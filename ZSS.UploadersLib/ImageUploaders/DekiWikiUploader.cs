@@ -60,7 +60,7 @@ namespace UploadersLib.ImageUploaders
             connector.UploadImage(localFilePath, fName);
 
             // Add this to the list of uploaded images
-            ifl.Add(new ImageFile(this.Options.Account.getUriPath(fName), ImageFile.ImageType.FULLIMAGE));
+            ifl.Add(new ImageFile(this.Options.Account.getUriPath(fName), LinkType.FULLIMAGE));
 
             // Create the file manager object
             ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };

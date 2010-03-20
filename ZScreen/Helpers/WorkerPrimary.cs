@@ -154,9 +154,9 @@ namespace ZScreenGUI
                     {
                         FileSystem.AppendDebug("Shortened URL: " + url);
                         task.RemoteFilePath = url;
-                        if (null != task.ImageManager && null != task.ImageManager.ImageFileList)
+                        if (null != task.LinkManager && null != task.LinkManager.ImageFileList)
                         {
-                            task.ImageManager.ImageFileList.Add(new ImageFile(url, ImageFile.ImageType.FULLIMAGE_TINYURL));
+                            task.LinkManager.ImageFileList.Add(new ImageFile(url, LinkType.FULLIMAGE_TINYURL));
                         }
                     }
                 }
@@ -298,18 +298,18 @@ namespace ZScreenGUI
                             switch (task.Job)
                             {
                                 case WorkerTask.Jobs.CustomUploaderTest:
-                                    if (task.ImageManager != null && task.ImageManager.ImageFileList.Count > 0)
+                                    if (task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
                                     {
-                                        if (!string.IsNullOrEmpty(task.ImageManager.GetFullImageUrl()))
+                                        if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
                                         {
                                             this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " full image: " +
-                                                task.ImageManager.GetFullImageUrl() + "\r\n");
+                                                task.LinkManager.GetFullImageUrl() + "\r\n");
                                         }
 
-                                        if (!string.IsNullOrEmpty(task.ImageManager.GetThumbnailUrl()))
+                                        if (!string.IsNullOrEmpty(task.LinkManager.GetThumbnailUrl()))
                                         {
                                             this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
-                                                task.ImageManager.GetThumbnailUrl() + "\r\n");
+                                                task.LinkManager.GetThumbnailUrl() + "\r\n");
                                         }
                                     }
                                     break;
@@ -336,7 +336,7 @@ namespace ZScreenGUI
                         Adapter.TwitterMsg(ref task);
                     }
 
-                    if (task.ImageManager != null && !string.IsNullOrEmpty(task.ImageManager.Source))
+                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
                     {
                         this.mZScreen.btnOpenSourceText.Enabled = true;
                         this.mZScreen.btnOpenSourceBrowser.Enabled = true;

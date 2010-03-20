@@ -142,8 +142,8 @@ namespace UploadersLib.ImageUploaders
                         string fullimage = GetXMLValue(ifm.Source, "fullsize");
                         string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
 
-                        if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                        if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                        if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
+                        if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
                     }
                 }
             }
@@ -194,8 +194,8 @@ namespace UploadersLib.ImageUploaders
                     if (imgType == "") imgType = ".jpg";
                     string fullimage = "http://i" + imgIval + ".tinypic.com/" + imgPic + imgType;
                     string thumbnail = "http://i" + imgIval + ".tinypic.com/" + imgPic + "_th" + imgType;
-                    ifm.ImageFileList.Add(new ImageFile(fullimage, ImageFile.ImageType.FULLIMAGE));
-                    ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                    ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
+                    ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
                 }
             }
             catch (Exception ex)

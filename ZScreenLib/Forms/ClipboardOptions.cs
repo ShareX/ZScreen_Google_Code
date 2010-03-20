@@ -21,7 +21,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
 
-            if (task != null && task.ImageManager != null)
+            if (task != null && task.LinkManager != null)
             {
                 this.mTask = task;
                 this.Text = task.FileName.ToString() + " - " + task.GetDescription();
@@ -35,7 +35,7 @@ namespace ZScreenLib
                 int count = 0;
                 foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
                 {
-                    string url = task.ImageManager.GetUrlByType(type);
+                    string url = task.LinkManager.GetUrlByType(type);
                     if (!string.IsNullOrEmpty(url))
                     {
                         // URL Label

@@ -35,7 +35,7 @@ namespace UploadersLib.Helpers
         /// Local file path of the Screenshot
         /// </summary>
         public string LocalFilePath { get; set; }
-        public ImageType Type { get; set; }
+        public LinkType Type { get; set; }
         public string URI { get; set; }
         /// <summary>
         /// Size in Mebibytes (MiB) = 1024 KiB
@@ -43,13 +43,6 @@ namespace UploadersLib.Helpers
         public decimal Size { get; set; }
         public DateTime DateModified { get; set; }
         public string Source { get; set; }
-
-        public enum ImageType
-        {
-            THUMBNAIL,
-            FULLIMAGE,
-            FULLIMAGE_TINYURL
-        }
 
         public ImageFile() { }
 
@@ -62,7 +55,7 @@ namespace UploadersLib.Helpers
             this.Size = fi.Length / (decimal)(1024 * 1024);
         }
 
-        public ImageFile(string URI, ImageType Type)
+        public ImageFile(string URI, LinkType Type)
         {
             this.URI = URI;
             this.Name = System.IO.Path.GetFileName(URI);

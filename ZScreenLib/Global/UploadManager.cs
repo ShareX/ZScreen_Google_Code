@@ -100,7 +100,7 @@ namespace ZScreenLib
                 case JobCategoryType.PICTURES:
                 case JobCategoryType.SCREENSHOTS:
                 case JobCategoryType.BINARY:
-                    ScreenshotsHistory = task.ImageManager;
+                    ScreenshotsHistory = task.LinkManager;
                     if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                     {
                         if (Engine.conf.ShowClipboardModeChooser || showDialog)
@@ -154,10 +154,17 @@ namespace ZScreenLib
                 Engine.ClipboardUnhook();
                 FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
                 Clipboard.SetText(clipboardText);
+
+                // optional deletion link
+                string linkdel = ScreenshotsHistory.GetDeletionLink();
+                if (!string.IsNullOrEmpty(linkdel))
+                {
+                    FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                }
+
                 Engine.zClipboardText = clipboardText;
                 Engine.ClipboardHook();
             }
-
             return clipboardText;
         }
     }

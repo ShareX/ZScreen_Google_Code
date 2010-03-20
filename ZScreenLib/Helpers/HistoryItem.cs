@@ -71,17 +71,17 @@ namespace ZScreenLib
             this.JobName = task.Job.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
-            if (string.IsNullOrEmpty(task.RemoteFilePath) && task.ImageManager != null) 
+            if (string.IsNullOrEmpty(task.RemoteFilePath) && task.LinkManager != null) 
             {
-            	this.RemotePath = task.ImageManager.GetLocalFilePathAsUri();
+            	this.RemotePath = task.LinkManager.GetLocalFilePathAsUri();
             }
-            else if (task.ImageManager != null) 
+            else if (task.LinkManager != null) 
             {
             	this.RemotePath = task.RemoteFilePath;
             }
             this.DestinationMode = task.MyImageUploader.GetDescription();
             this.DestinationName = GetDestinationName(task);
-            this.ScreenshotManager = task.ImageManager;
+            this.ScreenshotManager = task.LinkManager;
             this.JobCategory = task.JobCategory;
             this.ImageDestCategory = task.MyImageUploader;
             this.StartTime = task.StartTime;

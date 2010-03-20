@@ -177,7 +177,7 @@ namespace ZScreenLib
         /// <summary>
         /// Pictures List to access Local file path, URL
         /// </summary>
-        public ImageFileManager ImageManager { get; set; }
+        public ImageFileManager LinkManager { get; set; }
 
         #endregion
 

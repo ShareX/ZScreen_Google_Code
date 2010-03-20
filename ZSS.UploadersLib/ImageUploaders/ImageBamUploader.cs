@@ -142,8 +142,8 @@ namespace UploadersLib.ImageUploaders
                             thumbnail = xele.ElementValue("thumbnail");
                             delcode = xele.ElementValue("delcode");
 
-                            ifm.ImageFileList.Add(new ImageFile(URL, ImageFile.ImageType.FULLIMAGE));
-                            ifm.ImageFileList.Add(new ImageFile(thumbnail, ImageFile.ImageType.THUMBNAIL));
+                            ifm.ImageFileList.Add(new ImageFile(URL, LinkType.FULLIMAGE));
+                            ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
 
                             break;
                         case "fail":

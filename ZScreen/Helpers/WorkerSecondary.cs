@@ -234,7 +234,6 @@ namespace ZScreenGUI
                     {
                         mZScreen.cbFromLanguage.SelectedIndex = i;
                     }
-
                     break;
                 }
             }

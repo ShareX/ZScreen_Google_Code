@@ -254,7 +254,7 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             FileSystem.AppendDebug("Uploading File: " + mTask.LocalFilePath);
-            mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
+            mTask.LinkManager = new ImageFileManager(mTask.LocalFilePath);
             FileUploader fileHost = null;
             switch (mTask.MyFileUploader)
             {
@@ -307,7 +307,7 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             FileSystem.AppendDebug("Uploading Image: " + mTask.LocalFilePath);
-            mTask.ImageManager = new ImageFileManager(mTask.LocalFilePath);
+            mTask.LinkManager = new ImageFileManager(mTask.LocalFilePath);
             ImageUploader imageUploader = null;
 
             if (Engine.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
@@ -415,20 +415,20 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.ImageManager == null ||
-                        (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count < 1)); i++)
+                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.LinkManager == null ||
+                        (mTask.LinkManager != null && mTask.LinkManager.ImageFileList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            mTask.ImageManager = imageUploader.UploadImage(fullFilePath);
+                            mTask.LinkManager = imageUploader.UploadImage(fullFilePath);
                         }
                         else if (mTask.MyImage != null && mTask.FileName != null)
                         {
-                            mTask.ImageManager = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
+                            mTask.LinkManager = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
                         }
                         mTask.Errors = imageUploader.Errors;
 
-                        if (mTask.ImageManager.ImageFileList.Count == 0)
+                        if (mTask.LinkManager.ImageFileList.Count == 0)
                         {
                             mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
                         }
@@ -456,7 +456,7 @@ namespace ZScreenLib
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
 
-            if (mTask.ImageManager != null)
+            if (mTask.LinkManager != null)
             {
                 FlashIcon(mTask);
             }
@@ -464,9 +464,9 @@ namespace ZScreenLib
 
         private void SetRemoteFilePath()
         {
-            if (mTask.ImageManager != null && mTask.ImageManager.ImageFileList.Count > 0)
+            if (mTask.LinkManager != null && mTask.LinkManager.ImageFileList.Count > 0)
             {
-                string url = mTask.ImageManager.GetFullImageUrl();
+                string url = mTask.LinkManager.GetFullImageUrl();
                 mTask.RemoteFilePath = url;
                 FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
             }
@@ -498,8 +498,8 @@ namespace ZScreenLib
                 }
                 File.Move(mTask.LocalFilePath, destFile);
                 mTask.UpdateLocalFilePath(destFile);
-                mTask.ImageManager = new ImageFileManager(destFile);
-                mTask.ImageManager.Add(acc.GetUriPath(fn), ImageFile.ImageType.FULLIMAGE);
+                mTask.LinkManager = new ImageFileManager(destFile);
+                mTask.LinkManager.Add(acc.GetUriPath(fn), LinkType.FULLIMAGE);
             }
         }
 
@@ -529,7 +529,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(url))
                     {
                         mTask.RemoteFilePath = url;
-                        mTask.ImageManager.Add(url, ImageFile.ImageType.FULLIMAGE);
+                        mTask.LinkManager.Add(url, LinkType.FULLIMAGE);
 
                         if (CreateThumbnail())
                         {
@@ -547,7 +547,7 @@ namespace ZScreenLib
 
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
-                                        mTask.ImageManager.Add(thumb, ImageFile.ImageType.THUMBNAIL);
+                                        mTask.LinkManager.Add(thumb, LinkType.THUMBNAIL);
                                     }
                                 }
                             }
@@ -620,7 +620,7 @@ namespace ZScreenLib
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
-                    mTask.ImageManager = uploader.UploadImage(mTask.LocalFilePath);
+                    mTask.LinkManager = uploader.UploadImage(mTask.LocalFilePath);
                     mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
 
                     DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));

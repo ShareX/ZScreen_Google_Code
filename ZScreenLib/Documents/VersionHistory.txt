@@ -1,3 +1,5 @@
+3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log [__y] {McoreD}
+
 Version 3.27.3.1 - 20100315
 
 3.27.3.1 Fixed pastebin.com upload errors due to API changes {Jaex}
