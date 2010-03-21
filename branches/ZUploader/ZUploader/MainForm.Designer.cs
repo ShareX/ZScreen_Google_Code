@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.cbImageUploaderDestination = new System.Windows.Forms.ComboBox();
             this.btnClipboardUpload = new System.Windows.Forms.Button();
@@ -39,6 +40,9 @@
             this.cbTextUploaderDestination = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFileUploaderDestination = new System.Windows.Forms.ComboBox();
+            this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsUploads.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -76,6 +80,10 @@
             this.chID,
             this.chStatus,
             this.chURL});
+            this.lvUploads.ContextMenuStrip = this.cmsUploads;
+            this.lvUploads.FullRowSelect = true;
+            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(8, 88);
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.Size = new System.Drawing.Size(440, 216);
@@ -136,6 +144,20 @@
             this.cbFileUploaderDestination.TabIndex = 1;
             this.cbFileUploaderDestination.SelectedIndexChanged += new System.EventHandler(this.cbFileUploaderDestination_SelectedIndexChanged);
             // 
+            // cmsUploads
+            // 
+            this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyURLToolStripMenuItem});
+            this.cmsUploads.Name = "cmsUploads";
+            this.cmsUploads.Size = new System.Drawing.Size(127, 26);
+            // 
+            // copyURLToolStripMenuItem
+            // 
+            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyURLToolStripMenuItem.Text = "Copy URL";
+            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,6 +173,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MainForm";
             this.Text = "ZUploader";
+            this.cmsUploads.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,6 +192,8 @@
         private System.Windows.Forms.ComboBox cbTextUploaderDestination;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbFileUploaderDestination;
+        private System.Windows.Forms.ContextMenuStrip cmsUploads;
+        private System.Windows.Forms.ToolStripMenuItem copyURLToolStripMenuItem;
     }
 }
 

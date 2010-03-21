@@ -52,12 +52,12 @@ namespace ZUploader
             DataManager.FileName = fileName;
         }
 
-        public Task(Image image)
+        public Task(Image image, string fileName)
             : this()
         {
             DataManager.FileType = EDataType.Image;
             DataManager.Image = image;
-            DataManager.FileName = Helpers.GetRandomAlphanumeric(10);
+            DataManager.FileName = fileName;
         }
 
         public Task(string text)

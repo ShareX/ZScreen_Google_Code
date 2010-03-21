@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
 
@@ -47,6 +41,19 @@ namespace ZUploader
         private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
             UploadManager.FileUploader = (FileUploaderType)cbFileUploaderDestination.SelectedIndex;
+        }
+
+        private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvUploads.SelectedItems.Count > 0)
+            {
+                string url = lvUploads.SelectedItems[0].SubItems[2].Text;
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Clipboard.SetText(url);
+                }
+            }
         }
     }
 }

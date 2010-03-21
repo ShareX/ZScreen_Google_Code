@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace ZUploader
 {
@@ -56,7 +58,13 @@ namespace ZUploader
         {
             if (Clipboard.ContainsImage())
             {
-                StartUpload(new Task(Clipboard.GetImage()));
+                using (Image img = Clipboard.GetImage())
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    img.Save(ms, ImageFormat.Png);
+                    Task task = new Task(Image.FromStream(ms), Helpers.GetRandomAlphanumeric(10) + ".png");
+                    StartUpload(task);
+                }
             }
             else if (Clipboard.ContainsText())
             {
