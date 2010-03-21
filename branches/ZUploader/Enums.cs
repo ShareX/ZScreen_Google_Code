@@ -4,6 +4,20 @@ using System.Reflection;
 
 namespace ZUploader
 {
+    public enum ImageDestType2
+    {
+        //[Description("ImageShack - www.imageshack.us")]
+        //IMAGESHACK,
+        //[Description("TinyPic - www.tinypic.com")]
+        //TINYPIC,
+        [Description("ImageBin - www.imagebin.ca")]
+        IMAGEBIN,
+        [Description("Img1 - www.img1.us")]
+        IMG1,
+        [Description("Imgur - www.imgur.com")]
+        IMGUR,
+    }
+
     public static class Enums
     {
         public static string GetDescription(this Enum value)

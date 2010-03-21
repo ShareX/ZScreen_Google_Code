@@ -9,7 +9,7 @@ namespace ZUploader
 {
     public static class UploadManager
     {
-        public static ImageDestType ImageUploader { get; set; }
+        public static ImageDestType2 ImageUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
         private static List<Task> Tasks = new List<Task>();

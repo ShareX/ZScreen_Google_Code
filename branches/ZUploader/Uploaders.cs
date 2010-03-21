@@ -27,7 +27,7 @@ namespace ZUploader
                 imageUploader = new ImageBamUploader(imageBamOptions);
                 break;
                  */
-                case ImageDestType.IMAGEBIN:
+                case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;
                 /*
@@ -36,10 +36,10 @@ namespace ZUploader
                 ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                 break;
                  */
-                case ImageDestType.IMG1:
+                case ImageDestType2.IMG1:
                     imageUploader = new Img1Uploader();
                     break;
-                case ImageDestType.IMGUR:
+                case ImageDestType2.IMGUR:
                     imageUploader = new Imgur();
                     break;
                 /*
