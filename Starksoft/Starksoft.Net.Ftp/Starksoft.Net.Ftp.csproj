@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5F228FCD-54F1-491D-93CE-3D768655FADC}</ProjectGuid>
     <SccProjectName>
@@ -79,10 +79,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Starksoft.Net.Proxy, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>references\Starksoft.Net.Proxy.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -152,6 +148,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
+      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
+      <Name>Starksoft.Net.Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
