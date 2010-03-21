@@ -36,12 +36,13 @@
             this.chID = new System.Windows.Forms.ColumnHeader();
             this.chStatus = new System.Windows.Forms.ColumnHeader();
             this.chURL = new System.Windows.Forms.ColumnHeader();
+            this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.cbTextUploaderDestination = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFileUploaderDestination = new System.Windows.Forms.ComboBox();
-            this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCopy = new System.Windows.Forms.Button();
             this.cmsUploads.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,9 +69,9 @@
             // 
             this.btnClipboardUpload.Location = new System.Drawing.Point(336, 8);
             this.btnClipboardUpload.Name = "btnClipboardUpload";
-            this.btnClipboardUpload.Size = new System.Drawing.Size(112, 72);
+            this.btnClipboardUpload.Size = new System.Drawing.Size(112, 32);
             this.btnClipboardUpload.TabIndex = 2;
-            this.btnClipboardUpload.Text = "Clipboard upload";
+            this.btnClipboardUpload.Text = "Clipboard Upload";
             this.btnClipboardUpload.UseVisualStyleBackColor = true;
             this.btnClipboardUpload.Click += new System.EventHandler(this.btnClipboardUpload_Click);
             // 
@@ -90,6 +91,7 @@
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
+            this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
             // 
             // chID
             // 
@@ -105,6 +107,20 @@
             // 
             this.chURL.Text = "URL";
             this.chURL.Width = 300;
+            // 
+            // cmsUploads
+            // 
+            this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyURLToolStripMenuItem});
+            this.cmsUploads.Name = "cmsUploads";
+            this.cmsUploads.Size = new System.Drawing.Size(122, 26);
+            // 
+            // copyURLToolStripMenuItem
+            // 
+            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.copyURLToolStripMenuItem.Text = "Copy URL";
+            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
             // label2
             // 
@@ -144,25 +160,24 @@
             this.cbFileUploaderDestination.TabIndex = 1;
             this.cbFileUploaderDestination.SelectedIndexChanged += new System.EventHandler(this.cbFileUploaderDestination_SelectedIndexChanged);
             // 
-            // cmsUploads
+            // btnCopy
             // 
-            this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyURLToolStripMenuItem});
-            this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(127, 26);
-            // 
-            // copyURLToolStripMenuItem
-            // 
-            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.copyURLToolStripMenuItem.Text = "Copy URL";
-            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            this.btnCopy.Enabled = false;
+            this.btnCopy.Location = new System.Drawing.Point(336, 48);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(112, 29);
+            this.btnCopy.TabIndex = 6;
+            this.btnCopy.Text = "Copy Link";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // MainForm
             // 
+            this.AcceptButton = this.btnClipboardUpload;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(457, 311);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lvUploads);
@@ -172,6 +187,7 @@
             this.Controls.Add(this.cbImageUploaderDestination);
             this.Controls.Add(this.label1);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
             this.cmsUploads.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -194,6 +210,7 @@
         private System.Windows.Forms.ComboBox cbFileUploaderDestination;
         private System.Windows.Forms.ContextMenuStrip cmsUploads;
         private System.Windows.Forms.ToolStripMenuItem copyURLToolStripMenuItem;
+        private System.Windows.Forms.Button btnCopy;
     }
 }
 
