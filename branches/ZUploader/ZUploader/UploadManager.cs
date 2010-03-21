@@ -14,7 +14,7 @@ namespace ZUploader
     {
         public static ImageDestType2 ImageUploader { get; set; }
         public static TextDestType TextUploader { get; set; }
-        public static FileUploaderType FileUploader { get; set; }
+        public static FileUploaderType2 FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
         private static List<Task> Tasks = new List<Task>();
@@ -34,7 +34,7 @@ namespace ZUploader
             {
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = sender.TaskID.ToString();
-                lvi.SubItems.Add("Upload started");
+                lvi.SubItems.Add("Upload started: " + sender.DataManager.FileType.ToString());
                 lvi.SubItems.Add(string.Empty);
                 ListViewControl.Items.Add(lvi);
             }
@@ -70,7 +70,7 @@ namespace ZUploader
             {
                 if (File.Exists(file))
                 {
-                    StartUpload(CheckFile(file));
+                    StartUpload(CreateTask(file));
                 }
                 else if (Directory.Exists(file))
                 {
@@ -78,7 +78,7 @@ namespace ZUploader
 
                     foreach (string file2 in files2)
                     {
-                        StartUpload(CheckFile(file2));
+                        StartUpload(CreateTask(file2));
                     }
                 }
             }
@@ -107,7 +107,7 @@ namespace ZUploader
             }
         }
 
-        private static Task CheckFile(string path)
+        private static Task CreateTask(string path)
         {
             Task task;
             string fileName = Path.GetFileName(path);

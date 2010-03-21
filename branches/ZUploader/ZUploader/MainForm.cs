@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
 using ZUploader.Properties;
-using System.Linq;
 
 namespace ZUploader
 {
@@ -22,9 +23,38 @@ namespace ZUploader
             cbImageUploaderDestination.SelectedIndex = 0;
             cbTextUploaderDestination.Items.AddRange(typeof(TextDestType).GetDescriptions());
             cbTextUploaderDestination.SelectedIndex = 0;
-            cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
-            cbFileUploaderDestination.SelectedIndex = 3;
+            cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
+            cbFileUploaderDestination.SelectedIndex = 0;
         }
+
+        private void CopyURL()
+        {
+            if (lvUploads.SelectedItems.Count > 0)
+            {
+                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => x.SubItems[2].Text).ToArray();
+                string urls = string.Join("\r\n", array);
+
+                if (!string.IsNullOrEmpty(urls))
+                {
+                    Clipboard.SetText(urls);
+                }
+            }
+        }
+
+        private void OpenURL()
+        {
+            if (lvUploads.SelectedItems.Count > 0)
+            {
+                string url = lvUploads.SelectedItems[0].SubItems[2].Text;
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Process.Start(url);
+                }
+            }
+        }
+
+        #region Form events
 
         private void btnClipboardUpload_Click(object sender, EventArgs e)
         {
@@ -43,36 +73,37 @@ namespace ZUploader
 
         private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UploadManager.FileUploader = (FileUploaderType)cbFileUploaderDestination.SelectedIndex;
-        }
-
-        private void CopyUrl()
-        {
-            if (lvUploads.SelectedItems.Count > 0)
-            {
-                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => x.SubItems[2].Text).ToArray();
-                string urls = string.Join("\r\n", array);
-
-                if (!string.IsNullOrEmpty(urls))
-                {
-                    Clipboard.SetText(urls);
-                }
-            }
-        }
-
-        private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CopyUrl();
-        }
-
-        private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnCopy.Enabled = lvUploads.SelectedItems.Count > 0;
+            UploadManager.FileUploader = (FileUploaderType2)cbFileUploaderDestination.SelectedIndex;
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            CopyUrl();
+            CopyURL();
+        }
+
+        private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyURL();
+        }
+
+        private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenURL();
+        }
+
+        private void lvUploads_DoubleClick(object sender, EventArgs e)
+        {
+            OpenURL();
+        }
+
+        private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnCopy.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = lvUploads.SelectedItems.Count > 0;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -97,5 +128,7 @@ namespace ZUploader
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
             UploadManager.Upload(files);
         }
+
+        #endregion
     }
 }

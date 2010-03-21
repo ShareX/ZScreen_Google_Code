@@ -122,17 +122,17 @@ namespace ZUploader
                 UploadFTP();
                 break;
                  */
-                case FileUploaderType.SendSpace:
+                case FileUploaderType2.SendSpace:
                     fileUploader = new SendSpace();
                     SendSpaceManager.PrepareUploadInfo(null, null);
                     break;
-                case FileUploaderType.RapidShare:
+                case FileUploaderType2.RapidShare:
                     fileUploader = new RapidShare(new RapidShareOptions()
                     {
                         AccountType = RapidShareAcctType.Free
                     });
                     break;
-                case FileUploaderType.FileBin:
+                case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
                     break;
             }

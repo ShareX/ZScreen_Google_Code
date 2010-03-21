@@ -47,6 +47,7 @@
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
+            this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -100,6 +101,7 @@
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
             this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
+            this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
             // 
             // chID
             // 
@@ -109,7 +111,7 @@
             // chStatus
             // 
             this.chStatus.Text = "Status";
-            this.chStatus.Width = 100;
+            this.chStatus.Width = 125;
             // 
             // chURL
             // 
@@ -119,9 +121,10 @@
             // cmsUploads
             // 
             this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyURLToolStripMenuItem});
+            this.copyURLToolStripMenuItem,
+            this.openURLToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(127, 26);
+            this.cmsUploads.Size = new System.Drawing.Size(128, 48);
             // 
             // copyURLToolStripMenuItem
             // 
@@ -225,6 +228,13 @@
             this.pgApp.TabIndex = 0;
             this.pgApp.ToolbarVisible = false;
             // 
+            // openURLToolStripMenuItem
+            // 
+            this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openURLToolStripMenuItem.Text = "Open URL";
+            this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
@@ -247,6 +257,7 @@
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.cmsUploads.ResumeLayout(false);
             this.tcApp.ResumeLayout(false);
             this.tpHistory.ResumeLayout(false);
@@ -276,6 +287,7 @@
         private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.TabPage tpOptions;
         private System.Windows.Forms.PropertyGrid pgApp;
+        private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
     }
 }
 

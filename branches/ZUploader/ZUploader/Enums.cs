@@ -22,6 +22,20 @@ namespace ZUploader
         IMGUR,
     }
 
+    public enum FileUploaderType2
+    {
+        //[Description("FTP Server")]
+        //FTP,
+        [Description("RapidShare - www.rapidshare.com")]
+        RapidShare,
+        [Description("SendSpace - www.sendspace.com")]
+        SendSpace,
+        [Description("FileBin - www.filebin.ca")]
+        FileBin,
+        //[Description("Drop.io - www.drop.io")]
+        //DropIO
+    }
+
     public static class Enums
     {
         public static string GetDescription(this Enum value)
