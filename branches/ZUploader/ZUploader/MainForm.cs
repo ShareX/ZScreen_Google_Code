@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using UploadersLib;
 using ZUploader.Properties;
+using System.Linq;
 
 namespace ZUploader
 {
@@ -49,11 +50,12 @@ namespace ZUploader
         {
             if (lvUploads.SelectedItems.Count > 0)
             {
-                string url = lvUploads.SelectedItems[0].SubItems[2].Text;
+                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => x.SubItems[2].Text).ToArray();
+                string urls = string.Join("\r\n", array);
 
-                if (!string.IsNullOrEmpty(url))
+                if (!string.IsNullOrEmpty(urls))
                 {
-                    Clipboard.SetText(url);
+                    Clipboard.SetText(urls);
                 }
             }
         }

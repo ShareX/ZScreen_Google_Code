@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
-using System.Drawing;
-using System.Drawing.Imaging;
 using ZUploader.Properties;
 
 namespace ZUploader
@@ -47,10 +46,15 @@ namespace ZUploader
                 ListViewItem lvi = ListViewControl.Items[sender.TaskID];
                 lvi.SubItems[1].Text = "Upload completed";
                 lvi.SubItems[2].Text = e.URL;
-                if (Settings.Default.ClipboardAutoCopy)
+                lvi.EnsureVisible();
+
+                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(e.URL))
                 {
                     Clipboard.SetText(e.URL);
                 }
+
+                Tasks.Remove(sender);
+                sender.Dispose();
             }
         }
 
@@ -89,20 +93,22 @@ namespace ZUploader
         private static Task CheckFile(string path)
         {
             Task task;
-            Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             string fileName = Path.GetFileName(path);
 
-            if (Helpers.IsValidTextFile(path))
+            using (Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                task = new Task(EDataType.Text, stream, fileName);
-            }
-            else if (Helpers.IsValidImageFile(stream))
-            {
-                task = new Task(EDataType.Image, stream, fileName);
-            }
-            else
-            {
-                task = new Task(EDataType.Data, stream, fileName);
+                if (Helpers.IsValidTextFile(path))
+                {
+                    task = new Task(EDataType.Text, stream, fileName);
+                }
+                else if (Helpers.IsValidImageFile(stream))
+                {
+                    task = new Task(Image.FromFile(path), fileName);
+                }
+                else
+                {
+                    task = new Task(EDataType.Data, stream, fileName);
+                }
             }
 
             return task;

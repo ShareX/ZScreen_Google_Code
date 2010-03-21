@@ -80,7 +80,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Storage.cs" />
+    <Compile Include="DataManager.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="Uploaders.cs" />
     <Compile Include="UploadManager.cs" />

@@ -4,10 +4,11 @@ using System.IO;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
+using System;
 
 namespace ZUploader
 {
-    public class Task
+    public class Task : IDisposable
     {
         public DataManager DataManager { get; private set; }
 
@@ -39,7 +40,7 @@ namespace ZUploader
             switch (DataManager.FileType = dataType)
             {
                 case EDataType.Data:
-                    DataManager.Data = stream;
+                    DataManager.Data = Helpers.GetBytes(stream);
                     break;
                 case EDataType.Image:
                     DataManager.Image = Image.FromStream(stream);
@@ -126,6 +127,14 @@ namespace ZUploader
             if (UploadCompleted != null)
             {
                 UploadCompleted(this, e);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (DataManager != null)
+            {
+                DataManager.Dispose();
             }
         }
     }

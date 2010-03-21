@@ -111,7 +111,7 @@ namespace ZUploader
             return null;
         }
 
-        public static string UploadFile(Stream stream, string fileName)
+        public static string UploadFile(byte[] data, string fileName)
         {
             FileUploader fileUploader = null;
 
@@ -139,7 +139,7 @@ namespace ZUploader
 
             if (fileUploader != null)
             {
-                return fileUploader.Upload(Helpers.GetBytes(stream), fileName);
+                return fileUploader.Upload(data, fileName);
             }
 
             return null;

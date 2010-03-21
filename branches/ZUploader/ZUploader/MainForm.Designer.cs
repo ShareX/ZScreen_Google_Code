@@ -76,7 +76,7 @@
             // 
             this.btnClipboardUpload.Location = new System.Drawing.Point(368, 8);
             this.btnClipboardUpload.Name = "btnClipboardUpload";
-            this.btnClipboardUpload.Size = new System.Drawing.Size(112, 32);
+            this.btnClipboardUpload.Size = new System.Drawing.Size(112, 40);
             this.btnClipboardUpload.TabIndex = 2;
             this.btnClipboardUpload.Text = "Clipboard Upload";
             this.btnClipboardUpload.UseVisualStyleBackColor = true;
@@ -121,12 +121,12 @@
             this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyURLToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(122, 26);
+            this.cmsUploads.Size = new System.Drawing.Size(127, 26);
             // 
             // copyURLToolStripMenuItem
             // 
             this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
@@ -234,8 +234,8 @@
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnClipboardUpload);
             this.Controls.Add(this.tcApp);
+            this.Controls.Add(this.btnClipboardUpload);
             this.Controls.Add(this.cbFileUploaderDestination);
             this.Controls.Add(this.cbTextUploaderDestination);
             this.Controls.Add(this.cbImageUploaderDestination);
