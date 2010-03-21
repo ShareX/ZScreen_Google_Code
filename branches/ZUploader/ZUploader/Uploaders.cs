@@ -20,20 +20,20 @@ namespace ZUploader
 
             switch (UploadManager.ImageUploader)
             {
-                case ImageDestType.IMAGESHACK:
+                case ImageDestType2.IMAGESHACK:
                     imageUploader = new ImageShackUploader("78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a", string.Empty, UploadMode.API);
                     ((ImageShackUploader)imageUploader).Public = false;
                     break;
-                case ImageDestType.TINYPIC:
+                case ImageDestType2.TINYPIC:
                     imageUploader = new TinyPicUploader("e2aabb8d555322fa", "00a68ed73ddd54da52dc2d5803fa35ee", UploadMode.API);
                     break;
-                case ImageDestType.IMAGEBIN:
+                case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;
-                case ImageDestType.IMG1:
+                case ImageDestType2.IMG1:
                     imageUploader = new Img1Uploader();
                     break;
-                case ImageDestType.IMGUR:
+                case ImageDestType2.IMGUR:
                     imageUploader = new Imgur();
                     break;
                 default:

@@ -11,7 +11,7 @@ namespace ZUploader
 {
     public static class UploadManager
     {
-        public static ImageDestType ImageUploader { get; set; }
+        public static ImageDestType2 ImageUploader { get; set; }
         public static TextDestType TextUploader { get; set; }
         public static FileUploaderType FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }

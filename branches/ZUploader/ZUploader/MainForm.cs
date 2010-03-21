@@ -15,7 +15,7 @@ namespace ZUploader
 
         private void UpdateForm()
         {
-            cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
             cbImageUploaderDestination.SelectedIndex = 0;
             cbTextUploaderDestination.Items.AddRange(typeof(TextDestType).GetDescriptions());
             cbTextUploaderDestination.SelectedIndex = 0;
@@ -30,7 +30,7 @@ namespace ZUploader
 
         private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UploadManager.ImageUploader = (ImageDestType)cbImageUploaderDestination.SelectedIndex;
+            UploadManager.ImageUploader = (ImageDestType2)cbImageUploaderDestination.SelectedIndex;
         }
 
         private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
