@@ -173,8 +173,8 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("FTP Server")]
-        FTP,
+        //[Description("FTP Server")]
+        //FTP,
         [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]

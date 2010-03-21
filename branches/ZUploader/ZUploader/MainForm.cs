@@ -28,7 +28,7 @@ namespace ZUploader
 
         private void btnClipboardUpload_Click(object sender, EventArgs e)
         {
-            UploadManager.DoClipboardUpload();
+            UploadManager.ClipboardUpload();
         }
 
         private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
@@ -78,6 +78,24 @@ namespace ZUploader
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Settings.Default.Save();
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            UploadManager.Upload(files);
         }
     }
 }

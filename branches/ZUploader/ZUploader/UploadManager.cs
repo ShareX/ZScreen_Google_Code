@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using UploadersLib;
 using ZUploader.Properties;
+using System.Linq;
 
 namespace ZUploader
 {
@@ -63,7 +64,27 @@ namespace ZUploader
             return ID++;
         }
 
-        public static void DoClipboardUpload()
+        public static void Upload(string[] files)
+        {
+            foreach (string file in files)
+            {
+                if (File.Exists(file))
+                {
+                    StartUpload(CheckFile(file));
+                }
+                else if (Directory.Exists(file))
+                {
+                    string[] files2 = Directory.GetFiles(file, "*.*", SearchOption.AllDirectories);
+
+                    foreach (string file2 in files2)
+                    {
+                        StartUpload(CheckFile(file2));
+                    }
+                }
+            }
+        }
+
+        public static void ClipboardUpload()
         {
             if (Clipboard.ContainsImage())
             {
@@ -81,12 +102,8 @@ namespace ZUploader
             }
             else if (Clipboard.ContainsFileDropList())
             {
-                StringCollection files = Clipboard.GetFileDropList();
-
-                foreach (string file in files)
-                {
-                    StartUpload(CheckFile(file));
-                }
+                string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
+                Upload(files);
             }
         }
 
