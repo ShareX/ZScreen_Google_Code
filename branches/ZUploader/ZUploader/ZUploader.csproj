@@ -86,7 +86,7 @@
     <Compile Include="UploadManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+    <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
