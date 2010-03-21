@@ -15,8 +15,18 @@ namespace ZUploader
         public MainForm()
         {
             InitializeComponent();
-            cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            UpdateForm();
             UploadManager.ListViewControl = lvUploads;
+        }
+
+        private void UpdateForm()
+        {
+            cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            cbImageUploaderDestination.SelectedIndex = 0;
+            cbTextUploaderDestination.Items.AddRange(typeof(TextDestType).GetDescriptions());
+            cbTextUploaderDestination.SelectedIndex = 0;
+            cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+            cbFileUploaderDestination.SelectedIndex = 0;
         }
 
         private void btnClipboardUpload_Click(object sender, EventArgs e)
@@ -27,6 +37,16 @@ namespace ZUploader
         private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
             UploadManager.ImageUploader = (ImageDestType)cbImageUploaderDestination.SelectedIndex;
+        }
+
+        private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UploadManager.TextUploader = (TextDestType)cbTextUploaderDestination.SelectedIndex;
+        }
+
+        private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UploadManager.FileUploader = (FileUploaderType)cbFileUploaderDestination.SelectedIndex;
         }
     }
 }

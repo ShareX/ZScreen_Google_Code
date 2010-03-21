@@ -84,11 +84,13 @@ namespace ZUploader
             switch (DataManager.FileType)
             {
                 case EDataType.Data:
+                    e.Result = Uploaders.UploadFile(DataManager.Data, DataManager.FileName);
                     break;
                 case EDataType.Image:
                     e.Result = Uploaders.UploadImage(DataManager.Image, DataManager.FileName);
                     break;
                 case EDataType.Text:
+                    e.Result = Uploaders.UploadText(DataManager.Text);
                     break;
             }
         }
@@ -97,12 +99,15 @@ namespace ZUploader
         {
             UploadCompletedEventArgs args = new UploadCompletedEventArgs();
 
-            ImageFileManager ifm = e.Result as ImageFileManager;
-
-            if (ifm != null)
+            if (e.Result is ImageFileManager)
             {
+                ImageFileManager ifm = (ImageFileManager)e.Result;
                 args.URL = ifm.GetFullImageUrl();
                 args.Thumbnail = ifm.GetThumbnailUrl();
+            }
+            else if (e.Result is string)
+            {
+                args.URL = (string)e.Result;
             }
 
             OnUploadCompleted(args);

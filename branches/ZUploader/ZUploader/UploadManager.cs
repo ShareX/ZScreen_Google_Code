@@ -10,6 +10,8 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestType ImageUploader { get; set; }
+        public static TextDestType TextUploader { get; set; }
+        public static FileUploaderType FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
         private static List<Task> Tasks = new List<Task>();
@@ -75,7 +77,7 @@ namespace ZUploader
         {
             Task task;
             Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-            string fileName = Path.GetFileNameWithoutExtension(path);
+            string fileName = Path.GetFileName(path);
 
             if (Helpers.IsValidTextFile(path))
             {

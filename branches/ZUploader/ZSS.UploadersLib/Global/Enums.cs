@@ -98,26 +98,12 @@ namespace UploadersLib
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
         TINYPIC,
-        [Description("Flickr - www.flickr.com")]
-        FLICKR,
         [Description("ImageBin - www.imagebin.ca")]
         IMAGEBIN,
-        [Description("ImageBam - www.imagebam.com")]
-        IMAGEBAM,
         [Description("Img1 - www.img1.us")]
         IMG1,
         [Description("Imgur - www.imgur.com")]
-        IMGUR,
-        [Description("TwitPic - www.twitpic.com")]
-        TWITPIC,
-        [Description("TwitSnaps - www.twitsnaps.com")]
-        TWITSNAPS,
-        [Description("yFrog - www.yfrog.com")]
-        YFROG,
-        [Description("Custom Uploader")]
-        CUSTOM_UPLOADER,
-        [Description("MindTouch Deki Wiki")]
-        DEKIWIKI
+        IMGUR
     }
 
     #endregion
