@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using UploadersLib;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -11,6 +12,7 @@ namespace ZUploader
             InitializeComponent();
             UpdateForm();
             UploadManager.ListViewControl = lvUploads;
+            pgApp.SelectedObject = Settings.Default;
         }
 
         private void UpdateForm()
@@ -63,16 +65,17 @@ namespace ZUploader
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lvUploads.SelectedItems.Count > 0)
-            {
-                string url = lvUploads.SelectedItems[0].SubItems[2].Text;
-                btnCopy.Enabled = !string.IsNullOrEmpty(url);
-            }
+            btnCopy.Enabled = lvUploads.SelectedItems.Count > 0;
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
             CopyUrl();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Settings.Default.Save();
         }
     }
 }

@@ -43,7 +43,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbFileUploaderDestination = new System.Windows.Forms.ComboBox();
             this.btnCopy = new System.Windows.Forms.Button();
+            this.tcApp = new System.Windows.Forms.TabControl();
+            this.tpHistory = new System.Windows.Forms.TabPage();
+            this.tpOptions = new System.Windows.Forms.TabPage();
+            this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.cmsUploads.SuspendLayout();
+            this.tcApp.SuspendLayout();
+            this.tpHistory.SuspendLayout();
+            this.tpOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -61,13 +68,13 @@
             this.cbImageUploaderDestination.FormattingEnabled = true;
             this.cbImageUploaderDestination.Location = new System.Drawing.Point(104, 8);
             this.cbImageUploaderDestination.Name = "cbImageUploaderDestination";
-            this.cbImageUploaderDestination.Size = new System.Drawing.Size(224, 21);
+            this.cbImageUploaderDestination.Size = new System.Drawing.Size(256, 21);
             this.cbImageUploaderDestination.TabIndex = 1;
             this.cbImageUploaderDestination.SelectedIndexChanged += new System.EventHandler(this.cbImageUploaderDestination_SelectedIndexChanged);
             // 
             // btnClipboardUpload
             // 
-            this.btnClipboardUpload.Location = new System.Drawing.Point(336, 8);
+            this.btnClipboardUpload.Location = new System.Drawing.Point(368, 8);
             this.btnClipboardUpload.Name = "btnClipboardUpload";
             this.btnClipboardUpload.Size = new System.Drawing.Size(112, 32);
             this.btnClipboardUpload.TabIndex = 2;
@@ -82,12 +89,13 @@
             this.chStatus,
             this.chURL});
             this.lvUploads.ContextMenuStrip = this.cmsUploads;
+            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvUploads.FullRowSelect = true;
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(8, 88);
+            this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(440, 216);
+            this.lvUploads.Size = new System.Drawing.Size(458, 240);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -137,7 +145,7 @@
             this.cbTextUploaderDestination.FormattingEnabled = true;
             this.cbTextUploaderDestination.Location = new System.Drawing.Point(104, 32);
             this.cbTextUploaderDestination.Name = "cbTextUploaderDestination";
-            this.cbTextUploaderDestination.Size = new System.Drawing.Size(224, 21);
+            this.cbTextUploaderDestination.Size = new System.Drawing.Size(256, 21);
             this.cbTextUploaderDestination.TabIndex = 1;
             this.cbTextUploaderDestination.SelectedIndexChanged += new System.EventHandler(this.cbTextUploaderDestination_SelectedIndexChanged);
             // 
@@ -156,14 +164,14 @@
             this.cbFileUploaderDestination.FormattingEnabled = true;
             this.cbFileUploaderDestination.Location = new System.Drawing.Point(104, 56);
             this.cbFileUploaderDestination.Name = "cbFileUploaderDestination";
-            this.cbFileUploaderDestination.Size = new System.Drawing.Size(224, 21);
+            this.cbFileUploaderDestination.Size = new System.Drawing.Size(256, 21);
             this.cbFileUploaderDestination.TabIndex = 1;
             this.cbFileUploaderDestination.SelectedIndexChanged += new System.EventHandler(this.cbFileUploaderDestination_SelectedIndexChanged);
             // 
             // btnCopy
             // 
             this.btnCopy.Enabled = false;
-            this.btnCopy.Location = new System.Drawing.Point(336, 48);
+            this.btnCopy.Location = new System.Drawing.Point(368, 48);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(112, 29);
             this.btnCopy.TabIndex = 6;
@@ -171,17 +179,63 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
+            // tcApp
+            // 
+            this.tcApp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcApp.Controls.Add(this.tpHistory);
+            this.tcApp.Controls.Add(this.tpOptions);
+            this.tcApp.Location = new System.Drawing.Point(8, 88);
+            this.tcApp.Name = "tcApp";
+            this.tcApp.SelectedIndex = 0;
+            this.tcApp.Size = new System.Drawing.Size(472, 272);
+            this.tcApp.TabIndex = 7;
+            // 
+            // tpHistory
+            // 
+            this.tpHistory.Controls.Add(this.lvUploads);
+            this.tpHistory.Location = new System.Drawing.Point(4, 22);
+            this.tpHistory.Name = "tpHistory";
+            this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tpHistory.Size = new System.Drawing.Size(464, 246);
+            this.tpHistory.TabIndex = 0;
+            this.tpHistory.Text = "History";
+            this.tpHistory.UseVisualStyleBackColor = true;
+            // 
+            // tpOptions
+            // 
+            this.tpOptions.Controls.Add(this.pgApp);
+            this.tpOptions.Location = new System.Drawing.Point(4, 22);
+            this.tpOptions.Name = "tpOptions";
+            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOptions.Size = new System.Drawing.Size(464, 246);
+            this.tpOptions.TabIndex = 1;
+            this.tpOptions.Text = "Options";
+            this.tpOptions.UseVisualStyleBackColor = true;
+            // 
+            // pgApp
+            // 
+            this.pgApp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgApp.HelpVisible = false;
+            this.pgApp.Location = new System.Drawing.Point(3, 3);
+            this.pgApp.Name = "pgApp";
+            this.pgApp.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgApp.Size = new System.Drawing.Size(458, 240);
+            this.pgApp.TabIndex = 0;
+            this.pgApp.ToolbarVisible = false;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 311);
+            this.ClientSize = new System.Drawing.Size(492, 366);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.lvUploads);
             this.Controls.Add(this.btnClipboardUpload);
+            this.Controls.Add(this.tcApp);
             this.Controls.Add(this.cbFileUploaderDestination);
             this.Controls.Add(this.cbTextUploaderDestination);
             this.Controls.Add(this.cbImageUploaderDestination);
@@ -189,7 +243,11 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.cmsUploads.ResumeLayout(false);
+            this.tcApp.ResumeLayout(false);
+            this.tpHistory.ResumeLayout(false);
+            this.tpOptions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,6 +269,10 @@
         private System.Windows.Forms.ContextMenuStrip cmsUploads;
         private System.Windows.Forms.ToolStripMenuItem copyURLToolStripMenuItem;
         private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.TabControl tcApp;
+        private System.Windows.Forms.TabPage tpHistory;
+        private System.Windows.Forms.TabPage tpOptions;
+        private System.Windows.Forms.PropertyGrid pgApp;
     }
 }
 

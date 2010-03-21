@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using System.Drawing;
 using System.Drawing.Imaging;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -46,6 +47,10 @@ namespace ZUploader
                 ListViewItem lvi = ListViewControl.Items[sender.TaskID];
                 lvi.SubItems[1].Text = "Upload completed";
                 lvi.SubItems[2].Text = e.URL;
+                if (Settings.Default.ClipboardAutoCopy)
+                {
+                    Clipboard.SetText(e.URL);
+                }
             }
         }
 
