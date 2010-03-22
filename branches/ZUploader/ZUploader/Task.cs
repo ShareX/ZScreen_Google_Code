@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using UploadersLib;
 using UploadersLib.Helpers;
-using UploadersLib.ImageUploaders;
-using System;
 
 namespace ZUploader
 {
@@ -39,7 +37,7 @@ namespace ZUploader
         {
             switch (DataManager.FileType = dataType)
             {
-                case EDataType.Data:
+                case EDataType.File:
                     DataManager.Data = Helpers.GetBytes(stream);
                     break;
                 case EDataType.Image:
@@ -84,7 +82,7 @@ namespace ZUploader
         {
             switch (DataManager.FileType)
             {
-                case EDataType.Data:
+                case EDataType.File:
                     e.Result = Uploaders.UploadFile(DataManager.Data, DataManager.FileName);
                     break;
                 case EDataType.Image:

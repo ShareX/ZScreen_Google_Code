@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using UploadersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
-using System.Drawing;
 using UploadersLib.TextUploaders;
-using System.IO;
-using UploadersLib.FileUploaders;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -117,11 +113,9 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
-                /*
-            case FileUploaderType.FTP:
-                UploadFTP();
-                break;
-                 */
+                case FileUploaderType2.FTP:
+                    fileUploader = new FTPUploader(Settings.Default.FTPAccount);
+                    break;
                 case FileUploaderType2.SendSpace:
                     fileUploader = new SendSpace();
                     SendSpaceManager.PrepareUploadInfo(null, null);

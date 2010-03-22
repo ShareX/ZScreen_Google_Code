@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
 using ZUploader.Properties;
-using System.Linq;
 
 namespace ZUploader
 {
@@ -124,7 +123,7 @@ namespace ZUploader
                 }
                 else
                 {
-                    task = new Task(EDataType.Data, stream, fileName);
+                    task = new Task(EDataType.File, stream, fileName);
                 }
             }
 

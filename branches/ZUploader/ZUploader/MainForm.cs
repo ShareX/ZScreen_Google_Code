@@ -14,17 +14,22 @@ namespace ZUploader
             InitializeComponent();
             UpdateForm();
             UploadManager.ListViewControl = lvUploads;
+            if (Settings.Default.FTPAccount == null)
+            {
+                Settings.Default.FTPAccount = new FTPAccount();
+            }
+            pgFTPAccount.SelectedObject = Settings.Default.FTPAccount;
             pgApp.SelectedObject = Settings.Default;
         }
 
         private void UpdateForm()
         {
             cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
-            cbImageUploaderDestination.SelectedIndex = 0;
+            cbImageUploaderDestination.SelectedIndex = Settings.Default.SelectedImageUploaderDestination;
             cbTextUploaderDestination.Items.AddRange(typeof(TextDestType).GetDescriptions());
-            cbTextUploaderDestination.SelectedIndex = 0;
+            cbTextUploaderDestination.SelectedIndex = Settings.Default.SelectedTextUploaderDestination;
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
-            cbFileUploaderDestination.SelectedIndex = 0;
+            cbFileUploaderDestination.SelectedIndex = Settings.Default.SelectedFileUploaderDestination;
         }
 
         private void CopyURL()
@@ -63,22 +68,30 @@ namespace ZUploader
 
         private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Settings.Default.SelectedImageUploaderDestination = cbImageUploaderDestination.SelectedIndex;
             UploadManager.ImageUploader = (ImageDestType2)cbImageUploaderDestination.SelectedIndex;
         }
 
         private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Settings.Default.SelectedTextUploaderDestination = cbTextUploaderDestination.SelectedIndex;
             UploadManager.TextUploader = (TextDestType)cbTextUploaderDestination.SelectedIndex;
         }
 
         private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Settings.Default.SelectedFileUploaderDestination = cbFileUploaderDestination.SelectedIndex;
             UploadManager.FileUploader = (FileUploaderType2)cbFileUploaderDestination.SelectedIndex;
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
             CopyURL();
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            OpenURL();
         }
 
         private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -98,7 +111,8 @@ namespace ZUploader
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnCopy.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = lvUploads.SelectedItems.Count > 0;
+            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled =
+                openURLToolStripMenuItem.Enabled = lvUploads.SelectedItems.Count > 0;
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
