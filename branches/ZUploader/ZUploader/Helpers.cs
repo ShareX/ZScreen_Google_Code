@@ -56,6 +56,7 @@ namespace ZUploader
 
         public static byte[] GetBytes(Stream input)
         {
+            input.Position = 0;
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())
             {
@@ -65,6 +66,15 @@ namespace ZUploader
                     ms.Write(buffer, 0, read);
                 }
                 return ms.ToArray();
+            }
+        }
+
+        public static byte[] GetBytes(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, img.RawFormat);
+                return GetBytes(ms);
             }
         }
     }

@@ -91,7 +91,18 @@ namespace ZUploader
                 using (MemoryStream ms = new MemoryStream())
                 {
                     img.Save(ms, ImageFormat.Png);
-                    Task task = new Task(Image.FromStream(ms), Helpers.GetRandomAlphanumeric(10) + ".png");
+                    Task task;
+                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".png";
+
+                    if (ImageUploader == ImageDestType2.FTP)
+                    {
+                        task = new Task(EDataType.File, ms, fileName);
+                    }
+                    else
+                    {
+                        task = new Task(Image.FromStream(ms), fileName);
+                    }
+
                     StartUpload(task);
                 }
             }
@@ -117,7 +128,7 @@ namespace ZUploader
                 {
                     task = new Task(EDataType.Text, stream, fileName);
                 }
-                else if (Helpers.IsValidImageFile(stream))
+                else if (ImageUploader != ImageDestType2.FTP && Helpers.IsValidImageFile(stream))
                 {
                     task = new Task(Image.FromFile(path), fileName);
                 }

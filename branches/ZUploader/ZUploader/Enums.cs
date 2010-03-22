@@ -19,19 +19,21 @@ namespace ZUploader
         [Description("Img1 - www.img1.us")]
         IMG1,
         [Description("Imgur - www.imgur.com")]
-        IMGUR
+        IMGUR,
+        [Description("FTP Server")]
+        FTP
     }
 
     public enum FileUploaderType2
     {
-        [Description("FTP Server")]
-        FTP,
         [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]
         SendSpace,
         [Description("FileBin - www.filebin.ca")]
         FileBin,
+        [Description("FTP Server")]
+        FTP
         //[Description("Drop.io - www.drop.io")]
         //DropIO
     }
