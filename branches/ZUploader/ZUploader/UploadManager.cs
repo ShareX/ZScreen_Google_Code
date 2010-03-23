@@ -6,18 +6,118 @@ using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
 using ZUploader.Properties;
+using System.Text;
 
 namespace ZUploader
 {
     public static class UploadManager
     {
         public static ImageDestType2 ImageUploader { get; set; }
-        public static TextDestType TextUploader { get; set; }
+        public static TextDestType2 TextUploader { get; set; }
         public static FileUploaderType2 FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
         private static List<Task> Tasks = new List<Task>();
         private static int ID;
+
+        public static int GetID()
+        {
+            return ID++;
+        }
+
+        public static void Upload(string path)
+        {
+            Task task;
+            string fileName = Path.GetFileName(path);
+
+            using (Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
+                {
+                    task = new Task(EDataType.Text, stream, fileName);
+                }
+                else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(stream))
+                {
+                    task = new Task(EDataType.Image, stream, fileName);
+                }
+                else
+                {
+                    task = new Task(EDataType.File, stream, fileName);
+                }
+            }
+
+            StartUpload(task);
+        }
+
+        public static void Upload(string[] files)
+        {
+            foreach (string file in files)
+            {
+                if (!string.IsNullOrEmpty(file))
+                {
+                    if (File.Exists(file))
+                    {
+                        Upload(file);
+                    }
+                    else if (Directory.Exists(file))
+                    {
+                        string[] files2 = Directory.GetFiles(file, "*.*", SearchOption.AllDirectories);
+
+                        Upload(files2);
+                    }
+                }
+            }
+        }
+
+        public static void ClipboardUpload()
+        {
+            if (Clipboard.ContainsImage())
+            {
+                using (Image img = Clipboard.GetImage())
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    img.Save(stream, ImageFormat.Png);
+                    Task task;
+                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".png";
+
+                    if (ImageUploader == ImageDestType2.FILE)
+                    {
+                        task = new Task(EDataType.File, stream, fileName);
+                    }
+                    else
+                    {
+                        task = new Task(EDataType.Image, stream, fileName);
+                    }
+
+                    StartUpload(task);
+                }
+            }
+            else if (Clipboard.ContainsText())
+            {
+                byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
+                using (MemoryStream stream = new MemoryStream(byteArray))
+                {
+                    Task task;
+                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".txt";
+
+                    if (TextUploader == TextDestType2.FILE)
+                    {
+                        task = new Task(EDataType.File, stream, fileName);
+                    }
+                    else
+                    {
+                        task = new Task(EDataType.Text, stream, fileName);
+                    }
+
+                    StartUpload(task);
+                }
+            }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
+                Upload(files);
+            }
+        }
 
         private static void StartUpload(Task task)
         {
@@ -56,89 +156,6 @@ namespace ZUploader
                 Tasks.Remove(sender);
                 sender.Dispose();
             }
-        }
-
-        public static int GetID()
-        {
-            return ID++;
-        }
-
-        public static void Upload(string[] files)
-        {
-            foreach (string file in files)
-            {
-                if (File.Exists(file))
-                {
-                    StartUpload(CreateTask(file));
-                }
-                else if (Directory.Exists(file))
-                {
-                    string[] files2 = Directory.GetFiles(file, "*.*", SearchOption.AllDirectories);
-
-                    foreach (string file2 in files2)
-                    {
-                        StartUpload(CreateTask(file2));
-                    }
-                }
-            }
-        }
-
-        public static void ClipboardUpload()
-        {
-            if (Clipboard.ContainsImage())
-            {
-                using (Image img = Clipboard.GetImage())
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    img.Save(ms, ImageFormat.Png);
-                    Task task;
-                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".png";
-
-                    if (ImageUploader == ImageDestType2.FTP)
-                    {
-                        task = new Task(EDataType.File, ms, fileName);
-                    }
-                    else
-                    {
-                        task = new Task(Image.FromStream(ms), fileName);
-                    }
-
-                    StartUpload(task);
-                }
-            }
-            else if (Clipboard.ContainsText())
-            {
-                StartUpload(new Task(Clipboard.GetText()));
-            }
-            else if (Clipboard.ContainsFileDropList())
-            {
-                string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
-                Upload(files);
-            }
-        }
-
-        private static Task CreateTask(string path)
-        {
-            Task task;
-            string fileName = Path.GetFileName(path);
-
-            using (Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                if (Helpers.IsValidTextFile(path))
-                {
-                    task = new Task(EDataType.Text, stream, fileName);
-                }
-                else if (ImageUploader != ImageDestType2.FTP && Helpers.IsValidImageFile(stream))
-                {
-                    task = new Task(Image.FromFile(path), fileName);
-                }
-                else
-                {
-                    task = new Task(EDataType.File, stream, fileName);
-                }
-            }
-
-            return task;
         }
     }
 }

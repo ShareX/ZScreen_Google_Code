@@ -26,7 +26,7 @@ namespace ZUploader
         {
             cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
             cbImageUploaderDestination.SelectedIndex = Settings.Default.SelectedImageUploaderDestination;
-            cbTextUploaderDestination.Items.AddRange(typeof(TextDestType).GetDescriptions());
+            cbTextUploaderDestination.Items.AddRange(typeof(TextDestType2).GetDescriptions());
             cbTextUploaderDestination.SelectedIndex = Settings.Default.SelectedTextUploaderDestination;
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
             cbFileUploaderDestination.SelectedIndex = Settings.Default.SelectedFileUploaderDestination;
@@ -75,7 +75,7 @@ namespace ZUploader
         private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Default.SelectedTextUploaderDestination = cbTextUploaderDestination.SelectedIndex;
-            UploadManager.TextUploader = (TextDestType)cbTextUploaderDestination.SelectedIndex;
+            UploadManager.TextUploader = (TextDestType2)cbTextUploaderDestination.SelectedIndex;
         }
 
         private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)

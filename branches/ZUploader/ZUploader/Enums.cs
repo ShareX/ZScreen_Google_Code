@@ -10,18 +10,30 @@ namespace ZUploader
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
         TINYPIC,
-        //[Description("Flickr - www.flickr.com")]
-        //FLICKR,
         [Description("ImageBin - www.imagebin.ca")]
         IMAGEBIN,
-        //[Description("ImageBam - www.imagebam.com")]
-        //IMAGEBAM,
         [Description("Img1 - www.img1.us")]
         IMG1,
         [Description("Imgur - www.imgur.com")]
         IMGUR,
-        [Description("FTP Server")]
-        FTP
+        [Description("Use File Uploader")]
+        FILE
+    }
+
+    public enum TextDestType2
+    {
+        [Description("PasteBin - www.pastebin.com")]
+        PASTEBIN,
+        [Description("PasteBin - www.pastebin.ca")]
+        PASTEBIN_CA,
+        [Description("Paste2 - www.paste2.org")]
+        PASTE2,
+        [Description("Slexy 2.0 - www.slexy.org")]
+        SLEXY,
+        [Description("Use File Uploader")]
+        FILE
+        //[Description("Snipt - www.snipt.org")]
+        //SNIPT
     }
 
     public enum FileUploaderType2

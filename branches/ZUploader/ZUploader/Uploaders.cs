@@ -83,16 +83,16 @@ namespace ZUploader
 
             switch (UploadManager.TextUploader)
             {
-                case TextDestType.PASTE2:
+                case TextDestType2.PASTE2:
                     textUploader = new Paste2Uploader();
                     break;
-                case TextDestType.PASTEBIN:
+                case TextDestType2.PASTEBIN:
                     textUploader = new PastebinUploader();
                     break;
-                case TextDestType.PASTEBIN_CA:
+                case TextDestType2.PASTEBIN_CA:
                     textUploader = new PastebinCaUploader();
                     break;
-                case TextDestType.SLEXY:
+                case TextDestType2.SLEXY:
                     textUploader = new SlexyUploader();
                     break;
                 default:

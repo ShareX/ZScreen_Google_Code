@@ -44,10 +44,21 @@ namespace ZUploader
                     DataManager.Image = Image.FromStream(stream);
                     break;
                 case EDataType.Text:
-                    DataManager.Text = new StreamReader(stream).ReadToEnd();
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        DataManager.Text = sr.ReadToEnd();
+                    }
                     break;
             }
 
+            DataManager.FileName = fileName;
+        }
+
+        public Task(byte[] data, string fileName)
+            : this()
+        {
+            DataManager.FileType = EDataType.File;
+            DataManager.Data = data;
             DataManager.FileName = fileName;
         }
 
