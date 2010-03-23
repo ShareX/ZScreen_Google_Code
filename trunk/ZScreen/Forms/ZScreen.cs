@@ -37,7 +37,6 @@ using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
@@ -1541,14 +1540,16 @@ namespace ZScreenGUI
         {
             Software temp = null;
 
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Executable files (*.exe)|*.exe";
-
-            if (dlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                temp = new Software();
-                temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
-                temp.Path = dlg.FileName;
+                dlg.Filter = "Executable Files (*.exe)|*.exe|All Files (*.*)|*.*";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    temp = new Software();
+                    temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
+                    temp.Path = dlg.FileName;
+                }
             }
 
             return temp;
