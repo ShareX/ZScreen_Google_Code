@@ -137,6 +137,7 @@ namespace UploadersLib
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
+                        OnProgressChanged((int)((double)stream.Position / stream.Length * 100));
                         requestStream.Write(buffer, 0, bytesRead);
                     }
                 }
