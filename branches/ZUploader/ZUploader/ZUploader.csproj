@@ -73,7 +73,6 @@
     </Compile>
     <Compile Include="DataManager.cs" />
     <Compile Include="Task.cs" />
-    <Compile Include="Uploaders.cs" />
     <Compile Include="UploadManager.cs" />
   </ItemGroup>
   <ItemGroup>

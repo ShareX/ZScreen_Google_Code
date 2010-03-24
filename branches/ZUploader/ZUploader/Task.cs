@@ -3,33 +3,36 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
+using UploadersLib;
+using UploadersLib.FileUploaders;
+using UploadersLib.TextUploaders;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
     public class Task : IDisposable
     {
-        public DataManager DataManager { get; private set; }
-
         public delegate void UploadStartedEventHandler(Task sender);
-        public delegate void UploadCompletedEventHandler(Task sender, UploadCompletedEventArgs e);
-
-        public class UploadCompletedEventArgs
-        {
-            public string URL { get; set; }
-            public string Thumbnail { get; set; }
-        }
+        public delegate void UploadCompletedEventHandler(Task sender, string url);
+        public delegate void UploadProgressChangedEventHandler(Task sender, int progress);
 
         public event UploadStartedEventHandler UploadStarted;
         public event UploadCompletedEventHandler UploadCompleted;
+        public event UploadProgressChangedEventHandler UploadProgressChanged;
 
-        public int TaskID { get; private set; }
+        public DataManager DataManager { get; private set; }
+        public int ID { get; private set; }
+        public int Progress { get; private set; }
+
+        private BackgroundWorker bw;
 
         #region Constructors
 
         public Task()
         {
-            TaskID = UploadManager.GetID();
             DataManager = new DataManager();
+            ID = UploadManager.GetID();
         }
 
         public Task(EDataType dataType, Stream stream, string fileName)
@@ -83,8 +86,10 @@ namespace ZUploader
         {
             OnUploadStarted();
 
-            BackgroundWorker bw = new BackgroundWorker();
+            bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(UploadThread);
+            bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
             bw.RunWorkerAsync();
         }
@@ -94,33 +99,171 @@ namespace ZUploader
             switch (DataManager.FileType)
             {
                 case EDataType.File:
-                    e.Result = Uploaders.UploadFile(DataManager.Data, DataManager.FileName);
+                    e.Result = UploadFile(DataManager.Data, DataManager.FileName);
                     break;
                 case EDataType.Image:
-                    e.Result = Uploaders.UploadImage(DataManager.Image, DataManager.FileName);
+                    e.Result = UploadImage(DataManager.Image, DataManager.FileName);
                     break;
                 case EDataType.Text:
-                    e.Result = Uploaders.UploadText(DataManager.Text);
+                    e.Result = UploadText(DataManager.Text);
                     break;
+            }
+        }
+
+        public ImageFileManager UploadImage(Image image, string fileName)
+        {
+            ImageUploader imageUploader = null;
+
+            switch (UploadManager.ImageUploader)
+            {
+                case ImageDestType2.IMAGESHACK:
+                    imageUploader = new ImageShackUploader("78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a", string.Empty, UploadMode.API);
+                    ((ImageShackUploader)imageUploader).Public = false;
+                    break;
+                case ImageDestType2.TINYPIC:
+                    imageUploader = new TinyPicUploader("e2aabb8d555322fa", "00a68ed73ddd54da52dc2d5803fa35ee", UploadMode.API);
+                    break;
+                case ImageDestType2.IMAGEBIN:
+                    imageUploader = new ImageBin();
+                    break;
+                case ImageDestType2.IMG1:
+                    imageUploader = new Img1Uploader();
+                    break;
+                case ImageDestType2.IMGUR:
+                    imageUploader = new Imgur();
+                    break;
+                default:
+                    break;
+                /*
+                case ImageDestType.FLICKR:
+                    imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
+                    break;
+                case ImageDestType.IMAGEBAM:
+                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
+                    Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
+                    imageUploader = new ImageBamUploader(imageBamOptions);
+                    break;
+                case ImageDestType.TWITPIC:
+                    TwitPicOptions twitpicOpt = new TwitPicOptions();
+                    twitpicOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
+                    twitpicOpt.Password = Adapter.TwitterGetActiveAcct().Password;
+                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(twitpicOpt);
+                    break;
+                case ImageDestType.TWITSNAPS:
+                    TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
+                    twitsnapsOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
+                    twitsnapsOpt.Password = Adapter.TwitterGetActiveAcct().Password;
+                    imageUploader = new TwitSnapsUploader(twitsnapsOpt);
+                    break;
+                case ImageDestType.YFROG:
+                    YfrogOptions yfrogOp = new YfrogOptions(Engine.IMAGESHACK_KEY);
+                    yfrogOp.UserName = Adapter.TwitterGetActiveAcct().UserName;
+                    yfrogOp.Password = Adapter.TwitterGetActiveAcct().Password;
+                    yfrogOp.Source = Application.ProductName;
+                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                    imageUploader = new YfrogUploader(yfrogOp);
+                    break;
+                 */
+            }
+
+            if (imageUploader != null)
+            {
+                imageUploader.ProgressChanged += (x) => bw.ReportProgress(x);
+                return imageUploader.UploadImage(image, fileName);
+            }
+
+            return null;
+        }
+
+        public string UploadText(string text)
+        {
+            TextUploader textUploader = null;
+
+            switch (UploadManager.TextUploader)
+            {
+                case TextDestType2.PASTE2:
+                    textUploader = new Paste2Uploader();
+                    break;
+                case TextDestType2.PASTEBIN:
+                    textUploader = new PastebinUploader();
+                    break;
+                case TextDestType2.PASTEBIN_CA:
+                    textUploader = new PastebinCaUploader();
+                    break;
+                case TextDestType2.SLEXY:
+                    textUploader = new SlexyUploader();
+                    break;
+                default:
+                    break;
+            }
+
+            if (textUploader != null)
+            {
+                return textUploader.UploadText(TextInfo.FromString(text));
+            }
+
+            return null;
+        }
+
+        public string UploadFile(byte[] data, string fileName)
+        {
+            FileUploader fileUploader = null;
+
+            switch (UploadManager.FileUploader)
+            {
+                case FileUploaderType2.FTP:
+                    fileUploader = new FTPUploader(Settings.Default.FTPAccount);
+                    break;
+                case FileUploaderType2.SendSpace:
+                    fileUploader = new SendSpace();
+                    SendSpaceManager.PrepareUploadInfo(null, null);
+                    break;
+                case FileUploaderType2.RapidShare:
+                    fileUploader = new RapidShare(new RapidShareOptions()
+                    {
+                        AccountType = RapidShareAcctType.Free
+                    });
+                    break;
+                case FileUploaderType2.FileBin:
+                    fileUploader = new FileBin();
+                    break;
+            }
+
+            if (fileUploader != null)
+            {
+                fileUploader.ProgressChanged += (x) => bw.ReportProgress(x);
+                return fileUploader.Upload(data, fileName);
+            }
+
+            return null;
+        }
+
+        private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (Progress < e.ProgressPercentage)
+            {
+                Progress = e.ProgressPercentage;
+                OnUploadProgressChanged(Progress);
             }
         }
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            UploadCompletedEventArgs args = new UploadCompletedEventArgs();
+            string url = string.Empty;
 
             if (e.Result is ImageFileManager)
             {
-                ImageFileManager ifm = (ImageFileManager)e.Result;
-                args.URL = ifm.GetFullImageUrl();
-                args.Thumbnail = ifm.GetThumbnailUrl();
+                url = ((ImageFileManager)e.Result).GetFullImageUrl();
             }
             else if (e.Result is string)
             {
-                args.URL = (string)e.Result;
+                url = (string)e.Result;
             }
 
-            OnUploadCompleted(args);
+            OnUploadCompleted(url);
         }
 
         private void OnUploadStarted()
@@ -131,11 +274,19 @@ namespace ZUploader
             }
         }
 
-        private void OnUploadCompleted(UploadCompletedEventArgs e)
+        private void OnUploadCompleted(string url)
         {
             if (UploadCompleted != null)
             {
-                UploadCompleted(this, e);
+                UploadCompleted(this, url);
+            }
+        }
+
+        private void OnUploadProgressChanged(int progress)
+        {
+            if (UploadProgressChanged != null)
+            {
+                UploadProgressChanged(this, progress);
             }
         }
 

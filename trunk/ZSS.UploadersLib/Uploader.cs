@@ -121,6 +121,7 @@ namespace UploadersLib
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
+                request.AllowWriteStreamBuffering = false;
                 request.ContentLength = stream.Length;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";

@@ -46,16 +46,16 @@
             this.btnCopy = new System.Windows.Forms.Button();
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpHistory = new System.Windows.Forms.TabPage();
+            this.tpFTP = new System.Windows.Forms.TabPage();
+            this.pgFTPAccount = new System.Windows.Forms.PropertyGrid();
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.tpFTP = new System.Windows.Forms.TabPage();
-            this.pgFTPAccount = new System.Windows.Forms.PropertyGrid();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
-            this.tpOptions.SuspendLayout();
             this.tpFTP.SuspendLayout();
+            this.tpOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblImageUploaderDestination
@@ -218,6 +218,27 @@
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
             // 
+            // tpFTP
+            // 
+            this.tpFTP.Controls.Add(this.pgFTPAccount);
+            this.tpFTP.Location = new System.Drawing.Point(4, 22);
+            this.tpFTP.Name = "tpFTP";
+            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFTP.Size = new System.Drawing.Size(464, 246);
+            this.tpFTP.TabIndex = 2;
+            this.tpFTP.Text = "FTP Account";
+            this.tpFTP.UseVisualStyleBackColor = true;
+            // 
+            // pgFTPAccount
+            // 
+            this.pgFTPAccount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgFTPAccount.Location = new System.Drawing.Point(3, 3);
+            this.pgFTPAccount.Name = "pgFTPAccount";
+            this.pgFTPAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgFTPAccount.Size = new System.Drawing.Size(458, 240);
+            this.pgFTPAccount.TabIndex = 0;
+            this.pgFTPAccount.ToolbarVisible = false;
+            // 
             // tpOptions
             // 
             this.tpOptions.Controls.Add(this.pgApp);
@@ -251,27 +272,6 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // tpFTP
-            // 
-            this.tpFTP.Controls.Add(this.pgFTPAccount);
-            this.tpFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(464, 246);
-            this.tpFTP.TabIndex = 2;
-            this.tpFTP.Text = "FTP Account";
-            this.tpFTP.UseVisualStyleBackColor = true;
-            // 
-            // pgFTPAccount
-            // 
-            this.pgFTPAccount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgFTPAccount.Location = new System.Drawing.Point(3, 3);
-            this.pgFTPAccount.Name = "pgFTPAccount";
-            this.pgFTPAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPAccount.Size = new System.Drawing.Size(458, 240);
-            this.pgFTPAccount.TabIndex = 0;
-            this.pgFTPAccount.ToolbarVisible = false;
-            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
@@ -289,6 +289,7 @@
             this.Controls.Add(this.cbTextUploaderDestination);
             this.Controls.Add(this.cbImageUploaderDestination);
             this.Controls.Add(this.lblImageUploaderDestination);
+            this.DoubleBuffered = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
@@ -299,8 +300,8 @@
             this.cmsUploads.ResumeLayout(false);
             this.tcApp.ResumeLayout(false);
             this.tpHistory.ResumeLayout(false);
-            this.tpOptions.ResumeLayout(false);
             this.tpFTP.ResumeLayout(false);
+            this.tpOptions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

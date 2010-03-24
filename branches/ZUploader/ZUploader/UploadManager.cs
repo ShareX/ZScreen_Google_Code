@@ -124,6 +124,7 @@ namespace ZUploader
             Tasks.Add(task);
             task.UploadStarted += new Task.UploadStartedEventHandler(task_UploadStarted);
             task.UploadCompleted += new Task.UploadCompletedEventHandler(task_UploadCompleted);
+            task.UploadProgressChanged += new Task.UploadProgressChangedEventHandler(task_UploadProgressChanged);
             task.Start();
         }
 
@@ -132,29 +133,38 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = new ListViewItem();
-                lvi.Text = sender.TaskID.ToString();
+                lvi.Text = sender.ID.ToString();
                 lvi.SubItems.Add("Upload started: " + sender.DataManager.FileType.ToString());
                 lvi.SubItems.Add(string.Empty);
                 ListViewControl.Items.Add(lvi);
             }
         }
 
-        private static void task_UploadCompleted(Task sender, Task.UploadCompletedEventArgs e)
+        private static void task_UploadCompleted(Task sender, string url)
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[sender.TaskID];
+                ListViewItem lvi = ListViewControl.Items[sender.ID];
                 lvi.SubItems[1].Text = "Upload completed";
-                lvi.SubItems[2].Text = e.URL;
+                lvi.SubItems[2].Text = url;
                 lvi.EnsureVisible();
 
-                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(e.URL))
+                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(url))
                 {
-                    Clipboard.SetText(e.URL);
+                    Clipboard.SetText(url);
                 }
 
                 Tasks.Remove(sender);
                 sender.Dispose();
+            }
+        }
+
+        private static void task_UploadProgressChanged(Task sender, int progress)
+        {
+            if (ListViewControl != null)
+            {
+                ListViewItem lvi = ListViewControl.Items[sender.ID];
+                lvi.SubItems[2].Text = string.Format("Upload progress: {0}%", progress);
             }
         }
     }
