@@ -3,10 +3,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using UploadersLib;
-using ZUploader.Properties;
 using System.Text;
+using System.Windows.Forms;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -28,22 +27,18 @@ namespace ZUploader
         public static void Upload(string path)
         {
             Task task;
-            string fileName = Path.GetFileName(path);
 
-            using (Stream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
             {
-                if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
-                {
-                    task = new Task(EDataType.Text, stream, fileName);
-                }
-                else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(stream))
-                {
-                    task = new Task(EDataType.Image, stream, fileName);
-                }
-                else
-                {
-                    task = new Task(EDataType.File, stream, fileName);
-                }
+                task = new Task(EDataType.Text, path);
+            }
+            else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(path))
+            {
+                task = new Task(EDataType.Image, path);
+            }
+            else
+            {
+                task = new Task(EDataType.File, path);
             }
 
             StartUpload(task);

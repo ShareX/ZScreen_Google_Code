@@ -7,10 +7,11 @@ namespace ZUploader
 {
     public static class Helpers
     {
-        public static bool IsValidImageFile(Stream stream)
+        public static bool IsValidImageFile(string path)
         {
             try
             {
+                using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                 using (Image img = Image.FromStream(stream, false, false))
                 {
                     return true;

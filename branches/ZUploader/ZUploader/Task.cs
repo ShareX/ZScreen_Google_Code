@@ -35,6 +35,26 @@ namespace ZUploader
             ID = UploadManager.GetID();
         }
 
+        public Task(EDataType dataType, string filePath)
+            : this()
+        {
+            DataManager.FileType = dataType;
+            DataManager.FileName = Path.GetFileName(filePath);
+
+            switch (dataType)
+            {
+                case EDataType.File:
+                    DataManager.Data = File.ReadAllBytes(filePath);
+                    break;
+                case EDataType.Image:
+                    DataManager.Image = Image.FromFile(filePath);
+                    break;
+                case EDataType.Text:
+                    DataManager.Text = File.ReadAllText(filePath);
+                    break;
+            }
+        }
+
         public Task(EDataType dataType, Stream stream, string fileName)
             : this()
         {
