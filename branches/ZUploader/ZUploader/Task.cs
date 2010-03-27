@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using UploadersLib.Helpers;
-using UploadersLib.ImageUploaders;
 using UploadersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.Helpers;
+using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using ZUploader.Properties;
 
@@ -14,7 +14,7 @@ namespace ZUploader
     public class Task : IDisposable
     {
         public delegate void UploadStartedEventHandler(Task sender);
-        public delegate void UploadCompletedEventHandler(Task sender, string url);
+        public delegate void UploadCompletedEventHandler(Task sender, UploadResult result);
         public delegate void UploadProgressChangedEventHandler(Task sender, int progress);
 
         public event UploadStartedEventHandler UploadStarted;
@@ -130,7 +130,7 @@ namespace ZUploader
             }
         }
 
-        public ImageFileManager UploadImage(Image image, string fileName)
+        public UploadResult UploadImage(Image image, string fileName)
         {
             ImageUploader imageUploader = null;
 
@@ -192,13 +192,21 @@ namespace ZUploader
             if (imageUploader != null)
             {
                 imageUploader.ProgressChanged += (x) => bw.ReportProgress(x);
-                return imageUploader.UploadImage(image, fileName);
+                ImageFileManager ifm = imageUploader.UploadImage(image, fileName);
+                UploadResult ur = new UploadResult
+                {
+                    URL = ifm.GetFullImageUrl(),
+                    ThumbnailURL = ifm.GetThumbnailUrl(),
+                    DeletionURL = ifm.GetDeletionLink(),
+                    Errors = imageUploader.Errors
+                };
+                return ur;
             }
 
             return null;
         }
 
-        public string UploadText(string text)
+        public UploadResult UploadText(string text)
         {
             TextUploader textUploader = null;
 
@@ -222,13 +230,19 @@ namespace ZUploader
 
             if (textUploader != null)
             {
-                return textUploader.UploadText(TextInfo.FromString(text));
+                string url = textUploader.UploadText(TextInfo.FromString(text));
+                UploadResult ur = new UploadResult
+                {
+                    URL = url,
+                    Errors = textUploader.Errors
+                };
+                return ur;
             }
 
             return null;
         }
 
-        public string UploadFile(byte[] data, string fileName)
+        public UploadResult UploadFile(byte[] data, string fileName)
         {
             FileUploader fileUploader = null;
 
@@ -255,7 +269,13 @@ namespace ZUploader
             if (fileUploader != null)
             {
                 fileUploader.ProgressChanged += (x) => bw.ReportProgress(x);
-                return fileUploader.Upload(data, fileName);
+                string url = fileUploader.Upload(data, fileName);
+                UploadResult ur = new UploadResult
+                {
+                    URL = url,
+                    Errors = fileUploader.Errors
+                };
+                return ur;
             }
 
             return null;
@@ -266,24 +286,14 @@ namespace ZUploader
             if (Progress < e.ProgressPercentage)
             {
                 Progress = e.ProgressPercentage;
-                OnUploadProgressChanged(Progress);
+                OnUploadProgressChanged(Math.Min(Progress, 99));
             }
         }
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            string url = string.Empty;
-
-            if (e.Result is ImageFileManager)
-            {
-                url = ((ImageFileManager)e.Result).GetFullImageUrl();
-            }
-            else if (e.Result is string)
-            {
-                url = (string)e.Result;
-            }
-
-            OnUploadCompleted(url);
+            UploadResult ur = (UploadResult)e.Result;
+            OnUploadCompleted(ur);
         }
 
         private void OnUploadStarted()
@@ -294,11 +304,11 @@ namespace ZUploader
             }
         }
 
-        private void OnUploadCompleted(string url)
+        private void OnUploadCompleted(UploadResult result)
         {
             if (UploadCompleted != null)
             {
-                UploadCompleted(this, url);
+                UploadCompleted(this, result);
             }
         }
 

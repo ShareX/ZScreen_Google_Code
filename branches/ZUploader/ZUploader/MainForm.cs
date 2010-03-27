@@ -36,12 +36,38 @@ namespace ZUploader
         {
             if (lvUploads.SelectedItems.Count > 0)
             {
-                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => x.SubItems[2].Text).ToArray();
+                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => ((UploadResult)x.Tag).URL).ToArray();
                 string urls = string.Join("\r\n", array);
 
                 if (!string.IsNullOrEmpty(urls))
                 {
                     Clipboard.SetText(urls);
+                }
+            }
+        }
+
+        private void CopyThumbnailURL()
+        {
+            if (lvUploads.SelectedItems.Count == 1)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null && !string.IsNullOrEmpty(result.ThumbnailURL))
+                {
+                    Clipboard.SetText(result.ThumbnailURL);
+                }
+            }
+        }
+
+        private void CopyDeletionURL()
+        {
+            if (lvUploads.SelectedItems.Count == 1)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null && !string.IsNullOrEmpty(result.DeletionURL))
+                {
+                    Clipboard.SetText(result.DeletionURL);
                 }
             }
         }
@@ -94,14 +120,24 @@ namespace ZUploader
             OpenURL();
         }
 
+        private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenURL();
+        }
+
         private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyURL();
         }
 
-        private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyThumbnailURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenURL();
+            CopyThumbnailURL();
+        }
+
+        private void copyDeletionURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyDeletionURL();
         }
 
         private void lvUploads_DoubleClick(object sender, EventArgs e)
@@ -113,6 +149,26 @@ namespace ZUploader
         {
             btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled =
                 openURLToolStripMenuItem.Enabled = lvUploads.SelectedItems.Count > 0;
+
+            copyThumbnailURLToolStripMenuItem.Enabled = copyDeletionURLToolStripMenuItem.Enabled = false;
+
+            if (lvUploads.SelectedItems.Count == 1)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null)
+                {
+                    if (!string.IsNullOrEmpty(result.ThumbnailURL))
+                    {
+                        copyThumbnailURLToolStripMenuItem.Enabled = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.DeletionURL))
+                    {
+                        copyDeletionURLToolStripMenuItem.Enabled = true;
+                    }
+                }
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

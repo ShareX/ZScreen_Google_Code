@@ -51,6 +51,8 @@
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -125,22 +127,24 @@
             // cmsUploads
             // 
             this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openURLToolStripMenuItem,
             this.copyURLToolStripMenuItem,
-            this.openURLToolStripMenuItem});
+            this.copyThumbnailURLToolStripMenuItem,
+            this.copyDeletionURLToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(128, 48);
+            this.cmsUploads.Size = new System.Drawing.Size(188, 114);
             // 
             // copyURLToolStripMenuItem
             // 
             this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
             // openURLToolStripMenuItem
             // 
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
             // 
@@ -272,6 +276,20 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
+            // copyThumbnailURLToolStripMenuItem
+            // 
+            this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
+            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
+            this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
+            // 
+            // copyDeletionURLToolStripMenuItem
+            // 
+            this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
+            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
+            this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
@@ -331,6 +349,8 @@
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.TabPage tpFTP;
         private System.Windows.Forms.PropertyGrid pgFTPAccount;
+        private System.Windows.Forms.ToolStripMenuItem copyThumbnailURLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyDeletionURLToolStripMenuItem;
     }
 }
 

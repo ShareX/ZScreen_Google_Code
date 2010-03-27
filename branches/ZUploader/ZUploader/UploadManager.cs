@@ -135,18 +135,26 @@ namespace ZUploader
             }
         }
 
-        private static void task_UploadCompleted(Task sender, string url)
+        private static void task_UploadCompleted(Task sender, UploadResult result)
         {
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[sender.ID];
+                lvi.Tag = result;
                 lvi.SubItems[1].Text = "Upload completed";
-                lvi.SubItems[2].Text = url;
+                if (result.Errors.Count > 0)
+                {
+                    lvi.SubItems[2].Text = "Error: " + result.Errors.Last();
+                }
+                else
+                {
+                    lvi.SubItems[2].Text = result.URL;
+                }
                 lvi.EnsureVisible();
 
-                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(url))
+                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
                 {
-                    Clipboard.SetText(url);
+                    Clipboard.SetText(result.URL);
                 }
 
                 Tasks.Remove(sender);

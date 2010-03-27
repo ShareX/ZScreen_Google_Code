@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -117,8 +118,6 @@ namespace UploadersLib
         {
             try
             {
-                ServicePointManager.Expect100Continue = false;
-
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.AllowWriteStreamBuffering = false;
@@ -126,6 +125,8 @@ namespace UploadersLib
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";
                 request.Proxy = ProxySettings.GetWebProxy;
+                request.ServicePoint.Expect100Continue = false;
+                request.ServicePoint.UseNagleAlgorithm = false;
                 request.UserAgent = UserAgent;
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
@@ -148,7 +149,7 @@ namespace UploadersLib
             catch (Exception e)
             {
                 this.Errors.Add(e.Message);
-                Console.WriteLine(e.ToString());
+                Debug.WriteLine(e.ToString());
             }
 
             return null;
@@ -206,7 +207,7 @@ namespace UploadersLib
             catch (Exception e)
             {
                 this.Errors.Add(e.Message);
-                Console.WriteLine(e.ToString());
+                Debug.WriteLine(e.ToString());
             }
 
             return null;
