@@ -62,7 +62,6 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UploadManager.cs" />
