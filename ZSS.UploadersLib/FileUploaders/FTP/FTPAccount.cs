@@ -95,6 +95,10 @@ namespace UploadersLib
 
         public FTPAccount()
         {
+            Name = "New Account";
+            UserName = "username";
+            Password = "password";
+            Host = "host";
             Port = 21;
             SubFolderPath = string.Empty;
             HttpHomePath = string.Empty;
