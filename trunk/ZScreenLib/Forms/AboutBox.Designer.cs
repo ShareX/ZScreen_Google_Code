@@ -239,13 +239,14 @@
             this.textBoxDescription.Size = new System.Drawing.Size(272, 112);
             this.textBoxDescription.TabIndex = 96;
             this.textBoxDescription.Text = "Description";
+            this.textBoxDescription.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBoxDescription_LinkClicked);
             // 
             // AboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(512, 320);
+            this.ClientSize = new System.Drawing.Size(520, 324);
             this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblRev);

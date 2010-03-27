@@ -224,5 +224,10 @@ namespace ZScreenLib
             }
             this.textBoxDescription.Text = sbDesc.ToString();
         }
+
+        private void textBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
+        }
     }
 }
