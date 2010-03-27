@@ -28,7 +28,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -175,7 +174,7 @@ namespace ZUploader
                 }
                 lvi.EnsureVisible();
 
-                if (Settings.Default.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
+                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
                 {
                     Clipboard.SetText(result.URL);
                 }

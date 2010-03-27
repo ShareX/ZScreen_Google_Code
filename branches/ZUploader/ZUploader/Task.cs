@@ -30,7 +30,6 @@ using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
-using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -272,7 +271,7 @@ namespace ZUploader
             switch (UploadManager.FileUploader)
             {
                 case FileUploaderType2.FTP:
-                    fileUploader = new FTPUploader(Settings.Default.FTPAccount);
+                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
                     break;
                 case FileUploaderType2.SendSpace:
                     fileUploader = new SendSpace();

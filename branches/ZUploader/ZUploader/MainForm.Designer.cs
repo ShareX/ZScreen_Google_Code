@@ -75,11 +75,11 @@ namespace ZUploader
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.pgFTPAccount = new System.Windows.Forms.PropertyGrid();
             this.tpOptions = new System.Windows.Forms.TabPage();
-            this.pgApp = new System.Windows.Forms.PropertyGrid();
-            this.btnOpen = new System.Windows.Forms.Button();
+            this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
             this.tpAbout = new System.Windows.Forms.TabPage();
-            this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
+            this.llWebsite = new System.Windows.Forms.LinkLabel();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -130,7 +130,7 @@ namespace ZUploader
             this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(458, 240);
+            this.lvUploads.Size = new System.Drawing.Size(458, 256);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -160,33 +160,33 @@ namespace ZUploader
             this.copyThumbnailURLToolStripMenuItem,
             this.copyDeletionURLToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(173, 92);
+            this.cmsUploads.Size = new System.Drawing.Size(188, 92);
             // 
             // openURLToolStripMenuItem
             // 
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
             // 
             // copyURLToolStripMenuItem
             // 
             this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
             // copyThumbnailURLToolStripMenuItem
             // 
             this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
-            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
             this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
             // 
             // copyDeletionURLToolStripMenuItem
             // 
             this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
-            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
             this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
             // 
@@ -251,7 +251,7 @@ namespace ZUploader
             this.tcApp.Location = new System.Drawing.Point(8, 88);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(472, 272);
+            this.tcApp.Size = new System.Drawing.Size(472, 288);
             this.tcApp.TabIndex = 7;
             // 
             // tpHistory
@@ -260,7 +260,7 @@ namespace ZUploader
             this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(464, 246);
+            this.tpHistory.Size = new System.Drawing.Size(464, 262);
             this.tpHistory.TabIndex = 0;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -288,7 +288,7 @@ namespace ZUploader
             // 
             // tpOptions
             // 
-            this.tpOptions.Controls.Add(this.pgApp);
+            this.tpOptions.Controls.Add(this.cbClipboardAutoCopy);
             this.tpOptions.Location = new System.Drawing.Point(4, 22);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
@@ -297,27 +297,16 @@ namespace ZUploader
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
             // 
-            // pgApp
+            // cbClipboardAutoCopy
             // 
-            this.pgApp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgApp.HelpVisible = false;
-            this.pgApp.Location = new System.Drawing.Point(3, 3);
-            this.pgApp.Name = "pgApp";
-            this.pgApp.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgApp.Size = new System.Drawing.Size(458, 240);
-            this.pgApp.TabIndex = 0;
-            this.pgApp.ToolbarVisible = false;
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.Enabled = false;
-            this.btnOpen.Location = new System.Drawing.Point(424, 48);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(56, 32);
-            this.btnOpen.TabIndex = 8;
-            this.btnOpen.Text = "Open";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.cbClipboardAutoCopy.AutoSize = true;
+            this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 16);
+            this.cbClipboardAutoCopy.Name = "cbClipboardAutoCopy";
+            this.cbClipboardAutoCopy.Size = new System.Drawing.Size(254, 17);
+            this.cbClipboardAutoCopy.TabIndex = 0;
+            this.cbClipboardAutoCopy.Text = "Copy URL to clipboard after upload is completed";
+            this.cbClipboardAutoCopy.UseVisualStyleBackColor = true;
+            this.cbClipboardAutoCopy.CheckedChanged += new System.EventHandler(this.cbClipboardAutoCopy_CheckedChanged);
             // 
             // tpAbout
             // 
@@ -331,23 +320,11 @@ namespace ZUploader
             this.tpAbout.Text = "About";
             this.tpAbout.UseVisualStyleBackColor = true;
             // 
-            // llWebsite
-            // 
-            this.llWebsite.AutoSize = true;
-            this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(16, 40);
-            this.llWebsite.Name = "llWebsite";
-            this.llWebsite.Size = new System.Drawing.Size(66, 13);
-            this.llWebsite.TabIndex = 83;
-            this.llWebsite.TabStop = true;
-            this.llWebsite.Text = "ZScreen.net";
-            this.llWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWebsite_LinkClicked);
-            // 
             // llblBugReports
             // 
             this.llblBugReports.AutoSize = true;
             this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(16, 16);
+            this.llblBugReports.Location = new System.Drawing.Point(16, 40);
             this.llblBugReports.Name = "llblBugReports";
             this.llblBugReports.Size = new System.Drawing.Size(100, 13);
             this.llblBugReports.TabIndex = 84;
@@ -355,13 +332,36 @@ namespace ZUploader
             this.llblBugReports.Text = "Bugs/Suggestions?";
             this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
             // 
+            // llWebsite
+            // 
+            this.llWebsite.AutoSize = true;
+            this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.llWebsite.Location = new System.Drawing.Point(16, 16);
+            this.llWebsite.Name = "llWebsite";
+            this.llWebsite.Size = new System.Drawing.Size(66, 13);
+            this.llWebsite.TabIndex = 83;
+            this.llWebsite.TabStop = true;
+            this.llWebsite.Text = "ZScreen.net";
+            this.llWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWebsite_LinkClicked);
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Enabled = false;
+            this.btnOpen.Location = new System.Drawing.Point(424, 48);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(56, 32);
+            this.btnOpen.TabIndex = 8;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 367);
+            this.ClientSize = new System.Drawing.Size(488, 383);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.lblTextUploaderDestination);
@@ -378,7 +378,6 @@ namespace ZUploader
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.cmsUploads.ResumeLayout(false);
@@ -386,6 +385,7 @@ namespace ZUploader
             this.tpHistory.ResumeLayout(false);
             this.tpFTP.ResumeLayout(false);
             this.tpOptions.ResumeLayout(false);
+            this.tpOptions.PerformLayout();
             this.tpAbout.ResumeLayout(false);
             this.tpAbout.PerformLayout();
             this.ResumeLayout(false);
@@ -412,7 +412,6 @@ namespace ZUploader
         private System.Windows.Forms.TabControl tcApp;
         private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.TabPage tpOptions;
-        private System.Windows.Forms.PropertyGrid pgApp;
         private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.TabPage tpFTP;
@@ -422,6 +421,7 @@ namespace ZUploader
         private System.Windows.Forms.TabPage tpAbout;
         internal System.Windows.Forms.LinkLabel llblBugReports;
         internal System.Windows.Forms.LinkLabel llWebsite;
+        private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
     }
 }
 

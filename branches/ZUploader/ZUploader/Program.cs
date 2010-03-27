@@ -23,20 +23,37 @@
 
 using System;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ZUploader
 {
     static class Program
     {
-        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
+        public static Settings Settings;
+
+        public static string SettingsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string SettingsFileName = "Settings.xml";
+        public static string SettingsFilePath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, SettingsFileName);
+            }
+        }
+
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
+        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
 
         [STAThread]
         static void Main()
         {
+            Settings = Settings.Load();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+
+            Settings.Save();
         }
     }
 }

@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
-using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -37,23 +36,22 @@ namespace ZUploader
             InitializeComponent();
             UpdateForm();
             UploadManager.ListViewControl = lvUploads;
-            if (Settings.Default.FTPAccount == null)
+            if (Program.Settings.FTPAccount == null)
             {
-                Settings.Default.FTPAccount = new FTPAccount();
+                Program.Settings.FTPAccount = new FTPAccount();
             }
-            pgFTPAccount.SelectedObject = Settings.Default.FTPAccount;
-            pgApp.SelectedObject = Settings.Default;
+            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
             this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
         }
 
         private void UpdateForm()
         {
             cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
-            cbImageUploaderDestination.SelectedIndex = Settings.Default.SelectedImageUploaderDestination;
+            cbImageUploaderDestination.SelectedIndex = Program.Settings.SelectedImageUploaderDestination;
             cbTextUploaderDestination.Items.AddRange(typeof(TextDestType2).GetDescriptions());
-            cbTextUploaderDestination.SelectedIndex = Settings.Default.SelectedTextUploaderDestination;
+            cbTextUploaderDestination.SelectedIndex = Program.Settings.SelectedTextUploaderDestination;
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
-            cbFileUploaderDestination.SelectedIndex = Settings.Default.SelectedFileUploaderDestination;
+            cbFileUploaderDestination.SelectedIndex = Program.Settings.SelectedFileUploaderDestination;
         }
 
         private void CopyURL()
@@ -118,19 +116,19 @@ namespace ZUploader
 
         private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.SelectedImageUploaderDestination = cbImageUploaderDestination.SelectedIndex;
+            Program.Settings.SelectedImageUploaderDestination = cbImageUploaderDestination.SelectedIndex;
             UploadManager.ImageUploader = (ImageDestType2)cbImageUploaderDestination.SelectedIndex;
         }
 
         private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.SelectedTextUploaderDestination = cbTextUploaderDestination.SelectedIndex;
+            Program.Settings.SelectedTextUploaderDestination = cbTextUploaderDestination.SelectedIndex;
             UploadManager.TextUploader = (TextDestType2)cbTextUploaderDestination.SelectedIndex;
         }
 
         private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.SelectedFileUploaderDestination = cbFileUploaderDestination.SelectedIndex;
+            Program.Settings.SelectedFileUploaderDestination = cbFileUploaderDestination.SelectedIndex;
             UploadManager.FileUploader = (FileUploaderType2)cbFileUploaderDestination.SelectedIndex;
         }
 
@@ -200,11 +198,6 @@ namespace ZUploader
             this.Refresh();
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Settings.Default.Save();
-        }
-
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -223,7 +216,16 @@ namespace ZUploader
             UploadManager.Upload(files);
         }
 
+        #region Options
+
+        private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ClipboardAutoCopy = cbClipboardAutoCopy.Checked;
+        }
+
         #endregion
+
+        #region About
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -234,5 +236,9 @@ namespace ZUploader
         {
             Process.Start(Program.URL_WEBSITE);
         }
+
+        #endregion
+
+        #endregion
     }
 }
