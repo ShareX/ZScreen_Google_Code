@@ -1,4 +1,27 @@
-﻿namespace ZUploader
+﻿#region License Information (GPL v2)
+/*
+    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    Copyright (C) 2010 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+#endregion
+
+namespace ZUploader
 {
     partial class MainForm
     {
@@ -29,6 +52,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lblImageUploaderDestination = new System.Windows.Forms.Label();
             this.cbImageUploaderDestination = new System.Windows.Forms.ComboBox();
             this.btnClipboardUpload = new System.Windows.Forms.Button();
@@ -37,8 +61,10 @@
             this.chStatus = new System.Windows.Forms.ColumnHeader();
             this.chURL = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTextUploaderDestination = new System.Windows.Forms.Label();
             this.cbTextUploaderDestination = new System.Windows.Forms.ComboBox();
             this.lblFileUploaderDestination = new System.Windows.Forms.Label();
@@ -51,13 +77,15 @@
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tpAbout = new System.Windows.Forms.TabPage();
+            this.llWebsite = new System.Windows.Forms.LinkLabel();
+            this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.tpOptions.SuspendLayout();
+            this.tpAbout.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblImageUploaderDestination
@@ -132,21 +160,35 @@
             this.copyThumbnailURLToolStripMenuItem,
             this.copyDeletionURLToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 114);
-            // 
-            // copyURLToolStripMenuItem
-            // 
-            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.copyURLToolStripMenuItem.Text = "Copy URL";
-            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            this.cmsUploads.Size = new System.Drawing.Size(173, 92);
             // 
             // openURLToolStripMenuItem
             // 
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
+            // 
+            // copyURLToolStripMenuItem
+            // 
+            this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyURLToolStripMenuItem.Text = "Copy URL";
+            this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            // 
+            // copyThumbnailURLToolStripMenuItem
+            // 
+            this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
+            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
+            this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
+            // 
+            // copyDeletionURLToolStripMenuItem
+            // 
+            this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
+            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
+            this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
             // 
             // lblTextUploaderDestination
             // 
@@ -205,6 +247,7 @@
             this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Controls.Add(this.tpFTP);
             this.tcApp.Controls.Add(this.tpOptions);
+            this.tcApp.Controls.Add(this.tpAbout);
             this.tcApp.Location = new System.Drawing.Point(8, 88);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
@@ -276,19 +319,41 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // copyThumbnailURLToolStripMenuItem
+            // tpAbout
             // 
-            this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
-            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
-            this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
+            this.tpAbout.Controls.Add(this.llblBugReports);
+            this.tpAbout.Controls.Add(this.llWebsite);
+            this.tpAbout.Location = new System.Drawing.Point(4, 22);
+            this.tpAbout.Name = "tpAbout";
+            this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAbout.Size = new System.Drawing.Size(464, 246);
+            this.tpAbout.TabIndex = 3;
+            this.tpAbout.Text = "About";
+            this.tpAbout.UseVisualStyleBackColor = true;
             // 
-            // copyDeletionURLToolStripMenuItem
+            // llWebsite
             // 
-            this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
-            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
-            this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
+            this.llWebsite.AutoSize = true;
+            this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.llWebsite.Location = new System.Drawing.Point(16, 40);
+            this.llWebsite.Name = "llWebsite";
+            this.llWebsite.Size = new System.Drawing.Size(66, 13);
+            this.llWebsite.TabIndex = 83;
+            this.llWebsite.TabStop = true;
+            this.llWebsite.Text = "ZScreen.net";
+            this.llWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWebsite_LinkClicked);
+            // 
+            // llblBugReports
+            // 
+            this.llblBugReports.AutoSize = true;
+            this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.llblBugReports.Location = new System.Drawing.Point(16, 16);
+            this.llblBugReports.Name = "llblBugReports";
+            this.llblBugReports.Size = new System.Drawing.Size(100, 13);
+            this.llblBugReports.TabIndex = 84;
+            this.llblBugReports.TabStop = true;
+            this.llblBugReports.Text = "Bugs/Suggestions?";
+            this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
             // 
             // MainForm
             // 
@@ -308,6 +373,7 @@
             this.Controls.Add(this.cbImageUploaderDestination);
             this.Controls.Add(this.lblImageUploaderDestination);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
@@ -320,6 +386,8 @@
             this.tpHistory.ResumeLayout(false);
             this.tpFTP.ResumeLayout(false);
             this.tpOptions.ResumeLayout(false);
+            this.tpAbout.ResumeLayout(false);
+            this.tpAbout.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,6 +419,9 @@
         private System.Windows.Forms.PropertyGrid pgFTPAccount;
         private System.Windows.Forms.ToolStripMenuItem copyThumbnailURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyDeletionURLToolStripMenuItem;
+        private System.Windows.Forms.TabPage tpAbout;
+        internal System.Windows.Forms.LinkLabel llblBugReports;
+        internal System.Windows.Forms.LinkLabel llWebsite;
     }
 }
 
