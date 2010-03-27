@@ -95,7 +95,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PostBuildEvent>"$(ProjectDir)..\Tools\ILMerge.exe" /wildcards /t:winexe /out:"$(TargetDir)ILMerge\ZUploader.exe" "$(TargetPath)" "$(TargetDir)*.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
