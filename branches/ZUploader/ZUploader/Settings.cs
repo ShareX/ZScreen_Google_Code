@@ -26,18 +26,35 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using UploadersLib;
+using System.ComponentModel;
 
 namespace ZUploader
 {
     public class Settings
     {
+        [Category("Settings"), DefaultValue(true), Description("Copy URL to clipboard after upload is completed")]
         public bool ClipboardAutoCopy { get; set; }
         public int SelectedImageUploaderDestination { get; set; }
         public int SelectedTextUploaderDestination { get; set; }
         public int SelectedFileUploaderDestination { get; set; }
         public FTPAccount FTPAccount { get; set; }
 
+        public Settings()
+        {
+            ApplyDefaultValues(this);
+        }
+
         #region Functions
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
 
         public bool Save()
         {
