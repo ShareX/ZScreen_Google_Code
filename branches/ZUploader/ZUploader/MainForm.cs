@@ -34,17 +34,10 @@ namespace ZUploader
         public MainForm()
         {
             InitializeComponent();
-            UpdateForm();
-            UploadManager.ListViewControl = lvUploads;
-            if (Program.Settings.FTPAccount == null)
-            {
-                Program.Settings.FTPAccount = new FTPAccount();
-            }
-            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
-            this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
+            LoadSettings();
         }
 
-        private void UpdateForm()
+        private void LoadSettings()
         {
             cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
             cbImageUploaderDestination.SelectedIndex = Program.Settings.SelectedImageUploaderDestination;
@@ -52,6 +45,15 @@ namespace ZUploader
             cbTextUploaderDestination.SelectedIndex = Program.Settings.SelectedTextUploaderDestination;
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
             cbFileUploaderDestination.SelectedIndex = Program.Settings.SelectedFileUploaderDestination;
+            UploadManager.ListViewControl = lvUploads;
+            if (Program.Settings.FTPAccount == null)
+            {
+                Program.Settings.FTPAccount = new FTPAccount();
+            }
+            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
+            cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
+            UpdateControls();
+            this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
         }
 
         private void CopyURL()
@@ -94,15 +96,67 @@ namespace ZUploader
             }
         }
 
+        private void CopyErrors()
+        {
+            if (lvUploads.SelectedItems.Count == 1)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null && result.Errors.Count > 0)
+                {
+                    string errors = string.Join("\r\n", result.Errors.ToArray());
+
+                    if (!string.IsNullOrEmpty(errors))
+                    {
+                        Clipboard.SetText(errors);
+                    }
+                }
+            }
+        }
+
         private void OpenURL()
         {
+            if (lvUploads.SelectedItems.Count == 1)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null && !string.IsNullOrEmpty(result.URL))
+                {
+                    Process.Start(result.URL);
+                }
+            }
+        }
+
+        private void UpdateControls()
+        {
+            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled =
+                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible = false;
+
             if (lvUploads.SelectedItems.Count > 0)
             {
-                string url = lvUploads.SelectedItems[0].SubItems[2].Text;
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
 
-                if (!string.IsNullOrEmpty(url))
+                if (result != null)
                 {
-                    Process.Start(url);
+                    if (!string.IsNullOrEmpty(result.URL))
+                    {
+                        btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.ThumbnailURL))
+                    {
+                        copyThumbnailURLToolStripMenuItem.Visible = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.DeletionURL))
+                    {
+                        copyDeletionURLToolStripMenuItem.Visible = true;
+                    }
+
+                    if (result.Errors.Count > 0)
+                    {
+                        copyErrorsToolStripMenuItem.Visible = true;
+                    }
                 }
             }
         }
@@ -162,6 +216,11 @@ namespace ZUploader
             CopyDeletionURL();
         }
 
+        private void copyErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyErrors();
+        }
+
         private void lvUploads_DoubleClick(object sender, EventArgs e)
         {
             OpenURL();
@@ -169,28 +228,7 @@ namespace ZUploader
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled =
-                openURLToolStripMenuItem.Enabled = lvUploads.SelectedItems.Count > 0;
-
-            copyThumbnailURLToolStripMenuItem.Enabled = copyDeletionURLToolStripMenuItem.Enabled = false;
-
-            if (lvUploads.SelectedItems.Count == 1)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
-
-                if (result != null)
-                {
-                    if (!string.IsNullOrEmpty(result.ThumbnailURL))
-                    {
-                        copyThumbnailURLToolStripMenuItem.Enabled = true;
-                    }
-
-                    if (!string.IsNullOrEmpty(result.DeletionURL))
-                    {
-                        copyDeletionURLToolStripMenuItem.Enabled = true;
-                    }
-                }
-            }
+            UpdateControls();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -238,6 +276,11 @@ namespace ZUploader
         }
 
         #endregion
+
+        private void pgFTPAccount_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
+        }
 
         #endregion
     }

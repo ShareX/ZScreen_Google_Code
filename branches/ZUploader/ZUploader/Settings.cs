@@ -22,11 +22,10 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using UploadersLib;
-using System.ComponentModel;
 
 namespace ZUploader
 {
@@ -63,7 +62,7 @@ namespace ZUploader
             }
             catch (Exception e)
             {
-
+                Debug.WriteLine(e.ToString());
             }
 
             return false;
@@ -93,7 +92,7 @@ namespace ZUploader
                 }
                 catch (Exception e)
                 {
-
+                    Debug.WriteLine(e.ToString());
                 }
             }
 

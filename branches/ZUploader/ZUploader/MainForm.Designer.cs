@@ -80,6 +80,7 @@ namespace ZUploader
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -129,6 +130,7 @@ namespace ZUploader
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
+            this.lvUploads.MultiSelect = false;
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.Size = new System.Drawing.Size(458, 256);
             this.lvUploads.TabIndex = 3;
@@ -158,9 +160,10 @@ namespace ZUploader
             this.openURLToolStripMenuItem,
             this.copyURLToolStripMenuItem,
             this.copyThumbnailURLToolStripMenuItem,
-            this.copyDeletionURLToolStripMenuItem});
+            this.copyDeletionURLToolStripMenuItem,
+            this.copyErrorsToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 92);
+            this.cmsUploads.Size = new System.Drawing.Size(188, 114);
             // 
             // openURLToolStripMenuItem
             // 
@@ -271,7 +274,7 @@ namespace ZUploader
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(464, 246);
+            this.tpFTP.Size = new System.Drawing.Size(464, 262);
             this.tpFTP.TabIndex = 2;
             this.tpFTP.Text = "FTP Account";
             this.tpFTP.UseVisualStyleBackColor = true;
@@ -282,9 +285,10 @@ namespace ZUploader
             this.pgFTPAccount.Location = new System.Drawing.Point(3, 3);
             this.pgFTPAccount.Name = "pgFTPAccount";
             this.pgFTPAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPAccount.Size = new System.Drawing.Size(458, 240);
+            this.pgFTPAccount.Size = new System.Drawing.Size(458, 256);
             this.pgFTPAccount.TabIndex = 0;
             this.pgFTPAccount.ToolbarVisible = false;
+            this.pgFTPAccount.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPAccount_PropertyValueChanged);
             // 
             // tpOptions
             // 
@@ -292,7 +296,7 @@ namespace ZUploader
             this.tpOptions.Location = new System.Drawing.Point(4, 22);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(464, 246);
+            this.tpOptions.Size = new System.Drawing.Size(464, 262);
             this.tpOptions.TabIndex = 1;
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
@@ -315,7 +319,7 @@ namespace ZUploader
             this.tpAbout.Location = new System.Drawing.Point(4, 22);
             this.tpAbout.Name = "tpAbout";
             this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAbout.Size = new System.Drawing.Size(464, 246);
+            this.tpAbout.Size = new System.Drawing.Size(464, 262);
             this.tpAbout.TabIndex = 3;
             this.tpAbout.Text = "About";
             this.tpAbout.UseVisualStyleBackColor = true;
@@ -354,6 +358,13 @@ namespace ZUploader
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // copyErrorsToolStripMenuItem
+            // 
+            this.copyErrorsToolStripMenuItem.Name = "copyErrorsToolStripMenuItem";
+            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
+            this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -422,6 +433,7 @@ namespace ZUploader
         internal System.Windows.Forms.LinkLabel llblBugReports;
         internal System.Windows.Forms.LinkLabel llWebsite;
         private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
+        private System.Windows.Forms.ToolStripMenuItem copyErrorsToolStripMenuItem;
     }
 }
 
