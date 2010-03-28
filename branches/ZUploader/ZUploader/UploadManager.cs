@@ -163,15 +163,18 @@ namespace ZUploader
             {
                 ListViewItem lvi = ListViewControl.Items[sender.ID];
                 lvi.Tag = result;
-                lvi.SubItems[1].Text = "Upload completed";
-                if (result.Errors.Count > 0)
+
+                if (result.Errors != null && result.Errors.Count > 0)
                 {
-                    lvi.SubItems[2].Text = "Error: " + result.Errors.Last();
+                    lvi.SubItems[1].Text = "Error: " + result.Errors.Last();
+                    lvi.SubItems[2].Text = string.Empty;
                 }
                 else
                 {
+                    lvi.SubItems[1].Text = "Upload completed";
                     lvi.SubItems[2].Text = result.URL;
                 }
+
                 lvi.EnsureVisible();
 
                 if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
@@ -189,7 +192,7 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[sender.ID];
-                lvi.SubItems[2].Text = string.Format("Upload progress: {0}%", progress);
+                lvi.SubItems[1].Text = string.Format("Upload progress: {0}%", progress);
             }
         }
     }

@@ -286,6 +286,11 @@ namespace ZUploader
                 case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
                     break;
+                case FileUploaderType2.DropIO:
+                    fileUploader = new DropIO();
+                    break;
+                default:
+                    break;
             }
 
             if (fileUploader != null)

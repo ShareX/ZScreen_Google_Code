@@ -67,10 +67,10 @@ namespace ZUploader
         SendSpace,
         [Description("FileBin - www.filebin.ca")]
         FileBin,
+        [Description("Drop.io - www.drop.io")]
+        DropIO,
         [Description("FTP Server")]
         FTP
-        //[Description("Drop.io - www.drop.io")]
-        //DropIO
     }
 
     public static class Enums
