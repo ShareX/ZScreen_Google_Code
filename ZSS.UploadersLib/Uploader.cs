@@ -35,6 +35,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Win32;
 using UploadersLib.Helpers;
+using System.Net.Cache;
 
 namespace UploadersLib
 {
@@ -121,6 +122,7 @@ namespace UploadersLib
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.AllowWriteStreamBuffering = false;
+                request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
                 request.ContentLength = stream.Length;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
                 request.Method = "POST";
