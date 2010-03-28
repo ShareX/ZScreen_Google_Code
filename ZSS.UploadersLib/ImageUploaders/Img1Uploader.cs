@@ -22,7 +22,7 @@ namespace UploadersLib.ImageUploaders
             {
                 string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1);
                 ifm.ImageFileList.Add(new ImageFile(lastLine, LinkType.FULLIMAGE));
-                ifm.ImageFileList.Add(new ImageFile(lastLine.Replace("/i/", "/thumbs/"), LinkType.THUMBNAIL));
+                ifm.ImageFileList.Add(new ImageFile(lastLine.Replace(".img1.us/", ".img1.us/thumbs/"), LinkType.THUMBNAIL));
             }
 
             return ifm;
