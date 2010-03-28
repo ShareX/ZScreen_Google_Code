@@ -130,7 +130,7 @@ namespace ZUploader
         private void UpdateControls()
         {
             btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled =
-                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible = false;
+                copyThumbnailURLToolStripMenuItem.Enabled = copyDeletionURLToolStripMenuItem.Enabled = copyErrorsToolStripMenuItem.Enabled = false;
 
             if (lvUploads.SelectedItems.Count > 0)
             {
@@ -145,17 +145,17 @@ namespace ZUploader
 
                     if (!string.IsNullOrEmpty(result.ThumbnailURL))
                     {
-                        copyThumbnailURLToolStripMenuItem.Visible = true;
+                        copyThumbnailURLToolStripMenuItem.Enabled = true;
                     }
 
                     if (!string.IsNullOrEmpty(result.DeletionURL))
                     {
-                        copyDeletionURLToolStripMenuItem.Visible = true;
+                        copyDeletionURLToolStripMenuItem.Enabled = true;
                     }
 
                     if (result.Errors.Count > 0)
                     {
-                        copyErrorsToolStripMenuItem.Visible = true;
+                        copyErrorsToolStripMenuItem.Enabled = true;
                     }
                 }
             }
@@ -254,6 +254,11 @@ namespace ZUploader
             UploadManager.Upload(files);
         }
 
+        private void pgFTPAccount_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
+        }
+
         #region Options
 
         private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
@@ -276,11 +281,6 @@ namespace ZUploader
         }
 
         #endregion
-
-        private void pgFTPAccount_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
-        }
 
         #endregion
     }

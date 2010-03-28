@@ -377,8 +377,8 @@ namespace ZUploader
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.lblTextUploaderDestination);
             this.Controls.Add(this.btnClipboardUpload);
-            this.Controls.Add(this.tcApp);
             this.Controls.Add(this.lblFileUploaderDestination);
+            this.Controls.Add(this.tcApp);
             this.Controls.Add(this.cbFileUploaderDestination);
             this.Controls.Add(this.cbTextUploaderDestination);
             this.Controls.Add(this.cbImageUploaderDestination);

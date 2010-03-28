@@ -137,7 +137,7 @@ namespace UploadersLib.ImageUploaders
 
                     ifm.Source = UploadImage(image, fileName, URLAPI, "uploadfile", arguments);
 
-                    if (CheckResponse(ifm.Source))
+                    if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
                     {
                         string fullimage = GetXMLValue(ifm.Source, "fullsize");
                         string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
