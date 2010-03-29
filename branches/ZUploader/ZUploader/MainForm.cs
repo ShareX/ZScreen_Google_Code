@@ -70,9 +70,22 @@ namespace ZUploader
             }
         }
 
+        private void OpenURL()
+        {
+            if (lvUploads.SelectedItems.Count > 0)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null && !string.IsNullOrEmpty(result.URL))
+                {
+                    Process.Start(result.URL);
+                }
+            }
+        }
+
         private void CopyThumbnailURL()
         {
-            if (lvUploads.SelectedItems.Count == 1)
+            if (lvUploads.SelectedItems.Count > 0)
             {
                 UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
 
@@ -85,7 +98,7 @@ namespace ZUploader
 
         private void CopyDeletionURL()
         {
-            if (lvUploads.SelectedItems.Count == 1)
+            if (lvUploads.SelectedItems.Count > 0)
             {
                 UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
 
@@ -98,11 +111,11 @@ namespace ZUploader
 
         private void CopyErrors()
         {
-            if (lvUploads.SelectedItems.Count == 1)
+            if (lvUploads.SelectedItems.Count > 0)
             {
                 UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
 
-                if (result != null && result.Errors.Count > 0)
+                if (result != null && result.Errors != null && result.Errors.Count > 0)
                 {
                     string errors = string.Join("\r\n", result.Errors.ToArray());
 
@@ -114,23 +127,11 @@ namespace ZUploader
             }
         }
 
-        private void OpenURL()
-        {
-            if (lvUploads.SelectedItems.Count == 1)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
-
-                if (result != null && !string.IsNullOrEmpty(result.URL))
-                {
-                    Process.Start(result.URL);
-                }
-            }
-        }
-
         private void UpdateControls()
         {
-            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled =
-                copyThumbnailURLToolStripMenuItem.Enabled = copyDeletionURLToolStripMenuItem.Enabled = copyErrorsToolStripMenuItem.Enabled = false;
+            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
+                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible =
+               uploadFileToolStripMenuItem.Visible = false;
 
             if (lvUploads.SelectedItems.Count > 0)
             {
@@ -140,24 +141,28 @@ namespace ZUploader
                 {
                     if (!string.IsNullOrEmpty(result.URL))
                     {
-                        btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Enabled = openURLToolStripMenuItem.Enabled = true;
+                        btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
                     }
 
                     if (!string.IsNullOrEmpty(result.ThumbnailURL))
                     {
-                        copyThumbnailURLToolStripMenuItem.Enabled = true;
+                        copyThumbnailURLToolStripMenuItem.Visible = true;
                     }
 
                     if (!string.IsNullOrEmpty(result.DeletionURL))
                     {
-                        copyDeletionURLToolStripMenuItem.Enabled = true;
+                        copyDeletionURLToolStripMenuItem.Visible = true;
                     }
 
-                    if (result.Errors.Count > 0)
+                    if (result.Errors != null && result.Errors.Count > 0)
                     {
-                        copyErrorsToolStripMenuItem.Enabled = true;
+                        copyErrorsToolStripMenuItem.Visible = true;
                     }
                 }
+            }
+            else
+            {
+                uploadFileToolStripMenuItem.Visible = true;
             }
         }
 
@@ -281,6 +286,18 @@ namespace ZUploader
         }
 
         #endregion
+
+        private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    UploadManager.Upload(ofd.FileName);
+                }
+            }
+        }
 
         #endregion
     }

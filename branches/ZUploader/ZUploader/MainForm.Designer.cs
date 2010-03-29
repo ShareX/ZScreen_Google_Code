@@ -65,6 +65,7 @@ namespace ZUploader
             this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTextUploaderDestination = new System.Windows.Forms.Label();
             this.cbTextUploaderDestination = new System.Windows.Forms.ComboBox();
             this.lblFileUploaderDestination = new System.Windows.Forms.Label();
@@ -80,7 +81,7 @@ namespace ZUploader
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -130,9 +131,8 @@ namespace ZUploader
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
-            this.lvUploads.MultiSelect = false;
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(458, 256);
+            this.lvUploads.Size = new System.Drawing.Size(459, 256);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -161,9 +161,10 @@ namespace ZUploader
             this.copyURLToolStripMenuItem,
             this.copyThumbnailURLToolStripMenuItem,
             this.copyDeletionURLToolStripMenuItem,
-            this.copyErrorsToolStripMenuItem});
+            this.copyErrorsToolStripMenuItem,
+            this.uploadFileToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 114);
+            this.cmsUploads.Size = new System.Drawing.Size(188, 136);
             // 
             // openURLToolStripMenuItem
             // 
@@ -192,6 +193,13 @@ namespace ZUploader
             this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
             this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
+            // 
+            // copyErrorsToolStripMenuItem
+            // 
+            this.copyErrorsToolStripMenuItem.Name = "copyErrorsToolStripMenuItem";
+            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
+            this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
             // 
             // lblTextUploaderDestination
             // 
@@ -254,7 +262,7 @@ namespace ZUploader
             this.tcApp.Location = new System.Drawing.Point(8, 88);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(472, 288);
+            this.tcApp.Size = new System.Drawing.Size(473, 288);
             this.tcApp.TabIndex = 7;
             // 
             // tpHistory
@@ -263,7 +271,7 @@ namespace ZUploader
             this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(464, 262);
+            this.tpHistory.Size = new System.Drawing.Size(465, 262);
             this.tpHistory.TabIndex = 0;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -359,12 +367,12 @@ namespace ZUploader
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // copyErrorsToolStripMenuItem
+            // uploadFileToolStripMenuItem
             // 
-            this.copyErrorsToolStripMenuItem.Name = "copyErrorsToolStripMenuItem";
-            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
-            this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
+            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.uploadFileToolStripMenuItem.Text = "Upload file...";
+            this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -372,7 +380,7 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 383);
+            this.ClientSize = new System.Drawing.Size(489, 383);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.lblTextUploaderDestination);
@@ -434,6 +442,7 @@ namespace ZUploader
         internal System.Windows.Forms.LinkLabel llWebsite;
         private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
         private System.Windows.Forms.ToolStripMenuItem copyErrorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
     }
 }
 

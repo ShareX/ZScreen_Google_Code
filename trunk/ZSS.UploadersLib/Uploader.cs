@@ -29,13 +29,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Cache;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Win32;
 using UploadersLib.Helpers;
-using System.Net.Cache;
 
 namespace UploadersLib
 {
@@ -293,24 +293,26 @@ namespace UploadersLib
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 boundary, name, fileName, contentType);
 
-            MemoryStream stream = new MemoryStream();
-            byte[] bytes;
-
-            bytes = Encoding.UTF8.GetBytes(format);
-            stream.Write(bytes, 0, bytes.Length);
-
-            stream.Write(content, 0, content.Length);
-
-            bytes = Encoding.UTF8.GetBytes("\r\n");
-            stream.Write(bytes, 0, bytes.Length);
-
-            if (isFinal)
+            using (MemoryStream stream = new MemoryStream())
             {
-                bytes = MakeFinalBoundary(boundary);
-                stream.Write(bytes, 0, bytes.Length);
-            }
+                byte[] bytes;
 
-            return stream.ToArray();
+                bytes = Encoding.UTF8.GetBytes(format);
+                stream.Write(bytes, 0, bytes.Length);
+
+                stream.Write(content, 0, content.Length);
+
+                bytes = Encoding.UTF8.GetBytes("\r\n");
+                stream.Write(bytes, 0, bytes.Length);
+
+                if (isFinal)
+                {
+                    bytes = MakeFinalBoundary(boundary);
+                    stream.Write(bytes, 0, bytes.Length);
+                }
+
+                return stream.ToArray();
+            }
         }
 
         private byte[] MakeFinalBoundary(string boundary)
@@ -322,6 +324,7 @@ namespace UploadersLib
         {
             if (response != null)
             {
+                using (response)
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     return reader.ReadToEnd();
