@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Media;
 
 namespace ZUploader
 {
@@ -180,6 +181,11 @@ namespace ZUploader
                 if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
                 {
                     Clipboard.SetText(result.URL);
+                }
+
+                if (Program.Settings.AutoPlaySound)
+                {
+                    SystemSounds.Exclamation.Play();
                 }
 
                 Tasks.Remove(sender);

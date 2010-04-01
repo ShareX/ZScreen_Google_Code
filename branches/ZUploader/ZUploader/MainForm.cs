@@ -46,12 +46,9 @@ namespace ZUploader
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
             cbFileUploaderDestination.SelectedIndex = Program.Settings.SelectedFileUploaderDestination;
             UploadManager.ListViewControl = lvUploads;
-            if (Program.Settings.FTPAccount == null)
-            {
-                Program.Settings.FTPAccount = new FTPAccount();
-            }
             pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
+            cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             UpdateControls();
             this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
         }
@@ -269,6 +266,11 @@ namespace ZUploader
         private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.ClipboardAutoCopy = cbClipboardAutoCopy.Checked;
+        }
+
+        private void cbAutoPlaySound_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AutoPlaySound = cbAutoPlaySound.Checked;
         }
 
         #endregion

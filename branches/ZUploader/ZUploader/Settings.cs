@@ -32,12 +32,12 @@ namespace ZUploader
 {
     public class Settings
     {
-        [Category("Settings"), DefaultValue(true), Description("Copy URL to clipboard after upload is completed")]
-        public bool ClipboardAutoCopy { get; set; }
-        public int SelectedImageUploaderDestination { get; set; }
-        public int SelectedTextUploaderDestination { get; set; }
-        public int SelectedFileUploaderDestination { get; set; }
-        public FTPAccount FTPAccount { get; set; }
+        public int SelectedImageUploaderDestination = 0;
+        public int SelectedTextUploaderDestination = 0;
+        public int SelectedFileUploaderDestination = 0;
+        public FTPAccount FTPAccount = new FTPAccount();
+        public bool ClipboardAutoCopy = true;
+        public bool AutoPlaySound = true;
 
         public Settings()
         {

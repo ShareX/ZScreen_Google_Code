@@ -66,6 +66,7 @@ namespace ZUploader
             this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTextUploaderDestination = new System.Windows.Forms.Label();
             this.cbTextUploaderDestination = new System.Windows.Forms.ComboBox();
             this.lblFileUploaderDestination = new System.Windows.Forms.Label();
@@ -76,12 +77,12 @@ namespace ZUploader
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.pgFTPAccount = new System.Windows.Forms.PropertyGrid();
             this.tpOptions = new System.Windows.Forms.TabPage();
+            this.cbAutoPlaySound = new System.Windows.Forms.CheckBox();
             this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
             this.tpAbout = new System.Windows.Forms.TabPage();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -201,6 +202,13 @@ namespace ZUploader
             this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
             this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
             // 
+            // uploadFileToolStripMenuItem
+            // 
+            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.uploadFileToolStripMenuItem.Text = "Upload file...";
+            this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
+            // 
             // lblTextUploaderDestination
             // 
             this.lblTextUploaderDestination.AutoSize = true;
@@ -282,7 +290,7 @@ namespace ZUploader
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(464, 262);
+            this.tpFTP.Size = new System.Drawing.Size(465, 262);
             this.tpFTP.TabIndex = 2;
             this.tpFTP.Text = "FTP Account";
             this.tpFTP.UseVisualStyleBackColor = true;
@@ -293,21 +301,33 @@ namespace ZUploader
             this.pgFTPAccount.Location = new System.Drawing.Point(3, 3);
             this.pgFTPAccount.Name = "pgFTPAccount";
             this.pgFTPAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPAccount.Size = new System.Drawing.Size(458, 256);
+            this.pgFTPAccount.Size = new System.Drawing.Size(459, 256);
             this.pgFTPAccount.TabIndex = 0;
             this.pgFTPAccount.ToolbarVisible = false;
             this.pgFTPAccount.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPAccount_PropertyValueChanged);
             // 
             // tpOptions
             // 
+            this.tpOptions.Controls.Add(this.cbAutoPlaySound);
             this.tpOptions.Controls.Add(this.cbClipboardAutoCopy);
             this.tpOptions.Location = new System.Drawing.Point(4, 22);
             this.tpOptions.Name = "tpOptions";
             this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(464, 262);
+            this.tpOptions.Size = new System.Drawing.Size(465, 262);
             this.tpOptions.TabIndex = 1;
             this.tpOptions.Text = "Options";
             this.tpOptions.UseVisualStyleBackColor = true;
+            // 
+            // cbAutoPlaySound
+            // 
+            this.cbAutoPlaySound.AutoSize = true;
+            this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
+            this.cbAutoPlaySound.Name = "cbAutoPlaySound";
+            this.cbAutoPlaySound.Size = new System.Drawing.Size(199, 17);
+            this.cbAutoPlaySound.TabIndex = 1;
+            this.cbAutoPlaySound.Text = "Play sound after upload is completed";
+            this.cbAutoPlaySound.UseVisualStyleBackColor = true;
+            this.cbAutoPlaySound.CheckedChanged += new System.EventHandler(this.cbAutoPlaySound_CheckedChanged);
             // 
             // cbClipboardAutoCopy
             // 
@@ -327,7 +347,7 @@ namespace ZUploader
             this.tpAbout.Location = new System.Drawing.Point(4, 22);
             this.tpAbout.Name = "tpAbout";
             this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAbout.Size = new System.Drawing.Size(464, 262);
+            this.tpAbout.Size = new System.Drawing.Size(465, 262);
             this.tpAbout.TabIndex = 3;
             this.tpAbout.Text = "About";
             this.tpAbout.UseVisualStyleBackColor = true;
@@ -366,13 +386,6 @@ namespace ZUploader
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            // 
-            // uploadFileToolStripMenuItem
-            // 
-            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
-            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.uploadFileToolStripMenuItem.Text = "Upload file...";
-            this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -443,6 +456,7 @@ namespace ZUploader
         private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
         private System.Windows.Forms.ToolStripMenuItem copyErrorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbAutoPlaySound;
     }
 }
 
