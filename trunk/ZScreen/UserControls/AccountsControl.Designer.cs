@@ -117,7 +117,6 @@
             this.btnClone.TabIndex = 123;
             this.btnClone.Text = "&Clone";
             this.btnClone.UseVisualStyleBackColor = true;
-            this.btnClone.Click += new System.EventHandler(this.btnClone_Click);
             // 
             // AccountsControl
             // 

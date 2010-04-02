@@ -183,6 +183,7 @@ namespace ZScreenGUI
             ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountTestButton_Click);
             ucFTPAccounts.btnClone.Click += new EventHandler(FTPAccountCloneButton_Click);
             ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
+            ucFTPAccounts.SettingsGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(FtpAccountSettingsGrid_PropertyValueChanged);
 
             // Accounts - Localhost
             ucLocalhostAccounts.btnAdd.Click += new EventHandler(LocalhostAccountAddButton_Click);
@@ -245,10 +246,17 @@ namespace ZScreenGUI
             DrawZScreenLabel(false);
         }
 
+        void FtpAccountSettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            FTPSetup(Engine.conf.FTPAccountList);
+        }
+
         void FTPAccountCloneButton_Click(object sender, EventArgs e)
         {
-            Engine.conf.FTPAccountList.Add(ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.Items.Count - 1] as FTPAccount);
+            FTPAccount src = ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] as FTPAccount;
+            Engine.conf.FTPAccountList.Add(src.Clone());
             ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
+            FTPSetup(Engine.conf.FTPAccountList);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -500,6 +508,11 @@ namespace ZScreenGUI
             chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
+        private void UpdateFtpControls()
+        {
+
+        }
+
         private void ZScreen_ConfigGUI_Destinations()
         {
             #region FTP Settings
@@ -514,9 +527,6 @@ namespace ZScreenGUI
                 if (ucFTPAccounts.AccountsList.Items.Count > 0)
                 {
                     ucFTPAccounts.AccountsList.SelectedIndex = 0;
-                    cboFtpImages.SelectedIndex = Engine.conf.FtpImages;
-                    cboFtpText.SelectedIndex = Engine.conf.FtpText;
-                    cboFtpFiles.SelectedIndex = Engine.conf.FtpFiles;
                 }
             }
 
@@ -3113,7 +3123,15 @@ namespace ZScreenGUI
         {
             if (accs != null)
             {
+                int selFtpList = ucFTPAccounts.AccountsList.SelectedIndex;
+                int selFtpImages = cboFtpImages.SelectedIndex;
+                int selFtpText = cboFtpText.SelectedIndex;
+                int selFtpFiles = cboFtpFiles.SelectedIndex;
+
                 ucFTPAccounts.AccountsList.Items.Clear();
+                cboFtpImages.Items.Clear();
+                cboFtpText.Items.Clear();
+                cboFtpFiles.Items.Clear();
                 Engine.conf.FTPAccountList = new List<FTPAccount>();
                 Engine.conf.FTPAccountList.AddRange(accs);
                 foreach (FTPAccount acc in Engine.conf.FTPAccountList)
@@ -3122,6 +3140,13 @@ namespace ZScreenGUI
                     cboFtpImages.Items.Add(acc);
                     cboFtpText.Items.Add(acc);
                     cboFtpFiles.Items.Add(acc);
+                }
+                if (ucFTPAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucFTPAccounts.AccountsList.SelectedIndex = Math.Max(Math.Min(selFtpList, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
+                    cboFtpImages.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpImages, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
+                    cboFtpText.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpText, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
+                    cboFtpFiles.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpFiles, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
                 }
             }
         }
@@ -3133,6 +3158,7 @@ namespace ZScreenGUI
             {
                 Engine.conf.FTPAccountList.RemoveAt(sel);
             }
+            FTPSetup(Engine.conf.FTPAccountList);
         }
 
         void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -3216,6 +3242,7 @@ namespace ZScreenGUI
             Engine.conf.FTPAccountList.Add(acc);
             ucFTPAccounts.AccountsList.Items.Add(acc);
             ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
+            FTPSetup(Engine.conf.FTPAccountList);
         }
 
         private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
@@ -4515,11 +4542,14 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Adapter.CheckFTPAccounts())
+            if (ucFTPAccounts.AccountsList.SelectedIndex > -1)
             {
-                FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
-                FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
-                ftpClient.Show();
+                FTPAccount acc = ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] as FTPAccount;
+                if (acc != null)
+                {
+                    FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
+                    ftpClient.Show();
+                }
             }
         }
 

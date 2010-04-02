@@ -30,7 +30,7 @@ using System.Text.RegularExpressions;
 namespace UploadersLib
 {
     [Serializable]
-    public class FTPAccount
+    public class FTPAccount : ICloneable
     {
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
@@ -182,6 +182,20 @@ namespace UploadersLib
         public override string ToString()
         {
             return string.Format("{0} - {1}:{2}", this.Name, this.Host, this.Port);
+        }
+
+        #region ICloneable Members
+
+        object ICloneable.Clone()
+        {
+            return this.MemberwiseClone() as FTPAccount;
+        }
+
+        #endregion
+
+        public FTPAccount Clone()
+        {
+            return this.MemberwiseClone() as FTPAccount;
         }
     }
 }
