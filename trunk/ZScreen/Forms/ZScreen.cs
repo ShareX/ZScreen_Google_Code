@@ -503,7 +503,10 @@ namespace ZScreenGUI
                 FTPSetup(Engine.conf.FTPAccountList);
                 if (ucFTPAccounts.AccountsList.Items.Count > 0)
                 {
-                    ucFTPAccounts.AccountsList.SelectedIndex = Engine.conf.FTPSelected;
+                    ucFTPAccounts.AccountsList.SelectedIndex = 0;
+                    cboFtpImages.SelectedIndex = Engine.conf.FtpImages;
+                    cboFtpText.SelectedIndex = Engine.conf.FtpText;
+                    cboFtpFiles.SelectedIndex = Engine.conf.FtpFiles;
                 }
             }
 
@@ -1469,42 +1472,45 @@ namespace ZScreenGUI
             cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 
+        /// <summary>
+        /// Annoying method until somebody fixes it
+        /// </summary>
         private void RewriteFTPRightClickMenu()
         {
-            if (Engine.conf.FTPAccountList != null)
-            {
-                List<ToolStripMenuItem> tsmList = new List<ToolStripMenuItem>();
-                tsmList.Add(GetImageDestMenuItem(ImageDestType.FTP));
-                tsmList.Add(GetFileDestMenuItem(FileUploaderType.FTP));
+            //if (Engine.conf.FTPAccountList != null)
+            //{
+            //    List<ToolStripMenuItem> tsmList = new List<ToolStripMenuItem>();
+            //    tsmList.Add(GetImageDestMenuItem(ImageDestType.FTP));
+            //    tsmList.Add(GetFileDestMenuItem(FileUploaderType.FTP));
 
-                foreach (ToolStripMenuItem tsmi in tsmList)
-                {
-                    tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
-                    tsmi.DropDownItems.Clear();
-                    List<FTPAccount> accs = Engine.conf.FTPAccountList;
-                    ToolStripMenuItem temp;
+            //    foreach (ToolStripMenuItem tsmi in tsmList)
+            //    {
+            //        tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
+            //        tsmi.DropDownItems.Clear();
+            //        List<FTPAccount> accs = Engine.conf.FTPAccountList;
+            //        ToolStripMenuItem temp;
 
-                    for (int x = 0; x < accs.Count; x++)
-                    {
-                        temp = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
-                        temp.Click += rightClickFTPItem_Click;
-                        tsmi.DropDownItems.Add(temp);
-                    }
+            //        for (int x = 0; x < accs.Count; x++)
+            //        {
+            //            temp = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
+            //            temp.Click += rightClickFTPItem_Click;
+            //            tsmi.DropDownItems.Add(temp);
+            //        }
 
-                    temp = tsmi;
+            //        temp = tsmi;
 
-                    // Check the active ftpUpload account
-                    CheckCorrectMenuItemClicked(ref temp, Engine.conf.FTPSelected);
-                    tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
+            //        // Check the active ftpUpload account
+            //        CheckCorrectMenuItemClicked(ref temp, Engine.conf.FtpImages);
+            //        tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
 
-                    // Show drop down menu in the correct place if menu is selected
-                    if (tsmi.Selected)
-                    {
-                        tsmi.DropDown.Hide();
-                        tsmi.DropDown.Show();
-                    }
-                }
-            }
+            //        // Show drop down menu in the correct place if menu is selected
+            //        if (tsmi.Selected)
+            //        {
+            //            tsmi.DropDown.Hide();
+            //            tsmi.DropDown.Show();
+            //        }
+            //    }
+            //}
         }
 
         private void rightClickFTPItem_Click(object sender, EventArgs e)
@@ -3103,6 +3109,9 @@ namespace ZScreenGUI
                 foreach (FTPAccount acc in Engine.conf.FTPAccountList)
                 {
                     ucFTPAccounts.AccountsList.Items.Add(acc);
+                    cboFtpImages.Items.Add(acc);
+                    cboFtpText.Items.Add(acc);
+                    cboFtpFiles.Items.Add(acc);
                 }
             }
         }
@@ -3170,7 +3179,6 @@ namespace ZScreenGUI
         private void FTPAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-            Engine.conf.FTPSelected = sel;
 
             if (Adapter.CheckFTPAccounts())
             {
@@ -3251,7 +3259,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+                acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
             }
 
             return acc;
@@ -4499,7 +4507,7 @@ namespace ZScreenGUI
         {
             if (Adapter.CheckFTPAccounts())
             {
-                FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+                FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
                 FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
                 ftpClient.Show();
             }
@@ -4937,6 +4945,21 @@ namespace ZScreenGUI
             {
                 WriteSettings();
             }
+        }
+
+        private void cboFtpImages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FtpImages = cboFtpImages.SelectedIndex;
+        }
+
+        private void cboFtpText_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FtpText = cboFtpText.SelectedIndex;
+        }
+
+        private void cboFtpFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FtpFiles = cboFtpFiles.SelectedIndex;
         }
     }
 }

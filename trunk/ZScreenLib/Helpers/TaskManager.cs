@@ -259,7 +259,15 @@ namespace ZScreenLib
             switch (mTask.MyFileUploader)
             {
                 case FileUploaderType.FTP:
-                    UploadFTP();
+                    switch (mTask.JobCategory)
+                    {
+                        case JobCategoryType.TEXT:
+                            UploadFTP(Engine.conf.FtpText);
+                            break;
+                        default:
+                            UploadFTP(Engine.conf.FtpFiles);
+                            break;
+                    }
                     break;
                 case FileUploaderType.SendSpace:
                     fileHost = new SendSpace();
@@ -347,7 +355,7 @@ namespace ZScreenLib
                     imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
                 case ImageDestType.FTP:
-                    UploadFTP();
+                    UploadFTP(Engine.conf.FtpImages);
                     break;
                 case ImageDestType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
@@ -507,7 +515,7 @@ namespace ZScreenLib
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public bool UploadFTP()
+        public bool UploadFTP(int FtpAccountId)
         {
             try
             {
@@ -515,7 +523,7 @@ namespace ZScreenLib
 
                 if (Adapter.CheckFTPAccounts(ref mTask) && File.Exists(mTask.LocalFilePath))
                 {
-                    FTPAccount acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+                    FTPAccount acc = Engine.conf.FTPAccountList[FtpAccountId];
                     mTask.DestinationName = string.Format("FTP - {0}", acc.Name);
                     FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", mTask.FileName, acc.Host));
 
