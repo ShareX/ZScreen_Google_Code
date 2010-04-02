@@ -183,6 +183,7 @@ Source: ..\..\..\branches\ZUploader\ZUploader\bin\Release\*.exe; Excludes: *.vsh
 
 [Icons]
 Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; AppUserModelID: {#ExeName}
+Name: {code:GetCodeVar|StartMenu}\ZUploader; Filename: {app}\ZUploader.exe; AppUserModelID: ZUploader
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
 Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"

@@ -181,18 +181,21 @@ namespace ZScreenGUI
             ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
             ucFTPAccounts.btnRemove.Click += new EventHandler(FTPAccountRemoveButton_Click);
             ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountTestButton_Click);
+            ucFTPAccounts.btnClone.Click += new EventHandler(FTPAccountCloneButton_Click);
             ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
 
             // Accounts - Localhost
             ucLocalhostAccounts.btnAdd.Click += new EventHandler(LocalhostAccountAddButton_Click);
             ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
             ucLocalhostAccounts.btnTest.Visible = false;
+            ucLocalhostAccounts.btnClone.Visible = false;
             ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
 
             // Accounts - MindTouch
             ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
             ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
             ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
+            ucMindTouchAccounts.btnClone.Visible = false;
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
             // Accounts - Twitter
@@ -201,6 +204,7 @@ namespace ZScreenGUI
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
+            ucTwitterAccounts.btnClone.Visible = false;
             ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
             ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
@@ -239,6 +243,12 @@ namespace ZScreenGUI
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
             DrawZScreenLabel(false);
+        }
+
+        void FTPAccountCloneButton_Click(object sender, EventArgs e)
+        {
+            Engine.conf.FTPAccountList.Add(ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.Items.Count - 1] as FTPAccount);
+            ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -3180,7 +3190,7 @@ namespace ZScreenGUI
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
 
-            if (Adapter.CheckFTPAccounts())
+            if (Adapter.CheckList(Engine.conf.FTPAccountList, sel))
             {
                 FTPAccount acc = Engine.conf.FTPAccountList[sel];
                 ucFTPAccounts.SettingsGrid.SelectedObject = acc;

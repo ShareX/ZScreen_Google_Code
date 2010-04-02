@@ -34,6 +34,7 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.AccountsLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.btnClone = new System.Windows.Forms.Button();
             this.AccountsLayout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,7 @@
             this.AccountsList.Name = "AccountsList";
             this.AccountsList.Size = new System.Drawing.Size(249, 338);
             this.AccountsList.TabIndex = 120;
+            this.AccountsList.SelectedIndexChanged += new System.EventHandler(this.AccountsList_SelectedIndexChanged);
             // 
             // btnAdd
             // 
@@ -107,10 +109,21 @@
             this.AccountsLayout.Size = new System.Drawing.Size(744, 344);
             this.AccountsLayout.TabIndex = 122;
             // 
+            // btnClone
+            // 
+            this.btnClone.Location = new System.Drawing.Point(224, 8);
+            this.btnClone.Name = "btnClone";
+            this.btnClone.Size = new System.Drawing.Size(72, 24);
+            this.btnClone.TabIndex = 123;
+            this.btnClone.Text = "&Clone";
+            this.btnClone.UseVisualStyleBackColor = true;
+            this.btnClone.Click += new System.EventHandler(this.btnClone_Click);
+            // 
             // AccountsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnClone);
             this.Controls.Add(this.AccountsLayout);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnTest);
@@ -130,5 +143,6 @@
         private System.Windows.Forms.TableLayoutPanel AccountsLayout;
         internal System.Windows.Forms.PropertyGrid SettingsGrid;
         internal System.Windows.Forms.ListBox AccountsList;
+        internal System.Windows.Forms.Button btnClone;
     }
 }
