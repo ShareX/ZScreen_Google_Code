@@ -1,11 +1,12 @@
 3.28.1.0 Active FTP Accounts can be chosen seperately for Images, Text and Files [Issue 259] {McoreD}
 3.28.0.0 Added Drop.IO file uploader support [Issue 248] {Jaex}
+3.27.4.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
 3.27.4.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
 3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log [__y] {McoreD}
 
 Version 3.27.3.1 - 20100315
 
-3.27.3.1 Fixed pastebin.com upload errors due to API changes {Jaex}
+3.27.3.1 Fixed pastebin.com upload errors due to API changes [Issue 190] {Jaex}
 3.27.3.0 Remote path protocols are now user confirgurable for FTP and Localhost {McoreD}
 3.27.2.0 PropertyGrid option to exclude Watermark during Clipboard Upload {McoreD}
 3.27.1.2 Sending image to Printer also sent the image to other image uploaders [Issue 237] {McoreD}
