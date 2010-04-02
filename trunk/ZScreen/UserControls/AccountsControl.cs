@@ -62,5 +62,18 @@ namespace ZScreenGUI
                 this.AccountsList.Items[this.AccountsList.SelectedIndex] = SettingsGrid.SelectedObject;
             }
         }
+
+        private void btnClone_Click(object sender, EventArgs e)
+        {
+            if (this.AccountsList.SelectedIndex > -1)
+            {
+                this.AccountsList.Items.Add(this.AccountsList.Items[this.AccountsList.SelectedIndex]);
+            }
+        }
+
+        private void AccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnClone.Enabled = AccountsList.SelectedIndex > -1;
+        }
     }
 }
