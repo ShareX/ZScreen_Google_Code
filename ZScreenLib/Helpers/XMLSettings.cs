@@ -328,7 +328,9 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FTPSelected = 0;
+        public int FtpImages = 0;
+        public int FtpText = 0;
+        public int FtpFiles = 0;
         public int FTPThumbnailWidth = 150;
         public bool FTPThumbnailCheckSize = true;
 
@@ -474,6 +476,7 @@ namespace ZScreenLib
 
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
+
 
         // Options / Actions Toolbar
 

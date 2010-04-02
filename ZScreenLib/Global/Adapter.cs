@@ -266,7 +266,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts()
         {
-            return CheckList(Engine.conf.FTPAccountList, Engine.conf.FTPSelected);
+            return CheckList(Engine.conf.FTPAccountList, Engine.conf.FtpImages);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -274,7 +274,7 @@ namespace ZScreenLib
             FTPAccount acc = null;
             if (CheckFTPAccounts())
             {
-                acc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+                acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
             }
             return acc;
         }

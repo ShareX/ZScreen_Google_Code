@@ -211,7 +211,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.FTPAccountList != null)
             {
-                mAcc = Engine.conf.FTPAccountList[Engine.conf.FTPSelected];
+                mAcc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
             }
 
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,

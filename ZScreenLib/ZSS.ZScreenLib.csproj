@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
     </Compile>
