@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml;
+using System.IO;
 
 namespace UploadersLib.FileUploaders
 {
@@ -54,7 +55,7 @@ namespace UploadersLib.FileUploaders
             public string AdminToken { get; set; }
         }
 
-        public override string Upload(byte[] file, string fileName)
+        public override string Upload(Stream stream, string fileName)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace UploadersLib.FileUploaders
                 args.Add("token", drop.AdminToken);
                 args.Add("drop_name", drop.Name);
 
-                string response = UploadData(file, fileName, "http://assets.drop.io/upload", "file", args);
+                string response = UploadData(stream, fileName, "http://assets.drop.io/upload", "file", args);
 
                 if (!string.IsNullOrEmpty(response))
                 {

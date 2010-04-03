@@ -23,15 +23,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
-using UploadersLib.Helpers;
-using System.Collections;
 using System.Xml.Linq;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -60,14 +57,14 @@ namespace UploadersLib.ImageUploaders
             get { return "TinyPic"; }
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImageAPI(image, fileName);
+                    return UploadImageAPI(stream, fileName);
                 case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(image, fileName);
+                    return UploadImageAnonymous(stream, fileName);
             }
             return null;
         }
@@ -78,7 +75,7 @@ namespace UploadersLib.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Image image, string fileName)
+        private ImageFileManager UploadImageAPI(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -135,7 +132,7 @@ namespace UploadersLib.ImageUploaders
                         arguments.Add("shuk", Shuk);
                     }
 
-                    ifm.Source = UploadImage(image, fileName, URLAPI, "uploadfile", arguments);
+                    ifm.Source = UploadData(stream, fileName, URLAPI, "uploadfile", arguments);
 
                     if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
                     {
@@ -166,7 +163,7 @@ namespace UploadersLib.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Image image, string fileName)
+        private ImageFileManager UploadImageAnonymous(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -183,7 +180,7 @@ namespace UploadersLib.ImageUploaders
                     { "dimension", "1600" }
                 };
 
-                ifm.Source = UploadImage(image, fileName, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
+                ifm.Source = UploadData(stream, fileName, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
 
                 string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
                 string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;

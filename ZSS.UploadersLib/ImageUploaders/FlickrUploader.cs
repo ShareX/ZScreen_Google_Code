@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
@@ -208,7 +208,7 @@ namespace UploadersLib.ImageUploaders
 
         #endregion
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("api_key", API_Key);
@@ -226,7 +226,7 @@ namespace UploadersLib.ImageUploaders
 
             args.Add("api_sig", GetAPISig(args));
 
-            string response = UploadImage(image, fileName, API_Upload_URL, "photo", args);
+            string response = UploadData(stream, fileName, API_Upload_URL, "photo", args);
 
             XElement xele = ParseResponse(response, "photoid");
             string photoid = string.Empty;

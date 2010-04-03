@@ -29,15 +29,16 @@ namespace UploadersLib
     {
         public abstract string Name { get; }
 
-        public FileUploader() { }
-
-        public abstract string Upload(byte[] data, string fileName);
+        public abstract string Upload(Stream stream, string fileName);
 
         public string Upload(string filePath)
         {
             if (File.Exists(filePath))
             {
-                return Upload(File.ReadAllBytes(filePath), Path.GetFileName(filePath));
+                using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    return Upload(stream, Path.GetFileName(filePath));
+                }
             }
 
             return string.Empty;

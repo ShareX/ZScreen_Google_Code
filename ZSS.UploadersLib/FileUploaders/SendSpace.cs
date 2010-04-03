@@ -27,6 +27,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
+using System.IO;
 
 namespace UploadersLib.FileUploaders
 {
@@ -396,18 +397,13 @@ namespace UploadersLib.FileUploaders
             return PrepareArguments(max_file_size, upload_identifier, extra_info, null, null, null, null, null, null);
         }
 
-        public string Upload(byte[] data, string fileName, UploadInfo uploadInfo)
+        public string Upload(Stream stream, string fileName, UploadInfo uploadInfo)
         {
             if (uploadInfo != null)
             {
                 Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
 
-                string response;
-
-                using (CheckProgress progress = new CheckProgress(uploadInfo.ProgressURL, this))
-                {
-                    response = UploadData(data, fileName, uploadInfo.URL, "userfile", args);
-                }
+                string response = UploadData(stream, fileName, uploadInfo.URL, "userfile", args);
 
                 if (!string.IsNullOrEmpty(response))
                 {
@@ -428,9 +424,9 @@ namespace UploadersLib.FileUploaders
             return string.Empty;
         }
 
-        public override string Upload(byte[] data, string fileName)
+        public override string Upload(Stream stream, string fileName)
         {
-            return Upload(data, fileName, SendSpaceManager.UploadInfo);
+            return Upload(stream, fileName, SendSpaceManager.UploadInfo);
         }
 
         public class CheckProgress : IDisposable
@@ -465,7 +461,7 @@ namespace UploadersLib.FileUploaders
                         {
                             if (int.TryParse(progressInfo.Meter, out progress))
                             {
-                                sendSpace.OnProgressChanged(progress);
+                                sendSpace.OnProgressChanged(0, 0);
                             }
                         }
                     }

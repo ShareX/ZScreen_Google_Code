@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System.IO;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
@@ -12,10 +12,10 @@ namespace UploadersLib.ImageUploaders
 
         private string uploadURL = "http://img1.us/?app";
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
-            string response = UploadImage(image, fileName, uploadURL, "fileup", null);
+            string response = UploadData(stream, fileName, uploadURL, "fileup", null);
             ifm.Source = response;
 
             if (!string.IsNullOrEmpty(response))

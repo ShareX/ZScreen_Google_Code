@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -41,7 +40,26 @@ namespace UploadersLib
 {
     public class Uploader
     {
-        public delegate void ProgressEventHandler(int progress);
+        public delegate void ProgressEventHandler(ProgressEventArgs e);
+
+        public class ProgressEventArgs : EventArgs
+        {
+            public long Position { get; set; }
+            public long Length { get; set; }
+            public double Percentage
+            {
+                get
+                {
+                    return (double)Position / Length * 100;
+                }
+            }
+
+            public ProgressEventArgs(long position, long length)
+            {
+                Position = position;
+                Length = length;
+            }
+        }
 
         public event ProgressEventHandler ProgressChanged;
 
@@ -57,11 +75,11 @@ namespace UploadersLib
             this.UserAgent = "ZScreen";
         }
 
-        protected void OnProgressChanged(int progress)
+        protected void OnProgressChanged(long position, long length)
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(progress);
+                ProgressChanged(new ProgressEventArgs(position, length));
             }
         }
 
@@ -141,8 +159,8 @@ namespace UploadersLib
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        OnProgressChanged((int)((double)stream.Position / stream.Length * 100));
                         requestStream.Write(buffer, 0, bytesRead);
+                        OnProgressChanged(stream.Position, stream.Length);
                     }
                 }
 
@@ -219,17 +237,7 @@ namespace UploadersLib
 
         #region Upload methods
 
-        protected string UploadImage(Image image, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                image.Save(stream, image.RawFormat);
-                byte[] data = stream.ToArray();
-                return UploadData(data, fileName, url, fileFormName, arguments);
-            }
-        }
-
-        protected string UploadData(byte[] data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
             string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
 
@@ -283,35 +291,46 @@ namespace UploadersLib
             }
         }
 
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, bool isFinal)
+        private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, bool isFinal)
         {
             return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName), isFinal);
         }
 
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, byte[] content, string contentType, bool isFinal)
+        private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, string contentType, bool isFinal)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                 boundary, name, fileName, contentType);
 
             using (MemoryStream stream = new MemoryStream())
             {
-                byte[] bytes;
+                byte[] buffer;
 
-                bytes = Encoding.UTF8.GetBytes(format);
-                stream.Write(bytes, 0, bytes.Length);
+                buffer = Encoding.UTF8.GetBytes(format);
+                stream.Write(buffer, 0, buffer.Length);
 
-                stream.Write(content, 0, content.Length);
+                CopyStream(content, stream);
 
-                bytes = Encoding.UTF8.GetBytes("\r\n");
-                stream.Write(bytes, 0, bytes.Length);
+                buffer = Encoding.UTF8.GetBytes("\r\n");
+                stream.Write(buffer, 0, buffer.Length);
 
                 if (isFinal)
                 {
-                    bytes = MakeFinalBoundary(boundary);
-                    stream.Write(bytes, 0, bytes.Length);
+                    buffer = MakeFinalBoundary(boundary);
+                    stream.Write(buffer, 0, buffer.Length);
                 }
 
                 return stream.ToArray();
+            }
+        }
+
+        private static void CopyStream(Stream input, Stream output)
+        {
+            byte[] buffer = new byte[32768];
+            int read;
+
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, read);
             }
         }
 

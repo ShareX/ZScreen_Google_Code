@@ -23,10 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using UploadersLib.Helpers;
 
@@ -46,7 +44,7 @@ namespace UploadersLib.ImageUploaders
             get { return iHosting.Name; }
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -59,7 +57,7 @@ namespace UploadersLib.ImageUploaders
                 {
                     arguments.Add(args[0], args[1]);
                 }
-                ifm.Source = UploadImage(image, fileName, iHosting.UploadURL, iHosting.FileForm, arguments);
+                ifm.Source = UploadData(stream, fileName, iHosting.UploadURL, iHosting.FileForm, arguments);
                 if (!string.IsNullOrEmpty(ifm.Source))
                 {
                     List<String> regexps = new List<string>();

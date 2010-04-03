@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace UploadersLib.FileUploaders
 {
@@ -52,11 +53,15 @@ namespace UploadersLib.FileUploaders
             this.Options = options;
         }
 
-        public override string Upload(byte[] file, string fileName)
+        public override string Upload(Stream stream, string fileName)
         {
             string url = NextUploadServer();
 
-            if (string.IsNullOrEmpty(url)) throw new Exception("Upload server URL is empty.");
+            if (string.IsNullOrEmpty(url))
+            {
+                Errors.Add("Upload server URL is empty.");
+                return null;
+            }
 
             Dictionary<string, string> args = new Dictionary<string, string>();
 
@@ -73,15 +78,19 @@ namespace UploadersLib.FileUploaders
                 args.Add("password", Options.Password);
             }
 
-            string result = UploadData(file, fileName, url, "filecontent", args);
+            string result = UploadData(stream, fileName, url, "filecontent", args);
 
-            if (string.IsNullOrEmpty(result)) throw new Exception("Upload result is empty.");
+            if (string.IsNullOrEmpty(result)) 
+            {
+                Errors.Add("Upload result is empty.");
+                return null;
+            }
 
             UploadInfo info = new UploadInfo(result);
 
-            if (Options.CheckFileSize)
+            /*if (Options.CheckFileSize)
             {
-                string fileSize = file.Count().ToString();
+                string fileSize = stream.Length.ToString();
                 if (fileSize != info.Size)
                 {
                     throw new Exception(string.Format("File size check failed.\nFile size: {0}\nUploaded file size: {1}", fileSize, info.Size));
@@ -95,7 +104,7 @@ namespace UploadersLib.FileUploaders
                 {
                     throw new Exception(string.Format("File MD5 check failed.\nFile MD5: {0}\nUploaded file MD5: {1}", fileMD5, info.MD5));
                 }
-            }
+            }*/
 
             return info.URL;
         }

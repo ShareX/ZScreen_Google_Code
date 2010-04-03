@@ -21,17 +21,10 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Xml.Linq;
-using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
@@ -80,21 +73,21 @@ namespace UploadersLib.ImageUploaders
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             switch (this.Options.UploadType)
             {
                 case YfrogUploadType.UPLOAD_IMAGE_ONLY:
-                    return Upload(image, fileName, "");
+                    return Upload(stream, fileName, "");
                 case YfrogUploadType.UPLOAD_IMAGE_AND_TWITTER:
                     TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
                     msgBox.ShowDialog();
-                    return Upload(image, fileName, msgBox.Message);
+                    return Upload(stream, fileName, msgBox.Message);
             }
             return null;
         }
 
-        private ImageFileManager Upload(Image image, string fileName, string msg)
+        private ImageFileManager Upload(Stream stream, string fileName, string msg)
         {
             string url;
 
@@ -119,7 +112,7 @@ namespace UploadersLib.ImageUploaders
 
             arguments.Add("key", this.Options.DeveloperKey);
 
-            string source = UploadImage(image, fileName, url, "media", arguments);
+            string source = UploadData(stream, fileName, url, "media", arguments);
 
             return ParseResult(source);
         }

@@ -21,17 +21,9 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Xml.Linq;
-using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
@@ -51,14 +43,14 @@ namespace UploadersLib.ImageUploaders
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
             msgBox.ShowDialog();
-            return Upload(image, fileName, msgBox.Message);
+            return Upload(stream, fileName, msgBox.Message);
         }
 
-        private ImageFileManager Upload(Image image, string fileName, string msg)
+        private ImageFileManager Upload(Stream stream, string fileName, string msg)
         {
             string url = string.Empty;
 
@@ -73,7 +65,7 @@ namespace UploadersLib.ImageUploaders
                 url = UploadAndPostLink;
             }
 
-            string source = UploadImage(image, fileName, url, "file", arguments);
+            string source = UploadData(stream, fileName, url, "file", arguments);
 
             return ParseResult(source);
         }
