@@ -94,17 +94,26 @@ namespace ZUploader
 
         private void UploadThread(object sender, DoWorkEventArgs e)
         {
-            switch (DataManager.FileType)
+            try
             {
-                case EDataType.File:
-                    e.Result = UploadFile(DataManager.Data, DataManager.FileName);
-                    break;
-                case EDataType.Image:
-                    e.Result = UploadImage(DataManager.Data, DataManager.FileName);
-                    break;
-                case EDataType.Text:
-                    e.Result = UploadText(DataManager.Data);
-                    break;
+                switch (DataManager.FileType)
+                {
+                    case EDataType.File:
+                        e.Result = UploadFile(DataManager.Data, DataManager.FileName);
+                        break;
+                    case EDataType.Image:
+                        e.Result = UploadImage(DataManager.Data, DataManager.FileName);
+                        break;
+                    case EDataType.Text:
+                        e.Result = UploadText(DataManager.Data);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                UploadResult result = new UploadResult();
+                result.Errors.Add(ex.Message);
+                e.Result = result;
             }
         }
 

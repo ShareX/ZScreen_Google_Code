@@ -46,6 +46,7 @@ namespace UploadersLib
         {
             public long Position { get; set; }
             public long Length { get; set; }
+
             public double Percentage
             {
                 get

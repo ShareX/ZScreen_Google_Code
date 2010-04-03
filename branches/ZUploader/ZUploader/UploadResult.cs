@@ -31,5 +31,10 @@ namespace ZUploader
         public string ThumbnailURL { get; set; }
         public string DeletionURL { get; set; }
         public List<string> Errors { get; set; }
+
+        public UploadResult()
+        {
+            Errors = new List<string>();
+        }
     }
 }
