@@ -54,9 +54,12 @@ namespace UploadersLib
         public ImageFileManager UploadImage(string filePath)
         {
             string fileName = Path.GetFileName(filePath);
-            ImageFileManager ifm = UploadImage(Image.FromFile(filePath), fileName);
-            ifm.LocalFilePath = filePath;
-            return ifm;
+            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                ImageFileManager ifm = UploadImage(stream, fileName);
+                ifm.LocalFilePath = filePath;
+                return ifm;
+            }
         }
     }
 

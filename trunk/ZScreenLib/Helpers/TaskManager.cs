@@ -584,14 +584,14 @@ namespace ZScreenLib
                 (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
         }
 
-        private void UploadProgressChanged(int progress)
+        private void UploadProgressChanged(Uploader.ProgressEventArgs progress)
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {
                 UploadInfo uploadInfo = UploadManager.GetInfo(mTask.UniqueNumber);
                 if (uploadInfo != null)
                 {
-                    uploadInfo.UploadPercentage = (int)progress;
+                    uploadInfo.UploadPercentage = (int)progress.Percentage;
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
                 }
             }
