@@ -56,6 +56,7 @@ namespace UploadersLib.FileUploaders
 
                 try
                 {
+                    stream.Position = 0;
                     ftpClient.UploadData(stream, remotePath);
                 }
                 catch (Exception e)
