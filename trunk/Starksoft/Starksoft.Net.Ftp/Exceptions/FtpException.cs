@@ -30,11 +30,13 @@ namespace Starksoft.Net.Ftp
 {
 
     /// <summary>
-    /// This exception is thrown when a general FTP exception occurrs.
+    /// This exception is thrown when a general FTP exception occurs.
     /// </summary>
     [Serializable()]
     public class FtpException : Exception
     {
+        private FtpResponse _response = new FtpResponse();
+        
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -50,6 +52,7 @@ namespace Starksoft.Net.Ftp
             : base(message)
         {
         }
+ 
 
         /// <summary>
         /// Constructor.
@@ -65,12 +68,61 @@ namespace Starksoft.Net.Ftp
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="message">Exception message text.</param>
+        /// <param name="response">Response object.</param>
+        /// <param name="innerException">The inner exception object.</param>
+        public FtpException(string message, FtpResponse response, Exception innerException)
+            :
+           base(message, innerException)
+        {
+            _response = response;
+        }
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="message">Exception message text.</param>
+        /// <param name="response">Ftp response object.</param>
+        public FtpException(string message, FtpResponse response)
+            : base(message)
+        {
+            _response = response;
+        }
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="info">Serialization information.</param>
         /// <param name="context">Stream context information.</param>
         protected FtpException(SerializationInfo info,
            StreamingContext context)
             : base(info, context)
         {
+        }
+
+        /// <summary>
+        /// Gets the last FTP response if one is available.
+        /// </summary>
+        public FtpResponse LastResponse
+        {
+            get { return _response; }
+        }
+
+
+        /// <summary>
+        /// Gets a message that describes the current exception.
+        /// </summary>
+        public override string Message
+        {
+            get
+            {
+                if (_response.Code == FtpResponseCode.None)
+                    return base.Message;
+                else
+                    return String.Format("{0}  (Last Server Response: {1}  {2})", base.Message, _response.Text, _response.Code); ;
+            }
         }
     }
 

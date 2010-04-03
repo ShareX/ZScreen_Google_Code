@@ -72,6 +72,26 @@ namespace Starksoft.Net.Ftp
             : base(info, context)
         {
         }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="message">Exception message text.</param>
+        /// <param name="response">Ftp response object.</param>
+        /// <param name="innerException">The inner exception object.</param>
+        public FtpSecureConnectionException(string message, FtpResponse response, Exception innerException)
+            :  base(message, response, innerException)
+        {   }
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="message">Exception message text.</param>
+        /// <param name="response">Ftp response object.</param>
+        public FtpSecureConnectionException(string message, FtpResponse response)
+            : base(message, response)
+        {   }
     }
 
 }
