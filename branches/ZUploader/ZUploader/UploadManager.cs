@@ -92,43 +92,23 @@ namespace ZUploader
             if (Clipboard.ContainsImage())
             {
                 using (Image img = Clipboard.GetImage())
-                using (MemoryStream stream = new MemoryStream())
                 {
+                    MemoryStream stream = new MemoryStream();
                     img.Save(stream, ImageFormat.Png);
-                    Task task;
                     string fileName = Helpers.GetRandomAlphanumeric(10) + ".png";
-
-                    if (ImageUploader == ImageDestType2.FILE)
-                    {
-                        task = new Task(EDataType.File, stream, fileName);
-                    }
-                    else
-                    {
-                        task = new Task(EDataType.Image, stream, fileName);
-                    }
-
+                    EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
+                    Task task = new Task(type, stream, fileName);
                     StartUpload(task);
                 }
             }
             else if (Clipboard.ContainsText())
             {
                 byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
-                using (MemoryStream stream = new MemoryStream(byteArray))
-                {
-                    Task task;
-                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".txt";
-
-                    if (TextUploader == TextDestType2.FILE)
-                    {
-                        task = new Task(EDataType.File, stream, fileName);
-                    }
-                    else
-                    {
-                        task = new Task(EDataType.Text, stream, fileName);
-                    }
-
-                    StartUpload(task);
-                }
+                MemoryStream stream = new MemoryStream(byteArray);
+                string fileName = Helpers.GetRandomAlphanumeric(10) + ".txt";
+                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Image;
+                Task task = new Task(type, stream, fileName);
+                StartUpload(task);
             }
             else if (Clipboard.ContainsFileDropList())
             {

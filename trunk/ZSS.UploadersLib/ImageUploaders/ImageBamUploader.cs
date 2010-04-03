@@ -21,13 +21,10 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using UploadersLib.Helpers;
+using System.IO;
 using System.Xml.Linq;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -80,7 +77,7 @@ namespace UploadersLib.ImageUploaders
 
         // http://www.imagebam.com/nav/API_uploading_photos
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
@@ -97,7 +94,7 @@ namespace UploadersLib.ImageUploaders
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
 
-            string source = UploadImage(image, fileName, upload, "photo", arguments);
+            string source = UploadData(stream, fileName, upload, "photo", arguments);
 
             return ParseResult(source);
         }

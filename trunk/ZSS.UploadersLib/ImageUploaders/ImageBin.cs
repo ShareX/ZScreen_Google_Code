@@ -21,14 +21,10 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UploadersLib.Helpers;
-using System.Drawing;
-using System.Text.RegularExpressions;
 using System.IO;
+using System.Text.RegularExpressions;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -39,7 +35,7 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageBin"; }
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
 
@@ -52,7 +48,7 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("sfile", "Upload");
             arguments.Add("url", string.Empty);
 
-            string response = UploadImage(image, fileName, "http://imagebin.ca/upload.php", "f", arguments);
+            string response = UploadData(stream, fileName, "http://imagebin.ca/upload.php", "f", arguments);
             ifm.Source = response;
 
             if (!string.IsNullOrEmpty(response))

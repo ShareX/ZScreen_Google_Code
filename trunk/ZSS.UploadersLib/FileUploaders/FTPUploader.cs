@@ -47,16 +47,16 @@ namespace UploadersLib.FileUploaders
             //this.Name = acc.Name;
         }
 
-        public override string Upload(byte[] data, string fileName)
+        public override string Upload(Stream stream, string fileName)
         {
             using (FTP ftpClient = new FTP(this.FTPAccount))
             {
-                ftpClient.ProgressChanged += new FTP.FTPProgressEventHandler(x => OnProgressChanged((int)x));
+                ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x.Position, x.Length));
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
 
                 try
                 {
-                    ftpClient.UploadData(data, remotePath);
+                    ftpClient.UploadData(stream, remotePath);
                 }
                 catch (Exception e)
                 {

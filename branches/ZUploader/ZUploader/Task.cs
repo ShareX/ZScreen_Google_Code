@@ -51,75 +51,32 @@ namespace ZUploader
 
         #region Constructors
 
-        public Task()
+        private Task()
         {
             DataManager = new DataManager();
             ID = UploadManager.GetID();
         }
 
+        /// <summary>
+        /// Create task using file path
+        /// </summary>
         public Task(EDataType dataType, string filePath)
             : this()
         {
             DataManager.FileType = dataType;
             DataManager.FileName = Path.GetFileName(filePath);
-
-            switch (dataType)
-            {
-                case EDataType.File:
-                    DataManager.Data = File.ReadAllBytes(filePath);
-                    break;
-                case EDataType.Image:
-                    DataManager.Image = Image.FromFile(filePath);
-                    break;
-                case EDataType.Text:
-                    DataManager.Text = File.ReadAllText(filePath);
-                    break;
-            }
+            DataManager.Data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
+        /// <summary>
+        /// Create task using stream
+        /// </summary>
         public Task(EDataType dataType, Stream stream, string fileName)
             : this()
         {
-            switch (DataManager.FileType = dataType)
-            {
-                case EDataType.File:
-                    DataManager.Data = Helpers.GetBytes(stream);
-                    break;
-                case EDataType.Image:
-                    DataManager.Image = Image.FromStream(stream);
-                    break;
-                case EDataType.Text:
-                    using (StreamReader sr = new StreamReader(stream))
-                    {
-                        DataManager.Text = sr.ReadToEnd();
-                    }
-                    break;
-            }
-
+            DataManager.FileType = dataType;
             DataManager.FileName = fileName;
-        }
-
-        public Task(byte[] data, string fileName)
-            : this()
-        {
-            DataManager.FileType = EDataType.File;
-            DataManager.Data = data;
-            DataManager.FileName = fileName;
-        }
-
-        public Task(Image image, string fileName)
-            : this()
-        {
-            DataManager.FileType = EDataType.Image;
-            DataManager.Image = image;
-            DataManager.FileName = fileName;
-        }
-
-        public Task(string text)
-            : this()
-        {
-            DataManager.FileType = EDataType.Text;
-            DataManager.Text = text;
+            DataManager.Data = stream;
         }
 
         #endregion
@@ -144,15 +101,15 @@ namespace ZUploader
                     e.Result = UploadFile(DataManager.Data, DataManager.FileName);
                     break;
                 case EDataType.Image:
-                    e.Result = UploadImage(DataManager.Image, DataManager.FileName);
+                    e.Result = UploadImage(DataManager.Data, DataManager.FileName);
                     break;
                 case EDataType.Text:
-                    e.Result = UploadText(DataManager.Text);
+                    e.Result = UploadText(DataManager.Data);
                     break;
             }
         }
 
-        public UploadResult UploadImage(Image image, string fileName)
+        public UploadResult UploadImage(Stream stream, string fileName)
         {
             ImageUploader imageUploader = null;
 
@@ -213,8 +170,8 @@ namespace ZUploader
 
             if (imageUploader != null)
             {
-                imageUploader.ProgressChanged += (x) => bw.ReportProgress(x);
-                ImageFileManager ifm = imageUploader.UploadImage(image, fileName);
+                imageUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
                 UploadResult ur = new UploadResult
                 {
                     URL = ifm.GetFullImageUrl(),
@@ -228,7 +185,7 @@ namespace ZUploader
             return null;
         }
 
-        public UploadResult UploadText(string text)
+        public UploadResult UploadText(Stream stream)
         {
             TextUploader textUploader = null;
 
@@ -252,6 +209,7 @@ namespace ZUploader
 
             if (textUploader != null)
             {
+                string text = new StreamReader(stream).ReadToEnd();
                 string url = textUploader.UploadText(TextInfo.FromString(text));
                 UploadResult ur = new UploadResult
                 {
@@ -264,7 +222,7 @@ namespace ZUploader
             return null;
         }
 
-        public UploadResult UploadFile(byte[] data, string fileName)
+        public UploadResult UploadFile(Stream stream, string fileName)
         {
             FileUploader fileUploader = null;
 
@@ -295,8 +253,8 @@ namespace ZUploader
 
             if (fileUploader != null)
             {
-                fileUploader.ProgressChanged += (x) => bw.ReportProgress(x);
-                string url = fileUploader.Upload(data, fileName);
+                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                string url = fileUploader.Upload(stream, fileName);
                 UploadResult ur = new UploadResult
                 {
                     URL = url,

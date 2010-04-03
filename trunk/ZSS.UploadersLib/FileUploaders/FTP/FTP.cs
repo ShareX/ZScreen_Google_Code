@@ -33,9 +33,7 @@ namespace UploadersLib
 {
     public sealed class FTP : IDisposable
     {
-        public delegate void FTPProgressEventHandler(float percentage);
-
-        public event FTPProgressEventHandler ProgressChanged;
+        public event Uploader.ProgressEventHandler ProgressChanged;
 
         public FTPAccount Account { get; set; }
 
@@ -71,7 +69,7 @@ namespace UploadersLib
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(e.Percentage);
+                ProgressChanged(new Uploader.ProgressEventArgs(e.TotalBytes, e.BytesTransferred));
             }
         }
 

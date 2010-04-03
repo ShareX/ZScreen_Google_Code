@@ -23,11 +23,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
-using System.Xml;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.ImageUploaders
@@ -70,14 +67,14 @@ namespace UploadersLib.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             switch (this.UploadMode)
             {
                 case UploadMode.API:
-                    return UploadImageAPI(image, fileName);
+                    return UploadImageAPI(stream, fileName);
                 case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(image, fileName);
+                    return UploadImageAnonymous(stream, fileName);
             }
 
             return null;
@@ -89,7 +86,7 @@ namespace UploadersLib.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Image image, string fileName)
+        private ImageFileManager UploadImageAPI(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -115,7 +112,7 @@ namespace UploadersLib.ImageUploaders
                 if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
                 if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
 
-                ifm.Source = UploadImage(image, fileName, URLUnifiedAPI, "fileupload", arguments);
+                ifm.Source = UploadData(stream, fileName, URLUnifiedAPI, "fileupload", arguments);
 
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
@@ -142,7 +139,7 @@ namespace UploadersLib.ImageUploaders
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Image image, string fileName)
+        private ImageFileManager UploadImageAnonymous(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
             bool oldValue = ServicePointManager.Expect100Continue;
@@ -165,7 +162,7 @@ namespace UploadersLib.ImageUploaders
                 if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
                 if (!Public) arguments.Add("public", "no");
 
-                ifm.Source = UploadImage(image, fileName, URLStandard, "fileupload", arguments);
+                ifm.Source = UploadData(stream, fileName, URLStandard, "fileupload", arguments);
 
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");

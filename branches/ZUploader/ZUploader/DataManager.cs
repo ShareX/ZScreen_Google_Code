@@ -23,6 +23,7 @@
 
 using System;
 using System.Drawing;
+using System.IO;
 
 namespace ZUploader
 {
@@ -36,16 +37,14 @@ namespace ZUploader
     public class DataManager : IDisposable
     {
         public EDataType FileType { get; set; }
-        public byte[] Data { get; set; }
-        public Image Image { get; set; }
-        public string Text { get; set; }
+        public Stream Data { get; set; }
         public string FileName { get; set; }
 
         public void Dispose()
         {
-            if (Image != null)
+            if (Data != null)
             {
-                Image.Dispose();
+                Data.Dispose();
             }
         }
     }

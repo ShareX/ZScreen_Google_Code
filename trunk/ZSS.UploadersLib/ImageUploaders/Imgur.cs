@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.IO;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
 
@@ -14,12 +14,12 @@ namespace UploadersLib.ImageUploaders
             get { return "Imgur"; }
         }
 
-        public override ImageFileManager UploadImage(Image image, string fileName)
+        public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", APIKEY);
 
-            string response = UploadImage(image, fileName, "http://imgur.com/api/upload.xml", "image", arguments);
+            string response = UploadData(stream, fileName, "http://imgur.com/api/upload.xml", "image", arguments);
 
             return ParseResult(response);
         }

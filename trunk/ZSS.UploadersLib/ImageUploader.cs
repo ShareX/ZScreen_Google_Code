@@ -40,7 +40,16 @@ namespace UploadersLib
             this.UploadMode = UploadMode.ANONYMOUS;
         }
 
-        public abstract ImageFileManager UploadImage(Image image, string fileName);
+        public abstract ImageFileManager UploadImage(Stream stream, string fileName);
+
+        public ImageFileManager UploadImage(Image image, string fileName)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, image.RawFormat);
+                return UploadImage(stream, fileName);
+            }
+        }
 
         public ImageFileManager UploadImage(string filePath)
         {

@@ -21,12 +21,8 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using UploadersLib;
+using System.IO;
 
 namespace UploadersLib.FileUploaders
 {
@@ -37,12 +33,12 @@ namespace UploadersLib.FileUploaders
             get { return "FileBin"; }
         }
 
-        public override string Upload(byte[] file, string fileName)
+        public override string Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("MAX_FILE_SIZE", "82428800");
 
-            string response = UploadData(file, fileName, "http://filebin.ca/upload.php", "file", args);
+            string response = UploadData(stream, fileName, "http://filebin.ca/upload.php", "file", args);
 
             if (!string.IsNullOrEmpty(response))
             {
