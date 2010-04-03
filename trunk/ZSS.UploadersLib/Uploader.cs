@@ -308,6 +308,7 @@ namespace UploadersLib
                 buffer = Encoding.UTF8.GetBytes(format);
                 stream.Write(buffer, 0, buffer.Length);
 
+                content.Position = 0;
                 CopyStream(content, stream);
 
                 buffer = Encoding.UTF8.GetBytes("\r\n");

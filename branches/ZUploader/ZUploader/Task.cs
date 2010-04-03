@@ -23,7 +23,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using UploadersLib;
 using UploadersLib.FileUploaders;
@@ -109,6 +108,50 @@ namespace ZUploader
             }
         }
 
+        public UploadResult UploadFile(Stream stream, string fileName)
+        {
+            FileUploader fileUploader = null;
+
+            switch (UploadManager.FileUploader)
+            {
+                case FileUploaderType2.FTP:
+                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
+                    break;
+                case FileUploaderType2.SendSpace:
+                    fileUploader = new SendSpace();
+                    SendSpaceManager.PrepareUploadInfo(null, null);
+                    break;
+                case FileUploaderType2.RapidShare:
+                    fileUploader = new RapidShare(new RapidShareOptions()
+                    {
+                        AccountType = RapidShareAcctType.Free
+                    });
+                    break;
+                case FileUploaderType2.FileBin:
+                    fileUploader = new FileBin();
+                    break;
+                case FileUploaderType2.DropIO:
+                    fileUploader = new DropIO();
+                    break;
+                default:
+                    break;
+            }
+
+            if (fileUploader != null)
+            {
+                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                string url = fileUploader.Upload(stream, fileName);
+                UploadResult ur = new UploadResult
+                {
+                    URL = url,
+                    Errors = fileUploader.Errors
+                };
+                return ur;
+            }
+
+            return null;
+        }
+
         public UploadResult UploadImage(Stream stream, string fileName)
         {
             ImageUploader imageUploader = null;
@@ -133,39 +176,6 @@ namespace ZUploader
                     break;
                 default:
                     break;
-                /*
-                case ImageDestType.FLICKR:
-                    imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
-                    break;
-                case ImageDestType.IMAGEBAM:
-                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
-                    Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
-                    imageUploader = new ImageBamUploader(imageBamOptions);
-                    break;
-                case ImageDestType.TWITPIC:
-                    TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    twitpicOpt.Password = Adapter.TwitterGetActiveAcct().Password;
-                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
-                    twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
-                    imageUploader = new TwitPicUploader(twitpicOpt);
-                    break;
-                case ImageDestType.TWITSNAPS:
-                    TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    twitsnapsOpt.Password = Adapter.TwitterGetActiveAcct().Password;
-                    imageUploader = new TwitSnapsUploader(twitsnapsOpt);
-                    break;
-                case ImageDestType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(Engine.IMAGESHACK_KEY);
-                    yfrogOp.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    yfrogOp.Password = Adapter.TwitterGetActiveAcct().Password;
-                    yfrogOp.Source = Application.ProductName;
-                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
-                    imageUploader = new YfrogUploader(yfrogOp);
-                    break;
-                 */
             }
 
             if (imageUploader != null)
@@ -215,50 +225,6 @@ namespace ZUploader
                 {
                     URL = url,
                     Errors = textUploader.Errors
-                };
-                return ur;
-            }
-
-            return null;
-        }
-
-        public UploadResult UploadFile(Stream stream, string fileName)
-        {
-            FileUploader fileUploader = null;
-
-            switch (UploadManager.FileUploader)
-            {
-                case FileUploaderType2.FTP:
-                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
-                    break;
-                case FileUploaderType2.SendSpace:
-                    fileUploader = new SendSpace();
-                    SendSpaceManager.PrepareUploadInfo(null, null);
-                    break;
-                case FileUploaderType2.RapidShare:
-                    fileUploader = new RapidShare(new RapidShareOptions()
-                    {
-                        AccountType = RapidShareAcctType.Free
-                    });
-                    break;
-                case FileUploaderType2.FileBin:
-                    fileUploader = new FileBin();
-                    break;
-                case FileUploaderType2.DropIO:
-                    fileUploader = new DropIO();
-                    break;
-                default:
-                    break;
-            }
-
-            if (fileUploader != null)
-            {
-                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
-                string url = fileUploader.Upload(stream, fileName);
-                UploadResult ur = new UploadResult
-                {
-                    URL = url,
-                    Errors = fileUploader.Errors
                 };
                 return ur;
             }

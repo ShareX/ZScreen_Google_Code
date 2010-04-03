@@ -21,14 +21,13 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Windows.Forms;
-using System.Media;
 
 namespace ZUploader
 {
@@ -39,7 +38,6 @@ namespace ZUploader
         public static FileUploaderType2 FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
-        private static List<Task> Tasks = new List<Task>();
         private static int ID;
 
         public static int GetID()
@@ -47,23 +45,24 @@ namespace ZUploader
             return ID++;
         }
 
-        public static void Upload(string path)
+        public static void Upload(string filePath)
         {
-            Task task;
+            EDataType type;
 
-            if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
+            if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(filePath))
             {
-                task = new Task(EDataType.Text, path);
+                type = EDataType.Text;
             }
-            else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(path))
+            else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(filePath))
             {
-                task = new Task(EDataType.Image, path);
+                type = EDataType.Image;
             }
             else
             {
-                task = new Task(EDataType.File, path);
+                type = EDataType.File;
             }
 
+            Task task = new Task(type, filePath);
             StartUpload(task);
         }
 
@@ -106,7 +105,7 @@ namespace ZUploader
                 byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
                 MemoryStream stream = new MemoryStream(byteArray);
                 string fileName = Helpers.GetRandomAlphanumeric(10) + ".txt";
-                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Image;
+                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
                 Task task = new Task(type, stream, fileName);
                 StartUpload(task);
             }
@@ -119,10 +118,9 @@ namespace ZUploader
 
         private static void StartUpload(Task task)
         {
-            Tasks.Add(task);
             task.UploadStarted += new Task.UploadStartedEventHandler(task_UploadStarted);
-            task.UploadCompleted += new Task.UploadCompletedEventHandler(task_UploadCompleted);
             task.UploadProgressChanged += new Task.UploadProgressChangedEventHandler(task_UploadProgressChanged);
+            task.UploadCompleted += new Task.UploadCompletedEventHandler(task_UploadCompleted);
             task.Start();
         }
 
@@ -135,6 +133,15 @@ namespace ZUploader
                 lvi.SubItems.Add("Upload started: " + sender.DataManager.FileType.ToString());
                 lvi.SubItems.Add(string.Empty);
                 ListViewControl.Items.Add(lvi);
+            }
+        }
+
+        private static void task_UploadProgressChanged(Task sender, int progress)
+        {
+            if (ListViewControl != null)
+            {
+                ListViewItem lvi = ListViewControl.Items[sender.ID];
+                lvi.SubItems[1].Text = string.Format("Upload progress: {0}%", progress);
             }
         }
 
@@ -168,17 +175,7 @@ namespace ZUploader
                     SystemSounds.Exclamation.Play();
                 }
 
-                Tasks.Remove(sender);
                 sender.Dispose();
-            }
-        }
-
-        private static void task_UploadProgressChanged(Task sender, int progress)
-        {
-            if (ListViewControl != null)
-            {
-                ListViewItem lvi = ListViewControl.Items[sender.ID];
-                lvi.SubItems[1].Text = string.Format("Upload progress: {0}%", progress);
             }
         }
     }

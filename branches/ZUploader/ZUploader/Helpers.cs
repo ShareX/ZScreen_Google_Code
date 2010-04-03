@@ -30,7 +30,25 @@ namespace ZUploader
 {
     public static class Helpers
     {
+        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp" };
+
         public static bool IsValidImageFile(string path)
+        {
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            {
+                foreach (string ext in ImageFileExtensions)
+                {
+                    if (Path.GetExtension(path).ToLower().EndsWith(ext))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsValidImageFile2(string path)
         {
             try
             {
