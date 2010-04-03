@@ -37,8 +37,6 @@ namespace Starksoft.Net.Ftp
     [Serializable()]
     public class FtpResponseException : FtpException
     {
-        private FtpResponse _response;
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -49,13 +47,11 @@ namespace Starksoft.Net.Ftp
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="response">Ftp response object.</param>
         /// <param name="message">Exception message text.</param>
-        public FtpResponseException(FtpResponse response, string message)
-            : base(message)
-        {
-            _response = response;
-        }
+        /// <param name="response">Ftp response object.</param>
+        public FtpResponseException(string message, FtpResponse response)
+            : base(message, response)
+        {  }
 
         /// <summary>
         /// Constructor.
@@ -63,11 +59,10 @@ namespace Starksoft.Net.Ftp
         /// <param name="response">Ftp response object.</param>
         /// <param name="message">Exception message text.</param>
         /// <param name="innerException">The inner exception object.</param>
-        public FtpResponseException(FtpResponse response, string message, Exception innerException)
+        public FtpResponseException(string message, FtpResponse response, Exception innerException)
             :
-           base(message, innerException)
+           base(message, response, innerException)
         {
-            _response = response;
         }
 
         /// <summary>
@@ -81,14 +76,6 @@ namespace Starksoft.Net.Ftp
         {
         }
 
-        /// <summary>
-        /// Gets the FTP response object and detail transmitted by the FTP server
-        /// when the exception occurred.
-        /// </summary>
-        public FtpResponse Response
-        {
-            get { return _response; }
-        }
     }
 
 }

@@ -209,12 +209,14 @@ namespace Starksoft.Net.Ftp
         private FtpCmd _command;
         private string[] _arguments;
         private string _text;
+        private Encoding _encoding;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         public FtpRequest()
         {
+            _encoding = Encoding.UTF8;
             _command = new FtpCmd();
             _text = string.Empty;
         }
@@ -222,10 +224,12 @@ namespace Starksoft.Net.Ftp
         /// <summary>
         /// FTP request constructor.
         /// </summary>
+        /// <param name="encoding">Text encoding object to use.</param>
         /// <param name="command">FTP request command.</param>
         /// <param name="arguments">Parameters for the request</param>
-        internal FtpRequest(FtpCmd command, params string[] arguments)
+        internal FtpRequest(Encoding encoding, FtpCmd command, params string[] arguments)
         {
+            _encoding = encoding;
             _command = command;
             _arguments = arguments;
             _text = BuildCommandText();
@@ -234,8 +238,9 @@ namespace Starksoft.Net.Ftp
         /// <summary>
         /// FTP request constructor.
         /// </summary>
+        /// <param name="encoding">Text encoding object to use.</param>
         /// <param name="command">FTP request command.</param>
-        internal FtpRequest(FtpCmd command) : this(command, null)
+        internal FtpRequest(Encoding encoding, FtpCmd command) : this(encoding, command, null)
         { }
 
         /// <summary>
@@ -306,7 +311,7 @@ namespace Starksoft.Net.Ftp
 
         internal byte[] GetBytes()
         {
-            return Encoding.ASCII.GetBytes(String.Format("{0}\r\n", _text));
+            return _encoding.GetBytes(String.Format("{0}\r\n", _text));
         }
 
         internal bool HasHappyCodes

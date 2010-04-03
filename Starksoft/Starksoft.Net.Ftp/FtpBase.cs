@@ -307,6 +307,7 @@ namespace Starksoft.Net.Ftp
     }
     #endregion
 
+
     /// <summary>
     /// Defines the possible versions of FtpSecurityProtocol.
     /// </summary>
@@ -323,18 +324,18 @@ namespace Starksoft.Net.Ftp
         /// The AUTH TLS command is sent to the FTP server to secure the connection.  TLS protocol is the latest version of the SSL protcol and is the security protocol that should be used whenever possible.
         /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
         /// </remarks>
-        Tls1,
+        Tls1Explicit,
         /// <summary>
-        /// Specifies Transport Layer Security (TLS) version 1.0. or Secure Socket Layer (SSL) version 3.0 is acceptable to secure communications
+        /// Specifies Transport Layer Security (TLS) version 1.0. or Secure Socket Layer (SSL) version 3.0 is acceptable to secure communications in explicit mode.
         /// </summary>
         /// <remarks>
         /// The AUTH SSL command is sent to the FTP server to secure the connection but the security protocol is negotiated between the server and client.  
         /// TLS protocol is the latest version of the SSL 3.0 protcol and is the security protocol that should be used whenever possible.
         /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
         /// </remarks>
-        Tls1OrSsl3,
+        Tls1OrSsl3Explicit,
         /// <summary>
-        /// Specifies Secure Socket Layer (SSL) version 3.0 is required to secure communications.  SSL 3.0 has been superseded by the TLS protocol
+        /// Specifies Secure Socket Layer (SSL) version 3.0 is required to secure communications in explicit mode.  SSL 3.0 has been superseded by the TLS protocol
         /// and is provided for backward compatibility only
         /// </summary>
         /// <remarks>
@@ -343,9 +344,9 @@ namespace Starksoft.Net.Ftp
         /// Some FTP server do not implement TLS or understand the command AUTH TLS.  In those situations you should specify the security
         /// protocol Ssl3, otherwise specify Tls1.
         /// </remarks>
-        Ssl3,
+        Ssl3Explicit,
         /// <summary>
-        /// Specifies Secure Socket Layer (SSL) version 2.0 is required to secure communications.  SSL 2.0 has been superseded by the TLS protocol
+        /// Specifies Secure Socket Layer (SSL) version 2.0 is required to secure communications in explicit mode.  SSL 2.0 has been superseded by the TLS protocol
         /// and is provided for backward compatibility only.  SSL 2.0 has several weaknesses and should only be used with legacy FTP server that require it.
         /// </summary>
         /// <remarks>
@@ -354,7 +355,46 @@ namespace Starksoft.Net.Ftp
         /// Some FTP server do not implement TLS or understand the command AUTH TLS.  In those situations you should specify the security
         /// protocol Ssl3, otherwise specify Tls1.
         /// </remarks>
-        Ssl2
+        Ssl2Explicit,
+        /// <summary>
+        /// Specifies Transport Layer Security (TLS) version 1.0 is required to secure communciations in explicit mode.  The TLS protocol is defined in IETF RFC 2246 and supercedes the SSL 3.0 protocol.
+        /// </summary>
+        /// <remarks>
+        /// The AUTH TLS command is sent to the FTP server to secure the connection.  TLS protocol is the latest version of the SSL protcol and is the security protocol that should be used whenever possible.
+        /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
+        /// </remarks>
+        Tls1Implicit,
+        /// <summary>
+        /// Specifies Transport Layer Security (TLS) version 1.0. or Secure Socket Layer (SSL) version 3.0 is acceptable to secure communications in implicit mode.
+        /// </summary>
+        /// <remarks>
+        /// The AUTH SSL command is sent to the FTP server to secure the connection but the security protocol is negotiated between the server and client.  
+        /// TLS protocol is the latest version of the SSL 3.0 protcol and is the security protocol that should be used whenever possible.
+        /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
+        /// </remarks>
+        Tls1OrSsl3Implicit,
+        /// <summary>
+        /// Specifies Secure Socket Layer (SSL) version 3.0 is required to secure communications in implicit mode.  SSL 3.0 has been superseded by the TLS protocol
+        /// and is provided for backward compatibility only
+        /// </summary>
+        /// <remarks>
+        /// The AUTH SSL command is sent to the FTP server to secure the connection.  TLS protocol is the latest version of the SSL 3.0 protcol and is the security protocol that should be used whenever possible.
+        /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
+        /// Some FTP server do not implement TLS or understand the command AUTH TLS.  In those situations you should specify the security
+        /// protocol Ssl3, otherwise specify Tls1.
+        /// </remarks>
+        Ssl3Implicit,
+        /// <summary>
+        /// Specifies Secure Socket Layer (SSL) version 2.0 is required to secure communications in implicit mode.  SSL 2.0 has been superseded by the TLS protocol
+        /// and is provided for backward compatibility only.  SSL 2.0 has several weaknesses and should only be used with legacy FTP server that require it.
+        /// </summary>
+        /// <remarks>
+        /// The AUTH SSL command is sent to the FTP server to secure the connection.  TLS protocol is the latest version of the SSL 3.0 protcol and is the security protocol that should be used whenever possible.
+        /// There are slight differences between SSL version 3.0 and TLS version 1.0, but the protocol remains substantially the same.
+        /// Some FTP server do not implement TLS or understand the command AUTH TLS.  In those situations you should specify the security
+        /// protocol Ssl3, otherwise specify Tls1.
+        /// </remarks>
+        Ssl2Implicit
     }
 
     /// <summary>
@@ -406,6 +446,7 @@ namespace Starksoft.Net.Ftp
         private FtpResponseCollection _responseList = new FtpResponseCollection();
 
         private Thread _responseMonitor;
+        static object _reponseMonitorLock = new object();
 
         private IProxyClient _proxy;
         private int _maxUploadSpeed;
@@ -432,6 +473,9 @@ namespace Starksoft.Net.Ftp
 
         // data integrity specific
         private HashingFunction _hashAlgorithm;
+
+        // character encoding
+        private Encoding _encoding = Encoding.UTF8;
 
         // thread signal for active mode data transfer
         private ManualResetEvent _activeSignal = new ManualResetEvent(false);
@@ -562,9 +606,9 @@ namespace Starksoft.Net.Ftp
             // send request to server to get the hash value for the file
             // if the restartposition is > 0 then computer the hash on the segment that we resent
             if (startPosition > 0)
-                SendRequest(new FtpRequest(command, path, startPosition.ToString(), endPosition.ToString()));
+                SendRequest(new FtpRequest(_encoding, command, path, startPosition.ToString(), endPosition.ToString()));
             else
-                SendRequest(new FtpRequest(command, path));
+                SendRequest(new FtpRequest(_encoding, command, path));
 
             return _response.Text;
         }
@@ -1089,7 +1133,14 @@ namespace Starksoft.Net.Ftp
                 }
                 finally
                 {
-                    client.Blocking = blockingState;
+                    try
+                    {
+                        client.Blocking = blockingState;
+                    }
+                    catch
+                    {
+                        connected = false;
+                    }
                 }
 
                 return connected;
@@ -1115,6 +1166,29 @@ namespace Starksoft.Net.Ftp
         {
             get { return _hashAlgorithm; }
             set { _hashAlgorithm = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the character encoding used when sending commands to the FTP server or receiving directory listing information.
+        /// This encoding value does not affect the encoding of files being transferred.  The default value is UTF-8.  Some older FTP servers
+        /// require different character encoding such as UTF-7.
+        /// </summary>
+        /// <remarks>
+        /// To set this value use the .NET System.Text.Encoding class. The following example sets the character encoding to UTF-7.  In addition,
+        /// other encodings can be specified by string name using the static method System.Text.Encoding.GetEncoding();
+        /// <code>
+        ///     FtpClient.CharacterEncoding = System.Text.Encoding.UTF7;
+        /// </code>
+        /// </remarks>
+        public Encoding CharacterEncoding
+        {
+            get { return _encoding; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("CharacterEncoding");
+                _encoding = value;
+            }
         }
 
         #endregion
@@ -1198,19 +1272,17 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         internal void CloseAllConnections()
         {
-            // close the data and command connections
-            // ignore network errors since that state may
-            // be in flux do to a lost connection or
-            // other problem
-            try
-            {
-                CloseDataConn();
-                CloseCommandConn();
-            }
-            catch (FtpException)
-            { }
-            catch (IOException)
-            { }
+            CloseDataConn();
+            CloseCommandConn();
+            AbortMonitorThread();
+        }
+
+        /// <summary>
+        /// The monitor thread should close automatically once the command connection is terminated.  If it does not close properly, force it to close.
+        /// </summary>
+        private void AbortMonitorThread()
+        {
+            _responseMonitor.Abort();
         }
 
         //  open a connection to the server
@@ -1218,11 +1290,13 @@ namespace Starksoft.Net.Ftp
         {
             //  create a new tcp client object 
             CreateCommandConnection();
-
             StartCommandMonitorThread();
 
-            if (_securityProtocol == FtpSecurityProtocol.Ssl2 || _securityProtocol == FtpSecurityProtocol.Ssl3 || _securityProtocol == FtpSecurityProtocol.Tls1 || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3)
-                CreateSslCommandStream();
+            if (_securityProtocol == FtpSecurityProtocol.Ssl2Explicit || _securityProtocol == FtpSecurityProtocol.Ssl3Explicit || _securityProtocol == FtpSecurityProtocol.Tls1Explicit || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3Explicit)
+                CreateSslExplicitCommandStream();
+
+            if (_securityProtocol == FtpSecurityProtocol.Ssl2Implicit || _securityProtocol == FtpSecurityProtocol.Ssl3Implicit || _securityProtocol == FtpSecurityProtocol.Tls1Implicit || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3Implicit)
+                CreateSslImplicitCommandStream();
 
             // test to see if this is an asychronous operation and if so make sure 
             // the user has not requested the operation to be canceled
@@ -1276,7 +1350,7 @@ namespace Starksoft.Net.Ftp
                 if (restartPosition > 0)
                 {
                     // instruct the server to restart file transfer at the same position where the output stream left off
-                    SendRequest(new FtpRequest(FtpCmd.Rest, restartPosition.ToString(CultureInfo.InvariantCulture)));
+                    SendRequest(new FtpRequest(_encoding, FtpCmd.Rest, restartPosition.ToString(CultureInfo.InvariantCulture)));
 
                     // set the data stream to the same position as the server
                     data.Position = restartPosition;
@@ -1295,8 +1369,8 @@ namespace Starksoft.Net.Ftp
                 // create the data stream object - handles creation of SslStream and DeflateStream objects as well
                 Stream conn = _dataConn.GetStream();
 
-                // test to see if we need to enable ssl
-                if (_securityProtocol == FtpSecurityProtocol.Ssl2 || _securityProtocol == FtpSecurityProtocol.Ssl3 || _securityProtocol == FtpSecurityProtocol.Tls1 || _securityProtocol == FtpSecurityProtocol.Tls1OrSsl3)
+                // test to see if we need to enable ssl/tls explicit mode
+                if (_securityProtocol != FtpSecurityProtocol.None)
                 {
                     conn = CreateSslStream(conn);
                 }
@@ -1362,7 +1436,7 @@ namespace Starksoft.Net.Ftp
             Stream output = new MemoryStream();
             TransferData(TransferDirection.ToClient, request, output);
             output.Position = 0;
-            StreamReader reader = new StreamReader(output, Encoding.UTF8);
+            StreamReader reader = new StreamReader(output, _encoding);
             return reader.ReadToEnd();
         }
 
@@ -1370,7 +1444,7 @@ namespace Starksoft.Net.Ftp
         {
             try
             {
-                SendRequest(new FtpRequest(FtpCmd.Mode, "Z"));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Mode, "Z"));
             }
             catch (Exception ex)
             {
@@ -1382,7 +1456,7 @@ namespace Starksoft.Net.Ftp
         {
             try
             {
-                SendRequest(new FtpRequest(FtpCmd.Mode, "S"));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Mode, "S"));
             }
             catch (Exception ex)
             {
@@ -1419,13 +1493,16 @@ namespace Starksoft.Net.Ftp
             long bytesTotal = 0;
             int bytesRead = 0;
             DateTime start = DateTime.Now;
-            TimeSpan elapsed;
+            TimeSpan elapsed = new TimeSpan(0);
             int bytesPerSec = 0;
-            long totalSize = input.CanSeek ? (int)input.Length : (int)output.Length;
 
-            do
+            while (true)
             {
                 bytesRead = input.Read(buffer, 0, bufferSize);
+
+                if (bytesRead == 0)
+                    break;
+
                 bytesTotal += bytesRead;
                 output.Write(buffer, 0, bytesRead);
 
@@ -1435,7 +1512,7 @@ namespace Starksoft.Net.Ftp
 
                 //  if the consumer subscribes to transfer progress event then fire it
                 if (TransferProgress != null)
-                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesTotal, bytesPerSec, elapsed, totalSize));
+                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesPerSec, elapsed));
 
                 // test to see if this is an asychronous operation and if so make sure 
                 // the user has not requested the operation to be canceled
@@ -1445,7 +1522,7 @@ namespace Starksoft.Net.Ftp
                 // throttle the transfer if necessary
                 ThrottleByteTransfer(maxBytesPerSecond, bytesTotal, elapsed, bytesPerSec);
 
-            } while (bytesRead > 0);
+            };
 
             //  if the consumer subscribes to transfer complete event then fire it
             if (TransferComplete != null)
@@ -1528,7 +1605,7 @@ namespace Starksoft.Net.Ftp
                 if (_commandConn.Connected)
                 {
                     //  send the quit command to the server
-                    SendRequest(new FtpRequest(FtpCmd.Quit));
+                    SendRequest(new FtpRequest(_encoding, FtpCmd.Quit));
                 }
                 _commandConn.Close();
             }
@@ -1563,7 +1640,10 @@ namespace Starksoft.Net.Ftp
                         break;
 
                     if (IsUnhappyResponse(response))
-                        throw new FtpResponseException(response, response.Text);
+                    {
+                        _response = response;
+                        throw new FtpResponseException("FTP command failed.", response);
+                    }
                 }
             } while (true);
 
@@ -1623,32 +1703,39 @@ namespace Starksoft.Net.Ftp
 
         private void MonitorCommandConnection()
         {
-
+            byte[] buffer = new byte[_tcpBufferSize];
+            StringBuilder response = new StringBuilder();
             while (IsConnected)
             {
-                Thread.Sleep(WAIT_FOR_COMMAND_RESPONSE_INTERVAL);
-
-                try
+                lock (_reponseMonitorLock)
                 {
-                    if (_commandConn != null && _commandConn.GetStream().DataAvailable)
+                    Thread.Sleep(WAIT_FOR_COMMAND_RESPONSE_INTERVAL);
+                    try
                     {
-                        byte[] buffer = new byte[_tcpBufferSize];
-                        int bytes = 0;
-
-                        bytes = _commandStream.Read(buffer, 0, _tcpBufferSize);
-
-                        //  parse out the response code sent back from the server
-                        //  in some cases more than one response can be sent with
-                        //  each line separated with a crlf pair.
-                        string[] responseArray = SplitResponse(Encoding.ASCII.GetString(buffer, 0, bytes));
-
-                        for (int i = 0; i < responseArray.Length; i++)
+                        if (_commandConn != null && _commandConn.GetStream().DataAvailable)
                         {
-                            _responseQueue.Enqueue(new FtpResponse(responseArray[i]));
+                            int bytes = _commandStream.Read(buffer, 0, _tcpBufferSize);
+                            string partial = _encoding.GetString(buffer, 0, bytes);
+                            response.Append(partial);
+                            if (!partial.EndsWith("\r\n"))
+                            {
+                                continue;
+                            }
+
+                            //  parse out the response code sent back from the server
+                            //  in some cases more than one response can be sent with
+                            //  each line separated with a crlf pair.
+                            string[] responseArray = SplitResponse(response.ToString());
+                            for (int i = 0; i < responseArray.Length; i++)
+                            {
+                                _responseQueue.Enqueue(new FtpResponse(responseArray[i]));
+                            }
+
+                            response.Remove(0, response.Length);
                         }
                     }
+                    catch { }
                 }
-                catch { }
             }
 
             RaiseConnectionClosedEvent();
@@ -1678,10 +1765,7 @@ namespace Starksoft.Net.Ftp
 
         private string[] SplitResponse(string response)
         {
-            char[] crlfSplit = new char[2];
-            crlfSplit[0] = '\r';
-            crlfSplit[1] = '\n';
-            return response.Split(crlfSplit, StringSplitOptions.RemoveEmptyEntries);
+            return response.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private int GetNextActiveModeListenerPort()
@@ -1697,13 +1781,27 @@ namespace Starksoft.Net.Ftp
         private void CreateActiveConn()
         {
             string localHost = Dns.GetHostName();
-            IPAddress localAddr = Dns.GetHostAddresses(localHost)[0];
-            int listenerPort = 0;
+            IPAddress[] localAddresses = Dns.GetHostAddresses(localHost);
+            IPAddress localAddr = null;
+            foreach (IPAddress addr in localAddresses)
+            {
+                if (addr.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localAddr = addr;
+                }
+            }
+
+            if (localAddr == null)
+            {
+                throw new Exception("Local host does not have an IPv4 address");
+            }
+
 
             // Set the event to nonsignaled state.
             _activeSignal.Reset();
 
             bool success = false;
+            int listenerPort = 0;
 
             do
             {
@@ -1735,7 +1833,7 @@ namespace Starksoft.Net.Ftp
             //  the local ip address and port that the tcplistener is bound to
             try
             {
-                SendRequest(new FtpRequest(FtpCmd.Port, dataPortInfo));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Port, dataPortInfo));
             }
             catch (FtpException fex)
             {
@@ -1776,7 +1874,11 @@ namespace Starksoft.Net.Ftp
             //  close the tcpclient data connection object
             if (_dataConn != null)
             {
-                _dataConn.Close();
+                try
+                {
+                    _dataConn.Close();
+                }
+                catch { }
                 _dataConn = null;
             }
 
@@ -1784,12 +1886,13 @@ namespace Starksoft.Net.Ftp
             //  are listing and the server makes a connection to the client and pushed data 
             if (_dataTransferMode == TransferMode.Active && _activeListener != null)
             {
-                _activeListener.Stop();
+                try
+                {
+                    _activeListener.Stop();
+                }
+                catch { }
                 _activeListener = null;
             }
-
-            //Thread.Sleep(100);
-
         }
 
         private void WaitForDataConn()
@@ -1818,11 +1921,11 @@ namespace Starksoft.Net.Ftp
             //  send command to get passive port to be used from the server
             try
             {
-                SendRequest(new FtpRequest(FtpCmd.Pasv));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Pasv));
             }
             catch (FtpException fex)
             {
-                throw new FtpDataConnectionException(String.Format("An error occurred while issuing up a passive FTP connection command.  Error: {0}", fex.Message), fex);
+                throw new FtpDataConnectionException("An error occurred while issuing up a passive FTP connection command.", fex);
             }
 
             //  get the port on the end
@@ -1864,8 +1967,6 @@ namespace Starksoft.Net.Ftp
             }
         }
 
-
-
         /// <summary>
         /// Creates an SSL or TLS secured stream.
         /// </summary>
@@ -1880,16 +1981,20 @@ namespace Starksoft.Net.Ftp
             SslProtocols protocol = SslProtocols.None;
             switch (_securityProtocol)
             {
-                case FtpSecurityProtocol.Tls1OrSsl3:
+                case FtpSecurityProtocol.Tls1OrSsl3Explicit:
+                case FtpSecurityProtocol.Tls1OrSsl3Implicit:
                     protocol = SslProtocols.Default;
                     break;
-                case FtpSecurityProtocol.Ssl2:
+                case FtpSecurityProtocol.Ssl2Explicit:
+                case FtpSecurityProtocol.Ssl2Implicit:
                     protocol = SslProtocols.Ssl2;
                     break;
-                case FtpSecurityProtocol.Ssl3:
+                case FtpSecurityProtocol.Ssl3Explicit:
+                case FtpSecurityProtocol.Ssl3Implicit:
                     protocol = SslProtocols.Ssl3;
                     break;
-                case FtpSecurityProtocol.Tls1:
+                case FtpSecurityProtocol.Tls1Explicit:
+                case FtpSecurityProtocol.Tls1Implicit:
                     protocol = SslProtocols.Tls;
                     break;
                 default:
@@ -1948,8 +2053,7 @@ namespace Starksoft.Net.Ftp
 
         }
 
-
-        private void CreateSslCommandStream()
+        private void CreateSslExplicitCommandStream()
         {
             try
             {
@@ -1957,34 +2061,57 @@ namespace Starksoft.Net.Ftp
                 string authCommand = "";
                 switch (_securityProtocol)
                 {
-                    case FtpSecurityProtocol.Tls1OrSsl3:
-                    case FtpSecurityProtocol.Ssl3:
-                    case FtpSecurityProtocol.Ssl2:
+                    case FtpSecurityProtocol.Tls1OrSsl3Explicit:
+                    case FtpSecurityProtocol.Ssl3Explicit:
+                    case FtpSecurityProtocol.Ssl2Explicit:
                         authCommand = "SSL";
                         break;
-                    case FtpSecurityProtocol.Tls1:
+                    case FtpSecurityProtocol.Tls1Explicit:
                         authCommand = "TLS";
                         break;
                 }
 
                 Debug.Assert(authCommand.Length > 0, "auth command should have a value - make sure every enum option in auth command has a corresponding value");
 
-                SendRequest(new FtpRequest(FtpCmd.Auth, authCommand));
-                Thread.Sleep(200);
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Auth, authCommand));
 
                 // set the active command stream to the ssl command stream object
-                _commandStream = CreateSslStream(_commandConn.GetStream());
+                lock (_reponseMonitorLock)
+                {
+                    _commandStream = CreateSslStream(_commandConn.GetStream());
+                }
 
-                SendRequest(new FtpRequest(FtpCmd.Pbsz, "0"));
-                SendRequest(new FtpRequest(FtpCmd.Prot, "P"));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Pbsz, "0"));
+                SendRequest(new FtpRequest(_encoding, FtpCmd.Prot, "P"));
             }
             catch (FtpAuthenticationException fauth)
             {
-                throw new FtpSecureConnectionException(String.Format("An ftp authentication exception occurred while setting up a ssl data connection.  {0}", fauth.Message), fauth);
+                throw new FtpSecureConnectionException(String.Format("An ftp authentication exception occurred while setting up a explicit ssl/tls command stream.  {0}", fauth.Message), _response, fauth);
             }
             catch (FtpException fex)
             {
-                throw new FtpSecureConnectionException(String.Format("An error occurred while setting up a ssl data connection.  {0}", fex.Message), fex);
+                throw new FtpSecureConnectionException(String.Format("An error occurred while setting up a explicit ssl/tls command stream.  {0}", fex.Message), _response, fex);
+            }
+
+        }
+
+        private void CreateSslImplicitCommandStream()
+        {
+            try
+            {
+                // set the active command stream to the ssl command stream object
+                lock (_reponseMonitorLock)
+                {
+                    _commandStream = CreateSslStream(_commandConn.GetStream());
+                }
+            }
+            catch (FtpAuthenticationException fauth)
+            {
+                throw new FtpSecureConnectionException(String.Format("An ftp authentication exception occurred while setting up a implicit ssl/tls command stream.  {0}", fauth.Message), _response, fauth);
+            }
+            catch (FtpException fex)
+            {
+                throw new FtpSecureConnectionException(String.Format("An error occurred while setting up a implicit ssl/tls command stream.  {0}", fex.Message), _response, fex);
             }
 
         }

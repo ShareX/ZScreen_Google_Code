@@ -71,11 +71,11 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         Create,
         /// <summary>
-        /// Create a new file or append an existing file.
+        /// Create a new file.  Do not overwrite an existing file.
         /// </summary>
         CreateNew,
         /// <summary>
-        /// Create a new file.  Do not overwrite an existing file.
+        /// Create a new file or append an existing file.
         /// </summary>
         CreateOrAppend,
         /// <summary>
@@ -300,6 +300,8 @@ namespace Starksoft.Net.Ftp
             get { return _currentDirectory; }
         }
 
+
+
 #endregion
 
 #region Public Methods
@@ -342,7 +344,7 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.User, user));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.User, user));
             }
             catch (FtpException fex)
             {
@@ -365,7 +367,7 @@ namespace Starksoft.Net.Ftp
             {
                 try
                 {
-                    base.SendRequest(new FtpRequest(FtpCmd.Pass, password));
+                    base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Pass, password));
                 }
                 catch (FtpException fex)
                 {
@@ -439,11 +441,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.User, user));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.User, user));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when sending user information.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred when sending user information.", base.LastResponse, fex);
             }
 
             // wait for user to log into system and all response messages to be transmitted
@@ -462,11 +464,11 @@ namespace Starksoft.Net.Ftp
             {
                 try
                 {
-                    base.SendRequest(new FtpRequest(FtpCmd.Pass, password));
+                    base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Pass, password));
                 }
                 catch (FtpException fex)
                 {
-                    throw new FtpException(String.Format("An error occurred when sending password information.  Reason: {0}", base.LastResponse.Text), fex);
+                    throw new FtpException("An error occurred when sending password information.", base.LastResponse, fex);
                 }
 
                 if (base.LastResponse.Code == FtpResponseCode.NotLoggedIn)
@@ -517,12 +519,12 @@ namespace Starksoft.Net.Ftp
                 // because some systems do not all a full path to be specified when changing directories
                 foreach (string dir in dirs)
                 {
-                    base.SendRequest(new FtpRequest(FtpCmd.Cwd, dir));
+                    base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Cwd, dir));
                 }
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Could not change working directory to '{0}'.  Reason: {1}", path, fex.Message), fex);
+                throw new FtpException(String.Format("Could not change working directory to '{0}'.", path), fex);
             }
 
             _currentDirectory = GetWorkingDirectory();
@@ -553,11 +555,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Cwd, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Cwd, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Could not change working directory to '{0}'.  Reason: {1}", path, fex.Message), fex);
+                throw new FtpException(String.Format("Could not change working directory to '{0}'.", path), fex);
             }
 
             _currentDirectory = GetWorkingDirectory();
@@ -574,11 +576,11 @@ namespace Starksoft.Net.Ftp
 		{
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Pwd));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Pwd));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Could not retrieve working directory.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("Could not retrieve working directory.", base.LastResponse, fex);
             }
 
 			//  now we have to fix the directory due to formatting
@@ -614,11 +616,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Dele, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Dele, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Unable to the delete file {0}.  Reason: {1}", path, base.LastResponse.Text),fex);
+                throw new FtpException(String.Format("Unable to the delete file {0}.", path), base.LastResponse,fex);
             }
 		}
 
@@ -632,11 +634,11 @@ namespace Starksoft.Net.Ftp
         {
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Abor));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Abor));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Abort command failed or was unable to be issued.  Reason: {1}", base.LastResponse.Text), fex);
+                throw new FtpException("Abort command failed or was unable to be issued.", base.LastResponse, fex);
             }
         }
 
@@ -661,11 +663,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Mkd, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Mkd, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("The directory {0} could not be created.  Reason: {1}", path, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("The directory {0} could not be created.", path), base.LastResponse, fex);
             }
 		}
 
@@ -729,11 +731,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Rmd, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Rmd, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("The FTP destination was unable to delete the directory '{0}'. Reason: {1}", path, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("The FTP destination was unable to delete the directory '{0}'.", path), base.LastResponse, fex);
             }
 
         }
@@ -752,11 +754,11 @@ namespace Starksoft.Net.Ftp
 		{
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Help));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Help));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while getting the system help.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred while getting the system help.", base.LastResponse, fex);
             }
 
             return base.LastResponse.Text;
@@ -785,11 +787,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Mdtm, fileName));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Mdtm, fileName));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when retrieving file date and time for '{0}'.  Reason: {1}", fileName, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("An error occurred when retrieving file date and time for '{0}'.", fileName), base.LastResponse, fex);
             }
 
             string response = base.LastResponse.Text;
@@ -836,7 +838,7 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Mdtm, dateTimeArg, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Mdtm, dateTimeArg, path));
             }
             catch (FtpException fex)
             {
@@ -858,11 +860,11 @@ namespace Starksoft.Net.Ftp
 		{
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Stat));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Stat));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while getting the system status.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred while getting the system status.", base.LastResponse, fex);
             }
 
             return base.LastResponse.Text;
@@ -881,11 +883,11 @@ namespace Starksoft.Net.Ftp
 		{
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Cdup));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Cdup));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when changing directory to the parent (ChangeDirectoryUp).  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred when changing directory to the parent (ChangeDirectoryUp).", base.LastResponse, fex);
             }
 		}
 
@@ -912,11 +914,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Size, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Size, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when retrieving file size for {0}.  Reason: {1}", path, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("An error occurred when retrieving file size for {0}.", path), base.LastResponse, fex);
             }
             
             return Int64.Parse(base.LastResponse.Text, CultureInfo.InvariantCulture);
@@ -927,17 +929,17 @@ namespace Starksoft.Net.Ftp
         /// </summary>
         /// <returns>A string containing the additional features beyond the RFC 959 standard supported by the FTP server.</returns>
         /// <remarks>
-        /// This command is an additional feature beyond the REF 959 standard and therefore is not supported by all FTP servers.        
+        /// This command is an additional feature beyond the RFC 959 standard and therefore is not supported by all FTP servers.        
         /// </remarks>
         public string GetFeatures()
         {
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Feat));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Feat));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when retrieving destination features.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred when retrieving features.", base.LastResponse, fex);
             }
                 
             return base.LastResponse.Text;
@@ -969,11 +971,11 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Stat, path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Stat, path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when retrieving file status for file '{0}'.  Reason: {1}", path, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("An error occurred when retrieving file status for file '{0}'.", path), base.LastResponse, fex);
             }
 
             return base.LastResponse.Text;
@@ -992,11 +994,11 @@ namespace Starksoft.Net.Ftp
         {
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Stor, size.ToString()));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Stor, size.ToString()));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when trying to allocate storage on the destination.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred when trying to allocate storage on the destination.", base.LastResponse, fex);
             }
         }
 
@@ -1015,11 +1017,11 @@ namespace Starksoft.Net.Ftp
 		{
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Syst));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Syst));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while getting the system type.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred while getting the system type.", base.LastResponse, fex);
             }
 
             return base.LastResponse.Text;
@@ -1048,7 +1050,7 @@ namespace Starksoft.Net.Ftp
             catch (FtpException fex)
             {
                 WriteToLog(String.Format("Action='PutFileUnique';Action='TransferError';LocalPath='{0}';CurrentDirectory='{1}';ErrorMessage='{2}'", localPath, _currentDirectory, fex.Message));
-                throw new FtpException(String.Format("An error occurred while executing PutFileUnique() on the remote FTP destination.  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred while executing PutFileUnique() on the remote FTP destination.", base.LastResponse, fex);
             }
         }
 
@@ -1079,12 +1081,12 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Stor), inputStream);
+                base.TransferData(TransferDirection.ToServer, new FtpRequest(base.CharacterEncoding, FtpCmd.Stor), inputStream);
             }
             catch (Exception ex)
             {
                 WriteToLog(String.Format("Action='PutFileUnique';Action='TransferError';CurrentDirectory='{0}';ErrorMessage='{1}'", _currentDirectory, ex.Message));
-                throw new FtpException("An error occurred while executing PutFileUnique() on the remote FTP destination.", ex);
+                throw new FtpException("An error occurred while executing PutFileUnique() on the remote FTP destination.", base.LastResponse, ex);
             }
 
             WriteToLog(String.Format("Action='PutFileUnique';Action='TransferSuccess';CurrentDirectory='{0}'", _currentDirectory));
@@ -1152,7 +1154,7 @@ namespace Starksoft.Net.Ftp
 
             WriteToLog(String.Format("Action='GetFile';Status='TransferBegin';LocalPath='{0}';RemotePath='{1}';FileAction='{1}'", localPath, remotePath, action.ToString()));
 
-            FtpRequest request = new FtpRequest(FtpCmd.Retr, remotePath);
+            FtpRequest request = new FtpRequest(base.CharacterEncoding, FtpCmd.Retr, remotePath);
 
             try
             {
@@ -1206,7 +1208,7 @@ namespace Starksoft.Net.Ftp
             catch (Exception ex)
             {
                 WriteToLog(String.Format("Action='GetFile';Status='TransferError';LocalPath='{0}';RemotePath='{1}';FileAction='{1}';ErrorMessage='{2}", localPath, remotePath, action.ToString(), ex.Message));
-                throw new FtpException(String.Format("An unexpected exception occurred while retrieving file '{0}. Error: {0}", remotePath, ex.Message), ex); 
+                throw new FtpException(String.Format("An unexpected exception occurred while retrieving file '{0}'.", remotePath), base.LastResponse, ex); 
             }
 
             WriteToLog(String.Format("Action='GetFile';Status='TransferSuccess';LocalPath='{0}';RemotePath='{1}';FileAction='{1}'", localPath, remotePath, action.ToString()));
@@ -1249,7 +1251,7 @@ namespace Starksoft.Net.Ftp
             if (outStream.CanWrite == false)
                 throw new ArgumentException("must be writable.  The CanWrite property must return the value 'true'.", "outStream");
 
-            FtpRequest request = new FtpRequest(FtpCmd.Retr, remotePath);
+            FtpRequest request = new FtpRequest(base.CharacterEncoding, FtpCmd.Retr, remotePath);
 
             if (restart)
             {
@@ -1296,9 +1298,10 @@ namespace Starksoft.Net.Ftp
             bool found = false;
             bool errorChgDir = false;
             path = path.Replace("\\", "/");
+
             string[] dirs = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             string filename = "";
-            if (dirs.Length == 1)
+            if (dirs.Length < 2)
                 filename = path;
             else
                 filename = dirs[dirs.Length - 1];
@@ -1355,7 +1358,7 @@ namespace Starksoft.Net.Ftp
         /// <seealso cref="GetDirListDeepAsync(string)"/>
         public string GetNameList()
 		{
-            return base.TransferText(new FtpRequest(FtpCmd.Nlst));
+            return base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.Nlst));
 		}
 
         /// <summary>
@@ -1380,7 +1383,7 @@ namespace Starksoft.Net.Ftp
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            return base.TransferText(new FtpRequest(FtpCmd.Nlst, path));
+            return base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.Nlst, path));
         }
 
 
@@ -1396,7 +1399,7 @@ namespace Starksoft.Net.Ftp
         /// <seealso cref="GetNameList(string)"/>
         public string GetDirListAsText()
 		{
-            return base.TransferText(new FtpRequest(FtpCmd.List, "-al"));
+            return base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.List, "-al"));
 		}
 
         /// <summary>
@@ -1421,7 +1424,7 @@ namespace Starksoft.Net.Ftp
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            return base.TransferText(new FtpRequest(FtpCmd.List, "-al", path));
+            return base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.List, "-al", path));
 		}
 
         /// <summary>
@@ -1439,7 +1442,7 @@ namespace Starksoft.Net.Ftp
         /// <seealso cref="GetNameList(string)"/>        
         public FtpItemCollection GetDirList()
         {
-            return new FtpItemCollection(_currentDirectory, base.TransferText(new FtpRequest(FtpCmd.List, "-al")), _itemParser);
+            return new FtpItemCollection(_currentDirectory, base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.List, "-al")), _itemParser);
         }
 
         /// <summary>
@@ -1464,7 +1467,7 @@ namespace Starksoft.Net.Ftp
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            return new FtpItemCollection(path, base.TransferText(new FtpRequest(FtpCmd.List, "-al", path)), _itemParser);
+            return new FtpItemCollection(path, base.TransferText(new FtpRequest(base.CharacterEncoding, FtpCmd.List, "-al", path)), _itemParser);
         }
 
         /// <summary>
@@ -1517,12 +1520,12 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Rnfr, name));
-                base.SendRequest(new FtpRequest(FtpCmd.Rnto, newName));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Rnfr, name));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Rnto, newName));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("The FTP destination was unable to rename the file or directory '{0}' to the new name '{1}'.  {2}", name, newName, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("The FTP destination was unable to rename the file or directory '{0}' to the new name '{1}'.", name, newName), base.LastResponse, fex);
             }
 
 		}
@@ -1589,13 +1592,13 @@ namespace Starksoft.Net.Ftp
                 throw new ArgumentException(String.Format("Command '{0}' not supported by Quote() method.", code), "command");
 
             if (ftpCmd == FtpCmd.List || ftpCmd == FtpCmd.Nlst)
-                return base.TransferText(new FtpRequest(ftpCmd, args));
+                return base.TransferText(new FtpRequest(base.CharacterEncoding, ftpCmd, args));
 
 
             if (ftpCmd == FtpCmd.Unknown)
-                base.SendRequest(new FtpRequest(ftpCmd, command));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, ftpCmd, command));
             else
-                base.SendRequest(new FtpRequest(ftpCmd, args));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, ftpCmd, args));
 
             return base.LastResponseList.GetRawText();
         }
@@ -1608,11 +1611,11 @@ namespace Starksoft.Net.Ftp
         {
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Noop));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Noop));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred while issuing the No Operation command (NOOP).  Reason: {0}", base.LastResponse.Text), fex);
+                throw new FtpException("An error occurred while issuing the No Operation command (NOOP).", base.LastResponse, fex);
             }
         }
 
@@ -1645,15 +1648,15 @@ namespace Starksoft.Net.Ftp
 
             try
             {
-                base.SendRequest(new FtpRequest(FtpCmd.Site, "CHMOD", octalValue.ToString(), path));
+                base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Site, "CHMOD", octalValue.ToString(), path));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Unable to the change file mode for file {0}.  Reason: {1}", path, base.LastResponse.Text), fex);
+                throw new FtpException(String.Format("Unable to the change file mode for file {0}.  Reason: {1}", path, base.LastResponse.Text), base.LastResponse, fex);
             }
 
             if (base.LastResponse.Code == FtpResponseCode.CommandNotImplementedSuperfluousAtThisSite)
-                throw new FtpException(String.Format("Unable to the change file mode for file {0}.  Reason: {1}", path, base.LastResponse.Text));
+                throw new FtpException(String.Format("Unable to the change file mode for file {0}.  Reason: {1}", path, base.LastResponse.Text), base.LastResponse);
         }
 
         /// <summary>
@@ -1671,7 +1674,7 @@ namespace Starksoft.Net.Ftp
             if (argument.Length == 0)
                 throw new ArgumentException("must have a value", "argument");
 
-            base.SendRequest(new FtpRequest(FtpCmd.Site, argument));
+            base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Site, argument));
         }
 
         /// <summary>
@@ -1822,17 +1825,17 @@ namespace Starksoft.Net.Ftp
                 switch (action)
                 {
                     case FileAction.CreateOrAppend:
-                        base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Appe, remotePath), inputStream);
+                        base.TransferData(TransferDirection.ToServer, new FtpRequest(base.CharacterEncoding, FtpCmd.Appe, remotePath), inputStream);
                         break;
                     case FileAction.CreateNew:
                         if (Exists(remotePath))
                         {
                             throw new FtpException("Cannot overwrite existing file when action FileAction.CreateNew is specified.");
                         }
-                        base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Stor, remotePath), inputStream);
+                        base.TransferData(TransferDirection.ToServer, new FtpRequest(base.CharacterEncoding, FtpCmd.Stor, remotePath), inputStream);
                         break;
                     case FileAction.Create:
-                        base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Stor, remotePath), inputStream);
+                        base.TransferData(TransferDirection.ToServer, new FtpRequest(base.CharacterEncoding, FtpCmd.Stor, remotePath), inputStream);
                         break;
                     case FileAction.Resume:
                         //  get the size of the file already on the server (in bytes)
@@ -1843,7 +1846,7 @@ namespace Starksoft.Net.Ftp
                             return;
 
                         //  transfer file to the server
-                        base.TransferData(TransferDirection.ToServer, new FtpRequest(FtpCmd.Stor, remotePath), inputStream, remoteSize);
+                        base.TransferData(TransferDirection.ToServer, new FtpRequest(base.CharacterEncoding, FtpCmd.Stor, remotePath), inputStream, remoteSize);
                         break;
                     case FileAction.ResumeOrCreate:
                         if (Exists(remotePath))
@@ -1856,7 +1859,7 @@ namespace Starksoft.Net.Ftp
             catch (FtpException fex)
             {
                 WriteToLog(String.Format("Action='PutFile';Status='TransferError';RemotePath='{0}';FileAction='{1}';ErrorMessage='{2}'", remotePath, action.ToString(), fex.Message));
-                throw new FtpException(String.Format("An error occurred while putting file to the fileName '{1}'.  Error: {0}", base.LastResponse.Text, fex.Message), fex);
+                throw new FtpDataTransferException(String.Format("An error occurred while putting fileName '{0}'.", remotePath), base.LastResponse, fex);
             }
 
             WriteToLog(String.Format("Action='PutFile';Status='TransferSuccess';RemotePath='{0}';FileAction='{1}'", remotePath, action.ToString()));
@@ -1895,11 +1898,11 @@ namespace Starksoft.Net.Ftp
             //  send command to destination FTP server to get passive port to be used from the source FTP server
             try
             {
-                destination.SendRequest(new FtpRequest(FtpCmd.Pasv));
+                destination.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Pasv));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred when trying to set up the passive connection on '{1}' for a destination to destination copy between '{0}' and '{1}'.", this.Host, destination.Host), fex);
+                throw new FtpException(String.Format("An error occurred when trying to set up the passive connection on '{1}' for a destination to destination copy between '{0}' and '{1}'.", this.Host, destination.Host), base.LastResponse, fex);
             }
 
             //  get the begin and end positions to extract data from the response string
@@ -1911,31 +1914,31 @@ namespace Starksoft.Net.Ftp
             //  the local ip address and port that the destination server will be bound to
             try
             {
-                this.SendRequest(new FtpRequest(FtpCmd.Port, dataPortInfo));
+                this.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Port, dataPortInfo));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("Command instructing '{0}' to open connection failed.", this.Host), fex);
+                throw new FtpException(String.Format("Command instructing '{0}' to open connection failed.", this.Host), base.LastResponse, fex);
             }
 
             // send command to tell the source server to retrieve the file from the destination server
             try
             {
-                this.SendRequest(new FtpRequest(FtpCmd.Retr, fileName));
+                this.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Retr, fileName));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred transfering on a server to server copy between '{0}' and '{1}'.", this.Host, destination.Host), fex);
+                throw new FtpException(String.Format("An error occurred transfering on a server to server copy between '{0}' and '{1}'.", this.Host, destination.Host), base.LastResponse, fex);
             }
 
             // send command to tell the destination to store the file
             try
             {
-                destination.SendRequest(new FtpRequest(FtpCmd.Stor, fileName));
+                destination.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Stor, fileName));
             }
             catch (FtpException fex)
             {
-                throw new FtpException(String.Format("An error occurred transfering on a server to server copy between '{0}' and '{1}'.", this.Host, destination.Host), fex);
+                throw new FtpException(String.Format("An error occurred transfering on a server to server copy between '{0}' and '{1}'.", this.Host, destination.Host), base.LastResponse, fex);
             }
 
             // wait until we get a file completed response back from the destination server and the source server
@@ -2013,10 +2016,10 @@ namespace Starksoft.Net.Ftp
 			switch (_fileTransferType)
 			{
 				case TransferType.Binary:
-                    base.SendRequest(new FtpRequest(FtpCmd.Type, "I"));
+                    base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Type, "I"));
 					break;
 				case TransferType.Ascii:
-                    base.SendRequest(new FtpRequest(FtpCmd.Type, "A"));
+                    base.SendRequest(new FtpRequest(base.CharacterEncoding, FtpCmd.Type, "A"));
 					break;
 			}
 		}
@@ -2042,7 +2045,7 @@ namespace Starksoft.Net.Ftp
                 return;
 
             string line = String.Format("[{0}] [{1}] [{2}] {3}\r\n", DateTime.Now.ToString("G"), base.Host, base.Port.ToString(), message);
-            byte[] buffer = Encoding.ASCII.GetBytes(line);
+            byte[] buffer = base.CharacterEncoding.GetBytes(line);
             _log.Write(buffer, 0, buffer.Length);
         }
         
