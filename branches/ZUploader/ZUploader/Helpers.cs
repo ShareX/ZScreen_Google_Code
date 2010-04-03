@@ -25,6 +25,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Drawing.Imaging;
 
 namespace ZUploader
 {
@@ -118,6 +119,28 @@ namespace ZUploader
                 img.Save(ms, img.RawFormat);
                 return GetBytes(ms);
             }
+        }
+
+        public static void SaveJPG100(this Image image, Stream stream)
+        {
+            EncoderParameters encoderParameters = new EncoderParameters(1);
+            encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+            image.Save(stream, GetEncoder(ImageFormat.Jpeg), encoderParameters);
+        }
+
+        public static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+
+            return null;
         }
     }
 }

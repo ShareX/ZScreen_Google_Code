@@ -93,8 +93,8 @@ namespace ZUploader
                 using (Image img = Clipboard.GetImage())
                 {
                     MemoryStream stream = new MemoryStream();
-                    img.Save(stream, ImageFormat.Png);
-                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".png";
+                    img.SaveJPG100(stream);
+                    string fileName = Helpers.GetRandomAlphanumeric(10) + ".jpg";
                     EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
                     Task task = new Task(type, stream, fileName);
                     StartUpload(task);
