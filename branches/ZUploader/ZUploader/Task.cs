@@ -41,8 +41,8 @@ namespace ZUploader
         public event TaskEventHandler UploadCompleted;
 
         public UploadInfo Info { get; private set; }
-        public Stream Data { get; private set; }
 
+        private Stream Data;
         private BackgroundWorker bw;
 
         #region Constructors
@@ -238,16 +238,13 @@ namespace ZUploader
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (Info.Progress.Percentage < e.ProgressPercentage)
+            Uploader.ProgressEventArgs progress = e.UserState as Uploader.ProgressEventArgs;
+            if (progress != null)
             {
-                Uploader.ProgressEventArgs progress = e.UserState as Uploader.ProgressEventArgs;
-                if (progress != null)
-                {
-                    Info.Progress.Position = progress.Position;
-                    Info.Progress.Length = progress.Length;
-                    Info.Progress.Percentage = (int)progress.Percentage;
-                    OnUploadProgressChanged();
-                }
+                Info.Progress.Position = progress.Position;
+                Info.Progress.Length = progress.Length;
+                Info.Progress.Percentage = (int)progress.Percentage;
+                OnUploadProgressChanged();
             }
         }
 
