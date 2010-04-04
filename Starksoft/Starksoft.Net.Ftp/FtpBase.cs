@@ -1495,6 +1495,7 @@ namespace Starksoft.Net.Ftp
             DateTime start = DateTime.Now;
             TimeSpan elapsed = new TimeSpan(0);
             int bytesPerSec = 0;
+            long totalSize = input.CanSeek ? (int)input.Length : (int)output.Length;
 
             while (true)
             {
@@ -1512,7 +1513,7 @@ namespace Starksoft.Net.Ftp
 
                 //  if the consumer subscribes to transfer progress event then fire it
                 if (TransferProgress != null)
-                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesPerSec, elapsed));
+                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesTotal, bytesPerSec, elapsed, totalSize));               
 
                 // test to see if this is an asychronous operation and if so make sure 
                 // the user has not requested the operation to be canceled
