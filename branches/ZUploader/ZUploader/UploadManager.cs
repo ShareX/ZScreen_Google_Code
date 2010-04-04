@@ -145,8 +145,8 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[status.ID];
-                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} kb / {2:N0} kb", status.Progress.Percentage,
-                    status.Progress.Position / 1000, status.Progress.Length / 1000);
+                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} KiB / {2:N0} KiB", status.Progress.Percentage,
+                    status.Progress.Position / 1024, status.Progress.Length / 1024);
             }
         }
 
