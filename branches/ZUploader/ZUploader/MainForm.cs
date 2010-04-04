@@ -46,7 +46,6 @@ namespace ZUploader
             cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
             cbFileUploaderDestination.SelectedIndex = Program.Settings.SelectedFileUploaderDestination;
             UploadManager.ListViewControl = lvUploads;
-            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             UpdateControls();
@@ -256,11 +255,6 @@ namespace ZUploader
             UploadManager.Upload(files);
         }
 
-        private void pgFTPAccount_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            pgFTPAccount.SelectedObject = Program.Settings.FTPAccount;
-        }
-
         #region Options
 
         private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
@@ -302,5 +296,10 @@ namespace ZUploader
         }
 
         #endregion
+
+        private void btnOpenFTPSettings_Click(object sender, EventArgs e)
+        {
+            new FTPSettingsForm().Show();
+        }
     }
 }

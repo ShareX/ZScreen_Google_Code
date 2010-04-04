@@ -59,6 +59,10 @@ namespace ZUploader
             this.lvUploads = new System.Windows.Forms.ListView();
             this.chID = new System.Windows.Forms.ColumnHeader();
             this.chStatus = new System.Windows.Forms.ColumnHeader();
+            this.chFilePath = new System.Windows.Forms.ColumnHeader();
+            this.chProgress = new System.Windows.Forms.ColumnHeader();
+            this.chUploaderType = new System.Windows.Forms.ColumnHeader();
+            this.chUploaderName = new System.Windows.Forms.ColumnHeader();
             this.chURL = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,27 +76,15 @@ namespace ZUploader
             this.lblFileUploaderDestination = new System.Windows.Forms.Label();
             this.cbFileUploaderDestination = new System.Windows.Forms.ComboBox();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.tcApp = new System.Windows.Forms.TabControl();
-            this.tpHistory = new System.Windows.Forms.TabPage();
-            this.tpFTP = new System.Windows.Forms.TabPage();
-            this.pgFTPAccount = new System.Windows.Forms.PropertyGrid();
-            this.tpOptions = new System.Windows.Forms.TabPage();
             this.cbAutoPlaySound = new System.Windows.Forms.CheckBox();
             this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
-            this.tpAbout = new System.Windows.Forms.TabPage();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.chFilePath = new System.Windows.Forms.ColumnHeader();
-            this.chProgress = new System.Windows.Forms.ColumnHeader();
-            this.chUploaderName = new System.Windows.Forms.ColumnHeader();
-            this.chUploaderType = new System.Windows.Forms.ColumnHeader();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnOpenFTPSettings = new System.Windows.Forms.Button();
             this.cmsUploads.SuspendLayout();
-            this.tcApp.SuspendLayout();
-            this.tpHistory.SuspendLayout();
-            this.tpFTP.SuspendLayout();
-            this.tpOptions.SuspendLayout();
-            this.tpAbout.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblImageUploaderDestination
@@ -126,6 +118,9 @@ namespace ZUploader
             // 
             // lvUploads
             // 
+            this.lvUploads.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chID,
             this.chStatus,
@@ -135,13 +130,12 @@ namespace ZUploader
             this.chUploaderName,
             this.chURL});
             this.lvUploads.ContextMenuStrip = this.cmsUploads;
-            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvUploads.FullRowSelect = true;
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(3, 3);
+            this.lvUploads.Location = new System.Drawing.Point(8, 88);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(1070, 424);
+            this.lvUploads.Size = new System.Drawing.Size(936, 312);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -157,6 +151,26 @@ namespace ZUploader
             // 
             this.chStatus.Text = "Status";
             this.chStatus.Width = 125;
+            // 
+            // chFilePath
+            // 
+            this.chFilePath.Text = "File path";
+            this.chFilePath.Width = 150;
+            // 
+            // chProgress
+            // 
+            this.chProgress.Text = "Progress";
+            this.chProgress.Width = 125;
+            // 
+            // chUploaderType
+            // 
+            this.chUploaderType.Text = "Uploader type";
+            this.chUploaderType.Width = 80;
+            // 
+            // chUploaderName
+            // 
+            this.chUploaderName.Text = "Uploader name";
+            this.chUploaderName.Width = 125;
             // 
             // chURL
             // 
@@ -266,70 +280,10 @@ namespace ZUploader
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // tcApp
-            // 
-            this.tcApp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcApp.Controls.Add(this.tpHistory);
-            this.tcApp.Controls.Add(this.tpFTP);
-            this.tcApp.Controls.Add(this.tpOptions);
-            this.tcApp.Controls.Add(this.tpAbout);
-            this.tcApp.Location = new System.Drawing.Point(8, 88);
-            this.tcApp.Name = "tcApp";
-            this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(1084, 456);
-            this.tcApp.TabIndex = 7;
-            // 
-            // tpHistory
-            // 
-            this.tpHistory.Controls.Add(this.lvUploads);
-            this.tpHistory.Location = new System.Drawing.Point(4, 22);
-            this.tpHistory.Name = "tpHistory";
-            this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(1076, 430);
-            this.tpHistory.TabIndex = 0;
-            this.tpHistory.Text = "History";
-            this.tpHistory.UseVisualStyleBackColor = true;
-            // 
-            // tpFTP
-            // 
-            this.tpFTP.Controls.Add(this.pgFTPAccount);
-            this.tpFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(465, 262);
-            this.tpFTP.TabIndex = 2;
-            this.tpFTP.Text = "FTP Account";
-            this.tpFTP.UseVisualStyleBackColor = true;
-            // 
-            // pgFTPAccount
-            // 
-            this.pgFTPAccount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgFTPAccount.Location = new System.Drawing.Point(3, 3);
-            this.pgFTPAccount.Name = "pgFTPAccount";
-            this.pgFTPAccount.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPAccount.Size = new System.Drawing.Size(459, 256);
-            this.pgFTPAccount.TabIndex = 0;
-            this.pgFTPAccount.ToolbarVisible = false;
-            this.pgFTPAccount.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgFTPAccount_PropertyValueChanged);
-            // 
-            // tpOptions
-            // 
-            this.tpOptions.Controls.Add(this.cbAutoPlaySound);
-            this.tpOptions.Controls.Add(this.cbClipboardAutoCopy);
-            this.tpOptions.Location = new System.Drawing.Point(4, 22);
-            this.tpOptions.Name = "tpOptions";
-            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(465, 262);
-            this.tpOptions.TabIndex = 1;
-            this.tpOptions.Text = "Options";
-            this.tpOptions.UseVisualStyleBackColor = true;
-            // 
             // cbAutoPlaySound
             // 
             this.cbAutoPlaySound.AutoSize = true;
-            this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
+            this.cbAutoPlaySound.Location = new System.Drawing.Point(11, 43);
             this.cbAutoPlaySound.Name = "cbAutoPlaySound";
             this.cbAutoPlaySound.Size = new System.Drawing.Size(199, 17);
             this.cbAutoPlaySound.TabIndex = 1;
@@ -340,7 +294,7 @@ namespace ZUploader
             // cbClipboardAutoCopy
             // 
             this.cbClipboardAutoCopy.AutoSize = true;
-            this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 16);
+            this.cbClipboardAutoCopy.Location = new System.Drawing.Point(11, 19);
             this.cbClipboardAutoCopy.Name = "cbClipboardAutoCopy";
             this.cbClipboardAutoCopy.Size = new System.Drawing.Size(254, 17);
             this.cbClipboardAutoCopy.TabIndex = 0;
@@ -348,23 +302,11 @@ namespace ZUploader
             this.cbClipboardAutoCopy.UseVisualStyleBackColor = true;
             this.cbClipboardAutoCopy.CheckedChanged += new System.EventHandler(this.cbClipboardAutoCopy_CheckedChanged);
             // 
-            // tpAbout
-            // 
-            this.tpAbout.Controls.Add(this.llblBugReports);
-            this.tpAbout.Controls.Add(this.llWebsite);
-            this.tpAbout.Location = new System.Drawing.Point(4, 22);
-            this.tpAbout.Name = "tpAbout";
-            this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAbout.Size = new System.Drawing.Size(465, 262);
-            this.tpAbout.TabIndex = 3;
-            this.tpAbout.Text = "About";
-            this.tpAbout.UseVisualStyleBackColor = true;
-            // 
             // llblBugReports
             // 
             this.llblBugReports.AutoSize = true;
             this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(16, 40);
+            this.llblBugReports.Location = new System.Drawing.Point(792, 64);
             this.llblBugReports.Name = "llblBugReports";
             this.llblBugReports.Size = new System.Drawing.Size(100, 13);
             this.llblBugReports.TabIndex = 84;
@@ -376,7 +318,7 @@ namespace ZUploader
             // 
             this.llWebsite.AutoSize = true;
             this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(16, 16);
+            this.llWebsite.Location = new System.Drawing.Point(824, 48);
             this.llWebsite.Name = "llWebsite";
             this.llWebsite.Size = new System.Drawing.Size(66, 13);
             this.llWebsite.TabIndex = 83;
@@ -395,25 +337,26 @@ namespace ZUploader
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // chFilePath
+            // groupBox1
             // 
-            this.chFilePath.Text = "File path";
-            this.chFilePath.Width = 200;
+            this.groupBox1.Controls.Add(this.cbClipboardAutoCopy);
+            this.groupBox1.Controls.Add(this.cbAutoPlaySound);
+            this.groupBox1.Location = new System.Drawing.Point(488, 8);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(288, 72);
+            this.groupBox1.TabIndex = 85;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Settings";
             // 
-            // chProgress
+            // btnOpenFTPSettings
             // 
-            this.chProgress.Text = "Progress";
-            this.chProgress.Width = 125;
-            // 
-            // chUploaderName
-            // 
-            this.chUploaderName.Text = "Uploader name";
-            this.chUploaderName.Width = 125;
-            // 
-            // chUploaderType
-            // 
-            this.chUploaderType.Text = "Uploader type";
-            this.chUploaderType.Width = 80;
+            this.btnOpenFTPSettings.Location = new System.Drawing.Point(784, 8);
+            this.btnOpenFTPSettings.Name = "btnOpenFTPSettings";
+            this.btnOpenFTPSettings.Size = new System.Drawing.Size(112, 32);
+            this.btnOpenFTPSettings.TabIndex = 86;
+            this.btnOpenFTPSettings.Text = "Open FTP Settings";
+            this.btnOpenFTPSettings.UseVisualStyleBackColor = true;
+            this.btnOpenFTPSettings.Click += new System.EventHandler(this.btnOpenFTPSettings_Click);
             // 
             // MainForm
             // 
@@ -421,10 +364,14 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 551);
+            this.ClientSize = new System.Drawing.Size(951, 407);
+            this.Controls.Add(this.lvUploads);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.llblBugReports);
+            this.Controls.Add(this.btnOpenFTPSettings);
+            this.Controls.Add(this.llWebsite);
             this.Controls.Add(this.lblTextUploaderDestination);
             this.Controls.Add(this.lblFileUploaderDestination);
-            this.Controls.Add(this.tcApp);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnClipboardUpload);
@@ -441,13 +388,8 @@ namespace ZUploader
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.cmsUploads.ResumeLayout(false);
-            this.tcApp.ResumeLayout(false);
-            this.tpHistory.ResumeLayout(false);
-            this.tpFTP.ResumeLayout(false);
-            this.tpOptions.ResumeLayout(false);
-            this.tpOptions.PerformLayout();
-            this.tpAbout.ResumeLayout(false);
-            this.tpAbout.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,16 +411,10 @@ namespace ZUploader
         private System.Windows.Forms.ContextMenuStrip cmsUploads;
         private System.Windows.Forms.ToolStripMenuItem copyURLToolStripMenuItem;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.TabControl tcApp;
-        private System.Windows.Forms.TabPage tpHistory;
-        private System.Windows.Forms.TabPage tpOptions;
         private System.Windows.Forms.ToolStripMenuItem openURLToolStripMenuItem;
         private System.Windows.Forms.Button btnOpen;
-        private System.Windows.Forms.TabPage tpFTP;
-        private System.Windows.Forms.PropertyGrid pgFTPAccount;
         private System.Windows.Forms.ToolStripMenuItem copyThumbnailURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyDeletionURLToolStripMenuItem;
-        private System.Windows.Forms.TabPage tpAbout;
         internal System.Windows.Forms.LinkLabel llblBugReports;
         internal System.Windows.Forms.LinkLabel llWebsite;
         private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
@@ -489,6 +425,8 @@ namespace ZUploader
         private System.Windows.Forms.ColumnHeader chProgress;
         private System.Windows.Forms.ColumnHeader chUploaderName;
         private System.Windows.Forms.ColumnHeader chUploaderType;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnOpenFTPSettings;
     }
 }
 
