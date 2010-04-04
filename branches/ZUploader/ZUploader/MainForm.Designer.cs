@@ -83,6 +83,10 @@ namespace ZUploader
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.chFilePath = new System.Windows.Forms.ColumnHeader();
+            this.chProgress = new System.Windows.Forms.ColumnHeader();
+            this.chUploaderName = new System.Windows.Forms.ColumnHeader();
+            this.chUploaderType = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpHistory.SuspendLayout();
@@ -125,6 +129,10 @@ namespace ZUploader
             this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chID,
             this.chStatus,
+            this.chFilePath,
+            this.chProgress,
+            this.chUploaderType,
+            this.chUploaderName,
             this.chURL});
             this.lvUploads.ContextMenuStrip = this.cmsUploads;
             this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -133,7 +141,7 @@ namespace ZUploader
             this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(459, 256);
+            this.lvUploads.Size = new System.Drawing.Size(1070, 424);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -270,7 +278,7 @@ namespace ZUploader
             this.tcApp.Location = new System.Drawing.Point(8, 88);
             this.tcApp.Name = "tcApp";
             this.tcApp.SelectedIndex = 0;
-            this.tcApp.Size = new System.Drawing.Size(473, 288);
+            this.tcApp.Size = new System.Drawing.Size(1084, 456);
             this.tcApp.TabIndex = 7;
             // 
             // tpHistory
@@ -279,7 +287,7 @@ namespace ZUploader
             this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(465, 262);
+            this.tpHistory.Size = new System.Drawing.Size(1076, 430);
             this.tpHistory.TabIndex = 0;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -387,23 +395,43 @@ namespace ZUploader
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
+            // chFilePath
+            // 
+            this.chFilePath.Text = "File path";
+            this.chFilePath.Width = 200;
+            // 
+            // chProgress
+            // 
+            this.chProgress.Text = "Progress";
+            this.chProgress.Width = 125;
+            // 
+            // chUploaderName
+            // 
+            this.chUploaderName.Text = "Uploader name";
+            this.chUploaderName.Width = 125;
+            // 
+            // chUploaderType
+            // 
+            this.chUploaderType.Text = "Uploader type";
+            this.chUploaderType.Width = 80;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnClipboardUpload;
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 383);
-            this.Controls.Add(this.btnOpen);
-            this.Controls.Add(this.btnCopy);
+            this.ClientSize = new System.Drawing.Size(1100, 551);
             this.Controls.Add(this.lblTextUploaderDestination);
-            this.Controls.Add(this.btnClipboardUpload);
             this.Controls.Add(this.lblFileUploaderDestination);
             this.Controls.Add(this.tcApp);
-            this.Controls.Add(this.cbFileUploaderDestination);
-            this.Controls.Add(this.cbTextUploaderDestination);
+            this.Controls.Add(this.btnOpen);
+            this.Controls.Add(this.btnCopy);
+            this.Controls.Add(this.btnClipboardUpload);
             this.Controls.Add(this.cbImageUploaderDestination);
             this.Controls.Add(this.lblImageUploaderDestination);
+            this.Controls.Add(this.cbFileUploaderDestination);
+            this.Controls.Add(this.cbTextUploaderDestination);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
@@ -457,6 +485,10 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem copyErrorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbAutoPlaySound;
+        private System.Windows.Forms.ColumnHeader chFilePath;
+        private System.Windows.Forms.ColumnHeader chProgress;
+        private System.Windows.Forms.ColumnHeader chUploaderName;
+        private System.Windows.Forms.ColumnHeader chUploaderType;
     }
 }
 

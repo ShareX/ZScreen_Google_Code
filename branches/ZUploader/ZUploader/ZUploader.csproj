@@ -62,11 +62,12 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="DataManager.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UploadManager.cs" />
+    <Compile Include="UploadProgress.cs" />
     <Compile Include="UploadResult.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UploadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">

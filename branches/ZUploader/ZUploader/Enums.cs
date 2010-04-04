@@ -27,6 +27,13 @@ using System.Reflection;
 
 namespace ZUploader
 {
+    public enum EDataType
+    {
+        File,
+        Image,
+        Text
+    }
+
     public enum ImageDestType2
     {
         [Description("ImageShack - www.imageshack.us")]

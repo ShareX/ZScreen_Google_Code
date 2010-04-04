@@ -34,17 +34,14 @@ namespace ZUploader
 {
     public class Task : IDisposable
     {
-        public delegate void UploadStartedEventHandler(Task sender);
-        public delegate void UploadCompletedEventHandler(Task sender, UploadResult result);
-        public delegate void UploadProgressChangedEventHandler(Task sender, int progress);
+        public delegate void TaskEventHandler(UploadInfo status);
 
-        public event UploadStartedEventHandler UploadStarted;
-        public event UploadCompletedEventHandler UploadCompleted;
-        public event UploadProgressChangedEventHandler UploadProgressChanged;
+        public event TaskEventHandler UploadStarted;
+        public event TaskEventHandler UploadProgressChanged;
+        public event TaskEventHandler UploadCompleted;
 
-        public DataManager DataManager { get; private set; }
-        public int ID { get; private set; }
-        public int Progress { get; private set; }
+        public UploadInfo Info { get; private set; }
+        public Stream Data { get; private set; }
 
         private BackgroundWorker bw;
 
@@ -52,8 +49,8 @@ namespace ZUploader
 
         private Task()
         {
-            DataManager = new DataManager();
-            ID = UploadManager.GetID();
+            Info = new UploadInfo();
+            Info.ID = UploadManager.GetID();
         }
 
         /// <summary>
@@ -62,9 +59,9 @@ namespace ZUploader
         public Task(EDataType dataType, string filePath)
             : this()
         {
-            DataManager.FileType = dataType;
-            DataManager.FileName = Path.GetFileName(filePath);
-            DataManager.Data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            Info.UploaderType = dataType;
+            Info.FilePath = filePath;
+            Data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         /// <summary>
@@ -73,9 +70,9 @@ namespace ZUploader
         public Task(EDataType dataType, Stream stream, string fileName)
             : this()
         {
-            DataManager.FileType = dataType;
-            DataManager.FileName = fileName;
-            DataManager.Data = stream;
+            Info.UploaderType = dataType;
+            Info.FileName = fileName;
+            Data = stream;
         }
 
         #endregion
@@ -96,24 +93,22 @@ namespace ZUploader
         {
             try
             {
-                switch (DataManager.FileType)
+                switch (Info.UploaderType)
                 {
                     case EDataType.File:
-                        e.Result = UploadFile(DataManager.Data, DataManager.FileName);
+                        Info.Result = UploadFile(Data, Info.FileName);
                         break;
                     case EDataType.Image:
-                        e.Result = UploadImage(DataManager.Data, DataManager.FileName);
+                        Info.Result = UploadImage(Data, Info.FileName);
                         break;
                     case EDataType.Text:
-                        e.Result = UploadText(DataManager.Data);
+                        Info.Result = UploadText(Data);
                         break;
                 }
             }
             catch (Exception ex)
             {
-                UploadResult result = new UploadResult();
-                result.Errors.Add(ex.Message);
-                e.Result = result;
+                Info.Result.Errors.Add(ex.Message);
             }
         }
 
@@ -243,48 +238,56 @@ namespace ZUploader
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (Progress < e.ProgressPercentage)
+            if (Info.Progress.Percentage < e.ProgressPercentage)
             {
-                Progress = e.ProgressPercentage;
-                OnUploadProgressChanged(Math.Min(Progress, 99));
+                Uploader.ProgressEventArgs progress = e.UserState as Uploader.ProgressEventArgs;
+                if (progress != null)
+                {
+                    Info.Progress.Position = progress.Position;
+                    Info.Progress.Length = progress.Length;
+                    Info.Progress.Percentage = (int)progress.Percentage;
+                    OnUploadProgressChanged();
+                }
             }
         }
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            UploadResult ur = (UploadResult)e.Result;
-            OnUploadCompleted(ur);
+            OnUploadCompleted();
+            Dispose();
         }
 
         private void OnUploadStarted()
         {
             if (UploadStarted != null)
             {
-                UploadStarted(this);
+                Info.Status = "Upload started";
+                UploadStarted(Info);
             }
         }
 
-        private void OnUploadCompleted(UploadResult result)
-        {
-            if (UploadCompleted != null)
-            {
-                UploadCompleted(this, result);
-            }
-        }
-
-        private void OnUploadProgressChanged(int progress)
+        private void OnUploadProgressChanged()
         {
             if (UploadProgressChanged != null)
             {
-                UploadProgressChanged(this, progress);
+                UploadProgressChanged(Info);
+            }
+        }
+
+        private void OnUploadCompleted()
+        {
+            if (UploadCompleted != null)
+            {
+                Info.Status = "Upload completed";
+                UploadCompleted(Info);
             }
         }
 
         public void Dispose()
         {
-            if (DataManager != null)
+            if (Data != null)
             {
-                DataManager.Dispose();
+                Data.Dispose();
             }
         }
     }

@@ -118,64 +118,67 @@ namespace ZUploader
 
         private static void StartUpload(Task task)
         {
-            task.UploadStarted += new Task.UploadStartedEventHandler(task_UploadStarted);
-            task.UploadProgressChanged += new Task.UploadProgressChangedEventHandler(task_UploadProgressChanged);
-            task.UploadCompleted += new Task.UploadCompletedEventHandler(task_UploadCompleted);
+            task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
+            task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
+            task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
             task.Start();
         }
 
-        private static void task_UploadStarted(Task sender)
+        private static void task_UploadStarted(UploadInfo status)
         {
             if (ListViewControl != null)
             {
                 ListViewItem lvi = new ListViewItem();
-                lvi.Text = sender.ID.ToString();
-                lvi.SubItems.Add("Upload started: " + sender.DataManager.FileType.ToString());
+                lvi.Text = status.ID.ToString();
+                lvi.SubItems.Add(status.Status);
+                lvi.SubItems.Add(string.IsNullOrEmpty(status.FilePath) ? status.FileName : status.FilePath);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(status.UploaderType.ToString());
+                lvi.SubItems.Add(status.UploaderName);
                 lvi.SubItems.Add(string.Empty);
                 ListViewControl.Items.Add(lvi);
             }
         }
 
-        private static void task_UploadProgressChanged(Task sender, int progress)
+        private static void task_UploadProgressChanged(UploadInfo status)
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[sender.ID];
-                lvi.SubItems[1].Text = string.Format("Upload progress: {0}%", progress);
+                ListViewItem lvi = ListViewControl.Items[status.ID];
+                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} kb / {2:N0} kb", status.Progress.Percentage,
+                    status.Progress.Position / 1000, status.Progress.Length / 1000);
             }
         }
 
-        private static void task_UploadCompleted(Task sender, UploadResult result)
+        private static void task_UploadCompleted(UploadInfo status)
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[sender.ID];
-                lvi.Tag = result;
+                ListViewItem lvi = ListViewControl.Items[status.ID];
+                lvi.Tag = status.Result;
 
-                if (result.Errors != null && result.Errors.Count > 0)
+                if (status.Result.Errors != null && status.Result.Errors.Count > 0)
                 {
-                    lvi.SubItems[1].Text = "Error: " + result.Errors.Last();
-                    lvi.SubItems[2].Text = string.Empty;
+                    lvi.SubItems[1].Text = "Error: " + status.Result.Errors.Last();
+                    lvi.SubItems[6].Text = string.Empty;
                 }
                 else
                 {
                     lvi.SubItems[1].Text = "Upload completed";
-                    lvi.SubItems[2].Text = result.URL;
+                    lvi.SubItems[6].Text = status.Result.URL;
                 }
 
                 lvi.EnsureVisible();
 
-                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(result.URL))
+                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(status.Result.URL))
                 {
-                    Clipboard.SetText(result.URL);
+                    Clipboard.SetText(status.Result.URL);
                 }
 
                 if (Program.Settings.AutoPlaySound)
                 {
                     SystemSounds.Exclamation.Play();
                 }
-
-                sender.Dispose();
             }
         }
     }

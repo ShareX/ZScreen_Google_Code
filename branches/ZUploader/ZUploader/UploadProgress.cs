@@ -21,31 +21,12 @@
 */
 #endregion
 
-using System;
-using System.Drawing;
-using System.IO;
-
 namespace ZUploader
 {
-    public enum EDataType
+    public class UploadProgress
     {
-        File,
-        Image,
-        Text
-    }
-
-    public class DataManager : IDisposable
-    {
-        public EDataType FileType { get; set; }
-        public Stream Data { get; set; }
-        public string FileName { get; set; }
-
-        public void Dispose()
-        {
-            if (Data != null)
-            {
-                Data.Dispose();
-            }
-        }
+        public long Position { get; set; }
+        public long Length { get; set; }
+        public int Percentage { get; set; }
     }
 }
