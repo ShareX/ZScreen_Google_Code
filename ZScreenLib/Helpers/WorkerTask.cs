@@ -253,10 +253,21 @@ namespace ZScreenLib
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
         public bool SetFilePathFromPattern(string fileName)
         {
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fileName + "." + Engine.zImageFileFormat.Extension));
+            string dir = Engine.ImagesDir;
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, fileName + "." + Engine.zImageFileFormat.Extension));
 
             if (Engine.conf.ManualNaming)
             {
+                // NOTE: we cannot use SaveFileDialog because we are not in the main thread, and we cant also use SaveFileDialog
+                // in the main thread because the file name has to be determined outside of the main thread so the main thrad is 
+                // ready for multiple requests
+
+                //SaveFileDialog dlg = new SaveFileDialog();
+                //if (dlg.ShowDialog() == DialogResult.OK)
+                //{
+                //    filePath = dlg.FileName;
+                //}
+
                 DestOptions dialog = new DestOptions(this)
                 {
                     Title = "Specify a Screenshot Name...",
@@ -289,7 +300,14 @@ namespace ZScreenLib
             sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), this.FileName));
             sbPath.Append(Path.GetExtension(filePath));
             filePath = sbPath.ToString();
-
+            // make sure this length is less than 256 char
+            if (filePath.Length > 256)
+            {
+                int extraChar = filePath.Length - 256;
+                string fn = Path.GetFileNameWithoutExtension(filePath);
+                string fnn = fn.Substring(0, fn.Length - extraChar);
+                filePath = Path.Combine(dir, fnn) + Path.GetExtension(filePath);
+            }
             UpdateLocalFilePath(filePath);
             return true;
         }
