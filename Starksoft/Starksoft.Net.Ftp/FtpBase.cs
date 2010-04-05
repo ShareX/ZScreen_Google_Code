@@ -1513,7 +1513,7 @@ namespace Starksoft.Net.Ftp
 
                 //  if the consumer subscribes to transfer progress event then fire it
                 if (TransferProgress != null)
-                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesTotal, bytesPerSec, elapsed, totalSize));               
+                    TransferProgress(this, new TransferProgressEventArgs(bytesRead, bytesTotal, bytesPerSec, elapsed, totalSize));
 
                 // test to see if this is an asychronous operation and if so make sure 
                 // the user has not requested the operation to be canceled
