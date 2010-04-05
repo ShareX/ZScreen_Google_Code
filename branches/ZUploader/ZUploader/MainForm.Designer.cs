@@ -318,7 +318,7 @@ namespace ZUploader
             // 
             this.llWebsite.AutoSize = true;
             this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(824, 48);
+            this.llWebsite.Location = new System.Drawing.Point(826, 46);
             this.llWebsite.Name = "llWebsite";
             this.llWebsite.Size = new System.Drawing.Size(66, 13);
             this.llWebsite.TabIndex = 83;

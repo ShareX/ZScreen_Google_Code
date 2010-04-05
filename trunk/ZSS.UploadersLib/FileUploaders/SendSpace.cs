@@ -343,9 +343,7 @@ namespace UploadersLib.FileUploaders
             args.Add("api_version", SENDSPACE_API_VERSION);
             args.Add("app_version", AppVersion);
 
-            ReportProgress = false;
             string response = GetResponseString(SENDSPACE_API_URL, args);
-            ReportProgress = true;
 
             if (!string.IsNullOrEmpty(response))
             {
