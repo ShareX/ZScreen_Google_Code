@@ -181,8 +181,6 @@ namespace ZScreenLib
 
         #endregion
 
-        public XMLSettings Settings { get; set; }
-
         #region Properties for Category: Text
 
         /// <summary>
@@ -207,7 +205,6 @@ namespace ZScreenLib
         private WorkerTask()
         {
             this.Errors = new List<string>();
-            this.Settings = Engine.conf;
         }
 
         public WorkerTask(Jobs job)
