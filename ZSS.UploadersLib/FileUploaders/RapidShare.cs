@@ -80,7 +80,7 @@ namespace UploadersLib.FileUploaders
 
             string result = UploadData(stream, fileName, url, "filecontent", args);
 
-            if (string.IsNullOrEmpty(result)) 
+            if (string.IsNullOrEmpty(result))
             {
                 Errors.Add("Upload result is empty.");
                 return null;
@@ -107,6 +107,21 @@ namespace UploadersLib.FileUploaders
             }*/
 
             return info.URL;
+        }
+
+        private string NextUploadServer()
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("sub", "nextuploadserver_v1");
+
+            string response = GetResponseString(rapidshareURL, args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return string.Format("http://rs{0}l3.rapidshare.com/cgi-bin/upload.cgi", response);
+            }
+
+            return string.Empty;
         }
 
         public class UploadInfo
@@ -142,21 +157,6 @@ namespace UploadersLib.FileUploaders
 
                 return string.Empty;
             }
-        }
-
-        private string NextUploadServer()
-        {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("sub", "nextuploadserver_v1");
-
-            string response = GetResponse(rapidshareURL, args);
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                return string.Format("http://rs{0}l3.rapidshare.com/cgi-bin/upload.cgi", response);
-            }
-
-            return string.Empty;
         }
     }
 }
