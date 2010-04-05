@@ -238,13 +238,16 @@ namespace ZUploader
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Uploader.ProgressEventArgs progress = e.UserState as Uploader.ProgressEventArgs;
-            if (progress != null)
+            if (Info.Progress.Percentage < e.ProgressPercentage)
             {
-                Info.Progress.Position = progress.Position;
-                Info.Progress.Length = progress.Length;
-                Info.Progress.Percentage = (int)progress.Percentage;
-                OnUploadProgressChanged();
+                Uploader.ProgressEventArgs progress = e.UserState as Uploader.ProgressEventArgs;
+                if (progress != null)
+                {
+                    Info.Progress.Position = progress.Position;
+                    Info.Progress.Length = progress.Length;
+                    Info.Progress.Percentage = (int)progress.Percentage;
+                    OnUploadProgressChanged();
+                }
             }
         }
 

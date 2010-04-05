@@ -67,13 +67,13 @@ namespace UploadersLib
         public static ProxySettings ProxySettings = new ProxySettings();
 
         public List<string> Errors { get; set; }
-
         public string UserAgent { get; set; }
 
         public Uploader()
         {
             this.Errors = new List<string>();
             this.UserAgent = "ZScreen";
+            this.ReportProgress = true;
         }
 
         protected void OnProgressChanged(long position, long length)
@@ -161,7 +161,10 @@ namespace UploadersLib
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
                         requestStream.Write(buffer, 0, bytesRead);
-                        OnProgressChanged(stream.Position, stream.Length);
+                        if (ReportProgress)
+                        {
+                            OnProgressChanged(stream.Position, stream.Length);
+                        }
                     }
                 }
 

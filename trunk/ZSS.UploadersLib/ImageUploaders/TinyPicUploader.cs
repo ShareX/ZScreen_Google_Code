@@ -92,7 +92,7 @@ namespace UploadersLib.ImageUploaders
                     { "responsetype", "XML" }
                 };
 
-                string response = GetResponse(URLAPI, args);
+                string response = GetResponseString(URLAPI, args);
 
                 if (string.IsNullOrEmpty(response)) throw new Exception("Unable to get upload key.");
 

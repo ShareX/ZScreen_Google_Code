@@ -314,7 +314,7 @@ namespace UploadersLib.FileUploaders
             args.Add("session_key", sessionKey);
             args.Add("speed_limit", SpeedLimit.ToString());
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponseString(SENDSPACE_API_URL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -343,7 +343,9 @@ namespace UploadersLib.FileUploaders
             args.Add("api_version", SENDSPACE_API_VERSION);
             args.Add("app_version", AppVersion);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            ReportProgress = false;
+            string response = GetResponseString(SENDSPACE_API_URL, args);
+            ReportProgress = true;
 
             if (!string.IsNullOrEmpty(response))
             {
