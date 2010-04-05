@@ -68,6 +68,7 @@ namespace UploadersLib
 
         public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
+        public bool ReportProgress { get; set; }
 
         public Uploader()
         {
