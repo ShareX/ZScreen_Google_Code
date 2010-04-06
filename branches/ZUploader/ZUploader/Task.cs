@@ -261,7 +261,7 @@ namespace ZUploader
         {
             if (UploadStarted != null)
             {
-                Info.Status = "Started";
+                Info.Status = "Uploading";
                 UploadStarted(Info);
             }
         }

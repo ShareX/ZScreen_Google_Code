@@ -44,6 +44,7 @@ namespace ZUploader
             }
             tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
             ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
+            UploadManager.ImageUploader = (ImageDestType2)Program.Settings.SelectedImageUploaderDestination;
 
             foreach (string fileUploader in typeof(FileUploaderType2).GetDescriptions())
             {
@@ -51,6 +52,7 @@ namespace ZUploader
             }
             tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
             ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
+            UploadManager.FileUploader = (FileUploaderType2)Program.Settings.SelectedFileUploaderDestination;
 
             foreach (string textUploader in typeof(TextDestType2).GetDescriptions())
             {
@@ -58,6 +60,7 @@ namespace ZUploader
             }
             tsddbTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
+            UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
 
             UploadManager.ListViewControl = lvUploads;
             UpdateControls();
