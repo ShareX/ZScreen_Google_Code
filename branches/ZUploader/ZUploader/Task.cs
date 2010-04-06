@@ -34,7 +34,7 @@ namespace ZUploader
 {
     public class Task : IDisposable
     {
-        public delegate void TaskEventHandler(UploadInfo status);
+        public delegate void TaskEventHandler(UploadInfo info);
 
         public event TaskEventHandler UploadStarted;
         public event TaskEventHandler UploadProgressChanged;

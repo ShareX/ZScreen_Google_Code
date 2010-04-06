@@ -101,9 +101,9 @@ namespace ZUploader
             this.lvUploads.GridLines = true;
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(8, 40);
+            this.lvUploads.Location = new System.Drawing.Point(8, 35);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(937, 359);
+            this.lvUploads.Size = new System.Drawing.Size(937, 369);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -143,7 +143,7 @@ namespace ZUploader
             // chURL
             // 
             this.chURL.Text = "URL";
-            this.chURL.Width = 378;
+            this.chURL.Width = 377;
             // 
             // cmsUploads
             // 
@@ -215,8 +215,8 @@ namespace ZUploader
             this.tsddbTextUploaders});
             this.tsMain.Location = new System.Drawing.Point(0, 0);
             this.tsMain.Name = "tsMain";
-            this.tsMain.Padding = new System.Windows.Forms.Padding(7, 5, 0, 0);
-            this.tsMain.Size = new System.Drawing.Size(952, 28);
+            this.tsMain.Padding = new System.Windows.Forms.Padding(7, 5, 0, 3);
+            this.tsMain.Size = new System.Drawing.Size(954, 31);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -308,12 +308,12 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(952, 406);
+            this.ClientSize = new System.Drawing.Size(954, 412);
             this.Controls.Add(this.lvUploads);
             this.Controls.Add(this.tsMain);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(960, 440);
+            this.MinimumSize = new System.Drawing.Size(970, 450);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";

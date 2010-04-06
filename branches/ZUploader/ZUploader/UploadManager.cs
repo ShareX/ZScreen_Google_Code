@@ -136,56 +136,56 @@ namespace ZUploader
             task.Start();
         }
 
-        private static void task_UploadStarted(UploadInfo status)
+        private static void task_UploadStarted(UploadInfo info)
         {
             if (ListViewControl != null)
             {
                 ListViewItem lvi = new ListViewItem();
-                lvi.Text = status.ID.ToString();
-                lvi.SubItems.Add(status.Status);
-                lvi.SubItems.Add(string.IsNullOrEmpty(status.FilePath) ? status.FileName : status.FilePath);
+                lvi.Text = info.ID.ToString();
+                lvi.SubItems.Add(info.Status);
+                lvi.SubItems.Add(string.IsNullOrEmpty(info.FilePath) ? info.FileName : info.FilePath);
                 lvi.SubItems.Add(string.Empty);
-                lvi.SubItems.Add(status.UploaderType.ToString());
-                lvi.SubItems.Add(status.UploaderName);
+                lvi.SubItems.Add(info.UploaderType.ToString());
+                lvi.SubItems.Add(info.UploaderName);
                 lvi.SubItems.Add(string.Empty);
-                lvi.BackColor = status.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
+                lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
                 ListViewControl.Items.Add(lvi);
             }
         }
 
-        private static void task_UploadProgressChanged(UploadInfo status)
+        private static void task_UploadProgressChanged(UploadInfo info)
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[status.ID];
-                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} KiB / {2:N0} KiB", status.Progress.Percentage,
-                    status.Progress.Position / 1024, status.Progress.Length / 1024);
+                ListViewItem lvi = ListViewControl.Items[info.ID];
+                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
+                    info.Progress.Position / 1024, info.Progress.Length / 1024);
             }
         }
 
-        private static void task_UploadCompleted(UploadInfo status)
+        private static void task_UploadCompleted(UploadInfo info)
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[status.ID];
-                lvi.Tag = status.Result;
+                ListViewItem lvi = ListViewControl.Items[info.ID];
+                lvi.Tag = info.Result;
 
-                if (status.Result.Errors != null && status.Result.Errors.Count > 0)
+                if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
-                    lvi.SubItems[1].Text = "Error: " + status.Result.Errors.Last();
+                    lvi.SubItems[1].Text = "Error: " + info.Result.Errors.Last();
                     lvi.SubItems[6].Text = string.Empty;
                 }
                 else
                 {
-                    lvi.SubItems[1].Text = "Upload completed";
-                    lvi.SubItems[6].Text = status.Result.URL;
+                    lvi.SubItems[1].Text = info.Status;
+                    lvi.SubItems[6].Text = info.Result.URL;
                 }
 
                 lvi.EnsureVisible();
 
-                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(status.Result.URL))
+                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(info.Result.URL))
                 {
-                    Clipboard.SetText(status.Result.URL);
+                    Clipboard.SetText(info.Result.URL);
                 }
 
                 if (Program.Settings.AutoPlaySound)

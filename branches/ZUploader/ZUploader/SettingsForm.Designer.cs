@@ -39,7 +39,7 @@
             this.pgFTPSettings.Location = new System.Drawing.Point(16, 88);
             this.pgFTPSettings.Name = "pgFTPSettings";
             this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(520, 240);
+            this.pgFTPSettings.Size = new System.Drawing.Size(520, 272);
             this.pgFTPSettings.TabIndex = 0;
             this.pgFTPSettings.ToolbarVisible = false;
             this.pgFTPSettings.SelectedObjectsChanged += new System.EventHandler(this.pgFTPSettings_SelectedObjectsChanged);
@@ -69,7 +69,7 @@
             // lblFTPSettings
             // 
             this.lblFTPSettings.AutoSize = true;
-            this.lblFTPSettings.Location = new System.Drawing.Point(16, 72);
+            this.lblFTPSettings.Location = new System.Drawing.Point(14, 67);
             this.lblFTPSettings.Name = "lblFTPSettings";
             this.lblFTPSettings.Size = new System.Drawing.Size(112, 13);
             this.lblFTPSettings.TabIndex = 4;
@@ -79,11 +79,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 342);
+            this.ClientSize = new System.Drawing.Size(551, 373);
             this.Controls.Add(this.lblFTPSettings);
             this.Controls.Add(this.cbClipboardAutoCopy);
             this.Controls.Add(this.cbAutoPlaySound);
             this.Controls.Add(this.pgFTPSettings);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "ZUploader - FTP Settings";
             this.Load += new System.EventHandler(this.FTPSettingsForm_Load);
