@@ -79,6 +79,7 @@ namespace ZUploader
             this.tsddbImageUploaders = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbFileUploaders = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbTextUploaders = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tss2 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.SuspendLayout();
@@ -155,47 +156,47 @@ namespace ZUploader
             this.copyErrorsToolStripMenuItem,
             this.uploadFileToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 136);
+            this.cmsUploads.Size = new System.Drawing.Size(173, 136);
             // 
             // openURLToolStripMenuItem
             // 
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
             // 
             // copyURLToolStripMenuItem
             // 
             this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             // 
             // copyThumbnailURLToolStripMenuItem
             // 
             this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
-            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
             this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
             // 
             // copyDeletionURLToolStripMenuItem
             // 
             this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
-            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
             this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
             // 
             // copyErrorsToolStripMenuItem
             // 
             this.copyErrorsToolStripMenuItem.Name = "copyErrorsToolStripMenuItem";
-            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
             this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
             // 
             // uploadFileToolStripMenuItem
             // 
             this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
-            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.uploadFileToolStripMenuItem.Text = "Upload file...";
             this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             // 
@@ -207,16 +208,17 @@ namespace ZUploader
             this.tsbFileUpload,
             this.tsbCopy,
             this.tsbOpen,
-            this.tsbSettings,
-            this.tsbAbout,
             this.tss1,
             this.tsddbImageUploaders,
             this.tsddbFileUploaders,
-            this.tsddbTextUploaders});
+            this.tsddbTextUploaders,
+            this.tss2,
+            this.tsbSettings,
+            this.tsbAbout});
             this.tsMain.Location = new System.Drawing.Point(0, 0);
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(7, 5, 0, 3);
-            this.tsMain.Size = new System.Drawing.Size(954, 31);
+            this.tsMain.Size = new System.Drawing.Size(962, 31);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -225,7 +227,7 @@ namespace ZUploader
             this.tsbClipboardUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbClipboardUpload.Image")));
             this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClipboardUpload.Name = "tsbClipboardUpload";
-            this.tsbClipboardUpload.Size = new System.Drawing.Size(119, 20);
+            this.tsbClipboardUpload.Size = new System.Drawing.Size(107, 20);
             this.tsbClipboardUpload.Text = "Clipboard upload";
             this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
             // 
@@ -234,7 +236,7 @@ namespace ZUploader
             this.tsbFileUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbFileUpload.Image")));
             this.tsbFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFileUpload.Name = "tsbFileUpload";
-            this.tsbFileUpload.Size = new System.Drawing.Size(94, 20);
+            this.tsbFileUpload.Size = new System.Drawing.Size(90, 20);
             this.tsbFileUpload.Text = "File upload...";
             this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
             // 
@@ -243,7 +245,7 @@ namespace ZUploader
             this.tsbCopy.Image = ((System.Drawing.Image)(resources.GetObject("tsbCopy.Image")));
             this.tsbCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbCopy.Name = "tsbCopy";
-            this.tsbCopy.Size = new System.Drawing.Size(55, 20);
+            this.tsbCopy.Size = new System.Drawing.Size(52, 20);
             this.tsbCopy.Text = "Copy";
             this.tsbCopy.Click += new System.EventHandler(this.tsbCopy_Click);
             // 
@@ -252,7 +254,7 @@ namespace ZUploader
             this.tsbOpen.Image = ((System.Drawing.Image)(resources.GetObject("tsbOpen.Image")));
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
-            this.tsbOpen.Size = new System.Drawing.Size(56, 20);
+            this.tsbOpen.Size = new System.Drawing.Size(53, 20);
             this.tsbOpen.Text = "Open";
             this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
@@ -270,7 +272,7 @@ namespace ZUploader
             this.tsbAbout.Image = ((System.Drawing.Image)(resources.GetObject("tsbAbout.Image")));
             this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(60, 20);
+            this.tsbAbout.Size = new System.Drawing.Size(56, 20);
             this.tsbAbout.Text = "About";
             this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
@@ -284,7 +286,7 @@ namespace ZUploader
             this.tsddbImageUploaders.Image = ((System.Drawing.Image)(resources.GetObject("tsddbImageUploaders.Image")));
             this.tsddbImageUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbImageUploaders.Name = "tsddbImageUploaders";
-            this.tsddbImageUploaders.Size = new System.Drawing.Size(124, 20);
+            this.tsddbImageUploaders.Size = new System.Drawing.Size(116, 20);
             this.tsddbImageUploaders.Text = "Image uploaders";
             // 
             // tsddbFileUploaders
@@ -292,7 +294,7 @@ namespace ZUploader
             this.tsddbFileUploaders.Image = ((System.Drawing.Image)(resources.GetObject("tsddbFileUploaders.Image")));
             this.tsddbFileUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbFileUploaders.Name = "tsddbFileUploaders";
-            this.tsddbFileUploaders.Size = new System.Drawing.Size(109, 20);
+            this.tsddbFileUploaders.Size = new System.Drawing.Size(102, 20);
             this.tsddbFileUploaders.Text = "File uploaders";
             // 
             // tsddbTextUploaders
@@ -300,15 +302,20 @@ namespace ZUploader
             this.tsddbTextUploaders.Image = ((System.Drawing.Image)(resources.GetObject("tsddbTextUploaders.Image")));
             this.tsddbTextUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbTextUploaders.Name = "tsddbTextUploaders";
-            this.tsddbTextUploaders.Size = new System.Drawing.Size(113, 20);
+            this.tsddbTextUploaders.Size = new System.Drawing.Size(108, 20);
             this.tsddbTextUploaders.Text = "Text uploaders";
+            // 
+            // tss2
+            // 
+            this.tss2.Name = "tss2";
+            this.tss2.Size = new System.Drawing.Size(6, 23);
             // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 412);
+            this.ClientSize = new System.Drawing.Size(962, 416);
             this.Controls.Add(this.lvUploads);
             this.Controls.Add(this.tsMain);
             this.DoubleBuffered = true;
@@ -356,6 +363,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripDropDownButton tsddbFileUploaders;
         private System.Windows.Forms.ToolStripSeparator tss1;
         private System.Windows.Forms.ToolStripDropDownButton tsddbTextUploaders;
+        private System.Windows.Forms.ToolStripSeparator tss2;
     }
 }
 
