@@ -25,7 +25,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using UploadersLib;
 
 namespace ZUploader
 {
@@ -243,7 +242,7 @@ namespace ZUploader
 
         private void tsbAbout_Click(object sender, EventArgs e)
         {
-            new NotImplementedException();
+            new AboutForm().Show();
         }
 
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)

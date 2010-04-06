@@ -103,7 +103,7 @@ namespace ZUploader
             this.lvUploads.HideSelection = false;
             this.lvUploads.Location = new System.Drawing.Point(8, 35);
             this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(937, 369);
+            this.lvUploads.Size = new System.Drawing.Size(938, 369);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
