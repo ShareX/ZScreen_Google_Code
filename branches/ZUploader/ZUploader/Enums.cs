@@ -36,45 +36,43 @@ namespace ZUploader
 
     public enum ImageDestType2
     {
-        [Description("ImageShack - www.imageshack.us")]
+        [Description("imageshack.us")]
         IMAGESHACK,
-        [Description("TinyPic - www.tinypic.com")]
+        [Description("tinypic.com")]
         TINYPIC,
-        [Description("ImageBin - www.imagebin.ca")]
+        [Description("imagebin.ca")]
         IMAGEBIN,
-        [Description("Img1 - www.img1.us")]
+        [Description("img1.us")]
         IMG1,
-        [Description("Imgur - www.imgur.com")]
+        [Description("imgur.com")]
         IMGUR,
-        [Description("Use File Uploader")]
+        [Description("Use file uploader")]
         FILE
     }
 
     public enum TextDestType2
     {
-        [Description("PasteBin - www.pastebin.com")]
+        [Description("pastebin.com")]
         PASTEBIN,
-        [Description("PasteBin - www.pastebin.ca")]
+        [Description("pastebin.ca")]
         PASTEBIN_CA,
-        [Description("Paste2 - www.paste2.org")]
+        [Description("paste2.org")]
         PASTE2,
-        [Description("Slexy 2.0 - www.slexy.org")]
+        [Description("slexy.org")]
         SLEXY,
-        [Description("Use File Uploader")]
+        [Description("Use file uploader")]
         FILE
-        //[Description("Snipt - www.snipt.org")]
-        //SNIPT
     }
 
     public enum FileUploaderType2
     {
-        [Description("RapidShare - www.rapidshare.com")]
+        [Description("rapidshare.com")]
         RapidShare,
-        [Description("SendSpace - www.sendspace.com")]
+        [Description("sendspace.com")]
         SendSpace,
-        [Description("FileBin - www.filebin.ca")]
+        [Description("filebin.ca")]
         FileBin,
-        [Description("Drop.io - www.drop.io")]
+        [Description("drop.io")]
         DropIO,
         [Description("FTP Server")]
         FTP

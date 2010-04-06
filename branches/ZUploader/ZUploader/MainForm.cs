@@ -39,17 +39,69 @@ namespace ZUploader
 
         private void LoadSettings()
         {
-            cbImageUploaderDestination.Items.AddRange(typeof(ImageDestType2).GetDescriptions());
-            cbImageUploaderDestination.SelectedIndex = Program.Settings.SelectedImageUploaderDestination;
-            cbTextUploaderDestination.Items.AddRange(typeof(TextDestType2).GetDescriptions());
-            cbTextUploaderDestination.SelectedIndex = Program.Settings.SelectedTextUploaderDestination;
-            cbFileUploaderDestination.Items.AddRange(typeof(FileUploaderType2).GetDescriptions());
-            cbFileUploaderDestination.SelectedIndex = Program.Settings.SelectedFileUploaderDestination;
+            foreach (string imageUploader in typeof(ImageDestType2).GetDescriptions())
+            {
+                tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
+            }
+            tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
+            ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
+
+            foreach (string fileUploader in typeof(FileUploaderType2).GetDescriptions())
+            {
+                tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
+            }
+            tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
+            ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
+
+            foreach (string textUploader in typeof(TextDestType2).GetDescriptions())
+            {
+                tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
+            }
+            tsddbTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
+            ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
+
             UploadManager.ListViewControl = lvUploads;
-            cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
-            cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             UpdateControls();
             this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
+        }
+
+        private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsddbImageUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbImageUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedImageUploaderDestination = i;
+                    UploadManager.ImageUploader = (ImageDestType2)i;
+                }
+            }
+        }
+
+        private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsddbFileUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbFileUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedFileUploaderDestination = i;
+                    UploadManager.FileUploader = (FileUploaderType2)i;
+                }
+            }
+        }
+
+        private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsddbTextUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbTextUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedTextUploaderDestination = i;
+                    UploadManager.TextUploader = (TextDestType2)i;
+                }
+            }
         }
 
         private void CopyURL()
@@ -125,7 +177,7 @@ namespace ZUploader
 
         private void UpdateControls()
         {
-            btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
+            tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
                 copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible =
                uploadFileToolStripMenuItem.Visible = false;
 
@@ -137,7 +189,7 @@ namespace ZUploader
                 {
                     if (!string.IsNullOrEmpty(result.URL))
                     {
-                        btnCopy.Enabled = btnOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
+                        tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
                     }
 
                     if (!string.IsNullOrEmpty(result.ThumbnailURL))
@@ -164,37 +216,34 @@ namespace ZUploader
 
         #region Form events
 
-        private void btnClipboardUpload_Click(object sender, EventArgs e)
+        private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
             UploadManager.ClipboardUpload();
         }
 
-        private void cbImageUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
+        private void tsbFileUpload_Click(object sender, EventArgs e)
         {
-            Program.Settings.SelectedImageUploaderDestination = cbImageUploaderDestination.SelectedIndex;
-            UploadManager.ImageUploader = (ImageDestType2)cbImageUploaderDestination.SelectedIndex;
+            UploadManager.UploadFile();
         }
 
-        private void cbTextUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.Settings.SelectedTextUploaderDestination = cbTextUploaderDestination.SelectedIndex;
-            UploadManager.TextUploader = (TextDestType2)cbTextUploaderDestination.SelectedIndex;
-        }
-
-        private void cbFileUploaderDestination_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Program.Settings.SelectedFileUploaderDestination = cbFileUploaderDestination.SelectedIndex;
-            UploadManager.FileUploader = (FileUploaderType2)cbFileUploaderDestination.SelectedIndex;
-        }
-
-        private void btnCopy_Click(object sender, EventArgs e)
+        private void tsbCopy_Click(object sender, EventArgs e)
         {
             CopyURL();
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void tsbOpen_Click(object sender, EventArgs e)
         {
             OpenURL();
+        }
+
+        private void tsbSettings_Click(object sender, EventArgs e)
+        {
+            new SettingsForm().Show();
+        }
+
+        private void tsbAbout_Click(object sender, EventArgs e)
+        {
+            new NotImplementedException();
         }
 
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -220,6 +269,11 @@ namespace ZUploader
         private void copyErrorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyErrors();
+        }
+
+        private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UploadManager.UploadFile();
         }
 
         private void lvUploads_DoubleClick(object sender, EventArgs e)
@@ -255,51 +309,7 @@ namespace ZUploader
             UploadManager.Upload(files);
         }
 
-        #region Options
-
-        private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.ClipboardAutoCopy = cbClipboardAutoCopy.Checked;
-        }
-
-        private void cbAutoPlaySound_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.AutoPlaySound = cbAutoPlaySound.Checked;
-        }
 
         #endregion
-
-        #region About
-
-        private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(Program.URL_ISSUES);
-        }
-
-        private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(Program.URL_WEBSITE);
-        }
-
-        #endregion
-
-        private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    UploadManager.Upload(ofd.FileName);
-                }
-            }
-        }
-
-        #endregion
-
-        private void btnOpenFTPSettings_Click(object sender, EventArgs e)
-        {
-            new FTPSettingsForm().Show();
-        }
     }
 }

@@ -21,8 +21,8 @@
 */
 #endregion
 
+using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -86,6 +86,18 @@ namespace ZUploader
             }
         }
 
+        public static void UploadFile()
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    Upload(ofd.FileName);
+                }
+            }
+        }
+
         public static void ClipboardUpload()
         {
             if (Clipboard.ContainsImage())
@@ -136,6 +148,7 @@ namespace ZUploader
                 lvi.SubItems.Add(status.UploaderType.ToString());
                 lvi.SubItems.Add(status.UploaderName);
                 lvi.SubItems.Add(string.Empty);
+                lvi.BackColor = status.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
                 ListViewControl.Items.Add(lvi);
             }
         }
