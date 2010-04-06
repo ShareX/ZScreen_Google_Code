@@ -110,14 +110,20 @@ namespace ZScreenLib
                             if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                         }
 
-                        clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-
-                        if (task.MakeTinyURL)
+                        if (task.MyImageUploader == ImageDestType.FILE)
                         {
-                            string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                            if (!string.IsNullOrEmpty(tinyUrl))
+                            clipboardText = task.LocalFilePath;
+                        }
+                        else
+                        {
+                            clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+                            if (task.MakeTinyURL)
                             {
-                                clipboardText = tinyUrl.Trim();
+                                string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                                if (!string.IsNullOrEmpty(tinyUrl))
+                                {
+                                    clipboardText = tinyUrl.Trim();
+                                }
                             }
                         }
                     }
@@ -148,6 +154,8 @@ namespace ZScreenLib
                     }
                     break;
             }
+
+            // after all this the clipboard text can be null 
 
             if (!string.IsNullOrEmpty(clipboardText))
             {

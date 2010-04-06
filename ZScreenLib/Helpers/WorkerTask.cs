@@ -77,7 +77,6 @@ namespace ZScreenLib
         public enum ProgressType : int
         {
             ADD_FILE_TO_LISTBOX,
-            COPY_TO_CLIPBOARD_URL,
             COPY_TO_CLIPBOARD_IMAGE,
             FLASH_ICON,
             INCREMENT_PROGRESS,
@@ -136,22 +135,10 @@ namespace ZScreenLib
         /// Name of the Image
         /// </summary>                
         public string FileName { get; set; }
-        private string localFilePath;
         /// <summary>
         /// Local file path of the Image: Picture or Screenshot or Text file
         /// </summary>
-        public string LocalFilePath
-        {
-            get
-            {
-                return localFilePath;
-            }
-            private set
-            {
-                localFilePath = value;
-                this.IsImage = GraphicsMgr.IsValidImage(localFilePath);
-            }
-        }
+        public string LocalFilePath { get; private set; }
         /// <summary>
         /// Option to convert Remote File Path to a tiny URL
         /// </summary>
@@ -159,7 +146,19 @@ namespace ZScreenLib
         /// <summary>
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
-        public string RemoteFilePath { get; set; }
+        private string urlRemote = string.Empty;
+        public string RemoteFilePath
+        {
+            get
+            {
+                return urlRemote;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    urlRemote = value;
+            }
+        }
 
         /*/// <summary>
         /// Tiny URL of RemoteFilePath
@@ -312,6 +311,9 @@ namespace ZScreenLib
         public void UpdateLocalFilePath(string fp)
         {
             this.LocalFilePath = fp;
+            this.LinkManager = new ImageFileManager(fp);
+            this.RemoteFilePath = this.LinkManager.GetLocalFilePathAsUri();
+            this.IsImage = GraphicsMgr.IsValidImage(fp);
             this.FileName = Path.GetFileName(fp);
 
             if (GraphicsMgr.IsValidImage(fp) && this.MyImage == null)
