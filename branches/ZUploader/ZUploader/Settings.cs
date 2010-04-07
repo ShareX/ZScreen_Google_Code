@@ -27,6 +27,7 @@ using System.IO;
 using System.Xml.Serialization;
 using UploadersLib;
 using System.ComponentModel;
+using UploadersLib.Helpers;
 
 namespace ZUploader
 {
@@ -36,6 +37,7 @@ namespace ZUploader
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
         public FTPAccount FTPAccount = new FTPAccount();
+        public ProxyInfo ProxySettings = new ProxyInfo();
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
 

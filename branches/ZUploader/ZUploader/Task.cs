@@ -81,6 +81,11 @@ namespace ZUploader
         {
             OnUploadStarted();
 
+            ProxySettings proxy = new ProxySettings();
+            proxy.ProxyEnabled = !string.IsNullOrEmpty(Program.Settings.ProxySettings.Host);
+            proxy.ProxyActive = Program.Settings.ProxySettings;
+            Uploader.ProxySettings = proxy;
+
             bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(UploadThread);

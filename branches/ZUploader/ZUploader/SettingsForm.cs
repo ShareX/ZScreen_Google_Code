@@ -9,6 +9,7 @@ namespace ZUploader
         {
             InitializeComponent();
             pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
+            pgProxy.SelectedObject = Program.Settings.ProxySettings;
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
         }
