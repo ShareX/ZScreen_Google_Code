@@ -81,6 +81,8 @@ namespace ZUploader
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
             this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.tscMain = new System.Windows.Forms.ToolStripContainer();
+            this.chSpeed = new System.Windows.Forms.ColumnHeader();
+            this.chEstimatedTime = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -95,6 +97,8 @@ namespace ZUploader
             this.chStatus,
             this.chFilePath,
             this.chProgress,
+            this.chSpeed,
+            this.chEstimatedTime,
             this.chUploaderType,
             this.chHost,
             this.chURL});
@@ -135,18 +139,20 @@ namespace ZUploader
             // 
             // chUploaderType
             // 
+            this.chUploaderType.DisplayIndex = 5;
             this.chUploaderType.Text = "Type";
             this.chUploaderType.Width = 50;
             // 
             // chHost
             // 
+            this.chHost.DisplayIndex = 6;
             this.chHost.Text = "Host";
             this.chHost.Width = 100;
             // 
             // chURL
             // 
             this.chURL.Text = "URL";
-            this.chURL.Width = 319;
+            this.chURL.Width = 199;
             // 
             // cmsUploads
             // 
@@ -337,6 +343,15 @@ namespace ZUploader
             // 
             this.tscMain.TopToolStripPanel.Controls.Add(this.tsMain);
             // 
+            // chSpeed
+            // 
+            this.chSpeed.Text = "Speed";
+            // 
+            // chEstimatedTime
+            // 
+            this.chEstimatedTime.DisplayIndex = 4;
+            this.chEstimatedTime.Text = "Estimated";
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -395,6 +410,8 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripDropDownButton tsddbTextUploaders;
         private System.Windows.Forms.ToolStripSeparator tss2;
         private System.Windows.Forms.ToolStripContainer tscMain;
+        private System.Windows.Forms.ColumnHeader chSpeed;
+        private System.Windows.Forms.ColumnHeader chEstimatedTime;
     }
 }
 

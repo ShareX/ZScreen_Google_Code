@@ -35,33 +35,13 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Win32;
 using UploadersLib.Helpers;
+using ZUploader;
 
 namespace UploadersLib
 {
     public class Uploader
     {
-        public delegate void ProgressEventHandler(ProgressEventArgs e);
-
-        public class ProgressEventArgs : EventArgs
-        {
-            public long Position { get; set; }
-            public long Length { get; set; }
-
-            public double Percentage
-            {
-                get
-                {
-                    return (double)Position / Length * 100;
-                }
-            }
-
-            public ProgressEventArgs(long position, long length)
-            {
-                Position = position;
-                Length = length;
-            }
-        }
-
+        public delegate void ProgressEventHandler(ProgressManager progress);
         public event ProgressEventHandler ProgressChanged;
 
         public static ProxySettings ProxySettings = new ProxySettings();
@@ -76,11 +56,11 @@ namespace UploadersLib
             this.UserAgent = "ZScreen";
         }
 
-        protected void OnProgressChanged(long position, long length)
+        protected void OnProgressChanged(ProgressManager progress)
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(new ProgressEventArgs(position, length));
+                ProgressChanged(progress);
             }
         }
 
@@ -151,17 +131,18 @@ namespace UploadersLib
                 request.UserAgent = UserAgent;
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
-
                 stream.Position = 0;
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
+                    ProgressManager progress = new ProgressManager(stream.Length, 500);
                     int bytesRead;
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
                         requestStream.Write(buffer, 0, bytesRead);
-                        OnProgressChanged(stream.Position, stream.Length);
+                        progress.ChangeProgress(bytesRead);
+                        OnProgressChanged(progress);
                     }
                 }
 

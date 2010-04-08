@@ -145,6 +145,8 @@ namespace ZUploader
                 lvi.SubItems.Add(info.Status);
                 lvi.SubItems.Add(string.IsNullOrEmpty(info.FilePath) ? info.FileName : info.FilePath);
                 lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(info.UploaderType.ToString());
                 lvi.SubItems.Add(info.UploaderName);
                 lvi.SubItems.Add(string.Empty);
@@ -158,8 +160,10 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[info.ID];
-                lvi.SubItems[3].Text = string.Format("{0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
+                lvi.SubItems[3].Text = string.Format("{0:N0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
                     info.Progress.Position / 1024, info.Progress.Length / 1024);
+                lvi.SubItems[4].Text = string.Format("{0:N0} kb/s", info.Progress.Speed);
+                lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.EstimatedCompleteTime.Minutes, info.Progress.EstimatedCompleteTime.Seconds);
             }
         }
 
@@ -173,12 +177,12 @@ namespace ZUploader
                 if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
                     lvi.SubItems[1].Text = "Error: " + info.Result.Errors.Last();
-                    lvi.SubItems[6].Text = string.Empty;
+                    lvi.SubItems[8].Text = string.Empty;
                 }
                 else
                 {
                     lvi.SubItems[1].Text = info.Status;
-                    lvi.SubItems[6].Text = info.Result.URL;
+                    lvi.SubItems[8].Text = info.Result.URL;
                 }
 
                 lvi.EnsureVisible();

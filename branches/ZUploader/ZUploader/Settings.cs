@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using UploadersLib;
-using System.ComponentModel;
 using UploadersLib.Helpers;
 
 namespace ZUploader
@@ -41,22 +40,7 @@ namespace ZUploader
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
 
-        public Settings()
-        {
-            ApplyDefaultValues(this);
-        }
-
         #region Functions
-
-        public static void ApplyDefaultValues(object self)
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
-        }
 
         public bool Save()
         {
@@ -73,7 +57,7 @@ namespace ZUploader
             try
             {
                 XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                using (FileStream fs = new FileStream(path, FileMode.Create))
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     xs.Serialize(fs, this);
                     return true;
@@ -104,7 +88,7 @@ namespace ZUploader
                 try
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                    using (FileStream fs = new FileStream(path, FileMode.Open))
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         return xs.Deserialize(fs) as Settings;
                     }

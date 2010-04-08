@@ -461,7 +461,7 @@ namespace UploadersLib.FileUploaders
                         {
                             if (int.TryParse(progressInfo.Meter, out progress))
                             {
-                                sendSpace.OnProgressChanged(0, 0);
+                                //sendSpace.OnProgressChanged(0, 0);
                             }
                         }
                     }

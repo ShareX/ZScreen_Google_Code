@@ -29,7 +29,7 @@ namespace ZUploader
     {
         public int ID { get; set; }
         public string Status { get; set; }
-        public UploadProgress Progress { get; set; }
+        public ProgressManager Progress { get; set; }
 
         private string filePath;
         public string FilePath
@@ -77,7 +77,6 @@ namespace ZUploader
 
         public UploadInfo()
         {
-            Progress = new UploadProgress();
             Result = new UploadResult();
         }
     }
