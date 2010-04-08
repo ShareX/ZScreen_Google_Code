@@ -20,7 +20,7 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1);
+                string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1).Trim();
                 ifm.ImageFileList.Add(new ImageFile(lastLine, LinkType.FULLIMAGE));
                 ifm.ImageFileList.Add(new ImageFile(lastLine.Replace(".img1.us/", ".img1.us/thumbs/"), LinkType.THUMBNAIL));
             }

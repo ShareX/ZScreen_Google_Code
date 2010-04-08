@@ -84,6 +84,7 @@
     <Compile Include="Helpers\IUploader.cs" />
     <Compile Include="Helpers\oAuth.cs" />
     <Compile Include="Helpers\oAuthTwitter.cs" />
+    <Compile Include="Helpers\ProgressManager.cs" />
     <Compile Include="Helpers\ProxyInfo.cs" />
     <Compile Include="Helpers\ProxySettings.cs" />
     <Compile Include="Helpers\TCPClient.cs" />

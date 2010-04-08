@@ -28,6 +28,7 @@ using System.IO;
 using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
+using ZUploader;
 
 namespace UploadersLib
 {
@@ -40,6 +41,8 @@ namespace UploadersLib
         public FtpClient Client { get; set; }
 
         public bool AutoReconnect { get; set; }
+
+        private ProgressManager progress;
 
         public FTP(FTPAccount account)
         {
@@ -69,7 +72,8 @@ namespace UploadersLib
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(new Uploader.ProgressEventArgs(e.TotalBytesTransferred, e.TotalBytes));
+                progress.ChangeProgress(e.BytesTransferred);
+                ProgressChanged(progress);
             }
         }
 
@@ -102,6 +106,7 @@ namespace UploadersLib
         public void UploadData(Stream stream, string remotePath)
         {
             Connect();
+            progress = new ProgressManager(stream.Length, 500);
             Client.PutFile(stream, remotePath, FileAction.Create);
         }
 
