@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{EDAD3B82-D40D-4402-B260-FD238E42871D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.Updater", "Updater\ZSS.Updater.csproj", "{EDAD3B82-D40D-4402-B260-FD238E42871D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

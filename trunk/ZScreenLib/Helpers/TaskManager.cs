@@ -38,6 +38,7 @@ using HelpersLib;
 using GraphicsMgrLib;
 using ZScreenLib.Forms;
 using ZScreenLib.Shapes;
+using ZUploader;
 
 namespace ZScreenLib
 {
@@ -583,7 +584,7 @@ namespace ZScreenLib
                 (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
         }
 
-        private void UploadProgressChanged(Uploader.ProgressEventArgs progress)
+        private void UploadProgressChanged(ProgressManager progress)
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {

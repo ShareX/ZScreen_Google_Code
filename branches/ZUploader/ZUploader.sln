@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\..\t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.HelpersLib", "..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Ftp", "..\..\trunk\Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj", "{5F228FCD-54F1-491D-93CE-3D768655FADC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starksoft.Net.Proxy", "..\..\trunk\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj", "{56EB350E-089E-40BB-97CB-F2745A4251AE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,14 +25,6 @@ Global
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F228FCD-54F1-491D-93CE-3D768655FADC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56EB350E-089E-40BB-97CB-F2745A4251AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
