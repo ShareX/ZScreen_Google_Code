@@ -70,8 +70,8 @@ namespace ZUploader
                 timer.Start();
             }
 
-            Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} kb/s - {5}",
-                DateTime.Now.ToLongTimeString(), Position, Length, Percentage, Speed, EstimatedCompleteTime.TotalSeconds));
+            /*Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} kb/s - {5}",
+                DateTime.Now.ToLongTimeString(), Position, Length, Percentage, Speed, EstimatedCompleteTime.TotalSeconds));*/
         }
     }
 }

@@ -124,10 +124,13 @@ namespace UploadersLib
                 request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
                 request.ContentLength = stream.Length;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
+                request.KeepAlive = false;
                 request.Method = "POST";
+                request.ProtocolVersion = HttpVersion.Version11;
                 request.Proxy = ProxySettings.GetWebProxy;
                 request.ServicePoint.Expect100Continue = false;
                 request.ServicePoint.UseNagleAlgorithm = false;
+                request.Timeout = -1;
                 request.UserAgent = UserAgent;
 
                 byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
