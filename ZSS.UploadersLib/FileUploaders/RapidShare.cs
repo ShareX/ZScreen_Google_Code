@@ -82,11 +82,9 @@ namespace UploadersLib.FileUploaders
 
             if (string.IsNullOrEmpty(result))
             {
-                Errors.Add("Upload result is empty.");
-                return null;
+                UploadInfo info = new UploadInfo(result);
+                return info.URL;
             }
-
-            UploadInfo info = new UploadInfo(result);
 
             /*if (Options.CheckFileSize)
             {
@@ -106,7 +104,7 @@ namespace UploadersLib.FileUploaders
                 }
             }*/
 
-            return info.URL;
+            return null;
         }
 
         private string NextUploadServer()
