@@ -39,7 +39,7 @@ namespace ZUploader
         private Stopwatch timer = new Stopwatch();
         private int smoothTime;
         private long speedTest;
-        private List<double> averageSpeed = new List<double>();
+        private List<double> averageSpeed = new List<double>(10);
 
         public ProgressManager(long length, int smoothTime)
         {
@@ -56,23 +56,21 @@ namespace ZUploader
 
             if (timer.ElapsedMilliseconds > smoothTime)
             {
-                averageSpeed.Add((double)speedTest / timer.ElapsedMilliseconds);
-                if (averageSpeed.Count > 10)
+                if (averageSpeed.Count == 10)
                 {
                     averageSpeed.RemoveAt(0);
-                    Speed = averageSpeed.Average();
                 }
-                else
-                {
-                    Speed = averageSpeed.Last();
-                }
+                
+                averageSpeed.Add((double)speedTest / timer.ElapsedMilliseconds);
+                Speed = averageSpeed.Average();
                 EstimatedCompleteTime = TimeSpan.FromMilliseconds((Length - Position) / Speed);
+
                 speedTest = 0;
                 timer.Reset();
                 timer.Start();
             }
 
-            Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} KiB/s - {5}",
+            Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} kb/s - {5}",
                 DateTime.Now.ToLongTimeString(), Position, Length, Percentage, Speed, EstimatedCompleteTime.TotalSeconds));
         }
     }
