@@ -53,14 +53,6 @@ namespace ZUploader
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.lvUploads = new System.Windows.Forms.ListView();
-            this.chID = new System.Windows.Forms.ColumnHeader();
-            this.chStatus = new System.Windows.Forms.ColumnHeader();
-            this.chFilePath = new System.Windows.Forms.ColumnHeader();
-            this.chProgress = new System.Windows.Forms.ColumnHeader();
-            this.chUploaderType = new System.Windows.Forms.ColumnHeader();
-            this.chHost = new System.Windows.Forms.ColumnHeader();
-            this.chURL = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,78 +73,22 @@ namespace ZUploader
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
             this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.tscMain = new System.Windows.Forms.ToolStripContainer();
+            this.lvUploads = new ZUploader.ListViewNF();
+            this.chID = new System.Windows.Forms.ColumnHeader();
+            this.chStatus = new System.Windows.Forms.ColumnHeader();
+            this.chFilePath = new System.Windows.Forms.ColumnHeader();
+            this.chProgress = new System.Windows.Forms.ColumnHeader();
             this.chSpeed = new System.Windows.Forms.ColumnHeader();
             this.chEstimatedTime = new System.Windows.Forms.ColumnHeader();
+            this.chUploaderType = new System.Windows.Forms.ColumnHeader();
+            this.chHost = new System.Windows.Forms.ColumnHeader();
+            this.chURL = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
             this.tscMain.TopToolStripPanel.SuspendLayout();
             this.tscMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lvUploads
-            // 
-            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chID,
-            this.chStatus,
-            this.chFilePath,
-            this.chProgress,
-            this.chSpeed,
-            this.chEstimatedTime,
-            this.chUploaderType,
-            this.chHost,
-            this.chURL});
-            this.lvUploads.ContextMenuStrip = this.cmsUploads;
-            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvUploads.FullRowSelect = true;
-            this.lvUploads.GridLines = true;
-            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(3, 3);
-            this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(878, 323);
-            this.lvUploads.TabIndex = 3;
-            this.lvUploads.UseCompatibleStateImageBehavior = false;
-            this.lvUploads.View = System.Windows.Forms.View.Details;
-            this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
-            this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
-            // 
-            // chID
-            // 
-            this.chID.Text = "ID";
-            this.chID.Width = 25;
-            // 
-            // chStatus
-            // 
-            this.chStatus.Text = "Status";
-            this.chStatus.Width = 100;
-            // 
-            // chFilePath
-            // 
-            this.chFilePath.Text = "File path";
-            this.chFilePath.Width = 150;
-            // 
-            // chProgress
-            // 
-            this.chProgress.Text = "Progress";
-            this.chProgress.Width = 130;
-            // 
-            // chUploaderType
-            // 
-            this.chUploaderType.DisplayIndex = 5;
-            this.chUploaderType.Text = "Type";
-            this.chUploaderType.Width = 50;
-            // 
-            // chHost
-            // 
-            this.chHost.DisplayIndex = 6;
-            this.chHost.Text = "Host";
-            this.chHost.Width = 100;
-            // 
-            // chURL
-            // 
-            this.chURL.Text = "URL";
-            this.chURL.Width = 199;
             // 
             // cmsUploads
             // 
@@ -343,14 +279,74 @@ namespace ZUploader
             // 
             this.tscMain.TopToolStripPanel.Controls.Add(this.tsMain);
             // 
+            // lvUploads
+            // 
+            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chID,
+            this.chStatus,
+            this.chFilePath,
+            this.chProgress,
+            this.chSpeed,
+            this.chEstimatedTime,
+            this.chUploaderType,
+            this.chHost,
+            this.chURL});
+            this.lvUploads.ContextMenuStrip = this.cmsUploads;
+            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUploads.FullRowSelect = true;
+            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvUploads.HideSelection = false;
+            this.lvUploads.Location = new System.Drawing.Point(3, 3);
+            this.lvUploads.Name = "lvUploads";
+            this.lvUploads.Size = new System.Drawing.Size(878, 323);
+            this.lvUploads.TabIndex = 3;
+            this.lvUploads.UseCompatibleStateImageBehavior = false;
+            this.lvUploads.View = System.Windows.Forms.View.Details;
+            this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
+            this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
+            // 
+            // chID
+            // 
+            this.chID.Text = "ID";
+            this.chID.Width = 25;
+            // 
+            // chStatus
+            // 
+            this.chStatus.Text = "Status";
+            this.chStatus.Width = 75;
+            // 
+            // chFilePath
+            // 
+            this.chFilePath.Text = "File path";
+            this.chFilePath.Width = 150;
+            // 
+            // chProgress
+            // 
+            this.chProgress.Text = "Progress";
+            this.chProgress.Width = 140;
+            // 
             // chSpeed
             // 
             this.chSpeed.Text = "Speed";
             // 
             // chEstimatedTime
             // 
-            this.chEstimatedTime.DisplayIndex = 4;
             this.chEstimatedTime.Text = "Estimated";
+            // 
+            // chUploaderType
+            // 
+            this.chUploaderType.Text = "Type";
+            this.chUploaderType.Width = 50;
+            // 
+            // chHost
+            // 
+            this.chHost.Text = "Host";
+            this.chHost.Width = 100;
+            // 
+            // chURL
+            // 
+            this.chURL.Text = "URL";
+            this.chURL.Width = 214;
             // 
             // MainForm
             // 
@@ -382,7 +378,7 @@ namespace ZUploader
 
         #endregion
 
-        private System.Windows.Forms.ListView lvUploads;
+        private ListViewNF lvUploads;
         private System.Windows.Forms.ColumnHeader chID;
         private System.Windows.Forms.ColumnHeader chStatus;
         private System.Windows.Forms.ColumnHeader chURL;
