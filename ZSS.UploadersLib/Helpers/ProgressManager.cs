@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2010  Brandon Zimmerman
+    Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -72,7 +72,7 @@ namespace ZUploader
                 timer.Start();
             }
 
-            Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4}kb/s - {5}",
+            Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} KiB/s - {5}",
                 DateTime.Now.ToLongTimeString(), Position, Length, Percentage, Speed, EstimatedCompleteTime.TotalSeconds));
         }
     }
