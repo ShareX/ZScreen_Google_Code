@@ -27,6 +27,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
+using ZUploader;
 
 namespace UploadersLib
 {
@@ -47,7 +48,7 @@ namespace UploadersLib
     public class FTPAdapter
     {
         public event ProgressEventHandler ProgressChanged;
-        public delegate void ProgressEventHandler(int progress);
+        public delegate void ProgressEventHandler(ProgressManager progress);
 
         public event StringEventHandler FTPOutput;
         public delegate void StringEventHandler(string text);
@@ -61,28 +62,7 @@ namespace UploadersLib
             this.Options = options;
         }
 
-        private class ProgressManager
-        {
-            public int Progress;
-
-            public bool ChangeProgress(Stream stream)
-            {
-                return ChangeProgress(stream.Position, stream.Length);
-            }
-
-            public bool ChangeProgress(long position, long length)
-            {
-                int percentage = (int)((double)position / length * 100);
-                if (percentage != Progress)
-                {
-                    Progress = percentage;
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        private void ReportProgress(int progress)
+        private void OnProgressChanged(ProgressManager progress)
         {
             if (ProgressChanged != null)
             {
@@ -104,18 +84,16 @@ namespace UploadersLib
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager();
+                    ProgressManager progress = new ProgressManager(stream.Length, 500);
 
                     byte[] buffer = new byte[BufferSize];
-                    int bytes = stream.Read(buffer, 0, BufferSize);
+                    int bytesRead;
 
-                    while (bytes > 0)
+                    while ((bytesRead = stream.Read(buffer, 0, BufferSize)) > 0)
                     {
-                        requestStream.Write(buffer, 0, bytes);
-
-                        if (progress.ChangeProgress(stream)) ReportProgress(progress.Progress);
-
-                        bytes = stream.Read(buffer, 0, BufferSize);
+                        requestStream.Write(buffer, 0, bytesRead);
+                        progress.ChangeProgress(bytesRead);
+                        OnProgressChanged(progress);
                     }
                 }
 
@@ -175,21 +153,16 @@ namespace UploadersLib
                 using (upload.Stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager();
+                    ProgressManager progress = new ProgressManager(upload.Stream.Length, 500);
 
                     byte[] buffer = new byte[BufferSize];
-                    int bytes = upload.Stream.Read(buffer, 0, BufferSize);
+                    int bytesRead;
 
-                    while (bytes > 0)
+                    while ((bytesRead = upload.Stream.Read(buffer, 0, BufferSize)) > 0)
                     {
-                        requestStream.Write(buffer, 0, bytes);
-
-                        if (progress.ChangeProgress(upload.Stream))
-                        {
-                            upload.BackgroundWorker.ReportProgress(progress.Progress);
-                        }
-
-                        bytes = upload.Stream.Read(buffer, 0, BufferSize);
+                        requestStream.Write(buffer, 0, bytesRead);
+                        progress.ChangeProgress(bytesRead);
+                        upload.BackgroundWorker.ReportProgress((int)progress.Percentage, progress);
                     }
                 }
             }
@@ -203,7 +176,7 @@ namespace UploadersLib
         {
             if (ProgressChanged != null)
             {
-                ProgressChanged(e.ProgressPercentage);
+                ProgressChanged((ProgressManager)e.UserState);
             }
         }
 
@@ -236,19 +209,16 @@ namespace UploadersLib
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
                 {
-                    ProgressManager progress = new ProgressManager();
+                    ProgressManager progress = new ProgressManager(stream.Length, 500);
 
                     byte[] buffer = new byte[BufferSize];
-                    int bytes = stream.Read(buffer, 0, BufferSize), totalBytes = 0;
+                    int bytesRead;
 
-                    while (bytes > 0)
+                    while ((bytesRead = stream.Read(buffer, 0, BufferSize)) > 0)
                     {
-                        fileStream.Write(buffer, 0, bytes);
-
-                        totalBytes += bytes;
-                        if (progress.ChangeProgress(totalBytes, response.ContentLength)) ReportProgress(progress.Progress);
-
-                        bytes = stream.Read(buffer, 0, BufferSize);
+                        fileStream.Write(buffer, 0, bytesRead);
+                        progress.ChangeProgress(bytesRead);
+                        OnProgressChanged(progress);
                     }
                 }
 

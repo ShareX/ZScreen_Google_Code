@@ -38,6 +38,7 @@ using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.IndexersLib;
 using System.Web;
+using ZUploader;
 
 namespace ZScreenGUI
 {
@@ -214,7 +215,7 @@ namespace ZScreenGUI
                     Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, string.Format("Images Destination was updated to {0}", Engine.conf.ImageUploaderType.GetDescription()), ToolTipIcon.Warning);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
-                    int progress = (int)((Uploader.ProgressEventArgs)e.UserState).Percentage;
+                    int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());

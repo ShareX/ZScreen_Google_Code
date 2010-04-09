@@ -502,7 +502,7 @@ namespace ZScreenLib
         public bool PreferBrowserForImages { get; set; }
         [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
         public bool PreferBrowserForText { get; set; }
-        
+
         // Options / Interaction
 
         [Category("Options / General"), DefaultValue(true),
@@ -725,7 +725,7 @@ namespace ZScreenLib
                 }
 
                 XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     xs.Serialize(fs, this);
                 }
@@ -780,7 +780,7 @@ namespace ZScreenLib
                     try
                     {
                         XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
-                        using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                        using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             return xs.Deserialize(fs) as XMLSettings;
                         }
@@ -790,12 +790,14 @@ namespace ZScreenLib
                         // We dont need a MessageBox when we rename enumerations
                         // Renaming enums tend to break parts of serialization
                         FileSystem.AppendDebug("Error while reading settings", ex);
-                        OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
-                        dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                        dlg.InitialDirectory = Engine.mAppSettings.RootDir;
-                        if (dlg.ShowDialog() == DialogResult.OK)
+                        using (OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS })
                         {
-                            return XMLSettings.Read(dlg.FileName);
+                            dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
+                            dlg.InitialDirectory = Engine.mAppSettings.RootDir;
+                            if (dlg.ShowDialog() == DialogResult.OK)
+                            {
+                                return XMLSettings.Read(dlg.FileName);
+                            }
                         }
                     }
                 }

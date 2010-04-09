@@ -36,6 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Starksoft.Net.Ftp, Version=1.0.158.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Starksoft.Net.Ftp.dll</HintPath>
+    </Reference>
+    <Reference Include="Starksoft.Net.Proxy, Version=1.0.131.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Starksoft.Net.Proxy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -130,14 +138,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Starksoft\Starksoft.Net.Ftp\Starksoft.Net.Ftp.csproj">
-      <Project>{5F228FCD-54F1-491D-93CE-3D768655FADC}</Project>
-      <Name>Starksoft.Net.Ftp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Starksoft\Starksoft.Net.Proxy\Starksoft.Net.Proxy.csproj">
-      <Project>{56EB350E-089E-40BB-97CB-F2745A4251AE}</Project>
-      <Name>Starksoft.Net.Proxy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>
