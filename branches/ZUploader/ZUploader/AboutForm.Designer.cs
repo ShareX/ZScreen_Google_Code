@@ -32,6 +32,7 @@
             this.lblZScreen = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblCopyright = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProductName
@@ -74,12 +75,23 @@
             // 
             this.lblCopyright.BackColor = System.Drawing.Color.Transparent;
             this.lblCopyright.ForeColor = System.Drawing.Color.White;
-            this.lblCopyright.Location = new System.Drawing.Point(16, 72);
+            this.lblCopyright.Location = new System.Drawing.Point(16, 120);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(352, 23);
             this.lblCopyright.TabIndex = 4;
             this.lblCopyright.Text = "Copyright";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(16, 80);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(195, 26);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "FTP Library: http://www.starksoft.com\r\nIcons: http://p.yusukekamiyamane.com";
             // 
             // AboutForm
             // 
@@ -87,6 +99,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(379, 215);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCopyright);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblZScreen);
@@ -107,5 +120,6 @@
         private System.Windows.Forms.Label lblZScreen;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblCopyright;
+        private System.Windows.Forms.Label label1;
     }
 }

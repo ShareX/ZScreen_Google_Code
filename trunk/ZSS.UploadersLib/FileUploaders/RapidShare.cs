@@ -21,11 +21,9 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace UploadersLib.FileUploaders
 {
@@ -80,7 +78,7 @@ namespace UploadersLib.FileUploaders
 
             string result = UploadData(stream, fileName, url, "filecontent", args);
 
-            if (string.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(result))
             {
                 UploadInfo info = new UploadInfo(result);
                 return info.URL;
