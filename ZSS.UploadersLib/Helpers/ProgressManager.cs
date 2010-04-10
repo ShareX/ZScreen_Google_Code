@@ -41,6 +41,8 @@ namespace ZUploader
         private long speedTest;
         private List<double> averageSpeed = new List<double>(10);
 
+        public ProgressManager(long length) : this(length, 500) { }
+
         public ProgressManager(long length, int smoothTime)
         {
             Length = length;
@@ -60,7 +62,7 @@ namespace ZUploader
                 {
                     averageSpeed.RemoveAt(0);
                 }
-                
+
                 averageSpeed.Add((double)speedTest / timer.ElapsedMilliseconds);
                 Speed = averageSpeed.Average();
                 EstimatedCompleteTime = TimeSpan.FromMilliseconds((Length - Position) / Speed);
@@ -69,9 +71,6 @@ namespace ZUploader
                 timer.Reset();
                 timer.Start();
             }
-
-            /*Console.WriteLine(string.Format("{0} - {1}/{2} - {3}% - {4} KiB/s - {5}",
-                DateTime.Now.ToLongTimeString(), Position, Length, Percentage, Speed, EstimatedCompleteTime.TotalSeconds));*/
         }
     }
 }

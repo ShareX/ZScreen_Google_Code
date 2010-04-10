@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2010  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -48,7 +48,6 @@ namespace UploadersLib
 
         public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
-        public bool ReportProgress { get; set; }
 
         public Uploader()
         {
@@ -133,12 +132,11 @@ namespace UploadersLib
                 request.Timeout = -1;
                 request.UserAgent = UserAgent;
 
-                byte[] buffer = new byte[(int)Math.Min(4096, stream.Length)];
-                stream.Position = 0;
-
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager(stream.Length, 500);
+                    ProgressManager progress = new ProgressManager(stream.Length);
+                    stream.Position = 0;
+                    byte[] buffer = new byte[4096];
                     int bytesRead;
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
