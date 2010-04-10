@@ -322,18 +322,15 @@ namespace ZScreenLib
             StartTextWorkers(textWorkers);
         }
 
-        protected void ScreenshotUsingDragDrop(string fp)
+        protected void UploadUsingDragDrop(string fp)
         {
             StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
         }
 
-        protected void ScreenshotUsingDragDrop(string[] paths)
+        protected void UploadUsingDragDrop(string[] paths)
         {
-            foreach (string filePath in FileSystem.GetExplorerFileList(paths))
-            {
-                //File.Copy(filePath, FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(filePath))), true);
-                ScreenshotUsingDragDrop(filePath);
-            }
+            List<string> pathsList = new List<string>(paths);
+            UploadUsingFileSystem(pathsList);
         }
 
         public bool UploadUsingFileSystem(List<string> fileList)
