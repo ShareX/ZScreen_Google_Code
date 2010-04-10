@@ -67,10 +67,10 @@ namespace ZScreenLib
                 PrinterSettings ps = ph.PrintWithDialog();
             }
         }
-        
+
         public static void CopyDataToClipboard(object data)
         {
-        	Clipboard.SetDataObject(data, true);
+            Clipboard.SetDataObject(data, true);
         }
 
         public static void CopyImageToClipboard(Image img)
@@ -119,7 +119,26 @@ namespace ZScreenLib
             if (task != null && ni != null && ico != null)
             {
                 ni.Icon = ico;
-                ni.Text = task.Job.GetDescription();
+                // Text length must be less than 64 characters long
+                StringBuilder sbMsg = new StringBuilder();
+                sbMsg.Append(task.Job.GetDescription());
+                sbMsg.Append(": ");
+                switch (task.JobCategory)
+                {
+                    case JobCategoryType.SCREENSHOTS:
+                    case JobCategoryType.PICTURES:
+                        sbMsg.Append(task.MyImageUploader.GetDescription());
+                        break;
+                    case JobCategoryType.TEXT:
+                        sbMsg.Append(task.MyTextUploader.ToString());
+                        break;
+                    case JobCategoryType.BINARY:
+                        sbMsg.Append(Path.GetFileName(task.LocalFilePath));
+                        sbMsg.Append(" to ");
+                        sbMsg.Append(task.MyFileUploader.GetDescription());
+                        break;
+                }
+                ni.Text = sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
             }
         }
 
@@ -780,7 +799,7 @@ namespace ZScreenLib
             }
             return result;
         }
-        
+
         /// <summary>
         /// Method to show the appropriate Folder Browser dialog based on the OS
         /// </summary>
