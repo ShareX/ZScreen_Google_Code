@@ -218,7 +218,7 @@ namespace ZScreenGUI
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
-                    mZScreen.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());
+                    mZScreen.Text = string.Format("{0}% - {1}", UploadManager.GetAverageProgress(), Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
@@ -849,7 +849,7 @@ namespace ZScreenGUI
         {
             if (strings != null)
             {
-                ScreenshotUsingDragDrop(strings);
+                UploadUsingDragDrop(strings);
             }
         }
 
