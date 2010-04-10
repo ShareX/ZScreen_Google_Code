@@ -39,6 +39,10 @@ https://zscreen.googlecode.com/svn
 {{{
 http://starksoft-component-libraries.googlecode.com/svn
 }}}
+ * Ensure that the Starksoft Ftp dll build output is set to ZScreen Lib folder such as
+{{{
+Visual Studio 2008\Projects\ZScreen\trunk\Lib
+}}}
 
 = Running from Source == 
  * Double click the ZScreen.sln to open the solution Visual C# Express or Visual Studio 
