@@ -73,16 +73,18 @@ namespace ZUploader
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
             this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.tscMain = new System.Windows.Forms.ToolStripContainer();
+            this.ilListView = new System.Windows.Forms.ImageList(this.components);
             this.lvUploads = new ZUploader.ListViewNF();
             this.chID = new System.Windows.Forms.ColumnHeader();
             this.chStatus = new System.Windows.Forms.ColumnHeader();
-            this.chFilePath = new System.Windows.Forms.ColumnHeader();
+            this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chProgress = new System.Windows.Forms.ColumnHeader();
             this.chSpeed = new System.Windows.Forms.ColumnHeader();
             this.chEstimatedTime = new System.Windows.Forms.ColumnHeader();
             this.chUploaderType = new System.Windows.Forms.ColumnHeader();
             this.chHost = new System.Windows.Forms.ColumnHeader();
             this.chURL = new System.Windows.Forms.ColumnHeader();
+            this.chIcon = new System.Windows.Forms.ColumnHeader();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -279,12 +281,21 @@ namespace ZUploader
             // 
             this.tscMain.TopToolStripPanel.Controls.Add(this.tsMain);
             // 
+            // ilListView
+            // 
+            this.ilListView.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilListView.ImageStream")));
+            this.ilListView.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilListView.Images.SetKeyName(0, "navigation-090-button.png");
+            this.ilListView.Images.SetKeyName(1, "cross-button.png");
+            this.ilListView.Images.SetKeyName(2, "tick-button.png");
+            // 
             // lvUploads
             // 
             this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chIcon,
             this.chID,
             this.chStatus,
-            this.chFilePath,
+            this.chFilename,
             this.chProgress,
             this.chSpeed,
             this.chEstimatedTime,
@@ -299,6 +310,7 @@ namespace ZUploader
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.Size = new System.Drawing.Size(878, 323);
+            this.lvUploads.SmallImageList = this.ilListView;
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -308,17 +320,17 @@ namespace ZUploader
             // chID
             // 
             this.chID.Text = "ID";
-            this.chID.Width = 25;
+            this.chID.Width = 24;
             // 
             // chStatus
             // 
             this.chStatus.Text = "Status";
             this.chStatus.Width = 75;
             // 
-            // chFilePath
+            // chFilename
             // 
-            this.chFilePath.Text = "File path";
-            this.chFilePath.Width = 150;
+            this.chFilename.Text = "Filename";
+            this.chFilename.Width = 100;
             // 
             // chProgress
             // 
@@ -346,7 +358,12 @@ namespace ZUploader
             // chURL
             // 
             this.chURL.Text = "URL";
-            this.chURL.Width = 214;
+            this.chURL.Width = 241;
+            // 
+            // chIcon
+            // 
+            this.chIcon.Text = "";
+            this.chIcon.Width = 24;
             // 
             // MainForm
             // 
@@ -389,7 +406,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem copyDeletionURLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyErrorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
-        private System.Windows.Forms.ColumnHeader chFilePath;
+        private System.Windows.Forms.ColumnHeader chFilename;
         private System.Windows.Forms.ColumnHeader chProgress;
         private System.Windows.Forms.ColumnHeader chHost;
         private System.Windows.Forms.ColumnHeader chUploaderType;
@@ -408,6 +425,8 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripContainer tscMain;
         private System.Windows.Forms.ColumnHeader chSpeed;
         private System.Windows.Forms.ColumnHeader chEstimatedTime;
+        private System.Windows.Forms.ImageList ilListView;
+        private System.Windows.Forms.ColumnHeader chIcon;
     }
 }
 
