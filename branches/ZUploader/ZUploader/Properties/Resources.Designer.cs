@@ -59,5 +59,89 @@ namespace ZUploader.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap application__plus {
+            get {
+                object obj = ResourceManager.GetObject("application--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap application_form {
+            get {
+                object obj = ResourceManager.GetObject("application-form", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap clipboard__plus {
+            get {
+                object obj = ResourceManager.GetObject("clipboard--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap cross_button {
+            get {
+                object obj = ResourceManager.GetObject("cross_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap document__arrow {
+            get {
+                object obj = ResourceManager.GetObject("document--arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap document__plus {
+            get {
+                object obj = ResourceManager.GetObject("document--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap document_copy {
+            get {
+                object obj = ResourceManager.GetObject("document-copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder__plus {
+            get {
+                object obj = ResourceManager.GetObject("folder--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap image__plus {
+            get {
+                object obj = ResourceManager.GetObject("image--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap information {
+            get {
+                object obj = ResourceManager.GetObject("information", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap navigation_090_button {
+            get {
+                object obj = ResourceManager.GetObject("navigation_090_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tick_button {
+            get {
+                object obj = ResourceManager.GetObject("tick_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

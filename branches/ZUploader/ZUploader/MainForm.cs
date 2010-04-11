@@ -62,7 +62,15 @@ namespace ZUploader
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
 
+            ImageList il = new ImageList();
+            il.ColorDepth = ColorDepth.Depth32Bit;
+            il.Images.Add(ZUploader.Properties.Resources.navigation_090_button);
+            il.Images.Add(ZUploader.Properties.Resources.cross_button);
+            il.Images.Add(ZUploader.Properties.Resources.tick_button);
+            lvUploads.SmallImageList = il;
+
             UploadManager.ListViewControl = lvUploads;
+
             UpdateControls();
             this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
         }
