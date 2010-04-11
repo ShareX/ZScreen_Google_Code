@@ -337,13 +337,13 @@ namespace ZScreenGUI
                         this.mZScreen.btnOpenSourceString.Enabled = true;
                     }
 
-                    this.mZScreen.niTray.Text = this.mZScreen.Text;
                     if (UploadManager.UploadInfoList.Count > 1)
                     {
                         this.mZScreen.niTray.Icon = Resources.zss_busy;
                     }
                     else
                     {
+                        this.mZScreen.niTray.Text = this.mZScreen.Text; // do not update notifyIcon text if there are other jobs active
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 

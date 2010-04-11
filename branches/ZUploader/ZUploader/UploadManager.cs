@@ -160,9 +160,9 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[info.ID];
-                lvi.SubItems[3].Text = string.Format("{0:N0}%  {1:N0} kb / {2:N0} kb", info.Progress.Percentage,
+                lvi.SubItems[3].Text = string.Format("{0:N0}%  {1:N0} kB / {2:N0} kB", info.Progress.Percentage,
                     info.Progress.Position / 1000, info.Progress.Length / 1000);
-                lvi.SubItems[4].Text = string.Format("{0:N0} kb/s", info.Progress.Speed);
+                lvi.SubItems[4].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
                 lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.EstimatedCompleteTime.Minutes, info.Progress.EstimatedCompleteTime.Seconds);
             }
         }
