@@ -61,12 +61,19 @@ namespace ZUploader
             this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMain = new System.Windows.Forms.ToolStrip();
+            this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbCopy = new System.Windows.Forms.ToolStripButton();
+            this.tsbOpen = new System.Windows.Forms.ToolStripButton();
             this.tss1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsddbImageUploaders = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbFileUploaders = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbTextUploaders = new System.Windows.Forms.ToolStripDropDownButton();
             this.tss2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbSettings = new System.Windows.Forms.ToolStripButton();
+            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.tscMain = new System.Windows.Forms.ToolStripContainer();
             this.lvUploads = new ZUploader.ListViewNF();
-            this.chIcon = new System.Windows.Forms.ColumnHeader();
-            this.chID = new System.Windows.Forms.ColumnHeader();
             this.chStatus = new System.Windows.Forms.ColumnHeader();
             this.chFilename = new System.Windows.Forms.ColumnHeader();
             this.chProgress = new System.Windows.Forms.ColumnHeader();
@@ -75,15 +82,6 @@ namespace ZUploader
             this.chUploaderType = new System.Windows.Forms.ColumnHeader();
             this.chHost = new System.Windows.Forms.ColumnHeader();
             this.chURL = new System.Windows.Forms.ColumnHeader();
-            this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
-            this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
-            this.tsbCopy = new System.Windows.Forms.ToolStripButton();
-            this.tsbOpen = new System.Windows.Forms.ToolStripButton();
-            this.tsddbImageUploaders = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddbFileUploaders = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddbTextUploaders = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsbSettings = new System.Windows.Forms.ToolStripButton();
-            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -164,118 +162,9 @@ namespace ZUploader
             this.tsMain.Location = new System.Drawing.Point(3, 0);
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
-            this.tsMain.Size = new System.Drawing.Size(881, 33);
+            this.tsMain.Size = new System.Drawing.Size(851, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
-            // 
-            // tss1
-            // 
-            this.tss1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tss1.Name = "tss1";
-            this.tss1.Size = new System.Drawing.Size(6, 23);
-            // 
-            // tss2
-            // 
-            this.tss2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tss2.Name = "tss2";
-            this.tss2.Size = new System.Drawing.Size(6, 23);
-            // 
-            // tscMain
-            // 
-            this.tscMain.BottomToolStripPanelVisible = false;
-            // 
-            // tscMain.ContentPanel
-            // 
-            this.tscMain.ContentPanel.Controls.Add(this.lvUploads);
-            this.tscMain.ContentPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.tscMain.ContentPanel.Size = new System.Drawing.Size(884, 329);
-            this.tscMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tscMain.LeftToolStripPanelVisible = false;
-            this.tscMain.Location = new System.Drawing.Point(0, 0);
-            this.tscMain.Name = "tscMain";
-            this.tscMain.RightToolStripPanelVisible = false;
-            this.tscMain.Size = new System.Drawing.Size(884, 362);
-            this.tscMain.TabIndex = 88;
-            this.tscMain.Text = "toolStripContainer1";
-            // 
-            // tscMain.TopToolStripPanel
-            // 
-            this.tscMain.TopToolStripPanel.Controls.Add(this.tsMain);
-            // 
-            // lvUploads
-            // 
-            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chIcon,
-            this.chID,
-            this.chStatus,
-            this.chFilename,
-            this.chProgress,
-            this.chSpeed,
-            this.chEstimatedTime,
-            this.chUploaderType,
-            this.chHost,
-            this.chURL});
-            this.lvUploads.ContextMenuStrip = this.cmsUploads;
-            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvUploads.FullRowSelect = true;
-            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(3, 3);
-            this.lvUploads.Name = "lvUploads";
-            this.lvUploads.Size = new System.Drawing.Size(878, 323);
-            this.lvUploads.TabIndex = 3;
-            this.lvUploads.UseCompatibleStateImageBehavior = false;
-            this.lvUploads.View = System.Windows.Forms.View.Details;
-            this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
-            this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
-            // 
-            // chIcon
-            // 
-            this.chIcon.Text = "";
-            this.chIcon.Width = 24;
-            // 
-            // chID
-            // 
-            this.chID.Text = "ID";
-            this.chID.Width = 24;
-            // 
-            // chStatus
-            // 
-            this.chStatus.Text = "Status";
-            this.chStatus.Width = 75;
-            // 
-            // chFilename
-            // 
-            this.chFilename.Text = "Filename";
-            this.chFilename.Width = 100;
-            // 
-            // chProgress
-            // 
-            this.chProgress.Text = "Progress";
-            this.chProgress.Width = 140;
-            // 
-            // chSpeed
-            // 
-            this.chSpeed.Text = "Speed";
-            // 
-            // chEstimatedTime
-            // 
-            this.chEstimatedTime.Text = "Estimated";
-            // 
-            // chUploaderType
-            // 
-            this.chUploaderType.Text = "Type";
-            this.chUploaderType.Width = 50;
-            // 
-            // chHost
-            // 
-            this.chHost.Text = "Host";
-            this.chHost.Width = 100;
-            // 
-            // chURL
-            // 
-            this.chURL.Text = "URL";
-            this.chURL.Width = 241;
             // 
             // tsbClipboardUpload
             // 
@@ -313,6 +202,12 @@ namespace ZUploader
             this.tsbOpen.Text = "Open";
             this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
+            // tss1
+            // 
+            this.tss1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.tss1.Name = "tss1";
+            this.tss1.Size = new System.Drawing.Size(6, 23);
+            // 
             // tsddbImageUploaders
             // 
             this.tsddbImageUploaders.Image = global::ZUploader.Properties.Resources.image__plus;
@@ -337,6 +232,12 @@ namespace ZUploader
             this.tsddbTextUploaders.Size = new System.Drawing.Size(113, 20);
             this.tsddbTextUploaders.Text = "Text uploaders";
             // 
+            // tss2
+            // 
+            this.tss2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.tss2.Name = "tss2";
+            this.tss2.Size = new System.Drawing.Size(6, 23);
+            // 
             // tsbSettings
             // 
             this.tsbSettings.Image = global::ZUploader.Properties.Resources.application_form;
@@ -354,6 +255,91 @@ namespace ZUploader
             this.tsbAbout.Size = new System.Drawing.Size(69, 20);
             this.tsbAbout.Text = "About...";
             this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
+            // 
+            // tscMain
+            // 
+            this.tscMain.BottomToolStripPanelVisible = false;
+            // 
+            // tscMain.ContentPanel
+            // 
+            this.tscMain.ContentPanel.Controls.Add(this.lvUploads);
+            this.tscMain.ContentPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.tscMain.ContentPanel.Size = new System.Drawing.Size(884, 329);
+            this.tscMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tscMain.LeftToolStripPanelVisible = false;
+            this.tscMain.Location = new System.Drawing.Point(0, 0);
+            this.tscMain.Name = "tscMain";
+            this.tscMain.RightToolStripPanelVisible = false;
+            this.tscMain.Size = new System.Drawing.Size(884, 362);
+            this.tscMain.TabIndex = 88;
+            this.tscMain.Text = "toolStripContainer1";
+            // 
+            // tscMain.TopToolStripPanel
+            // 
+            this.tscMain.TopToolStripPanel.Controls.Add(this.tsMain);
+            // 
+            // lvUploads
+            // 
+            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chStatus,
+            this.chFilename,
+            this.chProgress,
+            this.chSpeed,
+            this.chEstimatedTime,
+            this.chUploaderType,
+            this.chHost,
+            this.chURL});
+            this.lvUploads.ContextMenuStrip = this.cmsUploads;
+            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUploads.FullRowSelect = true;
+            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvUploads.HideSelection = false;
+            this.lvUploads.Location = new System.Drawing.Point(3, 3);
+            this.lvUploads.Name = "lvUploads";
+            this.lvUploads.Size = new System.Drawing.Size(878, 323);
+            this.lvUploads.TabIndex = 3;
+            this.lvUploads.UseCompatibleStateImageBehavior = false;
+            this.lvUploads.View = System.Windows.Forms.View.Details;
+            this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
+            this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
+            // 
+            // chStatus
+            // 
+            this.chStatus.Text = "Status";
+            this.chStatus.Width = 100;
+            // 
+            // chFilename
+            // 
+            this.chFilename.Text = "Filename";
+            this.chFilename.Width = 100;
+            // 
+            // chProgress
+            // 
+            this.chProgress.Text = "Progress";
+            this.chProgress.Width = 140;
+            // 
+            // chSpeed
+            // 
+            this.chSpeed.Text = "Speed";
+            // 
+            // chEstimatedTime
+            // 
+            this.chEstimatedTime.Text = "Estimated";
+            // 
+            // chUploaderType
+            // 
+            this.chUploaderType.Text = "Type";
+            this.chUploaderType.Width = 50;
+            // 
+            // chHost
+            // 
+            this.chHost.Text = "Host";
+            this.chHost.Width = 100;
+            // 
+            // chURL
+            // 
+            this.chURL.Text = "URL";
+            this.chURL.Width = 264;
             // 
             // MainForm
             // 
@@ -386,7 +372,6 @@ namespace ZUploader
         #endregion
 
         private ListViewNF lvUploads;
-        private System.Windows.Forms.ColumnHeader chID;
         private System.Windows.Forms.ColumnHeader chStatus;
         private System.Windows.Forms.ColumnHeader chURL;
         private System.Windows.Forms.ContextMenuStrip cmsUploads;
@@ -415,7 +400,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripContainer tscMain;
         private System.Windows.Forms.ColumnHeader chSpeed;
         private System.Windows.Forms.ColumnHeader chEstimatedTime;
-        private System.Windows.Forms.ColumnHeader chIcon;
     }
 }
 
