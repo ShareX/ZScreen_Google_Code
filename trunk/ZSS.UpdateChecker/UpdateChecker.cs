@@ -56,8 +56,8 @@ namespace ZSS.UpdateCheckerLib
             {
                 projectName = value.ToLower();
                 downloadsList = "http://code.google.com/p/" + projectName + "/downloads/list";
-                labelFeatured = "?q=label:Featured";
-                labelBeta = "?q=label:Beta";
+                labelFeatured = "?q=label:" + projectName + "+Featured";
+                labelBeta = "?q=label:" + projectName + "+Beta";
             }
         }
 
@@ -73,7 +73,11 @@ namespace ZSS.UpdateCheckerLib
             {
                 string url = downloadsList;
 
-                if (!this.Options.CheckBeta)
+                if (this.Options.CheckBeta)
+                {
+                    url += labelBeta;
+                }
+                else
                 {
                     url += labelFeatured;
                 }
