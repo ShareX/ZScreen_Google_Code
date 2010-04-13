@@ -161,7 +161,7 @@ namespace UploadersLib.ImageUploaders
 
         public string GetPhotosLink(string userID)
         {
-            return CombineURL("http://www.flickr.com/photos", userID);
+            return UploadHelpers.CombineURL("http://www.flickr.com/photos", userID);
         }
 
         public string GetPhotosLink()
@@ -175,7 +175,7 @@ namespace UploadersLib.ImageUploaders
 
         private string GetAPISig(Dictionary<string, string> args)
         {
-            return GetMD5(args.OrderBy(x => x.Key).Aggregate(API_Secret, (x, x2) => x + x2.Key + x2.Value));
+            return UploadHelpers.GetMD5(args.OrderBy(x => x.Key).Aggregate(API_Secret, (x, x2) => x + x2.Key + x2.Value));
         }
 
         private XElement ParseResponse(string response, string field)
@@ -235,8 +235,8 @@ namespace UploadersLib.ImageUploaders
             if (null != xele)
             {
                 photoid = xele.Value;
-                string url = CombineURL(GetPhotosLink(), photoid);
-                url2 = CombineURL(url, "sizes/o");
+                string url = UploadHelpers.CombineURL(GetPhotosLink(), photoid);
+                url2 = UploadHelpers.CombineURL(url, "sizes/o");
             }
 
             return new ImageFileManager(url2, response);

@@ -74,7 +74,7 @@ namespace UploadersLib.ImageUploaders
 
                 arguments.Add("action", action);
                 arguments.Add("tpid", tpid);
-                arguments.Add("sig", GetMD5(action + tpid + tpk));
+                arguments.Add("sig", UploadHelpers.GetMD5(action + tpid + tpk));
                 arguments.Add("responsetype", "XML");
                 arguments.Add("upk", upk);
                 arguments.Add("type", "image");
@@ -84,8 +84,8 @@ namespace UploadersLib.ImageUploaders
 
                 if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
                 {
-                    string fullimage = GetXMLValue(ifm.Source, "fullsize");
-                    string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
+                    string fullimage = UploadHelpers.GetXMLValue(ifm.Source, "fullsize");
+                    string thumbnail = UploadHelpers.GetXMLValue(ifm.Source, "thumbnail");
 
                     ifm.Add(fullimage, LinkType.FULLIMAGE);
                     ifm.Add(thumbnail, LinkType.THUMBNAIL);
@@ -103,7 +103,7 @@ namespace UploadersLib.ImageUploaders
             {                 
                 { "action", action },
                 { "tpid", tpid },
-                { "sig", GetMD5(action + tpid + tpk) },
+                { "sig", UploadHelpers.GetMD5(action + tpid + tpk) },
                 { "email", email },
                 { "pass", password }
             };
@@ -112,7 +112,7 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                string result = GetXMLValue(response, "shuk");
+                string result = UploadHelpers.GetXMLValue(response, "shuk");
 
                 return HttpUtility.HtmlEncode(result);
             }
@@ -125,14 +125,14 @@ namespace UploadersLib.ImageUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("action", action);
             args.Add("tpid", tpid);
-            args.Add("sig", GetMD5(action + tpid + tpk));
+            args.Add("sig", UploadHelpers.GetMD5(action + tpid + tpk));
             args.Add("responsetype", "XML");
 
             string response = GetResponseString(URLAPI, args);
 
             if (!string.IsNullOrEmpty(response) && CheckResponse(response))
             {
-                string upk = GetXMLValue(response, "uploadkey");
+                string upk = UploadHelpers.GetXMLValue(response, "uploadkey");
 
                 if (string.IsNullOrEmpty(upk))
                 {

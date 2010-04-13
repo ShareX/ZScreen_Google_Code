@@ -24,10 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
-using System.IO;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
 {
@@ -225,7 +226,8 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.login");
             args.Add("token", token);
             args.Add("user_name", username);
-            args.Add("tokened_password", GetMD5(token + GetMD5(password))); // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
+            // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
+            args.Add("tokened_password", UploadHelpers.GetMD5(token + UploadHelpers.GetMD5(password)));
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 
