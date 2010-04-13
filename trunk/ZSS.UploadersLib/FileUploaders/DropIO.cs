@@ -23,11 +23,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using System.Xml;
 using System.IO;
+using System.Xml.Linq;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
 {
@@ -59,7 +57,7 @@ namespace UploadersLib.FileUploaders
         {
             try
             {
-                DropName = "ZScreen_" + GetRandomAlphanumeric(10);
+                DropName = "ZScreen_" + UploadHelpers.GetRandomAlphanumeric(10);
                 DropDescription = string.Empty;
                 Drop drop = CreateDrop(DropName, DropDescription, false, false, false);
 

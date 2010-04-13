@@ -167,6 +167,25 @@ namespace UploadersLib
             }
         }
 
+        protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        {
+            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                byte[] bytes = MakeInputContent(boundary, arguments, false);
+                stream.Write(bytes, 0, bytes.Length);
+
+                bytes = MakeFileInputContent(boundary, fileFormName, fileName, data, true);
+                stream.Write(bytes, 0, bytes.Length);
+
+                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary))
+                {
+                    return ResponseToString(response);
+                }
+            }
+        }
+
         #endregion
 
         #region Get methods
@@ -219,29 +238,6 @@ namespace UploadersLib
 
         #endregion
 
-        #region Upload methods
-
-        protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
-        {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                byte[] bytes = MakeInputContent(boundary, arguments, false);
-                stream.Write(bytes, 0, bytes.Length);
-
-                bytes = MakeFileInputContent(boundary, fileFormName, fileName, data, true);
-                stream.Write(bytes, 0, bytes.Length);
-
-                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary))
-                {
-                    return ResponseToString(response);
-                }
-            }
-        }
-
-        #endregion
-
         #region Helper methods
 
         private byte[] MakeInputContent(string boundary, string name, string value)
@@ -277,7 +273,7 @@ namespace UploadersLib
 
         private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, bool isFinal)
         {
-            return MakeFileInputContent(boundary, name, fileName, content, GetMimeType(fileName), isFinal);
+            return MakeFileInputContent(boundary, name, fileName, content, UploadHelpers.GetMimeType(fileName), isFinal);
         }
 
         private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, string contentType, bool isFinal)
@@ -292,8 +288,7 @@ namespace UploadersLib
                 buffer = Encoding.UTF8.GetBytes(format);
                 stream.Write(buffer, 0, buffer.Length);
 
-                content.Position = 0;
-                CopyStream(content, stream);
+                content.CopyStream(stream);
 
                 buffer = Encoding.UTF8.GetBytes("\r\n");
                 stream.Write(buffer, 0, buffer.Length);
@@ -305,17 +300,6 @@ namespace UploadersLib
                 }
 
                 return stream.ToArray();
-            }
-        }
-
-        private static void CopyStream(Stream input, Stream output)
-        {
-            byte[] buffer = new byte[32768];
-            int read;
-
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                output.Write(buffer, 0, read);
             }
         }
 
@@ -336,104 +320,6 @@ namespace UploadersLib
             }
 
             return null;
-        }
-
-        private string GetMimeType(string fileName)
-        {
-            string ext = Path.GetExtension(fileName).ToLower();
-            RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
-            {
-                return regKey.GetValue("Content Type").ToString();
-            }
-
-            return "application/octetstream";
-        }
-
-        private string GetMimeType(ImageFormat format)
-        {
-            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec.MimeType;
-                }
-            }
-
-            return "image/unknown";
-        }
-
-        protected string GetXMLValue(string input, string tag)
-        {
-            return Regex.Match(input, String.Format("(?<={0}>).+?(?=</{0})", tag)).Value;
-        }
-
-        protected string GetMD5(byte[] data)
-        {
-            byte[] bytes = new MD5CryptoServiceProvider().ComputeHash(data);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (byte b in bytes)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-
-            return sb.ToString().ToLower();
-        }
-
-        protected string GetMD5(string text)
-        {
-            return GetMD5(Encoding.UTF8.GetBytes(text));
-        }
-
-        protected string GetRandomAlphanumeric(int length)
-        {
-            Random random = new Random();
-            string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-
-            StringBuilder sb = new StringBuilder();
-
-            while (length-- > 0)
-            {
-                sb.Append(alphanumeric[(int)(random.NextDouble() * alphanumeric.Length)]);
-            }
-
-            return sb.ToString();
-        }
-
-        protected string CombineURL(string url1, string url2)
-        {
-            if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))
-            {
-                if (!string.IsNullOrEmpty(url1))
-                {
-                    return url1;
-                }
-                else if (!string.IsNullOrEmpty(url2))
-                {
-                    return url2;
-                }
-
-                return string.Empty;
-            }
-
-            if (url1.EndsWith("/"))
-            {
-                url1 = url1.Substring(0, url1.Length - 1);
-            }
-
-            if (url2.StartsWith("/"))
-            {
-                url2 = url2.Remove(0, 1);
-            }
-
-            return url1 + "/" + url2;
-        }
-
-        protected string CombineURL(params string[] urls)
-        {
-            return urls.Aggregate((current, arg) => CombineURL(current, arg));
         }
 
         #endregion

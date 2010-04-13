@@ -97,6 +97,7 @@
     <Compile Include="Helpers\ProxySettings.cs" />
     <Compile Include="Helpers\TCPClient.cs" />
     <Compile Include="Helpers\TextInfo.cs" />
+    <Compile Include="Helpers\UploadHelpers.cs" />
     <Compile Include="ImageUploader.cs" />
     <Compile Include="ImageUploaders\CustomUploader.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />

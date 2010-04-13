@@ -21,11 +21,7 @@
 */
 #endregion
 
-using System;
-using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Drawing.Imaging;
 
 namespace ZUploader
 {
@@ -49,21 +45,6 @@ namespace ZUploader
             return false;
         }
 
-        public static bool IsValidImageFile2(string path)
-        {
-            try
-            {
-                using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (Image img = Image.FromStream(stream, false, false))
-                {
-                    return true;
-                }
-            }
-            catch { }
-
-            return false;
-        }
-
         private static string[] TextFileExtensions = { "txt", "log" };
 
         public static bool IsValidTextFile(string path)
@@ -80,67 +61,6 @@ namespace ZUploader
             }
 
             return false;
-        }
-
-        public static string GetRandomAlphanumeric(int length)
-        {
-            Random random = new Random();
-            string alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-
-            StringBuilder sb = new StringBuilder();
-
-            while (length-- > 0)
-            {
-                sb.Append(alphanumeric[(int)(random.NextDouble() * alphanumeric.Length)]);
-            }
-
-            return sb.ToString();
-        }
-
-        public static byte[] GetBytes(Stream input)
-        {
-            input.Position = 0;
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
-
-        public static byte[] GetBytes(Image img)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                img.Save(ms, img.RawFormat);
-                return GetBytes(ms);
-            }
-        }
-
-        public static void SaveJPG100(this Image image, Stream stream)
-        {
-            EncoderParameters encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
-            image.Save(stream, GetEncoder(ImageFormat.Jpeg), encoderParameters);
-        }
-
-        public static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-
-            return null;
         }
     }
 }

@@ -63,8 +63,8 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(ifm.Source))
             {
-                string fullimage = GetXMLValue(ifm.Source, "image_link");
-                string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
+                string fullimage = UploadHelpers.GetXMLValue(ifm.Source, "image_link");
+                string thumbnail = UploadHelpers.GetXMLValue(ifm.Source, "thumb_link");
 
                 ifm.Add(fullimage, LinkType.FULLIMAGE);
                 ifm.Add(thumbnail, LinkType.THUMBNAIL);

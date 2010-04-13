@@ -86,13 +86,13 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("API_key_dev", Key); // Your API-Key.
             arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
-            string salt = GetRandomAlphanumeric(32);
+            string salt = UploadHelpers.GetRandomAlphanumeric(32);
 
             // Random string of 32 characters (a-zA-Z0-9) for higher security.
             arguments.Add("salt", salt);
 
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
-            arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
+            arguments.Add("secret", UploadHelpers.GetMD5(Secret + Options.UserSecret + salt));
 
             string source = UploadData(stream, fileName, upload, "photo", arguments);
 
@@ -106,17 +106,17 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("API_key_dev", Key); // Your API-Key.
             arguments.Add("API_key_user", Options.UserKey); // The user's API key.
 
-            string salt = GetRandomAlphanumeric(32);
+            string salt = UploadHelpers.GetRandomAlphanumeric(32);
 
             // Random string of 32 characters (a-zA-Z0-9) for higher security.
             arguments.Add("salt", salt);
 
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
-            arguments.Add("secret", GetMD5(Secret + Options.UserSecret + salt));
+            arguments.Add("secret", UploadHelpers.GetMD5(Secret + Options.UserSecret + salt));
 
             string source = GetResponse(generate_GID, arguments);
 
-            return GetXMLValue(source, "GID");
+            return UploadHelpers.GetXMLValue(source, "GID");
         }
 
         private ImageFileManager ParseResult(string source)
