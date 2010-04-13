@@ -320,7 +320,7 @@ namespace ZScreenLib
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, UploadMode.API);
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY);
                 if (Engine.conf.RememberTinyPicUserPass)
                 {
                     Engine.conf.TinyPicUserName = ub.UserName;
@@ -339,7 +339,7 @@ namespace ZScreenLib
             if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
                 !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, UploadMode.API);
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY);
                 string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {

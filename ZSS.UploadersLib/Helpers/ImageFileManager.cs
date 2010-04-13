@@ -21,10 +21,10 @@
 */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System;
 
 namespace UploadersLib.Helpers
 {
@@ -62,7 +62,10 @@ namespace UploadersLib.Helpers
 
         public void Add(string url, LinkType type)
         {
-            ImageFileList.Add(new ImageFile(url, type));
+            if (!string.IsNullOrEmpty(url))
+            {
+                ImageFileList.Add(new ImageFile(url, type));
+            }
         }
 
         /// <summary>

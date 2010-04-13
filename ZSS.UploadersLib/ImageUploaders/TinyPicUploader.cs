@@ -21,11 +21,8 @@
 */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml.Linq;
 using UploadersLib.Helpers;
@@ -40,17 +37,14 @@ namespace UploadersLib.ImageUploaders
 
         private const string URLAPI = "http://api.tinypic.com/api.php";
 
-        public TinyPicUploader(string id, string key)
+        public TinyPicUploader(string id, string key, string shuk)
         {
-            this.TinyPicID = id;
-            this.TinyPicKey = key;
+            TinyPicID = id;
+            TinyPicKey = key;
+            Shuk = shuk;
         }
 
-        public TinyPicUploader(string id, string key, UploadMode mode)
-            : this(id, key)
-        {
-            this.UploadMode = mode;
-        }
+        public TinyPicUploader(string id, string key) : this(id, key, string.Empty) { }
 
         public override string Name
         {
@@ -59,150 +53,43 @@ namespace UploadersLib.ImageUploaders
 
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
-            switch (this.UploadMode)
-            {
-                case UploadMode.API:
-                    return UploadImageAPI(stream, fileName);
-                case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(stream, fileName);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// API Method to upload images to TinyPic
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Stream stream, string fileName)
-        {
             ImageFileManager ifm = new ImageFileManager();
-            bool oldValue = ServicePointManager.Expect100Continue;
 
-            try
+            string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
+            string upk = GetUploadKey(action, tpid, tpk);
+
+            if (!string.IsNullOrEmpty(upk))
             {
-                string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
+                Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-                Dictionary<string, string> args = new Dictionary<string, string>()
+                if (string.IsNullOrEmpty(Shuk))
                 {
-                    { "action", action },
-                    { "tpid", tpid },
-                    { "sig", GetMD5(action + tpid + tpk) },
-                    { "responsetype", "XML" }
-                };
-
-                string response = GetResponseString(URLAPI, args);
-
-                if (string.IsNullOrEmpty(response)) throw new Exception("Unable to get upload key.");
-
-                if (CheckResponse(response))
-                {
-                    string upk = GetXMLValue(response, "uploadkey");
-
-                    if (string.IsNullOrEmpty(upk))
-                    {
-                        throw new Exception("Upload key is empty.");
-                    }
-
-                    if (string.IsNullOrEmpty(Shuk))
-                    {
-                        action = "upload"; //anonymous upload
-                    }
-                    else
-                    {
-                        action = "userupload"; //user upload
-                    }
-
-                    ServicePointManager.Expect100Continue = false;
-
-                    Dictionary<string, string> arguments = new Dictionary<string, string>() 
-                    {                 
-                        { "action", action },
-                        { "tpid", tpid },
-                        { "sig", GetMD5(action + tpid + tpk) },
-                        { "responsetype", "XML" },
-                        { "upk", upk },
-                        { "type", "image" },
-                        { "tags", "" }
-                    };
-
-                    if (!string.IsNullOrEmpty(Shuk))
-                    {
-                        arguments.Add("shuk", Shuk);
-                    }
-
-                    ifm.Source = UploadData(stream, fileName, URLAPI, "uploadfile", arguments);
-
-                    if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
-                    {
-                        string fullimage = GetXMLValue(ifm.Source, "fullsize");
-                        string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
-
-                        if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
-                        if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
-                    }
+                    action = "upload";
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            finally
-            {
-                ServicePointManager.Expect100Continue = oldValue;
-            }
-
-            return ifm;
-        }
-
-        /// <summary>
-        /// Anonymous Method to upload images to TinyPic
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Stream stream, string fileName)
-        {
-            ImageFileManager ifm = new ImageFileManager();
-            bool oldValue = ServicePointManager.Expect100Continue;
-
-            try
-            {
-                ServicePointManager.Expect100Continue = false;
-                Dictionary<string, string> arguments = new Dictionary<string, string>()
+                else
                 {
-                    { "domain_lang", "en" },
-                    { "action", "upload" },
-                    { "MAX_FILE_SIZE", "200000000" },
-                    { "file_type", "image" },
-                    { "dimension", "1600" }
-                };
-
-                ifm.Source = UploadData(stream, fileName, "http://s5.tinypic.com/plugin/upload.php", "the_file", arguments);
-
-                string imgIval = Regex.Match(ifm.Source, "(?<=ival\" value=\").+(?=\" />)").Value;
-                string imgPic = Regex.Match(ifm.Source, "(?<=pic\" value=\").+(?=\" />)").Value;
-                string imgType = Regex.Match(ifm.Source, "(?<=ext\" value=\").*(?=\" />)").Value;
-
-                if ((imgIval != "") && (imgPic != ""))
-                {
-                    if (imgType == "") imgType = ".jpg";
-                    string fullimage = "http://i" + imgIval + ".tinypic.com/" + imgPic + imgType;
-                    string thumbnail = "http://i" + imgIval + ".tinypic.com/" + imgPic + "_th" + imgType;
-                    ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
-                    ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
+                    action = "userupload";
+                    arguments.Add("shuk", Shuk);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            finally
-            {
-                ServicePointManager.Expect100Continue = oldValue;
+
+                arguments.Add("action", action);
+                arguments.Add("tpid", tpid);
+                arguments.Add("sig", GetMD5(action + tpid + tpk));
+                arguments.Add("responsetype", "XML");
+                arguments.Add("upk", upk);
+                arguments.Add("type", "image");
+                arguments.Add("tags", string.Empty);
+
+                ifm.Source = UploadData(stream, fileName, URLAPI, "uploadfile", arguments);
+
+                if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
+                {
+                    string fullimage = GetXMLValue(ifm.Source, "fullsize");
+                    string thumbnail = GetXMLValue(ifm.Source, "thumbnail");
+
+                    ifm.Add(fullimage, LinkType.FULLIMAGE);
+                    ifm.Add(thumbnail, LinkType.THUMBNAIL);
+                }
             }
 
             return ifm;
@@ -230,10 +117,39 @@ namespace UploadersLib.ImageUploaders
                 return HttpUtility.HtmlEncode(result);
             }
 
-            return "";
+            return string.Empty;
         }
 
-        public bool CheckResponse(string response)
+        private string GetUploadKey(string action, string tpid, string tpk)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("action", action);
+            args.Add("tpid", tpid);
+            args.Add("sig", GetMD5(action + tpid + tpk));
+            args.Add("responsetype", "XML");
+
+            string response = GetResponseString(URLAPI, args);
+
+            if (!string.IsNullOrEmpty(response) && CheckResponse(response))
+            {
+                string upk = GetXMLValue(response, "uploadkey");
+
+                if (string.IsNullOrEmpty(upk))
+                {
+                    Errors.Add("Upload key is empty.");
+                }
+
+                return upk;
+            }
+            else
+            {
+                Errors.Add("Unable to get upload key.");
+            }
+
+            return null;
+        }
+
+        private bool CheckResponse(string response)
         {
             bool result = false;
 
@@ -265,7 +181,7 @@ namespace UploadersLib.ImageUploaders
             return result;
         }
 
-        public string GetErrorMessage(int errorCode)
+        private string GetErrorMessage(int errorCode)
         {
             switch (errorCode)
             {

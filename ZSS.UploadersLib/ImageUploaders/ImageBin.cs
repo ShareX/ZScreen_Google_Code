@@ -48,15 +48,13 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("sfile", "Upload");
             arguments.Add("url", string.Empty);
 
-            string response = UploadData(stream, fileName, "http://imagebin.ca/upload.php", "f", arguments);
-            ifm.Source = response;
+            ifm.Source = UploadData(stream, fileName, "http://imagebin.ca/upload.php", "f", arguments);
 
-            if (!string.IsNullOrEmpty(response))
+            if (!string.IsNullOrEmpty(ifm.Source))
             {
-                Match match = Regex.Match(response, @"(?<=ca/view/).+(?=\.html'>)");
+                Match match = Regex.Match(ifm.Source, @"(?<=ca/view/).+(?=\.html'>)");
                 if (match != null)
                 {
-                    //string url = string.Format("http://imagebin.ca/view/{0}.html", match.Value);
                     string url = "http://imagebin.ca/img/" + match.Value + Path.GetExtension(fileName);
                     ifm.Add(url, LinkType.FULLIMAGE);
                 }
