@@ -104,6 +104,8 @@ namespace ZScreenLib
 
         public const string IMAGESHACK_KEY = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
 
+        public const string IMGUR_KEY = "63499468bcc5d2d6aee1439e50b4e61c";
+
         public const string TINYPIC_ID = "e2aabb8d555322fa";
         public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
 

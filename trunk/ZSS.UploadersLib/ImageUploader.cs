@@ -31,15 +31,6 @@ namespace UploadersLib
     {
         public abstract string Name { get; }
 
-        /// API or Anonymous. Default: Anonymous
-        /// </summary>
-        protected UploadMode UploadMode { get; set; }
-
-        protected ImageUploader()
-        {
-            this.UploadMode = UploadMode.ANONYMOUS;
-        }
-
         public abstract ImageFileManager UploadImage(Stream stream, string fileName);
 
         public ImageFileManager UploadImage(Image image, string fileName)

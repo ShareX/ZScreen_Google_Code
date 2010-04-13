@@ -367,14 +367,14 @@ namespace ZScreenLib
                     imageUploader = new ImageBin();
                     break;
                 case ImageDestType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode, Engine.conf.UploadMode);
+                    imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
                     break;
                 case ImageDestType.IMGUR:
-                    imageUploader = new Imgur();
+                    imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;
                 case ImageDestType.Localhost:
                     UploadLocalhost();
@@ -386,8 +386,7 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageDestType.TINYPIC:
-                    imageUploader = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, Engine.conf.UploadMode);
-                    ((TinyPicUploader)imageUploader).Shuk = Engine.conf.TinyPicShuk;
+                    imageUploader = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, Engine.conf.TinyPicShuk);
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();

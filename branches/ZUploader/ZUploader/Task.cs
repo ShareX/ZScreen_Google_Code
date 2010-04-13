@@ -168,11 +168,10 @@ namespace ZUploader
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestType2.IMAGESHACK:
-                    imageUploader = new ImageShackUploader("78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a", string.Empty, UploadMode.API);
-                    ((ImageShackUploader)imageUploader).Public = false;
+                    imageUploader = new ImageShackUploader(Program.ImageShackKey, string.Empty);
                     break;
                 case ImageDestType2.TINYPIC:
-                    imageUploader = new TinyPicUploader("e2aabb8d555322fa", "00a68ed73ddd54da52dc2d5803fa35ee", UploadMode.API);
+                    imageUploader = new TinyPicUploader(Program.TinyPicID, Program.TinyPicKey, string.Empty);
                     break;
                 case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
@@ -181,7 +180,7 @@ namespace ZUploader
                     imageUploader = new Img1Uploader();
                     break;
                 case ImageDestType2.IMGUR:
-                    imageUploader = new Imgur();
+                    imageUploader = new Imgur(Program.ImgurKey);
                     break;
                 default:
                     break;

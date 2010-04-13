@@ -35,20 +35,14 @@ namespace UploadersLib.ImageUploaders
         private string RegistrationCode { get; set; }
 
         /// <summary>
-        /// Toggle where images will be added to the public profile
+        /// Public/private marker of your video/picture. True means public, false means private.
         /// </summary>
         public bool Public { get; set; }
 
         public ImageShackUploader(string developerKey, string registrationCode)
         {
-            this.DeveloperKey = developerKey;
-            this.RegistrationCode = registrationCode;
-        }
-
-        public ImageShackUploader(string developerKey, string registrationCode, UploadMode mode)
-            : this(developerKey, registrationCode)
-        {
-            this.UploadMode = mode;
+            DeveloperKey = developerKey;
+            RegistrationCode = registrationCode;
         }
 
         public override string Name
@@ -56,128 +50,24 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageShack"; }
         }
 
-        private string Email { get; set; }
-
-        private const string URLStandard = "http://imageshack.us/index.php";
-        private const string URLUnifiedAPI = "http://imageshack.us/upload_api.php";
-
-        /// <summary>
-        /// Uploads Image according to Upload Mode
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
-            switch (this.UploadMode)
-            {
-                case UploadMode.API:
-                    return UploadImageAPI(stream, fileName);
-                case UploadMode.ANONYMOUS:
-                    return UploadImageAnonymous(stream, fileName);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// API Method to upload images to ImageShack
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private ImageFileManager UploadImageAPI(Stream stream, string fileName)
-        {
             ImageFileManager ifm = new ImageFileManager();
-            bool oldValue = ServicePointManager.Expect100Continue;
 
-            try
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+            arguments.Add("key", DeveloperKey);
+            arguments.Add("public", Public ? "yes" : "no");
+            if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
+
+            ifm.Source = UploadData(stream, fileName, "http://www.imageshack.us/upload_api.php", "fileupload", arguments);
+
+            if (!string.IsNullOrEmpty(ifm.Source))
             {
-                ServicePointManager.Expect100Continue = false;
-                CookieContainer cookies = new CookieContainer();
-                Dictionary<string, string> arguments = new Dictionary<string, string>
-                {
-                    {"MAX_FILE_SIZE", "13145728"},
-                    {"refer", ""},
-                    {"brand", ""},
-                    {"optimage", "1"},
-                    {"rembar", "1"},
-                    {"submit", "host it!"},
-                    {"optsize", "resample"},
-                    {"xml", "yes"},
-                    {"public", Public ? "yes" : "no"}
-                };
-
-                if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
-                if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
-                if (!string.IsNullOrEmpty(DeveloperKey)) arguments.Add("key", DeveloperKey);
-
-                ifm.Source = UploadData(stream, fileName, URLUnifiedAPI, "fileupload", arguments);
-
                 string fullimage = GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
 
-                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            finally
-            {
-                ServicePointManager.Expect100Continue = oldValue;
-            }
-
-            return ifm;
-        }
-
-        /// <summary>
-        /// Anonymous Method to upload images to ImageShack
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private ImageFileManager UploadImageAnonymous(Stream stream, string fileName)
-        {
-            ImageFileManager ifm = new ImageFileManager();
-            bool oldValue = ServicePointManager.Expect100Continue;
-
-            try
-            {
-                ServicePointManager.Expect100Continue = false;
-                Dictionary<string, string> arguments = new Dictionary<string, string>() 
-                { 
-                    { "MAX_FILE_SIZE", "13145728" },
-                    { "refer", "" },
-                    { "brand", "" },
-                    { "optimage", "1" },
-                    { "rembar", "1" },
-                    { "submit", "host it!" },
-                    { "optsize", "resample" },
-                    { "xml", "yes" }
-                };
-
-                if (!string.IsNullOrEmpty(Email)) arguments.Add("email", Email);
-                if (!Public) arguments.Add("public", "no");
-
-                ifm.Source = UploadData(stream, fileName, URLStandard, "fileupload", arguments);
-
-                string fullimage = GetXMLValue(ifm.Source, "image_link");
-                string thumbnail = GetXMLValue(ifm.Source, "thumb_link");
-
-                if (!string.IsNullOrEmpty(fullimage)) ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
-                if (!string.IsNullOrEmpty(thumbnail)) ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            finally
-            {
-                ServicePointManager.Expect100Continue = oldValue;
+                ifm.Add(fullimage, LinkType.FULLIMAGE);
+                ifm.Add(thumbnail, LinkType.THUMBNAIL);
             }
 
             return ifm;

@@ -44,6 +44,11 @@ namespace ZUploader
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
 
+        public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
+        public const string TinyPicID = "e2aabb8d555322fa";
+        public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
+        public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
+
         [STAThread]
         static void Main()
         {
