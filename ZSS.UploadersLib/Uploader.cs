@@ -118,8 +118,7 @@ namespace UploadersLib
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-                request.AllowWriteStreamBuffering = false;
+                request.AllowWriteStreamBuffering = ProxySettings.ProxyEnabled;
                 request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
                 request.ContentLength = stream.Length;
                 request.ContentType = "multipart/form-data; boundary=" + boundary;
