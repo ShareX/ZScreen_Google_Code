@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2010  Brandon Zimmerman
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
