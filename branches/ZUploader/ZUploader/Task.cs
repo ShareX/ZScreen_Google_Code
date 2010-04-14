@@ -131,10 +131,7 @@ namespace ZUploader
                     SendSpaceManager.PrepareUploadInfo(null, null);
                     break;
                 case FileUploaderType2.RapidShare:
-                    fileUploader = new RapidShare(new RapidShareOptions()
-                    {
-                        AccountType = RapidShareAcctType.Free
-                    });
+                    fileUploader = new RapidShare();
                     break;
                 case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();

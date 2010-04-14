@@ -46,9 +46,14 @@ namespace UploadersLib.FileUploaders
             get { return "RapidShare"; }
         }
 
+        public RapidShare()
+        {
+            Options = new RapidShareOptions();
+        }
+
         public RapidShare(RapidShareOptions options)
         {
-            this.Options = options;
+            Options = options;
         }
 
         public override string Upload(Stream stream, string fileName)

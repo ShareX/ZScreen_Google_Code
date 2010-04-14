@@ -175,6 +175,9 @@ namespace ZUploader
                 ListViewItem lvi = ListViewControl.Items[info.ID];
                 lvi.Tag = info.Result;
 
+                lvi.SubItems[3].Text = string.Empty;
+                lvi.SubItems[4].Text = string.Empty;
+
                 if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
                     lvi.Text = "Error: " + info.Result.Errors.Last();

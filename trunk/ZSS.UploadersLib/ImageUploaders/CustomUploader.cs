@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Text.RegularExpressions;
 using UploadersLib.Helpers;
 
@@ -47,45 +46,29 @@ namespace UploadersLib.ImageUploaders
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
-            bool oldValue = ServicePointManager.Expect100Continue;
 
-            try
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+            foreach (string[] args in iHosting.Arguments)
             {
-                ServicePointManager.Expect100Continue = false;
-                Dictionary<string, string> arguments = new Dictionary<string, string>();
-                foreach (string[] args in iHosting.Arguments)
-                {
-                    arguments.Add(args[0], args[1]);
-                }
-                ifm.Source = UploadData(stream, fileName, iHosting.UploadURL, iHosting.FileForm, arguments);
-                if (!string.IsNullOrEmpty(ifm.Source))
-                {
-                    List<String> regexps = new List<string>();
-                    foreach (string regexp in iHosting.RegexpList)
-                    {
-                        regexps.Add(Regex.Match(ifm.Source, regexp).Value);
-                    }
-                    iHosting.Regexps = regexps;
-                    string fullimage = iHosting.ReturnLink(iHosting.Fullimage);
-                    string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
-                    if (!string.IsNullOrEmpty(fullimage))
-                    {
-                        ifm.ImageFileList.Add(new ImageFile(fullimage, LinkType.FULLIMAGE));
-                    }
-                    if (!string.IsNullOrEmpty(thumbnail))
-                    {
-                        ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));
-                    }
-                }
+                arguments.Add(args[0], args[1]);
             }
-            catch (Exception ex)
+
+            ifm.Source = UploadData(stream, fileName, iHosting.UploadURL, iHosting.FileForm, arguments);
+
+            if (!string.IsNullOrEmpty(ifm.Source))
             {
-                Console.WriteLine(ex.ToString());
-                this.Errors.Add(ex.Message);
-            }
-            finally
-            {
-                ServicePointManager.Expect100Continue = oldValue;
+                List<String> regexps = new List<string>();
+                foreach (string regexp in iHosting.RegexpList)
+                {
+                    regexps.Add(Regex.Match(ifm.Source, regexp).Value);
+                }
+                iHosting.Regexps = regexps;
+
+                string fullimage = iHosting.ReturnLink(iHosting.Fullimage);
+                string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
+
+                ifm.Add(fullimage, LinkType.FULLIMAGE);
+                ifm.Add(thumbnail, LinkType.THUMBNAIL);
             }
 
             return ifm;
