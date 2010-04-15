@@ -48,6 +48,10 @@ namespace UploadersLib.FileUploaders
                 ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
 
                 fileName = UploadHelpers.ReplaceIllegalChars(fileName, '_');
+                while (fileName.IndexOf("__") != -1)
+                {
+                    fileName = fileName.Replace("__", "_");
+                }
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
 
                 try
