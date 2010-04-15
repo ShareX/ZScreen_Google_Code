@@ -107,7 +107,7 @@ namespace ZUploader
                 {
                     MemoryStream stream = new MemoryStream();
                     img.SaveJPG100(stream);
-                    string fileName = UploadHelpers.GetRandomString(10) + ".jpg";
+                    string fileName = UploadHelpers.GetDateTimeString() + ".jpg";
                     EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
                     Task task = new Task(type, stream, fileName);
                     StartUpload(task);
@@ -117,7 +117,7 @@ namespace ZUploader
             {
                 byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
                 MemoryStream stream = new MemoryStream(byteArray);
-                string fileName = UploadHelpers.GetRandomString(10) + ".txt";
+                string fileName = UploadHelpers.GetDateTimeString() + ".txt";
                 EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
                 Task task = new Task(type, stream, fileName);
                 StartUpload(task);

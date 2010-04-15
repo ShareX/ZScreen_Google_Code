@@ -133,7 +133,6 @@ namespace UploadersLib
                 return string.Empty;
             }
 
-            fileName = HttpUtility.UrlEncode(fileName).Replace("+", "%20");
             string path = string.Empty;
             string host = this.Host;
             string lHttpHomePath = GetHttpHomePath();

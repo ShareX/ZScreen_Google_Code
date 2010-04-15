@@ -82,6 +82,45 @@ namespace UploadersLib.Helpers
             return GetRandomString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890", length);
         }
 
+        public static string GetDateTimeString()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+        }
+
+        public static string ReplaceIllegalChars(string filename, char replace)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char c in filename)
+            {
+                if (IsCharValid(c))
+                {
+                    sb.Append(c);
+                }
+                else
+                {
+                    sb.Append(replace);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public static bool IsCharValid(char c)
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890()-._!";
+
+            foreach (char c2 in chars)
+            {
+                if (c == c2)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static string CombineURL(string url1, string url2)
         {
             if (string.IsNullOrEmpty(url1) || string.IsNullOrEmpty(url2))

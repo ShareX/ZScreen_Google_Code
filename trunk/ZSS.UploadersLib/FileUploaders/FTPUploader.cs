@@ -22,13 +22,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Text;
 using UploadersLib.Helpers;
-using System.Web;
 
 namespace UploadersLib.FileUploaders
 {
@@ -41,17 +36,18 @@ namespace UploadersLib.FileUploaders
             get { return "FTP Uploader"; }
         }
 
-        public FTPUploader(FTPAccount acc)
+        public FTPUploader(FTPAccount account)
         {
-            this.FTPAccount = acc;
-            //this.Name = acc.Name;
+            FTPAccount = account;
         }
 
         public override string Upload(Stream stream, string fileName)
         {
-            using (FTP ftpClient = new FTP(this.FTPAccount))
+            using (FTP ftpClient = new FTP(FTPAccount))
             {
                 ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
+
+                fileName = UploadHelpers.ReplaceIllegalChars(fileName, '_');
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
 
                 try
@@ -65,56 +61,13 @@ namespace UploadersLib.FileUploaders
                     this.Errors.Add(e.Message);
                 }
 
-                if (this.Errors.Count == 0)
+                if (Errors.Count == 0)
                 {
-                    return this.FTPAccount.GetUriPath(fileName);
+                    return FTPAccount.GetUriPath(fileName);
                 }
             }
 
             return string.Empty;
         }
-
-        /*
-        /// <summary>
-        /// Uploads an Image to the FTP
-        /// If the method fails, it will return a list of zero images
-        /// </summary>
-        /// <returns>Returns a list of images</returns>
-        public ImageFileManager UploadImage(string localFilePath)
-        {
-            if (this.EnableThumbnail)
-            {
-                Image img = null;
-                if (img != null && (!this.CheckThumbnailSize ||
-                    (this.CheckThumbnailSize && (img.Width > this.ThumbnailSize.Width || img.Height > this.ThumbnailSize.Height))))
-                {
-                    img = ResizeBitmap(img, ThumbnailSize);
-                    StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(fName));
-                    sb.Append(".th");
-                    sb.Append(Path.GetExtension(fName));
-                    string thPath = Path.Combine(this.WorkingDir, sb.ToString());
-                    img.Save(thPath);
-                    if (File.Exists(thPath))
-                    {
-                        string url = FTPHelpers.CombineURL(FTPAccount.Path, Path.GetFileName(thPath));
-                        try
-                        {
-                            ftpClient.UploadFile(thPath, url);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.ToString());
-                            this.Errors.Add(e.Message);
-                        }
-
-                        if (this.Errors.Count == 0)
-                        {
-                            ifl.Add(new ImageFile(this.FTPAccount.GetUriPath(Path.GetFileName(thPath)), ImageFile.ImageType.THUMBNAIL));
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
 }
