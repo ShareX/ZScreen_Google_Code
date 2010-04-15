@@ -267,12 +267,43 @@ namespace HelpersLib
             }
         }
 
+        public static bool IsCharValid(char c)
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890()-._!";
+
+            foreach (char c2 in chars)
+            {
+                if (c == c2)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///    Normalize the entire thing, allow only characters and digits,
         ///    spaces become underscores, prevents possible problems
         /// </summary>
         public static StringBuilder Normalize(NormalizeOptions options)
         {
+            //string fName = options.MyStringBuilder.ToString();
+            //StringBuilder sbName = new StringBuilder();
+
+            //// if folder path - do not check for DirectorySeparatorChar
+            //foreach (char c in fName)
+            //{
+            //    if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'))
+            //    {
+            //        sbName.Append(c);
+            //    }
+            //}
+
+            //fName = sbName.ToString();
+
+            //*************
+
             char[] unCharsFile = Path.GetInvalidFileNameChars();
             char[] unCharsPath = Path.GetInvalidPathChars();
 
@@ -289,20 +320,26 @@ namespace HelpersLib
             {
                 fName = fName.Replace(c, '_');
             }
-            while (fName.StartsWith("."))
-            {
-                fName = fName.Remove(0, 1);
-            }
             if (options.ConvertSpace)
             {
                 fName = fName.Replace(" ", "_");
             }
+
+            //*************
+            
+            while (fName.StartsWith("."))
+            {
+                fName = fName.Remove(0, 1);
+            }
+
             while (fName.IndexOf("__") != -1)
             {
                 fName = fName.Replace("__", "_");
             }
+
             return new StringBuilder(fName);
         }
+
 
         private static string ToString(ReplacementVariables replacement)
         {
