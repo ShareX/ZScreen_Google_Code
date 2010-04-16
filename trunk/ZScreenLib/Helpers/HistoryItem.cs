@@ -73,7 +73,8 @@ namespace ZScreenLib
             this.LocalPath = task.LocalFilePath;
             if (string.IsNullOrEmpty(task.RemoteFilePath) && task.LinkManager != null)
             {
-                this.RemotePath = task.LinkManager.GetLocalFilePathAsUri();
+                string fp = Engine.Portable ? Path.Combine(Application.StartupPath, this.LocalPath) : this.LocalPath;
+                this.RemotePath = task.LinkManager.GetLocalFilePathAsUri(fp);
             }
             else
             {

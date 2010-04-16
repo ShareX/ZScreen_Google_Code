@@ -127,9 +127,27 @@ namespace UploadersLib.Helpers
             return string.Empty;
         }
 
+        /// <summary>
+        /// Attempts to return a local file path URI and if fails (possible due to Portable mode) it will return the local file path
+        /// </summary>
+        /// <returns></returns>
         public string GetLocalFilePathAsUri()
         {
-            return new Uri(this.LocalFilePath).AbsoluteUri;
+            string lp = string.Empty;
+            try
+            {
+                lp = new Uri(this.LocalFilePath).AbsoluteUri;
+            }
+            catch (Exception ex)
+            {
+                lp = this.LocalFilePath;
+            }
+            return lp;
+        }
+
+        public string GetLocalFilePathAsUri(string fp)
+        {
+            return new Uri(fp).AbsoluteUri;
         }
 
         private string GetUrlByLinkType(LinkType type)

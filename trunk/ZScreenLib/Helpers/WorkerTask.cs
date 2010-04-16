@@ -312,7 +312,7 @@ namespace ZScreenLib
         {
             this.LocalFilePath = fp;
             this.LinkManager = new ImageFileManager(fp);
-            this.RemoteFilePath = this.LinkManager.GetLocalFilePathAsUri();
+            this.RemoteFilePath = this.LinkManager.GetLocalFilePathAsUri(Engine.Portable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath);
             this.IsImage = GraphicsMgr.IsValidImage(fp);
             this.FileName = Path.GetFileName(fp);
 

@@ -1699,9 +1699,7 @@ namespace ZScreenGUI
                 }
             }
 
-            Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
-            FileSystem.AppendDebug("Keyboard Hook initiated");
+            Loader.KeyboardHook();
             Engine.conf.FirstRun = false;
         }
 

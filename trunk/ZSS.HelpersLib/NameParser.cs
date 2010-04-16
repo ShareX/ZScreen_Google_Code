@@ -288,44 +288,19 @@ namespace HelpersLib
         /// </summary>
         public static StringBuilder Normalize(NormalizeOptions options)
         {
-            //string fName = options.MyStringBuilder.ToString();
-            //StringBuilder sbName = new StringBuilder();
-
-            //// if folder path - do not check for DirectorySeparatorChar
-            //foreach (char c in fName)
-            //{
-            //    if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'))
-            //    {
-            //        sbName.Append(c);
-            //    }
-            //}
-
-            //fName = sbName.ToString();
-
-            //*************
-
-            char[] unCharsFile = Path.GetInvalidFileNameChars();
-            char[] unCharsPath = Path.GetInvalidPathChars();
-
             string fName = options.MyStringBuilder.ToString();
 
-            foreach (char c in unCharsFile)
+            StringBuilder sbName = new StringBuilder();
+
+            foreach (char c in fName)
             {
-                if (options.IsFolderPath && c != Path.DirectorySeparatorChar && c != '/' || !options.IsFolderPath)
+                if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'))
                 {
-                    fName = fName.Replace(c, '_');
+                    sbName.Append(c);
                 }
             }
-            foreach (char c in unCharsPath)
-            {
-                fName = fName.Replace(c, '_');
-            }
-            if (options.ConvertSpace)
-            {
-                fName = fName.Replace(" ", "_");
-            }
 
-            //*************
+            fName = sbName.ToString();
             
             while (fName.StartsWith("."))
             {
@@ -337,9 +312,10 @@ namespace HelpersLib
                 fName = fName.Replace("__", "_");
             }
 
+            Console.WriteLine("NameParser: " + fName);
+
             return new StringBuilder(fName);
         }
-
 
         private static string ToString(ReplacementVariables replacement)
         {

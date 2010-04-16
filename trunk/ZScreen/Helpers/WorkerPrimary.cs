@@ -382,9 +382,6 @@ namespace ZScreenGUI
                 {
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
-                Engine.ZScreenKeyboardHook.Dispose();
-                Engine.ZScreenKeyboardHook = new KeyboardHook();
-                Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
                 this.mZScreen.btnUploadersTest.Enabled = true;
             }
         }
