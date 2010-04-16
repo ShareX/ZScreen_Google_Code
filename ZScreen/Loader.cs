@@ -87,6 +87,23 @@ namespace ZScreenGUI
             }
         }
 
+        public static void KeyboardHook()
+        {
+            System.Windows.Forms.Timer keyboardTimer = new System.Windows.Forms.Timer() { Interval = 1500, Enabled = true };
+            keyboardTimer.Tick += new EventHandler(keyboardTimer_Tick);
+            FileSystem.AppendDebug("Keyboard Hook initiated");
+        }
+
+        static void keyboardTimer_Tick(object sender, EventArgs e)
+        {
+            if (Engine.ZScreenKeyboardHook != null)
+            {
+                Engine.ZScreenKeyboardHook.Dispose();
+            }
+            Engine.ZScreenKeyboardHook = new KeyboardHook();
+            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+        }
+
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);

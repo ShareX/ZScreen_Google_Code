@@ -41,17 +41,17 @@ namespace ZScreenLib
     public static class Engine
     {
         // App Info
-        private static string mProductName = Application.ProductName;        
+        private static string mProductName = Application.ProductName;
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        
+
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
         public static bool MultipleInstance { get; private set; }
-        
+
         public static IntPtr zHandle = IntPtr.Zero;
 
         public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion, McoreSystem.AppInfo.SoftwareCycle.Beta, false);
-             
+
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mProductName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), mProductName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
@@ -68,7 +68,7 @@ namespace ZScreenLib
         private static readonly string HistoryFileName = "History.xml";
         private static readonly string OldXMLFilePath = Path.Combine(zLocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
-        
+
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
         public static string RootImagesDir = zPicturesDir;
@@ -172,7 +172,7 @@ namespace ZScreenLib
                     RootAppFolder = Engine.mAppSettings.RootDir;
                 }
                 else
-                {                    
+                {
                     RootAppFolder = Engine.mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : DefaultRootAppFolder;
                 }
             }
@@ -218,20 +218,20 @@ namespace ZScreenLib
 
         public static void LoadSettingsLatest()
         {
-        	string fp = GetLatestSettingsFile();          
+            string fp = GetLatestSettingsFile();
             XMLSettings.XMLFileName = Path.GetFileName(fp);
             LoadSettings(fp);
         }
-        
+
         public static string GetLatestSettingsFile()
         {
-        	return GetLatestSettingsFile(Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile));
+            return GetLatestSettingsFile(Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile));
         }
-        
+
         public static string GetLatestSettingsFile(string settingsDir)
         {
-        	string fp = string.Empty;
-        	if (!string.IsNullOrEmpty(settingsDir))
+            string fp = string.Empty;
+            if (!string.IsNullOrEmpty(settingsDir))
             {
                 List<ImageFile> imgFiles = new List<ImageFile>();
                 string[] files = Directory.GetFiles(settingsDir, Application.ProductName + "-*-Settings.xml");
@@ -245,7 +245,7 @@ namespace ZScreenLib
                     fp = imgFiles[imgFiles.Count - 1].LocalFilePath;
                 }
             }
-        	return fp;
+            return fp;
         }
 
         public static void LoadSettings(string fp)
@@ -285,7 +285,7 @@ namespace ZScreenLib
                 ZScreenKeyboardHook.Dispose();
                 FileSystem.AppendDebug("Keyboard Hook terminated");
             }
-            FileSystem.WriteDebugFile();                
+            FileSystem.WriteDebugFile();
             Engine.conf.Write();
         }
 
@@ -461,7 +461,7 @@ namespace ZScreenLib
                     Directory.CreateDirectory(SettingsDir);
                 }
 
-                return Engine.mAppSettings.XMLSettingsFile;                          
+                return Engine.mAppSettings.XMLSettingsFile;
             }
         }
 
