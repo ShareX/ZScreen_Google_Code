@@ -18,7 +18,7 @@ namespace ZScreenLib
             }
             OpenFileDialog dlg = new OpenFileDialog();            
             dlg.Title = "Browse for an executable...";
-            dlg.Filter = "Executables (*.exe)|*.exe";
+            dlg.Filter = "Executables (*.exe)|*.exe|All Files (*.*)|*.*";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 value = dlg.FileName;
