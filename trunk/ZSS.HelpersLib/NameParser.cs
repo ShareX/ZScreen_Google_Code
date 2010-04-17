@@ -28,6 +28,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace HelpersLib
 {
@@ -294,7 +295,8 @@ namespace HelpersLib
 
             foreach (char c in fName)
             {
-                if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'))
+                // @ is for HttpHomePath we use in FTP Account
+                if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'|| c == '@'))
                 {
                     sbName.Append(c);
                 }
@@ -311,8 +313,6 @@ namespace HelpersLib
             {
                 fName = fName.Replace("__", "_");
             }
-
-            Console.WriteLine("NameParser: " + fName);
 
             return new StringBuilder(fName);
         }
