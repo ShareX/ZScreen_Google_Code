@@ -1076,7 +1076,12 @@ namespace ZScreenGUI
             cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
 
             // Proxy 
-            chkProxyEnable.Checked = Engine.conf.ProxyEnabled;
+            if (cboProxyConfig.Items.Count == 0)
+            {
+                cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetDescriptions());
+            }
+            cboProxyConfig.SelectedIndex = (int)Engine.conf.ProxyConfig;
+
             ProxySetup(Engine.conf.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
             {
@@ -1659,7 +1664,7 @@ namespace ZScreenGUI
             Engine.zHandle = this.Handle;
             Engine.ClipboardHook();
 
-            if (Engine.conf.ProxyEnabled)
+            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)
             {
                 FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
@@ -4100,15 +4105,6 @@ namespace ZScreenGUI
             DrawZScreenLabel(false);
         }
 
-        private void chkProxyEnable_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ProxyEnabled = chkProxyEnable.Checked;
-            if (mGuiIsReady)
-            {
-                Uploader.ProxySettings = Adapter.CheckProxySettings();
-            }
-        }
-
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
@@ -4996,6 +4992,15 @@ namespace ZScreenGUI
         private void cboFtpFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.FtpFiles = cboFtpFiles.SelectedIndex;
+        }
+
+        private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
+            if (mGuiIsReady)
+            {
+                Uploader.ProxySettings = Adapter.CheckProxySettings();
+            }
         }
     }
 }

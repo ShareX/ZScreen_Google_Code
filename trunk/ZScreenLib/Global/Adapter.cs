@@ -548,8 +548,8 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyEnabled.ToString());
-            return new ProxySettings { ProxyEnabled = Engine.conf.ProxyEnabled, ProxyActive = Engine.conf.ProxyActive };
+            FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyConfig.ToString());
+            return new ProxySettings { ProxyConfig = Engine.conf.ProxyConfig, ProxyActive = Engine.conf.ProxyActive };
         }
 
         public static void TestProxyAccount(ProxyInfo acc)
