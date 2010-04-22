@@ -1,11 +1,13 @@
 Version 3.28 - 20100414
 
+3.28.3.2 Uploading did not work in portable mode [Issue 268] {McoreD}
 3.28.3.1 Fixes related to Progress percentage with support for simultaneous uploads {Jaex}
 3.28.3.0 More descriptive text in the NotifyIcon text {McoreD}
 3.28.2.1 Fixes to upload using Drag n Drop window [Issue 264] {McoreD}
 3.28.2.0 File upload enhancements to support uploading large files without significant memory usage {Jaex}
 3.28.1.0 Active FTP Accounts can be chosen seperately for Images, Text and Files [Issue 259] {McoreD}
 3.28.0.0 Added Drop.IO file uploader support [Issue 248] {Jaex}
+3.27.5.0 Progress percentage now works for all image uploaders {Jaex}
 3.27.4.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
 3.27.4.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
 3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log [__y] {McoreD}

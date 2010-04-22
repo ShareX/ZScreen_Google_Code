@@ -438,7 +438,7 @@ namespace ZScreenLib
         public List<ProxyInfo> ProxyList = new List<ProxyInfo>();
         public int ProxySelected = 0;
         public ProxyInfo ProxyActive = null;
-        public bool ProxyEnabled = false;
+        public ProxyConfigType ProxyConfig = ProxyConfigType.NoProxy;
 
         //~~~~~~~~~
         // Paths

@@ -186,7 +186,6 @@ Name: {code:GetCodeVar|StartMenu}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Ap
 Name: {code:GetCodeVar|StartMenu}\ZUploader; Filename: {app}\ZUploader.exe; AppUserModelID: ZUploader
 ;Name: "{group}\ZScreen Manual"; Filename: "{app}\ZScreen-manual.pdf"
 Name: {code:GetCodeVar|Desktop}\{#ExeName}; Filename: {app}\{#ExeName}.exe; Tasks: desktopicon
-Name: {code:GetCodeVar|Desktop}\ZUploader; Filename: {app}\ZUploader.exe; Tasks: desktopicon
 ;Name: "{group}\Uninstall {#ExeName}"; Filename: "{uninstallexe}"
 
 [Run]
