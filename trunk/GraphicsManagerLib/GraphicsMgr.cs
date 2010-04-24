@@ -29,8 +29,8 @@ using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ImageQuantization;
 using GraphicsMgrLib.Properties;
+using ImageQuantization;
 
 namespace GraphicsMgrLib
 {
@@ -291,6 +291,28 @@ namespace GraphicsMgrLib
                 point.Y = y;
             }
             return new Rectangle(x, y, width, height);
+        }
+
+        public static Rectangle GetRectangle(int x, int y, int width, int height)
+        {
+            if (width < 0)
+            {
+                x = x + width;
+                width = -width;
+            }
+
+            if (height < 0)
+            {
+                y = y + height;
+                height = -height;
+            }
+
+            return new Rectangle(x, y, width, height);
+        }
+
+        public static Rectangle GetRectangle(Rectangle rect)
+        {
+            return GetRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         public static int GridPoint(int point, int grid)
