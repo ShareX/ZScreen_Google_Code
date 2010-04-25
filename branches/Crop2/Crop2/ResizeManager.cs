@@ -13,13 +13,17 @@ namespace Crop
         private Crop crop;
         private RegionManager region;
         private Label[] resizers;
-        private int mx, my;
+        private int mx, my, keyboardMove;
+        private Rectangle tempRect;
 
         public ResizeManager(Crop crop, RegionManager region)
         {
             this.crop = crop;
             this.region = region;
             resizers = new Label[8];
+            keyboardMove = 5;
+
+            crop.KeyDown += new KeyEventHandler(crop_KeyDown);
 
             for (int i = 0; i < resizers.Length; i++)
             {
@@ -45,10 +49,38 @@ namespace Crop
             resizers[7].Cursor = Cursors.SizeWE;
         }
 
+        private void crop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (IsVisible)
+            {
+                Rectangle rect = region.Rectangle;
+
+                switch (e.KeyCode)
+                {
+                    case Keys.Left:
+                        rect.X -= keyboardMove;
+                        break;
+                    case Keys.Right:
+                        rect.X += keyboardMove;
+                        break;
+                    case Keys.Up:
+                        rect.Y -= keyboardMove;
+                        break;
+                    case Keys.Down:
+                        rect.Y += keyboardMove;
+                        break;
+                }
+
+                region.Rectangle = rect;
+                Update();
+            }
+        }
+
         private void ResizeManager_MouseDown(object sender, MouseEventArgs e)
         {
             mx = e.X;
             my = e.Y;
+            tempRect = region.Rectangle;
             IsMouseDown = true;
         }
 
@@ -64,30 +96,28 @@ namespace Crop
                 Label resizer = (Label)sender;
                 int index = (int)resizer.Tag;
 
-                Rectangle rect = region.Rectangle;
-
                 if (index <= 2)
                 { // top row
-                    rect.Y += e.Y - my;
-                    rect.Height -= e.Y - my;
+                    tempRect.Y += e.Y - my;
+                    tempRect.Height -= e.Y - my;
                 }
                 else if (index >= 4 && index <= 6)
                 { // bottom row
-                    rect.Height += e.Y - my;
+                    tempRect.Height += e.Y - my;
                 }
 
                 if (index >= 2 && index <= 4)
                 { // right row
-                    rect.Width += e.X - mx;
+                    tempRect.Width += e.X - mx;
                 }
                 else if (index >= 6 || index == 0)
                 { // left row
-                    rect.X += e.X - mx;
-                    rect.Width -= e.X - mx;
+                    tempRect.X += e.X - mx;
+                    tempRect.Width -= e.X - mx;
                 }
 
-                region.Rectangle = GraphicsMgr.GetRectangle(rect);
-                Update();
+                region.Rectangle = tempRect;
+                Update(tempRect);
             }
         }
 
@@ -113,7 +143,11 @@ namespace Crop
 
         public void Update()
         {
-            Rectangle rect = region.Rectangle;
+            Update(region.Rectangle);
+        }
+
+        public void Update(Rectangle rect)
+        {
             int pos = resizers[0].Width / 2;
 
             int[] xChoords = new int[] { rect.Left - pos, rect.Left + rect.Width / 2 - pos, rect.Left + rect.Width - pos };

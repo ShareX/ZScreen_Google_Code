@@ -27,7 +27,7 @@ namespace Crop
             this.SuspendLayout();
             this.Bounds = GraphicsMgr.GetScreenBounds();
             this.CausesValidation = false;
-            this.ControlBox = false;
+            this.ControlBox = true;
             this.Cursor = Cursors.Default;
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -38,7 +38,7 @@ namespace Crop
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.TopMost = true;
+            //this.TopMost = true;
             this.ResumeLayout(false);
         }
 

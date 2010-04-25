@@ -8,7 +8,20 @@ namespace Crop
 {
     public class RegionManager
     {
-        public Rectangle Rectangle { get; set; }
+        private Rectangle rectangle;
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return rectangle;
+            }
+            set
+            {
+                rectangle = GraphicsMgr.GetRectangle(value);
+                rectangle.Intersect(Crop.Bounds);
+            }
+        }
+
         public bool IsMouseDown { get; private set; }
         public bool IsRectangleCreated { get; private set; }
         public bool IsRectangleSelected { get; private set; }
@@ -27,8 +40,8 @@ namespace Crop
             Crop.MouseDown += new MouseEventHandler(Crop_MouseDown);
             Crop.MouseUp += new MouseEventHandler(Crop_MouseUp);
             Crop.MouseMove += new MouseEventHandler(Crop_MouseMove);
-            RectanglePen = new Pen(Color.Red, 1);
-            RectanglePen.Alignment = PenAlignment.Center;
+            RectanglePen = new Pen(Color.Red, 2);
+            RectanglePen.Alignment = PenAlignment.Inset;
             RectangleBrush = new SolidBrush(Color.FromArgb(100, Color.CornflowerBlue));
             Resize = new ResizeManager(crop, this);
         }
@@ -37,23 +50,17 @@ namespace Crop
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!IsMouseDown && IsRectangleCreated && !IsRectangleSelected)
+                if (!IsMouseDown && !IsRectangleCreated && !IsRectangleSelected && !IsMoving)
                 {
-                    SelectRectangle();
+                    IsMouseDown = true;
+                    IsRectangleCreated = true;
+                    positionOnClick = e.Location;
+                    Rectangle = new Rectangle(positionOnClick, new Size(20, 20));
                 }
-
-                if (IsMoveable())
+                else if (IsMoveable())
                 {
                     IsMoving = true;
                     positionOnClick = e.Location;
-                }
-
-                if (!IsMouseDown && !IsRectangleCreated)
-                {
-                    IsMouseDown = true;
-                    positionOnClick = e.Location;
-                    Rectangle = new Rectangle(positionOnClick, new Size(20, 20));
-                    IsRectangleCreated = true;
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -123,7 +130,7 @@ namespace Crop
             if (IsMouseDown && IsRectangleCreated && !IsRectangleSelected)
             {
                 currentPosition = GetMousePosition();
-                Rectangle = GraphicsMgr.GetRectangle(currentPosition.X, currentPosition.Y, positionOnClick.X - currentPosition.X, positionOnClick.Y - currentPosition.Y);
+                Rectangle = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X + 1, currentPosition.Y - positionOnClick.Y + 1);
             }
         }
 
@@ -149,9 +156,8 @@ namespace Crop
         {
             if (IsRectangleCreated)
             {
-                Rectangle rect = GraphicsMgr.GetRectangle(Rectangle);
-                g.FillRectangle(RectangleBrush, rect);
-                g.DrawRectangle(RectanglePen, rect);
+                g.FillRectangle(RectangleBrush, Rectangle);
+                g.DrawRectangle(RectanglePen, Rectangle);
             }
         }
     }
