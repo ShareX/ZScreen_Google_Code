@@ -82,7 +82,10 @@ namespace ZUploader
             OnUploadStarted();
 
             ProxySettings proxy = new ProxySettings();
-            proxy.ProxyEnabled = !string.IsNullOrEmpty(Program.Settings.ProxySettings.Host);
+            if (!string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+            {
+                proxy.ProxyConfig = ProxyConfigType.ManualProxy;
+            }
             proxy.ProxyActive = Program.Settings.ProxySettings;
             Uploader.ProxySettings = proxy;
 
