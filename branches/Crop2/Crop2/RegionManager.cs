@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using System;
 
 namespace Crop
 {
@@ -40,8 +38,7 @@ namespace Crop
             Crop.MouseDown += new MouseEventHandler(Crop_MouseDown);
             Crop.MouseUp += new MouseEventHandler(Crop_MouseUp);
             Crop.MouseMove += new MouseEventHandler(Crop_MouseMove);
-            RectanglePen = new Pen(Color.Red, 2);
-            RectanglePen.Alignment = PenAlignment.Inset;
+            RectanglePen = new Pen(Color.Red, 1);
             RectangleBrush = new SolidBrush(Color.FromArgb(100, Color.CornflowerBlue));
             Resize = new ResizeManager(crop, this);
         }
@@ -130,7 +127,7 @@ namespace Crop
             if (IsMouseDown && IsRectangleCreated && !IsRectangleSelected)
             {
                 currentPosition = GetMousePosition();
-                Rectangle = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X + 1, currentPosition.Y - positionOnClick.Y + 1);
+                Rectangle = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X, currentPosition.Y - positionOnClick.Y);
             }
         }
 
@@ -158,6 +155,8 @@ namespace Crop
             {
                 g.FillRectangle(RectangleBrush, Rectangle);
                 g.DrawRectangle(RectanglePen, Rectangle);
+                g.DrawString(string.Format("x:{0} y:{1}\n{2} x {3}", rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height),
+                  new Font("Arial", 16), Brushes.Black, rectangle.X + 5, rectangle.Y + 5);
             }
         }
     }

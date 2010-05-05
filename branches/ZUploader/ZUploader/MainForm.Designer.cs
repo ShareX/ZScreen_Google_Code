@@ -162,7 +162,8 @@ namespace ZUploader
             this.tsMain.Location = new System.Drawing.Point(3, 0);
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
-            this.tsMain.Size = new System.Drawing.Size(851, 33);
+            this.tsMain.ShowItemToolTips = false;
+            this.tsMain.Size = new System.Drawing.Size(881, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 

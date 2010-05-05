@@ -134,6 +134,7 @@
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitSnapsUploader.cs" />
+    <Compile Include="ImageUploaders\UploadScreenshot.cs" />
     <Compile Include="ImageUploaders\YfrogUploader.cs" />
     <Compile Include="FileUploaders\Localhost\LocalhostAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

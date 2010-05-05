@@ -48,6 +48,7 @@ namespace ZUploader
         public const string TinyPicID = "e2aabb8d555322fa";
         public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
+        public const string UploadScreenshotKey = "2807828f377649572393126680";
 
         [STAThread]
         static void Main()

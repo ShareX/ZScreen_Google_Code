@@ -376,6 +376,9 @@ namespace ZScreenLib
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;
+                case ImageDestType.UPLOADSCREENSHOT:
+                    imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
+                    break;
                 case ImageDestType.Localhost:
                     UploadLocalhost();
                     break;

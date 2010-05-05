@@ -46,6 +46,8 @@ namespace ZUploader
         IMG1,
         [Description("imgur.com")]
         IMGUR,
+        [Description("uploadscreenshot.com")]
+        UPLOADSCREENSHOT,
         [Description("Use file uploader")]
         FILE
     }
