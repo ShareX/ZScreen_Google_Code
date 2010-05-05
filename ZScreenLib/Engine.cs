@@ -109,6 +109,8 @@ namespace ZScreenLib
         public const string TINYPIC_ID = "e2aabb8d555322fa";
         public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
 
+        public const string UPLOADSCREENSHOT_KEY = "2807828f377649572393126680";
+
         public const string TWITTER_CONSUMER_KEY = "Jzzcm6ytcyml14sQIvqvmA";
         public const string TWITTER_CONSUMER_SECRET = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
 

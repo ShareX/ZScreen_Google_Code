@@ -138,7 +138,7 @@ namespace UploadersLib.Helpers
             {
                 lp = new Uri(this.LocalFilePath).AbsoluteUri;
             }
-            catch (Exception ex)
+            catch
             {
                 lp = this.LocalFilePath;
             }

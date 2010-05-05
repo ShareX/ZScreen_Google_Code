@@ -118,6 +118,8 @@ namespace UploadersLib
         IMG1,
         [Description("Imgur - www.imgur.com")]
         IMGUR,
+        [Description("UploadScreenshot - www.uploadscreenshot.com")]
+        UPLOADSCREENSHOT,
         [Description("TwitPic - www.twitpic.com")]
         TWITPIC,
         [Description("TwitSnaps - www.twitsnaps.com")]
