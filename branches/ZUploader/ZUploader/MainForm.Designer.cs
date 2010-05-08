@@ -163,7 +163,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(881, 33);
+            this.tsMain.Size = new System.Drawing.Size(851, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -356,6 +356,7 @@ namespace ZUploader
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.Resize += new System.EventHandler(this.MainForm_Resize);

@@ -48,23 +48,26 @@ namespace ZUploader
 
         public static void Upload(string filePath)
         {
-            EDataType type;
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                EDataType type;
 
-            if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(filePath))
-            {
-                type = EDataType.Text;
-            }
-            else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(filePath))
-            {
-                type = EDataType.Image;
-            }
-            else
-            {
-                type = EDataType.File;
-            }
+                if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(filePath))
+                {
+                    type = EDataType.Text;
+                }
+                else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(filePath))
+                {
+                    type = EDataType.Image;
+                }
+                else
+                {
+                    type = EDataType.File;
+                }
 
-            Task task = new Task(type, filePath);
-            StartUpload(task);
+                Task task = new Task(type, filePath);
+                StartUpload(task);
+            }
         }
 
         public static void Upload(string[] files)
@@ -87,7 +90,7 @@ namespace ZUploader
             }
         }
 
-        public static void UploadFile()
+        public static void Upload()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {

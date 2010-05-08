@@ -23,6 +23,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -30,10 +31,13 @@ namespace ZUploader
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private string commandLinePath;
+
+        public MainForm(string path)
         {
             InitializeComponent();
             LoadSettings();
+            commandLinePath = path;
         }
 
         private void LoadSettings()
@@ -233,7 +237,7 @@ namespace ZUploader
 
         private void tsbFileUpload_Click(object sender, EventArgs e)
         {
-            UploadManager.UploadFile();
+            UploadManager.Upload();
         }
 
         private void tsbCopy_Click(object sender, EventArgs e)
@@ -283,7 +287,7 @@ namespace ZUploader
 
         private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UploadManager.UploadFile();
+            UploadManager.Upload();
         }
 
         private void lvUploads_DoubleClick(object sender, EventArgs e)
@@ -299,6 +303,11 @@ namespace ZUploader
         private void MainForm_Resize(object sender, EventArgs e)
         {
             this.Refresh();
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            UploadManager.Upload(commandLinePath);
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)

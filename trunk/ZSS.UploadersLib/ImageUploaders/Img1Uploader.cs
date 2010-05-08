@@ -45,7 +45,6 @@ namespace UploadersLib.ImageUploaders
             {
                 string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1).Trim();
                 ifm.Add(lastLine, LinkType.FULLIMAGE);
-                ifm.Add(lastLine.Replace(".img1.us/", ".img1.us/thumbs/"), LinkType.THUMBNAIL);
             }
 
             return ifm;

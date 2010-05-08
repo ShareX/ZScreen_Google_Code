@@ -31,14 +31,11 @@ namespace ZUploader
 
         public static bool IsValidImageFile(string path)
         {
-            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            foreach (string ext in ImageFileExtensions)
             {
-                foreach (string ext in ImageFileExtensions)
+                if (Path.GetExtension(path).ToLower().EndsWith(ext))
                 {
-                    if (Path.GetExtension(path).ToLower().EndsWith(ext))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -49,14 +46,11 @@ namespace ZUploader
 
         public static bool IsValidTextFile(string path)
         {
-            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            foreach (string ext in TextFileExtensions)
             {
-                foreach (string ext in TextFileExtensions)
+                if (Path.GetExtension(path).ToLower().EndsWith(ext))
                 {
-                    if (Path.GetExtension(path).ToLower().EndsWith(ext))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 

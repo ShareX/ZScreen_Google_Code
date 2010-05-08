@@ -51,13 +51,16 @@ namespace ZUploader
         public const string UploadScreenshotKey = "2807828f377649572393126680";
 
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Settings = Settings.Load();
 
+            string path = null;
+            if (args.Length > 0) path = args[0];
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(path));
 
             Settings.Save();
         }
