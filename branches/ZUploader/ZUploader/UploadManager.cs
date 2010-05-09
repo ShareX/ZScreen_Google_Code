@@ -46,27 +46,36 @@ namespace ZUploader
             return ID++;
         }
 
-        public static void Upload(string filePath)
+        public static void Upload(string path)
         {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            if (!string.IsNullOrEmpty(path))
             {
-                EDataType type;
+                if (File.Exists(path))
+                {
+                    EDataType type;
 
-                if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(filePath))
-                {
-                    type = EDataType.Text;
-                }
-                else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(filePath))
-                {
-                    type = EDataType.Image;
-                }
-                else
-                {
-                    type = EDataType.File;
-                }
+                    if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
+                    {
+                        type = EDataType.Text;
+                    }
+                    else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(path))
+                    {
+                        type = EDataType.Image;
+                    }
+                    else
+                    {
+                        type = EDataType.File;
+                    }
 
-                Task task = new Task(type, filePath);
-                StartUpload(task);
+                    Task task = new Task(type, path);
+                    StartUpload(task);
+                }
+                else if (Directory.Exists(path))
+                {
+                    string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+
+                    Upload(files);
+                }
             }
         }
 
@@ -74,19 +83,7 @@ namespace ZUploader
         {
             foreach (string file in files)
             {
-                if (!string.IsNullOrEmpty(file))
-                {
-                    if (File.Exists(file))
-                    {
-                        Upload(file);
-                    }
-                    else if (Directory.Exists(file))
-                    {
-                        string[] files2 = Directory.GetFiles(file, "*.*", SearchOption.AllDirectories);
-
-                        Upload(files2);
-                    }
-                }
+                Upload(file);
             }
         }
 

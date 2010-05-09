@@ -95,7 +95,7 @@
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
-            this.tcSettings.Size = new System.Drawing.Size(545, 367);
+            this.tcSettings.Size = new System.Drawing.Size(490, 285);
             this.tcSettings.TabIndex = 5;
             // 
             // tpGeneral
@@ -106,7 +106,7 @@
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(537, 341);
+            this.tpGeneral.Size = new System.Drawing.Size(482, 259);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(551, 373);
+            this.ClientSize = new System.Drawing.Size(496, 291);
             this.Controls.Add(this.tcSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
