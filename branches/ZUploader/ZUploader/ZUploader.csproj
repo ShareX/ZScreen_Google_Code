@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ShellContextMenu.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UploadManager.cs" />
     <Compile Include="UploadProgress.cs" />
