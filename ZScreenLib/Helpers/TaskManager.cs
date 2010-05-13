@@ -297,6 +297,9 @@ namespace ZScreenLib
                 case FileUploaderType.DropIO:
                     fileHost = new DropIO();
                     break;
+                case FileUploaderType.ShareCX:
+                    fileHost = new ShareCX();
+                    break;
             }
 
             if (fileHost != null)
@@ -304,9 +307,9 @@ namespace ZScreenLib
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 mTask.DestinationName = fileHost.Name;
                 fileHost.ProgressChanged += UploadProgressChanged;
-                string url = fileHost.Upload(mTask.LocalFilePath);
+                UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
                 mTask.Errors = fileHost.Errors;
-                mTask.RemoteFilePath = url;
+                mTask.RemoteFilePath = ur.URL;
             }
 
             mTask.EndTime = DateTime.Now;
@@ -534,7 +537,7 @@ namespace ZScreenLib
 
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
 
-                    string url = fu.Upload(mTask.LocalFilePath);
+                    string url = fu.Upload(mTask.LocalFilePath).URL;
 
                     if (!string.IsNullOrEmpty(url))
                     {
@@ -553,7 +556,7 @@ namespace ZScreenLib
                                 img.Save(thPath);
                                 if (File.Exists(thPath))
                                 {
-                                    string thumb = fu.Upload(thPath);
+                                    string thumb = fu.Upload(thPath).URL;
 
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
