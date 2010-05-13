@@ -142,6 +142,9 @@ namespace ZUploader
                 case FileUploaderType2.DropIO:
                     fileUploader = new DropIO();
                     break;
+                case FileUploaderType2.ShareCX:
+                    fileUploader = new ShareCX();
+                    break;
                 default:
                     break;
             }
@@ -149,12 +152,8 @@ namespace ZUploader
             if (fileUploader != null)
             {
                 fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
-                string url = fileUploader.Upload(stream, fileName);
-                UploadResult ur = new UploadResult
-                {
-                    URL = url,
-                    Errors = fileUploader.Errors
-                };
+                UploadResult ur = fileUploader.Upload(stream, fileName);
+                ur.Errors = fileUploader.Errors;
                 return ur;
             }
 

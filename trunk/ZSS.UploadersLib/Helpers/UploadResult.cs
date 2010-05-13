@@ -23,7 +23,7 @@
 
 using System.Collections.Generic;
 
-namespace ZUploader
+namespace UploadersLib.Helpers
 {
     public class UploadResult
     {
@@ -35,6 +35,12 @@ namespace ZUploader
         public UploadResult()
         {
             Errors = new List<string>();
+        }
+
+        public UploadResult(string url)
+            : this()
+        {
+            URL = url;
         }
     }
 }

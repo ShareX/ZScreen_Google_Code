@@ -24,6 +24,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
 {
@@ -56,7 +57,7 @@ namespace UploadersLib.FileUploaders
             Options = options;
         }
 
-        public override string Upload(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             string url = NextUploadServer();
 
@@ -81,31 +82,18 @@ namespace UploadersLib.FileUploaders
                 args.Add("password", Options.Password);
             }
 
-            string result = UploadData(stream, fileName, url, "filecontent", args);
+            string response = UploadData(stream, fileName, url, "filecontent", args);
 
-            if (!string.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(response))
             {
-                UploadInfo info = new UploadInfo(result);
-                return info.URL;
-            }
-
-            /*if (Options.CheckFileSize)
-            {
-                string fileSize = stream.Length.ToString();
-                if (fileSize != info.Size)
+                UploadInfo info = new UploadInfo(response);
+                UploadResult ur = new UploadResult
                 {
-                    throw new Exception(string.Format("File size check failed.\nFile size: {0}\nUploaded file size: {1}", fileSize, info.Size));
-                }
+                    URL = info.URL,
+                    DeletionURL = info.KillCodeURL
+                };
+                return ur;
             }
-
-            if (Options.CheckFileMD5)
-            {
-                string fileMD5 = GetMD5(file);
-                if (!fileMD5.Equals(info.MD5, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    throw new Exception(string.Format("File MD5 check failed.\nFile MD5: {0}\nUploaded file MD5: {1}", fileMD5, info.MD5));
-                }
-            }*/
 
             return null;
         }

@@ -76,6 +76,8 @@ namespace ZUploader
         FileBin,
         [Description("drop.io")]
         DropIO,
+        [Description("share.cx")]
+        ShareCX,
         [Description("FTP Server")]
         FTP
     }

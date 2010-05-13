@@ -100,7 +100,6 @@
     <Compile Include="Task.cs" />
     <Compile Include="UploadManager.cs" />
     <Compile Include="UploadProgress.cs" />
-    <Compile Include="UploadResult.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UploadInfo.cs" />
   </ItemGroup>

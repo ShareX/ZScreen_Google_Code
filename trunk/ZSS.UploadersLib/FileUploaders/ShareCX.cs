@@ -21,30 +21,31 @@
 */
 #endregion
 
-using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
 {
-    public sealed class FileBin : FileUploader
+    public sealed class ShareCX : FileUploader
     {
         public override string Name
         {
-            get { return "FileBin"; }
+            get { return "ShareCX"; }
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("MAX_FILE_SIZE", "82428800");
+            string response = UploadData(stream, fileName, "http://file1.share.cx/cgi-bin/upload.cgi", "file_0", null);
 
-            string response = UploadData(stream, fileName, "http://filebin.ca/upload.php", "file", args);
+            MatchCollection matches = Regex.Matches(response, "(?<=value=\")http:.+?(?=\".*></td>)");
 
-            if (!string.IsNullOrEmpty(response))
+            if (matches.Count == 2)
             {
-                string url = response.Substring(response.LastIndexOf(' ') + 1).Trim();
-                return new UploadResult(url);
+                UploadResult ur = new UploadResult();
+                ur.URL = matches[0].Value;
+                ur.DeletionURL = matches[1].Value;
+                return ur;
             }
 
             return null;

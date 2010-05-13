@@ -53,7 +53,7 @@ namespace UploadersLib.FileUploaders
             public string AdminToken { get; set; }
         }
 
-        public override string Upload(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             try
             {
@@ -73,7 +73,8 @@ namespace UploadersLib.FileUploaders
                 if (!string.IsNullOrEmpty(response))
                 {
                     Asset asset = ParseAsset(response);
-                    return string.Format("http://drop.io/{0}/asset/{1}", drop.Name, asset.Name);
+                    string url = string.Format("http://drop.io/{0}/asset/{1}", drop.Name, asset.Name);
+                    return new UploadResult(url);
                 }
             }
             catch (Exception e)

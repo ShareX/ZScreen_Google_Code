@@ -96,6 +96,8 @@
     <Compile Include="FileUploaders\RapidShare.cs" />
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="FileUploaders\SendSpaceManager.cs" />
+    <Compile Include="FileUploaders\ShareCX.cs" />
+    <Compile Include="Helpers\UploadResult.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
       <SubType>Form</SubType>
     </Compile>
