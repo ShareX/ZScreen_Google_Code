@@ -196,7 +196,9 @@ namespace UploadersLib
         [Description("FileBin - www.filebin.ca")]
         FileBin,
         [Description("Drop.io - www.drop.io")]
-        DropIO
+        DropIO,
+        [Description("ShareCX - www.share.cx")]
+        ShareCX
     }
 
     public enum RapidShareAcctType
