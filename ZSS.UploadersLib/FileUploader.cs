@@ -22,6 +22,7 @@
 #endregion
 
 using System.IO;
+using UploadersLib.Helpers;
 
 namespace UploadersLib
 {
@@ -29,9 +30,9 @@ namespace UploadersLib
     {
         public abstract string Name { get; }
 
-        public abstract string Upload(Stream stream, string fileName);
+        public abstract UploadResult Upload(Stream stream, string fileName);
 
-        public string Upload(string filePath)
+        public UploadResult Upload(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -41,7 +42,7 @@ namespace UploadersLib
                 }
             }
 
-            return string.Empty;
+            return null;
         }
     }
 }

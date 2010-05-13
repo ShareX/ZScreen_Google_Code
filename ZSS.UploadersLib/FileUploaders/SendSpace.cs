@@ -64,7 +64,7 @@ namespace UploadersLib.FileUploaders
             public XElement Result { get; set; }
         }
 
-        public ResponsePacket ParseResponse(string response)
+        private ResponsePacket ParseResponse(string response)
         {
             ResponsePacket packet = new ResponsePacket();
 
@@ -84,6 +84,30 @@ namespace UploadersLib.FileUploaders
             }
 
             return packet;
+        }
+
+        private UploadResponsePacket ParseUploadResponse(string response)
+        {
+            XDocument xml = XDocument.Parse(response);
+            XElement xe = xml.Root;
+            if (xe.ElementValue("status") == "ok")
+            {
+                UploadResponsePacket urp = new UploadResponsePacket
+                {
+                    DownloadURL = xe.ElementValue("download_url"),
+                    DeleteURL = xe.ElementValue("delete_url")
+                };
+
+                return urp;
+            }
+
+            return null;
+        }
+
+        public class UploadResponsePacket
+        {
+            public string DownloadURL { get; set; }
+            public string DeleteURL { get; set; }
         }
 
         public class LoginInfo
@@ -399,7 +423,7 @@ namespace UploadersLib.FileUploaders
             return PrepareArguments(max_file_size, upload_identifier, extra_info, null, null, null, null, null, null);
         }
 
-        public string Upload(Stream stream, string fileName, UploadInfo uploadInfo)
+        public UploadResult Upload(Stream stream, string fileName, UploadInfo uploadInfo)
         {
             if (uploadInfo != null)
             {
@@ -409,24 +433,30 @@ namespace UploadersLib.FileUploaders
 
                 if (!string.IsNullOrEmpty(response))
                 {
-                    string fileid = Regex.Match(response, @"<file_id>(\w+)</file_id>").Groups[1].Value; // Anonymous
+                    UploadResponsePacket urp = ParseUploadResponse(response);
 
-                    if (string.IsNullOrEmpty(fileid))
+                    if (urp == null) // User
                     {
-                        fileid = fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value; // User
+                        string fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
+                        string url = "http://www.sendspace.com/file/" + fileid;
+                        return new UploadResult(url);
                     }
-
-                    if (!string.IsNullOrEmpty(fileid))
+                    else
                     {
-                        return "http://www.sendspace.com/file/" + fileid;
+                        UploadResult ur = new UploadResult
+                        {
+                            URL = urp.DownloadURL,
+                            DeletionURL = urp.DeleteURL
+                        };
+                        return ur;
                     }
                 }
             }
 
-            return string.Empty;
+            return null;
         }
 
-        public override string Upload(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             return Upload(stream, fileName, SendSpaceManager.UploadInfo);
         }

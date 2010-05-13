@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -22,32 +22,25 @@
 #endregion
 
 using System.Collections.Generic;
-using System.IO;
-using UploadersLib.Helpers;
 
-namespace UploadersLib.FileUploaders
+namespace UploadersLib.Helpers
 {
-    public sealed class FileBin : FileUploader
+    public class UploadResult
     {
-        public override string Name
+        public string URL { get; set; }
+        public string ThumbnailURL { get; set; }
+        public string DeletionURL { get; set; }
+        public List<string> Errors { get; set; }
+
+        public UploadResult()
         {
-            get { return "FileBin"; }
+            Errors = new List<string>();
         }
 
-        public override UploadResult Upload(Stream stream, string fileName)
+        public UploadResult(string url)
+            : this()
         {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("MAX_FILE_SIZE", "82428800");
-
-            string response = UploadData(stream, fileName, "http://filebin.ca/upload.php", "file", args);
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                string url = response.Substring(response.LastIndexOf(' ') + 1).Trim();
-                return new UploadResult(url);
-            }
-
-            return null;
+            URL = url;
         }
     }
 }

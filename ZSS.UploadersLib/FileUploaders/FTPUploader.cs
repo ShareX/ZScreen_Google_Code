@@ -41,7 +41,7 @@ namespace UploadersLib.FileUploaders
             FTPAccount = account;
         }
 
-        public override string Upload(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             using (FTP ftpClient = new FTP(FTPAccount))
             {
@@ -67,11 +67,12 @@ namespace UploadersLib.FileUploaders
 
                 if (Errors.Count == 0)
                 {
-                    return FTPAccount.GetUriPath(fileName);
+                    string url = FTPAccount.GetUriPath(fileName);
+                    return new UploadResult(url);
                 }
             }
 
-            return string.Empty;
+            return null;
         }
     }
 }
