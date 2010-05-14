@@ -60,6 +60,7 @@ namespace ZUploader
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
@@ -97,9 +98,11 @@ namespace ZUploader
             this.copyThumbnailURLToolStripMenuItem,
             this.copyDeletionURLToolStripMenuItem,
             this.copyErrorsToolStripMenuItem,
-            this.uploadFileToolStripMenuItem});
+            this.uploadFileToolStripMenuItem,
+            this.stopUploadToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 136);
+            this.cmsUploads.Size = new System.Drawing.Size(188, 158);
+            this.cmsUploads.Opening += new System.ComponentModel.CancelEventHandler(this.cmsUploads_Opening);
             // 
             // openURLToolStripMenuItem
             // 
@@ -142,6 +145,13 @@ namespace ZUploader
             this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.uploadFileToolStripMenuItem.Text = "Upload file...";
             this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
+            // 
+            // stopUploadToolStripMenuItem
+            // 
+            this.stopUploadToolStripMenuItem.Name = "stopUploadToolStripMenuItem";
+            this.stopUploadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.stopUploadToolStripMenuItem.Text = "Stop upload";
+            this.stopUploadToolStripMenuItem.Click += new System.EventHandler(this.stopUploadToolStripMenuItem_Click);
             // 
             // tsMain
             // 
@@ -403,6 +413,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripContainer tscMain;
         private System.Windows.Forms.ColumnHeader chSpeed;
         private System.Windows.Forms.ColumnHeader chEstimatedTime;
+        private System.Windows.Forms.ToolStripMenuItem stopUploadToolStripMenuItem;
     }
 }
 

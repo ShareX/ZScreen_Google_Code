@@ -193,7 +193,7 @@ namespace ZUploader
         {
             tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
                 copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible =
-               uploadFileToolStripMenuItem.Visible = false;
+               uploadFileToolStripMenuItem.Visible = stopUploadToolStripMenuItem.Visible = false;
 
             if (lvUploads.SelectedItems.Count > 0)
             {
@@ -221,6 +221,9 @@ namespace ZUploader
                         copyErrorsToolStripMenuItem.Visible = true;
                     }
                 }
+
+                int index = lvUploads.SelectedIndices[0];
+                stopUploadToolStripMenuItem.Visible = UploadManager.Tasks[index].IsUploading;
             }
             else
             {
@@ -260,6 +263,16 @@ namespace ZUploader
             new AboutForm().Show();
         }
 
+        private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cmsUploads_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            UpdateControls();
+        }
+
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenURL();
@@ -290,14 +303,20 @@ namespace ZUploader
             UploadManager.Upload();
         }
 
+        private void stopUploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lvUploads.SelectedIndices.Count > 0)
+            {
+                foreach (int index in lvUploads.SelectedIndices)
+                {
+                    UploadManager.Tasks[index].Stop();
+                }
+            }
+        }
+
         private void lvUploads_DoubleClick(object sender, EventArgs e)
         {
             OpenURL();
-        }
-
-        private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateControls();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

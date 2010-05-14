@@ -29,6 +29,7 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib.Helpers;
+using System.Collections.Generic;
 
 namespace ZUploader
 {
@@ -39,12 +40,7 @@ namespace ZUploader
         public static FileUploaderType2 FileUploader { get; set; }
         public static ListView ListViewControl { get; set; }
 
-        private static int ID;
-
-        public static int GetID()
-        {
-            return ID++;
-        }
+        public static List<Task> Tasks = new List<Task>();
 
         public static void Upload(string path)
         {
@@ -131,10 +127,20 @@ namespace ZUploader
 
         private static void StartUpload(Task task)
         {
+            Tasks.Add(task);
+            task.Info.ID = Tasks.Count - 1;
             task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
             task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
             task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
             task.Start();
+        }
+
+        public static void StopUpload(int index)
+        {
+            if (Tasks.Count < index)
+            {
+                Tasks[index].Stop();
+            }
         }
 
         private static void task_UploadStarted(UploadInfo info)

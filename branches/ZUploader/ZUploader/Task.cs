@@ -41,16 +41,19 @@ namespace ZUploader
         public event TaskEventHandler UploadCompleted;
 
         public UploadInfo Info { get; private set; }
+        public bool IsUploading { get; private set; }
+        public bool IsStopped { get; private set; }
 
         private Stream Data;
         private BackgroundWorker bw;
+        private ImageUploader imageUploader;
+        private FileUploader fileUploader;
 
         #region Constructors
 
         private Task()
         {
             Info = new UploadInfo();
-            Info.ID = UploadManager.GetID();
         }
 
         /// <summary>
@@ -97,6 +100,29 @@ namespace ZUploader
             bw.RunWorkerAsync();
         }
 
+        public void Stop()
+        {
+            switch (Info.UploaderType)
+            {
+                case EDataType.File:
+                    if (fileUploader != null)
+                    {
+                        fileUploader.StopUpload();
+                    }
+                    break;
+                case EDataType.Image:
+                    if (imageUploader != null)
+                    {
+                        imageUploader.StopUpload();
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            IsStopped = true;
+        }
+
         private void UploadThread(object sender, DoWorkEventArgs e)
         {
             try
@@ -122,8 +148,6 @@ namespace ZUploader
 
         public UploadResult UploadFile(Stream stream, string fileName)
         {
-            FileUploader fileUploader = null;
-
             switch (UploadManager.FileUploader)
             {
                 case FileUploaderType2.FTP:
@@ -162,8 +186,6 @@ namespace ZUploader
 
         public UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageUploader imageUploader = null;
-
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestType2.IMAGESHACK:
@@ -262,6 +284,7 @@ namespace ZUploader
         {
             if (UploadStarted != null)
             {
+                IsUploading = true;
                 Info.Status = "Uploading";
                 UploadStarted(Info);
             }
@@ -279,7 +302,15 @@ namespace ZUploader
         {
             if (UploadCompleted != null)
             {
-                Info.Status = "Completed";
+                IsUploading = false;
+                if (!IsStopped)
+                {
+                    Info.Status = "Done";
+                }
+                else
+                {
+                    Info.Status = "Stopped";
+                }
                 UploadCompleted(Info);
             }
         }
