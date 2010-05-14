@@ -48,6 +48,9 @@ namespace UploadersLib
 
         public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
+        public bool IsUploading { get; private set; }
+
+        private bool stopUpload;
 
         public Uploader()
         {
@@ -66,6 +69,14 @@ namespace UploadersLib
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
+        }
+
+        public void StopUpload()
+        {
+            if (IsUploading)
+            {
+                stopUpload = true;
+            }
         }
 
         #region Post methods
@@ -115,6 +126,9 @@ namespace UploadersLib
 
         private HttpWebResponse GetResponseUsingPost(string url, Stream stream, string boundary)
         {
+            IsUploading = true;
+            stopUpload = false;
+
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -140,6 +154,8 @@ namespace UploadersLib
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
+                        if (stopUpload) return null;
+
                         requestStream.Write(buffer, 0, bytesRead);
                         progress.ChangeProgress(bytesRead);
                         OnProgressChanged(progress);
@@ -150,8 +166,15 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                this.Errors.Add(e.Message);
-                Debug.WriteLine(e.ToString());
+                if (!stopUpload)
+                {
+                    this.Errors.Add(e.Message);
+                    Debug.WriteLine(e.ToString());
+                }
+            }
+            finally
+            {
+                IsUploading = false;
             }
 
             return null;
