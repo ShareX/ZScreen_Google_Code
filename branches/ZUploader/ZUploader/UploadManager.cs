@@ -148,8 +148,9 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = new ListViewItem();
-                lvi.Text = info.Status;
-                lvi.SubItems.Add(info.FileName);
+                lvi.Text = info.FileName;
+                lvi.SubItems.Add(info.Status);
+                lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
@@ -170,7 +171,8 @@ namespace ZUploader
                 lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} kB / {2:N0} kB", info.Progress.Percentage,
                     info.Progress.Position / 1000, info.Progress.Length / 1000);
                 lvi.SubItems[3].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
-                lvi.SubItems[4].Text = string.Format("{0:00}:{1:00}", info.Progress.EstimatedCompleteTime.Minutes, info.Progress.EstimatedCompleteTime.Seconds);
+                lvi.SubItems[4].Text = string.Format("{0:00}:{1:00}", info.Progress.Elapsed.Minutes, info.Progress.Elapsed.Seconds);
+                lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.Remaining.Minutes, info.Progress.Remaining.Seconds);
             }
         }
 
@@ -181,19 +183,16 @@ namespace ZUploader
                 ListViewItem lvi = ListViewControl.Items[info.ID];
                 lvi.Tag = info.Result;
 
-                lvi.SubItems[3].Text = string.Empty;
-                lvi.SubItems[4].Text = string.Empty;
-
                 if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
-                    lvi.Text = "Error: " + info.Result.Errors.Last();
-                    lvi.SubItems[7].Text = string.Empty;
+                    lvi.SubItems[1].Text = "Error: " + info.Result.Errors.Last();
+                    lvi.SubItems[8].Text = string.Empty;
                     lvi.ImageIndex = 1;
                 }
                 else
                 {
-                    lvi.Text = info.Status;
-                    lvi.SubItems[7].Text = info.Result.URL;
+                    lvi.SubItems[1].Text = info.Status;
+                    lvi.SubItems[8].Text = info.Result.URL;
                     lvi.ImageIndex = 2;
                 }
 
