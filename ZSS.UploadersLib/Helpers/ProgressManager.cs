@@ -34,7 +34,9 @@ namespace ZUploader
         public long Length { get; set; }
         public double Percentage { get; set; }
         public double Speed { get; set; }
-        public TimeSpan EstimatedCompleteTime { get; set; }
+        public DateTime StartTime { get; private set; }
+        public TimeSpan Elapsed { get; set; }
+        public TimeSpan Remaining { get; set; }
 
         private Stopwatch timer = new Stopwatch();
         private int smoothTime;
@@ -45,6 +47,7 @@ namespace ZUploader
 
         public ProgressManager(long length, int smoothTime)
         {
+            StartTime = DateTime.Now;
             Length = length;
             this.smoothTime = smoothTime;
             timer.Start();
@@ -65,7 +68,8 @@ namespace ZUploader
 
                 averageSpeed.Add((double)speedTest / timer.ElapsedMilliseconds);
                 Speed = averageSpeed.Average();
-                EstimatedCompleteTime = TimeSpan.FromMilliseconds((Length - Position) / Speed);
+                Elapsed = DateTime.Now - StartTime;
+                Remaining = TimeSpan.FromMilliseconds((Length - Position) / Speed);
 
                 speedTest = 0;
                 timer.Reset();
