@@ -108,6 +108,10 @@
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SingleInstanceApplication\SingleInstanceApplication.csproj">
+      <Project>{7472BC61-9C5D-4F30-B87B-233E8C189238}</Project>
+      <Name>SingleInstanceApplication</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Docs\Changes.log" />

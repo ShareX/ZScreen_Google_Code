@@ -23,7 +23,11 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
+using SingleInstanceApplication;
+using System.Diagnostics;
+using System.Threading;
 
 namespace ZUploader
 {
@@ -50,19 +54,69 @@ namespace ZUploader
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
         public const string UploadScreenshotKey = "2807828f377649572393126680";
 
+        private static MainForm mainForm;
+
         [STAThread]
         static void Main(string[] args)
         {
-            Settings = Settings.Load();
+            string name = Assembly.GetExecutingAssembly().GetName().Name;
+            if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
+
+            Program.Settings = Settings.Load();
 
             string path = null;
             if (args.Length > 0) path = args[0];
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(path));
+
+            mainForm = new MainForm(path);
+
+            Application.Run(mainForm);
 
             Settings.Save();
+        }
+
+        /// <summary>
+        /// Single instance callback handler.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="SingleInstanceApplication.InstanceCallbackEventArgs"/> instance containing the event data.</param>
+        private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)
+        {
+            if (WaitFormLoad(5000))
+            {
+                Action d = () =>
+                {
+                    mainForm.Activate();
+                    mainForm.BringToFront();
+
+                    if (args != null && args.CommandLineArgs.Length > 1)
+                    {
+                        UploadManager.Upload(args.CommandLineArgs[1]);
+                    }
+                };
+
+                mainForm.Invoke(d);
+            }
+        }
+
+        private static bool WaitFormLoad(int wait)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
+            while (timer.ElapsedMilliseconds < wait)
+            {
+                if (mainForm != null)
+                {
+                    return true;
+                }
+
+                Thread.Sleep(10);
+            }
+
+            return false;
         }
     }
 }
