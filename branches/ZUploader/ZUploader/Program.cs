@@ -22,12 +22,12 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using SingleInstanceApplication;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ZUploader
 {
@@ -77,17 +77,17 @@ namespace ZUploader
             Settings.Save();
         }
 
-        /// <summary>
-        /// Single instance callback handler.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="SingleInstanceApplication.InstanceCallbackEventArgs"/> instance containing the event data.</param>
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)
         {
             if (WaitFormLoad(5000))
             {
                 Action d = () =>
                 {
+                    if (mainForm.WindowState == FormWindowState.Minimized)
+                    {
+                        mainForm.WindowState = FormWindowState.Normal;
+                    }
+
                     mainForm.Activate();
                     mainForm.BringToFront();
 
@@ -108,10 +108,7 @@ namespace ZUploader
 
             while (timer.ElapsedMilliseconds < wait)
             {
-                if (mainForm != null)
-                {
-                    return true;
-                }
+                if (mainForm != null && mainForm.IsReady) return true;
 
                 Thread.Sleep(10);
             }

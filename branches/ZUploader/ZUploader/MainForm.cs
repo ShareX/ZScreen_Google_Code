@@ -31,6 +31,8 @@ namespace ZUploader
 {
     public partial class MainForm : Form
     {
+        public bool IsReady { get; private set; }
+
         private string commandLinePath;
 
         public MainForm(string path)
@@ -327,6 +329,8 @@ namespace ZUploader
         private void MainForm_Shown(object sender, EventArgs e)
         {
             UploadManager.Upload(commandLinePath);
+
+            IsReady = true;
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)

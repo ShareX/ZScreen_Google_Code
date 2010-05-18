@@ -40,6 +40,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -97,6 +98,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ShellContextMenu.cs" />
+    <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
+    <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UploadManager.cs" />
     <Compile Include="UploadProgress.cs" />
@@ -107,10 +110,6 @@
     <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SingleInstanceApplication\SingleInstanceApplication.csproj">
-      <Project>{7472BC61-9C5D-4F30-B87B-233E8C189238}</Project>
-      <Name>SingleInstanceApplication</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
