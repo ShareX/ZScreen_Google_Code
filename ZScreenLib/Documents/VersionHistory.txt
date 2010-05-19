@@ -1,5 +1,7 @@
-Version 3.28 - 20100414
+Version 3.30 - 20100515
 
+3.30.0.0 Added share.cx File Uploader support {Jaex}
+3.29.0.0 Added UploadScreenshot Image Uploader support {Jaex}
 3.28.3.2 Uploading did not work in portable mode [Issue 268] {McoreD}
 3.28.3.1 Fixes related to Progress percentage with support for simultaneous uploads {Jaex}
 3.28.3.0 More descriptive text in the NotifyIcon text {McoreD}
