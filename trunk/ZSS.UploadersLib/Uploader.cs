@@ -48,7 +48,7 @@ namespace UploadersLib
 
         public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
-        public bool IsUploading { get; private set; }
+        public bool IsUploading { get; set; }
 
         private bool stopUpload;
 
