@@ -220,6 +220,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\branches\Crop2\Crop2\Crop2.csproj">
+      <Project>{39EBFBE7-317B-4778-99FF-187F2AC6110F}</Project>
+      <Name>Crop2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DavuxLibMin\DavuxLib.csproj">
       <Project>{6241A05D-EF12-4769-B660-EF75060DF20E}</Project>
       <Name>DavuxLib</Name>
