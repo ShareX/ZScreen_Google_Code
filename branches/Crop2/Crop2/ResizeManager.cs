@@ -1,27 +1,41 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using System;
 
 namespace Crop
 {
     public class ResizeManager
     {
         public bool IsMouseDown { get; private set; }
-        public bool IsVisible { get; private set; }
 
-        private Crop crop;
+        private bool visible;
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+
+                for (int i = 0; i < resizers.Length; i++)
+                {
+                    resizers[i].Visible = visible;
+                }
+            }
+        }
+
+        private Crop2 crop;
         private RegionManager region;
-        private Label[] resizers;
-        private int mx, my, keyboardMove;
+        private Label[] resizers = new Label[8];
+        private int mx, my, minSpeed = 1, maxSpeed = 5;
         private Rectangle tempRect;
 
-        public ResizeManager(Crop crop, RegionManager region)
+        public ResizeManager(Crop2 crop, RegionManager region)
         {
             this.crop = crop;
             this.region = region;
-            resizers = new Label[8];
-            keyboardMove = 5;
 
             crop.KeyDown += new KeyEventHandler(crop_KeyDown);
 
@@ -51,23 +65,33 @@ namespace Crop
 
         private void crop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (IsVisible)
+            if (Visible)
             {
                 Rectangle rect = region.Rectangle;
+                int speed;
+
+                if (e.Control)
+                {
+                    speed = maxSpeed;
+                }
+                else
+                {
+                    speed = minSpeed;
+                }
 
                 switch (e.KeyCode)
                 {
                     case Keys.Left:
-                        rect.X -= keyboardMove;
+                        rect.X -= speed;
                         break;
                     case Keys.Right:
-                        rect.X += keyboardMove;
+                        rect.X += speed;
                         break;
                     case Keys.Up:
-                        rect.Y -= keyboardMove;
+                        rect.Y -= speed;
                         break;
                     case Keys.Down:
-                        rect.Y += keyboardMove;
+                        rect.Y += speed;
                         break;
                 }
 
@@ -96,49 +120,39 @@ namespace Crop
                 Label resizer = (Label)sender;
                 int index = (int)resizer.Tag;
 
-                if (index <= 2)
-                { // top row
+                if (index <= 2) // Top row
+                {
                     tempRect.Y += e.Y - my;
                     tempRect.Height -= e.Y - my;
                 }
-                else if (index >= 4 && index <= 6)
-                { // bottom row
+                else if (index >= 4 && index <= 6) // Bottom row
+                {
                     tempRect.Height += e.Y - my;
                 }
 
-                if (index >= 2 && index <= 4)
-                { // right row
+                if (index >= 2 && index <= 4) // Right row
+                {
                     tempRect.Width += e.X - mx;
                 }
-                else if (index >= 6 || index == 0)
-                { // left row
+                else if (index >= 6 || index == 0) // Left row
+                {
                     tempRect.X += e.X - mx;
                     tempRect.Width -= e.X - mx;
                 }
 
-                region.Rectangle = tempRect;
+                region.Rectangle = GraphicsMgr.FixRectangle(tempRect);
                 Update(tempRect);
             }
         }
 
         public void Show()
         {
-            ChangeVisible(true);
+            Visible = true;
         }
 
         public void Hide()
         {
-            ChangeVisible(false);
-        }
-
-        private void ChangeVisible(bool visible)
-        {
-            IsVisible = visible;
-
-            for (int i = 0; i < resizers.Length; i++)
-            {
-                resizers[i].Visible = visible;
-            }
+            Visible = false;
         }
 
         public void Update()
@@ -161,6 +175,33 @@ namespace Crop
             resizers[5].Left = xChoords[1]; resizers[5].Top = yChoords[2];
             resizers[6].Left = xChoords[0]; resizers[6].Top = yChoords[2];
             resizers[7].Left = xChoords[0]; resizers[7].Top = yChoords[1];
+
+            if ((resizers[0].Left < resizers[4].Left && resizers[0].Top < resizers[4].Top) ||
+                   resizers[0].Left > resizers[4].Left && resizers[0].Top > resizers[4].Top)
+            {
+                resizers[0].Cursor = Cursors.SizeNWSE;
+                resizers[2].Cursor = Cursors.SizeNESW;
+                resizers[4].Cursor = Cursors.SizeNWSE;
+                resizers[6].Cursor = Cursors.SizeNESW;
+            }
+            else if ((resizers[0].Left > resizers[4].Left && resizers[0].Top < resizers[4].Top) ||
+                resizers[0].Left < resizers[4].Left && resizers[0].Top > resizers[4].Top)
+            {
+                resizers[0].Cursor = Cursors.SizeNESW;
+                resizers[2].Cursor = Cursors.SizeNWSE;
+                resizers[4].Cursor = Cursors.SizeNESW;
+                resizers[6].Cursor = Cursors.SizeNWSE;
+            }
+            else if (resizers[0].Left == resizers[4].Left)
+            {
+                resizers[0].Cursor = Cursors.SizeNS;
+                resizers[4].Cursor = Cursors.SizeNS;
+            }
+            else if (resizers[0].Top == resizers[4].Top)
+            {
+                resizers[0].Cursor = Cursors.SizeWE;
+                resizers[4].Cursor = Cursors.SizeWE;
+            }
 
             crop.Refresh();
         }

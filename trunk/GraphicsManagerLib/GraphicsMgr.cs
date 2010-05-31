@@ -293,7 +293,7 @@ namespace GraphicsMgrLib
             return new Rectangle(x, y, width, height);
         }
 
-        public static Rectangle GetRectangle(int x, int y, int width, int height)
+        public static Rectangle FixRectangle(int x, int y, int width, int height)
         {
             if (width < 0)
             {
@@ -307,12 +307,15 @@ namespace GraphicsMgrLib
                 height = -height;
             }
 
+            width++;
+            height++;
+
             return new Rectangle(x, y, width, height);
         }
 
-        public static Rectangle GetRectangle(Rectangle rect)
+        public static Rectangle FixRectangle(Rectangle rect)
         {
-            return GetRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+            return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         public static int GridPoint(int point, int grid)

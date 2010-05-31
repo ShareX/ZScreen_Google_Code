@@ -6,20 +6,28 @@ using GraphicsMgrLib;
 
 namespace Crop
 {
-    public class Crop : Form
+    public class Crop2 : Form
     {
         public Image Screenshot { get; private set; }
         public RegionManager CropRegion { get; private set; }
 
-        public Crop()
+        public Crop2(Image screenshot)
         {
             InitializeComponent();
-            Screenshot = ZScreenLib.Capture.CaptureScreen(true);
+            Screenshot = screenshot;
             CropRegion = new RegionManager(this);
             Timer drawTimer = new Timer();
             drawTimer.Interval = 10;
             drawTimer.Tick += new EventHandler(drawTimer_Tick);
             drawTimer.Start();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (Screenshot != null) Screenshot.Dispose();
+            if (CropRegion != null) CropRegion.Dispose();
+
+            base.Dispose(disposing);
         }
 
         private void InitializeComponent()
@@ -38,8 +46,36 @@ namespace Crop
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            //this.TopMost = true;
+            this.TopMost = true;
             this.ResumeLayout(false);
+
+            this.KeyDown += new KeyEventHandler(Crop2_KeyDown);
+        }
+
+        private void Crop2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close(false);
+            }
+            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+            {
+                Close(true);
+            }
+        }
+
+        private void Close(bool result)
+        {
+            if (result && CropRegion.IsRectangleCreated)
+            {
+                DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                DialogResult = DialogResult.Abort;
+            }
+
+            this.Close();
         }
 
         private void drawTimer_Tick(object sender, EventArgs e)

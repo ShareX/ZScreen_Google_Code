@@ -28,15 +28,15 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Crop;
+using GraphicsMgrLib;
+using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
-using HelpersLib;
-using GraphicsMgrLib;
-using ZScreenLib.Forms;
 using ZScreenLib.Shapes;
 using ZUploader;
 
@@ -94,22 +94,35 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        using (Crop c = new Crop(imgSS, windowMode))
+                        if (Engine.conf.UseCropBeta && !windowMode)
                         {
-                            if (c.ShowDialog() == DialogResult.OK)
+                            using (Crop2 crop = new Crop2(imgSS))
                             {
-                                if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
+                                if (crop.ShowDialog() == DialogResult.OK)
                                 {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
-                                }
-                                else if (windowMode && !Engine.LastCapture.IsEmpty)
-                                {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, crop.CropRegion.Rectangle));
                                 }
                             }
-                            else
+                        }
+                        else
+                        {
+                            using (Crop c = new Crop(imgSS, windowMode))
                             {
-                                mTask.RetryPending = true;
+                                if (c.ShowDialog() == DialogResult.OK)
+                                {
+                                    if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
+                                    {
+                                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
+                                    }
+                                    else if (windowMode && !Engine.LastCapture.IsEmpty)
+                                    {
+                                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
+                                    }
+                                }
+                                else
+                                {
+                                    mTask.RetryPending = true;
+                                }
                             }
                         }
                     }

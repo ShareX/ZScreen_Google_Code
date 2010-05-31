@@ -1,10 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 
 namespace Crop
 {
-    public class RegionManager
+    public class RegionManager : IDisposable
     {
         private Rectangle rectangle;
         public Rectangle Rectangle
@@ -15,7 +16,7 @@ namespace Crop
             }
             set
             {
-                rectangle = GraphicsMgr.GetRectangle(value);
+                rectangle = value;
                 rectangle.Intersect(Crop.Bounds);
             }
         }
@@ -24,23 +25,39 @@ namespace Crop
         public bool IsRectangleCreated { get; private set; }
         public bool IsRectangleSelected { get; private set; }
         public bool IsMoving { get; private set; }
+
         public Pen RectanglePen { get; set; }
         public Brush RectangleBrush { get; set; }
+        public Font TextFont { get; set; }
+        public Brush TextBrush { get; set; }
+        public Brush TextShadowBrush { get; set; }
         public ResizeManager Resize { get; private set; }
 
-        private Crop Crop;
+        private Crop2 Crop;
         private Point positionOnClick;
         private Point currentPosition;
 
-        public RegionManager(Crop crop)
+        public RegionManager(Crop2 crop)
         {
             Crop = crop;
             Crop.MouseDown += new MouseEventHandler(Crop_MouseDown);
             Crop.MouseUp += new MouseEventHandler(Crop_MouseUp);
             Crop.MouseMove += new MouseEventHandler(Crop_MouseMove);
             RectanglePen = new Pen(Color.Red, 1);
-            RectangleBrush = new SolidBrush(Color.FromArgb(100, Color.CornflowerBlue));
+            RectangleBrush = new SolidBrush(Color.FromArgb(50, Color.CornflowerBlue));
+            TextFont = new Font("Arial", 16);
+            TextBrush = new SolidBrush(Color.Black);
+            TextShadowBrush = new SolidBrush(Color.White);
             Resize = new ResizeManager(crop, this);
+        }
+
+        public void Dispose()
+        {
+            if (RectanglePen != null) RectanglePen.Dispose();
+            if (RectangleBrush != null) RectangleBrush.Dispose();
+            if (TextFont != null) TextFont.Dispose();
+            if (TextBrush != null) TextBrush.Dispose();
+            if (TextShadowBrush != null) TextShadowBrush.Dispose();
         }
 
         private void Crop_MouseDown(object sender, MouseEventArgs e)
@@ -52,7 +69,7 @@ namespace Crop
                     IsMouseDown = true;
                     IsRectangleCreated = true;
                     positionOnClick = e.Location;
-                    Rectangle = new Rectangle(positionOnClick, new Size(20, 20));
+                    Rectangle = new Rectangle(positionOnClick, new Size(25, 25));
                 }
                 else if (IsMoveable())
                 {
@@ -127,7 +144,8 @@ namespace Crop
             if (IsMouseDown && IsRectangleCreated && !IsRectangleSelected)
             {
                 currentPosition = GetMousePosition();
-                Rectangle = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X, currentPosition.Y - positionOnClick.Y);
+                Rectangle rect = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X, currentPosition.Y - positionOnClick.Y);
+                rectangle = GraphicsMgr.FixRectangle(rect);
             }
         }
 
@@ -146,7 +164,7 @@ namespace Crop
 
         private Point GetMousePosition()
         {
-            return Crop.PointToClient(Crop.MousePosition);
+            return Crop.PointToClient(Crop2.MousePosition);
         }
 
         public void Draw(Graphics g)
@@ -154,9 +172,15 @@ namespace Crop
             if (IsRectangleCreated)
             {
                 g.FillRectangle(RectangleBrush, Rectangle);
-                g.DrawRectangle(RectanglePen, Rectangle);
-                g.DrawString(string.Format("x:{0} y:{1}\n{2} x {3}", rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height),
-                  new Font("Arial", 16), Brushes.Black, rectangle.X + 5, rectangle.Y + 5);
+
+                Rectangle rect = Rectangle;
+                rect.Width--;
+                rect.Height--;
+                g.DrawRectangle(RectanglePen, rect);
+
+                string info = string.Format("x:{0} y:{1}\n{2} x {3}", rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+                g.DrawString(info, TextFont, TextShadowBrush, rectangle.X + 6, rectangle.Y + 6);
+                g.DrawString(info, TextFont, TextBrush, rectangle.X + 5, rectangle.Y + 5);
             }
         }
     }
