@@ -42,16 +42,15 @@ namespace Crop
                     positionOnClick = e.Location;
                     CurrentArea = area;
                     SelectArea();
-                    Resize.Update();
                 }
                 else if (!IsMouseDown)
                 {
                     IsMouseDown = true;
+                    DeselectArea();
                     RectangleArea newArea = new RectangleArea();
                     Areas.Add(newArea);
                     positionOnClick = e.Location;
                     newArea.Rectangle = new Rectangle(positionOnClick, new Size(25, 25));
-                    DeselectArea();
                     CurrentArea = newArea;
                 }
             }
@@ -119,7 +118,7 @@ namespace Crop
                 }
             }
 
-            Crop.Cursor = Cursors.Default;
+            Crop.Cursor = Cursors.Cross;
             return null;
         }
 
@@ -165,6 +164,8 @@ namespace Crop
             {
                 region.Union(area.Region);
             }
+
+            region.Intersect(new Region(Crop.Bounds));
 
             return region;
         }

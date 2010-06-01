@@ -35,7 +35,7 @@ namespace Crop
             this.Bounds = GraphicsMgr.GetScreenBounds();
             this.CausesValidation = false;
             this.ControlBox = true;
-            this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Cross;
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
             this.KeyPreview = true;

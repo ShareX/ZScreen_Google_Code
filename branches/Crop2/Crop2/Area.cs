@@ -23,6 +23,7 @@ namespace Crop
                 Region = new Region(rectangle);
             }
         }
+
         public bool Selected { get; set; }
 
         public Brush RectangleBrush { get; set; }
@@ -36,7 +37,7 @@ namespace Crop
         {
             RectangleBrush = new SolidBrush(Color.FromArgb(100, Color.CornflowerBlue));
             RectanglePen = new Pen(Color.Black, 1);
-            TextFont = new Font("Arial", 16);
+            TextFont = new Font("Arial", 14);
             TextBrush = new SolidBrush(Color.White);
             TextShadowBrush = new SolidBrush(Color.Black);
             TextOffset = 5;
@@ -46,14 +47,18 @@ namespace Crop
         {
             g.FillRectangle(RectangleBrush, Rectangle);
 
-            Rectangle rect = Rectangle;
-            rect.Width--;
-            rect.Height--;
-            g.DrawRectangle(RectanglePen, rect);
+            if (Region != null) g.Clip = Region;
 
             string info = string.Format("X:{0} Y:{1}\n{2} x {3}", Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
             g.DrawString(info, TextFont, TextShadowBrush, Rectangle.X + TextOffset + 1, Rectangle.Y + TextOffset + 1);
             g.DrawString(info, TextFont, TextBrush, Rectangle.X + TextOffset, Rectangle.Y + TextOffset);
+
+            g.Clip = new Region();
+
+            Rectangle rect = Rectangle;
+            rect.Width--;
+            rect.Height--;
+            g.DrawRectangle(RectanglePen, rect);
         }
 
         public void Dispose()
