@@ -9,13 +9,13 @@ namespace Crop
     public class Crop2 : Form
     {
         public Image Screenshot { get; private set; }
-        public RegionManager CropRegion { get; private set; }
+        public AreaManager Manager { get; private set; }
 
         public Crop2(Image screenshot)
         {
             InitializeComponent();
             Screenshot = screenshot;
-            CropRegion = new RegionManager(this);
+            Manager = new AreaManager(this);
             Timer drawTimer = new Timer();
             drawTimer.Interval = 10;
             drawTimer.Tick += new EventHandler(drawTimer_Tick);
@@ -25,7 +25,6 @@ namespace Crop
         protected override void Dispose(bool disposing)
         {
             if (Screenshot != null) Screenshot.Dispose();
-            if (CropRegion != null) CropRegion.Dispose();
 
             base.Dispose(disposing);
         }
@@ -46,7 +45,7 @@ namespace Crop
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.TopMost = true;
+            //this.TopMost = true;
             this.ResumeLayout(false);
 
             this.KeyDown += new KeyEventHandler(Crop2_KeyDown);
@@ -64,9 +63,9 @@ namespace Crop
             }
         }
 
-        private void Close(bool result)
+        public void Close(bool result)
         {
-            if (result && CropRegion.IsRectangleCreated)
+            if (result)
             {
                 DialogResult = DialogResult.OK;
             }
@@ -88,7 +87,42 @@ namespace Crop
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
             DrawScreenshot(g);
-            CropRegion.Draw(g);
+            Manager.Draw(g);
+        }
+
+        public Image GetCroppedScreenshot()
+        {
+            using (Graphics g = Graphics.FromImage(Screenshot))
+            {
+                Region region = Manager.CombineAreas();
+
+                if (!region.IsEmpty(g))
+                {
+                    RectangleF rect = region.GetBounds(g);
+                    Bitmap bmp = new Bitmap((int)rect.Width, (int)rect.Height);
+
+                    using (Graphics g2 = Graphics.FromImage(bmp))
+                    {
+                        g2.Clear(Color.Transparent);
+
+                        using (Matrix translateMatrix = new Matrix())
+                        {
+                            translateMatrix.Translate(-rect.X, -rect.Y);
+                            region.Transform(translateMatrix);
+                        }
+
+                        g2.IntersectClip(region);
+
+                        g2.CompositingQuality = CompositingQuality.HighQuality;
+                        g2.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g2.DrawImage(Screenshot, new Rectangle(0, 0, bmp.Width, bmp.Height), rect, GraphicsUnit.Pixel);
+
+                        return bmp;
+                    }
+                }
+            }
+
+            return null;
         }
 
         private void DrawScreenshot(Graphics g)

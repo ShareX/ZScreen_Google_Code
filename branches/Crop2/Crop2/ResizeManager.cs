@@ -27,12 +27,12 @@ namespace Crop
         }
 
         private Crop2 crop;
-        private RegionManager region;
+        private AreaManager region;
         private Label[] resizers = new Label[8];
         private int mx, my, minSpeed = 1, maxSpeed = 5;
         private Rectangle tempRect;
 
-        public ResizeManager(Crop2 crop, RegionManager region)
+        public ResizeManager(Crop2 crop, AreaManager region)
         {
             this.crop = crop;
             this.region = region;
@@ -67,7 +67,7 @@ namespace Crop
         {
             if (Visible)
             {
-                Rectangle rect = region.Rectangle;
+                Rectangle rect = region.CurrentArea.Rectangle;
                 int speed;
 
                 if (e.Control)
@@ -95,7 +95,7 @@ namespace Crop
                         break;
                 }
 
-                region.Rectangle = rect;
+                region.CurrentArea.Rectangle = rect;
                 Update();
             }
         }
@@ -104,7 +104,7 @@ namespace Crop
         {
             mx = e.X;
             my = e.Y;
-            tempRect = region.Rectangle;
+            tempRect = region.CurrentArea.Rectangle;
             IsMouseDown = true;
         }
 
@@ -140,7 +140,7 @@ namespace Crop
                     tempRect.Width -= e.X - mx;
                 }
 
-                region.Rectangle = GraphicsMgr.FixRectangle(tempRect);
+                region.CurrentArea.Rectangle = GraphicsMgr.FixRectangle(tempRect);
                 Update(tempRect);
             }
         }
@@ -157,7 +157,7 @@ namespace Crop
 
         public void Update()
         {
-            Update(region.Rectangle);
+            Update(region.CurrentArea.Rectangle);
         }
 
         public void Update(Rectangle rect)
