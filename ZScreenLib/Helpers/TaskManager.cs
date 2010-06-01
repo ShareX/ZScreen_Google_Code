@@ -100,7 +100,7 @@ namespace ZScreenLib
                             {
                                 if (crop.ShowDialog() == DialogResult.OK)
                                 {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, crop.CropRegion.Rectangle));
+                                    mTask.SetImage(crop.GetCroppedScreenshot());
                                 }
                             }
                         }
