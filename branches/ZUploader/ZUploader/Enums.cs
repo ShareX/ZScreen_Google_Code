@@ -36,6 +36,8 @@ namespace ZUploader
 
     public enum ImageDestType2
     {
+        [Description("filez.muffinz.eu")]
+        FilezImages,
         [Description("imageshack.us")]
         IMAGESHACK,
         [Description("tinypic.com")]
@@ -68,6 +70,8 @@ namespace ZUploader
 
     public enum FileUploaderType2
     {
+        [Description("filez.muffinz.eu")]
+        FilezFiles,
         [Description("rapidshare.com")]
         RapidShare,
         [Description("sendspace.com")]

@@ -104,6 +104,8 @@ namespace UploadersLib
         CLIPBOARD,
         [Description("File")]
         FILE,
+        [Description("Filez - www.filez.muffinz.eu")]
+        FilezImages,
         [Description("ImageShack - www.imageshack.us")]
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
@@ -189,6 +191,8 @@ namespace UploadersLib
     {
         [Description("FTP Server")]
         FTP,
+        [Description("Filez - www.filez.muffinz.eu")]
+        FilezFiles,
         [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]

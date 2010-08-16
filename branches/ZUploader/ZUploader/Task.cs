@@ -160,6 +160,9 @@ namespace ZUploader
                 case FileUploaderType2.RapidShare:
                     fileUploader = new RapidShare();
                     break;
+                case FileUploaderType2.FilezFiles:
+                    fileUploader = new FilezFiles();
+                    break;
                 case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
                     break;
@@ -193,6 +196,9 @@ namespace ZUploader
                     break;
                 case ImageDestType2.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TinyPicID, Program.TinyPicKey, string.Empty);
+                    break;
+                case ImageDestType2.FilezImages:
+                    imageUploader = new FilezImages();
                     break;
                 case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
