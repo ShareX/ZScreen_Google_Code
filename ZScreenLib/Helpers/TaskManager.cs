@@ -310,6 +310,9 @@ namespace ZScreenLib
                 case FileUploaderType.DropIO:
                     fileHost = new DropIO();
                     break;
+                case FileUploaderType.FilezFiles:
+                    fileHost = new FilezFiles();
+                    break;
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
                     break;
@@ -391,6 +394,9 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
+                    break;
+                case ImageDestType.FilezImages:
+                    imageUploader = new FilezImages();
                     break;
                 case ImageDestType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
