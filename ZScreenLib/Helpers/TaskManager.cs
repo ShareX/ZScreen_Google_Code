@@ -391,7 +391,7 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
-                    break;
+                    break; 
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;
