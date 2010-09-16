@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -14,8 +10,8 @@ namespace ZScreenGUI
         public DataGridView dgvHotkeys { get; set; }
         public Label lblHotkeyStatus { get; set; }
 
-        public string[] HotkeyNames = new string[] 
-        { 
+        public string[] HotkeyNames = new string[]
+        {
             "Entire Screen",
             "Active Window",
             "Crop Shot",

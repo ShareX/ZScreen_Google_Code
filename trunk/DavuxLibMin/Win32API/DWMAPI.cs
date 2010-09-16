@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Drawing.Printing;
-using System.Drawing;
 
 namespace DavuxLib.Win32API
 {
@@ -29,6 +24,7 @@ namespace DavuxLib.Win32API
 
         [DllImport("dwmapi.dll")]
         private static extern void DwmIsCompositionEnabled(ref bool pfEnabled);
+
         public static bool DwmIsCompositionEnabled()
         {
             bool isGlassSupported = false;
@@ -41,6 +37,7 @@ namespace DavuxLib.Win32API
 
         [DllImport("dwmapi.dll")]
         static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMargins);
+
         public static void DwmExtendFrameIntoClientArea(Control c, MARGINS marg)
         {
             if (DwmIsCompositionEnabled())
@@ -59,4 +56,3 @@ namespace DavuxLib.Win32API
         }
     }
 }
-

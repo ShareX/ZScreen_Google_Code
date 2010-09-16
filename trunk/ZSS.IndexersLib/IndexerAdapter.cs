@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -27,14 +29,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Serialization;
-using ICSharpCode.SharpZipLib;
 
 namespace ZSS.IndexersLib
 {
     //*******************************
-    //* Reads .tgc files and returns 
+    //* Reads .tgc files and returns
     //* a Config object with settings
     //*******************************
     public class IndexerAdapter
@@ -68,7 +68,6 @@ namespace ZSS.IndexersLib
 
         public string GetOptionsFilePath()
         {
-
             string strStandaloneOptionsPath = Application.StartupPath + OPTIONS_FILENAME;
             if (File.Exists(strStandaloneOptionsPath))
             {
@@ -155,7 +154,6 @@ namespace ZSS.IndexersLib
 
                         foreach (string filePath in filesExtra)
                         {
-
                             FileStream strmFile = File.OpenRead(filePath);
                             byte[] abyBuffer = new byte[(int)strmFile.Length - 1 + 1];
                             strmFile.Read(abyBuffer, 0, abyBuffer.Length);
@@ -290,9 +288,9 @@ namespace ZSS.IndexersLib
             }
 
             // Since v2.4.0.3
-            // Internal Logic to Determine if Date&Time Indexing is 
+            // Internal Logic to Determine if Date&Time Indexing is
             // Scheduled for Today
-            // 2.4.0.3 IsScheduledForToday was determined from CheckBoxes rather than XML 
+            // 2.4.0.3 IsScheduledForToday was determined from CheckBoxes rather than XML
 
             if (mOptions.OnMonday & DateTime.Now.DayOfWeek.ToString() == "Monday" |
                 mOptions.OnTuesday & DateTime.Now.DayOfWeek.ToString() == "Tuesday" |
@@ -412,7 +410,7 @@ namespace ZSS.IndexersLib
 
             if (html)
             {
-                appName = Xhtml.MakeAnchor(appUrl, appName);                
+                appName = Xhtml.MakeAnchor(appUrl, appName);
             }
 
             string footer = string.Format("Generated on {0} using {1}", strDateTime, appName);
@@ -457,11 +455,11 @@ namespace ZSS.IndexersLib
             try
             {
                 EventLog MyLog = new EventLog(Application.ProductName);
-                // create a new event log 
-                // Check if the the Event Log Exists 
+                // create a new event log
+                // Check if the the Event Log Exists
                 if (!EventLog.SourceExists("TreeGUI"))
                 {
-                    // Create Log 
+                    // Create Log
                     EventLog.CreateEventSource("TreeGUI", "TreeGUI Log");
                 }
                 MyLog.Source = "TreeGUI";

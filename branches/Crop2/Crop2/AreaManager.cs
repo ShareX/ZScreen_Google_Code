@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using System.Collections.Generic;
 
 namespace Crop
 {
@@ -32,10 +31,10 @@ namespace Crop
 
         private void Crop_MouseDown(object sender, MouseEventArgs e)
         {
+            Area area = IsAreaIntersect();
+
             if (e.Button == MouseButtons.Left)
             {
-                Area area = IsAreaIntersect();
-
                 if (area != null)
                 {
                     IsMoving = true;
@@ -54,6 +53,22 @@ namespace Crop
                     CurrentArea = newArea;
                 }
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (area != null)
+                {
+                    Areas.Remove(area);
+                    DeselectArea();
+                }
+                else if (CurrentArea != null && CurrentArea.Selected)
+                {
+                    DeselectArea();
+                }
+                else
+                {
+                    Crop.Close(false);
+                }
+            }
         }
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
@@ -69,18 +84,6 @@ namespace Crop
                 if (IsMoving)
                 {
                     IsMoving = false;
-                }
-            }
-
-            if (e.Button == MouseButtons.Right)
-            {
-                if (CurrentArea != null && CurrentArea.Selected)
-                {
-                    DeselectArea();
-                }
-                else
-                {
-                    Crop.Close(false);
                 }
             }
         }

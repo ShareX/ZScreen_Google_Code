@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,20 +17,22 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace ZScreenLib
 {
     class PasswordManager
     {
         private string KeyPath { get; set; }
+
         public PasswordManager(string keyPath)
         {
             this.KeyPath = keyPath;
@@ -37,17 +40,15 @@ namespace ZScreenLib
 
         public string EncryptString(string Message)
         {
-
             byte[] Results;
 
             System.Text.UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
 
-            // Step 1. We hash the passphrase using MD5 
-            // We use the MD5 hash generator as the result is a 128 bit byte array 
-            // which is a valid length for the TripleDES encoder we use below 
+            // Step 1. We hash the passphrase using MD5
+            // We use the MD5 hash generator as the result is a 128 bit byte array
+            // which is a valid length for the TripleDES encoder we use below
 
-
-            // Step 2. Create a new TripleDESCryptoServiceProvider object 
+            // Step 2. Create a new TripleDESCryptoServiceProvider object
             TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
             MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
             byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(TDESAlgorithm.Key.ToString()));
@@ -56,15 +57,15 @@ namespace ZScreenLib
             stream.Write(TDESKey, 0, TDESKey.Length);
             stream.Close();
 
-            // Step 3. Setup the encoder 
+            // Step 3. Setup the encoder
             TDESAlgorithm.Key = TDESKey;
             TDESAlgorithm.Mode = CipherMode.ECB;
             TDESAlgorithm.Padding = PaddingMode.PKCS7;
 
-            // Step 4. Convert the input string to a byte[] 
+            // Step 4. Convert the input string to a byte[]
             byte[] DataToEncrypt = UTF8.GetBytes(Message);
 
-            // Step 5. Attempt to encrypt the string 
+            // Step 5. Attempt to encrypt the string
             try
             {
                 ICryptoTransform Encryptor = TDESAlgorithm.CreateEncryptor();
@@ -73,25 +74,23 @@ namespace ZScreenLib
 
             finally
             {
-                // Clear the TripleDes and Hashprovider services of any sensitive information 
+                // Clear the TripleDes and Hashprovider services of any sensitive information
                 TDESAlgorithm.Clear();
                 HashProvider.Clear();
             }
 
-            // Step 6. Return the encrypted string as a base64 encoded string 
+            // Step 6. Return the encrypted string as a base64 encoded string
             return Convert.ToBase64String(Results);
         }
-
 
         public string DecryptString(string Message)
         {
             byte[] Results;
             System.Text.UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
 
-
-            // Step 1. We hash the passphrase using MD5 
-            // We use the MD5 hash generator as the result is a 128 bit byte array 
-            // which is a valid length for the TripleDES encoder we use below 
+            // Step 1. We hash the passphrase using MD5
+            // We use the MD5 hash generator as the result is a 128 bit byte array
+            // which is a valid length for the TripleDES encoder we use below
 
             Stream stream = File.OpenRead(this.KeyPath);
             byte[] buffer = new byte[(int)stream.Length];
@@ -100,7 +99,7 @@ namespace ZScreenLib
             // MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
             // byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Passphrase));
 
-            // Step 2. Create a new TripleDESCryptoServiceProvider object 
+            // Step 2. Create a new TripleDESCryptoServiceProvider object
             TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider
             {
                 Key = buffer,
@@ -108,12 +107,12 @@ namespace ZScreenLib
                 Padding = PaddingMode.PKCS7
             };
 
-            // Step 3. Setup the decoder 
+            // Step 3. Setup the decoder
 
-            // Step 4. Convert the input string to a byte[] 
+            // Step 4. Convert the input string to a byte[]
             byte[] DataToDecrypt = Convert.FromBase64String(Message);
 
-            // Step 5. Attempt to decrypt the string 
+            // Step 5. Attempt to decrypt the string
             try
             {
                 ICryptoTransform Decryptor = TDESAlgorithm.CreateDecryptor();
@@ -122,12 +121,12 @@ namespace ZScreenLib
 
             finally
             {
-                // Clear the TripleDes and Hashprovider services of any sensitive information 
+                // Clear the TripleDes and Hashprovider services of any sensitive information
                 TDESAlgorithm.Clear();
                 // HashProvider.Clear();
             }
 
-            // Step 6. Return the decrypted string in UTF8 format 
+            // Step 6. Return the decrypted string in UTF8 format
             return UTF8.GetString(Results);
         }
     }

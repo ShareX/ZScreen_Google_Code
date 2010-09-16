@@ -44,8 +44,10 @@ namespace Crop
             this.Name = "Crop";
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.ShowIcon = false;
+#if !DEBUG
+            this.TopMost = true;
+#endif
             this.ShowInTaskbar = false;
-            //this.TopMost = true;
             this.ResumeLayout(false);
 
             this.KeyDown += new KeyEventHandler(Crop2_KeyDown);

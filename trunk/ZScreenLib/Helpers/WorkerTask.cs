@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -28,13 +30,12 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using GraphicsMgrLib;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.Helpers;
 using UploadersLib.TextServices;
-using ZScreenLib.Helpers;
 using ZScreenLib.Properties;
-using HelpersLib;
-using GraphicsMgrLib;
 
 namespace ZScreenLib
 {
@@ -90,7 +91,7 @@ namespace ZScreenLib
             ShowTrayWarning
         }
 
-        #endregion
+        #endregion Enums
 
         #region Common Properties for All Categories
 
@@ -123,7 +124,7 @@ namespace ZScreenLib
         public bool IsImage { get; set; }
         public int UniqueNumber { get; set; }
 
-        #endregion
+        #endregion Common Properties for All Categories
 
         #region Properties for Categories: Pictures and Screenshots
 
@@ -133,7 +134,7 @@ namespace ZScreenLib
         public Image MyImage { get; private set; }
         /// <summary>
         /// Name of the Image
-        /// </summary>                
+        /// </summary>
         public string FileName { get; set; }
         /// <summary>
         /// Local file path of the Image: Picture or Screenshot or Text file
@@ -178,7 +179,7 @@ namespace ZScreenLib
         /// </summary>
         public ImageFileManager LinkManager { get; set; }
 
-        #endregion
+        #endregion Properties for Categories: Pictures and Screenshots
 
         #region Properties for Category: Text
 
@@ -192,14 +193,14 @@ namespace ZScreenLib
         /// </summary>
         public TextUploader MyTextUploader { get; set; }
 
-        #endregion
+        #endregion Properties for Category: Text
 
         #region Properties for Category: Binary
 
         public FileUploaderType MyFileUploader { get; set; }
         public byte[] MyFile { get; set; }
 
-        #endregion
+        #endregion Properties for Category: Binary
 
         private WorkerTask()
         {
@@ -242,7 +243,7 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Sets the file to save the image to. 
+        /// Sets the file to save the image to.
         /// If the user activated the "prompt for filename" option, then opens a dialog box.
         /// </summary>
         /// <param name="fileName">the base name</param>
@@ -255,7 +256,7 @@ namespace ZScreenLib
             if (Engine.conf.ManualNaming)
             {
                 // NOTE: we cannot use SaveFileDialog because we are not in the main thread, and we cant also use SaveFileDialog
-                // in the main thread because the file name has to be determined outside of the main thread so the main thrad is 
+                // in the main thread because the file name has to be determined outside of the main thread so the main thrad is
                 // ready for multiple requests
 
                 //SaveFileDialog dlg = new SaveFileDialog();

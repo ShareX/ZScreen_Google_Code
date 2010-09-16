@@ -4,14 +4,11 @@
  * License: Free for any use.
  */
 
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace DavuxLib
 {
@@ -29,7 +26,7 @@ namespace DavuxLib
                     {
                         try
                         {
-                            if (typeof(T).IsAssignableFrom(type))   
+                            if (typeof(T).IsAssignableFrom(type))
                             {
                                 T temp = (T)Activator.CreateInstance(type);
                                 ret.Add(temp);

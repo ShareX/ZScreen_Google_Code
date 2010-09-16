@@ -37,9 +37,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // btnOK
-            // 
+            //
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Location = new System.Drawing.Point(616, 236);
             this.btnOK.Name = "btnOK";
@@ -48,9 +48,9 @@
             this.btnOK.Text = "&Tweet It";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Location = new System.Drawing.Point(704, 236);
             this.btnCancel.Name = "btnCancel";
@@ -59,9 +59,9 @@
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // txtTweet
-            // 
+            //
             this.txtTweet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtTweet.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtTweet.Location = new System.Drawing.Point(223, 3);
@@ -70,9 +70,9 @@
             this.txtTweet.Size = new System.Drawing.Size(550, 214);
             this.txtTweet.TabIndex = 2;
             this.txtTweet.TextChanged += new System.EventHandler(this.txtTweet_TextChanged);
-            // 
+            //
             // lblCount
-            // 
+            //
             this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCount.AutoSize = true;
             this.lblCount.Location = new System.Drawing.Point(8, 244);
@@ -80,9 +80,9 @@
             this.lblCount.Size = new System.Drawing.Size(25, 13);
             this.lblCount.TabIndex = 3;
             this.lblCount.Text = "140";
-            // 
+            //
             // lbUsers
-            // 
+            //
             this.lbUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbUsers.FormattingEnabled = true;
             this.lbUsers.Location = new System.Drawing.Point(113, 3);
@@ -92,18 +92,18 @@
             this.lbUsers.TabIndex = 4;
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
             this.lbUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbUsers_KeyDown);
-            // 
+            //
             // clbAccounts
-            // 
+            //
             this.clbAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clbAccounts.FormattingEnabled = true;
             this.clbAccounts.Location = new System.Drawing.Point(3, 3);
             this.clbAccounts.Name = "clbAccounts";
             this.clbAccounts.Size = new System.Drawing.Size(104, 214);
             this.clbAccounts.TabIndex = 5;
-            // 
+            //
             // tableLayoutPanel1
-            // 
+            //
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -120,9 +120,9 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(776, 220);
             this.tableLayoutPanel1.TabIndex = 4;
-            // 
+            //
             // TwitterMsg
-            // 
+            //
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -144,10 +144,9 @@
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;

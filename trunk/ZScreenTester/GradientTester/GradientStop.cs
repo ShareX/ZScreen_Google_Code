@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZSS.ColorsLib;
 using System.Drawing;
 using System.Globalization;
+using ZSS.ColorsLib;
 
 namespace GradientTester
 {

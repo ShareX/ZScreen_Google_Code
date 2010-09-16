@@ -4,15 +4,11 @@
  * License: Free for any use.
  */
 
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
-using System.Xml;
-using System.Xml.Serialization;
 using System.Drawing;
+using System.Linq;
 
 namespace DavuxLib
 {
@@ -166,7 +162,7 @@ namespace DavuxLib
             return error;
         }
 
-        #endregion
+        #endregion Get methods for each data type.
 
         #region Set methods for each data type (Match Get!)
 
@@ -221,7 +217,7 @@ namespace DavuxLib
             }
         }
 
-        #endregion
+        #endregion Set methods for each data type (Match Get!)
     }
 
     public class ConfValue

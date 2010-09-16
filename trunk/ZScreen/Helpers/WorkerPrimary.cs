@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -36,8 +38,6 @@ using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
-using ZSS.IndexersLib;
-using System.Web;
 using ZUploader;
 
 namespace ZScreenGUI
@@ -386,7 +386,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion Worker Events
 
         /// <summary>
         /// Worker for Text: Paste2, Pastebin
@@ -738,7 +738,7 @@ namespace ZScreenGUI
             StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
         }
 
-        #endregion
+        #endregion Start Workers
 
         #region Quick Actions
 
@@ -771,7 +771,7 @@ namespace ZScreenGUI
             bQuickActionsOpened = false;
         }
 
-        #endregion
+        #endregion Quick Actions
 
         #region "Show Quick Actions"
 
@@ -801,7 +801,7 @@ namespace ZScreenGUI
             bQuickOptionsOpened = false;
         }
 
-        #endregion
+        #endregion "Show Quick Actions"
 
         public void ShowAutoCapture()
         {
@@ -880,7 +880,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion Translate
 
         #region ZScreen GUI
 
@@ -917,6 +917,6 @@ namespace ZScreenGUI
             mZScreen.tpHistoryList.Text = string.Format("History List ({0}/{1})", mZScreen.lbHistory.Items.Count, Engine.conf.HistoryMaxNumber);
         }
 
-        #endregion
+        #endregion ZScreen GUI
     }
 }

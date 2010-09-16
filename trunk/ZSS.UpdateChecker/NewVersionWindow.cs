@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,16 +17,17 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Net;
 using System.Diagnostics;
+using System.Drawing;
+using System.Net;
+using System.Windows.Forms;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -33,6 +35,7 @@ namespace ZSS.UpdateCheckerLib
     {
         [System.Runtime.InteropServices.DllImport("user32")]
         private static extern bool SetForegroundWindow(int hWnd);
+
         private NewVersionWindowOptions Options { get; set; }
 
         public NewVersionWindow(NewVersionWindowOptions options)
@@ -74,10 +77,10 @@ namespace ZSS.UpdateCheckerLib
             this.DialogResult = DialogResult.No;
             this.Close();
         }
-        
+
         void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
         {
-        	Process.Start(e.LinkText);
+            Process.Start(e.LinkText);
         }
     }
 

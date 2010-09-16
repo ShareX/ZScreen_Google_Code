@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,35 +17,35 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 #region Source code: Greenshot (GPL)
+
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
     Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
-#endregion
+
+#endregion Source code: Greenshot (GPL)
 
 /*
  * Erstellt mit SharpDevelop.
  * Benutzer: Administrator
  * Datum: 11.11.2007
  * Zeit: 15:07
- * 
+ *
  * Sie k�nnen diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader �ndern.
  */
 
-using System;
-using System.Windows.Forms;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
-
+using System.Windows.Forms;
 using Greenshot.Configuration;
 using Greenshot.Forms;
 using Greenshot.Helpers;
@@ -113,7 +114,6 @@ namespace ZScreenLib
                 {
                     printRect.Size = resizedRect;
                 }
-
             }
             // align the image
             printRect = ScaleHelper.GetAlignedRectangle(printRect, new RectangleF(0, 0, pageRect.Width, pageRect.Height), alignment);

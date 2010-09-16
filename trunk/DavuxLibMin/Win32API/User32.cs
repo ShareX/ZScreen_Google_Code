@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
-
 
 namespace DavuxLib.Win32API
 {
     public class User32
     {
         [DllImport("user32.dll")]
-        public static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey); 
+        public static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern void LockWorkStation();
@@ -36,8 +32,6 @@ namespace DavuxLib.Win32API
             DESKTOP_WRITEOBJECTS = 0x80,
             DESKTOP_SWITCHDESKTOP = 0x100,
         }
-
-
 
         [DllImport("user32.dll")]
         public static extern bool RegisterShellHookWindow(IntPtr hWnd);

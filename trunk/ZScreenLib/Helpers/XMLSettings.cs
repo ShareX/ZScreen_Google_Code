@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-   
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -85,7 +87,7 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // ImageBam 
+        // ImageBam
 
         public string ImageBamApiKey = string.Empty;
         public string ImageBamSecret = string.Empty;
@@ -94,7 +96,7 @@ namespace ZScreenLib
         public List<string> ImageBamGallery = new List<string>();
         public int ImageBamGallerySelected = 0;
 
-        // Rapid Share 
+        // Rapid Share
 
         public string RapidSharePremiumUserName = string.Empty;
         public string RapidShareCollectorsID = string.Empty;
@@ -121,7 +123,7 @@ namespace ZScreenLib
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = true;
 
-        // Twitter 
+        // Twitter
         public List<TwitterAuthInfo> TwitterAccountsList = new List<TwitterAuthInfo>();
         public int TwitterAcctSelected = 0;
         public bool TwitterEnabled = false;
@@ -477,7 +479,6 @@ namespace ZScreenLib
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
 
-
         // Options / Actions Toolbar
 
         [Category("Options / Actions Toolbar"), DefaultValue(false), Description("Open Actions Toolbar on startup.")]
@@ -618,9 +619,9 @@ namespace ZScreenLib
         [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
 
-        #endregion
+        #endregion Properties for PropertyGrid
 
-        #endregion
+        #endregion Settings
 
         #region Serialization Helpers
 
@@ -700,7 +701,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Serialization Helpers
 
         #region I/O Methods
 
@@ -818,7 +819,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion I/O Methods
 
         #region Other methods
 
@@ -840,6 +841,6 @@ namespace ZScreenLib
             return false;
         }
 
-        #endregion
+        #endregion Other methods
     }
 }

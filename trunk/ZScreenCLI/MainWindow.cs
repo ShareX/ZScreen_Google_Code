@@ -1,9 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 using ZScreenLib;
-using System.IO;
-using System.Collections.Generic;
 
 namespace ZScreenCLI
 {
@@ -76,7 +74,7 @@ namespace ZScreenCLI
             }
         }
 
-        #endregion
+        #endregion Command Line Arguments
 
         #region Tray Events
 
@@ -103,7 +101,7 @@ namespace ZScreenCLI
             this.Close();
         }
 
-        #endregion
+        #endregion Tray Events
 
         private void MainWindow_Load(object sender, EventArgs e)
         {

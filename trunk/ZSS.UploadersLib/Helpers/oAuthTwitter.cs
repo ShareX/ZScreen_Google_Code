@@ -1,11 +1,9 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Net;
-using System.IO;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
+using System.Net;
+using System.Web;
 
 namespace UploadersLib.Helpers
 {
@@ -30,6 +28,7 @@ namespace UploadersLib.Helpers
         {
             this.AccountName = "New Account";
         }
+
         public override string ToString()
         {
             return this.AccountName;
@@ -129,7 +128,6 @@ namespace UploadersLib.Helpers
             string outUrl = "";
             string querystring = "";
             string ret = "";
-
 
             //Setup postData for signing.
             //Add the postData to the querystring.
@@ -249,7 +247,6 @@ namespace UploadersLib.Helpers
             webRequest = null;
 
             return responseData;
-
         }
 
         /// <summary>

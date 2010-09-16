@@ -4,16 +4,13 @@
  * License: Free for any use.
  */
 
-
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Threading;
 using System.Diagnostics;
-using System.Net.Sockets;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace DavuxLib
 {
@@ -27,11 +24,9 @@ namespace DavuxLib
         /// </summary>
         public static readonly int GracefulExitCode = 75;
 
-
         private RoboRestarter() { }
 
         private int Port = 0;
-
 
         /// <summary>
         /// Enable hosting.  The application will check for hosting, and enable it if not already enabled.
@@ -114,7 +109,6 @@ namespace DavuxLib
                             Thread.Sleep(1000 * 2);
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -174,7 +168,6 @@ namespace DavuxLib
         private TcpListener _tcpListener = null;
         private Thread _worker = null;
 
-
         public int KeepAlives { get; set; }
         public int Port
         {
@@ -223,7 +216,6 @@ namespace DavuxLib
                     {
                         KeepAlives = 0;
                     }
-
                 }
                 Thread.Sleep(1000 * 5); // 5 seconds between ping checks
             }

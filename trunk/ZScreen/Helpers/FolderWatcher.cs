@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using ZScreenLib;
-using ZSS;
 using System.Threading;
+using ZScreenLib;
 
 namespace ZScreenGUI
 {

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -108,7 +110,7 @@ namespace ZScreenLib.Helpers
                     {
                         using (Image image = Image.FromStream(stream))
                         {
-                        	float perc = ThumbnailSize.Width *100 / image.Width;
+                            float perc = ThumbnailSize.Width * 100 / image.Width;
                             thumb.Image = GraphicsMgr.ChangeImageSize(image, perc);
                             e.Result = thumb;
                         }
@@ -145,7 +147,7 @@ namespace ZScreenLib.Helpers
             }
         }
 
-        #endregion
+        #endregion Private Events
 
         #region Private Helpers Methods
 
@@ -243,7 +245,7 @@ namespace ZScreenLib.Helpers
             }
         }
 
-        #endregion
+        #endregion Private Helpers Methods
     }
 
     public class Thumbnail

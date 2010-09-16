@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,29 +17,30 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 #region Source code: Greenshot (GPL)
+
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
     Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
-#endregion
 
-using Greenshot.Configuration;
+#endregion Source code: Greenshot (GPL)
+
 using System;
-using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Greenshot.Configuration;
 
 namespace Greenshot.Helpers
 {
@@ -132,7 +134,7 @@ namespace Greenshot.Helpers
             Save(img, fullPath, q);
         }
 
-        #endregion
+        #endregion Save
 
         #region Save As
 
@@ -213,7 +215,6 @@ namespace Greenshot.Helpers
         /// </summary>
         /// <param name="sfd">a SaveFileDialog instance</param>
         private static void applyPresetValues(SaveFileDialog sfd) {
-			
             AppConfig conf = AppConfig.GetInstance();
             string path = conf.Output_FileAs_Fullpath;
             if(path.Length == 0) {
@@ -235,9 +236,9 @@ namespace Greenshot.Helpers
                 String fileNameFromPattern = FilenameHelper.GetFilenameWithoutExtensionFromPattern(conf.Output_File_FilenamePattern);
                 String appendDir = Path.GetDirectoryName(fileNameFromPattern);
                 String fileName = Path.GetFileName(fileNameFromPattern);
-				
+
                 String recommendedDir = Path.Combine(rootDir, appendDir);
-				
+
                 // due to weird behavior of SaveFileDialog, we cannot use a path in the FileName property (causes InitialDirectory to be ignored)
                 // thus we create the recommended dir eagerly, assign it to InitialDirectory, and clean up afterwards, if it has not been used
                 DirectoryInfo di = new DirectoryInfo(recommendedDir);
@@ -251,7 +252,7 @@ namespace Greenshot.Helpers
         }
         */
 
-        #endregion
+        #endregion Save As
 
         #region Clipboard
 
@@ -275,6 +276,6 @@ namespace Greenshot.Helpers
             source.Close();
         }
 
-        #endregion
+        #endregion Clipboard
     }
 }

@@ -46,8 +46,7 @@ namespace ZUploader
 
         private Stream Data;
         private BackgroundWorker bw;
-        private ImageUploader imageUploader;
-        private FileUploader fileUploader;
+        private Uploader uploader;
 
         #region Constructors
 
@@ -83,14 +82,7 @@ namespace ZUploader
         public void Start()
         {
             OnUploadStarted();
-
-            ProxySettings proxy = new ProxySettings();
-            if (!string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
-            {
-                proxy.ProxyConfig = ProxyConfigType.ManualProxy;
-            }
-            proxy.ProxyActive = Program.Settings.ProxySettings;
-            Uploader.ProxySettings = proxy;
+            ApplyProxySettings();
 
             bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
@@ -100,27 +92,24 @@ namespace ZUploader
             bw.RunWorkerAsync();
         }
 
+        private void ApplyProxySettings()
+        {
+            ProxySettings proxy = new ProxySettings();
+            if (!string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+            {
+                proxy.ProxyConfig = ProxyConfigType.ManualProxy;
+            }
+            proxy.ProxyActive = Program.Settings.ProxySettings;
+            Uploader.ProxySettings = proxy;
+        }
+
         public void Stop()
         {
-            switch (Info.UploaderType)
+            if (uploader != null && uploader.IsUploading)
             {
-                case EDataType.File:
-                    if (fileUploader != null)
-                    {
-                        fileUploader.StopUpload();
-                    }
-                    break;
-                case EDataType.Image:
-                    if (imageUploader != null)
-                    {
-                        imageUploader.StopUpload();
-                    }
-                    break;
-                default:
-                    return;
+                uploader.StopUpload();
+                IsStopped = true;
             }
-
-            IsStopped = true;
         }
 
         private void UploadThread(object sender, DoWorkEventArgs e)
@@ -148,6 +137,8 @@ namespace ZUploader
 
         public UploadResult UploadFile(Stream stream, string fileName)
         {
+            FileUploader fileUploader = null;
+
             switch (UploadManager.FileUploader)
             {
                 case FileUploaderType2.FTP:
@@ -178,6 +169,7 @@ namespace ZUploader
 
             if (fileUploader != null)
             {
+                uploader = fileUploader;
                 fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
                 UploadResult ur = fileUploader.Upload(stream, fileName);
                 ur.Errors = fileUploader.Errors;
@@ -189,6 +181,8 @@ namespace ZUploader
 
         public UploadResult UploadImage(Stream stream, string fileName)
         {
+            ImageUploader imageUploader = null;
+
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestType2.IMAGESHACK:
@@ -218,6 +212,7 @@ namespace ZUploader
 
             if (imageUploader != null)
             {
+                uploader = imageUploader;
                 imageUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
                 ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
                 UploadResult ur = new UploadResult

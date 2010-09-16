@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using ZScreenLib;
-using UploadersLib;
-using System.IO;
 using System.Drawing;
-using ZSS.IndexersLib;
+using System.IO;
 using System.Windows.Forms;
+using GraphicsMgrLib;
+using HelpersLib;
+using UploadersLib;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
-using HelpersLib;
-using GraphicsMgrLib;
+using ZSS.IndexersLib;
 
 namespace ZScreenLib
 {
@@ -20,6 +17,7 @@ namespace ZScreenLib
     {
         private GenericMainWindow GUI = null;
         public bool IsBusy { get; private set; }
+
         public Worker() { }
 
         public Worker(GenericMainWindow gui)
@@ -98,7 +96,6 @@ namespace ZScreenLib
             }
 
             e.Result = task;
-
         }
 
         void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -213,7 +210,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Background Worker
 
         #region Create Tasks
 
@@ -261,7 +258,7 @@ namespace ZScreenLib
             return t;
         }
 
-        #endregion
+        #endregion Create Tasks
 
         #region User Tasks
 
@@ -489,7 +486,6 @@ namespace ZScreenLib
             }
         }
 
-
         /// <summary>
         /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
         /// </summary>
@@ -504,7 +500,7 @@ namespace ZScreenLib
             t.MyWorker.RunWorkerAsync(t);
         }
 
-        #endregion
+        #endregion User Tasks
 
         #region Publish Workers
 
@@ -524,7 +520,7 @@ namespace ZScreenLib
             tm.UploadFile();
         }
 
-        #endregion
+        #endregion Publish Workers
 
         public WorkerTask RetryUpload(WorkerTask task)
         {

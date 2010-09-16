@@ -1,5 +1,5 @@
-﻿
-using ZScreenLib;
+﻿using ZScreenLib;
+
 namespace ZScreenGUI
 {
     partial class AutoCapture
@@ -41,9 +41,9 @@ namespace ZScreenGUI
             this.nudDelay = new NumericUpDownTimer();
             this.ssBar.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // cbScreenshotTypes
-            // 
+            //
             this.cbScreenshotTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbScreenshotTypes.FormattingEnabled = true;
             this.cbScreenshotTypes.Location = new System.Drawing.Point(104, 10);
@@ -51,9 +51,9 @@ namespace ZScreenGUI
             this.cbScreenshotTypes.Size = new System.Drawing.Size(104, 21);
             this.cbScreenshotTypes.TabIndex = 0;
             this.cbScreenshotTypes.SelectedIndexChanged += new System.EventHandler(this.cbScreenshotTypes_SelectedIndexChanged);
-            // 
+            //
             // ssBar
-            // 
+            //
             this.ssBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspbBar,
             this.tsslStatus});
@@ -63,19 +63,19 @@ namespace ZScreenGUI
             this.ssBar.SizingGrip = false;
             this.ssBar.TabIndex = 2;
             this.ssBar.Text = "statusStrip1";
-            // 
+            //
             // tspbBar
-            // 
+            //
             this.tspbBar.Name = "tspbBar";
             this.tspbBar.Size = new System.Drawing.Size(125, 16);
-            // 
+            //
             // tsslStatus
-            // 
+            //
             this.tsslStatus.Name = "tsslStatus";
             this.tsslStatus.Size = new System.Drawing.Size(0, 17);
-            // 
+            //
             // btnExecute
-            // 
+            //
             this.btnExecute.Location = new System.Drawing.Point(192, 72);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(112, 40);
@@ -83,9 +83,9 @@ namespace ZScreenGUI
             this.btnExecute.Text = "Start";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
-            // 
+            //
             // cbWaitUploads
-            // 
+            //
             this.cbWaitUploads.AutoSize = true;
             this.cbWaitUploads.Location = new System.Drawing.Point(16, 96);
             this.cbWaitUploads.Name = "cbWaitUploads";
@@ -94,18 +94,18 @@ namespace ZScreenGUI
             this.cbWaitUploads.Text = "Wait until uploads complete";
             this.cbWaitUploads.UseVisualStyleBackColor = true;
             this.cbWaitUploads.CheckedChanged += new System.EventHandler(this.cbWaitUploads_CheckedChanged);
-            // 
+            //
             // lblScreenshotType
-            // 
+            //
             this.lblScreenshotType.AutoSize = true;
             this.lblScreenshotType.Location = new System.Drawing.Point(16, 14);
             this.lblScreenshotType.Name = "lblScreenshotType";
             this.lblScreenshotType.Size = new System.Drawing.Size(87, 13);
             this.lblScreenshotType.TabIndex = 5;
             this.lblScreenshotType.Text = "Screenshot type:";
-            // 
+            //
             // cbAutoMinimize
-            // 
+            //
             this.cbAutoMinimize.AutoSize = true;
             this.cbAutoMinimize.Location = new System.Drawing.Point(16, 72);
             this.cbAutoMinimize.Name = "cbAutoMinimize";
@@ -114,9 +114,9 @@ namespace ZScreenGUI
             this.cbAutoMinimize.Text = "Auto minimize this window";
             this.cbAutoMinimize.UseVisualStyleBackColor = true;
             this.cbAutoMinimize.CheckedChanged += new System.EventHandler(this.cbAutoMinimize_CheckedChanged);
-            // 
+            //
             // nudDelay
-            // 
+            //
             this.nudDelay.Location = new System.Drawing.Point(13, 38);
             this.nudDelay.Name = "nudDelay";
             this.nudDelay.RealValue = ((long)(0));
@@ -126,9 +126,9 @@ namespace ZScreenGUI
             this.nudDelay.Value = ((long)(0));
             this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             this.nudDelay.SelectedIndexChanged += new System.EventHandler(this.nudDelay_SelectedIndexChanged);
-            // 
+            //
             // AutoCapture
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(319, 148);
@@ -148,10 +148,9 @@ namespace ZScreenGUI
             this.ssBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.ComboBox cbScreenshotTypes;
         private System.Windows.Forms.StatusStrip ssBar;

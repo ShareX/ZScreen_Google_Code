@@ -5,10 +5,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace DavuxLib
@@ -55,7 +53,6 @@ namespace DavuxLib
             }
         }
 
-
         /// <summary>
         /// Serialize the object into an XML format
         /// </summary>
@@ -90,4 +87,3 @@ namespace DavuxLib
         }
     }
 }
-

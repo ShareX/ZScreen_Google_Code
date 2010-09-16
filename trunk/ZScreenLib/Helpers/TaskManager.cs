@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Diagnostics;
@@ -245,7 +247,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Image Tasks Manager
 
         public void PublishImage()
         {
@@ -391,7 +393,7 @@ namespace ZScreenLib
                     break;
                 case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
-                    break; 
+                    break;
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;

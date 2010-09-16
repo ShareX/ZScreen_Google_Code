@@ -4,13 +4,7 @@
  * License: Free for any use.
  */
 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace DavuxLib
 {
@@ -21,7 +15,6 @@ namespace DavuxLib
         // the caller will be asked for each setting to mutate and return the value.
         public delegate string SettingStringFound(string settingString);
         public event SettingStringFound OnSettingFound;
-
 
         /// <summary>
         /// Load the control values from the Settings object.

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,30 +17,29 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 #region Source code: Greenshot (GPL)
+
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
     Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
-#endregion
+
+#endregion Source code: Greenshot (GPL)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.Windows.Forms;
-using System.Collections;
 using Greenshot.Drawing;
 
 namespace Greenshot.Configuration
@@ -88,7 +88,7 @@ namespace Greenshot.Configuration
         public bool? Output_Print_AllowShrink = true;
         public bool? Output_Print_Center = true;
 
-        #endregion
+        #endregion Output config
 
         #region Editor config
 
@@ -102,7 +102,7 @@ namespace Greenshot.Configuration
         public Font Editor_Font = null;
         public ArrowHeads Editor_ArrowHeads = ArrowHeads.End;
 
-        #endregion
+        #endregion Editor config
 
         /// <summary>
         /// a private constructor because this is a singleton
@@ -158,10 +158,10 @@ namespace Greenshot.Configuration
         /// <summary>
         /// Checks for the existence of a configuration file.
         /// First in greenshot's Applicationdata folder (where it is stored since 0.6),
-        /// then (if it cannot be found there) in greenshot's program directory (where older 
+        /// then (if it cannot be found there) in greenshot's program directory (where older
         /// versions might have stored it).
         /// If the latter is the case, the file is moved to the new location, so that a user does not lose
-        /// their configuration after upgrading. 
+        /// their configuration after upgrading.
         /// If there is no file in both locations, a virgin config file is created.
         /// </summary>
         private static void CheckConfigFile()

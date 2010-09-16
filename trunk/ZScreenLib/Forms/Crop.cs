@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 // Update: 20080401 (Isaac) Fixing multiple screen handling
 
@@ -31,8 +33,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using ZSS.ColorsLib;
 using GraphicsMgrLib;
+using ZSS.ColorsLib;
 
 namespace ZScreenLib
 {
@@ -73,7 +75,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Private Variables
 
         /// <summary>
         /// Crop shot or Selected Window captures
@@ -141,7 +143,7 @@ namespace ZScreenLib
             }
             else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
-            { //If Background Region Brightness  
+            { //If Background Region Brightness
                 ImageAttributes imgattr = new ImageAttributes();
                 imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.BackgroundRegionBrightnessValue));
                 gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
@@ -556,9 +558,9 @@ namespace ZScreenLib
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
+            //
             // Crop
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -585,10 +587,9 @@ namespace ZScreenLib
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Crop_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Crop_KeyDown);
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
     }
 
     public class DynamicRectangle

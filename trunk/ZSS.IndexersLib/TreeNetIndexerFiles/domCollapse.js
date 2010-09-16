@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
 * DOMcollapse
 * Version 3.0
-* released 06.12.2005 
+* released 06.12.2005
 * Not for commercial reselling or use, unless consent given by the author
 * Check for updates on http://onlinetools.org and http://wait-till-i.com
 *
@@ -27,7 +27,7 @@ dc = {
     hoverClass:'hover',
     */
 
-    init: function(e) {
+    init: function (e) {
         var temp;
         if (!document.getElementById || !document.createTextNode) { return; }
         if (!dc.parentElementId) {
@@ -46,7 +46,7 @@ dc = {
             }
         }
     },
-    makeTrigger: function(o, e) {
+    makeTrigger: function (o, e) {
         var tl = dc.tempLink.cloneNode(true);
         var tohide = o.nextSibling;
         while (tohide.nodeType != 1) {
@@ -72,9 +72,9 @@ dc = {
         */
         o.insertBefore(tl, o.firstChild);
         dc.addEvent(tl, 'click', dc.addCollapse, false);
-        // Safari hacks 
-        tl.onclick = function() { return false; }
-        o.onclick = function() { return false; }
+        // Safari hacks
+        tl.onclick = function () { return false; }
+        o.onclick = function () { return false; }
     },
     /* Doesn't work with Safari
     hover:function(e){
@@ -83,9 +83,9 @@ dc = {
     dc.cssjs(action,o,dc.hoverClass)
     },
     */
-    addCollapse: function(e) {
+    addCollapse: function (e) {
         var action, pic;
-        // hack to fix safari's redraw bug 
+        // hack to fix safari's redraw bug
         // as mentioned on http://en.wikipedia.org/wiki/Wikipedia:Browser_notes#Mac_OS_X
         if (self.screenTop && self.screenX) {
             window.resizeTo(self.outerWidth + 1, self.outerHeight);
@@ -125,7 +125,7 @@ dc = {
         }
     },
     /* helper methods */
-    getTarget: function(e) {
+    getTarget: function (e) {
         var target = window.event ? window.event.srcElement : e ? e.target : null;
         if (!target) { return false; }
         while (!target.tohide && target.nodeName.toLowerCase() != 'body') {
@@ -134,7 +134,7 @@ dc = {
         // if (target.nodeName.toLowerCase() != 'a'){target = target.parentNode;} Safari fix not needed here
         return target;
     },
-    cancelClick: function(e) {
+    cancelClick: function (e) {
         if (window.event) {
             window.event.cancelBubble = true;
             window.event.returnValue = false;
@@ -145,7 +145,7 @@ dc = {
             e.preventDefault();
         }
     },
-    addEvent: function(elm, evType, fn, useCapture) {
+    addEvent: function (elm, evType, fn, useCapture) {
         if (elm.addEventListener) {
             elm.addEventListener(evType, fn, useCapture);
             return true;
@@ -156,7 +156,7 @@ dc = {
             elm['on' + evType] = fn;
         }
     },
-    cssjs: function(a, o, c1, c2) {
+    cssjs: function (a, o, c1, c2) {
         switch (a) {
             case 'swap':
                 o.className = !dc.cssjs('check', o, c1) ? o.className.replace(c2, c1) : o.className.replace(c1, c2);

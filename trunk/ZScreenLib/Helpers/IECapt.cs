@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-   
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 ////////////////////////////////////////////////////////////////////
 //
@@ -63,9 +65,13 @@ public interface IViewObject
               [MarshalAs(UnmanagedType.U4)] UInt32 dwContinue);
 
     void RemoteGetColorSet([In] uint dwDrawAspect, [In] int lindex, [In] uint pvAspect, [In] ref tagDVTARGETDEVICE ptd, [In] uint hicTargetDev, [Out] IntPtr ppColorSet);
+
     void RemoteFreeze([In] uint dwDrawAspect, [In] int lindex, [In] uint pvAspect, out uint pdwFreeze);
+
     void Unfreeze([In] uint dwFreeze);
+
     void SetAdvise([In] uint aspects, [In] uint advf, [In, MarshalAs(UnmanagedType.Interface)] IAdviseSink pAdvSink);
+
     void RemoteGetAdvise(out uint pAspects, out uint pAdvf, [MarshalAs(UnmanagedType.Interface)] out IAdviseSink ppAdvSink);
 }
 
@@ -156,7 +162,7 @@ public class IECapt
         // Ignore errors for embedded documents
         if (wb.Application != e.pDisp) return;
 
-        // If we get here, the main document cannot be navigated 
+        // If we get here, the main document cannot be navigated
         // to meaning there is nothing to draw, so we just croak.
         Console.Error.WriteLine("Failed to navigate to {0} (0x{1:X08})", e.uRL, e.statusCode);
         ReportCapture(null);

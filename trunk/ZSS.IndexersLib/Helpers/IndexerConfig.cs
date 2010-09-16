@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,19 +17,19 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using System.Windows.Forms.Design;
-using System.Drawing.Design;
 using ZSS.IndexersLib.Helpers;
 
 namespace ZSS.IndexersLib
@@ -40,7 +41,7 @@ namespace ZSS.IndexersLib
         [Category("Engines / General"), Description("Adjust CPU indexing priority level")]
         public System.Threading.ThreadPriority ProcessPriority { get; set; }
 
-        // Config > Engine > Tree 
+        // Config > Engine > Tree
         [Category("Engines / Tree Walk Utility"), DefaultValue(true), Description("Display the names of the files in each folder.")]
         public bool TreeShowFiles { get; set; }
         [Category("Engines / Tree Walk Utility"), DefaultValue(true), Description("Use ASCII instead of extended characters")]
@@ -48,7 +49,7 @@ namespace ZSS.IndexersLib
         [Category("Engines / Tree Walk Utility"), DefaultValue(false), Description("Remove tree branches")]
         public bool RemoveTreeBranches { get; set; }
 
-        // Engine > TreeNet 
+        // Engine > TreeNet
         public const string DefaultCssFileName = "Default.css";
         [Category("Engines / Tree.NET"), DefaultValue(true), Description("Display files")]
         public bool ShowFilesTreeNet { get; set; }
@@ -203,6 +204,7 @@ namespace ZSS.IndexersLib
             IndexFileNameWitoutExt = Path.GetFileNameWithoutExtension(fpath);
             IndexFileExt = Path.GetExtension(fpath);
         }
+
         public void SetSingleIndexPath(string fpath)
         {
             OutputDir = Path.GetDirectoryName(fpath);
@@ -217,6 +219,6 @@ namespace ZSS.IndexersLib
             return this.OutputDir + Path.DirectorySeparatorChar + this.GetIndexFileName();
         }
 
-        #endregion
+        #endregion "Methods"
     }
 }

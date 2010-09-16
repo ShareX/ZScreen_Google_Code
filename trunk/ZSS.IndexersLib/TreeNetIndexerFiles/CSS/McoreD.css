@@ -5,82 +5,82 @@
 
 body
 {
-	font-family:Georgia, "Times New Roman", Times, serif;
-	background-color:#CCCCCC;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    background-color: #CCCCCC;
 }
 
 img
 {
-	border-style: none;
+    border-style: none;
 }
 
-a:link { 
-	font-weight:bold; 
-	text-decoration:none; 
-	color: green;
-	}
+a:link
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: green;
+}
 
-	/* Already Visited Links */
-a:visited { 
-	font-weight: normal; 
-	text-decoration: none; 
-	color: #777777;
-	}
-a:hover, a:active {
+/* Already Visited Links */
+a:visited
+{
+    font-weight: normal;
+    text-decoration: none;
+    color: #777777;
+}
+a:hover, a:active
+{
+    text-decoration: none;
+    background-color: #FFFF00;
+    color: black;
+}
 
-	text-decoration: none;
-	background-color:#FFFF00;
-	color: black;
-	}
-	
-	/* Heading 1*/
+/* Heading 1*/
 h1
 {
-	color: white; /*#7D775C;*/
-	text-align:center;
-	font-style: italic;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	background-color:green;
+    color: white; /*#7D775C;*/
+    text-align: center;
+    font-style: italic;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    background-color: green;
 }
-	/* Heading 2*/
+/* Heading 2*/
 h2
 {
-	color: #880000;
-	font-style: italic;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	background-color:#FFCC33;
+    color: #880000;
+    font-style: italic;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    background-color: #FFCC33;
 }
-	/* Heading 3*/
+/* Heading 3*/
 h3
 {
-	color:#555555;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	background-color:#DDDDDD;
-	text-indent: 3em;
+    color: #555555;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    background-color: #DDDDDD;
+    text-indent: 3em;
 }
 
-	/* Heading 4*/
+/* Heading 4*/
 h4
 {
-	color:#555555;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	background-color:#CCFF99;
-	text-indent: 5em;
+    color: #555555;
+    font-family: Georgia, "Times New Roman" , Times, serif;
+    background-color: #CCFF99;
+    text-indent: 5em;
 }
 
-.audioinfo {
-      color: #2F4F4F;
-}
-
-.filesize 
+.audioinfo
 {
-	color: Blue;
+    color: #2F4F4F;
+}
+
+.filesize
+{
+    color: Blue;
 }
 
 .foldercount
 {
-	float:right;
+    float: right;
 }
-
-
-

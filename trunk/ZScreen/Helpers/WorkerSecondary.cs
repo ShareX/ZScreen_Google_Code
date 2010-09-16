@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,20 +17,20 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using UploadersLib;
 using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
-using ZSS;
 using ZSS.UpdateCheckerLib;
-using UploadersLib;
 
 namespace ZScreenGUI
 {
@@ -89,7 +90,7 @@ namespace ZScreenGUI
             mZScreen.btnCheckUpdate.Enabled = true;
         }
 
-        #endregion
+        #endregion Check Updates
 
         #region Cache Cleaner Methods
 
@@ -106,7 +107,7 @@ namespace ZScreenGUI
             t.CleanCache();
         }
 
-        #endregion
+        #endregion Cache Cleaner Methods
 
         #region History Reader
 
@@ -153,7 +154,7 @@ namespace ZScreenGUI
             e.Result = HistoryManager.Read();
         }
 
-        #endregion
+        #endregion History Reader
 
         public void PerformOnlineTasks()
         {
@@ -274,6 +275,6 @@ namespace ZScreenGUI
             mZScreen.ucFTPAccounts.btnTest.Enabled = true;
         }
 
-        #endregion
+        #endregion Test FTP Account asynchronously
     }
 }

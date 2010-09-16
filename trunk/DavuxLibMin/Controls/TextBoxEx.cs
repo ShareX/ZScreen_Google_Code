@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DavuxLib.Controls
 {
     /// <summary>
-    /// Draws a textbox with a prompt inside of it, similar to the "Quick Search" box 
+    /// Draws a textbox with a prompt inside of it, similar to the "Quick Search" box
     /// in Outlook 2007, IE7 or the Firefox 2.0 search box. The prompt will disappear when
     /// the focus is placed in the textbox, and will not display again if the Text property
     /// contains any value. If the Text property is empty, then the prompt will display
@@ -198,7 +196,7 @@ namespace DavuxLib.Controls
             TextFormatFlags flags = TextFormatFlags.Top | TextFormatFlags.EndEllipsis;
             Rectangle rect = this.ClientRectangle;
 
-            // Offset the rectangle based on the HorizontalAlignment, 
+            // Offset the rectangle based on the HorizontalAlignment,
             // otherwise the display looks a little strange
             switch (this.TextAlign)
             {
