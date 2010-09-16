@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace DavuxLib.Controls
 {
     public class SavedSizePositionForm : System.Windows.Forms.Form
     {
-
         public string SavedStateKey = "";
 
         protected override void OnLoad(EventArgs e)
@@ -50,7 +46,6 @@ namespace DavuxLib.Controls
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-
             // only save the WindowState if Normal or Maximized
             switch (this.WindowState)
             {
@@ -70,11 +65,10 @@ namespace DavuxLib.Controls
             this.Visible = false;
             this.WindowState = FormWindowState.Normal;
 
-
             Settings.Set("#" + SavedStateKey + "|Size", this.DesktopBounds);
             base.OnClosing(e);
         }
- 
+
         private bool IsVisibleOnAnyScreen(Rectangle rect)
         {
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)

@@ -29,20 +29,17 @@
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
+            //
             // GenericMainWindow
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "GenericMainWindow";
             this.Text = "GenericMain";
             this.ResumeLayout(false);
-
         }
 
-        #endregion
-
-
+        #endregion Windows Form Designer generated code
     }
 }

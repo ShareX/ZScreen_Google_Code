@@ -4,13 +4,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-
 namespace DavuxLib.Controls
 {
     public class SplitButton : Button
     {
         PushButtonState _state;
-
 
         const int SplitSectionWidth = 18;
 
@@ -20,7 +18,6 @@ namespace DavuxLib.Controls
         bool showSplit;
 
         bool isSplitMenuVisible;
-
 
         ContextMenuStrip m_SplitMenuStrip;
         ContextMenu m_SplitMenu;
@@ -97,7 +94,6 @@ namespace DavuxLib.Controls
                 }
                 else
                     ShowSplit = false;
-
 
                 m_SplitMenuStrip = value;
             }
@@ -234,7 +230,6 @@ namespace DavuxLib.Controls
             {
                 State = PushButtonState.Hot;
             }
-
         }
 
         protected override void OnMouseLeave(EventArgs e)
@@ -336,7 +331,6 @@ namespace DavuxLib.Controls
 
             bool drawSplitLine = (State == PushButtonState.Hot || State == PushButtonState.Pressed || !Application.RenderWithVisualStyles);
 
-
             if (RightToLeft == RightToLeft.Yes)
             {
                 dropDownRectangle.X = bounds.Left + 1;
@@ -399,8 +393,8 @@ namespace DavuxLib.Controls
             if (!string.IsNullOrEmpty(Text))
             {
                 if (Enabled)
-                    g.DrawString(Text ,Font,SystemBrushes.ControlText,text_rectangle);
-                    //TextRenderer.DrawText(g, Text, Font, text_rectangle, SystemColors.ControlText, textFormatFlags);
+                    g.DrawString(Text, Font, SystemBrushes.ControlText, text_rectangle);
+                //TextRenderer.DrawText(g, Text, Font, text_rectangle, SystemColors.ControlText, textFormatFlags);
                 else
                     ControlPaint.DrawStringDisabled(g, Text, Font, BackColor, text_rectangle, textFormatFlags);
             }
@@ -482,8 +476,8 @@ namespace DavuxLib.Controls
 
         #region Button Layout Calculations
 
-        //The following layout functions were taken from Mono's Windows.Forms 
-        //implementation, specifically "ThemeWin32Classic.cs", 
+        //The following layout functions were taken from Mono's Windows.Forms
+        //implementation, specifically "ThemeWin32Classic.cs",
         //then modified to fit the context of this splitButton
 
         private void CalculateButtonTextAndImageLayout(ref Rectangle content_rect, out Rectangle textRectangle, out Rectangle imageRectangle)
@@ -746,7 +740,6 @@ namespace DavuxLib.Controls
 
         #endregion Button Layout Calculations
 
-
         private void ShowContextMenuStrip()
         {
             if (skipNextOpen)
@@ -785,7 +778,6 @@ namespace DavuxLib.Controls
                 skipNextOpen = (dropDownRectangle.Contains(PointToClient(Cursor.Position))) && MouseButtons == MouseButtons.Left;
             }
         }
-
 
         void SplitMenu_Popup(object sender, EventArgs e)
         {

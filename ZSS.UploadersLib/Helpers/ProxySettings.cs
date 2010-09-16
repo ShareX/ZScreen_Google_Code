@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Net;
 using Starksoft.Net.Proxy;
-using System.ComponentModel;
 
 namespace UploadersLib.Helpers
 {
@@ -46,7 +42,6 @@ namespace UploadersLib.Helpers
 
         public IProxyClient GetProxyClient(ProxyInfo myProxyInfo)
         {
-
             if (myProxyInfo != null)
             {
                 ProxyType proxyType;

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,17 +17,28 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Reflection;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+using GraphicsMgrLib;
+using Greenshot.Helpers;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.Helpers;
@@ -34,21 +46,6 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
-using ZSS;
-using System.Drawing.Printing;
-using Greenshot.Helpers;
-using System.Drawing;
-using System.Web;
-using Microsoft.Win32;
-using System.Reflection;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading;
-using HelpersLib;
-using GraphicsMgrLib;
-using System.Drawing.Imaging;
-using MS.WindowsAPICodePack.Internal;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenLib
 {
@@ -162,6 +159,7 @@ namespace ZScreenLib
                 }
             }
         }
+
         public static string SaveImage(Image img)
         {
             if (img != null)
@@ -172,7 +170,7 @@ namespace ZScreenLib
             return string.Empty;
         }
 
-        #endregion
+        #endregion Worker Tasks
 
         public static string ResourcePath = Path.Combine(Application.StartupPath, "ZSS.ResourcesLib.dll");
 
@@ -310,7 +308,7 @@ namespace ZScreenLib
             return result;
         }
 
-        #endregion
+        #endregion FTP Methods
 
         #region TinyPic Methods
 
@@ -352,7 +350,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion TinyPic Methods
 
         #region ImageBam Methods
 
@@ -374,7 +372,7 @@ namespace ZScreenLib
             return galleryId;
         }
 
-        #endregion
+        #endregion ImageBam Methods
 
         #region URL Shortener Methods
 
@@ -469,7 +467,7 @@ namespace ZScreenLib
             return Engine.conf.TwitterEnabled || Engine.conf.ShortenUrlAfterUpload || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
         }
 
-        #endregion
+        #endregion URL Shortener Methods
 
         #region Text Uploader Methods
 
@@ -483,7 +481,7 @@ namespace ZScreenLib
             return uploader;
         }
 
-        #endregion
+        #endregion Text Uploader Methods
 
         public static bool CheckList<T>(List<T> list, int selected)
         {
@@ -574,7 +572,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Proxy Methods
 
         public static UserPassBox SendSpaceRegister()
         {
@@ -725,7 +723,7 @@ namespace ZScreenLib
             Engine.conf.TwitterClientConfig = msg.Config;
         }
 
-        #endregion
+        #endregion Twitter Methods
 
         public static int RandomNumber(int min, int max)
         {
@@ -866,7 +864,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion "Windows 7 only"
 
         public static bool ClipboardMonitor
         {

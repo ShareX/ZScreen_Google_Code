@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,18 +17,19 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using GraphicsMgrLib;
 using UploadersLib;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
-using GraphicsMgrLib;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -155,7 +157,7 @@ namespace ZScreenLib
                     break;
             }
 
-            // after all this the clipboard text can be null 
+            // after all this the clipboard text can be null
 
             if (!string.IsNullOrEmpty(clipboardText))
             {

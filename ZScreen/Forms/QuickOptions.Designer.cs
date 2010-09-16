@@ -38,9 +38,9 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.lbDest);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
             this.groupBox1.Name = "groupBox1";
@@ -48,9 +48,9 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Choose Destination";
-            // 
+            //
             // lbDest
-            // 
+            //
             this.lbDest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbDest.FormattingEnabled = true;
             this.lbDest.IntegralHeight = false;
@@ -60,9 +60,9 @@
             this.lbDest.TabIndex = 0;
             this.lbDest.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbDest_MouseDoubleClick);
             this.lbDest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbDest_KeyDown);
-            // 
+            //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.lbClipboardMode);
             this.groupBox2.Location = new System.Drawing.Point(8, 144);
             this.groupBox2.Name = "groupBox2";
@@ -70,9 +70,9 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Clipboard Mode";
-            // 
+            //
             // lbClipboardMode
-            // 
+            //
             this.lbClipboardMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbClipboardMode.FormattingEnabled = true;
             this.lbClipboardMode.IntegralHeight = false;
@@ -80,9 +80,9 @@
             this.lbClipboardMode.Name = "lbClipboardMode";
             this.lbClipboardMode.Size = new System.Drawing.Size(282, 93);
             this.lbClipboardMode.TabIndex = 0;
-            // 
+            //
             // btnOK
-            // 
+            //
             this.btnOK.Location = new System.Drawing.Point(8, 264);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(96, 24);
@@ -90,9 +90,9 @@
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.Location = new System.Drawing.Point(200, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 24);
@@ -100,9 +100,9 @@
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // btnApply
-            // 
+            //
             this.btnApply.Location = new System.Drawing.Point(104, 264);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(96, 24);
@@ -110,9 +110,9 @@
             this.btnApply.Text = "&Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-            // 
+            //
             // QuickOptions
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(306, 297);
@@ -132,10 +132,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -144,6 +143,5 @@
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.ListBox lbDest;
         private System.Windows.Forms.ListBox lbClipboardMode;
-
     }
 }

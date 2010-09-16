@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,18 +17,16 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace ZSS.FTPClientLib
 {
@@ -69,7 +68,7 @@ namespace ZSS.FTPClientLib
         private const int HDN_ITEMCHANGINGA = (HDN_FIRST - 0);
         private const int HDN_ITEMCHANGINGW = (HDN_FIRST - 20);
 
-        #endregion
+        #endregion Interop structs, imports and constants
 
         ///	<summary>
         ///	Required designer variable.
@@ -106,7 +105,7 @@ namespace ZSS.FTPClientLib
         #region Component	Designer generated code
 
         ///	<summary>
-        ///	Required method	for	Designer support - do not modify 
+        ///	Required method	for	Designer support - do not modify
         ///	the	contents of	this method	with the code editor.
         ///	</summary>
         private void InitializeComponent()
@@ -114,7 +113,7 @@ namespace ZSS.FTPClientLib
             components = new System.ComponentModel.Container();
         }
 
-        #endregion
+        #endregion Component	Designer generated code
 
         private bool _doubleClickActivation = false;
         /// <summary>
@@ -281,7 +280,7 @@ namespace ZSS.FTPClientLib
             }
         }
 
-        #endregion
+        #endregion Initialize editing depending of DoubleClickActivation property
 
         #region In-place editing functions
 
@@ -419,7 +418,7 @@ namespace ZSS.FTPClientLib
             _editSubItem = -1;
         }
 
-        #endregion
+        #endregion In-place editing functions
     }
 
     /// <summary>
@@ -441,6 +440,7 @@ namespace ZSS.FTPClientLib
             _subItemIndex = subItem;
             _item = item;
         }
+
         private int _subItemIndex = -1;
         private ListViewItem _item = null;
         public int SubItem
@@ -467,6 +467,7 @@ namespace ZSS.FTPClientLib
             _text = display;
             _cancel = cancel;
         }
+
         public string DisplayText
         {
             get { return _text; }

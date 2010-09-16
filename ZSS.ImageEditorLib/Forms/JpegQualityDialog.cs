@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,31 +17,32 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 #region Source code: Greenshot (GPL)
+
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
     Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
-#endregion
+
+#endregion Source code: Greenshot (GPL)
 
 /*
  * Created by SharpDevelop.
  * User: jens
  * Date: 19.07.2007
  * Time: 21:37
- * 
+ *
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Greenshot.Configuration;
 
@@ -53,6 +55,7 @@ namespace Greenshot
     {
         AppConfig conf;
         public int Quality = 0;
+
         public JpegQualityDialog()
         {
             //
@@ -64,7 +67,6 @@ namespace Greenshot
 
             this.trackBarJpegQuality.Value = conf.Output_File_JpegQuality;
             this.textBoxJpegQuality.Text = conf.Output_File_JpegQuality.ToString();
-
         }
 
         private void Button_okClick(object sender, System.EventArgs e)
@@ -76,7 +78,6 @@ namespace Greenshot
                 conf.Output_File_PromptJpegQuality = false;
                 conf.Save();
             }
-
         }
 
         private void TrackBarJpegQualityScroll(object sender, System.EventArgs e)

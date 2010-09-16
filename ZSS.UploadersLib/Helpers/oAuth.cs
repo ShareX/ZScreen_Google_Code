@@ -1,6 +1,6 @@
 using System;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
@@ -62,7 +62,7 @@ namespace UploadersLib.Helpers
                 }
             }
 
-            #endregion
+            #endregion IComparer<QueryParameter> Members
         }
 
         protected const string OAuthVersion = "1.0";
@@ -70,7 +70,7 @@ namespace UploadersLib.Helpers
 
         //
         // List of know and used oauth parameters' names
-        //        
+        //
         protected const string OAuthConsumerKeyKey = "oauth_consumer_key";
         protected const string OAuthCallbackKey = "oauth_callback";
         protected const string OAuthVersionKey = "oauth_version";
@@ -204,7 +204,7 @@ namespace UploadersLib.Helpers
         /// Generate the signature base that is used to produce the signature
         /// </summary>
         /// <param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
-        /// <param name="consumerKey">The consumer key</param>        
+        /// <param name="consumerKey">The consumer key</param>
         /// <param name="token">The token, if available. If not available pass null or an empty string</param>
         /// <param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
         /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
@@ -290,7 +290,7 @@ namespace UploadersLib.Helpers
 
         /// <summary>
         /// Generates a signature using the HMAC-SHA1 algorithm
-        /// </summary>		
+        /// </summary>
         /// <param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
         /// <param name="consumerKey">The consumer key</param>
         /// <param name="consumerSecret">The consumer seceret</param>
@@ -304,8 +304,8 @@ namespace UploadersLib.Helpers
         }
 
         /// <summary>
-        /// Generates a signature using the specified signatureType 
-        /// </summary>		
+        /// Generates a signature using the specified signatureType
+        /// </summary>
         /// <param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
         /// <param name="consumerKey">The consumer key</param>
         /// <param name="consumerSecret">The consumer seceret</param>
@@ -338,7 +338,7 @@ namespace UploadersLib.Helpers
         }
 
         /// <summary>
-        /// Generate the timestamp for the signature        
+        /// Generate the timestamp for the signature
         /// </summary>
         /// <returns></returns>
         public virtual string GenerateTimeStamp()

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace DavuxLib.Win32API
@@ -21,16 +18,22 @@ namespace DavuxLib.Win32API
 
         [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
         private static extern IntPtr CreateCompatibleDC(IntPtr hDC);
+
         [DllImport("gdi32.dll", ExactSpelling = true)]
         private static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
+
         [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
         private static extern bool DeleteObject(IntPtr hObject);
+
         [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
         private static extern bool DeleteDC(IntPtr hdc);
+
         [DllImport("gdi32.dll")]
         private static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, uint dwRop);
+
         [DllImport("UxTheme.dll", CharSet = CharSet.Unicode)]
         private static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref Shared.RECT pRect, ref DTTOPTS pOptions);
+
         [DllImport("gdi32.dll")]
         private static extern IntPtr CreateDIBSection(IntPtr hdc, BITMAPINFO pbmi, uint iUsage, int ppvBits, IntPtr hSection, uint dwOffset);
 
@@ -141,7 +144,5 @@ namespace DavuxLib.Win32API
 
             graphics.ReleaseHdc(primaryHdc);
         }
-
     }
-    
 }

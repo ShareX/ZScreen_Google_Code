@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,45 +17,42 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 #region Source code: Greenshot (GPL)
+
 /*
     This file originated from the Greenshot project (GPL). It may or may not have been modified.
     Please do not contact Greenshot about errors with this code. Instead contact the creators of this program.
     URL: http://greenshot.sourceforge.net/
     Code (CVS): http://greenshot.cvs.sourceforge.net/viewvc/greenshot/
 */
-#endregion
+
+#endregion Source code: Greenshot (GPL)
 
 /*
  * Erstellt mit SharpDevelop.
  * Benutzer: thomas
  * Datum: 22.03.2007
  * Zeit: 23:09
- * 
+ *
  * Sie k�nnen diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader �ndern.
  */
 
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
-using System.Collections;
-using System.Collections.Generic;
 using Greenshot.Configuration;
 using Greenshot.Drawing;
-using System.Drawing.Printing;
-using System.Drawing.Imaging;
-using System.Resources;
-using System.Diagnostics;
-using System.IO;
-using System.Text.RegularExpressions;
 using Greenshot.Helpers;
-using System.ComponentModel;
 
 namespace Greenshot
 {
@@ -171,7 +169,6 @@ namespace Greenshot
 
         private void BtnSaveClick(object sender, EventArgs e)
         {
-
             Save();
         }
 
@@ -239,7 +236,7 @@ namespace Greenshot
             this.Close();
         }
 
-        #endregion
+        #endregion Filesystem options
 
         #region Drawing options
 
@@ -313,7 +310,7 @@ namespace Greenshot
             RemoveObjectToolStripMenuItemClick(sender, e);
         }
 
-        #endregion
+        #endregion Drawing options
 
         #region Copy & paste options
 
@@ -360,7 +357,7 @@ namespace Greenshot
             surface.DuplicateSelectedElements();
         }
 
-        #endregion
+        #endregion Copy & paste options
 
         #region Element properties
 
@@ -601,7 +598,7 @@ namespace Greenshot
             btnArrowHeads.Image = DrawArrowHeadsButton(arrowHeads, btnArrowHeads.ContentRectangle);
         }
 
-        #endregion
+        #endregion Element properties
 
         #region Help
 
@@ -610,7 +607,7 @@ namespace Greenshot
             new AboutForm().Show();
         }
 
-        #endregion
+        #endregion Help
 
         #region Image editor event handlers
 
@@ -672,7 +669,7 @@ namespace Greenshot
             }
         }
 
-        #endregion
+        #endregion Image editor event handlers
 
         #region Cursor key strokes
 
@@ -682,7 +679,7 @@ namespace Greenshot
             return base.ProcessCmdKey(ref msg, k);
         }
 
-        #endregion
+        #endregion Cursor key strokes
 
         #region Status label handling
 
@@ -726,7 +723,6 @@ namespace Greenshot
             p.Start();
         }
 
-        #endregion
-
+        #endregion Status label handling
     }
 }

@@ -1,10 +1,10 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-using System.Diagnostics;
 using System.ComponentModel;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ZScreenLib
 {
@@ -21,7 +21,7 @@ namespace ZScreenLib
             psi.Arguments =
                 string.Format("{0} {1} {2} \"{3}\" {4} {5}",
                     progId, // 0
-                    registerInHKCU, // 1 
+                    registerInHKCU, // 1
                     appId, // 2
                     openWith,
                     unregister,
@@ -35,7 +35,7 @@ namespace ZScreenLib
             }
             catch (Win32Exception e)
             {
-                if (e.NativeErrorCode == 1223) // 1223: The operation was canceled by the user. 
+                if (e.NativeErrorCode == 1223) // 1223: The operation was canceled by the user.
                     TaskDialog.Show("The operation was canceled by the user.");
             }
         }

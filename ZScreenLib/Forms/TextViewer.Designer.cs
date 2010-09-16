@@ -30,9 +30,9 @@
         {
             this.txtText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
+            //
             // txtText
-            // 
+            //
             this.txtText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtText.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txtText.Location = new System.Drawing.Point(4, 4);
@@ -44,9 +44,9 @@
             this.txtText.TabIndex = 0;
             this.txtText.TabStop = false;
             this.txtText.WordWrap = false;
-            // 
+            //
             // frmTextViewer
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 446);
@@ -58,10 +58,9 @@
             this.Text = "frmTextViewer";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.TextBox txtText;
     }

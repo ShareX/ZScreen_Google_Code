@@ -3,9 +3,10 @@
  * Benutzer: thomas
  * Datum: 30.03.2007
  * Zeit: 19:53
- * 
+ *
  * Sie können diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader ändern.
  */
+
 namespace Greenshot
 {
     partial class TextInputForm
@@ -57,12 +58,12 @@ namespace Greenshot
             this.toolStripContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // toolStripContainer1
-            // 
-            // 
+            //
+            //
             // toolStripContainer1.ContentPanel
-            // 
+            //
             this.toolStripContainer1.ContentPanel.Controls.Add(this.btnCancel);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.btnOk);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.InputText);
@@ -73,13 +74,13 @@ namespace Greenshot
             this.toolStripContainer1.Size = new System.Drawing.Size(579, 344);
             this.toolStripContainer1.TabIndex = 4;
             this.toolStripContainer1.Text = "toolStripContainer1";
-            // 
+            //
             // toolStripContainer1.TopToolStripPanel
-            // 
+            //
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(479, 282);
@@ -89,9 +90,9 @@ namespace Greenshot
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancelClick);
-            // 
+            //
             // btnOk
-            // 
+            //
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.Location = new System.Drawing.Point(385, 282);
             this.btnOk.Name = "btnOk";
@@ -100,9 +101,9 @@ namespace Greenshot
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.BtnOkClick);
-            // 
+            //
             // InputText
-            // 
+            //
             this.InputText.Dock = System.Windows.Forms.DockStyle.Top;
             this.InputText.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InputText.Location = new System.Drawing.Point(0, 0);
@@ -112,9 +113,9 @@ namespace Greenshot
             this.InputText.Size = new System.Drawing.Size(579, 272);
             this.InputText.TabIndex = 4;
             this.InputText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputTextKeyDown);
-            // 
+            //
             // toolStrip1
-            // 
+            //
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboFonts,
@@ -130,29 +131,29 @@ namespace Greenshot
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(384, 23);
             this.toolStrip1.TabIndex = 0;
-            // 
+            //
             // comboFonts
-            // 
+            //
             this.comboFonts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboFonts.MaxDropDownItems = 20;
             this.comboFonts.Name = "comboFonts";
             this.comboFonts.Size = new System.Drawing.Size(200, 23);
             this.comboFonts.SelectedIndexChanged += new System.EventHandler(this.ComboFontsSelectedIndexChanged);
-            // 
+            //
             // comboFontSize
-            // 
+            //
             this.comboFontSize.MaxDropDownItems = 20;
             this.comboFontSize.Name = "comboFontSize";
             this.comboFontSize.Size = new System.Drawing.Size(75, 23);
             this.comboFontSize.TextChanged += new System.EventHandler(this.ComboFontSizeTextChanged);
-            // 
+            //
             // toolStripSeparator2
-            // 
+            //
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
-            // 
+            //
             // btnBold
-            // 
+            //
             this.btnBold.AutoToolTip = false;
             this.btnBold.CheckOnClick = true;
             this.btnBold.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -164,9 +165,9 @@ namespace Greenshot
             this.btnBold.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.btnBold.ToolTipText = "Bold";
             this.btnBold.Click += new System.EventHandler(this.BtnBoldClick);
-            // 
+            //
             // btnItalic
-            // 
+            //
             this.btnItalic.CheckOnClick = true;
             this.btnItalic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnItalic.Image = ((System.Drawing.Image)(resources.GetObject("btnItalic.Image")));
@@ -175,9 +176,9 @@ namespace Greenshot
             this.btnItalic.Size = new System.Drawing.Size(23, 20);
             this.btnItalic.Text = "toolStripButton2";
             this.btnItalic.Click += new System.EventHandler(this.BtnItalicClick);
-            // 
+            //
             // btnUnderline
-            // 
+            //
             this.btnUnderline.CheckOnClick = true;
             this.btnUnderline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnUnderline.Image = ((System.Drawing.Image)(resources.GetObject("btnUnderline.Image")));
@@ -186,14 +187,14 @@ namespace Greenshot
             this.btnUnderline.Size = new System.Drawing.Size(23, 20);
             this.btnUnderline.Text = "toolStripButton3";
             this.btnUnderline.Click += new System.EventHandler(this.BtnUnderlineClick);
-            // 
+            //
             // toolStripSeparator1
-            // 
+            //
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
-            // 
+            //
             // btnColor
-            // 
+            //
             this.btnColor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnColor.Image = ((System.Drawing.Image)(resources.GetObject("btnColor.Image")));
             this.btnColor.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -201,9 +202,9 @@ namespace Greenshot
             this.btnColor.Size = new System.Drawing.Size(23, 20);
             this.btnColor.Text = "toolStripDropDownButton1";
             this.btnColor.Click += new System.EventHandler(this.BtnColorClick);
-            // 
+            //
             // TextInputForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 344);
@@ -219,8 +220,8 @@ namespace Greenshot
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
-
         }
+
         public System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.ToolStripComboBox comboFontSize;
         private System.Windows.Forms.ToolStripButton btnItalic;
@@ -234,6 +235,5 @@ namespace Greenshot
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-
     }
 }

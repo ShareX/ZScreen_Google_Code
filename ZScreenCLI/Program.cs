@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using ZScreenLib;
-using System.IO;
 
 namespace ZScreenCLI
 {

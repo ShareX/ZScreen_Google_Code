@@ -4,7 +4,6 @@
  * License: Free for any use.
  */
 
-
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -60,6 +59,7 @@ namespace DavuxLib
         }
 
         static RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+
         public static bool WillRunAtStartup(string app)
         {
             try

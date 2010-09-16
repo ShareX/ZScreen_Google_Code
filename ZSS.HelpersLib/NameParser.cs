@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,19 +17,19 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
-using System.Text;
-using System.Drawing;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
-using System.Windows.Forms;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Text;
+using System.Windows.Forms;
 
 namespace HelpersLib
 {
@@ -139,7 +140,7 @@ namespace HelpersLib
             sb = sb.Replace(ToString(ReplacementVariables.width), width);
             sb = sb.Replace(ToString(ReplacementVariables.height), height);
 
-            #endregion
+            #endregion width, height
 
             #region t
 
@@ -157,7 +158,7 @@ namespace HelpersLib
                 sb = sb.Replace(ToString(ReplacementVariables.t), "");
             }
 
-            #endregion
+            #endregion t
 
             #region FTP
 
@@ -166,7 +167,7 @@ namespace HelpersLib
                 sb = sb.Replace("%host", nameParser.Host);
             }
 
-            #endregion
+            #endregion FTP
 
             #region y, mo, mon, mon2, d
 
@@ -183,7 +184,7 @@ namespace HelpersLib
                 .Replace(ToString(ReplacementVariables.mo), AddZeroes(dt.Month))
                 .Replace(ToString(ReplacementVariables.d), AddZeroes(dt.Day));
 
-            #endregion
+            #endregion y, mo, mon, mon2, d
 
             #region h, mi, s, w, w2, pm, i
 
@@ -216,7 +217,7 @@ namespace HelpersLib
                 }
             }
 
-            #endregion
+            #endregion h, mi, s, w, w2, pm, i
 
             sb = sb.Replace(ToString(ReplacementVariables.ver), Application.ProductVersion);
             sb = sb.Replace(ToString(ReplacementVariables.app), nameParser.ProductName);
@@ -296,14 +297,14 @@ namespace HelpersLib
             foreach (char c in fName)
             {
                 // @ is for HttpHomePath we use in FTP Account
-                if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/'|| c == '@'))
+                if (IsCharValid(c) || options.IsFolderPath && (c == Path.DirectorySeparatorChar || c == '/' || c == '@'))
                 {
                     sbName.Append(c);
                 }
             }
 
             fName = sbName.ToString();
-            
+
             while (fName.StartsWith("."))
             {
                 fName = fName.Remove(0, 1);

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,12 +17,12 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
 
-using System.Collections.Generic;
+#endregion License Information (GPL v2)
+
 using System.IO;
 using System.Text.RegularExpressions;
 using ZSS.IndexersLib.Helpers;
@@ -48,7 +49,7 @@ namespace ZSS.IndexersLib
                 FileAttributesEx dirAttrib = new FileAttributesEx(dir.DirectoryPath());
 
                 string[] c = dir.DirectoryPath().Split(Path.DirectorySeparatorChar);
-                // If Options says to filter protected OS folders 
+                // If Options says to filter protected OS folders
                 if (mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders)
                 {
                     return c[1].Length != 0 && dirAttrib.isReadOnlyDirectory() && mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders;
@@ -60,13 +61,13 @@ namespace ZSS.IndexersLib
                     return dirAttrib.isHidden();
                 }
 
-                // If Config says to filter System Folders 
+                // If Config says to filter System Folders
                 if (mSettings.GetConfig().IgnoreSystemFolders)
                 {
                     return dirAttrib.isSystem();
                 }
 
-                //war59312: If Config says to filter Empty Folders 
+                //war59312: If Config says to filter Empty Folders
                 if (mSettings.GetConfig().IgnoreEmptyFolders && dir.DirectorySize() == 0.0)
                 {
                     return true;
@@ -84,7 +85,7 @@ namespace ZSS.IndexersLib
                 // Establish an FileInfo, we need for the checks below
                 FileAttributesEx fi = new FileAttributesEx(filePath);
 
-                // If Options says to filter protected OS files 
+                // If Options says to filter protected OS files
                 if (mSettings.GetConfig().HideProtectedOperatingSystemFilesFolders)
                 {
                     return fi.isHiddenSystemFile();
@@ -96,13 +97,13 @@ namespace ZSS.IndexersLib
                     return fi.isHidden();
                 }
 
-                // If Config says to filter System Files 
+                // If Config says to filter System Files
                 if (mSettings.GetConfig().IgnoreSystemFiles)
                 {
                     return fi.isSystem();
                 }
 
-                // If Config says to filter following files 
+                // If Config says to filter following files
                 if (mSettings.GetConfig().IgnoreFollowingFiles)
                 {
                     foreach (string item in mBannedFilter)
@@ -116,7 +117,6 @@ namespace ZSS.IndexersLib
                             return true;
                         }
                     }
-
                 }
             }
 

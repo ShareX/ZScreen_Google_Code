@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,20 +17,19 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ZScreenLib.Helpers;
-using System.Threading;
 using GraphicsMgrLib;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -275,7 +275,7 @@ namespace ZScreenLib
             if (Engine.conf.ActiveWindowCleanTransparentCorners)
             {
                 Image result = RemoveCorners(handle, windowImage, redBGImage, windowRect);
-                if(result != null)
+                if (result != null)
                 {
                     windowImage = result;
                 }
@@ -342,12 +342,12 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Make a full-size thumbnail of the captured window on a new topmost form, and capture 
+        /// Make a full-size thumbnail of the captured window on a new topmost form, and capture
         /// this new form with a black and then white background. Then compute the transparency by
         /// difference between the black and white versions.
-        /// This method has these advantages: 
+        /// This method has these advantages:
         /// - the full form is captured even if it is obscured on the Windows desktop
-        /// - there is no problem with unpredictable Z-order anymore (the background and 
+        /// - there is no problem with unpredictable Z-order anymore (the background and
         ///   the window to capture are drawn on the same window)
         /// Note: now that GDI capture is more robust, DWM capture is not that useful anymore.
         /// </summary>
@@ -527,6 +527,6 @@ namespace ZScreenLib
             }
         }*/
 
-        #endregion
+        #endregion Clean window corners
     }
 }

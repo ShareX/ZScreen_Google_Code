@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -67,7 +69,7 @@ namespace ZScreenGUI
         private ThumbnailCacher thumbnailCacher;
         internal static GoogleTranslate mGTranslator = null;
 
-        #endregion
+        #endregion Variables
 
         public ZScreen()
         {
@@ -508,7 +510,6 @@ namespace ZScreenGUI
 
         private void UpdateFtpControls()
         {
-
         }
 
         private void ZScreen_ConfigGUI_Destinations()
@@ -531,7 +532,7 @@ namespace ZScreenGUI
             txtFTPThumbWidth.Text = Engine.conf.FTPThumbnailWidth.ToString();
             cbFTPThumbnailCheckSize.Checked = Engine.conf.FTPThumbnailCheckSize;
 
-            #endregion
+            #endregion FTP Settings
 
             if (Engine.conf.LocalhostAccountList == null || Engine.conf.LocalhostAccountList.Count == 0)
             {
@@ -567,7 +568,7 @@ namespace ZScreenGUI
 
             chkDekiWikiForcePath.Checked = Engine.conf.DekiWikiForcePath;
 
-            #endregion
+            #endregion MindTouch Settings
 
             #region Image Uploaders
 
@@ -575,7 +576,7 @@ namespace ZScreenGUI
             // Image Uploader Settings
             ///////////////////////////////////
 
-            // Twitter 
+            // Twitter
             ucTwitterAccounts.AccountsList.Items.Clear();
             foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
             {
@@ -636,7 +637,7 @@ namespace ZScreenGUI
             pgFlickrSettings.SelectedObject = Engine.conf.FlickrSettings;
             // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
 
-            #endregion
+            #endregion Image Uploaders
 
             #region File Uploaders
 
@@ -669,7 +670,8 @@ namespace ZScreenGUI
             cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
             txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
             txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
-            #endregion
+
+            #endregion File Uploaders
         }
 
         private void ZScreen_ConfigGUI_Hotkeys()
@@ -698,7 +700,7 @@ namespace ZScreenGUI
             nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
-            // Active Window        
+            // Active Window
             chkActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
             chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
@@ -843,7 +845,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Editors()
         {
-
             chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
             tsmEditinImageSoftware.Checked = Engine.conf.ImageEditorsEnabled;
 
@@ -1075,7 +1076,7 @@ namespace ZScreenGUI
             cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
             cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
 
-            // Proxy 
+            // Proxy
             if (cboProxyConfig.Items.Count == 0)
             {
                 cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetDescriptions());
@@ -1262,8 +1263,10 @@ namespace ZScreenGUI
         }
 
         #region Trim memory
+
         private System.Timers.Timer timerTrimMemory;
         Object trimMemoryLock = new Object();
+
         /// <summary>
         /// Trim memory working set after a few seconds, unless this method is called again in the mean time (optimization)
         /// </summary>
@@ -1306,7 +1309,8 @@ namespace ZScreenGUI
                 NativeMethods.TrimMemoryUse();
             }
         }
-        #endregion
+
+        #endregion Trim memory
 
         private void WriteSettings()
         {
@@ -2308,7 +2312,7 @@ namespace ZScreenGUI
             Process.Start(e.LinkText);
         }
 
-        #endregion
+        #endregion Image MyCollection
 
         private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -3025,7 +3029,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion Language Translator
 
         private void cboUploadMode_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -4341,7 +4345,7 @@ namespace ZScreenGUI
             {
                 webPageCapture = new WebPageCapture();
             }
-            
+
             webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
             webPageCapture.DownloadPage(txtWebPageURL.Text);
             */
@@ -4620,7 +4624,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion Flickr
 
         private void btnFTPOpenClient_Click(object sender, EventArgs e)
         {

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Collections.Generic;
@@ -266,9 +268,9 @@ namespace ZSS.IndexersLib
                     }
                     else
                     {
-                        //Note: 
-                        // dir.GetFilesColl().Count = 0 DOESNT ALWAYS MEAN THAT 
-                        // it is an empty directory because there can be subfolders 
+                        //Note:
+                        // dir.GetFilesColl().Count = 0 DOESNT ALWAYS MEAN THAT
+                        // it is an empty directory because there can be subfolders
                         // with files
                         //System.Windows.Forms.MessageBox.Show(dir.GetFilesColl().Count)
                         where.WriteLine(Xhtml.OpenPara(""));
@@ -520,7 +522,7 @@ namespace ZSS.IndexersLib
             {
                 sw.WriteLine(Xhtml.OpenDiv());
                 sw.WriteLine("<hr />");
-                sw.WriteLine(mSettings.GetFooterText(null, IndexingEngine.TreeNetLib, true));                
+                sw.WriteLine(mSettings.GetFooterText(null, IndexingEngine.TreeNetLib, true));
                 sw.WriteLine(Xhtml.CloseDiv());
                 sw.WriteLine(Xhtml.CloseBody());
             }
@@ -532,7 +534,7 @@ namespace ZSS.IndexersLib
         {
             if (Directory.Exists(folderPath))
             {
-                // 2.7.1.6 TreeGUI crashed on Could not find a part of the path 
+                // 2.7.1.6 TreeGUI crashed on Could not find a part of the path
 
                 TreeDir dir = new TreeDir(folderPath);
                 dir = Analyze(dir.DirectoryPath());
@@ -623,7 +625,6 @@ namespace ZSS.IndexersLib
 
             foreach (TreeDir d in dir.GetSubDirColl())
             {
-
                 TreeDir sd = new TreeDir(d.DirectoryPath());
                 sd = IndexToTxtFile(d, sw);
             }
@@ -702,7 +703,7 @@ namespace ZSS.IndexersLib
                     }
                     break;
                 case IndexingMode.IN_ONE_FOLDER_SEPERATE:
-                    // DO NOT MERGE INDEX FILES 
+                    // DO NOT MERGE INDEX FILES
                     if (!Directory.Exists(mSettings.GetConfig().OutputDir))
                     {
                         MessageBox.Show(string.Format("{0} does not exist." + Environment.NewLine + Environment.NewLine + "Please change the Output folder in Configuration." + Environment.NewLine + "The index file will be created in the same folder you chose to index.", mSettings.GetConfig().OutputDir), Application.ProductName, MessageBoxButtons.OK);

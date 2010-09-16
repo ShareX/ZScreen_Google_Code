@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Jaex (Berk)
@@ -16,14 +17,15 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace ZSS.ColorsLib
 {
@@ -88,7 +90,7 @@ namespace ZSS.ColorsLib
             }
         }
 
-        #endregion
+        #endregion Variables
 
         #region Component Designer generated code
 
@@ -127,7 +129,7 @@ namespace ZSS.ColorsLib
             base.Dispose(disposing);
         }
 
-        #endregion
+        #endregion Component Designer generated code
 
         #region Events
 
@@ -181,7 +183,7 @@ namespace ZSS.ColorsLib
             }
         }
 
-        #endregion
+        #endregion Events
 
         #region Protected Methods
 
@@ -349,7 +351,7 @@ namespace ZSS.ColorsLib
             }
         }
 
-        #endregion
+        #endregion Protected Methods
 
         #region Protected Helpers
 
@@ -399,18 +401,24 @@ namespace ZSS.ColorsLib
             return ret_val;
         }
 
-        #endregion
+        #endregion Protected Helpers
 
         #region Protected Virtual Members
 
         protected virtual void DrawCrosshair(Graphics g) { }
+
         protected virtual void DrawHue() { }
+
         protected virtual void DrawSaturation() { }
+
         protected virtual void DrawBrightness() { }
+
         protected virtual void DrawRed() { }
+
         protected virtual void DrawGreen() { }
+
         protected virtual void DrawBlue() { }
 
-        #endregion
+        #endregion Protected Virtual Members
     }
 }

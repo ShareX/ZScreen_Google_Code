@@ -42,9 +42,9 @@ namespace ZScreenGUI
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
             this.tsQuickActions.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // tsQuickActions
-            // 
+            //
             this.tsQuickActions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsQuickActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbEntireScreen,
@@ -63,9 +63,9 @@ namespace ZScreenGUI
             this.tsQuickActions.TabIndex = 0;
             this.tsQuickActions.Text = "toolStrip1";
             this.tsQuickActions.MouseEnter += new System.EventHandler(this.tsQuickActions_MouseEnter);
-            // 
+            //
             // tsbEntireScreen
-            // 
+            //
             this.tsbEntireScreen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbEntireScreen.Image = Resources.monitor;
             this.tsbEntireScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -73,9 +73,9 @@ namespace ZScreenGUI
             this.tsbEntireScreen.Size = new System.Drawing.Size(23, 20);
             this.tsbEntireScreen.Text = "Entire Screen";
             this.tsbEntireScreen.Click += new System.EventHandler(this.tsbEntireScreen_Click);
-            // 
+            //
             // tsbSelectedWindow
-            // 
+            //
             this.tsbSelectedWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbSelectedWindow.Image = Resources.application_double;
             this.tsbSelectedWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -83,9 +83,9 @@ namespace ZScreenGUI
             this.tsbSelectedWindow.Size = new System.Drawing.Size(23, 20);
             this.tsbSelectedWindow.Text = "Selected Window";
             this.tsbSelectedWindow.Click += new System.EventHandler(this.tsbSelectedWindow_Click);
-            // 
+            //
             // tsbCropShot
-            // 
+            //
             this.tsbCropShot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbCropShot.Image = Resources.shape_square;
             this.tsbCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -93,9 +93,9 @@ namespace ZScreenGUI
             this.tsbCropShot.Size = new System.Drawing.Size(23, 20);
             this.tsbCropShot.Text = "Crop Shot";
             this.tsbCropShot.Click += new System.EventHandler(this.tsbCropShot_Click);
-            // 
+            //
             // tsbLastCropShot
-            // 
+            //
             this.tsbLastCropShot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbLastCropShot.Image = Resources.shape_square_go;
             this.tsbLastCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -103,9 +103,9 @@ namespace ZScreenGUI
             this.tsbLastCropShot.Size = new System.Drawing.Size(23, 20);
             this.tsbLastCropShot.Text = "Last Crop Shot";
             this.tsbLastCropShot.Click += new System.EventHandler(this.tsbLastCropShot_Click);
-            // 
+            //
             // tsbAutoCapture
-            // 
+            //
             this.tsbAutoCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbAutoCapture.Image = Resources.images_stack;
             this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -113,9 +113,9 @@ namespace ZScreenGUI
             this.tsbAutoCapture.Size = new System.Drawing.Size(23, 20);
             this.tsbAutoCapture.Text = "Auto Capture";
             this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
-            // 
+            //
             // tsbClipboardUpload
-            // 
+            //
             this.tsbClipboardUpload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbClipboardUpload.Image = Resources.images;
             this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -123,9 +123,9 @@ namespace ZScreenGUI
             this.tsbClipboardUpload.Size = new System.Drawing.Size(23, 20);
             this.tsbClipboardUpload.Text = "Clipboard Upload";
             this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
-            // 
+            //
             // tsbDragDropWindow
-            // 
+            //
             this.tsbDragDropWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbDragDropWindow.Image = Resources.shape_move_backwards;
             this.tsbDragDropWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -133,9 +133,9 @@ namespace ZScreenGUI
             this.tsbDragDropWindow.Size = new System.Drawing.Size(23, 20);
             this.tsbDragDropWindow.Text = "Drag & Drop Window";
             this.tsbDragDropWindow.Click += new System.EventHandler(this.tsbDragDropWindow_Click);
-            // 
+            //
             // tsbLanguageTranslator
-            // 
+            //
             this.tsbLanguageTranslator.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbLanguageTranslator.Image = Resources.comments;
             this.tsbLanguageTranslator.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -143,9 +143,9 @@ namespace ZScreenGUI
             this.tsbLanguageTranslator.Size = new System.Drawing.Size(23, 20);
             this.tsbLanguageTranslator.Text = "Language Translator";
             this.tsbLanguageTranslator.Click += new System.EventHandler(this.tsbLanguageTranslator_Click);
-            // 
+            //
             // tsbScreenColorPicker
-            // 
+            //
             this.tsbScreenColorPicker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbScreenColorPicker.Image = Resources.color_wheel;
             this.tsbScreenColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -153,9 +153,9 @@ namespace ZScreenGUI
             this.tsbScreenColorPicker.Size = new System.Drawing.Size(23, 20);
             this.tsbScreenColorPicker.Text = "Screen Color Picker";
             this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
-            // 
+            //
             // ToolbarWindow
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(208, 24);
@@ -171,10 +171,9 @@ namespace ZScreenGUI
             this.tsQuickActions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.ToolStrip tsQuickActions;
         private System.Windows.Forms.ToolStripButton tsbEntireScreen;

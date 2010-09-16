@@ -32,9 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tmrClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
+            //
             // niTray
-            // 
+            //
             this.niTray.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.niTray.Icon = ((System.Drawing.Icon)(resources.GetObject("niTray.Icon")));
             this.niTray.Text = "ZScreen";
@@ -42,14 +42,14 @@
             this.niTray.BalloonTipClosed += new System.EventHandler(this.niTray_BalloonTipClosed);
             this.niTray.BalloonTipClicked += new System.EventHandler(this.niTray_BalloonTipClicked);
             this.niTray.Click += new System.EventHandler(this.niTray_Click);
-            // 
+            //
             // tmrClose
-            // 
+            //
             this.tmrClose.Interval = 1000;
             this.tmrClose.Tick += new System.EventHandler(this.tmrClose_Tick);
-            // 
+            //
             // MainWindow
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
@@ -60,13 +60,10 @@
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.Timer tmrClose;
-
     }
 }
-

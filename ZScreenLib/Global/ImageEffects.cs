@@ -1,4 +1,5 @@
 #region License Information (GPL v2)
+
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2009  Brandon Zimmerman
@@ -16,25 +17,24 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
-using ZSS;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Greenshot.Drawing;
+using System.Windows.Forms;
 using GradientTester;
-using HelpersLib;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -450,7 +450,7 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Creates a new image with the transparency removed by capturing 
+        /// Creates a new image with the transparency removed by capturing
         /// the given image over a background of the given color.
         /// </summary>
         public static Image FillBackground(Image img, Color color)

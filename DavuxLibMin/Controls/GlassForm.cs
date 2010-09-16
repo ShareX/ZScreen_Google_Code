@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using DavuxLib.Win32API;
-using System.Runtime.InteropServices;
 
 namespace DavuxLib.Controls
 {
@@ -95,7 +91,6 @@ namespace DavuxLib.Controls
         }
         private Padding _GlassArea = new Padding();
 
-
         private bool MarginsAdjusted = false;
 
         private void EnableGlass()
@@ -160,8 +155,6 @@ namespace DavuxLib.Controls
         {
             int WM_NCCALCSIZE = 0x83;
             int WM_NCHITTEST = 0x84;
-
-            
 
             if (m.Msg == 0x84 // if this is a click
                 && m.Result.ToInt32() == 1 // ...and it is on the client
@@ -252,7 +245,6 @@ namespace DavuxLib.Controls
             return false;
         }
 
-
         private IntPtr HitTestNCA(IntPtr hwnd, IntPtr wparam, IntPtr lparam)
         {
             int HTNOWHERE = 0;
@@ -324,6 +316,5 @@ namespace DavuxLib.Controls
 
             return new IntPtr(HTCLIENT);
         }
-        
     }
 }

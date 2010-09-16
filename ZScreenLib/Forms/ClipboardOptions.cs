@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using UploadersLib;
 using GraphicsMgrLib;
+using UploadersLib;
 
 namespace ZScreenLib
 {
@@ -73,7 +68,7 @@ namespace ZScreenLib
                 btnCopyImage.Click += new EventHandler(btnCopyImage_Click);
                 this.Controls.Add(btnCopyImage);
 
-                this.Height = yBottomControl + btnCopyImage.Size.Height + yOffset * 2+10;
+                this.Height = yBottomControl + btnCopyImage.Size.Height + yOffset * 2 + 10;
                 this.MinimumSize = new Size(this.Width, this.Height);
 
                 Button btnOpenLocal = new Button();

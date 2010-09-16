@@ -56,9 +56,9 @@
             this.toolStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // lvUploaders
-            // 
+            //
             this.lvUploaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -73,49 +73,49 @@
             this.lvUploaders.TabIndex = 0;
             this.lvUploaders.UseCompatibleStateImageBehavior = false;
             this.lvUploaders.View = System.Windows.Forms.View.Details;
-            // 
+            //
             // columnHeader1
-            // 
+            //
             this.columnHeader1.Text = "Name";
             this.columnHeader1.Width = 180;
-            // 
+            //
             // columnHeader2
-            // 
+            //
             this.columnHeader2.Text = "Status";
             this.columnHeader2.Width = 333;
-            // 
+            //
             // cmsUploaders
-            // 
+            //
             this.cmsUploaders.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testSelectedUploadersToolStripMenuItem,
             this.openURLToolStripMenuItem,
             this.copyToolStripMenuItem});
             this.cmsUploaders.Name = "cmsUploaders";
             this.cmsUploaders.Size = new System.Drawing.Size(207, 70);
-            // 
+            //
             // testSelectedUploadersToolStripMenuItem
-            // 
+            //
             this.testSelectedUploadersToolStripMenuItem.Name = "testSelectedUploadersToolStripMenuItem";
             this.testSelectedUploadersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.testSelectedUploadersToolStripMenuItem.Text = "Test selected uploaders";
             this.testSelectedUploadersToolStripMenuItem.Click += new System.EventHandler(this.btnTestSelected_Click);
-            // 
+            //
             // openURLToolStripMenuItem
-            // 
+            //
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
             this.openURLToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
-            // 
+            //
             // copyToolStripMenuItem
-            // 
+            //
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.copyToolStripMenuItem.Text = "Copy URL(s) to clipboard";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
+            //
             // tcTesters
-            // 
+            //
             this.tcTesters.Controls.Add(this.tabPage1);
             this.tcTesters.Controls.Add(this.tabPage2);
             this.tcTesters.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -124,9 +124,9 @@
             this.tcTesters.SelectedIndex = 0;
             this.tcTesters.Size = new System.Drawing.Size(635, 663);
             this.tcTesters.TabIndex = 1;
-            // 
+            //
             // tabPage1
-            // 
+            //
             this.tabPage1.Controls.Add(this.tscTesters);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -135,12 +135,12 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Testers";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
+            //
             // tscTesters
-            // 
-            // 
+            //
+            //
             // tscTesters.ContentPanel
-            // 
+            //
             this.tscTesters.ContentPanel.Controls.Add(this.lvUploaders);
             this.tscTesters.ContentPanel.Size = new System.Drawing.Size(621, 608);
             this.tscTesters.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -149,14 +149,14 @@
             this.tscTesters.Size = new System.Drawing.Size(621, 631);
             this.tscTesters.TabIndex = 3;
             this.tscTesters.Text = "toolStripContainer1";
-            // 
+            //
             // tscTesters.TopToolStripPanel
-            // 
+            //
             this.tscTesters.TopToolStripPanel.BackColor = System.Drawing.Color.White;
             this.tscTesters.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
+            //
             // toolStrip1
-            // 
+            //
             this.toolStrip1.BackColor = System.Drawing.Color.White;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -169,9 +169,9 @@
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.Size = new System.Drawing.Size(134, 23);
             this.toolStrip1.TabIndex = 0;
-            // 
+            //
             // btnTestSelected
-            // 
+            //
             this.btnTestSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnTestSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnTestSelected.Image")));
             this.btnTestSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -179,14 +179,14 @@
             this.btnTestSelected.Size = new System.Drawing.Size(79, 19);
             this.btnTestSelected.Text = "Test selected";
             this.btnTestSelected.Click += new System.EventHandler(this.btnTestSelected_Click);
-            // 
+            //
             // toolStripSeparator1
-            // 
+            //
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
-            // 
+            //
             // btnTestAll
-            // 
+            //
             this.btnTestAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnTestAll.Image = ((System.Drawing.Image)(resources.GetObject("btnTestAll.Image")));
             this.btnTestAll.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -194,9 +194,9 @@
             this.btnTestAll.Size = new System.Drawing.Size(48, 19);
             this.btnTestAll.Text = "Test all";
             this.btnTestAll.Click += new System.EventHandler(this.btnTestAll_Click);
-            // 
+            //
             // tabPage2
-            // 
+            //
             this.tabPage2.Controls.Add(this.txtConsole);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -205,23 +205,23 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Console";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
+            //
             // txtConsole
-            // 
+            //
             this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConsole.Location = new System.Drawing.Point(3, 3);
             this.txtConsole.Multiline = true;
             this.txtConsole.Name = "txtConsole";
             this.txtConsole.Size = new System.Drawing.Size(621, 631);
             this.txtConsole.TabIndex = 0;
-            // 
+            //
             // columnHeader3
-            // 
+            //
             this.columnHeader3.Text = "Time";
             this.columnHeader3.Width = 86;
-            // 
+            //
             // TesterGUI
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 669);
@@ -244,10 +244,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.ListView lvUploaders;
         private System.Windows.Forms.ColumnHeader columnHeader1;
