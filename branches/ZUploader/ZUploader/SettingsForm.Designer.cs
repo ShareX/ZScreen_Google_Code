@@ -34,9 +34,9 @@
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpProxy = new System.Windows.Forms.TabPage();
-            this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpFTP.SuspendLayout();
@@ -82,7 +82,7 @@
             this.pgProxy.Location = new System.Drawing.Point(3, 3);
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgProxy.Size = new System.Drawing.Size(537, 341);
+            this.pgProxy.Size = new System.Drawing.Size(476, 253);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
             // 
@@ -111,28 +111,6 @@
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
             // 
-            // tpFTP
-            // 
-            this.tpFTP.Controls.Add(this.pgFTPSettings);
-            this.tpFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(537, 341);
-            this.tpFTP.TabIndex = 1;
-            this.tpFTP.Text = "FTP";
-            this.tpFTP.UseVisualStyleBackColor = true;
-            // 
-            // tpProxy
-            // 
-            this.tpProxy.Controls.Add(this.pgProxy);
-            this.tpProxy.Location = new System.Drawing.Point(4, 22);
-            this.tpProxy.Name = "tpProxy";
-            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProxy.Size = new System.Drawing.Size(537, 341);
-            this.tpProxy.TabIndex = 2;
-            this.tpProxy.Text = "Proxy";
-            this.tpProxy.UseVisualStyleBackColor = true;
-            // 
             // cbShellContextMenu
             // 
             this.cbShellContextMenu.AutoSize = true;
@@ -143,6 +121,28 @@
             this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell Context Menu";
             this.cbShellContextMenu.UseVisualStyleBackColor = true;
             this.cbShellContextMenu.CheckedChanged += new System.EventHandler(this.cbShellContextMenu_CheckedChanged);
+            // 
+            // tpFTP
+            // 
+            this.tpFTP.Controls.Add(this.pgFTPSettings);
+            this.tpFTP.Location = new System.Drawing.Point(4, 22);
+            this.tpFTP.Name = "tpFTP";
+            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFTP.Size = new System.Drawing.Size(482, 259);
+            this.tpFTP.TabIndex = 1;
+            this.tpFTP.Text = "FTP";
+            this.tpFTP.UseVisualStyleBackColor = true;
+            // 
+            // tpProxy
+            // 
+            this.tpProxy.Controls.Add(this.pgProxy);
+            this.tpProxy.Location = new System.Drawing.Point(4, 22);
+            this.tpProxy.Name = "tpProxy";
+            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tpProxy.Size = new System.Drawing.Size(482, 259);
+            this.tpProxy.TabIndex = 2;
+            this.tpProxy.Text = "Proxy";
+            this.tpProxy.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
