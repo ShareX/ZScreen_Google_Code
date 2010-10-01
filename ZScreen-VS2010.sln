@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crop2", "..\branches\Crop2\Crop2\Crop2.csproj", "{39EBFBE7-317B-4778-99FF-187F2AC6110F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crop2", "Crop2\Crop2\Crop2.csproj", "{39EBFBE7-317B-4778-99FF-187F2AC6110F}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
