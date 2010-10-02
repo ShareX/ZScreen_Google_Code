@@ -107,6 +107,7 @@ namespace ZScreenLib
                     Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, GUI.niTray, Resources.zss_busy);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
+                    //Issue 331
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(GUI.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
