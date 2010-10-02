@@ -10,6 +10,7 @@ using UploadersLib;
 using UploadersLib.Helpers;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
+using ZUploader;
 
 namespace ZScreenLib
 {
@@ -106,7 +107,7 @@ namespace ZScreenLib
                     Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, GUI.niTray, Resources.zss_busy);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
-                    int progress = (int)e.UserState;
+                    int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(GUI.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
                     GUI.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());
