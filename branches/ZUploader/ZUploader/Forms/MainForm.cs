@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Diagnostics;
@@ -38,35 +40,32 @@ namespace ZUploader
         public MainForm(string path)
         {
             InitializeComponent();
-            LoadSettings();
             commandLinePath = path;
+            InitControls();
+            UpdateControls();
         }
 
-        private void LoadSettings()
+        private void InitControls()
         {
+            this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
+
             foreach (string imageUploader in typeof(ImageDestType2).GetDescriptions())
             {
                 tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
             tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
-            ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
-            UploadManager.ImageUploader = (ImageDestType2)Program.Settings.SelectedImageUploaderDestination;
 
             foreach (string fileUploader in typeof(FileUploaderType2).GetDescriptions())
             {
                 tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
-            ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
-            UploadManager.FileUploader = (FileUploaderType2)Program.Settings.SelectedFileUploaderDestination;
 
             foreach (string textUploader in typeof(TextDestType2).GetDescriptions())
             {
                 tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
             tsddbTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
-            ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
-            UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
 
             ImageList il = new ImageList();
             il.ColorDepth = ColorDepth.Depth32Bit;
@@ -76,48 +75,18 @@ namespace ZUploader
             lvUploads.SmallImageList = il;
 
             UploadManager.ListViewControl = lvUploads;
-
-            UpdateControls();
-            this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
         }
 
-        private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void LoadSettings()
         {
-            for (int i = 0; i < tsddbImageUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbImageUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedImageUploaderDestination = i;
-                    UploadManager.ImageUploader = (ImageDestType2)i;
-                }
-            }
-        }
+            ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
+            UploadManager.ImageUploader = (ImageDestType2)Program.Settings.SelectedImageUploaderDestination;
 
-        private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsddbFileUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbFileUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedFileUploaderDestination = i;
-                    UploadManager.FileUploader = (FileUploaderType2)i;
-                }
-            }
-        }
+            ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
+            UploadManager.FileUploader = (FileUploaderType2)Program.Settings.SelectedFileUploaderDestination;
 
-        private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            for (int i = 0; i < tsddbTextUploaders.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbTextUploaders.DropDownItems[i];
-                if (tsmi.Checked = tsmi == e.ClickedItem)
-                {
-                    Program.Settings.SelectedTextUploaderDestination = i;
-                    UploadManager.TextUploader = (TextDestType2)i;
-                }
-            }
+            ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
+            UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
         }
 
         private void CopyURL()
@@ -235,6 +204,45 @@ namespace ZUploader
 
         #region Form events
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            DebugTimer.WriteLine("Form Load.");
+            LoadSettings();
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            TimeSpan startupTime = DateTime.Now - Program.StartTime;
+            // DateTime.Now not fast enough therefore (Application ready time - Application started time) != Startup time
+            DebugTimer.WriteLine("Form Shown. Startup time: {0}ms", ((int)startupTime.TotalMilliseconds).ToString());
+
+            UploadManager.Upload(commandLinePath);
+            IsReady = true;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            UploadManager.Upload(files);
+        }
+
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
             UploadManager.ClipboardUpload();
@@ -321,36 +329,45 @@ namespace ZUploader
             OpenURL();
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
+        private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            this.Refresh();
-        }
-
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            UploadManager.Upload(commandLinePath);
-
-            IsReady = true;
-        }
-
-        private void MainForm_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            for (int i = 0; i < tsddbImageUploaders.DropDownItems.Count; i++)
             {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbImageUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedImageUploaderDestination = i;
+                    UploadManager.ImageUploader = (ImageDestType2)i;
+                }
             }
         }
 
-        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            UploadManager.Upload(files);
+            for (int i = 0; i < tsddbFileUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbFileUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedFileUploaderDestination = i;
+                    UploadManager.FileUploader = (FileUploaderType2)i;
+                }
+            }
         }
 
-        #endregion
+        private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsddbTextUploaders.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbTextUploaders.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedTextUploaderDestination = i;
+                    UploadManager.TextUploader = (TextDestType2)i;
+                }
+            }
+        }
+
+        #endregion Form events
     }
 }

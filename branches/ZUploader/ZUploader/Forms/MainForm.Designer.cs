@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 namespace ZUploader
 {
@@ -375,6 +377,7 @@ namespace ZUploader
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
@@ -391,7 +394,7 @@ namespace ZUploader
 
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private ListViewNF lvUploads;
         private System.Windows.Forms.ColumnHeader chStatus;
@@ -426,4 +429,3 @@ namespace ZUploader
         private System.Windows.Forms.ColumnHeader chElapsed;
     }
 }
-

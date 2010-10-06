@@ -47,7 +47,7 @@ namespace UploadersLib
         [Description("https://")]
         Https,
         [Description("file://")]
-        File,
+        File
     }
 
     public enum LinkType
@@ -106,8 +106,6 @@ namespace UploadersLib
         CLIPBOARD,
         [Description("File")]
         FILE,
-        [Description("Filez - www.filez.muffinz.eu")]
-        FilezImages,
         [Description("ImageShack - www.imageshack.us")]
         IMAGESHACK,
         [Description("TinyPic - www.tinypic.com")]
@@ -120,8 +118,10 @@ namespace UploadersLib
         IMAGEBAM,
         [Description("Img1 - www.img1.us")]
         IMG1,
-        [Description("Imgur - www.imgur.com")]
-        IMGUR,
+        //[Description("Imgur - www.imgur.com")]
+        //IMGUR,
+        [Description("Filez - www.filez.muffinz.eu")]
+        FilezImages,
         [Description("UploadScreenshot - www.uploadscreenshot.com")]
         UPLOADSCREENSHOT,
         [Description("TwitPic - www.twitpic.com")]
@@ -193,8 +193,6 @@ namespace UploadersLib
     {
         [Description("FTP Server")]
         FTP,
-        [Description("Filez - www.filez.muffinz.eu")]
-        FilezFiles,
         [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]
@@ -204,7 +202,9 @@ namespace UploadersLib
         [Description("Drop.io - www.drop.io")]
         DropIO,
         [Description("ShareCX - www.share.cx")]
-        ShareCX
+        ShareCX,
+        [Description("Filez - www.filez.muffinz.eu")]
+        FilezFiles
     }
 
     public enum RapidShareAcctType

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Diagnostics;
@@ -32,9 +34,12 @@ namespace ZUploader
 {
     public class Settings
     {
+        // Main Form
         public int SelectedImageUploaderDestination = 0;
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
+
+        // Settings Form
         public FTPAccount FTPAccount = new FTPAccount();
         public ProxyInfo ProxySettings = new ProxyInfo();
         public bool ClipboardAutoCopy = true;
@@ -44,28 +49,34 @@ namespace ZUploader
 
         public bool Save()
         {
-            return Save(Program.SettingsFilePath);
+            using (new DebugTimer("Settings.Save", true))
+            {
+                return Save(Program.SettingsFilePath);
+            }
         }
 
         public bool Save(string path)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            lock (this)
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
-            }
-
-            try
-            {
-                XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
+                if (!Directory.Exists(Path.GetDirectoryName(path)))
                 {
-                    xs.Serialize(fs, this);
-                    return true;
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
+
+                try
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Settings));
+                    using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
+                    {
+                        xs.Serialize(fs, this);
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                }
             }
 
             return false;
@@ -73,7 +84,10 @@ namespace ZUploader
 
         public static Settings Load()
         {
-            return Load(Program.SettingsFilePath);
+            using (new DebugTimer("Settings.Load", true))
+            {
+                return Load(Program.SettingsFilePath);
+            }
         }
 
         public static Settings Load(string path)
@@ -102,6 +116,6 @@ namespace ZUploader
             return new Settings();
         }
 
-        #endregion
+        #endregion Functions
     }
 }

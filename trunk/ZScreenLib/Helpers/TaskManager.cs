@@ -394,9 +394,9 @@ namespace ZScreenLib
                 case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
                     break;
-                case ImageDestType.IMGUR:
-                    imageUploader = new Imgur(Engine.IMGUR_KEY);
-                    break;
+                //case ImageDestType.IMGUR:
+                //    imageUploader = new Imgur(Engine.IMGUR_KEY);
+                //    break;
                 case ImageDestType.FilezImages:
                     imageUploader = new FilezImages();
                     break;

@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.ComponentModel;
@@ -36,20 +38,20 @@ namespace ZUploader
 
     public enum ImageDestType2
     {
-        [Description("filez.muffinz.eu")]
-        FilezImages,
         [Description("imageshack.us")]
         IMAGESHACK,
         [Description("tinypic.com")]
         TINYPIC,
         [Description("imagebin.ca")]
         IMAGEBIN,
-        [Description("img1.us")]
-        IMG1,
+        //[Description("img1.us")]
+        //IMG1,
         [Description("imgur.com")]
         IMGUR,
         [Description("uploadscreenshot.com")]
         UPLOADSCREENSHOT,
+        [Description("filez.muffinz.eu")]
+        FilezImages,
         [Description("Use file uploader")]
         FILE
     }
@@ -70,8 +72,6 @@ namespace ZUploader
 
     public enum FileUploaderType2
     {
-        [Description("filez.muffinz.eu")]
-        FilezFiles,
         [Description("rapidshare.com")]
         RapidShare,
         [Description("sendspace.com")]
@@ -82,6 +82,8 @@ namespace ZUploader
         DropIO,
         [Description("share.cx")]
         ShareCX,
+        [Description("filez.muffinz.eu")]
+        FilezFiles,
         [Description("FTP Server")]
         FTP
     }

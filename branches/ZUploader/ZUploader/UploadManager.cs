@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,12 +17,14 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -29,7 +32,6 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib.Helpers;
-using System.Collections.Generic;
 
 namespace ZUploader
 {

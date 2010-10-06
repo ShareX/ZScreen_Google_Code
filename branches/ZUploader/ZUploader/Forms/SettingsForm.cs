@@ -10,6 +10,11 @@ namespace ZUploader
         public SettingsForm()
         {
             InitializeComponent();
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
             pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;

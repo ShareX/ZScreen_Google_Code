@@ -34,9 +34,9 @@
             this.lblCopyright = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // lblProductName
-            // 
+            //
             this.lblProductName.BackColor = System.Drawing.Color.Transparent;
             this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblProductName.ForeColor = System.Drawing.Color.White;
@@ -46,9 +46,9 @@
             this.lblProductName.TabIndex = 1;
             this.lblProductName.Text = "ZUploader 1.1.0.0";
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // lblZScreen
-            // 
+            //
             this.lblZScreen.AutoSize = true;
             this.lblZScreen.BackColor = System.Drawing.Color.Transparent;
             this.lblZScreen.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -60,9 +60,9 @@
             this.lblZScreen.TabIndex = 2;
             this.lblZScreen.Text = "ZScreen.net";
             this.lblZScreen.Click += new System.EventHandler(this.lblZScreen_Click);
-            // 
+            //
             // btnClose
-            // 
+            //
             this.btnClose.Location = new System.Drawing.Point(280, 168);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(83, 31);
@@ -70,9 +70,9 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
+            //
             // lblCopyright
-            // 
+            //
             this.lblCopyright.BackColor = System.Drawing.Color.Transparent;
             this.lblCopyright.ForeColor = System.Drawing.Color.White;
             this.lblCopyright.Location = new System.Drawing.Point(16, 120);
@@ -81,9 +81,9 @@
             this.lblCopyright.TabIndex = 4;
             this.lblCopyright.Text = "Copyright";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.ForeColor = System.Drawing.Color.White;
@@ -92,9 +92,9 @@
             this.label1.Size = new System.Drawing.Size(195, 26);
             this.label1.TabIndex = 5;
             this.label1.Text = "FTP Library: http://www.starksoft.com\r\nIcons: http://p.yusukekamiyamane.com";
-            // 
+            //
             // AboutForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -111,10 +111,9 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.AboutForm_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
+        #endregion Windows Form Designer generated code
 
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.Label lblZScreen;

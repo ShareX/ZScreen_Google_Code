@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using UploadersLib.Helpers;
-using System.Collections.Generic;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -22,7 +22,7 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                ifm.Add(response.TrimEnd('/','f','o','r','c','e'), LinkType.FULLIMAGE);
+                ifm.Add(response.TrimEnd('/', 'f', 'o', 'r', 'c', 'e'), LinkType.FULLIMAGE);
             }
 
             return ifm;

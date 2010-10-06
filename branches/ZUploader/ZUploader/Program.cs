@@ -1,4 +1,5 @@
 ﻿#region License Information (GPL v2)
+
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
     Copyright (C) 2010 ZScreen Developers
@@ -16,10 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-    
+
     Optionally you can also view the license at <http://www.gnu.org/licenses/>.
 */
-#endregion
+
+#endregion License Information (GPL v2)
 
 using System;
 using System.Diagnostics;
@@ -54,27 +56,38 @@ namespace ZUploader
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
         public const string UploadScreenshotKey = "2807828f377649572393126680";
 
+        public static DateTime StartTime;
+
         private static MainForm mainForm;
 
         [STAThread]
         static void Main(string[] args)
         {
+            DebugTimer.WriteLine("Application started.");
+
+            StartTime = DateTime.Now;
+
             string name = Assembly.GetExecutingAssembly().GetName().Name;
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
 
-            Program.Settings = Settings.Load();
-
-            string path = null;
-            if (args.Length > 0) path = args[0];
+            Thread settingThread = new Thread(() => Settings = Settings.Load());
+            settingThread.Start();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            mainForm = new MainForm(path);
+            string path = null;
+            if (args.Length > 0) path = args[0];
+
+            using (new DebugTimer("MainForm init", true)) mainForm = new MainForm(path);
+
+            settingThread.Join();
 
             Application.Run(mainForm);
 
             Settings.Save();
+
+            DebugTimer.WriteLine("Application stopped.");
         }
 
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)
