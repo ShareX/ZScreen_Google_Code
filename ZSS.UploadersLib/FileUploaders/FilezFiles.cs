@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using UploadersLib.Helpers;
-using System.Collections.Generic;
 
 namespace UploadersLib.FileUploaders
 {
