@@ -23,7 +23,9 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.IO;
+using HistoryLib;
 using UploadersLib.Helpers;
 
 namespace ZUploader
@@ -63,24 +65,40 @@ namespace ZUploader
                 switch (uploaderType)
                 {
                     case EDataType.File:
-                        UploaderName = UploadManager.FileUploader.GetDescription();
+                        UploaderHost = UploadManager.FileUploader.GetDescription();
                         break;
                     case EDataType.Image:
-                        UploaderName = UploadManager.ImageUploader.GetDescription();
+                        UploaderHost = UploadManager.ImageUploader.GetDescription();
                         break;
                     case EDataType.Text:
-                        UploaderName = UploadManager.TextUploader.GetDescription();
+                        UploaderHost = UploadManager.TextUploader.GetDescription();
                         break;
                 }
             }
         }
 
-        public string UploaderName { get; set; }
+        public string UploaderHost { get; private set; }
+        public DateTime UploadTime { get; set; }
         public UploadResult Result { get; set; }
 
         public UploadInfo()
         {
             Result = new UploadResult();
+        }
+
+        public HistoryItem GetHistoryItem()
+        {
+            return new HistoryItem
+            {
+                Filename = FileName,
+                Filepath = FilePath,
+                DateTimeUtc = UploadTime,
+                Type = UploaderType.ToString(),
+                Host = UploaderHost,
+                URL = Result.URL,
+                ThumbnailURL = Result.ThumbnailURL,
+                DeletionURL = Result.DeletionURL
+            };
         }
     }
 }

@@ -30,7 +30,9 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
+using HistoryLib;
 using UploadersLib.Helpers;
 
 namespace ZUploader
@@ -157,7 +159,7 @@ namespace ZUploader
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(info.UploaderType.ToString());
-                lvi.SubItems.Add(info.UploaderName);
+                lvi.SubItems.Add(info.UploaderHost);
                 lvi.SubItems.Add(string.Empty);
                 lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
                 lvi.ImageIndex = 0;
@@ -209,7 +211,18 @@ namespace ZUploader
                 {
                     SystemSounds.Exclamation.Play();
                 }
+
+                if (!string.IsNullOrEmpty(info.Result.URL) && (info.Result.Errors == null || info.Result.Errors.Count == 0))
+                {
+                    new Thread(() => AddHistoryItemToDB(info.GetHistoryItem())).Start();
+                }
             }
+        }
+
+        private static bool AddHistoryItemToDB(HistoryItem historyItem)
+        {
+            // TODO
+            return true;
         }
     }
 }

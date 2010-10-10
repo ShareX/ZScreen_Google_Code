@@ -112,6 +112,10 @@
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
+      <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
+      <Name>HistoryLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Docs\Changes.log" />

@@ -263,6 +263,12 @@ namespace ZUploader
             OpenURL();
         }
 
+        private void tsbHistory_Click(object sender, EventArgs e)
+        {
+            // TODO
+            //new HistoryForm().Show();
+        }
+
         private void tsbSettings_Click(object sender, EventArgs e)
         {
             new SettingsForm().Show();

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace ZUploader
+namespace HistoryLib
 {
     internal class ListViewNF : ListView
     {

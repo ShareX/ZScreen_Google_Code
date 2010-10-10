@@ -135,6 +135,8 @@ namespace ZUploader
             {
                 Info.Result.Errors.Add(ex.Message);
             }
+
+            Info.UploadTime = DateTime.UtcNow;
         }
 
         public UploadResult UploadFile(Stream stream, string fileName)

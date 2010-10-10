@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "..\..\t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.HelpersLib", "..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryLib", "HistoryLib\HistoryLib.csproj", "{E7DE6237-AEA2-498B-8F56-9B392472C490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|x86.ActiveCfg = Release|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E7DE6237-AEA2-498B-8F56-9B392472C490}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
