@@ -37,14 +37,18 @@ namespace ZUploader
     {
         public static Settings Settings;
 
-        public static string SettingsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string ZUploaderPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+
         public static string SettingsFileName = "Settings.xml";
         public static string SettingsFilePath
         {
-            get
-            {
-                return Path.Combine(SettingsDir, SettingsFileName);
-            }
+            get { return Path.Combine(ZUploaderPersonalPath, SettingsFileName); }
+        }
+
+        public static string HistoryFileName = "History.db3";
+        public static string HistoryFilePath
+        {
+            get { return Path.Combine(ZUploaderPersonalPath, HistoryFileName); }
         }
 
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";

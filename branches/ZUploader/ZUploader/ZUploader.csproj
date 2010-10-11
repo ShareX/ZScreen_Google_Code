@@ -131,6 +131,7 @@
     <None Include="Resources\document--plus.png" />
     <None Include="Resources\application-form.png" />
     <None Include="Resources\information.png" />
+    <None Include="Resources\address-book-blue.png" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

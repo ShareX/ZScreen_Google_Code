@@ -24,12 +24,13 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Data;
 
 namespace HistoryLib
 {
     public class HistoryItem
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
 
         private string filename;
         public string Filename
@@ -142,6 +143,29 @@ namespace HistoryLib
             }
 
             return true;
+        }
+
+        public static explicit operator HistoryItem(DataRow row)
+        {
+            HistoryItem historyItem = null;
+
+            if (row != null)
+            {
+                historyItem = new HistoryItem
+                {
+                    ID = row.Field<long>("ID"),
+                    Filename = row.Field<string>("Filename"),
+                    Filepath = row.Field<string>("Filepath"),
+                    DateTimeUtc = row.Field<DateTime>("DateTime"),
+                    Type = row.Field<string>("Type"),
+                    Host = row.Field<string>("Host"),
+                    URL = row.Field<string>("URL"),
+                    ThumbnailURL = row.Field<string>("ThumbnailURL"),
+                    DeletionURL = row.Field<string>("DeletionURL")
+                };
+            }
+
+            return historyItem;
         }
     }
 }

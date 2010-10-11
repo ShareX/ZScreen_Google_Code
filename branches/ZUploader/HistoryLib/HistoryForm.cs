@@ -45,6 +45,11 @@ namespace HistoryLib
             AddHistoryItems(historyItems);
         }
 
+        private void HistoryForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (history != null) history.Dispose();
+        }
+
         private void AddHistoryItems(HistoryItem[] historyItems)
         {
             lvHistory.SuspendLayout();

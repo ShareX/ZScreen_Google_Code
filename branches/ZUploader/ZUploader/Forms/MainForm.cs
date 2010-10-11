@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using HistoryLib;
 using UploadersLib.Helpers;
 
 namespace ZUploader
@@ -265,8 +266,7 @@ namespace ZUploader
 
         private void tsbHistory_Click(object sender, EventArgs e)
         {
-            // TODO
-            //new HistoryForm().Show();
+            new HistoryForm(Program.HistoryFilePath).Show();
         }
 
         private void tsbSettings_Click(object sender, EventArgs e)

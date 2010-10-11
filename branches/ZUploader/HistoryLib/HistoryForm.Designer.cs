@@ -107,6 +107,7 @@
             this.Controls.Add(this.lvHistory);
             this.Name = "HistoryForm";
             this.Text = "HistoryFormTest";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.HistoryForm_FormClosed);
             this.Load += new System.EventHandler(this.HistoryForm_Load);
             this.ResumeLayout(false);
         }

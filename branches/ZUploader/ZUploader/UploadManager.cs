@@ -30,7 +30,6 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using HistoryLib;
 using UploadersLib.Helpers;
@@ -214,15 +213,9 @@ namespace ZUploader
 
                 if (!string.IsNullOrEmpty(info.Result.URL) && (info.Result.Errors == null || info.Result.Errors.Count == 0))
                 {
-                    new Thread(() => AddHistoryItemToDB(info.GetHistoryItem())).Start();
+                    HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
                 }
             }
-        }
-
-        private static bool AddHistoryItemToDB(HistoryItem historyItem)
-        {
-            // TODO
-            return true;
         }
     }
 }

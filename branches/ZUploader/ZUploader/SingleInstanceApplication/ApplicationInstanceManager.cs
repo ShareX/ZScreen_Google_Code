@@ -118,9 +118,7 @@ namespace SingleInstanceApplication
             if (callback == null) return;
 
             // invoke event handler on other process
-            callback(state,
-                     new InstanceCallbackEventArgs(InstanceProxy.IsFirstInstance,
-                                                   InstanceProxy.CommandLineArgs));
+            callback(state, new InstanceCallbackEventArgs(InstanceProxy.IsFirstInstance, InstanceProxy.CommandLineArgs));
         }
     }
 }

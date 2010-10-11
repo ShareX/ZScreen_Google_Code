@@ -122,14 +122,19 @@ namespace HistoryLib
 
         public int ExecuteNonQuery(string query)
         {
+            using (SQLiteCommand command = CreateCommand(query))
+            {
+                return ExecuteNonQuery(command);
+            }
+        }
+
+        public int ExecuteNonQuery(SQLiteCommand command)
+        {
             int result = 0;
 
             Action action = () =>
             {
-                using (SQLiteCommand command = CreateCommand(query))
-                {
-                    result = command.ExecuteNonQuery();
-                }
+                result = command.ExecuteNonQuery();
             };
 
             LockProtection(action);
@@ -160,10 +165,8 @@ namespace HistoryLib
 
             Action action = () =>
             {
-                using (SQLiteCommand command = CreateCommand(query))
-                {
-                    dataAdapter = new SQLiteDataAdapter(command);
-                }
+                SQLiteCommand command = CreateCommand(query);
+                dataAdapter = new SQLiteDataAdapter(command);
             };
 
             LockProtection(action);
@@ -229,7 +232,7 @@ namespace HistoryLib
             return list;
         }
 
-        public int Insert(string table, Dictionary<string, object> parameters)
+        public bool Insert(string table, Dictionary<string, object> parameters)
         {
             string columnNames = string.Join(", ", parameters.Keys.ToArray());
             string columnValues = string.Join(", ", parameters.Keys.Select(x => "@" + x).ToArray());
@@ -241,9 +244,14 @@ namespace HistoryLib
                 {
                     command.Parameters.AddWithValue("@" + parameter.Key, parameter.Value ?? DBNull.Value);
                 }
-            }
 
-            return ExecuteNonQuery(query);
+                return ExecuteNonQuery(command) == 1;
+            }
+        }
+
+        public DataTable SelectAll(string table)
+        {
+            return ExecuteQueryDataTable("SELECT * FROM " + table);
         }
 
         private SQLiteCommand CreateCommand(string query)

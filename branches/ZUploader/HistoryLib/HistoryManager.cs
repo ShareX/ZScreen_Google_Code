@@ -28,10 +28,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace HistoryLib
 {
-    public class HistoryManager
+    public class HistoryManager : IDisposable
     {
         private const string EmptyDatabasePath = "HistoryLib.Database.History.db3";
 
@@ -57,15 +58,17 @@ namespace HistoryLib
             return false;
         }
 
+        public void Dispose()
+        {
+            sqlite.Dispose();
+        }
+
         public bool AddHistoryItem(HistoryItem historyItem)
         {
-            bool result = false;
-
-            if (!string.IsNullOrEmpty(historyItem.Filename) && historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
+            if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) && historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
             {
                 Dictionary<string, object> parameters = new Dictionary<string, object>
                 {
-                    {"ID", historyItem.ID},
                     {"Filename", historyItem.Filename},
                     {"Filepath", historyItem.Filepath},
                     {"DateTime", historyItem.DateTimeUtc},
@@ -76,47 +79,37 @@ namespace HistoryLib
                     {"DeletionURL", historyItem.DeletionURL}
                 };
 
-                result = sqlite.Insert("History", parameters) == 1;
+                return sqlite.Insert("History", parameters);
             }
 
-            return result;
+            return false;
         }
 
         public HistoryItem[] GetHistoryItems()
         {
-            DataTable historyTable = sqlite.ExecuteQueryDataTable("SELECT * FROM History");
+            DataTable historyTable = sqlite.SelectAll("History");
 
             HistoryItem[] historyItems = new HistoryItem[historyTable.Rows.Count];
 
             for (int i = 0; i < historyItems.Length; i++)
             {
-                historyItems[i] = RowToHistoryItem(historyTable.Rows[i]);
+                historyItems[i] = (HistoryItem)historyTable.Rows[i];
             }
 
             return historyItems;
         }
 
-        private HistoryItem RowToHistoryItem(DataRow row)
+        public static void AutomaticlyAddHistoryItemAsync(string databasePath, HistoryItem historyItem)
         {
-            HistoryItem historyItem = null;
-
-            if (row != null)
+            ThreadStart thread = () =>
             {
-                historyItem = new HistoryItem
+                using (HistoryManager history = new HistoryManager(databasePath))
                 {
-                    ID = (int)row["ID"],
-                    Filename = (string)row["Filename"],
-                    Filepath =(string)row["Filepath"],
-                    DateTimeUtc = (DateTime)row["DateTime"],
-                    Type =(string)row["Type"],
-                    Host =(string)row["Host"],
-                    URL = (string)row["URL"],
-                    ThumbnailURL = (string)row["ThumbnailURL"],
-                    DeletionURL = (string)row["DeletionURL"]
-                };
-            }
+                    history.AddHistoryItem(historyItem);
+                }
+            };
 
-            return historyItem;
+            new Thread(thread).Start();
         }
     }
 }
