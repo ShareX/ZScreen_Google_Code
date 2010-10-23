@@ -118,8 +118,8 @@ namespace UploadersLib
         IMAGEBAM,
         [Description("Img1 - www.img1.us")]
         IMG1,
-        //[Description("Imgur - www.imgur.com")]
-        //IMGUR,
+        [Description("Imgur - www.imgur.com")]
+        IMGUR,
         [Description("Filez - www.filez.muffinz.eu")]
         FilezImages,
         [Description("UploadScreenshot - www.uploadscreenshot.com")]
