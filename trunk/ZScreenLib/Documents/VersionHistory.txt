@@ -1,5 +1,8 @@
-Version 3.30 - 20100515
+Version 3.32 - 20101028
 
+3.32.0.1 Explorer context menu for uploading did not work [Issue 331] {rgrthat}
+3.32.0.0 Added filez.muffinz.eu File Uploader support {semas123}	
+3.31.0.0 Advanced option to enable Crop Shot with multiple regions selection {Jaex} 
 3.30.0.0 Added share.cx File Uploader support {Jaex}
 3.29.0.0 Added UploadScreenshot Image Uploader support {Jaex}
 3.28.3.2 Uploading did not work in portable mode [Issue 268] {McoreD}
@@ -12,7 +15,7 @@ Version 3.30 - 20100515
 3.27.5.0 Progress percentage now works for all image uploaders {Jaex}
 3.27.4.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
 3.27.4.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
-3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log [__y] {McoreD}
+3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log {McoreD}
 
 Version 3.27 - 20100315
 
