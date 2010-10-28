@@ -24,98 +24,45 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
 using UploadersLib;
 using UploadersLib.Helpers;
 
 namespace ZUploader
 {
+    [Serializable]
     public class Settings
     {
         // Main Form
+
         public int SelectedImageUploaderDestination = 0;
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
 
         // Settings Form
+
         public FTPAccount FTPAccount = new FTPAccount();
         public ProxyInfo ProxySettings = new ProxyInfo();
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
 
-        #region Functions
+        public bool SaveHistory = true;
+        public bool UseCustomHistoryPath = false;
+        public string CustomHistoryPath = string.Empty;
 
         public bool Save()
         {
             using (new DebugTimer("Settings.Save", true))
             {
-                return Save(Program.SettingsFilePath);
+                return SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Binary);
             }
-        }
-
-        public bool Save(string path)
-        {
-            lock (this)
-            {
-                if (!Directory.Exists(Path.GetDirectoryName(path)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(path));
-                }
-
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                    using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
-                    {
-                        xs.Serialize(fs, this);
-                        return true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.ToString());
-                }
-            }
-
-            return false;
         }
 
         public static Settings Load()
         {
             using (new DebugTimer("Settings.Load", true))
             {
-                return Load(Program.SettingsFilePath);
+                return SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Binary);
             }
         }
-
-        public static Settings Load(string path)
-        {
-            if (!Directory.Exists(Path.GetDirectoryName(path)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
-            }
-
-            if (File.Exists(path))
-            {
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        return xs.Deserialize(fs) as Settings;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.ToString());
-                }
-            }
-
-            return new Settings();
-        }
-
-        #endregion Functions
     }
 }

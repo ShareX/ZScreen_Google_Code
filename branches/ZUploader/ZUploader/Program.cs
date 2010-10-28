@@ -39,16 +39,26 @@ namespace ZUploader
 
         public static string ZUploaderPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
 
-        public static string SettingsFileName = "Settings.xml";
+        private const string SettingsFileName = "Settings.bin"; // "Settings.xml";
         public static string SettingsFilePath
         {
             get { return Path.Combine(ZUploaderPersonalPath, SettingsFileName); }
         }
 
-        public static string HistoryFileName = "History.db3";
+        private const string HistoryFileName = "History.db3";
         public static string HistoryFilePath
         {
-            get { return Path.Combine(ZUploaderPersonalPath, HistoryFileName); }
+            get
+            {
+                if (Settings != null && Settings.UseCustomHistoryPath && !string.IsNullOrEmpty(Program.Settings.CustomHistoryPath))
+                {
+                    return Settings.CustomHistoryPath;
+                }
+                else
+                {
+                    return Path.Combine(ZUploaderPersonalPath, HistoryFileName);
+                }
+            }
         }
 
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
@@ -60,7 +70,7 @@ namespace ZUploader
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
         public const string UploadScreenshotKey = "2807828f377649572393126680";
 
-        public static DateTime StartTime;
+        public static Stopwatch StartTimer;
 
         private static MainForm mainForm;
 
@@ -69,7 +79,8 @@ namespace ZUploader
         {
             DebugTimer.WriteLine("Application started.");
 
-            StartTime = DateTime.Now;
+            StartTimer = new Stopwatch();
+            StartTimer.Start();
 
             string name = Assembly.GetExecutingAssembly().GetName().Name;
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;

@@ -207,15 +207,13 @@ namespace ZUploader
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            DebugTimer.WriteLine("Form Load.");
             LoadSettings();
+            DebugTimer.WriteLine("MainForm_Load. Settings loaded.");
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            TimeSpan startupTime = DateTime.Now - Program.StartTime;
-            // DateTime.Now not fast enough therefore (Application ready time - Application started time) != Startup time
-            DebugTimer.WriteLine("Form Shown. Startup time: {0}ms", ((int)startupTime.TotalMilliseconds).ToString());
+            DebugTimer.WriteLine("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds.ToString());
 
             UploadManager.Upload(commandLinePath);
             IsReady = true;

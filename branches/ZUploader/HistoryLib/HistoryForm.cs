@@ -56,15 +56,11 @@ namespace HistoryLib
 
             foreach (HistoryItem hi in historyItems)
             {
-                ListViewItem lvi = new ListViewItem(hi.ID.ToString());
+                ListViewItem lvi = new ListViewItem(hi.DateTimeLocalString);
                 lvi.SubItems.Add(hi.Filename);
-                lvi.SubItems.Add(hi.Filepath);
-                lvi.SubItems.Add(hi.DateTimeLocalString);
                 lvi.SubItems.Add(hi.Type);
                 lvi.SubItems.Add(hi.Host);
                 lvi.SubItems.Add(hi.URL);
-                lvi.SubItems.Add(hi.ThumbnailURL);
-                lvi.SubItems.Add(hi.DeletionURL);
                 lvHistory.Items.Add(lvi);
             }
 
