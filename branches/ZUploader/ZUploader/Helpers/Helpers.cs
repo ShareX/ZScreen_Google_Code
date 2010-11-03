@@ -24,39 +24,28 @@
 #endregion License Information (GPL v2)
 
 using System.IO;
+using System.Linq;
 
 namespace ZUploader
 {
     public static class Helpers
     {
-        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp" };
+        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
 
-        public static bool IsValidImageFile(string path)
+        public static bool IsImageFile(string path)
         {
-            foreach (string ext in ImageFileExtensions)
-            {
-                if (Path.GetExtension(path).ToLower().EndsWith(ext))
-                {
-                    return true;
-                }
-            }
+            string ext = Path.GetExtension(path).ToLower();
 
-            return false;
+            return ImageFileExtensions.Any(x => ext.EndsWith(x));
         }
 
-        private static string[] TextFileExtensions = { "txt", "log" };
+        private static string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
 
-        public static bool IsValidTextFile(string path)
+        public static bool IsTextFile(string path)
         {
-            foreach (string ext in TextFileExtensions)
-            {
-                if (Path.GetExtension(path).ToLower().EndsWith(ext))
-                {
-                    return true;
-                }
-            }
+            string ext = Path.GetExtension(path).ToLower();
 
-            return false;
+            return TextFileExtensions.Any(x => ext.EndsWith(x));
         }
     }
 }

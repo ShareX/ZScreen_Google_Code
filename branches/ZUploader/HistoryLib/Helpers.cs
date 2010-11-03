@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.IO;
+using System.Linq;
 
 namespace HistoryLib
 {
@@ -49,6 +50,24 @@ namespace HistoryLib
             }
 
             return false;
+        }
+
+        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
+
+        public static bool IsImageFile(string path)
+        {
+            string ext = Path.GetExtension(path).ToLower();
+
+            return ImageFileExtensions.Any(x => ext.EndsWith(x));
+        }
+
+        private static string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
+
+        public static bool IsTextFile(string path)
+        {
+            string ext = Path.GetExtension(path).ToLower();
+
+            return TextFileExtensions.Any(x => ext.EndsWith(x));
         }
     }
 }

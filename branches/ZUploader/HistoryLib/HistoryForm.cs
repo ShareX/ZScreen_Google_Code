@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace HistoryLib
@@ -61,10 +62,80 @@ namespace HistoryLib
                 lvi.SubItems.Add(hi.Type);
                 lvi.SubItems.Add(hi.Host);
                 lvi.SubItems.Add(hi.URL);
+                lvi.Tag = hi;
                 lvHistory.Items.Add(lvi);
             }
 
             lvHistory.ResumeLayout(true);
+        }
+
+        private void cmsHistory_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel =  !UpdateHistoryMenu();
+        }
+
+        private bool UpdateHistoryMenu()
+        {
+            HistoryItem hi = GetSelectedHistoryItem();
+
+            if (hi != null)
+            {
+                bool URLExist = !string.IsNullOrEmpty(hi.URL);
+                bool thumbnailURLExist = !string.IsNullOrEmpty(hi.ThumbnailURL);
+                bool deletionURLExist = !string.IsNullOrEmpty(hi.DeletionURL);
+                bool filePathValid = !string.IsNullOrEmpty(hi.Filepath) && Path.HasExtension(hi.Filepath);
+                bool fileExist =  filePathValid && File.Exists(hi.Filepath);
+                bool folderExist = filePathValid && Directory.Exists(Path.GetDirectoryName(hi.Filepath));
+                bool isImageFile = fileExist && Helpers.IsImageFile(hi.Filepath);
+                bool isTextfile = fileExist && Helpers.IsTextFile(hi.Filepath);
+
+                // Open
+                tsmiOpenURL.Enabled = URLExist;
+                tsmiOpenThumbnailURL.Enabled = thumbnailURLExist;
+                tsmiOpenDeletionURL.Enabled = deletionURLExist;
+
+                tsmiOpenFile.Enabled = fileExist;
+                tsmiOpenFolder.Enabled = folderExist;
+
+                // Copy
+                tsmiCopyURL.Enabled = URLExist;
+                tsmiCopyThumbnailURL.Enabled = thumbnailURLExist;
+                tsmiCopyDeletionURL.Enabled = deletionURLExist;
+
+                tsmiCopyFile.Enabled = fileExist;
+                tsmiCopyImage.Enabled = isImageFile;
+                tsmiCopyText.Enabled = isTextfile;
+
+                tsmiCopyHTMLLink.Enabled = URLExist;
+                tsmiCopyHTMLImage.Enabled = URLExist;
+                tsmiCopyHTMLLinkedImage.Enabled = URLExist && thumbnailURLExist;
+
+                tsmiCopyForumLink.Enabled = URLExist;
+                tsmiCopyForumImage.Enabled = URLExist;
+                tsmiCopyForumLinkedImage.Enabled = URLExist && thumbnailURLExist;
+
+                tsmiCopyFilePath.Enabled = filePathValid;
+                tsmiCopyFileName.Enabled = filePathValid;
+                tsmiCopyFileNameWithExtension.Enabled = filePathValid;
+                tsmiCopyFolder.Enabled = filePathValid;
+
+                // Delete
+                tsmiDeleteLocalFile.Enabled = fileExist;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private HistoryItem GetSelectedHistoryItem()
+        {
+            if (lvHistory.SelectedItems.Count > 0)
+            {
+                return lvHistory.SelectedItems[0].Tag as HistoryItem;
+            }
+
+            return null;
         }
     }
 }

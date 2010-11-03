@@ -53,11 +53,11 @@ namespace ZUploader
                 {
                     EDataType type;
 
-                    if (TextUploader != TextDestType2.FILE && Helpers.IsValidTextFile(path))
+                    if (TextUploader != TextDestType2.FILE && Helpers.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
-                    else if (ImageUploader != ImageDestType2.FILE && Helpers.IsValidImageFile(path))
+                    else if (ImageUploader != ImageDestType2.FILE && Helpers.IsImageFile(path))
                     {
                         type = EDataType.Image;
                     }

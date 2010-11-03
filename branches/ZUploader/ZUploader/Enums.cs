@@ -44,8 +44,8 @@ namespace ZUploader
         TINYPIC,
         [Description("imagebin.ca")]
         IMAGEBIN,
-        //[Description("img1.us")]
-        //IMG1,
+        [Description("img1.us")]
+        IMG1,
         [Description("imgur.com")]
         IMGUR,
         [Description("uploadscreenshot.com")]
