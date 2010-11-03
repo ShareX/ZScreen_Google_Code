@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace HistoryLib
@@ -32,7 +31,7 @@ namespace HistoryLib
     public partial class HistoryForm : Form
     {
         private HistoryManager history;
-        private HistoryItem[] historyItems;
+        private HistoryItemManager him;
 
         public HistoryForm(string databasePath)
         {
@@ -42,8 +41,7 @@ namespace HistoryLib
 
         private void HistoryForm_Load(object sender, EventArgs e)
         {
-            historyItems = history.GetHistoryItems();
-            AddHistoryItems(historyItems);
+            RefreshHistoryItems();
         }
 
         private void HistoryForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -51,9 +49,17 @@ namespace HistoryLib
             if (history != null) history.Dispose();
         }
 
+        private void RefreshHistoryItems()
+        {
+            HistoryItem[] historyItems = history.GetHistoryItems();
+            AddHistoryItems(historyItems);
+        }
+
         private void AddHistoryItems(HistoryItem[] historyItems)
         {
             lvHistory.SuspendLayout();
+
+            lvHistory.Items.Clear();
 
             foreach (HistoryItem hi in historyItems)
             {
@@ -80,47 +86,40 @@ namespace HistoryLib
 
             if (hi != null)
             {
-                bool URLExist = !string.IsNullOrEmpty(hi.URL);
-                bool thumbnailURLExist = !string.IsNullOrEmpty(hi.ThumbnailURL);
-                bool deletionURLExist = !string.IsNullOrEmpty(hi.DeletionURL);
-                bool filePathValid = !string.IsNullOrEmpty(hi.Filepath) && Path.HasExtension(hi.Filepath);
-                bool fileExist =  filePathValid && File.Exists(hi.Filepath);
-                bool folderExist = filePathValid && Directory.Exists(Path.GetDirectoryName(hi.Filepath));
-                bool isImageFile = fileExist && Helpers.IsImageFile(hi.Filepath);
-                bool isTextfile = fileExist && Helpers.IsTextFile(hi.Filepath);
+                him = new HistoryItemManager(hi);
 
                 // Open
-                tsmiOpenURL.Enabled = URLExist;
-                tsmiOpenThumbnailURL.Enabled = thumbnailURLExist;
-                tsmiOpenDeletionURL.Enabled = deletionURLExist;
+                tsmiOpenURL.Enabled = him.IsURLExist;
+                tsmiOpenThumbnailURL.Enabled = him.IsThumbnailURLExist;
+                tsmiOpenDeletionURL.Enabled = him.IsDeletionURLExist;
 
-                tsmiOpenFile.Enabled = fileExist;
-                tsmiOpenFolder.Enabled = folderExist;
+                tsmiOpenFile.Enabled = him.IsFileExist;
+                tsmiOpenFolder.Enabled = him.IsFolderExist;
 
                 // Copy
-                tsmiCopyURL.Enabled = URLExist;
-                tsmiCopyThumbnailURL.Enabled = thumbnailURLExist;
-                tsmiCopyDeletionURL.Enabled = deletionURLExist;
+                tsmiCopyURL.Enabled = him.IsURLExist;
+                tsmiCopyThumbnailURL.Enabled = him.IsThumbnailURLExist;
+                tsmiCopyDeletionURL.Enabled = him.IsDeletionURLExist;
 
-                tsmiCopyFile.Enabled = fileExist;
-                tsmiCopyImage.Enabled = isImageFile;
-                tsmiCopyText.Enabled = isTextfile;
+                tsmiCopyFile.Enabled = him.IsFileExist;
+                tsmiCopyImage.Enabled = him.IsImageFile;
+                tsmiCopyText.Enabled = him.IsTextFile;
 
-                tsmiCopyHTMLLink.Enabled = URLExist;
-                tsmiCopyHTMLImage.Enabled = URLExist;
-                tsmiCopyHTMLLinkedImage.Enabled = URLExist && thumbnailURLExist;
+                tsmiCopyHTMLLink.Enabled = him.IsURLExist;
+                tsmiCopyHTMLImage.Enabled = him.IsURLExist;
+                tsmiCopyHTMLLinkedImage.Enabled = him.IsURLExist && him.IsThumbnailURLExist;
 
-                tsmiCopyForumLink.Enabled = URLExist;
-                tsmiCopyForumImage.Enabled = URLExist;
-                tsmiCopyForumLinkedImage.Enabled = URLExist && thumbnailURLExist;
+                tsmiCopyForumLink.Enabled = him.IsURLExist;
+                tsmiCopyForumImage.Enabled =  him.IsURLExist;
+                tsmiCopyForumLinkedImage.Enabled =  him.IsURLExist && him.IsThumbnailURLExist;
 
-                tsmiCopyFilePath.Enabled = filePathValid;
-                tsmiCopyFileName.Enabled = filePathValid;
-                tsmiCopyFileNameWithExtension.Enabled = filePathValid;
-                tsmiCopyFolder.Enabled = filePathValid;
+                tsmiCopyFilePath.Enabled = him.IsFilePathValid;
+                tsmiCopyFileName.Enabled =  him.IsFilePathValid;
+                tsmiCopyFileNameWithExtension.Enabled = him.IsFilePathValid;
+                tsmiCopyFolder.Enabled =  him.IsFilePathValid;
 
                 // Delete
-                tsmiDeleteLocalFile.Enabled = fileExist;
+                tsmiDeleteLocalFile.Enabled = him.IsFileExist;
 
                 return true;
             }
@@ -137,5 +136,135 @@ namespace HistoryLib
 
             return null;
         }
+
+        #region Right click menu events
+
+        private void tsmiOpenURL_Click(object sender, EventArgs e)
+        {
+            him.OpenURL();
+        }
+
+        private void tsmiOpenThumbnailURL_Click(object sender, EventArgs e)
+        {
+            him.OpenThumbnailURL();
+        }
+
+        private void tsmiOpenDeletionURL_Click(object sender, EventArgs e)
+        {
+            him.OpenDeletionURL();
+        }
+
+        private void tsmiOpenFile_Click(object sender, EventArgs e)
+        {
+            him.OpenFile();
+        }
+
+        private void tsmiOpenFolder_Click(object sender, EventArgs e)
+        {
+            him.OpenFolder();
+        }
+
+        private void tsmiCopyURL_Click(object sender, EventArgs e)
+        {
+            him.CopyURL();
+        }
+
+        private void tsmiCopyThumbnailURL_Click(object sender, EventArgs e)
+        {
+            him.CopyThumbnailURL();
+        }
+
+        private void tsmiCopyDeletionURL_Click(object sender, EventArgs e)
+        {
+            him.CopyDeletionURL();
+        }
+
+        private void tsmiCopyFile_Click(object sender, EventArgs e)
+        {
+            him.CopyFile();
+        }
+
+        private void tsmiCopyImage_Click(object sender, EventArgs e)
+        {
+            him.CopyImage();
+        }
+
+        private void tsmiCopyText_Click(object sender, EventArgs e)
+        {
+            him.CopyText();
+        }
+
+        private void tsmiCopyHTMLLink_Click(object sender, EventArgs e)
+        {
+            him.CopyHTMLLink();
+        }
+
+        private void tsmiCopyHTMLImage_Click(object sender, EventArgs e)
+        {
+            him.CopyHTMLImage();
+        }
+
+        private void tsmiCopyHTMLLinkedImage_Click(object sender, EventArgs e)
+        {
+            him.CopyHTMLLinkedImage();
+        }
+
+        private void tsmiCopyForumLink_Click(object sender, EventArgs e)
+        {
+            him.CopyForumLink();
+        }
+
+        private void tsmiCopyForumImage_Click(object sender, EventArgs e)
+        {
+            him.CopyForumImage();
+        }
+
+        private void tsmiCopyForumLinkedImage_Click(object sender, EventArgs e)
+        {
+            him.CopyForumLinkedImage();
+        }
+
+        private void tsmiCopyFilePath_Click(object sender, EventArgs e)
+        {
+            him.CopyFilePath();
+        }
+
+        private void tsmiCopyFileName_Click(object sender, EventArgs e)
+        {
+            him.CopyFileName();
+        }
+
+        private void tsmiCopyFileNameWithExtension_Click(object sender, EventArgs e)
+        {
+            him.CopyFileNameWithExtension();
+        }
+
+        private void tsmiCopyFolder_Click(object sender, EventArgs e)
+        {
+            him.CopyFolder();
+        }
+
+        private void tsmiDeleteFromHistory_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        private void tsmiDeleteLocalFile_Click(object sender, EventArgs e)
+        {
+            him.DeleteLocalFile();
+        }
+
+        private void tsmiDeleteFromHistoryAndLocalFile_Click(object sender, EventArgs e)
+        {
+            // TODO
+            him.DeleteLocalFile();
+        }
+
+        private void tsmiRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshHistoryItems();
+        }
+
+        #endregion Right click menu events
     }
 }

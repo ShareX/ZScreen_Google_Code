@@ -23,8 +23,11 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace HistoryLib
 {
@@ -68,6 +71,26 @@ namespace HistoryLib
             string ext = Path.GetExtension(path).ToLower();
 
             return TextFileExtensions.Any(x => ext.EndsWith(x));
+        }
+
+        public static void CopyFileToClipboard(string path)
+        {
+            Clipboard.SetFileDropList(new StringCollection() { path });
+        }
+
+        public static void CopyImageToClipboard(string path)
+        {
+            try
+            {
+                using (Image img = Image.FromFile(path)) Clipboard.SetImage(img);
+            }
+            catch { }
+        }
+
+        public static void CopyTextToClipboard(string path)
+        {
+            string text = File.ReadAllText(path);
+            Clipboard.SetText(text);
         }
     }
 }
