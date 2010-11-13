@@ -61,6 +61,7 @@
             this.tsmiDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteFromHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteLocalFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeleteFromHistoryAndLocalFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tssHistory1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.lvHistory = new HistoryLib.ListViewNF();
@@ -69,7 +70,6 @@
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tsmiDeleteFromHistoryAndLocalFile = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsHistory.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,7 +83,7 @@
             this.tsmiRefresh});
             this.cmsHistory.Name = "cmsHistory";
             this.cmsHistory.ShowImageMargin = false;
-            this.cmsHistory.Size = new System.Drawing.Size(128, 120);
+            this.cmsHistory.Size = new System.Drawing.Size(107, 98);
             this.cmsHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsHistory_Opening);
             // 
             // tsmiOpen
@@ -96,7 +96,7 @@
             this.tsmiOpenFile,
             this.tsmiOpenFolder});
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(127, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(106, 22);
             this.tsmiOpen.Text = "Open";
             // 
             // tsmiOpenURL
@@ -163,7 +163,7 @@
             this.tsmiCopyFileNameWithExtension,
             this.tsmiCopyFolder});
             this.tsmiCopy.Name = "tsmiCopy";
-            this.tsmiCopy.Size = new System.Drawing.Size(127, 22);
+            this.tsmiCopy.Size = new System.Drawing.Size(106, 22);
             this.tsmiCopy.Text = "Copy";
             // 
             // tsmiCopyURL
@@ -305,14 +305,14 @@
             this.tsmiDeleteLocalFile,
             this.tsmiDeleteFromHistoryAndLocalFile});
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(127, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(106, 22);
             this.tsmiDelete.Text = "Delete";
             // 
             // tsmiDeleteFromHistory
             // 
             this.tsmiDeleteFromHistory.Name = "tsmiDeleteFromHistory";
             this.tsmiDeleteFromHistory.Size = new System.Drawing.Size(220, 22);
-            this.tsmiDeleteFromHistory.Text = "From history...";
+            this.tsmiDeleteFromHistory.Text = "From history";
             this.tsmiDeleteFromHistory.Click += new System.EventHandler(this.tsmiDeleteFromHistory_Click);
             // 
             // tsmiDeleteLocalFile
@@ -322,15 +322,22 @@
             this.tsmiDeleteLocalFile.Text = "Local file...";
             this.tsmiDeleteLocalFile.Click += new System.EventHandler(this.tsmiDeleteLocalFile_Click);
             // 
+            // tsmiDeleteFromHistoryAndLocalFile
+            // 
+            this.tsmiDeleteFromHistoryAndLocalFile.Name = "tsmiDeleteFromHistoryAndLocalFile";
+            this.tsmiDeleteFromHistoryAndLocalFile.Size = new System.Drawing.Size(220, 22);
+            this.tsmiDeleteFromHistoryAndLocalFile.Text = "From history and local file...";
+            this.tsmiDeleteFromHistoryAndLocalFile.Click += new System.EventHandler(this.tsmiDeleteFromHistoryAndLocalFile_Click);
+            // 
             // tssHistory1
             // 
             this.tssHistory1.Name = "tssHistory1";
-            this.tssHistory1.Size = new System.Drawing.Size(124, 6);
+            this.tssHistory1.Size = new System.Drawing.Size(103, 6);
             // 
             // tsmiRefresh
             // 
             this.tsmiRefresh.Name = "tsmiRefresh";
-            this.tsmiRefresh.Size = new System.Drawing.Size(127, 22);
+            this.tsmiRefresh.Size = new System.Drawing.Size(106, 22);
             this.tsmiRefresh.Text = "Refresh list";
             this.tsmiRefresh.Click += new System.EventHandler(this.tsmiRefresh_Click);
             // 
@@ -347,6 +354,7 @@
             this.lvHistory.FullRowSelect = true;
             this.lvHistory.HideSelection = false;
             this.lvHistory.Location = new System.Drawing.Point(0, 0);
+            this.lvHistory.MultiSelect = false;
             this.lvHistory.Name = "lvHistory";
             this.lvHistory.Size = new System.Drawing.Size(825, 332);
             this.lvHistory.TabIndex = 0;
@@ -378,13 +386,6 @@
             this.chURL.Text = "URL";
             this.chURL.Width = 351;
             // 
-            // tsmiDeleteFromHistoryAndLocalFile
-            // 
-            this.tsmiDeleteFromHistoryAndLocalFile.Name = "tsmiDeleteFromHistoryAndLocalFile";
-            this.tsmiDeleteFromHistoryAndLocalFile.Size = new System.Drawing.Size(220, 22);
-            this.tsmiDeleteFromHistoryAndLocalFile.Text = "From history and local file...";
-            this.tsmiDeleteFromHistoryAndLocalFile.Click += new System.EventHandler(this.tsmiDeleteFromHistoryAndLocalFile_Click);
-            // 
             // HistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -394,7 +395,7 @@
             this.Name = "HistoryForm";
             this.Text = "HistoryFormTest";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.HistoryForm_FormClosed);
-            this.Load += new System.EventHandler(this.HistoryForm_Load);
+            this.Shown += new System.EventHandler(this.HistoryForm_Shown);
             this.cmsHistory.ResumeLayout(false);
             this.ResumeLayout(false);
 

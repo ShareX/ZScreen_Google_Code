@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    ZUploader - A program that allows you to upload images, texts or files
     Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
@@ -40,14 +40,21 @@ namespace ZUploader
 
         // Settings Form
 
-        public FTPAccount FTPAccount = new FTPAccount();
-        public ProxyInfo ProxySettings = new ProxyInfo();
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
+
+        public EImageFormat ImageFormat = EImageFormat.PNG;
+        public int ImageJPEGQuality = 90;
+        public GIFQuality ImageGIFQuality = GIFQuality.Default;
+        public int ImageSizeLimit = 512;
+        public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
         public bool SaveHistory = true;
         public bool UseCustomHistoryPath = false;
         public string CustomHistoryPath = string.Empty;
+
+        public FTPAccount FTPAccount = new FTPAccount();
+        public ProxyInfo ProxySettings = new ProxyInfo();
 
         public bool Save()
         {

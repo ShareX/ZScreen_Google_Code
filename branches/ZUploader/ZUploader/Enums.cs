@@ -31,9 +31,7 @@ namespace ZUploader
 {
     public enum EDataType
     {
-        File,
-        Image,
-        Text
+        File, Image, Text
     }
 
     public enum ImageDestType2
@@ -86,6 +84,16 @@ namespace ZUploader
         FilezFiles,
         [Description("FTP Server")]
         FTP
+    }
+
+    public enum EImageFormat
+    {
+        PNG, JPEG, GIF, BMP, TIFF
+    }
+
+    public enum GIFQuality
+    {
+        Default, Bit8, Bit4, Grayscale
     }
 
     public static class Enums

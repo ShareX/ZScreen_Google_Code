@@ -39,8 +39,11 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestType2 ImageUploader { get; set; }
+
         public static TextDestType2 TextUploader { get; set; }
+
         public static FileUploaderType2 FileUploader { get; set; }
+
         public static ListView ListViewControl { get; set; }
 
         public static List<Task> Tasks = new List<Task>();
@@ -102,30 +105,88 @@ namespace ZUploader
         {
             if (Clipboard.ContainsImage())
             {
-                using (Image img = Clipboard.GetImage())
-                {
-                    MemoryStream stream = new MemoryStream();
-                    img.SaveJPG100(stream);
-                    string fileName = UploadHelpers.GetDateTimeString() + ".jpg";
-                    EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
-                    Task task = new Task(type, stream, fileName);
-                    StartUpload(task);
-                }
+                ClipboardImageUpload();
             }
             else if (Clipboard.ContainsText())
             {
-                byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
-                MemoryStream stream = new MemoryStream(byteArray);
-                string fileName = UploadHelpers.GetDateTimeString() + ".txt";
-                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
-                Task task = new Task(type, stream, fileName);
-                StartUpload(task);
+                ClipboardTextUpload();
             }
             else if (Clipboard.ContainsFileDropList())
             {
-                string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
-                Upload(files);
+                ClipboardFilesUpload();
             }
+        }
+
+        public static void ClipboardImageUpload()
+        {
+            using (Image img = Clipboard.GetImage())
+            {
+                EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
+                EImageFormat imageFormat;
+                Stream stream = PrepareImage(img, out imageFormat);
+                string filename = PrepareFilename(imageFormat);
+                Task task = new Task(type, stream, filename);
+                StartUpload(task);
+            }
+        }
+
+        private static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
+        {
+            MemoryStream stream = img.SaveImage(Program.Settings.ImageFormat);
+            int sizeLimit = Program.Settings.ImageSizeLimit * 1000;
+            if (Program.Settings.ImageFormat != Program.Settings.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
+            {
+                stream = img.SaveImage(Program.Settings.ImageFormat2);
+                imageFormat = Program.Settings.ImageFormat2;
+            }
+            else
+            {
+                imageFormat = Program.Settings.ImageFormat;
+            }
+
+            return stream;
+        }
+
+        private static string PrepareFilename(EImageFormat imageFormat)
+        {
+            string ext = "png";
+
+            switch (imageFormat)
+            {
+                case EImageFormat.PNG:
+                    ext = "png";
+                    break;
+                case EImageFormat.JPEG:
+                    ext = "jpg";
+                    break;
+                case EImageFormat.GIF:
+                    ext = "gif";
+                    break;
+                case EImageFormat.BMP:
+                    ext = "bmp";
+                    break;
+                case EImageFormat.TIFF:
+                    ext = "tif";
+                    break;
+            }
+
+            return string.Format("{0}.{1}", UploadHelpers.GetDateTimeString(), ext);
+        }
+
+        public static void ClipboardTextUpload()
+        {
+            byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
+            MemoryStream stream = new MemoryStream(byteArray);
+            string filename = UploadHelpers.GetDateTimeString() + ".txt";
+            EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
+            Task task = new Task(type, stream, filename);
+            StartUpload(task);
+        }
+
+        public static void ClipboardFilesUpload()
+        {
+            string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
+            Upload(files);
         }
 
         private static void StartUpload(Task task)
@@ -163,6 +224,7 @@ namespace ZUploader
                 lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
                 lvi.ImageIndex = 0;
                 ListViewControl.Items.Add(lvi);
+                lvi.EnsureVisible();
             }
         }
 

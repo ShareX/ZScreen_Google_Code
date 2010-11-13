@@ -31,6 +31,8 @@ namespace HistoryLib
 {
     public class HistoryItemManager
     {
+        public HistoryItem HistoryItem { get; private set; }
+
         public bool IsURLExist { get; private set; }
         public bool IsThumbnailURLExist { get; private set; }
         public bool IsDeletionURLExist { get; private set; }
@@ -40,142 +42,140 @@ namespace HistoryLib
         public bool IsImageFile { get; private set; }
         public bool IsTextFile { get; private set; }
 
-        private HistoryItem hi;
-
         public HistoryItemManager(HistoryItem historyItem)
         {
-            hi = historyItem;
+            HistoryItem = historyItem;
 
-            if (hi != null)
+            if (HistoryItem != null)
             {
-                IsURLExist = !string.IsNullOrEmpty(hi.URL);
-                IsThumbnailURLExist = !string.IsNullOrEmpty(hi.ThumbnailURL);
-                IsDeletionURLExist = !string.IsNullOrEmpty(hi.DeletionURL);
-                IsFilePathValid = !string.IsNullOrEmpty(hi.Filepath) && Path.HasExtension(hi.Filepath);
-                IsFileExist = IsFilePathValid && File.Exists(hi.Filepath);
-                IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(hi.Filepath));
-                IsImageFile = IsFileExist && Helpers.IsImageFile(hi.Filepath);
-                IsTextFile = IsFileExist && Helpers.IsTextFile(hi.Filepath);
+                IsURLExist = !string.IsNullOrEmpty(HistoryItem.URL);
+                IsThumbnailURLExist = !string.IsNullOrEmpty(HistoryItem.ThumbnailURL);
+                IsDeletionURLExist = !string.IsNullOrEmpty(HistoryItem.DeletionURL);
+                IsFilePathValid = !string.IsNullOrEmpty(HistoryItem.Filepath) && Path.HasExtension(HistoryItem.Filepath);
+                IsFileExist = IsFilePathValid && File.Exists(HistoryItem.Filepath);
+                IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
+                IsImageFile = IsFileExist && Helpers.IsImageFile(HistoryItem.Filepath);
+                IsTextFile = IsFileExist && Helpers.IsTextFile(HistoryItem.Filepath);
             }
         }
 
         public void OpenURL()
         {
-            if (hi != null && IsURLExist) Process.Start(hi.URL);
+            if (HistoryItem != null && IsURLExist) Process.Start(HistoryItem.URL);
         }
 
         public void OpenThumbnailURL()
         {
-            if (hi != null && IsThumbnailURLExist) Process.Start(hi.ThumbnailURL);
+            if (HistoryItem != null && IsThumbnailURLExist) Process.Start(HistoryItem.ThumbnailURL);
         }
 
         public void OpenDeletionURL()
         {
-            if (hi != null && IsDeletionURLExist) Process.Start(hi.DeletionURL);
+            if (HistoryItem != null && IsDeletionURLExist) Process.Start(HistoryItem.DeletionURL);
         }
 
         public void OpenFile()
         {
-            if (hi != null && IsFileExist) Process.Start(hi.Filepath);
+            if (HistoryItem != null && IsFileExist) Process.Start(HistoryItem.Filepath);
         }
 
         public void OpenFolder()
         {
-            if (hi != null && IsFolderExist) Process.Start(Path.GetDirectoryName(hi.Filepath));
+            if (HistoryItem != null && IsFolderExist) Process.Start(Path.GetDirectoryName(HistoryItem.Filepath));
         }
 
         public void CopyURL()
         {
-            if (hi != null && IsURLExist) Clipboard.SetText(hi.URL);
+            if (HistoryItem != null && IsURLExist) Clipboard.SetText(HistoryItem.URL);
         }
 
         public void CopyThumbnailURL()
         {
-            if (hi != null && IsThumbnailURLExist) Clipboard.SetText(hi.ThumbnailURL);
+            if (HistoryItem != null && IsThumbnailURLExist) Clipboard.SetText(HistoryItem.ThumbnailURL);
         }
 
         public void CopyDeletionURL()
         {
-            if (hi != null && IsDeletionURLExist) Clipboard.SetText(hi.DeletionURL);
+            if (HistoryItem != null && IsDeletionURLExist) Clipboard.SetText(HistoryItem.DeletionURL);
         }
 
         public void CopyFile()
         {
-            if (hi != null && IsFileExist) Helpers.CopyFileToClipboard(hi.Filepath);
+            if (HistoryItem != null && IsFileExist) Helpers.CopyFileToClipboard(HistoryItem.Filepath);
         }
 
         public void CopyImage()
         {
-            if (hi != null && IsImageFile) Helpers.CopyImageToClipboard(hi.Filepath);
+            if (HistoryItem != null && IsImageFile) Helpers.CopyImageToClipboard(HistoryItem.Filepath);
         }
 
         public void CopyText()
         {
-            if (hi != null && IsTextFile) Helpers.CopyTextToClipboard(hi.Filepath);
+            if (HistoryItem != null && IsTextFile) Helpers.CopyTextToClipboard(HistoryItem.Filepath);
         }
 
         public void CopyHTMLLink()
         {
-            if (hi != null && IsURLExist) Clipboard.SetText(string.Format("<a href=\"{0}\">{0}</a>", hi.URL));
+            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("<a href=\"{0}\">{0}</a>", HistoryItem.URL));
         }
 
         public void CopyHTMLImage()
         {
-            if (hi != null && IsURLExist) Clipboard.SetText(string.Format("<img src=\"{0}\"/>", hi.URL));
+            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("<img src=\"{0}\"/>", HistoryItem.URL));
         }
 
         public void CopyHTMLLinkedImage()
         {
-            if (hi != null && IsURLExist && IsThumbnailURLExist)
+            if (HistoryItem != null && IsURLExist && IsThumbnailURLExist)
             {
-                Clipboard.SetText(string.Format("<a href=\"{0}\"><img src=\"{1}\"/></a>", hi.URL, hi.ThumbnailURL));
+                Clipboard.SetText(string.Format("<a href=\"{0}\"><img src=\"{1}\"/></a>", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }
         }
 
         public void CopyForumLink()
         {
-            if (hi != null && IsURLExist) Clipboard.SetText(string.Format("[url]{0}[/url]", hi.URL));
+            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("[url]{0}[/url]", HistoryItem.URL));
         }
 
         public void CopyForumImage()
         {
-            if (hi != null && IsURLExist) Clipboard.SetText(string.Format("[img]{0}[/img]", hi.URL));
+            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("[img]{0}[/img]", HistoryItem.URL));
         }
 
         public void CopyForumLinkedImage()
         {
-            if (hi != null && IsURLExist && IsThumbnailURLExist)
+            if (HistoryItem != null && IsURLExist && IsThumbnailURLExist)
             {
-                Clipboard.SetText(string.Format("[url={0}][img]{1}[/img][/url]", hi.URL, hi.ThumbnailURL));
+                Clipboard.SetText(string.Format("[url={0}][img]{1}[/img][/url]", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }
         }
 
         public void CopyFilePath()
         {
-            if (hi != null && IsFilePathValid) Clipboard.SetText(hi.Filepath);
+            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(HistoryItem.Filepath);
         }
 
         public void CopyFileName()
         {
-            if (hi != null && IsFilePathValid) Clipboard.SetText(Path.GetFileNameWithoutExtension(hi.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetFileNameWithoutExtension(HistoryItem.Filepath));
         }
 
         public void CopyFileNameWithExtension()
         {
-            if (hi != null && IsFilePathValid) Clipboard.SetText(Path.GetFileName(hi.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetFileName(HistoryItem.Filepath));
         }
 
         public void CopyFolder()
         {
-            if (hi != null && IsFilePathValid) Clipboard.SetText(Path.GetDirectoryName(hi.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetDirectoryName(HistoryItem.Filepath));
         }
 
         public void DeleteLocalFile()
         {
-            if (hi != null && IsFileExist && MessageBox.Show("Do you want to delete this file?\n" + hi.Filepath,
+            if (HistoryItem != null && IsFileExist && MessageBox.Show("Do you want to delete this file?\n" + HistoryItem.Filepath,
                 "Delete Local File", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                File.Delete(hi.Filepath);
+                File.Delete(HistoryItem.Filepath);
             }
         }
     }

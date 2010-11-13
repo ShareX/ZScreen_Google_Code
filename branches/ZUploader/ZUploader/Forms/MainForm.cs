@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    ZUploader - A program that allows you to upload images, texts or files
     Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
@@ -90,6 +90,28 @@ namespace ZUploader
             UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
         }
 
+        private UploadResult GetCurrentUploadResult()
+        {
+            UploadResult result = null;
+
+            if (lvUploads.SelectedItems.Count > 0)
+            {
+                result = lvUploads.SelectedItems[0].Tag as UploadResult;
+            }
+
+            return result;
+        }
+
+        private void OpenURL()
+        {
+            UploadResult result = GetCurrentUploadResult();
+
+            if (result != null && !string.IsNullOrEmpty(result.URL))
+            {
+                Process.Start(result.URL);
+            }
+        }
+
         private void CopyURL()
         {
             if (lvUploads.SelectedItems.Count > 0)
@@ -104,68 +126,64 @@ namespace ZUploader
             }
         }
 
-        private void OpenURL()
-        {
-            if (lvUploads.SelectedItems.Count > 0)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
-
-                if (result != null && !string.IsNullOrEmpty(result.URL))
-                {
-                    Process.Start(result.URL);
-                }
-            }
-        }
-
         private void CopyThumbnailURL()
         {
-            if (lvUploads.SelectedItems.Count > 0)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+            UploadResult result = GetCurrentUploadResult();
 
-                if (result != null && !string.IsNullOrEmpty(result.ThumbnailURL))
-                {
-                    Clipboard.SetText(result.ThumbnailURL);
-                }
+            if (result != null && !string.IsNullOrEmpty(result.ThumbnailURL))
+            {
+                Clipboard.SetText(result.ThumbnailURL);
             }
         }
 
         private void CopyDeletionURL()
         {
-            if (lvUploads.SelectedItems.Count > 0)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+            UploadResult result = GetCurrentUploadResult();
 
-                if (result != null && !string.IsNullOrEmpty(result.DeletionURL))
-                {
-                    Clipboard.SetText(result.DeletionURL);
-                }
+            if (result != null && !string.IsNullOrEmpty(result.DeletionURL))
+            {
+                Clipboard.SetText(result.DeletionURL);
+            }
+        }
+
+        private string GetErrors()
+        {
+            string errors = string.Empty;
+            UploadResult result = GetCurrentUploadResult();
+
+            if (result != null && result.Errors != null && result.Errors.Count > 0)
+            {
+                errors = string.Join("\r\n", result.Errors.ToArray());
+            }
+
+            return errors;
+        }
+
+        private void ShowErrors()
+        {
+            string errors = GetErrors();
+
+            if (!string.IsNullOrEmpty(errors))
+            {
+                MessageBox.Show(errors, "ZUploader - Errors", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void CopyErrors()
         {
-            if (lvUploads.SelectedItems.Count > 0)
+            string errors = GetErrors();
+
+            if (!string.IsNullOrEmpty(errors))
             {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
-
-                if (result != null && result.Errors != null && result.Errors.Count > 0)
-                {
-                    string errors = string.Join("\r\n", result.Errors.ToArray());
-
-                    if (!string.IsNullOrEmpty(errors))
-                    {
-                        Clipboard.SetText(errors);
-                    }
-                }
+                Clipboard.SetText(errors);
             }
         }
 
         private void UpdateControls()
         {
             tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
-                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible =
-               uploadFileToolStripMenuItem.Visible = stopUploadToolStripMenuItem.Visible = false;
+                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = showErrorsToolStripMenuItem.Visible =
+                copyErrorsToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible = stopUploadToolStripMenuItem.Visible = false;
 
             if (lvUploads.SelectedItems.Count > 0)
             {
@@ -190,6 +208,7 @@ namespace ZUploader
 
                     if (result.Errors != null && result.Errors.Count > 0)
                     {
+                        showErrorsToolStripMenuItem.Visible = true;
                         copyErrorsToolStripMenuItem.Visible = true;
                     }
                 }
@@ -305,6 +324,11 @@ namespace ZUploader
         private void copyDeletionURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyDeletionURL();
+        }
+
+        private void showErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowErrors();
         }
 
         private void copyErrorsToolStripMenuItem_Click(object sender, EventArgs e)

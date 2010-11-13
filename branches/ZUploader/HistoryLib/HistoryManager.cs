@@ -99,6 +99,11 @@ namespace HistoryLib
             return historyItems;
         }
 
+        public bool RemoveHistoryItem(HistoryItem historyItem)
+        {
+            return sqlite.Delete("History", "ID", historyItem.ID.ToString()) == 1;
+        }
+
         public static void AutomaticlyAddHistoryItemAsync(string databasePath, HistoryItem historyItem)
         {
             ThreadStart thread = () =>

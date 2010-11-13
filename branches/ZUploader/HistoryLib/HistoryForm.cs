@@ -30,16 +30,18 @@ namespace HistoryLib
 {
     public partial class HistoryForm : Form
     {
+        public string DatabasePath { get; private set; }
+
         private HistoryManager history;
         private HistoryItemManager him;
 
         public HistoryForm(string databasePath)
         {
             InitializeComponent();
-            history = new HistoryManager(databasePath);
+            DatabasePath = databasePath;
         }
 
-        private void HistoryForm_Load(object sender, EventArgs e)
+        private void HistoryForm_Shown(object sender, EventArgs e)
         {
             RefreshHistoryItems();
         }
@@ -51,6 +53,11 @@ namespace HistoryLib
 
         private void RefreshHistoryItems()
         {
+            if (history == null)
+            {
+                history = new HistoryManager(DatabasePath);
+            }
+
             HistoryItem[] historyItems = history.GetHistoryItems();
             AddHistoryItems(historyItems);
         }
@@ -135,6 +142,21 @@ namespace HistoryLib
             }
 
             return null;
+        }
+
+        private void RemoveSelectedHistoryItem()
+        {
+            if (lvHistory.SelectedItems.Count > 0)
+            {
+                ListViewItem lvi = lvHistory.SelectedItems[0];
+                HistoryItem hi = lvi.Tag as HistoryItem;
+
+                if (hi != null)
+                {
+                    history.RemoveHistoryItem(hi);
+                    lvHistory.Items.Remove(lvi);
+                }
+            }
         }
 
         #region Right click menu events
@@ -246,7 +268,7 @@ namespace HistoryLib
 
         private void tsmiDeleteFromHistory_Click(object sender, EventArgs e)
         {
-            // TODO
+            RemoveSelectedHistoryItem();
         }
 
         private void tsmiDeleteLocalFile_Click(object sender, EventArgs e)
@@ -256,7 +278,7 @@ namespace HistoryLib
 
         private void tsmiDeleteFromHistoryAndLocalFile_Click(object sender, EventArgs e)
         {
-            // TODO
+            RemoveSelectedHistoryItem();
             him.DeleteLocalFile();
         }
 

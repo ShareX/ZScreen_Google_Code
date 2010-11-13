@@ -249,6 +249,11 @@ namespace HistoryLib
             }
         }
 
+        public int Delete(string table, string whereName, string whereValue)
+        {
+            return ExecuteNonQuery(string.Format("DELETE FROM {0} WHERE {1}='{2}'", table, whereName, whereValue));
+        }
+
         public DataTable SelectAll(string table)
         {
             return ExecuteQueryDataTable("SELECT * FROM " + table);
