@@ -231,12 +231,5 @@ namespace UploadersLib.Helpers
                 return GetBytes(ms);
             }
         }
-
-        public static void SaveJPG100(this Image img, Stream stream)
-        {
-            EncoderParameters encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
-            img.Save(stream, UploadHelpers.GetCodecInfo(ImageFormat.Jpeg), encoderParameters);
-        }
     }
 }
