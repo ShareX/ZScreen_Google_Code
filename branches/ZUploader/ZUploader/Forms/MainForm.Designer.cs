@@ -60,6 +60,7 @@ namespace ZUploader
             this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +88,6 @@ namespace ZUploader
             this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.showErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -137,6 +137,13 @@ namespace ZUploader
             this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
             this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
+            // 
+            // showErrorsToolStripMenuItem
+            // 
+            this.showErrorsToolStripMenuItem.Name = "showErrorsToolStripMenuItem";
+            this.showErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showErrorsToolStripMenuItem.Text = "Show Errors";
+            this.showErrorsToolStripMenuItem.Click += new System.EventHandler(this.showErrorsToolStripMenuItem_Click);
             // 
             // copyErrorsToolStripMenuItem
             // 
@@ -345,7 +352,7 @@ namespace ZUploader
             // chProgress
             // 
             this.chProgress.Text = "Progress";
-            this.chProgress.Width = 140;
+            this.chProgress.Width = 149;
             // 
             // chSpeed
             // 
@@ -376,13 +383,6 @@ namespace ZUploader
             // 
             this.chURL.Text = "URL";
             this.chURL.Width = 194;
-            // 
-            // showErrorsToolStripMenuItem
-            // 
-            this.showErrorsToolStripMenuItem.Name = "showErrorsToolStripMenuItem";
-            this.showErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.showErrorsToolStripMenuItem.Text = "Show Errors";
-            this.showErrorsToolStripMenuItem.Click += new System.EventHandler(this.showErrorsToolStripMenuItem_Click);
             // 
             // MainForm
             // 

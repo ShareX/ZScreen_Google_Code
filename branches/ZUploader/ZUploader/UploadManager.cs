@@ -232,6 +232,7 @@ namespace ZUploader
         {
             if (ListViewControl != null)
             {
+                Console.WriteLine(info.Progress.Elapsed.TotalMilliseconds);
                 ListViewItem lvi = ListViewControl.Items[info.ID];
                 lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} kB / {2:N0} kB", info.Progress.Percentage,
                     info.Progress.Position / 1000, info.Progress.Length / 1000);

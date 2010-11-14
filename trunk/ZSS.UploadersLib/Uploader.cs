@@ -155,8 +155,11 @@ namespace UploadersLib
                         if (stopUpload) return null;
 
                         requestStream.Write(buffer, 0, bytesRead);
-                        progress.ChangeProgress(bytesRead);
-                        OnProgressChanged(progress);
+
+                        if (progress.ChangeProgress(bytesRead))
+                        {
+                            OnProgressChanged(progress);
+                        }
                     }
                 }
 
