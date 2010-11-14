@@ -32,51 +32,60 @@ namespace ZUploader
 {
     public class ProgressManager
     {
-        public long Position { get; set; }
-        public long Length { get; set; }
-        public double Percentage { get; set; }
-        public double Speed { get; set; }
-        public DateTime StartTime { get; private set; }
-        public TimeSpan Elapsed { get; set; }
-        public TimeSpan Remaining { get; set; }
+        public long Length { get; private set; }
+        public long Position { get; private set; }
+        public double Percentage { get; private set; }
+        public double Speed { get; private set; }
+        public TimeSpan Elapsed { get; private set; }
+        public TimeSpan Remaining { get; private set; }
 
-        private Stopwatch timer = new Stopwatch();
+        private Stopwatch startTimer = new Stopwatch();
+        private Stopwatch smoothTimer = new Stopwatch();
         private int smoothTime;
         private long speedTest;
         private List<double> averageSpeed = new List<double>(10);
 
-        public ProgressManager(long length) : this(length, 500) { }
-
-        public ProgressManager(long length, int smoothTime)
+        public ProgressManager(long length, int smoothTime = 250)
         {
-            StartTime = DateTime.Now;
             Length = length;
             this.smoothTime = smoothTime;
-            timer.Start();
+            startTimer.Start();
+            smoothTimer.Start();
         }
 
-        public void ChangeProgress(int bytesRead)
+        public bool ChangeProgress(int bytesRead)
         {
+            Console.WriteLine(bytesRead + "  " + Elapsed.TotalMilliseconds);
             Position += bytesRead;
             Percentage = (double)Position / Length * 100;
             speedTest += bytesRead;
 
-            if (timer.ElapsedMilliseconds > smoothTime)
+            if (Position >= Length)
+            {
+                Elapsed = startTimer.Elapsed;
+                Remaining = TimeSpan.Zero;
+            }
+            else if (smoothTimer.ElapsedMilliseconds > smoothTime)
             {
                 if (averageSpeed.Count == 10)
                 {
                     averageSpeed.RemoveAt(0);
                 }
 
-                averageSpeed.Add((double)speedTest / timer.ElapsedMilliseconds);
+                averageSpeed.Add((double)speedTest / smoothTimer.ElapsedMilliseconds);
+
                 Speed = averageSpeed.Average();
-                Elapsed = DateTime.Now - StartTime;
+                Elapsed = startTimer.Elapsed;
                 Remaining = TimeSpan.FromMilliseconds((Length - Position) / Speed);
 
                 speedTest = 0;
-                timer.Reset();
-                timer.Start();
+                smoothTimer.Reset();
+                smoothTimer.Start();
+
+                return true;
             }
+
+            return false;
         }
     }
 }
