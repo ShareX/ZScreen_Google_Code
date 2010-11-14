@@ -24,6 +24,8 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace HistoryLib
@@ -34,11 +36,15 @@ namespace HistoryLib
 
         private HistoryManager history;
         private HistoryItemManager him;
+        private HistoryItem[] allHistoryItems;
 
-        public HistoryForm(string databasePath)
+        public HistoryForm(string databasePath, string title)
         {
             InitializeComponent();
             DatabasePath = databasePath;
+            this.Text = title;
+            cbFilenameFilterMethod.SelectedIndex = 0; // Contains
+            cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
         }
 
         private void HistoryForm_Shown(object sender, EventArgs e)
@@ -58,14 +64,82 @@ namespace HistoryLib
                 history = new HistoryManager(DatabasePath);
             }
 
-            HistoryItem[] historyItems = history.GetHistoryItems();
-            AddHistoryItems(historyItems);
+            allHistoryItems = history.GetHistoryItems();
+            AddHistoryItems(allHistoryItems);
+        }
+
+        private void btnApplyFilters_Click(object sender, EventArgs e)
+        {
+            ApplyFiltersAndAdd();
+        }
+
+        private void ApplyFiltersAndAdd()
+        {
+            if (allHistoryItems.Length > 0)
+            {
+                AddHistoryItems(ApplyFilters(allHistoryItems));
+            }
+        }
+
+        private HistoryItem[] ApplyFilters(HistoryItem[] historyItems)
+        {
+            IEnumerable<HistoryItem> result = (IEnumerable<HistoryItem>)historyItems.Clone();
+
+            string filenameFilter = txtFilenameFilter.Text;
+            if (!string.IsNullOrEmpty(filenameFilter))
+            {
+                StringComparison rule = GetStringRule();
+
+                if (cbFilenameFilterMethod.SelectedIndex == 0) // Contains
+                {
+                    result = result.Where(x => x.Filename.IndexOf(filenameFilter, rule) >= 0);
+                }
+                else if (cbFilenameFilterMethod.SelectedIndex == 1) // Starts with
+                {
+                    result = result.Where(x => x.Filename.StartsWith(filenameFilter, rule));
+                }
+                else if (cbFilenameFilterMethod.SelectedIndex == 2) // Exact match
+                {
+                    result = result.Where(x => x.Filename.Equals(filenameFilter, rule));
+                }
+            }
+
+            if (cbDateFilter.Checked)
+            {
+                DateTime fromDate = dtpFilterFrom.Value.Date;
+                DateTime toDate = dtpFilterTo.Value.Date;
+
+                result = from hi in result
+                         let date = hi.DateTimeUtc.ToLocalTime().Date
+                         where date >= fromDate && date <= toDate
+                         select hi;
+            }
+
+            return result.ToArray();
+        }
+
+        private StringComparison GetStringRule()
+        {
+            bool caseSensitive = cbFilenameFilterCase.Checked;
+
+            switch (cbFilenameFilterCulture.SelectedIndex)
+            {
+                case 0:
+                    return caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
+                case 1:
+                    return caseSensitive ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase;
+                case 3:
+                    return caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
+            }
+
+            return StringComparison.InvariantCultureIgnoreCase;
         }
 
         private void AddHistoryItems(HistoryItem[] historyItems)
         {
-            lvHistory.SuspendLayout();
+            UpdateItemCount(historyItems);
 
+            lvHistory.SuspendLayout();
             lvHistory.Items.Clear();
 
             foreach (HistoryItem hi in historyItems)
@@ -80,6 +154,16 @@ namespace HistoryLib
             }
 
             lvHistory.ResumeLayout(true);
+        }
+
+        private void UpdateItemCount(HistoryItem[] historyItems)
+        {
+            lblHistoryStatus.Text = "Total: " + allHistoryItems.Length;
+
+            if (allHistoryItems.Length > historyItems.Length)
+            {
+                lblHistoryStatus.Text += ", Filtered: " + historyItems.Length;
+            }
         }
 
         private void cmsHistory_Opening(object sender, System.ComponentModel.CancelEventArgs e)

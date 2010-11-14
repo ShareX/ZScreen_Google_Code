@@ -69,10 +69,10 @@
             // pgFTPSettings
             // 
             this.pgFTPSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgFTPSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgFTPSettings.Location = new System.Drawing.Point(4, 4);
             this.pgFTPSettings.Name = "pgFTPSettings";
             this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(476, 253);
+            this.pgFTPSettings.Size = new System.Drawing.Size(474, 251);
             this.pgFTPSettings.TabIndex = 0;
             this.pgFTPSettings.ToolbarVisible = false;
             this.pgFTPSettings.SelectedObjectsChanged += new System.EventHandler(this.pgFTPSettings_SelectedObjectsChanged);
@@ -102,10 +102,10 @@
             // pgProxy
             // 
             this.pgProxy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgProxy.Location = new System.Drawing.Point(3, 3);
+            this.pgProxy.Location = new System.Drawing.Point(4, 4);
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgProxy.Size = new System.Drawing.Size(476, 253);
+            this.pgProxy.Size = new System.Drawing.Size(474, 251);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
             // 
@@ -382,7 +382,7 @@
             this.tpFTP.Controls.Add(this.pgFTPSettings);
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFTP.Padding = new System.Windows.Forms.Padding(4);
             this.tpFTP.Size = new System.Drawing.Size(482, 259);
             this.tpFTP.TabIndex = 1;
             this.tpFTP.Text = "FTP";
@@ -393,7 +393,7 @@
             this.tpProxy.Controls.Add(this.pgProxy);
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
-            this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tpProxy.Padding = new System.Windows.Forms.Padding(4);
             this.tpProxy.Size = new System.Drawing.Size(482, 259);
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
@@ -409,6 +409,7 @@
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Padding = new System.Windows.Forms.Padding(3);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader - Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.tcSettings.ResumeLayout(false);

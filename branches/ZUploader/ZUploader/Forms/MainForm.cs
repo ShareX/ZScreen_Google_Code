@@ -283,7 +283,7 @@ namespace ZUploader
 
         private void tsbHistory_Click(object sender, EventArgs e)
         {
-            new HistoryForm(Program.HistoryFilePath).Show();
+            new HistoryForm(Program.HistoryFilePath, "ZUploader - History").Show();
         }
 
         private void tsbSettings_Click(object sender, EventArgs e)

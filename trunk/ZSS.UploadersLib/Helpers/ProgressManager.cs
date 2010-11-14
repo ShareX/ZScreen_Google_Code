@@ -55,7 +55,6 @@ namespace ZUploader
 
         public bool ChangeProgress(int bytesRead)
         {
-            Console.WriteLine(bytesRead + "  " + Elapsed.TotalMilliseconds);
             Position += bytesRead;
             Percentage = (double)Position / Length * 100;
             speedTest += bytesRead;
