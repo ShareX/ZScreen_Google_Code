@@ -77,6 +77,7 @@
             this.cbFilenameFilterCulture = new System.Windows.Forms.ComboBox();
             this.cbFilenameFilter = new System.Windows.Forms.CheckBox();
             this.cbFilenameFilterCase = new System.Windows.Forms.CheckBox();
+            this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
             this.lvHistory = new HistoryLib.ListViewNF();
             this.chDateTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -475,6 +476,14 @@
             this.cbFilenameFilterCase.Text = "Case sensitive";
             this.cbFilenameFilterCase.UseVisualStyleBackColor = true;
             // 
+            // pbThumbnail
+            // 
+            this.pbThumbnail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbThumbnail.Location = new System.Drawing.Point(480, 152);
+            this.pbThumbnail.Name = "pbThumbnail";
+            this.pbThumbnail.Size = new System.Drawing.Size(334, 272);
+            this.pbThumbnail.TabIndex = 14;
+            // 
             // lvHistory
             // 
             this.lvHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -496,6 +505,7 @@
             this.lvHistory.TabIndex = 0;
             this.lvHistory.UseCompatibleStateImageBehavior = false;
             this.lvHistory.View = System.Windows.Forms.View.Details;
+            this.lvHistory.SelectedIndexChanged += new System.EventHandler(this.lvHistory_SelectedIndexChanged);
             // 
             // chDateTime
             // 
@@ -532,6 +542,7 @@
             this.Controls.Add(this.cbFilenameFilterCulture);
             this.Controls.Add(this.cbFilenameFilterMethod);
             this.Controls.Add(this.txtFilenameFilter);
+            this.Controls.Add(this.pbThumbnail);
             this.Controls.Add(this.dtpFilterTo);
             this.Controls.Add(this.btnApplyFilters);
             this.Controls.Add(this.label2);
@@ -607,5 +618,6 @@
         private System.Windows.Forms.ComboBox cbFilenameFilterCulture;
         private System.Windows.Forms.CheckBox cbFilenameFilter;
         private System.Windows.Forms.CheckBox cbFilenameFilterCase;
+        private Custom_Controls.MyPictureBox pbThumbnail;
     }
 }

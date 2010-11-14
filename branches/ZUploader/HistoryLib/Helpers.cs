@@ -27,6 +27,7 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace HistoryLib
@@ -91,6 +92,13 @@ namespace HistoryLib
         {
             string text = File.ReadAllText(path);
             Clipboard.SetText(text);
+        }
+
+        public static Image LoadImageFromResources(string imageName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream("HistoryLib.Images." + imageName);
+            return Image.FromStream(stream);
         }
     }
 }

@@ -48,6 +48,12 @@
     <Compile Include="Custom Controls\ListViewNF.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Custom Controls\MyPictureBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\MyPictureBox.Designer.cs">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
@@ -62,12 +68,18 @@
     <Compile Include="SQLiteWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Custom Controls\MyPictureBox.resx">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HistoryForm.resx">
       <DependentUpon>HistoryForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Database\History.db3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

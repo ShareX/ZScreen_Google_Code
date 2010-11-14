@@ -45,6 +45,8 @@ namespace HistoryLib
             this.Text = title;
             cbFilenameFilterMethod.SelectedIndex = 0; // Contains
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
+            pbThumbnail.SizeMode = PictureBoxSizeMode.Zoom;
+            pbThumbnail.LoadingImage = Helpers.LoadImageFromResources("Loading.gif");
         }
 
         private void HistoryForm_Shown(object sender, EventArgs e)
@@ -372,5 +374,15 @@ namespace HistoryLib
         }
 
         #endregion Right click menu events
+
+        private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HistoryItem hi = GetSelectedHistoryItem();
+
+            if (hi != null)
+            {
+                pbThumbnail.LoadImage(hi.Filepath, hi.URL);
+            }
+        }
     }
 }
