@@ -17,6 +17,7 @@ namespace HistoryLib.Custom_Controls
             set { pbMain.SizeMode = value; }
         }
 
+        private bool isReady;
         private bool isLoadLocal;
 
         public MyPictureBox()
@@ -32,37 +33,59 @@ namespace HistoryLib.Custom_Controls
 
             if (!string.IsNullOrEmpty(imagePath) && Helpers.IsImageFile(imagePath) && File.Exists(imagePath))
             {
-                lblStatus.Visible = true;
                 lblStatus.Text = "Loading local image...";
                 isLoadLocal = true;
-                pbMain.LoadAsync(imagePath);
+                LoadImage(imagePath);
             }
             else if (!string.IsNullOrEmpty(imageURL) && Helpers.IsImageFile(imageURL))
             {
-                lblStatus.Visible = true;
                 lblStatus.Text = "Downloading image from URL...";
                 isLoadLocal = false;
-                pbMain.LoadAsync(imageURL);
+                LoadImage(imageURL);
             }
+        }
+
+        private void LoadImage(string path)
+        {
+            isReady = false;
+            lblStatus.Visible = true;
+            this.Cursor = Cursors.Default;
+            pbMain.LoadAsync(path);
         }
 
         private void pbMain_LoadCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            isReady = true;
             lblStatus.Visible = false;
+            this.Cursor = Cursors.Hand;
         }
 
         private void pbMain_LoadProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            string status;
+
             if (isLoadLocal)
             {
-                lblStatus.Text = "Loading local image - ";
+                status = "Loading local image - ";
             }
             else
             {
-                lblStatus.Text = "Downloading image from URL - ";
+                status = "Downloading image from URL - ";
             }
 
-            lblStatus.Text += e.ProgressPercentage + "%";
+            status += e.ProgressPercentage + "%";
+            lblStatus.Text = status;
+        }
+
+        private void pbMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && isReady && pbMain.Image != null)
+            {
+                using (ImageViewer viewer = new ImageViewer(pbMain.Image))
+                {
+                    viewer.ShowDialog();
+                }
+            }
         }
     }
 }

@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom Controls\ImageViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Custom Controls\ListViewNF.cs">
       <SubType>Component</SubType>
     </Compile>

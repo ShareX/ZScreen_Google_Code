@@ -401,7 +401,7 @@ namespace HistoryLib
         {
             HistoryItem hi = GetSelectedHistoryItem();
 
-            if (hi != null)
+            if (hi != null && hi.Type == "Image")
             {
                 pbThumbnail.LoadImage(hi.Filepath, hi.URL);
             }

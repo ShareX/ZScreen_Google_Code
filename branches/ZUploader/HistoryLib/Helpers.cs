@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
@@ -99,6 +100,24 @@ namespace HistoryLib
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream("HistoryLib.Images." + imageName);
             return Image.FromStream(stream);
+        }
+
+        /// <summary>
+        /// Function to get a Rectangle of all the screens combined
+        /// </summary>
+        /// <returns></returns>
+        public static Rectangle GetScreenBounds()
+        {
+            Point topLeft = new Point(0, 0);
+            Point bottomRight = new Point(0, 0);
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                if (screen.Bounds.X < topLeft.X) topLeft.X = screen.Bounds.X;
+                if (screen.Bounds.Y < topLeft.Y) topLeft.Y = screen.Bounds.Y;
+                if ((screen.Bounds.X + screen.Bounds.Width) > bottomRight.X) bottomRight.X = screen.Bounds.X + screen.Bounds.Width;
+                if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
+            }
+            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
     }
 }

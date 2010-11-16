@@ -2,12 +2,12 @@
 {
     partial class MyPictureBox
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -32,9 +32,9 @@
             this.lblStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // pbMain
-            // 
+            //
             this.pbMain.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMain.Location = new System.Drawing.Point(0, 0);
@@ -42,9 +42,10 @@
             this.pbMain.Size = new System.Drawing.Size(150, 150);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
-            // 
+            this.pbMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMain_MouseClick);
+            //
             // lblStatus
-            // 
+            //
             this.lblStatus.BackColor = System.Drawing.Color.DimGray;
             this.lblStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblStatus.ForeColor = System.Drawing.Color.White;
@@ -55,9 +56,9 @@
             this.lblStatus.Text = "Test";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblStatus.Visible = false;
-            // 
+            //
             // MyPictureBox
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblStatus);
@@ -65,10 +66,9 @@
             this.Name = "MyPictureBox";
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        #endregion Component Designer generated code
 
         private System.Windows.Forms.PictureBox pbMain;
         private System.Windows.Forms.Label lblStatus;
