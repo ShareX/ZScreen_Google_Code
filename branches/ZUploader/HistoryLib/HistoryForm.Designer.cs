@@ -13,10 +13,13 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            if (history != null) history.Dispose();
+
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -63,8 +66,6 @@
             this.tsmiDeleteLocalFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDeleteFromHistoryAndLocalFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMoreInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tssHistory1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.dtpFilterFrom = new System.Windows.Forms.DateTimePicker();
             this.cbDateFilter = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -79,13 +80,18 @@
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbFilters = new System.Windows.Forms.GroupBox();
+            this.btnRemoveFilters = new System.Windows.Forms.Button();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
-            this.lvHistory = new HistoryLib.ListViewNF();
+            this.lvHistory = new HistoryLib.Custom_Controls.ListViewNF();
             this.chDateTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnRefreshList = new System.Windows.Forms.Button();
+            this.btnCopyURL = new System.Windows.Forms.Button();
+            this.btnOpenURL = new System.Windows.Forms.Button();
+            this.btnOpenLocalFile = new System.Windows.Forms.Button();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.gbFilters.SuspendLayout();
@@ -97,12 +103,10 @@
             this.tsmiOpen,
             this.tsmiCopy,
             this.tsmiDelete,
-            this.tsmiMoreInfo,
-            this.tssHistory1,
-            this.tsmiRefresh});
+            this.tsmiMoreInfo});
             this.cmsHistory.Name = "cmsHistory";
             this.cmsHistory.ShowImageMargin = false;
-            this.cmsHistory.Size = new System.Drawing.Size(107, 120);
+            this.cmsHistory.Size = new System.Drawing.Size(102, 92);
             this.cmsHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsHistory_Opening);
             //
             // tsmiOpen
@@ -115,7 +119,7 @@
             this.tsmiOpenFile,
             this.tsmiOpenFolder});
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(106, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(101, 22);
             this.tsmiOpen.Text = "Open";
             //
             // tsmiOpenURL
@@ -182,7 +186,7 @@
             this.tsmiCopyFileNameWithExtension,
             this.tsmiCopyFolder});
             this.tsmiCopy.Name = "tsmiCopy";
-            this.tsmiCopy.Size = new System.Drawing.Size(106, 22);
+            this.tsmiCopy.Size = new System.Drawing.Size(101, 22);
             this.tsmiCopy.Text = "Copy";
             //
             // tsmiCopyURL
@@ -324,7 +328,7 @@
             this.tsmiDeleteLocalFile,
             this.tsmiDeleteFromHistoryAndLocalFile});
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(106, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(101, 22);
             this.tsmiDelete.Text = "Delete";
             //
             // tsmiDeleteFromHistory
@@ -351,20 +355,8 @@
             // tsmiMoreInfo
             //
             this.tsmiMoreInfo.Name = "tsmiMoreInfo";
-            this.tsmiMoreInfo.Size = new System.Drawing.Size(106, 22);
+            this.tsmiMoreInfo.Size = new System.Drawing.Size(101, 22);
             this.tsmiMoreInfo.Text = "More info";
-            //
-            // tssHistory1
-            //
-            this.tssHistory1.Name = "tssHistory1";
-            this.tssHistory1.Size = new System.Drawing.Size(103, 6);
-            //
-            // tsmiRefresh
-            //
-            this.tsmiRefresh.Name = "tsmiRefresh";
-            this.tsmiRefresh.Size = new System.Drawing.Size(106, 22);
-            this.tsmiRefresh.Text = "Refresh list";
-            this.tsmiRefresh.Click += new System.EventHandler(this.tsmiRefresh_Click);
             //
             // dtpFilterFrom
             //
@@ -412,9 +404,9 @@
             //
             this.btnApplyFilters.Location = new System.Drawing.Point(16, 24);
             this.btnApplyFilters.Name = "btnApplyFilters";
-            this.btnApplyFilters.Size = new System.Drawing.Size(75, 23);
+            this.btnApplyFilters.Size = new System.Drawing.Size(104, 24);
             this.btnApplyFilters.TabIndex = 7;
-            this.btnApplyFilters.Text = "Apply Filters";
+            this.btnApplyFilters.Text = "Apply filters";
             this.btnApplyFilters.UseVisualStyleBackColor = true;
             this.btnApplyFilters.Click += new System.EventHandler(this.btnApplyFilters_Click);
             //
@@ -444,8 +436,8 @@
             this.cbFilenameFilterCulture.FormattingEnabled = true;
             this.cbFilenameFilterCulture.Items.AddRange(new object[] {
             "Current culture",
-            "Invariant culture",
-            "Ordinal"});
+            "Invariant culture (English)",
+            "Ordinal (English)"});
             this.cbFilenameFilterCulture.Location = new System.Drawing.Point(17, 108);
             this.cbFilenameFilterCulture.Name = "cbFilenameFilterCulture";
             this.cbFilenameFilterCulture.Size = new System.Drawing.Size(176, 21);
@@ -489,6 +481,7 @@
             //
             // gbFilters
             //
+            this.gbFilters.Controls.Add(this.btnRemoveFilters);
             this.gbFilters.Controls.Add(this.btnApplyFilters);
             this.gbFilters.Controls.Add(this.dtpFilterFrom);
             this.gbFilters.Controls.Add(this.label1);
@@ -500,12 +493,22 @@
             this.gbFilters.Controls.Add(this.cbFilenameFilterCulture);
             this.gbFilters.Controls.Add(this.txtFilenameFilter);
             this.gbFilters.Controls.Add(this.cbFilenameFilterMethod);
-            this.gbFilters.Location = new System.Drawing.Point(8, 8);
+            this.gbFilters.Location = new System.Drawing.Point(168, 8);
             this.gbFilters.Name = "gbFilters";
             this.gbFilters.Size = new System.Drawing.Size(312, 224);
             this.gbFilters.TabIndex = 16;
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
+            //
+            // btnRemoveFilters
+            //
+            this.btnRemoveFilters.Location = new System.Drawing.Point(128, 24);
+            this.btnRemoveFilters.Name = "btnRemoveFilters";
+            this.btnRemoveFilters.Size = new System.Drawing.Size(104, 24);
+            this.btnRemoveFilters.TabIndex = 17;
+            this.btnRemoveFilters.Text = "Remove filters";
+            this.btnRemoveFilters.UseVisualStyleBackColor = true;
+            this.btnRemoveFilters.Click += new System.EventHandler(this.btnRemoveFilters_Click);
             //
             // pbThumbnail
             //
@@ -565,19 +568,65 @@
             this.chURL.Text = "URL";
             this.chURL.Width = 330;
             //
+            // btnRefreshList
+            //
+            this.btnRefreshList.Location = new System.Drawing.Point(16, 16);
+            this.btnRefreshList.Name = "btnRefreshList";
+            this.btnRefreshList.Size = new System.Drawing.Size(104, 24);
+            this.btnRefreshList.TabIndex = 17;
+            this.btnRefreshList.Text = "Refresh list";
+            this.btnRefreshList.UseVisualStyleBackColor = true;
+            this.btnRefreshList.Click += new System.EventHandler(this.btnRefreshList_Click);
+            //
+            // btnCopyURL
+            //
+            this.btnCopyURL.Enabled = false;
+            this.btnCopyURL.Location = new System.Drawing.Point(16, 48);
+            this.btnCopyURL.Name = "btnCopyURL";
+            this.btnCopyURL.Size = new System.Drawing.Size(104, 24);
+            this.btnCopyURL.TabIndex = 18;
+            this.btnCopyURL.Text = "Copy URL";
+            this.btnCopyURL.UseVisualStyleBackColor = true;
+            this.btnCopyURL.Click += new System.EventHandler(this.btnCopyURL_Click);
+            //
+            // btnOpenURL
+            //
+            this.btnOpenURL.Enabled = false;
+            this.btnOpenURL.Location = new System.Drawing.Point(16, 80);
+            this.btnOpenURL.Name = "btnOpenURL";
+            this.btnOpenURL.Size = new System.Drawing.Size(104, 24);
+            this.btnOpenURL.TabIndex = 18;
+            this.btnOpenURL.Text = "Open URL";
+            this.btnOpenURL.UseVisualStyleBackColor = true;
+            this.btnOpenURL.Click += new System.EventHandler(this.btnOpenURL_Click);
+            //
+            // btnOpenLocalFile
+            //
+            this.btnOpenLocalFile.Enabled = false;
+            this.btnOpenLocalFile.Location = new System.Drawing.Point(16, 112);
+            this.btnOpenLocalFile.Name = "btnOpenLocalFile";
+            this.btnOpenLocalFile.Size = new System.Drawing.Size(104, 24);
+            this.btnOpenLocalFile.TabIndex = 18;
+            this.btnOpenLocalFile.Text = "Open local file";
+            this.btnOpenLocalFile.UseVisualStyleBackColor = true;
+            this.btnOpenLocalFile.Click += new System.EventHandler(this.btnOpenLocalFile_Click);
+            //
             // HistoryForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(825, 634);
-            this.Controls.Add(this.gbFilters);
+            this.Controls.Add(this.btnOpenLocalFile);
             this.Controls.Add(this.ssMain);
+            this.Controls.Add(this.gbFilters);
+            this.Controls.Add(this.btnOpenURL);
             this.Controls.Add(this.pbThumbnail);
+            this.Controls.Add(this.btnCopyURL);
             this.Controls.Add(this.lvHistory);
+            this.Controls.Add(this.btnRefreshList);
             this.Name = "HistoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistoryFormTest";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.HistoryForm_FormClosed);
             this.Shown += new System.EventHandler(this.HistoryForm_Shown);
             this.cmsHistory.ResumeLayout(false);
             this.ssMain.ResumeLayout(false);
@@ -590,7 +639,7 @@
 
         #endregion Windows Form Designer generated code
 
-        private ListViewNF lvHistory;
+        private Custom_Controls.ListViewNF lvHistory;
         private System.Windows.Forms.ColumnHeader chFilename;
         private System.Windows.Forms.ColumnHeader chDateTime;
         private System.Windows.Forms.ColumnHeader chType;
@@ -628,8 +677,6 @@
         private System.Windows.Forms.ToolStripSeparator tssOpen1;
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenFile;
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenFolder;
-        private System.Windows.Forms.ToolStripSeparator tssHistory1;
-        private System.Windows.Forms.ToolStripMenuItem tsmiRefresh;
         private System.Windows.Forms.ToolStripMenuItem tsmiDeleteFromHistoryAndLocalFile;
         private System.Windows.Forms.DateTimePicker dtpFilterFrom;
         private System.Windows.Forms.CheckBox cbDateFilter;
@@ -647,5 +694,10 @@
         private System.Windows.Forms.StatusStrip ssMain;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.GroupBox gbFilters;
+        private System.Windows.Forms.Button btnRemoveFilters;
+        private System.Windows.Forms.Button btnRefreshList;
+        private System.Windows.Forms.Button btnCopyURL;
+        private System.Windows.Forms.Button btnOpenURL;
+        private System.Windows.Forms.Button btnOpenLocalFile;
     }
 }

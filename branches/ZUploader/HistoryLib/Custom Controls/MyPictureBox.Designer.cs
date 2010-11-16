@@ -40,6 +40,7 @@
             this.pbMain.Location = new System.Drawing.Point(0, 0);
             this.pbMain.Name = "pbMain";
             this.pbMain.Size = new System.Drawing.Size(150, 150);
+            this.pbMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbMain_MouseClick);

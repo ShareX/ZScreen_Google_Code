@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace HistoryLib
+namespace HistoryLib.Custom_Controls
 {
     internal class ListViewNF : ListView
     {

@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -47,18 +48,8 @@ namespace HistoryLib
             this.Text = title;
             cbFilenameFilterMethod.SelectedIndex = 0; // Contains
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
-            pbThumbnail.SizeMode = PictureBoxSizeMode.Zoom;
+            cbFilenameFilterCulture.Items[0] = string.Format("Current culture ({0})", CultureInfo.CurrentCulture.Parent.EnglishName);
             pbThumbnail.LoadingImage = Helpers.LoadImageFromResources("Loading.gif");
-        }
-
-        private void HistoryForm_Shown(object sender, EventArgs e)
-        {
-            RefreshHistoryItems();
-        }
-
-        private void HistoryForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (history != null) history.Dispose();
         }
 
         private void RefreshHistoryItems()
@@ -70,11 +61,6 @@ namespace HistoryLib
 
             allHistoryItems = history.GetHistoryItems();
             AddHistoryItems(allHistoryItems);
-        }
-
-        private void btnApplyFilters_Click(object sender, EventArgs e)
-        {
-            ApplyFiltersAndAdd();
         }
 
         private void ApplyFiltersAndAdd()
@@ -185,11 +171,6 @@ namespace HistoryLib
             tsslStatus.Text = status.ToString();
         }
 
-        private void cmsHistory_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel =  !UpdateHistoryMenu();
-        }
-
         private bool UpdateHistoryMenu()
         {
             HistoryItem hi = GetSelectedHistoryItem();
@@ -237,6 +218,16 @@ namespace HistoryLib
             return false;
         }
 
+        private void UpdateButtons()
+        {
+            if (UpdateHistoryMenu())
+            {
+                btnCopyURL.Enabled = him.IsURLExist;
+                btnOpenURL.Enabled = him.IsURLExist;
+                btnOpenLocalFile.Enabled = him.IsFileExist;
+            }
+        }
+
         private HistoryItem GetSelectedHistoryItem()
         {
             if (lvHistory.SelectedItems.Count > 0)
@@ -261,6 +252,67 @@ namespace HistoryLib
                 }
             }
         }
+
+        #region Form events
+
+        private void HistoryForm_Shown(object sender, EventArgs e)
+        {
+            RefreshHistoryItems();
+        }
+
+        private void btnRefreshList_Click(object sender, EventArgs e)
+        {
+            RefreshHistoryItems();
+        }
+
+        private void btnCopyURL_Click(object sender, EventArgs e)
+        {
+            him.CopyURL();
+        }
+
+        private void btnOpenURL_Click(object sender, EventArgs e)
+        {
+            him.OpenURL();
+        }
+
+        private void btnOpenLocalFile_Click(object sender, EventArgs e)
+        {
+            him.OpenFile();
+        }
+
+        private void btnApplyFilters_Click(object sender, EventArgs e)
+        {
+            ApplyFiltersAndAdd();
+        }
+
+        private void btnRemoveFilters_Click(object sender, EventArgs e)
+        {
+            AddHistoryItems(allHistoryItems);
+        }
+
+        private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateButtons();
+
+            HistoryItem hi = GetSelectedHistoryItem();
+
+            if (hi != null)
+            {
+                pbThumbnail.Reset();
+
+                if (hi.Type == "Image")
+                {
+                    pbThumbnail.LoadImage(hi.Filepath, hi.URL);
+                }
+            }
+        }
+
+        private void cmsHistory_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel =  !UpdateHistoryMenu();
+        }
+
+        #endregion Form events
 
         #region Right click menu events
 
@@ -390,21 +442,6 @@ namespace HistoryLib
             // TODO: More Info
         }
 
-        private void tsmiRefresh_Click(object sender, EventArgs e)
-        {
-            RefreshHistoryItems();
-        }
-
         #endregion Right click menu events
-
-        private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            HistoryItem hi = GetSelectedHistoryItem();
-
-            if (hi != null && hi.Type == "Image")
-            {
-                pbThumbnail.LoadImage(hi.Filepath, hi.URL);
-            }
-        }
     }
 }

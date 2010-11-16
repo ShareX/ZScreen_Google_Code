@@ -31,33 +31,8 @@ namespace HistoryLib
     public class HistoryItem
     {
         public long ID { get; set; }
-
-        private string filename;
-        public string Filename
-        {
-            get { return filename; }
-            set
-            {
-                if (CheckValueLength(value, 260))
-                {
-                    filename = value;
-                }
-            }
-        }
-
-        private string filepath;
-        public string Filepath
-        {
-            get { return filepath; }
-            set
-            {
-                if (CheckValueLength(value, 260))
-                {
-                    filepath = value;
-                }
-            }
-        }
-
+        public string Filename { get; set; }
+        public string Filepath { get; set; }
         public DateTime DateTimeUtc { get; set; }
 
         public string DateTimeLocalString
@@ -69,81 +44,11 @@ namespace HistoryLib
             }
         }
 
-        private string type;
-        public string Type
-        {
-            get { return type; }
-            set
-            {
-                if (CheckValueLength(value, 5))
-                {
-                    type = value;
-                }
-            }
-        }
-
-        private string host;
-        public string Host
-        {
-            get { return host; }
-            set
-            {
-                if (CheckValueLength(value, 50))
-                {
-                    host = value;
-                }
-            }
-        }
-
-        private string url;
-        public string URL
-        {
-            get { return url; }
-            set
-            {
-                if (CheckValueLength(value, 1000))
-                {
-                    url = value;
-                }
-            }
-        }
-
-        private string thumbnailurl;
-        public string ThumbnailURL
-        {
-            get { return thumbnailurl; }
-            set
-            {
-                if (CheckValueLength(value, 1000))
-                {
-                    thumbnailurl = value;
-                }
-            }
-        }
-
-        private string deletionurl;
-        public string DeletionURL
-        {
-            get { return deletionurl; }
-            set
-            {
-                if (CheckValueLength(value, 1000))
-                {
-                    deletionurl = value;
-                }
-            }
-        }
-
-        private bool CheckValueLength(string value, int length)
-        {
-            if (value != null && value.Length > length)
-            {
-                string message = string.Format("Value length must be equal or smaller than {0}.\nFirst 25 chars of this value: {1}", length, value.Substring(0, 25));
-                throw new Exception(message);
-            }
-
-            return true;
-        }
+        public string Type { get; set; }
+        public string Host { get; set; }
+        public string URL { get; set; }
+        public string ThumbnailURL { get; set; }
+        public string DeletionURL { get; set; }
 
         public static explicit operator HistoryItem(DataRow row)
         {
