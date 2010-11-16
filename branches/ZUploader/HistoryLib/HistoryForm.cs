@@ -25,7 +25,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace HistoryLib
@@ -88,7 +90,7 @@ namespace HistoryLib
             IEnumerable<HistoryItem> result = (IEnumerable<HistoryItem>)historyItems.Clone();
 
             string filenameFilter = txtFilenameFilter.Text;
-            if (!string.IsNullOrEmpty(filenameFilter))
+            if (cbFilenameFilter.Checked && !string.IsNullOrEmpty(filenameFilter))
             {
                 StringComparison rule = GetStringRule();
 
@@ -160,15 +162,30 @@ namespace HistoryLib
 
         private void UpdateItemCount(HistoryItem[] historyItems)
         {
-            lblHistoryStatus.Text = "Total: " + allHistoryItems.Length;
+            StringBuilder status = new StringBuilder();
+
+            status.Append("Total: " + allHistoryItems.Length);
 
             if (allHistoryItems.Length > historyItems.Length)
             {
-                lblHistoryStatus.Text += ", Filtered: " + historyItems.Length;
+                status.Append(", Filtered: " + historyItems.Length);
             }
+
+            var types = from hi in historyItems
+                        group hi by hi.Type into t
+                        let count = t.Count()
+                        orderby t.Key
+                        select string.Format(", {0}: {1}", t.Key, count);
+
+            foreach (string type in types)
+            {
+                status.Append(type);
+            }
+
+            tsslStatus.Text = status.ToString();
         }
 
-        private void cmsHistory_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void cmsHistory_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel =  !UpdateHistoryMenu();
         }
@@ -366,6 +383,11 @@ namespace HistoryLib
         {
             RemoveSelectedHistoryItem();
             him.DeleteLocalFile();
+        }
+
+        private void tsmiMoreInfo_Click(object sender, EventArgs e)
+        {
+            // TODO: More Info
         }
 
         private void tsmiRefresh_Click(object sender, EventArgs e)

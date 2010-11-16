@@ -113,7 +113,7 @@ namespace ZUploader
 
         private void btnImageGIFQualityHint_Click(object sender, EventArgs e)
         {
-            // TODO
+            // TODO: GIF Quality Hint
         }
 
         private void nudUseImageFormat2After_ValueChanged(object sender, EventArgs e)

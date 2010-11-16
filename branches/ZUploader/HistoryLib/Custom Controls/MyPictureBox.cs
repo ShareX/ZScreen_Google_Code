@@ -33,14 +33,14 @@ namespace HistoryLib.Custom_Controls
             if (!string.IsNullOrEmpty(imagePath) && Helpers.IsImageFile(imagePath) && File.Exists(imagePath))
             {
                 lblStatus.Visible = true;
-                lblStatus.Text = "Loading local image";
+                lblStatus.Text = "Loading local image...";
                 isLoadLocal = true;
                 pbMain.LoadAsync(imagePath);
             }
-            else if (!string.IsNullOrEmpty(imageURL))
+            else if (!string.IsNullOrEmpty(imageURL) && Helpers.IsImageFile(imageURL))
             {
                 lblStatus.Visible = true;
-                lblStatus.Text = "Downloading image from URL";
+                lblStatus.Text = "Downloading image from URL...";
                 isLoadLocal = false;
                 pbMain.LoadAsync(imageURL);
             }
@@ -55,11 +55,11 @@ namespace HistoryLib.Custom_Controls
         {
             if (isLoadLocal)
             {
-                lblStatus.Text = "Loading local image: ";
+                lblStatus.Text = "Loading local image - ";
             }
             else
             {
-                lblStatus.Text = "Downloading image from URL: ";
+                lblStatus.Text = "Downloading image from URL - ";
             }
 
             lblStatus.Text += e.ProgressPercentage + "%";

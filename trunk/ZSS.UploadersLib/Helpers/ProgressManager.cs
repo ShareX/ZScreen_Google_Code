@@ -63,6 +63,8 @@ namespace ZUploader
             {
                 Elapsed = startTimer.Elapsed;
                 Remaining = TimeSpan.Zero;
+
+                return true;
             }
             else if (smoothTimer.ElapsedMilliseconds > smoothTime)
             {
