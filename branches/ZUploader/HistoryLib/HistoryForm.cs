@@ -50,6 +50,7 @@ namespace HistoryLib
             ResetControls();
             cbFilenameFilterMethod.SelectedIndex = 0; // Contains
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
+            cbTypeFilterSelection.SelectedIndex = 0; // Image
             cbFilenameFilterCulture.Items[0] = string.Format("Current culture ({0})", CultureInfo.CurrentCulture.Parent.EnglishName);
             pbThumbnail.LoadingImage = Helpers.LoadImageFromResources("Loading.gif");
             lvHistory.AutoResizeLastColumn();
@@ -62,8 +63,20 @@ namespace HistoryLib
                 history = new HistoryManager(DatabasePath);
             }
 
-            allHistoryItems = history.GetHistoryItems();
-            AddHistoryItems(allHistoryItems);
+            allHistoryItems = GetHistoryItems();
+            ApplyFiltersAndAdd();
+        }
+
+        private HistoryItem[] GetHistoryItems()
+        {
+            IEnumerable<HistoryItem> historyItems = history.GetHistoryItems().Reverse();
+
+            if (MaxItemCount > -1)
+            {
+                historyItems = historyItems.Take(MaxItemCount);
+            }
+
+            return historyItems.ToArray();
         }
 
         private void ApplyFiltersAndAdd()
@@ -76,7 +89,21 @@ namespace HistoryLib
 
         private HistoryItem[] ApplyFilters(HistoryItem[] historyItems)
         {
-            IEnumerable<HistoryItem> result = (IEnumerable<HistoryItem>)historyItems.Clone();
+            IEnumerable<HistoryItem> result = historyItems.AsEnumerable();
+
+            if (cbTypeFilter.Checked)
+            {
+                string type = cbTypeFilterSelection.Text;
+
+                result = result.Where(x => x.Type == type);
+            }
+
+            if (cbHostFilter.Checked)
+            {
+                string host = txtHostFilter.Text;
+
+                result = result.Where(x => x.Host.IndexOf(host, StringComparison.InvariantCultureIgnoreCase) >= 0);
+            }
 
             string filenameFilter = txtFilenameFilter.Text;
             if (cbFilenameFilter.Checked && !string.IsNullOrEmpty(filenameFilter))
@@ -136,19 +163,8 @@ namespace HistoryLib
             lvHistory.Items.Clear();
 
             HistoryItem hi;
-            int start = historyItems.Length - 1;
-            int end;
 
-            if (MaxItemCount < 0)
-            {
-                end = -1;
-            }
-            else
-            {
-                end = Math.Max(-1, historyItems.Length - MaxItemCount - 1);
-            }
-
-            for (int i = start; i > end; i--)
+            for (int i = 0; i < historyItems.Length; i++)
             {
                 hi = historyItems[i];
                 ListViewItem lvi = new ListViewItem(hi.DateTimeLocalString);
@@ -196,7 +212,6 @@ namespace HistoryLib
             if (hi != null)
             {
                 him = new HistoryItemManager(hi);
-
                 UpdateButtons();
                 UpdateMenu();
                 UpdatePictureBox();
@@ -344,6 +359,14 @@ namespace HistoryLib
         private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateControls();
+        }
+
+        private void lvHistory_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (him != null)
+            {
+                him.OpenURL();
+            }
         }
 
         #endregion Form events

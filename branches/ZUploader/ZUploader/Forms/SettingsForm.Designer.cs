@@ -344,7 +344,7 @@
             // 
             // nudHistoryMaxItemCount
             // 
-            this.nudHistoryMaxItemCount.Location = new System.Drawing.Point(160, 92);
+            this.nudHistoryMaxItemCount.Location = new System.Drawing.Point(216, 92);
             this.nudHistoryMaxItemCount.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -371,9 +371,9 @@
             this.lblHistoryMaxItemCount.AutoSize = true;
             this.lblHistoryMaxItemCount.Location = new System.Drawing.Point(16, 96);
             this.lblHistoryMaxItemCount.Name = "lblHistoryMaxItemCount";
-            this.lblHistoryMaxItemCount.Size = new System.Drawing.Size(141, 13);
+            this.lblHistoryMaxItemCount.Size = new System.Drawing.Size(192, 13);
             this.lblHistoryMaxItemCount.TabIndex = 10;
-            this.lblHistoryMaxItemCount.Text = "Max item count (-1 disables):";
+            this.lblHistoryMaxItemCount.Text = "Max item count for filtering (-1 disables):";
             // 
             // btnBrowseCustomHistoryPath
             // 
