@@ -41,6 +41,11 @@ namespace ZUploader
             lblCopyright.Text = AssemblyCopyright;
         }
 
+        private void AboutForm_Shown(object sender, EventArgs e)
+        {
+            this.Activate();
+        }
+
         private void AboutForm_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;

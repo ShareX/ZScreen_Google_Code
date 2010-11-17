@@ -61,9 +61,6 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums.cs" />
-    <Compile Include="Custom Controls\ListViewNF.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Helpers\DebugTimer.cs" />
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>

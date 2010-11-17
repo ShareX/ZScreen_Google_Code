@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -36,20 +35,24 @@ namespace HistoryLib
     public partial class HistoryForm : Form
     {
         public string DatabasePath { get; private set; }
+        public int MaxItemCount { get; set; }
 
         private HistoryManager history;
         private HistoryItemManager him;
         private HistoryItem[] allHistoryItems;
 
-        public HistoryForm(string databasePath, string title)
+        public HistoryForm(string databasePath, int maxItemCount, string title)
         {
             InitializeComponent();
             DatabasePath = databasePath;
+            MaxItemCount = maxItemCount;
             this.Text = title;
+            ResetControls();
             cbFilenameFilterMethod.SelectedIndex = 0; // Contains
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
             cbFilenameFilterCulture.Items[0] = string.Format("Current culture ({0})", CultureInfo.CurrentCulture.Parent.EnglishName);
             pbThumbnail.LoadingImage = Helpers.LoadImageFromResources("Loading.gif");
+            lvHistory.AutoResizeLastColumn();
         }
 
         private void RefreshHistoryItems()
@@ -132,8 +135,22 @@ namespace HistoryLib
             lvHistory.SuspendLayout();
             lvHistory.Items.Clear();
 
-            foreach (HistoryItem hi in historyItems)
+            HistoryItem hi;
+            int start = historyItems.Length - 1;
+            int end;
+
+            if (MaxItemCount < 0)
             {
+                end = -1;
+            }
+            else
+            {
+                end = Math.Max(-1, historyItems.Length - MaxItemCount - 1);
+            }
+
+            for (int i = start; i > end; i--)
+            {
+                hi = historyItems[i];
                 ListViewItem lvi = new ListViewItem(hi.DateTimeLocalString);
                 lvi.SubItems.Add(hi.Filename);
                 lvi.SubItems.Add(hi.Type);
@@ -143,6 +160,7 @@ namespace HistoryLib
                 lvHistory.Items.Add(lvi);
             }
 
+            lvHistory.AutoResizeLastColumn();
             lvHistory.ResumeLayout(true);
         }
 
@@ -171,7 +189,7 @@ namespace HistoryLib
             tsslStatus.Text = status.ToString();
         }
 
-        private bool UpdateHistoryMenu()
+        private bool UpdateControls()
         {
             HistoryItem hi = GetSelectedHistoryItem();
 
@@ -179,53 +197,85 @@ namespace HistoryLib
             {
                 him = new HistoryItemManager(hi);
 
-                // Open
-                tsmiOpenURL.Enabled = him.IsURLExist;
-                tsmiOpenThumbnailURL.Enabled = him.IsThumbnailURLExist;
-                tsmiOpenDeletionURL.Enabled = him.IsDeletionURLExist;
-
-                tsmiOpenFile.Enabled = him.IsFileExist;
-                tsmiOpenFolder.Enabled = him.IsFolderExist;
-
-                // Copy
-                tsmiCopyURL.Enabled = him.IsURLExist;
-                tsmiCopyThumbnailURL.Enabled = him.IsThumbnailURLExist;
-                tsmiCopyDeletionURL.Enabled = him.IsDeletionURLExist;
-
-                tsmiCopyFile.Enabled = him.IsFileExist;
-                tsmiCopyImage.Enabled = him.IsImageFile;
-                tsmiCopyText.Enabled = him.IsTextFile;
-
-                tsmiCopyHTMLLink.Enabled = him.IsURLExist;
-                tsmiCopyHTMLImage.Enabled = him.IsURLExist;
-                tsmiCopyHTMLLinkedImage.Enabled = him.IsURLExist && him.IsThumbnailURLExist;
-
-                tsmiCopyForumLink.Enabled = him.IsURLExist;
-                tsmiCopyForumImage.Enabled =  him.IsURLExist;
-                tsmiCopyForumLinkedImage.Enabled =  him.IsURLExist && him.IsThumbnailURLExist;
-
-                tsmiCopyFilePath.Enabled = him.IsFilePathValid;
-                tsmiCopyFileName.Enabled =  him.IsFilePathValid;
-                tsmiCopyFileNameWithExtension.Enabled = him.IsFilePathValid;
-                tsmiCopyFolder.Enabled =  him.IsFilePathValid;
-
-                // Delete
-                tsmiDeleteLocalFile.Enabled = him.IsFileExist;
+                UpdateButtons();
+                UpdateMenu();
+                UpdatePictureBox();
 
                 return true;
             }
+
+            ResetControls();
 
             return false;
         }
 
         private void UpdateButtons()
         {
-            if (UpdateHistoryMenu())
+            btnCopyURL.Enabled = him.IsURLExist;
+            btnOpenURL.Enabled = him.IsURLExist;
+            btnOpenLocalFile.Enabled = him.IsFileExist;
+        }
+
+        private void UpdateMenu()
+        {
+            cmsHistory.Enabled = true;
+
+            // Open
+            tsmiOpenURL.Enabled = him.IsURLExist;
+            tsmiOpenThumbnailURL.Enabled = him.IsThumbnailURLExist;
+            tsmiOpenDeletionURL.Enabled = him.IsDeletionURLExist;
+
+            tsmiOpenFile.Enabled = him.IsFileExist;
+            tsmiOpenFolder.Enabled = him.IsFolderExist;
+
+            // Copy
+            tsmiCopyURL.Enabled = him.IsURLExist;
+            tsmiCopyThumbnailURL.Enabled = him.IsThumbnailURLExist;
+            tsmiCopyDeletionURL.Enabled = him.IsDeletionURLExist;
+
+            tsmiCopyFile.Enabled = him.IsFileExist;
+            tsmiCopyImage.Enabled = him.IsImageFile;
+            tsmiCopyText.Enabled = him.IsTextFile;
+
+            tsmiCopyHTMLLink.Enabled = him.IsURLExist;
+            tsmiCopyHTMLImage.Enabled = him.IsImageURL;
+            tsmiCopyHTMLLinkedImage.Enabled = him.IsImageURL && him.IsThumbnailURLExist;
+
+            tsmiCopyForumLink.Enabled = him.IsURLExist;
+            tsmiCopyForumImage.Enabled = him.IsImageURL && him.IsURLExist;
+            tsmiCopyForumLinkedImage.Enabled =  him.IsImageURL && him.IsThumbnailURLExist;
+
+            tsmiCopyFilePath.Enabled = him.IsFilePathValid;
+            tsmiCopyFileName.Enabled =  him.IsFilePathValid;
+            tsmiCopyFileNameWithExtension.Enabled = him.IsFilePathValid;
+            tsmiCopyFolder.Enabled =  him.IsFilePathValid;
+
+            // Delete
+            tsmiDeleteLocalFile.Enabled = him.IsFileExist;
+        }
+
+        private void UpdatePictureBox()
+        {
+            pbThumbnail.Reset();
+
+            if (him.HistoryItem.Type == "Image")
             {
-                btnCopyURL.Enabled = him.IsURLExist;
-                btnOpenURL.Enabled = him.IsURLExist;
-                btnOpenLocalFile.Enabled = him.IsFileExist;
+                pbThumbnail.LoadImage(him.HistoryItem.Filepath, him.HistoryItem.URL);
             }
+        }
+
+        private void ResetControls()
+        {
+            // Buttons
+            btnCopyURL.Enabled = false;
+            btnOpenURL.Enabled = false;
+            btnOpenLocalFile.Enabled = false;
+
+            // Menu
+            cmsHistory.Enabled = false;
+
+            // PictureBox
+            pbThumbnail.Reset();
         }
 
         private HistoryItem GetSelectedHistoryItem()
@@ -258,6 +308,7 @@ namespace HistoryLib
         private void HistoryForm_Shown(object sender, EventArgs e)
         {
             RefreshHistoryItems();
+            this.Activate();
         }
 
         private void btnRefreshList_Click(object sender, EventArgs e)
@@ -292,24 +343,7 @@ namespace HistoryLib
 
         private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateButtons();
-
-            HistoryItem hi = GetSelectedHistoryItem();
-
-            if (hi != null)
-            {
-                pbThumbnail.Reset();
-
-                if (hi.Type == "Image")
-                {
-                    pbThumbnail.LoadImage(hi.Filepath, hi.URL);
-                }
-            }
-        }
-
-        private void cmsHistory_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel =  !UpdateHistoryMenu();
+            UpdateControls();
         }
 
         #endregion Form events

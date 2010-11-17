@@ -32,6 +32,7 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using HistoryLib;
+using HistoryLib.Custom_Controls;
 using UploadersLib.Helpers;
 
 namespace ZUploader
@@ -44,7 +45,7 @@ namespace ZUploader
 
         public static FileUploaderType2 FileUploader { get; set; }
 
-        public static ListView ListViewControl { get; set; }
+        public static MyListView ListViewControl { get; set; }
 
         public static List<Task> Tasks = new List<Task>();
 
@@ -225,6 +226,7 @@ namespace ZUploader
                 lvi.ImageIndex = 0;
                 ListViewControl.Items.Add(lvi);
                 lvi.EnsureVisible();
+                ListViewControl.AutoResizeLastColumn();
             }
         }
 

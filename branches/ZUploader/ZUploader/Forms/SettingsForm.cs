@@ -37,11 +37,6 @@ namespace ZUploader
         {
             InitializeComponent();
             LoadSettings();
-        }
-
-        private void SettingsForm_Load(object sender, EventArgs e)
-        {
-            this.BringToFront();
             loaded = true;
         }
 
@@ -60,9 +55,20 @@ namespace ZUploader
             cbHistorySave.Checked = Program.Settings.SaveHistory;
             cbUseCustomHistoryPath.Checked = Program.Settings.UseCustomHistoryPath;
             txtCustomHistoryPath.Text = Program.Settings.CustomHistoryPath;
+            nudHistoryMaxItemCount.Value = Program.Settings.HistoryMaxItemCount;
 
             pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
+        }
+
+        private void SettingsForm_Shown(object sender, EventArgs e)
+        {
+            this.Activate();
+        }
+
+        private void SettingsForm_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
 
         #region General
@@ -172,6 +178,11 @@ namespace ZUploader
                     txtCustomHistoryPath.Text = ofd.FileName;
                 }
             }
+        }
+
+        private void nudHistoryMaxItemCount_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.HistoryMaxItemCount = (int)nudHistoryMaxItemCount.Value;
         }
 
         #endregion History

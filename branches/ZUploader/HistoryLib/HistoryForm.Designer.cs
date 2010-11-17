@@ -81,17 +81,17 @@
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbFilters = new System.Windows.Forms.GroupBox();
             this.btnRemoveFilters = new System.Windows.Forms.Button();
+            this.btnRefreshList = new System.Windows.Forms.Button();
+            this.btnCopyURL = new System.Windows.Forms.Button();
+            this.btnOpenURL = new System.Windows.Forms.Button();
+            this.btnOpenLocalFile = new System.Windows.Forms.Button();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
-            this.lvHistory = new HistoryLib.Custom_Controls.ListViewNF();
+            this.lvHistory = new HistoryLib.Custom_Controls.MyListView();
             this.chDateTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnRefreshList = new System.Windows.Forms.Button();
-            this.btnCopyURL = new System.Windows.Forms.Button();
-            this.btnOpenURL = new System.Windows.Forms.Button();
-            this.btnOpenLocalFile = new System.Windows.Forms.Button();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.gbFilters.SuspendLayout();
@@ -107,7 +107,6 @@
             this.cmsHistory.Name = "cmsHistory";
             this.cmsHistory.ShowImageMargin = false;
             this.cmsHistory.Size = new System.Drawing.Size(102, 92);
-            this.cmsHistory.Opening += new System.ComponentModel.CancelEventHandler(this.cmsHistory_Opening);
             //
             // tsmiOpen
             //
@@ -510,6 +509,46 @@
             this.btnRemoveFilters.UseVisualStyleBackColor = true;
             this.btnRemoveFilters.Click += new System.EventHandler(this.btnRemoveFilters_Click);
             //
+            // btnRefreshList
+            //
+            this.btnRefreshList.Location = new System.Drawing.Point(16, 16);
+            this.btnRefreshList.Name = "btnRefreshList";
+            this.btnRefreshList.Size = new System.Drawing.Size(104, 24);
+            this.btnRefreshList.TabIndex = 17;
+            this.btnRefreshList.Text = "Refresh list";
+            this.btnRefreshList.UseVisualStyleBackColor = true;
+            this.btnRefreshList.Click += new System.EventHandler(this.btnRefreshList_Click);
+            //
+            // btnCopyURL
+            //
+            this.btnCopyURL.Location = new System.Drawing.Point(16, 48);
+            this.btnCopyURL.Name = "btnCopyURL";
+            this.btnCopyURL.Size = new System.Drawing.Size(104, 24);
+            this.btnCopyURL.TabIndex = 18;
+            this.btnCopyURL.Text = "Copy URL";
+            this.btnCopyURL.UseVisualStyleBackColor = true;
+            this.btnCopyURL.Click += new System.EventHandler(this.btnCopyURL_Click);
+            //
+            // btnOpenURL
+            //
+            this.btnOpenURL.Location = new System.Drawing.Point(16, 80);
+            this.btnOpenURL.Name = "btnOpenURL";
+            this.btnOpenURL.Size = new System.Drawing.Size(104, 24);
+            this.btnOpenURL.TabIndex = 18;
+            this.btnOpenURL.Text = "Open URL";
+            this.btnOpenURL.UseVisualStyleBackColor = true;
+            this.btnOpenURL.Click += new System.EventHandler(this.btnOpenURL_Click);
+            //
+            // btnOpenLocalFile
+            //
+            this.btnOpenLocalFile.Location = new System.Drawing.Point(16, 112);
+            this.btnOpenLocalFile.Name = "btnOpenLocalFile";
+            this.btnOpenLocalFile.Size = new System.Drawing.Size(104, 24);
+            this.btnOpenLocalFile.TabIndex = 18;
+            this.btnOpenLocalFile.Text = "Open local file";
+            this.btnOpenLocalFile.UseVisualStyleBackColor = true;
+            this.btnOpenLocalFile.Click += new System.EventHandler(this.btnOpenLocalFile_Click);
+            //
             // pbThumbnail
             //
             this.pbThumbnail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -533,6 +572,7 @@
             this.chURL});
             this.lvHistory.ContextMenuStrip = this.cmsHistory;
             this.lvHistory.FullRowSelect = true;
+            this.lvHistory.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvHistory.HideSelection = false;
             this.lvHistory.Location = new System.Drawing.Point(8, 240);
             this.lvHistory.MultiSelect = false;
@@ -568,49 +608,6 @@
             this.chURL.Text = "URL";
             this.chURL.Width = 330;
             //
-            // btnRefreshList
-            //
-            this.btnRefreshList.Location = new System.Drawing.Point(16, 16);
-            this.btnRefreshList.Name = "btnRefreshList";
-            this.btnRefreshList.Size = new System.Drawing.Size(104, 24);
-            this.btnRefreshList.TabIndex = 17;
-            this.btnRefreshList.Text = "Refresh list";
-            this.btnRefreshList.UseVisualStyleBackColor = true;
-            this.btnRefreshList.Click += new System.EventHandler(this.btnRefreshList_Click);
-            //
-            // btnCopyURL
-            //
-            this.btnCopyURL.Enabled = false;
-            this.btnCopyURL.Location = new System.Drawing.Point(16, 48);
-            this.btnCopyURL.Name = "btnCopyURL";
-            this.btnCopyURL.Size = new System.Drawing.Size(104, 24);
-            this.btnCopyURL.TabIndex = 18;
-            this.btnCopyURL.Text = "Copy URL";
-            this.btnCopyURL.UseVisualStyleBackColor = true;
-            this.btnCopyURL.Click += new System.EventHandler(this.btnCopyURL_Click);
-            //
-            // btnOpenURL
-            //
-            this.btnOpenURL.Enabled = false;
-            this.btnOpenURL.Location = new System.Drawing.Point(16, 80);
-            this.btnOpenURL.Name = "btnOpenURL";
-            this.btnOpenURL.Size = new System.Drawing.Size(104, 24);
-            this.btnOpenURL.TabIndex = 18;
-            this.btnOpenURL.Text = "Open URL";
-            this.btnOpenURL.UseVisualStyleBackColor = true;
-            this.btnOpenURL.Click += new System.EventHandler(this.btnOpenURL_Click);
-            //
-            // btnOpenLocalFile
-            //
-            this.btnOpenLocalFile.Enabled = false;
-            this.btnOpenLocalFile.Location = new System.Drawing.Point(16, 112);
-            this.btnOpenLocalFile.Name = "btnOpenLocalFile";
-            this.btnOpenLocalFile.Size = new System.Drawing.Size(104, 24);
-            this.btnOpenLocalFile.TabIndex = 18;
-            this.btnOpenLocalFile.Text = "Open local file";
-            this.btnOpenLocalFile.UseVisualStyleBackColor = true;
-            this.btnOpenLocalFile.Click += new System.EventHandler(this.btnOpenLocalFile_Click);
-            //
             // HistoryForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -639,7 +636,7 @@
 
         #endregion Windows Form Designer generated code
 
-        private Custom_Controls.ListViewNF lvHistory;
+        private Custom_Controls.MyListView lvHistory;
         private System.Windows.Forms.ColumnHeader chFilename;
         private System.Windows.Forms.ColumnHeader chDateTime;
         private System.Windows.Forms.ColumnHeader chType;

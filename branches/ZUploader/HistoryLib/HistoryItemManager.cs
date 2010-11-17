@@ -36,6 +36,8 @@ namespace HistoryLib
         public bool IsURLExist { get; private set; }
         public bool IsThumbnailURLExist { get; private set; }
         public bool IsDeletionURLExist { get; private set; }
+        public bool IsImageURL { get; private set; }
+        public bool IsTextURL { get; private set; }
         public bool IsFilePathValid { get; private set; }
         public bool IsFileExist { get; private set; }
         public bool IsFolderExist { get; private set; }
@@ -51,6 +53,8 @@ namespace HistoryLib
                 IsURLExist = !string.IsNullOrEmpty(HistoryItem.URL);
                 IsThumbnailURLExist = !string.IsNullOrEmpty(HistoryItem.ThumbnailURL);
                 IsDeletionURLExist = !string.IsNullOrEmpty(HistoryItem.DeletionURL);
+                IsImageURL = IsURLExist && Helpers.IsImageFile(HistoryItem.URL);
+                IsTextURL = IsURLExist && Helpers.IsTextFile(HistoryItem.URL);
                 IsFilePathValid = !string.IsNullOrEmpty(HistoryItem.Filepath) && Path.HasExtension(HistoryItem.Filepath);
                 IsFileExist = IsFilePathValid && File.Exists(HistoryItem.Filepath);
                 IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
@@ -121,12 +125,12 @@ namespace HistoryLib
 
         public void CopyHTMLImage()
         {
-            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("<img src=\"{0}\"/>", HistoryItem.URL));
+            if (HistoryItem != null && IsImageURL) Clipboard.SetText(string.Format("<img src=\"{0}\"/>", HistoryItem.URL));
         }
 
         public void CopyHTMLLinkedImage()
         {
-            if (HistoryItem != null && IsURLExist && IsThumbnailURLExist)
+            if (HistoryItem != null && IsImageURL && IsThumbnailURLExist)
             {
                 Clipboard.SetText(string.Format("<a href=\"{0}\"><img src=\"{1}\"/></a>", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }
@@ -139,12 +143,12 @@ namespace HistoryLib
 
         public void CopyForumImage()
         {
-            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("[img]{0}[/img]", HistoryItem.URL));
+            if (HistoryItem != null && IsImageURL) Clipboard.SetText(string.Format("[img]{0}[/img]", HistoryItem.URL));
         }
 
         public void CopyForumLinkedImage()
         {
-            if (HistoryItem != null && IsURLExist && IsThumbnailURLExist)
+            if (HistoryItem != null && IsImageURL && IsThumbnailURLExist)
             {
                 Clipboard.SetText(string.Format("[url={0}][img]{1}[/img][/url]", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }

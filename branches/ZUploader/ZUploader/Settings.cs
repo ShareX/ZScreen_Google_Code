@@ -52,6 +52,7 @@ namespace ZUploader
         public bool SaveHistory = true;
         public bool UseCustomHistoryPath = false;
         public string CustomHistoryPath = string.Empty;
+        public int HistoryMaxItemCount = -1;
 
         public FTPAccount FTPAccount = new FTPAccount();
         public ProxyInfo ProxySettings = new ProxyInfo();

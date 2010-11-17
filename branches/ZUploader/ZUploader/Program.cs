@@ -117,7 +117,6 @@ namespace ZUploader
                     }
 
                     mainForm.Activate();
-                    mainForm.BringToFront();
 
                     if (args != null && args.CommandLineArgs.Length > 1)
                     {
