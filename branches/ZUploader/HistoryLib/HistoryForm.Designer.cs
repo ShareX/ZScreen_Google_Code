@@ -80,15 +80,15 @@
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbFilters = new System.Windows.Forms.GroupBox();
+            this.txtHostFilter = new System.Windows.Forms.TextBox();
+            this.cbTypeFilterSelection = new System.Windows.Forms.ComboBox();
+            this.cbHostFilter = new System.Windows.Forms.CheckBox();
+            this.cbTypeFilter = new System.Windows.Forms.CheckBox();
             this.btnRemoveFilters = new System.Windows.Forms.Button();
             this.btnRefreshList = new System.Windows.Forms.Button();
             this.btnCopyURL = new System.Windows.Forms.Button();
             this.btnOpenURL = new System.Windows.Forms.Button();
             this.btnOpenLocalFile = new System.Windows.Forms.Button();
-            this.cbTypeFilter = new System.Windows.Forms.CheckBox();
-            this.cbHostFilter = new System.Windows.Forms.CheckBox();
-            this.cbTypeFilterSelection = new System.Windows.Forms.ComboBox();
-            this.txtHostFilter = new System.Windows.Forms.TextBox();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
             this.lvHistory = new HistoryLib.Custom_Controls.MyListView();
             this.chDateTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -110,7 +110,7 @@
             this.tsmiMoreInfo});
             this.cmsHistory.Name = "cmsHistory";
             this.cmsHistory.ShowImageMargin = false;
-            this.cmsHistory.Size = new System.Drawing.Size(102, 92);
+            this.cmsHistory.Size = new System.Drawing.Size(128, 114);
             // 
             // tsmiOpen
             // 
@@ -122,7 +122,7 @@
             this.tsmiOpenFile,
             this.tsmiOpenFolder});
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(101, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(127, 22);
             this.tsmiOpen.Text = "Open";
             // 
             // tsmiOpenURL
@@ -189,7 +189,7 @@
             this.tsmiCopyFileNameWithExtension,
             this.tsmiCopyFolder});
             this.tsmiCopy.Name = "tsmiCopy";
-            this.tsmiCopy.Size = new System.Drawing.Size(101, 22);
+            this.tsmiCopy.Size = new System.Drawing.Size(127, 22);
             this.tsmiCopy.Text = "Copy";
             // 
             // tsmiCopyURL
@@ -331,7 +331,7 @@
             this.tsmiDeleteLocalFile,
             this.tsmiDeleteFromHistoryAndLocalFile});
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(101, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(127, 22);
             this.tsmiDelete.Text = "Delete";
             // 
             // tsmiDeleteFromHistory
@@ -358,8 +358,9 @@
             // tsmiMoreInfo
             // 
             this.tsmiMoreInfo.Name = "tsmiMoreInfo";
-            this.tsmiMoreInfo.Size = new System.Drawing.Size(101, 22);
+            this.tsmiMoreInfo.Size = new System.Drawing.Size(127, 22);
             this.tsmiMoreInfo.Text = "More info";
+            this.tsmiMoreInfo.Click += new System.EventHandler(this.tsmiMoreInfo_Click);
             // 
             // dtpFilterFrom
             // 
@@ -505,6 +506,46 @@
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
             // 
+            // txtHostFilter
+            // 
+            this.txtHostFilter.Location = new System.Drawing.Point(112, 200);
+            this.txtHostFilter.Name = "txtHostFilter";
+            this.txtHostFilter.Size = new System.Drawing.Size(184, 20);
+            this.txtHostFilter.TabIndex = 17;
+            // 
+            // cbTypeFilterSelection
+            // 
+            this.cbTypeFilterSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTypeFilterSelection.FormattingEnabled = true;
+            this.cbTypeFilterSelection.Items.AddRange(new object[] {
+            "Image",
+            "File",
+            "Text"});
+            this.cbTypeFilterSelection.Location = new System.Drawing.Point(112, 174);
+            this.cbTypeFilterSelection.Name = "cbTypeFilterSelection";
+            this.cbTypeFilterSelection.Size = new System.Drawing.Size(96, 21);
+            this.cbTypeFilterSelection.TabIndex = 16;
+            // 
+            // cbHostFilter
+            // 
+            this.cbHostFilter.AutoSize = true;
+            this.cbHostFilter.Location = new System.Drawing.Point(16, 202);
+            this.cbHostFilter.Name = "cbHostFilter";
+            this.cbHostFilter.Size = new System.Drawing.Size(73, 17);
+            this.cbHostFilter.TabIndex = 15;
+            this.cbHostFilter.Text = "Host filter:";
+            this.cbHostFilter.UseVisualStyleBackColor = true;
+            // 
+            // cbTypeFilter
+            // 
+            this.cbTypeFilter.AutoSize = true;
+            this.cbTypeFilter.Location = new System.Drawing.Point(16, 176);
+            this.cbTypeFilter.Name = "cbTypeFilter";
+            this.cbTypeFilter.Size = new System.Drawing.Size(90, 17);
+            this.cbTypeFilter.TabIndex = 14;
+            this.cbTypeFilter.Text = "File type filter:";
+            this.cbTypeFilter.UseVisualStyleBackColor = true;
+            // 
             // btnRemoveFilters
             // 
             this.btnRemoveFilters.Location = new System.Drawing.Point(16, 176);
@@ -554,46 +595,6 @@
             this.btnOpenLocalFile.Text = "Open local file";
             this.btnOpenLocalFile.UseVisualStyleBackColor = true;
             this.btnOpenLocalFile.Click += new System.EventHandler(this.btnOpenLocalFile_Click);
-            // 
-            // cbTypeFilter
-            // 
-            this.cbTypeFilter.AutoSize = true;
-            this.cbTypeFilter.Location = new System.Drawing.Point(16, 176);
-            this.cbTypeFilter.Name = "cbTypeFilter";
-            this.cbTypeFilter.Size = new System.Drawing.Size(90, 17);
-            this.cbTypeFilter.TabIndex = 14;
-            this.cbTypeFilter.Text = "File type filter:";
-            this.cbTypeFilter.UseVisualStyleBackColor = true;
-            // 
-            // cbHostFilter
-            // 
-            this.cbHostFilter.AutoSize = true;
-            this.cbHostFilter.Location = new System.Drawing.Point(16, 202);
-            this.cbHostFilter.Name = "cbHostFilter";
-            this.cbHostFilter.Size = new System.Drawing.Size(73, 17);
-            this.cbHostFilter.TabIndex = 15;
-            this.cbHostFilter.Text = "Host filter:";
-            this.cbHostFilter.UseVisualStyleBackColor = true;
-            // 
-            // cbTypeFilterSelection
-            // 
-            this.cbTypeFilterSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTypeFilterSelection.FormattingEnabled = true;
-            this.cbTypeFilterSelection.Items.AddRange(new object[] {
-            "Image",
-            "File",
-            "Text"});
-            this.cbTypeFilterSelection.Location = new System.Drawing.Point(112, 174);
-            this.cbTypeFilterSelection.Name = "cbTypeFilterSelection";
-            this.cbTypeFilterSelection.Size = new System.Drawing.Size(96, 21);
-            this.cbTypeFilterSelection.TabIndex = 16;
-            // 
-            // txtHostFilter
-            // 
-            this.txtHostFilter.Location = new System.Drawing.Point(112, 200);
-            this.txtHostFilter.Name = "txtHostFilter";
-            this.txtHostFilter.Size = new System.Drawing.Size(184, 20);
-            this.txtHostFilter.TabIndex = 17;
             // 
             // pbThumbnail
             // 
@@ -671,6 +672,7 @@
             this.Controls.Add(this.lvHistory);
             this.Controls.Add(this.btnRefreshList);
             this.Name = "HistoryForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistoryFormTest";
             this.Shown += new System.EventHandler(this.HistoryForm_Shown);

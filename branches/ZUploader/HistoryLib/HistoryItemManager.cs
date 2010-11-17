@@ -182,5 +182,10 @@ namespace HistoryLib
                 File.Delete(HistoryItem.Filepath);
             }
         }
+
+        public void MoreInfo()
+        {
+            new HistoryItemInfoForm(this).Show();
+        }
     }
 }

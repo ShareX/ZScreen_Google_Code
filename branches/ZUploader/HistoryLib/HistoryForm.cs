@@ -167,7 +167,7 @@ namespace HistoryLib
             for (int i = 0; i < historyItems.Length; i++)
             {
                 hi = historyItems[i];
-                ListViewItem lvi = new ListViewItem(hi.DateTimeLocalString);
+                ListViewItem lvi = new ListViewItem(hi.DateTimeUtc.ToLocalTime().ToString());
                 lvi.SubItems.Add(hi.Filename);
                 lvi.SubItems.Add(hi.Type);
                 lvi.SubItems.Add(hi.Host);
@@ -177,6 +177,7 @@ namespace HistoryLib
             }
 
             lvHistory.AutoResizeLastColumn();
+            lvHistory.Focus();
             lvHistory.ResumeLayout(true);
         }
 
@@ -496,7 +497,7 @@ namespace HistoryLib
 
         private void tsmiMoreInfo_Click(object sender, EventArgs e)
         {
-            // TODO: More Info
+            him.MoreInfo();
         }
 
         #endregion Right click menu events

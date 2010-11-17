@@ -34,16 +34,6 @@ namespace HistoryLib
         public string Filename { get; set; }
         public string Filepath { get; set; }
         public DateTime DateTimeUtc { get; set; }
-
-        public string DateTimeLocalString
-        {
-            get
-            {
-                DateTime time = DateTimeUtc.ToLocalTime();
-                return string.Format("{0} {1}", time.ToShortDateString(), time.ToLongTimeString());
-            }
-        }
-
         public string Type { get; set; }
         public string Host { get; set; }
         public string URL { get; set; }
