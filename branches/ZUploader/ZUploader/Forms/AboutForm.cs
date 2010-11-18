@@ -73,6 +73,11 @@ namespace ZUploader
             Process.Start(Program.URL_WEBSITE);
         }
 
+        private void lblBugs_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.URL_ISSUES);
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

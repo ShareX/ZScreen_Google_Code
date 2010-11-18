@@ -74,6 +74,7 @@ namespace ZUploader
             il.Images.Add(Properties.Resources.cross_button);
             il.Images.Add(Properties.Resources.tick_button);
             lvUploads.SmallImageList = il;
+            lvUploads.AutoResizeLastColumn();
 
             UploadManager.ListViewControl = lvUploads;
         }

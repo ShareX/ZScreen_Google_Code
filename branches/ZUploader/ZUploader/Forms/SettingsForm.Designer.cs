@@ -38,7 +38,6 @@
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
             this.lblImageJPEGQualityHint = new System.Windows.Forms.Label();
-            this.btnImageGIFQualityHint = new System.Windows.Forms.Button();
             this.cbImageGIFQuality = new System.Windows.Forms.ComboBox();
             this.cbImageFormat2 = new System.Windows.Forms.ComboBox();
             this.lblImageFormat2 = new System.Windows.Forms.Label();
@@ -154,7 +153,6 @@
             // 
             this.tpImage.Controls.Add(this.lblUseImageFormat2AfterHint);
             this.tpImage.Controls.Add(this.lblImageJPEGQualityHint);
-            this.tpImage.Controls.Add(this.btnImageGIFQualityHint);
             this.tpImage.Controls.Add(this.cbImageGIFQuality);
             this.tpImage.Controls.Add(this.cbImageFormat2);
             this.tpImage.Controls.Add(this.lblImageFormat2);
@@ -190,16 +188,6 @@
             this.lblImageJPEGQualityHint.Size = new System.Drawing.Size(34, 13);
             this.lblImageJPEGQualityHint.TabIndex = 12;
             this.lblImageJPEGQualityHint.Text = "0-100";
-            // 
-            // btnImageGIFQualityHint
-            // 
-            this.btnImageGIFQualityHint.Location = new System.Drawing.Point(232, 74);
-            this.btnImageGIFQualityHint.Name = "btnImageGIFQualityHint";
-            this.btnImageGIFQualityHint.Size = new System.Drawing.Size(24, 24);
-            this.btnImageGIFQualityHint.TabIndex = 11;
-            this.btnImageGIFQualityHint.Text = "?";
-            this.btnImageGIFQualityHint.UseVisualStyleBackColor = true;
-            this.btnImageGIFQualityHint.Click += new System.EventHandler(this.btnImageGIFQualityHint_Click);
             // 
             // cbImageGIFQuality
             // 
@@ -495,7 +483,6 @@
         private System.Windows.Forms.NumericUpDown nudImageJPEGQuality;
         private System.Windows.Forms.Label lblImageGIFQuality;
         private System.Windows.Forms.Label lblImageJPEGQuality;
-        private System.Windows.Forms.Button btnImageGIFQualityHint;
         private System.Windows.Forms.Label lblUseImageFormat2AfterHint;
         private System.Windows.Forms.Label lblImageJPEGQualityHint;
         private System.Windows.Forms.Label lblHistoryMaxItemCount;

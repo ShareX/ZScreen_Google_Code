@@ -117,11 +117,6 @@ namespace ZUploader
             Program.Settings.ImageGIFQuality = (GIFQuality)cbImageGIFQuality.SelectedIndex;
         }
 
-        private void btnImageGIFQualityHint_Click(object sender, EventArgs e)
-        {
-            // TODO: GIF Quality Hint
-        }
-
         private void nudUseImageFormat2After_ValueChanged(object sender, EventArgs e)
         {
             Program.Settings.ImageSizeLimit = (int)nudUseImageFormat2After.Value;

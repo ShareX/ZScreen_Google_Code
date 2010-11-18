@@ -32,6 +32,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HistoryForm));
             this.cmsHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenURL = new System.Windows.Forms.ToolStripMenuItem();
@@ -695,8 +696,8 @@
             this.Controls.Add(this.gbFilters);
             this.Controls.Add(this.pbThumbnail);
             this.Controls.Add(this.lvHistory);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HistoryForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistoryFormTest";
             this.Shown += new System.EventHandler(this.HistoryForm_Shown);

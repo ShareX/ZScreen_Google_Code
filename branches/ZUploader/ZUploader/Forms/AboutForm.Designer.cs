@@ -33,6 +33,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblBugs = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProductName
@@ -54,7 +55,7 @@
             this.lblZScreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblZScreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblZScreen.ForeColor = System.Drawing.Color.White;
-            this.lblZScreen.Location = new System.Drawing.Point(157, 48);
+            this.lblZScreen.Location = new System.Drawing.Point(103, 48);
             this.lblZScreen.Name = "lblZScreen";
             this.lblZScreen.Size = new System.Drawing.Size(66, 13);
             this.lblZScreen.TabIndex = 2;
@@ -93,12 +94,27 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "FTP Library: http://www.starksoft.com\r\nIcons: http://p.yusukekamiyamane.com";
             // 
+            // lblBugs
+            // 
+            this.lblBugs.AutoSize = true;
+            this.lblBugs.BackColor = System.Drawing.Color.Transparent;
+            this.lblBugs.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblBugs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblBugs.ForeColor = System.Drawing.Color.White;
+            this.lblBugs.Location = new System.Drawing.Point(175, 48);
+            this.lblBugs.Name = "lblBugs";
+            this.lblBugs.Size = new System.Drawing.Size(100, 13);
+            this.lblBugs.TabIndex = 6;
+            this.lblBugs.Text = "Bugs / Suggestions";
+            this.lblBugs.Click += new System.EventHandler(this.lblBugs_Click);
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(379, 215);
+            this.Controls.Add(this.lblBugs);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCopyright);
             this.Controls.Add(this.btnClose);
@@ -123,5 +139,6 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblBugs;
     }
 }
