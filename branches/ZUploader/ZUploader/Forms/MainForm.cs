@@ -48,7 +48,7 @@ namespace ZUploader
 
         private void InitControls()
         {
-            this.Text = string.Format("{0} {1} {2}", Application.ProductName, Application.ProductVersion, "Beta");
+            this.Text = Program.Title;
 
             foreach (string imageUploader in typeof(ImageDestType2).GetDescriptions())
             {

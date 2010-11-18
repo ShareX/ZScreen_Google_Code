@@ -159,10 +159,14 @@ namespace ZUploader
 
                 try
                 {
-                    string text = txtCustomHistoryPath.Text;
-                    if (!string.IsNullOrEmpty(text) && Directory.Exists(text = Path.GetDirectoryName(text)))
+                    string path = txtCustomHistoryPath.Text;
+                    if (!string.IsNullOrEmpty(path))
                     {
-                        ofd.InitialDirectory = text;
+                        path = Path.GetDirectoryName(path);
+                        if (Directory.Exists(path))
+                        {
+                            ofd.InitialDirectory = path;
+                        }
                     }
                 }
                 finally

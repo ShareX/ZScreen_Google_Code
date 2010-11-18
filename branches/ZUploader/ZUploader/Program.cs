@@ -37,7 +37,9 @@ namespace ZUploader
     {
         public static Settings Settings;
 
-        public static string ZUploaderPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        public static string ZUploaderPersonalPath;
+        private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
 
         private const string SettingsFileName = "Settings.bin"; // "Settings.xml";
         public static string SettingsFilePath
@@ -70,20 +72,33 @@ namespace ZUploader
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
         public const string UploadScreenshotKey = "2807828f377649572393126680";
 
+        public static bool IsPortable;
+        public static bool IsBeta = true;
         public static Stopwatch StartTimer;
+
+        public static string Title
+        {
+            get
+            {
+                string title = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
+                if (IsBeta) title += " Beta";
+                if (IsPortable) title += " Portable";
+                return title;
+            }
+        }
 
         private static MainForm mainForm;
 
         [STAThread]
         static void Main(string[] args)
         {
-            DebugTimer.WriteLine("Application started.");
-
-            StartTimer = new Stopwatch();
-            StartTimer.Start();
-
             string name = Assembly.GetExecutingAssembly().GetName().Name;
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
+
+            StartTimer = Stopwatch.StartNew();
+            DebugTimer.WriteLine("Application started.");
+
+            IsPortable = CheckPortable();
 
             Thread settingThread = new Thread(() => Settings = Settings.Load());
             settingThread.Start();
@@ -103,6 +118,20 @@ namespace ZUploader
             Settings.Save();
 
             DebugTimer.WriteLine("Application stopped.");
+        }
+
+        private static bool CheckPortable()
+        {
+            if (Directory.Exists(ZUploaderPortablePersonalPath))
+            {
+                ZUploaderPersonalPath = ZUploaderPortablePersonalPath;
+                return true;
+            }
+            else
+            {
+                ZUploaderPersonalPath = ZUploaderDefaultPersonalPath;
+                return false;
+            }
         }
 
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)

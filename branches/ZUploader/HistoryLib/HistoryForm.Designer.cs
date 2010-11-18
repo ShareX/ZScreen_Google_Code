@@ -96,9 +96,13 @@
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gbSelectedHistoryItem = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.gbFilters.SuspendLayout();
+            this.gbSelectedHistoryItem.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsHistory
@@ -406,9 +410,9 @@
             // 
             // btnApplyFilters
             // 
-            this.btnApplyFilters.Location = new System.Drawing.Point(16, 144);
+            this.btnApplyFilters.Location = new System.Drawing.Point(8, 48);
             this.btnApplyFilters.Name = "btnApplyFilters";
-            this.btnApplyFilters.Size = new System.Drawing.Size(128, 24);
+            this.btnApplyFilters.Size = new System.Drawing.Size(136, 24);
             this.btnApplyFilters.TabIndex = 7;
             this.btnApplyFilters.Text = "Apply filters";
             this.btnApplyFilters.UseVisualStyleBackColor = true;
@@ -548,9 +552,9 @@
             // 
             // btnRemoveFilters
             // 
-            this.btnRemoveFilters.Location = new System.Drawing.Point(16, 176);
+            this.btnRemoveFilters.Location = new System.Drawing.Point(8, 72);
             this.btnRemoveFilters.Name = "btnRemoveFilters";
-            this.btnRemoveFilters.Size = new System.Drawing.Size(128, 24);
+            this.btnRemoveFilters.Size = new System.Drawing.Size(136, 24);
             this.btnRemoveFilters.TabIndex = 17;
             this.btnRemoveFilters.Text = "Remove filters";
             this.btnRemoveFilters.UseVisualStyleBackColor = true;
@@ -558,9 +562,9 @@
             // 
             // btnRefreshList
             // 
-            this.btnRefreshList.Location = new System.Drawing.Point(16, 16);
+            this.btnRefreshList.Location = new System.Drawing.Point(8, 24);
             this.btnRefreshList.Name = "btnRefreshList";
-            this.btnRefreshList.Size = new System.Drawing.Size(128, 24);
+            this.btnRefreshList.Size = new System.Drawing.Size(136, 24);
             this.btnRefreshList.TabIndex = 17;
             this.btnRefreshList.Text = "Refresh list";
             this.btnRefreshList.UseVisualStyleBackColor = true;
@@ -568,9 +572,9 @@
             // 
             // btnCopyURL
             // 
-            this.btnCopyURL.Location = new System.Drawing.Point(16, 48);
+            this.btnCopyURL.Location = new System.Drawing.Point(8, 24);
             this.btnCopyURL.Name = "btnCopyURL";
-            this.btnCopyURL.Size = new System.Drawing.Size(128, 24);
+            this.btnCopyURL.Size = new System.Drawing.Size(136, 24);
             this.btnCopyURL.TabIndex = 18;
             this.btnCopyURL.Text = "Copy URL";
             this.btnCopyURL.UseVisualStyleBackColor = true;
@@ -578,9 +582,9 @@
             // 
             // btnOpenURL
             // 
-            this.btnOpenURL.Location = new System.Drawing.Point(16, 80);
+            this.btnOpenURL.Location = new System.Drawing.Point(8, 48);
             this.btnOpenURL.Name = "btnOpenURL";
-            this.btnOpenURL.Size = new System.Drawing.Size(128, 24);
+            this.btnOpenURL.Size = new System.Drawing.Size(136, 24);
             this.btnOpenURL.TabIndex = 18;
             this.btnOpenURL.Text = "Open URL";
             this.btnOpenURL.UseVisualStyleBackColor = true;
@@ -588,9 +592,9 @@
             // 
             // btnOpenLocalFile
             // 
-            this.btnOpenLocalFile.Location = new System.Drawing.Point(16, 112);
+            this.btnOpenLocalFile.Location = new System.Drawing.Point(8, 72);
             this.btnOpenLocalFile.Name = "btnOpenLocalFile";
-            this.btnOpenLocalFile.Size = new System.Drawing.Size(128, 24);
+            this.btnOpenLocalFile.Size = new System.Drawing.Size(136, 24);
             this.btnOpenLocalFile.TabIndex = 18;
             this.btnOpenLocalFile.Text = "Open local file";
             this.btnOpenLocalFile.UseVisualStyleBackColor = true;
@@ -656,21 +660,41 @@
             this.chURL.Text = "URL";
             this.chURL.Width = 330;
             // 
+            // gbSelectedHistoryItem
+            // 
+            this.gbSelectedHistoryItem.Controls.Add(this.btnCopyURL);
+            this.gbSelectedHistoryItem.Controls.Add(this.btnOpenURL);
+            this.gbSelectedHistoryItem.Controls.Add(this.btnOpenLocalFile);
+            this.gbSelectedHistoryItem.Location = new System.Drawing.Point(8, 120);
+            this.gbSelectedHistoryItem.Name = "gbSelectedHistoryItem";
+            this.gbSelectedHistoryItem.Size = new System.Drawing.Size(152, 104);
+            this.gbSelectedHistoryItem.TabIndex = 18;
+            this.gbSelectedHistoryItem.TabStop = false;
+            this.gbSelectedHistoryItem.Text = "Selected history item";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnRefreshList);
+            this.groupBox1.Controls.Add(this.btnApplyFilters);
+            this.groupBox1.Controls.Add(this.btnRemoveFilters);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(152, 104);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "General";
+            // 
             // HistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(825, 634);
-            this.Controls.Add(this.btnRemoveFilters);
-            this.Controls.Add(this.btnOpenLocalFile);
-            this.Controls.Add(this.btnApplyFilters);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbSelectedHistoryItem);
             this.Controls.Add(this.ssMain);
             this.Controls.Add(this.gbFilters);
-            this.Controls.Add(this.btnOpenURL);
             this.Controls.Add(this.pbThumbnail);
-            this.Controls.Add(this.btnCopyURL);
             this.Controls.Add(this.lvHistory);
-            this.Controls.Add(this.btnRefreshList);
             this.Name = "HistoryForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -681,6 +705,8 @@
             this.ssMain.PerformLayout();
             this.gbFilters.ResumeLayout(false);
             this.gbFilters.PerformLayout();
+            this.gbSelectedHistoryItem.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -752,5 +778,7 @@
         private System.Windows.Forms.CheckBox cbHostFilter;
         private System.Windows.Forms.CheckBox cbTypeFilter;
         private System.Windows.Forms.TextBox txtHostFilter;
+        private System.Windows.Forms.GroupBox gbSelectedHistoryItem;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
