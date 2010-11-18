@@ -159,8 +159,7 @@ namespace ZUploader
 
         private static bool WaitFormLoad(int wait)
         {
-            Stopwatch timer = new Stopwatch();
-            timer.Start();
+            Stopwatch timer = Stopwatch.StartNew();
 
             while (timer.ElapsedMilliseconds < wait)
             {
