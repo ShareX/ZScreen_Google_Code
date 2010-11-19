@@ -64,6 +64,7 @@ namespace HistoryLib.Custom_Controls
 
         private void ShowScreenshot_Shown(object sender, EventArgs e)
         {
+            this.BringToFront();
             this.Activate();
         }
 

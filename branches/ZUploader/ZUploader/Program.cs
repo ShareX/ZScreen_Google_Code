@@ -74,6 +74,7 @@ namespace ZUploader
 
         public static bool IsPortable;
         public static bool IsBeta = true;
+        public static string CommandLineArg;
         public static Stopwatch StartTimer;
 
         public static string Title
@@ -106,10 +107,9 @@ namespace ZUploader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string path = null;
-            if (args.Length > 0) path = args[0];
+            if (args != null && args.Length > 0) CommandLineArg = args[0];
 
-            using (new DebugTimer("MainForm init", true)) mainForm = new MainForm(path);
+            using (new DebugTimer("MainForm init", true)) mainForm = new MainForm();
 
             settingThread.Join();
 
@@ -145,11 +145,12 @@ namespace ZUploader
                         mainForm.WindowState = FormWindowState.Normal;
                     }
 
+                    mainForm.BringToFront();
                     mainForm.Activate();
 
                     if (args != null && args.CommandLineArgs.Length > 1)
                     {
-                        UploadManager.Upload(args.CommandLineArgs[1]);
+                        mainForm.UseCommandLineArg(args.CommandLineArgs[1]);
                     }
                 };
 

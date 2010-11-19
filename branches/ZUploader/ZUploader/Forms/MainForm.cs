@@ -36,12 +36,9 @@ namespace ZUploader
     {
         public bool IsReady { get; private set; }
 
-        private string commandLinePath;
-
-        public MainForm(string path)
+        public MainForm()
         {
             InitializeComponent();
-            commandLinePath = path;
             InitControls();
             UpdateControls();
         }
@@ -223,6 +220,21 @@ namespace ZUploader
             }
         }
 
+        public void UseCommandLineArg(string arg)
+        {
+            if (!string.IsNullOrEmpty(arg))
+            {
+                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    UploadManager.ClipboardUpload();
+                }
+                else
+                {
+                    UploadManager.Upload(arg);
+                }
+            }
+        }
+
         #region Form events
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -235,7 +247,7 @@ namespace ZUploader
         {
             DebugTimer.WriteLine("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds.ToString());
 
-            UploadManager.Upload(commandLinePath);
+            UseCommandLineArg(Program.CommandLineArg);
             IsReady = true;
         }
 

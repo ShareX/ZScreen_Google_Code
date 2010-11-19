@@ -325,6 +325,7 @@ namespace HistoryLib
         {
             Application.DoEvents();
             RefreshHistoryItems();
+            this.BringToFront();
             this.Activate();
         }
 

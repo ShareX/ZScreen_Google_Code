@@ -43,6 +43,7 @@ namespace ZUploader
 
         private void AboutForm_Shown(object sender, EventArgs e)
         {
+            this.BringToFront();
             this.Activate();
         }
 

@@ -63,6 +63,7 @@ namespace ZUploader
 
         private void SettingsForm_Shown(object sender, EventArgs e)
         {
+            this.BringToFront();
             this.Activate();
         }
 
