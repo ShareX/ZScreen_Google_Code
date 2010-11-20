@@ -57,6 +57,9 @@
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpProxy = new System.Windows.Forms.TabPage();
+            this.lblImageInfo = new System.Windows.Forms.Label();
+            this.lblHistoryInfo = new System.Windows.Forms.Label();
+            this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpImage.SuspendLayout();
@@ -127,6 +130,7 @@
             // 
             // tpGeneral
             // 
+            this.tpGeneral.Controls.Add(this.lblGeneralInfo);
             this.tpGeneral.Controls.Add(this.cbShellContextMenu);
             this.tpGeneral.Controls.Add(this.cbClipboardAutoCopy);
             this.tpGeneral.Controls.Add(this.cbAutoPlaySound);
@@ -143,14 +147,15 @@
             this.cbShellContextMenu.AutoSize = true;
             this.cbShellContextMenu.Location = new System.Drawing.Point(16, 64);
             this.cbShellContextMenu.Name = "cbShellContextMenu";
-            this.cbShellContextMenu.Size = new System.Drawing.Size(287, 17);
+            this.cbShellContextMenu.Size = new System.Drawing.Size(285, 17);
             this.cbShellContextMenu.TabIndex = 4;
-            this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell Context Menu";
+            this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell context menu";
             this.cbShellContextMenu.UseVisualStyleBackColor = true;
             this.cbShellContextMenu.CheckedChanged += new System.EventHandler(this.cbShellContextMenu_CheckedChanged);
             // 
             // tpImage
             // 
+            this.tpImage.Controls.Add(this.lblImageInfo);
             this.tpImage.Controls.Add(this.lblUseImageFormat2AfterHint);
             this.tpImage.Controls.Add(this.lblImageJPEGQualityHint);
             this.tpImage.Controls.Add(this.cbImageGIFQuality);
@@ -194,7 +199,7 @@
             this.cbImageGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbImageGIFQuality.FormattingEnabled = true;
             this.cbImageGIFQuality.Items.AddRange(new object[] {
-            "Default",
+            "Default (Fast)",
             "256 colors (8 bit)",
             "16 colors (4 bit)",
             "Grayscale"});
@@ -316,6 +321,7 @@
             // 
             // tpHistory
             // 
+            this.tpHistory.Controls.Add(this.lblHistoryInfo);
             this.tpHistory.Controls.Add(this.nudHistoryMaxItemCount);
             this.tpHistory.Controls.Add(this.lblHistoryMaxItemCount);
             this.tpHistory.Controls.Add(this.btnBrowseCustomHistoryPath);
@@ -425,6 +431,46 @@
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
+            // lblImageInfo
+            // 
+            this.lblImageInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblImageInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblImageInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblImageInfo.ForeColor = System.Drawing.Color.White;
+            this.lblImageInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblImageInfo.Name = "lblImageInfo";
+            this.lblImageInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblImageInfo.TabIndex = 14;
+            this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
+    "added as bitmap.";
+            this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHistoryInfo
+            // 
+            this.lblHistoryInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblHistoryInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblHistoryInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblHistoryInfo.ForeColor = System.Drawing.Color.White;
+            this.lblHistoryInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblHistoryInfo.Name = "lblHistoryInfo";
+            this.lblHistoryInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblHistoryInfo.TabIndex = 15;
+            this.lblHistoryInfo.Text = "ZUploader using SQLite for store history items.";
+            this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblGeneralInfo
+            // 
+            this.lblGeneralInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblGeneralInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGeneralInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
+            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblGeneralInfo.Name = "lblGeneralInfo";
+            this.lblGeneralInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblGeneralInfo.TabIndex = 16;
+            this.lblGeneralInfo.Text = "Shell context menu is Windows Explorer right click menu for files and folders.";
+            this.lblGeneralInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,5 +533,8 @@
         private System.Windows.Forms.Label lblImageJPEGQualityHint;
         private System.Windows.Forms.Label lblHistoryMaxItemCount;
         private System.Windows.Forms.NumericUpDown nudHistoryMaxItemCount;
+        private System.Windows.Forms.Label lblImageInfo;
+        private System.Windows.Forms.Label lblHistoryInfo;
+        private System.Windows.Forms.Label lblGeneralInfo;
     }
 }
