@@ -74,9 +74,11 @@ namespace UploadersLib.ImageUploaders
                 case TwitPicUploadType.UPLOAD_IMAGE_ONLY:
                     return Upload(stream, fileName, "");
                 case TwitPicUploadType.UPLOAD_IMAGE_AND_TWITTER:
-                    TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
-                    msgBox.ShowDialog();
-                    return Upload(stream, fileName, msgBox.Message);
+                    using (TwitterMsg msgBox = new TwitterMsg("Update Twitter Status"))
+                    {
+                        msgBox.ShowDialog();
+                        return Upload(stream, fileName, msgBox.Message);
+                    }
             }
             return null;
         }

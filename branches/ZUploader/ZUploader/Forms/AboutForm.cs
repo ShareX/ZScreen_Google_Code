@@ -51,9 +51,11 @@ namespace ZUploader
         {
             Graphics g = e.Graphics;
             Rectangle rect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical);
-            brush.SetSigmaBellShape(0.20f);
-            g.FillRectangle(brush, rect);
+            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical))
+            {
+                brush.SetSigmaBellShape(0.20f);
+                g.FillRectangle(brush, rect);
+            }
         }
 
         public string AssemblyCopyright

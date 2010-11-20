@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace UploadersLib
 {
@@ -50,8 +51,7 @@ namespace UploadersLib
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
-                    System.Xml.Serialization.XmlSerializer xs =
-                        new System.Xml.Serialization.XmlSerializer(typeof(FTPAccountManager));
+                    XmlSerializer xs = new XmlSerializer(typeof(FTPAccountManager));
                     xs.Serialize(fs, this);
                 }
             }
@@ -69,16 +69,14 @@ namespace UploadersLib
                 {
                     using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        System.Xml.Serialization.XmlSerializer xs =
-                            new System.Xml.Serialization.XmlSerializer(typeof(FTPAccountManager));
+                        XmlSerializer xs = new XmlSerializer(typeof(FTPAccountManager));
                         FTPAccountManager set = xs.Deserialize(fs) as FTPAccountManager;
-                        fs.Close();
                         return set;
                     }
                 }
                 catch
                 {
-                    //just return blank settings
+                    // just return blank settings
                 }
             }
 

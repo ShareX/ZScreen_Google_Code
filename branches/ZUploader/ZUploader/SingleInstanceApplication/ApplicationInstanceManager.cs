@@ -20,7 +20,6 @@ namespace SingleInstanceApplication
         /// <returns></returns>
         public static bool CreateSingleInstance(string name, EventHandler<InstanceCallbackEventArgs> callback)
         {
-            EventWaitHandle eventWaitHandle = null;
             string eventName = string.Format("{0}-{1}", Environment.MachineName, name);
 
             InstanceProxy.IsFirstInstance = false;
@@ -29,36 +28,32 @@ namespace SingleInstanceApplication
             try
             {
                 // try opening existing wait handle
-                eventWaitHandle = EventWaitHandle.OpenExisting(eventName);
+                using (EventWaitHandle eventWaitHandle = EventWaitHandle.OpenExisting(eventName))
+                {
+                    // pass console arguments to shared object
+                    UpdateRemoteObject(name);
+
+                    // invoke (signal) wait handle on other process
+                    if (eventWaitHandle != null) eventWaitHandle.Set();
+                }
+
+                // kill current process
+                Environment.Exit(0);
             }
             catch
             {
                 // got exception = handle wasn't created yet
                 InstanceProxy.IsFirstInstance = true;
-            }
 
-            if (InstanceProxy.IsFirstInstance)
-            {
                 // init handle
-                eventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
-
-                // register wait handle for this instance (process)
-                ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, WaitOrTimerCallback, callback, Timeout.Infinite, false);
-                eventWaitHandle.Close();
+                using (EventWaitHandle eventWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset, eventName))
+                {
+                    // register wait handle for this instance (process)
+                    ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, WaitOrTimerCallback, callback, Timeout.Infinite, false);
+                }
 
                 // register shared type (used to pass data between processes)
                 RegisterRemoteType(name);
-            }
-            else
-            {
-                // pass console arguments to shared object
-                UpdateRemoteObject(name);
-
-                // invoke (signal) wait handle on other process
-                if (eventWaitHandle != null) eventWaitHandle.Set();
-
-                // kill current process
-                Environment.Exit(0);
             }
 
             return InstanceProxy.IsFirstInstance;

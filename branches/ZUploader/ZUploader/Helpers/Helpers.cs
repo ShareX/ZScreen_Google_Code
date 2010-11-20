@@ -54,9 +54,11 @@ namespace ZUploader
 
         public static void SaveJPG(this Image img, Stream stream, int quality)
         {
-            EncoderParameters encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-            img.Save(stream, UploadHelpers.GetCodecInfo(ImageFormat.Jpeg), encoderParameters);
+            using (EncoderParameters encoderParameters = new EncoderParameters(1))
+            {
+                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+                img.Save(stream, UploadHelpers.GetCodecInfo(ImageFormat.Jpeg), encoderParameters);
+            }
         }
 
         public static void SaveGIF(this Image img, Stream stream, GIFQuality quality)

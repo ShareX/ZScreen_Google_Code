@@ -326,10 +326,12 @@ namespace UploadersLib.Helpers
                 case SignatureTypes.HMACSHA1:
                     string signatureBase = GenerateSignatureBase(url, consumerKey, token, tokenSecret, httpMethod, timeStamp, nonce, PIN, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
-                    HMACSHA1 hmacsha1 = new HMACSHA1();
-                    hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", UrlEncode(consumerSecret), string.IsNullOrEmpty(tokenSecret) ? "" : UrlEncode(tokenSecret)));
+                    using (HMACSHA1 hmacsha1 = new HMACSHA1())
+                    {
+                        hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", UrlEncode(consumerSecret), string.IsNullOrEmpty(tokenSecret) ? "" : UrlEncode(tokenSecret)));
 
-                    return GenerateSignatureUsingHash(signatureBase, hmacsha1);
+                        return GenerateSignatureUsingHash(signatureBase, hmacsha1);
+                    }
                 case SignatureTypes.RSASHA1:
                     throw new NotImplementedException();
                 default:

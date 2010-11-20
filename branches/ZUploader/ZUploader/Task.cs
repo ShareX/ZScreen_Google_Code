@@ -322,10 +322,8 @@ namespace ZUploader
 
         public void Dispose()
         {
-            if (Data != null)
-            {
-                Data.Dispose();
-            }
+            if (Data != null) Data.Dispose();
+            if (bw != null) bw.Dispose();
         }
     }
 }

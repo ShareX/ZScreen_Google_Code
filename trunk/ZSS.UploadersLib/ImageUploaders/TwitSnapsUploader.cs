@@ -46,9 +46,11 @@ namespace UploadersLib.ImageUploaders
 
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
-            TwitterMsg msgBox = new TwitterMsg("Update Twitter Status");
-            msgBox.ShowDialog();
-            return Upload(stream, fileName, msgBox.Message);
+            using (TwitterMsg msgBox = new TwitterMsg("Update Twitter Status"))
+            {
+                msgBox.ShowDialog();
+                return Upload(stream, fileName, msgBox.Message);
+            }
         }
 
         private ImageFileManager Upload(Stream stream, string fileName, string msg)
