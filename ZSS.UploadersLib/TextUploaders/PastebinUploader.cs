@@ -113,17 +113,19 @@ namespace UploadersLib.TextUploaders
             List<TextFormat> textFormats = new List<TextFormat>();
             try
             {
-                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                string source = webClient.DownloadString(HostSettings.URL);
-                Match match = Regex.Match(source, "-</option>(.+?)</select>");
-                if (match.Success)
+                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
                 {
-                    MatchCollection matches = Regex.Matches(match.Groups[1].Value, "value=\"(.+?)\">(.+?)</");
-                    foreach (Match m in matches)
+                    string source = webClient.DownloadString(HostSettings.URL);
+                    Match match = Regex.Match(source, "-</option>(.+?)</select>");
+                    if (match.Success)
                     {
-                        if (m.Success)
+                        MatchCollection matches = Regex.Matches(match.Groups[1].Value, "value=\"(.+?)\">(.+?)</");
+                        foreach (Match m in matches)
                         {
-                            textFormats.Add(new TextFormat { Value = m.Groups[1].Value, Name = m.Groups[2].Value });
+                            if (m.Success)
+                            {
+                                textFormats.Add(new TextFormat { Value = m.Groups[1].Value, Name = m.Groups[2].Value });
+                            }
                         }
                     }
                 }
@@ -140,12 +142,14 @@ namespace UploadersLib.TextUploaders
         {
             try
             {
-                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                string source = webClient.DownloadString(url);
-                Match match = Regex.Match(source, "<textarea.+?>(.*?)</textarea>", RegexOptions.Singleline);
-                if (match.Success)
+                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
                 {
-                    return HttpUtility.HtmlDecode(match.Groups[1].Value);
+                    string source = webClient.DownloadString(url);
+                    Match match = Regex.Match(source, "<textarea.+?>(.*?)</textarea>", RegexOptions.Singleline);
+                    if (match.Success)
+                    {
+                        return HttpUtility.HtmlDecode(match.Groups[1].Value);
+                    }
                 }
             }
             catch (Exception ex)

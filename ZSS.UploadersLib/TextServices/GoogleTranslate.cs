@@ -49,28 +49,30 @@ namespace UploadersLib.TextServices
 
             try
             {
-                WebClient webClient = new WebClient();
-                if (!object.ReferenceEquals(Uploader.ProxySettings, null))
+                using (WebClient webClient = new WebClient())
                 {
-                    webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
-                }
-                string source = webClient.DownloadString("http://translate.google.com/translate_t");
-                string[] selectName = new[] { "sl", "tl" };
-
-                for (int i = 0; i < selectName.Length; i++)
-                {
-                    string countrySource = Regex.Match(source, "(?<=<select.*?name=" + selectName[i] + ").+?(?=</select>)").Value;
-                    MatchCollection countryResults = Regex.Matches(countrySource, "(?<=value=\")(.+?)\">(.+?)(?=</option)");
-                    foreach (Match countryResult in countryResults)
+                    if (!object.ReferenceEquals(Uploader.ProxySettings, null))
                     {
-                        GTLanguage lang = new GTLanguage(countryResult.Groups[1].Value, countryResult.Groups[2].Value);
-                        if (i == 0)
+                        webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
+                    }
+                    string source = webClient.DownloadString("http://translate.google.com/translate_t");
+                    string[] selectName = new[] { "sl", "tl" };
+
+                    for (int i = 0; i < selectName.Length; i++)
+                    {
+                        string countrySource = Regex.Match(source, "(?<=<select.*?name=" + selectName[i] + ").+?(?=</select>)").Value;
+                        MatchCollection countryResults = Regex.Matches(countrySource, "(?<=value=\")(.+?)\">(.+?)(?=</option)");
+                        foreach (Match countryResult in countryResults)
                         {
-                            gtLangOp.SourceLangList.Add(lang);
-                        }
-                        else
-                        {
-                            gtLangOp.TargetLangList.Add(lang);
+                            GTLanguage lang = new GTLanguage(countryResult.Groups[1].Value, countryResult.Groups[2].Value);
+                            if (i == 0)
+                            {
+                                gtLangOp.SourceLangList.Add(lang);
+                            }
+                            else
+                            {
+                                gtLangOp.TargetLangList.Add(lang);
+                            }
                         }
                     }
                 }
@@ -107,14 +109,16 @@ namespace UploadersLib.TextServices
                 }
 
                 string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
-                WebClient webClient = new WebClient { Encoding = Encoding.UTF8 };
-                webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
+                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
+                {
+                    webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
 
-                string wc = webClient.DownloadString(url);
-                result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=\"normaltext\">).+?(?=</span>)").Value);
-                result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=class=\"short_text\"><span.+?>).+?(?=</span)").Value);
-                result.TranslatedText = result.TranslatedText.Replace(" \r<br> ", Environment.NewLine);
-                result.Dictionary = SearchGrammer(wc);
+                    string wc = webClient.DownloadString(url);
+                    result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=\"normaltext\">).+?(?=</span>)").Value);
+                    result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=class=\"short_text\"><span.+?>).+?(?=</span)").Value);
+                    result.TranslatedText = result.TranslatedText.Replace(" \r<br> ", Environment.NewLine);
+                    result.Dictionary = SearchGrammer(wc);
+                }
             }
             catch (Exception ex)
             {
