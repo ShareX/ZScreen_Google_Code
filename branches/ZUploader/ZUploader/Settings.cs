@@ -59,18 +59,18 @@ namespace ZUploader
 
         public bool Save()
         {
-            using (new DebugTimer("Settings.Save", true))
-            {
-                return SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Xml);
-            }
+            Program.MyLogger.Debug("Settings.Save() started = " + Program.SettingsFilePath);
+            bool result = SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Xml);
+            Program.MyLogger.Debug("Settings.Save() finished = " + result);
+            return result;
         }
 
         public static Settings Load()
         {
-            using (new DebugTimer("Settings.Load", true))
-            {
-                return SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
-            }
+            Program.MyLogger.Debug("Settings.Load() started = {0}", Program.SettingsFilePath);
+            Settings result = SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
+            Program.MyLogger.Debug("Settings.Load() finished");
+            return result;
         }
     }
 }

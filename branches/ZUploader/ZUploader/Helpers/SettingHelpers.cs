@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
@@ -69,7 +68,7 @@ namespace ZUploader
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(e.ToString());
+                        Program.MyLogger.DebugException("Exception in SettingHelpers.Save", e);
                     }
                 }
             }
@@ -96,7 +95,7 @@ namespace ZUploader
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                    Program.MyLogger.DebugException("Exception in SettingHelpers.Load", e);
                 }
             }
 

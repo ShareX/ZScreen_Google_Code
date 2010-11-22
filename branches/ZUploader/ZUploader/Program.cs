@@ -29,6 +29,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using NLog;
 using SingleInstanceApplication;
 
 namespace ZUploader
@@ -88,6 +89,8 @@ namespace ZUploader
             }
         }
 
+        public static readonly Logger MyLogger = LogManager.GetLogger("ZUploader");
+
         private static MainForm mainForm;
 
         [STAThread]
@@ -97,9 +100,10 @@ namespace ZUploader
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
 
             StartTimer = Stopwatch.StartNew();
-            DebugTimer.WriteLine("Application started.");
+            MyLogger.Info("ZUploader started");
 
             IsPortable = CheckPortable();
+            MyLogger.Debug("IsPortable = {0}", IsPortable);
 
             Thread settingThread = new Thread(() => Settings = Settings.Load());
             settingThread.Start();
@@ -108,8 +112,11 @@ namespace ZUploader
             Application.SetCompatibleTextRenderingDefault(false);
 
             if (args != null && args.Length > 0) CommandLineArg = args[0];
+            MyLogger.Debug("CommandLineArg = {0}", CommandLineArg);
 
-            using (new DebugTimer("MainForm init", true)) mainForm = new MainForm();
+            MyLogger.Debug("new MainForm() started");
+            mainForm = new MainForm();
+            MyLogger.Debug("new MainForm() finished");
 
             settingThread.Join();
 
@@ -117,7 +124,7 @@ namespace ZUploader
 
             Settings.Save();
 
-            DebugTimer.WriteLine("Application stopped.");
+            MyLogger.Info("ZUploader closing");
         }
 
         private static bool CheckPortable()

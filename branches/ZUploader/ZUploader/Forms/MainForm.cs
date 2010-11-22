@@ -239,13 +239,14 @@ namespace ZUploader
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Program.MyLogger.Debug("MainForm_Load");
+
             LoadSettings();
-            DebugTimer.WriteLine("MainForm_Load. Settings loaded.");
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            DebugTimer.WriteLine("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds.ToString());
+            Program.MyLogger.Debug("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds.ToString());
 
             UseCommandLineArg(Program.CommandLineArg);
             IsReady = true;
