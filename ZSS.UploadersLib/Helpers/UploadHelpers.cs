@@ -169,19 +169,22 @@ namespace UploadersLib.Helpers
             return "application/octetstream";
         }
 
-        public static ImageCodecInfo GetCodecInfo(ImageFormat format)
+        public static ImageCodecInfo GetCodecInfo(this ImageFormat format)
         {
-            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageEncoders())
+            foreach (ImageCodecInfo info in ImageCodecInfo.GetImageEncoders())
             {
-                if (codec.FormatID == format.Guid) return codec;
+                if (info.FormatID.Equals(format.Guid))
+                {
+                    return info;
+                }
             }
 
             return null;
         }
 
-        public static string GetMimeType(ImageFormat format)
+        public static string GetMimeType(this ImageFormat format)
         {
-            ImageCodecInfo codec = GetCodecInfo(format);
+            ImageCodecInfo codec = format.GetCodecInfo();
 
             if (codec != null) return codec.MimeType;
 
