@@ -61,7 +61,7 @@ namespace ZUploader
         {
             using (new DebugTimer("Settings.Save", true))
             {
-                return SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Binary);
+                return SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Xml);
             }
         }
 
@@ -69,7 +69,7 @@ namespace ZUploader
         {
             using (new DebugTimer("Settings.Load", true))
             {
-                return SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Binary);
+                return SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
             }
         }
     }

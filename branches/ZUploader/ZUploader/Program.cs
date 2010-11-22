@@ -41,7 +41,7 @@ namespace ZUploader
         private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
         private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
 
-        private const string SettingsFileName = "Settings.bin"; // "Settings.xml";
+        private const string SettingsFileName = "Settings.xml";
         public static string SettingsFilePath
         {
             get { return Path.Combine(ZUploaderPersonalPath, SettingsFileName); }

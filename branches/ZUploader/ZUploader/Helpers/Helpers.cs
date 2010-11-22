@@ -57,7 +57,7 @@ namespace ZUploader
             using (EncoderParameters encoderParameters = new EncoderParameters(1))
             {
                 encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-                img.Save(stream, UploadHelpers.GetCodecInfo(ImageFormat.Jpeg), encoderParameters);
+                img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
             }
         }
 
