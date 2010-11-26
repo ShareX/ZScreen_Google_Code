@@ -215,7 +215,7 @@ namespace ZUploader
                         copyDeletionURLToolStripMenuItem.Visible = true;
                     }
 
-                    if (result.Errors != null && result.Errors.Count == 0)
+                    if (result.Errors != null && result.Errors.Count > 0)
                     {
                         showErrorsToolStripMenuItem.Visible = true;
                         copyErrorsToolStripMenuItem.Visible = true;
