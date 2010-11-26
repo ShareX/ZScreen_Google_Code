@@ -157,7 +157,7 @@ namespace UploadersLib.ImageUploaders
 
             XDocument xDoc = XDocument.Parse(response);
             XElement xEle = xDoc.Element("response");
-            string status = xEle.ElementValue("status");
+            string status = xEle.GetElementValue("status");
 
             if (!string.IsNullOrEmpty(status))
             {
@@ -167,7 +167,7 @@ namespace UploadersLib.ImageUploaders
                 }
                 else if (status == "FAIL")
                 {
-                    string errorcode = xEle.ElementValue("errorcode");
+                    string errorcode = xEle.GetElementValue("errorcode");
                     if (!string.IsNullOrEmpty(errorcode))
                     {
                         int code;

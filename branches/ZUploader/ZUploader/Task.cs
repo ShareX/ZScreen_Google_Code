@@ -120,11 +120,11 @@ namespace ZUploader
             {
                 switch (Info.UploaderType)
                 {
-                    case EDataType.File:
-                        Info.Result = UploadFile(Data, Info.FileName);
-                        break;
                     case EDataType.Image:
                         Info.Result = UploadImage(Data, Info.FileName);
+                        break;
+                    case EDataType.File:
+                        Info.Result = UploadFile(Data, Info.FileName);
                         break;
                     case EDataType.Text:
                         Info.Result = UploadText(Data);
@@ -137,50 +137,6 @@ namespace ZUploader
             }
 
             Info.UploadTime = DateTime.UtcNow;
-        }
-
-        public UploadResult UploadFile(Stream stream, string fileName)
-        {
-            FileUploader fileUploader = null;
-
-            switch (UploadManager.FileUploader)
-            {
-                case FileUploaderType2.FTP:
-                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
-                    break;
-                case FileUploaderType2.SendSpace:
-                    fileUploader = new SendSpace();
-                    SendSpaceManager.PrepareUploadInfo(null, null);
-                    break;
-                case FileUploaderType2.RapidShare:
-                    fileUploader = new RapidShare();
-                    break;
-                case FileUploaderType2.FilezFiles:
-                    fileUploader = new FilezFiles();
-                    break;
-                case FileUploaderType2.FileBin:
-                    fileUploader = new FileBin();
-                    break;
-                case FileUploaderType2.DropIO:
-                    fileUploader = new DropIO();
-                    break;
-                case FileUploaderType2.ShareCX:
-                    fileUploader = new ShareCX();
-                    break;
-                default:
-                    break;
-            }
-
-            if (fileUploader != null)
-            {
-                uploader = fileUploader;
-                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
-                UploadResult ur = fileUploader.Upload(stream, fileName);
-                ur.Errors = fileUploader.Errors;
-                return ur;
-            }
-
-            return null;
         }
 
         public UploadResult UploadImage(Stream stream, string fileName)
@@ -224,8 +180,53 @@ namespace ZUploader
                     URL = ifm.GetFullImageUrl(),
                     ThumbnailURL = ifm.GetThumbnailUrl(),
                     DeletionURL = ifm.GetDeletionLink(),
+                    Source = ifm.Source,
                     Errors = imageUploader.Errors
                 };
+                return ur;
+            }
+
+            return null;
+        }
+
+        public UploadResult UploadFile(Stream stream, string fileName)
+        {
+            FileUploader fileUploader = null;
+
+            switch (UploadManager.FileUploader)
+            {
+                case FileUploaderType2.FTP:
+                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
+                    break;
+                case FileUploaderType2.SendSpace:
+                    fileUploader = new SendSpace();
+                    SendSpaceManager.PrepareUploadInfo(null, null);
+                    break;
+                case FileUploaderType2.RapidShare:
+                    fileUploader = new RapidShare();
+                    break;
+                case FileUploaderType2.FilezFiles:
+                    fileUploader = new FilezFiles();
+                    break;
+                case FileUploaderType2.FileBin:
+                    fileUploader = new FileBin();
+                    break;
+                case FileUploaderType2.DropIO:
+                    fileUploader = new DropIO();
+                    break;
+                case FileUploaderType2.ShareCX:
+                    fileUploader = new ShareCX();
+                    break;
+                default:
+                    break;
+            }
+
+            if (fileUploader != null)
+            {
+                uploader = fileUploader;
+                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                UploadResult ur = fileUploader.Upload(stream, fileName);
+                ur.Errors = fileUploader.Errors;
                 return ur;
             }
 

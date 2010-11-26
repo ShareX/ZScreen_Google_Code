@@ -44,9 +44,13 @@ namespace UploadersLib.FileUploaders
 
             if (matches.Count == 2)
             {
-                UploadResult ur = new UploadResult();
-                ur.URL = matches[0].Value;
-                ur.DeletionURL = matches[1].Value;
+                UploadResult ur = new UploadResult
+                {
+                    URL = matches[0].Value,
+                    DeletionURL = matches[1].Value,
+                    Source = response
+                };
+
                 return ur;
             }
 

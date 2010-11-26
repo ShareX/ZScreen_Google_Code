@@ -40,7 +40,7 @@ namespace UploadersLib.ImageUploaders
                 XDocument xdoc = XDocument.Parse(source);
                 XElement xele = xdoc.Root.Element("upload");
 
-                string error = xele.ElementValue("errorCode");
+                string error = xele.GetElementValue("errorCode");
                 if (!string.IsNullOrEmpty(error))
                 {
                     string errorMessage;
@@ -70,9 +70,9 @@ namespace UploadersLib.ImageUploaders
                 }
                 else
                 {
-                    ifm.Add(xele.ElementValue("original"), LinkType.FULLIMAGE);
-                    ifm.Add(xele.ElementValue("small"), LinkType.THUMBNAIL);
-                    ifm.Add(xele.ElementValue("deleteurl"), LinkType.DELETION_LINK);
+                    ifm.Add(xele.GetElementValue("original"), LinkType.FULLIMAGE);
+                    ifm.Add(xele.GetElementValue("small"), LinkType.THUMBNAIL);
+                    ifm.Add(xele.GetElementValue("deleteurl"), LinkType.DELETION_LINK);
                 }
             }
 

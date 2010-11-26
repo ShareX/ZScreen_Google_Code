@@ -177,11 +177,22 @@ namespace ZUploader
             }
         }
 
+        private void ShowResponse()
+        {
+            UploadResult result = GetCurrentUploadResult();
+
+            if (result != null && !string.IsNullOrEmpty(result.Source))
+            {
+                new ResponseForm(result.Source).Show();
+            }
+        }
+
         private void UpdateControls()
         {
             tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
                 copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = showErrorsToolStripMenuItem.Visible =
-                copyErrorsToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible = stopUploadToolStripMenuItem.Visible = false;
+                copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible =
+                stopUploadToolStripMenuItem.Visible = false;
 
             if (lvUploads.SelectedItems.Count > 0)
             {
@@ -204,10 +215,15 @@ namespace ZUploader
                         copyDeletionURLToolStripMenuItem.Visible = true;
                     }
 
-                    if (result.Errors != null && result.Errors.Count > 0)
+                    if (result.Errors != null && result.Errors.Count == 0)
                     {
                         showErrorsToolStripMenuItem.Visible = true;
                         copyErrorsToolStripMenuItem.Visible = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.Source))
+                    {
+                        showResponseToolStripMenuItem.Visible = true;
                     }
                 }
 
@@ -348,6 +364,11 @@ namespace ZUploader
         private void copyErrorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyErrors();
+        }
+
+        private void showResponseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowResponse();
         }
 
         private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)

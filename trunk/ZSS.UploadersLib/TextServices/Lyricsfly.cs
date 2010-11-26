@@ -81,7 +81,7 @@ namespace UploadersLib.TextServices
 
                 if (xele != null)
                 {
-                    string status = xele.ElementValue("status");
+                    string status = xele.GetElementValue("status");
                     if (!string.IsNullOrEmpty(status))
                     {
                         switch (status)
@@ -92,12 +92,12 @@ namespace UploadersLib.TextServices
                                 if (xele != null)
                                 {
                                     Lyrics lyric = new Lyrics();
-                                    lyric.Checksum = xele.ElementValue("cs");
-                                    lyric.SongID = xele.ElementValue("id");
-                                    lyric.ArtistName = xele.ElementValue("ar");
-                                    lyric.Title = xele.ElementValue("tt");
-                                    lyric.AlbumName = xele.ElementValue("al");
-                                    lyric.Text = xele.ElementValue("tx").Replace("[br]", string.Empty);
+                                    lyric.Checksum = xele.GetElementValue("cs");
+                                    lyric.SongID = xele.GetElementValue("id");
+                                    lyric.ArtistName = xele.GetElementValue("ar");
+                                    lyric.Title = xele.GetElementValue("tt");
+                                    lyric.AlbumName = xele.GetElementValue("al");
+                                    lyric.Text = xele.GetElementValue("tx").Replace("[br]", string.Empty);
 
                                     return lyric;
                                 }

@@ -132,14 +132,14 @@ namespace UploadersLib.ImageUploaders
 
                 if (xele != null)
                 {
-                    switch (xele.AttributeFirstValue("status", "stat"))
+                    switch (xele.GetAttributeFirstValue("status", "stat"))
                     {
                         case "ok":
                             string ID, URL, thumbnail, delcode;
-                            ID = xele.ElementValue("ID");
-                            URL = xele.ElementValue("URL");
-                            thumbnail = xele.ElementValue("thumbnail");
-                            delcode = xele.ElementValue("delcode");
+                            ID = xele.GetElementValue("ID");
+                            URL = xele.GetElementValue("URL");
+                            thumbnail = xele.GetElementValue("thumbnail");
+                            delcode = xele.GetElementValue("delcode");
 
                             ifm.ImageFileList.Add(new ImageFile(URL, LinkType.FULLIMAGE));
                             ifm.ImageFileList.Add(new ImageFile(thumbnail, LinkType.THUMBNAIL));

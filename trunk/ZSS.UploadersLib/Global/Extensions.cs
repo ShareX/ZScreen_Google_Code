@@ -39,7 +39,46 @@ namespace UploadersLib
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
         }
 
-        public static string ElementValue(this XElement xe, string name)
+        public static XElement GetElement(this XElement xe, params string[] elements)
+        {
+            XElement result = null;
+
+            if (xe != null && elements != null && elements.Length > 0)
+            {
+                result = xe;
+
+                foreach (string element in elements)
+                {
+                    result = result.Element(element);
+                    if (result == null) break;
+                }
+            }
+
+            return result;
+        }
+
+        public static XElement GetElement(this XDocument xd, params string[] elements)
+        {
+            if (xd != null && elements != null && elements.Length > 0)
+            {
+                XElement result = xd.Root;
+
+                if (result.Name == elements[0])
+                {
+                    for (int i = 1; i < elements.Length; i++)
+                    {
+                        result = result.Element(elements[i]);
+                        if (result == null) break;
+                    }
+
+                    return result;
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetElementValue(this XElement xe, string name)
         {
             if (xe != null)
             {
@@ -53,7 +92,7 @@ namespace UploadersLib
             return string.Empty;
         }
 
-        public static string AttributeValue(this XElement xe, string name)
+        public static string GetAttributeValue(this XElement xe, string name)
         {
             if (xe != null)
             {
@@ -67,12 +106,12 @@ namespace UploadersLib
             return string.Empty;
         }
 
-        public static string AttributeFirstValue(this XElement xe, params string[] names)
+        public static string GetAttributeFirstValue(this XElement xe, params string[] names)
         {
             string value;
             foreach (string name in names)
             {
-                value = xe.AttributeValue(name);
+                value = xe.GetAttributeValue(name);
                 if (!string.IsNullOrEmpty(value))
                 {
                     return value;

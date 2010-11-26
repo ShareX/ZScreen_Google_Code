@@ -92,8 +92,10 @@ namespace UploadersLib.FileUploaders
                 UploadResult ur = new UploadResult
                 {
                     URL = info.URL,
-                    DeletionURL = info.KillCodeURL
+                    DeletionURL = info.KillCodeURL,
+                    Source = response
                 };
+
                 return ur;
             }
 

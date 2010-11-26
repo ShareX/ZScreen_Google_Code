@@ -87,7 +87,7 @@ namespace UploadersLib.Helpers
             XElement xele = xdoc.Element("status");
             if (null != xele)
             {
-                this.Config.AddUser(xele.ElementValue("in_reply_to_screen_name"));
+                this.Config.AddUser(xele.GetElementValue("in_reply_to_screen_name"));
             }
         }
 

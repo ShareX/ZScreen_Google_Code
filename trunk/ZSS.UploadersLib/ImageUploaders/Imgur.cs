@@ -32,7 +32,7 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class Imgur : ImageUploader
     {
-        private string APIKey { get; set; }
+        public string APIKey { get; private set; }
 
         public Imgur(string key)
         {
@@ -49,7 +49,7 @@ namespace UploadersLib.ImageUploaders
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", APIKey);
 
-            string response = UploadData(stream, fileName, "http://imgur.com/api/upload.xml", "image", arguments);
+            string response = UploadData(stream, fileName, "http://api.imgur.com/2/upload.xml", "image", arguments);
 
             return ParseResult(response);
         }
@@ -60,29 +60,19 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(source))
             {
-                XDocument xdoc = XDocument.Parse(source);
-                XElement xele = xdoc.Element("rsp");
+                XDocument xd = XDocument.Parse(source);
+                XElement xe;
 
-                if (xele != null)
+                if ((xe = xd.GetElement("upload", "links")) != null)
                 {
-                    switch (xele.AttributeFirstValue("status", "stat"))
-                    {
-                        case "ok":
-                            string original_image = xele.ElementValue("original_image");
-                            string large_thumbnail = xele.ElementValue("large_thumbnail");
-                            string small_thumbnail = xele.ElementValue("small_thumbnail");
-                            string imgur_page = xele.ElementValue("imgur_page");
-                            string delete_page = xele.ElementValue("delete_page");
-                            ifm.ImageFileList.Add(new ImageFile(original_image, LinkType.FULLIMAGE));
-                            ifm.ImageFileList.Add(new ImageFile(large_thumbnail, LinkType.THUMBNAIL));
-                            ifm.ImageFileList.Add(new ImageFile(delete_page, LinkType.DELETION_LINK));
-                            break;
-                        case "fail":
-                            string error_code = xele.ElementValue("error_code");
-                            string error_msg = xele.ElementValue("error_msg");
-                            Errors.Add(error_code + " - " + error_msg);
-                            break;
-                    }
+                    ifm.Add(xe.GetElementValue("original"), LinkType.FULLIMAGE);
+                    ifm.Add(xe.GetElementValue("large_thumbnail"), LinkType.THUMBNAIL);
+                    //ifm.Add(xele.ElementValue("small_square"), LinkType.THUMBNAIL);
+                    ifm.Add(xe.GetElementValue("delete_page"), LinkType.DELETION_LINK);
+                }
+                else if ((xe = xd.GetElement("error")) != null)
+                {
+                    Errors.Add("Imgur error message: " + xe.GetElementValue("message"));
                 }
             }
 

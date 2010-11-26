@@ -92,12 +92,12 @@ namespace UploadersLib.FileUploaders
         {
             XDocument xml = XDocument.Parse(response);
             XElement xe = xml.Root;
-            if (xe.ElementValue("status") == "ok")
+            if (xe.GetElementValue("status") == "ok")
             {
                 UploadResponsePacket urp = new UploadResponsePacket
                 {
-                    DownloadURL = xe.ElementValue("download_url"),
-                    DeleteURL = xe.ElementValue("delete_url")
+                    DownloadURL = xe.GetElementValue("download_url"),
+                    DeleteURL = xe.GetElementValue("delete_url")
                 };
 
                 return urp;
@@ -137,21 +137,21 @@ namespace UploadersLib.FileUploaders
 
             public LoginInfo(XElement element)
             {
-                SessionKey = element.ElementValue("session_key");
-                Username = element.ElementValue("user_name");
-                EMail = element.ElementValue("email");
-                MembershipType = element.ElementValue("membership_type");
-                MembershipEnds = element.ElementValue("membership_ends");
-                CapableUpload = element.ElementValue("capable_upload") != "0";
-                CapableDownload = element.ElementValue("capable_download") != "0";
-                CapableFolders = element.ElementValue("capable_folders") != "0";
-                CapableFiles = element.ElementValue("capable_files") != "0";
-                CapableHTTPS = element.ElementValue("capable_https") != "0";
-                CapableAddressBook = element.ElementValue("capable_addressbook") != "0";
-                BandwidthLeft = element.ElementValue("bandwidth_left");
-                DiskSpaceLeft = element.ElementValue("diskspace_left");
-                DiskSpaceUsed = element.ElementValue("diskspace_used");
-                Points = element.ElementValue("points");
+                SessionKey = element.GetElementValue("session_key");
+                Username = element.GetElementValue("user_name");
+                EMail = element.GetElementValue("email");
+                MembershipType = element.GetElementValue("membership_type");
+                MembershipEnds = element.GetElementValue("membership_ends");
+                CapableUpload = element.GetElementValue("capable_upload") != "0";
+                CapableDownload = element.GetElementValue("capable_download") != "0";
+                CapableFolders = element.GetElementValue("capable_folders") != "0";
+                CapableFiles = element.GetElementValue("capable_files") != "0";
+                CapableHTTPS = element.GetElementValue("capable_https") != "0";
+                CapableAddressBook = element.GetElementValue("capable_addressbook") != "0";
+                BandwidthLeft = element.GetElementValue("bandwidth_left");
+                DiskSpaceLeft = element.GetElementValue("diskspace_left");
+                DiskSpaceUsed = element.GetElementValue("diskspace_used");
+                Points = element.GetElementValue("points");
             }
         }
 
@@ -168,11 +168,11 @@ namespace UploadersLib.FileUploaders
             public UploadInfo(XElement element)
             {
                 XElement upload = element.Element("upload");
-                URL = upload.AttributeValue("url");
-                ProgressURL = upload.AttributeValue("progress_url");
-                MaxFileSize = upload.AttributeValue("max_file_size");
-                UploadIdentifier = upload.AttributeValue("upload_identifier");
-                ExtraInfo = upload.AttributeValue("extra_info");
+                URL = upload.GetAttributeValue("url");
+                ProgressURL = upload.GetAttributeValue("progress_url");
+                MaxFileSize = upload.GetAttributeValue("max_file_size");
+                UploadIdentifier = upload.GetAttributeValue("upload_identifier");
+                ExtraInfo = upload.GetAttributeValue("extra_info");
             }
         }
 
@@ -231,7 +231,7 @@ namespace UploadersLib.FileUploaders
 
                 if (!packet.Error)
                 {
-                    return packet.Result.ElementValue("token");
+                    return packet.Result.GetElementValue("token");
                 }
             }
 
@@ -291,7 +291,7 @@ namespace UploadersLib.FileUploaders
 
                 if (!packet.Error)
                 {
-                    string session = packet.Result.ElementValue("session");
+                    string session = packet.Result.GetElementValue("session");
 
                     if (!string.IsNullOrEmpty(session))
                     {
@@ -435,23 +435,21 @@ namespace UploadersLib.FileUploaders
 
                 if (!string.IsNullOrEmpty(response))
                 {
+                    UploadResult ur = new UploadResult { Source = response };
                     UploadResponsePacket urp = ParseUploadResponse(response);
 
                     if (urp == null) // User
                     {
                         string fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
-                        string url = "http://www.sendspace.com/file/" + fileid;
-                        return new UploadResult(url);
+                        ur.URL = "http://www.sendspace.com/file/" + fileid;
                     }
                     else
                     {
-                        UploadResult ur = new UploadResult
-                        {
-                            URL = urp.DownloadURL,
-                            DeletionURL = urp.DeleteURL
-                        };
-                        return ur;
+                        ur.URL = urp.DownloadURL;
+                        ur.DeletionURL = urp.DeleteURL;
                     }
+
+                    return ur;
                 }
             }
 
@@ -530,13 +528,13 @@ namespace UploadersLib.FileUploaders
                     XDocument xml = XDocument.Parse(response);
                     XElement element = xml.Element("progress");
 
-                    Status = element.ElementValue("status");
-                    ETA = element.ElementValue("eta");
-                    Speed = element.ElementValue("speed");
-                    UploadedBytes = element.ElementValue("uploaded_bytes");
-                    TotalSize = element.ElementValue("total_size");
-                    Elapsed = element.ElementValue("elapsed");
-                    Meter = element.ElementValue("meter");
+                    Status = element.GetElementValue("status");
+                    ETA = element.GetElementValue("eta");
+                    Speed = element.GetElementValue("speed");
+                    UploadedBytes = element.GetElementValue("uploaded_bytes");
+                    TotalSize = element.GetElementValue("total_size");
+                    Elapsed = element.GetElementValue("elapsed");
+                    Meter = element.GetElementValue("meter");
                 }
 
                 public override string ToString()
