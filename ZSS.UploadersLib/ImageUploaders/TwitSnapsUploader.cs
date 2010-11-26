@@ -84,12 +84,12 @@ namespace UploadersLib.ImageUploaders
 
                 if (xele != null)
                 {
-                    switch (xele.AttributeFirstValue("status", "stat"))
+                    switch (xele.GetAttributeFirstValue("status", "stat"))
                     {
                         case "ok":
                             string userid, imageurl;
-                            userid = xele.ElementValue("userid");
-                            imageurl = xele.ElementValue("imageurl");
+                            userid = xele.GetElementValue("userid");
+                            imageurl = xele.GetElementValue("imageurl");
                             ifm.ImageFileList.Add(new ImageFile(imageurl, LinkType.FULLIMAGE));
                             break;
                         case "fail":

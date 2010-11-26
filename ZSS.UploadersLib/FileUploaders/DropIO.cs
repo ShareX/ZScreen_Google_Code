@@ -76,7 +76,7 @@ namespace UploadersLib.FileUploaders
                 {
                     Asset asset = ParseAsset(response);
                     string url = string.Format("http://drop.io/{0}/asset/{1}", drop.Name, asset.Name);
-                    return new UploadResult(url);
+                    return new UploadResult(response, url);
                 }
             }
             catch (Exception e)
@@ -94,8 +94,8 @@ namespace UploadersLib.FileUploaders
             if (root != null)
             {
                 Asset asset = new Asset();
-                asset.Name = root.ElementValue("name");
-                asset.OriginalFilename = root.ElementValue("original-filename");
+                asset.Name = root.GetElementValue("name");
+                asset.OriginalFilename = root.GetElementValue("original-filename");
                 return asset;
             }
 
@@ -126,8 +126,8 @@ namespace UploadersLib.FileUploaders
             if (root != null)
             {
                 Drop drop = new Drop();
-                drop.Name = root.ElementValue("name");
-                drop.AdminToken = root.ElementValue("admin_token");
+                drop.Name = root.GetElementValue("name");
+                drop.AdminToken = root.GetElementValue("admin_token");
                 return drop;
             }
 

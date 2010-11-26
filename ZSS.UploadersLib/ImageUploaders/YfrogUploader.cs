@@ -131,14 +131,14 @@ namespace UploadersLib.ImageUploaders
 
                 if (xele != null)
                 {
-                    switch (xele.AttributeFirstValue("status", "stat"))
+                    switch (xele.GetAttributeFirstValue("status", "stat"))
                     {
                         case "ok":
                             string statusid, userid, mediaid, mediaurl;
-                            statusid = xele.ElementValue("statusid");
-                            userid = xele.ElementValue("userid");
-                            mediaid = xele.ElementValue("mediaid");
-                            mediaurl = xele.ElementValue("mediaurl");
+                            statusid = xele.GetElementValue("statusid");
+                            userid = xele.GetElementValue("userid");
+                            mediaid = xele.GetElementValue("mediaid");
+                            mediaurl = xele.GetElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
                             ifm.ImageFileList.Add(new ImageFile(mediaurl, LinkType.FULLIMAGE));
                             ifm.ImageFileList.Add(new ImageFile(mediaurl + ".th.jpg", LinkType.THUMBNAIL));

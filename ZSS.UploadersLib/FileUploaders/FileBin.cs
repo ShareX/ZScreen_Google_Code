@@ -46,7 +46,7 @@ namespace UploadersLib.FileUploaders
             if (!string.IsNullOrEmpty(response))
             {
                 string url = response.Substring(response.LastIndexOf(' ') + 1).Trim();
-                return new UploadResult(url);
+                return new UploadResult(response, url);
             }
 
             return null;

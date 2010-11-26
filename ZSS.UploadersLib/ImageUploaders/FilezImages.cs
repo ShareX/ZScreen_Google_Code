@@ -22,7 +22,12 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                ifm.Add(response.TrimEnd('/', 'f', 'o', 'r', 'c', 'e'), LinkType.FULLIMAGE);
+                if (response.EndsWith("/force"))
+                {
+                    response = response.Substring(0, response.Length - 6);
+                }
+
+                ifm.Add(response, LinkType.FULLIMAGE);
             }
 
             return ifm;

@@ -32,6 +32,7 @@ namespace UploadersLib.Helpers
         public string URL { get; set; }
         public string ThumbnailURL { get; set; }
         public string DeletionURL { get; set; }
+        public string Source { get; set; }
         public List<string> Errors { get; set; }
 
         public UploadResult()
@@ -39,9 +40,10 @@ namespace UploadersLib.Helpers
             Errors = new List<string>();
         }
 
-        public UploadResult(string url)
+        public UploadResult(string source = null, string url = null)
             : this()
         {
+            Source = source;
             URL = url;
         }
     }

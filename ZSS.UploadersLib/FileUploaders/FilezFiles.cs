@@ -20,7 +20,7 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                return new UploadResult(response);
+                return new UploadResult(response, response);
             }
 
             return null;

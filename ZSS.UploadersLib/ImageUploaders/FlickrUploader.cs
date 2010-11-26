@@ -189,15 +189,15 @@ namespace UploadersLib.ImageUploaders
 
                 if (xele != null)
                 {
-                    switch (xele.AttributeFirstValue("status", "stat"))
+                    switch (xele.GetAttributeFirstValue("status", "stat"))
                     {
                         case "ok":
                             return xele.Element(field);
                         case "fail":
                             string code, msg;
                             XElement err = xele.Element("err");
-                            code = err.AttributeValue("code");
-                            msg = err.AttributeValue("msg");
+                            code = err.GetAttributeValue("code");
+                            msg = err.GetAttributeValue("msg");
                             // throw new Exception(string.Format("Code: {0}, Message: {1}", code, msg));
                             this.Errors.Add(msg);
                             break;
@@ -265,12 +265,12 @@ namespace UploadersLib.ImageUploaders
 
             public AuthInfo(XElement element)
             {
-                Token = element.ElementValue("token");
-                Permission = element.ElementValue("perms");
+                Token = element.GetElementValue("token");
+                Permission = element.GetElementValue("perms");
                 XElement user = element.Element("user");
-                UserID = user.AttributeValue("nsid");
-                Username = user.AttributeValue("username");
-                Fullname = user.AttributeValue("fullname");
+                UserID = user.GetAttributeValue("nsid");
+                Username = user.GetAttributeValue("username");
+                Fullname = user.GetAttributeValue("fullname");
             }
         }
 

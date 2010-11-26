@@ -70,7 +70,7 @@ namespace UploadersLib.FileUploaders
                 if (Errors.Count == 0)
                 {
                     string url = FTPAccount.GetUriPath(fileName);
-                    return new UploadResult(url);
+                    return new UploadResult(null, url);
                 }
             }
 
