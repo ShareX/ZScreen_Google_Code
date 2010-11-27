@@ -131,6 +131,7 @@ namespace ZUploader
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
 
+            Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(mainForm);
 
@@ -140,14 +141,22 @@ namespace ZUploader
             MyLogger.SaveLog(LogFilePath);
         }
 
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            OnError(e.Exception);
+        }
+
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            MyLogger.WriteException((Exception)e.ExceptionObject);
+            OnError((Exception)e.ExceptionObject);
+        }
 
-            if (e.IsTerminating)
-            {
-                MyLogger.SaveLog(LogFilePath);
-            }
+        private static void OnError(Exception e)
+        {
+            MyLogger.WriteException(e);
+            MyLogger.SaveLog(LogFilePath);
+            MessageBox.Show(e.Message, "ZUploader - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
         }
 
         private static bool CheckPortable()

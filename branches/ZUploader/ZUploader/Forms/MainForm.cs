@@ -291,6 +291,7 @@ namespace ZUploader
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
+            throw new Exception();
             UploadManager.ClipboardUpload();
         }
 

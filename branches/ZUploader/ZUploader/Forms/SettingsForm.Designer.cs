@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
             this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
             this.cbAutoPlaySound = new System.Windows.Forms.CheckBox();
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tpImage = new System.Windows.Forms.TabPage();
+            this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
             this.lblImageJPEGQualityHint = new System.Windows.Forms.Label();
             this.cbImageGIFQuality = new System.Windows.Forms.ComboBox();
@@ -49,6 +52,7 @@
             this.cbImageFormat = new System.Windows.Forms.ComboBox();
             this.lblImageFormat = new System.Windows.Forms.Label();
             this.tpHistory = new System.Windows.Forms.TabPage();
+            this.lblHistoryInfo = new System.Windows.Forms.Label();
             this.nudHistoryMaxItemCount = new System.Windows.Forms.NumericUpDown();
             this.lblHistoryMaxItemCount = new System.Windows.Forms.Label();
             this.btnBrowseCustomHistoryPath = new System.Windows.Forms.Button();
@@ -57,9 +61,10 @@
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpProxy = new System.Windows.Forms.TabPage();
-            this.lblImageInfo = new System.Windows.Forms.Label();
-            this.lblHistoryInfo = new System.Windows.Forms.Label();
-            this.lblGeneralInfo = new System.Windows.Forms.Label();
+            this.tpDebug = new System.Windows.Forms.TabPage();
+            this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.cmsDebug = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiDebugCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpImage.SuspendLayout();
@@ -69,10 +74,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).BeginInit();
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
+            this.tpDebug.SuspendLayout();
+            this.cmsDebug.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // pgFTPSettings
-            //
+            // 
             this.pgFTPSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgFTPSettings.Location = new System.Drawing.Point(4, 4);
             this.pgFTPSettings.Name = "pgFTPSettings";
@@ -81,9 +88,9 @@
             this.pgFTPSettings.TabIndex = 0;
             this.pgFTPSettings.ToolbarVisible = false;
             this.pgFTPSettings.SelectedObjectsChanged += new System.EventHandler(this.pgFTPSettings_SelectedObjectsChanged);
-            //
+            // 
             // cbClipboardAutoCopy
-            //
+            // 
             this.cbClipboardAutoCopy.AutoSize = true;
             this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 16);
             this.cbClipboardAutoCopy.Name = "cbClipboardAutoCopy";
@@ -92,9 +99,9 @@
             this.cbClipboardAutoCopy.Text = "Copy URL to clipboard after upload is completed";
             this.cbClipboardAutoCopy.UseVisualStyleBackColor = true;
             this.cbClipboardAutoCopy.CheckedChanged += new System.EventHandler(this.cbClipboardAutoCopy_CheckedChanged);
-            //
+            // 
             // cbAutoPlaySound
-            //
+            // 
             this.cbAutoPlaySound.AutoSize = true;
             this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
             this.cbAutoPlaySound.Name = "cbAutoPlaySound";
@@ -103,9 +110,9 @@
             this.cbAutoPlaySound.Text = "Play sound after upload is completed";
             this.cbAutoPlaySound.UseVisualStyleBackColor = true;
             this.cbAutoPlaySound.CheckedChanged += new System.EventHandler(this.cbAutoPlaySound_CheckedChanged);
-            //
+            // 
             // pgProxy
-            //
+            // 
             this.pgProxy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgProxy.Location = new System.Drawing.Point(4, 4);
             this.pgProxy.Name = "pgProxy";
@@ -113,23 +120,24 @@
             this.pgProxy.Size = new System.Drawing.Size(474, 251);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
-            //
+            // 
             // tcSettings
-            //
+            // 
             this.tcSettings.Controls.Add(this.tpGeneral);
             this.tcSettings.Controls.Add(this.tpImage);
             this.tcSettings.Controls.Add(this.tpHistory);
             this.tcSettings.Controls.Add(this.tpFTP);
             this.tcSettings.Controls.Add(this.tpProxy);
+            this.tcSettings.Controls.Add(this.tpDebug);
             this.tcSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
             this.tcSettings.Size = new System.Drawing.Size(490, 285);
             this.tcSettings.TabIndex = 5;
-            //
+            // 
             // tpGeneral
-            //
+            // 
             this.tpGeneral.Controls.Add(this.lblGeneralInfo);
             this.tpGeneral.Controls.Add(this.cbShellContextMenu);
             this.tpGeneral.Controls.Add(this.cbClipboardAutoCopy);
@@ -141,9 +149,22 @@
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
-            //
+            // 
+            // lblGeneralInfo
+            // 
+            this.lblGeneralInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblGeneralInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGeneralInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
+            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblGeneralInfo.Name = "lblGeneralInfo";
+            this.lblGeneralInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblGeneralInfo.TabIndex = 16;
+            this.lblGeneralInfo.Text = "Shell context menu is Windows Explorer right click menu for files and folders.";
+            this.lblGeneralInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // cbShellContextMenu
-            //
+            // 
             this.cbShellContextMenu.AutoSize = true;
             this.cbShellContextMenu.Location = new System.Drawing.Point(16, 64);
             this.cbShellContextMenu.Name = "cbShellContextMenu";
@@ -152,9 +173,9 @@
             this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell context menu";
             this.cbShellContextMenu.UseVisualStyleBackColor = true;
             this.cbShellContextMenu.CheckedChanged += new System.EventHandler(this.cbShellContextMenu_CheckedChanged);
-            //
+            // 
             // tpImage
-            //
+            // 
             this.tpImage.Controls.Add(this.lblImageInfo);
             this.tpImage.Controls.Add(this.lblUseImageFormat2AfterHint);
             this.tpImage.Controls.Add(this.lblImageJPEGQualityHint);
@@ -175,27 +196,41 @@
             this.tpImage.TabIndex = 4;
             this.tpImage.Text = "Image";
             this.tpImage.UseVisualStyleBackColor = true;
-            //
+            // 
+            // lblImageInfo
+            // 
+            this.lblImageInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblImageInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblImageInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblImageInfo.ForeColor = System.Drawing.Color.White;
+            this.lblImageInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblImageInfo.Name = "lblImageInfo";
+            this.lblImageInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblImageInfo.TabIndex = 14;
+            this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
+    "added as bitmap.";
+            this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lblUseImageFormat2AfterHint
-            //
+            // 
             this.lblUseImageFormat2AfterHint.AutoSize = true;
             this.lblUseImageFormat2AfterHint.Location = new System.Drawing.Point(288, 112);
             this.lblUseImageFormat2AfterHint.Name = "lblUseImageFormat2AfterHint";
             this.lblUseImageFormat2AfterHint.Size = new System.Drawing.Size(111, 13);
             this.lblUseImageFormat2AfterHint.TabIndex = 13;
             this.lblUseImageFormat2AfterHint.Text = "kb 0-5000 (0 disables)";
-            //
+            // 
             // lblImageJPEGQualityHint
-            //
+            // 
             this.lblImageJPEGQualityHint.AutoSize = true;
             this.lblImageJPEGQualityHint.Location = new System.Drawing.Point(168, 48);
             this.lblImageJPEGQualityHint.Name = "lblImageJPEGQualityHint";
             this.lblImageJPEGQualityHint.Size = new System.Drawing.Size(34, 13);
             this.lblImageJPEGQualityHint.TabIndex = 12;
             this.lblImageJPEGQualityHint.Text = "0-100";
-            //
+            // 
             // cbImageGIFQuality
-            //
+            // 
             this.cbImageGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbImageGIFQuality.FormattingEnabled = true;
             this.cbImageGIFQuality.Items.AddRange(new object[] {
@@ -208,9 +243,9 @@
             this.cbImageGIFQuality.Size = new System.Drawing.Size(120, 21);
             this.cbImageGIFQuality.TabIndex = 10;
             this.cbImageGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbImageGIFQuality_SelectedIndexChanged);
-            //
+            // 
             // cbImageFormat2
-            //
+            // 
             this.cbImageFormat2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbImageFormat2.FormattingEnabled = true;
             this.cbImageFormat2.Items.AddRange(new object[] {
@@ -224,27 +259,27 @@
             this.cbImageFormat2.Size = new System.Drawing.Size(56, 21);
             this.cbImageFormat2.TabIndex = 9;
             this.cbImageFormat2.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat2_SelectedIndexChanged);
-            //
+            // 
             // lblImageFormat2
-            //
+            // 
             this.lblImageFormat2.AutoSize = true;
             this.lblImageFormat2.Location = new System.Drawing.Point(16, 144);
             this.lblImageFormat2.Name = "lblImageFormat2";
             this.lblImageFormat2.Size = new System.Drawing.Size(80, 13);
             this.lblImageFormat2.TabIndex = 8;
             this.lblImageFormat2.Text = "Image format 2:";
-            //
+            // 
             // lblUseImageFormat2After
-            //
+            // 
             this.lblUseImageFormat2After.AutoSize = true;
             this.lblUseImageFormat2After.Location = new System.Drawing.Point(16, 112);
             this.lblUseImageFormat2After.Name = "lblUseImageFormat2After";
             this.lblUseImageFormat2After.Size = new System.Drawing.Size(198, 13);
             this.lblUseImageFormat2After.TabIndex = 7;
             this.lblUseImageFormat2After.Text = "Image size limit for use \"Image format 2\":";
-            //
+            // 
             // nudUseImageFormat2After
-            //
+            // 
             this.nudUseImageFormat2After.Location = new System.Drawing.Point(224, 108);
             this.nudUseImageFormat2After.Maximum = new decimal(new int[] {
             5000,
@@ -261,9 +296,9 @@
             0,
             0});
             this.nudUseImageFormat2After.ValueChanged += new System.EventHandler(this.nudUseImageFormat2After_ValueChanged);
-            //
+            // 
             // nudImageJPEGQuality
-            //
+            // 
             this.nudImageJPEGQuality.Location = new System.Drawing.Point(104, 44);
             this.nudImageJPEGQuality.Name = "nudImageJPEGQuality";
             this.nudImageJPEGQuality.Size = new System.Drawing.Size(56, 20);
@@ -275,27 +310,27 @@
             0,
             0});
             this.nudImageJPEGQuality.ValueChanged += new System.EventHandler(this.nudImageJPEGQuality_ValueChanged);
-            //
+            // 
             // lblImageGIFQuality
-            //
+            // 
             this.lblImageGIFQuality.AutoSize = true;
             this.lblImageGIFQuality.Location = new System.Drawing.Point(16, 80);
             this.lblImageGIFQuality.Name = "lblImageGIFQuality";
             this.lblImageGIFQuality.Size = new System.Drawing.Size(60, 13);
             this.lblImageGIFQuality.TabIndex = 3;
             this.lblImageGIFQuality.Text = "GIF quality:";
-            //
+            // 
             // lblImageJPEGQuality
-            //
+            // 
             this.lblImageJPEGQuality.AutoSize = true;
             this.lblImageJPEGQuality.Location = new System.Drawing.Point(16, 48);
             this.lblImageJPEGQuality.Name = "lblImageJPEGQuality";
             this.lblImageJPEGQuality.Size = new System.Drawing.Size(70, 13);
             this.lblImageJPEGQuality.TabIndex = 2;
             this.lblImageJPEGQuality.Text = "JPEG quality:";
-            //
+            // 
             // cbImageFormat
-            //
+            // 
             this.cbImageFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbImageFormat.FormattingEnabled = true;
             this.cbImageFormat.Items.AddRange(new object[] {
@@ -309,18 +344,18 @@
             this.cbImageFormat.Size = new System.Drawing.Size(56, 21);
             this.cbImageFormat.TabIndex = 1;
             this.cbImageFormat.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat_SelectedIndexChanged);
-            //
+            // 
             // lblImageFormat
-            //
+            // 
             this.lblImageFormat.AutoSize = true;
             this.lblImageFormat.Location = new System.Drawing.Point(16, 16);
             this.lblImageFormat.Name = "lblImageFormat";
             this.lblImageFormat.Size = new System.Drawing.Size(71, 13);
             this.lblImageFormat.TabIndex = 0;
             this.lblImageFormat.Text = "Image format:";
-            //
+            // 
             // tpHistory
-            //
+            // 
             this.tpHistory.Controls.Add(this.lblHistoryInfo);
             this.tpHistory.Controls.Add(this.nudHistoryMaxItemCount);
             this.tpHistory.Controls.Add(this.lblHistoryMaxItemCount);
@@ -335,9 +370,22 @@
             this.tpHistory.TabIndex = 3;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
-            //
+            // 
+            // lblHistoryInfo
+            // 
+            this.lblHistoryInfo.BackColor = System.Drawing.Color.DimGray;
+            this.lblHistoryInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblHistoryInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblHistoryInfo.ForeColor = System.Drawing.Color.White;
+            this.lblHistoryInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblHistoryInfo.Name = "lblHistoryInfo";
+            this.lblHistoryInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblHistoryInfo.TabIndex = 15;
+            this.lblHistoryInfo.Text = "ZUploader using SQLite for store history items.";
+            this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // nudHistoryMaxItemCount
-            //
+            // 
             this.nudHistoryMaxItemCount.Location = new System.Drawing.Point(216, 92);
             this.nudHistoryMaxItemCount.Maximum = new decimal(new int[] {
             1000000,
@@ -359,18 +407,18 @@
             0,
             -2147483648});
             this.nudHistoryMaxItemCount.ValueChanged += new System.EventHandler(this.nudHistoryMaxItemCount_ValueChanged);
-            //
+            // 
             // lblHistoryMaxItemCount
-            //
+            // 
             this.lblHistoryMaxItemCount.AutoSize = true;
             this.lblHistoryMaxItemCount.Location = new System.Drawing.Point(16, 96);
             this.lblHistoryMaxItemCount.Name = "lblHistoryMaxItemCount";
             this.lblHistoryMaxItemCount.Size = new System.Drawing.Size(192, 13);
             this.lblHistoryMaxItemCount.TabIndex = 10;
             this.lblHistoryMaxItemCount.Text = "Max item count for filtering (-1 disables):";
-            //
+            // 
             // btnBrowseCustomHistoryPath
-            //
+            // 
             this.btnBrowseCustomHistoryPath.Location = new System.Drawing.Point(392, 62);
             this.btnBrowseCustomHistoryPath.Name = "btnBrowseCustomHistoryPath";
             this.btnBrowseCustomHistoryPath.Size = new System.Drawing.Size(75, 23);
@@ -378,17 +426,17 @@
             this.btnBrowseCustomHistoryPath.Text = "Browse...";
             this.btnBrowseCustomHistoryPath.UseVisualStyleBackColor = true;
             this.btnBrowseCustomHistoryPath.Click += new System.EventHandler(this.btnBrowseCustomHistoryPath_Click);
-            //
+            // 
             // txtCustomHistoryPath
-            //
+            // 
             this.txtCustomHistoryPath.Location = new System.Drawing.Point(16, 64);
             this.txtCustomHistoryPath.Name = "txtCustomHistoryPath";
             this.txtCustomHistoryPath.Size = new System.Drawing.Size(368, 20);
             this.txtCustomHistoryPath.TabIndex = 8;
             this.txtCustomHistoryPath.TextChanged += new System.EventHandler(this.txtCustomHistoryPath_TextChanged);
-            //
+            // 
             // cbUseCustomHistoryPath
-            //
+            // 
             this.cbUseCustomHistoryPath.AutoSize = true;
             this.cbUseCustomHistoryPath.Location = new System.Drawing.Point(16, 40);
             this.cbUseCustomHistoryPath.Name = "cbUseCustomHistoryPath";
@@ -397,9 +445,9 @@
             this.cbUseCustomHistoryPath.Text = "Use custom history file path:";
             this.cbUseCustomHistoryPath.UseVisualStyleBackColor = true;
             this.cbUseCustomHistoryPath.CheckedChanged += new System.EventHandler(this.cbUseCustomHistoryPath_CheckedChanged);
-            //
+            // 
             // cbHistorySave
-            //
+            // 
             this.cbHistorySave.AutoSize = true;
             this.cbHistorySave.Location = new System.Drawing.Point(16, 16);
             this.cbHistorySave.Name = "cbHistorySave";
@@ -408,9 +456,9 @@
             this.cbHistorySave.Text = "Enable history save";
             this.cbHistorySave.UseVisualStyleBackColor = true;
             this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            //
+            // 
             // tpFTP
-            //
+            // 
             this.tpFTP.Controls.Add(this.pgFTPSettings);
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
@@ -419,9 +467,9 @@
             this.tpFTP.TabIndex = 1;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
-            //
+            // 
             // tpProxy
-            //
+            // 
             this.tpProxy.Controls.Add(this.pgProxy);
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
@@ -430,49 +478,47 @@
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
-            //
-            // lblImageInfo
-            //
-            this.lblImageInfo.BackColor = System.Drawing.Color.DimGray;
-            this.lblImageInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblImageInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblImageInfo.ForeColor = System.Drawing.Color.White;
-            this.lblImageInfo.Location = new System.Drawing.Point(3, 227);
-            this.lblImageInfo.Name = "lblImageInfo";
-            this.lblImageInfo.Size = new System.Drawing.Size(476, 29);
-            this.lblImageInfo.TabIndex = 14;
-            this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
-            this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
-            // lblHistoryInfo
-            //
-            this.lblHistoryInfo.BackColor = System.Drawing.Color.DimGray;
-            this.lblHistoryInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblHistoryInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblHistoryInfo.ForeColor = System.Drawing.Color.White;
-            this.lblHistoryInfo.Location = new System.Drawing.Point(3, 227);
-            this.lblHistoryInfo.Name = "lblHistoryInfo";
-            this.lblHistoryInfo.Size = new System.Drawing.Size(476, 29);
-            this.lblHistoryInfo.TabIndex = 15;
-            this.lblHistoryInfo.Text = "ZUploader using SQLite for store history items.";
-            this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
-            // lblGeneralInfo
-            //
-            this.lblGeneralInfo.BackColor = System.Drawing.Color.DimGray;
-            this.lblGeneralInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblGeneralInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
-            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 227);
-            this.lblGeneralInfo.Name = "lblGeneralInfo";
-            this.lblGeneralInfo.Size = new System.Drawing.Size(476, 29);
-            this.lblGeneralInfo.TabIndex = 16;
-            this.lblGeneralInfo.Text = "Shell context menu is Windows Explorer right click menu for files and folders.";
-            this.lblGeneralInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
+            // 
+            // tpDebug
+            // 
+            this.tpDebug.Controls.Add(this.txtDebugLog);
+            this.tpDebug.Location = new System.Drawing.Point(4, 22);
+            this.tpDebug.Name = "tpDebug";
+            this.tpDebug.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDebug.Size = new System.Drawing.Size(482, 259);
+            this.tpDebug.TabIndex = 5;
+            this.tpDebug.Text = "Debug";
+            this.tpDebug.UseVisualStyleBackColor = true;
+            // 
+            // txtDebugLog
+            // 
+            this.txtDebugLog.ContextMenuStrip = this.cmsDebug;
+            this.txtDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDebugLog.Location = new System.Drawing.Point(3, 3);
+            this.txtDebugLog.Multiline = true;
+            this.txtDebugLog.Name = "txtDebugLog";
+            this.txtDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtDebugLog.Size = new System.Drawing.Size(476, 253);
+            this.txtDebugLog.TabIndex = 0;
+            this.txtDebugLog.WordWrap = false;
+            // 
+            // cmsDebug
+            // 
+            this.cmsDebug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiDebugCopy});
+            this.cmsDebug.Name = "cmsDebug";
+            this.cmsDebug.ShowImageMargin = false;
+            this.cmsDebug.Size = new System.Drawing.Size(128, 48);
+            // 
+            // tsmiDebugCopy
+            // 
+            this.tsmiDebugCopy.Name = "tsmiDebugCopy";
+            this.tsmiDebugCopy.Size = new System.Drawing.Size(127, 22);
+            this.tsmiDebugCopy.Text = "Copy";
+            this.tsmiDebugCopy.Click += new System.EventHandler(this.tsmiDebugCopy_Click);
+            // 
             // SettingsForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 291);
@@ -497,7 +543,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).EndInit();
             this.tpFTP.ResumeLayout(false);
             this.tpProxy.ResumeLayout(false);
+            this.tpDebug.ResumeLayout(false);
+            this.tpDebug.PerformLayout();
+            this.cmsDebug.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.PropertyGrid pgProxy;
@@ -535,5 +585,9 @@
         private System.Windows.Forms.Label lblImageInfo;
         private System.Windows.Forms.Label lblHistoryInfo;
         private System.Windows.Forms.Label lblGeneralInfo;
+        private System.Windows.Forms.TabPage tpDebug;
+        private System.Windows.Forms.TextBox txtDebugLog;
+        private System.Windows.Forms.ContextMenuStrip cmsDebug;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDebugCopy;
     }
 }

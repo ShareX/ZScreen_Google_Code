@@ -59,6 +59,9 @@ namespace ZUploader
 
             pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
+
+            txtDebugLog.Text = Program.MyLogger.Messages.ToString();
+            txtDebugLog.ScrollToCaret();
         }
 
         private void SettingsForm_Shown(object sender, EventArgs e)
@@ -195,5 +198,19 @@ namespace ZUploader
         }
 
         #endregion FTP
+
+        #region Debug
+
+        private void tsmiDebugCopy_Click(object sender, EventArgs e)
+        {
+            string selected = txtDebugLog.SelectedText;
+
+            if (!string.IsNullOrEmpty(selected))
+            {
+                Clipboard.SetText(selected);
+            }
+        }
+
+        #endregion Debug
     }
 }
