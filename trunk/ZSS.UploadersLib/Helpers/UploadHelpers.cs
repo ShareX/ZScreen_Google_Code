@@ -84,11 +84,6 @@ namespace UploadersLib.Helpers
             return GetRandomString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890", length);
         }
 
-        public static string GetDateTimeString()
-        {
-            return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-        }
-
         public static string ReplaceIllegalChars(string filename, char replace)
         {
             StringBuilder sb = new StringBuilder();

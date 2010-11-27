@@ -32,6 +32,7 @@ using System.Net;
 using System.Net.Cache;
 using System.Text;
 using System.Web;
+using HelpersLib;
 using UploadersLib.Helpers;
 using ZUploader;
 
@@ -84,7 +85,7 @@ namespace UploadersLib
         /// </summary>
         protected string GetResponse(string url, Dictionary<string, string> arguments)
         {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
 
             byte[] data = MakeInputContent(boundary, arguments, true);
 
@@ -107,7 +108,7 @@ namespace UploadersLib
         /// </summary>
         protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
         {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
 
             byte[] data = MakeInputContent(boundary, arguments, true);
 
@@ -192,7 +193,7 @@ namespace UploadersLib
 
         protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
-            string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
 
             using (MemoryStream stream = new MemoryStream())
             {

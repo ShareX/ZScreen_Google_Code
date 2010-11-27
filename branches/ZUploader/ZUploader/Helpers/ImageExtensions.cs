@@ -26,30 +26,37 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using ImageQuantization;
 using UploadersLib.Helpers;
 
 namespace ZUploader
 {
-    public static class Helpers
+    public static class ImageExtensions
     {
-        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
-
-        public static bool IsImageFile(string path)
+        public static MemoryStream SaveImage(this Image img, EImageFormat imageFormat)
         {
-            string ext = Path.GetExtension(path).ToLower();
+            MemoryStream stream = new MemoryStream();
 
-            return ImageFileExtensions.Any(x => ext.EndsWith(x));
-        }
+            switch (imageFormat)
+            {
+                case EImageFormat.PNG:
+                    img.Save(stream, ImageFormat.Png);
+                    break;
+                case EImageFormat.JPEG:
+                    img.SaveJPG(stream, Program.Settings.ImageJPEGQuality);
+                    break;
+                case EImageFormat.GIF:
+                    img.SaveGIF(stream, Program.Settings.ImageGIFQuality);
+                    break;
+                case EImageFormat.BMP:
+                    img.Save(stream, ImageFormat.Bmp);
+                    break;
+                case EImageFormat.TIFF:
+                    img.Save(stream, ImageFormat.Tiff);
+                    break;
+            }
 
-        private static string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
-
-        public static bool IsTextFile(string path)
-        {
-            string ext = Path.GetExtension(path).ToLower();
-
-            return TextFileExtensions.Any(x => ext.EndsWith(x));
+            return stream;
         }
 
         public static void SaveJPG(this Image img, Stream stream, int quality)
@@ -89,32 +96,6 @@ namespace ZUploader
                     quantized.Save(stream, ImageFormat.Gif);
                 }
             }
-        }
-
-        public static MemoryStream SaveImage(this Image img, EImageFormat imageFormat)
-        {
-            MemoryStream stream = new MemoryStream();
-
-            switch (imageFormat)
-            {
-                case EImageFormat.PNG:
-                    img.Save(stream, ImageFormat.Png);
-                    break;
-                case EImageFormat.JPEG:
-                    img.SaveJPG(stream, Program.Settings.ImageJPEGQuality);
-                    break;
-                case EImageFormat.GIF:
-                    img.SaveGIF(stream, Program.Settings.ImageGIFQuality);
-                    break;
-                case EImageFormat.BMP:
-                    img.Save(stream, ImageFormat.Bmp);
-                    break;
-                case EImageFormat.TIFF:
-                    img.Save(stream, ImageFormat.Tiff);
-                    break;
-            }
-
-            return stream;
         }
     }
 }

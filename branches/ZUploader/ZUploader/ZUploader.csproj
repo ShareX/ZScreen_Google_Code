@@ -86,22 +86,19 @@
     <Compile Include="Forms\ResponseForm.Designer.cs">
       <DependentUpon>ResponseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DebugTimer.cs" />
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\FastDateTime.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\ImageExtensions.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\SettingHelpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,6 +133,10 @@
     <Compile Include="UploadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\trunk\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
@@ -151,9 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Docs\Changes.log" />
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\navigation-090-button.png" />
     <None Include="Resources\cross-button.png" />
     <None Include="Resources\tick-button.png" />

@@ -37,9 +37,9 @@
             this.tpString.SuspendLayout();
             this.tpWebBrowser.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // txtSource
-            // 
+            //
             this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSource.Location = new System.Drawing.Point(3, 3);
             this.txtSource.Multiline = true;
@@ -47,9 +47,9 @@
             this.txtSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtSource.Size = new System.Drawing.Size(746, 437);
             this.txtSource.TabIndex = 0;
-            // 
+            //
             // tcResponse
-            // 
+            //
             this.tcResponse.Controls.Add(this.tpString);
             this.tcResponse.Controls.Add(this.tpWebBrowser);
             this.tcResponse.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -59,9 +59,9 @@
             this.tcResponse.Size = new System.Drawing.Size(760, 469);
             this.tcResponse.TabIndex = 1;
             this.tcResponse.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcResponse_Selecting);
-            // 
+            //
             // tpString
-            // 
+            //
             this.tpString.Controls.Add(this.txtSource);
             this.tpString.Location = new System.Drawing.Point(4, 22);
             this.tpString.Name = "tpString";
@@ -70,9 +70,9 @@
             this.tpString.TabIndex = 0;
             this.tpString.Text = "String";
             this.tpString.UseVisualStyleBackColor = true;
-            // 
+            //
             // tpWebBrowser
-            // 
+            //
             this.tpWebBrowser.Controls.Add(this.wbResponse);
             this.tpWebBrowser.Location = new System.Drawing.Point(4, 22);
             this.tpWebBrowser.Name = "tpWebBrowser";
@@ -81,18 +81,18 @@
             this.tpWebBrowser.TabIndex = 1;
             this.tpWebBrowser.Text = "Web browser";
             this.tpWebBrowser.UseVisualStyleBackColor = true;
-            // 
+            //
             // wbResponse
-            // 
+            //
             this.wbResponse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wbResponse.Location = new System.Drawing.Point(3, 3);
             this.wbResponse.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbResponse.Name = "wbResponse";
             this.wbResponse.Size = new System.Drawing.Size(746, 437);
             this.wbResponse.TabIndex = 0;
-            // 
+            //
             // ResponseForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 479);
@@ -107,7 +107,6 @@
             this.tpString.PerformLayout();
             this.tpWebBrowser.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion Windows Form Designer generated code

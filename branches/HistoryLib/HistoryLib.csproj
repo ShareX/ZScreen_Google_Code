@@ -64,7 +64,6 @@
     <Compile Include="Custom Controls\ObjectListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Helpers.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="History.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

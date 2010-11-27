@@ -26,6 +26,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace HistoryLib.Custom_Controls
 {

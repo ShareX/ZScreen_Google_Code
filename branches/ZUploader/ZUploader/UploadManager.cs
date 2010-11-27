@@ -31,9 +31,9 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Windows.Forms;
+using HelpersLib;
 using HistoryLib;
 using HistoryLib.Custom_Controls;
-using UploadersLib.Helpers;
 
 namespace ZUploader
 {
@@ -172,14 +172,14 @@ namespace ZUploader
                     break;
             }
 
-            return string.Format("{0}.{1}", UploadHelpers.GetDateTimeString(), ext);
+            return string.Format("{0}.{1}", Helpers.GetDateTimeString(), ext);
         }
 
         private static void ClipboardTextUpload()
         {
             byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
             MemoryStream stream = new MemoryStream(byteArray);
-            string filename = UploadHelpers.GetDateTimeString() + ".txt";
+            string filename = Helpers.GetDateTimeString() + ".txt";
             EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
             Task task = new Task(type, stream, filename);
             StartUpload(task);

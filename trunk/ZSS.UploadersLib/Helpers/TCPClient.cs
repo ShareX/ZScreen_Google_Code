@@ -31,6 +31,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using HelpersLib;
 
 namespace UploadersLib.Helpers
 {
@@ -122,7 +123,7 @@ namespace UploadersLib.Helpers
 
                 url = new Uri(link);
 
-                boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+                boundary = "----------" + FastDateTime.Now.Ticks.ToString("x");
                 header = string.Format("--{0}", boundary);
                 footer = string.Format("--{0}--", boundary);
 

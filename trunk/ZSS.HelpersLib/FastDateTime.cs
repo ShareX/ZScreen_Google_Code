@@ -1,8 +1,8 @@
-#region License Information (GPL v2)
+﻿#region License Information (GPL v2)
 
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -24,26 +24,26 @@
 #endregion License Information (GPL v2)
 
 using System;
-using HelpersLib;
 
-namespace UploadersLib.Helpers
+namespace HelpersLib
 {
-    [Serializable]
-    public class DekiWikiHistory
+    public static class FastDateTime
     {
-        public string Path;
-        public DateTime Time;
+        public static TimeSpan LocalUtcOffset { get; private set; }
 
-        public DekiWikiHistory()
+        public static DateTime Now
         {
-            this.Path = string.Empty;
-            this.Time = FastDateTime.Now;
+            get { return ToLocalTime(DateTime.UtcNow); }
         }
 
-        public DekiWikiHistory(string Path, DateTime Time)
+        static FastDateTime()
         {
-            this.Path = Path;
-            this.Time = Time;
+            LocalUtcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+        }
+
+        public static DateTime ToLocalTime(DateTime dateTime)
+        {
+            return dateTime + LocalUtcOffset;
         }
     }
 }

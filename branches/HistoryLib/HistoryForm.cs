@@ -25,10 +25,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace HistoryLib
 {
@@ -52,8 +56,15 @@ namespace HistoryLib
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
             cbTypeFilterSelection.SelectedIndex = 0; // Image
             cbFilenameFilterCulture.Items[0] = string.Format("Current culture ({0})", CultureInfo.CurrentCulture.Parent.EnglishName);
-            pbThumbnail.LoadingImage = Helpers.LoadImageFromResources("Loading.gif");
+            pbThumbnail.LoadingImage = LoadImageFromResources("Loading.gif");
             lvHistory.AutoResizeLastColumn();
+        }
+
+        private Image LoadImageFromResources(string imageName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream("HistoryLib.Images." + imageName);
+            return Image.FromStream(stream);
         }
 
         private void RefreshHistoryItems()
@@ -130,7 +141,7 @@ namespace HistoryLib
                 DateTime toDate = dtpFilterTo.Value.Date;
 
                 result = from hi in result
-                         let date = hi.DateTimeUtc.ToLocalTime().Date
+                         let date = FastDateTime.ToLocalTime(hi.DateTimeUtc).Date
                          where date >= fromDate && date <= toDate
                          select hi;
             }

@@ -29,6 +29,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using HelpersLib;
 using SingleInstanceApplication;
 
 namespace ZUploader
@@ -60,6 +61,16 @@ namespace ZUploader
                 {
                     return Path.Combine(ZUploaderPersonalPath, HistoryFileName);
                 }
+            }
+        }
+
+        public static string LogFilePath
+        {
+            get
+            {
+                DateTime now = FastDateTime.Now;
+                string fileName = string.Format("Log_{0}_{1}.txt", now.Month, now.Year);
+                return Path.Combine(ZUploaderPersonalPath, fileName);
             }
         }
 
@@ -120,11 +131,23 @@ namespace ZUploader
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
 
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(mainForm);
 
             Settings.Save();
 
             MyLogger.WriteLine("ZUploader closing");
+            MyLogger.SaveLog(LogFilePath);
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            MyLogger.WriteException((Exception)e.ExceptionObject);
+
+            if (e.IsTerminating)
+            {
+                MyLogger.SaveLog(LogFilePath);
+            }
         }
 
         private static bool CheckPortable()

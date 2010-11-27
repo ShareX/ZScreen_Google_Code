@@ -1,8 +1,33 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+
+/*
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2010 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace ZUploader
+namespace HelpersLib
 {
     public class DebugTimer : IDisposable
     {
@@ -31,8 +56,7 @@ namespace ZUploader
                 WriteLine("{0} started.", text);
             }
 
-            timer = new Stopwatch();
-            timer.Start();
+            timer = Stopwatch.StartNew();
         }
 
         public void Stop()
@@ -63,13 +87,12 @@ namespace ZUploader
 
         public static void WriteLine(string text)
         {
-            DateTime now = DateTime.Now;
-            Debug.WriteLine(string.Format("{0} - {1}.{2} - {3}", now.ToShortDateString(), now.ToLongTimeString(), now.Millisecond, text));
+            Debug.WriteLine(string.Format("{0:dd/MM/yyyy HH:mm:ss.fff} - {1}", FastDateTime.Now, text));
         }
 
-        public static void WriteLine(string text, string args)
+        public static void WriteLine(string format, params object[] args)
         {
-            WriteLine(string.Format(text, args));
+            WriteLine(string.Format(format, args));
         }
     }
 }

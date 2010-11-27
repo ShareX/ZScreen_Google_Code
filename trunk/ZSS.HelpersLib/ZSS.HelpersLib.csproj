@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugTimer.cs" />
+    <Compile Include="FastDateTime.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="NameParser.cs" />
     <Compile Include="HelpersNativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

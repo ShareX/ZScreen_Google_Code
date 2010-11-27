@@ -28,10 +28,9 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
-namespace HistoryLib
+namespace HelpersLib
 {
     public static class Helpers
     {
@@ -95,13 +94,6 @@ namespace HistoryLib
             Clipboard.SetText(text);
         }
 
-        public static Image LoadImageFromResources(string imageName)
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("HistoryLib.Images." + imageName);
-            return Image.FromStream(stream);
-        }
-
         /// <summary>
         /// Function to get a Rectangle of all the screens combined
         /// </summary>
@@ -118,6 +110,12 @@ namespace HistoryLib
                 if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
             }
             return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+        }
+
+        /// <summary>Format: yyyy-MM-dd_hh-mm-ss</summary>
+        public static string GetDateTimeString()
+        {
+            return FastDateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
         }
     }
 }
