@@ -30,6 +30,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
+using HelpersLib;
 using UploadersLib.Helpers;
 
 namespace UploadersLib.FileUploaders
@@ -485,7 +486,7 @@ namespace UploadersLib.FileUploaders
                 DateTime time;
                 while (!bw.CancellationPending)
                 {
-                    time = DateTime.Now;
+                    time = FastDateTime.Now;
                     try
                     {
                         progressInfo.ParseResponse(sendSpace.GetResponse(url));
@@ -498,7 +499,7 @@ namespace UploadersLib.FileUploaders
                         }
                     }
                     catch { }
-                    elapsed = (int)(DateTime.Now - time).TotalMilliseconds;
+                    elapsed = (int)(FastDateTime.Now - time).TotalMilliseconds;
                     if (elapsed < interval)
                     {
                         Thread.Sleep(interval - elapsed);

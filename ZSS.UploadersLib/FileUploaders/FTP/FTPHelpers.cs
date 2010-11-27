@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using HelpersLib;
 
 namespace UploadersLib
 {
@@ -226,7 +227,7 @@ namespace UploadersLib
             if (year.Contains(':'))
             {
                 time = year;
-                year = DateTime.Now.Year.ToString();
+                year = FastDateTime.Now.Year.ToString();
                 this.TimeInfo = true;
             }
 

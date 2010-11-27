@@ -1,8 +1,8 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2010 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -123,7 +123,7 @@ namespace HelpersLib
 
         public static string Convert(NameParserInfo nameParser)
         {
-            if (string.IsNullOrEmpty(nameParser.Pattern)) return "";
+            if (string.IsNullOrEmpty(nameParser.Pattern)) return string.Empty;
 
             StringBuilder sb = new StringBuilder(nameParser.Pattern);
 
@@ -155,7 +155,7 @@ namespace HelpersLib
             }
             else
             {
-                sb = sb.Replace(ToString(ReplacementVariables.t), "");
+                sb = sb.Replace(ToString(ReplacementVariables.t), string.Empty);
             }
 
             #endregion t
@@ -171,7 +171,7 @@ namespace HelpersLib
 
             #region y, mo, mon, mon2, d
 
-            DateTime dt = DateTime.Now;
+            DateTime dt = FastDateTime.Now;
 
             if (nameParser.CustomDate != DateTime.MinValue)
             {

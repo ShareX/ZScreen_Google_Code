@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
+using HelpersLib;
 using ZUploader;
 
 namespace UploadersLib
@@ -406,7 +407,7 @@ namespace UploadersLib
         {
             if (FTPOutput != null)
             {
-                FTPOutput(string.Format("{0} - {1}", DateTime.Now.ToLongTimeString(), text));
+                FTPOutput(string.Format("{0} - {1}", FastDateTime.Now.ToLongTimeString(), text));
             }
         }
     }

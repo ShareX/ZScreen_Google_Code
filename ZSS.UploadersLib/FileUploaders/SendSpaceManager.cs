@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using HelpersLib;
 
 namespace UploadersLib.FileUploaders
 {
@@ -62,11 +63,11 @@ namespace UploadersLib.FileUploaders
                         Token = sendSpace.AuthCreateToken();
                         if (string.IsNullOrEmpty(Token)) throw new Exception("Token is null or empty.");
                     }
-                    if (string.IsNullOrEmpty(SessionKey) || (DateTime.Now - LastSessionKey).Minutes > 30)
+                    if (string.IsNullOrEmpty(SessionKey) || (FastDateTime.Now - LastSessionKey).Minutes > 30)
                     {
                         SessionKey = sendSpace.AuthLogin(Token, username, password).SessionKey;
                         if (string.IsNullOrEmpty(Token)) throw new Exception("SessionKey is null or empty.");
-                        LastSessionKey = DateTime.Now;
+                        LastSessionKey = FastDateTime.Now;
                     }
                     UploadInfo = sendSpace.UploadGetInfo(SessionKey);
                     if (UploadInfo == null) throw new Exception("UploadInfo is null.");

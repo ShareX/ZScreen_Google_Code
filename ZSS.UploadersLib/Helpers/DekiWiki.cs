@@ -29,6 +29,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Xml;
+using HelpersLib;
 
 namespace UploadersLib.Helpers
 {
@@ -164,7 +165,7 @@ namespace UploadersLib.Helpers
                 this.Options.Account.History.RemoveAt(0);
             }
 
-            this.Options.Account.History.Add(new DekiWikiHistory(savePath, DateTime.Now));
+            this.Options.Account.History.Add(new DekiWikiHistory(savePath, FastDateTime.Now));
         }
 
         public Page getPageInfo(string path)
