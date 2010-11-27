@@ -29,7 +29,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using NLog;
 using SingleInstanceApplication;
 
 namespace ZUploader
@@ -89,7 +88,9 @@ namespace ZUploader
             }
         }
 
-        public static readonly Logger MyLogger = LogManager.GetLogger("ZUploader");
+        public static Thread SettingThread;
+
+        public static Logger MyLogger;
 
         private static MainForm mainForm;
 
@@ -100,31 +101,30 @@ namespace ZUploader
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
 
             StartTimer = Stopwatch.StartNew();
-            MyLogger.Info("ZUploader started");
+            MyLogger = new Logger();
+            MyLogger.WriteLine("ZUploader started");
 
             IsPortable = CheckPortable();
-            MyLogger.Debug("IsPortable = {0}", IsPortable);
+            MyLogger.WriteLine("IsPortable = {0}", IsPortable);
 
-            Thread settingThread = new Thread(() => Settings = Settings.Load());
-            settingThread.Start();
+            if (args != null && args.Length > 0) CommandLineArg = args[0];
+            MyLogger.WriteLine("CommandLineArg = \"{0}\"", CommandLineArg);
+
+            SettingThread = new Thread(() => Settings = Settings.Load());
+            SettingThread.Start();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (args != null && args.Length > 0) CommandLineArg = args[0];
-            MyLogger.Debug("CommandLineArg = {0}", CommandLineArg);
-
-            MyLogger.Debug("new MainForm() started");
+            MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
-            MyLogger.Debug("new MainForm() finished");
-
-            settingThread.Join();
+            MyLogger.WriteLine("new MainForm() finished");
 
             Application.Run(mainForm);
 
             Settings.Save();
 
-            MyLogger.Info("ZUploader closing");
+            MyLogger.WriteLine("ZUploader closing");
         }
 
         private static bool CheckPortable()

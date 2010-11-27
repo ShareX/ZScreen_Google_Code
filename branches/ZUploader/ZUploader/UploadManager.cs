@@ -40,14 +40,15 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestType2 ImageUploader { get; set; }
-
         public static TextDestType2 TextUploader { get; set; }
-
         public static FileUploaderType2 FileUploader { get; set; }
-
         public static MyListView ListViewControl { get; set; }
+        public static List<Task> Tasks { get; private set; }
 
-        public static List<Task> Tasks = new List<Task>();
+        static UploadManager()
+        {
+            Tasks = new List<Task>();
+        }
 
         public static void Upload(string path)
         {
@@ -118,7 +119,7 @@ namespace ZUploader
             }
         }
 
-        public static void ClipboardImageUpload()
+        private static void ClipboardImageUpload()
         {
             using (Image img = Clipboard.GetImage())
             {
@@ -174,7 +175,7 @@ namespace ZUploader
             return string.Format("{0}.{1}", UploadHelpers.GetDateTimeString(), ext);
         }
 
-        public static void ClipboardTextUpload()
+        private static void ClipboardTextUpload()
         {
             byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
             MemoryStream stream = new MemoryStream(byteArray);
@@ -184,7 +185,7 @@ namespace ZUploader
             StartUpload(task);
         }
 
-        public static void ClipboardFilesUpload()
+        private static void ClipboardFilesUpload()
         {
             string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
             Upload(files);

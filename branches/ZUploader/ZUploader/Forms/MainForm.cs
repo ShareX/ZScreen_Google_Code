@@ -253,16 +253,14 @@ namespace ZUploader
 
         #region Form events
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            Program.MyLogger.Debug("MainForm_Load");
-
-            LoadSettings();
-        }
-
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            Program.MyLogger.Debug("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds.ToString());
+            Program.MyLogger.WriteLine("MainForm_Shown");
+
+            Program.SettingThread.Join();
+            LoadSettings();
+
+            Program.MyLogger.WriteLine("MainForm.LoadSettings() finished. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
 
             UseCommandLineArg(Program.CommandLineArg);
             IsReady = true;

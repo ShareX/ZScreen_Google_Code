@@ -68,7 +68,7 @@ namespace ZUploader
                     }
                     catch (Exception e)
                     {
-                        Program.MyLogger.DebugException("Exception in SettingHelpers.Save", e);
+                        Program.MyLogger.WriteException(e);
                     }
                 }
             }
@@ -95,7 +95,7 @@ namespace ZUploader
                 }
                 catch (Exception e)
                 {
-                    Program.MyLogger.DebugException("Exception in SettingHelpers.Load", e);
+                    Program.MyLogger.WriteException(e);
                 }
             }
 
