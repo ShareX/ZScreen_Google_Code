@@ -24,7 +24,9 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -33,6 +35,7 @@ namespace ZUploader
     public partial class SettingsForm : Form
     {
         private bool loaded;
+        private ContextMenuStrip codesMenu;
 
         public SettingsForm()
         {
@@ -54,6 +57,7 @@ namespace ZUploader
             cbImageFormat2.SelectedIndex = (int)Program.Settings.ImageFormat2;
 
             txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
+            CreateCodesMenu();
 
             cbHistorySave.Checked = Program.Settings.SaveHistory;
             cbUseCustomHistoryPath.Checked = Program.Settings.UseCustomHistoryPath;
@@ -76,6 +80,39 @@ namespace ZUploader
         private void SettingsForm_Resize(object sender, EventArgs e)
         {
             this.Refresh();
+        }
+
+        private void CreateCodesMenu()
+        {
+            codesMenu = new ContextMenuStrip
+            {
+                Font = new Font("Lucida Console", 8),
+                Opacity = 0.8,
+                ShowImageMargin = false
+            };
+
+            var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
+                Select(x => new
+                {
+                    Name = ReplacementExtension.Prefix + Enum.GetName(typeof(ReplacementVariables), x),
+                    Description = x.GetDescription(),
+                    Enum = x
+                });
+
+            foreach (var variable in variables)
+            {
+                switch (variable.Enum)
+                {
+                    case ReplacementVariables.t:
+                    case ReplacementVariables.i:
+                    case ReplacementVariables.n:
+                        continue;
+                }
+
+                ToolStripMenuItem tsi = new ToolStripMenuItem { Text = string.Format("{0} - {1}", variable.Name, variable.Description), Tag = variable.Name };
+                tsi.Click += (sender, e) => txtNameFormatPattern.AppendText(((ToolStripMenuItem)sender).Tag.ToString());
+                codesMenu.Items.Add(tsi);
+            }
         }
 
         #region General
@@ -146,7 +183,7 @@ namespace ZUploader
 
         private void btnNameFormatPatternHelp_Click(object sender, EventArgs e)
         {
-            // TODO
+            codesMenu.Show(btnNameFormatPatternHelp, new Point(btnNameFormatPatternHelp.Width + 1, 0));
         }
 
         #endregion Clipboard upload

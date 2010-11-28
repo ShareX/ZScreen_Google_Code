@@ -49,6 +49,7 @@ namespace ZUploader
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
+        // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver
         public string NameFormatPattern = "%y-%mo-%d_%h-%mi-%s";
 
         public bool SaveHistory = true;
