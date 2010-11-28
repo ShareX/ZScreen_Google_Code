@@ -140,7 +140,7 @@ namespace HelpersLib
             return AddZeroes(hour);
         }
 
-        public static Random Random = new Random();
+        public static readonly Random Random = new Random();
 
         public static string GetRandomString(string chars, int length)
         {
@@ -221,6 +221,10 @@ namespace HelpersLib
                 if (IsCharValid(c) || (isFolderPath && (c == Path.DirectorySeparatorChar || c == '/' || c == '@')))
                 {
                     result.Append(c);
+                }
+                else if (c == ' ')
+                {
+                    result.Append('_');
                 }
             }
 
