@@ -46,15 +46,19 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            UploadResult result = new UploadResult();
+
             using (FTP ftpClient = new FTP(FTPAccount))
             {
                 ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
 
                 fileName = Helpers.ReplaceIllegalChars(fileName, '_');
+
                 while (fileName.IndexOf("__") != -1)
                 {
                     fileName = fileName.Replace("__", "_");
                 }
+
                 string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
 
                 try
@@ -70,12 +74,11 @@ namespace UploadersLib.FileUploaders
 
                 if (Errors.Count == 0)
                 {
-                    string url = FTPAccount.GetUriPath(fileName);
-                    return new UploadResult(null, url);
+                    result.URL = FTPAccount.GetUriPath(fileName);
                 }
             }
 
-            return null;
+            return result;
         }
     }
 }

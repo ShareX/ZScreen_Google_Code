@@ -428,6 +428,8 @@ namespace UploadersLib.FileUploaders
 
         public UploadResult Upload(Stream stream, string fileName, UploadInfo uploadInfo)
         {
+            UploadResult result = new UploadResult();
+
             if (uploadInfo != null)
             {
                 Dictionary<string, string> args = PrepareArguments(uploadInfo.MaxFileSize, uploadInfo.UploadIdentifier, uploadInfo.ExtraInfo);
@@ -436,25 +438,24 @@ namespace UploadersLib.FileUploaders
 
                 if (!string.IsNullOrEmpty(response))
                 {
-                    UploadResult ur = new UploadResult { Source = response };
+                    result.Source = response;
+
                     UploadResponsePacket urp = ParseUploadResponse(response);
 
                     if (urp == null) // User
                     {
                         string fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
-                        ur.URL = "http://www.sendspace.com/file/" + fileid;
+                        result.URL = "http://www.sendspace.com/file/" + fileid;
                     }
                     else
                     {
-                        ur.URL = urp.DownloadURL;
-                        ur.DeletionURL = urp.DeleteURL;
+                        result.URL = urp.DownloadURL;
+                        result.DeletionURL = urp.DeleteURL;
                     }
-
-                    return ur;
                 }
             }
 
-            return null;
+            return result;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
