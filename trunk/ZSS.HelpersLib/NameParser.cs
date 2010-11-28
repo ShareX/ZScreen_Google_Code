@@ -70,17 +70,17 @@ namespace HelpersLib
         width,
         [Description("Gets image height")]
         height,
-        [Description("ZScreen version")]
-        ver,
-        [Description("Product information")]
-        app,
         [Description("New line")]
-        n
+        n,
+        [Description("Application name")]
+        app,
+        [Description("Application version")]
+        ver
     }
 
     public static class ReplacementExtension
     {
-        public const string Prefix = "%";
+        public const char Prefix = '%';
 
         public static string ToPrefixString(this ReplacementVariables replacement)
         {
@@ -106,6 +106,7 @@ namespace HelpersLib
         public string Host { get; set; }
         public Image Picture { get; set; }
         public DateTime CustomDate { get; set; }
+        public string CustomProductName { get; set; }
         public int MaxNameLength { get; set; }
 
         public NameParser()
@@ -225,9 +226,10 @@ namespace HelpersLib
 
             #endregion h, mi, s, ms, w, w2, pm, i (If not SaveFolder)
 
-            #region app, ver, n, rn, ra
+            #region app, ver, n
 
-            sb.Replace(ReplacementVariables.app.ToPrefixString(), Application.ProductName);
+            string productName = string.IsNullOrEmpty(CustomProductName) ? Application.ProductName : CustomProductName;
+            sb.Replace(ReplacementVariables.app.ToPrefixString(), productName);
             sb.Replace(ReplacementVariables.ver.ToPrefixString(), Application.ProductVersion);
 
             if (Type == NameParserType.Watermark)
@@ -235,20 +237,23 @@ namespace HelpersLib
                 sb.Replace(ReplacementVariables.n.ToPrefixString(), "\n");
             }
 
-            sb.Replace(ReplacementVariables.rn.ToPrefixString(), Helpers.GetRandomChar(Helpers.Numbers).ToString());
-            sb.Replace(ReplacementVariables.ra.ToPrefixString(), Helpers.GetRandomChar(Helpers.Alphanumeric).ToString());
+            #endregion app, ver, n
 
-            #endregion app, ver, n, rn, ra
+            #region rn, ra
 
-            string result;
+            string result = sb.ToString();
+
+            string rn = ReplacementVariables.rn.ToPrefixString();
+            while (result.ReplaceFirst(rn, Helpers.GetRandomChar(Helpers.Numbers).ToString(), out result)) ;
+
+            string ra = ReplacementVariables.ra.ToPrefixString();
+            while (result.ReplaceFirst(ra, Helpers.GetRandomChar(Helpers.Alphanumeric).ToString(), out result)) ;
+
+            #endregion rn, ra
 
             if (Type != NameParserType.Watermark)
             {
-                result = Helpers.NormalizeString(sb.ToString(), Type != NameParserType.SaveFolder, IsFolderPath);
-            }
-            else
-            {
-                result = sb.ToString();
+                result = Helpers.NormalizeString(result, Type != NameParserType.SaveFolder, IsFolderPath);
             }
 
             if (MaxNameLength > 0 && (Type == NameParserType.ActiveWindow || Type == NameParserType.EntireScreen) &&

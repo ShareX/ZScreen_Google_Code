@@ -26,6 +26,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZUploader
 {
@@ -51,6 +52,8 @@ namespace ZUploader
             cbImageGIFQuality.SelectedIndex = (int)Program.Settings.ImageGIFQuality;
             nudUseImageFormat2After.Value = Program.Settings.ImageSizeLimit;
             cbImageFormat2.SelectedIndex = (int)Program.Settings.ImageFormat2;
+
+            txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
 
             cbHistorySave.Checked = Program.Settings.SaveHistory;
             cbUseCustomHistoryPath.Checked = Program.Settings.UseCustomHistoryPath;
@@ -132,6 +135,21 @@ namespace ZUploader
         }
 
         #endregion Image
+
+        #region Clipboard upload
+
+        private void txtNameFormatPattern_TextChanged(object sender, EventArgs e)
+        {
+            Program.Settings.NameFormatPattern = txtNameFormatPattern.Text;
+            lblNameFormatPatternPreview.Text = "Preview: " + new NameParser().Convert(Program.Settings.NameFormatPattern);
+        }
+
+        private void btnNameFormatPatternHelp_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        #endregion Clipboard upload
 
         #region History
 

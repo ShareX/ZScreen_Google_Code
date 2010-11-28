@@ -173,14 +173,14 @@ namespace ZUploader
             }
 
             NameParser parser = new NameParser { Picture = img };
-            return string.Format("{0}.{1}", parser.Convert(Program.Settings.ImageNamePattern), ext);
+            return string.Format("{0}.{1}", parser.Convert(Program.Settings.NameFormatPattern), ext);
         }
 
         private static void ClipboardTextUpload()
         {
             byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
             MemoryStream stream = new MemoryStream(byteArray);
-            string filename = new NameParser().Convert(Program.Settings.TextNamePattern) + ".txt";
+            string filename = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
             EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
             Task task = new Task(type, stream, filename);
             StartUpload(task);
