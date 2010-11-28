@@ -139,6 +139,14 @@ namespace ZScreenLib
         public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
         public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
 
+        // Filez
+
+        public bool FilezUserUserData = false;
+        public string FilezUsername = "";
+        public string FilezUserpass = "";
+        public bool FilezHideFiles = true;
+
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
