@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     [Serializable]
     public class ImageHostingService

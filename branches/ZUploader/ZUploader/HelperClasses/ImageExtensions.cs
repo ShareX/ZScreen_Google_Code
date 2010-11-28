@@ -26,8 +26,8 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using HelpersLib;
 using ImageQuantization;
-using UploadersLib.Helpers;
 
 namespace ZUploader
 {

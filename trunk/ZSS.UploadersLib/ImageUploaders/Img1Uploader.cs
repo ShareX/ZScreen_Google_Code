@@ -24,7 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.IO;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {

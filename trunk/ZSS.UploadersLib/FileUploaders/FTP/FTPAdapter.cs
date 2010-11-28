@@ -30,7 +30,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using HelpersLib;
-using ZUploader;
+using ZUploader.HelperClasses;
 
 namespace UploadersLib
 {

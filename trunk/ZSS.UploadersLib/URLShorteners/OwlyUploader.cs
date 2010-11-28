@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.URLShorteners
 {

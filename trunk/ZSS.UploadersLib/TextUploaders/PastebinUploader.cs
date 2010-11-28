@@ -29,7 +29,8 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using UploadersLib.Helpers;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.TextUploaders
 {

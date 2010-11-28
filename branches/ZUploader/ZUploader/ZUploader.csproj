@@ -98,14 +98,14 @@
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ImageExtensions.cs" />
+    <Compile Include="HelperClasses\ImageExtensions.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\SettingHelpers.cs" />
+    <Compile Include="HelperClasses\SettingHelpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
@@ -132,7 +132,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ShellContextMenu.cs" />
+    <Compile Include="HelperClasses\ShellContextMenu.cs" />
     <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
     <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
     <Compile Include="Task.cs" />

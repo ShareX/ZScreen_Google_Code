@@ -25,7 +25,7 @@
 
 using System;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {
@@ -48,6 +48,9 @@ namespace ZUploader
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
+        public string ImageNamePattern = "%y-%mo-%d_%h-%mi-%s";
+
+        public string TextNamePattern = "%y-%mo-%d_%h-%mi-%s";
 
         public bool SaveHistory = true;
         public bool UseCustomHistoryPath = false;

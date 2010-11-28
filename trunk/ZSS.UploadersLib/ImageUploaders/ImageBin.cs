@@ -26,7 +26,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {

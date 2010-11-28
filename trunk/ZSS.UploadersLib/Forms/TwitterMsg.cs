@@ -28,8 +28,10 @@ using System.Collections.Generic;
 using System.Web;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib
 {
     public partial class TwitterMsg : Form
     {

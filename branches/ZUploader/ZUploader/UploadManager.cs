@@ -126,7 +126,7 @@ namespace ZUploader
                 EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
                 EImageFormat imageFormat;
                 Stream stream = PrepareImage(img, out imageFormat);
-                string filename = PrepareFilename(imageFormat);
+                string filename = PrepareFilename(imageFormat, img);
                 Task task = new Task(type, stream, filename);
                 StartUpload(task);
             }
@@ -149,7 +149,7 @@ namespace ZUploader
             return stream;
         }
 
-        private static string PrepareFilename(EImageFormat imageFormat)
+        private static string PrepareFilename(EImageFormat imageFormat, Image img)
         {
             string ext = "png";
 
@@ -172,14 +172,15 @@ namespace ZUploader
                     break;
             }
 
-            return string.Format("{0}.{1}", Helpers.GetDateTimeString(), ext);
+            NameParser parser = new NameParser { Picture = img };
+            return string.Format("{0}.{1}", parser.Convert(Program.Settings.ImageNamePattern), ext);
         }
 
         private static void ClipboardTextUpload()
         {
             byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
             MemoryStream stream = new MemoryStream(byteArray);
-            string filename = Helpers.GetDateTimeString() + ".txt";
+            string filename = new NameParser().Convert(Program.Settings.TextNamePattern) + ".txt";
             EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
             Task task = new Task(type, stream, filename);
             StartUpload(task);

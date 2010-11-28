@@ -26,7 +26,8 @@
 using System;
 using System.IO;
 using HistoryLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
+using ZUploader.HelperClasses;
 
 namespace ZUploader
 {

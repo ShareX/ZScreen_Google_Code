@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 

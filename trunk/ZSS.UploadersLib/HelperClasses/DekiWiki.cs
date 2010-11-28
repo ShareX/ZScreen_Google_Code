@@ -31,7 +31,7 @@ using System.Web;
 using System.Xml;
 using HelpersLib;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class DekiWikiOptions
     {

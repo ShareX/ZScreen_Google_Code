@@ -28,7 +28,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using UploadersLib.Helpers;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -163,7 +164,7 @@ namespace UploadersLib.ImageUploaders
 
         public string GetPhotosLink(string userID)
         {
-            return UploadHelpers.CombineURL("http://www.flickr.com/photos", userID);
+            return Helpers.CombineURL("http://www.flickr.com/photos", userID);
         }
 
         public string GetPhotosLink()
@@ -177,7 +178,7 @@ namespace UploadersLib.ImageUploaders
 
         private string GetAPISig(Dictionary<string, string> args)
         {
-            return UploadHelpers.GetMD5(args.OrderBy(x => x.Key).Aggregate(API_Secret, (x, x2) => x + x2.Key + x2.Value));
+            return Helpers.GetMD5(args.OrderBy(x => x.Key).Aggregate(API_Secret, (x, x2) => x + x2.Key + x2.Value));
         }
 
         private XElement ParseResponse(string response, string field)
@@ -237,8 +238,8 @@ namespace UploadersLib.ImageUploaders
             if (null != xele)
             {
                 photoid = xele.Value;
-                string url = UploadHelpers.CombineURL(GetPhotosLink(), photoid);
-                url2 = UploadHelpers.CombineURL(url, "sizes/o");
+                string url = Helpers.CombineURL(GetPhotosLink(), photoid);
+                url2 = Helpers.CombineURL(url, "sizes/o");
             }
 
             return new ImageFileManager(url2, response);

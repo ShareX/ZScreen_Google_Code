@@ -28,9 +28,10 @@ using System.ComponentModel;
 using System.IO;
 using UploadersLib;
 using UploadersLib.FileUploaders;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
+using ZUploader.HelperClasses;
 
 namespace ZUploader
 {

@@ -28,7 +28,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using HistoryLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {

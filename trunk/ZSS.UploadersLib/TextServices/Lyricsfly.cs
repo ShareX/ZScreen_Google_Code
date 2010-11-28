@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using HelpersLib;
 
 namespace UploadersLib.TextServices
 {

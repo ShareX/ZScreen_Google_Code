@@ -25,7 +25,7 @@
 
 using System;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class ImageFile : IComparable<ImageFile>
     {

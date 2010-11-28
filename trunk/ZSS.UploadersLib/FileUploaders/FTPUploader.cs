@@ -25,7 +25,8 @@
 
 using System;
 using System.IO;
-using UploadersLib.Helpers;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
@@ -49,7 +50,7 @@ namespace UploadersLib.FileUploaders
             {
                 ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
 
-                fileName = UploadHelpers.ReplaceIllegalChars(fileName, '_');
+                fileName = Helpers.ReplaceIllegalChars(fileName, '_');
                 while (fileName.IndexOf("__") != -1)
                 {
                     fileName = fileName.Replace("__", "_");

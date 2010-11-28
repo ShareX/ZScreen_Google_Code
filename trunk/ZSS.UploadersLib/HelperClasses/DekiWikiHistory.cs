@@ -23,46 +23,27 @@
 
 #endregion License Information (GPL v2)
 
-using System.IO;
+using System;
+using HelpersLib;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
-    public class TextInfo
+    [Serializable]
+    public class DekiWikiHistory
     {
-        private TextInfo() { }
+        public string Path;
+        public DateTime Time;
 
-        public string LocalString { get; set; }
-        public string RemoteString { get; set; }
-        public string LocalPath { get; set; }
-
-        /// <summary>
-        /// URL of the Text: pastebin URL, paste2 URL
-        /// </summary>
-        public string RemotePath { get; set; }
-
-        public static TextInfo FromFile(string filePath)
+        public DekiWikiHistory()
         {
-            TextInfo text = new TextInfo();
-            if (File.Exists(filePath))
-            {
-                text.LocalString = File.ReadAllText(filePath);
-            }
-            text.LocalPath = filePath;
-            return text;
+            this.Path = string.Empty;
+            this.Time = FastDateTime.Now;
         }
 
-        public static TextInfo FromString(string localSting)
+        public DekiWikiHistory(string Path, DateTime Time)
         {
-            TextInfo text = new TextInfo();
-            text.LocalString = localSting;
-            return text;
-        }
-
-        public static TextInfo FromClipboard()
-        {
-            TextInfo text = new TextInfo();
-            text.LocalString = System.Windows.Forms.Clipboard.GetText();
-            return text;
+            this.Path = Path;
+            this.Time = Time;
         }
     }
 }

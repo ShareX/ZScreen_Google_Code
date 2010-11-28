@@ -25,7 +25,7 @@
 
 using System.Collections.Generic;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class UploadResult
     {
