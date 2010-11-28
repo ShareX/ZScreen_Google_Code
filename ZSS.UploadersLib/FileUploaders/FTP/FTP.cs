@@ -108,7 +108,7 @@ namespace UploadersLib
         public void UploadData(Stream stream, string remotePath)
         {
             Connect();
-            progress = new ProgressManager(stream.Length, 500);
+            progress = new ProgressManager(stream.Length);
             Client.PutFile(stream, remotePath, FileAction.Create);
         }
 

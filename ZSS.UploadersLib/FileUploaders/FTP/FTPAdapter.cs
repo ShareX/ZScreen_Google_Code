@@ -87,7 +87,7 @@ namespace UploadersLib
                 using (stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager(stream.Length, 500);
+                    ProgressManager progress = new ProgressManager(stream.Length);
 
                     byte[] buffer = new byte[BufferSize];
                     int bytesRead;
@@ -156,7 +156,7 @@ namespace UploadersLib
                 using (upload.Stream)
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager(upload.Stream.Length, 500);
+                    ProgressManager progress = new ProgressManager(upload.Stream.Length);
 
                     byte[] buffer = new byte[BufferSize];
                     int bytesRead;
@@ -212,7 +212,7 @@ namespace UploadersLib
                 using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())
                 {
-                    ProgressManager progress = new ProgressManager(stream.Length, 500);
+                    ProgressManager progress = new ProgressManager(stream.Length);
 
                     byte[] buffer = new byte[BufferSize];
                     int bytesRead;
