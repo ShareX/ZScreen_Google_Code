@@ -40,21 +40,17 @@ namespace UploadersLib.FileUploaders
         {
             string response = UploadData(stream, fileName, "http://file1.share.cx/cgi-bin/upload.cgi", "file_0", null);
 
+            UploadResult result = new UploadResult(response);
+
             MatchCollection matches = Regex.Matches(response, "(?<=value=\")http:.+?(?=\".*></td>)");
 
             if (matches.Count == 2)
             {
-                UploadResult ur = new UploadResult
-                {
-                    URL = matches[0].Value,
-                    DeletionURL = matches[1].Value,
-                    Source = response
-                };
-
-                return ur;
+                result.URL = matches[0].Value;
+                result.DeletionURL = matches[1].Value;
             }
 
-            return null;
+            return result;
         }
     }
 }

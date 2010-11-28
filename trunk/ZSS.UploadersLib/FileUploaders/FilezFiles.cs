@@ -64,7 +64,7 @@ namespace UploadersLib.FileUploaders
 
             UploadResult result = new UploadResult(response);
 
-            if (response != null && !response.StartsWith("{\"error\""))
+            if (!string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\""))
             {
                 Dictionary<string, Dictionary<string, string>> data = new JavaScriptSerializer().Deserialize<Dictionary<string, Dictionary<string, string>>>(response);
                 if (data["info"] != null)

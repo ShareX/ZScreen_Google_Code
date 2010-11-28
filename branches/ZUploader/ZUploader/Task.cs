@@ -139,7 +139,7 @@ namespace ZUploader
                 Info.Result.Errors.Add(ex.ToString());
             }
 
-            if (!IsStopped && Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
+            if (!IsStopped && Info.Result != null && Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
             {
                 Info.Result.Errors.Add("URL is empty.");
             }
@@ -234,7 +234,12 @@ namespace ZUploader
             {
                 PrepareUploader(fileUploader);
                 UploadResult ur = fileUploader.Upload(stream, fileName);
-                ur.Errors = fileUploader.Errors;
+
+                if (ur != null)
+                {
+                    ur.Errors = fileUploader.Errors;
+                }
+
                 return ur;
             }
 
@@ -268,11 +273,13 @@ namespace ZUploader
                 PrepareUploader(textUploader);
                 string text = new StreamReader(stream).ReadToEnd();
                 string url = textUploader.UploadText(TextInfo.FromString(text));
+
                 UploadResult ur = new UploadResult
                 {
                     URL = url,
                     Errors = textUploader.Errors
                 };
+
                 return ur;
             }
 

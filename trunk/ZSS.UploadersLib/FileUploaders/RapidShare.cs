@@ -86,20 +86,18 @@ namespace UploadersLib.FileUploaders
 
             string response = UploadData(stream, fileName, url, "filecontent", args);
 
+            UploadResult result = new UploadResult(response);
+
             if (!string.IsNullOrEmpty(response))
             {
                 UploadInfo info = new UploadInfo(response);
-                UploadResult ur = new UploadResult
-                {
-                    URL = info.URL,
-                    DeletionURL = info.KillCodeURL,
-                    Source = response
-                };
 
-                return ur;
+                result.URL = info.URL;
+                result.DeletionURL = info.KillCodeURL;
+                result.Source = response;
             }
 
-            return null;
+            return result;
         }
 
         private string NextUploadServer()

@@ -58,6 +58,8 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
+            UploadResult result = new UploadResult();
+
             try
             {
                 DropName = "ZScreen_" + Helpers.GetRandomAlphanumeric(10);
@@ -72,12 +74,12 @@ namespace UploadersLib.FileUploaders
                 args.Add("drop_name", drop.Name);
 
                 string response = UploadData(stream, fileName, "http://assets.drop.io/upload", "file", args);
+                result.Source = response;
 
                 if (!string.IsNullOrEmpty(response))
                 {
                     Asset asset = ParseAsset(response);
-                    string url = string.Format("http://drop.io/{0}/asset/{1}", drop.Name, asset.Name);
-                    return new UploadResult(response, url);
+                    result.URL = string.Format("http://drop.io/{0}/asset/{1}", drop.Name, asset.Name);
                 }
             }
             catch (Exception e)
@@ -85,7 +87,7 @@ namespace UploadersLib.FileUploaders
                 Errors.Add(e.Message);
             }
 
-            return null;
+            return result;
         }
 
         public Asset ParseAsset(string response)

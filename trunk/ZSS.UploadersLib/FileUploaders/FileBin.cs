@@ -43,13 +43,14 @@ namespace UploadersLib.FileUploaders
 
             string response = UploadData(stream, fileName, "http://filebin.ca/upload.php", "file", args);
 
+            UploadResult result = new UploadResult(response);
+
             if (!string.IsNullOrEmpty(response))
             {
-                string url = response.Substring(response.LastIndexOf(' ') + 1).Trim();
-                return new UploadResult(response, url);
+                result.URL = response.Substring(response.LastIndexOf(' ') + 1).Trim();
             }
 
-            return null;
+            return result;
         }
     }
 }
