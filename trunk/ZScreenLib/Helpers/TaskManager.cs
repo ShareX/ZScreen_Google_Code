@@ -36,11 +36,11 @@ using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
 using UploadersLib.FileUploaders;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
-using ZUploader;
+using ZUploader.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -204,23 +204,23 @@ namespace ZScreenLib
             if (mTask.MyImage != null)
             {
                 NameParserType type;
-                string text = string.Empty;
+                string pattern = string.Empty;
                 if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
                 {
                     type = NameParserType.ActiveWindow;
-                    text = Engine.conf.ActiveWindowPattern;
+                    pattern = Engine.conf.ActiveWindowPattern;
                 }
                 else
                 {
                     type = NameParserType.EntireScreen;
-                    text = Engine.conf.EntireScreenPattern;
+                    pattern = Engine.conf.EntireScreenPattern;
                 }
 
-                using (NameParserInfo npi = new NameParserInfo(type, text) { AutoIncrement = Engine.conf.AutoIncrement })
+                using (NameParser parser = new NameParser(type) { AutoIncrement = Engine.conf.AutoIncrement })
                 {
-                    if (mTask.SetFilePathFromPattern(NameParser.Convert(npi)))
+                    if (mTask.SetFilePathFromPattern(parser.Convert(pattern)))
                     {
-                        Engine.conf.AutoIncrement = npi.AutoIncrement;
+                        Engine.conf.AutoIncrement = parser.AutoIncrement;
                         FileSystem.SaveImage(ref mTask);
                         if (!File.Exists(mTask.LocalFilePath))
                         {
@@ -394,9 +394,9 @@ namespace ZScreenLib
                 case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
                     break;
-                //case ImageDestType.IMGUR:
-                //    imageUploader = new Imgur(Engine.IMGUR_KEY);
-                //    break;
+                case ImageDestType.IMGUR:
+                    imageUploader = new Imgur(Engine.IMGUR_KEY);
+                    break;
                 case ImageDestType.FilezImages:
                     imageUploader = new FilezImages();
                     break;

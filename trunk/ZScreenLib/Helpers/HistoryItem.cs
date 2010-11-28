@@ -28,7 +28,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {

@@ -41,7 +41,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
 using UploadersLib.FileUploaders;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;

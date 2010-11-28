@@ -72,6 +72,10 @@
       <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
       <Name>ZSS.ZScreenLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+      <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
+      <Name>ZSS.HelpersLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>

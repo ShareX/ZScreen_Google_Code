@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {

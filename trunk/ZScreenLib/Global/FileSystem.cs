@@ -487,7 +487,7 @@ namespace ZScreenLib
                         if (File.Exists(image))
                         {
                             time = File.GetCreationTime(image);
-                            newFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder, Engine.conf.SaveFolderPattern) { CustomDate = time });
+                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.conf.SaveFolderPattern);
                             newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))

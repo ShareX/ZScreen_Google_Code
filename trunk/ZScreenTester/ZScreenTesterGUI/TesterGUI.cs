@@ -6,8 +6,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using ZScreenLib;
 
 namespace ZScreenTesterGUI

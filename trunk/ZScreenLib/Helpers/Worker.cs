@@ -7,10 +7,10 @@ using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
-using ZUploader;
+using ZUploader.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -297,7 +297,7 @@ namespace ZScreenLib
             if (Clipboard.ContainsImage())
             {
                 task.SetImage(Clipboard.GetImage());
-                if (task.SetFilePathFromPattern(NameParser.Convert(new NameParserInfo(NameParserType.EntireScreen, Engine.conf.EntireScreenPattern))))
+                if (task.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
                 {
                     FileSystem.SaveImage(ref task);
                     StartWorkerPictures(task, task.LocalFilePath);
@@ -306,8 +306,7 @@ namespace ZScreenLib
             else if (Clipboard.ContainsText())
             {
                 WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir,
-                    NameParser.Convert(new NameParserInfo(NameParserType.Text, "%y.%mo.%d-%h.%mi.%s")) + ".txt"));
+                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                 File.WriteAllText(fp, Clipboard.GetText());
                 temp.UpdateLocalFilePath(fp);
                 temp.MyText = TextInfo.FromFile(fp);
