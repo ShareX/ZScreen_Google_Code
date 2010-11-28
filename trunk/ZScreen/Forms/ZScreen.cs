@@ -5006,5 +5006,32 @@ namespace ZScreenGUI
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }
         }
+
+        private void tbFilezUsernameBox_TextChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FilezUsername = tbFilezUsernameBox.Text;
+        }
+
+        private void tbFilezUserpassBox_TextChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FilezUserpass = tbFilezUserpassBox.Text;
+        }
+
+        private void tbFilezHideFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tbFilezHideFiles.Checked == true)
+            {
+                Engine.conf.FilezHideFiles = true;
+            }
+            else
+            {
+                Engine.conf.FilezHideFiles = false;
+            }
+        }
+
+        private void tbFilezRegisterButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.filez.muffinz.eu/register");
+        }
     }
 }
