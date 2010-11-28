@@ -107,7 +107,8 @@ namespace ZScreenLib
                 case WatermarkType.NONE:
                     return img;
                 case WatermarkType.TEXT:
-                    return DrawWatermark(img, NameParser.Convert(new NameParserInfo(NameParserType.Watermark, Engine.conf.WatermarkText) { IsPreview = true, Picture = img }));
+                    NameParser parser = new NameParser(NameParserType.Watermark) { IsPreview = true, Picture = img };
+                    return DrawWatermark(img, parser.Convert(Engine.conf.WatermarkText));
                 case WatermarkType.IMAGE:
                     return DrawImageWatermark(img, Engine.conf.WatermarkImageLocation);
             }

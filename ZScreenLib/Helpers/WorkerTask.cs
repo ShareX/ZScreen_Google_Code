@@ -31,9 +31,8 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using GraphicsMgrLib;
-using HelpersLib;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
 using ZScreenLib.Properties;
 
@@ -275,11 +274,9 @@ namespace ZScreenLib
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
-                    StringBuilder sb = new StringBuilder(dialog.InputText);
-                    sb = NameParser.Normalize(new NameParser.NormalizeOptions(sb) { ConvertSpace = true });
                     if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(dialog.InputText))
                     {
-                        this.FileName = sb.ToString();
+                        this.FileName = HelpersLib.Helpers.NormalizeString(dialog.InputText);
                     }
                 }
                 else

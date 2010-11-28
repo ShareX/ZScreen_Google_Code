@@ -30,15 +30,16 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
-using ZUploader;
+using ZUploader.HelperClasses;
 
 namespace ZScreenGUI
 {

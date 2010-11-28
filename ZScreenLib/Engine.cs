@@ -36,7 +36,7 @@ using HelpersLib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -310,7 +310,7 @@ namespace ZScreenLib
             string saveFolderPath = string.Empty;
             if (Engine.conf != null)
             {
-                saveFolderPath = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder, Engine.conf.SaveFolderPattern));
+                saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
                 if (!Portable && Engine.conf.PreferSystemFolders)
                 {
                     imagesDir = zPicturesDir;

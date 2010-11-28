@@ -28,7 +28,7 @@ using System.Linq;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
 
 // Last working class that supports multiple screenshots histories:

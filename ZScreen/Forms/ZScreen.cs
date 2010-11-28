@@ -43,7 +43,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
@@ -1916,25 +1916,25 @@ namespace ZScreenGUI
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ActiveWindowPattern = txtActiveWindow.Text;
-            lblActiveWindowPreview.Text = NameParser.Convert(
-                new NameParserInfo(NameParserType.ActiveWindow, Engine.conf.ActiveWindowPattern)
-                {
-                    ProductName = Engine.GetProductName(),
-                    IsPreview = true,
-                    MaxNameLength = Engine.conf.MaxNameLength
-                });
+            NameParser parser = new NameParser(NameParserType.ActiveWindow)
+            {
+                CustomProductName = Engine.GetProductName(),
+                IsPreview = true,
+                MaxNameLength = Engine.conf.MaxNameLength
+            };
+            lblActiveWindowPreview.Text = parser.Convert(Engine.conf.ActiveWindowPattern);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.EntireScreenPattern = txtEntireScreen.Text;
-            lblEntireScreenPreview.Text = NameParser.Convert(
-                new NameParserInfo(NameParserType.EntireScreen, Engine.conf.EntireScreenPattern)
-                {
-                    ProductName = Engine.GetProductName(),
-                    IsPreview = true,
-                    MaxNameLength = Engine.conf.MaxNameLength
-                });
+            NameParser parser = new NameParser(NameParserType.EntireScreen)
+            {
+                CustomProductName = Engine.GetProductName(),
+                IsPreview = true,
+                MaxNameLength = Engine.conf.MaxNameLength
+            };
+            lblEntireScreenPreview.Text = parser.Convert(Engine.conf.EntireScreenPattern);
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -2622,7 +2622,7 @@ namespace ZScreenGUI
         private void CreateCodesMenu()
         {
             var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
-                Select(x => new { Name = NameParser.Prefix + Enum.GetName(typeof(ReplacementVariables), x), Description = x.GetDescription() });
+                Select(x => new { Name = ReplacementExtension.Prefix + Enum.GetName(typeof(ReplacementVariables), x), Description = x.GetDescription() });
 
             foreach (var variable in variables)
             {
@@ -2639,7 +2639,7 @@ namespace ZScreenGUI
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             int oldPos = txtWatermarkText.SelectionStart;
             string appendText;
-            if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == NameParser.Prefix[0])
+            if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == ReplacementExtension.Prefix)
             {
                 appendText = tsi.Tag.ToString().TrimStart('%');
                 txtWatermarkText.Text =
@@ -4236,7 +4236,7 @@ namespace ZScreenGUI
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = NameParser.Convert(new NameParserInfo(NameParserType.SaveFolder, Engine.conf.SaveFolderPattern));
+            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
             txtImagesDir.Text = Engine.ImagesDir;
         }
 
