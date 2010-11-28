@@ -139,7 +139,7 @@ namespace ZUploader
                 Info.Result.Errors.Add(ex.ToString());
             }
 
-            if (Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
+            if (!IsStopped && Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
             {
                 Info.Result.Errors.Add("URL is empty.");
             }
