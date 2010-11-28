@@ -25,7 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using UploadersLib.Helpers;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.TextUploaders
 {

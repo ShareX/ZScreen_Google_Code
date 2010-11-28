@@ -1,4 +1,4 @@
-﻿#region License Information (GPL v2)
+#region License Information (GPL v2)
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
@@ -24,38 +24,42 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Web;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
-    [Serializable]
-    public class ProxyInfo
+    [Serializable()]
+    public class DekiWikiAccount
     {
-        public string UserName { get; set; }
-        [PasswordPropertyText(true)]
+        [Category("MindTouch")]
+        public string Name { get; set; }
+        [Category("MindTouch")]
+        public string Url { get; set; }
+        [Category("MindTouch")]
+        public string Username { get; set; }
+        [Category("MindTouch"), PasswordPropertyText(true)]
         public string Password { get; set; }
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public Proxy ProxyType { get; set; }
 
-        public ProxyInfo() { }
+        public List<DekiWikiHistory> History = new List<DekiWikiHistory>();
 
-        public ProxyInfo(string username, string password, string host, int port)
+        public DekiWikiAccount() { }
+
+        public DekiWikiAccount(string name)
         {
-            this.UserName = username;
-            this.Password = password;
-            this.Host = host;
-            this.Port = port;
+            this.Name = name;
+        }
+
+        public string getUriPath(string fileName)
+        {
+            // Create the Uri
+            return Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(DekiWiki.savePath)) + "/files/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(fileName));
         }
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}:{2} ({3})", this.UserName, this.Host, this.Port, this.ProxyType.ToString());
-        }
-
-        public string GetAddress()
-        {
-            return string.Format("{0}:{1}", this.Host, this.Port);
+            return this.Name;
         }
     }
 }

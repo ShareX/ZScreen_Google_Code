@@ -31,7 +31,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
 using HelpersLib;
-using UploadersLib.Helpers;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
@@ -254,7 +254,7 @@ namespace UploadersLib.FileUploaders
             args.Add("token", token);
             args.Add("user_name", username);
             // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
-            args.Add("tokened_password", UploadHelpers.GetMD5(token + UploadHelpers.GetMD5(password)));
+            args.Add("tokened_password", Helpers.GetMD5(token + Helpers.GetMD5(password)));
 
             string response = GetResponse(SENDSPACE_API_URL, args);
 

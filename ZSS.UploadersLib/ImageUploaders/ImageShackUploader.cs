@@ -25,7 +25,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using UploadersLib.Helpers;
+using HelpersLib;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
@@ -63,8 +64,8 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(ifm.Source))
             {
-                string fullimage = UploadHelpers.GetXMLValue(ifm.Source, "image_link");
-                string thumbnail = UploadHelpers.GetXMLValue(ifm.Source, "thumb_link");
+                string fullimage = Helpers.GetXMLValue(ifm.Source, "image_link");
+                string thumbnail = Helpers.GetXMLValue(ifm.Source, "thumb_link");
 
                 ifm.Add(fullimage, LinkType.FULLIMAGE);
                 ifm.Add(thumbnail, LinkType.THUMBNAIL);

@@ -2,7 +2,7 @@
 using System.Net;
 using Starksoft.Net.Proxy;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public enum ProxyConfigType
     {

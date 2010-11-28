@@ -33,7 +33,7 @@ using System.Net.Sockets;
 using System.Text;
 using HelpersLib;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class TCPClient
     {

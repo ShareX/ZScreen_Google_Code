@@ -23,7 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     interface ITextUploader
     {

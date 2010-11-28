@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class ImageFileManager
     {

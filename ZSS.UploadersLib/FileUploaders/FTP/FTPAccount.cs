@@ -113,12 +113,14 @@ namespace UploadersLib
 
         public string GetSubFolderPath()
         {
-            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.SubFolderPath) { Host = this.Host, IsFolderPath = true });
+            NameParser parser = new NameParser { Host = this.Host, IsFolderPath = true };
+            return parser.Convert(this.SubFolderPath);
         }
 
         public string GetHttpHomePath()
         {
-            return NameParser.Convert(new NameParserInfo(NameParserType.Text, this.HttpHomePath) { Host = this.Host, IsFolderPath = true });
+            NameParser parser = new NameParser { Host = this.Host, IsFolderPath = true };
+            return parser.Convert(this.HttpHomePath);
         }
 
         public string GetUriPath(string fileName)

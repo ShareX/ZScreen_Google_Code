@@ -30,7 +30,7 @@ using System.IO;
 using System.Text;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
-using ZUploader;
+using ZUploader.HelperClasses;
 
 namespace UploadersLib
 {

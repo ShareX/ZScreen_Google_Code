@@ -1,4 +1,4 @@
-#region License Information (GPL v2)
+﻿#region License Information (GPL v2)
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
@@ -24,26 +24,38 @@
 #endregion License Information (GPL v2)
 
 using System;
-using HelpersLib;
+using System.ComponentModel;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     [Serializable]
-    public class DekiWikiHistory
+    public class ProxyInfo
     {
-        public string Path;
-        public DateTime Time;
+        public string UserName { get; set; }
+        [PasswordPropertyText(true)]
+        public string Password { get; set; }
+        public string Host { get; set; }
+        public int Port { get; set; }
+        public Proxy ProxyType { get; set; }
 
-        public DekiWikiHistory()
+        public ProxyInfo() { }
+
+        public ProxyInfo(string username, string password, string host, int port)
         {
-            this.Path = string.Empty;
-            this.Time = FastDateTime.Now;
+            this.UserName = username;
+            this.Password = password;
+            this.Host = host;
+            this.Port = port;
         }
 
-        public DekiWikiHistory(string Path, DateTime Time)
+        public override string ToString()
         {
-            this.Path = Path;
-            this.Time = Time;
+            return string.Format("{0} - {1}:{2} ({3})", this.UserName, this.Host, this.Port, this.ProxyType.ToString());
+        }
+
+        public string GetAddress()
+        {
+            return string.Format("{0}:{1}", this.Host, this.Port);
         }
     }
 }

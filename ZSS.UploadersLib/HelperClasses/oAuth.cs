@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class OAuthBase
     {

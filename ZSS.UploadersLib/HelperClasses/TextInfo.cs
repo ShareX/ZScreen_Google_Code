@@ -23,43 +23,46 @@
 
 #endregion License Information (GPL v2)
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Web;
+using System.IO;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
-    [Serializable()]
-    public class DekiWikiAccount
+    public class TextInfo
     {
-        [Category("MindTouch")]
-        public string Name { get; set; }
-        [Category("MindTouch")]
-        public string Url { get; set; }
-        [Category("MindTouch")]
-        public string Username { get; set; }
-        [Category("MindTouch"), PasswordPropertyText(true)]
-        public string Password { get; set; }
+        private TextInfo() { }
 
-        public List<DekiWikiHistory> History = new List<DekiWikiHistory>();
+        public string LocalString { get; set; }
+        public string RemoteString { get; set; }
+        public string LocalPath { get; set; }
 
-        public DekiWikiAccount() { }
+        /// <summary>
+        /// URL of the Text: pastebin URL, paste2 URL
+        /// </summary>
+        public string RemotePath { get; set; }
 
-        public DekiWikiAccount(string name)
+        public static TextInfo FromFile(string filePath)
         {
-            this.Name = name;
+            TextInfo text = new TextInfo();
+            if (File.Exists(filePath))
+            {
+                text.LocalString = File.ReadAllText(filePath);
+            }
+            text.LocalPath = filePath;
+            return text;
         }
 
-        public string getUriPath(string fileName)
+        public static TextInfo FromString(string localSting)
         {
-            // Create the Uri
-            return Url + "/@api/deki/pages/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(DekiWiki.savePath)) + "/files/=" + HttpUtility.UrlEncode(HttpUtility.UrlEncode(fileName));
+            TextInfo text = new TextInfo();
+            text.LocalString = localSting;
+            return text;
         }
 
-        public override string ToString()
+        public static TextInfo FromClipboard()
         {
-            return this.Name;
+            TextInfo text = new TextInfo();
+            text.LocalString = System.Windows.Forms.Clipboard.GetText();
+            return text;
         }
     }
 }

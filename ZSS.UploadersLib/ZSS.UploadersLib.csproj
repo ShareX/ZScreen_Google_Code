@@ -100,7 +100,7 @@
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="FileUploaders\SendSpaceManager.cs" />
     <Compile Include="FileUploaders\ShareCX.cs" />
-    <Compile Include="Helpers\UploadResult.cs" />
+    <Compile Include="HelperClasses\UploadResult.cs" />
     <Compile Include="Forms\TwitterMsg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,24 +108,22 @@
       <DependentUpon>TwitterMsg.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Enums.cs" />
-    <Compile Include="Global\Extensions.cs" />
-    <Compile Include="Helpers\DekiWiki.cs" />
-    <Compile Include="Helpers\DekiWikiAccount.cs" />
-    <Compile Include="Helpers\DekiWikiHistory.cs" />
-    <Compile Include="Helpers\ImageFile.cs" />
-    <Compile Include="Helpers\ImageFileManager.cs" />
-    <Compile Include="Helpers\ImageHostingService.cs" />
-    <Compile Include="Helpers\ImageHostingServiceManager.cs" />
-    <Compile Include="Helpers\ITextUploader.cs" />
-    <Compile Include="Helpers\IUploader.cs" />
-    <Compile Include="Helpers\oAuth.cs" />
-    <Compile Include="Helpers\oAuthTwitter.cs" />
-    <Compile Include="Helpers\ProgressManager.cs" />
-    <Compile Include="Helpers\ProxyInfo.cs" />
-    <Compile Include="Helpers\ProxySettings.cs" />
-    <Compile Include="Helpers\TCPClient.cs" />
-    <Compile Include="Helpers\TextInfo.cs" />
-    <Compile Include="Helpers\UploadHelpers.cs" />
+    <Compile Include="HelperClasses\DekiWiki.cs" />
+    <Compile Include="HelperClasses\DekiWikiAccount.cs" />
+    <Compile Include="HelperClasses\DekiWikiHistory.cs" />
+    <Compile Include="HelperClasses\ImageFile.cs" />
+    <Compile Include="HelperClasses\ImageFileManager.cs" />
+    <Compile Include="HelperClasses\ImageHostingService.cs" />
+    <Compile Include="HelperClasses\ImageHostingServiceManager.cs" />
+    <Compile Include="HelperClasses\ITextUploader.cs" />
+    <Compile Include="HelperClasses\IUploader.cs" />
+    <Compile Include="HelperClasses\oAuth.cs" />
+    <Compile Include="HelperClasses\oAuthTwitter.cs" />
+    <Compile Include="HelperClasses\ProgressManager.cs" />
+    <Compile Include="HelperClasses\ProxyInfo.cs" />
+    <Compile Include="HelperClasses\ProxySettings.cs" />
+    <Compile Include="HelperClasses\TCPClient.cs" />
+    <Compile Include="HelperClasses\TextInfo.cs" />
     <Compile Include="ImageUploader.cs" />
     <Compile Include="ImageUploaders\CustomUploader.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />

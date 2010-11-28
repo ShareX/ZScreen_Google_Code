@@ -1,4 +1,4 @@
-﻿namespace UploadersLib.Helpers
+﻿namespace UploadersLib
 {
     partial class TwitterMsg
     {

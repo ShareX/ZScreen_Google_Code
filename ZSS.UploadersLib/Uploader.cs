@@ -33,8 +33,8 @@ using System.Net.Cache;
 using System.Text;
 using System.Web;
 using HelpersLib;
-using UploadersLib.Helpers;
-using ZUploader;
+using UploadersLib.HelperClasses;
+using ZUploader.HelperClasses;
 
 namespace UploadersLib
 {
@@ -297,7 +297,7 @@ namespace UploadersLib
 
         private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, bool isFinal)
         {
-            return MakeFileInputContent(boundary, name, fileName, content, UploadHelpers.GetMimeType(fileName), isFinal);
+            return MakeFileInputContent(boundary, name, fileName, content, Helpers.GetMimeType(fileName), isFinal);
         }
 
         private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, string contentType, bool isFinal)

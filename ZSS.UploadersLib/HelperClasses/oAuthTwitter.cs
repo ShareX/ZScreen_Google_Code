@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 
-namespace UploadersLib.Helpers
+namespace UploadersLib.HelperClasses
 {
     public class TwitterAuthInfo
     {

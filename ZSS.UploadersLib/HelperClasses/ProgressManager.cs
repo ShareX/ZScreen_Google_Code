@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace ZUploader
+namespace ZUploader.HelperClasses
 {
     public class ProgressManager
     {

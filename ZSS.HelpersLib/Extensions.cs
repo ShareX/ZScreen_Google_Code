@@ -25,10 +25,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace UploadersLib
+namespace HelpersLib
 {
     public static class Extensions
     {
@@ -119,6 +122,50 @@ namespace UploadersLib
             }
 
             return string.Empty;
+        }
+
+        public static void CopyStream(this Stream input, Stream output)
+        {
+            byte[] buffer = new byte[32768];
+            int read;
+
+            input.Position = 0;
+
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, read);
+            }
+        }
+
+        public static byte[] GetBytes(this Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, img.RawFormat);
+                return Helpers.GetBytes(ms);
+            }
+        }
+
+        public static ImageCodecInfo GetCodecInfo(this ImageFormat format)
+        {
+            foreach (ImageCodecInfo info in ImageCodecInfo.GetImageEncoders())
+            {
+                if (info.FormatID.Equals(format.Guid))
+                {
+                    return info;
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetMimeType(this ImageFormat format)
+        {
+            ImageCodecInfo codec = format.GetCodecInfo();
+
+            if (codec != null) return codec.MimeType;
+
+            return "image/unknown";
         }
     }
 }
