@@ -194,21 +194,77 @@ namespace UploadersLib
 
         protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
-            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
+            IsUploading = true;
+            stopUpload = false;
 
-            using (MemoryStream stream = new MemoryStream())
+            try
             {
-                byte[] bytes = MakeInputContent(boundary, arguments, false);
-                stream.Write(bytes, 0, bytes.Length);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
+                request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+                request.KeepAlive = false;
+                request.Method = "POST";
+                request.ProtocolVersion = HttpVersion.Version11;
+                request.Proxy = ProxySettings.GetWebProxy;
+                request.ServicePoint.Expect100Continue = false;
+                request.ServicePoint.UseNagleAlgorithm = false;
+                request.Timeout = -1;
+                request.UserAgent = UserAgent;
 
-                bytes = MakeFileInputContent(boundary, fileFormName, fileName, data, true);
-                stream.Write(bytes, 0, bytes.Length);
+                string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
+                request.ContentType = "multipart/form-data; boundary=" + boundary;
 
-                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary))
+                byte[] bytesArguments = MakeInputContent(boundary, arguments, false);
+
+                string fileInputContent = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
+                    boundary, fileFormName, fileName, Helpers.GetMimeType(fileName));
+
+                byte[] bytesFileInputContent = Encoding.UTF8.GetBytes(fileInputContent);
+                byte[] bytesLast = Encoding.UTF8.GetBytes(string.Format("\r\n--{0}--\r\n", boundary));
+
+                request.ContentLength = bytesArguments.Length + bytesFileInputContent.Length + data.Length + bytesLast.Length;
+
+                using (Stream requestStream = request.GetRequestStream())
                 {
-                    return ResponseToString(response);
+                    requestStream.Write(bytesArguments, 0, bytesArguments.Length);
+                    requestStream.Write(bytesFileInputContent, 0, bytesFileInputContent.Length);
+
+                    ProgressManager progress = new ProgressManager(data.Length);
+                    data.Position = 0;
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+
+                    while ((bytesRead = data.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        if (stopUpload) return null;
+
+                        requestStream.Write(buffer, 0, bytesRead);
+
+                        if (progress.ChangeProgress(bytesRead))
+                        {
+                            OnProgressChanged(progress);
+                        }
+                    }
+
+                    requestStream.Write(bytesLast, 0, bytesLast.Length);
+                }
+
+                return ResponseToString(request.GetResponse());
+            }
+            catch (Exception e)
+            {
+                if (!stopUpload)
+                {
+                    this.Errors.Add(e.ToString());
+                    Debug.WriteLine(e.ToString());
                 }
             }
+            finally
+            {
+                IsUploading = false;
+            }
+
+            return null;
         }
 
         #endregion Post methods
@@ -290,38 +346,6 @@ namespace UploadersLib
                 {
                     bytes = MakeFinalBoundary(boundary);
                     stream.Write(bytes, 0, bytes.Length);
-                }
-
-                return stream.ToArray();
-            }
-        }
-
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, bool isFinal)
-        {
-            return MakeFileInputContent(boundary, name, fileName, content, Helpers.GetMimeType(fileName), isFinal);
-        }
-
-        private byte[] MakeFileInputContent(string boundary, string name, string fileName, Stream content, string contentType, bool isFinal)
-        {
-            string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                boundary, name, fileName, contentType);
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                byte[] buffer;
-
-                buffer = Encoding.UTF8.GetBytes(format);
-                stream.Write(buffer, 0, buffer.Length);
-
-                content.CopyStream(stream);
-
-                buffer = Encoding.UTF8.GetBytes("\r\n");
-                stream.Write(buffer, 0, buffer.Length);
-
-                if (isFinal)
-                {
-                    buffer = MakeFinalBoundary(boundary);
-                    stream.Write(buffer, 0, buffer.Length);
                 }
 
                 return stream.ToArray();
