@@ -58,13 +58,13 @@ namespace ZUploader
                 {
                     EDataType type;
 
-                    if (TextUploader != TextDestType2.FILE && Helpers.IsTextFile(path))
-                    {
-                        type = EDataType.Text;
-                    }
-                    else if (ImageUploader != ImageDestType2.FILE && Helpers.IsImageFile(path))
+                    if (ImageUploader != ImageDestType2.FILE && Helpers.IsImageFile(path))
                     {
                         type = EDataType.Image;
+                    }
+                    else if (TextUploader != TextDestType2.FILE && Helpers.IsTextFile(path))
+                    {
+                        type = EDataType.Text;
                     }
                     else
                     {
@@ -72,6 +72,7 @@ namespace ZUploader
                     }
 
                     Task task = new Task(type, path);
+                    Program.MyLogger.WriteLine("Upload starting: {0}", path);
                     StartUpload(task);
                 }
                 else if (Directory.Exists(path))
@@ -128,6 +129,7 @@ namespace ZUploader
                 Stream stream = PrepareImage(img, out imageFormat);
                 string filename = PrepareFilename(imageFormat, img);
                 Task task = new Task(type, stream, filename);
+                Program.MyLogger.WriteLine("ClipboardImageUpload starting: {0}", filename);
                 StartUpload(task);
             }
         }
@@ -183,6 +185,7 @@ namespace ZUploader
             string filename = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
             EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
             Task task = new Task(type, stream, filename);
+            Program.MyLogger.WriteLine("ClipboardTextUpload starting: {0}", filename);
             StartUpload(task);
         }
 
@@ -247,14 +250,25 @@ namespace ZUploader
 
         private static void task_UploadCompleted(UploadInfo info)
         {
-            if (ListViewControl != null)
+            if (ListViewControl != null && info != null && info.Result != null)
             {
+                if (info.Result.Errors != null && info.Result.Errors.Count > 0)
+                {
+                    string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
+
+                    Program.MyLogger.WriteLine("Upload errors:\r\n" + errors);
+                }
+                else
+                {
+                    Program.MyLogger.WriteLine("Upload completed. Filename: {0}, URL: {1}, Duration: {2}ms", info.FileName, info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
+                }
+
                 ListViewItem lvi = ListViewControl.Items[info.ID];
                 lvi.Tag = info.Result;
 
                 if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
-                    lvi.SubItems[1].Text = "Error: " + info.Result.Errors.Last();
+                    lvi.SubItems[1].Text = "Error";
                     lvi.SubItems[8].Text = string.Empty;
                     lvi.ImageIndex = 1;
                 }

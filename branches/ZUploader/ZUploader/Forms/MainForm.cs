@@ -151,7 +151,7 @@ namespace ZUploader
 
             if (result != null && result.Errors != null && result.Errors.Count > 0)
             {
-                errors = string.Join("\r\n", result.Errors.ToArray());
+                errors = string.Join("\r\n\r\n", result.Errors.ToArray());
             }
 
             return errors;

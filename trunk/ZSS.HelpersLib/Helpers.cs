@@ -60,7 +60,7 @@ namespace HelpersLib
             return false;
         }
 
-        private static string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
+        private static readonly string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
 
         public static bool IsImageFile(string path)
         {
@@ -69,7 +69,7 @@ namespace HelpersLib
             return ImageFileExtensions.Any(x => ext.EndsWith(x));
         }
 
-        private static string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
+        private static readonly string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
 
         public static bool IsTextFile(string path)
         {

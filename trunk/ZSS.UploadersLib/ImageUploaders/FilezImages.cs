@@ -14,7 +14,7 @@ namespace UploadersLib.ImageUploaders
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("api", "ZUploader");  //does not work for some reason...
+            args.Add("hideFile", "1");
 
             ImageFileManager ifm = new ImageFileManager();
             string response = UploadData(stream, fileName, "http://www.filez.muffinz.eu/api/upload/linkOnly", "file", args);

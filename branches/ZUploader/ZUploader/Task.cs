@@ -117,6 +117,8 @@ namespace ZUploader
 
         private void UploadThread(object sender, DoWorkEventArgs e)
         {
+            Info.StartTime = DateTime.UtcNow;
+
             try
             {
                 switch (Info.UploaderType)
@@ -134,7 +136,12 @@ namespace ZUploader
             }
             catch (Exception ex)
             {
-                Info.Result.Errors.Add(ex.Message);
+                Info.Result.Errors.Add(ex.ToString());
+            }
+
+            if (Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
+            {
+                Info.Result.Errors.Add("URL is empty.");
             }
 
             Info.UploadTime = DateTime.UtcNow;
@@ -173,9 +180,9 @@ namespace ZUploader
 
             if (imageUploader != null)
             {
-                uploader = imageUploader;
-                imageUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                PrepareUploader(imageUploader);
                 ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
+
                 UploadResult ur = new UploadResult
                 {
                     URL = ifm.GetFullImageUrl(),
@@ -184,6 +191,7 @@ namespace ZUploader
                     Source = ifm.Source,
                     Errors = imageUploader.Errors
                 };
+
                 return ur;
             }
 
@@ -224,8 +232,7 @@ namespace ZUploader
 
             if (fileUploader != null)
             {
-                uploader = fileUploader;
-                fileUploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+                PrepareUploader(fileUploader);
                 UploadResult ur = fileUploader.Upload(stream, fileName);
                 ur.Errors = fileUploader.Errors;
                 return ur;
@@ -258,6 +265,7 @@ namespace ZUploader
 
             if (textUploader != null)
             {
+                PrepareUploader(textUploader);
                 string text = new StreamReader(stream).ReadToEnd();
                 string url = textUploader.UploadText(TextInfo.FromString(text));
                 UploadResult ur = new UploadResult
@@ -287,6 +295,12 @@ namespace ZUploader
             Dispose();
         }
 
+        private void PrepareUploader(Uploader currentUploader)
+        {
+            uploader = currentUploader;
+            uploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+        }
+
         private void OnUploadStarted()
         {
             if (UploadStarted != null)
@@ -310,6 +324,7 @@ namespace ZUploader
             if (UploadCompleted != null)
             {
                 IsUploading = false;
+
                 if (!IsStopped)
                 {
                     Info.Status = "Done";
@@ -318,6 +333,7 @@ namespace ZUploader
                 {
                     Info.Status = "Stopped";
                 }
+
                 UploadCompleted(Info);
             }
         }

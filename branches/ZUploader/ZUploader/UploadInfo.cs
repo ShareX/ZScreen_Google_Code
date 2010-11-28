@@ -79,7 +79,14 @@ namespace ZUploader
         }
 
         public string UploaderHost { get; private set; }
+        public DateTime StartTime { get; set; }
         public DateTime UploadTime { get; set; }
+
+        public TimeSpan UploadDuration
+        {
+            get { return UploadTime - StartTime; }
+        }
+
         public UploadResult Result { get; set; }
 
         public UploadInfo()

@@ -32,6 +32,7 @@ using System.Net;
 using System.Net.Cache;
 using System.Text;
 using System.Web;
+using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.HelperClasses;
@@ -54,7 +55,7 @@ namespace UploadersLib
         public Uploader()
         {
             this.Errors = new List<string>();
-            this.UserAgent = "ZScreen";
+            this.UserAgent = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
         }
 
         protected void OnProgressChanged(ProgressManager progress)
@@ -170,7 +171,7 @@ namespace UploadersLib
             {
                 if (!stopUpload)
                 {
-                    this.Errors.Add(e.Message);
+                    this.Errors.Add(e.ToString());
                     Debug.WriteLine(e.ToString());
                 }
             }
@@ -253,7 +254,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                this.Errors.Add(e.Message);
+                this.Errors.Add(e.ToString());
                 Debug.WriteLine(e.ToString());
             }
 
