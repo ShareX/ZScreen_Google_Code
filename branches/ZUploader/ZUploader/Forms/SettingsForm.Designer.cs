@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
             this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
             this.cbAutoPlaySound = new System.Windows.Forms.CheckBox();
@@ -63,8 +62,6 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cmsDebug = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiDebugCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpImage.SuspendLayout();
@@ -75,7 +72,6 @@
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
-            this.cmsDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // pgFTPSettings
@@ -492,7 +488,6 @@
             // 
             // txtDebugLog
             // 
-            this.txtDebugLog.ContextMenuStrip = this.cmsDebug;
             this.txtDebugLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtDebugLog.Location = new System.Drawing.Point(3, 3);
             this.txtDebugLog.Multiline = true;
@@ -501,21 +496,6 @@
             this.txtDebugLog.Size = new System.Drawing.Size(476, 253);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
-            // 
-            // cmsDebug
-            // 
-            this.cmsDebug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiDebugCopy});
-            this.cmsDebug.Name = "cmsDebug";
-            this.cmsDebug.ShowImageMargin = false;
-            this.cmsDebug.Size = new System.Drawing.Size(128, 48);
-            // 
-            // tsmiDebugCopy
-            // 
-            this.tsmiDebugCopy.Name = "tsmiDebugCopy";
-            this.tsmiDebugCopy.Size = new System.Drawing.Size(127, 22);
-            this.tsmiDebugCopy.Text = "Copy";
-            this.tsmiDebugCopy.Click += new System.EventHandler(this.tsmiDebugCopy_Click);
             // 
             // SettingsForm
             // 
@@ -545,7 +525,6 @@
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
-            this.cmsDebug.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -587,7 +566,5 @@
         private System.Windows.Forms.Label lblGeneralInfo;
         private System.Windows.Forms.TabPage tpDebug;
         private System.Windows.Forms.TextBox txtDebugLog;
-        private System.Windows.Forms.ContextMenuStrip cmsDebug;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDebugCopy;
     }
 }

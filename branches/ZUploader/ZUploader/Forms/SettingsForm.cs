@@ -198,19 +198,5 @@ namespace ZUploader
         }
 
         #endregion FTP
-
-        #region Debug
-
-        private void tsmiDebugCopy_Click(object sender, EventArgs e)
-        {
-            string selected = txtDebugLog.SelectedText;
-
-            if (!string.IsNullOrEmpty(selected))
-            {
-                Clipboard.SetText(selected);
-            }
-        }
-
-        #endregion Debug
     }
 }
