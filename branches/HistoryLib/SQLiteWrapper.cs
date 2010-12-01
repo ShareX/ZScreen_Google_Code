@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -283,6 +284,8 @@ namespace HistoryLib
                         }
                         catch (Exception e)
                         {
+                            Debug.WriteLine(e.ToString());
+
                             if (i + 1 < LockRetryCount)
                             {
                                 Thread.Sleep(LockRetryDelay);

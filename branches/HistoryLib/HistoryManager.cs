@@ -43,6 +43,7 @@ namespace HistoryLib
         {
             CreateDatabaseIfNotExist(databasePath);
             sqlite = new SQLiteWrapper(databasePath);
+            sqlite.UseLockProtection = true;
             sqlite.OpenDatabase();
         }
 

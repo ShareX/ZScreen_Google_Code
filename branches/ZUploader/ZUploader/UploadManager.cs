@@ -252,28 +252,24 @@ namespace ZUploader
         {
             if (ListViewControl != null && info != null && info.Result != null)
             {
-                if (info.Result.Errors != null && info.Result.Errors.Count > 0)
-                {
-                    string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
-
-                    Program.MyLogger.WriteLine("Upload errors:\r\n" + errors);
-                }
-                else
-                {
-                    Program.MyLogger.WriteLine("Upload completed. Filename: {0}, URL: {1}, Duration: {2}ms", info.FileName, info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
-                }
-
                 ListViewItem lvi = ListViewControl.Items[info.ID];
                 lvi.Tag = info.Result;
 
                 if (info.Result.Errors != null && info.Result.Errors.Count > 0)
                 {
+                    string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
+
+                    Program.MyLogger.WriteLine("Upload errors:\r\n" + errors);
+
                     lvi.SubItems[1].Text = "Error";
                     lvi.SubItems[8].Text = string.Empty;
                     lvi.ImageIndex = 1;
                 }
                 else
                 {
+                    Program.MyLogger.WriteLine("Upload completed. Filename: {0}, URL: {1}, Duration: {2}ms", info.FileName, info.Result.URL,
+                        (int)info.UploadDuration.TotalMilliseconds);
+
                     lvi.SubItems[1].Text = info.Status;
                     lvi.SubItems[8].Text = info.Result.URL;
                     lvi.ImageIndex = 2;

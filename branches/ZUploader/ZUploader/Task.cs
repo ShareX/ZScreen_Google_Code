@@ -136,7 +136,12 @@ namespace ZUploader
             }
             catch (Exception ex)
             {
-                Info.Result.Errors.Add(ex.ToString());
+                uploader.Errors.Add(ex.ToString());
+            }
+            finally
+            {
+                if (Info.Result == null) Info.Result = new UploadResult();
+                Info.Result.Errors = uploader.Errors;
             }
 
             if (!IsStopped && Info.Result != null && Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
@@ -181,16 +186,18 @@ namespace ZUploader
             if (imageUploader != null)
             {
                 PrepareUploader(imageUploader);
+
                 ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
 
-                UploadResult ur = new UploadResult
+                UploadResult ur = new UploadResult();
+
+                if (ifm != null)
                 {
-                    URL = ifm.GetFullImageUrl(),
-                    ThumbnailURL = ifm.GetThumbnailUrl(),
-                    DeletionURL = ifm.GetDeletionLink(),
-                    Source = ifm.Source,
-                    Errors = imageUploader.Errors
-                };
+                    ur.URL = ifm.GetFullImageUrl();
+                    ur.ThumbnailURL = ifm.GetThumbnailUrl();
+                    ur.DeletionURL = ifm.GetDeletionLink();
+                    ur.Source = ifm.Source;
+                }
 
                 return ur;
             }
@@ -233,14 +240,8 @@ namespace ZUploader
             if (fileUploader != null)
             {
                 PrepareUploader(fileUploader);
-                UploadResult ur = fileUploader.Upload(stream, fileName);
 
-                if (ur != null)
-                {
-                    ur.Errors = fileUploader.Errors;
-                }
-
-                return ur;
+                return fileUploader.Upload(stream, fileName);
             }
 
             return null;
@@ -271,16 +272,10 @@ namespace ZUploader
             if (textUploader != null)
             {
                 PrepareUploader(textUploader);
-                string text = new StreamReader(stream).ReadToEnd();
-                string url = textUploader.UploadText(TextInfo.FromString(text));
 
-                UploadResult ur = new UploadResult
-                {
-                    URL = url,
-                    Errors = textUploader.Errors
-                };
+                string url = textUploader.UploadText(stream);
 
-                return ur;
+                return new UploadResult(null, url);
             }
 
             return null;

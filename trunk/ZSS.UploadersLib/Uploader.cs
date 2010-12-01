@@ -47,8 +47,8 @@ namespace UploadersLib
 
         public const int BufferSize = 4096;
 
-        public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
+        public List<string> Errors { get; private set; }
         public bool IsUploading { get; private set; }
 
         private bool stopUpload;
