@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextUploaders;
@@ -65,6 +66,12 @@ namespace UploadersLib
         public virtual object Settings { get; set; }
 
         public abstract string UploadText(TextInfo text);
+
+        public string UploadText(Stream stream)
+        {
+            string text = new StreamReader(stream, Encoding.UTF8).ReadToEnd();
+            return UploadText(TextInfo.FromString(text));
+        }
 
         public string UploadTextFromClipboard()
         {
