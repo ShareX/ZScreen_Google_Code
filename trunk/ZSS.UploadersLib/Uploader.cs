@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -46,9 +45,11 @@ namespace UploadersLib
 
         public static ProxySettings ProxySettings = new ProxySettings();
 
+        public const int BufferSize = 4096;
+
         public List<string> Errors { get; set; }
         public string UserAgent { get; set; }
-        public bool IsUploading { get; set; }
+        public bool IsUploading { get; private set; }
 
         private bool stopUpload;
 
@@ -84,21 +85,6 @@ namespace UploadersLib
         /// <summary>
         /// Method: POST
         /// </summary>
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
-
-            byte[] data = MakeInputContent(boundary, arguments, true);
-
-            using (HttpWebResponse response = GetResponse(url, data, boundary))
-            {
-                return ResponseToString(response);
-            }
-        }
-
-        /// <summary>
-        /// Method: POST
-        /// </summary>
         protected string GetResponse(string url)
         {
             return GetResponse(url, null);
@@ -107,13 +93,20 @@ namespace UploadersLib
         /// <summary>
         /// Method: POST
         /// </summary>
+        protected string GetResponse(string url, Dictionary<string, string> arguments)
+        {
+            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
+            {
+                return ResponseToString(response);
+            }
+        }
+
+        /// <summary>
+        /// Method: POST
+        /// </summary>
         protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
         {
-            string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
-
-            byte[] data = MakeInputContent(boundary, arguments, true);
-
-            using (HttpWebResponse response = GetResponse(url, data, boundary))
+            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
             {
                 if (response != null)
                 {
@@ -124,56 +117,41 @@ namespace UploadersLib
             return null;
         }
 
-        private HttpWebResponse GetResponseUsingPost(string url, Stream stream, string boundary)
+        private HttpWebResponse GetResponseUsingPost(string url, Dictionary<string, string> arguments)
+        {
+            string boundary = CreateBoundary();
+            byte[] data = MakeInputContent(boundary, arguments);
+            return GetResponseUsingPost(url, data, boundary);
+        }
+
+        private HttpWebResponse GetResponseUsingPost(string url, byte[] data, string boundary)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+                return GetResponseUsingPost(url, stream, boundary);
+            }
+        }
+
+        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary)
         {
             IsUploading = true;
             stopUpload = false;
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
-                request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-                request.ContentLength = stream.Length;
-                request.ContentType = "multipart/form-data; boundary=" + boundary;
-                request.KeepAlive = false;
-                request.Method = "POST";
-                request.ProtocolVersion = HttpVersion.Version11;
-                request.Proxy = ProxySettings.GetWebProxy;
-                request.ServicePoint.Expect100Continue = false;
-                request.ServicePoint.UseNagleAlgorithm = false;
-                request.Timeout = -1;
-                request.UserAgent = UserAgent;
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length);
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
-                    ProgressManager progress = new ProgressManager(stream.Length);
-                    stream.Position = 0;
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-
-                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        if (stopUpload) return null;
-
-                        requestStream.Write(buffer, 0, bytesRead);
-
-                        if (progress.ChangeProgress(bytesRead))
-                        {
-                            OnProgressChanged(progress);
-                        }
-                    }
+                    if (!TransferData(requestStream, dataStream)) return null;
                 }
 
                 return (HttpWebResponse)request.GetResponse();
             }
             catch (Exception e)
             {
-                if (!stopUpload)
-                {
-                    this.Errors.Add(e.ToString());
-                    Debug.WriteLine(e.ToString());
-                }
+                if (!stopUpload) Errors.Add(e.ToString());
             }
             finally
             {
@@ -183,81 +161,38 @@ namespace UploadersLib
             return null;
         }
 
-        private HttpWebResponse GetResponse(string url, byte[] data, string boundary)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(data, 0, data.Length);
-                return GetResponseUsingPost(url, stream, boundary);
-            }
-        }
-
-        protected string UploadData(Stream data, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        /// <summary>
+        /// Method: POST
+        /// </summary>
+        protected string UploadData(Stream dataStream, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
         {
             IsUploading = true;
             stopUpload = false;
 
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
-                request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-                request.KeepAlive = false;
-                request.Method = "POST";
-                request.ProtocolVersion = HttpVersion.Version11;
-                request.Proxy = ProxySettings.GetWebProxy;
-                request.ServicePoint.Expect100Continue = false;
-                request.ServicePoint.UseNagleAlgorithm = false;
-                request.Timeout = -1;
-                request.UserAgent = UserAgent;
-
-                string boundary = "---------------" + FastDateTime.Now.Ticks.ToString("x");
-                request.ContentType = "multipart/form-data; boundary=" + boundary;
+                string boundary = CreateBoundary();
 
                 byte[] bytesArguments = MakeInputContent(boundary, arguments, false);
+                byte[] bytesDataOpen = MakeFileInputContentOpen(boundary, fileFormName, fileName);
+                byte[] bytesDataClose = MakeFileInputContentClose(boundary);
 
-                string fileInputContent = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                    boundary, fileFormName, fileName, Helpers.GetMimeType(fileName));
-
-                byte[] bytesFileInputContent = Encoding.UTF8.GetBytes(fileInputContent);
-                byte[] bytesLast = Encoding.UTF8.GetBytes(string.Format("\r\n--{0}--\r\n", boundary));
-
-                request.ContentLength = bytesArguments.Length + bytesFileInputContent.Length + data.Length + bytesLast.Length;
+                long contentLength = bytesArguments.Length + bytesDataOpen.Length + dataStream.Length + bytesDataClose.Length;
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, contentLength);
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
                     requestStream.Write(bytesArguments, 0, bytesArguments.Length);
-                    requestStream.Write(bytesFileInputContent, 0, bytesFileInputContent.Length);
-
-                    ProgressManager progress = new ProgressManager(data.Length);
-                    data.Position = 0;
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-
-                    while ((bytesRead = data.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        if (stopUpload) return null;
-
-                        requestStream.Write(buffer, 0, bytesRead);
-
-                        if (progress.ChangeProgress(bytesRead))
-                        {
-                            OnProgressChanged(progress);
-                        }
-                    }
-
-                    requestStream.Write(bytesLast, 0, bytesLast.Length);
+                    requestStream.Write(bytesDataOpen, 0, bytesDataOpen.Length);
+                    if (!TransferData(requestStream, dataStream)) return null;
+                    requestStream.Write(bytesDataClose, 0, bytesDataClose.Length);
                 }
 
                 return ResponseToString(request.GetResponse());
             }
             catch (Exception e)
             {
-                if (!stopUpload)
-                {
-                    this.Errors.Add(e.ToString());
-                    Debug.WriteLine(e.ToString());
-                }
+                if (!stopUpload) Errors.Add(e.ToString());
             }
             finally
             {
@@ -270,6 +205,14 @@ namespace UploadersLib
         #endregion Post methods
 
         #region Get methods
+
+        /// <summary>
+        /// Method: GET
+        /// </summary>
+        protected string GetResponseString(string url)
+        {
+            return GetResponseString(url, null);
+        }
 
         /// <summary>
         /// Method: GET
@@ -287,31 +230,21 @@ namespace UploadersLib
             }
         }
 
-        /// <summary>
-        /// Method: GET
-        /// </summary>
-        protected string GetResponseString(string url)
-        {
-            return GetResponseString(url, null);
-        }
-
         private HttpWebResponse GetResponseUsingGet(string url)
         {
+            IsUploading = true;
+
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-                request.KeepAlive = false;
-                request.Method = "GET";
-                request.Proxy = ProxySettings.GetWebProxy;
-                request.UserAgent = UserAgent;
-
-                return (HttpWebResponse)request.GetResponse();
+                return (HttpWebResponse)PrepareGetWebRequest(url).GetResponse();
             }
             catch (Exception e)
             {
-                this.Errors.Add(e.ToString());
-                Debug.WriteLine(e.ToString());
+                Errors.Add(e.ToString());
+            }
+            finally
+            {
+                IsUploading = false;
             }
 
             return null;
@@ -321,24 +254,85 @@ namespace UploadersLib
 
         #region Helper methods
 
+        private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
+            request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+            request.ContentLength = length;
+            request.ContentType = "multipart/form-data; boundary=" + boundary;
+            request.KeepAlive = false;
+            request.Method = "POST";
+            request.ProtocolVersion = HttpVersion.Version11;
+            request.Proxy = ProxySettings.GetWebProxy;
+            request.ServicePoint.Expect100Continue = false;
+            request.ServicePoint.UseNagleAlgorithm = false;
+            request.Timeout = -1;
+            request.UserAgent = UserAgent;
+
+            return request;
+        }
+
+        private HttpWebRequest PrepareGetWebRequest(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.KeepAlive = false;
+            request.Method = "GET";
+            request.Proxy = ProxySettings.GetWebProxy;
+            request.UserAgent = UserAgent;
+
+            return request;
+        }
+
+        private bool TransferData(Stream requestStream, Stream dataStream)
+        {
+            ProgressManager progress = new ProgressManager(dataStream.Length);
+            dataStream.Position = 0;
+            byte[] buffer = new byte[BufferSize];
+            int bytesRead;
+
+            while ((bytesRead = dataStream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                if (stopUpload) return false;
+
+                requestStream.Write(buffer, 0, bytesRead);
+
+                if (progress.ChangeProgress(bytesRead))
+                {
+                    OnProgressChanged(progress);
+                }
+            }
+
+            return true;
+        }
+
+        private string CreateBoundary()
+        {
+            return new string('-', 20) + FastDateTime.Now.Ticks.ToString("x");
+        }
+
         private byte[] MakeInputContent(string boundary, string name, string value)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}\r\n", boundary, name, value);
             return Encoding.UTF8.GetBytes(format);
         }
 
-        private byte[] MakeInputContent(string boundary, Dictionary<string, string> contents, bool isFinal)
+        private byte[] MakeInputContent(string boundary, Dictionary<string, string> contents, bool isFinal = true)
         {
             using (MemoryStream stream = new MemoryStream())
             {
+                if (string.IsNullOrEmpty(boundary)) boundary = CreateBoundary();
                 byte[] bytes;
 
                 if (contents != null)
                 {
                     foreach (KeyValuePair<string, string> content in contents)
                     {
-                        bytes = MakeInputContent(boundary, content.Key, content.Value);
-                        stream.Write(bytes, 0, bytes.Length);
+                        if (!string.IsNullOrEmpty(content.Key))
+                        {
+                            bytes = MakeInputContent(boundary, content.Key, content.Value);
+                            stream.Write(bytes, 0, bytes.Length);
+                        }
                     }
                 }
 
@@ -352,6 +346,18 @@ namespace UploadersLib
             }
         }
 
+        private byte[] MakeFileInputContentOpen(string boundary, string fileFormName, string fileName)
+        {
+            string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
+                boundary, fileFormName, fileName, Helpers.GetMimeType(fileName));
+            return Encoding.UTF8.GetBytes(format);
+        }
+
+        private byte[] MakeFileInputContentClose(string boundary)
+        {
+            return Encoding.UTF8.GetBytes(string.Format("\r\n--{0}--\r\n", boundary));
+        }
+
         private byte[] MakeFinalBoundary(string boundary)
         {
             return Encoding.UTF8.GetBytes(string.Format("--{0}--\r\n", boundary));
@@ -362,7 +368,7 @@ namespace UploadersLib
             if (response != null)
             {
                 using (response)
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     return reader.ReadToEnd();
                 }
