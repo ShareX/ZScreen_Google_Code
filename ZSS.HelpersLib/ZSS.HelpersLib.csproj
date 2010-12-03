@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom Controls\MyListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DebugTimer.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FastDateTime.cs" />
