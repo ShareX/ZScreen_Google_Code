@@ -240,13 +240,15 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(arg))
             {
+                arg = arg.Trim();
+
                 if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
                 {
                     UploadManager.ClipboardUpload();
                 }
                 else
                 {
-                    UploadManager.Upload(arg);
+                    UploadManager.UploadFile(arg);
                 }
             }
         }
@@ -273,7 +275,9 @@ namespace ZUploader
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) ||
+                e.Data.GetDataPresent(DataFormats.Bitmap, false) ||
+                e.Data.GetDataPresent(DataFormats.Text, false))
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -285,8 +289,7 @@ namespace ZUploader
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            UploadManager.Upload(files);
+            UploadManager.DragDropUpload(e.Data);
         }
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
@@ -296,7 +299,7 @@ namespace ZUploader
 
         private void tsbFileUpload_Click(object sender, EventArgs e)
         {
-            UploadManager.Upload();
+            UploadManager.UploadFile();
         }
 
         private void tsbCopy_Click(object sender, EventArgs e)
@@ -371,7 +374,7 @@ namespace ZUploader
 
         private void uploadFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UploadManager.Upload();
+            UploadManager.UploadFile();
         }
 
         private void stopUploadToolStripMenuItem_Click(object sender, EventArgs e)

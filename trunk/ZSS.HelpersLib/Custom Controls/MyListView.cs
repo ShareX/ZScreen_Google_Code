@@ -23,9 +23,10 @@
 
 #endregion License Information (GPL v2)
 
+using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace HistoryLib.Custom_Controls
+namespace HelpersLib.Custom_Controls
 {
     public class MyListView : ListView
     {
@@ -66,6 +67,7 @@ namespace HistoryLib.Custom_Controls
             }
         }
 
+        [DebuggerStepThrough]
         protected override void OnNotifyMessage(Message m)
         {
             if (m.Msg != WM_ERASEBKGND)

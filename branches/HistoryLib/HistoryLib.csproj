@@ -52,18 +52,13 @@
     <Compile Include="Custom Controls\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Custom Controls\MyListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Custom Controls\MyPictureBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Custom Controls\MyPictureBox.Designer.cs">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Custom Controls\ObjectListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Custom Controls\ObjectListView.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>

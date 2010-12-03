@@ -91,7 +91,7 @@
             this.btnOpenURL = new System.Windows.Forms.Button();
             this.btnOpenLocalFile = new System.Windows.Forms.Button();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
-            this.lvHistory = new HistoryLib.Custom_Controls.MyListView();
+            this.lvHistory = new HelpersLib.Custom_Controls.MyListView();
             this.chDateTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -714,7 +714,7 @@
 
         #endregion Windows Form Designer generated code
 
-        private Custom_Controls.MyListView lvHistory;
+        private HelpersLib.Custom_Controls.MyListView lvHistory;
         private System.Windows.Forms.ColumnHeader chFilename;
         private System.Windows.Forms.ColumnHeader chDateTime;
         private System.Windows.Forms.ColumnHeader chType;

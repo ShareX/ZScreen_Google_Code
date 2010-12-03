@@ -32,8 +32,8 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
+using HelpersLib.Custom_Controls;
 using HistoryLib;
-using HistoryLib.Custom_Controls;
 
 namespace ZUploader
 {
@@ -50,7 +50,7 @@ namespace ZUploader
             Tasks = new List<Task>();
         }
 
-        public static void Upload(string path)
+        public static void UploadFile(string path)
         {
             if (!string.IsNullOrEmpty(path))
             {
@@ -72,34 +72,36 @@ namespace ZUploader
                     }
 
                     Task task = new Task(type, path);
-                    Program.MyLogger.WriteLine("Upload starting: {0}", path);
+                    Program.MyLogger.WriteLine("UploadFile starting. Type: {0}, Path: {1}", type.ToString(), path);
                     StartUpload(task);
                 }
                 else if (Directory.Exists(path))
                 {
                     string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-
-                    Upload(files);
+                    UploadFile(files);
                 }
             }
         }
 
-        public static void Upload(string[] files)
+        public static void UploadFile(string[] files)
         {
-            foreach (string file in files)
+            if (files != null && files.Length > 0)
             {
-                Upload(file);
+                foreach (string file in files)
+                {
+                    UploadFile(file);
+                }
             }
         }
 
-        public static void Upload()
+        public static void UploadFile()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    Upload(ofd.FileName);
+                    UploadFile(ofd.FileName);
                 }
             }
         }
@@ -108,28 +110,52 @@ namespace ZUploader
         {
             if (Clipboard.ContainsImage())
             {
-                ClipboardImageUpload();
-            }
-            else if (Clipboard.ContainsText())
-            {
-                ClipboardTextUpload();
+                using (Image img = Clipboard.GetImage())
+                {
+                    UploadImage(img);
+                }
             }
             else if (Clipboard.ContainsFileDropList())
             {
-                ClipboardFilesUpload();
+                string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
+                UploadFile(files);
+            }
+            else if (Clipboard.ContainsText())
+            {
+                string text = Clipboard.GetText();
+                UploadText(text);
             }
         }
 
-        private static void ClipboardImageUpload()
+        public static void DragDropUpload(IDataObject data)
         {
-            using (Image img = Clipboard.GetImage())
+            if (data.GetDataPresent(DataFormats.FileDrop, false))
+            {
+                string[] files = data.GetData(DataFormats.FileDrop, false) as string[];
+                UploadFile(files);
+            }
+            else if (data.GetDataPresent(DataFormats.Bitmap, false))
+            {
+                Image img = data.GetData(DataFormats.Bitmap, false) as Image;
+                UploadImage(img);
+            }
+            else if (data.GetDataPresent(DataFormats.Text, false))
+            {
+                string text = data.GetData(DataFormats.Text, false) as string;
+                UploadText(text);
+            }
+        }
+
+        public static void UploadImage(Image img)
+        {
+            if (img != null)
             {
                 EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
                 EImageFormat imageFormat;
                 Stream stream = PrepareImage(img, out imageFormat);
                 string filename = PrepareFilename(imageFormat, img);
                 Task task = new Task(type, stream, filename);
-                Program.MyLogger.WriteLine("ClipboardImageUpload starting: {0}", filename);
+                Program.MyLogger.WriteLine("UploadImage starting. Type: {0}, Filename: {1}, Length: {2}", type.ToString(), filename, stream.Length);
                 StartUpload(task);
             }
         }
@@ -178,21 +204,18 @@ namespace ZUploader
             return string.Format("{0}.{1}", parser.Convert(Program.Settings.NameFormatPattern), ext);
         }
 
-        private static void ClipboardTextUpload()
+        public static void UploadText(string text)
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes(Clipboard.GetText());
-            MemoryStream stream = new MemoryStream(byteArray);
-            string filename = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
-            EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
-            Task task = new Task(type, stream, filename);
-            Program.MyLogger.WriteLine("ClipboardTextUpload starting: {0}", filename);
-            StartUpload(task);
-        }
-
-        private static void ClipboardFilesUpload()
-        {
-            string[] files = Clipboard.GetFileDropList().Cast<string>().ToArray();
-            Upload(files);
+            if (!string.IsNullOrEmpty(text))
+            {
+                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
+                byte[] byteArray = Encoding.UTF8.GetBytes(text);
+                MemoryStream stream = new MemoryStream(byteArray);
+                string filename = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
+                Task task = new Task(type, stream, filename);
+                Program.MyLogger.WriteLine("UploadText starting. Type: {0}, Filename: {1}, Length: {2}", type.ToString(), filename, stream.Length);
+                StartUpload(task);
+            }
         }
 
         private static void StartUpload(Task task)
