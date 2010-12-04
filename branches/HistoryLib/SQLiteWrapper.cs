@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -46,10 +45,10 @@ namespace HistoryLib
         private SQLiteConnection connection;
         private SQLiteTransaction transaction;
 
-        public SQLiteWrapper(string databasePath)
+        public SQLiteWrapper(string databasePath, bool useLockProtection)
         {
             DatabasePath = databasePath;
-            UseLockProtection = false;
+            UseLockProtection = useLockProtection;
             LockRetryCount = 10;
             LockRetryDelay = 100;
         }
@@ -284,8 +283,6 @@ namespace HistoryLib
                         }
                         catch (Exception e)
                         {
-                            Debug.WriteLine(e.ToString());
-
                             if (i + 1 < LockRetryCount)
                             {
                                 Thread.Sleep(LockRetryDelay);

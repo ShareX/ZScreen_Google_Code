@@ -29,7 +29,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Custom_Controls;
@@ -71,8 +70,7 @@ namespace ZUploader
                         type = EDataType.File;
                     }
 
-                    Task task = new Task(type, path);
-                    Program.MyLogger.WriteLine("UploadFile starting. Type: {0}, Path: {1}", type.ToString(), path);
+                    Task task = Task.CreateFileUploaderTask(type, path);
                     StartUpload(task);
                 }
                 else if (Directory.Exists(path))
@@ -110,10 +108,8 @@ namespace ZUploader
         {
             if (Clipboard.ContainsImage())
             {
-                using (Image img = Clipboard.GetImage())
-                {
-                    UploadImage(img);
-                }
+                Image img = Clipboard.GetImage();
+                UploadImage(img);
             }
             else if (Clipboard.ContainsFileDropList())
             {
@@ -151,57 +147,9 @@ namespace ZUploader
             if (img != null)
             {
                 EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
-                EImageFormat imageFormat;
-                Stream stream = PrepareImage(img, out imageFormat);
-                string filename = PrepareFilename(imageFormat, img);
-                Task task = new Task(type, stream, filename);
-                Program.MyLogger.WriteLine("UploadImage starting. Type: {0}, Filename: {1}, Length: {2}", type.ToString(), filename, stream.Length);
+                Task task = Task.CreateImageUploaderTask(type, img);
                 StartUpload(task);
             }
-        }
-
-        private static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
-        {
-            MemoryStream stream = img.SaveImage(Program.Settings.ImageFormat);
-            int sizeLimit = Program.Settings.ImageSizeLimit * 1000;
-            if (Program.Settings.ImageFormat != Program.Settings.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
-            {
-                stream = img.SaveImage(Program.Settings.ImageFormat2);
-                imageFormat = Program.Settings.ImageFormat2;
-            }
-            else
-            {
-                imageFormat = Program.Settings.ImageFormat;
-            }
-
-            return stream;
-        }
-
-        private static string PrepareFilename(EImageFormat imageFormat, Image img)
-        {
-            string ext = "png";
-
-            switch (imageFormat)
-            {
-                case EImageFormat.PNG:
-                    ext = "png";
-                    break;
-                case EImageFormat.JPEG:
-                    ext = "jpg";
-                    break;
-                case EImageFormat.GIF:
-                    ext = "gif";
-                    break;
-                case EImageFormat.BMP:
-                    ext = "bmp";
-                    break;
-                case EImageFormat.TIFF:
-                    ext = "tif";
-                    break;
-            }
-
-            NameParser parser = new NameParser { Picture = img };
-            return string.Format("{0}.{1}", parser.Convert(Program.Settings.NameFormatPattern), ext);
         }
 
         public static void UploadText(string text)
@@ -209,11 +157,7 @@ namespace ZUploader
             if (!string.IsNullOrEmpty(text))
             {
                 EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
-                byte[] byteArray = Encoding.UTF8.GetBytes(text);
-                MemoryStream stream = new MemoryStream(byteArray);
-                string filename = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
-                Task task = new Task(type, stream, filename);
-                Program.MyLogger.WriteLine("UploadText starting. Type: {0}, Filename: {1}, Length: {2}", type.ToString(), filename, stream.Length);
+                Task task = Task.CreateTextUploaderTask(type, text);
                 StartUpload(task);
             }
         }
@@ -222,6 +166,7 @@ namespace ZUploader
         {
             Tasks.Add(task);
             task.Info.ID = Tasks.Count - 1;
+            task.UploadPreparing += new Task.TaskEventHandler(task_UploadPreparing);
             task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
             task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
             task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
@@ -236,10 +181,12 @@ namespace ZUploader
             }
         }
 
-        private static void task_UploadStarted(UploadInfo info)
+        private static void task_UploadPreparing(UploadInfo info)
         {
             if (ListViewControl != null)
             {
+                Program.MyLogger.WriteLine("Upload preparing. ID: {0}, Job: {1}, Type: {2}, Host: {3}", info.ID, info.Job, info.UploaderType, info.UploaderHost);
+
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = info.FileName;
                 lvi.SubItems.Add(info.Status);
@@ -256,6 +203,17 @@ namespace ZUploader
                 lvi.EnsureVisible();
                 ListViewControl.AutoResizeLastColumn();
             }
+        }
+
+        private static void task_UploadStarted(UploadInfo info)
+        {
+            string status = string.Format("Upload started. ID: {0}, Filename: {1}", info.ID, info.FileName);
+            if (!string.IsNullOrEmpty(info.FilePath)) status += ", Filepath: " + info.FilePath;
+            Program.MyLogger.WriteLine(status);
+
+            ListViewItem lvi = ListViewControl.Items[info.ID];
+            lvi.Text = info.FileName;
+            lvi.SubItems[1].Text = info.Status;
         }
 
         private static void task_UploadProgressChanged(UploadInfo info)
@@ -282,7 +240,7 @@ namespace ZUploader
                 {
                     string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
 
-                    Program.MyLogger.WriteLine("Upload errors:\r\n" + errors);
+                    Program.MyLogger.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
 
                     lvi.SubItems[1].Text = "Error";
                     lvi.SubItems[8].Text = string.Empty;
@@ -290,8 +248,8 @@ namespace ZUploader
                 }
                 else
                 {
-                    Program.MyLogger.WriteLine("Upload completed. Filename: {0}, URL: {1}, Duration: {2}ms", info.FileName, info.Result.URL,
-                        (int)info.UploadDuration.TotalMilliseconds);
+                    Program.MyLogger.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
+                        info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
 
                     lvi.SubItems[1].Text = info.Status;
                     lvi.SubItems[8].Text = info.Result.URL;

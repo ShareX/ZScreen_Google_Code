@@ -42,7 +42,7 @@ namespace HistoryLib
         public HistoryManager(string databasePath)
         {
             CreateDatabaseIfNotExist(databasePath);
-            sqlite = new SQLiteWrapper(databasePath);
+            sqlite = new SQLiteWrapper(databasePath, true);
             sqlite.UseLockProtection = true;
             sqlite.OpenDatabase();
         }

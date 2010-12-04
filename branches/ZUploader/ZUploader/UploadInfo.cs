@@ -35,6 +35,7 @@ namespace ZUploader
     {
         public int ID { get; set; }
         public string Status { get; set; }
+        public TaskJob Job { get; set; }
         public ProgressManager Progress { get; set; }
 
         private string filePath;

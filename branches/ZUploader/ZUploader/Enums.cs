@@ -96,6 +96,11 @@ namespace ZUploader
         Default, Bit8, Bit4, Grayscale
     }
 
+    public enum TaskJob
+    {
+        DataUpload, FileUpload, ImageUpload, TextUpload
+    }
+
     public static class Enums
     {
         public static string GetDescription(this Enum value)

@@ -25,7 +25,10 @@
 
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
+using System.Text;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -40,6 +43,7 @@ namespace ZUploader
         public delegate void TaskEventHandler(UploadInfo info);
 
         public event TaskEventHandler UploadStarted;
+        public event TaskEventHandler UploadPreparing;
         public event TaskEventHandler UploadProgressChanged;
         public event TaskEventHandler UploadCompleted;
 
@@ -47,44 +51,61 @@ namespace ZUploader
         public bool IsUploading { get; private set; }
         public bool IsStopped { get; private set; }
 
-        private Stream Data;
+        private Stream data;
+        private Image tempImage;
+        private string tempText;
         private BackgroundWorker bw;
         private Uploader uploader;
 
         #region Constructors
 
-        private Task()
+        private Task(EDataType dataType, TaskJob job)
         {
             Info = new UploadInfo();
+            Info.Job = job;
+            Info.UploaderType = dataType;
         }
 
-        /// <summary>
-        /// Create task using file path
-        /// </summary>
-        public Task(EDataType dataType, string filePath)
-            : this()
+        public static Task CreateDataUploaderTask(EDataType dataType, Stream stream, string fileName)
         {
-            Info.UploaderType = dataType;
-            Info.FilePath = filePath;
-            Data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            Task task = new Task(dataType, TaskJob.DataUpload);
+            task.Info.FileName = fileName;
+            task.data = stream;
+            return task;
         }
 
-        /// <summary>
-        /// Create task using stream
-        /// </summary>
-        public Task(EDataType dataType, Stream stream, string fileName)
-            : this()
+        // string filePath -> FileStream data
+        public static Task CreateFileUploaderTask(EDataType dataType, string filePath)
         {
-            Info.UploaderType = dataType;
-            Info.FileName = fileName;
-            Data = stream;
+            Task task = new Task(dataType, TaskJob.FileUpload);
+            task.Info.FilePath = filePath;
+            task.data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return task;
+        }
+
+        // Image image -> MemoryStream data (in thread)
+        public static Task CreateImageUploaderTask(EDataType dataType, Image image)
+        {
+            Task task = new Task(dataType, TaskJob.ImageUpload);
+            task.Info.FileName = "Image encoding...";
+            task.tempImage = image;
+            return task;
+        }
+
+        // string text -> MemoryStream data (in thread)
+        public static Task CreateTextUploaderTask(EDataType dataType, string text)
+        {
+            Task task = new Task(dataType, TaskJob.TextUpload);
+            task.Info.FileName = "Text encoding...";
+            task.tempText = text;
+            return task;
         }
 
         #endregion Constructors
 
         public void Start()
         {
-            OnUploadStarted();
+            OnUploadPreparing();
             ApplyProxySettings();
 
             bw = new BackgroundWorker();
@@ -117,6 +138,9 @@ namespace ZUploader
 
         private void UploadThread(object sender, DoWorkEventArgs e)
         {
+            CheckJob();
+            bw.ReportProgress(-1);
+
             Info.StartTime = DateTime.UtcNow;
 
             try
@@ -124,13 +148,13 @@ namespace ZUploader
                 switch (Info.UploaderType)
                 {
                     case EDataType.Image:
-                        Info.Result = UploadImage(Data, Info.FileName);
+                        Info.Result = UploadImage(data, Info.FileName);
                         break;
                     case EDataType.File:
-                        Info.Result = UploadFile(Data, Info.FileName);
+                        Info.Result = UploadFile(data, Info.FileName);
                         break;
                     case EDataType.Text:
-                        Info.Result = UploadText(Data);
+                        Info.Result = UploadText(data);
                         break;
                 }
             }
@@ -150,6 +174,25 @@ namespace ZUploader
             }
 
             Info.UploadTime = DateTime.UtcNow;
+        }
+
+        private void CheckJob()
+        {
+            if (Info.Job == TaskJob.ImageUpload && tempImage != null)
+            {
+                using (tempImage)
+                {
+                    EImageFormat imageFormat;
+                    data = TaskHelper.PrepareImage(tempImage, out imageFormat);
+                    Info.FileName = TaskHelper.PrepareFilename(imageFormat, tempImage);
+                }
+            }
+            else if (Info.Job == TaskJob.TextUpload && !string.IsNullOrEmpty(tempText))
+            {
+                byte[] byteArray = Encoding.UTF8.GetBytes(tempText);
+                data = new MemoryStream(byteArray);
+                Info.FileName = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
+            }
         }
 
         public UploadResult UploadImage(Stream stream, string fileName)
@@ -283,11 +326,18 @@ namespace ZUploader
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            ProgressManager progress = e.UserState as ProgressManager;
-            if (progress != null)
+            if (!IsUploading && e.ProgressPercentage == -1)
             {
-                Info.Progress = progress;
-                OnUploadProgressChanged();
+                OnUploadStarted();
+            }
+            else
+            {
+                ProgressManager progress = e.UserState as ProgressManager;
+                if (progress != null)
+                {
+                    Info.Progress = progress;
+                    OnUploadProgressChanged();
+                }
             }
         }
 
@@ -303,12 +353,34 @@ namespace ZUploader
             uploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
         }
 
+        private void OnUploadPreparing()
+        {
+            switch (Info.Job)
+            {
+                case TaskJob.ImageUpload:
+                    Info.Status = "Preparing";
+                    break;
+                case TaskJob.TextUpload:
+                    Info.Status = "Preparing";
+                    break;
+                default:
+                    Info.Status = "Starting";
+                    break;
+            }
+
+            if (UploadPreparing != null)
+            {
+                UploadPreparing(Info);
+            }
+        }
+
         private void OnUploadStarted()
         {
+            IsUploading = true;
+            Info.Status = "Uploading";
+
             if (UploadStarted != null)
             {
-                IsUploading = true;
-                Info.Status = "Uploading";
                 UploadStarted(Info);
             }
         }
@@ -323,26 +395,27 @@ namespace ZUploader
 
         private void OnUploadCompleted()
         {
+            IsUploading = false;
+
+            if (!IsStopped)
+            {
+                Info.Status = "Done";
+            }
+            else
+            {
+                Info.Status = "Stopped";
+            }
+
             if (UploadCompleted != null)
             {
-                IsUploading = false;
-
-                if (!IsStopped)
-                {
-                    Info.Status = "Done";
-                }
-                else
-                {
-                    Info.Status = "Stopped";
-                }
-
                 UploadCompleted(Info);
             }
         }
 
         public void Dispose()
         {
-            if (Data != null) Data.Dispose();
+            if (data != null) data.Dispose();
+            if (tempImage != null) tempImage.Dispose();
             if (bw != null) bw.Dispose();
         }
     }

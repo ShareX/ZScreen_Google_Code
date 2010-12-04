@@ -58,7 +58,9 @@
     <Compile Include="Custom Controls\MyPictureBox.Designer.cs">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Custom Controls\ObjectListView.cs" />
+    <Compile Include="Custom Controls\ObjectListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
