@@ -5019,14 +5019,7 @@ namespace ZScreenGUI
 
         private void tbFilezHideFiles_CheckedChanged(object sender, EventArgs e)
         {
-            if (tbFilezHideFiles.Checked == true)
-            {
-                Engine.conf.FilezHideFiles = true;
-            }
-            else
-            {
-                Engine.conf.FilezHideFiles = false;
-            }
+            Engine.conf.FilezHideFiles = tbFilezHideFiles.Checked;
         }
 
         private void tbFilezRegisterButton_Click(object sender, EventArgs e)

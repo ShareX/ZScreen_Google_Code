@@ -263,6 +263,7 @@ namespace UploadersLib
             request.ContentType = "multipart/form-data; boundary=" + boundary;
             request.KeepAlive = false;
             request.Method = "POST";
+            request.Pipelined = false;
             request.ProtocolVersion = HttpVersion.Version11;
             request.Proxy = ProxySettings.GetWebProxy;
             request.ServicePoint.Expect100Continue = false;

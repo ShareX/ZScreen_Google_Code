@@ -141,11 +141,9 @@ namespace ZScreenLib
 
         // Filez
 
-        public bool FilezUserUserData = false;
         public string FilezUsername = "";
         public string FilezUserpass = "";
         public bool FilezHideFiles = true;
-
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
