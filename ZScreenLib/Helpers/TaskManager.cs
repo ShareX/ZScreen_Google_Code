@@ -290,10 +290,10 @@ namespace ZScreenLib
                     switch (Engine.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:
-                            fileHost.Errors = SendSpaceManager.PrepareUploadInfo(null, null);
+                            SendSpaceManager.PrepareUploadInfo(null, null);
                             break;
                         case AcctType.User:
-                            fileHost.Errors = SendSpaceManager.PrepareUploadInfo(Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
                             break;
                     }
                     break;
