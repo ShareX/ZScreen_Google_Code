@@ -99,8 +99,6 @@ namespace ZUploader
             }
         }
 
-        public static Thread SettingThread;
-
         public static Logger MyLogger;
 
         private static MainForm mainForm;
@@ -121,8 +119,8 @@ namespace ZUploader
             if (args != null && args.Length > 0) CommandLineArg = args[0];
             MyLogger.WriteLine("CommandLineArg = \"{0}\"", CommandLineArg);
 
-            SettingThread = new Thread(() => Settings = Settings.Load());
-            SettingThread.Start();
+            Thread settingThread = new Thread(() => Settings = Settings.Load());
+            settingThread.Start();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -130,6 +128,8 @@ namespace ZUploader
             MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
             MyLogger.WriteLine("new MainForm() finished");
+
+            settingThread.Join();
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);

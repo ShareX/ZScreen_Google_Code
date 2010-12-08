@@ -62,6 +62,7 @@ namespace ZUploader
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showResponseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMain = new System.Windows.Forms.ToolStrip();
@@ -89,7 +90,6 @@ namespace ZUploader
             this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.showResponseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -154,6 +154,13 @@ namespace ZUploader
             this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
             this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
+            //
+            // showResponseToolStripMenuItem
+            //
+            this.showResponseToolStripMenuItem.Name = "showResponseToolStripMenuItem";
+            this.showResponseToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showResponseToolStripMenuItem.Text = "Show Response";
+            this.showResponseToolStripMenuItem.Click += new System.EventHandler(this.showResponseToolStripMenuItem_Click);
             //
             // uploadFileToolStripMenuItem
             //
@@ -393,13 +400,6 @@ namespace ZUploader
             this.chURL.Text = "URL";
             this.chURL.Width = 225;
             //
-            // showResponseToolStripMenuItem
-            //
-            this.showResponseToolStripMenuItem.Name = "showResponseToolStripMenuItem";
-            this.showResponseToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.showResponseToolStripMenuItem.Text = "Show Response";
-            this.showResponseToolStripMenuItem.Click += new System.EventHandler(this.showResponseToolStripMenuItem_Click);
-            //
             // MainForm
             //
             this.AllowDrop = true;
@@ -413,6 +413,7 @@ namespace ZUploader
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);

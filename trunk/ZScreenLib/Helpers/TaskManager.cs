@@ -313,12 +313,7 @@ namespace ZScreenLib
                     fileHost = new DropIO();
                     break;
                 case FileUploaderType.FilezFiles:
-                    fileHost = new FilezFiles(new UploadersLib.FileUploaders.FilezOptions()
-                    {
-                        Username = Engine.conf.FilezUsername,
-                        Password = Engine.conf.FilezUserpass,
-                        HideFile = Engine.conf.FilezHideFiles
-                    });
+                    fileHost = new FilezFiles(Engine.conf.FilezUsername, Engine.conf.FilezUserpass, Engine.conf.FilezHideFiles);
                     break;
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
@@ -403,12 +398,7 @@ namespace ZScreenLib
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;
                 case ImageDestType.FilezImages:
-                    imageUploader = new FilezImages(new UploadersLib.ImageUploaders.FilezOptions()
-                    {
-                        Username = Engine.conf.FilezUsername,
-                        Password = Engine.conf.FilezUserpass,
-                        HideFile = Engine.conf.FilezHideFiles
-                    });
+                    imageUploader = new FilezImages(Engine.conf.FilezUsername, Engine.conf.FilezUserpass, Engine.conf.FilezHideFiles);
                     break;
                 case ImageDestType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
