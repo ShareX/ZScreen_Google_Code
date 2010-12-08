@@ -32,6 +32,7 @@ using System.Net.Cache;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.HelperClasses;
@@ -48,7 +49,9 @@ namespace UploadersLib
         public const int BufferSize = 4096;
 
         public string UserAgent { get; set; }
+        [XmlIgnore]
         public List<string> Errors { get; private set; }
+        [XmlIgnore]
         public bool IsUploading { get; private set; }
 
         private bool stopUpload;

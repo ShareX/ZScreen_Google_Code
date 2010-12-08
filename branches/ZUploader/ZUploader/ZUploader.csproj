@@ -198,7 +198,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Tools\Sgen.exe" /a:"$(TargetPath)" /f /t:"ZUploader.Settings"</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"$(TargetPath)" /f /t:"ZUploader.Settings"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
