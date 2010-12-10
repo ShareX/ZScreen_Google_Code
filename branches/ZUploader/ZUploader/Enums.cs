@@ -48,8 +48,6 @@ namespace ZUploader
         IMGUR,
         //[Description("uploadscreenshot.com")]
         //UPLOADSCREENSHOT,
-        [Description("filez.muffinz.eu")]
-        FilezImages,
         [Description("Use file uploader")]
         FILE
     }

@@ -60,22 +60,27 @@ namespace HelpersLib
             return false;
         }
 
-        private static readonly string[] ImageFileExtensions = { "jpg", "jpeg", "png", "gif", "bmp", "ico", "tif", "tiff" };
+        public static bool IsValidFile(string path, Type enumType)
+        {
+            string ext = Path.GetExtension(path);
+
+            if (!string.IsNullOrEmpty(ext) && ext.Length > 1)
+            {
+                ext = ext.Remove(0, 1);
+                return Enum.GetNames(enumType).Any(x => ext.Equals(x, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return false;
+        }
 
         public static bool IsImageFile(string path)
         {
-            string ext = Path.GetExtension(path).ToLower();
-
-            return ImageFileExtensions.Any(x => ext.EndsWith(x));
+            return IsValidFile(path, typeof(ImageFileExtensions));
         }
-
-        private static readonly string[] TextFileExtensions = { "txt", "rtf", "log", "doc", "docx" };
 
         public static bool IsTextFile(string path)
         {
-            string ext = Path.GetExtension(path).ToLower();
-
-            return TextFileExtensions.Any(x => ext.EndsWith(x));
+            return IsValidFile(path, typeof(TextFileExtensions));
         }
 
         public static void CopyFileToClipboard(string path)

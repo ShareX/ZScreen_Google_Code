@@ -26,6 +26,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
+using HelpersLib;
 using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
@@ -67,9 +68,21 @@ namespace UploadersLib.FileUploaders
             if (!string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\""))
             {
                 Dictionary<string, Dictionary<string, string>> data = new JavaScriptSerializer().Deserialize<Dictionary<string, Dictionary<string, string>>>(response);
-                if (data["info"] != null)
+
+                if (data != null && data["info"] != null)
                 {
-                    result.URL = data["info"]["forcedl"];
+                    if (Helpers.IsImageFile(fileName))
+                    {
+                        result.URL = data["info"]["dl"];
+                    }
+                    else if (Helpers.IsTextFile(fileName))
+                    {
+                        result.URL = data["info"]["highlight"];
+                    }
+                    else
+                    {
+                        result.URL = data["info"]["forcedl"];
+                    }
                 }
             }
 

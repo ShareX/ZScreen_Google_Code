@@ -207,9 +207,6 @@ namespace ZUploader
                 case ImageDestType2.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TinyPicID, Program.TinyPicKey, string.Empty);
                     break;
-                case ImageDestType2.FilezImages:
-                    imageUploader = new FilezImages();
-                    break;
                 case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;
