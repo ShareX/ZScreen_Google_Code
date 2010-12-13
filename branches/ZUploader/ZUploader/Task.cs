@@ -347,6 +347,7 @@ namespace ZUploader
         private void PrepareUploader(Uploader currentUploader)
         {
             uploader = currentUploader;
+            uploader.BufferSize = Program.Settings.BufferSizePower;
             uploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
         }
 

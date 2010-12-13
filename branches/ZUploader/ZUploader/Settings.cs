@@ -43,6 +43,8 @@ namespace ZUploader
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
 
+        public int BufferSizePower = 3;
+
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public int ImageJPEGQuality = 90;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;

@@ -46,11 +46,15 @@ namespace UploadersLib
 
         public static ProxySettings ProxySettings = new ProxySettings();
 
-        public const int BufferSize = 4096;
+        [XmlIgnore]
+        public int BufferSize { get; set; }
 
-        public string UserAgent { get; set; }
         [XmlIgnore]
         public List<string> Errors { get; private set; }
+
+        [XmlIgnore]
+        public string UserAgent { get; set; }
+
         [XmlIgnore]
         public bool IsUploading { get; private set; }
 
@@ -58,6 +62,7 @@ namespace UploadersLib
 
         public Uploader()
         {
+            this.BufferSize = 8192;
             this.Errors = new List<string>();
             this.UserAgent = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
         }

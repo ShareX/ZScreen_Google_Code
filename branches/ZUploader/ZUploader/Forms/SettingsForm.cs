@@ -50,6 +50,13 @@ namespace ZUploader
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbShellContextMenu.Checked = ShellContextMenu.Check();
 
+            for (int i = 0; i < 12; i++)
+            {
+                cbBufferSize.Items.Add(Math.Pow(2, i).ToString("N0"));
+            }
+
+            cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower;
+
             cbImageFormat.SelectedIndex = (int)Program.Settings.ImageFormat;
             nudImageJPEGQuality.Value = Program.Settings.ImageJPEGQuality;
             cbImageGIFQuality.SelectedIndex = (int)Program.Settings.ImageGIFQuality;
@@ -143,6 +150,17 @@ namespace ZUploader
         }
 
         #endregion General
+
+        #region Upload
+
+        private void cbBufferSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.Settings.BufferSizePower = cbBufferSize.SelectedIndex;
+            string bufferSize = (Math.Pow(2, Program.Settings.BufferSizePower) * 1024 / 1000).ToString("#,0.###");
+            lblBufferSizeInfo.Text = string.Format("x {0} kb = {1} kb", 1.024, bufferSize);
+        }
+
+        #endregion Upload
 
         #region Image
 
