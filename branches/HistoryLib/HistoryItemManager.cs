@@ -25,6 +25,7 @@
 
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -33,6 +34,7 @@ namespace HistoryLib
     public class HistoryItemManager
     {
         public HistoryItem HistoryItem { get; private set; }
+        public int HistoryItemCount { get; private set; }
 
         public bool IsURLExist { get; private set; }
         public bool IsThumbnailURLExist { get; private set; }
@@ -45,9 +47,16 @@ namespace HistoryLib
         public bool IsImageFile { get; private set; }
         public bool IsTextFile { get; private set; }
 
-        public HistoryItemManager(HistoryItem historyItem)
+        private ListView lv;
+
+        public HistoryItemManager(ListView listView)
         {
-            HistoryItem = historyItem;
+            lv = listView;
+        }
+
+        public bool RefreshInfo()
+        {
+            HistoryItem = GetSelectedHistoryItem();
 
             if (HistoryItem != null)
             {
@@ -61,7 +70,23 @@ namespace HistoryLib
                 IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
                 IsImageFile = IsFileExist && Helpers.IsImageFile(HistoryItem.Filepath);
                 IsTextFile = IsFileExist && Helpers.IsTextFile(HistoryItem.Filepath);
+
+                return true;
             }
+
+            return false;
+        }
+
+        private HistoryItem GetSelectedHistoryItem()
+        {
+            HistoryItemCount = lv.SelectedItems.Count;
+
+            if (HistoryItemCount > 0)
+            {
+                return lv.SelectedItems[0].Tag as HistoryItem;
+            }
+
+            return null;
         }
 
         public void OpenURL()
@@ -91,7 +116,21 @@ namespace HistoryLib
 
         public void CopyURL()
         {
-            if (HistoryItem != null && IsURLExist) Clipboard.SetText(HistoryItem.URL);
+            if (HistoryItem != null && IsURLExist)
+            {
+                string[] array = lv.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as HistoryItem).
+                    Where(x => x != null && !string.IsNullOrEmpty(x.URL)).Select(x => x.URL).ToArray();
+
+                if (array != null && array.Length > 0)
+                {
+                    string urls = string.Join("\r\n", array);
+
+                    if (!string.IsNullOrEmpty(urls))
+                    {
+                        Clipboard.SetText(urls);
+                    }
+                }
+            }
         }
 
         public void CopyThumbnailURL()

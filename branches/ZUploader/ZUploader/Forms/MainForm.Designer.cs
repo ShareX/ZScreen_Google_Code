@@ -110,69 +110,70 @@ namespace ZUploader
             this.uploadFileToolStripMenuItem,
             this.stopUploadToolStripMenuItem});
             this.cmsUploads.Name = "cmsUploads";
-            this.cmsUploads.Size = new System.Drawing.Size(188, 224);
-            this.cmsUploads.Opening += new System.ComponentModel.CancelEventHandler(this.cmsUploads_Opening);
+            this.cmsUploads.ShowImageMargin = false;
+            this.cmsUploads.ShowItemToolTips = false;
+            this.cmsUploads.Size = new System.Drawing.Size(163, 202);
             //
             // openURLToolStripMenuItem
             //
             this.openURLToolStripMenuItem.Name = "openURLToolStripMenuItem";
-            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.openURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.openURLToolStripMenuItem.Text = "Open URL";
             this.openURLToolStripMenuItem.Click += new System.EventHandler(this.openURLToolStripMenuItem_Click);
             //
             // copyURLToolStripMenuItem
             //
             this.copyURLToolStripMenuItem.Name = "copyURLToolStripMenuItem";
-            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
             //
             // copyThumbnailURLToolStripMenuItem
             //
             this.copyThumbnailURLToolStripMenuItem.Name = "copyThumbnailURLToolStripMenuItem";
-            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyThumbnailURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.copyThumbnailURLToolStripMenuItem.Text = "Copy Thumbnail URL";
             this.copyThumbnailURLToolStripMenuItem.Click += new System.EventHandler(this.copyThumbnailURLToolStripMenuItem_Click);
             //
             // copyDeletionURLToolStripMenuItem
             //
             this.copyDeletionURLToolStripMenuItem.Name = "copyDeletionURLToolStripMenuItem";
-            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyDeletionURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.copyDeletionURLToolStripMenuItem.Text = "Copy Deletion URL";
             this.copyDeletionURLToolStripMenuItem.Click += new System.EventHandler(this.copyDeletionURLToolStripMenuItem_Click);
             //
             // showErrorsToolStripMenuItem
             //
             this.showErrorsToolStripMenuItem.Name = "showErrorsToolStripMenuItem";
-            this.showErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showErrorsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.showErrorsToolStripMenuItem.Text = "Show Errors";
             this.showErrorsToolStripMenuItem.Click += new System.EventHandler(this.showErrorsToolStripMenuItem_Click);
             //
             // copyErrorsToolStripMenuItem
             //
             this.copyErrorsToolStripMenuItem.Name = "copyErrorsToolStripMenuItem";
-            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyErrorsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.copyErrorsToolStripMenuItem.Text = "Copy Errors";
             this.copyErrorsToolStripMenuItem.Click += new System.EventHandler(this.copyErrorsToolStripMenuItem_Click);
             //
             // showResponseToolStripMenuItem
             //
             this.showResponseToolStripMenuItem.Name = "showResponseToolStripMenuItem";
-            this.showResponseToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showResponseToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.showResponseToolStripMenuItem.Text = "Show Response";
             this.showResponseToolStripMenuItem.Click += new System.EventHandler(this.showResponseToolStripMenuItem_Click);
             //
             // uploadFileToolStripMenuItem
             //
             this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
-            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.uploadFileToolStripMenuItem.Text = "Upload file...";
             this.uploadFileToolStripMenuItem.Click += new System.EventHandler(this.uploadFileToolStripMenuItem_Click);
             //
             // stopUploadToolStripMenuItem
             //
             this.stopUploadToolStripMenuItem.Name = "stopUploadToolStripMenuItem";
-            this.stopUploadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.stopUploadToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.stopUploadToolStripMenuItem.Text = "Stop upload";
             this.stopUploadToolStripMenuItem.Click += new System.EventHandler(this.stopUploadToolStripMenuItem_Click);
             //
@@ -340,7 +341,6 @@ namespace ZUploader
             this.chUploaderType,
             this.chHost,
             this.chURL});
-            this.lvUploads.ContextMenuStrip = this.cmsUploads;
             this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvUploads.FullRowSelect = true;
             this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -354,6 +354,7 @@ namespace ZUploader
             this.lvUploads.View = System.Windows.Forms.View.Details;
             this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
             this.lvUploads.DoubleClick += new System.EventHandler(this.lvUploads_DoubleClick);
+            this.lvUploads.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvUploads_MouseUp);
             //
             // chFilename
             //

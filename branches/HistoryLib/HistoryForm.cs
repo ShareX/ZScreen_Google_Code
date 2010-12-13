@@ -51,6 +51,7 @@ namespace HistoryLib
             DatabasePath = databasePath;
             MaxItemCount = maxItemCount;
             this.Text = title;
+            him = new HistoryItemManager(lvHistory);
             ResetControls();
             cbFilenameFilterMethod.SelectedIndex = 0; // Contains
             cbFilenameFilterCulture.SelectedIndex = 1; // Invariant culture
@@ -219,32 +220,39 @@ namespace HistoryLib
 
         private bool UpdateControls()
         {
-            HistoryItem hi = GetSelectedHistoryItem();
-
-            if (hi != null)
+            if (him.RefreshInfo())
             {
-                him = new HistoryItemManager(hi);
                 UpdateButtons();
-                UpdateMenu();
                 UpdatePictureBox();
-
                 return true;
             }
 
             ResetControls();
-
             return false;
         }
 
         private void UpdateButtons()
         {
+            // Buttons
             btnCopyURL.Enabled = him.IsURLExist;
             btnOpenURL.Enabled = him.IsURLExist;
             btnOpenLocalFile.Enabled = him.IsFileExist;
-        }
 
-        private void UpdateMenu()
-        {
+            // Multi URL?
+            int itemsCount = lvHistory.SelectedItems.Count;
+
+            if (itemsCount > 1)
+            {
+                tsmiCopyURL.Text = string.Format("URLs ({0})", itemsCount);
+                btnCopyURL.Text = string.Format("Copy URLs ({0})", itemsCount);
+            }
+            else
+            {
+                tsmiCopyURL.Text = "URL";
+                btnCopyURL.Text = "Copy URL";
+            }
+
+            cmsHistory.SuspendLayout();
             cmsHistory.Enabled = true;
 
             // Open
@@ -279,13 +287,15 @@ namespace HistoryLib
 
             // Delete
             tsmiDeleteLocalFile.Enabled = him.IsFileExist;
+
+            cmsHistory.ResumeLayout();
         }
 
         private void UpdatePictureBox()
         {
             pbThumbnail.Reset();
 
-            if (him.HistoryItem.Type == "Image")
+            if (him.IsImageURL)
             {
                 pbThumbnail.LoadImage(him.HistoryItem.Filepath, him.HistoryItem.URL);
             }
@@ -303,16 +313,6 @@ namespace HistoryLib
 
             // PictureBox
             pbThumbnail.Reset();
-        }
-
-        private HistoryItem GetSelectedHistoryItem()
-        {
-            if (lvHistory.SelectedItems.Count > 0)
-            {
-                return lvHistory.SelectedItems[0].Tag as HistoryItem;
-            }
-
-            return null;
         }
 
         private void RemoveSelectedHistoryItem()
@@ -373,6 +373,15 @@ namespace HistoryLib
         private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateControls();
+        }
+
+        private void lvHistory_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                //UpdateControls();
+                cmsHistory.Show(lvHistory, e.X + 1, e.Y + 1);
+            }
         }
 
         private void lvHistory_MouseDoubleClick(object sender, MouseEventArgs e)

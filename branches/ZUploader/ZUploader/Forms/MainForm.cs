@@ -114,12 +114,17 @@ namespace ZUploader
         {
             if (lvUploads.SelectedItems.Count > 0)
             {
-                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => ((UploadResult)x.Tag).URL).ToArray();
-                string urls = string.Join("\r\n", array);
+                string[] array = lvUploads.SelectedItems.Cast<ListViewItem>().Select(x => x.Tag as UploadResult).
+                    Where(x => x != null && !string.IsNullOrEmpty(x.URL)).Select(x => x.URL).ToArray();
 
-                if (!string.IsNullOrEmpty(urls))
+                if (array != null && array.Length > 0)
                 {
-                    Clipboard.SetText(urls);
+                    string urls = string.Join("\r\n", array);
+
+                    if (!string.IsNullOrEmpty(urls))
+                    {
+                        Clipboard.SetText(urls);
+                    }
                 }
             }
         }
@@ -194,7 +199,9 @@ namespace ZUploader
                 copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible =
                 stopUploadToolStripMenuItem.Visible = false;
 
-            if (lvUploads.SelectedItems.Count > 0)
+            int itemsCount = lvUploads.SelectedItems.Count;
+
+            if (itemsCount > 0)
             {
                 UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
 
@@ -203,6 +210,15 @@ namespace ZUploader
                     if (!string.IsNullOrEmpty(result.URL))
                     {
                         tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
+
+                        if (itemsCount > 1)
+                        {
+                            copyURLToolStripMenuItem.Text = string.Format("Copy URLs ({0})", itemsCount);
+                        }
+                        else
+                        {
+                            copyURLToolStripMenuItem.Text = "Copy URL";
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(result.ThumbnailURL))
@@ -334,9 +350,13 @@ namespace ZUploader
             UpdateControls();
         }
 
-        private void cmsUploads_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void lvUploads_MouseUp(object sender, MouseEventArgs e)
         {
-            UpdateControls();
+            if (e.Button == MouseButtons.Right)
+            {
+                UpdateControls();
+                cmsUploads.Show(lvUploads, e.X + 1, e.Y + 1);
+            }
         }
 
         private void openURLToolStripMenuItem_Click(object sender, EventArgs e)
