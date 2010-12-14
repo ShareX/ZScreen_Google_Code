@@ -218,17 +218,18 @@ namespace HistoryLib
             tsslStatus.Text = status.ToString();
         }
 
-        private bool UpdateControls()
+        private void UpdateControls()
         {
-            if (him.RefreshInfo())
+            switch (him.RefreshInfo())
             {
-                UpdateButtons();
-                UpdatePictureBox();
-                return true;
+                case HistoryRefreshInfoResult.Success:
+                    UpdateButtons();
+                    UpdatePictureBox();
+                    break;
+                case HistoryRefreshInfoResult.Invalid:
+                    ResetControls();
+                    break;
             }
-
-            ResetControls();
-            return false;
         }
 
         private void UpdateButtons()
@@ -370,16 +371,18 @@ namespace HistoryLib
             AddHistoryItems(allHistoryItems);
         }
 
-        private void lvHistory_SelectedIndexChanged(object sender, EventArgs e)
+        private void lvHistory_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            UpdateControls();
+            if (e.IsSelected)
+            {
+                UpdateControls();
+            }
         }
 
         private void lvHistory_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                //UpdateControls();
                 cmsHistory.Show(lvHistory, e.X + 1, e.Y + 1);
             }
         }

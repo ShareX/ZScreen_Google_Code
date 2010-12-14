@@ -36,6 +36,10 @@
             this.tpGeneral = new System.Windows.Forms.TabPage();
             this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
+            this.tpUpload = new System.Windows.Forms.TabPage();
+            this.lblBufferSize = new System.Windows.Forms.Label();
+            this.lblBufferSizeInfo = new System.Windows.Forms.Label();
+            this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
@@ -68,12 +72,9 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.tpUpload = new System.Windows.Forms.TabPage();
-            this.cbBufferSize = new System.Windows.Forms.ComboBox();
-            this.lblBufferSizeInfo = new System.Windows.Forms.Label();
-            this.lblBufferSize = new System.Windows.Forms.Label();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
+            this.tpUpload.SuspendLayout();
             this.tpImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).BeginInit();
@@ -83,7 +84,6 @@
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
-            this.tpUpload.SuspendLayout();
             this.SuspendLayout();
             // 
             // pgFTPSettings
@@ -183,6 +183,46 @@
             this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell context menu";
             this.cbShellContextMenu.UseVisualStyleBackColor = true;
             this.cbShellContextMenu.CheckedChanged += new System.EventHandler(this.cbShellContextMenu_CheckedChanged);
+            // 
+            // tpUpload
+            // 
+            this.tpUpload.Controls.Add(this.lblBufferSize);
+            this.tpUpload.Controls.Add(this.lblBufferSizeInfo);
+            this.tpUpload.Controls.Add(this.cbBufferSize);
+            this.tpUpload.Location = new System.Drawing.Point(4, 22);
+            this.tpUpload.Name = "tpUpload";
+            this.tpUpload.Size = new System.Drawing.Size(482, 259);
+            this.tpUpload.TabIndex = 7;
+            this.tpUpload.Text = "Upload";
+            this.tpUpload.UseVisualStyleBackColor = true;
+            // 
+            // lblBufferSize
+            // 
+            this.lblBufferSize.AutoSize = true;
+            this.lblBufferSize.Location = new System.Drawing.Point(16, 16);
+            this.lblBufferSize.Name = "lblBufferSize";
+            this.lblBufferSize.Size = new System.Drawing.Size(59, 13);
+            this.lblBufferSize.TabIndex = 2;
+            this.lblBufferSize.Text = "Buffer size:";
+            // 
+            // lblBufferSizeInfo
+            // 
+            this.lblBufferSizeInfo.AutoSize = true;
+            this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 16);
+            this.lblBufferSizeInfo.Name = "lblBufferSizeInfo";
+            this.lblBufferSizeInfo.Size = new System.Drawing.Size(19, 13);
+            this.lblBufferSizeInfo.TabIndex = 1;
+            this.lblBufferSizeInfo.Text = "kb";
+            // 
+            // cbBufferSize
+            // 
+            this.cbBufferSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBufferSize.FormattingEnabled = true;
+            this.cbBufferSize.Location = new System.Drawing.Point(80, 12);
+            this.cbBufferSize.Name = "cbBufferSize";
+            this.cbBufferSize.Size = new System.Drawing.Size(64, 21);
+            this.cbBufferSize.TabIndex = 0;
+            this.cbBufferSize.SelectedIndexChanged += new System.EventHandler(this.cbBufferSize_SelectedIndexChanged);
             // 
             // tpImage
             // 
@@ -389,8 +429,8 @@
             this.lblClipboardUploadInfo.Name = "lblClipboardUploadInfo";
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(476, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
-            this.lblClipboardUploadInfo.Text = "Clipboard upload automaticly detect data type and select upload service according" +
-    "ly.";
+            this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
+    "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -456,7 +496,7 @@
             this.lblHistoryInfo.Name = "lblHistoryInfo";
             this.lblHistoryInfo.Size = new System.Drawing.Size(476, 29);
             this.lblHistoryInfo.TabIndex = 15;
-            this.lblHistoryInfo.Text = "ZUploader using SQLite for store history items.";
+            this.lblHistoryInfo.Text = "ZUploader uses SQLite to store history items.";
             this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // nudHistoryMaxItemCount
@@ -576,46 +616,6 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // tpUpload
-            // 
-            this.tpUpload.Controls.Add(this.lblBufferSize);
-            this.tpUpload.Controls.Add(this.lblBufferSizeInfo);
-            this.tpUpload.Controls.Add(this.cbBufferSize);
-            this.tpUpload.Location = new System.Drawing.Point(4, 22);
-            this.tpUpload.Name = "tpUpload";
-            this.tpUpload.Size = new System.Drawing.Size(482, 259);
-            this.tpUpload.TabIndex = 7;
-            this.tpUpload.Text = "Upload";
-            this.tpUpload.UseVisualStyleBackColor = true;
-            // 
-            // cbBufferSize
-            // 
-            this.cbBufferSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBufferSize.FormattingEnabled = true;
-            this.cbBufferSize.Location = new System.Drawing.Point(80, 12);
-            this.cbBufferSize.Name = "cbBufferSize";
-            this.cbBufferSize.Size = new System.Drawing.Size(64, 21);
-            this.cbBufferSize.TabIndex = 0;
-            this.cbBufferSize.SelectedIndexChanged += new System.EventHandler(this.cbBufferSize_SelectedIndexChanged);
-            // 
-            // lblBufferSizeInfo
-            // 
-            this.lblBufferSizeInfo.AutoSize = true;
-            this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 16);
-            this.lblBufferSizeInfo.Name = "lblBufferSizeInfo";
-            this.lblBufferSizeInfo.Size = new System.Drawing.Size(19, 13);
-            this.lblBufferSizeInfo.TabIndex = 1;
-            this.lblBufferSizeInfo.Text = "kb";
-            // 
-            // lblBufferSize
-            // 
-            this.lblBufferSize.AutoSize = true;
-            this.lblBufferSize.Location = new System.Drawing.Point(16, 16);
-            this.lblBufferSize.Name = "lblBufferSize";
-            this.lblBufferSize.Size = new System.Drawing.Size(59, 13);
-            this.lblBufferSize.TabIndex = 2;
-            this.lblBufferSize.Text = "Buffer size:";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -633,6 +633,8 @@
             this.tcSettings.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
             this.tpGeneral.PerformLayout();
+            this.tpUpload.ResumeLayout(false);
+            this.tpUpload.PerformLayout();
             this.tpImage.ResumeLayout(false);
             this.tpImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).EndInit();
@@ -646,8 +648,6 @@
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
-            this.tpUpload.ResumeLayout(false);
-            this.tpUpload.PerformLayout();
             this.ResumeLayout(false);
 
         }

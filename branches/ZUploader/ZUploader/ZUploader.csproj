@@ -163,7 +163,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Docs\Changes.log" />
     <None Include="Resources\navigation-090-button.png" />
     <None Include="Resources\cross-button.png" />
     <None Include="Resources\tick-button.png" />
@@ -177,6 +176,7 @@
     <None Include="Resources\application-form.png" />
     <None Include="Resources\information.png" />
     <None Include="Resources\address-book-blue.png" />
+    <Content Include="Docs\VersionHistory.txt" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

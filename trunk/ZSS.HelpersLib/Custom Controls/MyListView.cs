@@ -75,5 +75,18 @@ namespace HelpersLib.Custom_Controls
                 base.OnNotifyMessage(m);
             }
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (this.MultiSelect && e.Control && e.KeyCode == Keys.A)
+            {
+                foreach (ListViewItem lvi in this.Items)
+                {
+                    lvi.Selected = true;
+                }
+            }
+
+            base.OnKeyDown(e);
+        }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Custom Controls\ObjectListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Enums.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>

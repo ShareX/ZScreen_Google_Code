@@ -54,27 +54,34 @@ namespace HistoryLib
             lv = listView;
         }
 
-        public bool RefreshInfo()
+        public HistoryRefreshInfoResult RefreshInfo()
         {
-            HistoryItem = GetSelectedHistoryItem();
+            HistoryItem tempHistoryItem = GetSelectedHistoryItem();
 
-            if (HistoryItem != null)
+            if (tempHistoryItem != null)
             {
-                IsURLExist = !string.IsNullOrEmpty(HistoryItem.URL);
-                IsThumbnailURLExist = !string.IsNullOrEmpty(HistoryItem.ThumbnailURL);
-                IsDeletionURLExist = !string.IsNullOrEmpty(HistoryItem.DeletionURL);
-                IsImageURL = IsURLExist && Helpers.IsImageFile(HistoryItem.URL);
-                IsTextURL = IsURLExist && Helpers.IsTextFile(HistoryItem.URL);
-                IsFilePathValid = !string.IsNullOrEmpty(HistoryItem.Filepath) && Path.HasExtension(HistoryItem.Filepath);
-                IsFileExist = IsFilePathValid && File.Exists(HistoryItem.Filepath);
-                IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
-                IsImageFile = IsFileExist && Helpers.IsImageFile(HistoryItem.Filepath);
-                IsTextFile = IsFileExist && Helpers.IsTextFile(HistoryItem.Filepath);
+                if (HistoryItem != tempHistoryItem)
+                {
+                    HistoryItem = tempHistoryItem;
 
-                return true;
+                    IsURLExist = !string.IsNullOrEmpty(HistoryItem.URL);
+                    IsThumbnailURLExist = !string.IsNullOrEmpty(HistoryItem.ThumbnailURL);
+                    IsDeletionURLExist = !string.IsNullOrEmpty(HistoryItem.DeletionURL);
+                    IsImageURL = IsURLExist && Helpers.IsImageFile(HistoryItem.URL);
+                    IsTextURL = IsURLExist && Helpers.IsTextFile(HistoryItem.URL);
+                    IsFilePathValid = !string.IsNullOrEmpty(HistoryItem.Filepath) && Path.HasExtension(HistoryItem.Filepath);
+                    IsFileExist = IsFilePathValid && File.Exists(HistoryItem.Filepath);
+                    IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
+                    IsImageFile = IsFileExist && Helpers.IsImageFile(HistoryItem.Filepath);
+                    IsTextFile = IsFileExist && Helpers.IsTextFile(HistoryItem.Filepath);
+
+                    return HistoryRefreshInfoResult.Success;
+                }
+
+                return HistoryRefreshInfoResult.Same;
             }
 
-            return false;
+            return HistoryRefreshInfoResult.Invalid;
         }
 
         private HistoryItem GetSelectedHistoryItem()
