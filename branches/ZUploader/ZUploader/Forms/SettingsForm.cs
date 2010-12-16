@@ -37,6 +37,8 @@ namespace ZUploader
         private bool loaded;
         private ContextMenuStrip codesMenu;
 
+        private const int MaxBufferSizePower = 12;
+
         public SettingsForm()
         {
             InitializeComponent();
@@ -50,12 +52,12 @@ namespace ZUploader
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbShellContextMenu.Checked = ShellContextMenu.Check();
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < MaxBufferSizePower; i++)
             {
                 cbBufferSize.Items.Add(Math.Pow(2, i).ToString("N0"));
             }
 
-            cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower;
+            cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower.Between(0, MaxBufferSizePower);
 
             cbImageFormat.SelectedIndex = (int)Program.Settings.ImageFormat;
             nudImageJPEGQuality.Value = Program.Settings.ImageJPEGQuality;

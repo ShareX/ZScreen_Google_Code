@@ -200,5 +200,10 @@ namespace HelpersLib
             result = text.Remove(location, search.Length).Insert(location, replace);
             return true;
         }
+
+        public static int Between(this int num, int min, int max)
+        {
+            return Math.Min(Math.Max(num, min), max);
+        }
     }
 }

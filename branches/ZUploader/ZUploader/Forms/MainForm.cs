@@ -79,11 +79,27 @@ namespace ZUploader
 
         private void LoadSettings()
         {
+            Program.Settings.SelectedImageUploaderDestination = 5;
+            if (Helpers.GetEnumLength<ImageDestType2>() <= Program.Settings.SelectedImageUploaderDestination)
+            {
+                Program.Settings.SelectedImageUploaderDestination = 0;
+            }
+
             ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
             UploadManager.ImageUploader = (ImageDestType2)Program.Settings.SelectedImageUploaderDestination;
 
+            if (Helpers.GetEnumLength<FileUploaderType2>() <= Program.Settings.SelectedFileUploaderDestination)
+            {
+                Program.Settings.SelectedFileUploaderDestination = 0;
+            }
+
             ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
             UploadManager.FileUploader = (FileUploaderType2)Program.Settings.SelectedFileUploaderDestination;
+
+            if (Helpers.GetEnumLength<TextDestType2>() <= Program.Settings.SelectedTextUploaderDestination)
+            {
+                Program.Settings.SelectedTextUploaderDestination = 0;
+            }
 
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
