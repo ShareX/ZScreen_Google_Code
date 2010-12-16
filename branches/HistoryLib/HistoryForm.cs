@@ -232,14 +232,8 @@ namespace HistoryLib
             }
         }
 
-        private void UpdateButtons()
+        private void UpdateTexts()
         {
-            // Buttons
-            btnCopyURL.Enabled = him.IsURLExist;
-            btnOpenURL.Enabled = him.IsURLExist;
-            btnOpenLocalFile.Enabled = him.IsFileExist;
-
-            // Multi URL?
             int itemsCount = lvHistory.SelectedItems.Count;
 
             if (itemsCount > 1)
@@ -252,6 +246,14 @@ namespace HistoryLib
                 tsmiCopyURL.Text = "URL";
                 btnCopyURL.Text = "Copy URL";
             }
+        }
+
+        private void UpdateButtons()
+        {
+            // Buttons
+            btnCopyURL.Enabled = him.IsURLExist;
+            btnOpenURL.Enabled = him.IsURLExist;
+            btnOpenLocalFile.Enabled = him.IsFileExist;
 
             cmsHistory.SuspendLayout();
             cmsHistory.Enabled = true;
@@ -373,6 +375,8 @@ namespace HistoryLib
 
         private void lvHistory_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
+            UpdateTexts();
+
             if (e.IsSelected)
             {
                 UpdateControls();

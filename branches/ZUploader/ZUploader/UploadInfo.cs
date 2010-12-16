@@ -25,6 +25,7 @@
 
 using System;
 using System.IO;
+using HelpersLib;
 using HistoryLib;
 using UploadersLib.HelperClasses;
 using ZUploader.HelperClasses;

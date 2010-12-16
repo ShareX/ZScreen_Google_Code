@@ -207,20 +207,18 @@ namespace ZUploader
                 case ImageDestType2.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TinyPicID, Program.TinyPicKey, string.Empty);
                     break;
-                case ImageDestType2.IMAGEBIN:
+                /*case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;
                 case ImageDestType2.IMG1:
                     imageUploader = new Img1Uploader();
-                    break;
+                    break;*/
                 case ImageDestType2.IMGUR:
                     imageUploader = new Imgur(Program.ImgurKey);
                     break;
                 /*case ImageDestType2.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Program.UploadScreenshotKey);
                     break;*/
-                default:
-                    break;
             }
 
             if (imageUploader != null)
@@ -251,36 +249,33 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
-                case FileUploaderType2.FTP:
-                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
+                case FileUploaderType2.RapidShare:
+                    fileUploader = new RapidShare();
                     break;
                 case FileUploaderType2.SendSpace:
                     fileUploader = new SendSpace();
                     SendSpaceManager.PrepareUploadInfo(null, null);
                     break;
-                case FileUploaderType2.RapidShare:
-                    fileUploader = new RapidShare();
-                    break;
-                case FileUploaderType2.FilezFiles:
-                    fileUploader = new FilezFiles();
-                    break;
-                case FileUploaderType2.FileBin:
+                /*case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
-                    break;
+                    break;*/
                 case FileUploaderType2.DropIO:
                     fileUploader = new DropIO();
                     break;
                 case FileUploaderType2.ShareCX:
                     fileUploader = new ShareCX();
                     break;
-                default:
+                case FileUploaderType2.FilezFiles:
+                    fileUploader = new FilezFiles();
+                    break;
+                case FileUploaderType2.FTP:
+                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
                     break;
             }
 
             if (fileUploader != null)
             {
                 PrepareUploader(fileUploader);
-
                 return fileUploader.Upload(stream, fileName);
             }
 
@@ -293,9 +288,6 @@ namespace ZUploader
 
             switch (UploadManager.TextUploader)
             {
-                case TextDestType2.PASTE2:
-                    textUploader = new Paste2Uploader();
-                    break;
                 case TextDestType2.PASTEBIN:
                     textUploader = new PastebinUploader();
                     break;
@@ -305,16 +297,15 @@ namespace ZUploader
                 case TextDestType2.SLEXY:
                     textUploader = new SlexyUploader();
                     break;
-                default:
+                case TextDestType2.PASTE2:
+                    textUploader = new Paste2Uploader();
                     break;
             }
 
             if (textUploader != null)
             {
                 PrepareUploader(textUploader);
-
                 string url = textUploader.UploadText(stream);
-
                 return new UploadResult(null, url);
             }
 

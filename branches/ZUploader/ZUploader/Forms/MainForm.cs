@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 using HistoryLib;
 using UploadersLib.HelperClasses;
 
@@ -47,19 +48,19 @@ namespace ZUploader
         {
             this.Text = Program.Title;
 
-            foreach (string imageUploader in typeof(ImageDestType2).GetDescriptions())
+            foreach (string imageUploader in Extensions.GetDescriptions<ImageDestType2>())
             {
                 tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
             tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
-            foreach (string fileUploader in typeof(FileUploaderType2).GetDescriptions())
+            foreach (string fileUploader in Extensions.GetDescriptions<FileUploaderType2>())
             {
                 tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
-            foreach (string textUploader in typeof(TextDestType2).GetDescriptions())
+            foreach (string textUploader in Extensions.GetDescriptions<TextDestType2>())
             {
                 tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }

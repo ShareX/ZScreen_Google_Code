@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -40,6 +41,24 @@ namespace HelpersLib
             FieldInfo fi = value.GetType().GetField(value.ToString());
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+        }
+
+        public static string[] GetDescriptions<T>()
+        {
+            List<string> descriptions = new List<string>();
+            Type enumType = typeof(T);
+
+            if (enumType.BaseType != typeof(Enum))
+            {
+                throw new ArgumentException("T must be of type System.Enum");
+            }
+
+            foreach (int value in Enum.GetValues(enumType))
+            {
+                descriptions.Add(((Enum)Enum.ToObject(enumType, value)).GetDescription());
+            }
+
+            return descriptions.ToArray();
         }
 
         public static XElement GetElement(this XElement xe, params string[] elements)
