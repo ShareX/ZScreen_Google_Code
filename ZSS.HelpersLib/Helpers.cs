@@ -325,5 +325,10 @@ namespace HelpersLib
                 return ms.ToArray();
             }
         }
+
+        public static int GetEnumLength<T>()
+        {
+            return Enum.GetValues(typeof(T)).Length;
+        }
     }
 }
