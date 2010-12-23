@@ -260,7 +260,7 @@ namespace ZUploader
 
                 if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(info.Result.URL))
                 {
-                    Clipboard.SetText(info.Result.URL);
+                    Helpers.CopyTextSafely(info.Result.URL);
                 }
 
                 if (Program.Settings.AutoPlaySound)

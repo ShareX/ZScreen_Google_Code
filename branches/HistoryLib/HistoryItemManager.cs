@@ -134,7 +134,7 @@ namespace HistoryLib
 
                     if (!string.IsNullOrEmpty(urls))
                     {
-                        Clipboard.SetText(urls);
+                        Helpers.CopyTextSafely(urls);
                     }
                 }
             }
@@ -142,12 +142,12 @@ namespace HistoryLib
 
         public void CopyThumbnailURL()
         {
-            if (HistoryItem != null && IsThumbnailURLExist) Clipboard.SetText(HistoryItem.ThumbnailURL);
+            if (HistoryItem != null && IsThumbnailURLExist) Helpers.CopyTextSafely(HistoryItem.ThumbnailURL);
         }
 
         public void CopyDeletionURL()
         {
-            if (HistoryItem != null && IsDeletionURLExist) Clipboard.SetText(HistoryItem.DeletionURL);
+            if (HistoryItem != null && IsDeletionURLExist) Helpers.CopyTextSafely(HistoryItem.DeletionURL);
         }
 
         public void CopyFile()
@@ -157,68 +157,68 @@ namespace HistoryLib
 
         public void CopyImage()
         {
-            if (HistoryItem != null && IsImageFile) Helpers.CopyImageToClipboard(HistoryItem.Filepath);
+            if (HistoryItem != null && IsImageFile) Helpers.CopyImageFileToClipboard(HistoryItem.Filepath);
         }
 
         public void CopyText()
         {
-            if (HistoryItem != null && IsTextFile) Helpers.CopyTextToClipboard(HistoryItem.Filepath);
+            if (HistoryItem != null && IsTextFile) Helpers.CopyTextFileToClipboard(HistoryItem.Filepath);
         }
 
         public void CopyHTMLLink()
         {
-            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("<a href=\"{0}\">{0}</a>", HistoryItem.URL));
+            if (HistoryItem != null && IsURLExist) Helpers.CopyTextSafely(string.Format("<a href=\"{0}\">{0}</a>", HistoryItem.URL));
         }
 
         public void CopyHTMLImage()
         {
-            if (HistoryItem != null && IsImageURL) Clipboard.SetText(string.Format("<img src=\"{0}\"/>", HistoryItem.URL));
+            if (HistoryItem != null && IsImageURL) Helpers.CopyTextSafely(string.Format("<img src=\"{0}\"/>", HistoryItem.URL));
         }
 
         public void CopyHTMLLinkedImage()
         {
             if (HistoryItem != null && IsImageURL && IsThumbnailURLExist)
             {
-                Clipboard.SetText(string.Format("<a href=\"{0}\"><img src=\"{1}\"/></a>", HistoryItem.URL, HistoryItem.ThumbnailURL));
+                Helpers.CopyTextSafely(string.Format("<a href=\"{0}\"><img src=\"{1}\"/></a>", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }
         }
 
         public void CopyForumLink()
         {
-            if (HistoryItem != null && IsURLExist) Clipboard.SetText(string.Format("[url]{0}[/url]", HistoryItem.URL));
+            if (HistoryItem != null && IsURLExist) Helpers.CopyTextSafely(string.Format("[url]{0}[/url]", HistoryItem.URL));
         }
 
         public void CopyForumImage()
         {
-            if (HistoryItem != null && IsImageURL) Clipboard.SetText(string.Format("[img]{0}[/img]", HistoryItem.URL));
+            if (HistoryItem != null && IsImageURL) Helpers.CopyTextSafely(string.Format("[img]{0}[/img]", HistoryItem.URL));
         }
 
         public void CopyForumLinkedImage()
         {
             if (HistoryItem != null && IsImageURL && IsThumbnailURLExist)
             {
-                Clipboard.SetText(string.Format("[url={0}][img]{1}[/img][/url]", HistoryItem.URL, HistoryItem.ThumbnailURL));
+                Helpers.CopyTextSafely(string.Format("[url={0}][img]{1}[/img][/url]", HistoryItem.URL, HistoryItem.ThumbnailURL));
             }
         }
 
         public void CopyFilePath()
         {
-            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(HistoryItem.Filepath);
+            if (HistoryItem != null && IsFilePathValid) Helpers.CopyTextSafely(HistoryItem.Filepath);
         }
 
         public void CopyFileName()
         {
-            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetFileNameWithoutExtension(HistoryItem.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Helpers.CopyTextSafely(Path.GetFileNameWithoutExtension(HistoryItem.Filepath));
         }
 
         public void CopyFileNameWithExtension()
         {
-            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetFileName(HistoryItem.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Helpers.CopyTextSafely(Path.GetFileName(HistoryItem.Filepath));
         }
 
         public void CopyFolder()
         {
-            if (HistoryItem != null && IsFilePathValid) Clipboard.SetText(Path.GetDirectoryName(HistoryItem.Filepath));
+            if (HistoryItem != null && IsFilePathValid) Helpers.CopyTextSafely(Path.GetDirectoryName(HistoryItem.Filepath));
         }
 
         public void DeleteLocalFile()

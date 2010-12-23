@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
+using HelpersLib;
 using HelpersLib.Custom_Controls;
 
 namespace HistoryLib.Custom_Controls
@@ -38,7 +39,7 @@ namespace HistoryLib.Custom_Controls
                 string text = this.SelectedItems[0].Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    Clipboard.SetText(text);
+                    Helpers.CopyTextSafely(text);
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace HistoryLib.Custom_Controls
                 string text = this.SelectedItems[0].SubItems[1].Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    Clipboard.SetText(text);
+                    Helpers.CopyTextSafely(text);
                 }
             }
         }

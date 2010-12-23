@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -34,10 +35,10 @@ namespace ZUploader
 {
     public partial class SettingsForm : Form
     {
+        private const int MaxBufferSizePower = 12;
+
         private bool loaded;
         private ContextMenuStrip codesMenu;
-
-        private const int MaxBufferSizePower = 12;
 
         public SettingsForm()
         {
@@ -148,6 +149,14 @@ namespace ZUploader
                 {
                     ShellContextMenu.Unregister();
                 }
+            }
+        }
+
+        private void btnOpenZUploaderPath_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Program.ZUploaderPersonalPath) && Directory.Exists(Program.ZUploaderPersonalPath))
+            {
+                Process.Start(Program.ZUploaderPersonalPath);
             }
         }
 

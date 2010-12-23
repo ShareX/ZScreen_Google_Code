@@ -48,19 +48,19 @@ namespace ZUploader
         {
             this.Text = Program.Title;
 
-            foreach (string imageUploader in Extensions.GetDescriptions<ImageDestType2>())
+            foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestType2>())
             {
                 tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
             tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
-            foreach (string fileUploader in Extensions.GetDescriptions<FileUploaderType2>())
+            foreach (string fileUploader in Helpers.GetEnumDescriptions<FileUploaderType2>())
             {
                 tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
-            foreach (string textUploader in Extensions.GetDescriptions<TextDestType2>())
+            foreach (string textUploader in Helpers.GetEnumDescriptions<TextDestType2>())
             {
                 tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
@@ -140,7 +140,7 @@ namespace ZUploader
 
                     if (!string.IsNullOrEmpty(urls))
                     {
-                        Clipboard.SetText(urls);
+                        Helpers.CopyTextSafely(urls);
                     }
                 }
             }
@@ -152,7 +152,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.ThumbnailURL))
             {
-                Clipboard.SetText(result.ThumbnailURL);
+                Helpers.CopyTextSafely(result.ThumbnailURL);
             }
         }
 
@@ -162,7 +162,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.DeletionURL))
             {
-                Clipboard.SetText(result.DeletionURL);
+                Helpers.CopyTextSafely(result.DeletionURL);
             }
         }
 
@@ -195,7 +195,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(errors))
             {
-                Clipboard.SetText(errors);
+                Helpers.CopyTextSafely(errors);
             }
         }
 

@@ -24,10 +24,12 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -38,6 +40,9 @@ namespace HelpersLib
 {
     public static class Helpers
     {
+        private static readonly object ClipboardLock = new object();
+        private static readonly Random Random = new Random();
+
         public static bool WriteFile(Stream stream, string filePath)
         {
             if (stream != null && !string.IsNullOrEmpty(filePath))
@@ -45,7 +50,7 @@ namespace HelpersLib
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     stream.Position = 0;
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[4096];
                     int bytesRead;
 
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
@@ -60,7 +65,7 @@ namespace HelpersLib
             return false;
         }
 
-        public static bool IsValidFile(string path, Type enumType)
+        private static bool IsValidFile(string path, Type enumType)
         {
             string ext = Path.GetExtension(path);
 
@@ -83,30 +88,55 @@ namespace HelpersLib
             return IsValidFile(path, typeof(TextFileExtensions));
         }
 
-        public static void CopyFileToClipboard(string path)
+        public static bool CopyTextSafely(string text)
         {
-            Clipboard.SetFileDropList(new StringCollection() { path });
+            if (!string.IsNullOrEmpty(text))
+            {
+                try
+                {
+                    lock (ClipboardLock)
+                    {
+                        Clipboard.Clear();
+                        Clipboard.SetText(text);
+                    }
+                }
+                catch (ExternalException)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        public static void CopyImageToClipboard(string path)
+        public static void CopyFileToClipboard(string path)
         {
             try
             {
-                using (Image img = Image.FromFile(path)) Clipboard.SetImage(img);
+                Clipboard.SetFileDropList(new StringCollection() { path });
             }
             catch { }
         }
 
-        public static void CopyTextToClipboard(string path)
+        public static void CopyImageFileToClipboard(string path)
         {
-            string text = File.ReadAllText(path);
-            Clipboard.SetText(text);
+            try
+            {
+                using (Image img = Image.FromFile(path))
+                {
+                    Clipboard.SetImage(img);
+                }
+            }
+            catch { }
         }
 
-        /// <summary>
-        /// Function to get a Rectangle of all the screens combined
-        /// </summary>
-        /// <returns></returns>
+        public static void CopyTextFileToClipboard(string path)
+        {
+            string text = File.ReadAllText(path);
+            CopyTextSafely(text);
+        }
+
+        /// <summary>Function to get a Rectangle of all the screens combined</summary>
         public static Rectangle GetScreenBounds()
         {
             Point topLeft = new Point(0, 0);
@@ -121,12 +151,7 @@ namespace HelpersLib
             return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
 
-        public static string AddZeroes(int number)
-        {
-            return AddZeroes(number, 2);
-        }
-
-        public static string AddZeroes(int number, int digits)
+        public static string AddZeroes(int number, int digits = 2)
         {
             return number.ToString("d" + digits);
         }
@@ -144,8 +169,6 @@ namespace HelpersLib
 
             return AddZeroes(hour);
         }
-
-        public static readonly Random Random = new Random();
 
         public static string GetRandomString(string chars, int length)
         {
@@ -329,6 +352,24 @@ namespace HelpersLib
         public static int GetEnumLength<T>()
         {
             return Enum.GetValues(typeof(T)).Length;
+        }
+
+        public static string[] GetEnumDescriptions<T>()
+        {
+            List<string> descriptions = new List<string>();
+            Type enumType = typeof(T);
+
+            if (enumType.BaseType != typeof(Enum))
+            {
+                throw new ArgumentException("T must be of type System.Enum");
+            }
+
+            foreach (int value in Enum.GetValues(enumType))
+            {
+                descriptions.Add(((Enum)Enum.ToObject(enumType, value)).GetDescription());
+            }
+
+            return descriptions.ToArray();
         }
     }
 }
