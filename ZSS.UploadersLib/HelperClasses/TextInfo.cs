@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.IO;
+using System.Windows.Forms;
 
 namespace UploadersLib.HelperClasses
 {
@@ -61,7 +62,7 @@ namespace UploadersLib.HelperClasses
         public static TextInfo FromClipboard()
         {
             TextInfo text = new TextInfo();
-            text.LocalString = System.Windows.Forms.Clipboard.GetText();
+            text.LocalString = Clipboard.GetText();
             return text;
         }
     }
