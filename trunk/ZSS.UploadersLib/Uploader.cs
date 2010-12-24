@@ -65,6 +65,10 @@ namespace UploadersLib
             this.BufferSize = 8192;
             this.Errors = new List<string>();
             this.UserAgent = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
+
+            ServicePointManager.DefaultConnectionLimit = 25;
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.UseNagleAlgorithm = false;
         }
 
         protected void OnProgressChanged(ProgressManager progress)
@@ -274,8 +278,6 @@ namespace UploadersLib
             request.Pipelined = false;
             request.ProtocolVersion = HttpVersion.Version11;
             request.Proxy = ProxySettings.GetWebProxy;
-            request.ServicePoint.Expect100Continue = false;
-            request.ServicePoint.UseNagleAlgorithm = false;
             request.Timeout = -1;
             request.UserAgent = UserAgent;
 

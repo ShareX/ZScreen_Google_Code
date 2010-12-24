@@ -43,6 +43,7 @@ namespace ZUploader
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
 
+        public int UploadLimit = 5;
         public int BufferSizePower = 3;
 
         public EImageFormat ImageFormat = EImageFormat.PNG;

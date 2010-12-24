@@ -170,7 +170,33 @@ namespace ZUploader
             task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
             task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
             task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
-            task.Start();
+            CreateListViewItem(task.Info);
+            StartTasks();
+        }
+
+        private static void StartTasks()
+        {
+            int workingTasksCount = Tasks.Count(x => x.IsWorking);
+            Task[] inQueueTasks = Tasks.Where(x => x.Status == TaskStatus.InQueue).ToArray();
+
+            if (inQueueTasks.Length > 0)
+            {
+                int len;
+
+                if (Program.Settings.UploadLimit == 0)
+                {
+                    len = inQueueTasks.Length;
+                }
+                else
+                {
+                    len = (Program.Settings.UploadLimit - workingTasksCount).Between(0, inQueueTasks.Length);
+                }
+
+                for (int i = 0; i < len; i++)
+                {
+                    inQueueTasks[i].Start();
+                }
+            }
         }
 
         public static void StopUpload(int index)
@@ -181,15 +207,24 @@ namespace ZUploader
             }
         }
 
-        private static void task_UploadPreparing(UploadInfo info)
+        private static void ChangeListViewItemStatus(UploadInfo info)
         {
             if (ListViewControl != null)
             {
-                Program.MyLogger.WriteLine("Upload preparing. ID: {0}, Job: {1}, Type: {2}, Host: {3}", info.ID, info.Job, info.UploaderType, info.UploaderHost);
+                ListViewItem lvi = ListViewControl.Items[info.ID];
+                lvi.SubItems[1].Text = info.Status;
+            }
+        }
+
+        private static void CreateListViewItem(UploadInfo info)
+        {
+            if (ListViewControl != null)
+            {
+                Program.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}", info.ID, info.Job, info.UploaderType, info.UploaderHost);
 
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = info.FileName;
-                lvi.SubItems.Add(info.Status);
+                lvi.SubItems.Add("In queue");
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
@@ -198,11 +233,17 @@ namespace ZUploader
                 lvi.SubItems.Add(info.UploaderHost);
                 lvi.SubItems.Add(string.Empty);
                 lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
-                lvi.ImageIndex = 0;
+                lvi.ImageIndex = 3;
                 ListViewControl.Items.Add(lvi);
                 lvi.EnsureVisible();
                 ListViewControl.AutoResizeLastColumn();
             }
+        }
+
+        private static void task_UploadPreparing(UploadInfo info)
+        {
+            Program.MyLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
+            ChangeListViewItemStatus(info);
         }
 
         private static void task_UploadStarted(UploadInfo info)
@@ -214,6 +255,7 @@ namespace ZUploader
             ListViewItem lvi = ListViewControl.Items[info.ID];
             lvi.Text = info.FileName;
             lvi.SubItems[1].Text = info.Status;
+            lvi.ImageIndex = 0;
         }
 
         private static void task_UploadProgressChanged(UploadInfo info)
@@ -231,47 +273,54 @@ namespace ZUploader
 
         private static void task_UploadCompleted(UploadInfo info)
         {
-            if (ListViewControl != null && info != null && info.Result != null)
+            try
             {
-                ListViewItem lvi = ListViewControl.Items[info.ID];
-                lvi.Tag = info.Result;
-
-                if (info.Result.Errors != null && info.Result.Errors.Count > 0)
+                if (ListViewControl != null && info != null && info.Result != null)
                 {
-                    string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
+                    ListViewItem lvi = ListViewControl.Items[info.ID];
+                    lvi.Tag = info.Result;
 
-                    Program.MyLogger.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
+                    if (info.Result.Errors != null && info.Result.Errors.Count > 0)
+                    {
+                        string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
 
-                    lvi.SubItems[1].Text = "Error";
-                    lvi.SubItems[8].Text = string.Empty;
-                    lvi.ImageIndex = 1;
+                        Program.MyLogger.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
+
+                        lvi.SubItems[1].Text = "Error";
+                        lvi.SubItems[8].Text = string.Empty;
+                        lvi.ImageIndex = 1;
+                    }
+                    else
+                    {
+                        Program.MyLogger.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
+                            info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
+
+                        lvi.SubItems[1].Text = info.Status;
+                        lvi.SubItems[8].Text = info.Result.URL;
+                        lvi.ImageIndex = 2;
+                    }
+
+                    lvi.EnsureVisible();
+
+                    if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(info.Result.URL))
+                    {
+                        Helpers.CopyTextSafely(info.Result.URL);
+                    }
+
+                    if (Program.Settings.AutoPlaySound)
+                    {
+                        SystemSounds.Exclamation.Play();
+                    }
+
+                    if (Program.Settings.SaveHistory && !string.IsNullOrEmpty(info.Result.URL) && (info.Result.Errors == null || info.Result.Errors.Count == 0))
+                    {
+                        HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
+                    }
                 }
-                else
-                {
-                    Program.MyLogger.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
-                        info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
-
-                    lvi.SubItems[1].Text = info.Status;
-                    lvi.SubItems[8].Text = info.Result.URL;
-                    lvi.ImageIndex = 2;
-                }
-
-                lvi.EnsureVisible();
-
-                if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(info.Result.URL))
-                {
-                    Helpers.CopyTextSafely(info.Result.URL);
-                }
-
-                if (Program.Settings.AutoPlaySound)
-                {
-                    SystemSounds.Exclamation.Play();
-                }
-
-                if (Program.Settings.SaveHistory && !string.IsNullOrEmpty(info.Result.URL) && (info.Result.Errors == null || info.Result.Errors.Count == 0))
-                {
-                    HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
-                }
+            }
+            finally
+            {
+                StartTasks();
             }
         }
     }

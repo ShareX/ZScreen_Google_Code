@@ -48,7 +48,8 @@ namespace ZUploader
         public event TaskEventHandler UploadCompleted;
 
         public UploadInfo Info { get; private set; }
-        public bool IsUploading { get; private set; }
+        public TaskStatus Status { get; private set; }
+        public bool IsWorking { get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; } }
         public bool IsStopped { get; private set; }
 
         private Stream data;
@@ -61,6 +62,7 @@ namespace ZUploader
 
         private Task(EDataType dataType, TaskJob job)
         {
+            Status = TaskStatus.InQueue;
             Info = new UploadInfo();
             Info.Job = job;
             Info.UploaderType = dataType;
@@ -87,7 +89,7 @@ namespace ZUploader
         public static Task CreateImageUploaderTask(EDataType dataType, Image image)
         {
             Task task = new Task(dataType, TaskJob.ImageUpload);
-            task.Info.FileName = "Image encoding...";
+            task.Info.FileName = "Require image encoding...";
             task.tempImage = image;
             return task;
         }
@@ -96,7 +98,7 @@ namespace ZUploader
         public static Task CreateTextUploaderTask(EDataType dataType, string text)
         {
             Task task = new Task(dataType, TaskJob.TextUpload);
-            task.Info.FileName = "Text encoding...";
+            task.Info.FileName = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
             task.tempText = text;
             return task;
         }
@@ -105,15 +107,32 @@ namespace ZUploader
 
         public void Start()
         {
-            OnUploadPreparing();
-            ApplyProxySettings();
+            if (Status == TaskStatus.InQueue && !IsStopped)
+            {
+                OnUploadPreparing();
+                ApplyProxySettings();
 
-            bw = new BackgroundWorker();
-            bw.WorkerReportsProgress = true;
-            bw.DoWork += new DoWorkEventHandler(UploadThread);
-            bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            bw.RunWorkerAsync();
+                bw = new BackgroundWorker();
+                bw.WorkerReportsProgress = true;
+                bw.DoWork += new DoWorkEventHandler(UploadThread);
+                bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
+                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+                bw.RunWorkerAsync();
+            }
+        }
+
+        public void Stop()
+        {
+            IsStopped = true;
+
+            if (Status == TaskStatus.InQueue)
+            {
+                OnUploadCompleted();
+            }
+            else if (Status == TaskStatus.Uploading && uploader != null)
+            {
+                uploader.StopUpload();
+            }
         }
 
         private void ApplyProxySettings()
@@ -127,21 +146,14 @@ namespace ZUploader
             Uploader.ProxySettings = proxy;
         }
 
-        public void Stop()
-        {
-            if (uploader != null && uploader.IsUploading)
-            {
-                uploader.StopUpload();
-                IsStopped = true;
-            }
-        }
-
         private void UploadThread(object sender, DoWorkEventArgs e)
         {
             CheckJob();
-            bw.ReportProgress(-1);
 
+            Status = TaskStatus.Uploading;
+            Info.Status = "Uploading";
             Info.StartTime = DateTime.UtcNow;
+            bw.ReportProgress((int)TaskProgress.ReportStarted);
 
             try
             {
@@ -191,7 +203,6 @@ namespace ZUploader
             {
                 byte[] byteArray = Encoding.UTF8.GetBytes(tempText);
                 data = new MemoryStream(byteArray);
-                Info.FileName = new NameParser().Convert(Program.Settings.NameFormatPattern) + ".txt";
             }
         }
 
@@ -224,9 +235,7 @@ namespace ZUploader
             if (imageUploader != null)
             {
                 PrepareUploader(imageUploader);
-
                 ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
-
                 UploadResult ur = new UploadResult();
 
                 if (ifm != null)
@@ -314,41 +323,41 @@ namespace ZUploader
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (!IsUploading && e.ProgressPercentage == -1)
+            switch ((TaskProgress)e.ProgressPercentage)
             {
-                OnUploadStarted();
-            }
-            else
-            {
-                ProgressManager progress = e.UserState as ProgressManager;
-                if (progress != null)
-                {
-                    Info.Progress = progress;
-                    OnUploadProgressChanged();
-                }
+                case TaskProgress.ReportStarted:
+                    OnUploadStarted();
+                    break;
+                case TaskProgress.ReportProgress:
+                    ProgressManager progress = e.UserState as ProgressManager;
+                    if (progress != null)
+                    {
+                        Info.Progress = progress;
+                        OnUploadProgressChanged();
+                    }
+                    break;
             }
         }
 
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             OnUploadCompleted();
-            Dispose();
         }
 
         private void PrepareUploader(Uploader currentUploader)
         {
             uploader = currentUploader;
             uploader.BufferSize = Program.Settings.BufferSizePower;
-            uploader.ProgressChanged += (x) => bw.ReportProgress((int)x.Percentage, x);
+            uploader.ProgressChanged += (x) => bw.ReportProgress((int)TaskProgress.ReportProgress, x);
         }
 
         private void OnUploadPreparing()
         {
+            Status = TaskStatus.Preparing;
+
             switch (Info.Job)
             {
                 case TaskJob.ImageUpload:
-                    Info.Status = "Preparing";
-                    break;
                 case TaskJob.TextUpload:
                     Info.Status = "Preparing";
                     break;
@@ -365,9 +374,6 @@ namespace ZUploader
 
         private void OnUploadStarted()
         {
-            IsUploading = true;
-            Info.Status = "Uploading";
-
             if (UploadStarted != null)
             {
                 UploadStarted(Info);
@@ -384,7 +390,7 @@ namespace ZUploader
 
         private void OnUploadCompleted()
         {
-            IsUploading = false;
+            Status = TaskStatus.Completed;
 
             if (!IsStopped)
             {
@@ -399,6 +405,8 @@ namespace ZUploader
             {
                 UploadCompleted(Info);
             }
+
+            Dispose();
         }
 
         public void Dispose()

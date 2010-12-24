@@ -139,6 +139,7 @@
     <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
     <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
     <Compile Include="Task.cs" />
+    <Compile Include="TaskEnums.cs" />
     <Compile Include="UploadManager.cs" />
     <Compile Include="UploadProgress.cs" />
     <Compile Include="Settings.cs" />
@@ -177,6 +178,7 @@
     <None Include="Resources\information.png" />
     <None Include="Resources\address-book-blue.png" />
     <Content Include="Docs\VersionHistory.txt" />
+    <None Include="Resources\navigation-000-button.png" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

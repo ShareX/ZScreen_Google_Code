@@ -71,6 +71,7 @@ namespace ZUploader
             il.Images.Add(Properties.Resources.navigation_090_button);
             il.Images.Add(Properties.Resources.cross_button);
             il.Images.Add(Properties.Resources.tick_button);
+            il.Images.Add(Properties.Resources.navigation_000_button);
             lvUploads.SmallImageList = il;
             lvUploads.AutoResizeLastColumn();
 
@@ -261,7 +262,7 @@ namespace ZUploader
                 }
 
                 int index = lvUploads.SelectedIndices[0];
-                stopUploadToolStripMenuItem.Visible = UploadManager.Tasks[index].IsUploading;
+                stopUploadToolStripMenuItem.Visible = UploadManager.Tasks[index].Status != TaskStatus.Completed;
             }
             else
             {

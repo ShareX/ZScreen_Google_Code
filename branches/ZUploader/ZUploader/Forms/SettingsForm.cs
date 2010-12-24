@@ -58,6 +58,7 @@ namespace ZUploader
                 cbBufferSize.Items.Add(Math.Pow(2, i).ToString("N0"));
             }
 
+            nudUploadLimit.Value = Program.Settings.UploadLimit;
             cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower.Between(0, MaxBufferSizePower);
 
             cbImageFormat.SelectedIndex = (int)Program.Settings.ImageFormat;
@@ -163,6 +164,11 @@ namespace ZUploader
         #endregion General
 
         #region Upload
+
+        private void nudUploadLimit_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.UploadLimit = (int)nudUploadLimit.Value;
+        }
 
         private void cbBufferSize_SelectedIndexChanged(object sender, EventArgs e)
         {
