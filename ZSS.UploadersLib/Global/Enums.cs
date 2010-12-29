@@ -112,18 +112,16 @@ namespace UploadersLib
         TINYPIC,
         [Description("Flickr - www.flickr.com")]
         FLICKR,
-        [Description("ImageBin - www.imagebin.ca")]
-        IMAGEBIN,
+        //[Description("ImageBin - www.imagebin.ca")]
+        //IMAGEBIN,
         [Description("ImageBam - www.imagebam.com")]
         IMAGEBAM,
-        [Description("Img1 - www.img1.us")]
-        IMG1,
+        //[Description("Img1 - www.img1.us")]
+        //IMG1,
         [Description("Imgur - www.imgur.com")]
         IMGUR,
-        [Description("Filez - www.filez.muffinz.eu")]
-        FilezImages,
-        [Description("UploadScreenshot - www.uploadscreenshot.com")]
-        UPLOADSCREENSHOT,
+        //[Description("UploadScreenshot - www.uploadscreenshot.com")]
+        //UPLOADSCREENSHOT,
         [Description("TwitPic - www.twitpic.com")]
         TWITPIC,
         [Description("TwitSnaps - www.twitsnaps.com")]
@@ -197,8 +195,8 @@ namespace UploadersLib
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]
         SendSpace,
-        [Description("FileBin - www.filebin.ca")]
-        FileBin,
+        //[Description("FileBin - www.filebin.ca")]
+        //FileBin,
         [Description("Drop.io - www.drop.io")]
         DropIO,
         [Description("ShareCX - www.share.cx")]
