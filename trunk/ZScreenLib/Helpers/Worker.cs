@@ -540,7 +540,7 @@ namespace ZScreenLib
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {
-                            List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC, ImageDestType.IMAGEBIN };
+                            List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
                             if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
                             {
                                 randomDest.Add(ImageDestType.IMAGEBAM);

@@ -306,9 +306,9 @@ namespace ZScreenLib
                         CollectorsID = Engine.conf.RapidShareCollectorsID
                     });
                     break;
-                case FileUploaderType.FileBin:
+                /*case FileUploaderType.FileBin:
                     fileHost = new FileBin();
-                    break;
+                    break;*/
                 case FileUploaderType.DropIO:
                     fileHost = new DropIO();
                     break;
@@ -384,25 +384,22 @@ namespace ZScreenLib
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
                     imageUploader = new ImageBamUploader(imageBamOptions);
                     break;
-                case ImageDestType.IMAGEBIN:
+                /*case ImageDestType.IMAGEBIN:
                     imageUploader = new ImageBin();
-                    break;
+                    break;*/
                 case ImageDestType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
-                case ImageDestType.IMG1:
+                /*case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
-                    break;
+                    break;*/
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.IMGUR_KEY);
                     break;
-                case ImageDestType.FilezImages:
-                    imageUploader = new FilezImages(Engine.conf.FilezUsername, Engine.conf.FilezUserpass, Engine.conf.FilezHideFiles);
-                    break;
-                case ImageDestType.UPLOADSCREENSHOT:
+                /*case ImageDestType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
-                    break;
+                    break;*/
                 case ImageDestType.Localhost:
                     UploadLocalhost();
                     break;
