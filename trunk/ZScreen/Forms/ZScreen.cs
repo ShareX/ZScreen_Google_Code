@@ -139,16 +139,16 @@ namespace ZScreenGUI
                     Engine.zJumpList.AddCustomCategories(paths);
 
                     // Taskbar Buttons
-                    ThumbnailToolbarButton cropShot = new ThumbnailToolbarButton(Resources.shape_square_ico, "Crop Shot");
+                    ThumbnailToolBarButton cropShot = new ThumbnailToolBarButton(Resources.shape_square_ico, "Crop Shot");
                     cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
 
-                    ThumbnailToolbarButton selWindow = new ThumbnailToolbarButton(Resources.application_double_ico, "Selected Window");
+                    ThumbnailToolBarButton selWindow = new ThumbnailToolBarButton(Resources.application_double_ico, "Selected Window");
                     selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
 
-                    ThumbnailToolbarButton clipboardUpload = new ThumbnailToolbarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
+                    ThumbnailToolBarButton clipboardUpload = new ThumbnailToolBarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Engine.zWindowsTaskbar.ThumbnailToolbars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
                     Engine.zJumpList.Refresh();
                     FileSystem.AppendDebug("Integrated into Windows 7 Taskbar");
                 }
@@ -1691,7 +1691,7 @@ namespace ZScreenGUI
                 FileSystem.BackupAppSettings();
             }
 
-            if (Engine.conf.Windows7TaskbarIntegration && !CoreHelpers.RunningOnXP)
+            if (Engine.conf.Windows7TaskbarIntegration && Engine.HasWindows7)
             {
                 if (Engine.conf.FirstRun)
                 {

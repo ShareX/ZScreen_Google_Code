@@ -814,7 +814,7 @@ namespace ZScreenLib
                 dlg.AllowNonFileSystemItems = true;
                 dlg.Title = title;
 
-                if (dlg.ShowDialog() == CommonFileDialogResult.OK)
+                if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     newDir = dlg.FileName;
                 }
@@ -855,7 +855,8 @@ namespace ZScreenLib
             {
                 try
                 {
-                    Engine.zJumpList.AddToRecent(filePath);
+                    Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                    // Engine.zJumpList.AddToRecent(filePath);
                 }
                 catch (Exception ex)
                 {
