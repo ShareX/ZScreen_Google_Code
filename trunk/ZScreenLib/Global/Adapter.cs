@@ -856,7 +856,7 @@ namespace ZScreenLib
                 try
                 {
                     Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
-                    // Engine.zJumpList.AddToRecent(filePath);
+                    Microsoft.WindowsAPICodePack.Taskbar.JumpList.AddToRecent(filePath);
                 }
                 catch (Exception ex)
                 {

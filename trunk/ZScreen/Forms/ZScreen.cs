@@ -93,7 +93,14 @@ namespace ZScreenGUI
         {
             this.ShowInTaskbar = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
 
-            if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
+            if (!Engine.conf.Windows7TaskbarIntegration)
+            {
+                if (Engine.zJumpList != null)
+                {
+                    Engine.zJumpList.ClearAllUserTasks();
+                }
+            }
+            else if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7)
             {
                 try
                 {
