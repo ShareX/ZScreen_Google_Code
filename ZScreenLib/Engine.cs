@@ -405,7 +405,7 @@ namespace ZScreenLib
                         "Register image/text files with this application to run ZScreen correctly.");
                     button1.Click += new EventHandler(button1_Click);
                     // Show UAC shield as this task requires elevation
-                    button1.ShowElevationIcon = true;
+                    button1.UseElevationIcon = true;
 
                     td.Controls.Add(button1);
 
@@ -429,6 +429,14 @@ namespace ZScreenLib
             get
             {
                 return Environment.OSVersion.Version.Major >= 6;
+            }
+        }
+
+        public static bool HasWindows7
+        {
+            get
+            {
+                return HasAero && Environment.OSVersion.Version.Minor >= 1;
             }
         }
 

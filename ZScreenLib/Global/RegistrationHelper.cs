@@ -28,10 +28,12 @@ namespace ZScreenLib
                     string.Join(" ", extensions));
             psi.UseShellExecute = true;
             psi.Verb = "runas"; //Launch elevated
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
             {
-                Process.Start(psi).WaitForExit();
+                Process.Start(psi).WaitForExit();                
+                TaskDialog.Show("File associations were " + (unregister ? "un" : "") + "registered");
             }
             catch (Win32Exception e)
             {
