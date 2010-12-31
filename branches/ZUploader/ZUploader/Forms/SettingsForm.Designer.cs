@@ -39,6 +39,9 @@
             this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tpUpload = new System.Windows.Forms.TabPage();
+            this.lblUploadLimitHint = new System.Windows.Forms.Label();
+            this.nudUploadLimit = new System.Windows.Forms.NumericUpDown();
+            this.lblUploadLimit = new System.Windows.Forms.Label();
             this.lblBufferSize = new System.Windows.Forms.Label();
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
@@ -74,12 +77,10 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.lblUploadLimit = new System.Windows.Forms.Label();
-            this.nudUploadLimit = new System.Windows.Forms.NumericUpDown();
-            this.lblUploadLimitHint = new System.Windows.Forms.Label();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).BeginInit();
             this.tpImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).BeginInit();
@@ -89,7 +90,6 @@
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).BeginInit();
             this.SuspendLayout();
             // 
             // pgFTPSettings
@@ -226,6 +226,43 @@
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
             // 
+            // lblUploadLimitHint
+            // 
+            this.lblUploadLimitHint.AutoSize = true;
+            this.lblUploadLimitHint.Location = new System.Drawing.Point(216, 16);
+            this.lblUploadLimitHint.Name = "lblUploadLimitHint";
+            this.lblUploadLimitHint.Size = new System.Drawing.Size(90, 13);
+            this.lblUploadLimitHint.TabIndex = 5;
+            this.lblUploadLimitHint.Text = "0 - 25 (0 disables)";
+            // 
+            // nudUploadLimit
+            // 
+            this.nudUploadLimit.Location = new System.Drawing.Point(152, 12);
+            this.nudUploadLimit.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.nudUploadLimit.Name = "nudUploadLimit";
+            this.nudUploadLimit.Size = new System.Drawing.Size(56, 20);
+            this.nudUploadLimit.TabIndex = 4;
+            this.nudUploadLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudUploadLimit.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudUploadLimit.ValueChanged += new System.EventHandler(this.nudUploadLimit_ValueChanged);
+            // 
+            // lblUploadLimit
+            // 
+            this.lblUploadLimit.AutoSize = true;
+            this.lblUploadLimit.Location = new System.Drawing.Point(16, 16);
+            this.lblUploadLimit.Name = "lblUploadLimit";
+            this.lblUploadLimit.Size = new System.Drawing.Size(128, 13);
+            this.lblUploadLimit.TabIndex = 3;
+            this.lblUploadLimit.Text = "Simultaneous upload limit:";
+            // 
             // lblBufferSize
             // 
             this.lblBufferSize.AutoSize = true;
@@ -240,9 +277,9 @@
             this.lblBufferSizeInfo.AutoSize = true;
             this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 48);
             this.lblBufferSizeInfo.Name = "lblBufferSizeInfo";
-            this.lblBufferSizeInfo.Size = new System.Drawing.Size(19, 13);
+            this.lblBufferSizeInfo.Size = new System.Drawing.Size(23, 13);
             this.lblBufferSizeInfo.TabIndex = 1;
-            this.lblBufferSizeInfo.Text = "kb";
+            this.lblBufferSizeInfo.Text = "KiB";
             // 
             // cbBufferSize
             // 
@@ -288,7 +325,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(476, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
+                "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -296,9 +333,9 @@
             this.lblUseImageFormat2AfterHint.AutoSize = true;
             this.lblUseImageFormat2AfterHint.Location = new System.Drawing.Point(288, 112);
             this.lblUseImageFormat2AfterHint.Name = "lblUseImageFormat2AfterHint";
-            this.lblUseImageFormat2AfterHint.Size = new System.Drawing.Size(120, 13);
+            this.lblUseImageFormat2AfterHint.Size = new System.Drawing.Size(124, 13);
             this.lblUseImageFormat2AfterHint.TabIndex = 13;
-            this.lblUseImageFormat2AfterHint.Text = "kb  0 - 5000 (0 disables)";
+            this.lblUseImageFormat2AfterHint.Text = "KiB  0 - 5000 (0 disables)";
             // 
             // lblImageJPEGQualityHint
             // 
@@ -460,7 +497,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(476, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-    "ce accordingly.";
+                "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -646,43 +683,6 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // lblUploadLimit
-            // 
-            this.lblUploadLimit.AutoSize = true;
-            this.lblUploadLimit.Location = new System.Drawing.Point(16, 16);
-            this.lblUploadLimit.Name = "lblUploadLimit";
-            this.lblUploadLimit.Size = new System.Drawing.Size(128, 13);
-            this.lblUploadLimit.TabIndex = 3;
-            this.lblUploadLimit.Text = "Simultaneous upload limit:";
-            // 
-            // nudUploadLimit
-            // 
-            this.nudUploadLimit.Location = new System.Drawing.Point(152, 12);
-            this.nudUploadLimit.Maximum = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            this.nudUploadLimit.Name = "nudUploadLimit";
-            this.nudUploadLimit.Size = new System.Drawing.Size(56, 20);
-            this.nudUploadLimit.TabIndex = 4;
-            this.nudUploadLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudUploadLimit.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.nudUploadLimit.ValueChanged += new System.EventHandler(this.nudUploadLimit_ValueChanged);
-            // 
-            // lblUploadLimitHint
-            // 
-            this.lblUploadLimitHint.AutoSize = true;
-            this.lblUploadLimitHint.Location = new System.Drawing.Point(216, 16);
-            this.lblUploadLimitHint.Name = "lblUploadLimitHint";
-            this.lblUploadLimitHint.Size = new System.Drawing.Size(90, 13);
-            this.lblUploadLimitHint.TabIndex = 5;
-            this.lblUploadLimitHint.Text = "0 - 25 (0 disables)";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -702,6 +702,7 @@
             this.tpGeneral.PerformLayout();
             this.tpUpload.ResumeLayout(false);
             this.tpUpload.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).EndInit();
             this.tpImage.ResumeLayout(false);
             this.tpImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).EndInit();
@@ -715,7 +716,6 @@
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).EndInit();
             this.ResumeLayout(false);
 
         }
