@@ -47,6 +47,10 @@ namespace HelpersLib
         {
             if (stream != null && !string.IsNullOrEmpty(filePath))
             {
+                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                }
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     stream.Position = 0;
