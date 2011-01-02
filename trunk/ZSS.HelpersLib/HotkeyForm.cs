@@ -22,6 +22,8 @@ namespace HelpersLib
 
         public bool RegisterHotkey(Keys hotkey)
         {
+            if (GetHotkeyInfoFromKey(hotkey) != null) return false;
+
             Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
 
             Native.Modifiers modifiers = Native.Modifiers.None;

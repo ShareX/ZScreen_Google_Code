@@ -33,7 +33,7 @@ using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {
-    public partial class MainForm : Form
+    public partial class MainForm : HotkeyForm
     {
         public bool IsReady { get; private set; }
 
@@ -76,6 +76,8 @@ namespace ZUploader
             lvUploads.AutoResizeLastColumn();
 
             UploadManager.ListViewControl = lvUploads;
+
+            HotkeyPress += new HotkeyEventHandler(MainForm_HotkeyPress);
         }
 
         private void LoadSettings()
@@ -104,6 +106,8 @@ namespace ZUploader
 
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
+
+            RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
         }
 
         private UploadResult GetCurrentUploadResult()
@@ -326,6 +330,14 @@ namespace ZUploader
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
             UploadManager.DragDropUpload(e.Data);
+        }
+
+        private void MainForm_HotkeyPress(KeyEventArgs e)
+        {
+            if (e.KeyData == Program.Settings.HotkeyClipboardUpload)
+            {
+                UploadManager.ClipboardUpload();
+            }
         }
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)

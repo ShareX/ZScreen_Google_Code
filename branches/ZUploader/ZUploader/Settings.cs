@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 
@@ -62,6 +63,8 @@ namespace ZUploader
 
         public FTPAccount FTPAccount = new FTPAccount();
         public ProxyInfo ProxySettings = new ProxyInfo();
+
+        public Keys HotkeyClipboardUpload = Keys.Control | Keys.PageUp;
 
         public bool Save()
         {
