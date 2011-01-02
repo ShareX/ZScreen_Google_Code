@@ -147,7 +147,7 @@ namespace HelpersLib
 
             if (Type == NameParserType.ActiveWindow || Type == NameParserType.Watermark)
             {
-                string activeWindow = HelpersNativeMethods.GetWindowLabel();
+                string activeWindow = Helpers.GetForegroundWindowText();
 
                 if (string.IsNullOrEmpty(activeWindow))
                 {
