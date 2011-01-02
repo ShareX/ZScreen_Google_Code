@@ -82,7 +82,6 @@ namespace ZUploader
 
         private void LoadSettings()
         {
-            Program.Settings.SelectedImageUploaderDestination = 5;
             if (Helpers.GetEnumLength<ImageDestType2>() <= Program.Settings.SelectedImageUploaderDestination)
             {
                 Program.Settings.SelectedImageUploaderDestination = 0;

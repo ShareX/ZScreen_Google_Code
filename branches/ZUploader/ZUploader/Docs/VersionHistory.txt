@@ -1,4 +1,9 @@
-﻿Version 3.6 - 2010-12-15
+﻿Version 3.8 - 2011-01-02
+
+3.8 - Added ClipboardUpload hotkey (Ctrl + Page up)
+3.7 - Added upload queue system to limit simultaneous uploads
+
+Version 3.6 - 2010-12-15
 
 3.6 - Added buffer size setting to improve upload speed {Jaex}
 3.5 - Added support to copy multiple URLs in history form {Jaex}
