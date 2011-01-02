@@ -59,10 +59,15 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FastDateTime.cs" />
+    <Compile Include="HotkeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helpers.cs" />
+    <Compile Include="HotkeyInfo.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NameParser.cs" />
-    <Compile Include="HelpersNativeMethods.cs" />
+    <Compile Include="Native.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

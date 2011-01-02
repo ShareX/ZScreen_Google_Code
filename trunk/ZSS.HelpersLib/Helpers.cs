@@ -377,5 +377,24 @@ namespace HelpersLib
 
             return descriptions.ToArray();
         }
+
+        public static string GetForegroundWindowText()
+        {
+            IntPtr hWnd = NativeMethods.GetForegroundWindow();
+            if (hWnd.ToInt32() > 0)
+            {
+                int length = NativeMethods.GetWindowTextLength(hWnd);
+                if (length > 0)
+                {
+                    StringBuilder sb = new StringBuilder(length + 1);
+                    if (NativeMethods.GetWindowText(hWnd, sb, sb.Capacity) > 0)
+                    {
+                        return sb.ToString();
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }
