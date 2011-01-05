@@ -83,7 +83,7 @@ namespace UploadersLib.ImageUploaders
                 arguments.Add("type", "image");
                 arguments.Add("tags", string.Empty);
 
-                ifm.Source = UploadData(stream, fileName, URLAPI, "uploadfile", arguments);
+                ifm.Source = UploadData(stream, URLAPI, fileName, "uploadfile", arguments);
 
                 if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
                 {

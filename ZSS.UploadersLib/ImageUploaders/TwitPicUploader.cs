@@ -103,7 +103,7 @@ namespace UploadersLib.ImageUploaders
                 url = UploadLink;
             }
 
-            string source = UploadData(stream, fileName, url, "media", arguments);
+            string source = UploadData(stream, url, fileName, "media", arguments);
 
             return ParseResult(source);
         }

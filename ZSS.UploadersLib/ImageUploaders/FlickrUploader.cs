@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -229,7 +229,7 @@ namespace UploadersLib.ImageUploaders
 
             args.Add("api_sig", GetAPISig(args));
 
-            string response = UploadData(stream, fileName, API_Upload_URL, "photo", args);
+            string response = UploadData(stream, API_Upload_URL, fileName, "photo", args);
 
             XElement xele = ParseResponse(response, "photoid");
             string photoid = string.Empty;

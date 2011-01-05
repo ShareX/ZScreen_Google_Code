@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -97,7 +97,7 @@ namespace UploadersLib.ImageUploaders
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", Helpers.GetMD5(Secret + Options.UserSecret + salt));
 
-            string source = UploadData(stream, fileName, upload, "photo", arguments);
+            string source = UploadData(stream, upload, fileName, "photo", arguments);
 
             return ParseResult(source);
         }

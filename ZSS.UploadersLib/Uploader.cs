@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2010  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -47,23 +47,24 @@ namespace UploadersLib
         public static ProxySettings ProxySettings = new ProxySettings();
 
         [XmlIgnore]
-        public int BufferSize { get; set; }
-
-        [XmlIgnore]
         public List<string> Errors { get; private set; }
 
         [XmlIgnore]
-        public string UserAgent { get; set; }
+        public bool IsUploading { get; private set; }
 
         [XmlIgnore]
-        public bool IsUploading { get; private set; }
+        public int BufferSize { get; set; }
+
+        [XmlIgnore]
+        public string UserAgent { get; set; }
 
         private bool stopUpload;
 
         public Uploader()
         {
-            this.BufferSize = 8192;
             this.Errors = new List<string>();
+            this.IsUploading = false;
+            this.BufferSize = 8192;
             this.UserAgent = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
 
             ServicePointManager.DefaultConnectionLimit = 25;
@@ -94,18 +95,8 @@ namespace UploadersLib
 
         #region Post methods
 
-        /// <summary>
-        /// Method: POST
-        /// </summary>
-        protected string GetResponse(string url)
-        {
-            return GetResponse(url, null);
-        }
-
-        /// <summary>
-        /// Method: POST
-        /// </summary>
-        protected string GetResponse(string url, Dictionary<string, string> arguments)
+        /// <summary>Method: POST, Returns: Response string</summary>
+        protected string GetResponse(string url, Dictionary<string, string> arguments = null)
         {
             using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
             {
@@ -113,10 +104,8 @@ namespace UploadersLib
             }
         }
 
-        /// <summary>
-        /// Method: POST
-        /// </summary>
-        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments)
+        /// <summary>Method: POST, Returns: Response URL</summary>
+        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments = null)
         {
             using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
             {
@@ -129,54 +118,8 @@ namespace UploadersLib
             return null;
         }
 
-        private HttpWebResponse GetResponseUsingPost(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = CreateBoundary();
-            byte[] data = MakeInputContent(boundary, arguments);
-            return GetResponseUsingPost(url, data, boundary);
-        }
-
-        private HttpWebResponse GetResponseUsingPost(string url, byte[] data, string boundary)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(data, 0, data.Length);
-                return GetResponseUsingPost(url, stream, boundary);
-            }
-        }
-
-        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary)
-        {
-            IsUploading = true;
-            stopUpload = false;
-
-            try
-            {
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length);
-
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    if (!TransferData(requestStream, dataStream)) return null;
-                }
-
-                return (HttpWebResponse)request.GetResponse();
-            }
-            catch (Exception e)
-            {
-                if (!stopUpload) Errors.Add(e.ToString());
-            }
-            finally
-            {
-                IsUploading = false;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Method: POST
-        /// </summary>
-        protected string UploadData(Stream dataStream, string fileName, string url, string fileFormName, Dictionary<string, string> arguments)
+        /// <summary>Method: POST, Returns: Response string</summary>
+        protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null)
         {
             IsUploading = true;
             stopUpload = false;
@@ -196,7 +139,7 @@ namespace UploadersLib
                 {
                     requestStream.Write(bytesArguments, 0, bytesArguments.Length);
                     requestStream.Write(bytesDataOpen, 0, bytesDataOpen.Length);
-                    if (!TransferData(requestStream, dataStream)) return null;
+                    if (!TransferData(dataStream, requestStream)) return null;
                     requestStream.Write(bytesDataClose, 0, bytesDataClose.Length);
                 }
 
@@ -214,22 +157,52 @@ namespace UploadersLib
             return null;
         }
 
+        private HttpWebResponse GetResponseUsingPost(string url, Dictionary<string, string> arguments)
+        {
+            string boundary = CreateBoundary();
+            byte[] data = MakeInputContent(boundary, arguments);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+                return GetResponseUsingPost(url, stream, boundary);
+            }
+        }
+
+        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary)
+        {
+            IsUploading = true;
+            stopUpload = false;
+
+            try
+            {
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length);
+
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    if (!TransferData(dataStream, requestStream)) return null;
+                }
+
+                return (HttpWebResponse)request.GetResponse();
+            }
+            catch (Exception e)
+            {
+                if (!stopUpload) Errors.Add(e.ToString());
+            }
+            finally
+            {
+                IsUploading = false;
+            }
+
+            return null;
+        }
+
         #endregion Post methods
 
         #region Get methods
 
-        /// <summary>
-        /// Method: GET
-        /// </summary>
-        protected string GetResponseString(string url)
-        {
-            return GetResponseString(url, null);
-        }
-
-        /// <summary>
-        /// Method: GET
-        /// </summary>
-        protected string GetResponseString(string url, Dictionary<string, string> arguments)
+        /// <summary>Method: GET, Returns: Response string</summary>
+        protected string GetResponseString(string url, Dictionary<string, string> arguments = null)
         {
             if (arguments != null && arguments.Count > 0)
             {
@@ -295,14 +268,15 @@ namespace UploadersLib
             return request;
         }
 
-        private bool TransferData(Stream requestStream, Stream dataStream)
+        private bool TransferData(Stream dataStream, Stream requestStream)
         {
-            ProgressManager progress = new ProgressManager(dataStream.Length);
             dataStream.Position = 0;
-            byte[] buffer = new byte[BufferSize];
+            ProgressManager progress = new ProgressManager(dataStream.Length);
+            int length = (int)Math.Min(BufferSize, dataStream.Length);
+            byte[] buffer = new byte[length];
             int bytesRead;
 
-            while ((bytesRead = dataStream.Read(buffer, 0, buffer.Length)) > 0)
+            while ((bytesRead = dataStream.Read(buffer, 0, length)) > 0)
             {
                 if (stopUpload) return false;
 

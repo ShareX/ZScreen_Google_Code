@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
@@ -71,24 +70,6 @@ namespace UploadersLib
         {
             string text = new StreamReader(stream, Encoding.UTF8).ReadToEnd();
             return UploadText(TextInfo.FromString(text));
-        }
-
-        public string UploadTextFromClipboard()
-        {
-            if (Clipboard.ContainsText())
-            {
-                return UploadText(TextInfo.FromClipboard());
-            }
-            else if (Clipboard.ContainsFileDropList())
-            {
-                string filePath = Clipboard.GetFileDropList()[0];
-                if (filePath.EndsWith(".txt"))
-                {
-                    return UploadTextFromFile(filePath);
-                }
-            }
-
-            return string.Empty;
         }
 
         public string UploadTextFromFile(string filePath)

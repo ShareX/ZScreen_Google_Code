@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2010  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -73,7 +73,7 @@ namespace UploadersLib.FileUploaders
                 args.Add("token", drop.AdminToken);
                 args.Add("drop_name", drop.Name);
 
-                string response = UploadData(stream, fileName, "http://assets.drop.io/upload", "file", args);
+                string response = UploadData(stream, "http://assets.drop.io/upload", fileName, "file", args);
                 result.Source = response;
 
                 if (!string.IsNullOrEmpty(response))

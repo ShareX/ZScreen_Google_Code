@@ -27,7 +27,7 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("xmlOutput", "1");
             //arguments.Add("testMode", "1");
 
-            string response = UploadData(stream, fileName, "http://img1.uploadscreenshot.com/api-upload.php", "userfile", arguments);
+            string response = UploadData(stream, "http://img1.uploadscreenshot.com/api-upload.php", fileName, "userfile", arguments);
 
             return ParseResult(response);
         }
