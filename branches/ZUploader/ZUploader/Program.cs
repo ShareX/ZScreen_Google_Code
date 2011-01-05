@@ -2,7 +2,7 @@
 
 /*
     ZUploader - A program that allows you to upload images, texts or files
-    Copyright (C) 2010 ZScreen Developers
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -76,6 +76,9 @@ namespace ZUploader
 
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
+        public const string URL_BERK = "http://code.google.com/u/flexy123";
+        public const string URL_MIKE = "http://code.google.com/u/mcored";
+        public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
 
         public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
         public const string TinyPicID = "e2aabb8d555322fa";

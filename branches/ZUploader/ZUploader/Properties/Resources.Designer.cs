@@ -74,9 +74,23 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_browser {
+            get {
+                object obj = ResourceManager.GetObject("application_browser", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_form {
             get {
                 object obj = ResourceManager.GetObject("application-form", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap au {
+            get {
+                object obj = ResourceManager.GetObject("au", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -154,6 +168,20 @@ namespace ZUploader.Properties {
         internal static System.Drawing.Bitmap tick_button {
             get {
                 object obj = ResourceManager.GetObject("tick_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tr {
+            get {
+                object obj = ResourceManager.GetObject("tr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap us {
+            get {
+                object obj = ResourceManager.GetObject("us", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

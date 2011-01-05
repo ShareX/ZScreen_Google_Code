@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen Developers")]
 [assembly: AssemblyProduct("HistoryLib")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
+[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

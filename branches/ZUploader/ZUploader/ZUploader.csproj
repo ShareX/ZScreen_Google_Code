@@ -179,6 +179,10 @@
     <None Include="Resources\address-book-blue.png" />
     <Content Include="Docs\VersionHistory.txt" />
     <None Include="Resources\navigation-000-button.png" />
+    <None Include="Resources\tr.png" />
+    <None Include="Resources\au.png" />
+    <None Include="Resources\us.png" />
+    <None Include="Resources\application-browser.png" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

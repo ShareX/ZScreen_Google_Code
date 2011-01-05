@@ -2,7 +2,7 @@
 
 /*
     ZUploader - A program that allows you to upload images, text or files in your clipboard
-    Copyright (C) 2010 ZScreen Developers
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License

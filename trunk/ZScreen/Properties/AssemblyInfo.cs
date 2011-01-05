@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
+[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

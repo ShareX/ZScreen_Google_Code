@@ -69,7 +69,7 @@ namespace UploadersLib.ImageUploaders
                 url = UploadAndPostLink;
             }
 
-            string source = UploadData(stream, fileName, url, "file", arguments);
+            string source = UploadData(stream, url, fileName, "file", arguments);
 
             return ParseResult(source);
         }

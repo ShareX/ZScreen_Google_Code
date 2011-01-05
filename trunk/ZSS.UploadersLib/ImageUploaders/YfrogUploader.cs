@@ -116,7 +116,7 @@ namespace UploadersLib.ImageUploaders
 
             arguments.Add("key", this.Options.DeveloperKey);
 
-            string source = UploadData(stream, fileName, url, "media", arguments);
+            string source = UploadData(stream, url, fileName, "media", arguments);
 
             return ParseResult(source);
         }

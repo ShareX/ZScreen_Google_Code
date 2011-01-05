@@ -2,7 +2,7 @@
 
 /*
     ZUploader - A program that allows you to upload images, texts or files
-    Copyright (C) 2010 ZScreen Developers
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -79,6 +79,21 @@ namespace ZUploader
         private void lblBugs_Click(object sender, EventArgs e)
         {
             Process.Start(Program.URL_ISSUES);
+        }
+
+        private void pbBerkURL_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.URL_BERK);
+        }
+
+        private void pbMikeURL_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.URL_MIKE);
+        }
+
+        private void pbBrandonURL_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.URL_BRANDON);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

@@ -2,7 +2,7 @@
 
 /*
     ZUploader - A program that allows you to upload images, texts or files
-    Copyright (C) 2010 ZScreen Developers
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -209,7 +209,9 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.Source))
             {
-                new ResponseForm(result.Source).Show();
+                ResponseForm form = new ResponseForm(result.Source);
+                form.Icon = this.Icon;
+                form.Show();
             }
         }
 
@@ -366,12 +368,16 @@ namespace ZUploader
 
         private void tsbSettings_Click(object sender, EventArgs e)
         {
-            new SettingsForm().Show();
+            SettingsForm form = new SettingsForm();
+            form.Icon = this.Icon;
+            form.Show();
         }
 
         private void tsbAbout_Click(object sender, EventArgs e)
         {
-            new AboutForm().Show();
+            AboutForm form = new AboutForm();
+            form.Icon = this.Icon;
+            form.Show();
         }
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)

@@ -2,7 +2,7 @@
 
 /*
     ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2009  Brandon Zimmerman
+    Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ namespace UploadersLib.FileUploaders
                 args.Add("password", Options.Password);
             }
 
-            string response = UploadData(stream, fileName, url, "filecontent", args);
+            string response = UploadData(stream, url, fileName, "filecontent", args);
 
             UploadResult result = new UploadResult(response);
 
