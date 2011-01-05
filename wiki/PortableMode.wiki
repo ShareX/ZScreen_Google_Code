@@ -1,5 +1,5 @@
 #summary How to run the application in portable mode
-#labels Phase-Support
+#labels Phase-Support,Featured
 
 = ZScreen =
 
@@ -12,7 +12,7 @@
 
 [http://img19.imageshack.us/img19/802/ss20090318214123.png] 
 
-and now you can run ZScreen in a USB drive. 
+and now you can run ZScreen in a USB drive.
 
 = ZUploader = 
 
@@ -25,4 +25,4 @@ and now you can run ZScreen in a USB drive.
 
 [http://i54.tinypic.com/2vucy7t.png]
 
-and now you can run ZScreen in a USB drive. 
+and now you can run ZUploader in a USB drive.
