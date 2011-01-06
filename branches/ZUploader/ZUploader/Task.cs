@@ -227,6 +227,9 @@ namespace ZUploader
                 case ImageDestType2.IMGUR:
                     imageUploader = new Imgur(Program.ImgurKey);
                     break;
+                case ImageDestType2.MINUS:
+                    imageUploader = new Minus();
+                    break;
                 /*case ImageDestType2.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Program.UploadScreenshotKey);
                     break;*/

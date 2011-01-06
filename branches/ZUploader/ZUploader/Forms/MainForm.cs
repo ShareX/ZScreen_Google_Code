@@ -30,22 +30,43 @@ using System.Windows.Forms;
 using HelpersLib;
 using HistoryLib;
 using UploadersLib.HelperClasses;
+using ZUploaderPlugin;
 
 namespace ZUploader
 {
-    public partial class MainForm : HotkeyForm
+    public partial class MainForm : HotkeyForm, IPluginHost
     {
         public bool IsReady { get; private set; }
 
+        private PluginManager pluginManager;
+
         public MainForm()
         {
-            InitializeComponent();
             InitControls();
             UpdateControls();
         }
 
+        private void AfterLoadJobs()
+        {
+            LoadSettings();
+            LoadPlugins();
+        }
+
+        private void AfterShownJobs()
+        {
+            UseCommandLineArg(Program.CommandLineArg);
+            IsReady = true;
+        }
+
+        public void TestPlugin(string text)
+        {
+            Debug.WriteLine(text);
+        }
+
         private void InitControls()
         {
+            InitializeComponent();
+
             this.Text = Program.Title;
 
             foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestType2>())
@@ -107,6 +128,89 @@ namespace ZUploader
             UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
 
             RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
+        }
+
+        private void LoadPlugins()
+        {
+            pluginManager = new PluginManager(Program.PluginFolderPath, this);
+            pluginManager.LoadPlugins();
+        }
+
+        private void UpdateControls()
+        {
+            tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
+                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = showErrorsToolStripMenuItem.Visible =
+                copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible =
+                stopUploadToolStripMenuItem.Visible = false;
+
+            int itemsCount = lvUploads.SelectedItems.Count;
+
+            if (itemsCount > 0)
+            {
+                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
+
+                if (result != null)
+                {
+                    if (!string.IsNullOrEmpty(result.URL))
+                    {
+                        tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
+
+                        if (itemsCount > 1)
+                        {
+                            copyURLToolStripMenuItem.Text = string.Format("Copy URLs ({0})", itemsCount);
+                        }
+                        else
+                        {
+                            copyURLToolStripMenuItem.Text = "Copy URL";
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(result.ThumbnailURL))
+                    {
+                        copyThumbnailURLToolStripMenuItem.Visible = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.DeletionURL))
+                    {
+                        copyDeletionURLToolStripMenuItem.Visible = true;
+                    }
+
+                    if (result.Errors != null && result.Errors.Count > 0)
+                    {
+                        showErrorsToolStripMenuItem.Visible = true;
+                        copyErrorsToolStripMenuItem.Visible = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.Source))
+                    {
+                        showResponseToolStripMenuItem.Visible = true;
+                    }
+                }
+
+                int index = lvUploads.SelectedIndices[0];
+                stopUploadToolStripMenuItem.Visible = UploadManager.Tasks[index].Status != TaskStatus.Completed;
+            }
+            else
+            {
+                uploadFileToolStripMenuItem.Visible = true;
+            }
+        }
+
+        public void UseCommandLineArg(string arg)
+        {
+            if (!string.IsNullOrEmpty(arg))
+            {
+                arg = arg.Trim();
+
+                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    UploadManager.ClipboardUpload();
+                }
+                else
+                {
+                    UploadManager.UploadFile(arg);
+                }
+            }
         }
 
         private UploadResult GetCurrentUploadResult()
@@ -215,98 +319,18 @@ namespace ZUploader
             }
         }
 
-        private void UpdateControls()
-        {
-            tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
-                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = showErrorsToolStripMenuItem.Visible =
-                copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible =
-                stopUploadToolStripMenuItem.Visible = false;
-
-            int itemsCount = lvUploads.SelectedItems.Count;
-
-            if (itemsCount > 0)
-            {
-                UploadResult result = lvUploads.SelectedItems[0].Tag as UploadResult;
-
-                if (result != null)
-                {
-                    if (!string.IsNullOrEmpty(result.URL))
-                    {
-                        tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible = true;
-
-                        if (itemsCount > 1)
-                        {
-                            copyURLToolStripMenuItem.Text = string.Format("Copy URLs ({0})", itemsCount);
-                        }
-                        else
-                        {
-                            copyURLToolStripMenuItem.Text = "Copy URL";
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(result.ThumbnailURL))
-                    {
-                        copyThumbnailURLToolStripMenuItem.Visible = true;
-                    }
-
-                    if (!string.IsNullOrEmpty(result.DeletionURL))
-                    {
-                        copyDeletionURLToolStripMenuItem.Visible = true;
-                    }
-
-                    if (result.Errors != null && result.Errors.Count > 0)
-                    {
-                        showErrorsToolStripMenuItem.Visible = true;
-                        copyErrorsToolStripMenuItem.Visible = true;
-                    }
-
-                    if (!string.IsNullOrEmpty(result.Source))
-                    {
-                        showResponseToolStripMenuItem.Visible = true;
-                    }
-                }
-
-                int index = lvUploads.SelectedIndices[0];
-                stopUploadToolStripMenuItem.Visible = UploadManager.Tasks[index].Status != TaskStatus.Completed;
-            }
-            else
-            {
-                uploadFileToolStripMenuItem.Visible = true;
-            }
-        }
-
-        public void UseCommandLineArg(string arg)
-        {
-            if (!string.IsNullOrEmpty(arg))
-            {
-                arg = arg.Trim();
-
-                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    UploadManager.ClipboardUpload();
-                }
-                else
-                {
-                    UploadManager.UploadFile(arg);
-                }
-            }
-        }
-
         #region Form events
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Program.MyLogger.WriteLine("MainForm_Load. LoadSettings()");
-
-            LoadSettings();
+            Program.MyLogger.WriteLine("MainForm_Load");
+            AfterLoadJobs();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
             Program.MyLogger.WriteLine("MainForm_Shown. Startup time: {0}ms", Program.StartTimer.ElapsedMilliseconds);
-
-            UseCommandLineArg(Program.CommandLineArg);
-            IsReady = true;
+            AfterShownJobs();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

@@ -36,19 +36,15 @@ namespace ZUploader
 {
     static class Program
     {
-        public static Settings Settings;
+        public static Settings Settings { get; private set; }
 
-        public static string ZUploaderPersonalPath;
-        private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
-        private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
+        public static string ZUploaderPersonalPath { get; private set; }
 
-        private const string SettingsFileName = "Settings.xml";
         public static string SettingsFilePath
         {
             get { return Path.Combine(ZUploaderPersonalPath, SettingsFileName); }
         }
 
-        private const string HistoryFileName = "History.db3";
         public static string HistoryFilePath
         {
             get
@@ -74,6 +70,17 @@ namespace ZUploader
             }
         }
 
+        public static string PluginFolderPath
+        {
+            get { return Path.Combine(ZUploaderPersonalPath, "Plugins"); }
+        }
+
+        private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
+        private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
+
+        private const string SettingsFileName = "Settings.xml";
+        private const string HistoryFileName = "History.db3";
+
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_BERK = "http://code.google.com/u/flexy123";
@@ -84,12 +91,12 @@ namespace ZUploader
         public const string TinyPicID = "e2aabb8d555322fa";
         public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
         public const string ImgurKey = "63499468bcc5d2d6aee1439e50b4e61c";
-        public const string UploadScreenshotKey = "2807828f377649572393126680";
 
-        public static bool IsPortable;
-        public static bool IsBeta = true;
-        public static string CommandLineArg;
-        public static Stopwatch StartTimer;
+        public static bool IsBeta { get { return true; } }
+        public static bool IsPortable { get; private set; }
+        public static string CommandLineArg { get; private set; }
+        public static Stopwatch StartTimer { get; private set; }
+        public static Logger MyLogger { get; private set; }
 
         public static string Title
         {
@@ -101,8 +108,6 @@ namespace ZUploader
                 return title;
             }
         }
-
-        public static Logger MyLogger;
 
         private static MainForm mainForm;
 

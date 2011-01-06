@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="HelperClasses\SettingHelpers.cs" />
     <Compile Include="HelperClasses\TaskHelper.cs" />
+    <Compile Include="PluginManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
@@ -154,6 +155,10 @@
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ExtensionManager\ExtensionManager.csproj">
+      <Project>{DC564D81-1C4E-43A9-9832-933C4ADBBBAC}</Project>
+      <Name>ExtensionManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
@@ -161,6 +166,10 @@
     <ProjectReference Include="..\..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
       <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
       <Name>ImageQuantization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZUploaderPlugin\ZUploaderPlugin.csproj">
+      <Project>{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}</Project>
+      <Name>ZUploaderPlugin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
