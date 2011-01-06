@@ -40,7 +40,7 @@ namespace UploadersLib.ImageUploaders
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
             ImageFileManager ifm = new ImageFileManager();
-            string response = UploadData(stream, uploadURL, fileName, "fileup", null);
+            string response = UploadData(stream, uploadURL, fileName, "fileup");
             ifm.Source = response;
 
             if (!string.IsNullOrEmpty(response))

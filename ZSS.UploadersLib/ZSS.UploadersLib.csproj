@@ -135,6 +135,7 @@
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="ImageUploaders\Img1Uploader.cs" />
     <Compile Include="ImageUploaders\Imgur.cs" />
+    <Compile Include="ImageUploaders\Minus.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitSnapsUploader.cs" />

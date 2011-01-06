@@ -38,7 +38,7 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            string response = UploadData(stream, "http://file1.share.cx/cgi-bin/upload.cgi", fileName, "file_0", null);
+            string response = UploadData(stream, "http://file1.share.cx/cgi-bin/upload.cgi", fileName, "file_0");
 
             UploadResult result = new UploadResult(response);
 
