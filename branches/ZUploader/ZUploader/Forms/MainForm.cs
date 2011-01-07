@@ -69,19 +69,19 @@ namespace ZUploader
 
             this.Text = Program.Title;
 
-            foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestType2>())
+            foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestination>())
             {
                 tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
             tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
-            foreach (string fileUploader in Helpers.GetEnumDescriptions<FileUploaderType2>())
+            foreach (string fileUploader in Helpers.GetEnumDescriptions<FileDestination>())
             {
                 tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
-            foreach (string textUploader in Helpers.GetEnumDescriptions<TextDestType2>())
+            foreach (string textUploader in Helpers.GetEnumDescriptions<TextDestination>())
             {
                 tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
@@ -103,29 +103,29 @@ namespace ZUploader
 
         private void LoadSettings()
         {
-            if (Helpers.GetEnumLength<ImageDestType2>() <= Program.Settings.SelectedImageUploaderDestination)
+            if (Helpers.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
             {
                 Program.Settings.SelectedImageUploaderDestination = 0;
             }
 
             ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
-            UploadManager.ImageUploader = (ImageDestType2)Program.Settings.SelectedImageUploaderDestination;
+            UploadManager.ImageUploader = (ImageDestination)Program.Settings.SelectedImageUploaderDestination;
 
-            if (Helpers.GetEnumLength<FileUploaderType2>() <= Program.Settings.SelectedFileUploaderDestination)
+            if (Helpers.GetEnumLength<FileDestination>() <= Program.Settings.SelectedFileUploaderDestination)
             {
                 Program.Settings.SelectedFileUploaderDestination = 0;
             }
 
             ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
-            UploadManager.FileUploader = (FileUploaderType2)Program.Settings.SelectedFileUploaderDestination;
+            UploadManager.FileUploader = (FileDestination)Program.Settings.SelectedFileUploaderDestination;
 
-            if (Helpers.GetEnumLength<TextDestType2>() <= Program.Settings.SelectedTextUploaderDestination)
+            if (Helpers.GetEnumLength<TextDestination>() <= Program.Settings.SelectedTextUploaderDestination)
             {
                 Program.Settings.SelectedTextUploaderDestination = 0;
             }
 
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
-            UploadManager.TextUploader = (TextDestType2)Program.Settings.SelectedTextUploaderDestination;
+            UploadManager.TextUploader = (TextDestination)Program.Settings.SelectedTextUploaderDestination;
 
             RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
         }
@@ -482,7 +482,7 @@ namespace ZUploader
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedImageUploaderDestination = i;
-                    UploadManager.ImageUploader = (ImageDestType2)i;
+                    UploadManager.ImageUploader = (ImageDestination)i;
                 }
             }
         }
@@ -495,7 +495,7 @@ namespace ZUploader
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedFileUploaderDestination = i;
-                    UploadManager.FileUploader = (FileUploaderType2)i;
+                    UploadManager.FileUploader = (FileDestination)i;
                 }
             }
         }
@@ -508,7 +508,7 @@ namespace ZUploader
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedTextUploaderDestination = i;
-                    UploadManager.TextUploader = (TextDestType2)i;
+                    UploadManager.TextUploader = (TextDestination)i;
                 }
             }
         }

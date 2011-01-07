@@ -38,9 +38,9 @@ namespace ZUploader
 {
     public static class UploadManager
     {
-        public static ImageDestType2 ImageUploader { get; set; }
-        public static TextDestType2 TextUploader { get; set; }
-        public static FileUploaderType2 FileUploader { get; set; }
+        public static ImageDestination ImageUploader { get; set; }
+        public static TextDestination TextUploader { get; set; }
+        public static FileDestination FileUploader { get; set; }
         public static MyListView ListViewControl { get; set; }
         public static List<Task> Tasks { get; private set; }
 
@@ -57,11 +57,11 @@ namespace ZUploader
                 {
                     EDataType type;
 
-                    if (ImageUploader != ImageDestType2.FILE && Helpers.IsImageFile(path))
+                    if (ImageUploader != ImageDestination.FILE && Helpers.IsImageFile(path))
                     {
                         type = EDataType.Image;
                     }
-                    else if (TextUploader != TextDestType2.FILE && Helpers.IsTextFile(path))
+                    else if (TextUploader != TextDestination.FILE && Helpers.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
@@ -146,7 +146,7 @@ namespace ZUploader
         {
             if (img != null)
             {
-                EDataType type = ImageUploader == ImageDestType2.FILE ? EDataType.File : EDataType.Image;
+                EDataType type = ImageUploader == ImageDestination.FILE ? EDataType.File : EDataType.Image;
                 Task task = Task.CreateImageUploaderTask(type, img);
                 StartUpload(task);
             }
@@ -156,7 +156,7 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                EDataType type = TextUploader == TextDestType2.FILE ? EDataType.File : EDataType.Text;
+                EDataType type = TextUploader == TextDestination.FILE ? EDataType.File : EDataType.Text;
                 Task task = Task.CreateTextUploaderTask(type, text);
                 StartUpload(task);
             }

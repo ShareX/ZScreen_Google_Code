@@ -212,10 +212,10 @@ namespace ZUploader
 
             switch (UploadManager.ImageUploader)
             {
-                case ImageDestType2.IMAGESHACK:
+                case ImageDestination.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Program.ImageShackKey, string.Empty);
                     break;
-                case ImageDestType2.TINYPIC:
+                case ImageDestination.TINYPIC:
                     imageUploader = new TinyPicUploader(Program.TinyPicID, Program.TinyPicKey, string.Empty);
                     break;
                 /*case ImageDestType2.IMAGEBIN:
@@ -224,15 +224,12 @@ namespace ZUploader
                 case ImageDestType2.IMG1:
                     imageUploader = new Img1Uploader();
                     break;*/
-                case ImageDestType2.IMGUR:
+                case ImageDestination.IMGUR:
                     imageUploader = new Imgur(Program.ImgurKey);
                     break;
-                case ImageDestType2.MINUS:
+                case ImageDestination.MINUS:
                     imageUploader = new Minus();
                     break;
-                /*case ImageDestType2.UPLOADSCREENSHOT:
-                    imageUploader = new UploadScreenshot(Program.UploadScreenshotKey);
-                    break;*/
             }
 
             if (imageUploader != null)
@@ -255,61 +252,22 @@ namespace ZUploader
             return null;
         }
 
-        public UploadResult UploadFile(Stream stream, string fileName)
-        {
-            FileUploader fileUploader = null;
-
-            switch (UploadManager.FileUploader)
-            {
-                case FileUploaderType2.RapidShare:
-                    fileUploader = new RapidShare();
-                    break;
-                case FileUploaderType2.SendSpace:
-                    fileUploader = new SendSpace();
-                    SendSpaceManager.PrepareUploadInfo(null, null);
-                    break;
-                /*case FileUploaderType2.FileBin:
-                    fileUploader = new FileBin();
-                    break;*/
-                case FileUploaderType2.DropIO:
-                    fileUploader = new DropIO();
-                    break;
-                case FileUploaderType2.ShareCX:
-                    fileUploader = new ShareCX();
-                    break;
-                case FileUploaderType2.FilezFiles:
-                    fileUploader = new FilezFiles();
-                    break;
-                case FileUploaderType2.FTP:
-                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
-                    break;
-            }
-
-            if (fileUploader != null)
-            {
-                PrepareUploader(fileUploader);
-                return fileUploader.Upload(stream, fileName);
-            }
-
-            return null;
-        }
-
         public UploadResult UploadText(Stream stream)
         {
             TextUploader textUploader = null;
 
             switch (UploadManager.TextUploader)
             {
-                case TextDestType2.PASTEBIN:
+                case TextDestination.PASTEBIN:
                     textUploader = new PastebinUploader();
                     break;
-                case TextDestType2.PASTEBIN_CA:
+                case TextDestination.PASTEBIN_CA:
                     textUploader = new PastebinCaUploader();
                     break;
-                case TextDestType2.SLEXY:
+                case TextDestination.SLEXY:
                     textUploader = new SlexyUploader();
                     break;
-                case TextDestType2.PASTE2:
+                case TextDestination.PASTE2:
                     textUploader = new Paste2Uploader();
                     break;
             }
@@ -319,6 +277,48 @@ namespace ZUploader
                 PrepareUploader(textUploader);
                 string url = textUploader.UploadText(stream);
                 return new UploadResult(null, url);
+            }
+
+            return null;
+        }
+
+        public UploadResult UploadFile(Stream stream, string fileName)
+        {
+            FileUploader fileUploader = null;
+
+            switch (UploadManager.FileUploader)
+            {
+                case FileDestination.RapidShare:
+                    fileUploader = new RapidShare();
+                    break;
+                case FileDestination.SendSpace:
+                    fileUploader = new SendSpace();
+                    SendSpaceManager.PrepareUploadInfo(null, null);
+                    break;
+                /*case FileUploaderType2.FileBin:
+                    fileUploader = new FileBin();
+                    break;*/
+                case FileDestination.DropIO:
+                    fileUploader = new DropIO();
+                    break;
+                case FileDestination.ShareCX:
+                    fileUploader = new ShareCX();
+                    break;
+                case FileDestination.FilezFiles:
+                    fileUploader = new FilezFiles();
+                    break;
+                case FileDestination.CustomUploader:
+                    fileUploader = new CustomUploader(new CustomUploaderInfo());
+                    break;
+                case FileDestination.FTP:
+                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
+                    break;
+            }
+
+            if (fileUploader != null)
+            {
+                PrepareUploader(fileUploader);
+                return fileUploader.Upload(stream, fileName);
             }
 
             return null;

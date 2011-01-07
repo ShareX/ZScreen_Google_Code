@@ -52,10 +52,17 @@ namespace UploadersLib
 
     public enum LinkType
     {
-        THUMBNAIL,
         FULLIMAGE,
-        FULLIMAGE_TINYURL,
-        DELETION_LINK
+        THUMBNAIL,
+        DELETION_LINK,
+        FULLIMAGE_TINYURL
+    }
+
+    public enum URLType
+    {
+        URL,
+        ThumbnailURL,
+        DeletionURL
     }
 
     #region Image Uploaders
@@ -120,8 +127,6 @@ namespace UploadersLib
         //IMG1,
         [Description("Imgur - www.imgur.com")]
         IMGUR,
-        //[Description("UploadScreenshot - www.uploadscreenshot.com")]
-        //UPLOADSCREENSHOT,
         [Description("TwitPic - www.twitpic.com")]
         TWITPIC,
         [Description("TwitSnaps - www.twitsnaps.com")]

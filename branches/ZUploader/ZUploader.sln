@@ -15,10 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionManager", "..\Exte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderPlugin", "ZUploaderPlugin\ZUploaderPlugin.csproj", "{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZUploaderPlugins", "ZUploaderPlugins", "{2A6EE04A-5E4A-43EC-B276-CB1C47A61047}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "Plugins\TestPlugin\TestPlugin.csproj", "{498469C2-0723-4A8A-B6D0-CCDC52F0456E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,21 +95,8 @@ Global
 		{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}.Release|x86.ActiveCfg = Release|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{498469C2-0723-4A8A-B6D0-CCDC52F0456E} = {2A6EE04A-5E4A-43EC-B276-CB1C47A61047}
 	EndGlobalSection
 EndGlobal

@@ -27,7 +27,7 @@ using System.ComponentModel;
 
 namespace ZUploader
 {
-    public enum ImageDestType2
+    public enum ImageDestination
     {
         [Description("imageshack.us")]
         IMAGESHACK,
@@ -41,13 +41,11 @@ namespace ZUploader
         IMGUR,
         [Description("min.us")]
         MINUS,
-        //[Description("uploadscreenshot.com")]
-        //UPLOADSCREENSHOT,
         [Description("Use file uploader")]
         FILE
     }
 
-    public enum TextDestType2
+    public enum TextDestination
     {
         [Description("pastebin.com")]
         PASTEBIN,
@@ -61,7 +59,7 @@ namespace ZUploader
         FILE
     }
 
-    public enum FileUploaderType2
+    public enum FileDestination
     {
         [Description("rapidshare.com")]
         RapidShare,
@@ -75,6 +73,8 @@ namespace ZUploader
         ShareCX,
         [Description("filez.muffinz.eu")]
         FilezFiles,
+        [Description("Use custom uploader")]
+        CustomUploader,
         [Description("FTP Server")]
         FTP
     }
