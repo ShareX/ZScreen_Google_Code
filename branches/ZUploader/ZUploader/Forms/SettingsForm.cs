@@ -76,6 +76,7 @@ namespace ZUploader
             nudHistoryMaxItemCount.Value = Program.Settings.HistoryMaxItemCount;
 
             pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
+            pgCustomUploaderSettings.SelectedObject = Program.Settings.CustomUploader;
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
 
             txtDebugLog.Text = Program.MyLogger.Messages.ToString();

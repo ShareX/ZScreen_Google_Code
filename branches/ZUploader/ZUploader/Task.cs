@@ -308,7 +308,7 @@ namespace ZUploader
                     fileUploader = new FilezFiles();
                     break;
                 case FileDestination.CustomUploader:
-                    fileUploader = new CustomUploader(new CustomUploaderInfo());
+                    fileUploader = new CustomUploader(Program.Settings.CustomUploader);
                     break;
                 case FileDestination.FTP:
                     fileUploader = new FTPUploader(Program.Settings.FTPAccount);

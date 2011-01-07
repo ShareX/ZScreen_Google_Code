@@ -77,6 +77,8 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.tpCustomUploader = new System.Windows.Forms.TabPage();
+            this.pgCustomUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -90,6 +92,7 @@
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
+            this.tpCustomUploader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pgFTPSettings
@@ -98,7 +101,7 @@
             this.pgFTPSettings.Location = new System.Drawing.Point(4, 4);
             this.pgFTPSettings.Name = "pgFTPSettings";
             this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(474, 251);
+            this.pgFTPSettings.Size = new System.Drawing.Size(515, 251);
             this.pgFTPSettings.TabIndex = 0;
             this.pgFTPSettings.ToolbarVisible = false;
             this.pgFTPSettings.SelectedObjectsChanged += new System.EventHandler(this.pgFTPSettings_SelectedObjectsChanged);
@@ -131,7 +134,7 @@
             this.pgProxy.Location = new System.Drawing.Point(4, 4);
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgProxy.Size = new System.Drawing.Size(474, 251);
+            this.pgProxy.Size = new System.Drawing.Size(515, 251);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
             // 
@@ -144,12 +147,13 @@
             this.tcSettings.Controls.Add(this.tpHistory);
             this.tcSettings.Controls.Add(this.tpFTP);
             this.tcSettings.Controls.Add(this.tpProxy);
+            this.tcSettings.Controls.Add(this.tpCustomUploader);
             this.tcSettings.Controls.Add(this.tpDebug);
             this.tcSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
-            this.tcSettings.Size = new System.Drawing.Size(490, 285);
+            this.tcSettings.Size = new System.Drawing.Size(531, 285);
             this.tcSettings.TabIndex = 5;
             // 
             // tpGeneral
@@ -163,7 +167,7 @@
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(482, 259);
+            this.tpGeneral.Size = new System.Drawing.Size(523, 259);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
@@ -195,7 +199,7 @@
             this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
             this.lblGeneralInfo.Location = new System.Drawing.Point(3, 227);
             this.lblGeneralInfo.Name = "lblGeneralInfo";
-            this.lblGeneralInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblGeneralInfo.Size = new System.Drawing.Size(517, 29);
             this.lblGeneralInfo.TabIndex = 16;
             this.lblGeneralInfo.Text = "Shell context menu is Windows Explorer right click menu for files and folders.";
             this.lblGeneralInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -221,7 +225,7 @@
             this.tpUpload.Controls.Add(this.cbBufferSize);
             this.tpUpload.Location = new System.Drawing.Point(4, 22);
             this.tpUpload.Name = "tpUpload";
-            this.tpUpload.Size = new System.Drawing.Size(482, 259);
+            this.tpUpload.Size = new System.Drawing.Size(523, 259);
             this.tpUpload.TabIndex = 7;
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
@@ -309,7 +313,7 @@
             this.tpImage.Location = new System.Drawing.Point(4, 22);
             this.tpImage.Name = "tpImage";
             this.tpImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImage.Size = new System.Drawing.Size(482, 259);
+            this.tpImage.Size = new System.Drawing.Size(523, 259);
             this.tpImage.TabIndex = 4;
             this.tpImage.Text = "Image";
             this.tpImage.UseVisualStyleBackColor = true;
@@ -322,10 +326,10 @@
             this.lblImageInfo.ForeColor = System.Drawing.Color.White;
             this.lblImageInfo.Location = new System.Drawing.Point(3, 227);
             this.lblImageInfo.Name = "lblImageInfo";
-            this.lblImageInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-                "added as bitmap.";
+    "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -481,7 +485,7 @@
             this.tpClipboardUpload.Location = new System.Drawing.Point(4, 22);
             this.tpClipboardUpload.Name = "tpClipboardUpload";
             this.tpClipboardUpload.Padding = new System.Windows.Forms.Padding(3);
-            this.tpClipboardUpload.Size = new System.Drawing.Size(482, 259);
+            this.tpClipboardUpload.Size = new System.Drawing.Size(523, 259);
             this.tpClipboardUpload.TabIndex = 6;
             this.tpClipboardUpload.Text = "Clipboard upload";
             this.tpClipboardUpload.UseVisualStyleBackColor = true;
@@ -494,10 +498,10 @@
             this.lblClipboardUploadInfo.ForeColor = System.Drawing.Color.White;
             this.lblClipboardUploadInfo.Location = new System.Drawing.Point(3, 227);
             this.lblClipboardUploadInfo.Name = "lblClipboardUploadInfo";
-            this.lblClipboardUploadInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-                "ce accordingly.";
+    "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -548,7 +552,7 @@
             this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(482, 259);
+            this.tpHistory.Size = new System.Drawing.Size(523, 259);
             this.tpHistory.TabIndex = 3;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -561,7 +565,7 @@
             this.lblHistoryInfo.ForeColor = System.Drawing.Color.White;
             this.lblHistoryInfo.Location = new System.Drawing.Point(3, 227);
             this.lblHistoryInfo.Name = "lblHistoryInfo";
-            this.lblHistoryInfo.Size = new System.Drawing.Size(476, 29);
+            this.lblHistoryInfo.Size = new System.Drawing.Size(517, 29);
             this.lblHistoryInfo.TabIndex = 15;
             this.lblHistoryInfo.Text = "ZUploader uses SQLite to store history items.";
             this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -645,7 +649,7 @@
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(4);
-            this.tpFTP.Size = new System.Drawing.Size(482, 259);
+            this.tpFTP.Size = new System.Drawing.Size(523, 259);
             this.tpFTP.TabIndex = 1;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
@@ -656,7 +660,7 @@
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
             this.tpProxy.Padding = new System.Windows.Forms.Padding(4);
-            this.tpProxy.Size = new System.Drawing.Size(482, 259);
+            this.tpProxy.Size = new System.Drawing.Size(523, 259);
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
@@ -667,7 +671,7 @@
             this.tpDebug.Location = new System.Drawing.Point(4, 22);
             this.tpDebug.Name = "tpDebug";
             this.tpDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDebug.Size = new System.Drawing.Size(482, 259);
+            this.tpDebug.Size = new System.Drawing.Size(523, 259);
             this.tpDebug.TabIndex = 5;
             this.tpDebug.Text = "Debug";
             this.tpDebug.UseVisualStyleBackColor = true;
@@ -679,15 +683,36 @@
             this.txtDebugLog.Multiline = true;
             this.txtDebugLog.Name = "txtDebugLog";
             this.txtDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDebugLog.Size = new System.Drawing.Size(476, 253);
+            this.txtDebugLog.Size = new System.Drawing.Size(517, 253);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
+            // 
+            // tpCustomUploader
+            // 
+            this.tpCustomUploader.Controls.Add(this.pgCustomUploaderSettings);
+            this.tpCustomUploader.Location = new System.Drawing.Point(4, 22);
+            this.tpCustomUploader.Name = "tpCustomUploader";
+            this.tpCustomUploader.Padding = new System.Windows.Forms.Padding(3);
+            this.tpCustomUploader.Size = new System.Drawing.Size(523, 259);
+            this.tpCustomUploader.TabIndex = 8;
+            this.tpCustomUploader.Text = "Custom Uploader";
+            this.tpCustomUploader.UseVisualStyleBackColor = true;
+            // 
+            // pgCustomUploaderSettings
+            // 
+            this.pgCustomUploaderSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgCustomUploaderSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgCustomUploaderSettings.Name = "pgCustomUploaderSettings";
+            this.pgCustomUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgCustomUploaderSettings.Size = new System.Drawing.Size(517, 253);
+            this.pgCustomUploaderSettings.TabIndex = 1;
+            this.pgCustomUploaderSettings.ToolbarVisible = false;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 291);
+            this.ClientSize = new System.Drawing.Size(537, 291);
             this.Controls.Add(this.tcSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -716,6 +741,7 @@
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
+            this.tpCustomUploader.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -772,5 +798,7 @@
         private System.Windows.Forms.Label lblUploadLimitHint;
         private System.Windows.Forms.NumericUpDown nudUploadLimit;
         private System.Windows.Forms.Label lblUploadLimit;
+        private System.Windows.Forms.TabPage tpCustomUploader;
+        private System.Windows.Forms.PropertyGrid pgCustomUploaderSettings;
     }
 }

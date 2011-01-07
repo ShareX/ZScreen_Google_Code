@@ -62,6 +62,7 @@ namespace ZUploader
         public int HistoryMaxItemCount = -1;
 
         public FTPAccount FTPAccount = new FTPAccount();
+        public CustomUploaderInfo CustomUploader = new CustomUploaderInfo();
         public ProxyInfo ProxySettings = new ProxyInfo();
 
         public Keys HotkeyClipboardUpload = Keys.Control | Keys.PageUp;
