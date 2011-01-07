@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -59,14 +58,23 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(ifm.Source))
             {
-                List<String> regexps = new List<string>();
+                List<string> regexps = new List<string>();
                 foreach (string regexp in iHosting.RegexpList)
                 {
                     regexps.Add(Regex.Match(ifm.Source, regexp).Value);
                 }
                 iHosting.Regexps = regexps;
 
-                string fullimage = iHosting.ReturnLink(iHosting.Fullimage);
+                string fullimage;
+                if (!string.IsNullOrEmpty(iHosting.Fullimage))
+                {
+                    fullimage = iHosting.ReturnLink(iHosting.Fullimage);
+                }
+                else
+                {
+                    fullimage = ifm.Source;
+                }
+
                 string thumbnail = iHosting.ReturnLink(iHosting.Thumbnail);
 
                 ifm.Add(fullimage, LinkType.FULLIMAGE);
