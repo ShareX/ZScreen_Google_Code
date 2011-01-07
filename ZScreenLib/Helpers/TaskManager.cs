@@ -318,6 +318,12 @@ namespace ZScreenLib
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
                     break;
+                case FileUploaderType.CUSTOM_UPLOADER:
+                    if (Adapter.CheckList(Engine.conf.CustomUploadersList, Engine.conf.CustomUploaderSelected))
+                    {
+                        fileHost = new CustomUploader(Engine.conf.CustomUploadersList[Engine.conf.CustomUploaderSelected]);
+                    }
+                    break;
             }
 
             if (fileHost != null)
@@ -355,12 +361,6 @@ namespace ZScreenLib
                 case ImageDestType.CLIPBOARD:
                     if (string.IsNullOrEmpty(mTask.LocalFilePath)) return;
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
-                    break;
-                case ImageDestType.CUSTOM_UPLOADER:
-                    if (Adapter.CheckList(Engine.conf.ImageUploadersList, Engine.conf.ImageUploaderSelected))
-                    {
-                        imageUploader = new CustomUploader(Engine.conf.ImageUploadersList[Engine.conf.ImageUploaderSelected]);
-                    }
                     break;
                 case ImageDestType.DEKIWIKI:
                     UploadDekiWiki();

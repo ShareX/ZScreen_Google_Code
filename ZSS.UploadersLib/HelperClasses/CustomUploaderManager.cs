@@ -31,11 +31,11 @@ using System.Xml.Serialization;
 namespace UploadersLib.HelperClasses
 {
     [Serializable]
-    public class CustomUploaderServiceManager
+    public class CustomUploaderManager
     {
         public List<CustomUploaderInfo> ImageHostingServices { get; set; }
 
-        public CustomUploaderServiceManager()
+        public CustomUploaderManager()
         {
             this.ImageHostingServices = new List<CustomUploaderInfo>();
         }
@@ -46,7 +46,7 @@ namespace UploadersLib.HelperClasses
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderServiceManager));
+                    XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderManager));
                     xs.Serialize(fs, this);
                 }
             }
@@ -56,7 +56,7 @@ namespace UploadersLib.HelperClasses
             }
         }
 
-        public static CustomUploaderServiceManager Read(string filePath)
+        public static CustomUploaderManager Read(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -64,8 +64,8 @@ namespace UploadersLib.HelperClasses
                 {
                     using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderServiceManager));
-                        CustomUploaderServiceManager set = xs.Deserialize(fs) as CustomUploaderServiceManager;
+                        XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderManager));
+                        CustomUploaderManager set = xs.Deserialize(fs) as CustomUploaderManager;
                         return set;
                     }
                 }
@@ -75,7 +75,7 @@ namespace UploadersLib.HelperClasses
                 }
             }
 
-            return new CustomUploaderServiceManager();
+            return new CustomUploaderManager();
         }
     }
 }

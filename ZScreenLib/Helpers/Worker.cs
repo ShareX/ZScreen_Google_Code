@@ -256,7 +256,7 @@ namespace ZScreenLib
             }
             else
             {
-                task.MyImageUploader = ImageDestType.CUSTOM_UPLOADER;
+                task.MyFileUploader = FileUploaderType.CUSTOM_UPLOADER;
             }
 
             return task;

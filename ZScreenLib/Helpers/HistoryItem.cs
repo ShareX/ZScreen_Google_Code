@@ -142,18 +142,13 @@ namespace ZScreenLib
             {
                 case JobCategoryType.PICTURES:
                 case JobCategoryType.SCREENSHOTS:
-                    switch (t.MyImageUploader)
-                    {
-                        case ImageDestType.CUSTOM_UPLOADER:
-                            return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
-                        default:
-                            return string.Format("{0}", t.MyImageUploader.GetDescription());
-                    }
+                    return string.Format("{0}", t.MyImageUploader.GetDescription());
                 case JobCategoryType.TEXT:
                     return string.Format("{0}", t.MyTextUploader.ToString());
                 case JobCategoryType.BINARY:
                     switch (t.MyFileUploader)
                     {
+                        case FileUploaderType.CUSTOM_UPLOADER:
                         case FileUploaderType.FTP:
                             return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:

@@ -188,7 +188,7 @@ namespace UploadersLib.HelperClasses
             return regexpResult[Convert.ToInt32(str.Substring(start + 1, end - start)) - 1];
         }
 
-        public int CheckConditional(string str, int start)
+        private int CheckConditional(string str, int start)
         {
             int search;
             string link = "";
@@ -213,7 +213,7 @@ namespace UploadersLib.HelperClasses
             return 0;
         }
 
-        public string ReturnConditional(string str, int start, int end)
+        private string ReturnConditional(string str, int start, int end)
         {
             int search;
             str = str.Substring(start + 1, end - start - 1);
@@ -290,7 +290,7 @@ namespace UploadersLib.HelperClasses
             return result;
         }
 
-        public string ReturnLinkOld(string str)
+        private string ReturnLinkOld(string str)
         {
             string link = "";
             try
