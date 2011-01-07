@@ -70,15 +70,7 @@ namespace ZScreenLib
                         break;
                     case JobCategoryType.SCREENSHOTS:
                     case JobCategoryType.PICTURES:
-                        switch (task.MyImageUploader)
-                        {
-                            case ImageDestType.CUSTOM_UPLOADER:
-                                sbMsg.AppendLine(string.Format("Destination: {0} ({1})", task.MyImageUploader.GetDescription(), task.DestinationName));
-                                break;
-                            default:
-                                sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
-                                break;
-                        }
+                        sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
                         break;
                 }
 

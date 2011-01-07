@@ -133,8 +133,6 @@ namespace UploadersLib
         TWITSNAPS,
         [Description("yFrog - www.yfrog.com")]
         YFROG,
-        [Description("Custom Uploader")]
-        CUSTOM_UPLOADER,
         [Description("MindTouch Deki Wiki")]
         DEKIWIKI,
         [Description("Printer")]
@@ -207,7 +205,9 @@ namespace UploadersLib
         [Description("ShareCX - www.share.cx")]
         ShareCX,
         [Description("Filez - www.filez.muffinz.eu")]
-        FilezFiles
+        FilezFiles,
+        [Description("Custom Uploader")]
+        CUSTOM_UPLOADER
     }
 
     public enum RapidShareAcctType

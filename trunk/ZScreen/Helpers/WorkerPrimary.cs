@@ -72,7 +72,8 @@ namespace ZScreenGUI
             task.UniqueNumber = UploadManager.Queue();
 
             if ((Engine.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
-                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT && task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR))
+                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT && task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR) ||
+                task.Job == WorkerTask.Jobs.CustomUploaderTest)
             {
                 task.JobCategory = JobCategoryType.BINARY;
                 if (!Engine.conf.PreferFtpServerForIndex)

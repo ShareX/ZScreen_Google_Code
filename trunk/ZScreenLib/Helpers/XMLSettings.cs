@@ -375,10 +375,10 @@ namespace ZScreenLib
 
         public IndexerConfig IndexerConfig = new IndexerConfig();
 
-        // Custom Image Uploaders
+        // Custom Uploaders
 
-        public List<ImageHostingService> ImageUploadersList = null;
-        public int ImageUploaderSelected = 0;
+        public List<CustomUploaderInfo> CustomUploadersList = null;
+        public int CustomUploaderSelected = 0;
 
         // Web Page Upload
 

@@ -933,27 +933,27 @@ namespace ZScreenGUI
 
             // Custom Image Uploaders
             lbImageUploader.Items.Clear();
-            if (Engine.conf.ImageUploadersList == null)
+            if (Engine.conf.CustomUploadersList == null)
             {
-                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
-                LoadImageUploaders(new ImageHostingService());
+                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
+                LoadImageUploaders(new CustomUploaderInfo());
             }
             else
             {
-                List<ImageHostingService> iUploaders = Engine.conf.ImageUploadersList;
-                foreach (ImageHostingService iUploader in iUploaders)
+                List<CustomUploaderInfo> iUploaders = Engine.conf.CustomUploadersList;
+                foreach (CustomUploaderInfo iUploader in iUploaders)
                 {
                     lbImageUploader.Items.Add(iUploader.Name);
                 }
 
                 if (lbImageUploader.Items.Count > 0)
                 {
-                    lbImageUploader.SelectedIndex = Engine.conf.ImageUploaderSelected;
+                    lbImageUploader.SelectedIndex = Engine.conf.CustomUploaderSelected;
                 }
 
                 if (lbImageUploader.SelectedIndex != -1)
                 {
-                    LoadImageUploaders(Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
+                    LoadImageUploaders(Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex]);
                 }
             }
 
@@ -1424,11 +1424,11 @@ namespace ZScreenGUI
 
         private void RewriteCustomUploaderRightClickMenu()
         {
-            if (Engine.conf.ImageUploadersList != null)
+            if (Engine.conf.CustomUploadersList != null)
             {
-                List<ImageHostingService> lUploaders = Engine.conf.ImageUploadersList;
+                List<CustomUploaderInfo> lUploaders = Engine.conf.CustomUploadersList;
 
-                ToolStripMenuItem tsmDestCustomHTTP = GetImageDestMenuItem(ImageDestType.CUSTOM_UPLOADER);
+                ToolStripMenuItem tsmDestCustomHTTP = GetFileDestMenuItem(FileUploaderType.CUSTOM_UPLOADER);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestCustomHTTP.DropDownItems.Clear();
 
@@ -1440,7 +1440,7 @@ namespace ZScreenGUI
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
-                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.conf.ImageUploaderSelected);
+                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.conf.CustomUploaderSelected);
 
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
@@ -2062,8 +2062,8 @@ namespace ZScreenGUI
         {
             if (txtUploader.Text != string.Empty)
             {
-                ImageHostingService iUploader = GetUploaderFromFields();
-                Engine.conf.ImageUploadersList.Add(iUploader);
+                CustomUploaderInfo iUploader = GetUploaderFromFields();
+                Engine.conf.CustomUploadersList.Add(iUploader);
                 lbImageUploader.Items.Add(iUploader.Name);
                 lbImageUploader.SelectedIndex = lbImageUploader.Items.Count - 1;
             }
@@ -2074,29 +2074,29 @@ namespace ZScreenGUI
             if (lbImageUploader.SelectedIndex != -1)
             {
                 int selected = lbImageUploader.SelectedIndex;
-                Engine.conf.ImageUploadersList.RemoveAt(selected);
+                Engine.conf.CustomUploadersList.RemoveAt(selected);
                 lbImageUploader.Items.RemoveAt(selected);
-                LoadImageUploaders(new ImageHostingService());
+                LoadImageUploaders(new CustomUploaderInfo());
             }
         }
 
-        private ImageHostingService GetUploaderFromFields()
+        private CustomUploaderInfo GetUploaderFromFields()
         {
-            ImageHostingService iUploader = new ImageHostingService(txtUploader.Text);
+            CustomUploaderInfo iUploader = new CustomUploaderInfo(txtUploader.Text);
             foreach (ListViewItem lvItem in lvArguments.Items)
             {
-                iUploader.Arguments.Add(new[] { lvItem.Text, lvItem.SubItems[1].Text });
+                iUploader.Arguments.Add(new Argument(lvItem.Text, lvItem.SubItems[1].Text));
             }
 
             iUploader.UploadURL = txtUploadURL.Text;
-            iUploader.FileForm = txtFileForm.Text;
+            iUploader.FileFormName = txtFileForm.Text;
             foreach (ListViewItem lvItem in lvRegexps.Items)
             {
                 iUploader.RegexpList.Add(lvItem.Text);
             }
 
-            iUploader.Fullimage = txtFullImage.Text;
-            iUploader.Thumbnail = txtThumbnail.Text;
+            iUploader.URL = txtFullImage.Text;
+            iUploader.ThumbnailURL = txtThumbnail.Text;
             return iUploader;
         }
 
@@ -2167,24 +2167,24 @@ namespace ZScreenGUI
         {
             if (lbImageUploader.SelectedIndex != -1)
             {
-                LoadImageUploaders(Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex]);
-                Engine.conf.ImageUploaderSelected = lbImageUploader.SelectedIndex;
+                LoadImageUploaders(Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex]);
+                Engine.conf.CustomUploaderSelected = lbImageUploader.SelectedIndex;
                 RewriteCustomUploaderRightClickMenu();
             }
         }
 
-        private void LoadImageUploaders(ImageHostingService imageUploader)
+        private void LoadImageUploaders(CustomUploaderInfo imageUploader)
         {
             txtArg1.Text = string.Empty;
             txtArg2.Text = string.Empty;
             lvArguments.Items.Clear();
-            foreach (string[] args in imageUploader.Arguments)
+            foreach (Argument arg in imageUploader.Arguments)
             {
-                lvArguments.Items.Add(args[0]).SubItems.Add(args[1]);
+                lvArguments.Items.Add(arg.Name).SubItems.Add(arg.Value);
             }
 
             txtUploadURL.Text = imageUploader.UploadURL;
-            txtFileForm.Text = imageUploader.FileForm;
+            txtFileForm.Text = imageUploader.FileFormName;
             txtRegexp.Text = string.Empty;
             lvRegexps.Items.Clear();
             foreach (string regexp in imageUploader.RegexpList)
@@ -2192,17 +2192,17 @@ namespace ZScreenGUI
                 lvRegexps.Items.Add(regexp);
             }
 
-            txtFullImage.Text = imageUploader.Fullimage;
-            txtThumbnail.Text = imageUploader.Thumbnail;
+            txtFullImage.Text = imageUploader.URL;
+            txtThumbnail.Text = imageUploader.ThumbnailURL;
         }
 
         private void btnUploadersUpdate_Click(object sender, EventArgs e)
         {
             if (lbImageUploader.SelectedIndex != -1)
             {
-                ImageHostingService iUploader = GetUploaderFromFields();
+                CustomUploaderInfo iUploader = GetUploaderFromFields();
                 iUploader.Name = lbImageUploader.SelectedItem.ToString();
-                Engine.conf.ImageUploadersList[lbImageUploader.SelectedIndex] = iUploader;
+                Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex] = iUploader;
             }
 
             RewriteCustomUploaderRightClickMenu();
@@ -2210,7 +2210,7 @@ namespace ZScreenGUI
 
         private void btnUploadersClear_Click(object sender, EventArgs e)
         {
-            LoadImageUploaders(new ImageHostingService());
+            LoadImageUploaders(new CustomUploaderInfo());
         }
 
         private void btUploadersTest_Click(object sender, EventArgs e)
@@ -2224,7 +2224,7 @@ namespace ZScreenGUI
 
         private void btnUploaderExport_Click(object sender, EventArgs e)
         {
-            if (Engine.conf.ImageUploadersList != null)
+            if (Engine.conf.CustomUploadersList != null)
             {
                 SaveFileDialog dlg = new SaveFileDialog
                 {
@@ -2233,9 +2233,9 @@ namespace ZScreenGUI
                 };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    ImageHostingServiceManager ihsm = new ImageHostingServiceManager
+                    CustomUploaderManager ihsm = new CustomUploaderManager
                     {
-                        ImageHostingServices = Engine.conf.ImageUploadersList
+                        ImageHostingServices = Engine.conf.CustomUploadersList
                     };
                     ihsm.Save(dlg.FileName);
                 }
@@ -2244,12 +2244,12 @@ namespace ZScreenGUI
 
         private void ImportImageUploaders(string fp)
         {
-            ImageHostingServiceManager tmp = ImageHostingServiceManager.Read(fp);
+            CustomUploaderManager tmp = CustomUploaderManager.Read(fp);
             if (tmp != null)
             {
-                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
-                Engine.conf.ImageUploadersList.AddRange(tmp.ImageHostingServices);
-                foreach (ImageHostingService iHostingService in Engine.conf.ImageUploadersList)
+                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
+                Engine.conf.CustomUploadersList.AddRange(tmp.ImageHostingServices);
+                foreach (CustomUploaderInfo iHostingService in Engine.conf.CustomUploadersList)
                 {
                     lbImageUploader.Items.Add(iHostingService.Name);
                 }
@@ -2258,9 +2258,9 @@ namespace ZScreenGUI
 
         private void btnUploaderImport_Click(object sender, EventArgs e)
         {
-            if (Engine.conf.ImageUploadersList == null)
+            if (Engine.conf.CustomUploadersList == null)
             {
-                Engine.conf.ImageUploadersList = new List<ImageHostingService>();
+                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
             }
 
             OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_IMAGE_HOSTING_SERVICES };
