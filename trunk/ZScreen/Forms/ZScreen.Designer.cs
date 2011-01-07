@@ -4958,14 +4958,14 @@ namespace ZScreenGUI
             // 
             this.txtUploadersLog.Location = new System.Drawing.Point(8, 280);
             this.txtUploadersLog.Name = "txtUploadersLog";
-            this.txtUploadersLog.Size = new System.Drawing.Size(416, 104);
+            this.txtUploadersLog.Size = new System.Drawing.Size(424, 104);
             this.txtUploadersLog.TabIndex = 18;
             this.txtUploadersLog.Text = "";
             this.txtUploadersLog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtUploadersLog_LinkClicked);
             // 
             // btnUploadersTest
             // 
-            this.btnUploadersTest.Location = new System.Drawing.Point(432, 360);
+            this.btnUploadersTest.Location = new System.Drawing.Point(448, 360);
             this.btnUploadersTest.Name = "btnUploadersTest";
             this.btnUploadersTest.Size = new System.Drawing.Size(328, 24);
             this.btnUploadersTest.TabIndex = 9;
@@ -4975,14 +4975,14 @@ namespace ZScreenGUI
             // 
             // txtFullImage
             // 
-            this.txtFullImage.Location = new System.Drawing.Point(432, 296);
+            this.txtFullImage.Location = new System.Drawing.Point(448, 296);
             this.txtFullImage.Name = "txtFullImage";
             this.txtFullImage.Size = new System.Drawing.Size(328, 20);
             this.txtFullImage.TabIndex = 5;
             // 
             // txtThumbnail
             // 
-            this.txtThumbnail.Location = new System.Drawing.Point(432, 336);
+            this.txtThumbnail.Location = new System.Drawing.Point(448, 336);
             this.txtThumbnail.Name = "txtThumbnail";
             this.txtThumbnail.Size = new System.Drawing.Size(328, 20);
             this.txtThumbnail.TabIndex = 6;
@@ -4990,7 +4990,7 @@ namespace ZScreenGUI
             // lblFullImage
             // 
             this.lblFullImage.AutoSize = true;
-            this.lblFullImage.Location = new System.Drawing.Point(432, 280);
+            this.lblFullImage.Location = new System.Drawing.Point(448, 280);
             this.lblFullImage.Name = "lblFullImage";
             this.lblFullImage.Size = new System.Drawing.Size(55, 13);
             this.lblFullImage.TabIndex = 17;
@@ -4999,7 +4999,7 @@ namespace ZScreenGUI
             // lblThumbnail
             // 
             this.lblThumbnail.AutoSize = true;
-            this.lblThumbnail.Location = new System.Drawing.Point(432, 320);
+            this.lblThumbnail.Location = new System.Drawing.Point(448, 320);
             this.lblThumbnail.Name = "lblThumbnail";
             this.lblThumbnail.Size = new System.Drawing.Size(56, 13);
             this.lblThumbnail.TabIndex = 16;
@@ -5105,7 +5105,7 @@ namespace ZScreenGUI
             this.gbRegexp.Controls.Add(this.lvRegexps);
             this.gbRegexp.Controls.Add(this.btnRegexpRemove);
             this.gbRegexp.Controls.Add(this.btnRegexpAdd);
-            this.gbRegexp.Location = new System.Drawing.Point(520, 88);
+            this.gbRegexp.Location = new System.Drawing.Point(272, 88);
             this.gbRegexp.Name = "gbRegexp";
             this.gbRegexp.Size = new System.Drawing.Size(240, 184);
             this.gbRegexp.TabIndex = 4;
@@ -5172,7 +5172,7 @@ namespace ZScreenGUI
             // 
             // txtFileForm
             // 
-            this.txtFileForm.Location = new System.Drawing.Point(528, 64);
+            this.txtFileForm.Location = new System.Drawing.Point(280, 64);
             this.txtFileForm.Name = "txtFileForm";
             this.txtFileForm.Size = new System.Drawing.Size(224, 20);
             this.txtFileForm.TabIndex = 3;
@@ -5180,7 +5180,7 @@ namespace ZScreenGUI
             // lblFileForm
             // 
             this.lblFileForm.AutoSize = true;
-            this.lblFileForm.Location = new System.Drawing.Point(528, 48);
+            this.lblFileForm.Location = new System.Drawing.Point(280, 48);
             this.lblFileForm.Name = "lblFileForm";
             this.lblFileForm.Size = new System.Drawing.Size(83, 13);
             this.lblFileForm.TabIndex = 9;
@@ -5189,7 +5189,7 @@ namespace ZScreenGUI
             // lblUploadURL
             // 
             this.lblUploadURL.AutoSize = true;
-            this.lblUploadURL.Location = new System.Drawing.Point(528, 8);
+            this.lblUploadURL.Location = new System.Drawing.Point(280, 8);
             this.lblUploadURL.Name = "lblUploadURL";
             this.lblUploadURL.Size = new System.Drawing.Size(69, 13);
             this.lblUploadURL.TabIndex = 8;
@@ -5197,7 +5197,7 @@ namespace ZScreenGUI
             // 
             // txtUploadURL
             // 
-            this.txtUploadURL.Location = new System.Drawing.Point(528, 24);
+            this.txtUploadURL.Location = new System.Drawing.Point(280, 24);
             this.txtUploadURL.Name = "txtUploadURL";
             this.txtUploadURL.Size = new System.Drawing.Size(224, 20);
             this.txtUploadURL.TabIndex = 2;
@@ -5210,7 +5210,7 @@ namespace ZScreenGUI
             this.gbArguments.Controls.Add(this.lvArguments);
             this.gbArguments.Controls.Add(this.btnArgAdd);
             this.gbArguments.Controls.Add(this.txtArg1);
-            this.gbArguments.Location = new System.Drawing.Point(264, 8);
+            this.gbArguments.Location = new System.Drawing.Point(528, 8);
             this.gbArguments.Name = "gbArguments";
             this.gbArguments.Size = new System.Drawing.Size(248, 264);
             this.gbArguments.TabIndex = 1;
