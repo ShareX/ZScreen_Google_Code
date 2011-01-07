@@ -25,36 +25,65 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UploadersLib.HelperClasses
 {
     [Serializable]
-    public class ImageHostingService
+    public class CustomUploaderInfo
     {
         public string Name { get; set; }
-        public List<string[]> Arguments { get; set; }
         public string UploadURL { get; set; }
-        public string FileForm { get; set; }
+        public string FileFormName { get; set; }
+        public Dictionary<string, string> Arguments { get; set; }
         public List<string> RegexpList { get; set; }
-        public string Fullimage { get; set; }
-        public string Thumbnail { get; set; }
-        public List<string> Regexps { get; set; }
-        public string LastOperation { get; set; }
+        public string URL { get; set; }
+        public string ThumbnailURL { get; set; }
+        public string DeletionURL { get; set; }
+        public bool AutoReturnResponse { get; set; }
 
-        public ImageHostingService()
+        private List<string> regexpResult;
+        private string lastOperation;
+
+        public CustomUploaderInfo()
         {
-            this.Arguments = new List<string[]>();
-            this.RegexpList = new List<string>();
-            this.Regexps = new List<string>();
+            Arguments = new Dictionary<string, string>();
+            RegexpList = new List<string>();
+            regexpResult = new List<string>();
         }
 
-        public ImageHostingService(string name)
+        public CustomUploaderInfo(string name)
             : this()
         {
-            this.Name = name;
+            Name = name;
         }
 
-        public string ReturnLink(string str)
+        public void Parse(string response)
+        {
+            regexpResult.Clear();
+
+            foreach (string regexp in RegexpList)
+            {
+                regexpResult.Add(Regex.Match(response, regexp).Value);
+            }
+        }
+
+        public string GetURL(URLType type)
+        {
+            switch (type)
+            {
+                case URLType.URL:
+                    return ReturnLink(URL);
+                case URLType.ThumbnailURL:
+                    return ReturnLink(ThumbnailURL);
+                case URLType.DeletionURL:
+                    return ReturnLink(DeletionURL);
+            }
+
+            return null;
+        }
+
+        private string ReturnLink(string str)
         {
             string link = "";
             int search;
@@ -138,7 +167,7 @@ namespace UploadersLib.HelperClasses
 
         private string ReturnRegexp(string str, int start, int end)
         {
-            return Regexps[Convert.ToInt32(str.Substring(start + 1, end - start)) - 1];
+            return regexpResult[Convert.ToInt32(str.Substring(start + 1, end - start)) - 1];
         }
 
         public int CheckConditional(string str, int start)
@@ -239,7 +268,7 @@ namespace UploadersLib.HelperClasses
             {
                 result = cFalse;
             }
-            LastOperation = "( " + firstStr + " " + operation + " " + secondStr + " ? " + cTrue + " : " + cFalse + " ) = " + result;
+            lastOperation = "( " + firstStr + " " + operation + " " + secondStr + " ? " + cTrue + " : " + cFalse + " ) = " + result;
             return result;
         }
 
@@ -272,13 +301,13 @@ namespace UploadersLib.HelperClasses
                         {
                             if (!char.IsDigit(str[i + a]))
                             {
-                                link += Regexps[Convert.ToInt32(str.Substring(i + 1, a - 1)) - 1];
+                                link += regexpResult[Convert.ToInt32(str.Substring(i + 1, a - 1)) - 1];
                                 i = i + a;
                                 break;
                             }
                             if (!(a + 1 < str.Length - i)) //If last char in string
                             {
-                                link += Regexps[Convert.ToInt32(str.Substring(i + 1, a)) - 1];
+                                link += regexpResult[Convert.ToInt32(str.Substring(i + 1, a)) - 1];
                             }
                         }
                     }

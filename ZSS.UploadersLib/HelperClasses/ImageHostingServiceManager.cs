@@ -31,13 +31,13 @@ using System.Xml.Serialization;
 namespace UploadersLib.HelperClasses
 {
     [Serializable]
-    public class ImageHostingServiceManager
+    public class CustomUploaderServiceManager
     {
-        public List<ImageHostingService> ImageHostingServices { get; set; }
+        public List<CustomUploaderInfo> ImageHostingServices { get; set; }
 
-        public ImageHostingServiceManager()
+        public CustomUploaderServiceManager()
         {
-            this.ImageHostingServices = new List<ImageHostingService>();
+            this.ImageHostingServices = new List<CustomUploaderInfo>();
         }
 
         public void Save(string filePath)
@@ -46,7 +46,7 @@ namespace UploadersLib.HelperClasses
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(ImageHostingServiceManager));
+                    XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderServiceManager));
                     xs.Serialize(fs, this);
                 }
             }
@@ -56,7 +56,7 @@ namespace UploadersLib.HelperClasses
             }
         }
 
-        public static ImageHostingServiceManager Read(string filePath)
+        public static CustomUploaderServiceManager Read(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -64,8 +64,8 @@ namespace UploadersLib.HelperClasses
                 {
                     using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(ImageHostingServiceManager));
-                        ImageHostingServiceManager set = xs.Deserialize(fs) as ImageHostingServiceManager;
+                        XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderServiceManager));
+                        CustomUploaderServiceManager set = xs.Deserialize(fs) as CustomUploaderServiceManager;
                         return set;
                     }
                 }
@@ -75,7 +75,7 @@ namespace UploadersLib.HelperClasses
                 }
             }
 
-            return new ImageHostingServiceManager();
+            return new CustomUploaderServiceManager();
         }
     }
 }

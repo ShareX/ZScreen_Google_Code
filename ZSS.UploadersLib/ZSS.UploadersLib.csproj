@@ -114,7 +114,7 @@
     <Compile Include="HelperClasses\DekiWikiHistory.cs" />
     <Compile Include="HelperClasses\ImageFile.cs" />
     <Compile Include="HelperClasses\ImageFileManager.cs" />
-    <Compile Include="HelperClasses\ImageHostingService.cs" />
+    <Compile Include="HelperClasses\CustomUploaderInfo.cs" />
     <Compile Include="HelperClasses\ImageHostingServiceManager.cs" />
     <Compile Include="HelperClasses\ITextUploader.cs" />
     <Compile Include="HelperClasses\IUploader.cs" />
@@ -126,7 +126,7 @@
     <Compile Include="HelperClasses\TCPClient.cs" />
     <Compile Include="HelperClasses\TextInfo.cs" />
     <Compile Include="ImageUploader.cs" />
-    <Compile Include="ImageUploaders\CustomUploader.cs" />
+    <Compile Include="FileUploaders\CustomUploader.cs" />
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
     <Compile Include="ImageUploaders\FlickrUploader.cs" />
     <Compile Include="FileUploaders\FTPUploader.cs" />
