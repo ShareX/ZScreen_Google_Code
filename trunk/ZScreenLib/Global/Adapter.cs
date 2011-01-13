@@ -378,7 +378,11 @@ namespace ZScreenLib
 
         public static TextUploader FindUrlShortener(string name)
         {
-            if (name.Equals(BitlyUploader.Hostname))
+            if (name.Equals(GoogleURLShortener.Hostname))
+            {
+                return new GoogleURLShortener();
+            }
+            else if (name.Equals(BitlyUploader.Hostname))
             {
                 return new BitlyUploader();
             }

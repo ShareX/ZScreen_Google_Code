@@ -118,6 +118,23 @@ namespace UploadersLib
             return null;
         }
 
+        protected T GetResponseJSON<T>(string url, string json)
+        {
+            string boundary = CreateBoundary();
+            byte[] data = Encoding.UTF8.GetBytes(json);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+
+                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary, "application/json"))
+                {
+                    string jsonResponse = ResponseToString(response);
+                    return JSONHelper.JSONToObject<T>(jsonResponse);
+                }
+            }
+        }
+
         /// <summary>Method: POST, Returns: Response string</summary>
         protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null)
         {
@@ -133,7 +150,7 @@ namespace UploadersLib
                 byte[] bytesDataClose = MakeFileInputContentClose(boundary);
 
                 long contentLength = bytesArguments.Length + bytesDataOpen.Length + dataStream.Length + bytesDataClose.Length;
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, contentLength);
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, contentLength, "multipart/form-data");
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -169,14 +186,14 @@ namespace UploadersLib
             }
         }
 
-        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary)
+        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary, string contentType = "multipart/form-data")
         {
             IsUploading = true;
             stopUpload = false;
 
             try
             {
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length);
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length, contentType);
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -239,13 +256,13 @@ namespace UploadersLib
 
         #region Helper methods
 
-        private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length)
+        private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length, string contentType)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
             request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.ContentLength = length;
-            request.ContentType = "multipart/form-data; boundary=" + boundary;
+            request.ContentType = contentType + "; boundary=" + boundary;
             request.KeepAlive = false;
             request.Method = "POST";
             request.Pipelined = false;
