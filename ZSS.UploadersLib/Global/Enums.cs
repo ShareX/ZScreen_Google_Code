@@ -161,6 +161,8 @@ namespace UploadersLib
     [Serializable]
     public enum UrlShortenerType
     {
+        [Description("Google - www.goo.gl")]
+        Google,
         [Description("Threely - www.3.ly")]
         THREELY,
         [Description("bit.ly - www.bit.ly")]
