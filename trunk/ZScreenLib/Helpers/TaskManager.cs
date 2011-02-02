@@ -216,11 +216,11 @@ namespace ZScreenLib
                     pattern = Engine.conf.EntireScreenPattern;
                 }
 
-                using (NameParser parser = new NameParser(type) { AutoIncrement = Engine.conf.AutoIncrement })
+                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
                 {
                     if (mTask.SetFilePathFromPattern(parser.Convert(pattern)))
                     {
-                        Engine.conf.AutoIncrement = parser.AutoIncrement;
+                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
                         FileSystem.SaveImage(ref mTask);
                         if (!File.Exists(mTask.LocalFilePath))
                         {

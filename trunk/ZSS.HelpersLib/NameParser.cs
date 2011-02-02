@@ -58,7 +58,7 @@ namespace HelpersLib
         w,
         [Description("Current week name (English)")]
         w2,
-        [Description("Auto increment")]
+        [Description("Auto increment number")]
         i,
         [Description("Gets AM/PM")]
         pm,
@@ -70,6 +70,12 @@ namespace HelpersLib
         width,
         [Description("Gets image height")]
         height,
+        [Description("User name")]
+        un,
+        [Description("User login name")]
+        uln,
+        [Description("Computer name")]
+        cn,
         [Description("Application name")]
         app,
         [Description("Application version")]
@@ -90,17 +96,17 @@ namespace HelpersLib
 
     public enum NameParserType
     {
+        Text,
         EntireScreen,
         ActiveWindow,
         Watermark,
-        SaveFolder,
-        Text
+        SaveFolder
     }
 
     public class NameParser : IDisposable
     {
         public NameParserType Type { get; set; }
-        public int AutoIncrement { get; set; }
+        public int AutoIncrementNumber { get; set; }
         public bool IsFolderPath { get; set; }
         public bool IsPreview { get; set; }
         public string Host { get; set; }
@@ -218,15 +224,19 @@ namespace HelpersLib
 
                 if (!IsPreview && sb.ToString().Contains("%i"))
                 {
-                    AutoIncrement++;
+                    AutoIncrementNumber++;
                 }
 
-                sb.Replace(ReplacementVariables.i.ToPrefixString(), Helpers.AddZeroes(AutoIncrement, 4));
+                sb.Replace(ReplacementVariables.i.ToPrefixString(), Helpers.AddZeroes(AutoIncrementNumber, 4));
             }
 
             #endregion h, mi, s, ms, w, w2, pm, i (If not SaveFolder)
 
-            #region app, ver, n
+            #region un, uln, cn, app, ver, n
+
+            sb.Replace(ReplacementVariables.un.ToPrefixString(), Environment.UserName);
+            sb.Replace(ReplacementVariables.uln.ToPrefixString(), Environment.UserDomainName);
+            sb.Replace(ReplacementVariables.cn.ToPrefixString(), Environment.MachineName);
 
             string productName = string.IsNullOrEmpty(CustomProductName) ? Application.ProductName : CustomProductName;
             sb.Replace(ReplacementVariables.app.ToPrefixString(), productName);
@@ -237,7 +247,7 @@ namespace HelpersLib
                 sb.Replace(ReplacementVariables.n.ToPrefixString(), "\n");
             }
 
-            #endregion app, ver, n
+            #endregion un, uln, cn, app, ver, n
 
             #region rn, ra
 
