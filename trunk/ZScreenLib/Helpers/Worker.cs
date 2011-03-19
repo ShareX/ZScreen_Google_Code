@@ -218,7 +218,9 @@ namespace ZScreenLib
 
                 if (task.Errors.Count > 0)
                 {
-                    FileSystem.AppendDebug(task.Errors[task.Errors.Count - 1]);
+                    foreach (var error in task.Errors)
+                        FileSystem.AppendDebug(error);
+                    MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 if (task.MyImage != null)

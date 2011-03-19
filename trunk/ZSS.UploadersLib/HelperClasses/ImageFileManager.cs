@@ -101,6 +101,8 @@ namespace UploadersLib.HelperClasses
                     return GetFullImageHTML();
                 case ClipboardUriType.FULL_IMAGE_WIKI:
                     return GetFullImageWiki();
+                case ClipboardUriType.FULL_IMAGE_MEDIAWIKI:
+                    return GetFullImageMediaWikiInnerLink();
                 case ClipboardUriType.LINKED_THUMBNAIL:
                     return GetLinkedThumbnailForumUrl();
                 case ClipboardUriType.LinkedThumbnailHtml:
@@ -211,6 +213,18 @@ namespace UploadersLib.HelperClasses
                 return string.Format("[{0}]", url);
             }
             return string.Empty;
+        }
+
+        public string GetFullImageMediaWikiInnerLink()
+        {
+            string url = this.GetFullImageUrl();
+            if (string.IsNullOrEmpty(url))
+                return string.Empty;
+            int index = url.IndexOf("Image:");
+            if (index < 0)
+                return string.Empty;
+            string name = url.Substring(index + "Image:".Length);
+            return string.Format("[[Image:{0}]]", name);
         }
 
         public string GetLinkedThumbnailForumUrl()

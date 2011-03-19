@@ -357,6 +357,13 @@ namespace ZScreenLib
         public bool DekiWikiForcePath = false;
 
         //~~~~~~~~~~~~~~~~~~~~~
+        //  MediaWiki
+        //~~~~~~~~~~~~~~~~~~~~~
+
+        public List<MediaWikiAccount> MediaWikiAccountList = new List<MediaWikiAccount>();
+        public int MediaWikiAccountSelected = 0;
+
+        //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
 
