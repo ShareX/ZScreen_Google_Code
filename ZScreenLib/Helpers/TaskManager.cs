@@ -403,6 +403,9 @@ namespace ZScreenLib
                 case ImageDestType.Localhost:
                     UploadLocalhost();
                     break;
+                case ImageDestType.MEDIAWIKI:
+                    UploadMediaWiki();
+                    break;
                 case ImageDestType.PRINTER:
                     if (mTask.MyImage != null)
                     {
@@ -665,6 +668,24 @@ namespace ZScreenLib
                 mTask.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
             }
 
+            return false;
+        }
+
+        public bool UploadMediaWiki()
+        {
+            string fullFilePath = mTask.LocalFilePath;
+
+            if (Adapter.CheckMediaWikiAccounts(ref mTask) && File.Exists(fullFilePath))
+            {
+                MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
+                System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
+                mTask.DestinationName = acc.Name;
+                FileSystem.AppendDebug(string.Format("Uploading {0} to MediaWiki: {1}", mTask.FileName, acc.Url));
+                MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
+                mTask.LinkManager = uploader.UploadImage(mTask.LocalFilePath);
+                mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
+                return true;
+            }
             return false;
         }
 

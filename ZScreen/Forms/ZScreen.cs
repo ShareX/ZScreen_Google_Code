@@ -207,6 +207,12 @@ namespace ZScreenGUI
             ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
+            // Accounts - MediaWiki
+            ucMediaWikiAccounts.btnAdd.Click += new EventHandler(MediawikiAccountAddButton_Click);
+            ucMediaWikiAccounts.btnRemove.Click += new EventHandler(MediawikiAccountRemoveButton_Click);
+            ucMediaWikiAccounts.btnTest.Click += new EventHandler(MediawikiAccountTestButton_Click);
+            ucMediaWikiAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MediaWikiAccountsList_SelectedIndexChanged);
+
             // Accounts - Twitter
             ucTwitterAccounts.btnAdd.Text = "Add...";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
@@ -541,6 +547,8 @@ namespace ZScreenGUI
 
             #endregion FTP Settings
 
+            #region Localhost Settings
+
             if (Engine.conf.LocalhostAccountList == null || Engine.conf.LocalhostAccountList.Count == 0)
             {
                 LocalhostAccountsSetup(new List<LocalhostAccount>());
@@ -553,6 +561,8 @@ namespace ZScreenGUI
                     ucLocalhostAccounts.AccountsList.SelectedIndex = Engine.conf.LocalhostSelected;
                 }
             }
+
+            #endregion Localhost Settings
 
             #region MindTouch Settings
 
@@ -576,6 +586,27 @@ namespace ZScreenGUI
             chkDekiWikiForcePath.Checked = Engine.conf.DekiWikiForcePath;
 
             #endregion MindTouch Settings
+
+            #region MediaWiki Settings
+
+            ///////////////////////////////////
+            // MediaWiki Settings
+            ///////////////////////////////////
+
+            if (Engine.conf.MediaWikiAccountList == null || Engine.conf.MediaWikiAccountList.Count == 0)
+            {
+                MediaWikiSetup(new List<MediaWikiAccount>());
+            }
+            else
+            {
+                MediaWikiSetup(Engine.conf.MediaWikiAccountList);
+                if (ucMediaWikiAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucMediaWikiAccounts.AccountsList.SelectedIndex = Engine.conf.MediaWikiAccountSelected;
+                }
+            }
+
+            #endregion MediaWiki Settings
 
             #region Image Uploaders
 
@@ -3117,6 +3148,20 @@ namespace ZScreenGUI
             }
         }
 
+        private void MediaWikiSetup(IEnumerable<MediaWikiAccount> accs)
+        {
+            if (accs != null)
+            {
+                ucMediaWikiAccounts.AccountsList.Items.Clear();
+                Engine.conf.MediaWikiAccountList = new List<MediaWikiAccount>();
+                Engine.conf.MediaWikiAccountList.AddRange(accs);
+                foreach (MediaWikiAccount acc in Engine.conf.MediaWikiAccountList)
+                {
+                    ucMediaWikiAccounts.AccountsList.Items.Add(acc);
+                }
+            }
+        }
+
         private void ProxySetup(IEnumerable<ProxyInfo> accs)
         {
             if (accs != null)
@@ -3263,6 +3308,79 @@ namespace ZScreenGUI
             Engine.conf.DekiWikiAccountList.Add(acc);
             ucMindTouchAccounts.AccountsList.Items.Add(acc);
             ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
+        }
+
+        void MediawikiAccountAddButton_Click(object sender, EventArgs e)
+        {
+            MediaWikiAccount acc = new MediaWikiAccount("New Account");
+            Engine.conf.MediaWikiAccountList.Add(acc);
+            ucMediaWikiAccounts.AccountsList.Items.Add(acc);
+            ucMediaWikiAccounts.AccountsList.SelectedIndex = ucMediaWikiAccounts.AccountsList.Items.Count - 1;
+        }
+
+        void MediaWikiAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucMediaWikiAccounts.AccountsList.SelectedIndex;
+            Engine.conf.MediaWikiAccountSelected = sel;
+            if (Engine.conf.MediaWikiAccountList != null && sel != -1 && sel < Engine.conf.MediaWikiAccountList.Count && Engine.conf.MediaWikiAccountList[sel] != null)
+            {
+                MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[sel];
+                ucMediaWikiAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        void MediawikiAccountTestButton_Click(object sender, EventArgs e)
+        {
+            string text = ucMediaWikiAccounts.btnTest.Text;
+            ucMediaWikiAccounts.btnTest.Text = "Testing...";
+            ucMediaWikiAccounts.btnTest.Enabled = false;
+            MediaWikiAccount acc = GetSelectedMediaWiki();
+            if (acc != null)
+            {
+                Adapter.TestMediaWikiAccount(acc,
+                    // callback for success
+                    delegate()
+                    {
+                        // invoke on UI thread
+                        Invoke((Action)delegate()
+                        {
+                            ucMediaWikiAccounts.btnTest.Enabled = true;
+                            ucMediaWikiAccounts.btnTest.Text = text;
+                            MessageBox.Show("Success!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        });
+                    },
+                    // callback for failure
+                    delegate(string message)
+                    {
+                        // invoke on UI thread
+                        Invoke((Action)delegate()
+                        {
+                            ucMediaWikiAccounts.btnTest.Enabled = true;
+                            ucMediaWikiAccounts.btnTest.Text = text;
+                            MessageBox.Show(message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        });
+                    });
+            }
+        }
+
+        void MediawikiAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucMediaWikiAccounts.AccountsList.SelectedIndex;
+            if (ucMediaWikiAccounts.RemoveItem(sel))
+            {
+                Engine.conf.MediaWikiAccountList.RemoveAt(sel);
+            }
+        }
+
+        private MediaWikiAccount GetSelectedMediaWiki()
+        {
+            MediaWikiAccount account = null;
+            if (Adapter.CheckMediaWikiAccounts())
+            {
+                account = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
+            }
+
+            return account;
         }
 
         private void btnExportAccounts_Click(object sender, EventArgs e)

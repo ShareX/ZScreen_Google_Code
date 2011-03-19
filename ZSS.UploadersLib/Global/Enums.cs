@@ -85,6 +85,8 @@ namespace UploadersLib
         FULL_IMAGE_HTML,
         [Description("Full Image for Wiki")]
         FULL_IMAGE_WIKI,
+        [Description("Full Image Link for MediaWiki")]
+        FULL_IMAGE_MEDIAWIKI,
         [Description("Full Image for Twitter")]
         FULL_TINYURL,
         [Description("Linked Thumbnail for Forums")]
@@ -135,6 +137,8 @@ namespace UploadersLib
         YFROG,
         [Description("MindTouch Deki Wiki")]
         DEKIWIKI,
+        [Description("MediaWiki")]
+        MEDIAWIKI,
         [Description("Printer")]
         PRINTER
     }
