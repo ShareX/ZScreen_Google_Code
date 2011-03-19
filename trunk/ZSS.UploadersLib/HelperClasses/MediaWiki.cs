@@ -66,6 +66,7 @@ namespace UploadersLib.HelperClasses
         public string Token { get; set; }
         public CookieContainer Cookies { get; set; }
         public bool NeedToken { get; set; }
+        public bool Redirected = false;
     }
 
     public class MediaWiki
@@ -131,12 +132,27 @@ namespace UploadersLib.HelperClasses
                     throw new MediaWikiException("Error uploading to MediaWiki: " + errorCode + "\r\n" + errorMessage);
                 }
                 string result = element.Attributes["result"].Value;
+                if (result == "Warning")
+                {
+                    foreach (XmlNode child in element.ChildNodes)
+                    {
+                        if (child.Name == "warnings")
+                        {
+                            if(child.Attributes["exists"] != null)
+                            {
+                                string existingImageName = child.Attributes["exists"].Value;
+                                throw new MediaWikiException("Image already exists: " + existingImageName);
+                            }
+                        }
+                    }
+                }
+
                 if (result != "Success")
                     throw new MediaWikiException("Error uploading to MediaWiki:\r\n" + result);
             }
             catch (XmlException)
             {
-                throw new MediaWikiException("Unexpected answer while logging in to MediaWiki with token:\r\n" + strResponse);
+                throw new MediaWikiException("Unexpected answer while uploading:\r\n" + strResponse);
             }
         }
 
@@ -153,7 +169,7 @@ namespace UploadersLib.HelperClasses
         {
             try
             {
-                var loginInfo = Login1();
+                var loginInfo = Login1(new LoginInfo());
                 if (loginInfo.NeedToken)
                     LoginWithToken(loginInfo);
                 return loginInfo;
@@ -164,9 +180,9 @@ namespace UploadersLib.HelperClasses
             }
         }
 
-        private LoginInfo Login1()
+        private LoginInfo Login1(LoginInfo loginInfo)
         {
-            string postData = string.Format("format=xml&action=login&lgname={0}&lgpassword={1}", Options.Account.Name, Options.Account.Password);
+            string postData = string.Format("format=xml&action=login&lgname={0}&lgpassword={1}", Options.Account.Username, Options.Account.Password);
 
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] postBytes = encoding.GetBytes(postData);
@@ -175,7 +191,8 @@ namespace UploadersLib.HelperClasses
             request.Method = WebRequestMethods.Http.Post;
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = postBytes.Length;
-            var cookieContainer = new CookieContainer();
+            request.AllowAutoRedirect = true;
+            var cookieContainer = loginInfo.Cookies ?? new CookieContainer();
             request.CookieContainer = cookieContainer;
 
             Stream postStream = request.GetRequestStream();
@@ -185,13 +202,25 @@ namespace UploadersLib.HelperClasses
             var response = request.GetResponse();
             string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
+            // redirected to another page
+            if (strResponse.StartsWith("<!DOCTYPE html"))
+            {
+                if (loginInfo.Redirected)
+                {
+                    throw new MediaWikiException("Still could not log in after redirection");
+                }
+                var uri = response.ResponseUri;
+                LoginInfo newLoginInfo = LoginRedirected(uri);
+                return Login1(newLoginInfo);
+            }
+
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(strResponse);
                 var loginElement = xmlDoc.GetElementsByTagName("api")[0].ChildNodes[0];
                 string result = loginElement.Attributes["result"].Value;
-                string token = loginElement.Attributes["token"].Value;
+                string token = (loginElement.Attributes["token"] ?? loginElement.Attributes["lgtoken"]).Value;
 
                 bool needToken;
                 if (result == "Success")
@@ -207,6 +236,34 @@ namespace UploadersLib.HelperClasses
             {
                 throw new MediaWikiException("unexpected answer:\r\n" + strResponse);
             }
+        }
+
+        private LoginInfo LoginRedirected(Uri uri)
+        {
+            // These parameter names may be specific. If the need arises, they could be made configurable.
+            string postData = string.Format("submit=Login&username={0}&password={1}", Options.Account.Username, Options.Account.Password);
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] postBytes = encoding.GetBytes(postData);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = WebRequestMethods.Http.Post;
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = postBytes.Length;
+            var cookieContainer = new CookieContainer();
+            request.CookieContainer = cookieContainer;
+
+            Stream postStream = request.GetRequestStream();
+            postStream.Write(postBytes, 0, postBytes.Length);
+            postStream.Close();
+
+            var response = request.GetResponse();
+            string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            if (strResponse.Contains("Authentication Failed"))
+                throw new MediaWikiException("Authentication failed");
+
+            //var cookies = cookieContainer.GetCookies(uri);
+            return new LoginInfo() { NeedToken = false, Cookies = cookieContainer };
         }
 
         private void LoginWithToken(LoginInfo loginInfo)
@@ -328,7 +385,7 @@ namespace UploadersLib.HelperClasses
                 string edittoken = pageElement.Attributes["edittoken"].Value;
                 return edittoken;
             }
-            catch (XmlException)
+            catch (Exception)
             {
                 throw new MediaWikiException("Unexpected answer while querying edit token from MediaWiki:\r\n" + strResponse);
             }
