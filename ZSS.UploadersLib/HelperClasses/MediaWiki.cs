@@ -103,6 +103,7 @@ namespace UploadersLib.HelperClasses
             this.Options.Account.History.Add(new MediaWikiHistory(remoteFilename, FastDateTime.Now));
         }
 
+        // upload a file using the MediaWiki upload API
         private void UploadFile(string editToken, LoginInfo loginInfo, string localFilePath, string remoteFilename)
         {
             UploadFile[] files = new UploadFile[] { new UploadFile(localFilePath, "file", "application/octet-stream") };
@@ -119,6 +120,12 @@ namespace UploadersLib.HelperClasses
             var response = HttpUploadHelper.Upload(request, files, parameters);
 
             string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            if (strResponse.StartsWith("unknown_action"))
+            {
+                // fallback : upload using web form
+                UploadFileThroughForm(loginInfo, localFilePath, remoteFilename);
+                return;
+            }
 
             try
             {
@@ -141,7 +148,7 @@ namespace UploadersLib.HelperClasses
                             if(child.Attributes["exists"] != null)
                             {
                                 string existingImageName = child.Attributes["exists"].Value;
-                                throw new MediaWikiException("Image already exists: " + existingImageName);
+                                throw new MediaWikiException("Image already exists on the wiki: " + existingImageName);
                             }
                         }
                     }
@@ -156,13 +163,39 @@ namespace UploadersLib.HelperClasses
             }
         }
 
-        private string GetApiUrl()
+        // upload a file using the web form instead of the API (for old versions of WikiMedia which don't have the upload API)
+        private void UploadFileThroughForm(LoginInfo loginInfo, string localFilePath, string remoteFilename)
+        {
+            UploadFile[] files = new UploadFile[] { new UploadFile(localFilePath, "wpUploadFile", "application/octet-stream") };
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GetUrl("Special:Upload"));
+            request.CookieContainer = loginInfo.Cookies;
+
+            var parameters = new System.Collections.Specialized.NameValueCollection();
+            parameters["wpSourceType"] = "file";
+            parameters["wpDestFile"] = remoteFilename;
+            parameters["wpUpload"] = "Upload file";
+
+            var response = HttpUploadHelper.Upload(request, files, parameters);
+
+            string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            if (strResponse.Contains("A file with this name exists already"))
+                throw new MediaWikiException("Image already exists on the wiki");
+
+        }
+
+        private string GetUrl(string path)
         {
             string url = Options.Account.Url;
             if (url.EndsWith("/"))
-                return url + "api.php";
+                return url + path;
             else
-                return url + "/api.php";
+                return url + "/" + path;
+        }
+
+        private string GetApiUrl()
+        {
+            return GetUrl("api.php");
         }
 
         public LoginInfo Login()
@@ -180,6 +213,7 @@ namespace UploadersLib.HelperClasses
             }
         }
 
+        // login
         private LoginInfo Login1(LoginInfo loginInfo)
         {
             string postData = string.Format("format=xml&action=login&lgname={0}&lgpassword={1}", Options.Account.Username, Options.Account.Password);
@@ -228,7 +262,11 @@ namespace UploadersLib.HelperClasses
                 else if (result == "NeedToken")
                     needToken = true;
                 else
-                    throw new MediaWikiException(result);
+                {
+                    HandleError(result);
+                    // should not happen since HandleError always throws an exception
+                    throw new Exception("Error not handled");
+                }
 
                 return new LoginInfo() { Token = token, Cookies = cookieContainer, NeedToken = needToken };
             }
@@ -238,6 +276,7 @@ namespace UploadersLib.HelperClasses
             }
         }
 
+        // implemented for a wiki that logs users through another form after a redirection
         private LoginInfo LoginRedirected(Uri uri)
         {
             // These parameter names may be specific. If the need arises, they could be made configurable.
@@ -266,6 +305,7 @@ namespace UploadersLib.HelperClasses
             return new LoginInfo() { NeedToken = false, Cookies = cookieContainer };
         }
 
+        // login with the token from a first login attempt (if it returned "NeedToken")
         private void LoginWithToken(LoginInfo loginInfo)
         {
             string postData = string.Format("format=xml&action=login&lgname={0}&lgpassword={1}&lgtoken={2}", Options.Account.Username, Options.Account.Password, loginInfo.Token);
@@ -303,6 +343,7 @@ namespace UploadersLib.HelperClasses
             }
         }
 
+        // handle a login error
         private void HandleError(string result)
         {
             string message;
@@ -348,6 +389,7 @@ namespace UploadersLib.HelperClasses
             throw new MediaWikiException(message);
         }
 
+        // query an edit token (needed for upload) after logging in
         private string QueryEditToken(LoginInfo loginInfo)
         {
             string strResponse;
