@@ -3346,7 +3346,7 @@ namespace ZScreenGUI
                         {
                             ucMediaWikiAccounts.btnTest.Enabled = true;
                             ucMediaWikiAccounts.btnTest.Text = text;
-                            MessageBox.Show("Success!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Login successful!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         });
                     },
                     // callback for failure
