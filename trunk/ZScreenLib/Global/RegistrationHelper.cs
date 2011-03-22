@@ -32,7 +32,7 @@ namespace ZScreenLib
 
             try
             {
-                Process.Start(psi).WaitForExit();                
+                Process.Start(psi).WaitForExit();
                 TaskDialog.Show("File associations were " + (unregister ? "un" : "") + "registered");
             }
             catch (Win32Exception e)

@@ -561,18 +561,22 @@ namespace ZScreenLib
         public static void TestMediaWikiAccount(MediaWikiAccount account, Action success, Action<string> failure)
         {
             var timeoutTimer = new System.Windows.Forms.Timer();
-            Thread thread = new Thread(new ThreadStart(delegate { 
-                TestMediaWikiAccountThread(account, 
-                    delegate() { 
-                        timeoutTimer.Stop(); success(); 
-                    }, 
-                    delegate(string msg) { 
-                        timeoutTimer.Stop(); failure(msg); 
-                    }); 
+            Thread thread = new Thread(new ThreadStart(delegate
+            {
+                TestMediaWikiAccountThread(account,
+                    delegate()
+                    {
+                        timeoutTimer.Stop(); success();
+                    },
+                    delegate(string msg)
+                    {
+                        timeoutTimer.Stop(); failure(msg);
+                    });
             }));
             thread.Start();
             timeoutTimer.Interval = 10000;
-            timeoutTimer.Tick += new EventHandler(delegate(object sender, EventArgs e) {
+            timeoutTimer.Tick += new EventHandler(delegate(object sender, EventArgs e)
+            {
                 thread.Interrupt();
                 timeoutTimer.Stop();
                 failure("The website at the URL you specified doesn't answer");
@@ -591,7 +595,7 @@ namespace ZScreenLib
             catch (Exception ex)
             {
                 // ignore ThreadInterruptedException : the request timed out and the thread was interrupted
-                if(!(ex.InnerException is ThreadInterruptedException))
+                if (!(ex.InnerException is ThreadInterruptedException))
                     failure(ex.Message);
             }
         }
