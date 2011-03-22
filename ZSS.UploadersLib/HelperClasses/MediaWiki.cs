@@ -24,16 +24,12 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Web;
+using System.Text;
 using System.Xml;
 using HelpersLib;
 using Krystalware.UploadHelper;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace UploadersLib.HelperClasses
 {
@@ -43,6 +39,7 @@ namespace UploadersLib.HelperClasses
             : base(message)
         {
         }
+
         public MediaWikiException(string message, Exception e)
             : base(message, e)
         {
@@ -145,7 +142,7 @@ namespace UploadersLib.HelperClasses
                     {
                         if (child.Name == "warnings")
                         {
-                            if(child.Attributes["exists"] != null)
+                            if (child.Attributes["exists"] != null)
                             {
                                 string existingImageName = child.Attributes["exists"].Value;
                                 throw new MediaWikiException("Image already exists on the wiki: " + existingImageName);
@@ -181,7 +178,6 @@ namespace UploadersLib.HelperClasses
             string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
             if (strResponse.Contains("A file with this name exists already"))
                 throw new MediaWikiException("Image already exists on the wiki");
-
         }
 
         private string GetUrl(string path)
@@ -325,7 +321,6 @@ namespace UploadersLib.HelperClasses
 
             var response = request.GetResponse();
             string strResponse = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
 
             try
             {

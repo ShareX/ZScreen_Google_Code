@@ -59,7 +59,6 @@ namespace UploadersLib.ImageUploaders
             // Upload the image
             connector.UploadImage(localFilePath, filename);
 
-
             string remotePath = Options.Account.Url + "/index.php?title=Image:" + filename;
 
             // Add this to the list of uploaded images
@@ -67,7 +66,6 @@ namespace UploadersLib.ImageUploaders
 
             // Create the file manager object
             ImageFileManager imageFileManager = new ImageFileManager(imageFiles) { LocalFilePath = localFilePath };
-            
 
             return imageFileManager;
         }

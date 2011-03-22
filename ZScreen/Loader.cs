@@ -41,7 +41,7 @@ namespace ZScreenGUI
         public static List<string> LibNames = new List<string>();
 
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -102,7 +102,7 @@ namespace ZScreenGUI
 
         private static void RunZScreenBeta()
         {
-            if (Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+            if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
             {
                 Engine.LoadSettings();
                 Application.Run(new ZScreen());
@@ -114,17 +114,39 @@ namespace ZScreenGUI
 
         public static void KeyboardHook()
         {
-            System.Windows.Forms.Timer keyboardTimer = new System.Windows.Forms.Timer() { Interval = 1500, Enabled = true };
-            keyboardTimer.Tick += new EventHandler(keyboardTimer_Tick);
+            InitKeyboardHook();
+
+            if (!Engine.conf.DisableKeyboardHookTimer)
+            {
+                Timer keyboardTimer = new Timer() { Interval = 5000 };
+                keyboardTimer.Tick += new EventHandler(keyboardTimer_Tick);
+                keyboardTimer.Start();
+            }
+
             FileSystem.AppendDebug("Keyboard Hook initiated");
         }
 
-        static void keyboardTimer_Tick(object sender, EventArgs e)
+        private static void keyboardTimer_Tick(object sender, EventArgs e)
+        {
+            if (Engine.conf.DisableKeyboardHookTimer)
+            {
+                Timer timer = sender as Timer;
+
+                if (timer != null) timer.Stop();
+            }
+            else
+            {
+                InitKeyboardHook();
+            }
+        }
+
+        private static void InitKeyboardHook()
         {
             if (Engine.ZScreenKeyboardHook != null)
             {
                 Engine.ZScreenKeyboardHook.Dispose();
             }
+
             Engine.ZScreenKeyboardHook = new KeyboardHook();
             Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
         }
