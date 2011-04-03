@@ -1,0 +1,22 @@
+#summary Supported Environmental Variables
+#labels Phase-Support
+
+= Introduction = 
+
+Environment variables are a set of dynamic named values that can be used to configure File Naming Conventions. 
+
+|| *Environmental Variable* || *Description* ||
+|| %app || Title of ZScreen ||
+|| %cn || Computer Name ||
+|| %d || Current day || 
+|| %h || Current hour|| 
+|| %i || Auto increment || 
+|| %mi || Current minute || 
+|| %mo || Current month || 
+|| %pm || AM or PM depending on the time of the day ||
+|| %s || Current second|| 
+|| %t || Title of the Active Window || 
+|| %uln || Network domain name associated with the current user ||
+|| %un || Current User Name || 
+|| %ver || Version of ZScreen ||
+|| %y || Current year || 
