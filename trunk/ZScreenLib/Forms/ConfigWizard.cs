@@ -29,6 +29,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
+using System.Collections.Generic;
 
 namespace ZScreenLib
 {
@@ -37,6 +38,9 @@ namespace ZScreenLib
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
         public ImageDestType ImageDestinationType { get; private set; }
+        public FileUploaderType FileUploaderType { get; private set; }
+        public int TextUploaderType { get; private set; }
+        public int UrlShortenerType { get; private set; }
 
         public ConfigWizard(string rootDir)
         {
@@ -44,12 +48,42 @@ namespace ZScreenLib
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
-            cboScreenshotDest.Items.AddRange(typeof(ImageDestType).GetDescriptions());
-            cboScreenshotDest.SelectedIndex = (int)ImageDestType.CLIPBOARD;
+
+            ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)ImageDestType.CLIPBOARD;
+
+            ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
+
+            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
+            {
+                TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
+                if (null != tu)
+                {
+                    ucDestOptions.cboTextUploaders.Items.Add(tu);
+                }
+            }
+            ucDestOptions.cboTextUploaders.SelectedIndex = 0;
+
+            foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
+            {
+                TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
+                if (null != tu)
+                {
+                    ucDestOptions.cboURLShorteners.Items.Add(tu);
+                }
+            }
+            ucDestOptions.cboURLShorteners.SelectedIndex = 0;
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+            ImageDestinationType = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
+            TextUploaderType = ucDestOptions.cboTextUploaders.SelectedIndex;
+            UrlShortenerType = ucDestOptions.cboURLShorteners.SelectedIndex;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -72,11 +106,6 @@ namespace ZScreenLib
             {
                 Process.Start(txtRootFolder.Text);
             }
-        }
-
-        private void cboScreenshotDest_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ImageDestinationType = (ImageDestType)cboScreenshotDest.SelectedIndex;
         }
 
         private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
