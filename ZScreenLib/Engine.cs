@@ -169,6 +169,10 @@ namespace ZScreenLib
                     Engine.mAppSettings.RootDir = cw.RootFolder;
                     Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
                     Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
+                    Engine.mAppSettings.FileUploader = cw.FileUploaderType;
+                    Engine.mAppSettings.TextUploaderSelected = cw.TextUploaderType;
+                    Engine.mAppSettings.UrlShortenerSelected = cw.UrlShortenerType;
+
                     RunConfig = true;
                 }
                 if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
@@ -269,7 +273,12 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
+                Engine.conf.PreferSystemFolders = Engine.mAppSettings.PreferSystemFolders;
                 Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
+                Engine.conf.FileDestMode = Engine.mAppSettings.FileUploader;
+                Engine.conf.TextUploaderSelected = Engine.mAppSettings.TextUploaderSelected;
+                Engine.conf.UrlShortenerSelected = Engine.mAppSettings.UrlShortenerSelected;
+                mAppSettings.Write();
             }
             // Portable then we don't need PreferSystemFolders to be true
             if (Portable)

@@ -1,8 +1,9 @@
 Version 3.34 - 20110404
 
+3.34.0.1 Fixed configuration always launching at startup [Issue 277] {McoreD}
 3.34.0.0 Added MediaWiki Image Uploader support [Issue 213] {theone256}
 3.33.1.0 New syntax support for file naming to support UserName, UserDomainName and MachineName {Jaex}
-3.33.0.0 Added Google URL Shortener support {Jaex}
+3.33.0.0 Added Google URL Shortener support [Issue 331] {Jaex}
 3.32.0.1 Explorer context menu for uploading did not work [Issue 331] {rgrthat}
 3.32.0.0 Added filez.muffinz.eu File Uploader support {semas123}	
 3.31.0.0 Advanced option to enable Crop Shot with multiple regions selection {Jaex} 
