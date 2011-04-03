@@ -4094,7 +4094,7 @@ namespace ZScreenGUI
             this.gbCodeTitle.Size = new System.Drawing.Size(224, 264);
             this.gbCodeTitle.TabIndex = 111;
             this.gbCodeTitle.TabStop = false;
-            this.gbCodeTitle.Text = "Codes";
+            this.gbCodeTitle.Text = "Environment Varables";
             //
             // btnCodesI
             //
