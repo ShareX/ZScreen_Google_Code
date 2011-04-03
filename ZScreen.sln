@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EE237035-DB9F-4AE5-B3C6-6BA48A96A958}"
 	ProjectSection(SolutionItems) = preProject
 		Tools\CommandLineParserLib.dll = Tools\CommandLineParserLib.dll
+		Tools\sgen.exe = Tools\sgen.exe
 		Tools\SharpSvn-DB44-20-Win32.dll = Tools\SharpSvn-DB44-20-Win32.dll
 		Tools\SharpSvn-SASL21-22-Win32.dll = Tools\SharpSvn-SASL21-22-Win32.dll
 		Tools\SharpSvn-Sasl21-23-win32.dll = Tools\SharpSvn-Sasl21-23-win32.dll
