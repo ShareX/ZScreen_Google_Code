@@ -260,7 +260,7 @@ namespace ZScreenLib
         // Naming Conventions
 
         public string ActiveWindowPattern = "%t-%y-%mo-%d_%h.%mi.%s";
-        public string EntireScreenPattern = "SS-%y-%mo-%d_%h.%mi.%s";
+        public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
         [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]

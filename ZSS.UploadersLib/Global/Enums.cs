@@ -206,8 +206,8 @@ namespace UploadersLib
         SendSpace,
         //[Description("FileBin - www.filebin.ca")]
         //FileBin,
-        [Description("Drop.io - www.drop.io")]
-        DropIO,
+        //[Description("Drop.io - www.drop.io")]
+        //DropIO,
         [Description("ShareCX - www.share.cx")]
         ShareCX,
         [Description("Filez - www.filez.muffinz.eu")]
