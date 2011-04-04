@@ -25,141 +25,92 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using HelpersLib;
 
 namespace ZSS.UpdateCheckerLib
 {
-    public class UpdateCheckerOptions
-    {
-        public bool CheckBeta { get; set; }
-        public NewVersionWindowOptions MyNewVersionWindowOptions { get; set; }
-        public IWebProxy ProxySettings { get; set; }
-    }
-
     public class UpdateChecker
     {
-        private string projectName, downloadsList, labelFeatured, labelBeta;
+        public string URL { get; private set; }
+        public bool CheckBeta { get; private set; }
+        public UpdateInfo UpdateInfo { get; private set; }
 
-        private UpdateCheckerOptions Options { get; set; }
-        private VersionInfo MyVersionInfo;
+        private IWebProxy proxy;
+        private NewVersionWindowOptions nvwo;
 
-        public string Statistics { get; private set; }
-
-        public string ProjectName
+        public UpdateChecker(string url, bool checkBeta, IWebProxy proxy, NewVersionWindowOptions nvwo)
         {
-            get { return projectName; }
-            set
-            {
-                projectName = value.ToLower();
-                downloadsList = "http://code.google.com/p/" + projectName + "/downloads/list";
-                labelFeatured = "?q=label:" + projectName + "+Featured";
-                labelBeta = "?q=label:" + projectName + "+Beta";
-            }
+            URL = url;
+            CheckBeta = checkBeta;
+            this.proxy = proxy;
+            this.nvwo = nvwo;
         }
 
-        public UpdateChecker(string projectName, UpdateCheckerOptions options)
-        {
-            this.ProjectName = projectName;
-            this.Options = options;
-        }
-
-        public string StartCheckUpdate()
+        public string CheckUpdate()
         {
             try
             {
-                string url = downloadsList;
-
-                if (this.Options.CheckBeta)
+                using (WebClient wc = new WebClient { Proxy = proxy })
+                using (MemoryStream ms = new MemoryStream(wc.DownloadData(URL)))
+                using (XmlTextReader xml = new XmlTextReader(ms))
                 {
-                    url += labelBeta;
-                }
-                else
-                {
-                    url += labelFeatured;
-                }
+                    XDocument xd = XDocument.Load(xml);
 
-                MyVersionInfo = CheckUpdate(url);
+                    if (xd != null)
+                    {
+                        string path = string.Format("Update/{0}/{1}", Application.ProductName, CheckBeta ? "Beta|Stable" : "Stable");
+                        XElement xe = xd.GetNode(path);
 
-                StringBuilder sbVersions = new StringBuilder();
-                sbVersions.AppendLine("Current version: " + Application.ProductVersion);
-                string latestVersion;
-                if (new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) > 0)
-                {
-                    latestVersion = MyVersionInfo.Version;
-                }
-                else
-                {
-                    latestVersion = Application.ProductVersion;
-                }
-                sbVersions.AppendLine("Latest version:  " + latestVersion);
-                this.Statistics = sbVersions.ToString();
+                        if (xe != null)
+                        {
+                            UpdateInfo = new UpdateInfo
+                            {
+                                Version = new Version(xe.GetValue("Version")),
+                                URL = xe.GetValue("URL"),
+                                Date = DateTime.Parse(xe.GetValue("Date")),
+                                Summary = xe.GetValue("Summary")
+                            };
 
-                return sbVersions.ToString();
+                            if (!UpdateInfo.Summary.IsNullOrEmpty() && UpdateInfo.Summary.IsValidUrl())
+                            {
+                                UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
+                            }
+
+                            return UpdateInfo.ToString();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-                return "Update failed:\r\n" + ex.Message;
+                Debug.WriteLine(ex.ToString());
+                return "Update failed:\r\n" + ex.ToString();
             }
+
+            return null;
         }
 
         public void ShowPrompt()
         {
-            if (!string.IsNullOrEmpty(MyVersionInfo.Version) && new Version(MyVersionInfo.Version).CompareTo(new Version(Application.ProductVersion)) > 0)
+            if (UpdateInfo != null && !UpdateInfo.URL.IsNullOrEmpty() && UpdateInfo.IsUpdateRequired)
             {
-                this.Options.MyNewVersionWindowOptions.Question = string.Format("Do you want to download it now?\n\n{0}", this.Statistics);
-                this.Options.MyNewVersionWindowOptions.VersionHistory = MyVersionInfo.Summary.Replace("|", "\r\n");
-                this.Options.MyNewVersionWindowOptions.ProjectName = ProjectName;
-                NewVersionWindow ver = new NewVersionWindow(this.Options.MyNewVersionWindowOptions)
-                {
-                    Text = string.Format("{0} {1} is available", Application.ProductName, MyVersionInfo.Version)
-                };
-                if (ver.ShowDialog() == DialogResult.Yes)
-                {
-                    //string fnUpdater = "Updater.exe";
-                    //string dirUpdater = Path.Combine(Path.GetTempPath(), Application.ProductName);
-                    //string updater = Path.Combine(Application.StartupPath, fnUpdater);
-                    //string updater2 = Path.Combine(dirUpdater, fnUpdater);
-                    //if (!Directory.Exists(dirUpdater))
-                    //{
-                    //    Directory.CreateDirectory(dirUpdater);
-                    //}
-                    //File.Copy(updater, updater2, true); // overwrite always to have to latest Updater copied
+                nvwo.Question = string.Format("Do you want to download it now?\n\n{0}", UpdateInfo.ToString());
+                nvwo.UpdateInfo = UpdateInfo;
+                nvwo.ProjectName = Application.ProductName;
 
-                    //if (File.Exists(updater2))
-                    //{
-                    //    ProcessStartInfo psi = new ProcessStartInfo(updater2);
-                    //    psi.Arguments = string.Format("--url {0} --filepath \"{1}\"", MyVersionInfo.Link, Process.GetCurrentProcess().MainModule.FileName);
-                    //    Process p = new Process();
-                    //    p.StartInfo = psi;
-                    //    p.Start();
-                    //}
-                    //else
-                    //{
-                    Process.Start(MyVersionInfo.Link);
-                    //}
+                using (NewVersionWindow ver = new NewVersionWindow(nvwo))
+                {
+                    if (ver.ShowDialog() == DialogResult.Yes)
+                    {
+                        Process.Start(UpdateInfo.URL);
+                    }
                 }
             }
-        }
-
-        public VersionInfo CheckUpdate(string link)
-        {
-            VersionInfo returnValue = new VersionInfo();
-            WebClient wClient = new WebClient();
-            if (this.Options.ProxySettings != null)
-            {
-                wClient.Proxy = this.Options.ProxySettings;
-            }
-            string source = wClient.DownloadString(link);
-            returnValue.Link = Regex.Match(source, "(?<=<a href=\").+(?=\" style=\"white)").Value; //Link
-            returnValue.Version = Regex.Match(returnValue.Link, @"(?<=.+)(?:\d+\.){3}\d+(?=.+)").Value; //Version
-            returnValue.Summary = HttpUtility.HtmlDecode(Regex.Match(source, "(?<=&amp;q=.*\">).+?(?=</a>)", RegexOptions.Singleline).Value.
-                Replace("\n", "").Replace("\r", "").Trim()); //Summary
-            return returnValue;
         }
     }
 }

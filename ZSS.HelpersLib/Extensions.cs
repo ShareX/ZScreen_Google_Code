@@ -24,10 +24,12 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -40,6 +42,52 @@ namespace HelpersLib
             FieldInfo fi = value.GetType().GetField(value.ToString());
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+        }
+
+        public static XElement GetNode(this XContainer element, string path)
+        {
+            if (element != null && !string.IsNullOrEmpty(path))
+            {
+                XContainer lastElement = element;
+
+                string[] splitPath = path.Trim().Trim('/').Split('/');
+
+                if (splitPath != null && splitPath.Length > 0)
+                {
+                    foreach (string name in splitPath)
+                    {
+                        if (name.Contains('|'))
+                        {
+                            string[] splitName = name.Split('|');
+
+                            foreach (string name2 in splitName)
+                            {
+                                lastElement = lastElement.Element(name2);
+                                if (lastElement != null) break;
+                            }
+                        }
+                        else
+                        {
+                            lastElement = lastElement.Element(name);
+                        }
+
+                        if (lastElement == null) return null;
+                    }
+
+                    return (XElement)lastElement;
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetValue(this XContainer element, string path, string defaultValue = null)
+        {
+            XElement xe = element.GetNode(path);
+
+            if (xe != null) return xe.Value;
+
+            return defaultValue;
         }
 
         public static XElement GetElement(this XElement xe, params string[] elements)
@@ -185,6 +233,23 @@ namespace HelpersLib
         public static int Between(this int num, int min, int max)
         {
             return Math.Min(Math.Max(num, min), max);
+        }
+
+        public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first,
+            IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
+        {
+            using (IEnumerator<TFirst> e1 = first.GetEnumerator())
+            using (IEnumerator<TSecond> e2 = second.GetEnumerator())
+                while (e1.MoveNext() && e2.MoveNext())
+                    yield return resultSelector(e1.Current, e2.Current);
+        }
+
+        public static bool HasFlag(this Enum keys, Enum flag)
+        {
+            ulong keysVal = Convert.ToUInt64(keys);
+            ulong flagVal = Convert.ToUInt64(flag);
+
+            return (keysVal & flagVal) == flagVal;
         }
     }
 }

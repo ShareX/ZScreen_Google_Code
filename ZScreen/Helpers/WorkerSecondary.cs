@@ -25,7 +25,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
@@ -56,7 +55,7 @@ namespace ZScreenGUI
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
             updateThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateThread_RunWorkerCompleted);
-            updateThread.RunWorkerAsync(Application.ProductName);
+            updateThread.RunWorkerAsync();
         }
 
         private void updateThread_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -73,15 +72,8 @@ namespace ZScreenGUI
         {
             BackgroundWorker worker = (BackgroundWorker)sender;
             NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
-
-            UpdateCheckerOptions uco = new UpdateCheckerOptions
-            {
-                CheckBeta = Engine.conf.CheckUpdatesBeta,
-                MyNewVersionWindowOptions = nvwo
-            };
-            uco.ProxySettings = Adapter.CheckProxySettings().GetWebProxy;
-            UpdateChecker updateChecker = new UpdateChecker((string)e.Argument, uco);
-            worker.ReportProgress(1, updateChecker.StartCheckUpdate());
+            UpdateChecker updateChecker = new UpdateChecker(Engine.URL_UPDATE, Engine.conf.CheckUpdatesBeta, Adapter.CheckProxySettings().GetWebProxy, nvwo);
+            worker.ReportProgress(1, updateChecker.CheckUpdate());
             updateChecker.ShowPrompt();
         }
 
