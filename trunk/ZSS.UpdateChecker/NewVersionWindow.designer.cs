@@ -39,20 +39,22 @@
             // btnYes
             // 
             this.btnYes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnYes.Location = new System.Drawing.Point(315, 80);
+            this.btnYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnYes.Location = new System.Drawing.Point(312, 80);
             this.btnYes.Name = "btnYes";
-            this.btnYes.Size = new System.Drawing.Size(83, 24);
+            this.btnYes.Size = new System.Drawing.Size(208, 32);
             this.btnYes.TabIndex = 0;
-            this.btnYes.Text = "&Yes";
+            this.btnYes.Text = "&Yes open download page";
             this.btnYes.UseVisualStyleBackColor = true;
             this.btnYes.Click += new System.EventHandler(this.btnYes_Click);
             // 
             // btnNo
             // 
             this.btnNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNo.Location = new System.Drawing.Point(403, 80);
+            this.btnNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnNo.Location = new System.Drawing.Point(528, 80);
             this.btnNo.Name = "btnNo";
-            this.btnNo.Size = new System.Drawing.Size(83, 24);
+            this.btnNo.Size = new System.Drawing.Size(88, 32);
             this.btnNo.TabIndex = 1;
             this.btnNo.Text = "&No";
             this.btnNo.UseVisualStyleBackColor = true;
@@ -63,11 +65,14 @@
             this.txtVer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVer.BackColor = System.Drawing.Color.DimGray;
+            this.txtVer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVer.Location = new System.Drawing.Point(8, 112);
+            this.txtVer.ForeColor = System.Drawing.Color.White;
+            this.txtVer.Location = new System.Drawing.Point(8, 120);
             this.txtVer.Name = "txtVer";
             this.txtVer.ReadOnly = true;
-            this.txtVer.Size = new System.Drawing.Size(479, 184);
+            this.txtVer.Size = new System.Drawing.Size(608, 216);
             this.txtVer.TabIndex = 2;
             this.txtVer.TabStop = false;
             this.txtVer.Text = "";
@@ -79,10 +84,11 @@
             this.lblVer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVer.BackColor = System.Drawing.Color.Transparent;
-            this.lblVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVer.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblVer.ForeColor = System.Drawing.Color.White;
             this.lblVer.Location = new System.Drawing.Point(136, 8);
             this.lblVer.Name = "lblVer";
-            this.lblVer.Size = new System.Drawing.Size(347, 100);
+            this.lblVer.Size = new System.Drawing.Size(480, 66);
             this.lblVer.TabIndex = 3;
             this.lblVer.Text = "New Version is available";
             // 
@@ -101,7 +107,8 @@
             this.AcceptButton = this.btnYes;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 309);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(625, 345);
             this.Controls.Add(this.pbApp);
             this.Controls.Add(this.txtVer);
             this.Controls.Add(this.btnNo);
@@ -109,9 +116,10 @@
             this.Controls.Add(this.lblVer);
             this.MinimumSize = new System.Drawing.Size(509, 343);
             this.Name = "NewVersionWindow";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "A New Version is Available";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NewVersionWindow_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
             this.ResumeLayout(false);
 

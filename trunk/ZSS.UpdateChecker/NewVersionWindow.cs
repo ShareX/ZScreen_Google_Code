@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace ZSS.UpdateCheckerLib
@@ -71,6 +72,19 @@ namespace ZSS.UpdateCheckerLib
         private void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
+        }
+
+        private void NewVersionWindow_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            Rectangle rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+
+            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical))
+            {
+                brush.SetSigmaBellShape(0.20f);
+                g.FillRectangle(brush, rect);
+            }
         }
     }
 
