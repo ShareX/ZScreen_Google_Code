@@ -81,7 +81,7 @@ namespace ZSS.UpdateCheckerLib
                                 Summary = xe.GetValue("Summary")
                             };
 
-                            if (!UpdateInfo.Summary.IsNullOrEmpty() && UpdateInfo.Summary.IsValidUrl())
+                            if (UpdateInfo.IsUpdateRequired && !UpdateInfo.Summary.IsNullOrEmpty() && UpdateInfo.Summary.IsValidUrl())
                             {
                                 UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
                             }
