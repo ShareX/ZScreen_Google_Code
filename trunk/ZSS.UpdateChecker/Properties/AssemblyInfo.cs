@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen Foundation")]
 [assembly: AssemblyProduct("ZSS.UpdateChecker")]
-[assembly: AssemblyCopyright("Copyright © Contributors 2009")]
+[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

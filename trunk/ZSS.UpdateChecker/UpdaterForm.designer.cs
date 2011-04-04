@@ -1,6 +1,6 @@
 ﻿namespace ZSS.UpdateCheckerLib
 {
-    partial class NewVersionWindow
+    partial class UpdaterForm
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@
             this.lblVer.Name = "lblVer";
             this.lblVer.Size = new System.Drawing.Size(480, 66);
             this.lblVer.TabIndex = 3;
-            this.lblVer.Text = "New Version is available";
+            this.lblVer.Text = "New version is available";
             // 
             // pbApp
             // 
@@ -102,7 +102,7 @@
             this.pbApp.TabIndex = 4;
             this.pbApp.TabStop = false;
             // 
-            // NewVersionWindow
+            // UpdaterForm
             // 
             this.AcceptButton = this.btnYes;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,10 +115,10 @@
             this.Controls.Add(this.btnYes);
             this.Controls.Add(this.lblVer);
             this.MinimumSize = new System.Drawing.Size(509, 343);
-            this.Name = "NewVersionWindow";
+            this.Name = "UpdaterForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "A New Version is Available";
+            this.Text = "Update form";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.NewVersionWindow_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
             this.ResumeLayout(false);

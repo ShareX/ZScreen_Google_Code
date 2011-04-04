@@ -25,6 +25,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
@@ -72,7 +73,8 @@ namespace ZScreenGUI
         {
             BackgroundWorker worker = (BackgroundWorker)sender;
             NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
-            UpdateChecker updateChecker = new UpdateChecker(Engine.URL_UPDATE, Engine.conf.CheckUpdatesBeta, Adapter.CheckProxySettings().GetWebProxy, nvwo);
+            UpdateChecker updateChecker = new UpdateChecker(Engine.URL_UPDATE, Application.ProductName, new Version(Application.ProductVersion),
+                Engine.conf.CheckUpdatesBeta, Adapter.CheckProxySettings().GetWebProxy, nvwo);
             worker.ReportProgress(1, updateChecker.CheckUpdate());
             updateChecker.ShowPrompt();
         }
