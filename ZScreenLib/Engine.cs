@@ -173,7 +173,10 @@ namespace ZScreenLib
                     Engine.mAppSettings.FileUploader = cw.FileUploaderType;
                     Engine.mAppSettings.TextUploaderSelected = cw.TextUploaderType;
                     Engine.mAppSettings.UrlShortenerSelected = cw.UrlShortenerType;
-
+                    if (!Portable)
+                    {
+                        mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+                    }
                     RunConfig = true;
                 }
                 if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
@@ -279,7 +282,6 @@ namespace ZScreenLib
                 Engine.conf.FileDestMode = Engine.mAppSettings.FileUploader;
                 Engine.conf.TextUploaderSelected = Engine.mAppSettings.TextUploaderSelected;
                 Engine.conf.UrlShortenerSelected = Engine.mAppSettings.UrlShortenerSelected;
-                mAppSettings.Write();
             }
             // Portable then we don't need PreferSystemFolders to be true
             if (Portable)

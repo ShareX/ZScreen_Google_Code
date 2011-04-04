@@ -331,6 +331,7 @@
     <None Include="Resources\explorer.png" />
     <None Include="Resources\application_go.png" />
     <Content Include="Resources\zss-main.ico" />
+    <Content Include="Setup\ZScreen Beta Setup 2011.iss" />
     <Content Include="Setup\zscreen-beta-setup-debug.iss" />
     <Content Include="Setup\zscreen-beta-setup.iss" />
   </ItemGroup>
