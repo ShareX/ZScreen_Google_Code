@@ -37,15 +37,19 @@ namespace ZSS.UpdateCheckerLib
     public class UpdateChecker
     {
         public string URL { get; private set; }
+        public string ApplicationName { get; private set; }
+        public Version ApplicationVersion { get; private set; }
         public bool CheckBeta { get; private set; }
         public UpdateInfo UpdateInfo { get; private set; }
 
         private IWebProxy proxy;
         private NewVersionWindowOptions nvwo;
 
-        public UpdateChecker(string url, bool checkBeta, IWebProxy proxy, NewVersionWindowOptions nvwo)
+        public UpdateChecker(string url, string applicationName, Version applicationVersion, bool checkBeta, IWebProxy proxy, NewVersionWindowOptions nvwo)
         {
             URL = url;
+            ApplicationName = applicationName;
+            ApplicationVersion = applicationVersion;
             CheckBeta = checkBeta;
             this.proxy = proxy;
             this.nvwo = nvwo;
@@ -63,16 +67,17 @@ namespace ZSS.UpdateCheckerLib
 
                     if (xd != null)
                     {
-                        string path = string.Format("Update/{0}/{1}", Application.ProductName, CheckBeta ? "Beta|Stable" : "Stable");
+                        string path = string.Format("Update/{0}/{1}", ApplicationName, CheckBeta ? "Beta|Stable" : "Stable");
                         XElement xe = xd.GetNode(path);
 
                         if (xe != null)
                         {
                             UpdateInfo = new UpdateInfo
                             {
-                                Version = new Version(xe.GetValue("Version")),
+                                ApplicationVersion = ApplicationVersion,
+                                LatestVersion = new Version(xe.GetValue("Version")),
                                 URL = xe.GetValue("URL"),
-                                Date = DateTime.Parse(xe.GetValue("Date")),
+                                Date = DateTime.Parse(xe.GetValue("Date")), // ?
                                 Summary = xe.GetValue("Summary")
                             };
 
@@ -89,28 +94,31 @@ namespace ZSS.UpdateCheckerLib
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                return "Update failed:\r\n" + ex.ToString();
+                return "Update check failed:\r\n" + ex.ToString();
             }
 
             return null;
         }
 
-        public void ShowPrompt()
+        public bool ShowPrompt()
         {
             if (UpdateInfo != null && !UpdateInfo.URL.IsNullOrEmpty() && UpdateInfo.IsUpdateRequired)
             {
                 nvwo.Question = string.Format("Do you want to download it now?\n\n{0}", UpdateInfo.ToString());
                 nvwo.UpdateInfo = UpdateInfo;
-                nvwo.ProjectName = Application.ProductName;
+                nvwo.ProjectName = ApplicationName;
 
-                using (NewVersionWindow ver = new NewVersionWindow(nvwo))
+                using (UpdaterForm ver = new UpdaterForm(nvwo))
                 {
                     if (ver.ShowDialog() == DialogResult.Yes)
                     {
                         Process.Start(UpdateInfo.URL);
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
     }
 }

@@ -31,11 +31,11 @@ using System.Windows.Forms;
 
 namespace ZSS.UpdateCheckerLib
 {
-    public partial class NewVersionWindow : Form
+    public partial class UpdaterForm : Form
     {
         public NewVersionWindowOptions Options { get; private set; }
 
-        public NewVersionWindow(NewVersionWindowOptions options)
+        public UpdaterForm(NewVersionWindowOptions options)
         {
             InitializeComponent();
 
@@ -51,7 +51,7 @@ namespace ZSS.UpdateCheckerLib
                 txtVer.Text = Options.UpdateInfo.Summary;
             }
 
-            Text = string.Format("{0} {1} is available", Options.ProjectName, Options.UpdateInfo.Version.ToString());
+            Text = string.Format("{0} {1} is available", Options.ProjectName, Options.UpdateInfo.LatestVersion);
 
             BringToFront();
             Activate();

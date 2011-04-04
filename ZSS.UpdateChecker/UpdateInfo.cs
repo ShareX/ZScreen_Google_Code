@@ -25,27 +25,27 @@
 
 using System;
 using System.Text;
-using System.Windows.Forms;
 
 namespace ZSS.UpdateCheckerLib
 {
     public class UpdateInfo
     {
-        public Version Version { get; set; }
+        public Version ApplicationVersion { get; set; }
+        public Version LatestVersion { get; set; }
         public string URL { get; set; }
         public DateTime Date { get; set; }
         public string Summary { get; set; }
 
         public bool IsUpdateRequired
         {
-            get { return Version != null && Version.CompareTo(new Version(Application.ProductVersion)) > 0; }
+            get { return LatestVersion != null && ApplicationVersion != null && LatestVersion.CompareTo(ApplicationVersion) > 0; }
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Current version: " + Application.ProductVersion);
-            sb.AppendLine("Latest version: " + (IsUpdateRequired ? Version.ToString() : Application.ProductVersion));
+            sb.AppendLine("Current version: " + ApplicationVersion);
+            sb.AppendLine("Latest version: " + (IsUpdateRequired ? LatestVersion : ApplicationVersion));
             return sb.ToString();
         }
     }
