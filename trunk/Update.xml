@@ -4,13 +4,13 @@
 		<Stable>
 			<Version>3.27.3.1</Version>
 			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.27.3.1-setup.exe</URL>
-			<Date>15.03.2011</Date>
+			<Date>2011-03-15</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Stable>
 		<Beta>
 			<Version>3.34.0.1</Version>
 			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.34.0.1-setup.exe</URL>
-			<Date>03.04.2011</Date>
+			<Date>2011-04-03</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Beta>
 	</ZScreen>
@@ -18,7 +18,7 @@
 		<Stable>
 			<Version>3.8.0.0</Version>
 			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZUploader-3.8-Beta.zip</URL>
-			<Date>02.01.2011</Date>
+			<Date>2011-01-02</Date>
 			<Summary>http://zscreen.googlecode.com/svn/branches/ZUploader/ZUploader/Docs/VersionHistory.txt</Summary>
 		</Stable>
 	</ZUploader>

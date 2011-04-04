@@ -51,7 +51,7 @@ namespace ZSS.UpdateCheckerLib
                 txtVer.Text = Options.UpdateInfo.Summary;
             }
 
-            Text = string.Format("{0} {1} ({2}) is available", Options.ProjectName, Options.UpdateInfo.LatestVersion, Options.UpdateInfo.Date.ToLongDateString());
+            Text = string.Format("{0} update is available", Options.ProjectName);
 
             BringToFront();
             Activate();

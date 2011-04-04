@@ -36,9 +36,11 @@ namespace ZSS.UpdateCheckerLib
         public DateTime Date { get; set; }
         public string Summary { get; set; }
 
+        private const bool ForceUpdate = false;
+
         public bool IsUpdateRequired
         {
-            get { return LatestVersion != null && ApplicationVersion != null && LatestVersion.CompareTo(ApplicationVersion) > 0; }
+            get { return ApplicationVersion != null && LatestVersion != null && (LatestVersion.CompareTo(ApplicationVersion) > 0 || ForceUpdate); }
         }
 
         public override string ToString()
@@ -46,6 +48,7 @@ namespace ZSS.UpdateCheckerLib
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Current version: " + ApplicationVersion);
             sb.AppendLine("Latest version: " + LatestVersion);
+            sb.AppendLine("Latest version date: " + Date.ToLongDateString());
             return sb.ToString();
         }
     }
