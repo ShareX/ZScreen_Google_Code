@@ -45,7 +45,7 @@ namespace ZSS.UpdateCheckerLib
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Current version: " + ApplicationVersion);
-            sb.AppendLine("Latest version: " + (IsUpdateRequired ? LatestVersion : ApplicationVersion));
+            sb.AppendLine("Latest version: " + LatestVersion);
             return sb.ToString();
         }
     }
