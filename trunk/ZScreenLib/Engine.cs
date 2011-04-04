@@ -103,6 +103,7 @@ namespace ZScreenLib
         public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
         public const string URL_HELP = "http://code.google.com/p/zscreen/wiki/Tutorials";
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
+        public const string URL_UPDATE = "http://zscreen.googlecode.com/svn/trunk/Update.xml";
 
         public const string IMAGESHACK_KEY = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
 

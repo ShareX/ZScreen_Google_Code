@@ -26,59 +26,49 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net;
 using System.Windows.Forms;
 
 namespace ZSS.UpdateCheckerLib
 {
     public partial class NewVersionWindow : Form
     {
-        [System.Runtime.InteropServices.DllImport("user32")]
-        private static extern bool SetForegroundWindow(int hWnd);
-
-        private NewVersionWindowOptions Options { get; set; }
+        public NewVersionWindowOptions Options { get; private set; }
 
         public NewVersionWindow(NewVersionWindowOptions options)
         {
             InitializeComponent();
-            this.Options = options;
 
-            if (this.Options.MyIcon != null)
-                this.Icon = this.Options.MyIcon;
-            if (this.Options.MyImage != null)
-                this.pbApp.Image = this.Options.MyImage;
+            Options = options;
 
-            this.lblVer.Text = this.Options.Question;
-            if (!string.IsNullOrEmpty(this.Options.VersionHistory) &&
-                 this.Options.VersionHistory.StartsWith("http://" + this.Options.ProjectName + ".googlecode.com/"))
+            if (Options.MyIcon != null) Icon = Options.MyIcon;
+            if (Options.MyImage != null) pbApp.Image = Options.MyImage;
+
+            lblVer.Text = Options.Question;
+
+            if (!string.IsNullOrEmpty(Options.UpdateInfo.Summary))
             {
-                WebClient wClient = new WebClient();
-                string versionHistory = wClient.DownloadString(this.Options.VersionHistory);
-                if (!string.IsNullOrEmpty(versionHistory))
-                {
-                    this.txtVer.Text = versionHistory;
-                }
+                txtVer.Text = Options.UpdateInfo.Summary;
             }
-            else
-            {
-                this.txtVer.Text = this.Options.VersionHistory;
-            }
-            SetForegroundWindow(this.Handle.ToInt32());
+
+            Text = string.Format("{0} {1} is available", Options.ProjectName, Options.UpdateInfo.Version.ToString());
+
+            BringToFront();
+            Activate();
         }
 
         private void btnYes_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Yes;
-            this.Close();
+            DialogResult = DialogResult.Yes;
+            Close();
         }
 
         private void btnNo_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.No;
-            this.Close();
+            DialogResult = DialogResult.No;
+            Close();
         }
 
-        void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
+        private void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
         }
@@ -88,8 +78,8 @@ namespace ZSS.UpdateCheckerLib
     {
         public Icon MyIcon { get; set; }
         public Image MyImage { get; set; }
-        public string VersionHistory { get; set; }
         public string Question { get; set; }
         public string ProjectName { get; set; }
+        public UpdateInfo UpdateInfo { get; set; }
     }
 }

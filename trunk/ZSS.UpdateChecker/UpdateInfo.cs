@@ -23,12 +23,30 @@
 
 #endregion License Information (GPL v2)
 
+using System;
+using System.Text;
+using System.Windows.Forms;
+
 namespace ZSS.UpdateCheckerLib
 {
-    public struct VersionInfo
+    public class UpdateInfo
     {
-        public string Link { get; set; }
-        public string Version { get; set; }
+        public Version Version { get; set; }
+        public string URL { get; set; }
+        public DateTime Date { get; set; }
         public string Summary { get; set; }
+
+        public bool IsUpdateRequired
+        {
+            get { return Version != null && Version.CompareTo(new Version(Application.ProductVersion)) > 0; }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Current version: " + Application.ProductVersion);
+            sb.AppendLine("Latest version: " + (IsUpdateRequired ? Version.ToString() : Application.ProductVersion));
+            return sb.ToString();
+        }
     }
 }
