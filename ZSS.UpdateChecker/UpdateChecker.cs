@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -77,7 +78,7 @@ namespace ZSS.UpdateCheckerLib
                                 ApplicationVersion = ApplicationVersion,
                                 LatestVersion = new Version(xe.GetValue("Version")),
                                 URL = xe.GetValue("URL"),
-                                Date = DateTime.Parse(xe.GetValue("Date")), // ?
+                                Date = DateTime.Parse(xe.GetValue("Date"), CultureInfo.InvariantCulture),
                                 Summary = xe.GetValue("Summary")
                             };
 

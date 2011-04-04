@@ -40,11 +40,11 @@
             // 
             this.btnYes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnYes.Location = new System.Drawing.Point(312, 80);
+            this.btnYes.Location = new System.Drawing.Point(472, 8);
             this.btnYes.Name = "btnYes";
-            this.btnYes.Size = new System.Drawing.Size(208, 32);
+            this.btnYes.Size = new System.Drawing.Size(72, 40);
             this.btnYes.TabIndex = 0;
-            this.btnYes.Text = "&Yes open download page";
+            this.btnYes.Text = "&Yes...";
             this.btnYes.UseVisualStyleBackColor = true;
             this.btnYes.Click += new System.EventHandler(this.btnYes_Click);
             // 
@@ -52,9 +52,9 @@
             // 
             this.btnNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnNo.Location = new System.Drawing.Point(528, 80);
+            this.btnNo.Location = new System.Drawing.Point(544, 8);
             this.btnNo.Name = "btnNo";
-            this.btnNo.Size = new System.Drawing.Size(88, 32);
+            this.btnNo.Size = new System.Drawing.Size(72, 40);
             this.btnNo.TabIndex = 1;
             this.btnNo.Text = "&No";
             this.btnNo.UseVisualStyleBackColor = true;
@@ -88,7 +88,7 @@
             this.lblVer.ForeColor = System.Drawing.Color.White;
             this.lblVer.Location = new System.Drawing.Point(136, 8);
             this.lblVer.Name = "lblVer";
-            this.lblVer.Size = new System.Drawing.Size(480, 66);
+            this.lblVer.Size = new System.Drawing.Size(480, 104);
             this.lblVer.TabIndex = 3;
             this.lblVer.Text = "New version is available";
             // 
