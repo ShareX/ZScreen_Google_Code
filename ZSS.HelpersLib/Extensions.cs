@@ -29,9 +29,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 
 namespace HelpersLib
 {
@@ -44,144 +42,42 @@ namespace HelpersLib
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
         }
 
-        public static XElement GetNode(this XContainer element, string path)
+        public static bool HasFlag(this Enum keys, Enum flag)
         {
-            if (element != null && !string.IsNullOrEmpty(path))
+            ulong keysVal = Convert.ToUInt64(keys);
+            ulong flagVal = Convert.ToUInt64(flag);
+
+            return (keysVal & flagVal) == flagVal;
+        }
+
+        public static int Between(this int num, int min, int max)
+        {
+            if (num <= min) return min;
+            if (num >= max) return max;
+            return num;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (action == null) throw new ArgumentNullException("action");
+
+            foreach (T item in source)
             {
-                XContainer lastElement = element;
-
-                string[] splitPath = path.Trim().Trim('/').Split('/');
-
-                if (splitPath != null && splitPath.Length > 0)
-                {
-                    foreach (string name in splitPath)
-                    {
-                        if (name.Contains('|'))
-                        {
-                            string[] splitName = name.Split('|');
-
-                            foreach (string name2 in splitName)
-                            {
-                                lastElement = lastElement.Element(name2);
-                                if (lastElement != null) break;
-                            }
-                        }
-                        else
-                        {
-                            lastElement = lastElement.Element(name);
-                        }
-
-                        if (lastElement == null) return null;
-                    }
-
-                    return (XElement)lastElement;
-                }
+                action(item);
             }
-
-            return null;
         }
 
-        public static string GetValue(this XContainer element, string path, string defaultValue = null)
+        public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first,
+            IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
         {
-            XElement xe = element.GetNode(path);
-
-            if (xe != null) return xe.Value;
-
-            return defaultValue;
-        }
-
-        public static XElement GetElement(this XElement xe, params string[] elements)
-        {
-            XElement result = null;
-
-            if (xe != null && elements != null && elements.Length > 0)
+            using (IEnumerator<TFirst> e1 = first.GetEnumerator())
+            using (IEnumerator<TSecond> e2 = second.GetEnumerator())
             {
-                result = xe;
-
-                foreach (string element in elements)
+                while (e1.MoveNext() && e2.MoveNext())
                 {
-                    result = result.Element(element);
-                    if (result == null) break;
+                    yield return resultSelector(e1.Current, e2.Current);
                 }
-            }
-
-            return result;
-        }
-
-        public static XElement GetElement(this XDocument xd, params string[] elements)
-        {
-            if (xd != null && elements != null && elements.Length > 0)
-            {
-                XElement result = xd.Root;
-
-                if (result.Name == elements[0])
-                {
-                    for (int i = 1; i < elements.Length; i++)
-                    {
-                        result = result.Element(elements[i]);
-                        if (result == null) break;
-                    }
-
-                    return result;
-                }
-            }
-
-            return null;
-        }
-
-        public static string GetElementValue(this XElement xe, string name)
-        {
-            if (xe != null)
-            {
-                XElement xeItem = xe.Element(name);
-                if (xeItem != null)
-                {
-                    return xeItem.Value;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        public static string GetAttributeValue(this XElement xe, string name)
-        {
-            if (xe != null)
-            {
-                XAttribute xeItem = xe.Attribute(name);
-                if (xeItem != null)
-                {
-                    return xeItem.Value;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        public static string GetAttributeFirstValue(this XElement xe, params string[] names)
-        {
-            string value;
-            foreach (string name in names)
-            {
-                value = xe.GetAttributeValue(name);
-                if (!string.IsNullOrEmpty(value))
-                {
-                    return value;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        public static void CopyStream(this Stream input, Stream output)
-        {
-            byte[] buffer = new byte[32768];
-            int read;
-
-            input.Position = 0;
-
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                output.Write(buffer, 0, read);
             }
         }
 
@@ -190,7 +86,7 @@ namespace HelpersLib
             using (MemoryStream ms = new MemoryStream())
             {
                 img.Save(ms, img.RawFormat);
-                return Helpers.GetBytes(ms);
+                return ms.ToArray();
             }
         }
 
@@ -228,28 +124,6 @@ namespace HelpersLib
 
             result = text.Remove(location, search.Length).Insert(location, replace);
             return true;
-        }
-
-        public static int Between(this int num, int min, int max)
-        {
-            return Math.Min(Math.Max(num, min), max);
-        }
-
-        public static IEnumerable<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first,
-            IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
-        {
-            using (IEnumerator<TFirst> e1 = first.GetEnumerator())
-            using (IEnumerator<TSecond> e2 = second.GetEnumerator())
-                while (e1.MoveNext() && e2.MoveNext())
-                    yield return resultSelector(e1.Current, e2.Current);
-        }
-
-        public static bool HasFlag(this Enum keys, Enum flag)
-        {
-            ulong keysVal = Convert.ToUInt64(keys);
-            ulong flagVal = Convert.ToUInt64(flag);
-
-            return (keysVal & flagVal) == flagVal;
         }
     }
 }

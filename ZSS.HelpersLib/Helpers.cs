@@ -43,34 +43,6 @@ namespace HelpersLib
         private static readonly object ClipboardLock = new object();
         private static readonly Random Random = new Random();
 
-        public static bool WriteFile(Stream stream, string filePath)
-        {
-            if (stream != null && !string.IsNullOrEmpty(filePath))
-            {
-                string directoryName = Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(directoryName))
-                {
-                    Directory.CreateDirectory(directoryName);
-                }
-
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    stream.Position = 0;
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-
-                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        fileStream.Write(buffer, 0, bytesRead);
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private static bool IsValidFile(string path, Type enumType)
         {
             string ext = Path.GetExtension(path);
@@ -338,21 +310,6 @@ namespace HelpersLib
             }
 
             return "application/octet-stream";
-        }
-
-        public static byte[] GetBytes(Stream input)
-        {
-            input.Position = 0;
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
         }
 
         public static int GetEnumLength<T>()
