@@ -5,27 +5,27 @@
 
 Environment variables are a set of dynamic named values that can be used to configure File Naming Conventions. 
 
-|| %t || Title of active window ||
-|| %y || Current year ||
+|| %app || Title of ZScreen ||
+|| %cn || Computer name ||
+|| %d || Current day ||
+|| %h || Current hour ||
+|| %height || Gets image height ||
+|| %i || Auto increment number ||
+|| %mi || Current minute ||
 || %mo || Current month ||
 || %mon || Current month name (Local language) ||
 || %mon2 || Current month name (English) ||
-|| %d || Current day ||
-|| %h || Current hour ||
-|| %mi || Current minute ||
-|| %s || Current second ||
 || %ms || Current milisecond ||
+|| %n || New line ||
+|| %pm || AM or PM depending on the time of the day ||
+|| %ra || Random alphanumeric char ||
+|| %rn || Random number 0 to 9 ||
+|| %s || Current second ||
+|| %t || Title of active window ||
+|| %uln || Network domain name associated with the current user ||
+|| %un || User name ||
+|| %ver || Version of ZScreen ||
 || %w || Current week name (Local language) ||
 || %w2 || Current week name (English) ||
-|| %i || Auto increment number ||
-|| %pm || AM or PM depending on the time of the day ||
-|| %rn || Random number 0 to 9 ||
-|| %ra || Random alphanumeric char ||
 || %width || Gets image width ||
-|| %height || Gets image height ||
-|| %un || User name ||
-|| %uln || Network domain name associated with the current user ||
-|| %cn || Computer name ||
-|| %app || Title of ZScreen ||
-|| %ver || Version of ZScreen ||
-|| %n || New line ||
+|| %y || Current year ||
