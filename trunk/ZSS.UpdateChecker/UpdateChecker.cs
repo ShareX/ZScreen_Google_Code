@@ -82,7 +82,7 @@ namespace ZSS.UpdateCheckerLib
                                 Summary = xe.GetValue("Summary")
                             };
 
-                            if (UpdateInfo.IsUpdateRequired && !UpdateInfo.Summary.IsNullOrEmpty() && UpdateInfo.Summary.IsValidUrl())
+                            if (UpdateInfo.IsUpdateRequired && !string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
                             {
                                 UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
                             }
@@ -103,7 +103,7 @@ namespace ZSS.UpdateCheckerLib
 
         public bool ShowPrompt()
         {
-            if (UpdateInfo != null && !UpdateInfo.URL.IsNullOrEmpty() && UpdateInfo.IsUpdateRequired)
+            if (UpdateInfo != null && UpdateInfo.IsUpdateRequired)
             {
                 nvwo.Question = string.Format("Do you want to download it now?\n\n{0}", UpdateInfo.ToString());
                 nvwo.UpdateInfo = UpdateInfo;
