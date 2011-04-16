@@ -38,6 +38,7 @@ namespace UploadersLib.HelperClasses
     public class oAuthTwitter : OAuthBase
     {
         public enum Method { GET, POST };
+
         public const string REQUEST_TOKEN = "http://twitter.com/oauth/request_token";
         public const string AUTHORIZE = "http://twitter.com/oauth/authorize";
         public const string ACCESS_TOKEN = "http://twitter.com/oauth/access_token";
