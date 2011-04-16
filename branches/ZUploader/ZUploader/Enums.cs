@@ -65,6 +65,8 @@ namespace ZUploader
         RapidShare,
         [Description("sendspace.com")]
         SendSpace,
+        [Description("dropbox.com")]
+        Dropbox,
         //[Description("filebin.ca")]
         //FileBin,
         [Description("drop.io")]

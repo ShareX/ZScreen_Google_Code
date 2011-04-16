@@ -295,6 +295,9 @@ namespace ZUploader
                     fileUploader = new SendSpace();
                     SendSpaceManager.PrepareUploadInfo(null, null);
                     break;
+                case FileDestination.Dropbox:
+                    fileUploader = new Dropbox("", "");
+                    break;
                 /*case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
                     break;*/

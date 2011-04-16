@@ -53,7 +53,8 @@ namespace HistoryLib
             {
                 using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(EmptyDatabasePath))
                 {
-                    return Helpers.WriteFile(stream, databasePath);
+                    stream.WriteFile(databasePath);
+                    return true;
                 }
             }
 

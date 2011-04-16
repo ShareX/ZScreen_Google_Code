@@ -80,7 +80,7 @@ namespace UploadersLib.HelperClasses
         protected const string OAuthNonceKey = "oauth_nonce";
         protected const string OAuthTokenKey = "oauth_token";
         protected const string OAuthTokenSecretKey = "oauth_token_secret";
-        protected const string OAuthVerifierKey = "oauth_verifier"; // JDevlin
+        protected const string OAuthVerifierKey = "oauth_verifier";
 
         protected const string HMACSHA1SignatureType = "HMAC-SHA1";
         protected const string PlainTextSignatureType = "PLAINTEXT";
@@ -133,7 +133,6 @@ namespace UploadersLib.HelperClasses
                 string[] p = parameters.Split('&');
                 foreach (string s in p)
                 {
-                    // jmd: don't strip out oauth_verifier
                     if (!string.IsNullOrEmpty(s) && !s.StartsWith(OAuthParameterPrefix))
                     {
                         if (s.IndexOf('=') > -1)
@@ -252,8 +251,7 @@ namespace UploadersLib.HelperClasses
                 parameters.Add(new QueryParameter(OAuthTokenKey, token));
             }
 
-            // JDevlin: support for PIN-based auth
-            if (!String.IsNullOrEmpty(PIN))
+            if (!string.IsNullOrEmpty(PIN))
             {
                 parameters.Add(new QueryParameter(OAuthVerifierKey, PIN));
             }
@@ -298,7 +296,7 @@ namespace UploadersLib.HelperClasses
         /// <param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
         /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
         /// <returns>A base64 string of the hash value</returns>
-        public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, /* JDevlin*/ string PIN, out string normalizedUrl, out string normalizedRequestParameters)
+        public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, string PIN, out string normalizedUrl, out string normalizedRequestParameters)
         {
             return GenerateSignature(url, consumerKey, consumerSecret, token, tokenSecret, httpMethod, timeStamp, nonce, PIN, SignatureTypes.HMACSHA1, out normalizedUrl, out normalizedRequestParameters);
         }
@@ -314,7 +312,7 @@ namespace UploadersLib.HelperClasses
         /// <param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
         /// <param name="signatureType">The type of signature to use</param>
         /// <returns>A base64 string of the hash value</returns>
-        public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, string PIN /*JDevlin*/, SignatureTypes signatureType, out string normalizedUrl, out string normalizedRequestParameters)
+        public string GenerateSignature(Uri url, string consumerKey, string consumerSecret, string token, string tokenSecret, string httpMethod, string timeStamp, string nonce, string PIN, SignatureTypes signatureType, out string normalizedUrl, out string normalizedRequestParameters)
         {
             normalizedUrl = null;
             normalizedRequestParameters = null;

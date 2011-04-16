@@ -33,7 +33,6 @@ namespace ZScreenLib
     public class KeyboardHook : IDisposable
     {
         public event KeyEventHandler KeyDownEvent, KeyUpEvent;
-        //public event MouseEventHandler MouseDownEvent, MouseUpEvent;
 
         public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -95,6 +94,7 @@ namespace ZScreenLib
                     return keyboardHookHandle;
                 }
             }
+
             return CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam);
         }
 
