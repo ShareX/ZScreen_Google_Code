@@ -10,17 +10,20 @@ namespace UploadersLib.HelperClasses
     {
         public static T JSONToObject<T>(string json)
         {
-            try
+            if (!string.IsNullOrEmpty(json))
             {
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
-                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                try
                 {
-                    return (T)serializer.ReadObject(stream);
+                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+                    using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                    {
+                        return (T)serializer.ReadObject(stream);
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                }
             }
 
             return default(T);

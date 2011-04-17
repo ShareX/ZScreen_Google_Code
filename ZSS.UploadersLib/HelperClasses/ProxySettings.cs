@@ -61,6 +61,7 @@ namespace UploadersLib.HelperClasses
                     case ProxyConfigType.SystemProxy:
                         return HttpWebRequest.DefaultWebProxy;
                 }
+
                 return null;
             }
         }

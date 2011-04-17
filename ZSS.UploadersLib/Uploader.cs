@@ -267,7 +267,8 @@ namespace UploadersLib
             request.Method = "POST";
             request.Pipelined = false;
             request.ProtocolVersion = HttpVersion.Version11;
-            request.Proxy = ProxySettings.GetWebProxy;
+            IWebProxy proxy = ProxySettings.GetWebProxy;
+            if (proxy != null) request.Proxy = proxy;
             request.Timeout = -1;
             request.UserAgent = UserAgent;
 
@@ -279,7 +280,8 @@ namespace UploadersLib
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.KeepAlive = false;
             request.Method = "GET";
-            request.Proxy = ProxySettings.GetWebProxy;
+            IWebProxy proxy = ProxySettings.GetWebProxy;
+            if (proxy != null) request.Proxy = proxy;
             request.UserAgent = UserAgent;
 
             return request;

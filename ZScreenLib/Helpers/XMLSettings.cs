@@ -109,6 +109,15 @@ namespace ZScreenLib
         public string SendSpaceUserName = string.Empty;
         public string SendSpacePassword = string.Empty;
 
+        // Dropbox
+
+        public string DropboxUserToken = string.Empty;
+        public string DropboxUserSecret = string.Empty;
+        public string DropboxUploadPath = string.Empty;
+        public string DropboxEmail = string.Empty;
+        public string DropboxName = string.Empty;
+        public string DropboxUserID = string.Empty;
+
         // ImageShack
 
         public string ImageShackRegistrationCode = "";

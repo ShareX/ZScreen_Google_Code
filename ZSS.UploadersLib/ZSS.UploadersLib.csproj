@@ -109,6 +109,7 @@
     <Compile Include="HelperClasses\MediaWikiHistory.cs" />
     <Compile Include="HelperClasses\MediaWikiAccount.cs" />
     <Compile Include="HelperClasses\JSONHelper.cs" />
+    <Compile Include="HelperClasses\MyOAuth.cs" />
     <Compile Include="HelperClasses\UploadHelper\HttpUploadHelper.cs" />
     <Compile Include="HelperClasses\UploadHelper\MimePart.cs" />
     <Compile Include="HelperClasses\UploadHelper\StreamMimePart.cs" />

@@ -89,6 +89,7 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcApp = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
@@ -133,6 +134,16 @@ namespace ZScreenGUI
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
             this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
+            this.tpDropbox = new System.Windows.Forms.TabPage();
+            this.lblDropboxStatus = new System.Windows.Forms.Label();
+            this.lblDropboxPathTip = new System.Windows.Forms.Label();
+            this.lblDropboxPath = new System.Windows.Forms.Label();
+            this.lblDropboxPassword = new System.Windows.Forms.Label();
+            this.lblDropboxEmail = new System.Windows.Forms.Label();
+            this.btnDropboxLogin = new System.Windows.Forms.Button();
+            this.txtDropboxPath = new System.Windows.Forms.TextBox();
+            this.txtDropboxPassword = new System.Windows.Forms.TextBox();
+            this.txtDropboxEmail = new System.Windows.Forms.TextBox();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -487,6 +498,7 @@ namespace ZScreenGUI
             this.panelPreview = new System.Windows.Forms.Panel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.txtPreview = new System.Windows.Forms.RichTextBox();
+            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.lbHistory = new System.Windows.Forms.ListBox();
             this.tpHistorySettings = new System.Windows.Forms.TabPage();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
@@ -588,7 +600,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
             this.ucLocalhostAccounts = new ZScreenGUI.AccountsControl();
@@ -597,7 +608,6 @@ namespace ZScreenGUI
             this.ucMediaWikiAccounts = new ZScreenGUI.AccountsControl();
             this.ucTextUploaders = new ZScreenGUI.TextUploadersControl();
             this.ucUrlShorteners = new ZScreenGUI.TextUploadersControl();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
             this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
@@ -612,6 +622,7 @@ namespace ZScreenGUI
             this.tpLocalhost.SuspendLayout();
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
+            this.tpDropbox.SuspendLayout();
             this.tpFlickr.SuspendLayout();
             this.tpImageShack.SuspendLayout();
             this.gbImageShack.SuspendLayout();
@@ -1209,6 +1220,15 @@ namespace ZScreenGUI
             this.tpMain.Text = "Main";
             this.tpMain.UseVisualStyleBackColor = true;
             // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
+            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.TabIndex = 124;
+            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
+            // 
             // gbImageSettings
             // 
             this.gbImageSettings.Controls.Add(this.lblScreenshotDelay);
@@ -1371,6 +1391,7 @@ namespace ZScreenGUI
             this.tcDestinations.Controls.Add(this.tpLocalhost);
             this.tcDestinations.Controls.Add(this.tpRapidShare);
             this.tcDestinations.Controls.Add(this.tpSendSpace);
+            this.tcDestinations.Controls.Add(this.tpDropbox);
             this.tcDestinations.Controls.Add(this.tpFlickr);
             this.tcDestinations.Controls.Add(this.tpImageShack);
             this.tcDestinations.Controls.Add(this.tpTinyPic);
@@ -1711,6 +1732,103 @@ namespace ZScreenGUI
             this.lblSendSpaceAccountType.TabIndex = 8;
             this.lblSendSpaceAccountType.Text = "Account Type";
             // 
+            // tpDropbox
+            // 
+            this.tpDropbox.Controls.Add(this.lblDropboxStatus);
+            this.tpDropbox.Controls.Add(this.lblDropboxPathTip);
+            this.tpDropbox.Controls.Add(this.lblDropboxPath);
+            this.tpDropbox.Controls.Add(this.lblDropboxPassword);
+            this.tpDropbox.Controls.Add(this.lblDropboxEmail);
+            this.tpDropbox.Controls.Add(this.btnDropboxLogin);
+            this.tpDropbox.Controls.Add(this.txtDropboxPath);
+            this.tpDropbox.Controls.Add(this.txtDropboxPassword);
+            this.tpDropbox.Controls.Add(this.txtDropboxEmail);
+            this.tpDropbox.Location = new System.Drawing.Point(4, 23);
+            this.tpDropbox.Name = "tpDropbox";
+            this.tpDropbox.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDropbox.Size = new System.Drawing.Size(791, 402);
+            this.tpDropbox.TabIndex = 14;
+            this.tpDropbox.Text = "Dropbox";
+            this.tpDropbox.UseVisualStyleBackColor = true;
+            // 
+            // lblDropboxStatus
+            // 
+            this.lblDropboxStatus.AutoSize = true;
+            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 152);
+            this.lblDropboxStatus.Name = "lblDropboxStatus";
+            this.lblDropboxStatus.Size = new System.Drawing.Size(67, 13);
+            this.lblDropboxStatus.TabIndex = 8;
+            this.lblDropboxStatus.Text = "Login status:";
+            // 
+            // lblDropboxPathTip
+            // 
+            this.lblDropboxPathTip.AutoSize = true;
+            this.lblDropboxPathTip.Location = new System.Drawing.Point(336, 84);
+            this.lblDropboxPathTip.Name = "lblDropboxPathTip";
+            this.lblDropboxPathTip.Size = new System.Drawing.Size(205, 13);
+            this.lblDropboxPathTip.TabIndex = 7;
+            this.lblDropboxPathTip.Text = "Use \"Public\" folder for be able to get URL";
+            // 
+            // lblDropboxPath
+            // 
+            this.lblDropboxPath.AutoSize = true;
+            this.lblDropboxPath.Location = new System.Drawing.Point(16, 84);
+            this.lblDropboxPath.Name = "lblDropboxPath";
+            this.lblDropboxPath.Size = new System.Drawing.Size(32, 13);
+            this.lblDropboxPath.TabIndex = 6;
+            this.lblDropboxPath.Text = "Path:";
+            // 
+            // lblDropboxPassword
+            // 
+            this.lblDropboxPassword.AutoSize = true;
+            this.lblDropboxPassword.Location = new System.Drawing.Point(16, 52);
+            this.lblDropboxPassword.Name = "lblDropboxPassword";
+            this.lblDropboxPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblDropboxPassword.TabIndex = 5;
+            this.lblDropboxPassword.Text = "Password:";
+            // 
+            // lblDropboxEmail
+            // 
+            this.lblDropboxEmail.AutoSize = true;
+            this.lblDropboxEmail.Location = new System.Drawing.Point(16, 20);
+            this.lblDropboxEmail.Name = "lblDropboxEmail";
+            this.lblDropboxEmail.Size = new System.Drawing.Size(35, 13);
+            this.lblDropboxEmail.TabIndex = 4;
+            this.lblDropboxEmail.Text = "Email:";
+            // 
+            // btnDropboxLogin
+            // 
+            this.btnDropboxLogin.Location = new System.Drawing.Point(248, 112);
+            this.btnDropboxLogin.Name = "btnDropboxLogin";
+            this.btnDropboxLogin.Size = new System.Drawing.Size(80, 24);
+            this.btnDropboxLogin.TabIndex = 3;
+            this.btnDropboxLogin.Text = "Login";
+            this.btnDropboxLogin.UseVisualStyleBackColor = true;
+            this.btnDropboxLogin.Click += new System.EventHandler(this.btnDropboxLogin_Click);
+            // 
+            // txtDropboxPath
+            // 
+            this.txtDropboxPath.Location = new System.Drawing.Point(80, 80);
+            this.txtDropboxPath.Name = "txtDropboxPath";
+            this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
+            this.txtDropboxPath.TabIndex = 2;
+            this.txtDropboxPath.TextChanged += new System.EventHandler(this.txtDropboxPath_TextChanged);
+            // 
+            // txtDropboxPassword
+            // 
+            this.txtDropboxPassword.Location = new System.Drawing.Point(80, 48);
+            this.txtDropboxPassword.Name = "txtDropboxPassword";
+            this.txtDropboxPassword.PasswordChar = '*';
+            this.txtDropboxPassword.Size = new System.Drawing.Size(248, 20);
+            this.txtDropboxPassword.TabIndex = 1;
+            // 
+            // txtDropboxEmail
+            // 
+            this.txtDropboxEmail.Location = new System.Drawing.Point(80, 16);
+            this.txtDropboxEmail.Name = "txtDropboxEmail";
+            this.txtDropboxEmail.Size = new System.Drawing.Size(248, 20);
+            this.txtDropboxEmail.TabIndex = 0;
+            // 
             // tpFlickr
             // 
             this.tpFlickr.Controls.Add(this.btnFlickrOpenImages);
@@ -1997,7 +2115,7 @@ namespace ZScreenGUI
             // 
             this.tpTwitter.Controls.Add(this.tcTwitter);
             this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
-            this.tpTwitter.ImageKey = "Twitter.ico";
+            this.tpTwitter.ImageKey = "(none)";
             this.tpTwitter.Location = new System.Drawing.Point(4, 23);
             this.tpTwitter.Name = "tpTwitter";
             this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
@@ -5844,6 +5962,15 @@ namespace ZScreenGUI
             this.txtPreview.TabIndex = 14;
             this.txtPreview.Text = "";
             // 
+            // historyBrowser
+            // 
+            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
+            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.historyBrowser.Name = "historyBrowser";
+            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
+            this.historyBrowser.TabIndex = 15;
+            // 
             // lbHistory
             // 
             this.lbHistory.AllowDrop = true;
@@ -7049,15 +7176,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(40, 56);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.TabIndex = 124;
-            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
-            // 
             // nudScreenshotDelay
             // 
             this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
@@ -7139,15 +7257,6 @@ namespace ZScreenGUI
             this.ucUrlShorteners.Size = new System.Drawing.Size(785, 397);
             this.ucUrlShorteners.TabIndex = 0;
             // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
-            this.historyBrowser.TabIndex = 15;
-            // 
             // ucProxyAccounts
             // 
             this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -7198,6 +7307,8 @@ namespace ZScreenGUI
             this.tpRapidShare.PerformLayout();
             this.tpSendSpace.ResumeLayout(false);
             this.tpSendSpace.PerformLayout();
+            this.tpDropbox.ResumeLayout(false);
+            this.tpDropbox.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
             this.tpImageShack.ResumeLayout(false);
             this.tpImageShack.PerformLayout();
@@ -7964,5 +8075,15 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button tbFilezRegisterButton;
         private System.Windows.Forms.TabPage tpMediaWiki;
         internal AccountsControl ucMediaWikiAccounts;
+        private System.Windows.Forms.TabPage tpDropbox;
+        private System.Windows.Forms.Label lblDropboxPathTip;
+        private System.Windows.Forms.Label lblDropboxPath;
+        private System.Windows.Forms.Label lblDropboxPassword;
+        private System.Windows.Forms.Label lblDropboxEmail;
+        private System.Windows.Forms.Button btnDropboxLogin;
+        private System.Windows.Forms.TextBox txtDropboxPath;
+        private System.Windows.Forms.TextBox txtDropboxPassword;
+        private System.Windows.Forms.TextBox txtDropboxEmail;
+        private System.Windows.Forms.Label lblDropboxStatus;
     }
 }
