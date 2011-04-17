@@ -204,6 +204,8 @@ namespace UploadersLib
         RapidShare,
         [Description("SendSpace - www.sendspace.com")]
         SendSpace,
+        [Description("Dropbox - www.dropbox.com")]
+        Dropbox,
         //[Description("FileBin - www.filebin.ca")]
         //FileBin,
         //[Description("Drop.io - www.drop.io")]

@@ -306,12 +306,15 @@ namespace ZScreenLib
                         CollectorsID = Engine.conf.RapidShareCollectorsID
                     });
                     break;
+                case FileUploaderType.Dropbox:
+                    fileHost = new Dropbox(Engine.conf.DropboxUserToken, Engine.conf.DropboxUserSecret, Engine.conf.DropboxUploadPath, Engine.conf.DropboxUserID);
+                    break;
                 /*case FileUploaderType.FileBin:
                     fileHost = new FileBin();
+                    break;
+                case FileUploaderType.DropIO:
+                    fileHost = new DropIO();
                     break;*/
-                //case FileUploaderType.DropIO:
-                //    fileHost = new DropIO();
-                //    break;
                 case FileUploaderType.FilezFiles:
                     fileHost = new FilezFiles(Engine.conf.FilezUsername, Engine.conf.FilezUserpass, Engine.conf.FilezHideFiles);
                     break;

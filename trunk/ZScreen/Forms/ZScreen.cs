@@ -43,6 +43,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
@@ -259,12 +260,12 @@ namespace ZScreenGUI
             DrawZScreenLabel(false);
         }
 
-        void FtpAccountSettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void FtpAccountSettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             FTPSetup(Engine.conf.FTPAccountList);
         }
 
-        void FTPAccountCloneButton_Click(object sender, EventArgs e)
+        private void FTPAccountCloneButton_Click(object sender, EventArgs e)
         {
             FTPAccount src = ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] as FTPAccount;
             Engine.conf.FTPAccountList.Add(src.Clone());
@@ -708,6 +709,18 @@ namespace ZScreenGUI
             cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
             txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
             txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
+
+            // Dropbox
+
+            txtDropboxEmail.Text = Engine.conf.DropboxEmail;
+            txtDropboxPath.Text = Engine.conf.DropboxUploadPath;
+            UpdateDropboxStatus();
+
+            // Filez
+
+            tbFilezUsernameBox.Text = Engine.conf.FilezUsername;
+            tbFilezUserpassBox.Text = Engine.conf.FilezUserpass;
+            tbFilezHideFiles.Checked = Engine.conf.FilezHideFiles;
 
             #endregion File Uploaders
         }
@@ -1335,7 +1348,7 @@ namespace ZScreenGUI
             }
         }
 
-        void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void timerTrimMemory_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             lock (trimMemoryLock)
             {
@@ -1402,12 +1415,12 @@ namespace ZScreenGUI
             }
         }
 
-        void TrayImageEditor_MouseLeave(object sender, EventArgs e)
+        private void TrayImageEditor_MouseLeave(object sender, EventArgs e)
         {
             tsmEditinImageSoftware.DropDown.AutoClose = true;
         }
 
-        void TrayImageEditor_MouseEnter(object sender, EventArgs e)
+        private void TrayImageEditor_MouseEnter(object sender, EventArgs e)
         {
             tsmEditinImageSoftware.DropDown.AutoClose = false;
         }
@@ -3218,7 +3231,7 @@ namespace ZScreenGUI
             FTPSetup(Engine.conf.FTPAccountList);
         }
 
-        void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        private void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
             Engine.conf.LocalhostSelected = sel;
@@ -3229,7 +3242,7 @@ namespace ZScreenGUI
             }
         }
 
-        void LocalhostAccountRemoveButton_Click(object sender, EventArgs e)
+        private void LocalhostAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
             if (ucLocalhostAccounts.RemoveItem(sel) == true)
@@ -3252,7 +3265,7 @@ namespace ZScreenGUI
             }
         }
 
-        void LocalhostAccountAddButton_Click(object sender, EventArgs e)
+        private void LocalhostAccountAddButton_Click(object sender, EventArgs e)
         {
             LocalhostAccount acc = new LocalhostAccount("New Account");
             Engine.conf.LocalhostAccountList.Add(acc);
@@ -3310,7 +3323,7 @@ namespace ZScreenGUI
             ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
         }
 
-        void MediawikiAccountAddButton_Click(object sender, EventArgs e)
+        private void MediawikiAccountAddButton_Click(object sender, EventArgs e)
         {
             MediaWikiAccount acc = new MediaWikiAccount("New Account");
             Engine.conf.MediaWikiAccountList.Add(acc);
@@ -3318,7 +3331,7 @@ namespace ZScreenGUI
             ucMediaWikiAccounts.AccountsList.SelectedIndex = ucMediaWikiAccounts.AccountsList.Items.Count - 1;
         }
 
-        void MediaWikiAccountsList_SelectedIndexChanged(object sender, EventArgs e)
+        private void MediaWikiAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucMediaWikiAccounts.AccountsList.SelectedIndex;
             Engine.conf.MediaWikiAccountSelected = sel;
@@ -3329,7 +3342,7 @@ namespace ZScreenGUI
             }
         }
 
-        void MediawikiAccountTestButton_Click(object sender, EventArgs e)
+        private void MediawikiAccountTestButton_Click(object sender, EventArgs e)
         {
             string text = ucMediaWikiAccounts.btnTest.Text;
             ucMediaWikiAccounts.btnTest.Text = "Testing...";
@@ -3363,7 +3376,7 @@ namespace ZScreenGUI
             }
         }
 
-        void MediawikiAccountRemoveButton_Click(object sender, EventArgs e)
+        private void MediawikiAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucMediaWikiAccounts.AccountsList.SelectedIndex;
             if (ucMediaWikiAccounts.RemoveItem(sel))
@@ -5002,7 +5015,7 @@ namespace ZScreenGUI
             chkEditorsEnabled.Checked = tsmEditinImageSoftware.Checked;
         }
 
-        void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
+        private void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
         {
             UpdateGuiEditors(sender);
         }
@@ -5030,7 +5043,7 @@ namespace ZScreenGUI
             Engine.conf.MinimizeButtonAction = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
 
-        void LbSoftwareMouseClick(object sender, MouseEventArgs e)
+        private void LbSoftwareMouseClick(object sender, MouseEventArgs e)
         {
             int sel = lbSoftware.IndexFromPoint(e.X, e.Y);
             if (sel != -1)
@@ -5039,7 +5052,7 @@ namespace ZScreenGUI
             }
         }
 
-        void BtnBrowseImagesDirClick(object sender, EventArgs e)
+        private void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
             string oldDir = txtImagesDir.Text;
             string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory...");
@@ -5150,6 +5163,58 @@ namespace ZScreenGUI
         private void tbFilezRegisterButton_Click(object sender, EventArgs e)
         {
             Process.Start("http://www.filez.muffinz.eu/register");
+        }
+
+        private void btnDropboxLogin_Click(object sender, EventArgs e)
+        {
+            string email = txtDropboxEmail.Text;
+            string password = txtDropboxPassword.Text;
+
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            {
+                Dropbox dropbox = new Dropbox();
+                Dropbox.DropboxUserLogin login = dropbox.Login(email, password);
+
+                if (login != null)
+                {
+                    Dropbox.DropboxAccountInfo account = dropbox.GetAccountInfo();
+
+                    if (account != null)
+                    {
+                        Engine.conf.DropboxUserToken = login.token;
+                        Engine.conf.DropboxUserSecret = login.secret;
+                        Engine.conf.DropboxEmail = account.email;
+                        Engine.conf.DropboxName = account.display_name;
+                        Engine.conf.DropboxUserID = account.uid.ToString();
+                        Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
+                        UpdateDropboxStatus();
+                    }
+                }
+            }
+        }
+
+        private void UpdateDropboxStatus()
+        {
+            if (!string.IsNullOrEmpty(Engine.conf.DropboxUserToken) && !string.IsNullOrEmpty(Engine.conf.DropboxUserSecret))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Login status: Success");
+                sb.AppendLine("Email: " +  Engine.conf.DropboxEmail);
+                sb.AppendLine("Name: " +  Engine.conf.DropboxName);
+                sb.AppendLine("User ID: " + Engine.conf.DropboxUserID);
+                sb.AppendLine("Path: " +  Engine.conf.DropboxUploadPath);
+                lblDropboxStatus.Text = sb.ToString();
+            }
+            else
+            {
+                lblDropboxStatus.Text = "Login status: Login is required";
+            }
+        }
+
+        private void txtDropboxPath_TextChanged(object sender, EventArgs e)
+        {
+            Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
+            UpdateDropboxStatus();
         }
     }
 }
