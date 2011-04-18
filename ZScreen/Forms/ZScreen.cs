@@ -32,6 +32,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -715,12 +716,6 @@ namespace ZScreenGUI
             txtDropboxEmail.Text = Engine.conf.DropboxEmail;
             txtDropboxPath.Text = Engine.conf.DropboxUploadPath;
             UpdateDropboxStatus();
-
-            // Filez
-
-            tbFilezUsernameBox.Text = Engine.conf.FilezUsername;
-            tbFilezUserpassBox.Text = Engine.conf.FilezUserpass;
-            tbFilezHideFiles.Checked = Engine.conf.FilezHideFiles;
 
             #endregion File Uploaders
         }
@@ -5145,26 +5140,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void tbFilezUsernameBox_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FilezUsername = tbFilezUsernameBox.Text;
-        }
-
-        private void tbFilezUserpassBox_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FilezUserpass = tbFilezUserpassBox.Text;
-        }
-
-        private void tbFilezHideFiles_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FilezHideFiles = tbFilezHideFiles.Checked;
-        }
-
-        private void tbFilezRegisterButton_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://www.filez.muffinz.eu/register");
-        }
-
         private void btnDropboxLogin_Click(object sender, EventArgs e)
         {
             string email = txtDropboxEmail.Text;
@@ -5172,24 +5147,44 @@ namespace ZScreenGUI
 
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
             {
-                Dropbox dropbox = new Dropbox();
-                Dropbox.DropboxUserLogin login = dropbox.Login(email, password);
-
-                if (login != null)
+                try
                 {
-                    Dropbox.DropboxAccountInfo account = dropbox.GetAccountInfo();
+                    Dropbox dropbox = new Dropbox();
+                    Dropbox.DropboxUserLogin login = dropbox.Login(email, password);
 
-                    if (account != null)
+                    if (login != null)
                     {
-                        Engine.conf.DropboxUserToken = login.token;
-                        Engine.conf.DropboxUserSecret = login.secret;
-                        Engine.conf.DropboxEmail = account.email;
-                        Engine.conf.DropboxName = account.display_name;
-                        Engine.conf.DropboxUserID = account.uid.ToString();
-                        Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
-                        UpdateDropboxStatus();
+                        Dropbox.DropboxAccountInfo account = dropbox.GetAccountInfo();
+
+                        if (account != null)
+                        {
+                            Engine.conf.DropboxUserToken = login.token;
+                            Engine.conf.DropboxUserSecret = login.secret;
+                            Engine.conf.DropboxEmail = account.email;
+                            Engine.conf.DropboxName = account.display_name;
+                            Engine.conf.DropboxUserID = account.uid.ToString();
+                            Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
+                            UpdateDropboxStatus();
+                            SystemSounds.Exclamation.Play();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                Engine.conf.DropboxUserToken = Engine.conf.DropboxUserSecret = string.Empty;
+                UpdateDropboxStatus();
             }
         }
 
@@ -5199,10 +5194,15 @@ namespace ZScreenGUI
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("Login status: Success");
-                sb.AppendLine("Email: " +  Engine.conf.DropboxEmail);
-                sb.AppendLine("Name: " +  Engine.conf.DropboxName);
+                sb.AppendLine("Email: " + Engine.conf.DropboxEmail);
+                sb.AppendLine("Name: " + Engine.conf.DropboxName);
                 sb.AppendLine("User ID: " + Engine.conf.DropboxUserID);
-                sb.AppendLine("Path: " +  Engine.conf.DropboxUploadPath);
+                if (!string.IsNullOrEmpty(Engine.conf.DropboxUploadPath))
+                {
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Engine.conf.DropboxUploadPath);
+                    sb.AppendLine("Upload path: " + uploadPath);
+                    sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Engine.conf.DropboxUserID, uploadPath, "{Filename}"));
+                }
                 lblDropboxStatus.Text = sb.ToString();
             }
             else
@@ -5215,6 +5215,16 @@ namespace ZScreenGUI
         {
             Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
             UpdateDropboxStatus();
+        }
+
+        private void pbDropboxLogo_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.dropbox.com");
+        }
+
+        private void btnDropboxRegister_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.dropbox.com/register");
         }
     }
 }

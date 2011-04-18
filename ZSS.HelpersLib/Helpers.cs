@@ -224,7 +224,7 @@ namespace HelpersLib
             foreach (char c in text)
             {
                 // @ is for HttpHomePath we use in FTP Account
-                if (IsCharValid(c) || (isFolderPath && (c == Path.DirectorySeparatorChar || c == '/' || c == '@')))
+                if (IsCharValid(c) || (isFolderPath && (c == Path.DirectorySeparatorChar || c == '/' || c == '.' || c == '@')))
                 {
                     result.Append(c);
                 }
