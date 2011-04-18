@@ -22,9 +22,9 @@ namespace UploadersLib.FileUploaders
         private const string ConsumerSecret = "r5d3aptd9a0cwp9";
         private const string APIVersion = "0";
 
-        private const string URLToken = "http://api.dropbox.com/" + APIVersion + "/token";
+        private const string URLToken = "https://api.dropbox.com/" + APIVersion + "/token";
         private const string URLAccountInfo = "https://api.dropbox.com/" + APIVersion + "/account/info";
-        private const string URLFiles = "http://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
+        private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
         public Dropbox() { }
@@ -103,17 +103,20 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                if (UploadPath.StartsWith("Public/"))
-                {
-                    result.URL = Helpers.CombineURL(URLDownload, UserID, UploadPath.Substring(7), fileName);
-                }
-                else
-                {
-                    result.URL = "Upload is private. Use Public folder for get public URL.";
-                }
+                result.URL = GetDropboxURL(UserID, UploadPath, fileName);
             }
 
             return result;
+        }
+
+        public static string GetDropboxURL(string userID, string uploadPath, string fileName)
+        {
+            if (uploadPath.StartsWith("Public/"))
+            {
+                return Helpers.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
+            }
+
+            return "Upload path is private. Use Public folder for get public URL.";
         }
 
         public class DropboxUserLogin

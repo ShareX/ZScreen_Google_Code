@@ -113,7 +113,7 @@ namespace ZScreenLib
 
         public string DropboxUserToken = string.Empty;
         public string DropboxUserSecret = string.Empty;
-        public string DropboxUploadPath = string.Empty;
+        public string DropboxUploadPath = "Public";
         public string DropboxEmail = string.Empty;
         public string DropboxName = string.Empty;
         public string DropboxUserID = string.Empty;
