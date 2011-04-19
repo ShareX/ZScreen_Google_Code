@@ -148,7 +148,7 @@ namespace ZScreenGUI
             }
 
             Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(Loader.Worker.CheckHotkeys);
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)

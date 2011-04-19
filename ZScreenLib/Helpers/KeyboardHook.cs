@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -32,11 +33,99 @@ namespace ZScreenLib
 {
     public class KeyboardHook : IDisposable
     {
-        public event KeyEventHandler KeyDownEvent, KeyUpEvent;
+        public event KeyEventHandler KeyDown, KeyUp;
 
-        public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+        private HookProc keyboardHookProc;
+        private IntPtr keyboardHookHandle = IntPtr.Zero;
 
-        private HookProc HookProcedure;
+        public KeyboardHook()
+        {
+            keyboardHookProc = KeyboardHookProc;
+            keyboardHookHandle = SetHook(WH_KEYBOARD_LL, keyboardHookProc);
+        }
+
+        ~KeyboardHook()
+        {
+            Dispose();
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private IntPtr KeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0)
+            {
+                bool handled = false;
+
+                switch ((KeyEvent)wParam)
+                {
+                    case KeyEvent.WM_KEYDOWN:
+                    case KeyEvent.WM_SYSKEYDOWN:
+                        handled = OnKeyDown(lParam);
+                        break;
+                    case KeyEvent.WM_KEYUP:
+                    case KeyEvent.WM_SYSKEYUP:
+                        handled = OnKeyUp(lParam);
+                        break;
+                }
+
+                if (handled)
+                {
+                    return keyboardHookHandle;
+                }
+            }
+
+            return CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam);
+        }
+
+        private bool OnKeyDown(IntPtr key)
+        {
+            if (KeyDown != null)
+            {
+                KeyEventArgs keyEventArgs = GetKeyEventArgs(key);
+                KeyDown(null, keyEventArgs);
+                return keyEventArgs.Handled || keyEventArgs.SuppressKeyPress;
+            }
+
+            return false;
+        }
+
+        private bool OnKeyUp(IntPtr key)
+        {
+            if (KeyUp != null)
+            {
+                KeyEventArgs keyEventArgs = GetKeyEventArgs(key);
+                KeyUp(null, keyEventArgs);
+                return keyEventArgs.Handled || keyEventArgs.SuppressKeyPress;
+            }
+
+            return false;
+        }
+
+        private KeyEventArgs GetKeyEventArgs(IntPtr key)
+        {
+            Keys keyData = (Keys)Marshal.ReadInt32(key) | Control.ModifierKeys;
+            return new KeyEventArgs(keyData);
+        }
+
+        public void Dispose()
+        {
+            UnhookWindowsHookEx(keyboardHookHandle);
+        }
+
+        #region Helpers
+
+        private const int WH_KEYBOARD_LL = 13;
+        private const int WH_MOUSE_LL = 14;
+
+        public enum KeyEvent
+        {
+            WM_KEYDOWN = 0x100,
+            WM_KEYUP = 0x101,
+            WM_SYSKEYUP = 0x104,
+            WM_SYSKEYDOWN = 0x105
+        }
+
+        private delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
         private static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
@@ -51,56 +140,15 @@ namespace ZScreenLib
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WH_MOUSE_LL = 14;
-        private const int WM_KEYDOWN = 0x0100;
-        private const int WM_KEYUP = 0x101;
-        private const int WM_SYSKEYDOWN = 0x0104;
-        private const int WM_SYSKEYUP = 0x105;
-
-        private IntPtr keyboardHookHandle = IntPtr.Zero;
-
-        public KeyboardHook()
+        private static IntPtr SetHook(int hookType, HookProc hookProc)
         {
-            keyboardHookHandle = SetHook(KeyboardHookProc);
-        }
-
-        private IntPtr SetHook(HookProc hookProc)
-        {
-            HookProcedure = hookProc;
             using (Process currentProcess = Process.GetCurrentProcess())
             using (ProcessModule currentModule = currentProcess.MainModule)
             {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, HookProcedure, GetModuleHandle(currentModule.ModuleName), 0);
+                return SetWindowsHookEx(hookType, hookProc, GetModuleHandle(currentModule.ModuleName), 0);
             }
         }
 
-        private IntPtr KeyboardHookProc(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0)
-            {
-                Keys keyData = (Keys)Marshal.ReadInt32(lParam) | Control.ModifierKeys;
-                KeyEventArgs keyEventArgs = new KeyEventArgs(keyData);
-                if (KeyDownEvent != null && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
-                {
-                    KeyDownEvent(null, keyEventArgs);
-                }
-                if (KeyUpEvent != null && (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP))
-                {
-                    KeyUpEvent(null, keyEventArgs);
-                }
-                if (keyEventArgs.Handled || keyEventArgs.SuppressKeyPress)
-                {
-                    return keyboardHookHandle;
-                }
-            }
-
-            return CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam);
-        }
-
-        public void Dispose()
-        {
-            UnhookWindowsHookEx(keyboardHookHandle);
-        }
+        #endregion Helpers
     }
 }

@@ -191,8 +191,11 @@ namespace ZScreenLib
                 }
             }
 
-            WriteImage();
-            PublishData();
+            if (mTask.MyImage != null)
+            {
+                WriteImage();
+                PublishData();
+            }
         }
 
         /// <summary>

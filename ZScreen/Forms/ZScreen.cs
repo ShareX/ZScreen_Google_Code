@@ -4803,7 +4803,7 @@ namespace ZScreenGUI
                 if (chkHotkeys.Checked)
                 {
                     Engine.ZScreenKeyboardHook = new KeyboardHook();
-                    Engine.ZScreenKeyboardHook.KeyDownEvent += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+                    Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(Loader.Worker.CheckHotkeys);
                 }
                 else
                 {
