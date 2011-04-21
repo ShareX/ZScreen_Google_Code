@@ -150,7 +150,7 @@ namespace UploadersLib
     [Serializable]
     public enum TextDestType
     {
-        [Description("PasteBin - www.pastebin.com")]
+        [Description("Pastebin - www.pastebin.com")]
         PASTEBIN,
         [Description("PasteBin - www.pastebin.ca")]
         PASTEBIN_CA,
