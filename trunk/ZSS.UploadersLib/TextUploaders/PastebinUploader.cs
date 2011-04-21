@@ -25,10 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
+using System.ComponentModel;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 
@@ -41,26 +38,19 @@ namespace UploadersLib.TextUploaders
 
         public override object Settings
         {
-            get
-            {
-                return HostSettings;
-            }
-            set
-            {
-                HostSettings = (PastebinSettings)value;
-            }
+            get { return HostSettings; }
+            set { HostSettings = (PastebinSettings)value; }
         }
 
         public PastebinSettings HostSettings = new PastebinSettings();
 
+        private const string APIKey = "4b23be71ec78bbd4fb96735320aa09ef";
+        private const string APIURL = "http://pastebin.com/api/api_post.php";
+        private const string APILoginURL = "http://pastebin.com/api/api_login.php";
+
         public PastebinUploader()
         {
-            HostSettings.URL = "http://pastebin.com/api_public.php";
-        }
-
-        public PastebinUploader(string url)
-        {
-            HostSettings.URL = url;
+            HostSettings.URL = APIURL;
         }
 
         public override string ToString()
@@ -77,94 +67,57 @@ namespace UploadersLib.TextUploaders
         {
             if (!string.IsNullOrEmpty(text.LocalString))
             {
-                Dictionary<string, string> arguments = new Dictionary<string, string>();
+                Dictionary<string, string> args = new Dictionary<string, string>();
 
-                // this is simply the text that you paste on pastebin
-                arguments.Add("paste_code", text.LocalString);
-                // for adding a title or name to your paste
-                arguments.Add("paste_name", HostSettings.Author);
-                // for sending confirmation email with paste link
-                arguments.Add("paste_email", HostSettings.Email);
-                // for using a certain subdomain
-                arguments.Add("paste_subdomain", HostSettings.Subdomain);
-                // for making it public (0) or private (1)
-                arguments.Add("paste_private", HostSettings.IsPublic ? "0" : "1");
-                // for adding expiration date. N = Never, 10M = 10 Minutes, 1H = 1 Hour, 1D = 1 Day, 1M = 1 Month
-                arguments.Add("paste_expire_date", HostSettings.ExpireTime);
-                // for adding syntax highlighting
-                arguments.Add("paste_format ", HostSettings.TextFormat);
+                args.Add("api_dev_key", APIKey); // which is your unique API Developers Key
+                args.Add("api_option", "paste"); // set as 'paste', this will indicate you want to create a new paste
+                args.Add("api_paste_code", text.LocalString); // this is the text that will be written inside your paste
 
-                string response = GetResponse(HostSettings.URL, arguments);
+                // Optional args
+                args.Add("api_paste_name", HostSettings.Title); // this will be the name / title of your paste
+                args.Add("api_paste_format", HostSettings.TextFormat); // this will be the syntax highlighting value
+                args.Add("api_paste_private", HostSettings.IsPublic ? "0" : "1"); // this makes a paste public or private, public = 0, private = 1
+                args.Add("api_paste_expire_date", HostSettings.ExpireTime); // this sets the expiration date of your paste
 
-                if (response.StartsWith("ERROR"))
+                if (string.IsNullOrEmpty(HostSettings.UserKey) && !string.IsNullOrEmpty(HostSettings.Username) && !string.IsNullOrEmpty(HostSettings.Password))
                 {
-                    Errors.Add(response);
+                    Dictionary<string, string> loginArgs = new Dictionary<string, string>();
+
+                    loginArgs.Add("api_dev_key", APIKey);
+                    loginArgs.Add("api_user_name", HostSettings.Username);
+                    loginArgs.Add("api_user_password", HostSettings.Password);
+
+                    string loginResponse = GetResponse(APILoginURL, loginArgs);
+
+                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Bad API request"))
+                    {
+                        HostSettings.UserKey = loginResponse;
+                    }
+                    else
+                    {
+                        Errors.Add("Pastebin login failed.");
+                        return string.Empty;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(HostSettings.UserKey))
+                {
+                    args.Add("api_user_key", HostSettings.UserKey); // this paramater is part of the login system
+                }
+
+                string response = GetResponse(HostSettings.URL, args);
+
+                if (!string.IsNullOrEmpty(response) && !response.StartsWith("Bad API request") && response.IsValidUrl())
+                {
+                    return response;
                 }
                 else
                 {
-                    return response;
+                    Errors.Add(response);
                 }
             }
 
             return string.Empty;
-        }
-
-        public List<TextFormat> DownloadTextFormats()
-        {
-            List<TextFormat> textFormats = new List<TextFormat>();
-            try
-            {
-                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
-                {
-                    string source = webClient.DownloadString(HostSettings.URL);
-                    Match match = Regex.Match(source, "-</option>(.+?)</select>");
-                    if (match.Success)
-                    {
-                        MatchCollection matches = Regex.Matches(match.Groups[1].Value, "value=\"(.+?)\">(.+?)</");
-                        foreach (Match m in matches)
-                        {
-                            if (m.Success)
-                            {
-                                textFormats.Add(new TextFormat { Value = m.Groups[1].Value, Name = m.Groups[2].Value });
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return textFormats;
-        }
-
-        public string DownloadTextContent(string url)
-        {
-            try
-            {
-                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
-                {
-                    string source = webClient.DownloadString(url);
-                    Match match = Regex.Match(source, "<textarea.+?>(.*?)</textarea>", RegexOptions.Singleline);
-                    if (match.Success)
-                    {
-                        return HttpUtility.HtmlDecode(match.Groups[1].Value);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return null;
-        }
-
-        public struct TextFormat
-        {
-            public string Value;
-            public string Name;
         }
 
         [Serializable]
@@ -172,20 +125,25 @@ namespace UploadersLib.TextUploaders
         {
             public override string Name { get; set; }
             public override string URL { get; set; }
-            /// <summary>format</summary>
+
+            [Description("Paste name / title")]
+            public string Title { get; set; }
+            [Description("Syntax highlighting")]
             public string TextFormat { get; set; }
-            /// <summary>poster</summary>
-            public string Author { get; set; }
-            /// <summary>expiry</summary>
+            [DefaultValue("N"), Description("Paste expiration\r\nN = Never, 10M = 10 Minutes, 1H = 1 Hour, 1D = 1 Day, 1M = 1 Month")]
             public string ExpireTime { get; set; }
+            [Description("Paste exposure"), DefaultValue(false)]
             public bool IsPublic { get; set; }
-            public string Subdomain { get; set; }
-            public string Email { get; set; }
+            [Description("Account username")]
+            public string Username { get; set; }
+            [PasswordPropertyText(true), Description("Account password")]
+            public string Password { get; set; }
+            [Description("Will be created automaticly with Username && Password")]
+            public string UserKey { get; set; }
 
             public PastebinSettings()
             {
                 Name = Hostname;
-                TextFormat = "text";
                 ExpireTime = "N";
             }
         }

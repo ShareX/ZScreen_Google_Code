@@ -708,6 +708,7 @@ namespace ZScreenLib
             else
             {
                 TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
+                textUploader.Errors.Clear();
                 FileSystem.AppendDebug("Uploading to " + textUploader.ToString());
                 string url = "";
                 if (mTask.MyText != null)
