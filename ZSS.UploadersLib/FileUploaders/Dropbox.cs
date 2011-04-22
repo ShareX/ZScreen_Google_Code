@@ -13,23 +13,27 @@ namespace UploadersLib.FileUploaders
             get { return "Dropbox"; }
         }
 
+        public string ConsumerKey { get; set; }
+        public string ConsumerSecret { get; set; }
         public string UserToken { get; set; }
         public string UserSecret { get; set; }
         public string UploadPath { get; set; }
         public string UserID { get; set; }
 
-        private const string ConsumerKey = "0te7j9ype9lrdfn";
-        private const string ConsumerSecret = "r5d3aptd9a0cwp9";
         private const string APIVersion = "0";
-
         private const string URLToken = "https://api.dropbox.com/" + APIVersion + "/token";
         private const string URLAccountInfo = "https://api.dropbox.com/" + APIVersion + "/account/info";
         private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
-        public Dropbox() { }
+        public Dropbox(string consumerKey, string consumerSecret)
+        {
+            ConsumerKey = consumerKey;
+            ConsumerSecret = consumerSecret;
+        }
 
-        public Dropbox(string userToken, string userSecret, string path, string userID)
+        public Dropbox(string consumerKey, string consumerSecret, string userToken, string userSecret, string path, string userID)
+            : this(consumerKey, consumerSecret)
         {
             UserToken = userToken;
             UserSecret = userSecret;

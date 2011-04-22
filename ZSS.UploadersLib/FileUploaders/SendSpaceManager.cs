@@ -39,9 +39,9 @@ namespace UploadersLib.FileUploaders
         public static string Password;
         public static SendSpace.UploadInfo UploadInfo;
 
-        public static List<string> PrepareUploadInfo(string username, string password)
+        public static List<string> PrepareUploadInfo(string apiKey, string username, string password)
         {
-            SendSpace sendSpace = new SendSpace();
+            SendSpace sendSpace = new SendSpace(apiKey);
 
             try
             {

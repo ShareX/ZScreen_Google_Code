@@ -37,9 +37,10 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class SendSpace : FileUploader
     {
-        private const string SENDSPACE_API_KEY = "LV6OS1R0Q3";
-        private const string SENDSPACE_API_URL = "http://api.sendspace.com/rest/";
-        private const string SENDSPACE_API_VERSION = "1.0";
+        private string APIKey;
+
+        private const string APIURL = "http://api.sendspace.com/rest/";
+        private const string APIVersion= "1.0";
 
         /// <summary>
         /// Upload speed limit in kilobytes, 0 for unlimited
@@ -48,7 +49,10 @@ namespace UploadersLib.FileUploaders
 
         public string AppVersion = "1.0";
 
-        public SendSpace() { }
+        public SendSpace(string apiKey)
+        {
+            APIKey = apiKey;
+        }
 
         public override string Name
         {
@@ -194,13 +198,13 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.register");
-            args.Add("api_key", SENDSPACE_API_KEY);
+            args.Add("api_key", APIKey);
             args.Add("user_name", username);
             args.Add("full_name", fullname);
             args.Add("email", email);
             args.Add("password", password);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponse(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -219,12 +223,12 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "auth.createToken");
-            args.Add("api_key", SENDSPACE_API_KEY); // Received from sendspace
-            args.Add("api_version", SENDSPACE_API_VERSION); // Value must be: 1.0
+            args.Add("api_key", APIKey); // Received from sendspace
+            args.Add("api_version", APIVersion); // Value must be: 1.0
             args.Add("app_version", AppVersion); // Application specific, formatting / style is up to you
             args.Add("response_format", "xml"); // Value must be: XML
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponse(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -256,7 +260,7 @@ namespace UploadersLib.FileUploaders
             // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
             args.Add("tokened_password", Helpers.GetMD5(token + Helpers.GetMD5(password)));
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponse(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -284,7 +288,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.checkSession");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponse(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -316,7 +320,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.logout");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(SENDSPACE_API_URL, args);
+            string response = GetResponse(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -343,7 +347,7 @@ namespace UploadersLib.FileUploaders
             args.Add("session_key", sessionKey);
             args.Add("speed_limit", SpeedLimit.ToString());
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponseString(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -368,11 +372,11 @@ namespace UploadersLib.FileUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "anonymous.uploadGetInfo");
             args.Add("speed_limit", SpeedLimit.ToString());
-            args.Add("api_key", SENDSPACE_API_KEY);
-            args.Add("api_version", SENDSPACE_API_VERSION);
+            args.Add("api_key", APIKey);
+            args.Add("api_version", APIVersion);
             args.Add("app_version", AppVersion);
 
-            string response = GetResponseString(SENDSPACE_API_URL, args);
+            string response = GetResponseString(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
