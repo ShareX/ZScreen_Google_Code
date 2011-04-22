@@ -99,25 +99,28 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
+        public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
         public const string URL_HELP = "http://code.google.com/p/zscreen/wiki/Tutorials";
-        public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_UPDATE = "http://zscreen.googlecode.com/svn/trunk/Update.xml";
+        public const string URL_BERK = "http://code.google.com/u/flexy123";
+        public const string URL_MIKE = "http://code.google.com/u/mcored";
+        public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
 
-        public const string IMAGESHACK_KEY = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
-
-        public const string IMGUR_KEY = "63499468bcc5d2d6aee1439e50b4e61c";
-
-        public const string TINYPIC_ID = "e2aabb8d555322fa";
-        public const string TINYPIC_KEY = "00a68ed73ddd54da52dc2d5803fa35ee";
-
-        public const string UPLOADSCREENSHOT_KEY = "2807828f377649572393126680";
-
-        public const string TWITTER_CONSUMER_KEY = "Jzzcm6ytcyml14sQIvqvmA";
-        public const string TWITTER_CONSUMER_SECRET = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
-
-        public const string PICNIK_KEY = "3aacd2de4563b8817de708b29b5bdd0e";
+        public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
+        public const string TinyPicID = "e2aabb8d555322fa";
+        public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
+        public const string ImgurAnonymousKey = "5468eb7bde830c779b37da30c5c7ebae";
+        public const string ImgurConsumerKey = "cc6a3227dc7cbe15d2754b194ae3c26504db122ab";
+        public const string ImgurConsumerSecret = "edd13f72e7c9908b50c8090a8e912b73";
+        public const string DropboxConsumerKey = "0te7j9ype9lrdfn";
+        public const string DropboxConsumerSecret = "r5d3aptd9a0cwp9";
+        public const string SendSpaceKey = "LV6OS1R0Q3";
+        public const string UploadScreenshotKey = "2807828f379860848433221358";
+        public const string TwitterConsumerKey = "Jzzcm6ytcyml14sQIvqvmA";
+        public const string TwitterConsumerSecret = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
+        public const string PicnikKey = "3aacd2de4563b8817de708b29b5bdd0e";
 
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
@@ -133,7 +136,7 @@ namespace ZScreenLib
         public static string zClipboardText = string.Empty;
 
         private static TaskDialog td = null;
-        public static Microsoft.WindowsAPICodePack.Taskbar.JumpList zJumpList;
+        public static JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;
 
@@ -426,7 +429,7 @@ namespace ZScreenLib
             }
         }
 
-        static void button1_Click(object sender, EventArgs e)
+        private static void button1_Click(object sender, EventArgs e)
         {
             RegistrationHelper.RegisterFileAssociations(progId, false, appId, Application.ExecutablePath + " /doc %1", GetExtensionsToRegister());
             td.Close();

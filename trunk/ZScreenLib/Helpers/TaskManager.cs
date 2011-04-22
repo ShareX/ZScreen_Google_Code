@@ -289,14 +289,14 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.SendSpace:
-                    fileHost = new SendSpace();
+                    fileHost = new SendSpace(Engine.SendSpaceKey);
                     switch (Engine.conf.SendSpaceAccountType)
                     {
                         case AcctType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(null, null);
+                            SendSpaceManager.PrepareUploadInfo(Engine.SendSpaceKey, null, null);
                             break;
                         case AcctType.User:
-                            SendSpaceManager.PrepareUploadInfo(Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(Engine.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
                             break;
                     }
                     break;
@@ -310,7 +310,7 @@ namespace ZScreenLib
                     });
                     break;
                 case FileUploaderType.Dropbox:
-                    fileHost = new Dropbox(Engine.conf.DropboxUserToken, Engine.conf.DropboxUserSecret,
+                    fileHost = new Dropbox(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret, Engine.conf.DropboxUserToken, Engine.conf.DropboxUserSecret,
                         new NameParser { IsFolderPath = true }.Convert(Engine.conf.DropboxUploadPath), Engine.conf.DropboxUserID);
                     break;
                 /*case FileUploaderType.FileBin:
@@ -395,14 +395,14 @@ namespace ZScreenLib
                     imageUploader = new ImageBin();
                     break;*/
                 case ImageDestType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(Engine.IMAGESHACK_KEY, Engine.conf.ImageShackRegistrationCode);
+                    imageUploader = new ImageShackUploader(Engine.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 /*case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
                     break;*/
                 case ImageDestType.IMGUR:
-                    imageUploader = new Imgur(Engine.IMGUR_KEY);
+                    imageUploader = new Imgur(Engine.ImgurAnonymousKey);
                     break;
                 /*case ImageDestType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
@@ -420,7 +420,7 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageDestType.TINYPIC:
-                    imageUploader = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY, Engine.conf.TinyPicShuk);
+                    imageUploader = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey, Engine.conf.TinyPicShuk);
                     break;
                 case ImageDestType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
@@ -438,7 +438,7 @@ namespace ZScreenLib
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
                 case ImageDestType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(Engine.IMAGESHACK_KEY);
+                    YfrogOptions yfrogOp = new YfrogOptions(Engine.ImageShackKey);
                     yfrogOp.UserName = Adapter.TwitterGetActiveAcct().UserName;
                     yfrogOp.Password = Adapter.TwitterGetActiveAcct().Password;
                     yfrogOp.Source = Application.ProductName;

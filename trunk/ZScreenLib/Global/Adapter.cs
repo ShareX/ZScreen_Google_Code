@@ -318,7 +318,7 @@ namespace ZScreenLib
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY);
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey);
                 if (Engine.conf.RememberTinyPicUserPass)
                 {
                     Engine.conf.TinyPicUserName = ub.UserName;
@@ -337,7 +337,7 @@ namespace ZScreenLib
             if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
                 !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TINYPIC_ID, Engine.TINYPIC_KEY);
+                TinyPicUploader tpu = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey);
                 string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
@@ -638,7 +638,7 @@ namespace ZScreenLib
             upb.ShowDialog();
             if (upb.DialogResult == DialogResult.OK)
             {
-                SendSpace sendSpace = new SendSpace();
+                SendSpace sendSpace = new SendSpace(Engine.SendSpaceKey);
                 upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
                 if (!upb.Success && sendSpace.Errors.Count > 0)
                 {
@@ -712,7 +712,7 @@ namespace ZScreenLib
         public static TwitterAuthInfo TwitterAuthGetPin()
         {
             // authorize ZScreen to twitter
-            oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+            oAuthTwitter oAuth = new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
             TwitterAuthInfo acc = TwitterGetActiveAcct();
             string authLink = oAuth.AuthorizationLinkGet();
             if (!string.IsNullOrEmpty(acc.AccountName))
@@ -736,7 +736,7 @@ namespace ZScreenLib
             {
                 if (null != acc)
                 {
-                    oAuthTwitter oAuth = new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET);
+                    oAuthTwitter oAuth = new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
                     acc = oAuth.AccessTokenGet(ref acc);
                 }
             }
@@ -763,7 +763,7 @@ namespace ZScreenLib
                 List<oAuthTwitter> oAccList = new List<oAuthTwitter>();
                 foreach (TwitterAuthInfo oAuth in Engine.conf.TwitterAccountsList)
                 {
-                    oAccList.Add(new oAuthTwitter(Engine.TWITTER_CONSUMER_KEY, Engine.TWITTER_CONSUMER_SECRET, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
+                    oAccList.Add(new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
                 }
                 TwitterMsg msg = new TwitterMsg(oAccList, string.Format("{0} - Update Twitter Status...", acc.AccountName));
                 msg.ActiveAccountName = acc.AccountName;
@@ -775,7 +775,7 @@ namespace ZScreenLib
             }
         }
 
-        static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
+        private static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
             TwitterMsg msg = sender as TwitterMsg;
             Engine.conf.TwitterClientConfig = msg.Config;

@@ -225,7 +225,7 @@ namespace ZUploader
                     imageUploader = new Img1Uploader();
                     break;*/
                 case ImageDestination.IMGUR:
-                    imageUploader = new Imgur(Program.ImgurKey);
+                    imageUploader = new Imgur(Program.ImgurAnonymousKey);
                     break;
                 case ImageDestination.MINUS:
                     imageUploader = new Minus();
@@ -292,11 +292,11 @@ namespace ZUploader
                     fileUploader = new RapidShare();
                     break;
                 case FileDestination.SendSpace:
-                    fileUploader = new SendSpace();
-                    SendSpaceManager.PrepareUploadInfo(null, null);
+                    fileUploader = new SendSpace(Program.SendSpaceKey);
+                    SendSpaceManager.PrepareUploadInfo(Program.SendSpaceKey, null, null);
                     break;
-                case FileDestination.Dropbox:
-                    fileUploader = new Dropbox();
+                case FileDestination.Dropbox: // TODO: Account settings
+                    fileUploader = new Dropbox(Program.DropboxConsumerKey, Program.DropboxConsumerSecret);
                     break;
                 /*case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();

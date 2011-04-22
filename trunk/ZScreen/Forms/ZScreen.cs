@@ -5083,7 +5083,7 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(hi.RemotePath))
                 {
                     Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
-                        HttpUtility.UrlEncode(hi.RemotePath), Engine.PICNIK_KEY));
+                        HttpUtility.UrlEncode(hi.RemotePath), Engine.PicnikKey));
                 }
             }
         }
@@ -5149,7 +5149,7 @@ namespace ZScreenGUI
             {
                 try
                 {
-                    Dropbox dropbox = new Dropbox();
+                    Dropbox dropbox = new Dropbox(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret);
                     Dropbox.DropboxUserLogin login = dropbox.Login(email, password);
 
                     if (login != null)
