@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
 		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
 		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
-		Lib\ImageQuantization.dll = Lib\ImageQuantization.dll
 		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
 		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
 		Lib\SHDocVw.dll = Lib\SHDocVw.dll
@@ -55,6 +54,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crop2", "Crop2\Crop2\Crop2.csproj", "{39EBFBE7-317B-4778-99FF-187F2AC6110F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageQuantization", "ImageQuantizer\ImageQuantization\ImageQuantization.csproj", "{923F9BA3-34C5-45C6-8069-D9CE7E79635A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -230,6 +231,16 @@ Global
 		{39EBFBE7-317B-4778-99FF-187F2AC6110F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{39EBFBE7-317B-4778-99FF-187F2AC6110F}.Release|x86.ActiveCfg = Release|x86
 		{39EBFBE7-317B-4778-99FF-187F2AC6110F}.Release|x86.Build.0 = Release|x86
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{923F9BA3-34C5-45C6-8069-D9CE7E79635A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -122,7 +122,7 @@ namespace ZScreenLib
             }
         }
 
-        void btnCopyImage_Click(object sender, EventArgs e)
+        private void btnCopyImage_Click(object sender, EventArgs e)
         {
             using (Image img = GraphicsMgr.GetImageSafely(mTask.LocalFilePath))
             {
@@ -130,7 +130,7 @@ namespace ZScreenLib
             }
         }
 
-        void btnOpenRemote_Click(object sender, EventArgs e)
+        private void btnOpenRemote_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(mTask.RemoteFilePath))
             {
@@ -138,12 +138,12 @@ namespace ZScreenLib
             }
         }
 
-        void btnClose_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        void btnDeleteClose_Click(object sender, EventArgs e)
+        private void btnDeleteClose_Click(object sender, EventArgs e)
         {
             if (mTask != null && File.Exists(mTask.LocalFilePath))
             {
@@ -152,7 +152,7 @@ namespace ZScreenLib
             btnClose_Click(sender, e);
         }
 
-        void btnOpenLocal_Click(object sender, EventArgs e)
+        private void btnOpenLocal_Click(object sender, EventArgs e)
         {
             if (mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath))
             {
@@ -160,7 +160,7 @@ namespace ZScreenLib
             }
         }
 
-        void btnCopy_Click(object sender, EventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             TextBox txtUrl = btn.Tag as TextBox;
@@ -185,7 +185,7 @@ namespace ZScreenLib
             }
         }
 
-        void Button_Click(object sender, EventArgs e)
+        private void Button_Click(object sender, EventArgs e)
         {
             ResetTimer();
         }

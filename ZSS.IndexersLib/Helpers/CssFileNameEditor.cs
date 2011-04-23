@@ -4,7 +4,7 @@ using System.Windows.Forms.Design;
 
 namespace ZSS.IndexersLib.Helpers
 {
-    class CssFileNameEditor : FileNameEditor
+    internal class CssFileNameEditor : FileNameEditor
     {
         public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
         {

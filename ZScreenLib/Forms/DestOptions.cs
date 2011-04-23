@@ -98,7 +98,7 @@ namespace ZScreenLib
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
 
-        void txtInputText_KeyDown(object sender, KeyEventArgs e)
+        private void txtInputText_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
@@ -107,7 +107,7 @@ namespace ZScreenLib
             }
         }
 
-        void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Adapter.CheckList(Engine.conf.UrlShortenersList, ucDestOptions.cboURLShorteners.SelectedIndex))
             {
@@ -115,7 +115,7 @@ namespace ZScreenLib
             }
         }
 
-        void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Adapter.CheckList(Engine.conf.TextUploadersList, ucDestOptions.cboTextUploaders.SelectedIndex))
             {

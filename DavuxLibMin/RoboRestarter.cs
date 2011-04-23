@@ -157,13 +157,13 @@ namespace DavuxLib
             }
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Trace.WriteLine("Unhandled Exception: " + e.ExceptionObject);
         }
     }
 
-    class RoboHost
+    internal class RoboHost
     {
         private TcpListener _tcpListener = null;
         private Thread _worker = null;

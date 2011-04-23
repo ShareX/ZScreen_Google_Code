@@ -762,12 +762,12 @@ namespace DavuxLib.Controls
             }
         }
 
-        void SplitMenuStrip_Opening(object sender, CancelEventArgs e)
+        private void SplitMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             isSplitMenuVisible = true;
         }
 
-        void SplitMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        private void SplitMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
         {
             isSplitMenuVisible = false;
 
@@ -779,7 +779,7 @@ namespace DavuxLib.Controls
             }
         }
 
-        void SplitMenu_Popup(object sender, EventArgs e)
+        private void SplitMenu_Popup(object sender, EventArgs e)
         {
             isSplitMenuVisible = true;
         }

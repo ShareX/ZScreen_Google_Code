@@ -29,7 +29,7 @@ using System.Security.Cryptography;
 
 namespace ZScreenLib
 {
-    class PasswordManager
+    internal class PasswordManager
     {
         private string KeyPath { get; set; }
 

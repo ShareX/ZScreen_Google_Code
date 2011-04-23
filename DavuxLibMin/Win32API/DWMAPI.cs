@@ -36,7 +36,7 @@ namespace DavuxLib.Win32API
         }
 
         [DllImport("dwmapi.dll")]
-        static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMargins);
+        private static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMargins);
 
         public static void DwmExtendFrameIntoClientArea(Control c, MARGINS marg)
         {

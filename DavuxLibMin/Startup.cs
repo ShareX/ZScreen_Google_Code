@@ -39,7 +39,7 @@ namespace DavuxLib
             Application_ApplicationExit(null, null);
         }
 
-        static void Application_ApplicationExit(object sender, EventArgs e)
+        private static void Application_ApplicationExit(object sender, EventArgs e)
         {
             try
             {

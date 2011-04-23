@@ -29,7 +29,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
-using System.Collections.Generic;
 
 namespace ZScreenLib
 {
@@ -74,7 +73,6 @@ namespace ZScreenLib
                 }
             }
             ucDestOptions.cboURLShorteners.SelectedIndex = 0;
-
         }
 
         private void btnOK_Click(object sender, EventArgs e)
