@@ -52,6 +52,7 @@ namespace Greenshot.Drawing
     public abstract class DrawableContainer : ISerializable
     {
         public enum RenderMode { EDIT, EXPORT };
+
         public enum Property { LINECOLOR, FILLCOLOR, THICKNESS, ARROWHEADS };
 
         protected Color foreColor = Color.Red;

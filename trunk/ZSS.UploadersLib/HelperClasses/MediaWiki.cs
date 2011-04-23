@@ -33,7 +33,7 @@ using Krystalware.UploadHelper;
 
 namespace UploadersLib.HelperClasses
 {
-    class MediaWikiException : Exception
+    internal class MediaWikiException : Exception
     {
         public MediaWikiException(string message)
             : base(message)

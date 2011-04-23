@@ -124,7 +124,7 @@ namespace ZScreenLib
             e.Result = task;
         }
 
-        void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
@@ -141,7 +141,7 @@ namespace ZScreenLib
             }
         }
 
-        void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Result;
 
