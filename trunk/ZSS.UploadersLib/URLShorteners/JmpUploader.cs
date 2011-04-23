@@ -36,8 +36,7 @@ namespace UploadersLib.URLShorteners
     {
         public static readonly string Hostname = UrlShortenerType.Jmp.GetDescription();
 
-        private const string APILogin = "mcored";
-        private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
+        private string APILogin, APIKey;
 
         public override object Settings
         {
@@ -53,8 +52,12 @@ namespace UploadersLib.URLShorteners
 
         public JmpUploaderSettings HostSettings = new JmpUploaderSettings();
 
-        public JmpUploader()
+        public JmpUploader() { }
+
+        public JmpUploader(string login, string key)
         {
+            APILogin = login;
+            APIKey = key;
             HostSettings.URL = "http://api.j.mp/shorten";
         }
 

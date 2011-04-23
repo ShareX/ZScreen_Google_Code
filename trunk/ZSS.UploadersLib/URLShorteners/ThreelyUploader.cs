@@ -34,7 +34,8 @@ namespace UploadersLib.URLShorteners
     public sealed class ThreelyUploader : TextUploader
     {
         public static readonly string Hostname = UrlShortenerType.THREELY.GetDescription();
-        public const string APIKey = "em5893833";
+
+        private string APIKey;
 
         public override object Settings
         {
@@ -50,8 +51,11 @@ namespace UploadersLib.URLShorteners
 
         public ThreelyUploaderSettings HostSettings = new ThreelyUploaderSettings();
 
-        public ThreelyUploader()
+        public ThreelyUploader() { }
+
+        public ThreelyUploader(string key)
         {
+            APIKey = key;
             HostSettings.URL = "http://3.ly";
         }
 

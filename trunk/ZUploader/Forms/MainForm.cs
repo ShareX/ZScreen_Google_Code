@@ -49,7 +49,7 @@ namespace ZUploader
         private void AfterLoadJobs()
         {
             LoadSettings();
-            LoadPlugins();
+            //LoadPlugins();
         }
 
         private void AfterShownJobs()

@@ -36,7 +36,7 @@ namespace UploadersLib.TextUploaders
     {
         public static readonly string Hostname = TextDestType.PASTEBIN_CA.GetDescription();
 
-        public const string APIKey = "KxTofLKQThSBZ63Gpa7hYLlMdyQlMD6u";
+        private string APIKey;
 
         public override object Settings
         {
@@ -52,8 +52,11 @@ namespace UploadersLib.TextUploaders
 
         public PastebinCaSettings HostSettings = new PastebinCaSettings();
 
-        public PastebinCaUploader()
+        public PastebinCaUploader() { }
+
+        public PastebinCaUploader(string apiKey)
         {
+            APIKey = apiKey;
             HostSettings.URL = "http://pastebin.ca/quiet-paste.php";
         }
 

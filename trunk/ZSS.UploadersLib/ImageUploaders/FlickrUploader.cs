@@ -35,8 +35,8 @@ namespace UploadersLib.ImageUploaders
 {
     public class FlickrUploader : ImageUploader
     {
-        private const string API_Key = "009382d913746758f23d0ba9906b9fde";
-        private const string API_Secret = "7a147b763b1c7ebc";
+        private string API_Key, API_Secret;
+
         private const string API_URL = "http://api.flickr.com/services/rest/";
         private const string API_Auth_URL = "http://www.flickr.com/services/auth/";
         private const string API_Upload_URL = "http://api.flickr.com/services/upload/";
@@ -45,9 +45,14 @@ namespace UploadersLib.ImageUploaders
         public FlickrSettings Settings = new FlickrSettings();
         public string Frob;
 
-        public FlickrUploader() { }
+        public FlickrUploader(string key, string secret)
+        {
+            API_Key = key;
+            API_Secret = secret;
+        }
 
-        public FlickrUploader(AuthInfo auth, FlickrSettings settings)
+        public FlickrUploader(string key, string secret, AuthInfo auth, FlickrSettings settings)
+            : this(key, secret)
         {
             this.Auth = auth;
             this.Settings = settings;

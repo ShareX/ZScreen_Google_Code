@@ -356,7 +356,8 @@ namespace ZScreenLib
 
         public static string CreateImageBamGallery()
         {
-            ImageBamUploader ibu = new ImageBamUploader(new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret));
+            ImageBamUploader ibu = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret,
+                new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret));
             string galleryId = ibu.CreateGalleryID();
             Engine.conf.ImageBamGallery.Add(galleryId);
             return galleryId;
@@ -380,11 +381,11 @@ namespace ZScreenLib
         {
             if (name.Equals(GoogleURLShortener.Hostname))
             {
-                return new GoogleURLShortener();
+                return new GoogleURLShortener(Engine.GoogleURLShortenerKey);
             }
             else if (name.Equals(BitlyUploader.Hostname))
             {
-                return new BitlyUploader();
+                return new BitlyUploader(Engine.BitlyLogin, Engine.BitlyKey);
             }
             else if (name.Equals(IsgdUploader.Hostname))
             {
@@ -392,15 +393,7 @@ namespace ZScreenLib
             }
             else if (name.Equals(JmpUploader.Hostname))
             {
-                return new JmpUploader();
-            }
-            else if (name.Equals(KlamUploader.Hostname))
-            {
-                return new KlamUploader();
-            }
-            else if (name.Equals(OwlyUploader.Hostname))
-            {
-                return new OwlyUploader();
+                return new JmpUploader(Engine.BitlyLogin, Engine.BitlyKey);
             }
             else if (name.Equals(TinyURLUploader.Hostname))
             {
@@ -408,7 +401,7 @@ namespace ZScreenLib
             }
             else if (name.Equals(ThreelyUploader.Hostname))
             {
-                return new ThreelyUploader();
+                return new ThreelyUploader(Engine.ThreelyKey);
             }
             else if (name.Equals(TurlUploader.Hostname))
             {
@@ -652,11 +645,11 @@ namespace ZScreenLib
         {
             if (name.Equals(PastebinUploader.Hostname))
             {
-                return new PastebinUploader();
+                return new PastebinUploader(Engine.PastebinKey);
             }
             else if (name.Equals(PastebinCaUploader.Hostname))
             {
-                return new PastebinCaUploader();
+                return new PastebinCaUploader(Engine.PastebinCaKey);
             }
             else if (name.Equals(Paste2Uploader.Hostname))
             {
@@ -712,7 +705,7 @@ namespace ZScreenLib
         public static TwitterAuthInfo TwitterAuthGetPin()
         {
             // authorize ZScreen to twitter
-            oAuthTwitter oAuth = new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            Twitter oAuth = new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
             TwitterAuthInfo acc = TwitterGetActiveAcct();
             string authLink = oAuth.AuthorizationLinkGet();
             if (!string.IsNullOrEmpty(acc.AccountName))
@@ -736,7 +729,7 @@ namespace ZScreenLib
             {
                 if (null != acc)
                 {
-                    oAuthTwitter oAuth = new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+                    Twitter oAuth = new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
                     acc = oAuth.AccessTokenGet(ref acc);
                 }
             }
@@ -760,10 +753,10 @@ namespace ZScreenLib
             TwitterAuthInfo acc = TwitterGetActiveAcct();
             if (!string.IsNullOrEmpty(acc.TokenSecret))
             {
-                List<oAuthTwitter> oAccList = new List<oAuthTwitter>();
+                List<Twitter> oAccList = new List<Twitter>();
                 foreach (TwitterAuthInfo oAuth in Engine.conf.TwitterAccountsList)
                 {
-                    oAccList.Add(new oAuthTwitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
+                    oAccList.Add(new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
                 }
                 TwitterMsg msg = new TwitterMsg(oAccList, string.Format("{0} - Update Twitter Status...", acc.AccountName));
                 msg.ActiveAccountName = acc.AccountName;

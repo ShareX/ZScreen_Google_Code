@@ -4688,7 +4688,7 @@ namespace ZScreenGUI
         {
             try
             {
-                FlickrUploader flickr = new FlickrUploader();
+                FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
                 btnFlickrGetFrob.Tag = flickr.GetFrob();
                 string url = flickr.GetAuthLink(FlickrUploader.Permission.Write);
                 Process.Start(url);
@@ -4707,7 +4707,7 @@ namespace ZScreenGUI
                 string token = btnFlickrGetFrob.Tag as string;
                 if (!string.IsNullOrEmpty(token))
                 {
-                    FlickrUploader flickr = new FlickrUploader();
+                    FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
                     Engine.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
                     // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
@@ -4729,7 +4729,7 @@ namespace ZScreenGUI
                     string token = Engine.conf.FlickrAuthInfo.Token;
                     if (!string.IsNullOrEmpty(token))
                     {
-                        FlickrUploader flickr = new FlickrUploader();
+                        FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
                         Engine.conf.FlickrAuthInfo = flickr.CheckToken(token);
                         pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
 
@@ -4750,7 +4750,7 @@ namespace ZScreenGUI
                 string userID = Engine.conf.FlickrAuthInfo.UserID;
                 if (!string.IsNullOrEmpty(userID))
                 {
-                    FlickrUploader flickr = new FlickrUploader();
+                    FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
                     string url = flickr.GetPhotosLink(userID);
                     Process.Start(url);
                 }
@@ -4844,7 +4844,7 @@ namespace ZScreenGUI
         private void btnOpenZScreenTester_Click(object sender, EventArgs e)
         {
             TesterGUI testerGUI = new TesterGUI
-            { // TODO
+            { // TODO: TesterGUI paths
                 TestFileBinaryPath = "",
                 TestFilePicturePath = "",
                 TestFileTextPath = ""

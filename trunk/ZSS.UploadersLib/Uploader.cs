@@ -332,7 +332,7 @@ namespace UploadersLib
                 {
                     foreach (KeyValuePair<string, string> content in contents)
                     {
-                        if (!string.IsNullOrEmpty(content.Key))
+                        if (!string.IsNullOrEmpty(content.Key) && !string.IsNullOrEmpty(content.Value))
                         {
                             bytes = MakeInputContent(boundary, content.Key, content.Value);
                             stream.Write(bytes, 0, bytes.Length);

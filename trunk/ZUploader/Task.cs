@@ -227,9 +227,6 @@ namespace ZUploader
                 case ImageDestination.IMGUR:
                     imageUploader = new Imgur(Program.ImgurAnonymousKey);
                     break;
-                case ImageDestination.MINUS:
-                    imageUploader = new Minus();
-                    break;
             }
 
             if (imageUploader != null)
@@ -300,10 +297,10 @@ namespace ZUploader
                     break;
                 /*case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
-                    break;*/
-                case FileDestination.DropIO:
-                    fileUploader = new DropIO();
                     break;
+                case FileDestination.DropIO:
+                    fileUploader = new DropIO(Program.DropIOKey);
+                    break;*/
                 case FileDestination.ShareCX:
                     fileUploader = new ShareCX();
                     break;

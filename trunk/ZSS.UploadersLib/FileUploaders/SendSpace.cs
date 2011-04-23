@@ -444,15 +444,14 @@ namespace UploadersLib.FileUploaders
                 {
                     result.Source = response;
 
-                    UploadResponsePacket urp = ParseUploadResponse(response);
-
-                    if (urp == null) // User
+                    if (response.StartsWith("upload_status=ok")) // User
                     {
                         string fileid = Regex.Match(response, @"file_id=(\w+)").Groups[1].Value;
                         result.URL = "http://www.sendspace.com/file/" + fileid;
                     }
-                    else
+                    else // Anonymous
                     {
+                        UploadResponsePacket urp = ParseUploadResponse(response);
                         result.URL = urp.DownloadURL;
                         result.DeletionURL = urp.DeleteURL;
                     }

@@ -168,7 +168,7 @@ namespace ZSS.IndexersLib
         //' DOMCOLLAPSE RULES
         //' If a folder has subfolders then wrap the folder with div
         //' If a folder has no files then don't have trigger
-        //TODO war59312 - Hide folders from output in which all its files are ignored
+        //TODO: war59312 - Hide folders from output in which all its files are ignored
 
         string rootDir = string.Empty;
 

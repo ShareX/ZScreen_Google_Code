@@ -35,7 +35,7 @@ namespace UploadersLib.HelperClasses
         }
     }
 
-    public class oAuthTwitter : OAuthBase
+    public class Twitter : OAuthBase
     {
         public enum Method { GET, POST };
 
@@ -49,14 +49,14 @@ namespace UploadersLib.HelperClasses
         public bool Enabled { get; set; }
         public TwitterAuthInfo AuthInfo { get; set; }
 
-        public oAuthTwitter(string consumerKey, string consumerSecret)
+        public Twitter(string consumerKey, string consumerSecret)
         {
             this.ConsumerKey = consumerKey;
             this.ConsumerSecret = consumerSecret;
             this.AuthInfo = new TwitterAuthInfo();
         }
 
-        public oAuthTwitter(string consumerKey, string consumerSecret, TwitterAuthInfo authInfo)
+        public Twitter(string consumerKey, string consumerSecret, TwitterAuthInfo authInfo)
             : this(consumerKey, consumerSecret)
         {
             this.AuthInfo = authInfo;

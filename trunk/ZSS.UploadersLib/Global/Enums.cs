@@ -152,14 +152,12 @@ namespace UploadersLib
     {
         [Description("Pastebin - www.pastebin.com")]
         PASTEBIN,
-        [Description("PasteBin - www.pastebin.ca")]
+        [Description("Pastebin - www.pastebin.ca")]
         PASTEBIN_CA,
         [Description("Paste2 - www.paste2.org")]
         PASTE2,
         [Description("Slexy 2.0 - www.slexy.org")]
         SLEXY
-        //[Description("Snipt - www.snipt.org")]
-        //SNIPT
     }
 
     [Serializable]
@@ -175,10 +173,8 @@ namespace UploadersLib
         Jmp,
         [Description("is.gd - www.is.gd")]
         ISGD,
-        [Description("kl.am - www.kl.am")]
-        KLAM,
-        //[Description("Ow.ly - www.ow.ly")]
-        //OWLY,
+        //[Description("kl.am - www.kl.am")]
+        //KLAM,
         [Description("TinyURL - www.tinyurl.com")]
         TINYURL,
         [Description("TURL - www.turl.ca")]

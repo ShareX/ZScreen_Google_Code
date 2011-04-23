@@ -34,8 +34,6 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class DropIO : FileUploader
     {
-        private const string API_KEY = "6c65e2d2bfd858f7d0aa6509784f876483582eea";
-
         public string DropName { get; set; }
         public string DropDescription { get; set; }
 
@@ -56,6 +54,13 @@ namespace UploadersLib.FileUploaders
             public string AdminToken { get; set; }
         }
 
+        private string APIKey;
+
+        public DropIO(string apiKey)
+        {
+            APIKey = apiKey;
+        }
+
         public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult result = new UploadResult();
@@ -68,7 +73,7 @@ namespace UploadersLib.FileUploaders
 
                 Dictionary<string, string> args = new Dictionary<string, string>();
                 args.Add("version", "2.0");
-                args.Add("api_key", API_KEY);
+                args.Add("api_key", APIKey);
                 args.Add("format", "xml");
                 args.Add("token", drop.AdminToken);
                 args.Add("drop_name", drop.Name);
@@ -109,7 +114,7 @@ namespace UploadersLib.FileUploaders
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("version", "2.0");
-            args.Add("api_key", API_KEY);
+            args.Add("api_key", APIKey);
             args.Add("format", "xml");
             // this is the name of the drop and will become part of the URL of the drop
             args.Add("name", name);

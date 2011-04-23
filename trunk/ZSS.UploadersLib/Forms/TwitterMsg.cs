@@ -37,16 +37,16 @@ namespace UploadersLib
     {
         public string ActiveAccountName { get; set; }
         public string Message { get; set; }
-        private List<oAuthTwitter> moAuth { get; set; }
+        private List<Twitter> moAuth { get; set; }
         public TwitterClientSettings Config { get; set; }
 
-        public TwitterMsg(List<oAuthTwitter> oAuth, string title)
+        public TwitterMsg(List<Twitter> oAuth, string title)
             : this(oAuth)
         {
             this.Text = title;
         }
 
-        public TwitterMsg(List<oAuthTwitter> oAuth)
+        public TwitterMsg(List<Twitter> oAuth)
             : this("Update Twitter Status...")
         {
             InitializeComponent();
@@ -68,12 +68,12 @@ namespace UploadersLib
                 if (null != moAuth && !string.IsNullOrEmpty(txtTweet.Text))
                 {
                     this.Hide();
-                    foreach (oAuthTwitter oAuth in clbAccounts.CheckedItems)
+                    foreach (Twitter oAuth in clbAccounts.CheckedItems)
                     {
                         // URL-encode the tweet...
                         string tweet = HttpUtility.UrlEncode(txtTweet.Text);
                         // And send it off...
-                        string xml = oAuth.oAuthWebRequest(oAuthTwitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
+                        string xml = oAuth.oAuthWebRequest(Twitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
                         FillResponseUser(xml);
                     }
                 }
@@ -121,7 +121,7 @@ namespace UploadersLib
                 lbUsers.Items.Add(user);
             }
             clbAccounts.Height = 134;
-            foreach (oAuthTwitter oAuth in moAuth)
+            foreach (Twitter oAuth in moAuth)
             {
                 clbAccounts.Items.Add(oAuth, oAuth.Enabled);
             }

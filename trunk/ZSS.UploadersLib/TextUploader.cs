@@ -39,8 +39,8 @@ namespace UploadersLib
         #region ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
 
         public static List<Type> Types = new List<Type> { typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof(PastebinUploader),
-            typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(KlamUploader),
-            typeof(IsgdUploader), typeof(JmpUploader), typeof(BitlyUploader), typeof(TurlUploader), typeof(GoogleURLShortener), typeof(TextUploader) };
+            typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(IsgdUploader),
+            typeof(JmpUploader), typeof(BitlyUploader), typeof(TurlUploader), typeof(GoogleURLShortener), typeof(TextUploader) };
 
         #endregion ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
 
