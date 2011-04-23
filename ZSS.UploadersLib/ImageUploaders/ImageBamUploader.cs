@@ -56,17 +56,18 @@ namespace UploadersLib.ImageUploaders
 
     public sealed class ImageBamUploader : ImageUploader
     {
-        private const string Key = "3702805a5d94b0161052e7aa4c69f046";
-        private const string Secret = "9b7ae269fee7f2aa5253a4d4b7608b9c";
+        private string Key, Secret;
 
         private const string upload = "http://www.imagebam.com/services/upload/";
         private const string generate_GID = "http://www.imagebam.com/services/generate_GID/";
 
         private ImageBamUploaderOptions Options { get; set; }
 
-        public ImageBamUploader(ImageBamUploaderOptions options)
+        public ImageBamUploader(string key, string secret, ImageBamUploaderOptions options)
         {
-            this.Options = options;
+            Key = key;
+            Secret = secret;
+            Options = options;
             if (string.IsNullOrEmpty(options.UserKey) || string.IsNullOrEmpty(options.UserSecret))
             {
                 this.Errors.Add("In order to upload images to ImageBam, you need to register first.");

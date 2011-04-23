@@ -133,7 +133,7 @@
     <Compile Include="HelperClasses\ITextUploader.cs" />
     <Compile Include="HelperClasses\IUploader.cs" />
     <Compile Include="HelperClasses\OAuthBase.cs" />
-    <Compile Include="HelperClasses\oAuthTwitter.cs" />
+    <Compile Include="TextServices\Twitter.cs" />
     <Compile Include="HelperClasses\ProgressManager.cs" />
     <Compile Include="HelperClasses\ProxyInfo.cs" />
     <Compile Include="HelperClasses\ProxySettings.cs" />
@@ -150,7 +150,6 @@
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="ImageUploaders\Img1Uploader.cs" />
     <Compile Include="ImageUploaders\Imgur.cs" />
-    <Compile Include="ImageUploaders\Minus.cs" />
     <Compile Include="ImageUploaders\TinyPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitPicUploader.cs" />
     <Compile Include="ImageUploaders\TwitSnapsUploader.cs" />
@@ -171,8 +170,6 @@
     <Compile Include="URLShorteners\GoogleURLShortener.cs" />
     <Compile Include="URLShorteners\IsgdUploader.cs" />
     <Compile Include="URLShorteners\JmpUploader.cs" />
-    <Compile Include="URLShorteners\KlamUploader.cs" />
-    <Compile Include="URLShorteners\OwlyUploader.cs" />
     <Compile Include="URLShorteners\ThreelyUploader.cs" />
     <Compile Include="URLShorteners\TinyURLUploader.cs" />
     <Compile Include="URLShorteners\TurlUploader.cs" />

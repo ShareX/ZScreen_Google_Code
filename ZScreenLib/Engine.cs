@@ -99,6 +99,7 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
+        // URLS
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
         public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
         public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
@@ -108,16 +109,37 @@ namespace ZScreenLib
         public const string URL_MIKE = "http://code.google.com/u/mcored";
         public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
 
+        // Image Uploaders
         public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";
         public const string TinyPicID = "e2aabb8d555322fa";
         public const string TinyPicKey = "00a68ed73ddd54da52dc2d5803fa35ee";
         public const string ImgurAnonymousKey = "5468eb7bde830c779b37da30c5c7ebae";
         public const string ImgurConsumerKey = "cc6a3227dc7cbe15d2754b194ae3c26504db122ab";
         public const string ImgurConsumerSecret = "edd13f72e7c9908b50c8090a8e912b73";
+        public const string FlickrKey = "009382d913746758f23d0ba9906b9fde";
+        public const string FlickrSecret = "7a147b763b1c7ebc";
+        public const string UploadScreenshotKey = "2807828f379860848433221358";
+        public const string ImageBamKey = "3702805a5d94b0161052e7aa4c69f046";
+        public const string ImageBamSecret = "9b7ae269fee7f2aa5253a4d4b7608b9c";
+
+        // File Uploaders
         public const string DropboxConsumerKey = "0te7j9ype9lrdfn";
         public const string DropboxConsumerSecret = "r5d3aptd9a0cwp9";
         public const string SendSpaceKey = "LV6OS1R0Q3";
-        public const string UploadScreenshotKey = "2807828f379860848433221358";
+        public const string DropIOKey = "6c65e2d2bfd858f7d0aa6509784f876483582eea";
+
+        // Text Uploaders
+        public const string PastebinKey = "4b23be71ec78bbd4fb96735320aa09ef";
+        public const string PastebinCaKey = "KxTofLKQThSBZ63Gpa7hYLlMdyQlMD6u";
+
+        // URL Shorteners
+        public const string BitlyLogin = "mcored";
+        public const string BitlyKey = "R_55cef8c7f08a07d2ecd4323084610161";
+        public const string GoogleURLShortenerKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
+        public const string KlamKey = "a4e5a8de710d80db774a8264f4588ffb";
+        public const string ThreelyKey = "em5893833";
+
+        // Other Services
         public const string TwitterConsumerKey = "Jzzcm6ytcyml14sQIvqvmA";
         public const string TwitterConsumerSecret = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
         public const string PicnikKey = "3aacd2de4563b8817de708b29b5bdd0e";

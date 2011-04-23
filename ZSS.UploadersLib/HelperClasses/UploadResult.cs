@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or

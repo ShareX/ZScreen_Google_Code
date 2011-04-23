@@ -36,8 +36,7 @@ namespace UploadersLib.URLShorteners
     {
         public static readonly string Hostname = UrlShortenerType.BITLY.GetDescription();
 
-        private const string APILogin = "mcored";
-        private const string APIKey = "R_55cef8c7f08a07d2ecd4323084610161";
+        private string APILogin, APIKey;
 
         public override object Settings
         {
@@ -53,8 +52,12 @@ namespace UploadersLib.URLShorteners
 
         public BitlyUploaderSettings HostSettings = new BitlyUploaderSettings();
 
-        public BitlyUploader()
+        public BitlyUploader() { }
+
+        public BitlyUploader(string login, string key)
         {
+            APILogin = login;
+            APIKey = key;
             HostSettings.URL = "http://api.bit.ly/shorten";
         }
 
@@ -62,8 +65,6 @@ namespace UploadersLib.URLShorteners
         {
             return HostSettings.Name;
         }
-
-        // http://api.bit.ly/shorten?version=2.0.1&longUrl=http://code.google.com/p/zscreen&login=mcored&apiKey=R_55cef8c7f08a07d2ecd4323084610161"
 
         public override string UploadText(TextInfo text)
         {

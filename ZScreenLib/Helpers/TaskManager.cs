@@ -381,7 +381,7 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageDestType.FLICKR:
-                    imageUploader = new FlickrUploader(Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
+                    imageUploader = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
                 case ImageDestType.FTP:
                     UploadFTP(Engine.conf.FtpImages);
@@ -389,7 +389,7 @@ namespace ZScreenLib
                 case ImageDestType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
-                    imageUploader = new ImageBamUploader(imageBamOptions);
+                    imageUploader = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret, imageBamOptions);
                     break;
                 /*case ImageDestType.IMAGEBIN:
                     imageUploader = new ImageBin();

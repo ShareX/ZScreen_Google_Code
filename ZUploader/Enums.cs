@@ -39,8 +39,6 @@ namespace ZUploader
         //IMG1,
         [Description("imgur.com")]
         IMGUR,
-        [Description("min.us")]
-        MINUS,
         [Description("Use file uploader")]
         FILE
     }
@@ -69,8 +67,8 @@ namespace ZUploader
         Dropbox,
         //[Description("filebin.ca")]
         //FileBin,
-        [Description("drop.io")]
-        DropIO,
+        //[Description("drop.io")]
+        //DropIO,
         [Description("share.cx")]
         ShareCX,
         [Description("filez.muffinz.eu")]

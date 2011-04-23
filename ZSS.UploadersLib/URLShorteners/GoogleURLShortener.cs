@@ -33,7 +33,7 @@ namespace UploadersLib.URLShorteners
     {
         public static readonly string Hostname = UrlShortenerType.Google.GetDescription();
 
-        public const string APIKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
+        private string APIKey;
 
         public override object Settings
         {
@@ -49,8 +49,11 @@ namespace UploadersLib.URLShorteners
 
         public GoogleURLShortenerSettings HostSettings = new GoogleURLShortenerSettings();
 
-        public GoogleURLShortener()
+        public GoogleURLShortener() { }
+
+        public GoogleURLShortener(string key)
         {
+            APIKey = key;
             HostSettings.URL = "https://www.googleapis.com/urlshortener/v1/url";
         }
 

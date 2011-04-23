@@ -44,12 +44,16 @@ namespace UploadersLib.TextUploaders
 
         public PastebinSettings HostSettings = new PastebinSettings();
 
-        private const string APIKey = "4b23be71ec78bbd4fb96735320aa09ef";
+        private string APIKey;
+
         private const string APIURL = "http://pastebin.com/api/api_post.php";
         private const string APILoginURL = "http://pastebin.com/api/api_login.php";
 
-        public PastebinUploader()
+        public PastebinUploader() { }
+
+        public PastebinUploader(string apiKey)
         {
+            APIKey = apiKey;
             HostSettings.URL = APIURL;
         }
 
