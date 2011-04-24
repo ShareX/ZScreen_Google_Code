@@ -66,7 +66,7 @@ namespace ZScreenLib
 
         public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
         public FileUploaderType FileUploaderType = FileUploaderType.RapidShare;
-        public TextDestination TextUploaderType = TextDestination.PASTEBIN;
+        public TextUploaderType TextUploaderType = TextUploaderType.PASTEBIN;
         public UrlShortenerType URLShortenerType = UrlShortenerType.BITLY;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
@@ -319,16 +319,6 @@ namespace ZScreenLib
         public string WatermarkImageLocation = "";
         public bool WatermarkUseBorder = false;
         public decimal WatermarkImageScale = 100;
-
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        //  Text Uploaders & URL Shorteners
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        public List<TextUploader> TextUploadersList = new List<TextUploader>();
-        public int TextUploaderSelected = 0;
-
-        public List<TextUploader> UrlShortenersList = new List<TextUploader>();
-        public int UrlShortenerSelected = 0;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors

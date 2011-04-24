@@ -146,7 +146,7 @@ namespace ZScreenLib
                             }
                             else if (null != task.MyText)
                             {
-                                clipboardText = task.MyText.LocalString;
+                                clipboardText = task.MyText;
                             }
                             else
                             {

@@ -38,8 +38,8 @@ namespace ZScreenLib
         public string RootFolder { get; private set; }
         public ImageDestType ImageDestinationType { get; private set; }
         public FileUploaderType FileUploaderType { get; private set; }
-        public int TextUploaderType { get; private set; }
-        public int UrlShortenerType { get; private set; }
+        public TextUploaderType MyTextUploaderType { get; private set; }
+        public UrlShortenerType MyUrlShortenerType { get; private set; }
 
         public ConfigWizard(string rootDir)
         {
@@ -54,33 +54,19 @@ namespace ZScreenLib
             ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
 
-            foreach (TextDestination etu in Enum.GetValues(typeof(TextDestination)))
-            {
-                TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
-                if (null != tu)
-                {
-                    ucDestOptions.cboTextUploaders.Items.Add(tu);
-                }
-            }
-            ucDestOptions.cboTextUploaders.SelectedIndex = 0;
+            ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
+            ucDestOptions.cboTextUploaders.SelectedIndex = (int)MyTextUploaderType.
 
-            foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
-            {
-                TextUploader tu = Adapter.FindUrlShortener(etu.GetDescription());
-                if (null != tu)
-                {
-                    ucDestOptions.cboURLShorteners.Items.Add(tu);
-                }
-            }
-            ucDestOptions.cboURLShorteners.SelectedIndex = 0;
+            ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+            ucDestOptions.cboURLShorteners.SelectedIndex = (int)MyUrlShortenerType;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
             ImageDestinationType = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            TextUploaderType = ucDestOptions.cboTextUploaders.SelectedIndex;
-            UrlShortenerType = ucDestOptions.cboURLShorteners.SelectedIndex;
+            MyTextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
+            MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

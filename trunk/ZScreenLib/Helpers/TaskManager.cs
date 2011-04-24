@@ -702,7 +702,7 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextDestination.FILE)
+            if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextUploaderType.FILE)
             {
                 UploadFile();
             }
@@ -712,16 +712,16 @@ namespace ZScreenLib
 
                 switch (mTask.MyTextUploader)
                 {
-                    case TextDestination.PASTEBIN:
+                    case TextUploaderType.PASTEBIN:
                         textUploader = new PastebinUploader(Engine.PastebinKey);
                         break;
-                    case TextDestination.PASTEBIN_CA:
+                    case TextUploaderType.PASTEBIN_CA:
                         textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
                         break;
-                    case TextDestination.PASTE2:
+                    case TextUploaderType.PASTE2:
                         textUploader = new Paste2Uploader();
                         break;
-                    case TextDestination.SLEXY:
+                    case TextUploaderType.SLEXY:
                         textUploader = new SlexyUploader();
                         break;
                 }

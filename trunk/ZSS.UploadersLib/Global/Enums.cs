@@ -153,7 +153,7 @@ namespace UploadersLib
 
     #region Text Uploaders & URL Shorteners
 
-    public enum TextDestination
+    public enum TextUploaderType
     {
         [Description("pastebin.com")]
         PASTEBIN,
