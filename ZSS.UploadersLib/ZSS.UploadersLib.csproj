@@ -109,7 +109,8 @@
     <Compile Include="HelperClasses\MediaWikiHistory.cs" />
     <Compile Include="HelperClasses\MediaWikiAccount.cs" />
     <Compile Include="HelperClasses\JSONHelper.cs" />
-    <Compile Include="HelperClasses\MyOAuth.cs" />
+    <Compile Include="HelperClasses\OAuth\OAuthManager.cs" />
+    <Compile Include="HelperClasses\OAuth\OAuthInfo.cs" />
     <Compile Include="HelperClasses\UploadHelper\HttpUploadHelper.cs" />
     <Compile Include="HelperClasses\UploadHelper\MimePart.cs" />
     <Compile Include="HelperClasses\UploadHelper\StreamMimePart.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="HelperClasses\ITextUploader.cs" />
     <Compile Include="HelperClasses\IUploader.cs" />
     <Compile Include="HelperClasses\OAuthBase.cs" />
+    <Compile Include="ImageUploaders\ImgurAuthenticated.cs" />
     <Compile Include="TextServices\Twitter.cs" />
     <Compile Include="HelperClasses\ProgressManager.cs" />
     <Compile Include="HelperClasses\ProxyInfo.cs" />

@@ -4926,12 +4926,12 @@ namespace ZScreenGUI
             {
                 try
                 {
-                    Dropbox dropbox = new Dropbox(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret);
-                    Dropbox.DropboxUserLogin login = dropbox.Login(email, password);
+                    Dropbox dropbox = new Dropbox(new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret));
+                    DropboxUserLogin login = dropbox.Login(email, password);
 
                     if (login != null)
                     {
-                        Dropbox.DropboxAccountInfo account = dropbox.GetAccountInfo();
+                        DropboxAccountInfo account = dropbox.GetAccountInfo();
 
                         if (account != null)
                         {
