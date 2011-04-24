@@ -33,16 +33,16 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class Imgur : ImageUploader
     {
+        public override string Name
+        {
+            get { return "Imgur"; }
+        }
+
         public string APIKey { get; private set; }
 
         public Imgur(string key)
         {
             APIKey = key;
-        }
-
-        public override string Name
-        {
-            get { return "Imgur"; }
         }
 
         public override ImageFileManager UploadImage(Stream stream, string fileName)

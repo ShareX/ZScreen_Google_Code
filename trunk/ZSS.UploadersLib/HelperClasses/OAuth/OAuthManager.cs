@@ -25,17 +25,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
-    public static class MyOAuth
+    public static class OAuthManager
     {
-        public const string OAuthVersion = "1.0";
-
         private const string ParameterConsumerKey = "oauth_consumer_key";
         private const string ParameterSignatureMethod = "oauth_signature_method";
         private const string ParameterSignature = "oauth_signature";
@@ -44,24 +44,33 @@ namespace UploadersLib.HelperClasses
         private const string ParameterVersion = "oauth_version";
         private const string ParameterToken = "oauth_token";
         private const string ParameterTokenSecret = "oauth_token_secret";
+        private const string ParameterVerifier = "oauth_verifier";
 
         private const string PlainTextSignatureType = "PLAINTEXT";
         private const string HMACSHA1SignatureType = "HMAC-SHA1";
         private const string RSASHA1SignatureType = "RSA-SHA1";
 
-        public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod,
-            string consumerKey, string consumerSecret, string userToken = null, string userSecret = null)
+        public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod, OAuthInfo oauth)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add(ParameterVersion, OAuthVersion);
+            parameters.Add(ParameterVersion, oauth.OAuthVersion);
             parameters.Add(ParameterNonce, GenerateNonce());
             parameters.Add(ParameterTimestamp, GenerateTimestamp());
             parameters.Add(ParameterSignatureMethod, HMACSHA1SignatureType);
-            parameters.Add(ParameterConsumerKey, consumerKey);
+            parameters.Add(ParameterConsumerKey, oauth.ConsumerKey);
 
-            if (!string.IsNullOrEmpty(userToken))
+            string secret = null;
+
+            if (!string.IsNullOrEmpty(oauth.UserToken) && !string.IsNullOrEmpty(oauth.UserSecret))
             {
-                parameters.Add(ParameterToken, userToken);
+                secret = oauth.UserSecret;
+                parameters.Add(ParameterToken, oauth.UserToken);
+            }
+            else if (!string.IsNullOrEmpty(oauth.AuthToken) && !string.IsNullOrEmpty(oauth.AuthSecret) && !string.IsNullOrEmpty(oauth.AuthVerifier))
+            {
+                secret = oauth.AuthSecret;
+                parameters.Add(ParameterToken, oauth.AuthToken);
+                parameters.Add(ParameterVerifier, oauth.AuthVerifier);
             }
 
             if (args != null)
@@ -75,11 +84,50 @@ namespace UploadersLib.HelperClasses
             string normalizedUrl = NormalizeUrl(url);
             string normalizedParameters = NormalizeParameters(parameters);
             string signatureBase = GenerateSignatureBase(httpMethod, normalizedUrl, normalizedParameters);
-            string signature = GenerateSignature(signatureBase, consumerSecret, userSecret);
+            string signature = GenerateSignature(signatureBase, oauth.ConsumerSecret, secret);
 
             normalizedParameters += "&" + ParameterSignature + "=" + signature;
 
             return normalizedUrl + "?" + normalizedParameters;
+        }
+
+        public static string GetAuthorizationURL(string requestTokenResponse, OAuthInfo oauth, string authorizeURL)
+        {
+            string url = null;
+
+            NameValueCollection args = HttpUtility.ParseQueryString(requestTokenResponse);
+
+            if (args[ParameterToken] != null)
+            {
+                oauth.AuthToken = args[ParameterToken];
+                url = string.Format("{0}?{1}={2}", authorizeURL, ParameterToken, oauth.AuthToken);
+
+                if (args[ParameterTokenSecret] != null)
+                {
+                    oauth.AuthSecret = args[ParameterTokenSecret];
+                }
+            }
+
+            return url;
+        }
+
+        public static bool ParseAccessTokenResponse(string accessTokenResponse, OAuthInfo oauth)
+        {
+            NameValueCollection args = HttpUtility.ParseQueryString(accessTokenResponse);
+
+            if (args[ParameterToken] != null)
+            {
+                oauth.UserToken = args[ParameterToken];
+
+                if (args[ParameterTokenSecret] != null)
+                {
+                    oauth.UserSecret = args[ParameterTokenSecret];
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static string GenerateSignatureBase(HttpMethod httpMethod, string normalizedUrl, string normalizedParameters)

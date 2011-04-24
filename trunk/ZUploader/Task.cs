@@ -293,7 +293,7 @@ namespace ZUploader
                     SendSpaceManager.PrepareUploadInfo(Program.SendSpaceKey, null, null);
                     break;
                 case FileDestination.Dropbox: // TODO: Account settings
-                    fileUploader = new Dropbox(Program.DropboxConsumerKey, Program.DropboxConsumerSecret);
+                    fileUploader = new Dropbox(new OAuthInfo(Program.DropboxConsumerKey, Program.DropboxConsumerSecret));
                     break;
                 /*case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();

@@ -38,10 +38,7 @@ namespace UploadersLib.FileUploaders
             get { return "Dropbox"; }
         }
 
-        public string ConsumerKey { get; private set; }
-        public string ConsumerSecret { get; private set; }
-        public string UserToken { get; set; }
-        public string UserSecret { get; set; }
+        public OAuthInfo AuthInfo { get; set; }
         public string UploadPath { get; set; }
         public string UserID { get; set; }
 
@@ -51,18 +48,15 @@ namespace UploadersLib.FileUploaders
         private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
-        public Dropbox(string consumerKey, string consumerSecret)
+        public Dropbox(OAuthInfo oauth)
         {
-            ConsumerKey = consumerKey;
-            ConsumerSecret = consumerSecret;
+            AuthInfo = oauth;
         }
 
-        public Dropbox(string consumerKey, string consumerSecret, string userToken, string userSecret, string path, string userID)
-            : this(consumerKey, consumerSecret)
+        public Dropbox(OAuthInfo oauth, string uploadPath, string userID)
+            : this(oauth)
         {
-            UserToken = userToken;
-            UserSecret = userSecret;
-            UploadPath = path;
+            UploadPath = uploadPath;
             UserID = userID;
         }
 
@@ -74,7 +68,7 @@ namespace UploadersLib.FileUploaders
                 args.Add("email", email);
                 args.Add("password", password);
 
-                string url = MyOAuth.GenerateQuery(URLToken, args, HttpMethod.GET, ConsumerKey, ConsumerSecret);
+                string url = OAuthManager.GenerateQuery(URLToken, args, HttpMethod.GET, AuthInfo);
 
                 string response = GetResponseString(url);
 
@@ -82,8 +76,8 @@ namespace UploadersLib.FileUploaders
 
                 if (login != null)
                 {
-                    UserToken = login.token;
-                    UserSecret = login.secret;
+                    AuthInfo.UserToken = login.token;
+                    AuthInfo.UserSecret = login.secret;
                 }
 
                 return login;
@@ -94,9 +88,9 @@ namespace UploadersLib.FileUploaders
 
         public DropboxAccountInfo GetAccountInfo()
         {
-            if (!string.IsNullOrEmpty(UserToken) && !string.IsNullOrEmpty(UserSecret))
+            if (!string.IsNullOrEmpty(AuthInfo.UserToken) && !string.IsNullOrEmpty(AuthInfo.UserSecret))
             {
-                string url = MyOAuth.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, ConsumerKey, ConsumerSecret, UserToken, UserSecret);
+                string url = OAuthManager.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, AuthInfo);
 
                 string response = GetResponseString(url);
 
@@ -115,17 +109,18 @@ namespace UploadersLib.FileUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            if (string.IsNullOrEmpty(UserToken) || string.IsNullOrEmpty(UserSecret)) throw new Exception("UserToken or UserSecret empty. Login is required.");
-
-            if (UploadPath == null) UploadPath = string.Empty;
-            if (!UploadPath.EndsWith("/")) UploadPath += "/";
+            if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
+            {
+                throw new Exception("UserToken or UserSecret is empty. Login is required.");
+            }
 
             string url = Helpers.CombineURL(URLFiles, UploadPath);
+            if (!url.EndsWith("/")) url += "/";
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("file", fileName);
 
-            string query = MyOAuth.GenerateQuery(url, args, HttpMethod.POST, ConsumerKey, ConsumerSecret, UserToken, UserSecret);
+            string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
 
             string response = UploadData(stream, query, fileName);
 
