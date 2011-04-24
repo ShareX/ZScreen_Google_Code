@@ -71,13 +71,14 @@ namespace UploadersLib.FileUploaders
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
             {
                 Dictionary<string, string> args = new Dictionary<string, string>();
-                args.Add("oauth_consumer_key", ConsumerKey);
                 args.Add("email", email);
                 args.Add("password", password);
 
-                string responseToken = GetResponseString(URLToken, args);
+                string url = MyOAuth.GenerateQuery(URLToken, args, HttpMethod.GET, ConsumerKey, ConsumerSecret);
 
-                DropboxUserLogin login = JSONHelper.JSONToObject<DropboxUserLogin>(responseToken);
+                string response = GetResponseString(url);
+
+                DropboxUserLogin login = JSONHelper.JSONToObject<DropboxUserLogin>(response);
 
                 if (login != null)
                 {
@@ -147,28 +148,28 @@ namespace UploadersLib.FileUploaders
 
             return "Upload path is private. Use Public folder for get public URL.";
         }
+    }
 
-        public class DropboxUserLogin
-        {
-            public string token { get; set; }
-            public string secret { get; set; }
-        }
+    public class DropboxUserLogin
+    {
+        public string token { get; set; }
+        public string secret { get; set; }
+    }
 
-        public class DropboxAccountInfo
-        {
-            public string referral_link { get; set; }
-            public string display_name { get; set; }
-            public long uid { get; set; }
-            public string country { get; set; }
-            public DropboxQuotaInfo quota_info { get; set; }
-            public string email { get; set; }
-        }
+    public class DropboxAccountInfo
+    {
+        public string referral_link { get; set; }
+        public string display_name { get; set; }
+        public long uid { get; set; }
+        public string country { get; set; }
+        public DropboxQuotaInfo quota_info { get; set; }
+        public string email { get; set; }
+    }
 
-        public class DropboxQuotaInfo
-        {
-            public long shared { get; set; }
-            public long quota { get; set; }
-            public long normal { get; set; }
-        }
+    public class DropboxQuotaInfo
+    {
+        public long shared { get; set; }
+        public long quota { get; set; }
+        public long normal { get; set; }
     }
 }

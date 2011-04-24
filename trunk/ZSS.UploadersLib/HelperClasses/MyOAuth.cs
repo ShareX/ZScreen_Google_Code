@@ -50,7 +50,7 @@ namespace UploadersLib.HelperClasses
         private const string RSASHA1SignatureType = "RSA-SHA1";
 
         public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod,
-            string consumerKey, string consumerSecret, string userToken, string userSecret)
+            string consumerKey, string consumerSecret, string userToken = null, string userSecret = null)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(ParameterVersion, OAuthVersion);
@@ -58,7 +58,11 @@ namespace UploadersLib.HelperClasses
             parameters.Add(ParameterTimestamp, GenerateTimestamp());
             parameters.Add(ParameterSignatureMethod, HMACSHA1SignatureType);
             parameters.Add(ParameterConsumerKey, consumerKey);
-            parameters.Add(ParameterToken, userToken);
+
+            if (!string.IsNullOrEmpty(userToken))
+            {
+                parameters.Add(ParameterToken, userToken);
+            }
 
             if (args != null)
             {
