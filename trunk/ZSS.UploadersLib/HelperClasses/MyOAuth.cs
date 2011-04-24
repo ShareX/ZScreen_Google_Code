@@ -28,74 +28,80 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
+using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
     public static class MyOAuth
     {
-        private const string OAuthVersion = "1.0";
+        public const string OAuthVersion = "1.0";
 
-        private const string OAuthConsumerKeyKey = "oauth_consumer_key";
-        private const string OAuthCallbackKey = "oauth_callback";
-        private const string OAuthVersionKey = "oauth_version";
-        private const string OAuthSignatureMethodKey = "oauth_signature_method";
-        private const string OAuthSignatureKey = "oauth_signature";
-        private const string OAuthTimestampKey = "oauth_timestamp";
-        private const string OAuthNonceKey = "oauth_nonce";
-        private const string OAuthTokenKey = "oauth_token";
-        private const string OAuthTokenSecretKey = "oauth_token_secret";
-        private const string OAuthVerifierKey = "oauth_verifier";
+        private const string ParameterConsumerKey = "oauth_consumer_key";
+        private const string ParameterSignatureMethod = "oauth_signature_method";
+        private const string ParameterSignature = "oauth_signature";
+        private const string ParameterTimestamp = "oauth_timestamp";
+        private const string ParameterNonce = "oauth_nonce";
+        private const string ParameterVersion = "oauth_version";
+        private const string ParameterToken = "oauth_token";
+        private const string ParameterTokenSecret = "oauth_token_secret";
 
-        private const string HMACSHA1SignatureType = "HMAC-SHA1";
         private const string PlainTextSignatureType = "PLAINTEXT";
+        private const string HMACSHA1SignatureType = "HMAC-SHA1";
         private const string RSASHA1SignatureType = "RSA-SHA1";
 
-        private static Random random = new Random();
-
-        public static string GenerateQuery(string url, Dictionary<string, string> args, string httpMethod,
+        public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod,
             string consumerKey, string consumerSecret, string userToken, string userSecret)
         {
-            SortedDictionary<string, string> parameters = new SortedDictionary<string, string>();
-            parameters.Add(OAuthVersionKey, OAuthVersion);
-            parameters.Add(OAuthNonceKey, GenerateNonce());
-            parameters.Add(OAuthTimestampKey, GenerateTimestamp());
-            parameters.Add(OAuthSignatureMethodKey, HMACSHA1SignatureType);
-            parameters.Add(OAuthConsumerKeyKey, consumerKey);
-            parameters.Add(OAuthTokenKey, userToken);
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add(ParameterVersion, OAuthVersion);
+            parameters.Add(ParameterNonce, GenerateNonce());
+            parameters.Add(ParameterTimestamp, GenerateTimestamp());
+            parameters.Add(ParameterSignatureMethod, HMACSHA1SignatureType);
+            parameters.Add(ParameterConsumerKey, consumerKey);
+            parameters.Add(ParameterToken, userToken);
 
             if (args != null)
             {
-                foreach (KeyValuePair<string, string> pair in args)
+                foreach (KeyValuePair<string, string> arg in args)
                 {
-                    parameters.Add(pair.Key, pair.Value);
+                    parameters.Add(arg.Key, arg.Value);
                 }
             }
 
-            StringBuilder signatureBase = new StringBuilder();
-            signatureBase.AppendFormat("{0}&", httpMethod.ToUpper());
-            signatureBase.AppendFormat("{0}&", Uri.EscapeDataString(url));
-            string queryString = string.Join("&", parameters.Select(x => x.Key + "=" + x.Value).ToArray());
-            signatureBase.AppendFormat("{0}", Uri.EscapeDataString(queryString));
+            string normalizedUrl = NormalizeUrl(url);
+            string normalizedParameters = NormalizeParameters(parameters);
+            string signatureBase = GenerateSignatureBase(httpMethod, normalizedUrl, normalizedParameters);
+            string signature = GenerateSignature(signatureBase, consumerSecret, userSecret);
 
-            string signature = GenerateSignature(signatureBase.ToString(), consumerSecret, userSecret);
+            normalizedParameters += "&" + ParameterSignature + "=" + signature;
 
-            queryString += "&" + OAuthSignatureKey + "=" + HttpUtility.UrlEncode(signature);
-
-            return url + "?" + queryString;
+            return normalizedUrl + "?" + normalizedParameters;
         }
 
-        private static string GenerateSignature(string signatureBase, string consumerSecret, string userSecret)
+        private static string GenerateSignatureBase(HttpMethod httpMethod, string normalizedUrl, string normalizedParameters)
+        {
+            StringBuilder signatureBase = new StringBuilder();
+            signatureBase.AppendFormat("{0}&", httpMethod.ToString().ToUpperInvariant());
+            signatureBase.AppendFormat("{0}&", Uri.EscapeDataString(normalizedUrl));
+            signatureBase.AppendFormat("{0}", Uri.EscapeDataString(normalizedParameters));
+            return signatureBase.ToString();
+        }
+
+        private static string GenerateSignature(string signatureBase, string consumerSecret, string userSecret = null)
         {
             using (HMACSHA1 hmacsha1 = new HMACSHA1())
             {
-                hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", HttpUtility.UrlEncode(consumerSecret),
-                    string.IsNullOrEmpty(userSecret) ? string.Empty : HttpUtility.UrlEncode(userSecret)));
+                string key = string.Format("{0}&{1}", Uri.EscapeDataString(consumerSecret),
+                    string.IsNullOrEmpty(userSecret) ? string.Empty : Uri.EscapeDataString(userSecret));
 
-                byte[] dataBuffer = Encoding.ASCII.GetBytes(signatureBase.ToString());
+                hmacsha1.Key = Encoding.ASCII.GetBytes(key);
+
+                byte[] dataBuffer = Encoding.ASCII.GetBytes(signatureBase);
                 byte[] hashBytes = hmacsha1.ComputeHash(dataBuffer);
 
-                return Convert.ToBase64String(hashBytes);
+                string signature = Convert.ToBase64String(hashBytes);
+
+                return Uri.EscapeDataString(signature);
             }
         }
 
@@ -107,7 +113,33 @@ namespace UploadersLib.HelperClasses
 
         private static string GenerateNonce()
         {
-            return random.Next(123400, 9999999).ToString();
+            return Helpers.GetRandomAlphanumeric(12);
+        }
+
+        private static string NormalizeUrl(string url)
+        {
+            Uri uri;
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                string port = string.Empty;
+
+                if (uri.Scheme == "http" && uri.Port != 80 ||
+                    uri.Scheme == "https" && uri.Port != 443 ||
+                    uri.Scheme == "ftp" && uri.Port != 20)
+                {
+                    port = ":" + uri.Port;
+                }
+
+                url = uri.Scheme + "://" + uri.Host + port + uri.AbsolutePath;
+            }
+
+            return url;
+        }
+
+        private static string NormalizeParameters(Dictionary<string, string> parameters)
+        {
+            return string.Join("&", parameters.OrderBy(x => x.Key).ThenBy(x => x.Value).Select(x => x.Key + "=" + x.Value).ToArray());
         }
     }
 }
