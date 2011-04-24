@@ -304,7 +304,7 @@ namespace ZScreenLib
             {
                 Engine.conf.PreferSystemFolders = Engine.mAppSettings.PreferSystemFolders;
                 Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
-                Engine.conf.FileDestMode = Engine.mAppSettings.FileUploader;
+                Engine.conf.FileUploaderType = Engine.mAppSettings.FileUploader;
                 Engine.conf.TextUploaderSelected = Engine.mAppSettings.TextUploaderSelected;
                 Engine.conf.UrlShortenerSelected = Engine.mAppSettings.UrlShortenerSelected;
             }

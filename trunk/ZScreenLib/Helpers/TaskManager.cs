@@ -713,11 +713,11 @@ namespace ZScreenLib
                 string url = "";
                 if (mTask.MyText != null)
                 {
-                    url = textUploader.UploadText(mTask.MyText);
+                    url = textUploader.UploadText(mTask.MyText.LocalString);
                 }
                 else
                 {
-                    url = textUploader.UploadTextFromFile(mTask.LocalFilePath);
+                    url = textUploader.UploadTextFile(mTask.LocalFilePath);
                     mTask.MyText = TextInfo.FromFile(mTask.LocalFilePath);
                 }
                 mTask.RemoteFilePath = url;

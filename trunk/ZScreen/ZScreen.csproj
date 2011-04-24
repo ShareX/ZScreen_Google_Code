@@ -188,12 +188,6 @@
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\RichTextBoxMenu.cs" />
-    <Compile Include="UserControls\TextUploadersControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\TextUploadersControl.Designer.cs">
-      <DependentUpon>TextUploadersControl.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -306,9 +300,6 @@
     <EmbeddedResource Include="Resources\lightning.png" />
     <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
       <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TextUploadersControl.resx">
-      <DependentUpon>TextUploadersControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Resources\main.png" />
     <None Include="Resources\application_lightning.png" />

@@ -43,8 +43,6 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.TextUploaders;
-using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib
@@ -377,40 +375,6 @@ namespace ZScreenLib
 
         #region URL Shortener Methods
 
-        public static TextUploader FindUrlShortener(string name)
-        {
-            if (name.Equals(GoogleURLShortener.Hostname))
-            {
-                return new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-            }
-            else if (name.Equals(BitlyUploader.Hostname))
-            {
-                return new BitlyUploader(Engine.BitlyLogin, Engine.BitlyKey);
-            }
-            else if (name.Equals(IsgdUploader.Hostname))
-            {
-                return new IsgdUploader();
-            }
-            else if (name.Equals(JmpUploader.Hostname))
-            {
-                return new JmpUploader(Engine.BitlyLogin, Engine.BitlyKey);
-            }
-            else if (name.Equals(TinyURLUploader.Hostname))
-            {
-                return new TinyURLUploader();
-            }
-            else if (name.Equals(ThreelyUploader.Hostname))
-            {
-                return new ThreelyUploader(Engine.ThreelyKey);
-            }
-            else if (name.Equals(TurlUploader.Hostname))
-            {
-                return new TurlUploader();
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// Attempt to shorten a URL
         /// </summary>
@@ -440,10 +404,10 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(url))
             {
-                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
+                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected]; // TODO: Use URLShortener
                 if (tu != null)
                 {
-                    string temp = tu.UploadText(TextInfo.FromString(url));
+                    string temp = tu.ShortenURL(url);
                     if (!string.IsNullOrEmpty(temp))
                     {
                         url = temp;
@@ -639,32 +603,6 @@ namespace ZScreenLib
                 }
             }
             return upb;
-        }
-
-        public static TextUploader FindTextUploader(string name)
-        {
-            if (name.Equals(PastebinUploader.Hostname))
-            {
-                return new PastebinUploader(Engine.PastebinKey);
-            }
-            else if (name.Equals(PastebinCaUploader.Hostname))
-            {
-                return new PastebinCaUploader(Engine.PastebinCaKey);
-            }
-            else if (name.Equals(Paste2Uploader.Hostname))
-            {
-                return new Paste2Uploader();
-            }
-            else if (name.Equals(SlexyUploader.Hostname))
-            {
-                return new SlexyUploader();
-            }
-            else if (name.Equals(SniptUploader.Hostname))
-            {
-                return new SniptUploader();
-            }
-
-            return null;
         }
 
         public static bool ImageSoftwareEnabled()

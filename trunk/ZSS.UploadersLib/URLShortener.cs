@@ -23,28 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System.Collections.Generic;
-
-namespace UploadersLib.HelperClasses
+namespace UploadersLib
 {
-    public class UploadResult
+    public abstract class URLShortener : Uploader
     {
-        public string URL { get; set; }
-        public string ThumbnailURL { get; set; }
-        public string DeletionURL { get; set; }
-        public string Source { get; set; }
-        public List<string> Errors { get; set; }
+        public abstract string Name { get; }
 
-        public UploadResult()
-        {
-            Errors = new List<string>();
-        }
-
-        public UploadResult(string source, string url = null)
-            : this()
-        {
-            Source = source;
-            URL = url;
-        }
+        public abstract string ShortenURL(string url);
     }
 }

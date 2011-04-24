@@ -23,61 +23,40 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.Xml;
-using HelpersLib;
-using UploadersLib.HelperClasses;
 
 namespace UploadersLib.URLShorteners
 {
-    [Serializable]
-    public sealed class BitlyUploader : TextUploader
+    public sealed class BitlyURLShortener : URLShortener
     {
-        public static readonly string Hostname = UrlShortenerType.BITLY.GetDescription();
+        public override string Name
+        {
+            get { return "Bitly"; }
+        }
+
+        private const string APIURL = "http://api.bit.ly/shorten";
 
         private string APILogin, APIKey;
 
-        public override object Settings
-        {
-            get
-            {
-                return (object)HostSettings;
-            }
-            set
-            {
-                HostSettings = (BitlyUploaderSettings)value;
-            }
-        }
-
-        public BitlyUploaderSettings HostSettings = new BitlyUploaderSettings();
-
-        public BitlyUploader() { }
-
-        public BitlyUploader(string login, string key)
+        public BitlyURLShortener(string login, string key)
         {
             APILogin = login;
             APIKey = key;
-            HostSettings.URL = "http://api.bit.ly/shorten";
         }
 
-        public override string ToString()
+        public override string ShortenURL(string url)
         {
-            return HostSettings.Name;
-        }
-
-        public override string UploadText(TextInfo text)
-        {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(url))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("version", "2.0.1");
-                arguments.Add("longUrl", text.LocalString);
+                arguments.Add("longUrl", url);
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");
 
-                string result = GetResponseString(HostSettings.URL, arguments);
+                string result = GetResponseString(APIURL, arguments);
 
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.LoadXml(result);
@@ -88,19 +67,7 @@ namespace UploadersLib.URLShorteners
                 }
             }
 
-            return string.Empty;
-        }
-
-        [Serializable]
-        public class BitlyUploaderSettings : TextUploaderSettings
-        {
-            public override string Name { get; set; }
-            public override string URL { get; set; }
-
-            public BitlyUploaderSettings()
-            {
-                Name = Hostname;
-            }
+            return null;
         }
     }
 }

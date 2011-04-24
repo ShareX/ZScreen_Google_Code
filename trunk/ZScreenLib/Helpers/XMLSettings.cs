@@ -65,15 +65,10 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
-        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+        public FileUploaderType FileUploaderType = FileUploaderType.RapidShare;
         public TextDestType TextUploaderType = TextDestType.PASTEBIN;
-        public FileUploaderType FileDestMode = FileUploaderType.RapidShare;
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
-        public bool PreferFileUploaderForImages { get; set; }
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
-        public bool PreferFileUploaderForText { get; set; }
-        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
-        public bool PreferFtpServerForIndex { get; set; }
+        public UrlShortenerType URLShortenerType = UrlShortenerType.BITLY;
+        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
@@ -82,6 +77,13 @@ namespace ZScreenLib
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
+
+        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
+        public bool PreferFileUploaderForImages { get; set; }
+        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
+        public bool PreferFileUploaderForText { get; set; }
+        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
+        public bool PreferFtpServerForIndex { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Destinations
@@ -354,6 +356,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
         //  Localhost
         //~~~~~~~~~~~~~~~~~~~~~
+
         public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
         public int LocalhostSelected = 0;
 
@@ -751,7 +754,7 @@ namespace ZScreenLib
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 }
 
-                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
+                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
                 using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     xs.Serialize(fs, this);
@@ -806,7 +809,7 @@ namespace ZScreenLib
                 {
                     try
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(XMLSettings), TextUploader.Types.ToArray());
+                        XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
                         using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             return xs.Deserialize(fs) as XMLSettings;

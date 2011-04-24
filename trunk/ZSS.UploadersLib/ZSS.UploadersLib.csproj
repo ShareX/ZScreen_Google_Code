@@ -164,15 +164,15 @@
     <Compile Include="TextUploaders\PastebinCaUploader.cs" />
     <Compile Include="TextUploaders\PastebinUploader.cs" />
     <Compile Include="TextUploaders\SlexyUploader.cs" />
-    <Compile Include="TextUploaders\SniptUploader.cs" />
     <Compile Include="Uploader.cs" />
-    <Compile Include="URLShorteners\BitlyUploader.cs" />
+    <Compile Include="URLShortener.cs" />
+    <Compile Include="URLShorteners\BitlyURLShortener.cs" />
     <Compile Include="URLShorteners\GoogleURLShortener.cs" />
-    <Compile Include="URLShorteners\IsgdUploader.cs" />
-    <Compile Include="URLShorteners\JmpUploader.cs" />
-    <Compile Include="URLShorteners\ThreelyUploader.cs" />
-    <Compile Include="URLShorteners\TinyURLUploader.cs" />
-    <Compile Include="URLShorteners\TurlUploader.cs" />
+    <Compile Include="URLShorteners\IsgdURLShortener.cs" />
+    <Compile Include="URLShorteners\JmpURLShortener.cs" />
+    <Compile Include="URLShorteners\ThreelyURLShortener.cs" />
+    <Compile Include="URLShorteners\TinyURLShortener.cs" />
+    <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">

@@ -23,20 +23,22 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
+
 namespace UploadersLib.URLShorteners
 {
-    public class GoogleURLShortener : URLShortener
+    public sealed class ThreelyURLShortener : URLShortener
     {
         public override string Name
         {
-            get { return "Google"; }
+            get { return "Threely"; }
         }
 
-        private const string APIURL = "https://www.googleapis.com/urlshortener/v1/url";
+        private const string APIURL = "http://3.ly";
 
         private string APIKey;
 
-        public GoogleURLShortener(string key)
+        public ThreelyURLShortener(string key)
         {
             APIKey = key;
         }
@@ -45,21 +47,14 @@ namespace UploadersLib.URLShorteners
         {
             if (!string.IsNullOrEmpty(url))
             {
-                string query = string.Format("{0}?key={1}", url, APIKey);
-                string json = string.Format("{{\"longUrl\":\"{0}\"}}", url);
-                GoogleURLShortenerResponse result = GetResponseJSON<GoogleURLShortenerResponse>(query, json);
-                return result.id;
+                Dictionary<string, string> arguments = new Dictionary<string, string>();
+                arguments.Add("api", APIKey);
+                arguments.Add("u", url);
+
+                return GetResponseString(APIURL, arguments);
             }
 
             return null;
         }
-    }
-
-    public class GoogleURLShortenerResponse
-    {
-        public string kind { get; set; }
-        public string id { get; set; }
-        public string longUrl { get; set; }
-        public string status { get; set; }
     }
 }

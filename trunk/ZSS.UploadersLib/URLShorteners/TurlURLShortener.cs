@@ -23,51 +23,35 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
-using HelpersLib;
-using UploadersLib.HelperClasses;
 
 namespace UploadersLib.URLShorteners
 {
-    [Serializable]
-    public sealed class TurlUploader : TextUploader
+    public sealed class TurlURLShortener : URLShortener
     {
-        public static readonly string Hostname = UrlShortenerType.TURL.GetDescription();
-
-        public override object Settings
+        public override string Name
         {
-            get
-            {
-                return (object)HostSettings;
-            }
-            set
-            {
-                HostSettings = (TURLSettings)value;
-            }
+            get { return "Turl"; }
         }
 
-        public TURLSettings HostSettings = new TURLSettings();
+        private const string APIURL = "http://turl.ca/api.php";
 
-        public TurlUploader()
+        private string APIKey;
+
+        public TurlURLShortener(string key)
         {
-            HostSettings.URL = "http://turl.ca/api.php";
+            APIKey = key;
         }
 
-        public override string ToString()
+        public override string ShortenURL(string url)
         {
-            return HostSettings.Name;
-        }
-
-        public override string UploadText(TextInfo text)
-        {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(url))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("url", text.LocalString);
-                arguments.Add("tag", HostSettings.Tag);
+                arguments.Add("url", url);
+                // arguments.Add("tag", settings.Tag);
 
-                string response = GetResponseString(HostSettings.URL, arguments);
+                string response = GetResponseString(APIURL, arguments);
 
                 if (!string.IsNullOrEmpty(response))
                 {
@@ -82,20 +66,7 @@ namespace UploadersLib.URLShorteners
                 }
             }
 
-            return string.Empty;
-        }
-
-        [Serializable]
-        public class TURLSettings : TextUploaderSettings
-        {
-            public override string Name { get; set; }
-            public override string URL { get; set; }
-            public string Tag { get; set; }
-
-            public TURLSettings()
-            {
-                Name = Hostname;
-            }
+            return null;
         }
     }
 }
