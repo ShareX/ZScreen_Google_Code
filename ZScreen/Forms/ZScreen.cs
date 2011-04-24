@@ -230,20 +230,6 @@ namespace ZScreenGUI
             ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
             ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
 
-            // Text Services - Text Uploaders
-            ucTextUploaders.MyComboBox = ucDestOptions.cboTextUploaders;
-            ucTextUploaders.btnItemAdd.Click += new EventHandler(TextUploadersAddButton_Click);
-            ucTextUploaders.btnItemRemove.Click += new EventHandler(TextUploadersRemoveButton_Click);
-            ucTextUploaders.MyCollection.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
-            ucTextUploaders.btnItemTest.Click += new EventHandler(TextUploaderTestButton_Click);
-
-            // Text Services - URL Shorteners
-            ucUrlShorteners.MyComboBox = ucDestOptions.cboURLShorteners;
-            ucUrlShorteners.btnItemAdd.Click += new EventHandler(UrlShortenersAddButton_Click);
-            ucUrlShorteners.btnItemRemove.Click += new EventHandler(UrlShortenersRemoveButton_Click);
-            ucUrlShorteners.MyCollection.SelectedIndexChanged += new EventHandler(UrlShorteners_SelectedIndexChanged);
-            ucUrlShorteners.btnItemTest.Click += new EventHandler(UrlShortenerTestButton_Click);
-
             // Watermark Codes Menu
             codesMenu.AutoClose = false;
             codesMenu.Font = new Font("Lucida Console", 8);
@@ -502,7 +488,7 @@ namespace ZScreenGUI
                     tsmFileDest.DropDownItems.Add(tsmi);
                 }
             }
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileDestMode));
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
         }
 
         private void ZScreen_ConfigGUI_Main()
@@ -686,7 +672,7 @@ namespace ZScreenGUI
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
 
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileDestMode;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileUploaderType;
 
             // RapidShare
 
@@ -1018,33 +1004,25 @@ namespace ZScreenGUI
                 }
             }
 
-            ucTextUploaders.MyCollection.Items.Clear();
             ucDestOptions.cboTextUploaders.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.TextUploadersList)
             {
                 if (textUploader != null)
                 {
-                    ucTextUploaders.MyCollection.Items.Add(textUploader);
                     ucDestOptions.cboTextUploaders.Items.Add(textUploader);
                 }
             }
 
             if (Adapter.CheckTextUploaders())
             {
-                ucTextUploaders.MyCollection.SelectedIndex = Engine.conf.TextUploaderSelected;
                 ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.TextUploaderSelected;
             }
             else
             {
-                ucTextUploaders.MyCollection.SelectedIndex = 0;
                 ucDestOptions.cboTextUploaders.SelectedIndex = 0;
             }
 
             ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
-
-            ucTextUploaders.Templates.Items.Clear();
-            ucTextUploaders.Templates.Items.AddRange(typeof(TextDestType).GetDescriptions());
-            ucTextUploaders.Templates.SelectedIndex = 1;
 
             foreach (UrlShortenerType etu in Enum.GetValues(typeof(UrlShortenerType)))
             {
@@ -1058,26 +1036,19 @@ namespace ZScreenGUI
                 }
             }
 
-            ucUrlShorteners.MyCollection.Items.Clear();
             ucDestOptions.cboURLShorteners.Items.Clear();
             foreach (TextUploader textUploader in Engine.conf.UrlShortenersList)
             {
                 if (textUploader != null)
                 {
-                    ucUrlShorteners.MyCollection.Items.Add(textUploader);
                     ucDestOptions.cboURLShorteners.Items.Add(textUploader);
                 }
             }
 
-            if (Engine.conf.UrlShortenerSelected > -1 && Engine.conf.UrlShortenerSelected < ucUrlShorteners.MyCollection.Items.Count)
+            if (Engine.conf.UrlShortenerSelected > -1 && Engine.conf.UrlShortenerSelected < ucDestOptions.cboURLShorteners.Items.Count)
             {
-                ucUrlShorteners.MyCollection.SelectedIndex = Engine.conf.UrlShortenerSelected;
                 ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.UrlShortenerSelected;
             }
-
-            ucUrlShorteners.Templates.Items.Clear();
-            ucUrlShorteners.Templates.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-            ucUrlShorteners.Templates.SelectedIndex = 0;
         }
 
         private void ZScreen_ConfigGUI_Translator()
@@ -3954,73 +3925,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI();
         }
 
-        private void TextUploadersAddButton_Click(object sender, EventArgs e)
-        {
-            if (ucTextUploaders.Templates.SelectedIndex > -1)
-            {
-                string name = ucTextUploaders.Templates.SelectedItem.ToString();
-                if (!string.IsNullOrEmpty(name))
-                {
-                    TextUploader textUploader = Adapter.FindTextUploader(name);
-                    if (textUploader != null)
-                    {
-                        Engine.conf.TextUploadersList.Add(textUploader);
-                        ucTextUploaders.MyCollection.Items.Add(textUploader);
-                        ucDestOptions.cboTextUploaders.Items.Add(textUploader);
-                    }
-
-                    ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
-                }
-            }
-        }
-
-        private void TextUploadersRemoveButton_Click(object sender, EventArgs e)
-        {
-            if (ucTextUploaders.MyCollection.Items.Count > 0)
-            {
-                List<TextUploader> selectedUploaders = new List<TextUploader>();
-                foreach (TextUploader uploader in ucTextUploaders.MyCollection.SelectedItems)
-                {
-                    selectedUploaders.Add(uploader);
-                }
-                foreach (TextUploader uploader in selectedUploaders)
-                {
-                    Engine.conf.TextUploadersList.Remove(uploader);
-                    ucTextUploaders.MyCollection.Items.Remove(uploader);
-                    ucDestOptions.cboTextUploaders.Items.Remove(uploader);
-                }
-                ucTextUploaders.MyCollection.SelectedIndex = ucTextUploaders.MyCollection.Items.Count - 1;
-            }
-        }
-
-        private void TestUploaderText(TextUploader uploader)
-        {
-            if (uploader != null)
-            {
-                string name = uploader.ToString();
-                string testString = uploader.TesterString;
-
-                if (!string.IsNullOrEmpty(name))
-                {
-                    WorkerTask task = Loader.Worker.GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
-                    task.MyText = TextInfo.FromString(testString);
-                    task.MakeTinyURL = false; // preventing Error: TinyURL redirects to a TinyURL.
-                    task.MyTextUploader = uploader;
-                    task.RunWorker();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Select a Text Uploader.");
-            }
-        }
-
-        private void TextUploaderTestButton_Click(object sender, EventArgs e)
-        {
-            TextUploader uploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
-            TestUploaderText(uploader);
-        }
-
         private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             RewriteFTPRightClickMenu();
@@ -4034,47 +3938,6 @@ namespace ZScreenGUI
             RewriteImageEditorsRightClickMenu();
         }
 
-        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            bool bComboBox = sender.GetType() == typeof(ComboBox);
-            int sel = (bComboBox ? ucDestOptions.cboTextUploaders.SelectedIndex : ucTextUploaders.MyCollection.SelectedIndex);
-
-            if (ucTextUploaders.MyCollection.SelectedItems.Count > 0)
-            {
-                TextUploader textUploader = (TextUploader)ucTextUploaders.MyCollection.SelectedItem;
-
-                if (mGuiIsReady)
-                {
-                    Engine.conf.TextUploaderSelected = sel;
-                    if (bComboBox)
-                    {
-                        ucTextUploaders.MyCollection.SelectedIndex = sel;
-                    }
-                    else
-                    {
-                        ucDestOptions.cboTextUploaders.SelectedIndex = sel;
-                    }
-                }
-
-                bool hasOptions = textUploader != null;
-                ucTextUploaders.SettingsGrid.Visible = hasOptions;
-
-                if (hasOptions)
-                {
-                    ucTextUploaders.SettingsGrid.SelectedObject = textUploader.Settings;
-                }
-            }
-        }
-
-        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (mGuiIsReady)
-            {
-                ucUrlShorteners.MyCollection.SelectedIndex = ucDestOptions.cboURLShorteners.SelectedIndex;
-                Engine.conf.UrlShortenerSelected = ucDestOptions.cboURLShorteners.SelectedIndex;
-            }
-        }
-
         private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.AutoTranslate = cbAutoTranslate.Checked;
@@ -4086,82 +3949,6 @@ namespace ZScreenGUI
             if (int.TryParse(txtAutoTranslate.Text, out number))
             {
                 Engine.conf.AutoTranslateLength = number;
-            }
-        }
-
-        private void UrlShortenerTestButton_Click(object sender, EventArgs e)
-        {
-            this.TestUploaderText((TextUploader)ucUrlShorteners.MyCollection.SelectedItem);
-        }
-
-        private void UrlShorteners_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.MyCollection.SelectedItems.Count > 0)
-            {
-                TextUploader textUploader = (TextUploader)ucUrlShorteners.MyCollection.SelectedItem;
-
-                if (mGuiIsReady)
-                {
-                    Engine.conf.UrlShortenerSelected = ucUrlShorteners.MyCollection.SelectedIndex;
-                    ucDestOptions.cboURLShorteners.SelectedIndex = ucUrlShorteners.MyCollection.SelectedIndex;
-                }
-
-                bool hasOptions = textUploader != null;
-                ucUrlShorteners.SettingsGrid.Visible = hasOptions;
-
-                if (hasOptions)
-                {
-                    ucUrlShorteners.SettingsGrid.SelectedObject = textUploader.Settings;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method to add a Link Shorteners to the List of Link Shorteners
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UrlShortenersAddButton_Click(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.Templates.SelectedIndex > -1)
-            {
-                string name = ucUrlShorteners.Templates.SelectedItem.ToString();
-                if (!string.IsNullOrEmpty(name))
-                {
-                    TextUploader textUploader = Adapter.FindUrlShortener(name);
-                    if (textUploader != null)
-                    {
-                        Engine.conf.UrlShortenersList.Add(textUploader);
-                        ucUrlShorteners.MyCollection.Items.Add(textUploader);
-                        ucDestOptions.cboURLShorteners.Items.Add(textUploader);
-                    }
-
-                    ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method to remove a Link Shorteners from the List of Link Shorteners
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UrlShortenersRemoveButton_Click(object sender, EventArgs e)
-        {
-            if (ucUrlShorteners.MyCollection.Items.Count > 0)
-            {
-                List<TextUploader> selectedUploaders = new List<TextUploader>();
-                foreach (TextUploader uploader in ucUrlShorteners.MyCollection.SelectedItems)
-                {
-                    selectedUploaders.Add(uploader);
-                }
-                foreach (TextUploader uploader in selectedUploaders)
-                {
-                    Engine.conf.UrlShortenersList.Remove(uploader);
-                    ucUrlShorteners.MyCollection.Items.Remove(uploader);
-                    ucDestOptions.cboURLShorteners.Items.Remove(uploader);
-                }
-                ucUrlShorteners.MyCollection.SelectedIndex = ucUrlShorteners.MyCollection.Items.Count - 1;
             }
         }
 
@@ -4189,16 +3976,6 @@ namespace ZScreenGUI
         private void txtUserNameImageShack_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageShackUserName = txtUserNameImageShack.Text;
-        }
-
-        private void ucTextUploaders_Load(object sender, EventArgs e)
-        {
-            cboTextUploaders_SelectedIndexChanged(sender, e);
-        }
-
-        private void ucUrlShorteners_Load(object sender, EventArgs e)
-        {
-            UrlShorteners_SelectedIndexChanged(sender, e);
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
@@ -4640,9 +4417,9 @@ namespace ZScreenGUI
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.FileDestMode = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+            Engine.conf.FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
 
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileDestMode));
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
         }
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)

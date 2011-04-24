@@ -23,79 +23,57 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
-using HelpersLib;
-using UploadersLib.HelperClasses;
 
 namespace UploadersLib.TextUploaders
 {
-    [Serializable]
     public sealed class Paste2Uploader : TextUploader
     {
-        public static readonly string Hostname = TextDestType.PASTE2.GetDescription();
-
-        public override object Settings
+        public override string Name
         {
-            get
-            {
-                return HostSettings;
-            }
-            set
-            {
-                HostSettings = (Paste2Settings)value;
-            }
+            get { return "Paste2"; }
         }
 
-        public Paste2Settings HostSettings = new Paste2Settings();
+        private const string APIURL = "http://paste2.org/new-paste";
+
+        private Paste2Settings settings;
 
         public Paste2Uploader()
         {
-            HostSettings.URL = "http://paste2.org/new-paste";
+            settings = new Paste2Settings();
         }
 
-        public override string ToString()
+        public Paste2Uploader(Paste2Settings settings)
         {
-            return HostSettings.Name;
+            this.settings = settings;
         }
 
-        public override string TesterString
+        public override string UploadText(string text)
         {
-            get { return "Testing " + Hostname; }
-        }
-
-        public override string UploadText(TextInfo text)
-        {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(text))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("code", text.LocalString);
-                arguments.Add("description", HostSettings.Description);
-                arguments.Add("lang", HostSettings.TextFormat);
+                arguments.Add("code", text);
+                arguments.Add("description", settings.Description);
+                arguments.Add("lang", settings.TextFormat);
                 arguments.Add("parent", "0");
 
-                return GetRedirectionURL(HostSettings.URL, arguments);
+                return GetRedirectionURL(APIURL, arguments);
             }
 
-            return string.Empty;
+            return null;
         }
+    }
 
-        [Serializable]
-        public class Paste2Settings : TextUploaderSettings
+    public class Paste2Settings
+    {
+        public string TextFormat { get; set; }
+        public string Description { get; set; }
+
+        public Paste2Settings()
         {
-            public override string Name { get; set; }
-            public override string URL { get; set; }
-            /// <summary>lang</summary>
-            public string TextFormat { get; set; }
-            /// <summary>description</summary>
-            public string Description { get; set; }
-
-            public Paste2Settings()
-            {
-                Name = Hostname;
-                TextFormat = "text";
-                Description = string.Empty;
-            }
+            TextFormat = "text";
+            Description = string.Empty;
         }
     }
 }

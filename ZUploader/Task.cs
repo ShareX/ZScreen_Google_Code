@@ -256,10 +256,10 @@ namespace ZUploader
             switch (UploadManager.TextUploader)
             {
                 case TextDestination.PASTEBIN:
-                    textUploader = new PastebinUploader();
+                    textUploader = new PastebinUploader(Program.PastebinKey);
                     break;
                 case TextDestination.PASTEBIN_CA:
-                    textUploader = new PastebinCaUploader();
+                    textUploader = new PastebinCaUploader(Program.PastebinCaKey);
                     break;
                 case TextDestination.SLEXY:
                     textUploader = new SlexyUploader();

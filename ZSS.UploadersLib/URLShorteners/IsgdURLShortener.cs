@@ -23,43 +23,30 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
+
 namespace UploadersLib.URLShorteners
 {
-    public class GoogleURLShortener : URLShortener
+    public sealed class IsgdURLShortener : URLShortener
     {
         public override string Name
         {
-            get { return "Google"; }
+            get { return "Isgd"; }
         }
 
-        private const string APIURL = "https://www.googleapis.com/urlshortener/v1/url";
-
-        private string APIKey;
-
-        public GoogleURLShortener(string key)
-        {
-            APIKey = key;
-        }
+        private const string APIURL = "http://is.gd/api.php";
 
         public override string ShortenURL(string url)
         {
             if (!string.IsNullOrEmpty(url))
             {
-                string query = string.Format("{0}?key={1}", url, APIKey);
-                string json = string.Format("{{\"longUrl\":\"{0}\"}}", url);
-                GoogleURLShortenerResponse result = GetResponseJSON<GoogleURLShortenerResponse>(query, json);
-                return result.id;
+                Dictionary<string, string> arguments = new Dictionary<string, string>();
+                arguments.Add("longurl", url);
+
+                return GetResponseString(APIURL, arguments);
             }
 
             return null;
         }
-    }
-
-    public class GoogleURLShortenerResponse
-    {
-        public string kind { get; set; }
-        public string id { get; set; }
-        public string longUrl { get; set; }
-        public string status { get; set; }
     }
 }

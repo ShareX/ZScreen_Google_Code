@@ -53,7 +53,7 @@ namespace ZScreenLib
             {
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileDestMode;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileUploaderType;
 
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)

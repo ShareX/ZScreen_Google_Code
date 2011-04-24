@@ -23,75 +23,58 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using HelpersLib;
-using UploadersLib.HelperClasses;
 
 namespace UploadersLib.TextUploaders
 {
-    [Serializable]
     public sealed class PastebinCaUploader : TextUploader
     {
-        public static readonly string Hostname = TextDestType.PASTEBIN_CA.GetDescription();
+        public override string Name
+        {
+            get { return "PasteBinCa"; }
+        }
+
+        private const string APIURL = "http://pastebin.ca/quiet-paste.php";
 
         private string APIKey;
 
-        public override object Settings
-        {
-            get
-            {
-                return HostSettings;
-            }
-            set
-            {
-                HostSettings = (PastebinCaSettings)value;
-            }
-        }
-
-        public PastebinCaSettings HostSettings = new PastebinCaSettings();
-
-        public PastebinCaUploader() { }
+        private PastebinCaSettings settings;
 
         public PastebinCaUploader(string apiKey)
         {
             APIKey = apiKey;
-            HostSettings.URL = "http://pastebin.ca/quiet-paste.php";
+            settings = new PastebinCaSettings();
         }
 
-        public override string ToString()
+        public PastebinCaUploader(string apiKey, PastebinCaSettings settings)
         {
-            return HostSettings.Name;
+            APIKey = apiKey;
+            this.settings = settings;
         }
 
-        public override string TesterString
+        public override string UploadText(string text)
         {
-            get { return "Testing " + Hostname; }
-        }
-
-        public override string UploadText(TextInfo text)
-        {
-            if (!string.IsNullOrEmpty(text.LocalString))
+            if (!string.IsNullOrEmpty(text))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("api", APIKey);
-                arguments.Add("content", text.LocalString);
-                arguments.Add("description", HostSettings.Description);
+                arguments.Add("content", text);
+                arguments.Add("description", settings.Description);
 
-                if (HostSettings.Encrypt)
+                if (settings.Encrypt)
                 {
                     arguments.Add("encrypt", "true");
                 }
 
-                arguments.Add("encryptpw", HostSettings.EncryptPassword);
-                arguments.Add("expiry", HostSettings.ExpireTime);
-                arguments.Add("name", HostSettings.Author);
+                arguments.Add("encryptpw", settings.EncryptPassword);
+                arguments.Add("expiry", settings.ExpireTime);
+                arguments.Add("name", settings.Author);
                 arguments.Add("s", "Submit Post");
-                arguments.Add("tags", HostSettings.Tags);
-                arguments.Add("type", HostSettings.TextFormat);
+                arguments.Add("tags", settings.Tags);
+                arguments.Add("type", settings.TextFormat);
 
-                string response = GetResponse(HostSettings.URL, arguments);
+                string response = GetResponse(APIURL, arguments);
 
                 if (!string.IsNullOrEmpty(response))
                 {
@@ -106,53 +89,48 @@ namespace UploadersLib.TextUploaders
                 }
             }
 
-            return string.Empty;
+            return null;
         }
+    }
 
-        [Serializable]
-        public class PastebinCaSettings : TextUploaderSettings
+    public class PastebinCaSettings
+    {
+        /// <summary>name</summary>
+        [Description("Name / Title")]
+        public string Author { get; set; }
+
+        /// <summary>description</summary>
+        [Description("Description / Question")]
+        public string Description { get; set; }
+
+        /// <summary>tags</summary>
+        [Description("Tags (space separated, optional)")]
+        public string Tags { get; set; }
+
+        [Description("Content Type"), DefaultValue("1")]
+        /// <summary>type</summary>
+        public string TextFormat { get; set; }
+
+        /// <summary>expiry</summary>
+        [Description("Expire this post in ..."), DefaultValue("1 month")]
+        public string ExpireTime { get; set; }
+
+        /// <summary>encrypt</summary>
+        [Description("Encrypt this paste")]
+        public bool Encrypt { get; set; }
+
+        /// <summary>encryptpw</summary>
+        public string EncryptPassword { get; set; }
+
+        public PastebinCaSettings()
         {
-            public override string Name { get; set; }
-            public override string URL { get; set; }
-
-            /// <summary>name</summary>
-            [Description("Name / Title")]
-            public string Author { get; set; }
-
-            /// <summary>description</summary>
-            [Description("Description / Question")]
-            public string Description { get; set; }
-
-            /// <summary>tags</summary>
-            [Description("Tags (space separated, optional)")]
-            public string Tags { get; set; }
-
-            [Description("Content Type"), DefaultValue("1")]
-            /// <summary>type</summary>
-            public string TextFormat { get; set; }
-
-            /// <summary>expiry</summary>
-            [Description("Expire this post in ..."), DefaultValue("1 month")]
-            public string ExpireTime { get; set; }
-
-            /// <summary>encrypt</summary>
-            [Description("Encrypt this paste")]
-            public bool Encrypt { get; set; }
-
-            /// <summary>encryptpw</summary>
-            public string EncryptPassword { get; set; }
-
-            public PastebinCaSettings()
-            {
-                Name = Hostname;
-                Author = string.Empty;
-                Description = string.Empty;
-                Tags = string.Empty;
-                TextFormat = "1";
-                ExpireTime = "1 month";
-                Encrypt = false;
-                EncryptPassword = string.Empty;
-            }
+            Author = string.Empty;
+            Description = string.Empty;
+            Tags = string.Empty;
+            TextFormat = "1";
+            ExpireTime = "1 month";
+            Encrypt = false;
+            EncryptPassword = string.Empty;
         }
     }
 }

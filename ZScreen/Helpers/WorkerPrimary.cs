@@ -78,7 +78,7 @@ namespace ZScreenGUI
                 task.JobCategory = JobCategoryType.BINARY;
                 if (!Engine.conf.PreferFtpServerForIndex)
                 {
-                    task.MyFileUploader = Engine.conf.FileDestMode;
+                    task.MyFileUploader = Engine.conf.FileUploaderType;
                 }
             }
 

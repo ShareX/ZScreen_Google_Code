@@ -23,69 +23,36 @@
 
 #endregion License Information (GPL v2)
 
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UploadersLib.HelperClasses;
-using UploadersLib.TextUploaders;
-using UploadersLib.URLShorteners;
 
 namespace UploadersLib
 {
-    [Serializable]
     public abstract class TextUploader : Uploader
     {
-        #region ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
+        public abstract string Name { get; }
 
-        public static List<Type> Types = new List<Type> { typeof(Paste2Uploader), typeof(PastebinCaUploader), typeof(PastebinUploader),
-            typeof(SlexyUploader), typeof(SniptUploader), typeof(TinyURLUploader), typeof(ThreelyUploader), typeof(IsgdUploader),
-            typeof(JmpUploader), typeof(BitlyUploader), typeof(TurlUploader), typeof(GoogleURLShortener), typeof(TextUploader) };
-
-        #endregion ** THIS HAS TO BE UP-TO-DATE OTHERWISE XML SERIALIZING IS GOING TO FUCK UP **
-
-        protected TextUploader() { }
-
-        /// <summary>
-        /// Descriptive name for the Text Uploader
-        /// </summary>
-        public override string ToString()
-        {
-            return "TextUploader";
-        }
-
-        /// <summary>
-        /// String used to test the functionality
-        /// </summary>
-        public virtual string TesterString
-        {
-            get { return "http://code.google.com/p/zscreen"; }
-        }
-
-        public virtual object Settings { get; set; }
-
-        public abstract string UploadText(TextInfo text);
+        public abstract string UploadText(string text);
 
         public string UploadText(Stream stream)
         {
-            string text = new StreamReader(stream, Encoding.UTF8).ReadToEnd();
-            return UploadText(TextInfo.FromString(text));
+            using (StreamReader sr = new StreamReader(stream, Encoding.UTF8))
+            {
+                return UploadText(sr.ReadToEnd());
+            }
         }
 
-        public string UploadTextFromFile(string filePath)
+        public string UploadTextFile(string filePath)
         {
             if (File.Exists(filePath))
             {
-                return UploadText(TextInfo.FromFile(filePath));
+                using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    return UploadText(stream);
+                }
             }
 
-            return string.Empty;
+            return null;
         }
-    }
-
-    public abstract class TextUploaderSettings
-    {
-        public abstract string Name { get; set; }
-        public abstract string URL { get; set; }
     }
 }

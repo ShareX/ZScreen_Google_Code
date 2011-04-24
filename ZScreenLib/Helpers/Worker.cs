@@ -254,7 +254,7 @@ namespace ZScreenLib
                 {
                     task.MyTextUploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
                 }
-                task.MyFileUploader = Engine.conf.FileDestMode;
+                task.MyFileUploader = Engine.conf.FileUploaderType;
             }
             else
             {
