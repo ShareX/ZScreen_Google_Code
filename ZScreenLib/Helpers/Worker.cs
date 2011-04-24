@@ -250,10 +250,7 @@ namespace ZScreenLib
             if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
             {
                 task.MyImageUploader = Engine.conf.ImageUploaderType;
-                if (Adapter.CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected))
-                {
-                    task.MyTextUploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
-                }
+                task.MyTextUploader = Engine.conf.TextUploaderType;
                 task.MyFileUploader = Engine.conf.FileUploaderType;
             }
             else
@@ -278,7 +275,7 @@ namespace ZScreenLib
             WorkerTask t = CreateTask(job);
             t.JobCategory = JobCategoryType.TEXT;
             // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = Adapter.GetTextUploaderActive();
+            t.MyTextUploader = Engine.conf.TextUploaderType;
             if (!string.IsNullOrEmpty(localFilePath))
             {
                 t.UpdateLocalFilePath(localFilePath);
@@ -460,10 +457,10 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (FileSystem.IsValidLink(task.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())
+                if (FileSystem.IsValidLink(task.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload)
                 {
                     FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText, task.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
-                    task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
+                    task.MyUrlShortenerType = Engine.conf.URLShortenerType;
                     task.RunWorker();
                 }
                 else if (Directory.Exists(task.MyText))
@@ -507,7 +504,7 @@ namespace ZScreenLib
                         task.RunWorker();
                     }
                 }
-                else if (Adapter.CheckTextUploaders())
+                else
                 {
                     task.RunWorker();
                 }

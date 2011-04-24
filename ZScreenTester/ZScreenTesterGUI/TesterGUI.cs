@@ -27,7 +27,7 @@ namespace ZScreenTesterGUI
         {
             public UploaderType UploaderType;
             public ImageDestType ImageUploader;
-            public TextDestination TextUploader;
+            public TextUploaderType TextUploader;
             public FileUploaderType FileUploader;
             public UrlShortenerType UrlShortener;
             public WorkerTask Task;
@@ -87,7 +87,7 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            foreach (TextDestination uploader in Enum.GetValues(typeof(TextDestination)))
+            foreach (TextUploaderType uploader in Enum.GetValues(typeof(TextUploaderType)))
             {
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.TextUploader, TextUploader = uploader };
@@ -222,7 +222,7 @@ namespace ZScreenTesterGUI
                         new TaskManager(ref task).UploadText();
                         break;
                     case UploaderType.UrlShortener:
-                        task.MyTextUploader = uploader.UrlShortener; // TODO: MyURLShortener required
+                        task.MyUrlShortenerType = uploader.UrlShortener; // TODO: MyURLShortener required
                         task.MyText = "Testing...";
                         new TaskManager(ref task).UploadText();
                         break;

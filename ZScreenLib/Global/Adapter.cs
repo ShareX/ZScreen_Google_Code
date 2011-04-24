@@ -417,11 +417,6 @@ namespace ZScreenLib
             return url;
         }
 
-        public static bool CheckURLShorteners()
-        {
-            return CheckList(Engine.conf.UrlShortenersList, Engine.conf.UrlShortenerSelected);
-        }
-
         public static bool MakeTinyURL()
         {
             // LimitLongURL = 0 means make tinyURL always
@@ -429,20 +424,6 @@ namespace ZScreenLib
         }
 
         #endregion URL Shortener Methods
-
-        #region Text Uploader Methods
-
-        public static TextUploader GetTextUploaderActive()
-        {
-            TextUploader uploader = null;
-            if (CheckTextUploaders())
-            {
-                uploader = Engine.conf.TextUploadersList[Engine.conf.TextUploaderSelected];
-            }
-            return uploader;
-        }
-
-        #endregion Text Uploader Methods
 
         public static bool CheckList<T>(List<T> list, int selected)
         {
@@ -459,11 +440,6 @@ namespace ZScreenLib
                 }
             }
             return false;
-        }
-
-        public static bool CheckTextUploaders()
-        {
-            return CheckList(Engine.conf.TextUploadersList, Engine.conf.TextUploaderSelected);
         }
 
         public static bool CheckDekiWikiAccounts()

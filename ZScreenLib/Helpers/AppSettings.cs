@@ -17,8 +17,8 @@ namespace ZScreenLib
         [Category("Options / General"), DefaultValue(ImageDestType.CLIPBOARD), Description("Image Destination")]
         public ImageDestType ImageUploader { get; set; }
         public FileUploaderType FileUploader { get; set; }
-        public int TextUploaderSelected { get; set; }
-        public int UrlShortenerSelected { get; set; }
+        public TextUploaderType TextUploaderSelected { get; set; }
+        public UrlShortenerType UrlShortenerSelected { get; set; }
 
         [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }

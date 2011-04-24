@@ -186,7 +186,8 @@ namespace ZScreenLib
 
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
 
-        public TextDestination MyTextUploader { get; set; }
+        public TextUploaderType MyTextUploader { get; set; }
+        public UrlShortenerType MyUrlShortenerType { get; set; }
 
         #endregion Properties for Category: Text
 

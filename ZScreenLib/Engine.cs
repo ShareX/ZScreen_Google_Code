@@ -196,8 +196,8 @@ namespace ZScreenLib
                     Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
                     Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
                     Engine.mAppSettings.FileUploader = cw.FileUploaderType;
-                    Engine.mAppSettings.TextUploaderSelected = cw.TextUploaderType;
-                    Engine.mAppSettings.UrlShortenerSelected = cw.UrlShortenerType;
+                    Engine.mAppSettings.TextUploaderSelected = cw.MyTextUploaderType;
+                    Engine.mAppSettings.UrlShortenerSelected = cw.MyUrlShortenerType;
                     if (!Portable)
                     {
                         mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
@@ -305,7 +305,7 @@ namespace ZScreenLib
                 Engine.conf.PreferSystemFolders = Engine.mAppSettings.PreferSystemFolders;
                 Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
                 Engine.conf.FileUploaderType = Engine.mAppSettings.FileUploader;
-                Engine.conf.TextUploaderSelected = Engine.mAppSettings.TextUploaderSelected;
+                Engine.conf.TextUploaderType = Engine.mAppSettings.TextUploaderSelected;
                 Engine.conf.UrlShortenerSelected = Engine.mAppSettings.UrlShortenerSelected;
             }
             // Portable then we don't need PreferSystemFolders to be true
