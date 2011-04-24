@@ -419,7 +419,7 @@ namespace ZScreenGUI
 
         public void CaptureWebpage(WorkerTask task)
         {
-            if (task != null && FileSystem.IsValidLink(task.MyText.LocalString))
+            if (task != null && FileSystem.IsValidLink(task.MyText))
             {
                 WebPageCapture webPageCapture;
                 if (Engine.conf.WebPageUseCustomSize)
@@ -432,7 +432,7 @@ namespace ZScreenGUI
                 }
 
                 webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
-                webPageCapture.DownloadPage(task.MyText.LocalString);
+                webPageCapture.DownloadPage(task.MyText);
             }
         }
 

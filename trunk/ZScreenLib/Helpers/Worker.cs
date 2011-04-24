@@ -460,13 +460,13 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (FileSystem.IsValidLink(task.MyText.LocalString) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())
+                if (FileSystem.IsValidLink(task.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && Adapter.CheckURLShorteners())
                 {
-                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText.LocalString, task.MyText.LocalString.Length, Engine.conf.ShortenUrlAfterUploadAfter));
+                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText, task.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
                     task.MyTextUploader = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected];
                     task.RunWorker();
                 }
-                else if (Directory.Exists(task.MyText.LocalString))
+                else if (Directory.Exists(task.MyText))
                 {
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
@@ -484,9 +484,9 @@ namespace ZScreenLib
                             ext = ".html";
                         }
                     }
-                    string fileName = Path.GetFileName(task.MyText.LocalString) + ext;
+                    string fileName = Path.GetFileName(task.MyText) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
-                    settings.GetConfig().FolderList.Add(task.MyText.LocalString);
+                    settings.GetConfig().FolderList.Add(task.MyText);
 
                     Indexer indexer = null;
                     switch (settings.GetConfig().IndexingEngineType)

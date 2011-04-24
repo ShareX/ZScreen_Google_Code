@@ -8,7 +8,6 @@ using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
-using UploadersLib.HelperClasses;
 using ZScreenLib;
 
 namespace ZScreenTesterGUI
@@ -28,7 +27,7 @@ namespace ZScreenTesterGUI
         {
             public UploaderType UploaderType;
             public ImageDestType ImageUploader;
-            public TextDestType TextUploader;
+            public TextDestination TextUploader;
             public FileUploaderType FileUploader;
             public UrlShortenerType UrlShortener;
             public WorkerTask Task;
@@ -88,7 +87,7 @@ namespace ZScreenTesterGUI
                 lvUploaders.Items.Add(lvi);
             }
 
-            foreach (TextDestType uploader in Enum.GetValues(typeof(TextDestType)))
+            foreach (TextDestination uploader in Enum.GetValues(typeof(TextDestination)))
             {
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.TextUploader, TextUploader = uploader };
@@ -218,13 +217,13 @@ namespace ZScreenTesterGUI
                         new TaskManager(ref task).UploadFile();
                         break;
                     case UploaderType.TextUploader:
-                        task.MyTextUploader = Adapter.FindTextUploader(uploader.TextUploader.GetDescription());
-                        task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                        task.MyTextUploader = uploader.TextUploader;
+                        task.MyText = "Testing...";
                         new TaskManager(ref task).UploadText();
                         break;
                     case UploaderType.UrlShortener:
-                        task.MyTextUploader = Adapter.FindUrlShortener(uploader.UrlShortener.GetDescription());
-                        task.MyText = TextInfo.FromString(task.MyTextUploader.TesterString);
+                        task.MyTextUploader = uploader.UrlShortener; // TODO: MyURLShortener required
+                        task.MyText = "Testing...";
                         new TaskManager(ref task).UploadText();
                         break;
                     default:

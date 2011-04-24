@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.ComponentModel;
 
 namespace UploadersLib
@@ -72,6 +71,48 @@ namespace UploadersLib
 
     #region Image Uploaders
 
+    public enum ImageDestType
+    {
+        [Description("FTP Server")]
+        FTP,
+        [Description("File Hosting Service")]
+        FileUploader,
+        [Description("Localhost")]
+        Localhost,
+        [Description("Clipboard")]
+        CLIPBOARD,
+        [Description("File")]
+        FILE,
+        [Description("ImageShack - imageshack.us")]
+        IMAGESHACK,
+        [Description("TinyPic - tinypic.com")]
+        TINYPIC,
+        [Description("Flickr - flickr.com")]
+        FLICKR,
+        //[Description("ImageBin - imagebin.ca")]
+        //IMAGEBIN,
+        //[Description("Img1 - img1.us")]
+        //IMG1,
+        [Description("ImageBam - imagebam.com")]
+        IMAGEBAM,
+        [Description("Imgur - imgur.com")]
+        IMGUR,
+        [Description("Uploadscreenshot - uploadscreenshot.com")]
+        UPLOADSCREENSHOT,
+        [Description("TwitPic - twitpic.com")]
+        TWITPIC,
+        [Description("TwitSnaps - twitsnaps.com")]
+        TWITSNAPS,
+        [Description("yFrog - yfrog.com")]
+        YFROG,
+        [Description("MindTouch Deki Wiki")]
+        DEKIWIKI,
+        [Description("MediaWiki")]
+        MEDIAWIKI,
+        [Description("Printer")]
+        PRINTER
+    }
+
     public enum UploadMode
     {
         [Description("User")]
@@ -108,85 +149,44 @@ namespace UploadersLib
         LocalFilePath
     }
 
-    public enum ImageDestType
-    {
-        [Description("FTP Server")]
-        FTP,
-        [Description("File Hosting Service")]
-        FileUploader,
-        [Description("Localhost")]
-        Localhost,
-        [Description("Clipboard")]
-        CLIPBOARD,
-        [Description("File")]
-        FILE,
-        [Description("ImageShack - www.imageshack.us")]
-        IMAGESHACK,
-        [Description("TinyPic - www.tinypic.com")]
-        TINYPIC,
-        [Description("Flickr - www.flickr.com")]
-        FLICKR,
-        //[Description("ImageBin - www.imagebin.ca")]
-        //IMAGEBIN,
-        [Description("ImageBam - www.imagebam.com")]
-        IMAGEBAM,
-        //[Description("Img1 - www.img1.us")]
-        //IMG1,
-        [Description("Imgur - www.imgur.com")]
-        IMGUR,
-        [Description("TwitPic - www.twitpic.com")]
-        TWITPIC,
-        [Description("TwitSnaps - www.twitsnaps.com")]
-        TWITSNAPS,
-        [Description("yFrog - www.yfrog.com")]
-        YFROG,
-        [Description("MindTouch Deki Wiki")]
-        DEKIWIKI,
-        [Description("MediaWiki")]
-        MEDIAWIKI,
-        [Description("Printer")]
-        PRINTER
-    }
-
     #endregion Image Uploaders
 
     #region Text Uploaders & URL Shorteners
 
-    [Serializable]
-    public enum TextDestType
+    public enum TextDestination
     {
-        [Description("Pastebin - www.pastebin.com")]
+        [Description("pastebin.com")]
         PASTEBIN,
-        [Description("Pastebin - www.pastebin.ca")]
+        [Description("pastebin.ca")]
         PASTEBIN_CA,
-        [Description("Paste2 - www.paste2.org")]
+        [Description("paste2.org")]
         PASTE2,
-        [Description("Slexy 2.0 - www.slexy.org")]
-        SLEXY
+        [Description("slexy.org")]
+        SLEXY,
+        [Description("Use file uploader")]
+        FILE
     }
 
-    [Serializable]
     public enum UrlShortenerType
     {
         [Description("Google - www.goo.gl")]
         Google,
-        [Description("Threely - www.3.ly")]
-        THREELY,
         [Description("bit.ly - www.bit.ly")]
         BITLY,
+        [Description("Threely - www.3.ly")]
+        THREELY,
         [Description("j.mp - www.j.mp")]
         Jmp,
         [Description("is.gd - www.is.gd")]
         ISGD,
-        //[Description("kl.am - www.kl.am")]
-        //KLAM,
         [Description("TinyURL - www.tinyurl.com")]
         TINYURL,
         [Description("TURL - www.turl.ca")]
         TURL
+        //[Description("kl.am - www.kl.am")]
+        //KLAM
     }
 
-    [Serializable]
     public enum Privacy
     {
         Public,
