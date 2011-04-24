@@ -38,6 +38,7 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.TextUploaders;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
 using ZUploader.HelperClasses;
@@ -404,9 +405,9 @@ namespace ZScreenLib
                 case ImageDestType.IMGUR:
                     imageUploader = new Imgur(Engine.ImgurAnonymousKey);
                     break;
-                /*case ImageDestType.UPLOADSCREENSHOT:
-                    imageUploader = new UploadScreenshot(Engine.UPLOADSCREENSHOT_KEY);
-                    break;*/
+                case ImageDestType.UPLOADSCREENSHOT:
+                    imageUploader = new UploadScreenshot(Engine.UploadScreenshotKey);
+                    break;
                 case ImageDestType.Localhost:
                     UploadLocalhost();
                     break;
@@ -701,28 +702,49 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (Engine.conf.PreferFileUploaderForText)
+            if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextDestination.FILE)
             {
                 UploadFile();
             }
             else
             {
-                TextUploader textUploader = (TextUploader)mTask.MyTextUploader;
-                textUploader.Errors.Clear();
-                FileSystem.AppendDebug("Uploading to " + textUploader.ToString());
-                string url = "";
-                if (mTask.MyText != null)
+                TextUploader textUploader = null;
+
+                switch (mTask.MyTextUploader)
                 {
-                    url = textUploader.UploadText(mTask.MyText.LocalString);
+                    case TextDestination.PASTEBIN:
+                        textUploader = new PastebinUploader(Engine.PastebinKey);
+                        break;
+                    case TextDestination.PASTEBIN_CA:
+                        textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
+                        break;
+                    case TextDestination.PASTE2:
+                        textUploader = new Paste2Uploader();
+                        break;
+                    case TextDestination.SLEXY:
+                        textUploader = new SlexyUploader();
+                        break;
                 }
-                else
+
+                if (textUploader != null)
                 {
-                    url = textUploader.UploadTextFile(mTask.LocalFilePath);
-                    mTask.MyText = TextInfo.FromFile(mTask.LocalFilePath);
+                    FileSystem.AppendDebug("Uploading to " + textUploader.Name);
+
+                    string url = string.Empty;
+
+                    if (mTask.MyText != null)
+                    {
+                        url = textUploader.UploadText(mTask.MyText);
+                    }
+                    else
+                    {
+                        url = textUploader.UploadTextFile(mTask.LocalFilePath);
+                    }
+
+                    mTask.RemoteFilePath = url;
+                    mTask.Errors = textUploader.Errors;
+                    mTask.EndTime = DateTime.Now;
                 }
-                mTask.RemoteFilePath = url;
-                mTask.Errors = textUploader.Errors;
-                mTask.EndTime = DateTime.Now;
             }
         }
 

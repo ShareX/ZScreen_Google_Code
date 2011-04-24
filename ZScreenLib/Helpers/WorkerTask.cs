@@ -182,15 +182,11 @@ namespace ZScreenLib
 
         #region Properties for Category: Text
 
-        /// <summary>
-        /// String object: Text captured from Clipboard
-        /// </summary>
-        public TextInfo MyText { get; set; }
+        public string MyText { get; set; }
+
         public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
-        /// <summary>
-        /// MyTextUploader
-        /// </summary>
-        public TextUploader MyTextUploader { get; set; }
+
+        public TextDestination MyTextUploader { get; set; }
 
         #endregion Properties for Category: Text
 

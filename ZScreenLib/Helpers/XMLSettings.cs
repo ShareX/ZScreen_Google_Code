@@ -66,7 +66,7 @@ namespace ZScreenLib
 
         public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
         public FileUploaderType FileUploaderType = FileUploaderType.RapidShare;
-        public TextDestType TextUploaderType = TextDestType.PASTEBIN;
+        public TextDestination TextUploaderType = TextDestination.PASTEBIN;
         public UrlShortenerType URLShortenerType = UrlShortenerType.BITLY;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;

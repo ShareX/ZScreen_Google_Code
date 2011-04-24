@@ -54,7 +54,7 @@ namespace ZScreenLib
             ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
 
-            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
+            foreach (TextDestination etu in Enum.GetValues(typeof(TextDestination)))
             {
                 TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
                 if (null != tu)

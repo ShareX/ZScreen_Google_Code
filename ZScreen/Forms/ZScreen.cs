@@ -992,7 +992,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_TextServices()
         {
-            foreach (TextDestType etu in Enum.GetValues(typeof(TextDestType)))
+            foreach (TextDestination etu in Enum.GetValues(typeof(TextDestination)))
             {
                 TextUploader tu = Adapter.FindTextUploader(etu.GetDescription());
                 if (null != tu)
