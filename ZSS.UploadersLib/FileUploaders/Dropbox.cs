@@ -38,8 +38,8 @@ namespace UploadersLib.FileUploaders
             get { return "Dropbox"; }
         }
 
-        public string ConsumerKey { get; set; }
-        public string ConsumerSecret { get; set; }
+        public string ConsumerKey { get; private set; }
+        public string ConsumerSecret { get; private set; }
         public string UserToken { get; set; }
         public string UserSecret { get; set; }
         public string UploadPath { get; set; }
@@ -95,7 +95,7 @@ namespace UploadersLib.FileUploaders
         {
             if (!string.IsNullOrEmpty(UserToken) && !string.IsNullOrEmpty(UserSecret))
             {
-                string url = MyOAuth.GenerateQuery(URLAccountInfo, null, "GET", ConsumerKey, ConsumerSecret, UserToken, UserSecret);
+                string url = MyOAuth.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, ConsumerKey, ConsumerSecret, UserToken, UserSecret);
 
                 string response = GetResponseString(url);
 
@@ -124,7 +124,7 @@ namespace UploadersLib.FileUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("file", fileName);
 
-            string query = MyOAuth.GenerateQuery(url, args, "POST", ConsumerKey, ConsumerSecret, UserToken, UserSecret);
+            string query = MyOAuth.GenerateQuery(url, args, HttpMethod.POST, ConsumerKey, ConsumerSecret, UserToken, UserSecret);
 
             string response = UploadData(stream, query, fileName);
 

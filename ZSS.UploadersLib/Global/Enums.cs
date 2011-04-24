@@ -28,6 +28,11 @@ using System.ComponentModel;
 
 namespace UploadersLib
 {
+    public enum HttpMethod
+    {
+        GET, POST
+    }
+
     public enum Proxy
     {
         [Description("HTTP Proxy")]

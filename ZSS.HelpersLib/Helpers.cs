@@ -162,13 +162,13 @@ namespace HelpersLib
 
         public static char GetRandomChar(string chars)
         {
-            return chars[(int)(Random.NextDouble() * chars.Length)];
+            return chars[Random.Next(chars.Length)];
         }
 
-        public const string Numbers = "0123456789";
         public const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
         public const string AlphabetCapital = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        public const string Alphanumeric = AlphabetCapital + Alphabet + Numbers;
+        public const string Numbers = "0123456789";
+        public const string Alphanumeric = Alphabet + AlphabetCapital + Numbers;
 
         /// <summary>0123456789</summary>
         public static string GetRandomNumber(int length)
@@ -176,7 +176,7 @@ namespace HelpersLib
             return GetRandomString(Numbers, length);
         }
 
-        /// <summary>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</summary>
+        /// <summary>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</summary>
         public static string GetRandomAlphanumeric(int length)
         {
             return GetRandomString(Alphanumeric, length);
@@ -201,7 +201,7 @@ namespace HelpersLib
             return sb.ToString();
         }
 
-        /// <summary>Valid chars: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789()-._!</summary>
+        /// <summary>Valid chars: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()-._!</summary>
         public static bool IsCharValid(char c)
         {
             string chars = Alphanumeric + "()-._!";
