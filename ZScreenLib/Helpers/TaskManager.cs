@@ -403,7 +403,7 @@ namespace ZScreenLib
                     imageUploader = new Img1Uploader();
                     break;*/
                 case ImageUploaderType.IMGUR:
-                    imageUploader = new Imgur(Engine.ImgurAnonymousKey);
+                    imageUploader = new Imgur(Engine.conf.ImgurAccountType, Engine.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
                     break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UploadScreenshotKey);

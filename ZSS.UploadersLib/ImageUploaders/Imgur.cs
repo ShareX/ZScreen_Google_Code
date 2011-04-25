@@ -54,8 +54,8 @@ namespace UploadersLib.ImageUploaders
         /// </summary>
         public OAuthInfo AuthInfo { get; set; }
 
-        private const string URLAnonymousUpload = "http://api.imgur.com/2/upload.xml";
-        private const string URLUserUpload = "http://api.imgur.com/2/account/images";
+        private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
+        private const string URLUserUpload = "https://api.imgur.com/2/account/images.xml";
         private const string URLRequestToken = "https://api.imgur.com/oauth/request_token";
         private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
         private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
@@ -138,20 +138,11 @@ namespace UploadersLib.ImageUploaders
                 throw new Exception("UserToken or UserSecret is empty. Login is required.");
             }
 
-            ImageFileManager ifm = new ImageFileManager();
-
             string query = OAuthManager.GenerateQuery(URLUserUpload, null, HttpMethod.POST, AuthInfo);
 
             string response = UploadData(stream, query, fileName, "image");
 
-            UploadResult result = new UploadResult(response);
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                // TODO: parse
-            }
-
-            return ifm;
+            return ParseResponse(response);
         }
 
         private ImageFileManager AnonymousUpload(Stream stream, string fileName)
@@ -161,10 +152,10 @@ namespace UploadersLib.ImageUploaders
 
             string response = UploadData(stream, URLAnonymousUpload, fileName, "image", arguments);
 
-            return ParseResult(response);
+            return ParseResponse(response);
         }
 
-        private ImageFileManager ParseResult(string source)
+        private ImageFileManager ParseResponse(string source)
         {
             ImageFileManager ifm = new ImageFileManager { Source = source };
 
@@ -173,7 +164,7 @@ namespace UploadersLib.ImageUploaders
                 XDocument xd = XDocument.Parse(source);
                 XElement xe;
 
-                if ((xe = xd.GetElement("upload", "links")) != null)
+                if ((xe = xd.GetNode("upload|images/links")) != null)
                 {
                     ifm.Add(xe.GetElementValue("original"), LinkType.FULLIMAGE);
                     ifm.Add(xe.GetElementValue("large_thumbnail"), LinkType.THUMBNAIL);
