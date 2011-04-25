@@ -52,6 +52,11 @@ namespace UploadersLib.HelperClasses
 
         public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod, OAuthInfo oauth)
         {
+            if (string.IsNullOrEmpty(oauth.ConsumerKey) || string.IsNullOrEmpty(oauth.ConsumerSecret))
+            {
+                throw new Exception("ConsumerKey or ConsumerSecret empty.");
+            }
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add(ParameterVersion, oauth.OAuthVersion);
             parameters.Add(ParameterNonce, GenerateNonce());

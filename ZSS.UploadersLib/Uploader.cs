@@ -32,7 +32,6 @@ using System.Net.Cache;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.HelperClasses;
@@ -46,16 +45,9 @@ namespace UploadersLib
 
         public static ProxySettings ProxySettings = new ProxySettings();
 
-        [XmlIgnore]
         public List<string> Errors { get; private set; }
-
-        [XmlIgnore]
         public bool IsUploading { get; private set; }
-
-        [XmlIgnore]
         public int BufferSize { get; set; }
-
-        [XmlIgnore]
         public string UserAgent { get; set; }
 
         private bool stopUpload;
@@ -382,5 +374,42 @@ namespace UploadersLib
         }
 
         #endregion Helper methods
+
+        #region OAuth methods
+
+        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo)
+        {
+            string url = OAuthManager.GenerateQuery(requestTokenURL, null, HttpMethod.GET, authInfo);
+
+            string response = GetResponseString(url);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return OAuthManager.GetAuthorizationURL(response, authInfo, authorizeURL);
+            }
+
+            return null;
+        }
+
+        protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo)
+        {
+            if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret) || string.IsNullOrEmpty(authInfo.AuthVerifier))
+            {
+                throw new Exception("Auth infos missing. Open Authorization URL first and copy verifier code.");
+            }
+
+            string url = OAuthManager.GenerateQuery(accessTokenURL, null, HttpMethod.GET, authInfo);
+
+            string response = GetResponseString(url);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return OAuthManager.ParseAccessTokenResponse(response, authInfo);
+            }
+
+            return false;
+        }
+
+        #endregion OAuth methods
     }
 }

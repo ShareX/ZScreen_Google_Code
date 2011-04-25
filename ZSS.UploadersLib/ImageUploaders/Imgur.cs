@@ -34,6 +34,12 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class Imgur : ImageUploader
     {
+        private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
+        private const string URLUserUpload = "https://api.imgur.com/2/account/images.xml";
+        private const string URLRequestToken = "https://api.imgur.com/oauth/request_token";
+        private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
+        private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
+
         public override string Name
         {
             get { return "Imgur"; }
@@ -53,12 +59,6 @@ namespace UploadersLib.ImageUploaders
         /// Required for User upload (OAuth)
         /// </summary>
         public OAuthInfo AuthInfo { get; set; }
-
-        private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
-        private const string URLUserUpload = "https://api.imgur.com/2/account/images.xml";
-        private const string URLRequestToken = "https://api.imgur.com/oauth/request_token";
-        private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
-        private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
 
         public Imgur(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {
@@ -98,37 +98,13 @@ namespace UploadersLib.ImageUploaders
 
         public string GetAuthorizationURL()
         {
-            string url = OAuthManager.GenerateQuery(URLRequestToken, null, HttpMethod.GET, AuthInfo);
-
-            string response = GetResponseString(url);
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                return OAuthManager.GetAuthorizationURL(response, AuthInfo, URLAuthorize);
-            }
-
-            return null;
+            return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo);
         }
 
         public bool GetAccessToken(string verificationCode)
         {
-            if (string.IsNullOrEmpty(AuthInfo.AuthToken))
-            {
-                throw new Exception("Auth token is empty. Get Authorization URL first.");
-            }
-
             AuthInfo.AuthVerifier = verificationCode;
-
-            string url = OAuthManager.GenerateQuery(URLAccessToken, null, HttpMethod.GET, AuthInfo);
-
-            string response = GetResponseString(url);
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                return OAuthManager.ParseAccessTokenResponse(response, AuthInfo);
-            }
-
-            return false;
+            return GetAccessToken(URLAccessToken, AuthInfo);
         }
 
         private ImageFileManager UserUpload(Stream stream, string fileName)
