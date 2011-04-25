@@ -137,6 +137,7 @@ namespace ZScreenLib
 
         // Imgur
 
+        public AccountType ImgurAccountType = AccountType.Anonymous;
         public OAuthInfo ImgurOAuthInfo = null;
 
         // Twitter
@@ -509,7 +510,7 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("Disables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
+        [Category("Options / General"), DefaultValue(true), Description("Disables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
         public bool DisableKeyboardHookTimer { get; set; }
 
         // Options / History Settings

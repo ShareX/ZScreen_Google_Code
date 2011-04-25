@@ -36,11 +36,14 @@ namespace UploadersLib.HelperClasses
         public string UserToken { get; set; }
         public string UserSecret { get; set; }
 
-        public OAuthInfo() { }
-
-        public OAuthInfo(string consumerKey, string consumerSecret)
+        public OAuthInfo()
         {
             OAuthVersion = "1.0";
+        }
+
+        public OAuthInfo(string consumerKey, string consumerSecret)
+            : this()
+        {
             ConsumerKey = consumerKey;
             ConsumerSecret = consumerSecret;
         }

@@ -603,27 +603,16 @@ namespace ZScreenGUI
             // Image Uploader Settings
             ///////////////////////////////////
 
-            // Twitter
-            ucTwitterAccounts.AccountsList.Items.Clear();
-            foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
-            {
-                ucTwitterAccounts.AccountsList.Items.Add(acc);
-            }
-            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
-            {
-                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
-            }
-
-            // TinyPic
-
-            txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
-            chkRememberTinyPicUserPass.Checked = Engine.conf.RememberTinyPicUserPass;
-
             // ImageShack
 
             txtImageShackRegistrationCode.Text = Engine.conf.ImageShackRegistrationCode;
             txtUserNameImageShack.Text = Engine.conf.ImageShackUserName;
             chkPublicImageShack.Checked = Engine.conf.ImageShackShowImagesInPublic;
+
+            // TinyPic
+
+            txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
+            chkRememberTinyPicUserPass.Checked = Engine.conf.RememberTinyPicUserPass;
 
             // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
@@ -633,6 +622,15 @@ namespace ZScreenGUI
             }
 
             cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
+
+            // Imgur
+
+            cbImgurUseAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
+
+            if (Engine.conf.ImgurOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.UserToken))
+            {
+                lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
+            }
 
             // ImageBam
 
@@ -656,6 +654,18 @@ namespace ZScreenGUI
             else
             {
                 lbImageBamGalleries.SelectedIndex = 0;
+            }
+
+            // Twitter
+
+            ucTwitterAccounts.AccountsList.Items.Clear();
+            foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
+            {
+                ucTwitterAccounts.AccountsList.Items.Add(acc);
+            }
+            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
+            {
+                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
             }
 
             // Flickr
@@ -4946,6 +4956,54 @@ namespace ZScreenGUI
         private void btnDropboxRegister_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.dropbox.com/register");
+        }
+
+        private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
+        {
+            OAuthInfo oauth = new OAuthInfo(Engine.ImgurConsumerKey, Engine.ImgurConsumerSecret);
+            Imgur imgur = new Imgur(oauth);
+            string url = imgur.GetAuthorizationURL();
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                Engine.conf.ImgurOAuthInfo = oauth;
+                Process.Start(url);
+            }
+        }
+
+        private void btnImgurLogin_Click(object sender, EventArgs e)
+        {
+            string verification = tbImgurVerificationCode.Text;
+
+            if (!string.IsNullOrEmpty(verification) && Engine.conf.ImgurOAuthInfo != null &&
+                !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthSecret))
+            {
+                Imgur imgur = new Imgur(Engine.conf.ImgurOAuthInfo);
+                bool result = imgur.GetAccessToken(verification);
+
+                if (result)
+                {
+                    lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
+                    MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    lblImgurStatus.Text = "Login is required";
+                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void cbImgurUseAccount_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbImgurUseAccount.Checked)
+            {
+                Engine.conf.ImgurAccountType = AccountType.User;
+            }
+            else
+            {
+                Engine.conf.ImgurAccountType = AccountType.Anonymous;
+            }
         }
     }
 }
