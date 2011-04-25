@@ -306,7 +306,7 @@ namespace ZScreenLib
                 Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
                 Engine.conf.FileUploaderType = Engine.mAppSettings.FileUploader;
                 Engine.conf.TextUploaderType = Engine.mAppSettings.TextUploaderSelected;
-                Engine.conf.UrlShortenerSelected = Engine.mAppSettings.UrlShortenerSelected;
+                Engine.conf.URLShortenerType = Engine.mAppSettings.UrlShortenerSelected;
             }
             // Portable then we don't need PreferSystemFolders to be true
             if (Portable)

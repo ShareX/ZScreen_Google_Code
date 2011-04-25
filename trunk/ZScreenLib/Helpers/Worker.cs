@@ -333,7 +333,7 @@ namespace ZScreenLib
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                 File.WriteAllText(fp, Clipboard.GetText());
                 temp.UpdateLocalFilePath(fp);
-                temp.MyText = TextInfo.FromFile(fp);
+                temp.MyText = TextInfo.FromFile(fp).LocalString;
                 textWorkers.Add(temp);
             }
             else if (Clipboard.ContainsFileDropList())
@@ -400,7 +400,7 @@ namespace ZScreenLib
                 {
                     WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
                     temp.UpdateLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromFile(fp);
+                    temp.MyText = TextInfo.FromFile(fp).LocalString; // TODO: Remove usage of TextInfo?
                     textWorkers.Add(temp);
                 }
                 else
