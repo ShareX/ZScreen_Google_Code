@@ -255,16 +255,16 @@ namespace ZUploader
 
             switch (UploadManager.TextUploader)
             {
-                case TextDestination.PASTEBIN:
+                case TextUploaderType.PASTEBIN:
                     textUploader = new PastebinUploader(Program.PastebinKey);
                     break;
-                case TextDestination.PASTEBIN_CA:
+                case TextUploaderType.PASTEBIN_CA:
                     textUploader = new PastebinCaUploader(Program.PastebinCaKey);
                     break;
-                case TextDestination.SLEXY:
+                case TextUploaderType.SLEXY:
                     textUploader = new SlexyUploader();
                     break;
-                case TextDestination.PASTE2:
+                case TextUploaderType.PASTE2:
                     textUploader = new Paste2Uploader();
                     break;
             }
@@ -285,14 +285,14 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
-                case FileDestination.RapidShare:
+                case FileUploaderType.RapidShare:
                     fileUploader = new RapidShare();
                     break;
-                case FileDestination.SendSpace:
+                case FileUploaderType.SendSpace:
                     fileUploader = new SendSpace(Program.SendSpaceKey);
                     SendSpaceManager.PrepareUploadInfo(Program.SendSpaceKey, null, null);
                     break;
-                case FileDestination.Dropbox: // TODO: Account settings
+                case FileUploaderType.Dropbox: // TODO: Account settings
                     fileUploader = new Dropbox(new OAuthInfo(Program.DropboxConsumerKey, Program.DropboxConsumerSecret));
                     break;
                 /*case FileUploaderType2.FileBin:
@@ -301,16 +301,16 @@ namespace ZUploader
                 case FileDestination.DropIO:
                     fileUploader = new DropIO(Program.DropIOKey);
                     break;*/
-                case FileDestination.ShareCX:
+                case FileUploaderType.ShareCX:
                     fileUploader = new ShareCX();
                     break;
-                case FileDestination.FilezFiles:
+                case FileUploaderType.FilezFiles:
                     fileUploader = new FilezFiles();
                     break;
-                case FileDestination.CustomUploader:
+                case FileUploaderType.CustomUploader:
                     fileUploader = new CustomUploader(Program.Settings.CustomUploader);
                     break;
-                case FileDestination.FTP:
+                case FileUploaderType.FTP:
                     fileUploader = new FTPUploader(Program.Settings.FTPAccount);
                     break;
             }

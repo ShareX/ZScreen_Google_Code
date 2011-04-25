@@ -38,7 +38,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
 
-            foreach (ImageDestType sdt in Enum.GetValues(typeof(ImageDestType)))
+            foreach (ImageUploaderType sdt in Enum.GetValues(typeof(ImageUploaderType)))
             {
                 lbDest.Items.Add(sdt.GetDescription());
             }
@@ -83,7 +83,7 @@ namespace ZScreenLib
         private void ApplyOptions()
         {
             if (lbDest.SelectedIndex > -1)
-                Engine.conf.ImageUploaderType = (ImageDestType)lbDest.SelectedIndex;
+                Engine.conf.ImageUploaderType = (ImageUploaderType)lbDest.SelectedIndex;
             if (lbClipboardMode.SelectedIndex > -1)
                 Engine.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
             ApplySettings(this, EventArgs.Empty);

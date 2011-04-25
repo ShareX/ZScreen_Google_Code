@@ -173,7 +173,7 @@ namespace ZScreenLib
 
                         break;
                     case JobCategoryType.SCREENSHOTS:
-                        if (task.MyImageUploader != ImageDestType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                        if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                         {
                             try
                             {
@@ -255,7 +255,7 @@ namespace ZScreenLib
             }
             else
             {
-                task.MyFileUploader = FileUploaderType.CUSTOM_UPLOADER;
+                task.MyFileUploader = FileUploaderType.CustomUploader;
             }
 
             return task;
@@ -549,9 +549,9 @@ namespace ZScreenLib
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageDestType.PRINTER)
+            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
             {
-                if (task.MyImageUploader != ImageDestType.CLIPBOARD && task.MyImageUploader != ImageDestType.FILE &&
+                if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && task.MyImageUploader != ImageUploaderType.FILE &&
                     string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
@@ -564,35 +564,35 @@ namespace ZScreenLib
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {
-                            List<ImageDestType> randomDest = new List<ImageDestType>() { ImageDestType.IMAGESHACK, ImageDestType.TINYPIC };
+                            List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC };
                             if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
                             {
-                                randomDest.Add(ImageDestType.IMAGEBAM);
+                                randomDest.Add(ImageUploaderType.IMAGEBAM);
                             }
                             if (null != Engine.conf.FlickrAuthInfo)
                             {
-                                randomDest.Add(ImageDestType.FLICKR);
+                                randomDest.Add(ImageUploaderType.FLICKR);
                             }
                             if (Adapter.CheckFTPAccounts() && null != Adapter.GetFtpAcctActive())
                             {
-                                randomDest.Add(ImageDestType.FTP);
+                                randomDest.Add(ImageUploaderType.FTP);
                             }
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while ((ImageDestType)r == task2.MyImageUploader || (ImageDestType)r == ImageDestType.FILE || (ImageDestType)r == ImageDestType.CLIPBOARD)
+                            while ((ImageUploaderType)r == task2.MyImageUploader || (ImageUploaderType)r == ImageUploaderType.FILE || (ImageUploaderType)r == ImageUploaderType.CLIPBOARD)
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }
-                            task2.MyImageUploader = (ImageDestType)r;
+                            task2.MyImageUploader = (ImageUploaderType)r;
                         }
                         else
                         {
-                            if (task.MyImageUploader == ImageDestType.IMAGESHACK)
+                            if (task.MyImageUploader == ImageUploaderType.IMAGESHACK)
                             {
-                                task2.MyImageUploader = ImageDestType.TINYPIC;
+                                task2.MyImageUploader = ImageUploaderType.TINYPIC;
                             }
                             else
                             {
-                                task2.MyImageUploader = ImageDestType.IMAGESHACK;
+                                task2.MyImageUploader = ImageUploaderType.IMAGESHACK;
                             }
                         }
                     }

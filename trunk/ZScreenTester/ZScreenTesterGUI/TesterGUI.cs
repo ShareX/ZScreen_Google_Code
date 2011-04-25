@@ -26,7 +26,7 @@ namespace ZScreenTesterGUI
         public class UploaderInfo
         {
             public UploaderType UploaderType;
-            public ImageDestType ImageUploader;
+            public ImageUploaderType ImageUploader;
             public TextUploaderType TextUploader;
             public FileUploaderType FileUploader;
             public UrlShortenerType UrlShortener;
@@ -69,15 +69,15 @@ namespace ZScreenTesterGUI
             ListViewGroup urlShortenersGroup = new ListViewGroup("URL Shorteners", HorizontalAlignment.Left);
             lvUploaders.Groups.AddRange(new[] { imageUploadersGroup, textUploadersGroup, fileUploadersGroup, urlShortenersGroup });
 
-            foreach (ImageDestType uploader in Enum.GetValues(typeof(ImageDestType)))
+            foreach (ImageUploaderType uploader in Enum.GetValues(typeof(ImageUploaderType)))
             {
                 switch (uploader)
                 {
-                    case ImageDestType.CLIPBOARD:
-                    case ImageDestType.FILE:
-                    case ImageDestType.PRINTER:
-                    case ImageDestType.TWITSNAPS: // Not possible to upload without post Twitter
-                    case ImageDestType.FileUploader: // We are going to test this in File Uploader tests
+                    case ImageUploaderType.CLIPBOARD:
+                    case ImageUploaderType.FILE:
+                    case ImageUploaderType.PRINTER:
+                    case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
+                    case ImageUploaderType.FileUploader: // We are going to test this in File Uploader tests
                         continue;
                 }
 

@@ -76,7 +76,7 @@ namespace ZScreenLib
 
                 string fileOrUrl = "";
 
-                if (task.MyImageUploader == ImageDestType.CLIPBOARD || task.MyImageUploader == ImageDestType.FILE)
+                if (task.MyImageUploader == ImageUploaderType.CLIPBOARD || task.MyImageUploader == ImageUploaderType.FILE)
                 {
                     // just local file
                     if (!string.IsNullOrEmpty(task.FileName.ToString()))
@@ -155,8 +155,8 @@ namespace ZScreenLib
                     default:
                         switch (task.MyImageUploader)
                         {
-                            case ImageDestType.FILE:
-                            case ImageDestType.CLIPBOARD:
+                            case ImageUploaderType.FILE:
+                            case ImageUploaderType.CLIPBOARD:
                                 cbString = task.LocalFilePath;
                                 if (!string.IsNullOrEmpty(cbString))
                                 {

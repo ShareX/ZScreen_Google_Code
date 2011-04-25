@@ -64,14 +64,51 @@ namespace UploadersLib
 
     public enum URLType
     {
-        URL,
-        ThumbnailURL,
-        DeletionURL
+        URL, ThumbnailURL, DeletionURL
     }
 
-    #region Image Uploaders
+    public enum Privacy
+    {
+        Public, Private
+    }
 
-    public enum ImageDestType
+    public enum AccountType
+    {
+        [Description("Anonymous")]
+        Anonymous,
+        [Description("User")]
+        User
+    }
+
+    public enum ClipboardUriType
+    {
+        [Description("Full Image")]
+        FULL,
+        [Description("Full Image for Forums")]
+        FULL_IMAGE_FORUMS,
+        [Description("Full Image as HTML")]
+        FULL_IMAGE_HTML,
+        [Description("Full Image for Wiki")]
+        FULL_IMAGE_WIKI,
+        [Description("Full Image Link for MediaWiki")]
+        FULL_IMAGE_MEDIAWIKI,
+        [Description("Full Image for Twitter")]
+        FULL_TINYURL,
+        [Description("Linked Thumbnail for Forums")]
+        LINKED_THUMBNAIL,
+        [Description("Linked Thumbnail as HTML")]
+        LinkedThumbnailHtml,
+        [Description("Linked Thumbnail for Wiki")]
+        LINKED_THUMBNAIL_WIKI,
+        [Description("Thumbnail")]
+        THUMBNAIL,
+        [Description("Local File as URI")]
+        LocalFilePathUri,
+        [Description("Local File")]
+        LocalFilePath
+    }
+
+    public enum ImageUploaderType
     {
         [Description("FTP Server")]
         FTP,
@@ -113,46 +150,6 @@ namespace UploadersLib
         PRINTER
     }
 
-    public enum UploadMode
-    {
-        [Description("User")]
-        API,
-        [Description("Anonymous")]
-        ANONYMOUS
-    }
-
-    public enum ClipboardUriType
-    {
-        [Description("Full Image")]
-        FULL,
-        [Description("Full Image for Forums")]
-        FULL_IMAGE_FORUMS,
-        [Description("Full Image as HTML")]
-        FULL_IMAGE_HTML,
-        [Description("Full Image for Wiki")]
-        FULL_IMAGE_WIKI,
-        [Description("Full Image Link for MediaWiki")]
-        FULL_IMAGE_MEDIAWIKI,
-        [Description("Full Image for Twitter")]
-        FULL_TINYURL,
-        [Description("Linked Thumbnail for Forums")]
-        LINKED_THUMBNAIL,
-        [Description("Linked Thumbnail as HTML")]
-        LinkedThumbnailHtml,
-        [Description("Linked Thumbnail for Wiki")]
-        LINKED_THUMBNAIL_WIKI,
-        [Description("Thumbnail")]
-        THUMBNAIL,
-        [Description("Local File as URI")]
-        LocalFilePathUri,
-        [Description("Local File")]
-        LocalFilePath
-    }
-
-    #endregion Image Uploaders
-
-    #region Text Uploaders & URL Shorteners
-
     public enum TextUploaderType
     {
         [Description("pastebin.com")]
@@ -165,6 +162,28 @@ namespace UploadersLib
         SLEXY,
         [Description("Use file uploader")]
         FILE
+    }
+
+    public enum FileUploaderType
+    {
+        [Description("rapidshare.com")]
+        RapidShare,
+        [Description("sendspace.com")]
+        SendSpace,
+        [Description("dropbox.com")]
+        Dropbox,
+        //[Description("filebin.ca")]
+        //FileBin,
+        //[Description("drop.io")]
+        //DropIO,
+        [Description("share.cx")]
+        ShareCX,
+        [Description("filez.muffinz.eu")]
+        FilezFiles,
+        [Description("Use custom uploader")]
+        CustomUploader,
+        [Description("FTP Server")]
+        FTP
     }
 
     public enum UrlShortenerType
@@ -186,56 +205,4 @@ namespace UploadersLib
         //[Description("kl.am - www.kl.am")]
         //KLAM
     }
-
-    public enum Privacy
-    {
-        Public,
-        Private
-    }
-
-    #endregion Text Uploaders & URL Shorteners
-
-    #region File Uploaders
-
-    public enum FileUploaderType
-    {
-        [Description("FTP Server")]
-        FTP,
-        [Description("RapidShare - www.rapidshare.com")]
-        RapidShare,
-        [Description("SendSpace - www.sendspace.com")]
-        SendSpace,
-        [Description("Dropbox - www.dropbox.com")]
-        Dropbox,
-        //[Description("FileBin - www.filebin.ca")]
-        //FileBin,
-        //[Description("Drop.io - www.drop.io")]
-        //DropIO,
-        [Description("ShareCX - www.share.cx")]
-        ShareCX,
-        [Description("Filez - www.filez.muffinz.eu")]
-        FilezFiles,
-        [Description("Custom Uploader")]
-        CUSTOM_UPLOADER
-    }
-
-    public enum RapidShareAcctType
-    {
-        [Description("Anonymous")]
-        Free,
-        [Description("Collector's Account")]
-        Collectors,
-        [Description("Premium Account")]
-        Premium
-    }
-
-    public enum AcctType
-    {
-        [Description("Anonymous")]
-        Anonymous,
-        [Description("User")]
-        User
-    }
-
-    #endregion File Uploaders
 }

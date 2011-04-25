@@ -60,7 +60,7 @@ namespace ZScreenLib
         public string Description { get; set; }
         public ImageFileManager ScreenshotManager { get; set; }
         public JobCategoryType JobCategory { get; set; }
-        public ImageDestType ImageDestCategory { get; set; }
+        public ImageUploaderType ImageDestCategory { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string UploadDuration { get; set; }
@@ -148,7 +148,7 @@ namespace ZScreenLib
                 case JobCategoryType.BINARY:
                     switch (t.MyFileUploader)
                     {
-                        case FileUploaderType.CUSTOM_UPLOADER:
+                        case FileUploaderType.CustomUploader:
                         case FileUploaderType.FTP:
                             return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
                         default:

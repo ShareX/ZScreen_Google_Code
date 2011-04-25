@@ -82,8 +82,8 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageDestType.CLIPBOARD &
-                task.MyImageUploader != ImageDestType.FILE &&
+            if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
+                task.MyImageUploader != ImageUploaderType.FILE &&
                 (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
                 task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
                 MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
@@ -250,7 +250,7 @@ namespace ZScreenGUI
                 else
                 {
                     FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
-                    if (task.MyImageUploader == ImageDestType.FILE && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.MyImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -311,7 +311,7 @@ namespace ZScreenGUI
                                     break;
                             }
 
-                            if (task.MyImageUploader != ImageDestType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {

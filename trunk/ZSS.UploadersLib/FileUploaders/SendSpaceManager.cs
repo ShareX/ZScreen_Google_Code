@@ -34,7 +34,7 @@ namespace UploadersLib.FileUploaders
         public static string Token;
         public static string SessionKey;
         public static DateTime LastSessionKey;
-        public static AcctType AccountType;
+        public static AccountType AccountType;
         public static string Username;
         public static string Password;
         public static SendSpace.UploadInfo UploadInfo;
@@ -47,14 +47,14 @@ namespace UploadersLib.FileUploaders
             {
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
-                    AccountType = AcctType.Anonymous;
+                    AccountType = AccountType.Anonymous;
 
                     UploadInfo = sendSpace.AnonymousUploadGetInfo();
                     if (UploadInfo == null) throw new Exception("UploadInfo is null.");
                 }
                 else
                 {
-                    AccountType = AcctType.User;
+                    AccountType = AccountType.User;
                     Username = username;
                     Password = password;
 

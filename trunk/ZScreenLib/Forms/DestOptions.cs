@@ -58,7 +58,7 @@ namespace ZScreenLib
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
             }
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
 
@@ -113,7 +113,7 @@ namespace ZScreenLib
 
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
+            ImageUploaderType sdt = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Task.MyImageUploader = sdt;
         }
 

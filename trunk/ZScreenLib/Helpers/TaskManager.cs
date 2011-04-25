@@ -293,10 +293,10 @@ namespace ZScreenLib
                     fileHost = new SendSpace(Engine.SendSpaceKey);
                     switch (Engine.conf.SendSpaceAccountType)
                     {
-                        case AcctType.Anonymous:
+                        case AccountType.Anonymous:
                             SendSpaceManager.PrepareUploadInfo(Engine.SendSpaceKey, null, null);
                             break;
-                        case AcctType.User:
+                        case AccountType.User:
                             SendSpaceManager.PrepareUploadInfo(Engine.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
                             break;
                     }
@@ -321,12 +321,12 @@ namespace ZScreenLib
                     fileHost = new DropIO();
                     break;*/
                 case FileUploaderType.FilezFiles:
-                    fileHost = new FilezFiles(Engine.conf.FilezUsername, Engine.conf.FilezUserpass, Engine.conf.FilezHideFiles);
+                    fileHost = new FilezFiles();
                     break;
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
                     break;
-                case FileUploaderType.CUSTOM_UPLOADER:
+                case FileUploaderType.CustomUploader:
                     if (Adapter.CheckList(Engine.conf.CustomUploadersList, Engine.conf.CustomUploaderSelected))
                     {
                         fileHost = new CustomUploader(Engine.conf.CustomUploadersList[Engine.conf.CustomUploaderSelected]);
@@ -354,26 +354,26 @@ namespace ZScreenLib
 
             ImageUploader imageUploader = null;
 
-            if (Engine.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageDestType.TINYPIC && File.Exists(mTask.LocalFilePath))
+            if (Engine.conf.TinyPicSizeCheck && mTask.MyImageUploader == ImageUploaderType.TINYPIC && File.Exists(mTask.LocalFilePath))
             {
                 SizeF size = Image.FromFile(mTask.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
                     FileSystem.AppendDebug("Changing from TinyPic to ImageShack due to large image size");
-                    mTask.MyImageUploader = ImageDestType.IMAGESHACK;
+                    mTask.MyImageUploader = ImageUploaderType.IMAGESHACK;
                 }
             }
 
             switch (mTask.MyImageUploader)
             {
-                case ImageDestType.CLIPBOARD:
+                case ImageUploaderType.CLIPBOARD:
                     if (string.IsNullOrEmpty(mTask.LocalFilePath)) return;
                     mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
                     break;
-                case ImageDestType.DEKIWIKI:
+                case ImageUploaderType.DEKIWIKI:
                     UploadDekiWiki();
                     break;
-                case ImageDestType.FILE:
+                case ImageUploaderType.FILE:
                     string fp = mTask.LocalFilePath;
                     if (Engine.Portable)
                     {
@@ -381,13 +381,13 @@ namespace ZScreenLib
                         mTask.UpdateLocalFilePath(fp);
                     }
                     break;
-                case ImageDestType.FLICKR:
+                case ImageUploaderType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
-                case ImageDestType.FTP:
+                case ImageUploaderType.FTP:
                     UploadFTP(Engine.conf.FtpImages);
                     break;
-                case ImageDestType.IMAGEBAM:
+                case ImageUploaderType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
                     imageUploader = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret, imageBamOptions);
@@ -395,35 +395,35 @@ namespace ZScreenLib
                 /*case ImageDestType.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;*/
-                case ImageDestType.IMAGESHACK:
+                case ImageUploaderType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Engine.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 /*case ImageDestType.IMG1:
                     imageUploader = new Img1Uploader();
                     break;*/
-                case ImageDestType.IMGUR:
+                case ImageUploaderType.IMGUR:
                     imageUploader = new Imgur(Engine.ImgurAnonymousKey);
                     break;
-                case ImageDestType.UPLOADSCREENSHOT:
+                case ImageUploaderType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(Engine.UploadScreenshotKey);
                     break;
-                case ImageDestType.Localhost:
+                case ImageUploaderType.Localhost:
                     UploadLocalhost();
                     break;
-                case ImageDestType.MEDIAWIKI:
+                case ImageUploaderType.MEDIAWIKI:
                     UploadMediaWiki();
                     break;
-                case ImageDestType.PRINTER:
+                case ImageUploaderType.PRINTER:
                     if (mTask.MyImage != null)
                     {
                         mTask.MyWorker.ReportProgress(101, (Image)mTask.MyImage.Clone());
                     }
                     break;
-                case ImageDestType.TINYPIC:
+                case ImageUploaderType.TINYPIC:
                     imageUploader = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey, Engine.conf.TinyPicShuk);
                     break;
-                case ImageDestType.TWITPIC:
+                case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
                     twitpicOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
                     twitpicOpt.Password = Adapter.TwitterGetActiveAcct().Password;
@@ -432,13 +432,13 @@ namespace ZScreenLib
                     twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
-                case ImageDestType.TWITSNAPS:
+                case ImageUploaderType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
                     twitsnapsOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
                     twitsnapsOpt.Password = Adapter.TwitterGetActiveAcct().Password;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
-                case ImageDestType.YFROG:
+                case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(Engine.ImageShackKey);
                     yfrogOp.UserName = Adapter.TwitterGetActiveAcct().UserName;
                     yfrogOp.Password = Adapter.TwitterGetActiveAcct().Password;
@@ -488,13 +488,13 @@ namespace ZScreenLib
 
             if (Engine.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Engine.conf.UploadDurationLimit)
             {
-                if (mTask.MyImageUploader == ImageDestType.IMAGESHACK)
+                if (mTask.MyImageUploader == ImageUploaderType.IMAGESHACK)
                 {
-                    Engine.conf.ImageUploaderType = ImageDestType.TINYPIC;
+                    Engine.conf.ImageUploaderType = ImageUploaderType.TINYPIC;
                 }
-                else if (mTask.MyImageUploader == ImageDestType.TINYPIC)
+                else if (mTask.MyImageUploader == ImageUploaderType.TINYPIC)
                 {
-                    Engine.conf.ImageUploaderType = ImageDestType.IMAGESHACK;
+                    Engine.conf.ImageUploaderType = ImageUploaderType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }

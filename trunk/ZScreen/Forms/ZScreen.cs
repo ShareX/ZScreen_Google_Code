@@ -469,7 +469,7 @@ namespace ZScreenGUI
 
             if (tsmImageDest.DropDownItems.Count == 0)
             {
-                foreach (ImageDestType idt in Enum.GetValues(typeof(ImageDestType)))
+                foreach (ImageUploaderType idt in Enum.GetValues(typeof(ImageUploaderType)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
                     tsmi.Click += new EventHandler(tsmiDestImages_Click);
@@ -496,7 +496,7 @@ namespace ZScreenGUI
         {
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
+                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
             }
             ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
 
@@ -691,7 +691,7 @@ namespace ZScreenGUI
 
             if (cboSendSpaceAcctType.Items.Count == 0)
             {
-                cboSendSpaceAcctType.Items.AddRange(typeof(AcctType).GetDescriptions());
+                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetDescriptions());
             }
 
             cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
@@ -943,12 +943,6 @@ namespace ZScreenGUI
             cboImageUploadRetryOnTimeout.Checked = Engine.conf.ImageUploadRetryOnTimeout;
             nudUploadDurationLimit.Value = Engine.conf.UploadDurationLimit;
 
-            if (cboUploadMode.Items.Count == 0)
-            {
-                cboUploadMode.Items.AddRange(typeof(UploadMode).GetDescriptions());
-            }
-
-            cboUploadMode.SelectedIndex = (int)Engine.conf.UploadMode;
             chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
             chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
             cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
@@ -1395,7 +1389,7 @@ namespace ZScreenGUI
             {
                 List<CustomUploaderInfo> lUploaders = Engine.conf.CustomUploadersList;
 
-                ToolStripMenuItem tsmDestCustomHTTP = GetFileDestMenuItem(FileUploaderType.CUSTOM_UPLOADER);
+                ToolStripMenuItem tsmDestCustomHTTP = GetFileDestMenuItem(FileUploaderType.CustomUploader);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmDestCustomHTTP.DropDownItems.Clear();
 
@@ -1776,11 +1770,11 @@ namespace ZScreenGUI
             RewriteImageEditorsRightClickMenu();
         }
 
-        private ToolStripMenuItem GetImageDestMenuItem(ImageDestType idt)
+        private ToolStripMenuItem GetImageDestMenuItem(ImageUploaderType idt)
         {
             foreach (ToolStripMenuItem tsmi in tsmImageDest.DropDownItems)
             {
-                if ((ImageDestType)tsmi.Tag == idt)
+                if ((ImageUploaderType)tsmi.Tag == idt)
                 {
                     return tsmi;
                 }
@@ -1804,10 +1798,10 @@ namespace ZScreenGUI
 
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageDestType sdt = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
+            ImageUploaderType sdt = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Engine.conf.ImageUploaderType = sdt;
-            Engine.conf.PreferFileUploaderForImages = (sdt == ImageDestType.FileUploader);
-            cboClipboardTextMode.Enabled = sdt != ImageDestType.CLIPBOARD;
+            Engine.conf.PreferFileUploaderForImages = (sdt == ImageUploaderType.FileUploader);
+            cboClipboardTextMode.Enabled = sdt != ImageUploaderType.CLIPBOARD;
 
             CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(sdt));
         }
@@ -1819,8 +1813,8 @@ namespace ZScreenGUI
                 tsmi.Checked = tsmi == item;
             }
 
-            tsmCopytoClipboardMode.Enabled = ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageDestType.CLIPBOARD &&
-                ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageDestType.FILE;
+            tsmCopytoClipboardMode.Enabled = ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageUploaderType.CLIPBOARD &&
+                ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageUploaderType.FILE;
         }
 
         private void SetActiveImageSoftware()
@@ -1996,8 +1990,8 @@ namespace ZScreenGUI
                             default:
                                 switch (t.MyImageUploader)
                                 {
-                                    case ImageDestType.FILE:
-                                    case ImageDestType.CLIPBOARD:
+                                    case ImageUploaderType.FILE:
+                                    case ImageUploaderType.CLIPBOARD:
                                         cbString = t.LocalFilePath;
                                         if (!string.IsNullOrEmpty(cbString))
                                         {
@@ -3004,13 +2998,6 @@ namespace ZScreenGUI
         }
 
         #endregion Language Translator
-
-        private void cboUploadMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.UploadMode = (UploadMode)cboUploadMode.SelectedIndex;
-            gbImageShack.Enabled = Engine.conf.UploadMode == UploadMode.API;
-            gbTinyPic.Enabled = Engine.conf.UploadMode == UploadMode.API;
-        }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -4354,9 +4341,9 @@ namespace ZScreenGUI
 
         private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.SendSpaceAccountType = (AcctType)cboSendSpaceAcctType.SelectedIndex;
-            txtSendSpacePassword.Enabled = Engine.conf.SendSpaceAccountType == AcctType.User;
-            txtSendSpaceUserName.Enabled = Engine.conf.SendSpaceAccountType == AcctType.User;
+            Engine.conf.SendSpaceAccountType = (AccountType)cboSendSpaceAcctType.SelectedIndex;
+            txtSendSpacePassword.Enabled = Engine.conf.SendSpaceAccountType == AccountType.User;
+            txtSendSpaceUserName.Enabled = Engine.conf.SendSpaceAccountType == AccountType.User;
         }
 
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)
@@ -4367,7 +4354,7 @@ namespace ZScreenGUI
                 {
                     txtSendSpaceUserName.Text = upb.UserName;
                     txtSendSpacePassword.Text = upb.Password;
-                    cboSendSpaceAcctType.SelectedIndex = (int)AcctType.User;
+                    cboSendSpaceAcctType.SelectedIndex = (int)AccountType.User;
                 }
             }
         }
