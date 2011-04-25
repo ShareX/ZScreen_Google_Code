@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using UploadersLib.HelperClasses;
@@ -149,5 +150,15 @@ namespace UploadersLib.FileUploaders
                 return string.Empty;
             }
         }
+    }
+
+    public enum RapidShareAcctType
+    {
+        [Description("Anonymous")]
+        Free,
+        [Description("Collector's Account")]
+        Collectors,
+        [Description("Premium Account")]
+        Premium
     }
 }

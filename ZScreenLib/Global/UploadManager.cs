@@ -112,7 +112,7 @@ namespace ZScreenLib
                             if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                         }
 
-                        if (task.MyImageUploader == ImageDestType.FILE)
+                        if (task.MyImageUploader == ImageUploaderType.FILE)
                         {
                             clipboardText = task.LocalFilePath;
                         }

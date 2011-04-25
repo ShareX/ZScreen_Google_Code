@@ -43,42 +43,6 @@ namespace ZUploader
         FILE
     }
 
-    public enum TextDestination
-    {
-        [Description("pastebin.com")]
-        PASTEBIN,
-        [Description("pastebin.ca")]
-        PASTEBIN_CA,
-        [Description("paste2.org")]
-        PASTE2,
-        [Description("slexy.org")]
-        SLEXY,
-        [Description("Use file uploader")]
-        FILE
-    }
-
-    public enum FileDestination
-    {
-        [Description("rapidshare.com")]
-        RapidShare,
-        [Description("sendspace.com")]
-        SendSpace,
-        [Description("dropbox.com")]
-        Dropbox,
-        //[Description("filebin.ca")]
-        //FileBin,
-        //[Description("drop.io")]
-        //DropIO,
-        [Description("share.cx")]
-        ShareCX,
-        [Description("filez.muffinz.eu")]
-        FilezFiles,
-        [Description("Use custom uploader")]
-        CustomUploader,
-        [Description("FTP Server")]
-        FTP
-    }
-
     public enum EDataType
     {
         File, Image, Text

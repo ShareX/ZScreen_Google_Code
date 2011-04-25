@@ -14,8 +14,8 @@ namespace ZScreenLib
 
         public string RootDir { get; set; }
         public string XMLSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, XMLSettings.XMLFileName);
-        [Category("Options / General"), DefaultValue(ImageDestType.CLIPBOARD), Description("Image Destination")]
-        public ImageDestType ImageUploader { get; set; }
+        [Category("Options / General"), DefaultValue(ImageUploaderType.CLIPBOARD), Description("Image Destination")]
+        public ImageUploaderType ImageUploader { get; set; }
         public FileUploaderType FileUploader { get; set; }
         public TextUploaderType TextUploaderSelected { get; set; }
         public UrlShortenerType UrlShortenerSelected { get; set; }

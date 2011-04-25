@@ -38,6 +38,7 @@ using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
 using UploadersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZSS.IndexersLib;
@@ -64,7 +65,7 @@ namespace ZScreenLib
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public ImageDestType ImageUploaderType = ImageDestType.CLIPBOARD;
+        public ImageUploaderType ImageUploaderType = ImageUploaderType.CLIPBOARD;
         public FileUploaderType FileUploaderType = FileUploaderType.RapidShare;
         public TextUploaderType TextUploaderType = TextUploaderType.PASTEBIN;
         public UrlShortenerType URLShortenerType = UrlShortenerType.BITLY;
@@ -107,7 +108,7 @@ namespace ZScreenLib
 
         // SendSpace
 
-        public AcctType SendSpaceAccountType = AcctType.Anonymous;
+        public AccountType SendSpaceAccountType = AccountType.Anonymous;
         public string SendSpaceUserName = string.Empty;
         public string SendSpacePassword = string.Empty;
 
@@ -122,17 +123,21 @@ namespace ZScreenLib
 
         // ImageShack
 
-        public string ImageShackRegistrationCode = "";
-        public string ImageShackUserName = "";
+        public string ImageShackRegistrationCode = string.Empty;
+        public string ImageShackUserName = string.Empty;
         public bool ImageShackShowImagesInPublic = false;
 
         // TinyPic
 
-        public string TinyPicShuk = "";
-        public string TinyPicUserName = "";
-        public string TinyPicPassword = "";
+        public string TinyPicShuk = string.Empty;
+        public string TinyPicUserName = string.Empty;
+        public string TinyPicPassword = string.Empty;
         public bool RememberTinyPicUserPass = false;
         public bool TinyPicSizeCheck = true;
+
+        // Imgur
+
+        public OAuthInfo ImgurOAuthInfo = null;
 
         // Twitter
         public List<TwitterAuthInfo> TwitterAccountsList = new List<TwitterAuthInfo>();
@@ -149,12 +154,6 @@ namespace ZScreenLib
 
         public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
         public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
-
-        // Filez
-
-        public string FilezUsername = "";
-        public string FilezUserpass = "";
-        public bool FilezHideFiles = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -371,7 +370,6 @@ namespace ZScreenLib
 
         // Image Uploaders
 
-        public UploadMode UploadMode = UploadMode.API;
         public bool AutoSwitchFileUploader = true;
         public decimal ErrorRetryCount = 2;
         public bool ImageUploadRetryOnFail = true;

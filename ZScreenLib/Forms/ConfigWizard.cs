@@ -36,7 +36,7 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
-        public ImageDestType ImageDestinationType { get; private set; }
+        public ImageUploaderType ImageDestinationType { get; private set; }
         public FileUploaderType FileUploaderType { get; private set; }
         public TextUploaderType MyTextUploaderType { get; private set; }
         public UrlShortenerType MyUrlShortenerType { get; private set; }
@@ -48,8 +48,8 @@ namespace ZScreenLib
             txtRootFolder.Text = rootDir;
             this.RootFolder = rootDir;
 
-            ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageDestType).GetDescriptions());
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)ImageDestType.CLIPBOARD;
+            ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)ImageUploaderType.CLIPBOARD;
 
             ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
@@ -64,7 +64,7 @@ namespace ZScreenLib
         private void btnOK_Click(object sender, EventArgs e)
         {
             FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-            ImageDestinationType = (ImageDestType)ucDestOptions.cboImageUploaders.SelectedIndex;
+            ImageDestinationType = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
             MyTextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
             MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
 

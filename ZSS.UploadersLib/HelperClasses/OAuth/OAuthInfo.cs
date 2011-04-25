@@ -28,13 +28,15 @@ namespace UploadersLib.HelperClasses
     public class OAuthInfo
     {
         public string OAuthVersion { get; set; }
-        public string ConsumerKey { get; private set; }
-        public string ConsumerSecret { get; private set; }
+        public string ConsumerKey { get; set; }
+        public string ConsumerSecret { get; set; }
         public string AuthToken { get; set; }
         public string AuthSecret { get; set; }
         public string AuthVerifier { get; set; }
         public string UserToken { get; set; }
         public string UserSecret { get; set; }
+
+        public OAuthInfo() { }
 
         public OAuthInfo(string consumerKey, string consumerSecret)
         {

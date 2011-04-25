@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
@@ -38,19 +39,127 @@ namespace UploadersLib.ImageUploaders
             get { return "Imgur"; }
         }
 
-        public string APIKey { get; private set; }
+        /// <summary>
+        /// Upload method: Anonymous or User?
+        /// </summary>
+        public AccountType UploadMethod { get; set; }
 
-        public Imgur(string key)
+        /// <summary>
+        /// Required for Anonymous upload
+        /// </summary>
+        public string AnonymousKey { get; set; }
+
+        /// <summary>
+        /// Required for User upload (OAuth)
+        /// </summary>
+        public OAuthInfo AuthInfo { get; set; }
+
+        private const string URLAnonymousUpload = "http://api.imgur.com/2/upload.xml";
+        private const string URLUserUpload = "http://api.imgur.com/2/account/images";
+        private const string URLRequestToken = "https://api.imgur.com/oauth/request_token";
+        private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
+        private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
+
+        public Imgur(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {
-            APIKey = key;
+            UploadMethod = uploadMethod;
+            AnonymousKey = anonymousKey;
+            AuthInfo = oauth;
+        }
+
+        public Imgur(string anonymousKey)
+        {
+            UploadMethod = AccountType.Anonymous;
+            AnonymousKey = anonymousKey;
+        }
+
+        public Imgur(OAuthInfo oauth)
+        {
+            UploadMethod = AccountType.User;
+            AuthInfo = oauth;
         }
 
         public override ImageFileManager UploadImage(Stream stream, string fileName)
         {
-            Dictionary<string, string> arguments = new Dictionary<string, string>();
-            arguments.Add("key", APIKey);
+            ImageFileManager ifm = null;
 
-            string response = UploadData(stream, "http://api.imgur.com/2/upload.xml", fileName, "image", arguments);
+            switch (UploadMethod)
+            {
+                case AccountType.Anonymous:
+                    ifm = AnonymousUpload(stream, fileName);
+                    break;
+                case AccountType.User:
+                    ifm = UserUpload(stream, fileName);
+                    break;
+            }
+
+            return ifm;
+        }
+
+        public string GetAuthorizationURL()
+        {
+            string url = OAuthManager.GenerateQuery(URLRequestToken, null, HttpMethod.GET, AuthInfo);
+
+            string response = GetResponseString(url);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return OAuthManager.GetAuthorizationURL(response, AuthInfo, URLAuthorize);
+            }
+
+            return null;
+        }
+
+        public bool GetAccessToken(string verificationCode)
+        {
+            if (string.IsNullOrEmpty(AuthInfo.AuthToken))
+            {
+                throw new Exception("Auth token is empty. Get Authorization URL first.");
+            }
+
+            AuthInfo.AuthVerifier = verificationCode;
+
+            string url = OAuthManager.GenerateQuery(URLAccessToken, null, HttpMethod.GET, AuthInfo);
+
+            string response = GetResponseString(url);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return OAuthManager.ParseAccessTokenResponse(response, AuthInfo);
+            }
+
+            return false;
+        }
+
+        private ImageFileManager UserUpload(Stream stream, string fileName)
+        {
+            if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
+            {
+                throw new Exception("UserToken or UserSecret is empty. Login is required.");
+            }
+
+            ImageFileManager ifm = new ImageFileManager();
+
+            string query = OAuthManager.GenerateQuery(URLUserUpload, null, HttpMethod.POST, AuthInfo);
+
+            string response = UploadData(stream, query, fileName, "image");
+
+            UploadResult result = new UploadResult(response);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                // TODO: parse
+            }
+
+            return ifm;
+        }
+
+        private ImageFileManager AnonymousUpload(Stream stream, string fileName)
+        {
+            Dictionary<string, string> arguments = new Dictionary<string, string>();
+            arguments.Add("key", AnonymousKey);
+
+            string response = UploadData(stream, URLAnonymousUpload, fileName, "image", arguments);
 
             return ParseResult(response);
         }

@@ -33,14 +33,15 @@ using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Custom_Controls;
 using HistoryLib;
+using UploadersLib;
 
 namespace ZUploader
 {
     public static class UploadManager
     {
         public static ImageDestination ImageUploader { get; set; }
-        public static TextDestination TextUploader { get; set; }
-        public static FileDestination FileUploader { get; set; }
+        public static TextUploaderType TextUploader { get; set; }
+        public static FileUploaderType FileUploader { get; set; }
         public static MyListView ListViewControl { get; set; }
         public static List<Task> Tasks { get; private set; }
 
@@ -61,7 +62,7 @@ namespace ZUploader
                     {
                         type = EDataType.Image;
                     }
-                    else if (TextUploader != TextDestination.FILE && Helpers.IsTextFile(path))
+                    else if (TextUploader != TextUploaderType.FILE && Helpers.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
@@ -156,7 +157,7 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                EDataType type = TextUploader == TextDestination.FILE ? EDataType.File : EDataType.Text;
+                EDataType type = TextUploader == TextUploaderType.FILE ? EDataType.File : EDataType.Text;
                 Task task = Task.CreateTextUploaderTask(type, text);
                 StartUpload(task);
             }

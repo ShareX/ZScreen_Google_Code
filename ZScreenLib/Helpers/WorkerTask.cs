@@ -172,7 +172,7 @@ namespace ZScreenLib
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
-        public ImageDestType MyImageUploader { get; set; }
+        public ImageUploaderType MyImageUploader { get; set; }
         /// <summary>
         /// Pictures List to access Local file path, URL
         /// </summary>
