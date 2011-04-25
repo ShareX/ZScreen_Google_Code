@@ -152,13 +152,13 @@ namespace UploadersLib
 
     public enum TextUploaderType
     {
-        [Description("pastebin.com")]
+        [Description("Pastebin - www.pastebin.com")]
         PASTEBIN,
-        [Description("pastebin.ca")]
+        [Description("Pastebin - www.pastebin.ca")]
         PASTEBIN_CA,
-        [Description("paste2.org")]
+        [Description("Paste2 - www.paste2.org")]
         PASTE2,
-        [Description("slexy.org")]
+        [Description("Slexy 2.0 - www.slexy.org")]
         SLEXY,
         [Description("Use file uploader")]
         FILE
@@ -166,21 +166,21 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("rapidshare.com")]
+        [Description("RapidShare - www.rapidshare.com")]
         RapidShare,
-        [Description("sendspace.com")]
+        [Description("SendSpace - www.sendspace.com")]
         SendSpace,
-        [Description("dropbox.com")]
+        [Description("Dropbox - www.dropbox.com")]
         Dropbox,
         //[Description("filebin.ca")]
         //FileBin,
         //[Description("drop.io")]
         //DropIO,
-        [Description("share.cx")]
+        [Description("ShareCX - www.share.cx")]
         ShareCX,
-        [Description("filez.muffinz.eu")]
+        [Description("Filez - www.filez.muffinz.eu")]
         FilezFiles,
-        [Description("Use custom uploader")]
+        [Description("Use Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
         FTP
