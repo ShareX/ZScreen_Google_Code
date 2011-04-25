@@ -402,17 +402,11 @@ namespace ZScreenLib
         /// <returns></returns>
         public static string ShortenURL(string url)
         {
+            // TODO: 
             if (!string.IsNullOrEmpty(url))
             {
-                TextUploader tu = Engine.conf.UrlShortenersList[Engine.conf.UrlShortenerSelected]; // TODO: Use URLShortener
-                if (tu != null)
-                {
-                    string temp = tu.ShortenURL(url);
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        url = temp;
-                    }
-                }
+                URLShortener us = new UploadersLib.URLShorteners.GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                us.ShortenURL(url);
             }
             return url;
         }

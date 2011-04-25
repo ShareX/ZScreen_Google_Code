@@ -497,7 +497,7 @@ namespace ZScreenGUI
         public void LanguageTranslator(ref WorkerTask task)
         {
             task.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(task.TranslationInfo);
-            task.MyText = TextInfo.FromString(task.TranslationInfo.Result.TranslatedText);
+            task.MyText = TextInfo.FromString(task.TranslationInfo.Result.TranslatedText).LocalString;
         }
 
         public void StartWorkerTranslator()

@@ -55,7 +55,7 @@ namespace ZScreenLib
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
 
             ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-            ucDestOptions.cboTextUploaders.SelectedIndex = (int)MyTextUploaderType.
+            ucDestOptions.cboTextUploaders.SelectedIndex = (int)MyTextUploaderType;
 
             ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
             ucDestOptions.cboURLShorteners.SelectedIndex = (int)MyUrlShortenerType;
