@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZUploader - A program that allows you to upload images, texts or files
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
     Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
@@ -53,6 +53,12 @@ namespace UploadersLib.HelperClasses
         {
             UserToken = userToken;
             UserSecret = userSecret;
+        }
+
+        public static bool CheckOAuth(OAuthInfo oauth)
+        {
+            return oauth != null && !string.IsNullOrEmpty(oauth.ConsumerKey) && !string.IsNullOrEmpty(oauth.ConsumerSecret) &&
+                !string.IsNullOrEmpty(oauth.UserToken) && !string.IsNullOrEmpty(oauth.UserSecret);
         }
     }
 }

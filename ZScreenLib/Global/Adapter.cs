@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
@@ -43,6 +44,8 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.TextServices;
+using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib
@@ -294,11 +297,6 @@ namespace ZScreenLib
             return acc;
         }
 
-        public static bool CheckTwitterAccounts()
-        {
-            return CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected);
-        }
-
         public static bool CheckFTPAccounts(ref WorkerTask task)
         {
             bool result = CheckFTPAccounts();
@@ -398,16 +396,15 @@ namespace ZScreenLib
         /// <summary>
         /// Method to shorten a URL
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
         public static string ShortenURL(string url)
         {
-            // TODO: 
+            // TODO:
             if (!string.IsNullOrEmpty(url))
             {
-                URLShortener us = new UploadersLib.URLShorteners.GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                us.ShortenURL(url);
+                URLShortener us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                return us.ShortenURL(url);
             }
+
             return url;
         }
 
@@ -596,59 +593,42 @@ namespace ZScreenLib
 
         #region Twitter Methods
 
-        /// <summary>
-        /// Returns the active TwitterAuthInfo object; if nothing is active then a new TwitterAuthInfo object is returned
-        /// </summary>
-        /// <returns></returns>
-        public static TwitterAuthInfo TwitterGetActiveAcct()
+        public static OAuthInfo TwitterGetActiveAcct()
         {
-            TwitterAuthInfo acc = new TwitterAuthInfo();
-            if (CheckTwitterAccounts())
-            {
-                acc = Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected];
-            }
-            return acc;
+            // TODO: Mcored
+
+            return null;
         }
 
-        public static TwitterAuthInfo TwitterAuthGetPin()
+        public static bool TwitterGetAuthorizationURL()
         {
-            // authorize ZScreen to twitter
-            Twitter oAuth = new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
-            TwitterAuthInfo acc = TwitterGetActiveAcct();
-            string authLink = oAuth.AuthorizationLinkGet();
-            if (!string.IsNullOrEmpty(acc.AccountName))
+            OAuthInfo oauth = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            Twitter twitter = new Twitter(oauth);
+            string url = twitter.GetAuthorizationURL();
+
+            if (!string.IsNullOrEmpty(url))
             {
-                oAuth.AuthInfo.AccountName = acc.AccountName;
+                Engine.conf.TwitterOAuthInfo = oauth;
+                Process.Start(url);
+                return true;
             }
-            if (CheckTwitterAccounts())
-            {
-                Engine.conf.TwitterAccountsList[Engine.conf.TwitterAcctSelected] = oAuth.AuthInfo;
-            }
-            if (!string.IsNullOrEmpty(authLink))
-            {
-                System.Diagnostics.Process.Start(authLink);
-            }
-            return oAuth.AuthInfo;
+
+            return false;
         }
 
-        public static TwitterAuthInfo TwitterAuthSetPin(ref TwitterAuthInfo acc)
+        public static bool TwitterGetAccessToken(string verificationCode)
         {
-            try
+            if (!string.IsNullOrEmpty(verificationCode) && Engine.conf.TwitterOAuthInfo != null &&
+                !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthSecret))
             {
-                if (null != acc)
-                {
-                    Twitter oAuth = new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
-                    acc = oAuth.AccessTokenGet(ref acc);
-                }
+                Twitter twitter = new Twitter(Engine.conf.TwitterOAuthInfo);
+                return twitter.GetAccessToken(verificationCode);
             }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug("Error while setting Twitter PIN", ex);
-            }
-            return acc;
+
+            return false;
         }
 
-        public static void TwitterMsg(ref WorkerTask task)
+        public static void TwitterMsg(WorkerTask task)
         {
             if (!string.IsNullOrEmpty(task.RemoteFilePath))
             {
@@ -658,18 +638,11 @@ namespace ZScreenLib
 
         public static void TwitterMsg(string url)
         {
-            TwitterAuthInfo acc = TwitterGetActiveAcct();
-            if (!string.IsNullOrEmpty(acc.TokenSecret))
+            if (OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
             {
-                List<Twitter> oAccList = new List<Twitter>();
-                foreach (TwitterAuthInfo oAuth in Engine.conf.TwitterAccountsList)
-                {
-                    oAccList.Add(new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
-                }
-                TwitterMsg msg = new TwitterMsg(oAccList, string.Format("{0} - Update Twitter Status...", acc.AccountName));
-                msg.ActiveAccountName = acc.AccountName;
+                TwitterMsg msg = new TwitterMsg(Engine.conf.TwitterOAuthInfo);
                 msg.Icon = Resources.zss_main;
-                msg.Config = Engine.conf.TwitterClientConfig;
+                // msg.Config = Engine.conf.TwitterClientConfig;
                 msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
                 msg.txtTweet.Text = url;
                 msg.Show();
@@ -678,8 +651,7 @@ namespace ZScreenLib
 
         private static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
-            TwitterMsg msg = sender as TwitterMsg;
-            Engine.conf.TwitterClientConfig = msg.Config;
+            // TODO: Mcored
         }
 
         #endregion Twitter Methods

@@ -141,10 +141,11 @@ namespace ZScreenLib
         public OAuthInfo ImgurOAuthInfo = null;
 
         // Twitter
-        public List<TwitterAuthInfo> TwitterAccountsList = new List<TwitterAuthInfo>();
-        public int TwitterAcctSelected = 0;
+
+        public OAuthInfo TwitterOAuthInfo = null;
+        public string TwitterUsername = string.Empty;
+        public string TwitterPassword = string.Empty;
         public bool TwitterEnabled = false;
-        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
 
         // TwitPic
 

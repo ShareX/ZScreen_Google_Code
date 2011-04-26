@@ -133,8 +133,6 @@
     <Compile Include="HelperClasses\CustomUploaderManager.cs" />
     <Compile Include="HelperClasses\ITextUploader.cs" />
     <Compile Include="HelperClasses\IUploader.cs" />
-    <Compile Include="HelperClasses\OAuthBase.cs" />
-    <Compile Include="TextServices\MyTwitter.cs" />
     <Compile Include="TextServices\Twitter.cs" />
     <Compile Include="HelperClasses\ProgressManager.cs" />
     <Compile Include="HelperClasses\ProxyInfo.cs" />

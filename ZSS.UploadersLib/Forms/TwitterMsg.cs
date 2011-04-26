@@ -27,9 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using HelpersLib;
 using UploadersLib.HelperClasses;
+using UploadersLib.TextServices;
 
 namespace UploadersLib
 {
@@ -37,20 +36,18 @@ namespace UploadersLib
     {
         public string ActiveAccountName { get; set; }
         public string Message { get; set; }
-        private List<Twitter> moAuth { get; set; }
+        public OAuthInfo AuthInfo { get; set; }
         public TwitterClientSettings Config { get; set; }
 
-        public TwitterMsg(List<Twitter> oAuth, string title)
-            : this(oAuth)
-        {
-            this.Text = title;
-        }
-
-        public TwitterMsg(List<Twitter> oAuth)
-            : this("Update Twitter Status...")
+        public TwitterMsg(OAuthInfo oauth, string title)
         {
             InitializeComponent();
-            this.moAuth = oAuth;
+            Text = title;
+        }
+
+        public TwitterMsg(OAuthInfo oauth)
+            : this("Update Twitter Status...")
+        {
         }
 
         public TwitterMsg(string title)
@@ -63,40 +60,30 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(txtTweet.Text))
             {
-                this.Message = txtTweet.Text;
-                this.DialogResult = DialogResult.OK;
-                if (null != moAuth && !string.IsNullOrEmpty(txtTweet.Text))
+                Message = txtTweet.Text;
+                DialogResult = DialogResult.OK;
+
+                if (AuthInfo != null && !string.IsNullOrEmpty(txtTweet.Text))
                 {
-                    this.Hide();
-                    foreach (Twitter oAuth in clbAccounts.CheckedItems)
+                    Hide();
+
+                    string tweet = HttpUtility.UrlEncode(txtTweet.Text);
+                    TweetStatus status = new Twitter(AuthInfo).TweetMessage(tweet);
+
+                    if (status != null)
                     {
-                        // URL-encode the tweet...
-                        string tweet = HttpUtility.UrlEncode(txtTweet.Text);
-                        // And send it off...
-                        string xml = oAuth.oAuthWebRequest(Twitter.Method.POST, "http://twitter.com/statuses/update.xml", "status=" + tweet);
-                        FillResponseUser(xml);
+                        Config.AddUser(status.InReplyToScreenName);
                     }
                 }
-                this.Close();
-            }
-        }
 
-        private void FillResponseUser(string xml)
-        {
-            XDocument xdoc = XDocument.Parse(xml);
-            Console.WriteLine("Twitter API Response:");
-            Console.WriteLine(xml);
-            XElement xele = xdoc.Element("status");
-            if (null != xele)
-            {
-                this.Config.AddUser(xele.GetElementValue("in_reply_to_screen_name"));
+                Close();
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void txtTweet_TextChanged(object sender, EventArgs e)
@@ -121,10 +108,11 @@ namespace UploadersLib
                 lbUsers.Items.Add(user);
             }
             clbAccounts.Height = 134;
-            foreach (Twitter oAuth in moAuth)
+
+            /*foreach (Twitter oAuth in moAuth)
             {
                 clbAccounts.Items.Add(oAuth, oAuth.Enabled);
-            }
+            }*/
         }
 
         private void lbUsers_KeyDown(object sender, KeyEventArgs e)

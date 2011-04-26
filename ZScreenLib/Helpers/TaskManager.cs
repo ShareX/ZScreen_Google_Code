@@ -425,8 +425,8 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    twitpicOpt.Password = Adapter.TwitterGetActiveAcct().Password;
+                    twitpicOpt.UserName = Engine.conf.TwitterUsername;
+                    twitpicOpt.Password = Engine.conf.TwitterPassword;
                     // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
                     twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
@@ -434,14 +434,14 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.TWITSNAPS:
                     TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    twitsnapsOpt.Password = Adapter.TwitterGetActiveAcct().Password;
+                    twitsnapsOpt.UserName = Engine.conf.TwitterUsername;
+                    twitsnapsOpt.Password = Engine.conf.TwitterPassword;
                     imageUploader = new TwitSnapsUploader(twitsnapsOpt);
                     break;
                 case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(Engine.ImageShackKey);
-                    yfrogOp.UserName = Adapter.TwitterGetActiveAcct().UserName;
-                    yfrogOp.Password = Adapter.TwitterGetActiveAcct().Password;
+                    yfrogOp.UserName = Engine.conf.TwitterUsername;
+                    yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
                     // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
