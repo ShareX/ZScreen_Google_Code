@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
@@ -42,19 +41,16 @@ namespace UploadersLib
         public TwitterMsg(OAuthInfo oauth, string title)
         {
             InitializeComponent();
+            AuthInfo = oauth;
             Text = title;
+            Config = new TwitterClientSettings();
         }
 
         public TwitterMsg(OAuthInfo oauth)
-            : this("Update Twitter Status...")
-        {
-        }
+            : this(oauth, "Update Twitter Status...") { }
 
         public TwitterMsg(string title)
-        {
-            this.Text = title;
-            this.Config = new TwitterClientSettings();
-        }
+            : this(null, title) { }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -67,12 +63,18 @@ namespace UploadersLib
                 {
                     Hide();
 
-                    string tweet = HttpUtility.UrlEncode(txtTweet.Text);
-                    TweetStatus status = new Twitter(AuthInfo).TweetMessage(tweet);
-
-                    if (status != null)
+                    try
                     {
-                        Config.AddUser(status.InReplyToScreenName);
+                        TweetStatus status = new Twitter(AuthInfo).TweetMessage(txtTweet.Text);
+
+                        if (status != null && !string.IsNullOrEmpty(status.InReplyToScreenName))
+                        {
+                            Config.AddUser(status.InReplyToScreenName);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 

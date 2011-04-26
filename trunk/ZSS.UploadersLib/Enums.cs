@@ -140,7 +140,7 @@ namespace UploadersLib
         TWITPIC,
         [Description("TwitSnaps - twitsnaps.com")]
         TWITSNAPS,
-        [Description("yFrog - yfrog.com")]
+        [Description("yfrog - yfrog.com")]
         YFROG,
         [Description("MindTouch Deki Wiki")]
         DEKIWIKI,
@@ -152,13 +152,13 @@ namespace UploadersLib
 
     public enum TextUploaderType
     {
-        [Description("Pastebin - www.pastebin.com")]
+        [Description("Pastebin - pastebin.com")]
         PASTEBIN,
-        [Description("Pastebin - www.pastebin.ca")]
+        [Description("Pastebin - pastebin.ca")]
         PASTEBIN_CA,
-        [Description("Paste2 - www.paste2.org")]
+        [Description("Paste2 - paste2.org")]
         PASTE2,
-        [Description("Slexy 2.0 - www.slexy.org")]
+        [Description("Slexy 2.0 - slexy.org")]
         SLEXY,
         [Description("Use file uploader")]
         FILE
@@ -166,21 +166,21 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("RapidShare - www.rapidshare.com")]
+        [Description("RapidShare - rapidshare.com")]
         RapidShare,
-        [Description("SendSpace - www.sendspace.com")]
+        [Description("SendSpace - sendspace.com")]
         SendSpace,
-        [Description("Dropbox - www.dropbox.com")]
+        [Description("Dropbox - dropbox.com")]
         Dropbox,
         //[Description("filebin.ca")]
         //FileBin,
         //[Description("drop.io")]
         //DropIO,
-        [Description("ShareCX - www.share.cx")]
+        [Description("ShareCX - share.cx")]
         ShareCX,
-        [Description("Filez - www.filez.muffinz.eu")]
+        [Description("FileZ - filez.muffinz.eu")]
         FilezFiles,
-        [Description("Use Custom Uploader")]
+        [Description("Use custom uploader")]
         CustomUploader,
         [Description("FTP Server")]
         FTP

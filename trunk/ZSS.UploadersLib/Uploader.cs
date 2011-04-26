@@ -330,12 +330,12 @@ namespace UploadersLib
                             stream.Write(bytes, 0, bytes.Length);
                         }
                     }
-                }
 
-                if (isFinal)
-                {
-                    bytes = MakeFinalBoundary(boundary);
-                    stream.Write(bytes, 0, bytes.Length);
+                    if (isFinal)
+                    {
+                        bytes = MakeFinalBoundary(boundary);
+                        stream.Write(bytes, 0, bytes.Length);
+                    }
                 }
 
                 return stream.ToArray();

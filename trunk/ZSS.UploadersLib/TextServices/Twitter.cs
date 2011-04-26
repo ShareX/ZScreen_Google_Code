@@ -31,7 +31,7 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.TextServices
 {
-    public class Twitter : Uploader
+    public class Twitter : Uploader, IOAuth
     {
         private const string APIVersion = "1";
         private const string URLRequestToken = "http://twitter.com/oauth/request_token";
@@ -62,9 +62,9 @@ namespace UploadersLib.TextServices
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("status", message);
 
-            string query = OAuthManager.GenerateQuery(URLTweet, args, HttpMethod.GET, AuthInfo);
+            string query = OAuthManager.GenerateQuery(URLTweet, args, HttpMethod.POST, AuthInfo);
 
-            string response = GetResponse(query, args);
+            string response = GetResponse(query);
 
             return ParseTweetResponse(response);
         }

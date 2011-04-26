@@ -32,8 +32,14 @@ namespace UploadersLib.TextServices
 {
     public class Lyricsfly : Uploader
     {
-        private const string UserID = "55603998025";
-        private const string AppID = "-code.google.com/p/itsfv";
+        public string UserID { get; set; }
+        public string AppID { get; set; }
+
+        public Lyricsfly(string userID, string appID)
+        {
+            UserID = userID;
+            AppID = appID;
+        }
 
         /// <summary>
         /// To search by artist and title combination
