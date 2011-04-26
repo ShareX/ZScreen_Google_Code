@@ -629,7 +629,7 @@ namespace ZScreenGUI
 
             cbImgurUseAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
 
-            if (Engine.conf.ImgurOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.UserToken))
+            if (OAuthInfo.CheckOAuth(Engine.conf.ImgurOAuthInfo))
             {
                 lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
             }
@@ -659,18 +659,11 @@ namespace ZScreenGUI
             }
 
             // Twitter
-            // TODO: Mcored
 
-            /*
-            ucTwitterAccounts.AccountsList.Items.Clear();
-            foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
+            if (OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
             {
-                ucTwitterAccounts.AccountsList.Items.Add(acc);
+                lblTwitterStatus.Text = "User token: " + Engine.conf.TwitterOAuthInfo.UserToken;
             }
-            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
-            {
-                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
-            }*/
 
             // Flickr
 
@@ -1583,14 +1576,6 @@ namespace ZScreenGUI
         private void ShowDirectory(string dir)
         {
             Process.Start("explorer.exe", dir);
-        }
-
-        private void tsmViewRemote_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.FTPAccountList.Count > 0)
-            {
-                new ViewRemote().Show();
-            }
         }
 
         private void txtActiveWindow_Leave(object sender, EventArgs e)
@@ -5011,6 +4996,42 @@ namespace ZScreenGUI
             else
             {
                 Engine.conf.ImgurAccountType = AccountType.Anonymous;
+            }
+        }
+
+        private void btnTwitterOpenAuthorizePage_Click(object sender, EventArgs e)
+        {
+            OAuthInfo oauth = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            Twitter twitter = new Twitter(oauth);
+            string url = twitter.GetAuthorizationURL();
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                Engine.conf.TwitterOAuthInfo = oauth;
+                Process.Start(url);
+            }
+        }
+
+        private void btnTwitterLogin_Click(object sender, EventArgs e)
+        {
+            string verification = tbTwitterVerificationCode.Text;
+
+            if (!string.IsNullOrEmpty(verification) && Engine.conf.TwitterOAuthInfo != null &&
+                !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthSecret))
+            {
+                Twitter twitter = new Twitter(Engine.conf.TwitterOAuthInfo);
+                bool result = twitter.GetAccessToken(verification);
+
+                if (result)
+                {
+                    lblTwitterStatus.Text = "User token: " + Engine.conf.TwitterOAuthInfo.UserToken;
+                    MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    lblTwitterStatus.Text = "Login is required";
+                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

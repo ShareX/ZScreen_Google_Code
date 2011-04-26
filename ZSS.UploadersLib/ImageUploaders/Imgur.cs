@@ -32,7 +32,7 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
-    public sealed class Imgur : ImageUploader
+    public sealed class Imgur : ImageUploader, IOAuth
     {
         private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
         private const string URLUserUpload = "https://api.imgur.com/2/account/images.xml";

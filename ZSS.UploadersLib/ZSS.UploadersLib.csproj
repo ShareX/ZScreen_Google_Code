@@ -109,6 +109,7 @@
     <Compile Include="HelperClasses\MediaWikiHistory.cs" />
     <Compile Include="HelperClasses\MediaWikiAccount.cs" />
     <Compile Include="HelperClasses\JSONHelper.cs" />
+    <Compile Include="HelperClasses\OAuth\IOAuth.cs" />
     <Compile Include="HelperClasses\OAuth\OAuthManager.cs" />
     <Compile Include="HelperClasses\OAuth\OAuthInfo.cs" />
     <Compile Include="HelperClasses\UploadHelper\HttpUploadHelper.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Forms\TwitterMsg.Designer.cs">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global\Enums.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="HelperClasses\DekiWiki.cs" />
     <Compile Include="HelperClasses\DekiWikiAccount.cs" />
     <Compile Include="HelperClasses\DekiWikiHistory.cs" />

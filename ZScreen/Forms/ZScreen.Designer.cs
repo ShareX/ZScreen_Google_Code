@@ -32,10 +32,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +46,6 @@ namespace ZScreenGUI
             this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmViewRemoteDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmViewLocalDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmActions = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,13 +183,9 @@ namespace ZScreenGUI
             this.btnFlickrGetToken = new System.Windows.Forms.Button();
             this.btnFlickrGetFrob = new System.Windows.Forms.Button();
             this.tpTwitter = new System.Windows.Forms.TabPage();
-            this.tcTwitter = new System.Windows.Forms.TabControl();
-            this.tpTwitPic = new System.Windows.Forms.TabPage();
             this.lblTwitPicThumbnailMode = new System.Windows.Forms.Label();
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
-            this.tpYfrog = new System.Windows.Forms.TabPage();
-            this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
             this.tpImageBam = new System.Windows.Forms.TabPage();
             this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
             this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
@@ -606,6 +601,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.lblTwitterVerificationCode = new System.Windows.Forms.Label();
+            this.tbTwitterVerificationCode = new System.Windows.Forms.TextBox();
+            this.btnTwitterOpenAuthorizePage = new System.Windows.Forms.Button();
+            this.gbTwitterOthers = new System.Windows.Forms.GroupBox();
+            this.lblTwitterStatus = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
@@ -628,8 +629,6 @@ namespace ZScreenGUI
             this.tpImgur.SuspendLayout();
             this.tpFlickr.SuspendLayout();
             this.tpTwitter.SuspendLayout();
-            this.tcTwitter.SuspendLayout();
-            this.tpTwitPic.SuspendLayout();
             this.tpImageBam.SuspendLayout();
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
@@ -755,6 +754,7 @@ namespace ZScreenGUI
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
+            this.gbTwitterOthers.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -774,7 +774,6 @@ namespace ZScreenGUI
             this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
             this.tsmFTPClient,
-            this.tsmViewRemoteDirectory,
             this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
             this.tsmActions,
@@ -784,7 +783,7 @@ namespace ZScreenGUI
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 314);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmiTabs
             // 
@@ -842,14 +841,6 @@ namespace ZScreenGUI
             this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
             this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
-            // 
-            // tsmViewRemoteDirectory
-            // 
-            this.tsmViewRemoteDirectory.Image = global::ZScreenGUI.Properties.Resources.server;
-            this.tsmViewRemoteDirectory.Name = "tsmViewRemoteDirectory";
-            this.tsmViewRemoteDirectory.Size = new System.Drawing.Size(205, 22);
-            this.tsmViewRemoteDirectory.Text = "&FTP Viewer...";
-            this.tsmViewRemoteDirectory.Click += new System.EventHandler(this.tsmViewRemote_Click);
             // 
             // tsmViewLocalDirectory
             // 
@@ -2138,10 +2129,10 @@ namespace ZScreenGUI
             this.lblImgurHowTo.AutoSize = true;
             this.lblImgurHowTo.Location = new System.Drawing.Point(16, 40);
             this.lblImgurHowTo.Name = "lblImgurHowTo";
-            this.lblImgurHowTo.Size = new System.Drawing.Size(246, 26);
+            this.lblImgurHowTo.Size = new System.Drawing.Size(298, 26);
             this.lblImgurHowTo.TabIndex = 4;
-            this.lblImgurHowTo.Text = "Open authorize page and login to Imgur if required\r\nCopy verification code to ZSc" +
-    "reen and press Login";
+            this.lblImgurHowTo.Text = "Open authorize page for web based secure login.\r\nAfter login copy verification co" +
+    "de to ZScreen and press Login.";
             // 
             // btnImgurLogin
             // 
@@ -2273,8 +2264,12 @@ namespace ZScreenGUI
             // 
             // tpTwitter
             // 
-            this.tpTwitter.Controls.Add(this.tcTwitter);
-            this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
+            this.tpTwitter.Controls.Add(this.lblTwitterStatus);
+            this.tpTwitter.Controls.Add(this.gbTwitterOthers);
+            this.tpTwitter.Controls.Add(this.btnTwitterLogin);
+            this.tpTwitter.Controls.Add(this.lblTwitterVerificationCode);
+            this.tpTwitter.Controls.Add(this.tbTwitterVerificationCode);
+            this.tpTwitter.Controls.Add(this.btnTwitterOpenAuthorizePage);
             this.tpTwitter.ImageKey = "(none)";
             this.tpTwitter.Location = new System.Drawing.Point(4, 23);
             this.tpTwitter.Name = "tpTwitter";
@@ -2284,35 +2279,10 @@ namespace ZScreenGUI
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
-            // tcTwitter
-            // 
-            this.tcTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tcTwitter.Controls.Add(this.tpTwitPic);
-            this.tcTwitter.Controls.Add(this.tpYfrog);
-            this.tcTwitter.Location = new System.Drawing.Point(6, 293);
-            this.tcTwitter.Name = "tcTwitter";
-            this.tcTwitter.SelectedIndex = 0;
-            this.tcTwitter.Size = new System.Drawing.Size(770, 98);
-            this.tcTwitter.TabIndex = 16;
-            // 
-            // tpTwitPic
-            // 
-            this.tpTwitPic.Controls.Add(this.lblTwitPicThumbnailMode);
-            this.tpTwitPic.Controls.Add(this.cboTwitPicThumbnailMode);
-            this.tpTwitPic.Controls.Add(this.cbTwitPicShowFull);
-            this.tpTwitPic.Location = new System.Drawing.Point(4, 22);
-            this.tpTwitPic.Name = "tpTwitPic";
-            this.tpTwitPic.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitPic.Size = new System.Drawing.Size(762, 72);
-            this.tpTwitPic.TabIndex = 0;
-            this.tpTwitPic.Text = "TwitPic";
-            this.tpTwitPic.UseVisualStyleBackColor = true;
-            // 
             // lblTwitPicThumbnailMode
             // 
             this.lblTwitPicThumbnailMode.AutoSize = true;
-            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(160, 21);
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 53);
             this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
             this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
             this.lblTwitPicThumbnailMode.TabIndex = 15;
@@ -2322,7 +2292,7 @@ namespace ZScreenGUI
             // 
             this.cboTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTwitPicThumbnailMode.FormattingEnabled = true;
-            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(256, 16);
+            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 48);
             this.cboTwitPicThumbnailMode.Name = "cboTwitPicThumbnailMode";
             this.cboTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
             this.cboTwitPicThumbnailMode.TabIndex = 14;
@@ -2331,7 +2301,7 @@ namespace ZScreenGUI
             // cbTwitPicShowFull
             // 
             this.cbTwitPicShowFull.AutoSize = true;
-            this.cbTwitPicShowFull.Location = new System.Drawing.Point(20, 19);
+            this.cbTwitPicShowFull.Location = new System.Drawing.Point(16, 24);
             this.cbTwitPicShowFull.Name = "cbTwitPicShowFull";
             this.cbTwitPicShowFull.Size = new System.Drawing.Size(94, 17);
             this.cbTwitPicShowFull.TabIndex = 13;
@@ -2339,27 +2309,6 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.cbTwitPicShowFull, "Append /full to the url to show the image in full size");
             this.cbTwitPicShowFull.UseVisualStyleBackColor = true;
             this.cbTwitPicShowFull.CheckedChanged += new System.EventHandler(this.cbTwitPicShowFull_CheckedChanged);
-            // 
-            // tpYfrog
-            // 
-            this.tpYfrog.Location = new System.Drawing.Point(4, 22);
-            this.tpYfrog.Name = "tpYfrog";
-            this.tpYfrog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpYfrog.Size = new System.Drawing.Size(762, 72);
-            this.tpYfrog.TabIndex = 2;
-            this.tpYfrog.Text = "yFrog";
-            this.tpYfrog.UseVisualStyleBackColor = true;
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucTwitterAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(786, 293);
-            this.ucTwitterAccounts.TabIndex = 17;
             // 
             // tpImageBam
             // 
@@ -2631,39 +2580,39 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2694,8 +2643,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -7244,6 +7193,63 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // btnTwitterLogin
+            // 
+            this.btnTwitterLogin.Location = new System.Drawing.Point(320, 47);
+            this.btnTwitterLogin.Name = "btnTwitterLogin";
+            this.btnTwitterLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnTwitterLogin.TabIndex = 19;
+            this.btnTwitterLogin.Text = "Login";
+            this.btnTwitterLogin.UseVisualStyleBackColor = true;
+            this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
+            // 
+            // lblTwitterVerificationCode
+            // 
+            this.lblTwitterVerificationCode.AutoSize = true;
+            this.lblTwitterVerificationCode.Location = new System.Drawing.Point(16, 51);
+            this.lblTwitterVerificationCode.Name = "lblTwitterVerificationCode";
+            this.lblTwitterVerificationCode.Size = new System.Drawing.Size(89, 13);
+            this.lblTwitterVerificationCode.TabIndex = 18;
+            this.lblTwitterVerificationCode.Text = "Verification code:";
+            // 
+            // tbTwitterVerificationCode
+            // 
+            this.tbTwitterVerificationCode.Location = new System.Drawing.Point(112, 48);
+            this.tbTwitterVerificationCode.Name = "tbTwitterVerificationCode";
+            this.tbTwitterVerificationCode.Size = new System.Drawing.Size(200, 20);
+            this.tbTwitterVerificationCode.TabIndex = 17;
+            // 
+            // btnTwitterOpenAuthorizePage
+            // 
+            this.btnTwitterOpenAuthorizePage.Location = new System.Drawing.Point(16, 16);
+            this.btnTwitterOpenAuthorizePage.Name = "btnTwitterOpenAuthorizePage";
+            this.btnTwitterOpenAuthorizePage.Size = new System.Drawing.Size(136, 23);
+            this.btnTwitterOpenAuthorizePage.TabIndex = 16;
+            this.btnTwitterOpenAuthorizePage.Text = "Open authorize page";
+            this.btnTwitterOpenAuthorizePage.UseVisualStyleBackColor = true;
+            this.btnTwitterOpenAuthorizePage.Click += new System.EventHandler(this.btnTwitterOpenAuthorizePage_Click);
+            // 
+            // gbTwitterOthers
+            // 
+            this.gbTwitterOthers.Controls.Add(this.cbTwitPicShowFull);
+            this.gbTwitterOthers.Controls.Add(this.cboTwitPicThumbnailMode);
+            this.gbTwitterOthers.Controls.Add(this.lblTwitPicThumbnailMode);
+            this.gbTwitterOthers.Location = new System.Drawing.Point(16, 112);
+            this.gbTwitterOthers.Name = "gbTwitterOthers";
+            this.gbTwitterOthers.Size = new System.Drawing.Size(288, 88);
+            this.gbTwitterOthers.TabIndex = 20;
+            this.gbTwitterOthers.TabStop = false;
+            this.gbTwitterOthers.Text = "Other Twitter services (yfrog, twitsnaps etc.)";
+            // 
+            // lblTwitterStatus
+            // 
+            this.lblTwitterStatus.AutoSize = true;
+            this.lblTwitterStatus.Location = new System.Drawing.Point(16, 80);
+            this.lblTwitterStatus.Name = "lblTwitterStatus";
+            this.lblTwitterStatus.Size = new System.Drawing.Size(84, 13);
+            this.lblTwitterStatus.TabIndex = 21;
+            this.lblTwitterStatus.Text = "Login is required";
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -7299,9 +7305,7 @@ namespace ZScreenGUI
             this.tpImgur.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
             this.tpTwitter.ResumeLayout(false);
-            this.tcTwitter.ResumeLayout(false);
-            this.tpTwitPic.ResumeLayout(false);
-            this.tpTwitPic.PerformLayout();
+            this.tpTwitter.PerformLayout();
             this.tpImageBam.ResumeLayout(false);
             this.gbImageBamGalleries.ResumeLayout(false);
             this.gbImageBamLinks.ResumeLayout(false);
@@ -7477,6 +7481,8 @@ namespace ZScreenGUI
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
+            this.gbTwitterOthers.ResumeLayout(false);
+            this.gbTwitterOthers.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -7498,7 +7504,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         internal System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmViewRemoteDirectory;
         internal System.Windows.Forms.ToolStripMenuItem tsmImageDest;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -7921,9 +7926,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.TextBox txtWebPageWidth;
         private System.Windows.Forms.CheckBox cbWebPageUseCustomSize;
         private System.Windows.Forms.CheckBox cbWebPageAutoUpload;
-        private System.Windows.Forms.TabControl tcTwitter;
-        private System.Windows.Forms.TabPage tpTwitPic;
-        private System.Windows.Forms.TabPage tpYfrog;
         private System.Windows.Forms.TabPage tpImageBam;
         internal System.Windows.Forms.Label lblImageBamSecret;
         internal System.Windows.Forms.TextBox txtImageBamSecret;
@@ -7977,7 +7979,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkTwitterEnable;
         private System.Windows.Forms.ToolStripMenuItem tsmiTwitter;
         private System.Windows.Forms.Button btnFtpHelp;
-        private AccountsControl ucTwitterAccounts;
         private System.Windows.Forms.Button btnOpenZScreenTester;
         private System.Windows.Forms.Label lblMaxNameLength;
         private System.Windows.Forms.NumericUpDown nudMaxNameLength;
@@ -8054,5 +8055,11 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblImgurStatus;
         private System.Windows.Forms.Label lblImgurHowTo;
         private System.Windows.Forms.CheckBox cbImgurUseAccount;
+        private System.Windows.Forms.GroupBox gbTwitterOthers;
+        private System.Windows.Forms.Button btnTwitterLogin;
+        private System.Windows.Forms.Label lblTwitterVerificationCode;
+        private System.Windows.Forms.TextBox tbTwitterVerificationCode;
+        private System.Windows.Forms.Button btnTwitterOpenAuthorizePage;
+        private System.Windows.Forms.Label lblTwitterStatus;
     }
 }

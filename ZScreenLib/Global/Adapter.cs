@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
@@ -44,7 +43,6 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.TextServices;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 
@@ -592,41 +590,6 @@ namespace ZScreenLib
         }
 
         #region Twitter Methods
-
-        public static OAuthInfo TwitterGetActiveAcct()
-        {
-            // TODO: Mcored
-
-            return null;
-        }
-
-        public static bool TwitterGetAuthorizationURL()
-        {
-            OAuthInfo oauth = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
-            Twitter twitter = new Twitter(oauth);
-            string url = twitter.GetAuthorizationURL();
-
-            if (!string.IsNullOrEmpty(url))
-            {
-                Engine.conf.TwitterOAuthInfo = oauth;
-                Process.Start(url);
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool TwitterGetAccessToken(string verificationCode)
-        {
-            if (!string.IsNullOrEmpty(verificationCode) && Engine.conf.TwitterOAuthInfo != null &&
-                !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthSecret))
-            {
-                Twitter twitter = new Twitter(Engine.conf.TwitterOAuthInfo);
-                return twitter.GetAccessToken(verificationCode);
-            }
-
-            return false;
-        }
 
         public static void TwitterMsg(WorkerTask task)
         {
