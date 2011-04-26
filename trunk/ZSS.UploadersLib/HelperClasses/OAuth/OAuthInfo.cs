@@ -32,21 +32,21 @@ namespace UploadersLib.HelperClasses
     {
         [Category("OAuthInfo")]
         public string Description { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), Browsable(false)]
         public string OAuthVersion { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), Browsable(false)]
         public string ConsumerKey { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), Browsable(false)]
         public string ConsumerSecret { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), Browsable(false)]
         public string AuthToken { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), Browsable(false)]
         public string AuthSecret { get; set; }
         [Category("OAuthInfo"), Description("Verification Code from the Authorization Page")]
         public string AuthVerifier { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), ReadOnly(true)]
         public string UserToken { get; set; }
-        [Category("OAuthInfo")]
+        [Category("OAuthInfo"), ReadOnly(true)]
         public string UserSecret { get; set; }
 
         public OAuthInfo()
