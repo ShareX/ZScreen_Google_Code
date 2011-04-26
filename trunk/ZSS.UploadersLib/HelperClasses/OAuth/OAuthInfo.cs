@@ -23,10 +23,13 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 namespace UploadersLib.HelperClasses
 {
+    [Serializable]
     public class OAuthInfo
     {
+        public string Description { get; set; }
         public string OAuthVersion { get; set; }
         public string ConsumerKey { get; set; }
         public string ConsumerSecret { get; set; }

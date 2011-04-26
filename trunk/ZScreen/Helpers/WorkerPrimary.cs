@@ -327,9 +327,10 @@ namespace ZScreenGUI
 
                     UploadManager.SetClipboardText(task, false);
 
+                    // TODO: Twitter Msg
                     if (Engine.conf.TwitterEnabled)
                     {
-                        Adapter.TwitterMsg(task);
+                       // Adapter.TwitterMsg(task);
                     }
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
