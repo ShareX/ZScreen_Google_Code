@@ -221,7 +221,7 @@ namespace ZScreenGUI
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
-            ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
+            ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.NoSort;
             ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
             // Options - Proxy
@@ -4617,7 +4617,6 @@ namespace ZScreenGUI
 
         private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO: Twitter
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
             Engine.conf.TwitterAcctSelected = sel;
 
@@ -4630,14 +4629,13 @@ namespace ZScreenGUI
 
         private void TwitterAccountAddButton_Click(object sender, EventArgs e)
         {
-            // TODO: Twitter
-            OAuthInfo acc = new OAuthInfo();
+            OAuthInfo acc = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
             Engine.conf.TwitterOAuthInfoList.Add(acc);
             ucTwitterAccounts.AccountsList.Items.Add(acc);
             ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
             if (Adapter.CheckTwitterAccounts())
             {
-                ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
+                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
             }
         }
 
@@ -5006,6 +5004,28 @@ namespace ZScreenGUI
             else
             {
                 Engine.conf.ImgurAccountType = AccountType.Anonymous;
+            }
+        }
+
+        private void btnTwitterLogin_Click(object sender, EventArgs e)
+        {
+            OAuthInfo acc = Adapter.TwitterGetActiveAcct();
+            string verification = acc.AuthVerifier;
+
+            if (!string.IsNullOrEmpty(verification) && acc != null &&
+                !string.IsNullOrEmpty(acc.AuthToken) && !string.IsNullOrEmpty(acc.AuthSecret))
+            {
+                Twitter twitter = new Twitter(acc);
+                bool result = twitter.GetAccessToken(acc.AuthVerifier);
+
+                if (result)
+                {
+                    MessageBox.Show("Login success.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

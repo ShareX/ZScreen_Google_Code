@@ -24,23 +24,34 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.ComponentModel;
 namespace UploadersLib.HelperClasses
 {
     [Serializable]
     public class OAuthInfo
     {
+        [Category("OAuthInfo")]
         public string Description { get; set; }
+        [Category("OAuthInfo")]
         public string OAuthVersion { get; set; }
+        [Category("OAuthInfo")]
         public string ConsumerKey { get; set; }
+        [Category("OAuthInfo")]
         public string ConsumerSecret { get; set; }
+        [Category("OAuthInfo")]
         public string AuthToken { get; set; }
+        [Category("OAuthInfo")]
         public string AuthSecret { get; set; }
+        [Category("OAuthInfo"), Description("Verification Code from the Authorization Page")]
         public string AuthVerifier { get; set; }
+        [Category("OAuthInfo")]
         public string UserToken { get; set; }
+        [Category("OAuthInfo")]
         public string UserSecret { get; set; }
 
         public OAuthInfo()
         {
+            Description = "New Account";
             OAuthVersion = "1.0";
         }
 
@@ -62,6 +73,11 @@ namespace UploadersLib.HelperClasses
         {
             return oauth != null && !string.IsNullOrEmpty(oauth.ConsumerKey) && !string.IsNullOrEmpty(oauth.ConsumerSecret) &&
                 !string.IsNullOrEmpty(oauth.UserToken) && !string.IsNullOrEmpty(oauth.UserSecret);
+        }
+
+        public override string ToString()
+        {
+            return this.Description;
         }
     }
 }

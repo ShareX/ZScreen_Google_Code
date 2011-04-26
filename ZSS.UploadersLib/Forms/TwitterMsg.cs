@@ -66,7 +66,6 @@ namespace UploadersLib
                     try
                     {
                         TweetStatus status = new Twitter(AuthInfo).TweetMessage(txtTweet.Text);
-
                         if (status != null && !string.IsNullOrEmpty(status.InReplyToScreenName))
                         {
                             Config.AddUser(status.InReplyToScreenName);
@@ -109,12 +108,6 @@ namespace UploadersLib
             {
                 lbUsers.Items.Add(user);
             }
-            clbAccounts.Height = 134;
-
-            /*foreach (Twitter oAuth in moAuth)
-            {
-                clbAccounts.Items.Add(oAuth, oAuth.Enabled);
-            }*/
         }
 
         private void lbUsers_KeyDown(object sender, KeyEventArgs e)

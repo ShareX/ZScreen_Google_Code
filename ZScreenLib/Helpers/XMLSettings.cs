@@ -144,6 +144,7 @@ namespace ZScreenLib
         
         public int TwitterAcctSelected = 0;
         public List<OAuthInfo> TwitterOAuthInfoList = new List<OAuthInfo>();
+        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
         public string TwitterUsername = string.Empty;
         public string TwitterPassword = string.Empty;
         public bool TwitterEnabled = false;
@@ -860,5 +861,6 @@ namespace ZScreenLib
         }
 
         #endregion Other methods
+
     }
 }
