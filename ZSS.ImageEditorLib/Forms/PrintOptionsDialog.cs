@@ -65,10 +65,6 @@ namespace Greenshot.Forms
             //
             InitializeComponent();
 
-            //
-            // TODO: Add constructor code after the InitializeComponent() call.
-            //
-
             conf = AppConfig.GetInstance();
 
             this.AllowPrintCenter = this.checkboxAllowCenter.Checked = (bool)conf.Output_Print_Center;

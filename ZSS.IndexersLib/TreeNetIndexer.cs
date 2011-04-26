@@ -287,7 +287,7 @@ namespace ZSS.IndexersLib
                             if (!mFilter.IsBannedFile(fp.GetFilePath()))
                             {
                                 booPrintList = true;
-                                break; // TODO: might not be correct. Was : Exit For
+                                break; 
                             }
                         }
 

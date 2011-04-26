@@ -43,8 +43,8 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
+using UploadersLib.TextServices;
 
 namespace ZScreenLib
 {
@@ -295,6 +295,11 @@ namespace ZScreenLib
             return acc;
         }
 
+        public static bool CheckTwitterAccounts()
+        {
+            return CheckList(Engine.conf.TwitterOAuthInfoList, Engine.conf.TwitterAcctSelected);
+        }
+
         public static bool CheckFTPAccounts(ref WorkerTask task)
         {
             bool result = CheckFTPAccounts();
@@ -394,15 +399,16 @@ namespace ZScreenLib
         /// <summary>
         /// Method to shorten a URL
         /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static string ShortenURL(string url)
         {
-            // TODO:
+            // TODO: 
             if (!string.IsNullOrEmpty(url))
             {
-                URLShortener us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                return us.ShortenURL(url);
+                URLShortener us = new UploadersLib.URLShorteners.GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                us.ShortenURL(url);
             }
-
             return url;
         }
 
@@ -591,7 +597,62 @@ namespace ZScreenLib
 
         #region Twitter Methods
 
-        public static void TwitterMsg(WorkerTask task)
+        /// <summary>
+        /// Returns the active TwitterAuthInfo object; if nothing is active then a new TwitterAuthInfo object is returned
+        /// </summary>
+        /// <returns></returns>
+        public static OAuthInfo TwitterGetActiveAcct()
+        {
+            OAuthInfo acc = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            if (CheckTwitterAccounts())
+            {
+                acc = Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected];
+            }
+            return acc;
+        }
+
+        public static OAuthInfo TwitterAuthGetPin()
+        {
+            // authorize ZScreen to twitter
+            // TODO: Twitter
+            OAuthInfo acc = TwitterGetActiveAcct();
+            Twitter oAuth = new Twitter(acc);
+
+            string authLink = oAuth.GetAuthorizationURL();
+            if (!string.IsNullOrEmpty(acc.Description))
+            {
+                oAuth.AuthInfo.Description = acc.Description;
+            }
+            if (CheckTwitterAccounts())
+            {
+                Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected] = oAuth.AuthInfo;
+            }
+            if (!string.IsNullOrEmpty(authLink))
+            {
+                System.Diagnostics.Process.Start(authLink);
+            }
+            return oAuth.AuthInfo;
+        }
+
+        public static OAuthInfo TwitterAuthSetPin(ref OAuthInfo acc)
+        {
+            // TODO: Twitter
+            try
+            {
+                if (null != acc)
+                {
+                    Twitter oAuth = new Twitter(new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret));
+                    oAuth.GetAccessToken(acc.AuthVerifier);
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error while setting Twitter PIN", ex);
+            }
+            return acc;
+        }
+
+        public static void TwitterMsg(ref WorkerTask task)
         {
             if (!string.IsNullOrEmpty(task.RemoteFilePath))
             {
@@ -601,20 +662,30 @@ namespace ZScreenLib
 
         public static void TwitterMsg(string url)
         {
-            if (OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
-            {
-                TwitterMsg msg = new TwitterMsg(Engine.conf.TwitterOAuthInfo);
-                msg.Icon = Resources.zss_main;
-                // msg.Config = Engine.conf.TwitterClientConfig;
-                msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
-                msg.txtTweet.Text = url;
-                msg.Show();
-            }
+            // TODO: Twitter
+            //OAuthInfo acc = TwitterGetActiveAcct();
+            //if (!string.IsNullOrEmpty(acc.UserToken))
+            //{
+            //    List<Twitter> oAccList = new List<Twitter>();
+            //    foreach (OAuthInfo oAuth in Engine.conf.TwitterOAuthInfoList)
+            //    {
+            //        oAccList.Add(new Twitter(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret, oAuth) { Enabled = acc.AccountName == oAuth.AccountName });
+            //    }
+            //    TwitterMsg msg = new TwitterMsg(oAccList, string.Format("{0} - Update Twitter Status...", acc.AccountName));
+            //    msg.ActiveAccountName = acc.AccountName;
+            //    msg.Icon = Resources.zss_main;
+            //    msg.Config = Engine.conf.TwitterClientConfig;
+            //    msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
+            //    msg.txtTweet.Text = url;
+            //    msg.Show();
+            //}
         }
 
         private static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // TODO: Mcored
+            // TODO: Twitter
+            TwitterMsg msg = sender as TwitterMsg;
+            // Engine.conf.TwitterClientConfig = msg.Config;
         }
 
         #endregion Twitter Methods

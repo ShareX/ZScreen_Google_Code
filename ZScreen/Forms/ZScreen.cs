@@ -215,16 +215,14 @@ namespace ZScreenGUI
             ucMediaWikiAccounts.btnTest.Click += new EventHandler(MediawikiAccountTestButton_Click);
             ucMediaWikiAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MediaWikiAccountsList_SelectedIndexChanged);
 
-            // TODO: Mcored
             // Accounts - Twitter
-            /*
             ucTwitterAccounts.btnAdd.Text = "Add...";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
             ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
-            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);*/
+            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -629,7 +627,7 @@ namespace ZScreenGUI
 
             cbImgurUseAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
 
-            if (OAuthInfo.CheckOAuth(Engine.conf.ImgurOAuthInfo))
+            if (Engine.conf.ImgurOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.UserToken))
             {
                 lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
             }
@@ -660,9 +658,14 @@ namespace ZScreenGUI
 
             // Twitter
 
-            if (OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
+            ucTwitterAccounts.AccountsList.Items.Clear();
+            foreach (OAuthInfo acc in Engine.conf.TwitterOAuthInfoList)
             {
-                lblTwitterStatus.Text = "User token: " + Engine.conf.TwitterOAuthInfo.UserToken;
+                ucTwitterAccounts.AccountsList.Items.Add(acc);
+            }
+            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
+            {
+                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
             }
 
             // Flickr
@@ -1576,6 +1579,14 @@ namespace ZScreenGUI
         private void ShowDirectory(string dir)
         {
             Process.Start("explorer.exe", dir);
+        }
+
+        private void tsmViewRemote_Click(object sender, EventArgs e)
+        {
+            if (Engine.conf.FTPAccountList.Count > 0)
+            {
+                new ViewRemote().Show();
+            }
         }
 
         private void txtActiveWindow_Leave(object sender, EventArgs e)
@@ -4534,13 +4545,12 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            if (!OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
+            if (!Adapter.CheckTwitterAccounts())
             {
                 MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tcApp.SelectedTab = tpDestinations;
                 tcDestinations.SelectedTab = tpTwitter;
             }
-
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
@@ -4548,8 +4558,8 @@ namespace ZScreenGUI
         {
             if (lbHistory.SelectedItem != null)
             {
-                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
-                if (hi != null && !string.IsNullOrEmpty(hi.RemotePath))
+                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
+                if (!string.IsNullOrEmpty(hi.RemotePath))
                 {
                     string url = Adapter.ShortenURL(hi.RemotePath);
                     Adapter.TwitterMsg(string.IsNullOrEmpty(url) ? hi.RemotePath : url);
@@ -4579,21 +4589,19 @@ namespace ZScreenGUI
             Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
-        // TODO: Mcored
-
-        /*
         private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
         {
             if (Adapter.CheckTwitterAccounts())
             {
-                TwitterAuthInfo acc = Adapter.TwitterGetActiveAcct();
-                if (!string.IsNullOrEmpty(acc.PIN))
+                OAuthInfo acc = Adapter.TwitterGetActiveAcct();
+                Twitter twitter = new Twitter(acc);
+                string url = twitter.GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
                 {
-                    acc = Adapter.TwitterAuthSetPin(ref acc);
-                    if (null != acc)
-                    {
-                        ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-                    }
+                    Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected] = acc;
+                    Process.Start(url);
+                    ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
                 }
             }
         }
@@ -4603,33 +4611,35 @@ namespace ZScreenGUI
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
             if (ucTwitterAccounts.RemoveItem(sel) == true)
             {
-                Engine.conf.TwitterAccountsList.RemoveAt(sel);
+                Engine.conf.TwitterOAuthInfoList.RemoveAt(sel);
             }
         }
 
         private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // TODO: Twitter
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
             Engine.conf.TwitterAcctSelected = sel;
 
-            if (Adapter.CheckList(Engine.conf.TwitterAccountsList, Engine.conf.TwitterAcctSelected))
+            if (Adapter.CheckList(Engine.conf.TwitterOAuthInfoList, Engine.conf.TwitterAcctSelected))
             {
-                TwitterAuthInfo acc = Engine.conf.TwitterAccountsList[sel];
+                OAuthInfo acc = Engine.conf.TwitterOAuthInfoList[sel];
                 ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
             }
         }
 
         private void TwitterAccountAddButton_Click(object sender, EventArgs e)
         {
-            TwitterAuthInfo acc = new TwitterAuthInfo();
-            Engine.conf.TwitterAccountsList.Add(acc);
+            // TODO: Twitter
+            OAuthInfo acc = new OAuthInfo();
+            Engine.conf.TwitterOAuthInfoList.Add(acc);
             ucTwitterAccounts.AccountsList.Items.Add(acc);
             ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
             if (Adapter.CheckTwitterAccounts())
             {
                 ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
             }
-        }*/
+        }
 
         private void SetToolTip(Control original)
         {
@@ -4996,42 +5006,6 @@ namespace ZScreenGUI
             else
             {
                 Engine.conf.ImgurAccountType = AccountType.Anonymous;
-            }
-        }
-
-        private void btnTwitterOpenAuthorizePage_Click(object sender, EventArgs e)
-        {
-            OAuthInfo oauth = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
-            Twitter twitter = new Twitter(oauth);
-            string url = twitter.GetAuthorizationURL();
-
-            if (!string.IsNullOrEmpty(url))
-            {
-                Engine.conf.TwitterOAuthInfo = oauth;
-                Process.Start(url);
-            }
-        }
-
-        private void btnTwitterLogin_Click(object sender, EventArgs e)
-        {
-            string verification = tbTwitterVerificationCode.Text;
-
-            if (!string.IsNullOrEmpty(verification) && Engine.conf.TwitterOAuthInfo != null &&
-                !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.TwitterOAuthInfo.AuthSecret))
-            {
-                Twitter twitter = new Twitter(Engine.conf.TwitterOAuthInfo);
-                bool result = twitter.GetAccessToken(verification);
-
-                if (result)
-                {
-                    lblTwitterStatus.Text = "User token: " + Engine.conf.TwitterOAuthInfo.UserToken;
-                    MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    lblTwitterStatus.Text = "Login is required";
-                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
         }
     }

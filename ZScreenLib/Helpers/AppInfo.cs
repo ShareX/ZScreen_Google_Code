@@ -81,9 +81,6 @@ namespace McoreSystem
 
         public AppInfo()
         {
-            //
-            // TODO: Add constructor logic here
-            //
         }
 
         public AppInfo(string ProductName, string Version)

@@ -224,8 +224,6 @@ public class IECapt
         IntPtr hdc = g.GetHdc();
         IViewObject iv = doc2 as IViewObject;
 
-        // TODO: Write to Metafile instead if requested.
-
         iv.Draw(1, -1, (IntPtr)0, (IntPtr)0, (IntPtr)0, (IntPtr)hdc, ref bounds, (IntPtr)0, (IntPtr)0, 0);
 
         g.ReleaseHdc(hdc);
