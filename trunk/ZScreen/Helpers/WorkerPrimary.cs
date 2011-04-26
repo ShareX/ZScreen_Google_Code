@@ -329,7 +329,7 @@ namespace ZScreenGUI
 
                     if (Engine.conf.TwitterEnabled)
                     {
-                        Adapter.TwitterMsg(ref task);
+                        Adapter.TwitterMsg(task);
                     }
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))

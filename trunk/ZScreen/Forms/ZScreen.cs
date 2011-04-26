@@ -215,14 +215,16 @@ namespace ZScreenGUI
             ucMediaWikiAccounts.btnTest.Click += new EventHandler(MediawikiAccountTestButton_Click);
             ucMediaWikiAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MediaWikiAccountsList_SelectedIndexChanged);
 
+            // TODO: Mcored
             // Accounts - Twitter
+            /*
             ucTwitterAccounts.btnAdd.Text = "Add...";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
             ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
             ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
-            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
+            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);*/
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -657,7 +659,9 @@ namespace ZScreenGUI
             }
 
             // Twitter
+            // TODO: Mcored
 
+            /*
             ucTwitterAccounts.AccountsList.Items.Clear();
             foreach (TwitterAuthInfo acc in Engine.conf.TwitterAccountsList)
             {
@@ -666,7 +670,7 @@ namespace ZScreenGUI
             if (ucTwitterAccounts.AccountsList.Items.Count > 0)
             {
                 ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
-            }
+            }*/
 
             // Flickr
 
@@ -4545,12 +4549,13 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Adapter.CheckTwitterAccounts())
+            if (!OAuthInfo.CheckOAuth(Engine.conf.TwitterOAuthInfo))
             {
                 MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tcApp.SelectedTab = tpDestinations;
                 tcDestinations.SelectedTab = tpTwitter;
             }
+
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
@@ -4558,8 +4563,8 @@ namespace ZScreenGUI
         {
             if (lbHistory.SelectedItem != null)
             {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
+                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
+                if (hi != null && !string.IsNullOrEmpty(hi.RemotePath))
                 {
                     string url = Adapter.ShortenURL(hi.RemotePath);
                     Adapter.TwitterMsg(string.IsNullOrEmpty(url) ? hi.RemotePath : url);
@@ -4589,6 +4594,9 @@ namespace ZScreenGUI
             Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
+        // TODO: Mcored
+
+        /*
         private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
         {
             if (Adapter.CheckTwitterAccounts())
@@ -4636,7 +4644,7 @@ namespace ZScreenGUI
             {
                 ucTwitterAccounts.SettingsGrid.SelectedObject = Adapter.TwitterAuthGetPin();
             }
-        }
+        }*/
 
         private void SetToolTip(Control original)
         {
