@@ -612,28 +612,6 @@ namespace ZScreenLib
             return acc;
         }
 
-        public static OAuthInfo TwitterAuthGetPin()
-        {
-            // authorize ZScreen to twitter
-            OAuthInfo acc = TwitterGetActiveAcct();
-            Twitter oAuth = new Twitter(acc);
-
-            string authLink = oAuth.GetAuthorizationURL();
-            if (!string.IsNullOrEmpty(acc.Description))
-            {
-                oAuth.AuthInfo.Description = acc.Description;
-            }
-            if (CheckTwitterAccounts())
-            {
-                Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected] = oAuth.AuthInfo;
-            }
-            if (!string.IsNullOrEmpty(authLink))
-            {
-                Process.Start(authLink);
-            }
-            return oAuth.AuthInfo;
-        }
-
         public static void TwitterMsg(ref WorkerTask task)
         {
             if (!string.IsNullOrEmpty(task.RemoteFilePath))

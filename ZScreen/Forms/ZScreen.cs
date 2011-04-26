@@ -216,7 +216,7 @@ namespace ZScreenGUI
             ucMediaWikiAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MediaWikiAccountsList_SelectedIndexChanged);
 
             // Accounts - Twitter
-            ucTwitterAccounts.btnAdd.Text = "Add...";
+            ucTwitterAccounts.btnAdd.Text = "Add";
             ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
             ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
             ucTwitterAccounts.btnTest.Text = "Authorize";
