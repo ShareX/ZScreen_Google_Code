@@ -143,7 +143,6 @@ namespace ZScreenGUI
                             LanguageTranslator(ref task);
                             break;
                     }
-
                     break;
             }
 

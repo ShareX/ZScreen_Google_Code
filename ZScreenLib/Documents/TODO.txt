@@ -1,4 +1,4 @@
-﻿Shortening URL to have its own Job under Text Category
+﻿FileWriter class to manage all writing to hard disk based on settings
 
 Run the following tasks before uploading
 	Image Editor
@@ -15,3 +15,6 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
+
+Archived Members
+

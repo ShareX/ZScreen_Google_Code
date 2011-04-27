@@ -1,3 +1,7 @@
+
+3.35.1.0 Imgur supports User Accounts {Jaex}
+3.35.0.0 Added Dropbox file uploader support {Jaex}
+
 Version 3.34 - 20110404
 
 3.34.1.0 Changes to Update Checker {Jaex}
