@@ -4952,37 +4952,56 @@ namespace ZScreenGUI
 
         private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
         {
-            OAuthInfo oauth = new OAuthInfo(Engine.ImgurConsumerKey, Engine.ImgurConsumerSecret);
-            Imgur imgur = new Imgur(oauth);
-            string url = imgur.GetAuthorizationURL();
-
-            if (!string.IsNullOrEmpty(url))
+            try
             {
-                Engine.conf.ImgurOAuthInfo = oauth;
-                Process.Start(url);
+                OAuthInfo oauth = new OAuthInfo(Engine.ImgurConsumerKey, Engine.ImgurConsumerSecret);
+
+                string url = new Imgur(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Engine.conf.ImgurOAuthInfo = oauth;
+                    Process.Start(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnImgurLogin_Click(object sender, EventArgs e)
         {
-            string verification = tbImgurVerificationCode.Text;
-
-            if (!string.IsNullOrEmpty(verification) && Engine.conf.ImgurOAuthInfo != null &&
-                !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthSecret))
+            try
             {
-                Imgur imgur = new Imgur(Engine.conf.ImgurOAuthInfo);
-                bool result = imgur.GetAccessToken(verification);
+                using (ZScreenLib.InputBox inputBox = new ZScreenLib.InputBox("Imgur user account", "Enter verification code:"))
+                {
+                    if (inputBox.ShowDialog() == DialogResult.OK)
+                    {
+                        string verification = inputBox.InputText;
 
-                if (result)
-                {
-                    lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
-                    MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (!string.IsNullOrEmpty(verification) && Engine.conf.ImgurOAuthInfo != null &&
+                            !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthSecret))
+                        {
+                            bool result = new Imgur(Engine.conf.ImgurOAuthInfo).GetAccessToken(verification);
+
+                            if (result)
+                            {
+                                lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
+                                MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                lblImgurStatus.Text = "Login is required";
+                                MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
                 }
-                else
-                {
-                    lblImgurStatus.Text = "Login is required";
-                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

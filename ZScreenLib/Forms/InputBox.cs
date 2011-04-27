@@ -24,6 +24,8 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace ZScreenLib
@@ -31,22 +33,24 @@ namespace ZScreenLib
     public partial class InputBox : Form
     {
         public string Title { get; set; }
+        public string Question { get; set; }
         public string InputText { get; set; }
 
-        public InputBox()
+        public InputBox(string title, string question = "", string inputText = "")
         {
             InitializeComponent();
-        }
+            Title = title;
+            Question = question;
+            InputText = inputText;
 
-        private void InputBox_Load(object sender, EventArgs e)
-        {
-            this.Text = Title;
+            Text = Title;
+            lblInputLabel.Text = question;
             txtInputText.Text = InputText;
         }
 
         private void InputBox_Shown(object sender, EventArgs e)
         {
-            this.BringToFront();
+            BringToFront();
             txtInputText.Focus();
             txtInputText.SelectionLength = txtInputText.Text.Length;
         }
@@ -56,15 +60,26 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(txtInputText.Text))
             {
                 InputText = txtInputText.Text;
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
+                DialogResult = DialogResult.OK;
+                Close();
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void InputBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect = new Rectangle(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical))
+            {
+                brush.SetSigmaBellShape(0.20f);
+                g.FillRectangle(brush, rect);
+            }
         }
 
         #region Windows Form Designer generated code
@@ -85,60 +100,81 @@ namespace ZScreenLib
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtInputText = new System.Windows.Forms.TextBox();
+            this.lblInputLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            //
+            // 
             // btnOK
-            //
-            this.btnOK.Location = new System.Drawing.Point(208, 40);
+            // 
+            this.btnOK.BackColor = System.Drawing.Color.White;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOK.Location = new System.Drawing.Point(208, 64);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(73, 23);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.Size = new System.Drawing.Size(72, 24);
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            //
+            // 
             // btnCancel
-            //
-            this.btnCancel.Location = new System.Drawing.Point(288, 40);
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.White;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Location = new System.Drawing.Point(288, 64);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(72, 23);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(72, 24);
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            //
+            // 
             // txtInputText
-            //
-            this.txtInputText.Location = new System.Drawing.Point(8, 8);
+            // 
+            this.txtInputText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtInputText.Location = new System.Drawing.Point(8, 32);
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.Size = new System.Drawing.Size(352, 20);
-            this.txtInputText.TabIndex = 2;
-            //
+            this.txtInputText.TabIndex = 0;
+            // 
+            // lblInputLabel
+            // 
+            this.lblInputLabel.AutoSize = true;
+            this.lblInputLabel.BackColor = System.Drawing.Color.Transparent;
+            this.lblInputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblInputLabel.ForeColor = System.Drawing.Color.White;
+            this.lblInputLabel.Location = new System.Drawing.Point(8, 8);
+            this.lblInputLabel.Name = "lblInputLabel";
+            this.lblInputLabel.Size = new System.Drawing.Size(36, 16);
+            this.lblInputLabel.TabIndex = 3;
+            this.lblInputLabel.Text = "Input";
+            // 
             // InputBox
-            //
-            this.AcceptButton = this.btnOK;
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(369, 73);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(369, 96);
+            this.Controls.Add(this.lblInputLabel);
             this.Controls.Add(this.txtInputText);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InputBox";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.InputBox_Load);
             this.Shown += new System.EventHandler(this.InputBox_Shown);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.InputBox_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.TextBox txtInputText;
+        private Label lblInputLabel;
+        private Button btnOK;
+        private Button btnCancel;
+        private TextBox txtInputText;
 
         #endregion Windows Form Designer generated code
     }

@@ -433,10 +433,7 @@ namespace ZScreenLib
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.TWITSNAPS:
-                    TwitSnapsOptions twitsnapsOpt = new TwitSnapsOptions();
-                    twitsnapsOpt.UserName = Engine.conf.TwitterUsername;
-                    twitsnapsOpt.Password = Engine.conf.TwitterPassword;
-                    imageUploader = new TwitSnapsUploader(twitsnapsOpt);
+                    imageUploader = new TwitSnapsUploader(Engine.TwitsnapsKey, Adapter.TwitterGetActiveAcct());
                     break;
                 case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(Engine.ImageShackKey);

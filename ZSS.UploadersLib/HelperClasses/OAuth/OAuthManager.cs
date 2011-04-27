@@ -161,7 +161,7 @@ namespace UploadersLib.HelperClasses
 
                 string signature = Convert.ToBase64String(hashBytes);
 
-                return HttpUtility.UrlEncode(signature);
+                return URLEncode(signature);
             }
         }
 

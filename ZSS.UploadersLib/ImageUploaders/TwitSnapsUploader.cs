@@ -31,19 +31,23 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
-    public class TwitSnapsOptions : ImageUploaderOptions { }
-
     public sealed class TwitSnapsUploader : ImageUploader
     {
-        private TwitSnapsOptions Options;
-
-        private const string UploadAndPostLink = "http://www.twitsnaps.com/api.php";
-
-        public override string Name { get { return "TwitSnaps"; } }
-
-        public TwitSnapsUploader(TwitSnapsOptions options)
+        public override string Name
         {
-            this.Options = options;
+            get { return "TwitSnaps"; }
+        }
+
+        public OAuthInfo AuthInfo { get; set; }
+
+        private const string APIURL = "http://twitsnaps.com/dev/image/upload.xml";
+
+        private string APIKey;
+
+        public TwitSnapsUploader(string apiKey, OAuthInfo oauth)
+        {
+            APIKey = apiKey;
+            AuthInfo = oauth;
         }
 
         public override ImageFileManager UploadImage(Stream stream, string fileName)
@@ -57,20 +61,19 @@ namespace UploadersLib.ImageUploaders
 
         private ImageFileManager Upload(Stream stream, string fileName, string msg)
         {
-            string url = string.Empty;
-
-            Dictionary<string, string> arguments = new Dictionary<string, string>();
-
-            arguments.Add("user_name", this.Options.UserName);
-            arguments.Add("password", this.Options.Password);
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("appKey", APIKey);
+            args.Add("consumerKey", AuthInfo.ConsumerKey);
+            args.Add("consumerSecret", AuthInfo.ConsumerSecret);
+            args.Add("oauthToken", AuthInfo.UserToken);
+            args.Add("oauthSecret", AuthInfo.UserSecret);
 
             if (!string.IsNullOrEmpty(msg))
             {
-                arguments.Add("message", msg);
-                url = UploadAndPostLink;
+                args.Add("message", msg);
             }
 
-            string source = UploadData(stream, url, fileName, "file", arguments);
+            string source = UploadData(stream, APIURL, fileName, "media", args);
 
             return ParseResult(source);
         }
@@ -81,25 +84,24 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(source))
             {
-                XDocument xdoc = XDocument.Parse(source);
-                XElement xele = xdoc.Element("rsp");
+                XDocument xd = XDocument.Parse(source);
+                XElement xe;
 
-                if (xele != null)
+                xe = xd.Element("image");
+
+                if (xe != null)
                 {
-                    switch (xele.GetAttributeFirstValue("status", "stat"))
+                    string id = xe.GetElementValue("id");
+                    ifm.Add("http://twitsnaps.com/snap/" + id, LinkType.FULLIMAGE);
+                    ifm.Add("http://twitsnaps.com/thumb/" + id, LinkType.THUMBNAIL);
+                }
+                else
+                {
+                    xe = xd.Element("error");
+
+                    if (xe != null)
                     {
-                        case "ok":
-                            string userid, imageurl;
-                            userid = xele.GetElementValue("userid");
-                            imageurl = xele.GetElementValue("imageurl");
-                            ifm.ImageFileList.Add(new ImageFile(imageurl, LinkType.FULLIMAGE));
-                            break;
-                        case "fail":
-                            string code, msg;
-                            code = xele.Element("errorcode").Value;
-                            msg = xele.Element("errormsg").Value;
-                            Errors.Add(msg);
-                            break;
+                        Errors.Add("Error: " + xe.GetElementValue("description"));
                     }
                 }
             }
