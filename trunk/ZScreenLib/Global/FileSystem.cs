@@ -213,6 +213,24 @@ namespace ZScreenLib
             }
         }
 
+        public static bool WriteText(string fp, string myText)
+        {
+            bool succ = false;
+            if (!Engine.conf.MemoryMode)
+            {
+                try
+                {
+                    File.WriteAllText(fp, myText);
+                    succ = true;
+                }
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug(ex.ToString());
+                }
+            }
+            return succ;
+        }
+
         public static void WriteDebugFile()
         {
             if (!string.IsNullOrEmpty(Engine.LogsDir))

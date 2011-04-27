@@ -1,4 +1,6 @@
 ﻿FileWriter class to manage all writing to hard disk based on settings
+Option to prevent writing to hard disk
+Option to prevent overwriting clipboard
 
 Run the following tasks before uploading
 	Image Editor
