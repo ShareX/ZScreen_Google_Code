@@ -53,5 +53,27 @@ namespace UploadersLib.HelperClasses
 
             return default(T);
         }
+
+        public static string ObjectToJSON<T>(T obj)
+        {
+            if (obj != null)
+            {
+                try
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+                        serializer.WriteObject(stream, obj);
+                        return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                }
+            }
+
+            return null;
+        }
     }
 }

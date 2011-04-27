@@ -25,244 +25,108 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace UploadersLib.TextServices
 {
-    public class GoogleTranslate
+    public class GoogleTranslate : Uploader
     {
-        public Options LanguageOptions { get; private set; }
+        private const string APIURL = "https://www.googleapis.com/language/translate/v2";
 
-        public GoogleTranslate()
+        private string APIKey;
+
+        public static List<GoogleLanguage> Languages;
+
+        public GoogleTranslate(string apiKey)
         {
-            this.LanguageOptions = this.GetLanguageOptions();
+            APIKey = apiKey;
         }
 
-        /// <summary>Gets "from country" and "to country" lists from google.</summary>
-        /// <returns>2 country list, first for "from country list" second for "to country list".</returns>
-        public Options GetLanguageOptions()
+        public List<GoogleLanguage> GetLanguages()
         {
-            Options gtLangOp = new Options();
+            string url = APIURL + "/languages";
 
-            try
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("key", APIKey);
+            args.Add("target", "en");
+
+            string response = SendGetRequest(url, args);
+
+            if (!string.IsNullOrEmpty(response))
             {
-                using (WebClient webClient = new WebClient())
+                try
                 {
-                    if (!object.ReferenceEquals(Uploader.ProxySettings, null))
-                    {
-                        webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
-                    }
-                    string source = webClient.DownloadString("http://translate.google.com/translate_t");
-                    string[] selectName = new[] { "sl", "tl" };
-
-                    for (int i = 0; i < selectName.Length; i++)
-                    {
-                        string countrySource = Regex.Match(source, "(?<=<select.*?name=" + selectName[i] + ").+?(?=</select>)").Value;
-                        MatchCollection countryResults = Regex.Matches(countrySource, "(?<=value=\")(.+?)\">(.+?)(?=</option)");
-                        foreach (Match countryResult in countryResults)
-                        {
-                            GTLanguage lang = new GTLanguage(countryResult.Groups[1].Value, countryResult.Groups[2].Value);
-                            if (i == 0)
-                            {
-                                gtLangOp.SourceLangList.Add(lang);
-                            }
-                            else
-                            {
-                                gtLangOp.TargetLangList.Add(lang);
-                            }
-                        }
-                    }
+                    JToken jt = JObject.Parse(response).SelectToken("data.languages");
+                    return jt.Select(x => new GoogleLanguage((string)x.SelectToken("language"), (string)x.SelectToken("name"))).ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return gtLangOp;
-        }
-
-        /// <summary>Translate text from google translate.</summary>
-        /// <param name="translateInfo"></param>
-        /// <returns>First index: Translated text, Second index: Languages</returns>
-        public ResultPacket TranslateText(TranslationInfo translateInfo)
-        {
-            return TranslateText(translateInfo.SourceText, translateInfo.SourceLanguage, translateInfo.TargetLanguage);
-        }
-
-        /// <summary>Translate text from google translate.</summary>
-        /// <param name="sourceText">Text for translate.</param>
-        /// <param name="sourceLanguage"></param>
-        /// <param name="targetLanguage"></param>
-        /// <returns>First index: Translated text, Second index: Languages</returns>
-        public ResultPacket TranslateText(string sourceText, GTLanguage sourceLanguage, GTLanguage targetLanguage)
-        {
-            ResultPacket result = new ResultPacket();
-            try
-            {
-                if (string.IsNullOrEmpty(sourceLanguage.Value))
+                catch (Exception e)
                 {
-                    sourceLanguage.Value = "auto";
-                }
-
-                string url = GetDownloadLink(sourceText, sourceLanguage.Value, targetLanguage.Value);
-                using (WebClient webClient = new WebClient { Encoding = Encoding.UTF8 })
-                {
-                    webClient.Proxy = Uploader.ProxySettings.GetWebProxy;
-
-                    string wc = webClient.DownloadString(url);
-                    result.TranslationType = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=\"normaltext\">).+?(?=</span>)").Value);
-                    result.TranslatedText = HttpUtility.HtmlDecode(Regex.Match(wc, "(?<=class=\"short_text\"><span.+?>).+?(?=</span)").Value);
-                    result.TranslatedText = result.TranslatedText.Replace(" \r<br> ", Environment.NewLine);
-                    result.Dictionary = SearchGrammer(wc);
-                }
-            }
-            catch (Exception ex)
-            {
-                result.TranslationType = string.Format("{0} » {1}", sourceLanguage.Name, targetLanguage.Name);
-                result.TranslatedText = ex.Message;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Method to populate Dictionary
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        private List<Vocabulary> SearchGrammer(string source)
-        {
-            List<Vocabulary> result = new List<Vocabulary>();
-            MatchCollection matches = Regex.Matches(source, @"<td><b>(?<name>.+?)</b><ol>(?:<li>(?<value>.+?)</li>)+</ol></td>");
-            foreach (Match match in matches)
-            {
-                string name = match.Groups["name"].Value;
-                name = name.Substring(0, 1).ToUpperInvariant() + name.Substring(1);
-                Vocabulary vocab = new Vocabulary(name);
-
-                foreach (Capture capture in match.Groups["value"].Captures)
-                {
-                    vocab.Words.Add(HttpUtility.HtmlDecode(capture.Value));
-                }
-
-                result.Add(vocab);
-            }
-
-            return result;
-        }
-
-        public class Vocabulary
-        {
-            public string Name;
-            public List<string> Words = new List<string>();
-
-            public Vocabulary(string name)
-            {
-                Name = name;
-            }
-        }
-
-        /// <summary>For use in TranslateText returning URL.</summary>
-        /// <param name="translateText">Text for translate.</param>
-        /// <param name="sourceLanguage">From language.</param>
-        /// <param name="targetLanguage">To language.</param>
-        /// <returns>Returning URL for use in TranslateText.</returns>
-        public static string GetDownloadLink(string translateText, string sourceLanguage, string targetLanguage)
-        {
-            return "http://www.google.com/translate_t?hl=en&ie=UTF8&oe=UTF8&text=" + HttpUtility.HtmlEncode(translateText) +
-                "&langpair=" + sourceLanguage + "|" + targetLanguage; //translateText.Replace(Environment.NewLine, "%0A")
-        }
-
-        public static GTLanguage FindLanguage(string language, List<GTLanguage> languages)
-        {
-            foreach (GTLanguage gtlanguage in languages)
-            {
-                if (gtlanguage.Value == language)
-                {
-                    return gtlanguage;
+                    Console.WriteLine(e.ToString());
                 }
             }
 
             return null;
         }
 
-        /// <summary>
-        /// Represents current possible translation options of Google Translate
-        /// </summary>
-        public class Options
+        public GoogleTranslateInfo TranslateText(string text, string targetLanguage, string sourceLanguage = null)
         {
-            public List<GTLanguage> SourceLangList { get; set; }
-            public List<GTLanguage> TargetLangList { get; set; }
+            GoogleTranslateInfo translateInfo = new GoogleTranslateInfo();
+            translateInfo.Text = text;
+            translateInfo.SourceLanguage = sourceLanguage;
+            translateInfo.TargetLanguage = targetLanguage;
 
-            public Options()
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("key", APIKey);
+            if (!string.IsNullOrEmpty(sourceLanguage)) args.Add("source", sourceLanguage);
+            args.Add("target", targetLanguage);
+            args.Add("q", text);
+
+            string response = SendGetRequest(APIURL, args);
+
+            if (!string.IsNullOrEmpty(response))
             {
-                this.SourceLangList = new List<GTLanguage>();
-                this.TargetLangList = new List<GTLanguage>();
+                try
+                {
+                    JToken jt = JObject.Parse(response).SelectToken("data.translations");
+                    translateInfo.Result = (string)jt.SelectToken("translatedText");
+                    if (string.IsNullOrEmpty(sourceLanguage))
+                    {
+                        translateInfo.SourceLanguage = (string)jt.SelectToken("detectedSourceLanguage");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
+
+            return translateInfo;
         }
 
-        /// <summary>
-        /// Google Translate Language
-        /// </summary>
-        public class GTLanguage
+        public GoogleTranslateInfo TranslateText(GoogleTranslateInfo info)
         {
-            /// <summary>
-            /// Example: sr
-            /// </summary>
-            public string Value { get; set; }
-            /// <summary>
-            /// Example: Serbian
-            /// </summary>
-            public string Name { get; set; }
-
-            public GTLanguage(string value, string name)
-            {
-                this.Value = value;
-                this.Name = name;
-            }
-
-            public bool IsEmpty()
-            {
-                return string.IsNullOrEmpty(Value) || string.IsNullOrEmpty(Name);
-            }
+            return TranslateText(info.Text, info.TargetLanguage, info.SourceLanguage);
         }
+    }
 
-        public struct ResultPacket
+    public class GoogleTranslateInfo
+    {
+        public string Text { get; set; }
+        public string SourceLanguage { get; set; }
+        public string TargetLanguage { get; set; }
+        public string Result { get; set; }
+    }
+
+    public class GoogleLanguage
+    {
+        public string Language { get; set; }
+        public string Name { get; set; }
+
+        public GoogleLanguage(string language, string name)
         {
-            /// <summary>
-            /// Translation Type as determined by Google
-            /// Example String: English (automatically detected) » Serbian
-            /// </summary>
-            public string TranslationType { get; set; }
-            /// <summary>
-            /// Translated Text
-            /// </summary>
-            public string TranslatedText { get; set; }
-            public List<Vocabulary> Dictionary { get; set; }
-        }
-
-        public class TranslationInfo
-        {
-            public string SourceText { get; set; }
-            public GTLanguage SourceLanguage { get; set; }
-            public GTLanguage TargetLanguage { get; set; }
-            public ResultPacket Result { get; set; }
-
-            public TranslationInfo(string sourceText, GTLanguage sourceLanguage, GTLanguage targetLanguage)
-            {
-                this.SourceText = sourceText;
-                this.SourceLanguage = sourceLanguage;
-                this.TargetLanguage = targetLanguage;
-            }
-
-            public bool IsEmpty()
-            {
-                return string.IsNullOrEmpty(SourceText) || SourceLanguage.IsEmpty() || TargetLanguage.IsEmpty();
-            }
+            Language = language;
+            Name = name;
         }
     }
 }

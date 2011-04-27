@@ -85,29 +85,27 @@ namespace UploadersLib
             }
         }
 
-        #region Post methods
-
-        /// <summary>Method: POST, Returns: Response string</summary>
-        protected string GetResponse(string url, Dictionary<string, string> arguments = null)
+        protected string SendRequest(HttpMethod httpMethod, string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
         {
-            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
+            switch (httpMethod)
             {
-                return ResponseToString(response);
-            }
-        }
-
-        /// <summary>Method: POST, Returns: Response URL</summary>
-        protected string GetRedirectionURL(string url, Dictionary<string, string> arguments = null)
-        {
-            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
-            {
-                if (response != null)
-                {
-                    return response.ResponseUri.OriginalString;
-                }
+                case HttpMethod.GET:
+                    return SendGetRequest(url, arguments, responseType);
+                case HttpMethod.POST:
+                    return SendPostRequest(url, arguments, responseType);
             }
 
             return null;
+        }
+
+        #region Post methods
+
+        protected string SendPostRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
+        {
+            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
+            {
+                return ResponseToString(response, responseType);
+            }
         }
 
         protected T GetResponseJSON<T>(string url, string json)
@@ -127,7 +125,6 @@ namespace UploadersLib
             }
         }
 
-        /// <summary>Method: POST, Returns: Response string</summary>
         protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null)
         {
             IsUploading = true;
@@ -210,23 +207,22 @@ namespace UploadersLib
 
         #region Get methods
 
-        /// <summary>Method: GET, Returns: Response string</summary>
-        protected string GetResponseString(string url, Dictionary<string, string> arguments = null)
+        protected string SendGetRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
         {
+            using (HttpWebResponse response = GetResponseUsingGet(url, arguments))
+            {
+                return ResponseToString(response, responseType);
+            }
+        }
+
+        private HttpWebResponse GetResponseUsingGet(string url, Dictionary<string, string> arguments = null)
+        {
+            IsUploading = true;
+
             if (arguments != null && arguments.Count > 0)
             {
                 url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
             }
-
-            using (HttpWebResponse response = GetResponseUsingGet(url))
-            {
-                return ResponseToString(response);
-            }
-        }
-
-        private HttpWebResponse GetResponseUsingGet(string url)
-        {
-            IsUploading = true;
 
             try
             {
@@ -254,7 +250,8 @@ namespace UploadersLib
             request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
             request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             request.ContentLength = length;
-            request.ContentType = contentType + "; boundary=" + boundary;
+            if (!string.IsNullOrEmpty(boundary)) contentType += "; boundary=" + boundary;
+            request.ContentType = contentType;
             request.KeepAlive = false;
             request.Method = "POST";
             request.Pipelined = false;
@@ -359,14 +356,22 @@ namespace UploadersLib
             return Encoding.UTF8.GetBytes(string.Format("--{0}--\r\n", boundary));
         }
 
-        private string ResponseToString(WebResponse response)
+        private string ResponseToString(WebResponse response, ResponseType responseType = ResponseType.Text)
         {
             if (response != null)
             {
                 using (response)
-                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
-                    return reader.ReadToEnd();
+                    switch (responseType)
+                    {
+                        case ResponseType.Text:
+                            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                            {
+                                return reader.ReadToEnd();
+                            }
+                        case ResponseType.RedirectionURL:
+                            return response.ResponseUri.OriginalString;
+                    }
                 }
             }
 
@@ -381,7 +386,7 @@ namespace UploadersLib
         {
             string url = OAuthManager.GenerateQuery(requestTokenURL, null, HttpMethod.GET, authInfo);
 
-            string response = GetResponseString(url);
+            string response = SendGetRequest(url);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -400,7 +405,7 @@ namespace UploadersLib
 
             string url = OAuthManager.GenerateQuery(accessTokenURL, null, HttpMethod.GET, authInfo);
 
-            string response = GetResponseString(url);
+            string response = SendGetRequest(url);
 
             if (!string.IsNullOrEmpty(response))
             {

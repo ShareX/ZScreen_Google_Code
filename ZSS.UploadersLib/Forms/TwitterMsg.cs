@@ -59,13 +59,13 @@ namespace UploadersLib
                 Message = txtTweet.Text;
                 DialogResult = DialogResult.OK;
 
-                if (AuthInfo != null && !string.IsNullOrEmpty(txtTweet.Text))
+                if (AuthInfo != null && !string.IsNullOrEmpty(Message))
                 {
                     Hide();
 
                     try
                     {
-                        TweetStatus status = new Twitter(AuthInfo).TweetMessage(txtTweet.Text);
+                        TweetStatus status = new Twitter(AuthInfo).TweetMessage(Message);
                         if (status != null && !string.IsNullOrEmpty(status.InReplyToScreenName))
                         {
                             Config.AddUser(status.InReplyToScreenName);
@@ -73,7 +73,7 @@ namespace UploadersLib
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.ToString(), "Tweet Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 

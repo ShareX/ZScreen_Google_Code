@@ -51,7 +51,7 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("api", APIKey);
                 arguments.Add("u", url);
 
-                return GetResponseString(APIURL, arguments);
+                return SendGetRequest(APIURL, arguments);
             }
 
             return null;

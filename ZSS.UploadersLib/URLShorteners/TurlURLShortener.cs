@@ -51,7 +51,7 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("url", url);
                 // arguments.Add("tag", settings.Tag);
 
-                string response = GetResponseString(APIURL, arguments);
+                string response = SendGetRequest(APIURL, arguments);
 
                 if (!string.IsNullOrEmpty(response))
                 {

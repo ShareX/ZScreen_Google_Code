@@ -134,9 +134,9 @@ namespace ZScreenLib
                     switch (task.Job)
                     {
                         case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
-                            if (null != task.TranslationInfo)
+                            if (task.TranslationInfo != null)
                             {
-                                clipboardText = task.TranslationInfo.Result.TranslatedText;
+                                clipboardText = task.TranslationInfo.Result;
                             }
                             break;
                         default:

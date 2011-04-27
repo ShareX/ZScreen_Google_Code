@@ -58,7 +58,7 @@ namespace UploadersLib.TextUploaders
                 arguments.Add("lang", settings.TextFormat);
                 arguments.Add("parent", "0");
 
-                return GetRedirectionURL(APIURL, arguments);
+                return SendPostRequest(APIURL, arguments, ResponseType.RedirectionURL);
             }
 
             return null;

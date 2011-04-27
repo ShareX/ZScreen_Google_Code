@@ -81,7 +81,7 @@ namespace UploadersLib.TextUploaders
                     loginArgs.Add("api_user_name", settings.Username);
                     loginArgs.Add("api_user_password", settings.Password);
 
-                    string loginResponse = GetResponse(APILoginURL, loginArgs);
+                    string loginResponse = SendPostRequest(APILoginURL, loginArgs);
 
                     if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Bad API request"))
                     {
@@ -99,7 +99,7 @@ namespace UploadersLib.TextUploaders
                     args.Add("api_user_key", settings.UserKey); // this paramater is part of the login system
                 }
 
-                string response = GetResponse(APIURL, args);
+                string response = SendPostRequest(APIURL, args);
 
                 if (!string.IsNullOrEmpty(response) && !response.StartsWith("Bad API request") && response.IsValidUrl())
                 {

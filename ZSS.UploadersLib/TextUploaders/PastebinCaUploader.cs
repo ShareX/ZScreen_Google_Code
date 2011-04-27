@@ -74,7 +74,7 @@ namespace UploadersLib.TextUploaders
                 arguments.Add("tags", settings.Tags);
                 arguments.Add("type", settings.TextFormat);
 
-                string response = GetResponse(APIURL, arguments);
+                string response = SendPostRequest(APIURL, arguments);
 
                 if (!string.IsNullOrEmpty(response))
                 {

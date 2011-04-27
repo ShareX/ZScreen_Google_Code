@@ -43,9 +43,8 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
-using UploadersLib.TextServices;
-using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -400,16 +399,15 @@ namespace ZScreenLib
         /// <summary>
         /// Method to shorten a URL
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
         public static string ShortenURL(string url)
         {
             // TODO: Support URL Shortening like Text Uploaders
             if (!string.IsNullOrEmpty(url))
             {
-                URLShortener us = new UploadersLib.URLShorteners.GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                us.ShortenURL(url);
+                URLShortener us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                return us.ShortenURL(url);
             }
+
             return url;
         }
 

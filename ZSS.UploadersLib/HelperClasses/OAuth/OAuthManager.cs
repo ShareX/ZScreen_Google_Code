@@ -89,6 +89,7 @@ namespace UploadersLib.HelperClasses
             string normalizedUrl = NormalizeUrl(url);
             string normalizedParameters = NormalizeParameters(parameters);
             string signatureBase = GenerateSignatureBase(httpMethod, normalizedUrl, normalizedParameters);
+            // Console.WriteLine("Signature base: " + signatureBase);
             string signature = GenerateSignature(signatureBase, oauth.ConsumerSecret, secret);
 
             normalizedParameters += "&" + ParameterSignature + "=" + signature;
@@ -196,7 +197,7 @@ namespace UploadersLib.HelperClasses
 
         private static string NormalizeParameters(Dictionary<string, string> parameters)
         {
-            return string.Join("&", parameters.OrderBy(x => x.Key).ThenBy(x => x.Value).Select(x => x.Key + "=" + x.Value).ToArray());
+            return string.Join("&", parameters.OrderBy(x => x.Key).ThenBy(x => x.Value).Select(x => x.Key + "=" + Uri.EscapeDataString(x.Value)).ToArray());
         }
     }
 }

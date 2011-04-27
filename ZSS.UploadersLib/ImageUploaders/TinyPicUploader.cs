@@ -111,7 +111,7 @@ namespace UploadersLib.ImageUploaders
                 { "pass", password }
             };
 
-            string response = GetResponse(URLAPI, args);
+            string response = SendPostRequest(URLAPI, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -131,7 +131,7 @@ namespace UploadersLib.ImageUploaders
             args.Add("sig", Helpers.GetMD5(action + tpid + tpk));
             args.Add("responsetype", "XML");
 
-            string response = GetResponseString(URLAPI, args);
+            string response = SendGetRequest(URLAPI, args);
 
             if (!string.IsNullOrEmpty(response) && CheckResponse(response))
             {
