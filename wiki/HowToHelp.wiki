@@ -4,7 +4,13 @@
 
 = Introduction =
 
-You have decided to contribute code to ZScreen? Great! Here are the steps that will get you easily started. 
+You have decided to contribute code to ZScreen? Great! Here are the steps that will get you easily 
+
+= Help Needed =
+
+ * When ZScreen fails upload because of the fact that there is no proxy set up, ZScreen needs to detect this and prompt the user for Proxy Configuration
+
+ * Show in Windows Explorer - How to open Windows Explorer and select the file
 
 = Requirements =
  # Visual Studio 2008 or above
