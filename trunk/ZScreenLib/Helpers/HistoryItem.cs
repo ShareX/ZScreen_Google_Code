@@ -144,7 +144,17 @@ namespace ZScreenLib
                 case JobLevel1.SCREENSHOTS:
                     return string.Format("{0}", t.MyImageUploader.GetDescription());
                 case JobLevel1.TEXT:
-                    return string.Format("{0}", t.MyTextUploader.ToString());
+                    string dest = string.Empty;
+                    switch (t.Job3)
+                    {
+                        case WorkerTask.JobLevel3.ShortenURL:
+                            dest = t.MyUrlShortenerType.GetDescription();
+                            break;
+                        default:
+                            dest = t.MyTextUploader.GetDescription();
+                            break;
+                    }
+                    return string.Format("{0}", dest);
                 case JobLevel1.BINARY:
                     switch (t.MyFileUploader)
                     {

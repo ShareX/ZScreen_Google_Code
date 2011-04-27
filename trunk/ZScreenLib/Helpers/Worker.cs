@@ -331,9 +331,20 @@ namespace ZScreenLib
             {
                 WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
-                File.WriteAllText(fp, Clipboard.GetText());
+                string cbText = Clipboard.GetText();
+                File.WriteAllText(fp, cbText);
                 temp.UpdateLocalFilePath(fp);
-                temp.MyText = TextInfo.FromFile(fp).LocalString;
+                temp.MyText = cbText;
+                if (temp.ShortenUrl())
+                {
+                    temp.Job3 = WorkerTask.JobLevel3.ShortenURL;
+                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", temp.MyText, temp.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
+                    temp.MyUrlShortenerType = Engine.conf.URLShortenerType;
+                }
+                else
+                {
+                    temp.Job3 = WorkerTask.JobLevel3.UploadText;
+                }
                 textWorkers.Add(temp);
             }
             else if (Clipboard.ContainsFileDropList())
@@ -457,13 +468,7 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (FileSystem.IsValidLink(task.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload)
-                {
-                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", task.MyText, task.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
-                    task.MyUrlShortenerType = Engine.conf.URLShortenerType;
-                    task.RunWorker();
-                }
-                else if (Directory.Exists(task.MyText))
+                if (Directory.Exists(task.MyText))
                 {
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);

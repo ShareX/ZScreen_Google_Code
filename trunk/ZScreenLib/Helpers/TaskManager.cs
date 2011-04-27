@@ -698,15 +698,14 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-            
+
             if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextUploaderType.FILE)
             {
                 UploadFile();
             }
-            else if (FileSystem.IsValidLink(mTask.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && mTask.Job2 == WorkerTask.JobLevel2.UploadFromClipboard)
+            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
             {
                 mTask.RemoteFilePath = Adapter.TryShortenURL(mTask.MyText);
-                mTask.EndTime = DateTime.Now;
             }
             else
             {
@@ -745,9 +744,9 @@ namespace ZScreenLib
 
                     mTask.RemoteFilePath = url;
                     mTask.Errors = textUploader.Errors;
-                    mTask.EndTime = DateTime.Now;
                 }
             }
+            mTask.EndTime = DateTime.Now;
         }
 
         public void TextEdit()

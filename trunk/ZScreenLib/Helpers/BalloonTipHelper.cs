@@ -64,7 +64,17 @@ namespace ZScreenLib
                 switch (task.Job1)
                 {
                     case JobLevel1.TEXT:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", task.MyTextUploader));
+                        string dest = string.Empty;
+                        switch (task.Job3)
+                        {
+                            case WorkerTask.JobLevel3.ShortenURL:
+                                dest = task.MyUrlShortenerType.GetDescription();
+                                break;
+                            default:
+                                dest = task.MyTextUploader.GetDescription();
+                                break;
+                        }
+                        sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
                     case JobLevel1.SCREENSHOTS:
                     case JobLevel1.PICTURES:
@@ -88,7 +98,7 @@ namespace ZScreenLib
                     // remote file
                     if (!string.IsNullOrEmpty(task.RemoteFilePath))
                     {
-                        if (task.FileName != null && !string.IsNullOrEmpty(task.FileName.ToString()))
+                        if (task.Job2 != WorkerTask.JobLevel2.UploadFromClipboard && task.FileName != null && !string.IsNullOrEmpty(task.FileName.ToString()))
                         {
                             sbMsg.AppendLine("Name: " + task.FileName);
                         }

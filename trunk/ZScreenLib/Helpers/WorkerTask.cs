@@ -79,7 +79,9 @@ namespace ZScreenLib
             [Description("Upload Text")]
             UploadText,
             [Description("Shorten URL")]
-            ShortenURL
+            ShortenURL,
+            [Description("Index Folder")]
+            IndexFolder
         }
 
         public enum ProgressType : int
@@ -108,7 +110,7 @@ namespace ZScreenLib
         /// Entire Screen, Active Window, Selected Window, Crop Shot...
         /// </summary>
         public JobLevel2 Job2 { get; private set; }
-        public JobLevel3 Job3 { get; private set; }
+        public JobLevel3 Job3 { get; set; }
         /// <summary>
         /// List of Errors the Worker had during its operation
         /// </summary>
@@ -338,7 +340,15 @@ namespace ZScreenLib
                         destName = this.MyImageUploader.GetDescription();
                         break;
                     case JobLevel1.TEXT:
-                        destName = this.MyTextUploader.ToString();
+                        switch (this.Job3)
+                        {
+                            case WorkerTask.JobLevel3.ShortenURL:
+                                destName = this.MyUrlShortenerType.GetDescription();
+                                break;
+                            default:
+                                destName = this.MyTextUploader.GetDescription();
+                                break;
+                        }
                         break;
                     case JobLevel1.BINARY:
                         destName = this.MyFileUploader.GetDescription();
@@ -350,7 +360,14 @@ namespace ZScreenLib
 
         public string GetDescription()
         {
-            return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
+            if (this.Job2 == JobLevel2.UploadFromClipboard)
+            {
+                return string.Format("{0}: {1} ({2})",this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
+            }
+            else
+            {
+                return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
+            }            
         }
 
         /// <summary>
@@ -375,9 +392,23 @@ namespace ZScreenLib
             }
         }
 
+        /// <summary>
+        /// Runs BwApp_DoWork
+        /// </summary>
         public void RunWorker()
         {
             this.MyWorker.RunWorkerAsync(this);
+        }
+
+        public bool ShortenUrl()
+        {
+            if (string.IsNullOrEmpty(MyText))
+            {
+                throw new Exception("Task has no text stored.");
+            }
+            return FileSystem.IsValidLink(this.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && this.Job2 == WorkerTask.JobLevel2.UploadFromClipboard
+                      && (Engine.conf.ShortenUrlAfterUploadAfter == 0 ||
+                      Engine.conf.ShortenUrlAfterUploadAfter > 0 && this.MyText.Length > Engine.conf.ShortenUrlAfterUploadAfter);
         }
 
         public override string ToString()

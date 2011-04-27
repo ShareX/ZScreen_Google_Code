@@ -329,6 +329,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
+    <Content Include="Documents\Workflow.txt" />
     <None Include="Resources\topRightShadow.png" />
     <None Include="Resources\topLeftShadow.png" />
     <None Include="Resources\bottomRightShadow.png" />

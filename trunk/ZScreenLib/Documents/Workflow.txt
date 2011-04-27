@@ -1,0 +1,5 @@
+﻿Clipboard Upload
+================
+StartBw_ClipboardUpload -> Create Task
+StartTextWorkers -> Run Worker
+BwApp_DoWork
