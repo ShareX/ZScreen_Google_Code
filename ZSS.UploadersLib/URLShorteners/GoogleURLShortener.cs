@@ -48,7 +48,7 @@ namespace UploadersLib.URLShorteners
                 string query = string.Format("{0}?key={1}", APIURL, APIKey);
                 string json = string.Format("{{\"longUrl\":\"{0}\"}}", url);
                 GoogleURLShortenerResponse result = GetResponseJSON<GoogleURLShortenerResponse>(query, json);
-                return result.id;
+                if (result != null) return result.id;
             }
 
             return null;

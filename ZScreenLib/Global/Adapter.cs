@@ -402,10 +402,18 @@ namespace ZScreenLib
         public static string ShortenURL(string url)
         {
             // TODO: Support URL Shortening like Text Uploaders
+
             if (!string.IsNullOrEmpty(url))
             {
+                string shortenUrl = null;
+
                 URLShortener us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                return us.ShortenURL(url);
+                shortenUrl = us.ShortenURL(url);
+
+                if (!string.IsNullOrEmpty(shortenUrl))
+                {
+                    return shortenUrl;
+                }
             }
 
             return url;
