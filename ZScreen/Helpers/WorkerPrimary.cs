@@ -258,13 +258,9 @@ namespace ZScreenGUI
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
+                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
                     {
-                        if (Engine.conf.AddFailedScreenshot ||
-                            (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
-                        {
-                            AddHistoryItem(new HistoryItem(task));
-                        }
+                        AddHistoryItem(new HistoryItem(task));
                     }
 
                     switch (task.Job1)

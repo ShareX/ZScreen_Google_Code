@@ -332,7 +332,7 @@ namespace ZScreenLib
                 WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                 string cbText = Clipboard.GetText();
-                File.WriteAllText(fp, cbText);
+                FileSystem.WriteText(fp, cbText);
                 temp.UpdateLocalFilePath(fp);
                 temp.MyText = cbText;
                 if (temp.ShortenUrl())

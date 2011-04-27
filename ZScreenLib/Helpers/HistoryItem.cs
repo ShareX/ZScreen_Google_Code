@@ -50,10 +50,6 @@ namespace ZScreenLib
         }
         public string RemotePath { get; set; }
         /// <summary>
-        /// Full Image, Active Window, Cropped Window...
-        /// </summary>
-        public string DestinationMode { get; set; }
-        /// <summary>
         /// ImageShack, TinyPic, FTP...
         /// </summary>
         public string DestinationName { get; set; }
@@ -82,7 +78,6 @@ namespace ZScreenLib
             {
                 this.RemotePath = task.RemoteFilePath;
             }
-            this.DestinationMode = task.MyImageUploader.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.LinkManager;
             this.JobCategory = task.Job1;
