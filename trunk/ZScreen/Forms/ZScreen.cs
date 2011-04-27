@@ -624,7 +624,7 @@ namespace ZScreenGUI
 
             // Imgur
 
-            cbImgurUseAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
+            chkImgurUserAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
 
             if (OAuthInfo.CheckOAuth(Engine.conf.ImgurOAuthInfo))
             {
@@ -5006,8 +5006,8 @@ namespace ZScreenGUI
         }
 
         private void cbImgurUseAccount_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbImgurUseAccount.Checked)
+        {            
+            if (chkImgurUserAccount.Checked)
             {
                 Engine.conf.ImgurAccountType = AccountType.User;
             }
