@@ -275,6 +275,9 @@
     <EmbeddedResource Include="Forms\DekiWikiPath.resx">
       <DependentUpon>DekiWikiPath.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
