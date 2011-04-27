@@ -70,7 +70,7 @@ namespace UploadersLib.FileUploaders
 
                 string url = OAuthManager.GenerateQuery(URLToken, args, HttpMethod.GET, AuthInfo);
 
-                string response = GetResponseString(url);
+                string response = SendGetRequest(url);
 
                 DropboxUserLogin login = JSONHelper.JSONToObject<DropboxUserLogin>(response);
 
@@ -92,7 +92,7 @@ namespace UploadersLib.FileUploaders
             {
                 string url = OAuthManager.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, AuthInfo);
 
-                string response = GetResponseString(url);
+                string response = SendGetRequest(url);
 
                 DropboxAccountInfo account = JSONHelper.JSONToObject<DropboxAccountInfo>(response);
 

@@ -55,11 +55,9 @@ namespace ZScreenLib
 
             if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
             {
-                //sbMsg.AppendLine("Languages: " + task.TranslationInfo.Result.TranslationType);
-                sbMsg.AppendLine(task.TranslationInfo.Result.TranslationType);
-                sbMsg.AppendLine("Source: " + task.TranslationInfo.SourceText);
-                sbMsg.AppendLine("Result: " + task.TranslationInfo.Result.TranslatedText);
-                //sbMsg.AppendLine(string.Format("{0} >> {1}", task.TranslationInfo.Result.SourceText, task.TranslationInfo.Result.TranslatedText));
+                sbMsg.AppendLine(task.TranslationInfo.SourceLanguage + " -> " + task.TranslationInfo.TargetLanguage);
+                sbMsg.AppendLine("Text: " + task.TranslationInfo.Text);
+                sbMsg.AppendLine("Result: " + task.TranslationInfo.Result);
             }
             else
             {
@@ -146,7 +144,7 @@ namespace ZScreenLib
                 switch (task.Job)
                 {
                     case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
-                        cbString = task.TranslationInfo.Result.TranslatedText;
+                        cbString = task.TranslationInfo.Result;
                         if (!string.IsNullOrEmpty(cbString))
                         {
                             Clipboard.SetText(cbString);

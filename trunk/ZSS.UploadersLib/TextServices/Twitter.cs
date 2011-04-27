@@ -64,7 +64,7 @@ namespace UploadersLib.TextServices
 
             string query = OAuthManager.GenerateQuery(URLTweet, args, HttpMethod.POST, AuthInfo);
 
-            string response = GetResponse(query);
+            string response = SendPostRequest(query);
 
             return ParseTweetResponse(response);
         }
@@ -72,6 +72,7 @@ namespace UploadersLib.TextServices
         private TweetStatus ParseTweetResponse(string response)
         {
             TweetStatus tweet = new TweetStatus();
+
             XDocument xd = XDocument.Parse(response);
 
             if (xd != null)
@@ -88,7 +89,6 @@ namespace UploadersLib.TextServices
 
             return tweet;
         }
-
     }
 
     public class TweetStatus

@@ -118,7 +118,7 @@ namespace UploadersLib.ImageUploaders
             // 32 character secret by building the md5-checksum of the string consisting of your API-Secret, the user's API-Secret and the 32-character salt.
             arguments.Add("secret", Helpers.GetMD5(Secret + Options.UserSecret + salt));
 
-            string source = GetResponse(generate_GID, arguments);
+            string source = SendPostRequest(generate_GID, arguments);
 
             return Helpers.GetXMLValue(source, "GID");
         }

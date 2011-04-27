@@ -106,7 +106,7 @@ namespace UploadersLib.FileUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("sub", "nextuploadserver_v1");
 
-            string response = GetResponseString(rapidshareURL, args);
+            string response = SendGetRequest(rapidshareURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {

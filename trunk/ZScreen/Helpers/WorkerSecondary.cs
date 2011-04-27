@@ -162,11 +162,13 @@ namespace ZScreenGUI
         {
             try
             {
-                ZScreen.mGTranslator = new GoogleTranslate();
-                if (null != Uploader.ProxySettings)
+                GoogleTranslate.Languages = new GoogleTranslate(Engine.GoogleTranslateKey).GetLanguages();
+
+                if (Uploader.ProxySettings != null)
                 {
                     Adapter.UpdateTinyPicShuk();
                 }
+
                 if (Adapter.CheckFTPAccounts())
                 {
                     Adapter.TestFTPAccount(Adapter.GetFtpAcctActive(), true);
@@ -180,27 +182,26 @@ namespace ZScreenGUI
 
         private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (ZScreen.mGTranslator != null)
+            if (GoogleTranslate.Languages != null)
             {
                 mZScreen.cbFromLanguage.Items.Clear();
                 mZScreen.cbToLanguage.Items.Clear();
-                foreach (GoogleTranslate.GTLanguage gtLang in ZScreen.mGTranslator.LanguageOptions.SourceLangList)
+
+                mZScreen.cbFromLanguage.Items.Add("Auto");
+
+                foreach (GoogleLanguage lang in GoogleTranslate.Languages)
                 {
-                    mZScreen.cbFromLanguage.Items.Add(gtLang.Name);
+                    mZScreen.cbFromLanguage.Items.Add(lang.Name);
+                    mZScreen.cbToLanguage.Items.Add(lang.Name);
                 }
 
-                foreach (GoogleTranslate.GTLanguage gtLang in ZScreen.mGTranslator.LanguageOptions.TargetLangList)
-                {
-                    mZScreen.cbToLanguage.Items.Add(gtLang.Name);
-                }
+                SelectLanguage(Engine.conf.GoogleSourceLanguage, Engine.conf.GoogleTargetLanguage, Engine.conf.HelpToLanguage);
+                // GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Engine.conf.GoogleTargetLanguage2, ZScreen.mGTranslator.LanguageOptions.TargetLangList);
 
-                SelectLanguage(Engine.conf.FromLanguage, Engine.conf.ToLanguage, Engine.conf.HelpToLanguage);
-                GoogleTranslate.GTLanguage secondLang = GoogleTranslate.FindLanguage(Engine.conf.ToLanguage2,
-                    ZScreen.mGTranslator.LanguageOptions.TargetLangList);
-                if (secondLang != null)
+                /*if (secondLang != null)
                 {
                     mZScreen.btnTranslateTo1.Text = "To " + secondLang.Name;
-                }
+                }*/
 
                 if (mZScreen.cbFromLanguage.Items.Count > 0)
                 {
@@ -221,7 +222,7 @@ namespace ZScreenGUI
 
         public void SelectLanguage(string srcLangValue, string targetLangValue, string helpTargetLangValue)
         {
-            for (int i = 0; i < ZScreen.mGTranslator.LanguageOptions.SourceLangList.Count; i++)
+            /*for (int i = 0; i < GoogleTranslate.Languages.Count; i++)
             {
                 if (ZScreen.mGTranslator.LanguageOptions.SourceLangList[i].Value == srcLangValue)
                 {
@@ -229,6 +230,7 @@ namespace ZScreenGUI
                     {
                         mZScreen.cbFromLanguage.SelectedIndex = i;
                     }
+
                     break;
                 }
             }
@@ -242,7 +244,7 @@ namespace ZScreenGUI
                         mZScreen.cbToLanguage.SelectedIndex = i;
                     }
                 }
-            }
+            }*/
         }
 
         #region Test FTP Account asynchronously

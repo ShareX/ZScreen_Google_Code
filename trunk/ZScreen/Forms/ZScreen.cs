@@ -69,7 +69,6 @@ namespace ZScreenGUI
         private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ThumbnailCacher thumbnailCacher;
-        internal static GoogleTranslate mGTranslator = null;
 
         #endregion Variables
 
@@ -627,7 +626,7 @@ namespace ZScreenGUI
 
             cbImgurUseAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
 
-            if (Engine.conf.ImgurOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.UserToken))
+            if (OAuthInfo.CheckOAuth(Engine.conf.ImgurOAuthInfo))
             {
                 lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
             }
@@ -1581,14 +1580,6 @@ namespace ZScreenGUI
             Process.Start("explorer.exe", dir);
         }
 
-        private void tsmViewRemote_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.FTPAccountList.Count > 0)
-            {
-                new ViewRemote().Show();
-            }
-        }
-
         private void txtActiveWindow_Leave(object sender, EventArgs e)
         {
             mHadFocus = (TextBox)sender;
@@ -1991,7 +1982,7 @@ namespace ZScreenGUI
                         switch (t.Job)
                         {
                             case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
-                                cbString = t.TranslationInfo.Result.TranslatedText;
+                                cbString = t.TranslationInfo.Result;
                                 if (!string.IsNullOrEmpty(cbString))
                                 {
                                     Clipboard.SetText(cbString);
@@ -2978,19 +2969,19 @@ namespace ZScreenGUI
 
         private void btnTranslateMethod()
         {
-            Loader.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                GoogleTranslate.FindLanguage(Engine.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+            /*Loader.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
+                GoogleTranslate.FindLanguage(Engine.conf.GoogleSourceLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
+                GoogleTranslate.FindLanguage(Engine.conf.GoogleTargetLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));*/
         }
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.FromLanguage = ZScreen.mGTranslator.LanguageOptions.SourceLangList[cbFromLanguage.SelectedIndex].Value;
+            Engine.conf.GoogleSourceLanguage = GoogleTranslate.Languages[cbFromLanguage.SelectedIndex].Name;
         }
 
         private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ToLanguage = ZScreen.mGTranslator.LanguageOptions.TargetLangList[cbToLanguage.SelectedIndex].Value;
+            Engine.conf.GoogleTargetLanguage = GoogleTranslate.Languages[cbToLanguage.SelectedIndex].Name;
         }
 
         private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
@@ -3839,7 +3830,7 @@ namespace ZScreenGUI
         {
             if (cbToLanguage.SelectedIndex > -1)
             {
-                cbToLanguage.DoDragDrop(Engine.conf.ToLanguage, DragDropEffects.Move);
+                cbToLanguage.DoDragDrop(Engine.conf.GoogleTargetLanguage, DragDropEffects.Move);
             }
         }
 
@@ -3853,10 +3844,10 @@ namespace ZScreenGUI
 
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
-            GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
+            /*GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
                ZScreen.mGTranslator.LanguageOptions.TargetLangList);
-            Engine.conf.ToLanguage2 = lang.Value;
-            btnTranslateTo1.Text = "To " + lang.Name;
+            Engine.conf.GoogleTargetLanguage2 = lang.Value;
+            btnTranslateTo1.Text = "To " + lang.Name;*/
         }
 
         private void btnTranslateTo1_Click(object sender, EventArgs e)
@@ -4558,8 +4549,8 @@ namespace ZScreenGUI
         {
             if (lbHistory.SelectedItem != null)
             {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
+                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
+                if (hi != null && !string.IsNullOrEmpty(hi.RemotePath))
                 {
                     string url = Adapter.ShortenURL(hi.RemotePath);
                     Adapter.TwitterMsg(string.IsNullOrEmpty(url) ? hi.RemotePath : url);

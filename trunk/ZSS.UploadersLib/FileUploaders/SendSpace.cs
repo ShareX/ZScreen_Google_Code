@@ -204,7 +204,7 @@ namespace UploadersLib.FileUploaders
             args.Add("email", email);
             args.Add("password", password);
 
-            string response = GetResponse(APIURL, args);
+            string response = SendPostRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -228,7 +228,7 @@ namespace UploadersLib.FileUploaders
             args.Add("app_version", AppVersion); // Application specific, formatting / style is up to you
             args.Add("response_format", "xml"); // Value must be: XML
 
-            string response = GetResponse(APIURL, args);
+            string response = SendPostRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -260,7 +260,7 @@ namespace UploadersLib.FileUploaders
             // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
             args.Add("tokened_password", Helpers.GetMD5(token + Helpers.GetMD5(password)));
 
-            string response = GetResponse(APIURL, args);
+            string response = SendPostRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -288,7 +288,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.checkSession");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(APIURL, args);
+            string response = SendPostRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -320,7 +320,7 @@ namespace UploadersLib.FileUploaders
             args.Add("method", "auth.logout");
             args.Add("session_key", sessionKey);
 
-            string response = GetResponse(APIURL, args);
+            string response = SendPostRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -347,7 +347,7 @@ namespace UploadersLib.FileUploaders
             args.Add("session_key", sessionKey);
             args.Add("speed_limit", SpeedLimit.ToString());
 
-            string response = GetResponseString(APIURL, args);
+            string response = SendGetRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -376,7 +376,7 @@ namespace UploadersLib.FileUploaders
             args.Add("api_version", APIVersion);
             args.Add("app_version", AppVersion);
 
-            string response = GetResponseString(APIURL, args);
+            string response = SendGetRequest(APIURL, args);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -493,7 +493,7 @@ namespace UploadersLib.FileUploaders
                     time = FastDateTime.Now;
                     try
                     {
-                        progressInfo.ParseResponse(sendSpace.GetResponse(url));
+                        progressInfo.ParseResponse(sendSpace.SendPostRequest(url));
                         if (progressInfo.Status != "fail" && !string.IsNullOrEmpty(progressInfo.Meter))
                         {
                             if (int.TryParse(progressInfo.Meter, out progress))

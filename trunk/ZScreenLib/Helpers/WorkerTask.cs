@@ -184,7 +184,7 @@ namespace ZScreenLib
 
         public string MyText { get; set; }
 
-        public GoogleTranslate.TranslationInfo TranslationInfo { get; set; }
+        public GoogleTranslateInfo TranslationInfo { get; set; }
 
         public TextUploaderType MyTextUploader { get; set; }
         public UrlShortenerType MyUrlShortenerType { get; set; }

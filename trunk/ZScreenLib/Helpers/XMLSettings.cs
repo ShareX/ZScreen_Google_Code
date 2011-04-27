@@ -141,7 +141,7 @@ namespace ZScreenLib
         public OAuthInfo ImgurOAuthInfo = null;
 
         // Twitter
-        
+
         public int TwitterAcctSelected = 0;
         public List<OAuthInfo> TwitterOAuthInfoList = new List<OAuthInfo>();
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
@@ -400,9 +400,9 @@ namespace ZScreenLib
 
         // Language Translator
 
-        public string FromLanguage = "auto";
-        public string ToLanguage = "en";
-        public string ToLanguage2 = "?";
+        public string GoogleSourceLanguage = "auto";
+        public string GoogleTargetLanguage = "en";
+        public string GoogleTargetLanguage2 = "?";
         public bool ClipboardTranslate = false;
         public bool AutoTranslate = false;
         public int AutoTranslateLength = 20;
@@ -861,6 +861,5 @@ namespace ZScreenLib
         }
 
         #endregion Other methods
-
     }
 }

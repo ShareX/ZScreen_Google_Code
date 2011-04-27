@@ -43,7 +43,7 @@ namespace UploadersLib.URLShorteners
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
                 arguments.Add("longurl", url);
 
-                return GetResponseString(APIURL, arguments);
+                return SendGetRequest(APIURL, arguments);
             }
 
             return null;

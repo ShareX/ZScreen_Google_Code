@@ -330,7 +330,7 @@ namespace ZScreenGUI
                     // TODO: Twitter Msg
                     if (Engine.conf.TwitterEnabled)
                     {
-                       // Adapter.TwitterMsg(task);
+                        // Adapter.TwitterMsg(task);
                     }
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
@@ -405,12 +405,12 @@ namespace ZScreenGUI
             {
                 case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
                     mZScreen.btnTranslate.Enabled = false;
-                    task.TranslationInfo = new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text, ZScreen.mGTranslator.LanguageOptions.SourceLangList[mZScreen.cbFromLanguage.SelectedIndex],
-                        ZScreen.mGTranslator.LanguageOptions.TargetLangList[mZScreen.cbToLanguage.SelectedIndex]);
-                    if (task.TranslationInfo.IsEmpty())
+                    task.TranslationInfo = new GoogleTranslateInfo()
                     {
-                        mZScreen.btnTranslate.Enabled = true;
-                    }
+                        Text = mZScreen.txtTranslateText.Text,
+                        SourceLanguage = Engine.conf.GoogleSourceLanguage,
+                        TargetLanguage = Engine.conf.GoogleTargetLanguage
+                    };
 
                     break;
             }
@@ -497,17 +497,20 @@ namespace ZScreenGUI
 
         public void LanguageTranslator(ref WorkerTask task)
         {
-            task.TranslationInfo.Result = ZScreen.mGTranslator.TranslateText(task.TranslationInfo);
-            task.MyText = TextInfo.FromString(task.TranslationInfo.Result.TranslatedText).LocalString;
+            task.TranslationInfo = new GoogleTranslate(Engine.GoogleTranslateKey).TranslateText(task.TranslationInfo);
+            task.MyText = task.TranslationInfo.Result;
         }
 
         public void StartWorkerTranslator()
         {
             if (Clipboard.ContainsText())
             {
-                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(Clipboard.GetText(),
-                    GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                    GoogleTranslate.FindLanguage(Engine.conf.ToLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+                StartBW_LanguageTranslator(new GoogleTranslateInfo()
+                {
+                    Text = Clipboard.GetText(),
+                    SourceLanguage = Engine.conf.GoogleSourceLanguage,
+                    TargetLanguage = Engine.conf.GoogleTargetLanguage
+                });
             }
         }
 
@@ -687,38 +690,18 @@ namespace ZScreenGUI
             Adapter.AddRecentItem(hi.LocalPath);
         }
 
-        private void FillGoogleTranslateInfo(GoogleTranslate.TranslationInfo info)
+        private void FillGoogleTranslateInfo(GoogleTranslateInfo info)
         {
-            mZScreen.txtTranslateText.Text = info.SourceText;
-            mZScreen.txtTranslateResult.Text = info.Result.TranslatedText;
-            mZScreen.txtLanguages.Text = info.Result.TranslationType;
-            List<GoogleTranslate.Vocabulary> dictionary = info.Result.Dictionary;
-            if (dictionary.Count > 0)
-            {
-                foreach (GoogleTranslate.Vocabulary vocab in dictionary)
-                {
-                    ListViewGroup group = new ListViewGroup(vocab.Name, HorizontalAlignment.Left);
-                    mZScreen.lvDictionary.Groups.Add(group);
-
-                    foreach (string word in vocab.Words)
-                    {
-                        ListViewItem lvi = new ListViewItem(word) { Group = group };
-                        mZScreen.lvDictionary.Items.Add(lvi);
-                    }
-                }
-            }
-            else
-            {
-                mZScreen.lvDictionary.Groups.Clear();
-                mZScreen.lvDictionary.Items.Clear();
-            }
+            mZScreen.txtTranslateText.Text = info.Text;
+            mZScreen.txtLanguages.Text = info.SourceLanguage + " -> " + info.TargetLanguage;
+            mZScreen.txtTranslateResult.Text = info.Result;
         }
 
         #region Start Workers
 
-        public void StartBW_LanguageTranslator(GoogleTranslate.TranslationInfo translationInfo)
+        public void StartBW_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
-            if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0 && !translationInfo.IsEmpty())
+            if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0)
             {
                 WorkerTask t = CreateTask(WorkerTask.Jobs.LANGUAGE_TRANSLATOR);
                 t.JobCategory = JobCategoryType.TEXT;
@@ -871,7 +854,7 @@ namespace ZScreenGUI
 
         public void TranslateTo1()
         {
-            if (Engine.conf.ToLanguage2 == "?")
+            if (Engine.conf.GoogleTargetLanguage2 == "?")
             {
                 mZScreen.lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
                 MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", mZScreen.Text,
@@ -880,9 +863,12 @@ namespace ZScreenGUI
             }
             else
             {
-                StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(mZScreen.txtTranslateText.Text,
-                     GoogleTranslate.FindLanguage(Engine.conf.FromLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                     GoogleTranslate.FindLanguage(Engine.conf.ToLanguage2, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));
+                StartBW_LanguageTranslator(new GoogleTranslateInfo()
+                {
+                    Text = mZScreen.txtTranslateText.Text,
+                    SourceLanguage = Engine.conf.GoogleSourceLanguage,
+                    TargetLanguage = Engine.conf.GoogleTargetLanguage2
+                });
             }
         }
 

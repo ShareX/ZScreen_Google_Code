@@ -77,7 +77,7 @@ namespace UploadersLib.ImageUploaders
             args.Add("auth_token", token);
             args.Add("api_sig", GetAPISig(args));
 
-            string response = GetResponse(API_URL, args);
+            string response = SendPostRequest(API_URL, args);
 
             this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 
@@ -95,7 +95,7 @@ namespace UploadersLib.ImageUploaders
             args.Add("api_key", API_Key);
             args.Add("api_sig", GetAPISig(args));
 
-            string response = GetResponse(API_URL, args);
+            string response = SendPostRequest(API_URL, args);
 
             this.Frob = ParseResponse(response, "frob").Value;
 
@@ -114,7 +114,7 @@ namespace UploadersLib.ImageUploaders
             args.Add("mini_token", frob);
             args.Add("api_sig", GetAPISig(args));
 
-            string response = GetResponse(API_URL, args);
+            string response = SendPostRequest(API_URL, args);
 
             this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 
@@ -134,7 +134,7 @@ namespace UploadersLib.ImageUploaders
             args.Add("frob", frob);
             args.Add("api_sig", GetAPISig(args));
 
-            string response = GetResponse(API_URL, args);
+            string response = SendPostRequest(API_URL, args);
 
             this.Auth = new AuthInfo(ParseResponse(response, "auth"));
 

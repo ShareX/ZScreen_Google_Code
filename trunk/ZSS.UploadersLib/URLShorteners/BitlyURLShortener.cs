@@ -56,7 +56,7 @@ namespace UploadersLib.URLShorteners
                 arguments.Add("apiKey", APIKey);
                 arguments.Add("format", "xml");
 
-                string result = GetResponseString(APIURL, arguments);
+                string result = SendGetRequest(APIURL, arguments);
 
                 XmlDocument xdoc = new XmlDocument();
                 xdoc.LoadXml(result);

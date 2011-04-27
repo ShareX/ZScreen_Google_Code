@@ -32,6 +32,11 @@ namespace UploadersLib
         GET, POST
     }
 
+    public enum ResponseType
+    {
+        Text, RedirectionURL
+    }
+
     public enum Proxy
     {
         [Description("HTTP Proxy")]
