@@ -104,7 +104,7 @@ namespace ZScreenLib
             {
                 img = ImageEffects.ApplySizeChanges(img);
                 img = ImageEffects.ApplyScreenshotEffects(img);
-                if (task.Job != WorkerTask.Jobs.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
+                if (task.Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
                 {
                     img = ImageEffects.ApplyWatermark(img);
                 }

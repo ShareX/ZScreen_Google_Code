@@ -197,7 +197,7 @@ namespace ZScreenTesterGUI
                     break;
                 }
 
-                WorkerTask task = new WorkerTask(WorkerTask.Jobs.UploadFromClipboard);
+                WorkerTask task = new WorkerTask(WorkerTask.JobLevel2.UploadFromClipboard);
 
                 uploader.Timer = new Stopwatch();
                 uploader.Timer.Start();

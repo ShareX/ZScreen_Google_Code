@@ -35,7 +35,7 @@ namespace ZScreenLib
     /// <summary>
     /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created
     /// </summary>
-    public enum JobCategoryType
+    public enum JobLevel1
     {
         PICTURES,
         SCREENSHOTS,

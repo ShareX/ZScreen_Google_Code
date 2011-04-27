@@ -1979,9 +1979,9 @@ namespace ZScreenGUI
                     {
                         WorkerTask t = (WorkerTask)niTray.Tag;
                         string cbString;
-                        switch (t.Job)
+                        switch (t.Job2)
                         {
-                            case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                                 cbString = t.TranslationInfo.Result;
                                 if (!string.IsNullOrEmpty(cbString))
                                 {
@@ -2180,7 +2180,7 @@ namespace ZScreenGUI
             if (lbImageUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
-                Loader.Worker.StartWorkerScreenshots(WorkerTask.Jobs.CustomUploaderTest);
+                Loader.Worker.StartWorkerScreenshots(WorkerTask.JobLevel2.CustomUploaderTest);
             }
         }
 
@@ -4251,7 +4251,7 @@ namespace ZScreenGUI
             if (pbWebPageImage.Image != null)
             {
                 Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                Loader.Worker.StartWorkerPictures(WorkerTask.Jobs.UPLOAD_IMAGE, bmp);
+                Loader.Worker.StartWorkerPictures(WorkerTask.JobLevel2.UPLOAD_IMAGE, bmp);
             }
         }
 

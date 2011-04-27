@@ -40,7 +40,7 @@ namespace ZScreenGUI
             NativeMethods.ActivateWindow(this.Handle);
         }
 
-        private void DoJob(object sender, WorkerTask.Jobs e)
+        private void DoJob(object sender, WorkerTask.JobLevel2 e)
         {
             EventJob(sender, e);
             if (Engine.conf.CloseQuickActions)
@@ -51,47 +51,47 @@ namespace ZScreenGUI
 
         private void tsbEntireScreen_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN);
+            DoJob(this, WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN);
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TakeScreenshotWindowSelected);
+            DoJob(this, WorkerTask.JobLevel2.TakeScreenshotWindowSelected);
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TakeScreenshotCropped);
+            DoJob(this, WorkerTask.JobLevel2.TakeScreenshotCropped);
         }
 
         private void tsbLastCropShot_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
+            DoJob(this, WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED);
         }
 
         private void tsbAutoCapture_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.AUTO_CAPTURE);
+            DoJob(this, WorkerTask.JobLevel2.AUTO_CAPTURE);
         }
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.UploadFromClipboard);
+            DoJob(this, WorkerTask.JobLevel2.UploadFromClipboard);
         }
 
         private void tsbDragDropWindow_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.PROCESS_DRAG_N_DROP);
+            DoJob(this, WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP);
         }
 
         private void tsbLanguageTranslator_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.LANGUAGE_TRANSLATOR);
+            DoJob(this, WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
         }
 
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)
         {
-            DoJob(this, WorkerTask.Jobs.SCREEN_COLOR_PICKER);
+            DoJob(this, WorkerTask.JobLevel2.SCREEN_COLOR_PICKER);
         }
 
         private void tsQuickActions_MouseEnter(object sender, EventArgs e)

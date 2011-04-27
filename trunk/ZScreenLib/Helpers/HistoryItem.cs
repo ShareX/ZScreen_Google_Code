@@ -59,7 +59,7 @@ namespace ZScreenLib
         public string DestinationName { get; set; }
         public string Description { get; set; }
         public ImageFileManager ScreenshotManager { get; set; }
-        public JobCategoryType JobCategory { get; set; }
+        public JobLevel1 JobCategory { get; set; }
         public ImageUploaderType ImageDestCategory { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -70,7 +70,7 @@ namespace ZScreenLib
 
         public HistoryItem(WorkerTask task)
         {
-            this.JobName = task.Job.GetDescription();
+            this.JobName = task.Job2.GetDescription();
             this.FileName = task.FileName.ToString();
             this.LocalPath = task.LocalFilePath;
             if (string.IsNullOrEmpty(task.RemoteFilePath) && task.LinkManager != null)
@@ -85,7 +85,7 @@ namespace ZScreenLib
             this.DestinationMode = task.MyImageUploader.GetDescription();
             this.DestinationName = GetDestinationName(task);
             this.ScreenshotManager = task.LinkManager;
-            this.JobCategory = task.JobCategory;
+            this.JobCategory = task.Job1;
             this.ImageDestCategory = task.MyImageUploader;
             this.StartTime = task.StartTime;
             this.EndTime = task.EndTime;
@@ -138,14 +138,14 @@ namespace ZScreenLib
 
         private string GetDestinationName(WorkerTask t)
         {
-            switch (t.JobCategory)
+            switch (t.Job1)
             {
-                case JobCategoryType.PICTURES:
-                case JobCategoryType.SCREENSHOTS:
+                case JobLevel1.PICTURES:
+                case JobLevel1.SCREENSHOTS:
                     return string.Format("{0}", t.MyImageUploader.GetDescription());
-                case JobCategoryType.TEXT:
+                case JobLevel1.TEXT:
                     return string.Format("{0}", t.MyTextUploader.ToString());
-                case JobCategoryType.BINARY:
+                case JobLevel1.BINARY:
                     switch (t.MyFileUploader)
                     {
                         case FileUploaderType.CustomUploader:

@@ -85,13 +85,13 @@ namespace ZScreenLib
             mTakingScreenShot = true;
             string filePath = string.Empty;
 
-            bool windowMode = mTask.Job == WorkerTask.Jobs.TakeScreenshotWindowSelected;
+            bool windowMode = mTask.Job2 == WorkerTask.JobLevel2.TakeScreenshotWindowSelected;
 
             try
             {
                 using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
                 {
-                    if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
+                    if (mTask.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
                     {
                         mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
                     }
@@ -113,7 +113,7 @@ namespace ZScreenLib
                             {
                                 if (c.ShowDialog() == DialogResult.OK)
                                 {
-                                    if (mTask.Job == WorkerTask.Jobs.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
+                                    if (mTask.Job2 == WorkerTask.JobLevel2.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
                                     {
                                         mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
                                     }
@@ -209,7 +209,7 @@ namespace ZScreenLib
             {
                 NameParserType type;
                 string pattern = string.Empty;
-                if (mTask.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                if (mTask.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
                 {
                     type = NameParserType.ActiveWindow;
                     pattern = Engine.conf.ActiveWindowPattern;
@@ -241,7 +241,7 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-            if (mTask.JobCategory == JobCategoryType.BINARY)
+            if (mTask.Job1 == JobLevel1.BINARY)
             {
                 UploadFile();
             }
@@ -255,7 +255,7 @@ namespace ZScreenLib
 
         public void PublishImage()
         {
-            if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job != WorkerTask.Jobs.UPLOAD_IMAGE)
+            if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
             {
                 ImageEdit();
             }
@@ -279,9 +279,9 @@ namespace ZScreenLib
             switch (mTask.MyFileUploader)
             {
                 case FileUploaderType.FTP:
-                    switch (mTask.JobCategory)
+                    switch (mTask.Job1)
                     {
-                        case JobCategoryType.TEXT:
+                        case JobLevel1.TEXT:
                             UploadFTP(Engine.conf.FtpText);
                             break;
                         default:
@@ -698,10 +698,15 @@ namespace ZScreenLib
         {
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-
+            
             if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextUploaderType.FILE)
             {
                 UploadFile();
+            }
+            else if (FileSystem.IsValidLink(mTask.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && mTask.Job2 == WorkerTask.JobLevel2.UploadFromClipboard)
+            {
+                mTask.RemoteFilePath = Adapter.TryShortenURL(mTask.MyText);
+                mTask.EndTime = DateTime.Now;
             }
             else
             {

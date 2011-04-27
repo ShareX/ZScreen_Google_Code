@@ -1,4 +1,6 @@
-﻿Run the following tasks before uploading
+﻿Shortening URL to have its own Job under Text Category
+
+Run the following tasks before uploading
 	Image Editor
 	Command Line Tools 
 Move MakeTinyURL to before AddToListBox
