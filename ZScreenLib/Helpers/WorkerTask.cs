@@ -42,7 +42,7 @@ namespace ZScreenLib
     {
         #region Enums
 
-        public enum Jobs
+        public enum JobLevel2
         {
             [Description("Entire Screen")]
             TAKE_SCREENSHOT_SCREEN,
@@ -74,6 +74,14 @@ namespace ZScreenLib
             FREEHAND_CROP_SHOT
         }
 
+        public enum JobLevel3
+        {
+            [Description("Upload Text")]
+            UploadText,
+            [Description("Shorten URL")]
+            ShortenURL
+        }
+
         public enum ProgressType : int
         {
             ADD_FILE_TO_LISTBOX,
@@ -95,11 +103,12 @@ namespace ZScreenLib
         #region Common Properties for All Categories
 
         public BackgroundWorker MyWorker { get; private set; }
-        public JobCategoryType JobCategory { get; set; }
+        public JobLevel1 Job1 { get; set; }
         /// <summary>
         /// Entire Screen, Active Window, Selected Window, Crop Shot...
         /// </summary>
-        public Jobs Job { get; private set; }
+        public JobLevel2 Job2 { get; private set; }
+        public JobLevel3 Job3 { get; private set; }
         /// <summary>
         /// List of Errors the Worker had during its operation
         /// </summary>
@@ -203,11 +212,11 @@ namespace ZScreenLib
             this.Errors = new List<string>();
         }
 
-        public WorkerTask(Jobs job)
+        public WorkerTask(JobLevel2 job)
             : this()
         {
             this.MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
-            this.Job = job;
+            this.Job2 = job;
         }
 
         /// <summary>
@@ -215,11 +224,11 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
-        public WorkerTask(BackgroundWorker worker, Jobs job)
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
             : this()
         {
             this.MyWorker = worker;
-            this.Job = job;
+            this.Job2 = job;
         }
 
         public void SetImage(Image img)
@@ -322,16 +331,16 @@ namespace ZScreenLib
             string destName = this.DestinationName;
             if (string.IsNullOrEmpty(destName))
             {
-                switch (JobCategory)
+                switch (Job1)
                 {
-                    case JobCategoryType.PICTURES:
-                    case JobCategoryType.SCREENSHOTS:
+                    case JobLevel1.PICTURES:
+                    case JobLevel1.SCREENSHOTS:
                         destName = this.MyImageUploader.GetDescription();
                         break;
-                    case JobCategoryType.TEXT:
+                    case JobLevel1.TEXT:
                         destName = this.MyTextUploader.ToString();
                         break;
-                    case JobCategoryType.BINARY:
+                    case JobLevel1.BINARY:
                         destName = this.MyFileUploader.GetDescription();
                         break;
                 }
@@ -341,7 +350,7 @@ namespace ZScreenLib
 
         public string GetDescription()
         {
-            return string.Format("{0} ({1})", this.Job.GetDescription(), this.GetDestinationName());
+            return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
         }
 
         /// <summary>

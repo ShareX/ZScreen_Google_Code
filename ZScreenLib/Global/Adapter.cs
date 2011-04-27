@@ -117,18 +117,18 @@ namespace ZScreenLib
                 ni.Icon = ico;
                 // Text length must be less than 64 characters long
                 StringBuilder sbMsg = new StringBuilder();
-                sbMsg.Append(task.Job.GetDescription());
+                sbMsg.Append(task.Job2.GetDescription());
                 sbMsg.Append(": ");
-                switch (task.JobCategory)
+                switch (task.Job1)
                 {
-                    case JobCategoryType.SCREENSHOTS:
-                    case JobCategoryType.PICTURES:
+                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.PICTURES:
                         sbMsg.Append(task.MyImageUploader.GetDescription());
                         break;
-                    case JobCategoryType.TEXT:
+                    case JobLevel1.TEXT:
                         sbMsg.Append(task.MyTextUploader.ToString());
                         break;
-                    case JobCategoryType.BINARY:
+                    case JobLevel1.BINARY:
                         sbMsg.Append(Path.GetFileName(task.LocalFilePath));
                         sbMsg.Append(" to ");
                         sbMsg.Append(task.MyFileUploader.GetDescription());

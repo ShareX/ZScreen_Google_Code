@@ -71,11 +71,11 @@ namespace ZScreenGUI
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if ((Engine.conf.PreferFileUploaderForImages && (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)) ||
-                (Engine.conf.PreferFileUploaderForText && task.JobCategory == JobCategoryType.TEXT && task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR) ||
-                task.Job == WorkerTask.Jobs.CustomUploaderTest)
+            if ((Engine.conf.PreferFileUploaderForImages && (task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS)) ||
+                (Engine.conf.PreferFileUploaderForText && task.Job1 == JobLevel1.TEXT && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR) ||
+                task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest)
             {
-                task.JobCategory = JobCategoryType.BINARY;
+                task.Job1 = JobLevel1.BINARY;
                 if (!Engine.conf.PreferFtpServerForIndex)
                 {
                     task.MyFileUploader = Engine.conf.FileUploaderType;
@@ -84,8 +84,8 @@ namespace ZScreenGUI
 
             if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
                 task.MyImageUploader != ImageUploaderType.FILE &&
-                (task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN ||
-                task.Job == WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
+                (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
+                task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
                 MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
                 Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
@@ -93,7 +93,7 @@ namespace ZScreenGUI
                 return;
             }
 
-            if (task.JobCategory == JobCategoryType.SCREENSHOTS)
+            if (task.Job1 == JobLevel1.SCREENSHOTS)
             {
                 if (Engine.conf.ScreenshotDelayTime != 0)
                 {
@@ -101,45 +101,45 @@ namespace ZScreenGUI
                 }
             }
 
-            FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job));
+            FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job2));
 
-            switch (task.JobCategory)
+            switch (task.Job1)
             {
-                case JobCategoryType.PICTURES:
-                case JobCategoryType.SCREENSHOTS:
-                case JobCategoryType.BINARY:
-                    switch (task.Job)
+                case JobLevel1.PICTURES:
+                case JobLevel1.SCREENSHOTS:
+                case JobLevel1.BINARY:
+                    switch (task.Job2)
                     {
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
                             new TaskManager(ref task).CaptureScreen();
                             break;
-                        case WorkerTask.Jobs.TakeScreenshotWindowSelected:
-                        case WorkerTask.Jobs.TakeScreenshotCropped:
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                        case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
+                        case WorkerTask.JobLevel2.TakeScreenshotCropped:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
                             new TaskManager(ref task).CaptureRegionOrWindow();
                             break;
-                        case WorkerTask.Jobs.CustomUploaderTest:
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                        case WorkerTask.JobLevel2.CustomUploaderTest:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             new TaskManager(ref task).CaptureActiveWindow();
                             break;
-                        case WorkerTask.Jobs.FREEHAND_CROP_SHOT:
+                        case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
                             new TaskManager(ref task).CaptureFreehandCrop();
                             break;
-                        case WorkerTask.Jobs.UPLOAD_IMAGE:
-                        case WorkerTask.Jobs.UploadFromClipboard:
-                        case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
+                        case WorkerTask.JobLevel2.UPLOAD_IMAGE:
+                        case WorkerTask.JobLevel2.UploadFromClipboard:
+                        case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
                             new TaskManager(ref task).PublishData();
                             break;
                     }
 
                     break;
-                case JobCategoryType.TEXT:
-                    switch (task.Job)
+                case JobLevel1.TEXT:
+                    switch (task.Job2)
                     {
-                        case WorkerTask.Jobs.UploadFromClipboard:
+                        case WorkerTask.JobLevel2.UploadFromClipboard:
                             PublishText(ref task);
                             break;
-                        case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                             LanguageTranslator(ref task);
                             break;
                     }
@@ -249,7 +249,7 @@ namespace ZScreenGUI
                 }
                 else
                 {
-                    FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
+                    FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
                     if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.MyImage);
@@ -262,24 +262,24 @@ namespace ZScreenGUI
                     if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
                     {
                         if (Engine.conf.AddFailedScreenshot ||
-                            (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
+                            (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
                         {
                             AddHistoryItem(new HistoryItem(task));
                         }
                     }
 
-                    switch (task.JobCategory)
+                    switch (task.Job1)
                     {
-                        case JobCategoryType.BINARY:
+                        case JobLevel1.BINARY:
                             if (!string.IsNullOrEmpty(task.RemoteFilePath))
                             {
                                 Clipboard.SetText(task.RemoteFilePath);
                             }
                             break;
-                        case JobCategoryType.TEXT:
-                            switch (task.Job)
+                        case JobLevel1.TEXT:
+                            switch (task.Job2)
                             {
-                                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                                     if (mZScreen != null)
                                     {
                                         FillGoogleTranslateInfo(task.TranslationInfo);
@@ -290,10 +290,10 @@ namespace ZScreenGUI
                                     break;
                             }
                             break;
-                        case JobCategoryType.SCREENSHOTS:
-                            switch (task.Job)
+                        case JobLevel1.SCREENSHOTS:
+                            switch (task.Job2)
                             {
-                                case WorkerTask.Jobs.CustomUploaderTest:
+                                case WorkerTask.JobLevel2.CustomUploaderTest:
                                     if (task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
                                     {
                                         if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
@@ -350,7 +350,7 @@ namespace ZScreenGUI
                         this.mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
+                    if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
                     {
                         if (Engine.conf.CompleteSound)
                         {
@@ -397,13 +397,13 @@ namespace ZScreenGUI
         /// Worker for Text: Paste2, Pastebin
         /// </summary>
         /// <returns></returns>
-        public override WorkerTask GetWorkerText(WorkerTask.Jobs job, string localFilePath)
+        public override WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask task = base.GetWorkerText(job, localFilePath);
 
             switch (job)
             {
-                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                     mZScreen.btnTranslate.Enabled = false;
                     task.TranslationInfo = new GoogleTranslateInfo()
                     {
@@ -449,8 +449,8 @@ namespace ZScreenGUI
         {
             if (hi != null && File.Exists(hi.LocalPath))
             {
-                WorkerTask task = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
-                task.JobCategory = hi.JobCategory;
+                WorkerTask task = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
+                task.Job1 = hi.JobCategory;
                 task.SetImage(hi.LocalPath);
                 task.UpdateLocalFilePath(hi.LocalPath);
                 task.MyImageUploader = hi.ImageDestCategory;
@@ -458,38 +458,38 @@ namespace ZScreenGUI
             }
         }
 
-        internal void EventJobs(object sender, WorkerTask.Jobs jobs)
+        internal void EventJobs(object sender, WorkerTask.JobLevel2 jobs)
         {
             switch (jobs)
             {
-                case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
                     StartBW_EntireScreen();
                     break;
-                case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                     StartBW_ActiveWindow();
                     break;
-                case WorkerTask.Jobs.TakeScreenshotWindowSelected:
+                case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
                     StartBw_SelectedWindow();
                     break;
-                case WorkerTask.Jobs.TakeScreenshotCropped:
+                case WorkerTask.JobLevel2.TakeScreenshotCropped:
                     StartBw_CropShot();
                     break;
-                case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
                     StartBW_LastCropShot();
                     break;
-                case WorkerTask.Jobs.AUTO_CAPTURE:
+                case WorkerTask.JobLevel2.AUTO_CAPTURE:
                     ShowAutoCapture();
                     break;
-                case WorkerTask.Jobs.UploadFromClipboard:
+                case WorkerTask.JobLevel2.UploadFromClipboard:
                     UploadUsingClipboard();
                     break;
-                case WorkerTask.Jobs.PROCESS_DRAG_N_DROP:
+                case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
                     ShowDropWindow();
                     break;
-                case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                     StartWorkerTranslator();
                     break;
-                case WorkerTask.Jobs.SCREEN_COLOR_PICKER:
+                case WorkerTask.JobLevel2.SCREEN_COLOR_PICKER:
                     ScreenColorPicker();
                     break;
             }
@@ -703,8 +703,8 @@ namespace ZScreenGUI
         {
             if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0)
             {
-                WorkerTask t = CreateTask(WorkerTask.Jobs.LANGUAGE_TRANSLATOR);
-                t.JobCategory = JobCategoryType.TEXT;
+                WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
+                t.Job1 = JobLevel1.TEXT;
                 mZScreen.btnTranslate.Enabled = false;
                 mZScreen.btnTranslateTo1.Enabled = false;
                 t.TranslationInfo = translationInfo;
@@ -714,17 +714,17 @@ namespace ZScreenGUI
 
         public void StartBW_EntireScreen()
         {
-            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN);
+            StartWorkerScreenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN);
         }
 
         public void StartBW_ActiveWindow()
         {
-            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE);
+            StartWorkerScreenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE);
         }
 
         public void StartBW_LastCropShot()
         {
-            StartWorkerScreenshots(WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED);
+            StartWorkerScreenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED);
         }
 
         #endregion Start Workers

@@ -69,42 +69,42 @@ namespace ZScreenLib
             task.UniqueNumber = UploadManager.Queue();
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
 
-            switch (task.JobCategory)
+            switch (task.Job1)
             {
-                case JobCategoryType.PICTURES:
-                case JobCategoryType.SCREENSHOTS:
-                case JobCategoryType.BINARY:
-                    switch (task.Job)
+                case JobLevel1.PICTURES:
+                case JobLevel1.SCREENSHOTS:
+                case JobLevel1.BINARY:
+                    switch (task.Job2)
                     {
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
                             new TaskManager(ref task).CaptureScreen();
                             break;
-                        case WorkerTask.Jobs.TakeScreenshotWindowSelected:
-                        case WorkerTask.Jobs.TakeScreenshotCropped:
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED:
+                        case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
+                        case WorkerTask.JobLevel2.TakeScreenshotCropped:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
                             new TaskManager(ref task).CaptureRegionOrWindow();
                             break;
-                        case WorkerTask.Jobs.CustomUploaderTest:
-                        case WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                        case WorkerTask.JobLevel2.CustomUploaderTest:
+                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                             new TaskManager(ref task).CaptureActiveWindow();
                             break;
-                        case WorkerTask.Jobs.FREEHAND_CROP_SHOT:
+                        case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
                             new TaskManager(ref task).CaptureFreehandCrop();
                             break;
-                        case WorkerTask.Jobs.UPLOAD_IMAGE:
-                        case WorkerTask.Jobs.UploadFromClipboard:
+                        case WorkerTask.JobLevel2.UPLOAD_IMAGE:
+                        case WorkerTask.JobLevel2.UploadFromClipboard:
                             new TaskManager(ref task).PublishData();
                             break;
                     }
 
                     break;
-                case JobCategoryType.TEXT:
-                    switch (task.Job)
+                case JobLevel1.TEXT:
+                    switch (task.Job2)
                     {
-                        case WorkerTask.Jobs.UploadFromClipboard:
+                        case WorkerTask.JobLevel2.UploadFromClipboard:
                             PublishText(ref task);
                             break;
-                        case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                             // LanguageTranslator(ref task);
                             break;
                     }
@@ -115,7 +115,7 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
                 if (Engine.conf.AddFailedScreenshot ||
-                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.JobCategory == JobCategoryType.TEXT))
+                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
                 {
                     task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -147,22 +147,22 @@ namespace ZScreenLib
 
             try
             {
-                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job));
+                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
                 WorkerTask checkTask = RetryUpload(task);
 
-                switch (task.JobCategory)
+                switch (task.Job1)
                 {
-                    case JobCategoryType.BINARY:
+                    case JobLevel1.BINARY:
                         if (!string.IsNullOrEmpty(task.RemoteFilePath))
                         {
                             Clipboard.SetText(task.RemoteFilePath);
                         }
 
                         break;
-                    case JobCategoryType.TEXT:
-                        switch (task.Job)
+                    case JobLevel1.TEXT:
+                        switch (task.Job2)
                         {
-                            case WorkerTask.Jobs.UploadFromClipboard:
+                            case WorkerTask.JobLevel2.UploadFromClipboard:
                                 if (!string.IsNullOrEmpty(task.RemoteFilePath))
                                 {
                                     Clipboard.SetText(task.RemoteFilePath);
@@ -172,7 +172,7 @@ namespace ZScreenLib
                         }
 
                         break;
-                    case JobCategoryType.SCREENSHOTS:
+                    case JobLevel1.SCREENSHOTS:
                         if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                         {
                             try
@@ -188,7 +188,7 @@ namespace ZScreenLib
                         break;
                 }
 
-                if (task.JobCategory != JobCategoryType.TEXT)
+                if (task.Job1 != JobLevel1.TEXT)
                 {
                     UploadManager.SetClipboardText(task, false);
                 }
@@ -203,7 +203,7 @@ namespace ZScreenLib
                     this.GUI.niTray.Icon = Resources.zss_tray;
                 }
 
-                if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
+                if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
                 {
                     if (Engine.conf.CompleteSound)
                     {
@@ -243,11 +243,11 @@ namespace ZScreenLib
 
         #region Create Tasks
 
-        public WorkerTask CreateTask(WorkerTask.Jobs job)
+        public WorkerTask CreateTask(WorkerTask.JobLevel2 job)
         {
             BackgroundWorker bwApp = CreateWorker();
             WorkerTask task = new WorkerTask(bwApp, job);
-            if (task.Job != WorkerTask.Jobs.CustomUploaderTest)
+            if (task.Job2 != WorkerTask.JobLevel2.CustomUploaderTest)
             {
                 task.MyImageUploader = Engine.conf.ImageUploaderType;
                 task.MyTextUploader = Engine.conf.TextUploaderType;
@@ -261,7 +261,7 @@ namespace ZScreenLib
             return task;
         }
 
-        public WorkerTask GetWorkerText(WorkerTask.Jobs job)
+        public WorkerTask GetWorkerText(WorkerTask.JobLevel2 job)
         {
             return GetWorkerText(job, string.Empty);
         }
@@ -270,10 +270,10 @@ namespace ZScreenLib
         /// Worker for Text: Paste2, Pastebin
         /// </summary>
         /// <returns></returns>
-        public virtual WorkerTask GetWorkerText(WorkerTask.Jobs job, string localFilePath)
+        public virtual WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.TEXT;
+            t.Job1 = JobLevel1.TEXT;
             // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = Engine.conf.TextUploaderType;
             if (!string.IsNullOrEmpty(localFilePath))
@@ -292,7 +292,7 @@ namespace ZScreenLib
         {
             if (!TaskManager.mTakingScreenShot)
             {
-                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotWindowSelected);
+                StartWorkerScreenshots(WorkerTask.JobLevel2.TakeScreenshotWindowSelected);
             }
         }
 
@@ -300,7 +300,7 @@ namespace ZScreenLib
         {
             if (!TaskManager.mTakingScreenShot)
             {
-                StartWorkerScreenshots(WorkerTask.Jobs.TakeScreenshotCropped);
+                StartWorkerScreenshots(WorkerTask.JobLevel2.TakeScreenshotCropped);
             }
         }
 
@@ -308,13 +308,13 @@ namespace ZScreenLib
         {
             if (!TaskManager.mTakingScreenShot)
             {
-                StartWorkerScreenshots(WorkerTask.Jobs.FREEHAND_CROP_SHOT);
+                StartWorkerScreenshots(WorkerTask.JobLevel2.FREEHAND_CROP_SHOT);
             }
         }
 
         public void StartBw_ClipboardUpload()
         {
-            WorkerTask task = CreateTask(WorkerTask.Jobs.UploadFromClipboard);
+            WorkerTask task = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
 
             List<WorkerTask> textWorkers = new List<WorkerTask>();
 
@@ -329,7 +329,7 @@ namespace ZScreenLib
             }
             else if (Clipboard.ContainsText())
             {
-                WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
+                WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
                 File.WriteAllText(fp, Clipboard.GetText());
                 temp.UpdateLocalFilePath(fp);
@@ -346,7 +346,7 @@ namespace ZScreenLib
 
         protected void UploadUsingDragDrop(string fp)
         {
-            StartWorkerPictures(CreateTask(WorkerTask.Jobs.PROCESS_DRAG_N_DROP), fp);
+            StartWorkerPictures(CreateTask(WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP), fp);
         }
 
         protected void UploadUsingDragDrop(string[] paths)
@@ -394,18 +394,18 @@ namespace ZScreenLib
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    StartWorkerPictures(CreateTask(WorkerTask.Jobs.UploadFromClipboard), fp);
+                    StartWorkerPictures(CreateTask(WorkerTask.JobLevel2.UploadFromClipboard), fp);
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask temp = GetWorkerText(WorkerTask.Jobs.UploadFromClipboard);
+                    WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                     temp.UpdateLocalFilePath(fp);
                     temp.MyText = TextInfo.FromFile(fp).LocalString; // TODO: Remove usage of TextInfo?
                     textWorkers.Add(temp);
                 }
                 else
                 {
-                    StartWorkerBinary(WorkerTask.Jobs.UploadFromClipboard, fp);
+                    StartWorkerBinary(WorkerTask.JobLevel2.UploadFromClipboard, fp);
                 }
             }
 
@@ -417,11 +417,11 @@ namespace ZScreenLib
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void StartWorkerScreenshots(WorkerTask.Jobs job)
+        public void StartWorkerScreenshots(WorkerTask.JobLevel2 job)
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.SCREENSHOTS;
+            t.Job1 = JobLevel1.SCREENSHOTS;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.MyWorker.RunWorkerAsync(t);
         }
@@ -434,18 +434,18 @@ namespace ZScreenLib
         public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
             Engine.ClipboardUnhook();
-            task.JobCategory = JobCategoryType.PICTURES;
+            task.Job1 = JobLevel1.PICTURES;
             task.MakeTinyURL = Adapter.MakeTinyURL();
             task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
             task.MyWorker.RunWorkerAsync(task);
         }
 
-        public void StartWorkerPictures(WorkerTask.Jobs job, Image img)
+        public void StartWorkerPictures(WorkerTask.JobLevel2 job, Image img)
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.PICTURES;
+            t.Job1 = JobLevel1.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
             new TaskManager(ref t).WriteImage();
@@ -474,7 +474,7 @@ namespace ZScreenLib
                         if (Engine.conf.PreferFtpServerForIndex)
                         {
                             task.MyFileUploader = FileUploaderType.FTP;
-                            task.JobCategory = JobCategoryType.BINARY;
+                            task.Job1 = JobLevel1.BINARY;
                         }
                         if (task.MyFileUploader == FileUploaderType.FTP)
                         {
@@ -516,10 +516,10 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the file</param>
-        protected void StartWorkerBinary(WorkerTask.Jobs job, string localFilePath)
+        protected void StartWorkerBinary(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.JobCategory = JobCategoryType.BINARY;
+            t.Job1 = JobLevel1.BINARY;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
@@ -549,18 +549,18 @@ namespace ZScreenLib
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.Job != WorkerTask.Jobs.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
+            if (task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
             {
                 if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && task.MyImageUploader != ImageUploaderType.FILE &&
                     string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
                 {
-                    WorkerTask task2 = CreateTask(WorkerTask.Jobs.UPLOAD_IMAGE);
-                    task2.JobCategory = task.JobCategory;
+                    WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
+                    task2.Job1 = task.Job1;
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
 
-                    if (task.JobCategory == JobCategoryType.PICTURES || task.JobCategory == JobCategoryType.SCREENSHOTS)
+                    if (task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS)
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {

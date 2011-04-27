@@ -53,7 +53,7 @@ namespace ZScreenLib
 
             niTray.Tag = task;
 
-            if (task.Job == WorkerTask.Jobs.LANGUAGE_TRANSLATOR)
+            if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
                 sbMsg.AppendLine(task.TranslationInfo.SourceLanguage + " -> " + task.TranslationInfo.TargetLanguage);
                 sbMsg.AppendLine("Text: " + task.TranslationInfo.Text);
@@ -61,13 +61,13 @@ namespace ZScreenLib
             }
             else
             {
-                switch (task.JobCategory)
+                switch (task.Job1)
                 {
-                    case JobCategoryType.TEXT:
+                    case JobLevel1.TEXT:
                         sbMsg.AppendLine(string.Format("Destination: {0}", task.MyTextUploader));
                         break;
-                    case JobCategoryType.SCREENSHOTS:
-                    case JobCategoryType.PICTURES:
+                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.PICTURES:
                         sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
                         break;
                 }
@@ -141,9 +141,9 @@ namespace ZScreenLib
             {
                 WorkerTask task = (WorkerTask)niTray.Tag;
                 string cbString;
-                switch (task.Job)
+                switch (task.Job2)
                 {
-                    case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                    case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                         cbString = task.TranslationInfo.Result;
                         if (!string.IsNullOrEmpty(cbString))
                         {

@@ -36,7 +36,7 @@ namespace ZScreenGUI
 
         private Timer timer = new Timer();
         private Timer statusTimer = new Timer { Interval = 250 };
-        private WorkerTask.Jobs mJob;
+        private WorkerTask.JobLevel2 mJob;
         private int mDelay;
         private bool waitUploads;
         private int count;
@@ -99,13 +99,13 @@ namespace ZScreenGUI
                 switch (Engine.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
-                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_SCREEN;
+                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_WINDOW_ACTIVE;
+                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                        mJob = WorkerTask.Jobs.TAKE_SCREENSHOT_LAST_CROPPED;
+                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED;
                         break;
                 }
 

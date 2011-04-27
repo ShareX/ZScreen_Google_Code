@@ -97,11 +97,11 @@ namespace ZScreenLib
         {
             string clipboardText = "";
 
-            switch (task.JobCategory)
+            switch (task.Job1)
             {
-                case JobCategoryType.PICTURES:
-                case JobCategoryType.SCREENSHOTS:
-                case JobCategoryType.BINARY:
+                case JobLevel1.PICTURES:
+                case JobLevel1.SCREENSHOTS:
+                case JobLevel1.BINARY:
                     ScreenshotsHistory = task.LinkManager;
                     if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                     {
@@ -130,10 +130,10 @@ namespace ZScreenLib
                         }
                     }
                     break;
-                case JobCategoryType.TEXT:
-                    switch (task.Job)
+                case JobLevel1.TEXT:
+                    switch (task.Job2)
                     {
-                        case WorkerTask.Jobs.LANGUAGE_TRANSLATOR:
+                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                             if (task.TranslationInfo != null)
                             {
                                 clipboardText = task.TranslationInfo.Result;
