@@ -79,10 +79,7 @@ namespace ZScreenLib
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
 
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Image Uploader for uploading Images")]
-        public bool PreferFileUploaderForImages { get; set; }
-        [Category("Destinations / General"), DefaultValue(false), Description("Use the active File Uploader instead of the active Text Uploader for uploading Text")]
-        public bool PreferFileUploaderForText { get; set; }
+        // TODO: Need to remove this now?
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
         public bool PreferFtpServerForIndex { get; set; }
 

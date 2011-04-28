@@ -71,8 +71,8 @@ namespace ZScreenGUI
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if ((Engine.conf.PreferFileUploaderForImages && (task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS)) ||
-                (Engine.conf.PreferFileUploaderForText && task.Job1 == JobLevel1.TEXT && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR) ||
+            if (((task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS) && task.MyImageUploader == ImageUploaderType.FileUploader) ||
+                (task.Job1 == JobLevel1.TEXT && task.MyTextUploader == TextUploaderType.FILE && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR) ||
                 task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest)
             {
                 task.Job1 = JobLevel1.BINARY;
@@ -111,24 +111,24 @@ namespace ZScreenGUI
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                            new TaskManager(ref task).CaptureScreen();
+                            new TaskManager(task).CaptureScreen();
                             break;
                         case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
                         case WorkerTask.JobLevel2.TakeScreenshotCropped:
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                            new TaskManager(ref task).CaptureRegionOrWindow();
+                            new TaskManager(task).CaptureRegionOrWindow();
                             break;
                         case WorkerTask.JobLevel2.CustomUploaderTest:
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            new TaskManager(ref task).CaptureActiveWindow();
+                            new TaskManager(task).CaptureActiveWindow();
                             break;
                         case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
-                            new TaskManager(ref task).CaptureFreehandCrop();
+                            new TaskManager(task).CaptureFreehandCrop();
                             break;
                         case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
                         case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
-                            new TaskManager(ref task).PublishData();
+                            new TaskManager(task).PublishData();
                             break;
                     }
 
@@ -137,10 +137,10 @@ namespace ZScreenGUI
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
-                            PublishText(ref task);
+                            PublishText(task);
                             break;
                         case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                            LanguageTranslator(ref task);
+                            LanguageTranslator(task);
                             break;
                     }
                     break;
@@ -490,7 +490,7 @@ namespace ZScreenGUI
             }
         }
 
-        public void LanguageTranslator(ref WorkerTask task)
+        public void LanguageTranslator(WorkerTask task)
         {
             task.TranslationInfo = new GoogleTranslate(Engine.GoogleTranslateKey).TranslateText(task.TranslationInfo);
             task.MyText = task.TranslationInfo.Result;

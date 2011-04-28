@@ -36,13 +36,6 @@ namespace UploadersLib.URLShorteners
 
         private const string APIURL = "http://tinyurl.com/api-create.php";
 
-        private string APIKey;
-
-        public TinyURLShortener(string key)
-        {
-            APIKey = key;
-        }
-
         public override string ShortenURL(string url)
         {
             if (!string.IsNullOrEmpty(url))

@@ -77,23 +77,23 @@ namespace ZScreenLib
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                            new TaskManager(ref task).CaptureScreen();
+                            new TaskManager(task).CaptureScreen();
                             break;
                         case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
                         case WorkerTask.JobLevel2.TakeScreenshotCropped:
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                            new TaskManager(ref task).CaptureRegionOrWindow();
+                            new TaskManager(task).CaptureRegionOrWindow();
                             break;
                         case WorkerTask.JobLevel2.CustomUploaderTest:
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            new TaskManager(ref task).CaptureActiveWindow();
+                            new TaskManager(task).CaptureActiveWindow();
                             break;
                         case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
-                            new TaskManager(ref task).CaptureFreehandCrop();
+                            new TaskManager(task).CaptureFreehandCrop();
                             break;
                         case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
-                            new TaskManager(ref task).PublishData();
+                            new TaskManager(task).PublishData();
                             break;
                     }
 
@@ -102,7 +102,7 @@ namespace ZScreenLib
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
-                            PublishText(ref task);
+                            PublishText(task);
                             break;
                         case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                             // LanguageTranslator(ref task);
@@ -459,7 +459,7 @@ namespace ZScreenLib
             t.Job1 = JobLevel1.PICTURES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
-            new TaskManager(ref t).WriteImage();
+            new TaskManager(t).WriteImage();
             t.MyWorker.RunWorkerAsync(t);
         }
 
@@ -474,7 +474,7 @@ namespace ZScreenLib
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = ".log";
-                    if (Engine.conf.PreferFileUploaderForText || Adapter.CheckFTPAccounts())
+                    if (task.MyTextUploader == TextUploaderType.FILE || Adapter.CheckFTPAccounts())
                     {
                         if (Engine.conf.PreferFtpServerForIndex)
                         {
@@ -538,15 +538,15 @@ namespace ZScreenLib
         /// Function to edit Text in a Text Editor and Upload
         /// </summary>
         /// <param name="task"></param>
-        protected void PublishText(ref WorkerTask task)
+        protected void PublishText(WorkerTask task)
         {
-            TaskManager tm = new TaskManager(ref task);
+            TaskManager tm = new TaskManager(task);
             tm.UploadText();
         }
 
-        protected void PublishBinary(ref WorkerTask task)
+        protected void PublishBinary(WorkerTask task)
         {
-            TaskManager tm = new TaskManager(ref task);
+            TaskManager tm = new TaskManager(task);
             tm.UploadFile();
         }
 
