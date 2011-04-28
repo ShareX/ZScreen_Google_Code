@@ -236,11 +236,10 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             // Dest Selectors
-            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
-            // TODO: cboTextUploaders_SelectedIndexChanged and cboURLShorteners_SelectedIndexChanged
-            //ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
-            //ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+            ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
+            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
+            ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
@@ -1001,8 +1000,6 @@ namespace ZScreenGUI
                 ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
                 ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.TextUploaderType;
             }
-
-            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
 
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
             {
@@ -1799,12 +1796,32 @@ namespace ZScreenGUI
 
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageUploaderType sdt = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Engine.conf.ImageUploaderType = sdt;
-            Engine.conf.PreferFileUploaderForImages = (sdt == ImageUploaderType.FileUploader);
-            cboClipboardTextMode.Enabled = sdt != ImageUploaderType.CLIPBOARD;
+            ImageUploaderType uploader = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
+            Engine.conf.ImageUploaderType = uploader;
+            cboClipboardTextMode.Enabled = uploader != ImageUploaderType.CLIPBOARD;
 
-            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(sdt));
+            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(uploader));
+        }
+
+        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.TextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
+
+            // TODO: CheckToolStripMenuItem(tsmTextDest?, GetFileDestMenuItem(uploader));
+        }
+
+        private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
+        }
+
+        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.URLShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
+
+            // TODO: CheckToolStripMenuItem(tsmURLShortenerDest?, GetFileDestMenuItem(Engine.conf.TextUploaderType));
         }
 
         private void CheckToolStripMenuItem(ToolStripDropDownItem parent, ToolStripMenuItem item)
@@ -4360,13 +4377,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
-        }
-
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
         {
             int width;
@@ -5006,7 +5016,7 @@ namespace ZScreenGUI
         }
 
         private void cbImgurUseAccount_CheckedChanged(object sender, EventArgs e)
-        {            
+        {
             if (chkImgurUserAccount.Checked)
             {
                 Engine.conf.ImgurAccountType = AccountType.User;

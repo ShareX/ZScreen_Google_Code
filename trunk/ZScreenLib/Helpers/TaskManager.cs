@@ -39,6 +39,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
+using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
 using ZUploader.HelperClasses;
@@ -47,12 +48,12 @@ namespace ZScreenLib
 {
     public class TaskManager
     {
-        private WorkerTask mTask;
         public static bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
+        private WorkerTask mTask;
 
-        public TaskManager(ref WorkerTask task)
+        public TaskManager(WorkerTask task)
         {
-            this.mTask = task;
+            mTask = task;
         }
 
         #region Image Tasks Manager
@@ -260,7 +261,7 @@ namespace ZScreenLib
                 ImageEdit();
             }
 
-            if (Engine.conf.PreferFileUploaderForImages)
+            if (mTask.MyImageUploader == ImageUploaderType.FileUploader)
             {
                 UploadFile();
             }
@@ -699,13 +700,13 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (Engine.conf.PreferFileUploaderForText || mTask.MyTextUploader == TextUploaderType.FILE)
+            if (mTask.MyTextUploader == TextUploaderType.FILE)
             {
                 UploadFile();
             }
-            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
+            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL) // TODO: Is it really necessary now?
             {
-                mTask.RemoteFilePath = Adapter.TryShortenURL(mTask.MyText);
+                ShortenURL();
             }
             else
             {
@@ -713,14 +714,14 @@ namespace ZScreenLib
 
                 switch (mTask.MyTextUploader)
                 {
+                    case TextUploaderType.PASTE2:
+                        textUploader = new Paste2Uploader();
+                        break;
                     case TextUploaderType.PASTEBIN:
                         textUploader = new PastebinUploader(Engine.PastebinKey);
                         break;
                     case TextUploaderType.PASTEBIN_CA:
                         textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
-                        break;
-                    case TextUploaderType.PASTE2:
-                        textUploader = new Paste2Uploader();
                         break;
                     case TextUploaderType.SLEXY:
                         textUploader = new SlexyUploader();
@@ -733,7 +734,7 @@ namespace ZScreenLib
 
                     string url = string.Empty;
 
-                    if (mTask.MyText != null)
+                    if (!string.IsNullOrEmpty(mTask.MyText))
                     {
                         url = textUploader.UploadText(mTask.MyText);
                     }
@@ -800,6 +801,55 @@ namespace ZScreenLib
                     }
                 }
             }
+        }
+
+        public bool ShortenURL()
+        {
+            // TODO: Support URL Shortening like Text Uploaders
+
+            if (!string.IsNullOrEmpty(mTask.MyText))
+            {
+                URLShortener us = null;
+
+                switch (mTask.MyUrlShortenerType)
+                {
+                    case UrlShortenerType.BITLY:
+                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.Google:
+                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                        break;
+                    case UrlShortenerType.ISGD:
+                        us = new IsgdURLShortener();
+                        break;
+                    case UrlShortenerType.Jmp:
+                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.THREELY:
+                        us = new ThreelyURLShortener(Engine.ThreelyKey);
+                        break;
+                    case UrlShortenerType.TINYURL:
+                        us = new TinyURLShortener();
+                        break;
+                    case UrlShortenerType.TURL:
+                        us = new TurlURLShortener();
+                        break;
+                }
+
+                if (us != null)
+                {
+                    string shortenUrl = us.ShortenURL(mTask.MyText);
+
+                    if (!string.IsNullOrEmpty(shortenUrl))
+                    {
+                        mTask.RemoteFilePath = shortenUrl;
+                        return true;
+                    }
+                }
+            }
+
+            mTask.RemoteFilePath = mTask.MyText;
+            return false;
         }
 
         public override string ToString()

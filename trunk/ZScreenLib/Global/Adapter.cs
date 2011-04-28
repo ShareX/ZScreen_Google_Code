@@ -401,18 +401,45 @@ namespace ZScreenLib
         /// </summary>
         public static string ShortenURL(string url)
         {
-            // TODO: Support URL Shortening like Text Uploaders
+            // TODO: TaskManager have it, need to remove this
 
             if (!string.IsNullOrEmpty(url))
             {
-                string shortenUrl = null;
+                URLShortener us = null;
 
-                URLShortener us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                shortenUrl = us.ShortenURL(url);
-
-                if (!string.IsNullOrEmpty(shortenUrl))
+                switch (Engine.conf.URLShortenerType)
                 {
-                    return shortenUrl;
+                    case UrlShortenerType.BITLY:
+                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.Google:
+                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                        break;
+                    case UrlShortenerType.ISGD:
+                        us = new IsgdURLShortener();
+                        break;
+                    case UrlShortenerType.Jmp:
+                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.THREELY:
+                        us = new ThreelyURLShortener(Engine.ThreelyKey);
+                        break;
+                    case UrlShortenerType.TINYURL:
+                        us = new TinyURLShortener();
+                        break;
+                    case UrlShortenerType.TURL:
+                        us = new TurlURLShortener();
+                        break;
+                }
+
+                if (us != null)
+                {
+                    string shortenUrl = us.ShortenURL(url);
+
+                    if (!string.IsNullOrEmpty(shortenUrl))
+                    {
+                        return shortenUrl;
+                    }
                 }
             }
 

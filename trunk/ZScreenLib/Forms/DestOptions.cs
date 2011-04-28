@@ -69,8 +69,6 @@ namespace ZScreenLib
             }
             ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.TextUploaderType;
 
-            ucDestOptions.cboTextUploaders.Enabled = !Engine.conf.PreferFileUploaderForText;
-
             // URL Shorteners
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
             {

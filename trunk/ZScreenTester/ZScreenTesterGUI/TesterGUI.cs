@@ -209,22 +209,22 @@ namespace ZScreenTesterGUI
                     case UploaderType.ImageUploader:
                         task.MyImageUploader = uploader.ImageUploader;
                         task.UpdateLocalFilePath(this.TestFilePicturePath);
-                        new TaskManager(ref task).UploadImage();
+                        new TaskManager(task).UploadImage();
                         break;
                     case UploaderType.FileUploader:
                         task.MyFileUploader = uploader.FileUploader;
                         task.UpdateLocalFilePath(this.TestFileBinaryPath);
-                        new TaskManager(ref task).UploadFile();
+                        new TaskManager(task).UploadFile();
                         break;
                     case UploaderType.TextUploader:
                         task.MyTextUploader = uploader.TextUploader;
-                        task.MyText = "Testing...";
-                        new TaskManager(ref task).UploadText();
+                        task.MyText = "ZScreen testing...";
+                        new TaskManager(task).UploadText();
                         break;
                     case UploaderType.UrlShortener:
-                        task.MyUrlShortenerType = uploader.UrlShortener; // TODO: MyURLShortener required
-                        task.MyText = "Testing...";
-                        new TaskManager(ref task).UploadText();
+                        task.MyUrlShortenerType = uploader.UrlShortener;
+                        task.MyText = "http://code.google.com/p/zscreen/";
+                        new TaskManager(task).ShortenURL();
                         break;
                     default:
                         throw new Exception("Unknown uploader.");

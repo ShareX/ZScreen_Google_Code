@@ -117,8 +117,6 @@ namespace UploadersLib
     {
         [Description("FTP Server")]
         FTP,
-        [Description("File Hosting Service")]
-        FileUploader,
         [Description("Localhost")]
         Localhost,
         [Description("Clipboard")]
@@ -152,7 +150,9 @@ namespace UploadersLib
         [Description("MediaWiki")]
         MEDIAWIKI,
         [Description("Printer")]
-        PRINTER
+        PRINTER,
+        [Description("Use file uploader")]
+        FileUploader
     }
 
     public enum TextUploaderType
