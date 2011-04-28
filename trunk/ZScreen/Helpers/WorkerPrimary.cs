@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
@@ -241,6 +242,7 @@ namespace ZScreenGUI
             try
             {
                 WorkerTask checkTask = RetryUpload(task);
+
                 if (checkTask.RetryPending)
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
@@ -249,6 +251,7 @@ namespace ZScreenGUI
                 else
                 {
                     FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
+
                     if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.MyImage);
@@ -265,45 +268,29 @@ namespace ZScreenGUI
 
                     switch (task.Job1)
                     {
-                        case JobLevel1.BINARY:
-                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                            {
-                                Clipboard.SetText(task.RemoteFilePath);
-                            }
-                            break;
                         case JobLevel1.TEXT:
-                            switch (task.Job2)
+                            if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && mZScreen != null)
                             {
-                                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                    if (mZScreen != null)
-                                    {
-                                        FillGoogleTranslateInfo(task.TranslationInfo);
+                                FillGoogleTranslateInfo(task.TranslationInfo);
 
-                                        this.mZScreen.btnTranslate.Enabled = true;
-                                        this.mZScreen.btnTranslateTo1.Enabled = true;
-                                    }
-                                    break;
+                                mZScreen.btnTranslate.Enabled = true;
+                                mZScreen.btnTranslateTo1.Enabled = true;
                             }
                             break;
                         case JobLevel1.SCREENSHOTS:
-                            switch (task.Job2)
+                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
                             {
-                                case WorkerTask.JobLevel2.CustomUploaderTest:
-                                    if (task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
-                                    {
-                                        if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
-                                        {
-                                            this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " full image: " +
+                                if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
+                                {
+                                    this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " full image: " +
                                                 task.LinkManager.GetFullImageUrl() + "\r\n");
-                                        }
+                                }
 
-                                        if (!string.IsNullOrEmpty(task.LinkManager.GetThumbnailUrl()))
-                                        {
-                                            this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
+                                if (!string.IsNullOrEmpty(task.LinkManager.GetThumbnailUrl()))
+                                {
+                                    this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
                                                 task.LinkManager.GetThumbnailUrl() + "\r\n");
-                                        }
-                                    }
-                                    break;
+                                }
                             }
 
                             if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
@@ -312,7 +299,7 @@ namespace ZScreenGUI
                                 {
                                     File.Delete(task.LocalFilePath);
                                 }
-                                catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
+                                catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
                                     FileSystem.AppendDebug("Error while finalizing job", ex);
                                 }
@@ -320,7 +307,10 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    UploadManager.SetClipboardText(task, false);
+                    if (Engine.conf.CopyClipboardAfterTask)
+                    {
+                        UploadManager.SetClipboardText(task, false);
+                    }
 
                     // TODO: Twitter Msg
                     if (Engine.conf.TwitterEnabled)
@@ -330,38 +320,41 @@ namespace ZScreenGUI
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
                     {
-                        this.mZScreen.btnOpenSourceText.Enabled = true;
-                        this.mZScreen.btnOpenSourceBrowser.Enabled = true;
-                        this.mZScreen.btnOpenSourceString.Enabled = true;
+                        mZScreen.btnOpenSourceText.Enabled = true;
+                        mZScreen.btnOpenSourceBrowser.Enabled = true;
+                        mZScreen.btnOpenSourceString.Enabled = true;
                     }
 
                     if (UploadManager.UploadInfoList.Count > 1)
                     {
-                        this.mZScreen.niTray.Icon = Resources.zss_busy;
+                        mZScreen.niTray.Icon = Resources.zss_busy;
                     }
                     else
                     {
-                        this.mZScreen.niTray.Text = this.mZScreen.Text; // do not update notifyIcon text if there are other jobs active
-                        this.mZScreen.niTray.Icon = Resources.zss_tray;
+                        mZScreen.niTray.Text = this.mZScreen.Text; // do not update notifyIcon text if there are other jobs active
+                        mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
+                    if (!string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                     {
                         if (Engine.conf.CompleteSound)
                         {
-                            System.Media.SystemSounds.Exclamation.Play();
+                            SystemSounds.Exclamation.Play();
                         }
 
                         if (Engine.conf.ShowBalloonTip)
                         {
-                            new BalloonTipHelper(this.mZScreen.niTray, task).ShowBalloonTip();
+                            new BalloonTipHelper(mZScreen.niTray, task).ShowBalloonTip();
                         }
                     }
 
                     if (task.Errors.Count > 0)
                     {
                         foreach (var error in task.Errors)
+                        {
                             FileSystem.AppendDebug(error);
+                        }
+
                         MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -378,11 +371,13 @@ namespace ZScreenGUI
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
+
                 if (CoreHelpers.RunningOnWin7)
                 {
                     Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
                 }
-                this.mZScreen.btnUploadersTest.Enabled = true;
+
+                mZScreen.btnUploadersTest.Enabled = true;
             }
         }
 

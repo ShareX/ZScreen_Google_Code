@@ -1046,6 +1046,7 @@ namespace ZScreenGUI
             cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
             chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
+            cbCopyClipboardAfterTask.Checked = Engine.conf.CopyClipboardAfterTask;
             cbCompleteSound.Checked = Engine.conf.CompleteSound;
             cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
             cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
@@ -2398,6 +2399,11 @@ namespace ZScreenGUI
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(Engine.URL_ISSUES);
+        }
+
+        private void cbCopyClipboardAfterTask_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.CopyClipboardAfterTask = cbCopyClipboardAfterTask.Checked;
         }
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
@@ -4552,6 +4558,7 @@ namespace ZScreenGUI
                 tcApp.SelectedTab = tpDestinations;
                 tcDestinations.SelectedTab = tpTwitter;
             }
+
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
