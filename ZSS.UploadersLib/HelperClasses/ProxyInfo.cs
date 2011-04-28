@@ -31,14 +31,21 @@ namespace UploadersLib.HelperClasses
     [Serializable]
     public class ProxyInfo
     {
+        [Category("Settings")]
         public string UserName { get; set; }
-        [PasswordPropertyText(true)]
+        [Category("Settings"), PasswordPropertyText(true)]
         public string Password { get; set; }
+        [Category("Settings")]
         public string Host { get; set; }
+        [Category("Settings"), DefaultValue(8080), Description("Port Number")]
         public int Port { get; set; }
+        [Category("Settings")]
         public Proxy ProxyType { get; set; }
 
-        public ProxyInfo() { }
+        public ProxyInfo()
+        {
+            ApplyDefaultValues(this);
+        }
 
         public ProxyInfo(string username, string password, string host, int port)
         {
@@ -56,6 +63,16 @@ namespace UploadersLib.HelperClasses
         public string GetAddress()
         {
             return string.Format("{0}:{1}", this.Host, this.Port);
+        }
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
         }
     }
 }
