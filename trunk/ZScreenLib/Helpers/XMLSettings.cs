@@ -485,10 +485,6 @@ namespace ZScreenLib
             }
         }
 
-        // TODO: Need to remove this now?
-        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
-        public bool PreferFtpServerForIndex { get; set; }
-
         // Destinations / FTP
 
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]

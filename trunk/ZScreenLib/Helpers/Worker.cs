@@ -335,11 +335,16 @@ namespace ZScreenLib
                 FileSystem.WriteText(fp, cbText);
                 temp.UpdateLocalFilePath(fp);
                 temp.MyText = cbText;
-                if (temp.ShortenUrl())
+                if (temp.CanShortenUrl())
                 {
                     temp.Job3 = WorkerTask.JobLevel3.ShortenURL;
                     FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", temp.MyText, temp.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
                     temp.MyUrlShortenerType = Engine.conf.URLShortenerType;
+                }
+                else if (Directory.Exists(cbText))
+                {
+                    temp.Job3 = WorkerTask.JobLevel3.IndexFolder;
+                    temp.MyFileUploader = Engine.conf.FileUploaderType;
                 }
                 else
                 {
@@ -474,17 +479,9 @@ namespace ZScreenLib
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = ".log";
-                    if (task.MyTextUploader == TextUploaderType.FILE || Adapter.CheckFTPAccounts())
+                    if (task.MyTextUploader == TextUploaderType.FileUploader)
                     {
-                        if (Engine.conf.PreferFtpServerForIndex)
-                        {
-                            task.MyFileUploader = FileUploaderType.FTP;
-                            task.Job1 = JobLevel1.BINARY;
-                        }
-                        if (task.MyFileUploader == FileUploaderType.FTP)
-                        {
-                            ext = ".html";
-                        }
+                        ext = ".html";
                     }
                     string fileName = Path.GetFileName(task.MyText) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));

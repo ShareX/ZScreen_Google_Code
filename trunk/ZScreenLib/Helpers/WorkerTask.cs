@@ -210,9 +210,10 @@ namespace ZScreenLib
 
         #endregion Properties for Category: Binary
 
-        private WorkerTask()
+        public WorkerTask()
         {
             this.Errors = new List<string>();
+            
         }
 
         public WorkerTask(JobLevel2 job)
@@ -401,7 +402,7 @@ namespace ZScreenLib
             this.MyWorker.RunWorkerAsync(this);
         }
 
-        public bool ShortenUrl()
+        public bool CanShortenUrl()
         {
             if (string.IsNullOrEmpty(MyText))
             {

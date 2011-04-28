@@ -702,12 +702,13 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (mTask.MyTextUploader == TextUploaderType.FILE)
+            if (mTask.MyTextUploader == TextUploaderType.FileUploader)
             {
                 UploadFile();
             }
-            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL) // TODO: Is it really necessary now?
+            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
             {
+                // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png 
                 ShortenURL();
             }
             else
@@ -807,8 +808,6 @@ namespace ZScreenLib
 
         public bool ShortenURL()
         {
-            // TODO: Support URL Shortening like Text Uploaders
-
             if (!string.IsNullOrEmpty(mTask.MyText))
             {
                 URLShortener us = null;
