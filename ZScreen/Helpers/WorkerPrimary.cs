@@ -72,17 +72,6 @@ namespace ZScreenGUI
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
             task.UniqueNumber = UploadManager.Queue();
 
-            if (((task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS) && task.MyImageUploader == ImageUploaderType.FileUploader) ||
-                (task.Job1 == JobLevel1.TEXT && task.MyTextUploader == TextUploaderType.FILE && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR) ||
-                task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest)
-            {
-                task.Job1 = JobLevel1.BINARY;
-                if (!Engine.conf.PreferFtpServerForIndex)
-                {
-                    task.MyFileUploader = Engine.conf.FileUploaderType;
-                }
-            }
-
             if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
                 task.MyImageUploader != ImageUploaderType.FILE &&
                 (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||

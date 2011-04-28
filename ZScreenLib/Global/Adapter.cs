@@ -401,48 +401,14 @@ namespace ZScreenLib
         /// </summary>
         public static string ShortenURL(string url)
         {
-            // TODO: TaskManager have it, need to remove this
-
             if (!string.IsNullOrEmpty(url))
             {
-                URLShortener us = null;
-
-                switch (Engine.conf.URLShortenerType)
-                {
-                    case UrlShortenerType.BITLY:
-                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
-                        break;
-                    case UrlShortenerType.Google:
-                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                        break;
-                    case UrlShortenerType.ISGD:
-                        us = new IsgdURLShortener();
-                        break;
-                    case UrlShortenerType.Jmp:
-                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
-                        break;
-                    case UrlShortenerType.THREELY:
-                        us = new ThreelyURLShortener(Engine.ThreelyKey);
-                        break;
-                    case UrlShortenerType.TINYURL:
-                        us = new TinyURLShortener();
-                        break;
-                    case UrlShortenerType.TURL:
-                        us = new TurlURLShortener();
-                        break;
-                }
-
-                if (us != null)
-                {
-                    string shortenUrl = us.ShortenURL(url);
-
-                    if (!string.IsNullOrEmpty(shortenUrl))
-                    {
-                        return shortenUrl;
-                    }
-                }
+                WorkerTask task = new WorkerTask();
+                task.MyText = url;
+                TaskManager tm = new TaskManager(task);
+                tm.ShortenURL();
+                return task.RemoteFilePath;
             }
-
             return url;
         }
 

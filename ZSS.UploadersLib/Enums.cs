@@ -166,7 +166,7 @@ namespace UploadersLib
         [Description("Slexy 2.0 - slexy.org")]
         SLEXY,
         [Description("Use file uploader")]
-        FILE
+        FileUploader
     }
 
     public enum FileUploaderType
