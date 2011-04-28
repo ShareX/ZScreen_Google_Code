@@ -90,7 +90,8 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Function to return the file path of a captured image. ImageFormat is based on length of the image.
+        /// Function to save and return the file path of a captured image. ImageFormat is based on length of the image.
+        /// If the image exists it is overwritten.
         /// </summary>
         /// <param name="img">The actual image</param>
         /// <param name="filePath">The path to where the image will be saved</param>
@@ -135,7 +136,7 @@ namespace ZScreenLib
                     }
 
                     int retry = 3;
-                    while (retry > 0 && !File.Exists(filePath))
+                    while (retry > 0)
                     {
                         using (FileStream fi = File.Create(filePath))
                         {
