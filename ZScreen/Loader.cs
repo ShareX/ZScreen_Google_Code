@@ -116,27 +116,26 @@ namespace ZScreenGUI
         {
             InitKeyboardHook();
 
-            if (!Engine.conf.DisableKeyboardHookTimer)
+            FileSystem.AppendDebug("Keyboard Hook initiated");
+
+            if (Engine.conf.EnableKeyboardHookTimer)
             {
                 Timer keyboardTimer = new Timer() { Interval = 5000 };
                 keyboardTimer.Tick += new EventHandler(keyboardTimer_Tick);
                 keyboardTimer.Start();
             }
-
-            FileSystem.AppendDebug("Keyboard Hook initiated");
         }
 
         private static void keyboardTimer_Tick(object sender, EventArgs e)
         {
-            if (Engine.conf.DisableKeyboardHookTimer)
+            if (Engine.conf.EnableKeyboardHookTimer)
             {
-                Timer timer = sender as Timer;
-
-                if (timer != null) timer.Stop();
+                InitKeyboardHook();
             }
             else
             {
-                InitKeyboardHook();
+                Timer timer = sender as Timer;
+                if (timer != null) timer.Stop();
             }
         }
 

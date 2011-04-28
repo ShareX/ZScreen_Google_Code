@@ -97,67 +97,72 @@ namespace ZScreenLib
         {
             string clipboardText = "";
 
-            switch (task.Job1)
+            if (task.Job1 == JobLevel1.BINARY && !string.IsNullOrEmpty(task.RemoteFilePath))
             {
-                case JobLevel1.PICTURES:
-                case JobLevel1.SCREENSHOTS:
-                case JobLevel1.BINARY:
-                    ScreenshotsHistory = task.LinkManager;
-                    if (GraphicsMgr.IsValidImage(task.LocalFilePath))
-                    {
-                        if (Engine.conf.ShowClipboardModeChooser || showDialog)
+                clipboardText = task.RemoteFilePath;
+            }
+            else
+            {
+                switch (task.Job1)
+                {
+                    case JobLevel1.PICTURES:
+                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.BINARY:
+                        ScreenshotsHistory = task.LinkManager;
+                        if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                         {
-                            ClipboardOptions cmp = new ClipboardOptions(task);
-                            cmp.Icon = Resources.zss_main;
-                            if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-                        }
+                            if (Engine.conf.ShowClipboardModeChooser || showDialog)
+                            {
+                                ClipboardOptions cmp = new ClipboardOptions(task);
+                                cmp.Icon = Resources.zss_main;
+                                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                            }
 
-                        if (task.MyImageUploader == ImageUploaderType.FILE)
-                        {
-                            clipboardText = task.LocalFilePath;
-                        }
-                        else
-                        {
-                            clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                            if (task.MakeTinyURL)
-                            {
-                                string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                                if (!string.IsNullOrEmpty(tinyUrl))
-                                {
-                                    clipboardText = tinyUrl.Trim();
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case JobLevel1.TEXT:
-                    switch (task.Job2)
-                    {
-                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                            if (task.TranslationInfo != null)
-                            {
-                                clipboardText = task.TranslationInfo.Result;
-                            }
-                            break;
-                        default:
-                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                            {
-                                clipboardText = task.RemoteFilePath;
-                            }
-                            else if (null != task.MyText)
-                            {
-                                clipboardText = task.MyText;
-                            }
-                            else
+                            if (task.MyImageUploader == ImageUploaderType.FILE)
                             {
                                 clipboardText = task.LocalFilePath;
                             }
-                            break;
-                    }
-                    break;
+                            else
+                            {
+                                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+                                if (task.MakeTinyURL)
+                                {
+                                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                                    if (!string.IsNullOrEmpty(tinyUrl))
+                                    {
+                                        clipboardText = tinyUrl.Trim();
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case JobLevel1.TEXT:
+                        switch (task.Job2)
+                        {
+                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                                if (task.TranslationInfo != null)
+                                {
+                                    clipboardText = task.TranslationInfo.Result;
+                                }
+                                break;
+                            default:
+                                if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                {
+                                    clipboardText = task.RemoteFilePath;
+                                }
+                                else if (null != task.MyText)
+                                {
+                                    clipboardText = task.MyText;
+                                }
+                                else
+                                {
+                                    clipboardText = task.LocalFilePath;
+                                }
+                                break;
+                        }
+                        break;
+                }
             }
-
-            // after all this the clipboard text can be null
 
             if (!string.IsNullOrEmpty(clipboardText))
             {
@@ -173,8 +178,9 @@ namespace ZScreenLib
                 }
 
                 Engine.zClipboardText = clipboardText;
-                Engine.ClipboardHook();
+                Engine.ClipboardHook(); // TODO: Why?
             }
+
             return clipboardText;
         }
     }

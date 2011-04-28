@@ -79,10 +79,6 @@ namespace ZScreenLib
         public Size CropGridSize = new Size(100, 100);
         public string HelpToLanguage = "en";
 
-        // TODO: Need to remove this now?
-        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
-        public bool PreferFtpServerForIndex { get; set; }
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
@@ -258,12 +254,13 @@ namespace ZScreenLib
 
         // Interaction
 
-        public decimal FlashTrayCount = 1;
-        public bool CaptureEntireScreenOnError = false;
+        public bool CopyClipboardAfterTask = true;
+        public bool CompleteSound = true;
         public bool ShowBalloonTip = true;
         public bool BalloonTipOpenLink = true;
-        public bool ShowUploadDuration = false;
-        public bool CompleteSound = false;
+        public bool ShowUploadDuration = true;
+        public decimal FlashTrayCount = 1;
+        public bool CaptureEntireScreenOnError = false;
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
         public bool CloseQuickActions = false;
@@ -488,6 +485,10 @@ namespace ZScreenLib
             }
         }
 
+        // TODO: Need to remove this now?
+        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Use the active FTP Server instead of the active Text Uploader for uploading Text. Prerequisite: PreferFileUploaderForText")]
+        public bool PreferFtpServerForIndex { get; set; }
+
         // Destinations / FTP
 
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]
@@ -510,8 +511,8 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
-        [Category("Options / General"), DefaultValue(true), Description("Disables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
-        public bool DisableKeyboardHookTimer { get; set; }
+        [Category("Options / General"), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
+        public bool EnableKeyboardHookTimer { get; set; }
 
         // Options / History Settings
 
