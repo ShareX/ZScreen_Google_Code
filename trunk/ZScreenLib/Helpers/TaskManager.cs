@@ -467,6 +467,8 @@ namespace ZScreenLib
                         {
                             mTask.LinkManager = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
                         }
+
+                        // TODO: Catch "The remote server returned an error: (407) Proxy Authentication Required." and prompt Proxy Dialog
                         mTask.Errors = imageUploader.Errors;
 
                         if (mTask.LinkManager.ImageFileList.Count == 0)

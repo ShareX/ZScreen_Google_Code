@@ -165,6 +165,12 @@ namespace ZScreenGUI
                 }
             }
 
+            if (task.Errors.Count > 0 && task.Errors[0].Contains("(407) Proxy Authentication Required"))
+            {
+                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateProxy);
+                task.Errors.Clear();
+            }
+
             e.Result = task;
         }
 
@@ -221,6 +227,16 @@ namespace ZScreenGUI
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", UploadManager.GetAverageProgress(), Engine.GetProductName());
+                    break;
+                case WorkerTask.ProgressType.UpdateProxy:
+                    // TODO: Proxy
+                    ProxyConfig pc = new ProxyConfig();
+                    if (pc.ShowDialog() == DialogResult.OK)
+                    {
+                        mZScreen.ucProxyAccounts.AccountsList.Items.Add(pc.Proxy);
+                        mZScreen.cboProxyConfig.SelectedIndex = (int)ProxyConfigType.ManualProxy;
+                        Uploader.ProxySettings = Adapter.CheckProxySettings();
+                    }
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;

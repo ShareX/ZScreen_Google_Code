@@ -92,6 +92,7 @@ namespace ZScreenLib
             INCREMENT_PROGRESS,
             SET_ICON_BUSY,
             UPDATE_STATUS_BAR_TEXT,
+            UpdateProxy,
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
             UpdateCropMode,

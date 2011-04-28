@@ -102,6 +102,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ProxyConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProxyConfig.Designer.cs">
+      <DependentUpon>ProxyConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
@@ -277,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProxyConfig.resx">
+      <DependentUpon>ProxyConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
