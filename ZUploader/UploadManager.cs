@@ -281,7 +281,7 @@ namespace ZUploader
                     ListViewItem lvi = ListViewControl.Items[info.ID];
                     lvi.Tag = info.Result;
 
-                    if (info.Result.Errors != null && info.Result.Errors.Count > 0)
+                    if (info.Result.IsError)
                     {
                         string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
 
@@ -310,10 +310,17 @@ namespace ZUploader
 
                     if (Program.Settings.AutoPlaySound)
                     {
-                        SystemSounds.Exclamation.Play();
+                        if (info.Result.IsError)
+                        {
+                            SystemSounds.Asterisk.Play();
+                        }
+                        else
+                        {
+                            SystemSounds.Exclamation.Play();
+                        }
                     }
 
-                    if (Program.Settings.SaveHistory && !string.IsNullOrEmpty(info.Result.URL) && (info.Result.Errors == null || info.Result.Errors.Count == 0))
+                    if (Program.Settings.SaveHistory && !string.IsNullOrEmpty(info.Result.URL) && !info.Result.IsError)
                     {
                         HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
                     }

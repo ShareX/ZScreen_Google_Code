@@ -35,6 +35,11 @@ namespace UploadersLib.HelperClasses
         public string Source { get; set; }
         public List<string> Errors { get; set; }
 
+        public bool IsError
+        {
+            get { return Errors != null && Errors.Count > 0; }
+        }
+
         public UploadResult()
         {
             Errors = new List<string>();

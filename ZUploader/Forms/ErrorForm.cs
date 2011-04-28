@@ -35,20 +35,21 @@ namespace ZUploader
 {
     public partial class ErrorForm : Form
     {
-        public Exception Exception { get; private set; }
         public string LogPath { get; private set; }
         public string BugReportPath { get; private set; }
 
         public ErrorForm(string title, Exception e, string logPath, string bugReportPath)
+            : this(title, e.Message, e.ToString(), logPath, bugReportPath) { }
+
+        public ErrorForm(string title, string message, string errorText, string logPath, string bugReportPath)
         {
             InitializeComponent();
-            this.Text = title;
-            Exception = e;
+            Text = title;
             LogPath = logPath;
             BugReportPath = bugReportPath;
 
-            lblExceptionMessage.Text = Exception.Message;
-            txtException.Text = Exception.ToString();
+            lblExceptionMessage.Text = message;
+            txtException.Text = errorText;
             btnOpenLogFile.Visible = !string.IsNullOrEmpty(LogPath) && File.Exists(LogPath);
             btnSendBugReport.Visible = !string.IsNullOrEmpty(BugReportPath);
         }

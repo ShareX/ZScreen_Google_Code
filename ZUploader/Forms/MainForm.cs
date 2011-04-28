@@ -176,7 +176,7 @@ namespace ZUploader
                         copyDeletionURLToolStripMenuItem.Visible = true;
                     }
 
-                    if (result.Errors != null && result.Errors.Count > 0)
+                    if (result.IsError)
                     {
                         showErrorsToolStripMenuItem.Visible = true;
                         copyErrorsToolStripMenuItem.Visible = true;
@@ -280,7 +280,7 @@ namespace ZUploader
             string errors = string.Empty;
             UploadResult result = GetCurrentUploadResult();
 
-            if (result != null && result.Errors != null && result.Errors.Count > 0)
+            if (result != null && result.IsError)
             {
                 errors = string.Join("\r\n\r\n", result.Errors.ToArray());
             }
@@ -294,7 +294,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(errors))
             {
-                MessageBox.Show(errors, "ZUploader - Errors", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                new ErrorForm("ZUploader - Errors", "Upload errors:", errors, Program.LogFilePath, Program.URL_ISSUES).ShowDialog();
             }
         }
 

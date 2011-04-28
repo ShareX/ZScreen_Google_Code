@@ -153,7 +153,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                if (!stopUpload) Errors.Add(e.ToString());
+                if (!stopUpload) Errors.Add(GetWebError(e));
             }
             finally
             {
@@ -193,7 +193,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                if (!stopUpload) Errors.Add(e.ToString());
+                if (!stopUpload) Errors.Add(GetWebError(e));
             }
             finally
             {
@@ -230,7 +230,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                Errors.Add(e.ToString());
+                Errors.Add(GetWebError(e));
             }
             finally
             {
@@ -376,6 +376,30 @@ namespace UploadersLib
             }
 
             return null;
+        }
+
+        private string GetWebError(Exception e)
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine("Message:");
+            str.AppendLine(e.Message);
+            str.AppendLine();
+            str.AppendLine("StackTrace:");
+            str.AppendLine(e.StackTrace);
+
+            if (e is WebException)
+            {
+                string response = ResponseToString(((WebException)e).Response);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    str.AppendLine();
+                    str.AppendLine("Response:");
+                    str.AppendLine(response);
+                }
+            }
+
+            return str.ToString();
         }
 
         #endregion Helper methods

@@ -34,10 +34,11 @@ namespace UploadersLib.TextServices
     public class Twitter : Uploader, IOAuth
     {
         private const string APIVersion = "1";
-        private const string URLRequestToken = "http://twitter.com/oauth/request_token";
-        private const string URLAuthorize = "http://twitter.com/oauth/authorize";
-        private const string URLAccessToken = "http://twitter.com/oauth/access_token";
-        private const string URLTweet = "http://twitter.com/statuses/update.xml"; // "http://api.twitter.com/" + APIVersion + "/statuses/update.xml";
+        private const string URLRequestToken = "https://twitter.com/oauth/request_token";
+        private const string URLAuthorize = "https://twitter.com/oauth/authorize";
+        private const string URLAccessToken = "https://twitter.com/oauth/access_token";
+        private const string URLTweet = "https://twitter.com/statuses/update.xml";
+        // private const string URLTweet =  "http://api.twitter.com/" + APIVersion + "/statuses/update.xml";
 
         public OAuthInfo AuthInfo { get; set; }
 
