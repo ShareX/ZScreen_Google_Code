@@ -180,7 +180,7 @@ namespace ZUploader
                 Info.Result.Errors = uploader.Errors;
             }
 
-            if (!IsStopped && Info.Result != null && Info.Result.Errors.Count == 0 && string.IsNullOrEmpty(Info.Result.URL))
+            if (!IsStopped && Info.Result != null && !Info.Result.IsError && string.IsNullOrEmpty(Info.Result.URL))
             {
                 Info.Result.Errors.Add("URL is empty.");
             }
