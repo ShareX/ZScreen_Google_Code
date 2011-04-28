@@ -178,7 +178,7 @@ namespace ZScreenLib
                 }
 
                 Engine.zClipboardText = clipboardText;
-                Engine.ClipboardHook(); // TODO: Why?
+                Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
             }
 
             return clipboardText;

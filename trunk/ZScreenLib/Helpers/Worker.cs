@@ -416,7 +416,7 @@ namespace ZScreenLib
                 {
                     WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                     temp.UpdateLocalFilePath(fp);
-                    temp.MyText = TextInfo.FromFile(fp).LocalString; // TODO: Remove usage of TextInfo?
+                    temp.MyText = File.ReadAllText(fp);
                     textWorkers.Add(temp);
                 }
                 else

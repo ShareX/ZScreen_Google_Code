@@ -636,9 +636,8 @@ namespace ZScreenLib
 
         private static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // TODO: Twitter
             TwitterMsg msg = sender as TwitterMsg;
-            // Engine.conf.TwitterClientConfig = msg.Config;
+            Engine.conf.TwitterClientConfig = msg.Config;
         }
 
         #endregion Twitter Methods

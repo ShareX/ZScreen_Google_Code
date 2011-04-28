@@ -27,7 +27,7 @@ namespace UploadersLib.HelperClasses
 {
     interface ITextUploader
     {
-        string UploadText(TextInfo text);
+        string UploadText(string text);
 
         string UploadTextFromClipboard();
 
