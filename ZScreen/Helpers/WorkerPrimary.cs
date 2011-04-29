@@ -446,7 +446,6 @@ namespace ZScreenGUI
             if (hi != null && File.Exists(hi.LocalPath))
             {
                 WorkerTask task = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
-                task.Job1 = hi.JobCategory;
                 task.SetImage(hi.LocalPath);
                 task.UpdateLocalFilePath(hi.LocalPath);
                 task.MyImageUploader = hi.ImageDestCategory;
@@ -494,7 +493,7 @@ namespace ZScreenGUI
         public void LanguageTranslator(WorkerTask task)
         {
             task.TranslationInfo = new GoogleTranslate(Engine.GoogleTranslateKey).TranslateText(task.TranslationInfo);
-            task.MyText = task.TranslationInfo.Result;
+            task.SetText(task.TranslationInfo.Result);
         }
 
         public void StartWorkerTranslator()
@@ -700,7 +699,6 @@ namespace ZScreenGUI
             if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0)
             {
                 WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
-                t.Job1 = JobLevel1.Text;
                 mZScreen.btnTranslate.Enabled = false;
                 mZScreen.btnTranslateTo1.Enabled = false;
                 t.TranslationInfo = translationInfo;
@@ -850,7 +848,7 @@ namespace ZScreenGUI
         {
             task.Errors.Clear();
             task.MyWorker = CreateWorker();
-            task.LinkManager = new ImageFileManager(); 
+            task.LinkManager = new ImageFileManager();
             task.RemoteFilePath = "";
             new TaskManager(task).PublishData();
         }

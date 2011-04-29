@@ -218,12 +218,12 @@ namespace ZScreenTesterGUI
                         break;
                     case UploaderType.TextUploader:
                         task.MyTextUploader = uploader.TextUploader;
-                        task.MyText = "ZScreen testing...";
+                        task.SetText("ZScreen testing...");
                         new TaskManager(task).UploadText();
                         break;
                     case UploaderType.UrlShortener:
                         task.MyUrlShortenerType = uploader.UrlShortener;
-                        task.MyText = "http://code.google.com/p/zscreen/";
+                        task.SetText("http://code.google.com/p/zscreen/");
                         new TaskManager(task).ShortenURL();
                         break;
                     default:
