@@ -2482,11 +2482,6 @@ namespace ZScreenGUI
             Engine.conf.AutoIncrement = 0;
         }
 
-        private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.HistoryShowTooltips = cbShowHistoryTooltip.Checked;
-        }
-
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.HistorySave = cbHistorySave.Checked;
@@ -3957,7 +3952,12 @@ namespace ZScreenGUI
 
         private void btnHistoryOpen_Click(object sender, EventArgs e)
         {
-            new HistoryLib.HistoryForm(Engine.HistoryDbPath, Engine.conf.HistoryMaxNumber, string.Format("{0} - History", Engine.GetProductName())).Show();
+            OpenHistory();
+        }
+
+        private void historyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenHistory();
         }
     }
 }

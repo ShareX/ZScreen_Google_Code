@@ -45,6 +45,7 @@ namespace ZScreenGUI
             this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmViewLocalDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -67,22 +68,6 @@ namespace ZScreenGUI
             this.tsmVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmExitZScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmCopyCbHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.openLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.browseURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copySourceToClipboardStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.editInPicnikToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiTwitter = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsRetryUpload = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ilApp = new System.Windows.Forms.ImageList(this.components);
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
@@ -482,17 +467,16 @@ namespace ZScreenGUI
             this.lblFromLanguage = new System.Windows.Forms.Label();
             this.cbToLanguage = new System.Windows.Forms.ComboBox();
             this.cbFromLanguage = new System.Windows.Forms.ComboBox();
+            this.tpOptions = new System.Windows.Forms.TabPage();
+            this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.btnHistoryOpen = new System.Windows.Forms.Button();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
             this.lblHistoryMaxItems = new System.Windows.Forms.Label();
             this.lblHistoryListFormat = new System.Windows.Forms.Label();
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
-            this.tpOptions = new System.Windows.Forms.TabPage();
-            this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
             this.gbMonitorClipboard = new System.Windows.Forms.GroupBox();
             this.chkMonUrls = new System.Windows.Forms.CheckBox();
@@ -584,7 +568,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.cmTray.SuspendLayout();
-            this.cmsHistory.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpMain.SuspendLayout();
             this.gbImageSettings.SuspendLayout();
@@ -699,10 +682,10 @@ namespace ZScreenGUI
             this.tcTextUploaders.SuspendLayout();
             this.tpTreeGUI.SuspendLayout();
             this.tpTranslator.SuspendLayout();
-            this.tpHistory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
+            this.tpHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpGeneral.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
             this.gbUpdates.SuspendLayout();
@@ -744,6 +727,7 @@ namespace ZScreenGUI
             this.tsmEditinImageSoftware,
             this.tsmCopytoClipboardMode,
             this.toolStripSeparator3,
+            this.historyToolStripMenuItem,
             this.tsmFTPClient,
             this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
@@ -754,7 +738,7 @@ namespace ZScreenGUI
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 336);
             // 
             // tsmiTabs
             // 
@@ -804,6 +788,14 @@ namespace ZScreenGUI
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
+            // 
+            // historyToolStripMenuItem
+            // 
+            this.historyToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.pictures;
+            this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.historyToolStripMenuItem.Text = "&History...";
+            this.historyToolStripMenuItem.Click += new System.EventHandler(this.historyToolStripMenuItem_Click);
             // 
             // tsmFTPClient
             // 
@@ -985,107 +977,6 @@ namespace ZScreenGUI
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
-            // cmsHistory
-            // 
-            this.cmsHistory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmCopyCbHistory,
-            this.copyImageToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.openLocalFileToolStripMenuItem,
-            this.browseURLToolStripMenuItem,
-            this.openSourceToolStripMenuItem,
-            this.toolStripSeparator9,
-            this.editInPicnikToolStripMenuItem,
-            this.tsmiTwitter,
-            this.toolStripSeparator8,
-            this.cmsRetryUpload,
-            this.deleteToolStripMenuItem});
-            this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(170, 220);
-            // 
-            // tsmCopyCbHistory
-            // 
-            this.tsmCopyCbHistory.Name = "tsmCopyCbHistory";
-            this.tsmCopyCbHistory.Size = new System.Drawing.Size(169, 22);
-            this.tsmCopyCbHistory.Text = "&Copy Link";
-            // 
-            // copyImageToolStripMenuItem
-            // 
-            this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
-            // 
-            // openLocalFileToolStripMenuItem
-            // 
-            this.openLocalFileToolStripMenuItem.Name = "openLocalFileToolStripMenuItem";
-            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
-            // browseURLToolStripMenuItem
-            // 
-            this.browseURLToolStripMenuItem.Name = "browseURLToolStripMenuItem";
-            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
-            // openSourceToolStripMenuItem
-            // 
-            this.openSourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem,
-            this.copySourceToClipboardStringToolStripMenuItem});
-            this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
-            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.openSourceToolStripMenuItem.Text = "Open Source";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
-            // 
-            // openSourceInDefaultWebBrowserHTMLToolStripMenuItem
-            // 
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Name = "openSourceInDefaultWebBrowserHTMLToolStripMenuItem";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
-            // 
-            // copySourceToClipboardStringToolStripMenuItem
-            // 
-            this.copySourceToClipboardStringToolStripMenuItem.Name = "copySourceToClipboardStringToolStripMenuItem";
-            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(166, 6);
-            // 
-            // editInPicnikToolStripMenuItem
-            // 
-            this.editInPicnikToolStripMenuItem.Name = "editInPicnikToolStripMenuItem";
-            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.editInPicnikToolStripMenuItem.Text = "Edit in Picnik...";
-            this.editInPicnikToolStripMenuItem.Click += new System.EventHandler(this.editInPicnikToolStripMenuItem_Click);
-            // 
-            // tsmiTwitter
-            // 
-            this.tsmiTwitter.Name = "tsmiTwitter";
-            this.tsmiTwitter.Size = new System.Drawing.Size(32, 19);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(166, 6);
-            // 
-            // cmsRetryUpload
-            // 
-            this.cmsRetryUpload.Name = "cmsRetryUpload";
-            this.cmsRetryUpload.Size = new System.Drawing.Size(32, 19);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
             // ilApp
             // 
             this.ilApp.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilApp.ImageStream")));
@@ -1128,7 +1019,6 @@ namespace ZScreenGUI
             this.tcApp.Controls.Add(this.tpImageHosting);
             this.tcApp.Controls.Add(this.tpTextServices);
             this.tcApp.Controls.Add(this.tpTranslator);
-            this.tcApp.Controls.Add(this.tpHistory);
             this.tcApp.Controls.Add(this.tpOptions);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcApp.ImageList = this.ilApp;
@@ -5717,21 +5607,50 @@ namespace ZScreenGUI
             this.cbFromLanguage.TabIndex = 0;
             this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
+            // tpOptions
+            // 
+            this.tpOptions.Controls.Add(this.tcOptions);
+            this.tpOptions.ImageKey = "application_edit.png";
+            this.tpOptions.Location = new System.Drawing.Point(4, 23);
+            this.tpOptions.Name = "tpOptions";
+            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOptions.Size = new System.Drawing.Size(805, 435);
+            this.tpOptions.TabIndex = 9;
+            this.tpOptions.Text = "Options";
+            this.tpOptions.UseVisualStyleBackColor = true;
+            // 
+            // tcOptions
+            // 
+            this.tcOptions.Controls.Add(this.tpGeneral);
+            this.tcOptions.Controls.Add(this.tpProxy);
+            this.tcOptions.Controls.Add(this.tpInteraction);
+            this.tcOptions.Controls.Add(this.tpAdvPaths);
+            this.tcOptions.Controls.Add(this.tpHistory);
+            this.tcOptions.Controls.Add(this.tpStats);
+            this.tcOptions.Controls.Add(this.tpDebugLog);
+            this.tcOptions.Controls.Add(this.tpOptionsAdv);
+            this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcOptions.Location = new System.Drawing.Point(3, 3);
+            this.tcOptions.Name = "tcOptions";
+            this.tcOptions.SelectedIndex = 0;
+            this.tcOptions.Size = new System.Drawing.Size(799, 429);
+            this.tcOptions.TabIndex = 8;
+            this.tcOptions.SelectedIndexChanged += new System.EventHandler(this.tcOptions_SelectedIndexChanged);
+            // 
             // tpHistory
             // 
             this.tpHistory.Controls.Add(this.label1);
             this.tpHistory.Controls.Add(this.btnHistoryOpen);
             this.tpHistory.Controls.Add(this.cbAddFailedScreenshot);
             this.tpHistory.Controls.Add(this.cbHistorySave);
-            this.tpHistory.Controls.Add(this.cbShowHistoryTooltip);
             this.tpHistory.Controls.Add(this.lblHistoryMaxItems);
             this.tpHistory.Controls.Add(this.lblHistoryListFormat);
             this.tpHistory.Controls.Add(this.nudHistoryMaxItems);
             this.tpHistory.ImageKey = "pictures.png";
-            this.tpHistory.Location = new System.Drawing.Point(4, 23);
+            this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(805, 435);
+            this.tpHistory.Size = new System.Drawing.Size(791, 403);
             this.tpHistory.TabIndex = 8;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -5758,7 +5677,7 @@ namespace ZScreenGUI
             // cbAddFailedScreenshot
             // 
             this.cbAddFailedScreenshot.AutoSize = true;
-            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(24, 159);
+            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(24, 136);
             this.cbAddFailedScreenshot.Name = "cbAddFailedScreenshot";
             this.cbAddFailedScreenshot.Size = new System.Drawing.Size(143, 17);
             this.cbAddFailedScreenshot.TabIndex = 7;
@@ -5771,22 +5690,11 @@ namespace ZScreenGUI
             this.cbHistorySave.AutoSize = true;
             this.cbHistorySave.Location = new System.Drawing.Point(24, 109);
             this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(173, 17);
+            this.cbHistorySave.Size = new System.Drawing.Size(105, 17);
             this.cbHistorySave.TabIndex = 10;
-            this.cbHistorySave.Text = "Save History List to an XML file";
+            this.cbHistorySave.Text = "Save History List";
             this.cbHistorySave.UseVisualStyleBackColor = true;
             this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            // 
-            // cbShowHistoryTooltip
-            // 
-            this.cbShowHistoryTooltip.AutoSize = true;
-            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(24, 134);
-            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
-            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(211, 17);
-            this.cbShowHistoryTooltip.TabIndex = 9;
-            this.cbShowHistoryTooltip.Text = "Show Screenshot Information in Tooltip";
-            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
-            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
             // 
             // lblHistoryMaxItems
             // 
@@ -5817,35 +5725,6 @@ namespace ZScreenGUI
             this.nudHistoryMaxItems.TabIndex = 4;
             this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
-            // 
-            // tpOptions
-            // 
-            this.tpOptions.Controls.Add(this.tcOptions);
-            this.tpOptions.ImageKey = "application_edit.png";
-            this.tpOptions.Location = new System.Drawing.Point(4, 23);
-            this.tpOptions.Name = "tpOptions";
-            this.tpOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptions.Size = new System.Drawing.Size(805, 435);
-            this.tpOptions.TabIndex = 9;
-            this.tpOptions.Text = "Options";
-            this.tpOptions.UseVisualStyleBackColor = true;
-            // 
-            // tcOptions
-            // 
-            this.tcOptions.Controls.Add(this.tpGeneral);
-            this.tcOptions.Controls.Add(this.tpProxy);
-            this.tcOptions.Controls.Add(this.tpInteraction);
-            this.tcOptions.Controls.Add(this.tpAdvPaths);
-            this.tcOptions.Controls.Add(this.tpStats);
-            this.tcOptions.Controls.Add(this.tpDebugLog);
-            this.tcOptions.Controls.Add(this.tpOptionsAdv);
-            this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcOptions.Location = new System.Drawing.Point(3, 3);
-            this.tcOptions.Name = "tcOptions";
-            this.tcOptions.SelectedIndex = 0;
-            this.tcOptions.Size = new System.Drawing.Size(799, 429);
-            this.tcOptions.TabIndex = 8;
-            this.tcOptions.SelectedIndexChanged += new System.EventHandler(this.tcOptions_SelectedIndexChanged);
             // 
             // tpGeneral
             // 
@@ -6269,9 +6148,9 @@ namespace ZScreenGUI
             this.chkTwitterEnable.AutoSize = true;
             this.chkTwitterEnable.Location = new System.Drawing.Point(352, 48);
             this.chkTwitterEnable.Name = "chkTwitterEnable";
-            this.chkTwitterEnable.Size = new System.Drawing.Size(194, 17);
+            this.chkTwitterEnable.Size = new System.Drawing.Size(202, 17);
             this.chkTwitterEnable.TabIndex = 9;
-            this.chkTwitterEnable.Text = "Update status in Twitter automaticly";
+            this.chkTwitterEnable.Text = "Update status in Twitter automatically";
             this.chkTwitterEnable.UseVisualStyleBackColor = true;
             this.chkTwitterEnable.CheckedChanged += new System.EventHandler(this.chkTwitterEnable_CheckedChanged);
             // 
@@ -6927,7 +6806,6 @@ namespace ZScreenGUI
             this.Leave += new System.EventHandler(this.ZScreen_Leave);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.cmTray.ResumeLayout(false);
-            this.cmsHistory.ResumeLayout(false);
             this.tcApp.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
@@ -7090,11 +6968,11 @@ namespace ZScreenGUI
             this.tpTreeGUI.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
+            this.tpOptions.ResumeLayout(false);
+            this.tcOptions.ResumeLayout(false);
             this.tpHistory.ResumeLayout(false);
             this.tpHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
-            this.tpOptions.ResumeLayout(false);
-            this.tcOptions.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
@@ -7155,25 +7033,12 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         internal System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
-        internal System.Windows.Forms.ContextMenuStrip cmsHistory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmCopyCbHistory;
         internal System.Windows.Forms.ImageList ilApp;
         internal System.Windows.Forms.ToolStripMenuItem tsmActions;
         internal System.Windows.Forms.ToolStripMenuItem tsmCropShot;
         internal System.Windows.Forms.ToolStripMenuItem tsmClipboardUpload;
         internal System.Windows.Forms.ToolStripMenuItem tsmEntireScreen;
         internal System.Windows.Forms.ToolStripMenuItem tsmLastCropShot;
-        internal System.Windows.Forms.ToolStripMenuItem copyImageToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        internal System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem openLocalFileToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem browseURLToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        internal System.Windows.Forms.ToolStripMenuItem openSourceToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem copySourceToClipboardStringToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem openSourceInDefaultWebBrowserHTMLToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem cmsRetryUpload;
         internal System.Windows.Forms.ToolStripMenuItem tsmHelp;
         internal System.Windows.Forms.ToolStripMenuItem tsmLicense;
         internal System.Windows.Forms.ToolStripMenuItem tsmVersionHistory;
@@ -7592,7 +7457,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
         private System.Windows.Forms.CheckBox chkHotkeys;
         private System.Windows.Forms.CheckBox chkTwitterEnable;
-        private System.Windows.Forms.ToolStripMenuItem tsmiTwitter;
         private System.Windows.Forms.Button btnFtpHelp;
         private System.Windows.Forms.Button btnOpenZScreenTester;
         private System.Windows.Forms.Label lblMaxNameLength;
@@ -7630,8 +7494,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkPreferSystemFolders;
         internal System.Windows.Forms.GroupBox gbSettingsExportImport;
         private System.Windows.Forms.Button btnResetHotkeys;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem editInPicnikToolStripMenuItem;
         private System.Windows.Forms.TabPage tpFreehandCropShot;
         private System.Windows.Forms.CheckBox cbFreehandCropShowHelpText;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
@@ -7679,10 +7541,10 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnHistoryOpen;
         internal System.Windows.Forms.CheckBox cbAddFailedScreenshot;
         internal System.Windows.Forms.CheckBox cbHistorySave;
-        internal System.Windows.Forms.CheckBox cbShowHistoryTooltip;
         internal System.Windows.Forms.Label lblHistoryMaxItems;
         internal System.Windows.Forms.Label lblHistoryListFormat;
         internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
     }
 }

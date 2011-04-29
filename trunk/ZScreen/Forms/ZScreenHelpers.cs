@@ -10,6 +10,12 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
+
+        public void OpenHistory()
+        {
+            new HistoryLib.HistoryForm(Engine.HistoryDbPath, Engine.conf.HistoryMaxNumber, string.Format("{0} - History", Engine.GetProductName())).Show();
+        }
+
         public void ProxyAdd(ProxyInfo acc)
         {
             Engine.conf.ProxyList.Add(acc);
