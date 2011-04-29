@@ -3362,10 +3362,7 @@ namespace ZScreenGUI
 
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
         {
-            ProxyInfo acc = new ProxyInfo("username", "password", "host", 8080);
-            Engine.conf.ProxyList.Add(acc);
-            ucProxyAccounts.AccountsList.Items.Add(acc);
-            ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
+            ProxyAdd(new ProxyInfo("username", "password", "host", 8080));
         }
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)

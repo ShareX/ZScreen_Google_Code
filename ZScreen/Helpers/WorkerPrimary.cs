@@ -154,11 +154,7 @@ namespace ZScreenGUI
                 }
             }
 
-            if (task.Errors.Count > 0 && task.Errors[0].Contains("(407) Proxy Authentication Required"))
-            {
-                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateProxy);
-                task.Errors.Clear();
-            }
+            // TODO: Proxy?
 
             e.Result = task;
         }
@@ -219,13 +215,6 @@ namespace ZScreenGUI
                     break;
                 case WorkerTask.ProgressType.UpdateProxy:
                     // TODO: Proxy
-                    ProxyConfig pc = new ProxyConfig();
-                    if (pc.ShowDialog() == DialogResult.OK)
-                    {
-                        mZScreen.ucProxyAccounts.AccountsList.Items.Add(pc.Proxy);
-                        mZScreen.cboProxyConfig.SelectedIndex = (int)ProxyConfigType.ManualProxy;
-                        Uploader.ProxySettings = Adapter.CheckProxySettings();
-                    }
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
@@ -246,6 +235,18 @@ namespace ZScreenGUI
 
             try
             {
+                if (task.Errors.Count > 0 && task.Errors[0].Contains("(407) Proxy Authentication Required"))
+                {
+                    ProxyConfig pc = new ProxyConfig();
+                    if (pc.ShowDialog() == DialogResult.OK)
+                    {
+                        mZScreen.ProxyAdd(pc.Proxy);
+                        mZScreen.cboProxyConfig.SelectedIndex = (int)ProxyConfigType.ManualProxy;
+                        Uploader.ProxySettings = Adapter.CheckProxySettings();
+                    }
+                    RetryTask(task);
+                }
+
                 WorkerTask checkTask = RetryUpload(task);
 
                 if (checkTask.RetryPending)
@@ -253,6 +254,7 @@ namespace ZScreenGUI
                     string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
                     mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
+
                 else
                 {
                     FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
@@ -320,7 +322,7 @@ namespace ZScreenGUI
                     // TODO: Twitter Msg
                     if (Engine.conf.TwitterEnabled)
                     {
-                      //  Adapter.TwitterMsg(task);
+                        //  Adapter.TwitterMsg(task);
                     }
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
@@ -843,6 +845,15 @@ namespace ZScreenGUI
         {
             DialogColor dialogColor = new DialogColor { ScreenPicker = true };
             dialogColor.Show();
+        }
+
+        public void RetryTask(WorkerTask task)
+        {
+            task.Errors.Clear();
+            task.MyWorker = CreateWorker();
+            task.LinkManager = new ImageFileManager(); 
+            task.RemoteFilePath = "";
+            new TaskManager(task).PublishData();
         }
 
         #region Translate
