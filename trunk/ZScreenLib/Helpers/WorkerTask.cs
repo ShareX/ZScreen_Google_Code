@@ -370,7 +370,7 @@ namespace ZScreenLib
 
         public string GetDescription()
         {
-            if (this.Job2 == JobLevel2.UploadFromClipboard)
+            if (this.Job2 == JobLevel2.UploadFromClipboard && this.Job3 != JobLevel3.None)
             {
                 return string.Format("{0}: {1} ({2})", this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
             }

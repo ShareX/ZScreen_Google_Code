@@ -40,6 +40,8 @@ namespace UploadersLib.HelperClasses
         /// </summary>
         public string LocalFilePath { get; set; }
 
+        public UploadResult UploadResult { get; set; }
+
         public ImageFileManager() { }
 
         public ImageFileManager(string fp)
@@ -59,6 +61,22 @@ namespace UploadersLib.HelperClasses
             {
                 this.ImageFileList = list;
                 this.Source = list[0].Source;
+            }
+        }
+
+        public void StoreUploadResult(UploadResult ur)
+        {
+            if (!string.IsNullOrEmpty(ur.URL))
+            {
+                ImageFileList.Add(new ImageFile(ur.URL, LinkType.FULLIMAGE));
+            }
+            if (!string.IsNullOrEmpty(ur.ThumbnailURL))
+            {
+                ImageFileList.Add(new ImageFile(ur.ThumbnailURL, LinkType.THUMBNAIL));
+            }
+            if (!string.IsNullOrEmpty(ur.DeletionURL))
+            {
+                ImageFileList.Add(new ImageFile(ur.DeletionURL, LinkType.DELETION_LINK));
             }
         }
 

@@ -346,9 +346,9 @@ namespace ZScreenLib
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 mTask.DestinationName = fileHost.Name;
                 fileHost.ProgressChanged += UploadProgressChanged;
-                UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
+                mTask.LinkManager.StoreUploadResult(fileHost.Upload(mTask.LocalFilePath));
                 mTask.Errors = fileHost.Errors;
-                mTask.RemoteFilePath = ur.URL;
+                mTask.RemoteFilePath = mTask.LinkManager.UploadResult.URL;
             }
 
             mTask.EndTime = DateTime.Now;
