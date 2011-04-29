@@ -124,10 +124,10 @@ namespace ZScreenLib
                     case JobLevel1.Images:
                         sbMsg.Append(task.MyImageUploader.GetDescription());
                         break;
-                    case JobLevel1.TEXT:
+                    case JobLevel1.Text:
                         sbMsg.Append(task.MyTextUploader.ToString());
                         break;
-                    case JobLevel1.NonImages:
+                    case JobLevel1.Binary:
                         sbMsg.Append(Path.GetFileName(task.LocalFilePath));
                         sbMsg.Append(" to ");
                         sbMsg.Append(task.MyFileUploader.GetDescription());

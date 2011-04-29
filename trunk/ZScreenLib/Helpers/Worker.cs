@@ -72,7 +72,7 @@ namespace ZScreenLib
             switch (task.Job1)
             {
                 case JobLevel1.Images:
-                case JobLevel1.NonImages:
+                case JobLevel1.Binary:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -97,7 +97,7 @@ namespace ZScreenLib
                     }
 
                     break;
-                case JobLevel1.TEXT:
+                case JobLevel1.Text:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
@@ -107,14 +107,13 @@ namespace ZScreenLib
                             // LanguageTranslator(ref task);
                             break;
                     }
-
                     break;
             }
 
             if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
             {
                 if (Engine.conf.AddFailedScreenshot ||
-                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
+                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.Text))
                 {
                     task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
                 }
@@ -249,7 +248,7 @@ namespace ZScreenLib
         public virtual WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.TEXT;
+            t.Job1 = JobLevel1.Text;
             // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = Engine.conf.TextUploaderType;
             if (!string.IsNullOrEmpty(localFilePath))
@@ -498,7 +497,7 @@ namespace ZScreenLib
         protected void StartWorkerBinary(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.NonImages;
+            t.Job1 = JobLevel1.Binary;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);

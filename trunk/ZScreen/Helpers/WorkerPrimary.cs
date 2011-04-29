@@ -96,7 +96,7 @@ namespace ZScreenGUI
             switch (task.Job1)
             {
                 case JobLevel1.Images:
-                case JobLevel1.NonImages:
+                case JobLevel1.Binary:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -122,7 +122,7 @@ namespace ZScreenGUI
                     }
 
                     break;
-                case JobLevel1.TEXT:
+                case JobLevel1.Text:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
@@ -267,14 +267,14 @@ namespace ZScreenGUI
                         }
                     }
 
-                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.TEXT))
+                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.Text))
                     {
                         AddHistoryItem(new HistoryItem(task));
                     }
 
                     switch (task.Job1)
                     {
-                        case JobLevel1.TEXT:
+                        case JobLevel1.Text:
                             if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && mZScreen != null)
                             {
                                 FillGoogleTranslateInfo(task.TranslationInfo);
@@ -700,7 +700,7 @@ namespace ZScreenGUI
             if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0)
             {
                 WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
-                t.Job1 = JobLevel1.TEXT;
+                t.Job1 = JobLevel1.Text;
                 mZScreen.btnTranslate.Enabled = false;
                 mZScreen.btnTranslateTo1.Enabled = false;
                 t.TranslationInfo = translationInfo;
