@@ -68,7 +68,6 @@ namespace ZScreenGUI
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
-        private ThumbnailCacher thumbnailCacher;
 
         #endregion Variables
 
@@ -301,7 +300,6 @@ namespace ZScreenGUI
             StartDebug();
 
             SetToolTip(nudScreenshotDelay);
-            FillClipboardCopyMenu();
             FillClipboardMenu();
 
             CreateCodesMenu();
@@ -310,11 +308,6 @@ namespace ZScreenGUI
 
             turnLogo = new ZScreenLib.ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
             turnLogo.ImageTurned += new ZScreenLib.ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
-
-            thumbnailCacher = new ThumbnailCacher(pbPreview, new Size(450, 230), 10)
-            {
-                LoadingImage = Resources.ajax_loader
-            };
 
             niTray.Visible = true;
             // Loader.Splash.Close();
@@ -632,7 +625,6 @@ namespace ZScreenGUI
             Engine.conf.WindowState = this.WindowState;
             Engine.conf.Write();
             FileSystem.AppendDebug("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
-            Loader.Worker.SaveHistoryItems();
         }
 
         private void RewriteImageEditorsRightClickMenu()
@@ -759,27 +751,6 @@ namespace ZScreenGUI
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             lbImageUploader.SelectedIndex = (int)tsm.Tag;
-        }
-
-        private void FillClipboardCopyMenu()
-        {
-            tsmCopyCbHistory.DropDownDirection = ToolStripDropDownDirection.Right;
-            tsmCopyCbHistory.DropDownItems.Clear();
-
-            ToolStripMenuItem tsm;
-            int x = 0;
-            foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
-            {
-                tsm = new ToolStripMenuItem { Tag = x++, Text = cui.GetDescription() };
-                tsm.Click += clipboardCopyHistory_Click;
-                tsmCopyCbHistory.DropDownItems.Add(tsm);
-            }
-        }
-
-        private void clipboardCopyHistory_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            SetClipboardFromHistory((ClipboardUriType)tsm.Tag);
         }
 
         private void FillClipboardMenu()
@@ -1755,181 +1726,6 @@ namespace ZScreenGUI
             Process.Start(e.LinkText);
         }
 
-        private void SetClipboardFromHistory(ClipboardUriType type)
-        {
-            if (lbHistory.SelectedIndex != -1)
-            {
-                List<string> listUrls = new List<string>();
-                for (int i = 0; i < lbHistory.SelectedItems.Count; i++)
-                {
-                    HistoryItem hi = (HistoryItem)lbHistory.SelectedItems[i];
-                    string url = string.Empty;
-                    if (hi.ScreenshotManager != null)
-                    {
-                        url = hi.ScreenshotManager.GetUrlByType(type);
-                        if (!string.IsNullOrEmpty(url))
-                        {
-                            listUrls.Add(url);
-                        }
-                    }
-                    if (0 == listUrls.Count && type == ClipboardUriType.FULL_TINYURL)
-                    {
-                        url = Adapter.ShortenURL(hi.RemotePath);
-                        if (!string.IsNullOrEmpty(url))
-                        {
-                            listUrls.Add(url);
-                        }
-                    }
-                }
-
-                if (listUrls.Count > 0)
-                {
-                    if (Engine.conf.HistoryReverseList)
-                    {
-                        listUrls.Reverse();
-                    }
-
-                    StringBuilder sb = new StringBuilder();
-                    if (Engine.conf.HistoryAddSpace)
-                    {
-                        sb.AppendLine();
-                    }
-
-                    for (int i = 0; i < listUrls.Count; i++)
-                    {
-                        sb.Append(listUrls[i]);
-                        if (i < lbHistory.SelectedItems.Count - 1)
-                        {
-                            sb.AppendLine();
-                        }
-                    }
-
-                    string result = sb.ToString();
-                    if (!string.IsNullOrEmpty(result))
-                    {
-                        Clipboard.SetText(result); // ok - user
-                    }
-                }
-            }
-        }
-
-        private void lbHistory_DoubleClick(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedIndex > -1)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    Process.Start(((HistoryItem)lbHistory.SelectedItem).RemotePath);
-                }
-            }
-        }
-
-        private void lbHistory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedIndex > -1)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-
-                if (hi != null)
-                {
-                    bool checkLocal = !string.IsNullOrEmpty(hi.LocalPath) && File.Exists(hi.LocalPath);
-                    bool checkRemote = !string.IsNullOrEmpty(hi.RemotePath);
-                    bool checkImage = FileSystem.IsValidImageFile(hi.LocalPath); //GraphicsMgr.IsValidImage(hi.LocalPath);
-                    bool checkText = FileSystem.IsValidTextFile(hi.LocalPath);
-                    bool checkWebpage = FileSystem.IsValidWebpageFile(hi.LocalPath) || (checkImage && Engine.conf.PreferBrowserForImages) ||
-                        (checkText && Engine.conf.PreferBrowserForText);
-                    bool checkBinary = !checkImage && !checkText && !checkWebpage;
-
-                    historyBrowser.Visible = checkWebpage;
-                    pbPreview.Visible = checkImage || (!checkText && checkRemote) && !checkWebpage || checkBinary;
-                    txtPreview.Visible = checkText && !checkWebpage;
-
-                    tsmCopyCbHistory.Enabled = checkRemote;
-                    cmsHistory.Enabled = checkLocal;
-
-                    tsmCopyCbHistory.Enabled = browseURLToolStripMenuItem.Enabled = checkRemote;
-                    copyImageToolStripMenuItem.Enabled = openLocalFileToolStripMenuItem.Enabled = deleteToolStripMenuItem.Enabled = checkLocal;
-                    openSourceToolStripMenuItem.Enabled = hi.ScreenshotManager != null;
-
-                    btnHistoryCopyLink.Enabled = checkRemote;
-                    btnHistoryBrowseURL.Enabled = checkRemote;
-                    btnHistoryOpenLocalFile.Enabled = checkLocal;
-                    btnHistoryCopyImage.Enabled = checkImage;
-
-                    if (checkWebpage)
-                    {
-                        // preview text from remote path because otherwise Notepad is gonna open
-                        string url = (checkText ? (checkRemote ? hi.RemotePath : hi.LocalPath) : hi.LocalPath);
-                        historyBrowser.Navigate(url);
-                    }
-                    else if (checkImage)
-                    {
-                        if (checkLocal)
-                        {
-                            thumbnailCacher.LoadImage(hi.LocalPath);
-                        }
-                        else if (checkRemote)
-                        {
-                            thumbnailCacher.LoadImage(hi.RemotePath);
-                        }
-                    }
-                    else if (checkText)
-                    {
-                        txtPreview.Text = File.ReadAllText(hi.LocalPath);
-                    }
-                    else if (checkBinary)
-                    {
-                        pbPreview.Image = Resources.explorer;
-                    }
-
-                    txtHistoryLocalPath.Text = hi.LocalPath;
-                    txtHistoryRemotePath.Text = hi.RemotePath;
-                    lblHistoryScreenshot.Text = hi.Description;
-                }
-
-                if (Engine.conf.HistoryShowTooltips && hi != null)
-                {
-                    ttZScreen.SetToolTip(lbHistory, hi.GetStatistics());
-                    ttZScreen.SetToolTip(pbPreview, hi.GetStatistics());
-                }
-            }
-        }
-
-        private void btnScreenshotOpen_Click(object sender, EventArgs e)
-        {
-            OpenLocalFile();
-        }
-
-        private void OpenLocalFile()
-        {
-            if (lbHistory.SelectedItem != null)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (File.Exists(hi.LocalPath))
-                {
-                    Process.Start(hi.LocalPath);
-                }
-            }
-        }
-
-        private void OpenRemoteFile()
-        {
-            if (lbHistory.SelectedItem != null)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    Process.Start(hi.RemotePath);
-                }
-            }
-        }
-
-        private void btnScreenshotBrowse_Click(object sender, EventArgs e)
-        {
-            OpenRemoteFile();
-        }
-
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.WatermarkText = txtWatermarkText.Text;
@@ -2146,96 +1942,6 @@ namespace ZScreenGUI
             TestWatermark();
         }
 
-        private void CopyImageFromHistory()
-        {
-            if (lbHistory.SelectedIndex != -1)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.LocalPath))
-                {
-                    using (Image img = GraphicsMgr.GetImageSafely(hi.LocalPath))
-                    {
-                        if (img != null)
-                        {
-                            using (Image img2 = ImageEffects.FillBackground(img, Engine.conf.ClipboardBackgroundColor))
-                            {
-                                try
-                                {
-                                    Clipboard.SetImage(img2); // ok
-                                }
-                                catch (Exception ex)
-                                {
-                                    FileSystem.AppendDebug("Error while copying image to clipboard", ex);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void CopyLinkFromHistory()
-        {
-            if (lbHistory.SelectedIndex != -1)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    Clipboard.SetText(hi.RemotePath); // ok
-                }
-            }
-        }
-
-        private void copyImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CopyImageFromHistory();
-        }
-
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DeleteHistoryFiles();
-        }
-
-        private void DeleteHistoryFiles()
-        {
-            if (lbHistory.SelectedIndex != -1)
-            {
-                StringBuilder sbFiles = new StringBuilder();
-                List<HistoryItem> temp = new List<HistoryItem>();
-                foreach (HistoryItem hi in lbHistory.SelectedItems)
-                {
-                    temp.Add(hi);
-                    sbFiles.AppendLine(hi.LocalPath);
-                }
-
-                string msg = "Are you sure you want to delete ";
-                if (temp.Count > 10)
-                {
-                    msg += temp.Count + " files?";
-                }
-                else
-                {
-                    msg += "the following files:\n\n" + sbFiles.ToString();
-                }
-
-                if (MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    foreach (HistoryItem hi in temp)
-                    {
-                        Adapter.DeleteFile(hi.LocalPath);
-                        lbHistory.Items.Remove(hi);
-                    }
-
-                    if (lbHistory.Items.Count > 0)
-                    {
-                        lbHistory.SelectedIndex = 0;
-                    }
-
-                    Loader.Worker.UpdateGuiControlsHistory();
-                }
-            }
-        }
-
         private void btnViewLocalDirectory_Click(object sender, EventArgs e)
         {
             ShowDirectory(FileSystem.GetImagesDir());
@@ -2297,16 +2003,6 @@ namespace ZScreenGUI
             codesMenu.Close();
         }
 
-        private void openLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenLocalFile();
-        }
-
-        private void browseURLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenRemoteFile();
-        }
-
         private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
@@ -2356,59 +2052,6 @@ namespace ZScreenGUI
         }
 
         #endregion Language Translator
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedItems.Count > 0)
-            {
-                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
-                if (hi != null)
-                {
-                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.TEXT);
-                }
-            }
-        }
-
-        private void openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedItems.Count > 0)
-            {
-                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
-                if (hi != null)
-                {
-                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.HTML);
-                }
-            }
-        }
-
-        private void copySourceToClipboardStringToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedItems.Count > 0)
-            {
-                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
-                if (hi != null)
-                {
-                    OpenSource(hi.ScreenshotManager, ImageFileManager.SourceType.STRING);
-                }
-            }
-        }
-
-        private void cmsRetryUpload_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.HistoryRetryUpload((HistoryItem)lbHistory.SelectedItem);
-        }
-
-        private void pbHistoryThumb_Click(object sender, EventArgs e)
-        {
-            HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-            if (hi != null && File.Exists(hi.LocalPath) && GraphicsMgr.IsValidImage(hi.LocalPath))
-            {
-                using (ShowScreenshot sc = new ShowScreenshot(Image.FromFile(hi.LocalPath)))
-                {
-                    sc.ShowDialog();
-                }
-            }
-        }
 
         private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
         {
@@ -2814,40 +2457,14 @@ namespace ZScreenGUI
             Engine.conf.CropShowGrids = cbCropShowGrids.Checked;
         }
 
-        private void cbAddSpace_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.HistoryAddSpace = cbHistoryAddSpace.Checked;
-        }
-
-        private void cbReverse_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.HistoryReverseList = cbHistoryReverseList.Checked;
-        }
-
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
             Engine.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
-            if (mGuiIsReady)
-            {
-                Loader.Worker.CheckHistoryItems();
-                Loader.Worker.SaveHistoryItems();
-            }
         }
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CloseDropBox = cbCloseDropBox.Checked;
-        }
-
-        private void btnHistoryClear_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Do you really want to clear the History List?", this.Text, MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                lbHistory.Items.Clear();
-                Loader.Worker.CheckHistoryItems();
-                Loader.Worker.SaveHistoryItems();
-            }
         }
 
         private void tsmQuickActions_Click(object sender, EventArgs e)
@@ -2863,37 +2480,6 @@ namespace ZScreenGUI
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
             Engine.conf.AutoIncrement = 0;
-        }
-
-        private void btnImageCopy_Click(object sender, EventArgs e)
-        {
-            CopyImageFromHistory();
-        }
-
-        private void lbHistory_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.A)
-            {
-                for (int i = lbHistory.Items.Count - 1; i >= 0; i--)
-                {
-                    lbHistory.SetSelected(i, true);
-                }
-            }
-            else if (e.KeyCode == Keys.Delete)
-            {
-                DeleteHistoryFiles();
-            }
-        }
-
-        private void btnCopyLink_Click(object sender, EventArgs e)
-        {
-            CopyLinkFromHistory();
-        }
-
-        private void cbHistoryListFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.HistoryListFormat = (HistoryListFormat)cbHistoryListFormat.SelectedIndex;
-            // LoadHistoryItems();
         }
 
         private void cbShowHistoryTooltip_CheckedChanged(object sender, EventArgs e)
@@ -3893,19 +3479,6 @@ namespace ZScreenGUI
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
-        private void tsmiTwitter_Click(object sender, EventArgs e)
-        {
-            if (lbHistory.SelectedItem != null)
-            {
-                HistoryItem hi = lbHistory.SelectedItem as HistoryItem;
-                if (hi != null && !string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    string url = Adapter.ShortenURL(hi.RemotePath);
-                    Adapter.TwitterMsg(string.IsNullOrEmpty(url) ? hi.RemotePath : url);
-                }
-            }
-        }
-
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
             Process.Start("http://code.google.com/p/zscreen/wiki/FTPAccounts");
@@ -4148,15 +3721,10 @@ namespace ZScreenGUI
 
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lbHistory.SelectedItem != null)
-            {
-                HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
-                if (!string.IsNullOrEmpty(hi.RemotePath))
-                {
-                    Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
-                        HttpUtility.UrlEncode(hi.RemotePath), Engine.PicnikKey));
-                }
-            }
+
+            // TODO: Edit in Picnik in the new Hustory
+            //Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
+            //                    HttpUtility.UrlEncode(hi.RemotePath), Engine.PicnikKey));
         }
 
         private void cbFreehandCropShowHelpText_CheckedChanged(object sender, EventArgs e)
@@ -4385,6 +3953,11 @@ namespace ZScreenGUI
                     MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnHistoryOpen_Click(object sender, EventArgs e)
+        {
+            new HistoryLib.HistoryForm(Engine.HistoryDbPath, Engine.conf.HistoryMaxNumber, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
     }
 }

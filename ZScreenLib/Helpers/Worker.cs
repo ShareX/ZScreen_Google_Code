@@ -71,8 +71,8 @@ namespace ZScreenLib
 
             switch (task.Job1)
             {
-                case JobLevel1.Images:
-                case JobLevel1.Binary:
+                case JobLevel1.Image:
+                case JobLevel1.File:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -108,15 +108,6 @@ namespace ZScreenLib
                             break;
                     }
                     break;
-            }
-
-            if (!string.IsNullOrEmpty(task.LocalFilePath) && File.Exists(task.LocalFilePath))
-            {
-                if (Engine.conf.AddFailedScreenshot ||
-                    (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.Text))
-                {
-                    task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX, new HistoryItem(task));
-                }
             }
 
             e.Result = task;
@@ -190,7 +181,7 @@ namespace ZScreenLib
                 {
                     ClipboardManager.SetClipboard(task, false);
                 }
-
+       
                 if (task.Errors.Count > 0)
                 {
                     foreach (var error in task.Errors)
@@ -533,7 +524,7 @@ namespace ZScreenLib
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
 
-                    if (task.Job1 == JobLevel1.Images)
+                    if (task.Job1 == JobLevel1.Image)
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {

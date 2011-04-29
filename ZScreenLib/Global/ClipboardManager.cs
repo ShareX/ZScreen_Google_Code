@@ -109,7 +109,7 @@ namespace ZScreenLib
             {
                 switch (task.Job1)
                 {
-                    case JobLevel1.Images:
+                    case JobLevel1.Image:
                         LinkMgr = task.LinkManager;
                         if (Engine.conf.ShowClipboardModeChooser || showDialog)
                         {
@@ -134,7 +134,7 @@ namespace ZScreenLib
                         }
                         break;
 
-                    case JobLevel1.Binary:
+                    case JobLevel1.File:
                         clipboardText = task.RemoteFilePath;
                         break;
 

@@ -236,6 +236,10 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
+      <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
+      <Name>HistoryLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
       <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
       <Name>ZScreenTesterGUI</Name>

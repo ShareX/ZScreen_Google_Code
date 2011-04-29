@@ -248,7 +248,7 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-            if (mTask.Job1 == JobLevel1.Binary)
+            if (mTask.Job1 == JobLevel1.File)
             {
                 UploadFile();
             }
@@ -752,6 +752,7 @@ namespace ZScreenLib
                     }
 
                     mTask.RemoteFilePath = url;
+                    mTask.LinkManager.UploadResult.URL = url;
                     mTask.Errors = textUploader.Errors;
                 }
             }

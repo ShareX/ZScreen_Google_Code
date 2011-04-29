@@ -195,8 +195,6 @@
     <Compile Include="Helpers\ExeFileNameEditor.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\Freeze.cs" />
-    <Compile Include="Helpers\HistoryItem.cs" />
-    <Compile Include="Helpers\HistoryManager.cs" />
     <Compile Include="Helpers\IECapt.cs" />
     <Compile Include="Helpers\MyTimer.cs" />
     <Compile Include="Helpers\Software.cs" />
@@ -237,6 +235,10 @@
     <ProjectReference Include="..\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>ZSS.GraphicsManagerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
+      <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
+      <Name>HistoryLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\ZSS.GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>

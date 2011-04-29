@@ -301,8 +301,6 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_History()
         {
             nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
-
-            Loader.Worker2.LoadHistoryItems();
         }
 
         private void ZScreen_ConfigGUI_Hotkeys()

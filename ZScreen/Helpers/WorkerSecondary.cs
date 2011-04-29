@@ -103,53 +103,6 @@ namespace ZScreenGUI
 
         #endregion Cache Cleaner Methods
 
-        #region History Reader
-
-        public void LoadHistoryItems()
-        {
-            mZScreen.cbHistorySave.Checked = Engine.conf.HistorySave;
-            if (mZScreen.cbHistoryListFormat.Items.Count == 0)
-            {
-                mZScreen.cbHistoryListFormat.Items.AddRange(typeof(HistoryListFormat).GetDescriptions());
-            }
-
-            mZScreen.cbHistoryListFormat.SelectedIndex = (int)Engine.conf.HistoryListFormat;
-            mZScreen.cbShowHistoryTooltip.Checked = Engine.conf.HistoryShowTooltips;
-            mZScreen.cbHistoryAddSpace.Checked = Engine.conf.HistoryAddSpace;
-            mZScreen.cbHistoryReverseList.Checked = Engine.conf.HistoryReverseList;
-
-            BackgroundWorker bwHistoryReader = new BackgroundWorker();
-            bwHistoryReader.DoWork += new DoWorkEventHandler(bwHistoryReader_DoWork);
-            bwHistoryReader.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwHistoryReader_RunWorkerCompleted);
-            bwHistoryReader.RunWorkerAsync();
-        }
-
-        private void bwHistoryReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            HistoryManager history = (HistoryManager)e.Result;
-
-            mZScreen.lbHistory.Items.Clear();
-
-            for (int i = 0; i < history.HistoryItems.Count && i < Engine.conf.HistoryMaxNumber; i++)
-            {
-                mZScreen.lbHistory.Items.Add(history.HistoryItems[i]);
-            }
-
-            if (mZScreen.lbHistory.Items.Count > 0)
-            {
-                mZScreen.lbHistory.SelectedIndex = 0;
-            }
-
-            Loader.Worker.UpdateGuiControlsHistory();
-        }
-
-        private void bwHistoryReader_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result = HistoryManager.Read();
-        }
-
-        #endregion History Reader
-
         public void PerformOnlineTasks()
         {
             BackgroundWorker bwOnlineWorker = new BackgroundWorker();

@@ -88,7 +88,6 @@ namespace ZScreenLib
 
         public enum ProgressType : int
         {
-            ADD_FILE_TO_LISTBOX,
             COPY_TO_CLIPBOARD_IMAGE, // needed only for the feature CopyImageUntilURL
             FLASH_ICON,
             INCREMENT_PROGRESS,
@@ -170,7 +169,9 @@ namespace ZScreenLib
             set
             {
                 if (!string.IsNullOrEmpty(value))
+                {
                     urlRemote = value;
+                }
             }
         }
 
@@ -235,7 +236,7 @@ namespace ZScreenLib
         {
             FileSystem.AppendDebug(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
             this.MyImage = img;
-            this.Job1 = JobLevel1.Images;
+            this.Job1 = JobLevel1.Image;
             if (Engine.conf.CopyImageUntilURL)
             {
                 // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
@@ -333,6 +334,21 @@ namespace ZScreenLib
             }
         }
 
+        public HistoryLib.HistoryItem GenerateHistoryItem()
+        {
+            HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
+            hi.DateTimeUtc = this.EndTime;
+            hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
+            hi.Filename = this.FileName;
+            hi.Filepath = this.LocalFilePath;
+            hi.Host = this.GetDestinationName();
+            hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
+            hi.Type = this.Job1.GetDescription();
+            hi.URL = this.LinkManager.UploadResult.URL; 
+            
+            return hi;
+        }
+
         public string GetDestinationName()
         {
             string destName = this.DestinationName;
@@ -340,7 +356,7 @@ namespace ZScreenLib
             {
                 switch (Job1)
                 {
-                    case JobLevel1.Images:
+                    case JobLevel1.Image:
                         destName = this.MyImageUploader.GetDescription();
                         break;
                     case JobLevel1.Text:
@@ -354,7 +370,7 @@ namespace ZScreenLib
                                 break;
                         }
                         break;
-                    case JobLevel1.Binary:
+                    case JobLevel1.File:
                         destName = this.MyFileUploader.GetDescription();
                         break;
                 }
@@ -426,12 +442,12 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Images && MyImageUploader == ImageUploaderType.CLIPBOARD;
+            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD;
         }
 
         public bool WasImageToFile()
         {
-            return Job1 == JobLevel1.Images && MyImageUploader == ImageUploaderType.FILE;
+            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
         }
 
         public string ToErrorString()
