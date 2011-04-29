@@ -324,7 +324,7 @@ namespace ZScreenGUI
                         //  Adapter.TwitterMsg(task);
                     }
 
-                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.Source))
+                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.Source))
                     {
                         mZScreen.btnOpenSourceText.Enabled = true;
                         mZScreen.btnOpenSourceBrowser.Enabled = true;
@@ -848,7 +848,7 @@ namespace ZScreenGUI
         {
             task.Errors.Clear();
             task.MyWorker = CreateWorker();
-            task.LinkManager = new ImageFileManager();
+            task.LinkManager = new ImageFileManager(task.LocalFilePath);
             task.RemoteFilePath = "";
             new TaskManager(task).PublishData();
         }
