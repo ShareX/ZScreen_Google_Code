@@ -71,8 +71,8 @@ namespace ZScreenLib
 
             switch (task.Job1)
             {
-                case JobLevel1.IMAGES:
-                case JobLevel1.BINARY:
+                case JobLevel1.Images:
+                case JobLevel1.NonImages:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -413,7 +413,7 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask task = CreateTask(job);
-            task.Job1 = JobLevel1.IMAGES;
+            task.Job1 = JobLevel1.Images;
             task.WasToTakeScreenshot = true;
             task.MakeTinyURL = Adapter.MakeTinyURL();
             task.MyWorker.RunWorkerAsync(task);
@@ -427,7 +427,7 @@ namespace ZScreenLib
         public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
             Engine.ClipboardUnhook();
-            task.Job1 = JobLevel1.IMAGES;
+            task.Job1 = JobLevel1.Images;
             task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
             task.MakeTinyURL = Adapter.MakeTinyURL();
@@ -438,7 +438,7 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.IMAGES;
+            t.Job1 = JobLevel1.Images;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
             new TaskManager(t).WriteImage();
@@ -498,7 +498,7 @@ namespace ZScreenLib
         protected void StartWorkerBinary(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.BINARY;
+            t.Job1 = JobLevel1.NonImages;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
@@ -539,7 +539,7 @@ namespace ZScreenLib
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
 
-                    if (task.Job1 == JobLevel1.IMAGES)
+                    if (task.Job1 == JobLevel1.Images)
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {

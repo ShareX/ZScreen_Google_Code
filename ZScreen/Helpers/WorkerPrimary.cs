@@ -83,7 +83,7 @@ namespace ZScreenGUI
                 return;
             }
 
-            if (task.Job1 == JobLevel1.IMAGES)
+            if (task.Job1 == JobLevel1.Images)
             {
                 if (Engine.conf.ScreenshotDelayTime != 0)
                 {
@@ -95,8 +95,8 @@ namespace ZScreenGUI
 
             switch (task.Job1)
             {
-                case JobLevel1.IMAGES:
-                case JobLevel1.BINARY:
+                case JobLevel1.Images:
+                case JobLevel1.NonImages:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -283,7 +283,7 @@ namespace ZScreenGUI
                                 mZScreen.btnTranslateTo1.Enabled = true;
                             }
                             break;
-                        case JobLevel1.IMAGES:
+                        case JobLevel1.Images:
                             if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
                             {
                                 if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))

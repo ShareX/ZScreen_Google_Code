@@ -76,6 +76,8 @@ namespace ZScreenLib
 
         public enum JobLevel3
         {
+            [Description("None")]
+            None,
             [Description("Upload Text")]
             UploadText,
             [Description("Shorten URL")]
@@ -213,8 +215,7 @@ namespace ZScreenLib
 
         public WorkerTask()
         {
-            this.Errors = new List<string>();
-            
+            this.Errors = new List<string>();            
         }
 
         public WorkerTask(JobLevel2 job)
@@ -338,7 +339,7 @@ namespace ZScreenLib
             {
                 switch (Job1)
                 {
-                    case JobLevel1.IMAGES:
+                    case JobLevel1.Images:
                         destName = this.MyImageUploader.GetDescription();
                         break;
                     case JobLevel1.TEXT:
@@ -352,7 +353,7 @@ namespace ZScreenLib
                                 break;
                         }
                         break;
-                    case JobLevel1.BINARY:
+                    case JobLevel1.NonImages:
                         destName = this.MyFileUploader.GetDescription();
                         break;
                 }
@@ -424,17 +425,12 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.IMAGES && MyImageUploader == ImageUploaderType.CLIPBOARD;
+            return Job1 == JobLevel1.Images && MyImageUploader == ImageUploaderType.CLIPBOARD;
         }
 
         public bool WasImageToFile()
         {
-            return Job1 == JobLevel1.IMAGES && MyImageUploader == ImageUploaderType.FILE;
-        }
-
-        public bool WasBinaryUpload()
-        {
-            return Job1 == JobLevel1.BINARY && !string.IsNullOrEmpty(RemoteFilePath);
+            return Job1 == JobLevel1.Images && MyImageUploader == ImageUploaderType.FILE;
         }
 
         public string ToErrorString()

@@ -37,9 +37,9 @@ namespace ZScreenLib
     /// </summary>
     public enum JobLevel1
     {
-        IMAGES,
+        Images,
         TEXT,
-        BINARY
+        NonImages
     }
 
     public enum CaptureType

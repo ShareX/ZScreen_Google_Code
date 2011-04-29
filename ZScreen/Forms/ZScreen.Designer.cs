@@ -4897,7 +4897,7 @@ namespace ZScreenGUI
             // tcImages
             // 
             this.tcImages.Controls.Add(this.tpImageUploaders);
-            this.tcImages.Controls.Add(this.tpCustomUploaders);
+            this.tcDestinations.Controls.Add(this.tpCustomUploaders);
             this.tcImages.Controls.Add(this.tpWebPageUpload);
             this.tcImages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcImages.ImageList = this.ilApp;
@@ -5072,7 +5072,7 @@ namespace ZScreenGUI
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
             this.tpCustomUploaders.Size = new System.Drawing.Size(791, 402);
             this.tpCustomUploaders.TabIndex = 11;
-            this.tpCustomUploaders.Text = "Custom Image Uploaders";
+            this.tpCustomUploaders.Text = "Custom";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
             // 
             // txtUploadersLog
