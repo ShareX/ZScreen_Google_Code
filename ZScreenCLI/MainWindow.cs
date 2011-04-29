@@ -110,14 +110,14 @@ namespace ZScreenCLI
 
         private void tmrClose_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("UploadInfoList: " + UploadManager.UploadInfoList.Count);
+            Console.WriteLine("UploadInfoList: " + ClipboardManager.UploadInfoList.Count);
             Console.WriteLine("OpenForms: " + Application.OpenForms.Count);
             if (null != mWorker)
             {
                 Console.WriteLine("WorkerIsBusy: " + mWorker.IsBusy);
             }
 
-            if (0 == UploadManager.UploadInfoList.Count && 1 == Application.OpenForms.Count && null != mWorker && !mWorker.IsBusy)
+            if (0 == ClipboardManager.UploadInfoList.Count && 1 == Application.OpenForms.Count && null != mWorker && !mWorker.IsBusy)
             {
                 this.Close();
             }

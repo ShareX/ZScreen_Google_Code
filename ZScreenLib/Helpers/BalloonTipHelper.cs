@@ -157,7 +157,7 @@ namespace ZScreenLib
                         cbString = task.TranslationInfo.Result;
                         if (!string.IsNullOrEmpty(cbString))
                         {
-                            Clipboard.SetText(cbString);
+                            Clipboard.SetText(cbString); // ok
                         }
                         break;
                     default:

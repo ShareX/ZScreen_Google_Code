@@ -87,7 +87,7 @@ namespace ZScreenLib
         public enum ProgressType : int
         {
             ADD_FILE_TO_LISTBOX,
-            COPY_TO_CLIPBOARD_IMAGE,
+            COPY_TO_CLIPBOARD_IMAGE, // needed only for the feature CopyImageUntilURL
             FLASH_ICON,
             INCREMENT_PROGRESS,
             SET_ICON_BUSY,

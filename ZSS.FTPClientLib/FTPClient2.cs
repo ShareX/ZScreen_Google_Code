@@ -541,7 +541,7 @@ namespace ZSS.FTPClientLib
 
             if (!string.IsNullOrEmpty(clipboard))
             {
-                Clipboard.SetText(clipboard);
+                Clipboard.SetText(clipboard); // ok
             }
         }
 

@@ -66,7 +66,7 @@ namespace ZScreenLib
         public virtual void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
-            task.UniqueNumber = UploadManager.Queue();
+            task.UniqueNumber = ClipboardManager.Queue();
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
 
             switch (task.Job1)
@@ -152,26 +152,6 @@ namespace ZScreenLib
 
                 switch (task.Job1)
                 {
-                    case JobLevel1.BINARY:
-                        if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                        {
-                            Clipboard.SetText(task.RemoteFilePath);
-                        }
-
-                        break;
-                    case JobLevel1.TEXT:
-                        switch (task.Job2)
-                        {
-                            case WorkerTask.JobLevel2.UploadFromClipboard:
-                                if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                {
-                                    Clipboard.SetText(task.RemoteFilePath);
-                                }
-
-                                break;
-                        }
-
-                        break;
                     case JobLevel1.SCREENSHOTS:
                         if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                         {
@@ -184,17 +164,11 @@ namespace ZScreenLib
                                 FileSystem.AppendDebug("Error while finalizing job", ex);
                             }
                         }
-
                         break;
                 }
 
-                if (task.Job1 != JobLevel1.TEXT)
-                {
-                    UploadManager.SetClipboardText(task, false);
-                }
-
                 this.GUI.niTray.Text = this.GUI.Text;
-                if (UploadManager.UploadInfoList.Count > 1)
+                if (ClipboardManager.UploadInfoList.Count > 1)
                 {
                     this.GUI.niTray.Icon = Resources.zss_busy;
                 }
@@ -216,6 +190,11 @@ namespace ZScreenLib
                     }
                 }
 
+                if (Engine.conf.CopyClipboardAfterTask)
+                {
+                    ClipboardManager.SetClipboard(task, false);
+                }
+
                 if (task.Errors.Count > 0)
                 {
                     foreach (var error in task.Errors)
@@ -234,7 +213,7 @@ namespace ZScreenLib
             }
             finally
             {
-                UploadManager.Commit(task.UniqueNumber);
+                ClipboardManager.Commit(task.UniqueNumber);
                 this.IsBusy = false;
             }
         }

@@ -59,7 +59,7 @@ namespace ZScreenGUI.UserControls
                 string text = rtb.Lines[line];
                 if (!string.IsNullOrEmpty(text))
                 {
-                    Clipboard.SetText(text);
+                    Clipboard.SetText(text); // ok
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace ZScreenGUI.UserControls
             string text = new StreamReader(stream).ReadToEnd();
             if (!string.IsNullOrEmpty(text))
             {
-                Clipboard.SetText(text);
+                Clipboard.SetText(text); // ok
             }
         }
 

@@ -95,7 +95,7 @@ namespace ZScreenLib
 
             if (!string.IsNullOrEmpty(str))
             {
-                Clipboard.SetText(str);
+                Clipboard.SetText(str); // ok
             }
         }
 

@@ -70,7 +70,7 @@ namespace ZScreenGUI
         {
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
-            task.UniqueNumber = UploadManager.Queue();
+            task.UniqueNumber = ClipboardManager.Queue();
 
             if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
                 task.MyImageUploader != ImageUploaderType.FILE &&
@@ -211,7 +211,7 @@ namespace ZScreenGUI
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(progress);
-                    mZScreen.Text = string.Format("{0}% - {1}", UploadManager.GetAverageProgress(), Engine.GetProductName());
+                    mZScreen.Text = string.Format("{0}% - {1}", ClipboardManager.GetAverageProgress(), Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UpdateProxy:
                     // TODO: Proxy
@@ -316,7 +316,7 @@ namespace ZScreenGUI
 
                     if (Engine.conf.CopyClipboardAfterTask)
                     {
-                        UploadManager.SetClipboardText(task, false);
+                        ClipboardManager.SetClipboard(task, false);
                     }
 
                     // TODO: Twitter Msg
@@ -332,7 +332,7 @@ namespace ZScreenGUI
                         mZScreen.btnOpenSourceString.Enabled = true;
                     }
 
-                    if (UploadManager.UploadInfoList.Count > 1)
+                    if (ClipboardManager.UploadInfoList.Count > 1)
                     {
                         mZScreen.niTray.Icon = Resources.zss_busy;
                     }
@@ -377,7 +377,7 @@ namespace ZScreenGUI
             }
             finally
             {
-                UploadManager.Commit(task.UniqueNumber);
+                ClipboardManager.Commit(task.UniqueNumber);
 
                 if (CoreHelpers.RunningOnWin7)
                 {

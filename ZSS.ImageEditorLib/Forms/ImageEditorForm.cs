@@ -710,7 +710,7 @@ namespace Greenshot
 
         private void CopyPathMenuItemClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(lastSaveFullPath);
+            Clipboard.SetText(lastSaveFullPath); // ok
         }
 
         private void OpenDirectoryMenuItemClick(object sender, EventArgs e)
