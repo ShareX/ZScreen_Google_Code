@@ -412,7 +412,7 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(url))
             {
                 WorkerTask task = new WorkerTask();
-                task.MyText = url;
+                task.SetText(url);
                 TaskManager tm = new TaskManager(task);
                 tm.ShortenURL();
                 return task.RemoteFilePath;

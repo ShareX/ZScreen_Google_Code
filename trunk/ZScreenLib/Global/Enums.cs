@@ -37,9 +37,9 @@ namespace ZScreenLib
     /// </summary>
     public enum JobLevel1
     {
+        Binary, // important to have this listed first as this must be the default unless otherwise specified
         Images,
-        Text,
-        Binary
+        Text
     }
 
     public enum CaptureType

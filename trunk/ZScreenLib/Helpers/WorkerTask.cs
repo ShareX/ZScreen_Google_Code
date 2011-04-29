@@ -109,7 +109,7 @@ namespace ZScreenLib
 
         public BackgroundWorker MyWorker { get; set; }
         public bool WasToTakeScreenshot { get; set; }
-        public JobLevel1 Job1 { get; set; }
+        public JobLevel1 Job1 { get; private set; }
         /// <summary>
         /// Entire Screen, Active Window, Selected Window, Crop Shot...
         /// </summary>
@@ -197,7 +197,7 @@ namespace ZScreenLib
 
         #region Properties for Category: Text
 
-        public string MyText { get; set; }
+        public string MyText { get; private set; }
 
         public GoogleTranslateInfo TranslationInfo { get; set; }
 
@@ -215,7 +215,7 @@ namespace ZScreenLib
 
         public WorkerTask()
         {
-            this.Errors = new List<string>();            
+            this.Errors = new List<string>();
         }
 
         public WorkerTask(JobLevel2 job)
@@ -241,6 +241,7 @@ namespace ZScreenLib
         {
             FileSystem.AppendDebug(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
             this.MyImage = img;
+            this.Job1 = JobLevel1.Images;
             if (Engine.conf.CopyImageUntilURL)
             {
                 // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
@@ -250,7 +251,13 @@ namespace ZScreenLib
 
         public void SetImage(string fp)
         {
-            this.MyImage = GraphicsMgr.GetImageSafely(fp);
+            SetImage(GraphicsMgr.GetImageSafely(fp));
+        }
+
+        public void SetText(string text)
+        {
+            this.Job1 = JobLevel1.Text;
+            this.MyText = text;
         }
 
         /// <summary>
@@ -365,12 +372,12 @@ namespace ZScreenLib
         {
             if (this.Job2 == JobLevel2.UploadFromClipboard)
             {
-                return string.Format("{0}: {1} ({2})",this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
+                return string.Format("{0}: {1} ({2})", this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
             }
             else
             {
                 return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
-            }            
+            }
         }
 
         /// <summary>

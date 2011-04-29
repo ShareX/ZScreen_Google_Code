@@ -148,7 +148,7 @@ namespace ZScreenLib
                 FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
                 WorkerTask checkTask = RetryUpload(task);
 
-                if (task.WasToTakeScreenshot )
+                if (task.WasToTakeScreenshot)
                 {
                     if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                     {
@@ -248,7 +248,6 @@ namespace ZScreenLib
         public virtual WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.Text;
             // t.MakeTinyURL = Program.MakeTinyURL();
             t.MyTextUploader = Engine.conf.TextUploaderType;
             if (!string.IsNullOrEmpty(localFilePath))
@@ -309,7 +308,7 @@ namespace ZScreenLib
                 string cbText = Clipboard.GetText();
                 FileSystem.WriteText(fp, cbText);
                 temp.UpdateLocalFilePath(fp);
-                temp.MyText = cbText;
+                temp.SetText(cbText);
                 if (temp.CanShortenUrl())
                 {
                     temp.Job3 = WorkerTask.JobLevel3.ShortenURL;
@@ -391,7 +390,7 @@ namespace ZScreenLib
                 {
                     WorkerTask temp = GetWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
                     temp.UpdateLocalFilePath(fp);
-                    temp.MyText = File.ReadAllText(fp);
+                    temp.SetText(File.ReadAllText(fp));
                     textWorkers.Add(temp);
                 }
                 else
@@ -412,7 +411,6 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask task = CreateTask(job);
-            task.Job1 = JobLevel1.Images;
             task.WasToTakeScreenshot = true;
             task.MakeTinyURL = Adapter.MakeTinyURL();
             task.MyWorker.RunWorkerAsync(task);
@@ -426,7 +424,6 @@ namespace ZScreenLib
         public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
             Engine.ClipboardUnhook();
-            task.Job1 = JobLevel1.Images;
             task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
             task.MakeTinyURL = Adapter.MakeTinyURL();
@@ -437,7 +434,6 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.Images;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
             new TaskManager(t).WriteImage();
@@ -477,7 +473,7 @@ namespace ZScreenLib
                     if (indexer != null)
                     {
                         indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
-                        task.MyText = null; // force to upload from file
+                        task.SetText(null); // force to upload from file
                         task.UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
                         task.RunWorker();
                     }
@@ -497,7 +493,6 @@ namespace ZScreenLib
         protected void StartWorkerBinary(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.Binary;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
@@ -533,7 +528,6 @@ namespace ZScreenLib
                     string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
-                    task2.Job1 = task.Job1;
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
