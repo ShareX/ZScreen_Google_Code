@@ -81,7 +81,7 @@ namespace ZScreenLib
             }
         }
 
-        public string CaptureRegionOrWindow()
+        public string CaptureRegionOrWindow() // TODO: Crop cancel fix required
         {
             mTakingScreenShot = true;
             string filePath = string.Empty;
@@ -108,6 +108,16 @@ namespace ZScreenLib
                                 }
                             }
                         }
+                        else if (Engine.conf.UseCropLight && !windowMode)
+                        {
+                            using (CropLight crop = new CropLight(imgSS))
+                            {
+                                if (crop.ShowDialog() == DialogResult.OK)
+                                {
+                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
+                                }
+                            }
+                        }
                         else
                         {
                             using (Crop c = new Crop(imgSS, windowMode))
@@ -122,10 +132,6 @@ namespace ZScreenLib
                                     {
                                         mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
                                     }
-                                }
-                                else
-                                {
-                                    mTask.RetryPending = true;
                                 }
                             }
                         }
@@ -704,7 +710,7 @@ namespace ZScreenLib
             }
             else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
             {
-                // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png 
+                // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png
                 ShortenURL();
             }
             else

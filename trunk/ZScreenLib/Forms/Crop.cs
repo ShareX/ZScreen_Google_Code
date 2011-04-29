@@ -438,18 +438,15 @@ namespace ZScreenLib
 
         private void Crop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (mouseDown && e.Button == MouseButtons.Left)
             {
-                if (mouseDown)
+                if (CropRegion.Width > 0 && CropRegion.Height > 0)
                 {
-                    if (CropRegion.Width > 0 && CropRegion.Height > 0)
-                    {
-                        ReturnImageAndExit();
-                    }
-                    else
-                    {
-                        CancelAndRestart();
-                    }
+                    ReturnImageAndExit();
+                }
+                else
+                {
+                    CancelAndRestart();
                 }
             }
         }

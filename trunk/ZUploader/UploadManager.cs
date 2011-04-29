@@ -62,7 +62,7 @@ namespace ZUploader
                     {
                         type = EDataType.Image;
                     }
-                    else if (TextUploader != TextUploaderType.FILE && Helpers.IsTextFile(path))
+                    else if (TextUploader != TextUploaderType.FileUploader && Helpers.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
@@ -157,7 +157,7 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                EDataType type = TextUploader == TextUploaderType.FILE ? EDataType.File : EDataType.Text;
+                EDataType type = TextUploader == TextUploaderType.FileUploader ? EDataType.File : EDataType.Text;
                 Task task = Task.CreateTextUploaderTask(type, text);
                 StartUpload(task);
             }

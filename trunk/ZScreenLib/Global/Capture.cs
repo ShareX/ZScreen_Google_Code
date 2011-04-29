@@ -54,7 +54,7 @@ namespace ZScreenLib
         {
             Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
             windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
-            windowRect = windowRect.AddMargin(margin);
+            windowRect.Inflate(margin, margin);
             Image img = CaptureRectangle(windowRect);
             if (showCursor) DrawCursor(img, windowRect.Location);
             return img;
@@ -190,7 +190,7 @@ namespace ZScreenLib
 
                     int offset = Engine.conf.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
 
-                    windowRect = windowRect.AddMargin(offset);
+                    windowRect.Inflate(offset, offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
                     NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);

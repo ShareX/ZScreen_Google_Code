@@ -104,6 +104,9 @@
     <Compile Include="Forms\ProxyConfig.Designer.cs">
       <DependentUpon>ProxyConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CropLight.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
@@ -344,9 +347,6 @@
     <None Include="Resources\leftShadow.png" />
     <None Include="Resources\bottomShadow.png" />
     <EmbeddedResource Include="Documents\VersionHistory.txt" />
-    <EmbeddedResource Include="Forms\Crop.resx">
-      <DependentUpon>Crop.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DestOptions.resx">
       <DependentUpon>DestOptions.cs</DependentUpon>
     </EmbeddedResource>
