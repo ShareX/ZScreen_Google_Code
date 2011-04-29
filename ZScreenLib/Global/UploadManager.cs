@@ -95,15 +95,23 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void SetClipboard(WorkerTask task, bool showDialog)
         {
+            string clipboardText = "";
+
             if (task.JobIsImageToClipboard())
             {
                 Clipboard.SetImage(task.MyImage);
             }
+            else if (task.WasImageToFile())
+            {
+                clipboardText = task.LocalFilePath;
+            }
+            else if (task.WasBinaryUpload())
+            {
+                clipboardText = task.RemoteFilePath;
+            }
 
             else
             {
-                string clipboardText = "";
-
                 switch (task.Job1)
                 {
                     case JobLevel1.PICTURES:
@@ -118,14 +126,8 @@ namespace ZScreenLib
                                 cmp.Icon = Resources.zss_main;
                                 if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                             }
-
-                            if (task.MyImageUploader == ImageUploaderType.FILE)
-                            {
-                                clipboardText = task.LocalFilePath;
-                            }
                             else
                             {
-                                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                                 if (task.MakeTinyURL)
                                 {
                                     string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
@@ -133,6 +135,10 @@ namespace ZScreenLib
                                     {
                                         clipboardText = tinyUrl.Trim();
                                     }
+                                }
+                                else
+                                {
+                                    clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                                 }
                             }
                         }
