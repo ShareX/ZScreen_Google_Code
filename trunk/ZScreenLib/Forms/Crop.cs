@@ -23,8 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-// Update: 20080401 (Isaac) Fixing multiple screen handling
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +42,7 @@ namespace ZScreenLib
 
         private bool mouseDown, selectedWindowMode, forceCheck, captureObjects, dragging;
         private Bitmap bmpClean, bmpBackground, bmpRegion;
+        private TextureBrush brushClean, brushBackground, brushRegion;
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
         private Pen labelBorderPen = new Pen(Color.Black);
@@ -59,7 +58,6 @@ namespace ZScreenLib
         private Timer windowCheck = new Timer { Interval = 250 };
         private DynamicCrosshair crosshair = new DynamicCrosshair();
         private DynamicRectangle myRectangle;
-        public Point CursorPos { get; set; }
 
         private Rectangle CropRegion
         {
@@ -76,6 +74,8 @@ namespace ZScreenLib
         }
 
         #endregion Private Variables
+
+        public Point CursorPos { get; set; }
 
         /// <summary>
         /// Crop shot or Selected Window captures
@@ -96,6 +96,7 @@ namespace ZScreenLib
             CalculateBoundaryFromMousePosition();
             timer.Tick += new EventHandler(TimerTick);
             windowCheck.Tick += new EventHandler(WindowCheckTick);
+
             if (selectedWindowMode)
             {
                 captureObjects = Engine.conf.SelectedWindowCaptureObjects;
@@ -106,57 +107,64 @@ namespace ZScreenLib
             else
             {
                 myRectangle = new DynamicRectangle(CaptureType.CROP);
-                if (Engine.conf.UseHardwareCursor == false)
+
+                if (Engine.conf.UseHardwareCursor)
                 {
-                    Cursor.Hide();
+                    Cursor = Cursors.Cross;
                 }
                 else
                 {
-                    this.Cursor = Cursors.Cross;
+                    Cursor.Hide();
                 }
             }
 
-            Graphics gBackground = Graphics.FromImage(bmpBackground);
-            gBackground.SmoothingMode = SmoothingMode.HighQuality;
-            Graphics gRegion = Graphics.FromImage(bmpRegion);
-            gRegion.SmoothingMode = SmoothingMode.HighQuality;
+            using (Graphics gBackground = Graphics.FromImage(bmpBackground))
+            using (Graphics gRegion = Graphics.FromImage(bmpRegion))
+            {
+                gBackground.SmoothingMode = SmoothingMode.HighQuality;
+                gRegion.SmoothingMode = SmoothingMode.HighQuality;
 
-            if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
+                if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT))
-            { //If Region Transparent
-                gRegion.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.RegionTransparentValue, Color.White)),
-                    new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height));
-            }
-            else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
+                { // If Region Transparent
+                    gRegion.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.RegionTransparentValue, Color.White)),
+                        new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height));
+                }
+                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
-            { //If Region Brightness
-                ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.RegionBrightnessValue));
-                gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
-                    bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
-            }
-            else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
+                { // If Region Brightness
+                    ImageAttributes imgattr = new ImageAttributes();
+                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.RegionBrightnessValue));
+                    gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
+                        bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
+                }
+                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
-            { //If Background Region Transparent
-                gBackground.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.BackgroundRegionTransparentValue, Color.White)),
-                    new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height));
-            }
-            else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
+                { // If Background Region Transparent
+                    gBackground.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.BackgroundRegionTransparentValue, Color.White)),
+                        new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height));
+                }
+                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
-            { //If Background Region Brightness
-                ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.BackgroundRegionBrightnessValue));
-                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
-                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
-            }
-            else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
+                { // If Background Region Brightness
+                    ImageAttributes imgattr = new ImageAttributes();
+                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.BackgroundRegionBrightnessValue));
+                    gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
+                        bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
+                }
+                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
                 (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
-            { //If Background Region Grayscale
-                ImageAttributes imgattr = new ImageAttributes();
-                imgattr.SetColorMatrix(ColorMatrices.GrayscaleFilter());
-                gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
-                    bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
+                { // If Background Region Grayscale
+                    ImageAttributes imgattr = new ImageAttributes();
+                    imgattr.SetColorMatrix(ColorMatrices.GrayscaleFilter());
+                    gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
+                        bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
+                }
             }
+
+            brushClean = new TextureBrush(bmpClean);
+            brushBackground = new TextureBrush(bmpBackground);
+            brushRegion = new TextureBrush(bmpRegion);
         }
 
         private void Crop_Shown(object sender, EventArgs e)
@@ -177,10 +185,9 @@ namespace ZScreenLib
         private bool IsDragging(Point point)
         {
             int checkSize = 0;
-            if (selectedWindowMode)
-            {
-                checkSize = 15;
-            }
+
+            if (selectedWindowMode) checkSize = 15;
+
             return mouseDown && (point.X > mousePosOnClick.X + checkSize || point.Y > mousePosOnClick.Y + checkSize ||
                 point.X < mousePosOnClick.X - checkSize || point.Y < mousePosOnClick.Y - checkSize);
         }
@@ -190,6 +197,7 @@ namespace ZScreenLib
             CalculateBoundaryFromMousePosition();
 
             if (Engine.conf.CropDynamicCrosshair) forceCheck = true;
+
             if (oldMousePos != mousePos || forceCheck)
             {
                 oldMousePos = mousePos;
@@ -256,18 +264,19 @@ namespace ZScreenLib
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            g.InterpolationMode = InterpolationMode.NearestNeighbor;
             g.SmoothingMode = SmoothingMode.HighSpeed;
 
-            //Draw background
-            g.DrawImage(bmpBackground, 0, 0, bmpBackground.Width, bmpBackground.Height);
+            // Draw background
+            g.FillRectangle(brushBackground, 0, 0, bmpBackground.Width, bmpBackground.Height);
 
-            //Draw region
+            // Draw region
             if ((selectedWindowMode && (Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
                 Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
                 (!selectedWindowMode && (Engine.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
                 Engine.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mouseDown))
-            { //If Region Transparent or Region Brightness
-                g.DrawImage(bmpRegion, CropRegion, CropRegion, GraphicsUnit.Pixel);
+            { // If Region Transparent or Region Brightness
+                g.FillRectangle(brushRegion, CropRegion);
             }
             else if (((selectedWindowMode &&
                 (Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
@@ -277,13 +286,14 @@ namespace ZScreenLib
                 Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
                 Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mouseDown))
                 && CropRegion.Width > 0 && CropRegion.Height > 0)
-            { //If Background Region Transparent or Background Region Grayscale or Background Region Brightness
-                g.DrawImage(bmpClean, CropRegion, CropRegion, GraphicsUnit.Pixel);
+            { // If Background Region Transparent or Background Region Grayscale or Background Region Brightness
+                g.FillRectangle(brushClean, CropRegion);
             }
 
             if (selectedWindowMode)
             {
                 myRectangle.DrawRectangle(g, CropRegion);
+
                 if (Engine.conf.SelectedWindowRectangleInfo)
                 {
                     DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
@@ -297,34 +307,40 @@ namespace ZScreenLib
                     g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(bmpBackground.Width, mousePos.Y));
                     g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, bmpBackground.Height));
                 }
+
                 if (mouseDown)
                 {
                     if (Engine.conf.CropShowGrids && Engine.conf.CropGridToggle)
                     {
                         DrawGrids(g);
                     }
+
                     DrawInstructor(strMouseDown, g);
                     myRectangle.DrawRectangle(g, CropRegion);
+
                     if (Engine.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
                             rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(20, 20), g);
                     }
-                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y),
-                        new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
-                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10),
-                        new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
+
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X - 10, mousePosOnClick.Y), new Point(mousePosOnClick.X + 10, mousePosOnClick.Y));
+                    g.DrawLine(crosshairPen, new Point(mousePosOnClick.X, mousePosOnClick.Y - 10), new Point(mousePosOnClick.X, mousePosOnClick.Y + 10));
                 }
                 else
                 {
                     DrawInstructor(strMouseUp, g);
+
                     if (Engine.conf.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(20, 20), g);
                     }
                 }
-                if (Engine.conf.UseHardwareCursor == false)
+
+                if (!Engine.conf.UseHardwareCursor)
+                {
                     crosshair.Draw(g, mousePos);
+                }
             }
         }
 
@@ -537,6 +553,9 @@ namespace ZScreenLib
             bmpClean.Dispose();
             bmpBackground.Dispose();
             bmpRegion.Dispose();
+            brushClean.Dispose();
+            brushBackground.Dispose();
+            brushRegion.Dispose();
             timer.Dispose();
             windowCheck.Dispose();
         }
