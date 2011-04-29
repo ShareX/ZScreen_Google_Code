@@ -91,15 +91,6 @@ namespace ZScreenLib
             return string.Join(" + ", split);
         }
 
-        public static Rectangle AddMargin(this Rectangle rect, int offset)
-        {
-            rect.X -= offset;
-            rect.Y -= offset;
-            rect.Width += offset * 2;
-            rect.Height += offset * 2;
-            return rect;
-        }
-
         /// <summary>
         /// Find out whether the two given bitmaps have the exact same image data.
         /// </summary>

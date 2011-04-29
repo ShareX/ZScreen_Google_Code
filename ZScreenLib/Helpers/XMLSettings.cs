@@ -618,6 +618,8 @@ namespace ZScreenLib
         public int RegionTransparentValue { get; set; }
         [Category("Screenshots / General"), DefaultValue(false), Description("Use crop beta.")]
         public bool UseCropBeta { get; set; }
+        [Category("Screenshots / General"), DefaultValue(false), Description("Use crop light. Simple crop for slow computers.")]
+        public bool UseCropLight { get; set; }
         [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
 
