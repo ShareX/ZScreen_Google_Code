@@ -32,8 +32,6 @@ namespace UploadersLib.HelperClasses
 {
     public class ImageFileManager
     {
-        public string Source { get; set; }
-
         /// <summary>
         /// Local File Path of the Image if exists
         /// </summary>
@@ -41,7 +39,7 @@ namespace UploadersLib.HelperClasses
 
         public UploadResult UploadResult { get; set; }
 
-        public ImageFileManager()
+        private ImageFileManager()
         {
             UploadResult = new UploadResult();
         }
@@ -227,20 +225,20 @@ namespace UploadersLib.HelperClasses
         public string GetSource(string dirPath, SourceType sType)
         {
             string filePath = "";
-            if (!string.IsNullOrEmpty(Source))
+            if (!string.IsNullOrEmpty(UploadResult.Source))
             {
                 switch (sType)
                 {
                     case SourceType.TEXT:
                         filePath = Path.Combine(dirPath, "LastSource.txt");
-                        File.WriteAllText(filePath, Source);
+                        File.WriteAllText(filePath, UploadResult.Source);
                         break;
                     case SourceType.HTML:
                         filePath = Path.Combine(dirPath, "LastSource.html");
-                        File.WriteAllText(filePath, Source);
+                        File.WriteAllText(filePath, UploadResult.Source);
                         break;
                     case SourceType.STRING:
-                        filePath = Source;
+                        filePath = UploadResult.Source;
                         break;
                 }
             }

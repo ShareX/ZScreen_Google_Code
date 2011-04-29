@@ -43,7 +43,7 @@ namespace ZScreenLib
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
 
-        private static ImageFileManager LinkMgr = new ImageFileManager();
+        private static ImageFileManager LinkMgr = null;
         private static int UniqueNumber = 0;
 
         /// <summary>

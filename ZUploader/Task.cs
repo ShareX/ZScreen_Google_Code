@@ -232,16 +232,7 @@ namespace ZUploader
             if (imageUploader != null)
             {
                 PrepareUploader(imageUploader);
-                ImageFileManager ifm = imageUploader.UploadImage(stream, fileName);
-                UploadResult ur = new UploadResult();
-
-                if (ifm != null)
-                {
-                    ur.URL = ifm.GetFullImageUrl();
-                    ur.ThumbnailURL = ifm.GetThumbnailUrl();
-                    ur.DeletionURL = ifm.GetDeletionLink();
-                    ur.Source = ifm.Source;
-                }
+                UploadResult ur = imageUploader.UploadImage(stream, fileName);
 
                 return ur;
             }
