@@ -3362,7 +3362,7 @@ namespace ZScreenGUI
 
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
         {
-            ProxyAdd(new ProxyInfo("username", "password", "host", 8080));
+            ProxyAdd(new ProxyInfo(Environment.UserName, "", Adapter.GetDefaultWebProxyHost(), Adapter.GetDefaultWebProxyPort()));
         }
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)

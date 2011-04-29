@@ -22,7 +22,6 @@ namespace ZScreenGUI
             FileSystem.AppendDebug("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
             pgApp.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
-
             ZScreen_ConfigGUI_TrayMenu();
             ZScreen_ConfigGUI_Options();
             ZScreen_ConfigGUI_Main();
@@ -682,6 +681,6 @@ namespace ZScreenGUI
             }
             CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
         }
-   
+
     }
 }
