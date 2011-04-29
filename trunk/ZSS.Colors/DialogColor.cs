@@ -131,11 +131,11 @@ namespace ZSS.ColorsLib
         {
             if (sender is NumericUpDown)
             {
-                Clipboard.SetText(((NumericUpDown)sender).Value.ToString());
+                Clipboard.SetText(((NumericUpDown)sender).Value.ToString()); // ok
             }
             else if (sender is TextBox)
             {
-                Clipboard.SetText(((TextBox)sender).Text);
+                Clipboard.SetText(((TextBox)sender).Text); // ok
             }
         }
 

@@ -305,7 +305,7 @@ namespace ZScreenTesterGUI
 
                 if (urls.Count > 0)
                 {
-                    Clipboard.SetText(string.Join("\r\n", urls.ToArray()));
+                    Clipboard.SetText(string.Join("\r\n", urls.ToArray())); // ok
                 }
             }
         }

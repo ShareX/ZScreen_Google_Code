@@ -66,7 +66,7 @@ namespace ZScreenGUI
 
         private void TimerTick(object sender, EventArgs e)
         {
-            if (waitUploads && UploadManager.UploadInfoList.Count > 0)
+            if (waitUploads && ClipboardManager.UploadInfoList.Count > 0)
             {
                 timer.Interval = 1000;
             }

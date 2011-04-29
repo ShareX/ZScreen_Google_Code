@@ -150,7 +150,7 @@ namespace ZScreenLib
         {
             if (ni != null)
             {
-                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress()))
+                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(ClipboardManager.GetAverageProgress()))
                 {
                     IntPtr hicon = img.GetHicon();
                     ni.Icon = Icon.FromHandle(hicon);
@@ -191,7 +191,7 @@ namespace ZScreenLib
             TextBox tb = ((TextBox)sender);
             if (!string.IsNullOrEmpty(tb.Text))
             {
-                Clipboard.SetText(tb.Text);
+                Clipboard.SetText(tb.Text); // ok
             }
         }
 

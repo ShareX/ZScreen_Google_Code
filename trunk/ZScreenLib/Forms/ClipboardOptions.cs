@@ -126,7 +126,7 @@ namespace ZScreenLib
         {
             using (Image img = GraphicsMgr.GetImageSafely(mTask.LocalFilePath))
             {
-                Clipboard.SetImage(img);
+                Clipboard.SetImage(img); // ok
             }
         }
 
@@ -164,7 +164,7 @@ namespace ZScreenLib
         {
             Button btn = sender as Button;
             TextBox txtUrl = btn.Tag as TextBox;
-            Clipboard.SetText(txtUrl.Text);
+            Clipboard.SetText(txtUrl.Text); // ok
         }
 
         private void tmrClose_Tick(object sender, EventArgs e)

@@ -1337,7 +1337,7 @@ namespace ZScreenGUI
                                 cbString = t.TranslationInfo.Result;
                                 if (!string.IsNullOrEmpty(cbString))
                                 {
-                                    Clipboard.SetText(cbString);
+                                    Clipboard.SetText(cbString); // ok
                                 }
                                 break;
                             default:
@@ -1601,7 +1601,7 @@ namespace ZScreenGUI
 
         private void OpenLastSource(ImageFileManager.SourceType sType)
         {
-            OpenSource(UploadManager.GetLastImageUpload(), sType);
+            OpenSource(ClipboardManager.GetLastImageUpload(), sType);
         }
 
         private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
@@ -1619,7 +1619,7 @@ namespace ZScreenGUI
 
                     if (sType == ImageFileManager.SourceType.STRING)
                     {
-                        Clipboard.SetText(path);
+                        Clipboard.SetText(path); // ok
                         return true;
                     }
                 }
@@ -1807,7 +1807,7 @@ namespace ZScreenGUI
                     string result = sb.ToString();
                     if (!string.IsNullOrEmpty(result))
                     {
-                        Clipboard.SetText(result);
+                        Clipboard.SetText(result); // ok - user
                     }
                 }
             }
@@ -2161,7 +2161,7 @@ namespace ZScreenGUI
                             {
                                 try
                                 {
-                                    Clipboard.SetImage(img2);
+                                    Clipboard.SetImage(img2); // ok
                                 }
                                 catch (Exception ex)
                                 {
@@ -2181,7 +2181,7 @@ namespace ZScreenGUI
                 HistoryItem hi = (HistoryItem)lbHistory.SelectedItem;
                 if (!string.IsNullOrEmpty(hi.RemotePath))
                 {
-                    Clipboard.SetText(hi.RemotePath);
+                    Clipboard.SetText(hi.RemotePath); // ok
                 }
             }
         }

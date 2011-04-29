@@ -367,10 +367,6 @@ namespace ZScreenLib
 
             switch (mTask.MyImageUploader)
             {
-                case ImageUploaderType.CLIPBOARD:
-                    if (string.IsNullOrEmpty(mTask.LocalFilePath)) return;
-                    mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, mTask.LocalFilePath);
-                    break;
                 case ImageUploaderType.DEKIWIKI:
                     UploadDekiWiki();
                     break;
@@ -622,7 +618,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {
-                UploadInfo uploadInfo = UploadManager.GetInfo(mTask.UniqueNumber);
+                UploadInfo uploadInfo = ClipboardManager.GetInfo(mTask.UniqueNumber);
                 if (uploadInfo != null)
                 {
                     uploadInfo.UploadPercentage = (int)progress.Percentage;
