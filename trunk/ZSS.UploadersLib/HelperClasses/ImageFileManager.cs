@@ -32,7 +32,7 @@ namespace UploadersLib.HelperClasses
 {
     public class ImageFileManager
     {
-        public List<ImageFile> ImageFileList = new List<ImageFile>();
+        public List<ImageFile> LinkList = new List<ImageFile>();
         public string Source { get; set; }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace UploadersLib.HelperClasses
 
         public ImageFileManager(string url, string source)
         {
-            this.ImageFileList.Add(new ImageFile(url, LinkType.FULLIMAGE));
+            this.LinkList.Add(new ImageFile(url, LinkType.URL));
             this.Source = source;
         }
 
@@ -59,24 +59,26 @@ namespace UploadersLib.HelperClasses
         {
             if (list != null && list.Count > 0)
             {
-                this.ImageFileList = list;
+                this.LinkList = list;
                 this.Source = list[0].Source;
             }
         }
 
         public void StoreUploadResult(UploadResult ur)
         {
+            this.UploadResult = ur;
+
             if (!string.IsNullOrEmpty(ur.URL))
             {
-                ImageFileList.Add(new ImageFile(ur.URL, LinkType.FULLIMAGE));
+                LinkList.Add(new ImageFile(ur.URL, LinkType.URL));
             }
             if (!string.IsNullOrEmpty(ur.ThumbnailURL))
             {
-                ImageFileList.Add(new ImageFile(ur.ThumbnailURL, LinkType.THUMBNAIL));
+                LinkList.Add(new ImageFile(ur.ThumbnailURL, LinkType.ThumbnailURL));
             }
             if (!string.IsNullOrEmpty(ur.DeletionURL))
             {
-                ImageFileList.Add(new ImageFile(ur.DeletionURL, LinkType.DELETION_LINK));
+                LinkList.Add(new ImageFile(ur.DeletionURL, LinkType.DeletionLink));
             }
         }
 
@@ -84,7 +86,7 @@ namespace UploadersLib.HelperClasses
         {
             if (!string.IsNullOrEmpty(url))
             {
-                ImageFileList.Add(new ImageFile(url, type));
+                LinkList.Add(new ImageFile(url, type));
             }
         }
 
@@ -110,7 +112,7 @@ namespace UploadersLib.HelperClasses
             switch (type)
             {
                 case ClipboardUriType.FULL:
-                    return GetUrlByLinkType(LinkType.FULLIMAGE);
+                    return GetUrlByLinkType(LinkType.URL);
                 case ClipboardUriType.FULL_TINYURL:
                     return GetUrlByLinkType(LinkType.FULLIMAGE_TINYURL);
                 case ClipboardUriType.FULL_IMAGE_FORUMS:
@@ -128,14 +130,14 @@ namespace UploadersLib.HelperClasses
                 case ClipboardUriType.LINKED_THUMBNAIL_WIKI:
                     return GetLinkedThumbnailWikiUrl();
                 case ClipboardUriType.THUMBNAIL:
-                    return GetUrlByLinkType(LinkType.THUMBNAIL);
+                    return GetUrlByLinkType(LinkType.ThumbnailURL);
                 case ClipboardUriType.LocalFilePath:
                     return this.LocalFilePath;
                 case ClipboardUriType.LocalFilePathUri:
                     return GetLocalFilePathAsUri();
             }
 
-            return GetUrlByLinkType(LinkType.FULLIMAGE);
+            return GetUrlByLinkType(LinkType.URL);
         }
 
         private string GetLinkedThumbnailHtmlUrl()
@@ -174,7 +176,7 @@ namespace UploadersLib.HelperClasses
 
         private string GetUrlByLinkType(LinkType type)
         {
-            foreach (ImageFile imf in this.ImageFileList)
+            foreach (ImageFile imf in this.LinkList)
             {
                 if (imf.Type == type)
                 {
@@ -186,14 +188,14 @@ namespace UploadersLib.HelperClasses
 
         public string GetDeletionLink()
         {
-            return GetUrlByLinkType(LinkType.DELETION_LINK);
+            return GetUrlByLinkType(LinkType.DeletionLink);
         }
 
         public string GetThumbnailUrl()
         {
-            foreach (ImageFile imf in this.ImageFileList)
+            foreach (ImageFile imf in this.LinkList)
             {
-                if (imf.Type == LinkType.THUMBNAIL)
+                if (imf.Type == LinkType.ThumbnailURL)
                 {
                     return imf.URI;
                 }
@@ -203,9 +205,9 @@ namespace UploadersLib.HelperClasses
 
         public string GetFullImageUrl()
         {
-            foreach (ImageFile imf in this.ImageFileList)
+            foreach (ImageFile imf in this.LinkList)
             {
-                if (imf.Type == LinkType.FULLIMAGE)
+                if (imf.Type == LinkType.URL)
                 {
                     return imf.URI;
                 }

@@ -145,8 +145,8 @@ namespace UploadersLib.ImageUploaders
                             mediaid = xele.GetElementValue("mediaid");
                             mediaurl = xele.GetElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
-                            ifm.ImageFileList.Add(new ImageFile(mediaurl, LinkType.FULLIMAGE));
-                            ifm.ImageFileList.Add(new ImageFile(mediaurl + ".th.jpg", LinkType.THUMBNAIL));
+                            ifm.LinkList.Add(new ImageFile(mediaurl, LinkType.URL));
+                            ifm.LinkList.Add(new ImageFile(mediaurl + ".th.jpg", LinkType.ThumbnailURL));
                             break;
                         case "fail":
                             string code, msg;

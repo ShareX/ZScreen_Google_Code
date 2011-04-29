@@ -142,10 +142,10 @@ namespace UploadersLib.ImageUploaders
 
                 if ((xe = xd.GetNode("upload|images/links")) != null)
                 {
-                    ifm.Add(xe.GetElementValue("original"), LinkType.FULLIMAGE);
-                    ifm.Add(xe.GetElementValue("large_thumbnail"), LinkType.THUMBNAIL);
+                    ifm.Add(xe.GetElementValue("original"), LinkType.URL);
+                    ifm.Add(xe.GetElementValue("large_thumbnail"), LinkType.ThumbnailURL);
                     //ifm.Add(xele.ElementValue("small_square"), LinkType.THUMBNAIL);
-                    ifm.Add(xe.GetElementValue("delete_page"), LinkType.DELETION_LINK);
+                    ifm.Add(xe.GetElementValue("delete_page"), LinkType.DeletionLink);
                 }
                 else if ((xe = xd.GetElement("error")) != null)
                 {

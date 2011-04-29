@@ -145,9 +145,9 @@ namespace ZScreenGUI
                     {
                         FileSystem.AppendDebug("Shortened URL: " + url);
                         task.RemoteFilePath = url;
-                        if (null != task.LinkManager && null != task.LinkManager.ImageFileList)
+                        if (null != task.LinkManager && null != task.LinkManager.LinkList)
                         {
-                            task.LinkManager.ImageFileList.Add(new ImageFile(url, LinkType.FULLIMAGE_TINYURL));
+                            task.LinkManager.LinkList.Add(new ImageFile(url, LinkType.FULLIMAGE_TINYURL));
                         }
                     }
                 }
@@ -284,7 +284,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Images:
-                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && task.LinkManager.ImageFileList.Count > 0)
+                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && task.LinkManager.LinkList.Count > 0)
                             {
                                 if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
                                 {

@@ -96,9 +96,9 @@ namespace UploadersLib.ImageUploaders
                 }
                 else
                 {
-                    ifm.Add(xele.GetElementValue("original"), LinkType.FULLIMAGE);
-                    ifm.Add(xele.GetElementValue("small"), LinkType.THUMBNAIL);
-                    ifm.Add(xele.GetElementValue("deleteurl"), LinkType.DELETION_LINK);
+                    ifm.Add(xele.GetElementValue("original"), LinkType.URL);
+                    ifm.Add(xele.GetElementValue("small"), LinkType.ThumbnailURL);
+                    ifm.Add(xele.GetElementValue("deleteurl"), LinkType.DeletionLink);
                 }
             }
 

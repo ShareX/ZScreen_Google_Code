@@ -58,7 +58,7 @@ namespace UploadersLib.ImageUploaders
                 if (match != null)
                 {
                     string url = "http://imagebin.ca/img/" + match.Value + Path.GetExtension(fileName);
-                    ifm.Add(url, LinkType.FULLIMAGE);
+                    ifm.Add(url, LinkType.URL);
                 }
             }
 

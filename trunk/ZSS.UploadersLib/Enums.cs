@@ -61,9 +61,9 @@ namespace UploadersLib
 
     public enum LinkType
     {
-        FULLIMAGE,
-        THUMBNAIL,
-        DELETION_LINK,
+        URL,
+        ThumbnailURL,
+        DeletionLink,
         FULLIMAGE_TINYURL
     }
 
