@@ -137,7 +137,7 @@ namespace ZScreenLib
             {
                 case JobLevel1.Images:
                     return string.Format("{0}", t.MyImageUploader.GetDescription());
-                case JobLevel1.TEXT:
+                case JobLevel1.Text:
                     string dest = string.Empty;
                     switch (t.Job3)
                     {
@@ -149,7 +149,7 @@ namespace ZScreenLib
                             break;
                     }
                     return string.Format("{0}", dest);
-                case JobLevel1.NonImages:
+                case JobLevel1.Binary:
                     switch (t.MyFileUploader)
                     {
                         case FileUploaderType.CustomUploader:

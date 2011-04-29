@@ -242,7 +242,7 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-            if (mTask.Job1 == JobLevel1.NonImages)
+            if (mTask.Job1 == JobLevel1.Binary)
             {
                 UploadFile();
             }
@@ -282,7 +282,7 @@ namespace ZScreenLib
                 case FileUploaderType.FTP:
                     switch (mTask.Job1)
                     {
-                        case JobLevel1.TEXT:
+                        case JobLevel1.Text:
                             UploadFTP(Engine.conf.FtpText);
                             break;
                         default:

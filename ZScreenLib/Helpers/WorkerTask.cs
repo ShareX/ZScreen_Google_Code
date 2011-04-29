@@ -342,7 +342,7 @@ namespace ZScreenLib
                     case JobLevel1.Images:
                         destName = this.MyImageUploader.GetDescription();
                         break;
-                    case JobLevel1.TEXT:
+                    case JobLevel1.Text:
                         switch (this.Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
@@ -353,7 +353,7 @@ namespace ZScreenLib
                                 break;
                         }
                         break;
-                    case JobLevel1.NonImages:
+                    case JobLevel1.Binary:
                         destName = this.MyFileUploader.GetDescription();
                         break;
                 }

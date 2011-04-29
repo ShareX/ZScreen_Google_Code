@@ -137,11 +137,11 @@ namespace ZScreenLib
                         }
                         break;
 
-                    case JobLevel1.NonImages:
+                    case JobLevel1.Binary:
                         clipboardText = task.RemoteFilePath;
                         break;
 
-                    case JobLevel1.TEXT:
+                    case JobLevel1.Text:
                         switch (task.Job2)
                         {
                             case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:

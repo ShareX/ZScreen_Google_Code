@@ -63,7 +63,7 @@ namespace ZScreenLib
             {
                 switch (task.Job1)
                 {
-                    case JobLevel1.TEXT:
+                    case JobLevel1.Text:
                         string dest = string.Empty;
                         switch (task.Job3)
                         {
