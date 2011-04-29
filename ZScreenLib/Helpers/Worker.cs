@@ -71,8 +71,7 @@ namespace ZScreenLib
 
             switch (task.Job1)
             {
-                case JobLevel1.PICTURES:
-                case JobLevel1.SCREENSHOTS:
+                case JobLevel1.IMAGES:
                 case JobLevel1.BINARY:
                     switch (task.Job2)
                     {
@@ -150,21 +149,19 @@ namespace ZScreenLib
                 FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
                 WorkerTask checkTask = RetryUpload(task);
 
-                switch (task.Job1)
+                if (task.WasToTakeScreenshot )
                 {
-                    case JobLevel1.SCREENSHOTS:
-                        if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                    if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                    {
+                        try
                         {
-                            try
-                            {
-                                File.Delete(task.LocalFilePath);
-                            }
-                            catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
-                            {
-                                FileSystem.AppendDebug("Error while finalizing job", ex);
-                            }
+                            File.Delete(task.LocalFilePath);
                         }
-                        break;
+                        catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
+                        {
+                            FileSystem.AppendDebug("Error while finalizing job", ex);
+                        }
+                    }
                 }
 
                 this.GUI.niTray.Text = this.GUI.Text;
@@ -415,10 +412,11 @@ namespace ZScreenLib
         public void StartWorkerScreenshots(WorkerTask.JobLevel2 job)
         {
             Engine.ClipboardUnhook();
-            WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.SCREENSHOTS;
-            t.MakeTinyURL = Adapter.MakeTinyURL();
-            t.MyWorker.RunWorkerAsync(t);
+            WorkerTask task = CreateTask(job);
+            task.Job1 = JobLevel1.IMAGES;
+            task.WasToTakeScreenshot = true;
+            task.MakeTinyURL = Adapter.MakeTinyURL();
+            task.MyWorker.RunWorkerAsync(task);
         }
 
         /// <summary>
@@ -429,10 +427,10 @@ namespace ZScreenLib
         public void StartWorkerPictures(WorkerTask task, string localFilePath)
         {
             Engine.ClipboardUnhook();
-            task.Job1 = JobLevel1.PICTURES;
-            task.MakeTinyURL = Adapter.MakeTinyURL();
+            task.Job1 = JobLevel1.IMAGES;
             task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
+            task.MakeTinyURL = Adapter.MakeTinyURL();
             task.MyWorker.RunWorkerAsync(task);
         }
 
@@ -440,7 +438,7 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.Job1 = JobLevel1.PICTURES;
+            t.Job1 = JobLevel1.IMAGES;
             t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
             new TaskManager(t).WriteImage();
@@ -541,7 +539,7 @@ namespace ZScreenLib
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.RetryPending = true; // we do not retry again
 
-                    if (task.Job1 == JobLevel1.PICTURES || task.Job1 == JobLevel1.SCREENSHOTS)
+                    if (task.Job1 == JobLevel1.IMAGES)
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {

@@ -106,6 +106,7 @@ namespace ZScreenLib
         #region Common Properties for All Categories
 
         public BackgroundWorker MyWorker { get; set; }
+        public bool WasToTakeScreenshot { get; set; }
         public JobLevel1 Job1 { get; set; }
         /// <summary>
         /// Entire Screen, Active Window, Selected Window, Crop Shot...
@@ -337,8 +338,7 @@ namespace ZScreenLib
             {
                 switch (Job1)
                 {
-                    case JobLevel1.PICTURES:
-                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.IMAGES:
                         destName = this.MyImageUploader.GetDescription();
                         break;
                     case JobLevel1.TEXT:
@@ -424,12 +424,12 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.PICTURES || Job1 == JobLevel1.SCREENSHOTS && MyImageUploader == ImageUploaderType.CLIPBOARD;
+            return Job1 == JobLevel1.IMAGES && MyImageUploader == ImageUploaderType.CLIPBOARD;
         }
 
         public bool WasImageToFile()
         {
-            return Job1 == JobLevel1.PICTURES || Job1 == JobLevel1.SCREENSHOTS && MyImageUploader == ImageUploaderType.FILE;
+            return Job1 == JobLevel1.IMAGES && MyImageUploader == ImageUploaderType.FILE;
         }
 
         public bool WasBinaryUpload()

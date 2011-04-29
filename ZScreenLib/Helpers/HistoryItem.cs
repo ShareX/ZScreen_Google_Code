@@ -135,8 +135,7 @@ namespace ZScreenLib
         {
             switch (t.Job1)
             {
-                case JobLevel1.PICTURES:
-                case JobLevel1.SCREENSHOTS:
+                case JobLevel1.IMAGES:
                     return string.Format("{0}", t.MyImageUploader.GetDescription());
                 case JobLevel1.TEXT:
                     string dest = string.Empty;

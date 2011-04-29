@@ -76,8 +76,7 @@ namespace ZScreenLib
                         }
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
-                    case JobLevel1.SCREENSHOTS:
-                    case JobLevel1.PICTURES:
+                    case JobLevel1.IMAGES:
                         sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
                         break;
                 }
