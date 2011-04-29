@@ -408,7 +408,6 @@ namespace ZScreenLib
         // History Settings
         public int HistoryMaxNumber = 50;
         public bool HistorySave = true;
-        public bool HistoryShowTooltips = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Options
@@ -505,13 +504,6 @@ namespace ZScreenLib
         public bool WriteDebugFile { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
         public bool EnableKeyboardHookTimer { get; set; }
-
-        // Options / History Settings
-
-        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded images.")]
-        public bool PreferBrowserForImages { get; set; }
-        [Category("Options / History Settings"), DefaultValue(false), Description("Prefer browser view to navigate uploaded text.")]
-        public bool PreferBrowserForText { get; set; }
 
         // Options / Interaction
 
