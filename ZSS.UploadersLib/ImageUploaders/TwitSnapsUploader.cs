@@ -92,8 +92,8 @@ namespace UploadersLib.ImageUploaders
                 if (xe != null)
                 {
                     string id = xe.GetElementValue("id");
-                    ifm.Add("http://twitsnaps.com/snap/" + id, LinkType.FULLIMAGE);
-                    ifm.Add("http://twitsnaps.com/thumb/" + id, LinkType.THUMBNAIL);
+                    ifm.Add("http://twitsnaps.com/snap/" + id, LinkType.URL);
+                    ifm.Add("http://twitsnaps.com/thumb/" + id, LinkType.ThumbnailURL);
                 }
                 else
                 {

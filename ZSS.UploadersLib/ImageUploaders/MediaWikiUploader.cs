@@ -62,7 +62,7 @@ namespace UploadersLib.ImageUploaders
             string remotePath = Options.Account.Url + "/index.php?title=Image:" + filename;
 
             // Add this to the list of uploaded images
-            imageFiles.Add(new ImageFile(remotePath, LinkType.FULLIMAGE));
+            imageFiles.Add(new ImageFile(remotePath, LinkType.URL));
 
             // Create the file manager object
             ImageFileManager imageFileManager = new ImageFileManager(imageFiles) { LocalFilePath = localFilePath };

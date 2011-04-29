@@ -46,7 +46,7 @@ namespace UploadersLib.ImageUploaders
             if (!string.IsNullOrEmpty(response))
             {
                 string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1).Trim();
-                ifm.Add(lastLine, LinkType.FULLIMAGE);
+                ifm.Add(lastLine, LinkType.URL);
             }
 
             return ifm;

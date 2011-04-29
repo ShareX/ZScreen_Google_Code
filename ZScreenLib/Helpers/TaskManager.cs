@@ -346,9 +346,13 @@ namespace ZScreenLib
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 mTask.DestinationName = fileHost.Name;
                 fileHost.ProgressChanged += UploadProgressChanged;
-                mTask.LinkManager.StoreUploadResult(fileHost.Upload(mTask.LocalFilePath));
+                UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
+                if (ur != null)
+                {
+                    mTask.LinkManager.StoreUploadResult(ur);
+                    mTask.RemoteFilePath = ur.URL;
+                }
                 mTask.Errors = fileHost.Errors;
-                mTask.RemoteFilePath = mTask.LinkManager.UploadResult.URL;
             }
 
             mTask.EndTime = DateTime.Now;
@@ -459,7 +463,7 @@ namespace ZScreenLib
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.LinkManager == null ||
-                        (mTask.LinkManager != null && mTask.LinkManager.ImageFileList.Count < 1)); i++)
+                        (mTask.LinkManager != null && mTask.LinkManager.LinkList.Count < 1)); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
@@ -473,7 +477,7 @@ namespace ZScreenLib
                         // TODO: Catch "The remote server returned an error: (407) Proxy Authentication Required." and prompt Proxy Dialog
                         mTask.Errors = imageUploader.Errors;
 
-                        if (mTask.LinkManager.ImageFileList.Count == 0)
+                        if (mTask.LinkManager.LinkList.Count == 0)
                         {
                             mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
                         }
@@ -509,7 +513,7 @@ namespace ZScreenLib
 
         private void SetRemoteFilePath()
         {
-            if (mTask.LinkManager != null && mTask.LinkManager.ImageFileList.Count > 0)
+            if (mTask.LinkManager != null && mTask.LinkManager.LinkList.Count > 0)
             {
                 string url = mTask.LinkManager.GetFullImageUrl();
                 mTask.RemoteFilePath = url;
@@ -543,7 +547,7 @@ namespace ZScreenLib
                 }
                 File.Move(mTask.LocalFilePath, destFile);
                 mTask.UpdateLocalFilePath(destFile);
-                mTask.LinkManager.Add(acc.GetUriPath(fn), LinkType.FULLIMAGE);
+                mTask.LinkManager.Add(acc.GetUriPath(fn), LinkType.URL);
             }
         }
 
@@ -573,7 +577,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(url))
                     {
                         mTask.RemoteFilePath = url;
-                        mTask.LinkManager.Add(url, LinkType.FULLIMAGE);
+                        mTask.LinkManager.Add(url, LinkType.URL);
 
                         if (CreateThumbnail())
                         {
@@ -591,7 +595,7 @@ namespace ZScreenLib
 
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
-                                        mTask.LinkManager.Add(thumb, LinkType.THUMBNAIL);
+                                        mTask.LinkManager.Add(thumb, LinkType.ThumbnailURL);
                                     }
                                 }
                             }
