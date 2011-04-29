@@ -83,7 +83,7 @@ namespace ZScreenGUI
                 return;
             }
 
-            if (task.Job1 == JobLevel1.Images)
+            if (task.Job1 == JobLevel1.Image)
             {
                 if (Engine.conf.ScreenshotDelayTime != 0)
                 {
@@ -95,8 +95,8 @@ namespace ZScreenGUI
 
             switch (task.Job1)
             {
-                case JobLevel1.Images:
-                case JobLevel1.Binary:
+                case JobLevel1.Image:
+                case JobLevel1.File:
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
@@ -176,9 +176,6 @@ namespace ZScreenGUI
                     break;
                 case (WorkerTask.ProgressType)104:
                     Adapter.CopyDataToClipboard(e.UserState);
-                    break;
-                case WorkerTask.ProgressType.ADD_FILE_TO_LISTBOX:
-                    AddHistoryItem(e.UserState as HistoryItem);
                     break;
                 case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
                     if (e.UserState.GetType() == typeof(string))
@@ -264,7 +261,7 @@ namespace ZScreenGUI
 
                     if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.Text))
                     {
-                        AddHistoryItem(new HistoryItem(task));
+                        AddHistoryItem(task);
                     }
 
                     switch (task.Job1)
@@ -278,7 +275,7 @@ namespace ZScreenGUI
                                 mZScreen.btnTranslateTo1.Enabled = true;
                             }
                             break;
-                        case JobLevel1.Images:
+                        case JobLevel1.Image:
                             if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && !string.IsNullOrEmpty( task.LinkManager.UploadResult.URL))
                             {
                                 if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
@@ -311,7 +308,7 @@ namespace ZScreenGUI
                     if (Engine.conf.CopyClipboardAfterTask)
                     {
                         ClipboardManager.SetClipboard(task, false);
-                    }
+                    }      
 
                     if (Engine.conf.TwitterEnabled)
                     {
@@ -432,18 +429,6 @@ namespace ZScreenGUI
             if (img != null)
             {
                 Bitmap bmp = new Bitmap(img);
-            }
-        }
-
-        public void HistoryRetryUpload(HistoryItem hi)
-        {
-            if (hi != null && File.Exists(hi.LocalPath))
-            {
-                WorkerTask task = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
-                task.SetImage(hi.LocalPath);
-                task.UpdateLocalFilePath(hi.LocalPath);
-                task.MyImageUploader = hi.ImageDestCategory;
-                task.MyWorker.RunWorkerAsync(task);
             }
         }
 
@@ -665,18 +650,13 @@ namespace ZScreenGUI
             }
         }
 
-        public void AddHistoryItem(HistoryItem hi)
-        {
-            mZScreen.lbHistory.Items.Insert(0, hi);
-            CheckHistoryItems();
-            SaveHistoryItems();
-            if (mZScreen.lbHistory.Items.Count > 0)
+        public void AddHistoryItem(WorkerTask task)
+        {            
+            if (Engine.conf.HistorySave)
             {
-                mZScreen.lbHistory.ClearSelected();
-                mZScreen.lbHistory.SelectedIndex = 0;
+                HistoryLib.HistoryManager.AutomaticlyAddHistoryItemAsync(Engine.HistoryDbPath, task.GenerateHistoryItem());
             }
-
-            Adapter.AddRecentItem(hi.LocalPath);
+            Adapter.AddRecentItem(task.LocalFilePath);
         }
 
         private void FillGoogleTranslateInfo(GoogleTranslateInfo info)
@@ -871,41 +851,5 @@ namespace ZScreenGUI
 
         #endregion Translate
 
-        #region ZScreen GUI
-
-        public void CheckHistoryItems()
-        {
-            if (mZScreen.lbHistory.Items.Count > Engine.conf.HistoryMaxNumber)
-            {
-                for (int i = mZScreen.lbHistory.Items.Count - 1; i >= Engine.conf.HistoryMaxNumber; i--)
-                {
-                    mZScreen.lbHistory.Items.RemoveAt(i);
-                }
-            }
-
-            UpdateGuiControlsHistory();
-        }
-
-        public void SaveHistoryItems()
-        {
-            if (Engine.conf.HistorySave)
-            {
-                List<HistoryItem> historyItems = new List<HistoryItem>();
-                foreach (HistoryItem item in mZScreen.lbHistory.Items)
-                {
-                    historyItems.Add(item);
-                }
-
-                HistoryManager hm = new HistoryManager(historyItems);
-                hm.Save();
-            }
-        }
-
-        public void UpdateGuiControlsHistory()
-        {
-            mZScreen.tpHistoryList.Text = string.Format("History List ({0}/{1})", mZScreen.lbHistory.Items.Count, Engine.conf.HistoryMaxNumber);
-        }
-
-        #endregion ZScreen GUI
     }
 }

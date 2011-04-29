@@ -32,10 +32,10 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -209,6 +209,42 @@ namespace ZScreenGUI
             this.ucMindTouchAccounts = new ZScreenGUI.AccountsControl();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
             this.ucMediaWikiAccounts = new ZScreenGUI.AccountsControl();
+            this.tpCustomUploaders = new System.Windows.Forms.TabPage();
+            this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
+            this.btnUploadersTest = new System.Windows.Forms.Button();
+            this.txtFullImage = new System.Windows.Forms.TextBox();
+            this.txtThumbnail = new System.Windows.Forms.TextBox();
+            this.lblFullImage = new System.Windows.Forms.Label();
+            this.lblThumbnail = new System.Windows.Forms.Label();
+            this.gbImageUploaders = new System.Windows.Forms.GroupBox();
+            this.lbImageUploader = new System.Windows.Forms.ListBox();
+            this.btnUploadersClear = new System.Windows.Forms.Button();
+            this.btnUploaderExport = new System.Windows.Forms.Button();
+            this.btnUploaderRemove = new System.Windows.Forms.Button();
+            this.btnUploaderImport = new System.Windows.Forms.Button();
+            this.btnUploaderUpdate = new System.Windows.Forms.Button();
+            this.txtUploader = new System.Windows.Forms.TextBox();
+            this.btnUploaderAdd = new System.Windows.Forms.Button();
+            this.gbRegexp = new System.Windows.Forms.GroupBox();
+            this.btnRegexpEdit = new System.Windows.Forms.Button();
+            this.txtRegexp = new System.Windows.Forms.TextBox();
+            this.lvRegexps = new System.Windows.Forms.ListView();
+            this.lvRegexpsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnRegexpRemove = new System.Windows.Forms.Button();
+            this.btnRegexpAdd = new System.Windows.Forms.Button();
+            this.txtFileForm = new System.Windows.Forms.TextBox();
+            this.lblFileForm = new System.Windows.Forms.Label();
+            this.lblUploadURL = new System.Windows.Forms.Label();
+            this.txtUploadURL = new System.Windows.Forms.TextBox();
+            this.gbArguments = new System.Windows.Forms.GroupBox();
+            this.btnArgEdit = new System.Windows.Forms.Button();
+            this.txtArg2 = new System.Windows.Forms.TextBox();
+            this.btnArgRemove = new System.Windows.Forms.Button();
+            this.lvArguments = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnArgAdd = new System.Windows.Forms.Button();
+            this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
@@ -414,42 +450,6 @@ namespace ZScreenGUI
             this.gbImageUploaderOptions = new System.Windows.Forms.GroupBox();
             this.chkAutoSwitchFileUploader = new System.Windows.Forms.CheckBox();
             this.cbTinyPicSizeCheck = new System.Windows.Forms.CheckBox();
-            this.tpCustomUploaders = new System.Windows.Forms.TabPage();
-            this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
-            this.btnUploadersTest = new System.Windows.Forms.Button();
-            this.txtFullImage = new System.Windows.Forms.TextBox();
-            this.txtThumbnail = new System.Windows.Forms.TextBox();
-            this.lblFullImage = new System.Windows.Forms.Label();
-            this.lblThumbnail = new System.Windows.Forms.Label();
-            this.gbImageUploaders = new System.Windows.Forms.GroupBox();
-            this.lbImageUploader = new System.Windows.Forms.ListBox();
-            this.btnUploadersClear = new System.Windows.Forms.Button();
-            this.btnUploaderExport = new System.Windows.Forms.Button();
-            this.btnUploaderRemove = new System.Windows.Forms.Button();
-            this.btnUploaderImport = new System.Windows.Forms.Button();
-            this.btnUploaderUpdate = new System.Windows.Forms.Button();
-            this.txtUploader = new System.Windows.Forms.TextBox();
-            this.btnUploaderAdd = new System.Windows.Forms.Button();
-            this.gbRegexp = new System.Windows.Forms.GroupBox();
-            this.btnRegexpEdit = new System.Windows.Forms.Button();
-            this.txtRegexp = new System.Windows.Forms.TextBox();
-            this.lvRegexps = new System.Windows.Forms.ListView();
-            this.lvRegexpsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnRegexpRemove = new System.Windows.Forms.Button();
-            this.btnRegexpAdd = new System.Windows.Forms.Button();
-            this.txtFileForm = new System.Windows.Forms.TextBox();
-            this.lblFileForm = new System.Windows.Forms.Label();
-            this.lblUploadURL = new System.Windows.Forms.Label();
-            this.txtUploadURL = new System.Windows.Forms.TextBox();
-            this.gbArguments = new System.Windows.Forms.GroupBox();
-            this.btnArgEdit = new System.Windows.Forms.Button();
-            this.txtArg2 = new System.Windows.Forms.TextBox();
-            this.btnArgRemove = new System.Windows.Forms.Button();
-            this.lvArguments = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnArgAdd = new System.Windows.Forms.Button();
-            this.txtArg1 = new System.Windows.Forms.TextBox();
             this.tpWebPageUpload = new System.Windows.Forms.TabPage();
             this.cbWebPageAutoUpload = new System.Windows.Forms.CheckBox();
             this.lblWebPageHeight = new System.Windows.Forms.Label();
@@ -483,25 +483,14 @@ namespace ZScreenGUI
             this.cbToLanguage = new System.Windows.Forms.ComboBox();
             this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpHistory = new System.Windows.Forms.TabPage();
-            this.tcHistory = new System.Windows.Forms.TabControl();
-            this.tpHistoryList = new System.Windows.Forms.TabPage();
-            this.tlpHistory = new System.Windows.Forms.TableLayoutPanel();
-            this.tlpHistoryControls = new System.Windows.Forms.TableLayoutPanel();
-            this.lblHistoryScreenshot = new System.Windows.Forms.Label();
-            this.panelControls = new System.Windows.Forms.Panel();
-            this.btnHistoryOpenLocalFile = new System.Windows.Forms.Button();
-            this.txtHistoryLocalPath = new System.Windows.Forms.TextBox();
-            this.btnHistoryCopyLink = new System.Windows.Forms.Button();
-            this.lblHistoryRemotePath = new System.Windows.Forms.Label();
-            this.btnHistoryCopyImage = new System.Windows.Forms.Button();
-            this.txtHistoryRemotePath = new System.Windows.Forms.TextBox();
-            this.btnHistoryBrowseURL = new System.Windows.Forms.Button();
-            this.lblHistoryLocalPath = new System.Windows.Forms.Label();
-            this.panelPreview = new System.Windows.Forms.Panel();
-            this.pbPreview = new System.Windows.Forms.PictureBox();
-            this.txtPreview = new System.Windows.Forms.RichTextBox();
-            this.historyBrowser = new System.Windows.Forms.WebBrowser();
-            this.lbHistory = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnHistoryOpen = new System.Windows.Forms.Button();
+            this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
+            this.cbHistorySave = new System.Windows.Forms.CheckBox();
+            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
+            this.lblHistoryMaxItems = new System.Windows.Forms.Label();
+            this.lblHistoryListFormat = new System.Windows.Forms.Label();
+            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
@@ -575,17 +564,6 @@ namespace ZScreenGUI
             this.lblMebibytes = new System.Windows.Forms.Label();
             this.nudCacheSize = new System.Windows.Forms.NumericUpDown();
             this.txtCacheDir = new System.Windows.Forms.TextBox();
-            this.tpHistorySettings = new System.Windows.Forms.TabPage();
-            this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
-            this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.cbShowHistoryTooltip = new System.Windows.Forms.CheckBox();
-            this.btnHistoryClear = new System.Windows.Forms.Button();
-            this.cbHistoryListFormat = new System.Windows.Forms.ComboBox();
-            this.lblHistoryMaxItems = new System.Windows.Forms.Label();
-            this.lblHistoryListFormat = new System.Windows.Forms.Label();
-            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
-            this.cbHistoryAddSpace = new System.Windows.Forms.CheckBox();
-            this.cbHistoryReverseList = new System.Windows.Forms.CheckBox();
             this.tpStats = new System.Windows.Forms.TabPage();
             this.btnOpenZScreenTester = new System.Windows.Forms.Button();
             this.gbStatistics = new System.Windows.Forms.GroupBox();
@@ -638,6 +616,10 @@ namespace ZScreenGUI
             this.tpMindTouch.SuspendLayout();
             this.gbMindTouchOptions.SuspendLayout();
             this.tpMediaWiki.SuspendLayout();
+            this.tpCustomUploaders.SuspendLayout();
+            this.gbImageUploaders.SuspendLayout();
+            this.gbRegexp.SuspendLayout();
+            this.gbArguments.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpScreenshots.SuspendLayout();
@@ -710,10 +692,6 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadDurationLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).BeginInit();
             this.gbImageUploaderOptions.SuspendLayout();
-            this.tpCustomUploaders.SuspendLayout();
-            this.gbImageUploaders.SuspendLayout();
-            this.gbRegexp.SuspendLayout();
-            this.gbArguments.SuspendLayout();
             this.tpWebPageUpload.SuspendLayout();
             this.pWebPageImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).BeginInit();
@@ -722,13 +700,7 @@ namespace ZScreenGUI
             this.tpTreeGUI.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpHistory.SuspendLayout();
-            this.tcHistory.SuspendLayout();
-            this.tpHistoryList.SuspendLayout();
-            this.tlpHistory.SuspendLayout();
-            this.tlpHistoryControls.SuspendLayout();
-            this.panelControls.SuspendLayout();
-            this.panelPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
             this.tpGeneral.SuspendLayout();
@@ -749,8 +721,6 @@ namespace ZScreenGUI
             this.gbSettingsExportImport.SuspendLayout();
             this.gbCache.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).BeginInit();
-            this.tpHistorySettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
@@ -784,34 +754,34 @@ namespace ZScreenGUI
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(201, 292);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmiTabs
             // 
             this.tsmiTabs.DoubleClickEnabled = true;
             this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
             this.tsmiTabs.Name = "tsmiTabs";
-            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
+            this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
             this.tsmiTabs.Text = "View Settings Menu...";
             this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmImageDest
             // 
             this.tsmImageDest.Image = global::ZScreenGUI.Properties.Resources.picture_go;
             this.tsmImageDest.Name = "tsmImageDest";
-            this.tsmImageDest.Size = new System.Drawing.Size(200, 22);
+            this.tsmImageDest.Size = new System.Drawing.Size(205, 22);
             this.tsmImageDest.Text = "Send Image To";
             // 
             // tsmFileDest
             // 
             this.tsmFileDest.Image = global::ZScreenGUI.Properties.Resources.application_go;
             this.tsmFileDest.Name = "tsmFileDest";
-            this.tsmFileDest.Size = new System.Drawing.Size(200, 22);
+            this.tsmFileDest.Size = new System.Drawing.Size(205, 22);
             this.tsmFileDest.Text = "Send File To";
             // 
             // tsmEditinImageSoftware
@@ -819,7 +789,7 @@ namespace ZScreenGUI
             this.tsmEditinImageSoftware.CheckOnClick = true;
             this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
             this.tsmEditinImageSoftware.Text = "Edit in Image Software";
             this.tsmEditinImageSoftware.CheckedChanged += new System.EventHandler(this.tsmEditinImageSoftware_CheckedChanged);
             // 
@@ -827,19 +797,19 @@ namespace ZScreenGUI
             // 
             this.tsmCopytoClipboardMode.Image = global::ZScreenGUI.Properties.Resources.page_copy;
             this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
-            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(200, 22);
+            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
             this.tsmCopytoClipboardMode.Text = "Copy to Clipboard Mode";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmFTPClient
             // 
             this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmFTPClient.Name = "tsmFTPClient";
-            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
+            this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
             this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
             // 
@@ -847,14 +817,14 @@ namespace ZScreenGUI
             // 
             this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(200, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmActions
             // 
@@ -871,7 +841,7 @@ namespace ZScreenGUI
             this.tsmScreenColorPicker});
             this.tsmActions.Image = global::ZScreenGUI.Properties.Resources.lightning;
             this.tsmActions.Name = "tsmActions";
-            this.tsmActions.Size = new System.Drawing.Size(200, 22);
+            this.tsmActions.Size = new System.Drawing.Size(205, 22);
             this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
@@ -955,7 +925,7 @@ namespace ZScreenGUI
             // 
             this.tsmQuickActions.Image = global::ZScreenGUI.Properties.Resources.application_lightning;
             this.tsmQuickActions.Name = "tsmQuickActions";
-            this.tsmQuickActions.Size = new System.Drawing.Size(200, 22);
+            this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickActions.Text = "Actions Toolbar...";
             this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
@@ -963,14 +933,14 @@ namespace ZScreenGUI
             // 
             this.tsmQuickOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
             this.tsmQuickOptions.Name = "tsmQuickOptions";
-            this.tsmQuickOptions.Size = new System.Drawing.Size(200, 22);
+            this.tsmQuickOptions.Size = new System.Drawing.Size(205, 22);
             this.tsmQuickOptions.Text = "&Quick Options...";
             this.tsmQuickOptions.Click += new System.EventHandler(this.tsmQuickOptions_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(202, 6);
             // 
             // tsmHelp
             // 
@@ -980,14 +950,14 @@ namespace ZScreenGUI
             this.tsmAbout});
             this.tsmHelp.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(200, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
             // 
             this.tsmLicense.Image = global::ZScreenGUI.Properties.Resources.note_error;
             this.tsmLicense.Name = "tsmLicense";
-            this.tsmLicense.Size = new System.Drawing.Size(169, 22);
+            this.tsmLicense.Size = new System.Drawing.Size(163, 22);
             this.tsmLicense.Text = "License...";
             this.tsmLicense.Click += new System.EventHandler(this.tsmLic_Click);
             // 
@@ -995,7 +965,7 @@ namespace ZScreenGUI
             // 
             this.tsmVersionHistory.Image = global::ZScreenGUI.Properties.Resources.page_white_text;
             this.tsmVersionHistory.Name = "tsmVersionHistory";
-            this.tsmVersionHistory.Size = new System.Drawing.Size(169, 22);
+            this.tsmVersionHistory.Size = new System.Drawing.Size(163, 22);
             this.tsmVersionHistory.Text = "&Version History...";
             this.tsmVersionHistory.Click += new System.EventHandler(this.cmVersionHistory_Click);
             // 
@@ -1003,7 +973,7 @@ namespace ZScreenGUI
             // 
             this.tsmAbout.Image = global::ZScreenGUI.Properties.Resources.information;
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(169, 22);
+            this.tsmAbout.Size = new System.Drawing.Size(163, 22);
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
@@ -1011,7 +981,7 @@ namespace ZScreenGUI
             // 
             this.tsmExitZScreen.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(200, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
@@ -1031,39 +1001,33 @@ namespace ZScreenGUI
             this.cmsRetryUpload,
             this.deleteToolStripMenuItem});
             this.cmsHistory.Name = "cmsHistory";
-            this.cmsHistory.Size = new System.Drawing.Size(178, 220);
+            this.cmsHistory.Size = new System.Drawing.Size(170, 220);
             // 
             // tsmCopyCbHistory
             // 
             this.tsmCopyCbHistory.Name = "tsmCopyCbHistory";
-            this.tsmCopyCbHistory.Size = new System.Drawing.Size(177, 22);
+            this.tsmCopyCbHistory.Size = new System.Drawing.Size(169, 22);
             this.tsmCopyCbHistory.Text = "&Copy Link";
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.copyImageToolStripMenuItem.Text = "Copy &Image";
-            this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.copyImageToolStripMenuItem_Click);
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
             // 
             // openLocalFileToolStripMenuItem
             // 
             this.openLocalFileToolStripMenuItem.Name = "openLocalFileToolStripMenuItem";
-            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.openLocalFileToolStripMenuItem.Text = "Open Local File";
-            this.openLocalFileToolStripMenuItem.Click += new System.EventHandler(this.openLocalFileToolStripMenuItem_Click);
+            this.openLocalFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // browseURLToolStripMenuItem
             // 
             this.browseURLToolStripMenuItem.Name = "browseURLToolStripMenuItem";
-            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.browseURLToolStripMenuItem.Text = "Browse &URL...";
-            this.browseURLToolStripMenuItem.Click += new System.EventHandler(this.browseURLToolStripMenuItem_Click);
+            this.browseURLToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // openSourceToolStripMenuItem
             // 
@@ -1072,67 +1036,55 @@ namespace ZScreenGUI
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem,
             this.copySourceToClipboardStringToolStripMenuItem});
             this.openSourceToolStripMenuItem.Name = "openSourceToolStripMenuItem";
-            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.openSourceToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.openSourceToolStripMenuItem.Text = "Open Source";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.openToolStripMenuItem.Text = "Open Source in Text Editor";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
             // 
             // openSourceInDefaultWebBrowserHTMLToolStripMenuItem
             // 
             this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Name = "openSourceInDefaultWebBrowserHTMLToolStripMenuItem";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Text = "Open Source in Browser";
-            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Click += new System.EventHandler(this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem_Click);
+            this.openSourceInDefaultWebBrowserHTMLToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
             // 
             // copySourceToClipboardStringToolStripMenuItem
             // 
             this.copySourceToClipboardStringToolStripMenuItem.Name = "copySourceToClipboardStringToolStripMenuItem";
-            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.copySourceToClipboardStringToolStripMenuItem.Text = "Copy Source to Clipboard";
-            this.copySourceToClipboardStringToolStripMenuItem.Click += new System.EventHandler(this.copySourceToClipboardStringToolStripMenuItem_Click);
+            this.copySourceToClipboardStringToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(166, 6);
             // 
             // editInPicnikToolStripMenuItem
             // 
             this.editInPicnikToolStripMenuItem.Name = "editInPicnikToolStripMenuItem";
-            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.editInPicnikToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.editInPicnikToolStripMenuItem.Text = "Edit in Picnik...";
             this.editInPicnikToolStripMenuItem.Click += new System.EventHandler(this.editInPicnikToolStripMenuItem_Click);
             // 
             // tsmiTwitter
             // 
             this.tsmiTwitter.Name = "tsmiTwitter";
-            this.tsmiTwitter.Size = new System.Drawing.Size(177, 22);
-            this.tsmiTwitter.Text = "Share on &Twitter...";
-            this.tsmiTwitter.Click += new System.EventHandler(this.tsmiTwitter_Click);
+            this.tsmiTwitter.Size = new System.Drawing.Size(32, 19);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(166, 6);
             // 
             // cmsRetryUpload
             // 
             this.cmsRetryUpload.Name = "cmsRetryUpload";
-            this.cmsRetryUpload.Size = new System.Drawing.Size(177, 22);
-            this.cmsRetryUpload.Text = "Retry Upload";
-            this.cmsRetryUpload.Click += new System.EventHandler(this.cmsRetryUpload_Click);
+            this.cmsRetryUpload.Size = new System.Drawing.Size(32, 19);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.deleteToolStripMenuItem.Text = "&Delete Local Files";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // ilApp
             // 
@@ -1403,6 +1355,7 @@ namespace ZScreenGUI
             this.tcDestinations.Controls.Add(this.tpImageBam);
             this.tcDestinations.Controls.Add(this.tpMindTouch);
             this.tcDestinations.Controls.Add(this.tpMediaWiki);
+            this.tcDestinations.Controls.Add(this.tpCustomUploaders);
             this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcDestinations.ImageList = this.ilApp;
             this.tcDestinations.Location = new System.Drawing.Point(3, 3);
@@ -2564,6 +2517,362 @@ namespace ZScreenGUI
             this.ucMediaWikiAccounts.Size = new System.Drawing.Size(787, 392);
             this.ucMediaWikiAccounts.TabIndex = 0;
             // 
+            // tpCustomUploaders
+            // 
+            this.tpCustomUploaders.Controls.Add(this.txtUploadersLog);
+            this.tpCustomUploaders.Controls.Add(this.btnUploadersTest);
+            this.tpCustomUploaders.Controls.Add(this.txtFullImage);
+            this.tpCustomUploaders.Controls.Add(this.txtThumbnail);
+            this.tpCustomUploaders.Controls.Add(this.lblFullImage);
+            this.tpCustomUploaders.Controls.Add(this.lblThumbnail);
+            this.tpCustomUploaders.Controls.Add(this.gbImageUploaders);
+            this.tpCustomUploaders.Controls.Add(this.gbRegexp);
+            this.tpCustomUploaders.Controls.Add(this.txtFileForm);
+            this.tpCustomUploaders.Controls.Add(this.lblFileForm);
+            this.tpCustomUploaders.Controls.Add(this.lblUploadURL);
+            this.tpCustomUploaders.Controls.Add(this.txtUploadURL);
+            this.tpCustomUploaders.Controls.Add(this.gbArguments);
+            this.tpCustomUploaders.ImageKey = "world_add.png";
+            this.tpCustomUploaders.Location = new System.Drawing.Point(4, 23);
+            this.tpCustomUploaders.Name = "tpCustomUploaders";
+            this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpCustomUploaders.Size = new System.Drawing.Size(791, 402);
+            this.tpCustomUploaders.TabIndex = 11;
+            this.tpCustomUploaders.Text = "Custom";
+            this.tpCustomUploaders.UseVisualStyleBackColor = true;
+            // 
+            // txtUploadersLog
+            // 
+            this.txtUploadersLog.Location = new System.Drawing.Point(8, 280);
+            this.txtUploadersLog.Name = "txtUploadersLog";
+            this.txtUploadersLog.Size = new System.Drawing.Size(424, 104);
+            this.txtUploadersLog.TabIndex = 18;
+            this.txtUploadersLog.Text = "";
+            this.txtUploadersLog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtUploadersLog_LinkClicked);
+            // 
+            // btnUploadersTest
+            // 
+            this.btnUploadersTest.Location = new System.Drawing.Point(448, 360);
+            this.btnUploadersTest.Name = "btnUploadersTest";
+            this.btnUploadersTest.Size = new System.Drawing.Size(328, 24);
+            this.btnUploadersTest.TabIndex = 9;
+            this.btnUploadersTest.Text = "Test Upload";
+            this.btnUploadersTest.UseVisualStyleBackColor = true;
+            this.btnUploadersTest.Click += new System.EventHandler(this.btUploadersTest_Click);
+            // 
+            // txtFullImage
+            // 
+            this.txtFullImage.Location = new System.Drawing.Point(448, 296);
+            this.txtFullImage.Name = "txtFullImage";
+            this.txtFullImage.Size = new System.Drawing.Size(328, 20);
+            this.txtFullImage.TabIndex = 5;
+            // 
+            // txtThumbnail
+            // 
+            this.txtThumbnail.Location = new System.Drawing.Point(448, 336);
+            this.txtThumbnail.Name = "txtThumbnail";
+            this.txtThumbnail.Size = new System.Drawing.Size(328, 20);
+            this.txtThumbnail.TabIndex = 6;
+            // 
+            // lblFullImage
+            // 
+            this.lblFullImage.AutoSize = true;
+            this.lblFullImage.Location = new System.Drawing.Point(448, 280);
+            this.lblFullImage.Name = "lblFullImage";
+            this.lblFullImage.Size = new System.Drawing.Size(55, 13);
+            this.lblFullImage.TabIndex = 17;
+            this.lblFullImage.Text = "Full Image";
+            // 
+            // lblThumbnail
+            // 
+            this.lblThumbnail.AutoSize = true;
+            this.lblThumbnail.Location = new System.Drawing.Point(448, 320);
+            this.lblThumbnail.Name = "lblThumbnail";
+            this.lblThumbnail.Size = new System.Drawing.Size(56, 13);
+            this.lblThumbnail.TabIndex = 16;
+            this.lblThumbnail.Text = "Thumbnail";
+            // 
+            // gbImageUploaders
+            // 
+            this.gbImageUploaders.Controls.Add(this.lbImageUploader);
+            this.gbImageUploaders.Controls.Add(this.btnUploadersClear);
+            this.gbImageUploaders.Controls.Add(this.btnUploaderExport);
+            this.gbImageUploaders.Controls.Add(this.btnUploaderRemove);
+            this.gbImageUploaders.Controls.Add(this.btnUploaderImport);
+            this.gbImageUploaders.Controls.Add(this.btnUploaderUpdate);
+            this.gbImageUploaders.Controls.Add(this.txtUploader);
+            this.gbImageUploaders.Controls.Add(this.btnUploaderAdd);
+            this.gbImageUploaders.Location = new System.Drawing.Point(8, 8);
+            this.gbImageUploaders.Name = "gbImageUploaders";
+            this.gbImageUploaders.Size = new System.Drawing.Size(248, 264);
+            this.gbImageUploaders.TabIndex = 0;
+            this.gbImageUploaders.TabStop = false;
+            this.gbImageUploaders.Text = "Image Hosting Services";
+            // 
+            // lbImageUploader
+            // 
+            this.lbImageUploader.FormattingEnabled = true;
+            this.lbImageUploader.Location = new System.Drawing.Point(8, 72);
+            this.lbImageUploader.Name = "lbImageUploader";
+            this.lbImageUploader.Size = new System.Drawing.Size(232, 147);
+            this.lbImageUploader.TabIndex = 3;
+            this.lbImageUploader.SelectedIndexChanged += new System.EventHandler(this.lbImageUploader_SelectedIndexChanged);
+            // 
+            // btnUploadersClear
+            // 
+            this.btnUploadersClear.Location = new System.Drawing.Point(168, 232);
+            this.btnUploadersClear.Name = "btnUploadersClear";
+            this.btnUploadersClear.Size = new System.Drawing.Size(72, 24);
+            this.btnUploadersClear.TabIndex = 8;
+            this.btnUploadersClear.Text = "Clear";
+            this.btnUploadersClear.UseVisualStyleBackColor = true;
+            this.btnUploadersClear.Click += new System.EventHandler(this.btnUploadersClear_Click);
+            // 
+            // btnUploaderExport
+            // 
+            this.btnUploaderExport.Location = new System.Drawing.Point(88, 232);
+            this.btnUploaderExport.Name = "btnUploaderExport";
+            this.btnUploaderExport.Size = new System.Drawing.Size(72, 24);
+            this.btnUploaderExport.TabIndex = 5;
+            this.btnUploaderExport.Text = "Export...";
+            this.btnUploaderExport.UseVisualStyleBackColor = true;
+            this.btnUploaderExport.Click += new System.EventHandler(this.btnUploaderExport_Click);
+            // 
+            // btnUploaderRemove
+            // 
+            this.btnUploaderRemove.Location = new System.Drawing.Point(88, 40);
+            this.btnUploaderRemove.Name = "btnUploaderRemove";
+            this.btnUploaderRemove.Size = new System.Drawing.Size(72, 24);
+            this.btnUploaderRemove.TabIndex = 2;
+            this.btnUploaderRemove.Text = "Remove";
+            this.btnUploaderRemove.UseVisualStyleBackColor = true;
+            this.btnUploaderRemove.Click += new System.EventHandler(this.btnUploaderRemove_Click);
+            // 
+            // btnUploaderImport
+            // 
+            this.btnUploaderImport.Location = new System.Drawing.Point(8, 232);
+            this.btnUploaderImport.Name = "btnUploaderImport";
+            this.btnUploaderImport.Size = new System.Drawing.Size(72, 24);
+            this.btnUploaderImport.TabIndex = 4;
+            this.btnUploaderImport.Text = "Import...";
+            this.btnUploaderImport.UseVisualStyleBackColor = true;
+            this.btnUploaderImport.Click += new System.EventHandler(this.btnUploaderImport_Click);
+            // 
+            // btnUploaderUpdate
+            // 
+            this.btnUploaderUpdate.Location = new System.Drawing.Point(168, 40);
+            this.btnUploaderUpdate.Name = "btnUploaderUpdate";
+            this.btnUploaderUpdate.Size = new System.Drawing.Size(72, 24);
+            this.btnUploaderUpdate.TabIndex = 7;
+            this.btnUploaderUpdate.Text = "Update";
+            this.btnUploaderUpdate.UseVisualStyleBackColor = true;
+            this.btnUploaderUpdate.Click += new System.EventHandler(this.btnUploadersUpdate_Click);
+            // 
+            // txtUploader
+            // 
+            this.txtUploader.Location = new System.Drawing.Point(8, 16);
+            this.txtUploader.Name = "txtUploader";
+            this.txtUploader.Size = new System.Drawing.Size(232, 20);
+            this.txtUploader.TabIndex = 0;
+            // 
+            // btnUploaderAdd
+            // 
+            this.btnUploaderAdd.Location = new System.Drawing.Point(8, 40);
+            this.btnUploaderAdd.Name = "btnUploaderAdd";
+            this.btnUploaderAdd.Size = new System.Drawing.Size(72, 24);
+            this.btnUploaderAdd.TabIndex = 1;
+            this.btnUploaderAdd.Text = "Add";
+            this.btnUploaderAdd.UseVisualStyleBackColor = true;
+            this.btnUploaderAdd.Click += new System.EventHandler(this.btnUploaderAdd_Click);
+            // 
+            // gbRegexp
+            // 
+            this.gbRegexp.Controls.Add(this.btnRegexpEdit);
+            this.gbRegexp.Controls.Add(this.txtRegexp);
+            this.gbRegexp.Controls.Add(this.lvRegexps);
+            this.gbRegexp.Controls.Add(this.btnRegexpRemove);
+            this.gbRegexp.Controls.Add(this.btnRegexpAdd);
+            this.gbRegexp.Location = new System.Drawing.Point(272, 88);
+            this.gbRegexp.Name = "gbRegexp";
+            this.gbRegexp.Size = new System.Drawing.Size(240, 184);
+            this.gbRegexp.TabIndex = 4;
+            this.gbRegexp.TabStop = false;
+            this.gbRegexp.Text = "Regexp from Source";
+            // 
+            // btnRegexpEdit
+            // 
+            this.btnRegexpEdit.Location = new System.Drawing.Point(160, 40);
+            this.btnRegexpEdit.Name = "btnRegexpEdit";
+            this.btnRegexpEdit.Size = new System.Drawing.Size(72, 24);
+            this.btnRegexpEdit.TabIndex = 4;
+            this.btnRegexpEdit.Text = "Edit";
+            this.btnRegexpEdit.UseVisualStyleBackColor = true;
+            this.btnRegexpEdit.Click += new System.EventHandler(this.btnRegexpEdit_Click);
+            // 
+            // txtRegexp
+            // 
+            this.txtRegexp.Location = new System.Drawing.Point(8, 16);
+            this.txtRegexp.Name = "txtRegexp";
+            this.txtRegexp.Size = new System.Drawing.Size(224, 20);
+            this.txtRegexp.TabIndex = 0;
+            // 
+            // lvRegexps
+            // 
+            this.lvRegexps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvRegexpsColumn});
+            this.lvRegexps.FullRowSelect = true;
+            this.lvRegexps.GridLines = true;
+            this.lvRegexps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvRegexps.HideSelection = false;
+            this.lvRegexps.Location = new System.Drawing.Point(8, 72);
+            this.lvRegexps.MultiSelect = false;
+            this.lvRegexps.Name = "lvRegexps";
+            this.lvRegexps.Scrollable = false;
+            this.lvRegexps.Size = new System.Drawing.Size(226, 104);
+            this.lvRegexps.TabIndex = 3;
+            this.lvRegexps.UseCompatibleStateImageBehavior = false;
+            this.lvRegexps.View = System.Windows.Forms.View.Details;
+            // 
+            // lvRegexpsColumn
+            // 
+            this.lvRegexpsColumn.Width = 227;
+            // 
+            // btnRegexpRemove
+            // 
+            this.btnRegexpRemove.Location = new System.Drawing.Point(84, 40);
+            this.btnRegexpRemove.Name = "btnRegexpRemove";
+            this.btnRegexpRemove.Size = new System.Drawing.Size(72, 24);
+            this.btnRegexpRemove.TabIndex = 2;
+            this.btnRegexpRemove.Text = "Remove";
+            this.btnRegexpRemove.UseVisualStyleBackColor = true;
+            this.btnRegexpRemove.Click += new System.EventHandler(this.btnRegexpRemove_Click);
+            // 
+            // btnRegexpAdd
+            // 
+            this.btnRegexpAdd.Location = new System.Drawing.Point(8, 40);
+            this.btnRegexpAdd.Name = "btnRegexpAdd";
+            this.btnRegexpAdd.Size = new System.Drawing.Size(72, 24);
+            this.btnRegexpAdd.TabIndex = 1;
+            this.btnRegexpAdd.Text = "Add";
+            this.btnRegexpAdd.UseVisualStyleBackColor = true;
+            this.btnRegexpAdd.Click += new System.EventHandler(this.btnRegexpAdd_Click);
+            // 
+            // txtFileForm
+            // 
+            this.txtFileForm.Location = new System.Drawing.Point(280, 64);
+            this.txtFileForm.Name = "txtFileForm";
+            this.txtFileForm.Size = new System.Drawing.Size(224, 20);
+            this.txtFileForm.TabIndex = 3;
+            // 
+            // lblFileForm
+            // 
+            this.lblFileForm.AutoSize = true;
+            this.lblFileForm.Location = new System.Drawing.Point(280, 48);
+            this.lblFileForm.Name = "lblFileForm";
+            this.lblFileForm.Size = new System.Drawing.Size(83, 13);
+            this.lblFileForm.TabIndex = 9;
+            this.lblFileForm.Text = "File Form Name:";
+            // 
+            // lblUploadURL
+            // 
+            this.lblUploadURL.AutoSize = true;
+            this.lblUploadURL.Location = new System.Drawing.Point(280, 8);
+            this.lblUploadURL.Name = "lblUploadURL";
+            this.lblUploadURL.Size = new System.Drawing.Size(69, 13);
+            this.lblUploadURL.TabIndex = 8;
+            this.lblUploadURL.Text = "Upload URL:";
+            // 
+            // txtUploadURL
+            // 
+            this.txtUploadURL.Location = new System.Drawing.Point(280, 24);
+            this.txtUploadURL.Name = "txtUploadURL";
+            this.txtUploadURL.Size = new System.Drawing.Size(224, 20);
+            this.txtUploadURL.TabIndex = 2;
+            // 
+            // gbArguments
+            // 
+            this.gbArguments.Controls.Add(this.btnArgEdit);
+            this.gbArguments.Controls.Add(this.txtArg2);
+            this.gbArguments.Controls.Add(this.btnArgRemove);
+            this.gbArguments.Controls.Add(this.lvArguments);
+            this.gbArguments.Controls.Add(this.btnArgAdd);
+            this.gbArguments.Controls.Add(this.txtArg1);
+            this.gbArguments.Location = new System.Drawing.Point(528, 8);
+            this.gbArguments.Name = "gbArguments";
+            this.gbArguments.Size = new System.Drawing.Size(248, 264);
+            this.gbArguments.TabIndex = 1;
+            this.gbArguments.TabStop = false;
+            this.gbArguments.Text = "Arguments";
+            // 
+            // btnArgEdit
+            // 
+            this.btnArgEdit.Location = new System.Drawing.Point(168, 40);
+            this.btnArgEdit.Name = "btnArgEdit";
+            this.btnArgEdit.Size = new System.Drawing.Size(72, 24);
+            this.btnArgEdit.TabIndex = 5;
+            this.btnArgEdit.Text = "Edit";
+            this.btnArgEdit.UseVisualStyleBackColor = true;
+            this.btnArgEdit.Click += new System.EventHandler(this.btnArgEdit_Click);
+            // 
+            // txtArg2
+            // 
+            this.txtArg2.Location = new System.Drawing.Point(128, 16);
+            this.txtArg2.Name = "txtArg2";
+            this.txtArg2.Size = new System.Drawing.Size(112, 20);
+            this.txtArg2.TabIndex = 1;
+            // 
+            // btnArgRemove
+            // 
+            this.btnArgRemove.Location = new System.Drawing.Point(88, 40);
+            this.btnArgRemove.Name = "btnArgRemove";
+            this.btnArgRemove.Size = new System.Drawing.Size(72, 24);
+            this.btnArgRemove.TabIndex = 3;
+            this.btnArgRemove.Text = "Remove";
+            this.btnArgRemove.UseVisualStyleBackColor = true;
+            this.btnArgRemove.Click += new System.EventHandler(this.btnArgRemove_Click);
+            // 
+            // lvArguments
+            // 
+            this.lvArguments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lvArguments.FullRowSelect = true;
+            this.lvArguments.GridLines = true;
+            this.lvArguments.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvArguments.HideSelection = false;
+            this.lvArguments.Location = new System.Drawing.Point(8, 72);
+            this.lvArguments.MultiSelect = false;
+            this.lvArguments.Name = "lvArguments";
+            this.lvArguments.Size = new System.Drawing.Size(232, 184);
+            this.lvArguments.TabIndex = 4;
+            this.lvArguments.UseCompatibleStateImageBehavior = false;
+            this.lvArguments.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 113;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 113;
+            // 
+            // btnArgAdd
+            // 
+            this.btnArgAdd.Location = new System.Drawing.Point(8, 40);
+            this.btnArgAdd.Name = "btnArgAdd";
+            this.btnArgAdd.Size = new System.Drawing.Size(72, 24);
+            this.btnArgAdd.TabIndex = 2;
+            this.btnArgAdd.Text = "Add";
+            this.btnArgAdd.UseVisualStyleBackColor = true;
+            this.btnArgAdd.Click += new System.EventHandler(this.btnArgAdd_Click);
+            // 
+            // txtArg1
+            // 
+            this.txtArg1.Location = new System.Drawing.Point(8, 16);
+            this.txtArg1.Name = "txtArg1";
+            this.txtArg1.Size = new System.Drawing.Size(112, 20);
+            this.txtArg1.TabIndex = 0;
+            // 
             // tpHotkeys
             // 
             this.tpHotkeys.Controls.Add(this.btnResetHotkeys);
@@ -2613,39 +2922,39 @@ namespace ZScreenGUI
             this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chHotkeys_Description,
             this.chHotkeys_Keys,
             this.DefaultKeys});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHotkeys.Location = new System.Drawing.Point(26, 50);
             this.dgvHotkeys.MultiSelect = false;
             this.dgvHotkeys.Name = "dgvHotkeys";
             this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvHotkeys.RowHeadersVisible = false;
             this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvHotkeys.RowTemplate.Height = 24;
@@ -2677,8 +2986,8 @@ namespace ZScreenGUI
             // DefaultKeys
             // 
             this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
             this.DefaultKeys.HeaderText = "Default Hotkey";
             this.DefaultKeys.Name = "DefaultKeys";
             this.DefaultKeys.ReadOnly = true;
@@ -4897,7 +5206,6 @@ namespace ZScreenGUI
             // tcImages
             // 
             this.tcImages.Controls.Add(this.tpImageUploaders);
-            this.tcDestinations.Controls.Add(this.tpCustomUploaders);
             this.tcImages.Controls.Add(this.tpWebPageUpload);
             this.tcImages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcImages.ImageList = this.ilApp;
@@ -5050,362 +5358,6 @@ namespace ZScreenGUI
                 "ixels";
             this.cbTinyPicSizeCheck.UseVisualStyleBackColor = true;
             this.cbTinyPicSizeCheck.CheckedChanged += new System.EventHandler(this.cbTinyPicSizeCheck_CheckedChanged);
-            // 
-            // tpCustomUploaders
-            // 
-            this.tpCustomUploaders.Controls.Add(this.txtUploadersLog);
-            this.tpCustomUploaders.Controls.Add(this.btnUploadersTest);
-            this.tpCustomUploaders.Controls.Add(this.txtFullImage);
-            this.tpCustomUploaders.Controls.Add(this.txtThumbnail);
-            this.tpCustomUploaders.Controls.Add(this.lblFullImage);
-            this.tpCustomUploaders.Controls.Add(this.lblThumbnail);
-            this.tpCustomUploaders.Controls.Add(this.gbImageUploaders);
-            this.tpCustomUploaders.Controls.Add(this.gbRegexp);
-            this.tpCustomUploaders.Controls.Add(this.txtFileForm);
-            this.tpCustomUploaders.Controls.Add(this.lblFileForm);
-            this.tpCustomUploaders.Controls.Add(this.lblUploadURL);
-            this.tpCustomUploaders.Controls.Add(this.txtUploadURL);
-            this.tpCustomUploaders.Controls.Add(this.gbArguments);
-            this.tpCustomUploaders.ImageKey = "world_add.png";
-            this.tpCustomUploaders.Location = new System.Drawing.Point(4, 23);
-            this.tpCustomUploaders.Name = "tpCustomUploaders";
-            this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploaders.Size = new System.Drawing.Size(791, 402);
-            this.tpCustomUploaders.TabIndex = 11;
-            this.tpCustomUploaders.Text = "Custom";
-            this.tpCustomUploaders.UseVisualStyleBackColor = true;
-            // 
-            // txtUploadersLog
-            // 
-            this.txtUploadersLog.Location = new System.Drawing.Point(8, 280);
-            this.txtUploadersLog.Name = "txtUploadersLog";
-            this.txtUploadersLog.Size = new System.Drawing.Size(424, 104);
-            this.txtUploadersLog.TabIndex = 18;
-            this.txtUploadersLog.Text = "";
-            this.txtUploadersLog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtUploadersLog_LinkClicked);
-            // 
-            // btnUploadersTest
-            // 
-            this.btnUploadersTest.Location = new System.Drawing.Point(448, 360);
-            this.btnUploadersTest.Name = "btnUploadersTest";
-            this.btnUploadersTest.Size = new System.Drawing.Size(328, 24);
-            this.btnUploadersTest.TabIndex = 9;
-            this.btnUploadersTest.Text = "Test Upload";
-            this.btnUploadersTest.UseVisualStyleBackColor = true;
-            this.btnUploadersTest.Click += new System.EventHandler(this.btUploadersTest_Click);
-            // 
-            // txtFullImage
-            // 
-            this.txtFullImage.Location = new System.Drawing.Point(448, 296);
-            this.txtFullImage.Name = "txtFullImage";
-            this.txtFullImage.Size = new System.Drawing.Size(328, 20);
-            this.txtFullImage.TabIndex = 5;
-            // 
-            // txtThumbnail
-            // 
-            this.txtThumbnail.Location = new System.Drawing.Point(448, 336);
-            this.txtThumbnail.Name = "txtThumbnail";
-            this.txtThumbnail.Size = new System.Drawing.Size(328, 20);
-            this.txtThumbnail.TabIndex = 6;
-            // 
-            // lblFullImage
-            // 
-            this.lblFullImage.AutoSize = true;
-            this.lblFullImage.Location = new System.Drawing.Point(448, 280);
-            this.lblFullImage.Name = "lblFullImage";
-            this.lblFullImage.Size = new System.Drawing.Size(55, 13);
-            this.lblFullImage.TabIndex = 17;
-            this.lblFullImage.Text = "Full Image";
-            // 
-            // lblThumbnail
-            // 
-            this.lblThumbnail.AutoSize = true;
-            this.lblThumbnail.Location = new System.Drawing.Point(448, 320);
-            this.lblThumbnail.Name = "lblThumbnail";
-            this.lblThumbnail.Size = new System.Drawing.Size(56, 13);
-            this.lblThumbnail.TabIndex = 16;
-            this.lblThumbnail.Text = "Thumbnail";
-            // 
-            // gbImageUploaders
-            // 
-            this.gbImageUploaders.Controls.Add(this.lbImageUploader);
-            this.gbImageUploaders.Controls.Add(this.btnUploadersClear);
-            this.gbImageUploaders.Controls.Add(this.btnUploaderExport);
-            this.gbImageUploaders.Controls.Add(this.btnUploaderRemove);
-            this.gbImageUploaders.Controls.Add(this.btnUploaderImport);
-            this.gbImageUploaders.Controls.Add(this.btnUploaderUpdate);
-            this.gbImageUploaders.Controls.Add(this.txtUploader);
-            this.gbImageUploaders.Controls.Add(this.btnUploaderAdd);
-            this.gbImageUploaders.Location = new System.Drawing.Point(8, 8);
-            this.gbImageUploaders.Name = "gbImageUploaders";
-            this.gbImageUploaders.Size = new System.Drawing.Size(248, 264);
-            this.gbImageUploaders.TabIndex = 0;
-            this.gbImageUploaders.TabStop = false;
-            this.gbImageUploaders.Text = "Image Hosting Services";
-            // 
-            // lbImageUploader
-            // 
-            this.lbImageUploader.FormattingEnabled = true;
-            this.lbImageUploader.Location = new System.Drawing.Point(8, 72);
-            this.lbImageUploader.Name = "lbImageUploader";
-            this.lbImageUploader.Size = new System.Drawing.Size(232, 147);
-            this.lbImageUploader.TabIndex = 3;
-            this.lbImageUploader.SelectedIndexChanged += new System.EventHandler(this.lbImageUploader_SelectedIndexChanged);
-            // 
-            // btnUploadersClear
-            // 
-            this.btnUploadersClear.Location = new System.Drawing.Point(168, 232);
-            this.btnUploadersClear.Name = "btnUploadersClear";
-            this.btnUploadersClear.Size = new System.Drawing.Size(72, 24);
-            this.btnUploadersClear.TabIndex = 8;
-            this.btnUploadersClear.Text = "Clear";
-            this.btnUploadersClear.UseVisualStyleBackColor = true;
-            this.btnUploadersClear.Click += new System.EventHandler(this.btnUploadersClear_Click);
-            // 
-            // btnUploaderExport
-            // 
-            this.btnUploaderExport.Location = new System.Drawing.Point(88, 232);
-            this.btnUploaderExport.Name = "btnUploaderExport";
-            this.btnUploaderExport.Size = new System.Drawing.Size(72, 24);
-            this.btnUploaderExport.TabIndex = 5;
-            this.btnUploaderExport.Text = "Export...";
-            this.btnUploaderExport.UseVisualStyleBackColor = true;
-            this.btnUploaderExport.Click += new System.EventHandler(this.btnUploaderExport_Click);
-            // 
-            // btnUploaderRemove
-            // 
-            this.btnUploaderRemove.Location = new System.Drawing.Point(88, 40);
-            this.btnUploaderRemove.Name = "btnUploaderRemove";
-            this.btnUploaderRemove.Size = new System.Drawing.Size(72, 24);
-            this.btnUploaderRemove.TabIndex = 2;
-            this.btnUploaderRemove.Text = "Remove";
-            this.btnUploaderRemove.UseVisualStyleBackColor = true;
-            this.btnUploaderRemove.Click += new System.EventHandler(this.btnUploaderRemove_Click);
-            // 
-            // btnUploaderImport
-            // 
-            this.btnUploaderImport.Location = new System.Drawing.Point(8, 232);
-            this.btnUploaderImport.Name = "btnUploaderImport";
-            this.btnUploaderImport.Size = new System.Drawing.Size(72, 24);
-            this.btnUploaderImport.TabIndex = 4;
-            this.btnUploaderImport.Text = "Import...";
-            this.btnUploaderImport.UseVisualStyleBackColor = true;
-            this.btnUploaderImport.Click += new System.EventHandler(this.btnUploaderImport_Click);
-            // 
-            // btnUploaderUpdate
-            // 
-            this.btnUploaderUpdate.Location = new System.Drawing.Point(168, 40);
-            this.btnUploaderUpdate.Name = "btnUploaderUpdate";
-            this.btnUploaderUpdate.Size = new System.Drawing.Size(72, 24);
-            this.btnUploaderUpdate.TabIndex = 7;
-            this.btnUploaderUpdate.Text = "Update";
-            this.btnUploaderUpdate.UseVisualStyleBackColor = true;
-            this.btnUploaderUpdate.Click += new System.EventHandler(this.btnUploadersUpdate_Click);
-            // 
-            // txtUploader
-            // 
-            this.txtUploader.Location = new System.Drawing.Point(8, 16);
-            this.txtUploader.Name = "txtUploader";
-            this.txtUploader.Size = new System.Drawing.Size(232, 20);
-            this.txtUploader.TabIndex = 0;
-            // 
-            // btnUploaderAdd
-            // 
-            this.btnUploaderAdd.Location = new System.Drawing.Point(8, 40);
-            this.btnUploaderAdd.Name = "btnUploaderAdd";
-            this.btnUploaderAdd.Size = new System.Drawing.Size(72, 24);
-            this.btnUploaderAdd.TabIndex = 1;
-            this.btnUploaderAdd.Text = "Add";
-            this.btnUploaderAdd.UseVisualStyleBackColor = true;
-            this.btnUploaderAdd.Click += new System.EventHandler(this.btnUploaderAdd_Click);
-            // 
-            // gbRegexp
-            // 
-            this.gbRegexp.Controls.Add(this.btnRegexpEdit);
-            this.gbRegexp.Controls.Add(this.txtRegexp);
-            this.gbRegexp.Controls.Add(this.lvRegexps);
-            this.gbRegexp.Controls.Add(this.btnRegexpRemove);
-            this.gbRegexp.Controls.Add(this.btnRegexpAdd);
-            this.gbRegexp.Location = new System.Drawing.Point(272, 88);
-            this.gbRegexp.Name = "gbRegexp";
-            this.gbRegexp.Size = new System.Drawing.Size(240, 184);
-            this.gbRegexp.TabIndex = 4;
-            this.gbRegexp.TabStop = false;
-            this.gbRegexp.Text = "Regexp from Source";
-            // 
-            // btnRegexpEdit
-            // 
-            this.btnRegexpEdit.Location = new System.Drawing.Point(160, 40);
-            this.btnRegexpEdit.Name = "btnRegexpEdit";
-            this.btnRegexpEdit.Size = new System.Drawing.Size(72, 24);
-            this.btnRegexpEdit.TabIndex = 4;
-            this.btnRegexpEdit.Text = "Edit";
-            this.btnRegexpEdit.UseVisualStyleBackColor = true;
-            this.btnRegexpEdit.Click += new System.EventHandler(this.btnRegexpEdit_Click);
-            // 
-            // txtRegexp
-            // 
-            this.txtRegexp.Location = new System.Drawing.Point(8, 16);
-            this.txtRegexp.Name = "txtRegexp";
-            this.txtRegexp.Size = new System.Drawing.Size(224, 20);
-            this.txtRegexp.TabIndex = 0;
-            // 
-            // lvRegexps
-            // 
-            this.lvRegexps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lvRegexpsColumn});
-            this.lvRegexps.FullRowSelect = true;
-            this.lvRegexps.GridLines = true;
-            this.lvRegexps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvRegexps.HideSelection = false;
-            this.lvRegexps.Location = new System.Drawing.Point(8, 72);
-            this.lvRegexps.MultiSelect = false;
-            this.lvRegexps.Name = "lvRegexps";
-            this.lvRegexps.Scrollable = false;
-            this.lvRegexps.Size = new System.Drawing.Size(226, 104);
-            this.lvRegexps.TabIndex = 3;
-            this.lvRegexps.UseCompatibleStateImageBehavior = false;
-            this.lvRegexps.View = System.Windows.Forms.View.Details;
-            // 
-            // lvRegexpsColumn
-            // 
-            this.lvRegexpsColumn.Width = 227;
-            // 
-            // btnRegexpRemove
-            // 
-            this.btnRegexpRemove.Location = new System.Drawing.Point(84, 40);
-            this.btnRegexpRemove.Name = "btnRegexpRemove";
-            this.btnRegexpRemove.Size = new System.Drawing.Size(72, 24);
-            this.btnRegexpRemove.TabIndex = 2;
-            this.btnRegexpRemove.Text = "Remove";
-            this.btnRegexpRemove.UseVisualStyleBackColor = true;
-            this.btnRegexpRemove.Click += new System.EventHandler(this.btnRegexpRemove_Click);
-            // 
-            // btnRegexpAdd
-            // 
-            this.btnRegexpAdd.Location = new System.Drawing.Point(8, 40);
-            this.btnRegexpAdd.Name = "btnRegexpAdd";
-            this.btnRegexpAdd.Size = new System.Drawing.Size(72, 24);
-            this.btnRegexpAdd.TabIndex = 1;
-            this.btnRegexpAdd.Text = "Add";
-            this.btnRegexpAdd.UseVisualStyleBackColor = true;
-            this.btnRegexpAdd.Click += new System.EventHandler(this.btnRegexpAdd_Click);
-            // 
-            // txtFileForm
-            // 
-            this.txtFileForm.Location = new System.Drawing.Point(280, 64);
-            this.txtFileForm.Name = "txtFileForm";
-            this.txtFileForm.Size = new System.Drawing.Size(224, 20);
-            this.txtFileForm.TabIndex = 3;
-            // 
-            // lblFileForm
-            // 
-            this.lblFileForm.AutoSize = true;
-            this.lblFileForm.Location = new System.Drawing.Point(280, 48);
-            this.lblFileForm.Name = "lblFileForm";
-            this.lblFileForm.Size = new System.Drawing.Size(83, 13);
-            this.lblFileForm.TabIndex = 9;
-            this.lblFileForm.Text = "File Form Name:";
-            // 
-            // lblUploadURL
-            // 
-            this.lblUploadURL.AutoSize = true;
-            this.lblUploadURL.Location = new System.Drawing.Point(280, 8);
-            this.lblUploadURL.Name = "lblUploadURL";
-            this.lblUploadURL.Size = new System.Drawing.Size(69, 13);
-            this.lblUploadURL.TabIndex = 8;
-            this.lblUploadURL.Text = "Upload URL:";
-            // 
-            // txtUploadURL
-            // 
-            this.txtUploadURL.Location = new System.Drawing.Point(280, 24);
-            this.txtUploadURL.Name = "txtUploadURL";
-            this.txtUploadURL.Size = new System.Drawing.Size(224, 20);
-            this.txtUploadURL.TabIndex = 2;
-            // 
-            // gbArguments
-            // 
-            this.gbArguments.Controls.Add(this.btnArgEdit);
-            this.gbArguments.Controls.Add(this.txtArg2);
-            this.gbArguments.Controls.Add(this.btnArgRemove);
-            this.gbArguments.Controls.Add(this.lvArguments);
-            this.gbArguments.Controls.Add(this.btnArgAdd);
-            this.gbArguments.Controls.Add(this.txtArg1);
-            this.gbArguments.Location = new System.Drawing.Point(528, 8);
-            this.gbArguments.Name = "gbArguments";
-            this.gbArguments.Size = new System.Drawing.Size(248, 264);
-            this.gbArguments.TabIndex = 1;
-            this.gbArguments.TabStop = false;
-            this.gbArguments.Text = "Arguments";
-            // 
-            // btnArgEdit
-            // 
-            this.btnArgEdit.Location = new System.Drawing.Point(168, 40);
-            this.btnArgEdit.Name = "btnArgEdit";
-            this.btnArgEdit.Size = new System.Drawing.Size(72, 24);
-            this.btnArgEdit.TabIndex = 5;
-            this.btnArgEdit.Text = "Edit";
-            this.btnArgEdit.UseVisualStyleBackColor = true;
-            this.btnArgEdit.Click += new System.EventHandler(this.btnArgEdit_Click);
-            // 
-            // txtArg2
-            // 
-            this.txtArg2.Location = new System.Drawing.Point(128, 16);
-            this.txtArg2.Name = "txtArg2";
-            this.txtArg2.Size = new System.Drawing.Size(112, 20);
-            this.txtArg2.TabIndex = 1;
-            // 
-            // btnArgRemove
-            // 
-            this.btnArgRemove.Location = new System.Drawing.Point(88, 40);
-            this.btnArgRemove.Name = "btnArgRemove";
-            this.btnArgRemove.Size = new System.Drawing.Size(72, 24);
-            this.btnArgRemove.TabIndex = 3;
-            this.btnArgRemove.Text = "Remove";
-            this.btnArgRemove.UseVisualStyleBackColor = true;
-            this.btnArgRemove.Click += new System.EventHandler(this.btnArgRemove_Click);
-            // 
-            // lvArguments
-            // 
-            this.lvArguments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.lvArguments.FullRowSelect = true;
-            this.lvArguments.GridLines = true;
-            this.lvArguments.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvArguments.HideSelection = false;
-            this.lvArguments.Location = new System.Drawing.Point(8, 72);
-            this.lvArguments.MultiSelect = false;
-            this.lvArguments.Name = "lvArguments";
-            this.lvArguments.Size = new System.Drawing.Size(232, 184);
-            this.lvArguments.TabIndex = 4;
-            this.lvArguments.UseCompatibleStateImageBehavior = false;
-            this.lvArguments.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 113;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 113;
-            // 
-            // btnArgAdd
-            // 
-            this.btnArgAdd.Location = new System.Drawing.Point(8, 40);
-            this.btnArgAdd.Name = "btnArgAdd";
-            this.btnArgAdd.Size = new System.Drawing.Size(72, 24);
-            this.btnArgAdd.TabIndex = 2;
-            this.btnArgAdd.Text = "Add";
-            this.btnArgAdd.UseVisualStyleBackColor = true;
-            this.btnArgAdd.Click += new System.EventHandler(this.btnArgAdd_Click);
-            // 
-            // txtArg1
-            // 
-            this.txtArg1.Location = new System.Drawing.Point(8, 16);
-            this.txtArg1.Name = "txtArg1";
-            this.txtArg1.Size = new System.Drawing.Size(112, 20);
-            this.txtArg1.TabIndex = 0;
             // 
             // tpWebPageUpload
             // 
@@ -5767,7 +5719,14 @@ namespace ZScreenGUI
             // 
             // tpHistory
             // 
-            this.tpHistory.Controls.Add(this.tcHistory);
+            this.tpHistory.Controls.Add(this.label1);
+            this.tpHistory.Controls.Add(this.btnHistoryOpen);
+            this.tpHistory.Controls.Add(this.cbAddFailedScreenshot);
+            this.tpHistory.Controls.Add(this.cbHistorySave);
+            this.tpHistory.Controls.Add(this.cbShowHistoryTooltip);
+            this.tpHistory.Controls.Add(this.lblHistoryMaxItems);
+            this.tpHistory.Controls.Add(this.lblHistoryListFormat);
+            this.tpHistory.Controls.Add(this.nudHistoryMaxItems);
             this.tpHistory.ImageKey = "pictures.png";
             this.tpHistory.Location = new System.Drawing.Point(4, 23);
             this.tpHistory.Name = "tpHistory";
@@ -5777,246 +5736,87 @@ namespace ZScreenGUI
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
             // 
-            // tcHistory
+            // label1
             // 
-            this.tcHistory.Controls.Add(this.tpHistoryList);
-            this.tcHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcHistory.Location = new System.Drawing.Point(3, 3);
-            this.tcHistory.Name = "tcHistory";
-            this.tcHistory.SelectedIndex = 0;
-            this.tcHistory.Size = new System.Drawing.Size(799, 429);
-            this.tcHistory.TabIndex = 3;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(24, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Maximum number of items in history";
             // 
-            // tpHistoryList
+            // btnHistoryOpen
             // 
-            this.tpHistoryList.Controls.Add(this.tlpHistory);
-            this.tpHistoryList.Location = new System.Drawing.Point(4, 22);
-            this.tpHistoryList.Name = "tpHistoryList";
-            this.tpHistoryList.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryList.Size = new System.Drawing.Size(791, 403);
-            this.tpHistoryList.TabIndex = 0;
-            this.tpHistoryList.Text = "History List";
-            this.tpHistoryList.UseVisualStyleBackColor = true;
+            this.btnHistoryOpen.Location = new System.Drawing.Point(24, 24);
+            this.btnHistoryOpen.Name = "btnHistoryOpen";
+            this.btnHistoryOpen.Size = new System.Drawing.Size(128, 23);
+            this.btnHistoryOpen.TabIndex = 0;
+            this.btnHistoryOpen.Text = "&Open History...";
+            this.btnHistoryOpen.UseVisualStyleBackColor = true;
+            this.btnHistoryOpen.Click += new System.EventHandler(this.btnHistoryOpen_Click);
             // 
-            // tlpHistory
+            // cbAddFailedScreenshot
             // 
-            this.tlpHistory.ColumnCount = 2;
-            this.tlpHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tlpHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tlpHistory.Controls.Add(this.tlpHistoryControls, 1, 0);
-            this.tlpHistory.Controls.Add(this.lbHistory, 0, 0);
-            this.tlpHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHistory.Location = new System.Drawing.Point(3, 3);
-            this.tlpHistory.Name = "tlpHistory";
-            this.tlpHistory.RowCount = 1;
-            this.tlpHistory.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHistory.Size = new System.Drawing.Size(785, 397);
-            this.tlpHistory.TabIndex = 17;
+            this.cbAddFailedScreenshot.AutoSize = true;
+            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(24, 159);
+            this.cbAddFailedScreenshot.Name = "cbAddFailedScreenshot";
+            this.cbAddFailedScreenshot.Size = new System.Drawing.Size(143, 17);
+            this.cbAddFailedScreenshot.TabIndex = 7;
+            this.cbAddFailedScreenshot.Text = "Add failed task to History";
+            this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
+            this.cbAddFailedScreenshot.CheckedChanged += new System.EventHandler(this.cbAddFailedScreenshot_CheckedChanged);
             // 
-            // tlpHistoryControls
+            // cbHistorySave
             // 
-            this.tlpHistoryControls.ColumnCount = 1;
-            this.tlpHistoryControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHistoryControls.Controls.Add(this.lblHistoryScreenshot, 0, 0);
-            this.tlpHistoryControls.Controls.Add(this.panelControls, 0, 2);
-            this.tlpHistoryControls.Controls.Add(this.panelPreview, 0, 1);
-            this.tlpHistoryControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpHistoryControls.Location = new System.Drawing.Point(317, 3);
-            this.tlpHistoryControls.Name = "tlpHistoryControls";
-            this.tlpHistoryControls.RowCount = 3;
-            this.tlpHistoryControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpHistoryControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpHistoryControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.tlpHistoryControls.Size = new System.Drawing.Size(465, 391);
-            this.tlpHistoryControls.TabIndex = 0;
+            this.cbHistorySave.AutoSize = true;
+            this.cbHistorySave.Location = new System.Drawing.Point(24, 109);
+            this.cbHistorySave.Name = "cbHistorySave";
+            this.cbHistorySave.Size = new System.Drawing.Size(173, 17);
+            this.cbHistorySave.TabIndex = 10;
+            this.cbHistorySave.Text = "Save History List to an XML file";
+            this.cbHistorySave.UseVisualStyleBackColor = true;
+            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
             // 
-            // lblHistoryScreenshot
+            // cbShowHistoryTooltip
             // 
-            this.lblHistoryScreenshot.AutoSize = true;
-            this.lblHistoryScreenshot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblHistoryScreenshot.Location = new System.Drawing.Point(3, 0);
-            this.lblHistoryScreenshot.Name = "lblHistoryScreenshot";
-            this.lblHistoryScreenshot.Size = new System.Drawing.Size(459, 20);
-            this.lblHistoryScreenshot.TabIndex = 13;
-            this.lblHistoryScreenshot.Text = "Screenshot";
+            this.cbShowHistoryTooltip.AutoSize = true;
+            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(24, 134);
+            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
+            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(211, 17);
+            this.cbShowHistoryTooltip.TabIndex = 9;
+            this.cbShowHistoryTooltip.Text = "Show Screenshot Information in Tooltip";
+            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
+            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
             // 
-            // panelControls
+            // lblHistoryMaxItems
             // 
-            this.panelControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelControls.Controls.Add(this.btnHistoryOpenLocalFile);
-            this.panelControls.Controls.Add(this.txtHistoryLocalPath);
-            this.panelControls.Controls.Add(this.btnHistoryCopyLink);
-            this.panelControls.Controls.Add(this.lblHistoryRemotePath);
-            this.panelControls.Controls.Add(this.btnHistoryCopyImage);
-            this.panelControls.Controls.Add(this.txtHistoryRemotePath);
-            this.panelControls.Controls.Add(this.btnHistoryBrowseURL);
-            this.panelControls.Controls.Add(this.lblHistoryLocalPath);
-            this.panelControls.Location = new System.Drawing.Point(3, 264);
-            this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(459, 123);
-            this.panelControls.TabIndex = 15;
+            this.lblHistoryMaxItems.AutoSize = true;
+            this.lblHistoryMaxItems.Location = new System.Drawing.Point(16, 48);
+            this.lblHistoryMaxItems.Name = "lblHistoryMaxItems";
+            this.lblHistoryMaxItems.Size = new System.Drawing.Size(0, 13);
+            this.lblHistoryMaxItems.TabIndex = 5;
             // 
-            // btnHistoryOpenLocalFile
+            // lblHistoryListFormat
             // 
-            this.btnHistoryOpenLocalFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHistoryOpenLocalFile.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnHistoryOpenLocalFile.Enabled = false;
-            this.btnHistoryOpenLocalFile.Location = new System.Drawing.Point(316, 8);
-            this.btnHistoryOpenLocalFile.Name = "btnHistoryOpenLocalFile";
-            this.btnHistoryOpenLocalFile.Size = new System.Drawing.Size(96, 24);
-            this.btnHistoryOpenLocalFile.TabIndex = 9;
-            this.btnHistoryOpenLocalFile.Text = "&Open Local File";
-            this.btnHistoryOpenLocalFile.UseVisualStyleBackColor = true;
-            this.btnHistoryOpenLocalFile.Click += new System.EventHandler(this.btnScreenshotOpen_Click);
+            this.lblHistoryListFormat.AutoSize = true;
+            this.lblHistoryListFormat.Location = new System.Drawing.Point(16, 20);
+            this.lblHistoryListFormat.Name = "lblHistoryListFormat";
+            this.lblHistoryListFormat.Size = new System.Drawing.Size(0, 13);
+            this.lblHistoryListFormat.TabIndex = 8;
             // 
-            // txtHistoryLocalPath
+            // nudHistoryMaxItems
             // 
-            this.txtHistoryLocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHistoryLocalPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryLocalPath.Location = new System.Drawing.Point(8, 56);
-            this.txtHistoryLocalPath.Name = "txtHistoryLocalPath";
-            this.txtHistoryLocalPath.ReadOnly = true;
-            this.txtHistoryLocalPath.Size = new System.Drawing.Size(444, 20);
-            this.txtHistoryLocalPath.TabIndex = 7;
-            // 
-            // btnHistoryCopyLink
-            // 
-            this.btnHistoryCopyLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHistoryCopyLink.Enabled = false;
-            this.btnHistoryCopyLink.Location = new System.Drawing.Point(52, 8);
-            this.btnHistoryCopyLink.Name = "btnHistoryCopyLink";
-            this.btnHistoryCopyLink.Size = new System.Drawing.Size(80, 24);
-            this.btnHistoryCopyLink.TabIndex = 12;
-            this.btnHistoryCopyLink.Text = "Copy Link";
-            this.btnHistoryCopyLink.UseVisualStyleBackColor = true;
-            this.btnHistoryCopyLink.Click += new System.EventHandler(this.btnCopyLink_Click);
-            // 
-            // lblHistoryRemotePath
-            // 
-            this.lblHistoryRemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblHistoryRemotePath.AutoSize = true;
-            this.lblHistoryRemotePath.Location = new System.Drawing.Point(12, 79);
-            this.lblHistoryRemotePath.Name = "lblHistoryRemotePath";
-            this.lblHistoryRemotePath.Size = new System.Drawing.Size(69, 13);
-            this.lblHistoryRemotePath.TabIndex = 6;
-            this.lblHistoryRemotePath.Text = "Remote Path";
-            // 
-            // btnHistoryCopyImage
-            // 
-            this.btnHistoryCopyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHistoryCopyImage.Enabled = false;
-            this.btnHistoryCopyImage.Location = new System.Drawing.Point(140, 8);
-            this.btnHistoryCopyImage.Name = "btnHistoryCopyImage";
-            this.btnHistoryCopyImage.Size = new System.Drawing.Size(80, 24);
-            this.btnHistoryCopyImage.TabIndex = 11;
-            this.btnHistoryCopyImage.Text = "Copy &Image";
-            this.btnHistoryCopyImage.UseVisualStyleBackColor = true;
-            this.btnHistoryCopyImage.Click += new System.EventHandler(this.btnImageCopy_Click);
-            // 
-            // txtHistoryRemotePath
-            // 
-            this.txtHistoryRemotePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHistoryRemotePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHistoryRemotePath.Location = new System.Drawing.Point(8, 96);
-            this.txtHistoryRemotePath.Name = "txtHistoryRemotePath";
-            this.txtHistoryRemotePath.ReadOnly = true;
-            this.txtHistoryRemotePath.Size = new System.Drawing.Size(444, 20);
-            this.txtHistoryRemotePath.TabIndex = 8;
-            // 
-            // btnHistoryBrowseURL
-            // 
-            this.btnHistoryBrowseURL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHistoryBrowseURL.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnHistoryBrowseURL.Enabled = false;
-            this.btnHistoryBrowseURL.Location = new System.Drawing.Point(228, 8);
-            this.btnHistoryBrowseURL.Name = "btnHistoryBrowseURL";
-            this.btnHistoryBrowseURL.Size = new System.Drawing.Size(80, 24);
-            this.btnHistoryBrowseURL.TabIndex = 10;
-            this.btnHistoryBrowseURL.Text = "Browse &URL";
-            this.btnHistoryBrowseURL.UseVisualStyleBackColor = true;
-            this.btnHistoryBrowseURL.Click += new System.EventHandler(this.btnScreenshotBrowse_Click);
-            // 
-            // lblHistoryLocalPath
-            // 
-            this.lblHistoryLocalPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblHistoryLocalPath.AutoSize = true;
-            this.lblHistoryLocalPath.Location = new System.Drawing.Point(12, 39);
-            this.lblHistoryLocalPath.Name = "lblHistoryLocalPath";
-            this.lblHistoryLocalPath.Size = new System.Drawing.Size(58, 13);
-            this.lblHistoryLocalPath.TabIndex = 5;
-            this.lblHistoryLocalPath.Text = "Local Path";
-            // 
-            // panelPreview
-            // 
-            this.panelPreview.Controls.Add(this.pbPreview);
-            this.panelPreview.Controls.Add(this.txtPreview);
-            this.panelPreview.Controls.Add(this.historyBrowser);
-            this.panelPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPreview.Location = new System.Drawing.Point(3, 23);
-            this.panelPreview.Name = "panelPreview";
-            this.panelPreview.Size = new System.Drawing.Size(459, 235);
-            this.panelPreview.TabIndex = 16;
-            // 
-            // pbPreview
-            // 
-            this.pbPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPreview.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbPreview.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbPreview.InitialImage")));
-            this.pbPreview.Location = new System.Drawing.Point(0, 0);
-            this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(459, 235);
-            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbPreview.TabIndex = 4;
-            this.pbPreview.TabStop = false;
-            this.pbPreview.Click += new System.EventHandler(this.pbHistoryThumb_Click);
-            // 
-            // txtPreview
-            // 
-            this.txtPreview.BackColor = System.Drawing.SystemColors.Info;
-            this.txtPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPreview.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPreview.Location = new System.Drawing.Point(0, 0);
-            this.txtPreview.Name = "txtPreview";
-            this.txtPreview.ReadOnly = true;
-            this.txtPreview.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.txtPreview.Size = new System.Drawing.Size(459, 235);
-            this.txtPreview.TabIndex = 14;
-            this.txtPreview.Text = "";
-            // 
-            // historyBrowser
-            // 
-            this.historyBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.historyBrowser.Location = new System.Drawing.Point(0, 0);
-            this.historyBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.historyBrowser.Name = "historyBrowser";
-            this.historyBrowser.Size = new System.Drawing.Size(459, 235);
-            this.historyBrowser.TabIndex = 15;
-            // 
-            // lbHistory
-            // 
-            this.lbHistory.AllowDrop = true;
-            this.lbHistory.ContextMenuStrip = this.cmsHistory;
-            this.lbHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbHistory.FormattingEnabled = true;
-            this.lbHistory.HorizontalScrollbar = true;
-            this.lbHistory.IntegralHeight = false;
-            this.lbHistory.Location = new System.Drawing.Point(3, 3);
-            this.lbHistory.Name = "lbHistory";
-            this.lbHistory.ScrollAlwaysVisible = true;
-            this.lbHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbHistory.Size = new System.Drawing.Size(308, 391);
-            this.lbHistory.TabIndex = 2;
-            this.lbHistory.SelectedIndexChanged += new System.EventHandler(this.lbHistory_SelectedIndexChanged);
-            this.lbHistory.DragDrop += new System.Windows.Forms.DragEventHandler(this.lbHistory_DragDrop);
-            this.lbHistory.DragEnter += new System.Windows.Forms.DragEventHandler(this.lbHistory_DragEnter);
-            this.lbHistory.DoubleClick += new System.EventHandler(this.lbHistory_DoubleClick);
-            this.lbHistory.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbHistory_KeyDown);
+            this.nudHistoryMaxItems.Location = new System.Drawing.Point(200, 69);
+            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
+            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
+            this.nudHistoryMaxItems.TabIndex = 4;
+            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
             // 
             // tpOptions
             // 
@@ -6036,7 +5836,6 @@ namespace ZScreenGUI
             this.tcOptions.Controls.Add(this.tpProxy);
             this.tcOptions.Controls.Add(this.tpInteraction);
             this.tcOptions.Controls.Add(this.tpAdvPaths);
-            this.tcOptions.Controls.Add(this.tpHistorySettings);
             this.tcOptions.Controls.Add(this.tpStats);
             this.tcOptions.Controls.Add(this.tpDebugLog);
             this.tcOptions.Controls.Add(this.tpOptionsAdv);
@@ -6902,140 +6701,6 @@ namespace ZScreenGUI
             this.txtCacheDir.Size = new System.Drawing.Size(623, 20);
             this.txtCacheDir.TabIndex = 0;
             // 
-            // tpHistorySettings
-            // 
-            this.tpHistorySettings.Controls.Add(this.cbAddFailedScreenshot);
-            this.tpHistorySettings.Controls.Add(this.cbHistorySave);
-            this.tpHistorySettings.Controls.Add(this.cbShowHistoryTooltip);
-            this.tpHistorySettings.Controls.Add(this.btnHistoryClear);
-            this.tpHistorySettings.Controls.Add(this.cbHistoryListFormat);
-            this.tpHistorySettings.Controls.Add(this.lblHistoryMaxItems);
-            this.tpHistorySettings.Controls.Add(this.lblHistoryListFormat);
-            this.tpHistorySettings.Controls.Add(this.nudHistoryMaxItems);
-            this.tpHistorySettings.Controls.Add(this.cbHistoryAddSpace);
-            this.tpHistorySettings.Controls.Add(this.cbHistoryReverseList);
-            this.tpHistorySettings.Location = new System.Drawing.Point(4, 22);
-            this.tpHistorySettings.Name = "tpHistorySettings";
-            this.tpHistorySettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistorySettings.Size = new System.Drawing.Size(791, 403);
-            this.tpHistorySettings.TabIndex = 1;
-            this.tpHistorySettings.Text = "History";
-            this.tpHistorySettings.UseVisualStyleBackColor = true;
-            // 
-            // cbAddFailedScreenshot
-            // 
-            this.cbAddFailedScreenshot.AutoSize = true;
-            this.cbAddFailedScreenshot.Location = new System.Drawing.Point(16, 164);
-            this.cbAddFailedScreenshot.Name = "cbAddFailedScreenshot";
-            this.cbAddFailedScreenshot.Size = new System.Drawing.Size(143, 17);
-            this.cbAddFailedScreenshot.TabIndex = 7;
-            this.cbAddFailedScreenshot.Text = "Add failed task to History";
-            this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
-            this.cbAddFailedScreenshot.CheckedChanged += new System.EventHandler(this.cbAddFailedScreenshot_CheckedChanged);
-            // 
-            // cbHistorySave
-            // 
-            this.cbHistorySave.AutoSize = true;
-            this.cbHistorySave.Location = new System.Drawing.Point(16, 72);
-            this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(173, 17);
-            this.cbHistorySave.TabIndex = 10;
-            this.cbHistorySave.Text = "Save History List to an XML file";
-            this.cbHistorySave.UseVisualStyleBackColor = true;
-            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            // 
-            // cbShowHistoryTooltip
-            // 
-            this.cbShowHistoryTooltip.AutoSize = true;
-            this.cbShowHistoryTooltip.Location = new System.Drawing.Point(16, 95);
-            this.cbShowHistoryTooltip.Name = "cbShowHistoryTooltip";
-            this.cbShowHistoryTooltip.Size = new System.Drawing.Size(211, 17);
-            this.cbShowHistoryTooltip.TabIndex = 9;
-            this.cbShowHistoryTooltip.Text = "Show Screenshot Information in Tooltip";
-            this.cbShowHistoryTooltip.UseVisualStyleBackColor = true;
-            this.cbShowHistoryTooltip.CheckedChanged += new System.EventHandler(this.cbShowHistoryTooltip_CheckedChanged);
-            // 
-            // btnHistoryClear
-            // 
-            this.btnHistoryClear.AutoSize = true;
-            this.btnHistoryClear.Location = new System.Drawing.Point(16, 187);
-            this.btnHistoryClear.Name = "btnHistoryClear";
-            this.btnHistoryClear.Size = new System.Drawing.Size(137, 27);
-            this.btnHistoryClear.TabIndex = 6;
-            this.btnHistoryClear.Text = "Clear History List...";
-            this.btnHistoryClear.UseVisualStyleBackColor = true;
-            this.btnHistoryClear.Click += new System.EventHandler(this.btnHistoryClear_Click);
-            // 
-            // cbHistoryListFormat
-            // 
-            this.cbHistoryListFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHistoryListFormat.FormattingEnabled = true;
-            this.cbHistoryListFormat.Location = new System.Drawing.Point(112, 16);
-            this.cbHistoryListFormat.Name = "cbHistoryListFormat";
-            this.cbHistoryListFormat.Size = new System.Drawing.Size(176, 21);
-            this.cbHistoryListFormat.TabIndex = 7;
-            this.cbHistoryListFormat.SelectedIndexChanged += new System.EventHandler(this.cbHistoryListFormat_SelectedIndexChanged);
-            // 
-            // lblHistoryMaxItems
-            // 
-            this.lblHistoryMaxItems.AutoSize = true;
-            this.lblHistoryMaxItems.Location = new System.Drawing.Point(16, 48);
-            this.lblHistoryMaxItems.Name = "lblHistoryMaxItems";
-            this.lblHistoryMaxItems.Size = new System.Drawing.Size(208, 13);
-            this.lblHistoryMaxItems.TabIndex = 5;
-            this.lblHistoryMaxItems.Text = "Maximum number of screenshots in history:";
-            // 
-            // lblHistoryListFormat
-            // 
-            this.lblHistoryListFormat.AutoSize = true;
-            this.lblHistoryListFormat.Location = new System.Drawing.Point(16, 20);
-            this.lblHistoryListFormat.Name = "lblHistoryListFormat";
-            this.lblHistoryListFormat.Size = new System.Drawing.Size(89, 13);
-            this.lblHistoryListFormat.TabIndex = 8;
-            this.lblHistoryListFormat.Text = "History list format:";
-            // 
-            // nudHistoryMaxItems
-            // 
-            this.nudHistoryMaxItems.Location = new System.Drawing.Point(232, 44);
-            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
-            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
-            this.nudHistoryMaxItems.TabIndex = 4;
-            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
-            // 
-            // cbHistoryAddSpace
-            // 
-            this.cbHistoryAddSpace.AutoSize = true;
-            this.cbHistoryAddSpace.BackColor = System.Drawing.Color.Transparent;
-            this.cbHistoryAddSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryAddSpace.Location = new System.Drawing.Point(16, 141);
-            this.cbHistoryAddSpace.Name = "cbHistoryAddSpace";
-            this.cbHistoryAddSpace.Size = new System.Drawing.Size(234, 17);
-            this.cbHistoryAddSpace.TabIndex = 0;
-            this.cbHistoryAddSpace.Tag = "Adding a New Line before the URLs makes it look nicer when you copy a URL List in" +
-                " IM such as Pidgin";
-            this.cbHistoryAddSpace.Text = "Add a new line before the URLs in clipboard";
-            this.cbHistoryAddSpace.UseVisualStyleBackColor = false;
-            this.cbHistoryAddSpace.CheckedChanged += new System.EventHandler(this.cbAddSpace_CheckedChanged);
-            // 
-            // cbHistoryReverseList
-            // 
-            this.cbHistoryReverseList.AutoSize = true;
-            this.cbHistoryReverseList.BackColor = System.Drawing.Color.Transparent;
-            this.cbHistoryReverseList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbHistoryReverseList.Location = new System.Drawing.Point(16, 118);
-            this.cbHistoryReverseList.Name = "cbHistoryReverseList";
-            this.cbHistoryReverseList.Size = new System.Drawing.Size(143, 17);
-            this.cbHistoryReverseList.TabIndex = 1;
-            this.cbHistoryReverseList.Text = "Reverse List in Clipboard";
-            this.cbHistoryReverseList.UseVisualStyleBackColor = false;
-            this.cbHistoryReverseList.CheckedChanged += new System.EventHandler(this.cbReverse_CheckedChanged);
-            // 
             // tpStats
             // 
             this.tpStats.Controls.Add(this.btnOpenZScreenTester);
@@ -7310,6 +6975,14 @@ namespace ZScreenGUI
             this.gbMindTouchOptions.ResumeLayout(false);
             this.gbMindTouchOptions.PerformLayout();
             this.tpMediaWiki.ResumeLayout(false);
+            this.tpCustomUploaders.ResumeLayout(false);
+            this.tpCustomUploaders.PerformLayout();
+            this.gbImageUploaders.ResumeLayout(false);
+            this.gbImageUploaders.PerformLayout();
+            this.gbRegexp.ResumeLayout(false);
+            this.gbRegexp.PerformLayout();
+            this.gbArguments.ResumeLayout(false);
+            this.gbArguments.PerformLayout();
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -7407,14 +7080,6 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudErrorRetry)).EndInit();
             this.gbImageUploaderOptions.ResumeLayout(false);
             this.gbImageUploaderOptions.PerformLayout();
-            this.tpCustomUploaders.ResumeLayout(false);
-            this.tpCustomUploaders.PerformLayout();
-            this.gbImageUploaders.ResumeLayout(false);
-            this.gbImageUploaders.PerformLayout();
-            this.gbRegexp.ResumeLayout(false);
-            this.gbRegexp.PerformLayout();
-            this.gbArguments.ResumeLayout(false);
-            this.gbArguments.PerformLayout();
             this.tpWebPageUpload.ResumeLayout(false);
             this.tpWebPageUpload.PerformLayout();
             this.pWebPageImage.ResumeLayout(false);
@@ -7426,15 +7091,8 @@ namespace ZScreenGUI
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpHistory.ResumeLayout(false);
-            this.tcHistory.ResumeLayout(false);
-            this.tpHistoryList.ResumeLayout(false);
-            this.tlpHistory.ResumeLayout(false);
-            this.tlpHistoryControls.ResumeLayout(false);
-            this.tlpHistoryControls.PerformLayout();
-            this.panelControls.ResumeLayout(false);
-            this.panelControls.PerformLayout();
-            this.panelPreview.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
+            this.tpHistory.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.tpOptions.ResumeLayout(false);
             this.tcOptions.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
@@ -7467,9 +7125,6 @@ namespace ZScreenGUI
             this.gbCache.ResumeLayout(false);
             this.gbCache.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).EndInit();
-            this.tpHistorySettings.ResumeLayout(false);
-            this.tpHistorySettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.tpStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
@@ -7717,7 +7372,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.CheckBox cbTinyPicSizeCheck;
         internal System.Windows.Forms.NumericUpDown nudUploadDurationLimit;
         internal System.Windows.Forms.CheckBox cboImageUploadRetryOnTimeout;
-        internal System.Windows.Forms.CheckBox cbAddFailedScreenshot;
         internal System.Windows.Forms.CheckBox chkImageUploadRetryOnFail;
         internal System.Windows.Forms.NumericUpDown nudErrorRetry;
         internal System.Windows.Forms.GroupBox gbImageShack;
@@ -7779,31 +7433,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblFromLanguage;
         internal System.Windows.Forms.ComboBox cbToLanguage;
         internal System.Windows.Forms.ComboBox cbFromLanguage;
-        internal System.Windows.Forms.TabPage tpHistory;
-        internal System.Windows.Forms.TabControl tcHistory;
-        internal System.Windows.Forms.TabPage tpHistoryList;
-        internal System.Windows.Forms.Label lblHistoryScreenshot;
-        internal System.Windows.Forms.Button btnHistoryCopyLink;
-        internal System.Windows.Forms.Button btnHistoryCopyImage;
-        internal System.Windows.Forms.Button btnHistoryBrowseURL;
-        internal System.Windows.Forms.Button btnHistoryOpenLocalFile;
-        internal System.Windows.Forms.Label lblHistoryLocalPath;
-        internal System.Windows.Forms.TextBox txtHistoryRemotePath;
-        internal System.Windows.Forms.Label lblHistoryRemotePath;
-        internal System.Windows.Forms.TextBox txtHistoryLocalPath;
-        internal System.Windows.Forms.ListBox lbHistory;
-        internal System.Windows.Forms.RichTextBox txtPreview;
-        internal System.Windows.Forms.PictureBox pbPreview;
-        internal System.Windows.Forms.TabPage tpHistorySettings;
-        internal System.Windows.Forms.CheckBox cbHistorySave;
-        internal System.Windows.Forms.CheckBox cbShowHistoryTooltip;
-        internal System.Windows.Forms.Button btnHistoryClear;
-        internal System.Windows.Forms.ComboBox cbHistoryListFormat;
-        internal System.Windows.Forms.Label lblHistoryMaxItems;
-        internal System.Windows.Forms.Label lblHistoryListFormat;
-        internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
-        internal System.Windows.Forms.CheckBox cbHistoryAddSpace;
-        internal System.Windows.Forms.CheckBox cbHistoryReverseList;
         internal System.Windows.Forms.TabPage tpOptions;
         internal System.Windows.Forms.TabControl tcOptions;
         internal System.Windows.Forms.TabPage tpGeneral;
@@ -7885,11 +7514,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbTwitPicShowFull;
         private System.Windows.Forms.ComboBox cboTwitPicThumbnailMode;
         private System.Windows.Forms.Label lblTwitPicThumbnailMode;
-        private System.Windows.Forms.TableLayoutPanel tlpHistory;
-        private System.Windows.Forms.TableLayoutPanel tlpHistoryControls;
-        private System.Windows.Forms.Panel panelControls;
-        private System.Windows.Forms.Panel panelPreview;
-        private System.Windows.Forms.WebBrowser historyBrowser;
         private System.Windows.Forms.TextBox txtImagesFolderPattern;
         private System.Windows.Forms.Label lblImagesFolderPatternPreview;
         private System.Windows.Forms.Label lblImagesFolderPattern;
@@ -8051,5 +7675,14 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbCopyClipboardAfterTask;
         internal AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.ComboBox cboProxyConfig;
+        internal System.Windows.Forms.TabPage tpHistory;
+        private System.Windows.Forms.Button btnHistoryOpen;
+        internal System.Windows.Forms.CheckBox cbAddFailedScreenshot;
+        internal System.Windows.Forms.CheckBox cbHistorySave;
+        internal System.Windows.Forms.CheckBox cbShowHistoryTooltip;
+        internal System.Windows.Forms.Label lblHistoryMaxItems;
+        internal System.Windows.Forms.Label lblHistoryListFormat;
+        internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
+        private System.Windows.Forms.Label label1;
     }
 }

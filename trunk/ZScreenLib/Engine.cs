@@ -67,7 +67,7 @@ namespace ZScreenLib
         public static AppSettings mAppSettings = AppSettings.Read();
 
         private static readonly string XMLFileName = XMLSettings.XMLFileName;
-        private static readonly string HistoryFileName = "History.xml";
+        private static readonly string HistoryDbName = "History.db3";
         private static readonly string OldXMLFilePath = Path.Combine(zLocalAppDataFolder, XMLFileName);
         private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
 
@@ -516,11 +516,11 @@ namespace ZScreenLib
             }
         }
 
-        public static string HistoryFile
+        public static string HistoryDbPath
         {
             get
             {
-                return Path.Combine(SettingsDir, HistoryFileName);
+                return Path.Combine(SettingsDir, HistoryDbName);
             }
         }
 
