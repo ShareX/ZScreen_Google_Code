@@ -45,11 +45,8 @@ namespace UploadersLib.ImageUploaders
             this.Errors = new List<string>();
         }
 
-        public ImageFileManager UploadImage(string localFilePath)
+        public UploadResult UploadImage(string localFilePath)
         {
-            // Create a new ImageFile List
-            List<ImageFile> imageFiles = new List<ImageFile>();
-
             // Create the connector
             MediaWiki connector = new MediaWiki(this.Options);
 
@@ -61,13 +58,10 @@ namespace UploadersLib.ImageUploaders
 
             string remotePath = Options.Account.Url + "/index.php?title=Image:" + filename;
 
-            // Add this to the list of uploaded images
-            imageFiles.Add(new ImageFile(remotePath, LinkType.URL));
-
             // Create the file manager object
-            ImageFileManager imageFileManager = new ImageFileManager(imageFiles) { LocalFilePath = localFilePath };
+            UploadResult ur = new UploadResult() { URL = remotePath };
 
-            return imageFileManager;
+            return ur;
         }
 
         public string ToErrorString()

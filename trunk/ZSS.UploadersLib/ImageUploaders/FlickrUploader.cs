@@ -216,7 +216,7 @@ namespace UploadersLib.ImageUploaders
 
         #endregion Helpers
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("api_key", API_Key);
@@ -247,7 +247,7 @@ namespace UploadersLib.ImageUploaders
                 url2 = Helpers.CombineURL(url, "sizes/o");
             }
 
-            return new ImageFileManager(url2, response);
+            return new UploadResult(url2, response);
         }
 
         public class AuthInfo

@@ -32,6 +32,7 @@ namespace UploadersLib.HelperClasses
         public string URL { get; set; }
         public string ThumbnailURL { get; set; }
         public string DeletionURL { get; set; }
+        public string TinyURL { get; set; }
         public string Source { get; set; }
         public List<string> Errors { get; set; }
 

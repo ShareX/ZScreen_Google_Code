@@ -33,9 +33,9 @@ namespace UploadersLib
     {
         public abstract string Name { get; }
 
-        public abstract ImageFileManager UploadImage(Stream stream, string fileName);
+        public abstract UploadResult UploadImage(Stream stream, string fileName);
 
-        public ImageFileManager UploadImage(Image image, string fileName)
+        public UploadResult UploadImage(Image image, string fileName)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -44,14 +44,14 @@ namespace UploadersLib
             }
         }
 
-        public ImageFileManager UploadImage(string filePath)
+        public UploadResult UploadImage(string filePath)
         {
             if (File.Exists(filePath))
             {
                 using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    ImageFileManager ifm = UploadImage(stream, Path.GetFileName(filePath));
-                    ifm.LocalFilePath = filePath;
+                    UploadResult ifm = UploadImage(stream, Path.GetFileName(filePath));
+                    // ifm.LocalFilePath = filePath;
                     return ifm;
                 }
             }

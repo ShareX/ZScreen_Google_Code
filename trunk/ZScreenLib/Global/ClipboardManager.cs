@@ -43,7 +43,7 @@ namespace ZScreenLib
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
 
-        private static ImageFileManager ScreenshotsHistory = new ImageFileManager();
+        private static ImageFileManager LinkMgr = new ImageFileManager();
         private static int UniqueNumber = 0;
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace ZScreenLib
 
         public static ImageFileManager GetLastImageUpload()
         {
-            return ScreenshotsHistory;
+            return LinkMgr;
         }
 
         public static int GetAverageProgress()
@@ -110,7 +110,7 @@ namespace ZScreenLib
                 switch (task.Job1)
                 {
                     case JobLevel1.Images:
-                        ScreenshotsHistory = task.LinkManager;
+                        LinkMgr = task.LinkManager;
                         if (Engine.conf.ShowClipboardModeChooser || showDialog)
                         {
                             ClipboardOptions cmp = new ClipboardOptions(task);
@@ -121,7 +121,7 @@ namespace ZScreenLib
                         {
                             if (task.MakeTinyURL)
                             {
-                                string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                                string tinyUrl = LinkMgr.GetUrlByType(ClipboardUriType.FULL_TINYURL);
                                 if (!string.IsNullOrEmpty(tinyUrl))
                                 {
                                     clipboardText = tinyUrl.Trim();
@@ -129,7 +129,7 @@ namespace ZScreenLib
                             }
                             else
                             {
-                                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+                                clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                             }
                         }
                         break;
@@ -172,7 +172,7 @@ namespace ZScreenLib
                     Clipboard.SetText(clipboardText); // auto
 
                     // optional deletion link
-                    string linkdel = ScreenshotsHistory.GetDeletionLink();
+                    string linkdel = LinkMgr.UploadResult.DeletionURL;
                     if (!string.IsNullOrEmpty(linkdel))
                     {
                         FileSystem.AppendDebug("Deletion Link: " + linkdel);

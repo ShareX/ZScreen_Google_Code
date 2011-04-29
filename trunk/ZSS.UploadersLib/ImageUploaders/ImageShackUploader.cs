@@ -51,9 +51,9 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageShack"; }
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            UploadResult ifm = new UploadResult();
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", DeveloperKey);
@@ -67,8 +67,8 @@ namespace UploadersLib.ImageUploaders
                 string fullimage = Helpers.GetXMLValue(ifm.Source, "image_link");
                 string thumbnail = Helpers.GetXMLValue(ifm.Source, "thumb_link");
 
-                ifm.Add(fullimage, LinkType.URL);
-                ifm.Add(thumbnail, LinkType.ThumbnailURL);
+                ifm.URL = fullimage;
+                ifm.ThumbnailURL = thumbnail;
             }
 
             return ifm;

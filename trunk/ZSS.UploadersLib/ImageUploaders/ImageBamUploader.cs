@@ -81,7 +81,7 @@ namespace UploadersLib.ImageUploaders
 
         // http://www.imagebam.com/nav/API_uploading_photos
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
@@ -123,9 +123,9 @@ namespace UploadersLib.ImageUploaders
             return Helpers.GetXMLValue(source, "GID");
         }
 
-        private ImageFileManager ParseResult(string source)
+        private UploadResult ParseResult(string source)
         {
-            ImageFileManager ifm = new ImageFileManager { Source = source };
+            UploadResult ifm = new UploadResult { Source = source };
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -143,8 +143,8 @@ namespace UploadersLib.ImageUploaders
                             thumbnail = xele.GetElementValue("thumbnail");
                             delcode = xele.GetElementValue("delcode");
 
-                            ifm.LinkList.Add(new ImageFile(URL, LinkType.URL));
-                            ifm.LinkList.Add(new ImageFile(thumbnail, LinkType.ThumbnailURL));
+                            ifm.URL = URL;
+                            ifm.ThumbnailURL = thumbnail;
 
                             break;
                         case "fail":

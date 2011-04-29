@@ -54,9 +54,9 @@ namespace UploadersLib.ImageUploaders
             get { return "TinyPic"; }
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            UploadResult ifm = new UploadResult();
 
             string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
             string upk = GetUploadKey(action, tpid, tpk);
@@ -90,8 +90,8 @@ namespace UploadersLib.ImageUploaders
                     string fullimage = Helpers.GetXMLValue(ifm.Source, "fullsize");
                     string thumbnail = Helpers.GetXMLValue(ifm.Source, "thumbnail");
 
-                    ifm.Add(fullimage, LinkType.URL);
-                    ifm.Add(thumbnail, LinkType.ThumbnailURL);
+                    ifm.URL = fullimage;
+                    ifm.ThumbnailURL = thumbnail;
                 }
             }
 
