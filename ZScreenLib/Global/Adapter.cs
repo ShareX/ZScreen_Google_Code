@@ -538,6 +538,16 @@ namespace ZScreenLib
 
         #region Proxy Methods
 
+        public static string GetDefaultWebProxyHost()
+        {
+            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Host;
+        }
+
+        public static int GetDefaultWebProxyPort()
+        {
+            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Port;
+        }
+
         public static ProxySettings CheckProxySettings()
         {
             FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyConfig.ToString());

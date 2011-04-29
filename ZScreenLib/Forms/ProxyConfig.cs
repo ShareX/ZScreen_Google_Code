@@ -17,7 +17,7 @@ namespace ZScreenLib
         public ProxyConfig()
         {
             InitializeComponent();
-            Proxy = new ProxyInfo();
+            Proxy = new ProxyInfo(Environment.UserName, "", Adapter.GetDefaultWebProxyHost(), Adapter.GetDefaultWebProxyPort());
         }
 
         private void btnOK_Click(object sender, EventArgs e)
