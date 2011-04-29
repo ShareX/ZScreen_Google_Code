@@ -95,90 +95,92 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void SetClipboard(WorkerTask task, bool showDialog)
         {
-            string clipboardText = "";
-
-            switch (task.Job1)
+            if (task.JobIsImageToClipboard())
             {
-                case JobLevel1.PICTURES:
-                case JobLevel1.SCREENSHOTS:
-                    if (task.MyImageUploader == ImageUploaderType.CLIPBOARD)
-                    {
-                        Clipboard.SetImage(task.MyImage);
-                    }
-                    break;
-                case JobLevel1.BINARY:
-                    ScreenshotsHistory = task.LinkManager;
-                    if (GraphicsMgr.IsValidImage(task.LocalFilePath))
-                    {
-                        if (Engine.conf.ShowClipboardModeChooser || showDialog)
-                        {
-                            ClipboardOptions cmp = new ClipboardOptions(task);
-                            cmp.Icon = Resources.zss_main;
-                            if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-                        }
+                Clipboard.SetImage(task.MyImage);
+            }
 
-                        if (task.MyImageUploader == ImageUploaderType.FILE)
+            else
+            {
+                string clipboardText = "";
+
+                switch (task.Job1)
+                {
+                    case JobLevel1.PICTURES:
+                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.BINARY:
+                        ScreenshotsHistory = task.LinkManager;
+                        if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                         {
-                            clipboardText = task.LocalFilePath;
-                        }
-                        else
-                        {
-                            clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                            if (task.MakeTinyURL)
+                            if (Engine.conf.ShowClipboardModeChooser || showDialog)
                             {
-                                string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                                if (!string.IsNullOrEmpty(tinyUrl))
-                                {
-                                    clipboardText = tinyUrl.Trim();
-                                }
+                                ClipboardOptions cmp = new ClipboardOptions(task);
+                                cmp.Icon = Resources.zss_main;
+                                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
                             }
-                        }
-                    }
-                    break;
-                case JobLevel1.TEXT:
-                    switch (task.Job2)
-                    {
-                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                            if (task.TranslationInfo != null)
-                            {
-                                clipboardText = task.TranslationInfo.Result;
-                            }
-                            break;
-                        default:
-                            if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                            {
-                                clipboardText = task.RemoteFilePath;
-                            }
-                            else if (null != task.MyText)
-                            {
-                                clipboardText = task.MyText;
-                            }
-                            else
+
+                            if (task.MyImageUploader == ImageUploaderType.FILE)
                             {
                                 clipboardText = task.LocalFilePath;
                             }
-                            break;
-                    }
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(clipboardText))
-            {
-                Engine.ClipboardUnhook();
-                FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
-                Clipboard.SetText(clipboardText); // auto
-
-                // optional deletion link
-                string linkdel = ScreenshotsHistory.GetDeletionLink();
-                if (!string.IsNullOrEmpty(linkdel))
-                {
-                    FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                            else
+                            {
+                                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+                                if (task.MakeTinyURL)
+                                {
+                                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                                    if (!string.IsNullOrEmpty(tinyUrl))
+                                    {
+                                        clipboardText = tinyUrl.Trim();
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case JobLevel1.TEXT:
+                        switch (task.Job2)
+                        {
+                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                                if (task.TranslationInfo != null)
+                                {
+                                    clipboardText = task.TranslationInfo.Result;
+                                }
+                                break;
+                            default:
+                                if (!string.IsNullOrEmpty(task.RemoteFilePath))
+                                {
+                                    clipboardText = task.RemoteFilePath;
+                                }
+                                else if (null != task.MyText)
+                                {
+                                    clipboardText = task.MyText;
+                                }
+                                else
+                                {
+                                    clipboardText = task.LocalFilePath;
+                                }
+                                break;
+                        }
+                        break;
                 }
 
-                Engine.zClipboardText = clipboardText;
-                Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
-            }
+                if (!string.IsNullOrEmpty(clipboardText))
+                {
+                    Engine.ClipboardUnhook();
+                    FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
+                    Clipboard.SetText(clipboardText); // auto
 
+                    // optional deletion link
+                    string linkdel = ScreenshotsHistory.GetDeletionLink();
+                    if (!string.IsNullOrEmpty(linkdel))
+                    {
+                        FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                    }
+
+                    Engine.zClipboardText = clipboardText;
+                    Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
+                }
+            }
         }
     }
 }

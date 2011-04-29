@@ -422,6 +422,11 @@ namespace ZScreenLib
             return sbDebug.ToString();
         }
 
+        public bool JobIsImageToClipboard()
+        {
+            return Job1 == JobLevel1.PICTURES || Job1 == JobLevel1.SCREENSHOTS && MyImageUploader == ImageUploaderType.CLIPBOARD;
+        }
+
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
