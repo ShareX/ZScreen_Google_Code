@@ -242,7 +242,7 @@ namespace ZScreenLib
         /// <param name="task"></param>
         public void PublishData()
         {
-            if (mTask.Job1 == JobLevel1.BINARY)
+            if (mTask.Job1 == JobLevel1.NonImages)
             {
                 UploadFile();
             }

@@ -105,17 +105,11 @@ namespace ZScreenLib
             {
                 clipboardText = task.LocalFilePath;
             }
-            else if (task.WasBinaryUpload())
-            {
-                clipboardText = task.RemoteFilePath;
-            }
-
             else
             {
                 switch (task.Job1)
                 {
-                    case JobLevel1.IMAGES:
-                    case JobLevel1.BINARY:
+                    case JobLevel1.Images:
                         ScreenshotsHistory = task.LinkManager;
                         if (GraphicsMgr.IsValidImage(task.LocalFilePath))
                         {
@@ -142,6 +136,11 @@ namespace ZScreenLib
                             }
                         }
                         break;
+
+                    case JobLevel1.NonImages:
+                        clipboardText = task.RemoteFilePath;
+                        break;
+
                     case JobLevel1.TEXT:
                         switch (task.Job2)
                         {

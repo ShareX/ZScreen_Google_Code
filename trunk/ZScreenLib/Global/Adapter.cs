@@ -121,13 +121,13 @@ namespace ZScreenLib
                 sbMsg.Append(": ");
                 switch (task.Job1)
                 {
-                    case JobLevel1.IMAGES:
+                    case JobLevel1.Images:
                         sbMsg.Append(task.MyImageUploader.GetDescription());
                         break;
                     case JobLevel1.TEXT:
                         sbMsg.Append(task.MyTextUploader.ToString());
                         break;
-                    case JobLevel1.BINARY:
+                    case JobLevel1.NonImages:
                         sbMsg.Append(Path.GetFileName(task.LocalFilePath));
                         sbMsg.Append(" to ");
                         sbMsg.Append(task.MyFileUploader.GetDescription());
@@ -382,9 +382,17 @@ namespace ZScreenLib
         /// <returns>Shortens URL or Empty String if request failed</returns>
         public static string TryShortenURL(string url)
         {
-            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
             if (!string.IsNullOrEmpty(url))
             {
+                if (Engine.conf.TwitterEnabled)
+                {
+                    FileSystem.AppendDebug("Shortening URL for Twitter.");
+                }
+                else
+                {
+                    FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                }
+
                 if (Engine.conf.ShortenUrlAfterUploadAfter == 0 || Engine.conf.TwitterEnabled ||
                     (Engine.conf.ShortenUrlAfterUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlAfterUploadAfter) ||
                     (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
@@ -392,6 +400,7 @@ namespace ZScreenLib
                     return ShortenURL(url);
                 }
             }
+
             return string.Empty;
         }
 
