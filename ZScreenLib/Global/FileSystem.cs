@@ -135,17 +135,12 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    int retry = 3;
-                    while (retry > 0)
+                    using (FileStream fi = File.Create(filePath))
                     {
-                        using (FileStream fi = File.Create(filePath))
-                        {
-                            if (retry < 3) { System.Threading.Thread.Sleep(1000); }
-                            FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-                            ms.WriteTo(fi);
-                            retry--;
-                        }
+                        FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+                        ms.WriteTo(fi);
                     }
+
                 }
                 catch (Exception ex)
                 {

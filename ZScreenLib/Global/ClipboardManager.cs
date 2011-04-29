@@ -111,28 +111,25 @@ namespace ZScreenLib
                 {
                     case JobLevel1.Images:
                         ScreenshotsHistory = task.LinkManager;
-                        if (GraphicsMgr.IsValidImage(task.LocalFilePath))
+                        if (Engine.conf.ShowClipboardModeChooser || showDialog)
                         {
-                            if (Engine.conf.ShowClipboardModeChooser || showDialog)
+                            ClipboardOptions cmp = new ClipboardOptions(task);
+                            cmp.Icon = Resources.zss_main;
+                            if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                        }
+                        else
+                        {
+                            if (task.MakeTinyURL)
                             {
-                                ClipboardOptions cmp = new ClipboardOptions(task);
-                                cmp.Icon = Resources.zss_main;
-                                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                                string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
+                                if (!string.IsNullOrEmpty(tinyUrl))
+                                {
+                                    clipboardText = tinyUrl.Trim();
+                                }
                             }
                             else
                             {
-                                if (task.MakeTinyURL)
-                                {
-                                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                                    if (!string.IsNullOrEmpty(tinyUrl))
-                                    {
-                                        clipboardText = tinyUrl.Trim();
-                                    }
-                                }
-                                else
-                                {
-                                    clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                                }
+                                clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                             }
                         }
                         break;
