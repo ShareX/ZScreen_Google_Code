@@ -145,6 +145,9 @@
     <Compile Include="Forms\ZScreenConfigGUI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ZScreenHelpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Global\RegistryMgr.cs" />

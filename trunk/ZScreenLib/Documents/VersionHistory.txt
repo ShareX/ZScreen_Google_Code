@@ -1,5 +1,8 @@
-
-3.35.1.0 Imgur supports User Accounts {Jaex}
+3.36.3.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment {McoreD}
+3.36.2.0 Ability to use File Destination to upload Text and Images {Jaex}
+3.36.1.0 Option to copy URL to Clipboard after task is complete {Jaex}
+3.36.0.0 Freehand Crop Shot support {Jaex}
+3.35.1.0 Support for Imgur User Accounts using Open Authorization {Jaex}
 3.35.0.0 Added Dropbox file uploader support {Jaex}
 
 Version 3.34 - 20110404

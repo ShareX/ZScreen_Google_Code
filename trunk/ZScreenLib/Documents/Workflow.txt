@@ -1,12 +1,16 @@
 ﻿Clipboard Upload
 ================
-StartBw_ClipboardUpload -> Create Task
+StartBw_ClipboardUpload || UploadUsingFileSystem
 StartTextWorkers -> Run Worker
 BwApp_DoWork
 
+Uploading Image
+===============
 
-UploadImage()
-PublishImage()
-PublishData()
-CaptureActiveWindow()
 WorkerPrimary -> BwApp_DoWork()
+CaptureActiveWindow()
+PublishData()
+PublishImage()
+UploadImage()
+
+

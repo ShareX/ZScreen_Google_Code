@@ -31,11 +31,11 @@ namespace UploadersLib.HelperClasses
     [Serializable]
     public class ProxyInfo
     {
-        [Category("Settings")]
+        [Category("Settings"), DefaultValue("username")]
         public string UserName { get; set; }
-        [Category("Settings"), PasswordPropertyText(true)]
+        [Category("Settings"), PasswordPropertyText(true), DefaultValue("password")]
         public string Password { get; set; }
-        [Category("Settings")]
+        [Category("Settings"), DefaultValue("")]
         public string Host { get; set; }
         [Category("Settings"), DefaultValue(8080), Description("Port Number")]
         public int Port { get; set; }

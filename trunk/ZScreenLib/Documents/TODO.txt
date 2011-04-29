@@ -1,4 +1,6 @@
-﻿FileWriter class to manage all writing to hard disk based on settings
+﻿yfrog and twitpic using OAuth
+
+FileWriter class to manage all writing to hard disk based on settings
 Option to prevent writing to hard disk
 Option to prevent overwriting clipboard
 

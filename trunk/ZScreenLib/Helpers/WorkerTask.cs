@@ -105,7 +105,7 @@ namespace ZScreenLib
 
         #region Common Properties for All Categories
 
-        public BackgroundWorker MyWorker { get; private set; }
+        public BackgroundWorker MyWorker { get; set; }
         public JobLevel1 Job1 { get; set; }
         /// <summary>
         /// Entire Screen, Active Window, Selected Window, Crop Shot...
