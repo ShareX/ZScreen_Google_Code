@@ -45,11 +45,8 @@ namespace UploadersLib.ImageUploaders
             this.Errors = new List<string>();
         }
 
-        public ImageFileManager UploadImage(string localFilePath)
+        public UploadResult UploadImage(string localFilePath)
         {
-            // Create a new ImageFile List
-            List<ImageFile> ifl = new List<ImageFile>();
-
             // Create the connector
             DekiWiki connector = new DekiWiki(this.Options);
 
@@ -59,11 +56,8 @@ namespace UploadersLib.ImageUploaders
             // Upload the image
             connector.UploadImage(localFilePath, fName);
 
-            // Add this to the list of uploaded images
-            ifl.Add(new ImageFile(this.Options.Account.getUriPath(fName), LinkType.URL));
-
             // Create the file manager object
-            ImageFileManager ifm = new ImageFileManager(ifl) { LocalFilePath = localFilePath };
+            UploadResult ifm = new UploadResult() { URL = this.Options.Account.getUriPath(fName) };
 
             return ifm;
         }

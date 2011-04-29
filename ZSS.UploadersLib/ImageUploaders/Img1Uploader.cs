@@ -37,16 +37,16 @@ namespace UploadersLib.ImageUploaders
 
         private const string uploadURL = "http://img1.us/?app";
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            UploadResult ifm = new UploadResult();
             string response = UploadData(stream, uploadURL, fileName, "fileup");
             ifm.Source = response;
 
             if (!string.IsNullOrEmpty(response))
             {
                 string lastLine = response.Remove(0, response.LastIndexOf('\n') + 1).Trim();
-                ifm.Add(lastLine, LinkType.URL);
+                ifm.URL = lastLine;
             }
 
             return ifm;

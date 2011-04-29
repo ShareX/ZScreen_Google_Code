@@ -349,7 +349,7 @@ namespace ZScreenLib
                 UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
                 if (ur != null)
                 {
-                    mTask.LinkManager.StoreUploadResult(ur);
+                    mTask.LinkManager.UploadResult = ur;
                     mTask.RemoteFilePath = ur.URL;
                 }
                 mTask.Errors = fileHost.Errors;
@@ -463,21 +463,21 @@ namespace ZScreenLib
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.LinkManager == null ||
-                        (mTask.LinkManager != null && mTask.LinkManager.LinkList.Count < 1)); i++)
+                        (mTask.LinkManager != null && string.IsNullOrEmpty (mTask.LinkManager.UploadResult.URL))); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            mTask.LinkManager = imageUploader.UploadImage(fullFilePath);
+                            mTask.LinkManager.UploadResult = imageUploader.UploadImage(fullFilePath);
                         }
                         else if (mTask.MyImage != null && mTask.FileName != null)
                         {
-                            mTask.LinkManager = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
+                            mTask.LinkManager.UploadResult = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
                         }
 
                         // TODO: Catch "The remote server returned an error: (407) Proxy Authentication Required." and prompt Proxy Dialog
                         mTask.Errors = imageUploader.Errors;
 
-                        if (mTask.LinkManager.LinkList.Count == 0)
+                        if (string.IsNullOrEmpty(mTask.LinkManager.UploadResult.URL))
                         {
                             mTask.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", mTask.MyImageUploader.GetDescription(), i));
                         }
@@ -513,7 +513,7 @@ namespace ZScreenLib
 
         private void SetRemoteFilePath()
         {
-            if (mTask.LinkManager != null && mTask.LinkManager.LinkList.Count > 0)
+            if (mTask.LinkManager != null && !string.IsNullOrEmpty(mTask.LinkManager.UploadResult.URL))
             {
                 string url = mTask.LinkManager.GetFullImageUrl();
                 mTask.RemoteFilePath = url;
@@ -547,7 +547,7 @@ namespace ZScreenLib
                 }
                 File.Move(mTask.LocalFilePath, destFile);
                 mTask.UpdateLocalFilePath(destFile);
-                mTask.LinkManager.Add(acc.GetUriPath(fn), LinkType.URL);
+                mTask.LinkManager.UploadResult.URL = acc.GetUriPath(fn);
             }
         }
 
@@ -577,7 +577,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(url))
                     {
                         mTask.RemoteFilePath = url;
-                        mTask.LinkManager.Add(url, LinkType.URL);
+                        mTask.LinkManager.UploadResult.URL = url;
 
                         if (CreateThumbnail())
                         {
@@ -595,7 +595,7 @@ namespace ZScreenLib
 
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
-                                        mTask.LinkManager.Add(thumb, LinkType.ThumbnailURL);
+                                        mTask.LinkManager.UploadResult.ThumbnailURL = thumb;
                                     }
                                 }
                             }
@@ -668,7 +668,7 @@ namespace ZScreenLib
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
-                    mTask.LinkManager = uploader.UploadImage(mTask.LocalFilePath);
+                    mTask.LinkManager.UploadResult = uploader.UploadImage(mTask.LocalFilePath);
                     mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
 
                     DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
@@ -696,7 +696,7 @@ namespace ZScreenLib
                 mTask.DestinationName = acc.Name;
                 FileSystem.AppendDebug(string.Format("Uploading {0} to MediaWiki: {1}", mTask.FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
-                mTask.LinkManager = uploader.UploadImage(mTask.LocalFilePath);
+                mTask.LinkManager.UploadResult = uploader.UploadImage(mTask.LocalFilePath);
                 mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
                 return true;
             }

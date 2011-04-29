@@ -45,7 +45,7 @@ namespace UploadersLib.ImageUploaders
             get { return "UploadScreenshot"; }
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("apiKey", APIKey);
@@ -57,9 +57,9 @@ namespace UploadersLib.ImageUploaders
             return ParseResult(response);
         }
 
-        private ImageFileManager ParseResult(string source)
+        private UploadResult ParseResult(string source)
         {
-            ImageFileManager ifm = new ImageFileManager { Source = source };
+            UploadResult ifm = new UploadResult { Source = source };
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -96,9 +96,9 @@ namespace UploadersLib.ImageUploaders
                 }
                 else
                 {
-                    ifm.Add(xele.GetElementValue("original"), LinkType.URL);
-                    ifm.Add(xele.GetElementValue("small"), LinkType.ThumbnailURL);
-                    ifm.Add(xele.GetElementValue("deleteurl"), LinkType.DeletionLink);
+                    ifm.URL = xele.GetElementValue("original");
+                    ifm.ThumbnailURL = xele.GetElementValue("small");
+                    ifm.DeletionURL = xele.GetElementValue("deleteurl");
                 }
             }
 

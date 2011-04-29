@@ -27,7 +27,7 @@ namespace UploadersLib.HelperClasses
 {
     public interface IUploader
     {
-        ImageFileManager UploadImage(string filePath);
+        UploadResult UploadImage(string filePath);
 
         string ToErrorString();
     }

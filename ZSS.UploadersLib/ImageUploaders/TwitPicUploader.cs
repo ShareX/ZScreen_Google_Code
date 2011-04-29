@@ -69,7 +69,7 @@ namespace UploadersLib.ImageUploaders
             this.Options = options;
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
             switch (this.Options.TwitPicUploadType)
             {
@@ -85,7 +85,7 @@ namespace UploadersLib.ImageUploaders
             return null;
         }
 
-        private ImageFileManager Upload(Stream stream, string fileName, string msg)
+        private UploadResult Upload(Stream stream, string fileName, string msg)
         {
             string url;
 
@@ -109,9 +109,9 @@ namespace UploadersLib.ImageUploaders
             return ParseResult(source);
         }
 
-        private ImageFileManager ParseResult(string source)
+        private UploadResult ParseResult(string source)
         {
-            ImageFileManager ifm = new ImageFileManager { Source = source };
+            UploadResult ifm = new UploadResult { Source = source };
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -129,9 +129,8 @@ namespace UploadersLib.ImageUploaders
                             mediaid = xele.GetElementValue("mediaid");
                             mediaurl = xele.GetElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
-                            ifm.LinkList.Add(new ImageFile(mediaurl, LinkType.URL));
-                            ifm.LinkList.Add(new ImageFile(string.Format("http://twitpic.com/show/{0}/{1}",
-                                this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid), LinkType.ThumbnailURL));
+                            ifm.URL = mediaurl;
+                            ifm.ThumbnailURL = string.Format("http://twitpic.com/show/{0}/{1}", this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid);
                             break;
                         case "fail":
                             string code, msg;

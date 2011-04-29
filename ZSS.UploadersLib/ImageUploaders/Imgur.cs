@@ -79,9 +79,9 @@ namespace UploadersLib.ImageUploaders
             AuthInfo = oauth;
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageFileManager ifm = null;
+            UploadResult ifm = null;
 
             switch (UploadMethod)
             {
@@ -107,7 +107,7 @@ namespace UploadersLib.ImageUploaders
             return GetAccessToken(URLAccessToken, AuthInfo);
         }
 
-        private ImageFileManager UserUpload(Stream stream, string fileName)
+        private UploadResult UserUpload(Stream stream, string fileName)
         {
             if (string.IsNullOrEmpty(AuthInfo.UserToken) || string.IsNullOrEmpty(AuthInfo.UserSecret))
             {
@@ -121,7 +121,7 @@ namespace UploadersLib.ImageUploaders
             return ParseResponse(response);
         }
 
-        private ImageFileManager AnonymousUpload(Stream stream, string fileName)
+        private UploadResult AnonymousUpload(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", AnonymousKey);
@@ -131,9 +131,9 @@ namespace UploadersLib.ImageUploaders
             return ParseResponse(response);
         }
 
-        private ImageFileManager ParseResponse(string source)
+        private UploadResult ParseResponse(string source)
         {
-            ImageFileManager ifm = new ImageFileManager { Source = source };
+            UploadResult ifm = new UploadResult { Source = source };
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -142,10 +142,10 @@ namespace UploadersLib.ImageUploaders
 
                 if ((xe = xd.GetNode("upload|images/links")) != null)
                 {
-                    ifm.Add(xe.GetElementValue("original"), LinkType.URL);
-                    ifm.Add(xe.GetElementValue("large_thumbnail"), LinkType.ThumbnailURL);
+                    ifm.URL = xe.GetElementValue("original");
+                    ifm.ThumbnailURL = xe.GetElementValue("large_thumbnail");
                     //ifm.Add(xele.ElementValue("small_square"), LinkType.THUMBNAIL);
-                    ifm.Add(xe.GetElementValue("delete_page"), LinkType.DeletionLink);
+                    ifm.DeletionURL = xe.GetElementValue("delete_page");
                 }
                 else if ((xe = xd.GetElement("error")) != null)
                 {

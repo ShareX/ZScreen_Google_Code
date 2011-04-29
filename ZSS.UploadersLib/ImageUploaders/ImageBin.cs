@@ -37,9 +37,9 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageBin"; }
         }
 
-        public override ImageFileManager UploadImage(Stream stream, string fileName)
+        public override UploadResult UploadImage(Stream stream, string fileName)
         {
-            ImageFileManager ifm = new ImageFileManager();
+            UploadResult ifm = new UploadResult();
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("t", "file");
@@ -58,7 +58,7 @@ namespace UploadersLib.ImageUploaders
                 if (match != null)
                 {
                     string url = "http://imagebin.ca/img/" + match.Value + Path.GetExtension(fileName);
-                    ifm.Add(url, LinkType.URL);
+                    ifm.URL = url;
                 }
             }
 
