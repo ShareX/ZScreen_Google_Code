@@ -96,7 +96,7 @@ namespace ZScreenLib
 
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Task.MyUrlShortenerType = Engine.conf.URLShortenerType;
+            Task.MyUrlShortener = Engine.conf.URLShortenerType;
         }
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)

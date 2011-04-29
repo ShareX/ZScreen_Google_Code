@@ -131,32 +131,32 @@ namespace ZScreenLib
             return sb.ToString().TrimEnd();
         }
 
-        private string GetDestinationName(WorkerTask t)
+        private string GetDestinationName(WorkerTask task)
         {
-            switch (t.Job1)
+            switch (task.Job1)
             {
                 case JobLevel1.Images:
-                    return string.Format("{0}", t.MyImageUploader.GetDescription());
+                    return string.Format("{0}", task.MyImageUploader.GetDescription());
                 case JobLevel1.Text:
                     string dest = string.Empty;
-                    switch (t.Job3)
+                    switch (task.Job3)
                     {
                         case WorkerTask.JobLevel3.ShortenURL:
-                            dest = t.MyUrlShortenerType.GetDescription();
+                            dest = task.MyUrlShortener.GetDescription();
                             break;
                         default:
-                            dest = t.MyTextUploader.GetDescription();
+                            dest = task.MyTextUploader.GetDescription();
                             break;
                     }
                     return string.Format("{0}", dest);
                 case JobLevel1.Binary:
-                    switch (t.MyFileUploader)
+                    switch (task.MyFileUploader)
                     {
                         case FileUploaderType.CustomUploader:
                         case FileUploaderType.FTP:
-                            return string.Format("{0}: {1}", t.MyImageUploader.GetDescription(), t.DestinationName);
+                            return string.Format("{0}: {1}", task.MyImageUploader.GetDescription(), task.DestinationName);
                         default:
-                            return string.Format("{0}", t.MyImageUploader.GetDescription());
+                            return string.Format("{0}", task.MyImageUploader.GetDescription());
                     }
             }
 

@@ -153,8 +153,6 @@ namespace ZScreenGUI
                 }
             }
 
-            // TODO: Proxy?
-
             e.Result = task;
         }
 
@@ -212,9 +210,6 @@ namespace ZScreenGUI
                     Adapter.TaskbarSetProgressValue(progress);
                     mZScreen.Text = string.Format("{0}% - {1}", ClipboardManager.GetAverageProgress(), Engine.GetProductName());
                     break;
-                case WorkerTask.ProgressType.UpdateProxy:
-                    // TODO: Proxy
-                    break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetProgressState(tbps);
@@ -234,7 +229,7 @@ namespace ZScreenGUI
 
             try
             {
-                if (task.Errors.Count > 0 && task.Errors[0].Contains("(407) Proxy Authentication Required"))
+                if (task.Errors.Count > 0 && task.Errors[0].Contains(ExceptionMessage.ProxyAuthenticationRequired))
                 {
                     ProxyConfig pc = new ProxyConfig();
                     if (pc.ShowDialog() == DialogResult.OK)
@@ -318,10 +313,9 @@ namespace ZScreenGUI
                         ClipboardManager.SetClipboard(task, false);
                     }
 
-                    // TODO: Twitter Msg
                     if (Engine.conf.TwitterEnabled)
                     {
-                        //  Adapter.TwitterMsg(task);
+                        Adapter.TwitterMsg(task);
                     }
 
                     if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.Source))

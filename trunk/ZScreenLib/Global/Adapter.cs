@@ -411,7 +411,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(url))
             {
-                WorkerTask task = new WorkerTask();
+                WorkerTask task = new Worker().CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
                 task.SetText(url);
                 TaskManager tm = new TaskManager(task);
                 tm.ShortenURL();
@@ -629,7 +629,7 @@ namespace ZScreenLib
             return acc;
         }
 
-        public static void TwitterMsg(ref WorkerTask task)
+        public static void TwitterMsg(WorkerTask task)
         {
             if (!string.IsNullOrEmpty(task.RemoteFilePath))
             {

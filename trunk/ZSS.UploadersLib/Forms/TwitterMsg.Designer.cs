@@ -41,10 +41,9 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(821, 290);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOK.Location = new System.Drawing.Point(616, 236);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(108, 30);
+            this.btnOK.Size = new System.Drawing.Size(81, 24);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "&Tweet It";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -53,10 +52,9 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(939, 290);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(704, 236);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(107, 30);
+            this.btnCancel.Size = new System.Drawing.Size(80, 24);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -66,11 +64,10 @@
             // 
             this.txtTweet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtTweet.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtTweet.Location = new System.Drawing.Point(298, 4);
-            this.txtTweet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTweet.Location = new System.Drawing.Point(223, 3);
             this.txtTweet.Multiline = true;
             this.txtTweet.Name = "txtTweet";
-            this.txtTweet.Size = new System.Drawing.Size(733, 263);
+            this.txtTweet.Size = new System.Drawing.Size(551, 214);
             this.txtTweet.TabIndex = 2;
             this.txtTweet.TextChanged += new System.EventHandler(this.txtTweet_TextChanged);
             // 
@@ -78,10 +75,9 @@
             // 
             this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(11, 300);
-            this.lblCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCount.Location = new System.Drawing.Point(8, 244);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(32, 17);
+            this.lblCount.Size = new System.Drawing.Size(25, 13);
             this.lblCount.TabIndex = 3;
             this.lblCount.Text = "140";
             // 
@@ -89,11 +85,9 @@
             // 
             this.lbUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbUsers.FormattingEnabled = true;
-            this.lbUsers.ItemHeight = 16;
-            this.lbUsers.Location = new System.Drawing.Point(151, 4);
-            this.lbUsers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbUsers.Location = new System.Drawing.Point(113, 3);
             this.lbUsers.Name = "lbUsers";
-            this.lbUsers.Size = new System.Drawing.Size(139, 263);
+            this.lbUsers.Size = new System.Drawing.Size(104, 214);
             this.lbUsers.Sorted = true;
             this.lbUsers.TabIndex = 4;
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
@@ -103,10 +97,9 @@
             // 
             this.clbAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clbAccounts.FormattingEnabled = true;
-            this.clbAccounts.Location = new System.Drawing.Point(4, 4);
-            this.clbAccounts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.clbAccounts.Location = new System.Drawing.Point(3, 3);
             this.clbAccounts.Name = "clbAccounts";
-            this.clbAccounts.Size = new System.Drawing.Size(139, 263);
+            this.clbAccounts.Size = new System.Drawing.Size(104, 214);
             this.clbAccounts.TabIndex = 5;
             // 
             // tableLayoutPanel1
@@ -115,32 +108,30 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.lbUsers, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.clbAccounts, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtTweet, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(11, 10);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1035, 271);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(776, 220);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // TwitterMsg
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1059, 335);
+            this.ClientSize = new System.Drawing.Size(794, 272);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lblCount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TwitterMsg";

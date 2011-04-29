@@ -222,7 +222,7 @@ namespace ZScreenTesterGUI
                         new TaskManager(task).UploadText();
                         break;
                     case UploaderType.UrlShortener:
-                        task.MyUrlShortenerType = uploader.UrlShortener;
+                        task.MyUrlShortener = uploader.UrlShortener;
                         task.SetText("http://code.google.com/p/zscreen/");
                         new TaskManager(task).ShortenURL();
                         break;
