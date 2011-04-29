@@ -427,6 +427,16 @@ namespace ZScreenLib
             return Job1 == JobLevel1.PICTURES || Job1 == JobLevel1.SCREENSHOTS && MyImageUploader == ImageUploaderType.CLIPBOARD;
         }
 
+        public bool WasImageToFile()
+        {
+            return Job1 == JobLevel1.PICTURES || Job1 == JobLevel1.SCREENSHOTS && MyImageUploader == ImageUploaderType.FILE;
+        }
+
+        public bool WasBinaryUpload()
+        {
+            return Job1 == JobLevel1.BINARY && !string.IsNullOrEmpty(RemoteFilePath);
+        }
+
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
