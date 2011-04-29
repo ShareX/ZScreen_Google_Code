@@ -68,10 +68,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\IECaptComImports.dll</HintPath>
     </Reference>
-    <Reference Include="ImageQuantization, Version=1.0.3606.5509, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\ImageQuantization.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

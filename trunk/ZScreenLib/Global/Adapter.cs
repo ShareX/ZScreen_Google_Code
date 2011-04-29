@@ -121,8 +121,7 @@ namespace ZScreenLib
                 sbMsg.Append(": ");
                 switch (task.Job1)
                 {
-                    case JobLevel1.SCREENSHOTS:
-                    case JobLevel1.PICTURES:
+                    case JobLevel1.IMAGES:
                         sbMsg.Append(task.MyImageUploader.GetDescription());
                         break;
                     case JobLevel1.TEXT:

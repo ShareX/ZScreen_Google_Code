@@ -114,8 +114,7 @@ namespace ZScreenLib
             {
                 switch (task.Job1)
                 {
-                    case JobLevel1.PICTURES:
-                    case JobLevel1.SCREENSHOTS:
+                    case JobLevel1.IMAGES:
                     case JobLevel1.BINARY:
                         ScreenshotsHistory = task.LinkManager;
                         if (GraphicsMgr.IsValidImage(task.LocalFilePath))

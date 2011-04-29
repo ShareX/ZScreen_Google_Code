@@ -37,8 +37,7 @@ namespace ZScreenLib
     /// </summary>
     public enum JobLevel1
     {
-        PICTURES,
-        SCREENSHOTS,
+        IMAGES,
         TEXT,
         BINARY
     }
