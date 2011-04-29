@@ -227,6 +227,7 @@ namespace ZScreenLib
                 task.MyImageUploader = Engine.conf.ImageUploaderType;
                 task.MyTextUploader = Engine.conf.TextUploaderType;
                 task.MyFileUploader = Engine.conf.FileUploaderType;
+                task.MyUrlShortener = Engine.conf.URLShortenerType;
             }
             else
             {
@@ -313,7 +314,7 @@ namespace ZScreenLib
                 {
                     temp.Job3 = WorkerTask.JobLevel3.ShortenURL;
                     FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", temp.MyText, temp.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
-                    temp.MyUrlShortenerType = Engine.conf.URLShortenerType;
+                    temp.MyUrlShortener = Engine.conf.URLShortenerType;
                 }
                 else if (Directory.Exists(cbText))
                 {

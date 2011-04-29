@@ -94,7 +94,6 @@ namespace ZScreenLib
             INCREMENT_PROGRESS,
             SET_ICON_BUSY,
             UPDATE_STATUS_BAR_TEXT,
-            UpdateProxy,
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
             UpdateCropMode,
@@ -175,11 +174,6 @@ namespace ZScreenLib
             }
         }
 
-        /*/// <summary>
-        /// Tiny URL of RemoteFilePath
-        /// </summary>
-        public string TinyURL { get; set; }*/
-
         /// <summary>
         /// FTP Account Name, TinyPic, ImageShack
         /// </summary>
@@ -202,7 +196,7 @@ namespace ZScreenLib
         public GoogleTranslateInfo TranslationInfo { get; set; }
 
         public TextUploaderType MyTextUploader { get; set; }
-        public UrlShortenerType MyUrlShortenerType { get; set; }
+        public UrlShortenerType MyUrlShortener { get; set; }
 
         #endregion Properties for Category: Text
 
@@ -213,7 +207,7 @@ namespace ZScreenLib
 
         #endregion Properties for Category: Binary
 
-        public WorkerTask()
+        private WorkerTask()
         {
             this.Errors = new List<string>();
         }
@@ -353,7 +347,7 @@ namespace ZScreenLib
                         switch (this.Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
-                                destName = this.MyUrlShortenerType.GetDescription();
+                                destName = this.MyUrlShortener.GetDescription();
                                 break;
                             default:
                                 destName = this.MyTextUploader.GetDescription();

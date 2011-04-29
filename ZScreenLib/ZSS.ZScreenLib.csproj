@@ -107,6 +107,7 @@
     <Compile Include="Forms\CropLight.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Global\ExceptionMessage.cs" />
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
