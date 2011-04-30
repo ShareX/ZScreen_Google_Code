@@ -246,11 +246,6 @@ namespace ZScreenGUI
                         }
                     }
 
-                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0))
-                    {
-                        AddHistoryItem(task);
-                    }
-
                     switch (task.Job1)
                     {
                         case JobLevel1.Text:
@@ -347,11 +342,19 @@ namespace ZScreenGUI
                 {
                     task.MyImage.Dispose(); // For fix memory leak
                 }
+
+                if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0))
+                {
+                    AddHistoryItem(task);
+                }
+
             }
+
             catch (Exception ex)
             {
                 FileSystem.AppendDebug("Job Completed with errors: ", ex);
             }
+
             finally
             {
                 ClipboardManager.Commit(task.UniqueNumber);
