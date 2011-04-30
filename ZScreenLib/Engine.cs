@@ -124,8 +124,8 @@ namespace ZScreenLib
         public const string TwitsnapsKey = "694aaea3bc8f28479c383cbcc094fb55";
 
         // File Uploaders
-        public const string DropboxConsumerKey = "0te7j9ype9lrdfn";
-        public const string DropboxConsumerSecret = "r5d3aptd9a0cwp9";
+        public const string DropboxConsumerKey = "07cpv2bv9cd2nx2";
+        public const string DropboxConsumerSecret = "te9zbk05c4rtkq6";
         public const string SendSpaceKey = "LV6OS1R0Q3";
         public const string DropIOKey = "6c65e2d2bfd858f7d0aa6509784f876483582eea";
 

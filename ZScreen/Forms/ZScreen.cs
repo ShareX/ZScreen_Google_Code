@@ -3468,7 +3468,7 @@ namespace ZScreenGUI
             {
                 MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tcApp.SelectedTab = tpDestinations;
-                tcDestinations.SelectedTab = tpTwitter;
+                tcDestinations.SelectedTab = tpDestTwitter;
             }
 
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
