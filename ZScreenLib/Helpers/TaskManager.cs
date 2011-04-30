@@ -461,8 +461,7 @@ namespace ZScreenLib
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
-                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.LinkManager == null ||
-                        (mTask.LinkManager != null && string.IsNullOrEmpty(mTask.LinkManager.UploadResult.URL))); i++)
+                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
