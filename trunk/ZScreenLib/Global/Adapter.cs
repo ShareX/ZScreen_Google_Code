@@ -380,56 +380,6 @@ namespace ZScreenLib
 
         #endregion ImageBam Methods
 
-        #region URL Shortener Methods
-
-        /// <summary>
-        /// Attempt to shorten a URL
-        /// </summary>
-        /// <param name="url">Full URL</param>
-        /// <returns>Shortens URL or Empty String if request failed</returns>
-        public static string TryShortenURL(string url)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                if (Engine.conf.TwitterEnabled)
-                {
-                    FileSystem.AppendDebug("Shortening URL for Twitter.");
-                }
-
-                if (Engine.conf.ShortenUrlAfterUploadAfter == 0 || Engine.conf.TwitterEnabled ||
-                    (Engine.conf.ShortenUrlAfterUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlAfterUploadAfter) ||
-                    (Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL))
-                {
-                    return ShortenURL(url);
-                }
-            }
-
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Method to shorten a URL
-        /// </summary>
-        public static string ShortenURL(string url)
-        {
-            if (!string.IsNullOrEmpty(url))
-            {
-                WorkerTask task = new Worker().CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-                task.SetText(url);
-                task.ShortenURL(url);
-                return task.RemoteFilePath;
-            }
-            return url;
-        }
-
-        public static bool MakeTinyURL()
-        {
-            // LimitLongURL = 0 means make tinyURL always
-            return Engine.conf.TwitterEnabled || Engine.conf.ShortenUrlAfterUpload || Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
-        }
-
-        #endregion URL Shortener Methods
-
         public static bool CheckList<T>(List<T> list, int selected)
         {
             return list.Count > 0 && selected >= 0 && list.Count > selected;

@@ -135,9 +135,9 @@ namespace ZScreenGUI
                     break;
             }
 
-            if (task.MakeTinyURL)
+            if (task.ShouldShortenURL(task.RemoteFilePath))
             {
-                task.ShortenURL(task.LinkManager.UploadResult.URL);
+                task.ShortenURL(task.RemoteFilePath);
             }
 
             e.Result = task;
