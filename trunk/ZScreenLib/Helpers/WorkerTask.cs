@@ -459,12 +459,20 @@ namespace ZScreenLib
         }
 
         public bool ShouldShortenURL(string url)
-        {
-            // LimitLongURL = 0 means make tinyURL always
-            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
-            return FileSystem.IsValidLink(url) && Engine.conf.TwitterEnabled ||
-                Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
-                Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+        {          
+            if (FileSystem.IsValidLink(url))
+            {
+                if (Engine.conf.ShortenUrlAfterUpload)
+                {
+                    FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                }
+                return Engine.conf.TwitterEnabled ||
+                    Engine.conf.ShortenUrlUsingClipboardUpload ||
+                    Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
+                    Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+            }
+
+            return false;
         }
 
         public bool ShortenURL(string fullUrl)
