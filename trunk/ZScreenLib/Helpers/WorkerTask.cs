@@ -35,6 +35,9 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
 using ZScreenLib.Properties;
+using ZScreenLib.Helpers;
+using HistoryLib;
+using UploadersLib.URLShorteners;
 
 namespace ZScreenLib
 {
@@ -107,12 +110,18 @@ namespace ZScreenLib
 
         public BackgroundWorker MyWorker { get; set; }
         public bool WasToTakeScreenshot { get; set; }
+        /// <summary>
+        /// Image, File, Text
+        /// </summary>
         public JobLevel1 Job1 { get; private set; }
         /// <summary>
-        /// Entire Screen, Active Window, Selected Window, Crop Shot...
+        /// Entire Screen, Active Window, Selected Window, Crop Shot, etc.
         /// </summary>
         public JobLevel2 Job2 { get; private set; }
-        public JobLevel3 Job3 { get; set; }
+        /// <summary>
+        /// Shorten URL, Upload Text, Index Folder, etc.
+        /// </summary>
+        public JobLevel3 Job3 { get; private set; }
         /// <summary>
         /// List of Errors the Worker had during its operation
         /// </summary>
@@ -166,7 +175,7 @@ namespace ZScreenLib
             {
                 return urlRemote;
             }
-            set
+            private set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
@@ -253,6 +262,22 @@ namespace ZScreenLib
         {
             this.Job1 = JobLevel1.Text;
             this.MyText = text;
+
+            if (this.CanShortenUrl())
+            {
+                this.Job3 = WorkerTask.JobLevel3.ShortenURL;
+                FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", text, text.Length, Engine.conf.ShortenUrlAfterUploadAfter));
+                this.MyUrlShortener = Engine.conf.URLShortenerType;
+            }
+            else if (Directory.Exists(text))
+            {
+                this.Job3 = WorkerTask.JobLevel3.IndexFolder;
+                this.MyFileUploader = Engine.conf.FileUploaderType;
+            }
+            else
+            {
+                this.Job3 = WorkerTask.JobLevel3.UploadText;
+            }
         }
 
         /// <summary>
@@ -320,6 +345,16 @@ namespace ZScreenLib
             return true;
         }
 
+        public void UpdateRemoteFilePath(UploadResult ur)
+        {
+            if (this.LinkManager == null)
+            {
+                this.LinkManager = new ImageFileManager(ur.Source);
+            }
+            this.LinkManager.SetUploadResult(ur);
+            this.RemoteFilePath = ur.URL;
+        }
+
         public void UpdateLocalFilePath(string fp)
         {
             this.LocalFilePath = fp;
@@ -334,7 +369,7 @@ namespace ZScreenLib
             }
         }
 
-        public HistoryLib.HistoryItem GenerateHistoryItem()
+        public HistoryItem GenerateHistoryItem()
         {
             HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
             hi.DateTimeUtc = this.EndTime;
@@ -343,9 +378,10 @@ namespace ZScreenLib
             hi.Filepath = this.LocalFilePath;
             hi.Host = this.GetDestinationName();
             hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
+            hi.TinyURL = this.LinkManager.UploadResult.TinyURL;
             hi.Type = this.Job1.GetDescription();
-            hi.URL = this.LinkManager.UploadResult.URL; 
-            
+            hi.URL = this.LinkManager.UploadResult.URL;
+
             return hi;
         }
 
@@ -420,7 +456,7 @@ namespace ZScreenLib
             this.MyWorker.RunWorkerAsync(this);
         }
 
-        public bool CanShortenUrl()
+        private bool CanShortenUrl()
         {
             if (string.IsNullOrEmpty(MyText))
             {
@@ -448,6 +484,53 @@ namespace ZScreenLib
         public bool WasImageToFile()
         {
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
+        }
+
+        public bool ShortenURL(string fullUrl)
+        {
+            if (!string.IsNullOrEmpty(fullUrl))
+            {
+                URLShortener us = null;
+
+                switch (MyUrlShortener)
+                {
+                    case UrlShortenerType.BITLY:
+                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.Google:
+                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                        break;
+                    case UrlShortenerType.ISGD:
+                        us = new IsgdURLShortener();
+                        break;
+                    case UrlShortenerType.Jmp:
+                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        break;
+                    case UrlShortenerType.THREELY:
+                        us = new ThreelyURLShortener(Engine.ThreelyKey);
+                        break;
+                    case UrlShortenerType.TINYURL:
+                        us = new TinyURLShortener();
+                        break;
+                    case UrlShortenerType.TURL:
+                        us = new TurlURLShortener();
+                        break;
+                }
+
+                if (us != null)
+                {
+                    string shortenUrl = us.ShortenURL(fullUrl);
+
+                    if (!string.IsNullOrEmpty(shortenUrl))
+                    {
+                        FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", fullUrl.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, TinyURL = shortenUrl, Source = fullUrl });
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public string ToErrorString()

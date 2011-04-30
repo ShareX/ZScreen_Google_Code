@@ -119,21 +119,9 @@ namespace ZScreenLib
                         }
                         else
                         {
-                            if (task.MakeTinyURL)
-                            {
-                                string tinyUrl = LinkMgr.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                                if (!string.IsNullOrEmpty(tinyUrl))
-                                {
-                                    clipboardText = tinyUrl.Trim();
-                                }
-                            }
-                            else
-                            {
-                                clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                            }
+                            clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                         }
                         break;
-
                     case JobLevel1.File:
                         clipboardText = task.RemoteFilePath;
                         break;

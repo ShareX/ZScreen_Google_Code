@@ -224,7 +224,7 @@ namespace ZScreenTesterGUI
                     case UploaderType.UrlShortener:
                         task.MyUrlShortener = uploader.UrlShortener;
                         task.SetText("http://code.google.com/p/zscreen/");
-                        new TaskManager(task).ShortenURL();
+                        task.ShortenURL(task.MyText);
                         break;
                     default:
                         throw new Exception("Unknown uploader.");

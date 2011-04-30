@@ -137,20 +137,7 @@ namespace ZScreenGUI
 
             if (task.MakeTinyURL)
             {
-                string url = task.RemoteFilePath;
-                if (!string.IsNullOrEmpty(url))
-                {
-                    url = Adapter.TryShortenURL(url);
-                    if (!string.IsNullOrEmpty(url))
-                    {
-                        FileSystem.AppendDebug("Shortened URL: " + url);
-                        task.RemoteFilePath = url;
-                        if (null != task.LinkManager)
-                        {
-                            task.LinkManager.UploadResult.URL = url;
-                        }
-                    }
-                }
+                task.ShortenURL(task.LinkManager.UploadResult.URL);
             }
 
             e.Result = task;
@@ -259,7 +246,7 @@ namespace ZScreenGUI
                         }
                     }
 
-                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0 || task.Job1 == JobLevel1.Text))
+                    if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0))
                     {
                         AddHistoryItem(task);
                     }
@@ -276,7 +263,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && !string.IsNullOrEmpty( task.LinkManager.UploadResult.URL))
+                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.URL))
                             {
                                 if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
                                 {
@@ -308,7 +295,7 @@ namespace ZScreenGUI
                     if (Engine.conf.CopyClipboardAfterTask)
                     {
                         ClipboardManager.SetClipboard(task, false);
-                    }      
+                    }
 
                     if (Engine.conf.TwitterEnabled)
                     {
@@ -651,7 +638,7 @@ namespace ZScreenGUI
         }
 
         public void AddHistoryItem(WorkerTask task)
-        {            
+        {
             if (Engine.conf.HistorySave)
             {
                 HistoryLib.HistoryManager.AutomaticlyAddHistoryItemAsync(Engine.HistoryDbPath, task.GenerateHistoryItem());
@@ -823,7 +810,7 @@ namespace ZScreenGUI
             task.Errors.Clear();
             task.MyWorker = CreateWorker();
             task.LinkManager = new ImageFileManager(task.LocalFilePath);
-            task.RemoteFilePath = "";
+            task.UpdateRemoteFilePath(new UploadResult());
             new TaskManager(task).PublishData();
         }
 
