@@ -103,9 +103,6 @@
     <Content Include="Lib\32-bit\System.Data.SQLite.dll" />
     <Content Include="Lib\64-bit\SQLite.Interop.dll" />
     <Content Include="Lib\64-bit\System.Data.SQLite.dll" />
-    <Content Include="SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
