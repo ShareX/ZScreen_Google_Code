@@ -694,7 +694,7 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
+            if (mTask.ShouldShortenURL(mTask.MyText))
             {
                 // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png
                 mTask.ShortenURL(mTask.MyText);

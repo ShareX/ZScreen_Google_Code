@@ -513,7 +513,7 @@ namespace ZScreenLib
         [Category("Options / General"), DefaultValue(80),
         Description("ShortenUrlAfterUpload will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int ShortenUrlAfterUploadAfter { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
+        [Category("Options / General"), DefaultValue(true), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
