@@ -162,25 +162,13 @@ namespace ZScreenLib
         /// </summary>
         public string LocalFilePath { get; private set; }
         /// <summary>
-        /// Option to convert Remote File Path to a tiny URL
-        /// </summary>
-        public bool MakeTinyURL { get; set; }
-        /// <summary>
         /// URL of the Image: Picture or Screenshot, or Text file
         /// </summary>
-        private string urlRemote = string.Empty;
         public string RemoteFilePath
         {
             get
             {
-                return urlRemote;
-            }
-            private set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    urlRemote = value;
-                }
+                return this.LinkManager.UploadResult.URL;
             }
         }
 
@@ -263,16 +251,9 @@ namespace ZScreenLib
             this.Job1 = JobLevel1.Text;
             this.MyText = text;
 
-            if (this.CanShortenUrl())
-            {
-                this.Job3 = WorkerTask.JobLevel3.ShortenURL;
-                FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", text, text.Length, Engine.conf.ShortenUrlAfterUploadAfter));
-                this.MyUrlShortener = Engine.conf.URLShortenerType;
-            }
-            else if (Directory.Exists(text))
+            if (Directory.Exists(text))
             {
                 this.Job3 = WorkerTask.JobLevel3.IndexFolder;
-                this.MyFileUploader = Engine.conf.FileUploaderType;
             }
             else
             {
@@ -352,14 +333,16 @@ namespace ZScreenLib
                 this.LinkManager = new ImageFileManager(ur.Source);
             }
             this.LinkManager.SetUploadResult(ur);
-            this.RemoteFilePath = ur.URL;
         }
 
         public void UpdateLocalFilePath(string fp)
         {
             this.LocalFilePath = fp;
             this.LinkManager = new ImageFileManager(fp);
-            this.RemoteFilePath = this.LinkManager.GetLocalFilePathAsUri(Engine.Portable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath);
+            this.UpdateRemoteFilePath(new UploadResult()
+            {
+                URL = this.LinkManager.GetLocalFilePathAsUri(Engine.Portable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath)
+            });
             this.IsImage = GraphicsMgr.IsValidImage(fp);
             this.FileName = Path.GetFileName(fp);
 
@@ -456,17 +439,6 @@ namespace ZScreenLib
             this.MyWorker.RunWorkerAsync(this);
         }
 
-        private bool CanShortenUrl()
-        {
-            if (string.IsNullOrEmpty(MyText))
-            {
-                throw new Exception("Task has no text stored.");
-            }
-            return FileSystem.IsValidLink(this.MyText) && Engine.conf.ShortenUrlUsingClipboardUpload && this.Job2 == WorkerTask.JobLevel2.UploadFromClipboard
-                      && (Engine.conf.ShortenUrlAfterUploadAfter == 0 ||
-                      Engine.conf.ShortenUrlAfterUploadAfter > 0 && this.MyText.Length > Engine.conf.ShortenUrlAfterUploadAfter);
-        }
-
         public override string ToString()
         {
             StringBuilder sbDebug = new StringBuilder();
@@ -486,10 +458,20 @@ namespace ZScreenLib
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
         }
 
+        public bool ShouldShortenURL(string url)
+        {
+            // LimitLongURL = 0 means make tinyURL always
+            FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+            return FileSystem.IsValidLink(url) && Engine.conf.TwitterEnabled ||
+                Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
+                Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+        }
+
         public bool ShortenURL(string fullUrl)
         {
             if (!string.IsNullOrEmpty(fullUrl))
             {
+                this.Job3 = WorkerTask.JobLevel3.ShortenURL;
                 URLShortener us = null;
 
                 switch (MyUrlShortener)
@@ -523,7 +505,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
-                        FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", fullUrl.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                        FileSystem.AppendDebug(string.Format("Shortened URL: {0}", shortenUrl));
                         UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, TinyURL = shortenUrl, Source = fullUrl });
                         return true;
                     }

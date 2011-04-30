@@ -698,7 +698,7 @@ namespace ZScreenLib
             if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
             {
                 // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png
-                mTask.ShortenURL(mTask.LinkManager.UploadResult.URL);
+                mTask.ShortenURL(mTask.MyText);
             }
             else
             {

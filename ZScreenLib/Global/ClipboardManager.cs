@@ -96,8 +96,13 @@ namespace ZScreenLib
         public static void SetClipboard(WorkerTask task, bool showDialog)
         {
             string clipboardText = "";
+            LinkMgr = task.LinkManager;
 
-            if (task.JobIsImageToClipboard())
+            if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
+            {
+                clipboardText = task.LinkManager.UploadResult.TinyURL;
+            }
+            else if (task.JobIsImageToClipboard())
             {
                 Clipboard.SetImage(task.MyImage);
             }
@@ -110,7 +115,6 @@ namespace ZScreenLib
                 switch (task.Job1)
                 {
                     case JobLevel1.Image:
-                        LinkMgr = task.LinkManager;
                         if (Engine.conf.ShowClipboardModeChooser || showDialog)
                         {
                             ClipboardOptions cmp = new ClipboardOptions(task);
@@ -153,22 +157,24 @@ namespace ZScreenLib
                         break;
                 }
 
-                if (!string.IsNullOrEmpty(clipboardText))
+
+            }
+
+            if (!string.IsNullOrEmpty(clipboardText))
+            {
+                Engine.ClipboardUnhook();
+                FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
+                Clipboard.SetText(clipboardText); // auto
+
+                // optional deletion link
+                string linkdel = LinkMgr.UploadResult.DeletionURL;
+                if (!string.IsNullOrEmpty(linkdel))
                 {
-                    Engine.ClipboardUnhook();
-                    FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
-                    Clipboard.SetText(clipboardText); // auto
-
-                    // optional deletion link
-                    string linkdel = LinkMgr.UploadResult.DeletionURL;
-                    if (!string.IsNullOrEmpty(linkdel))
-                    {
-                        FileSystem.AppendDebug("Deletion Link: " + linkdel);
-                    }
-
-                    Engine.zClipboardText = clipboardText;
-                    Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
+                    FileSystem.AppendDebug("Deletion Link: " + linkdel);
                 }
+
+                Engine.zClipboardText = clipboardText;
+                Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
             }
         }
     }

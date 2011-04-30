@@ -389,7 +389,6 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             WorkerTask task = CreateTask(job);
             task.WasToTakeScreenshot = true;
-            task.MakeTinyURL = Adapter.MakeTinyURL();
             task.MyWorker.RunWorkerAsync(task);
         }
 
@@ -403,7 +402,6 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             task.UpdateLocalFilePath(localFilePath);
             task.SetImage(localFilePath);
-            task.MakeTinyURL = Adapter.MakeTinyURL();
             task.MyWorker.RunWorkerAsync(task);
         }
 
@@ -411,7 +409,6 @@ namespace ZScreenLib
         {
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
-            t.MakeTinyURL = Adapter.MakeTinyURL();
             t.SetImage(img);
             new TaskManager(t).WriteImage();
             t.MyWorker.RunWorkerAsync(t);
@@ -470,7 +467,6 @@ namespace ZScreenLib
         protected void StartWorkerBinary(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask t = CreateTask(job);
-            t.MakeTinyURL = Adapter.MakeTinyURL();
             t.UpdateLocalFilePath(localFilePath);
             t.MyWorker.RunWorkerAsync(t);
         }

@@ -292,6 +292,7 @@
     <None Include="Resources\note_error.png" />
     <EmbeddedResource Include="Forms\AutoCapture.resx">
       <DependentUpon>AutoCapture.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DropWindow.resx">
       <DependentUpon>DropWindow.cs</DependentUpon>
