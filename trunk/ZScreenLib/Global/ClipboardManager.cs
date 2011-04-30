@@ -98,11 +98,7 @@ namespace ZScreenLib
             string clipboardText = "";
             LinkMgr = task.LinkManager;
 
-            if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
-            {
-                clipboardText = task.LinkManager.UploadResult.TinyURL;
-            }
-            else if (task.JobIsImageToClipboard())
+            if (task.JobIsImageToClipboard())
             {
                 Clipboard.SetImage(task.MyImage);
             }
@@ -110,54 +106,51 @@ namespace ZScreenLib
             {
                 clipboardText = task.LocalFilePath;
             }
+            else if (Engine.conf.ShowClipboardModeChooser || showDialog)
+            {
+                ClipboardOptions cmp = new ClipboardOptions(task);
+                cmp.Icon = Resources.zss_main;
+                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+            }
+                // If the user requests for the full image URL, preference is given for the Shortened URL is exists
+            else if (task.Job1 == JobLevel1.Image && Engine.conf.ClipboardUriMode == ClipboardUriType.FULL)
+            {
+                if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.TinyURL))
+                {
+                    clipboardText = task.LinkManager.UploadResult.TinyURL;
+                }
+                    // If no shortened URL exists then default full URL will be used
+                else
+                {
+                    clipboardText = task.RemoteFilePath;
+                }
+            }
+             
             else
             {
-                switch (task.Job1)
+                // From this point onwards app needs to respect all other Clipboard URL modes for Images
+                if (task.Job1 == JobLevel1.Image)
                 {
-                    case JobLevel1.Image:
-                        if (Engine.conf.ShowClipboardModeChooser || showDialog)
-                        {
-                            ClipboardOptions cmp = new ClipboardOptions(task);
-                            cmp.Icon = Resources.zss_main;
-                            if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-                        }
-                        else
-                        {
-                            clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                        }
-                        break;
-                    case JobLevel1.File:
-                        clipboardText = task.RemoteFilePath;
-                        break;
-
-                    case JobLevel1.Text:
-                        switch (task.Job2)
-                        {
-                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                if (task.TranslationInfo != null)
-                                {
-                                    clipboardText = task.TranslationInfo.Result;
-                                }
-                                break;
-                            default:
-                                if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                {
-                                    clipboardText = task.RemoteFilePath;
-                                }
-                                else if (null != task.MyText)
-                                {
-                                    clipboardText = task.MyText;
-                                }
-                                else
-                                {
-                                    clipboardText = task.LocalFilePath;
-                                }
-                                break;
-                        }
-                        break;
+                    clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
                 }
-
-
+                    // Text and File catagories are still left to process. Exception for Google Translate
+                else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                {
+                    if (task.TranslationInfo != null)
+                    {
+                        clipboardText = task.TranslationInfo.Result;
+                    }
+                }
+                // Text and File catagories are still left to process. If shortened URL exists, preference is given to that
+                else if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.TinyURL))
+                {
+                    clipboardText = task.LinkManager.UploadResult.TinyURL;
+                }
+                    // Otherwise full URL for Text or File is used
+                else
+                {
+                    clipboardText = task.RemoteFilePath;
+                }
             }
 
             if (!string.IsNullOrEmpty(clipboardText))

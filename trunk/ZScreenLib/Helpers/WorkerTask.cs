@@ -168,7 +168,12 @@ namespace ZScreenLib
         {
             get
             {
-                return this.LinkManager.UploadResult.URL;
+                if (this.LinkManager != null)
+                {
+                    return this.LinkManager.UploadResult.URL;
+                }
+                FileSystem.AppendDebug("Attempted to access RemoteFilePath when LinkManager is null.");
+                return string.Empty;
             }
         }
 

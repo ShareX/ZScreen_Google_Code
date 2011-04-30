@@ -6570,11 +6570,8 @@ namespace ZScreenGUI
             // nudHistoryMaxItems
             // 
             this.nudHistoryMaxItems.Location = new System.Drawing.Point(200, 69);
-            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
+            this.nudHistoryMaxItems.Maximum = 10000;
+            this.nudHistoryMaxItems.Minimum = -1;
             this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
             this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
             this.nudHistoryMaxItems.TabIndex = 4;
