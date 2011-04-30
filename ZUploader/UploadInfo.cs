@@ -107,7 +107,8 @@ namespace ZUploader
                 Host = UploaderHost,
                 URL = Result.URL,
                 ThumbnailURL = Result.ThumbnailURL,
-                DeletionURL = Result.DeletionURL
+                DeletionURL = Result.DeletionURL,
+                TinyURL = Result.TinyURL
             };
         }
     }

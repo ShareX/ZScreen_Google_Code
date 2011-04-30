@@ -349,8 +349,7 @@ namespace ZScreenLib
                 UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
                 if (ur != null)
                 {
-                    mTask.LinkManager.UploadResult = ur;
-                    mTask.RemoteFilePath = ur.URL;
+                    mTask.UpdateRemoteFilePath(ur);
                 }
                 mTask.Errors = fileHost.Errors;
             }
@@ -463,15 +462,15 @@ namespace ZScreenLib
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount && (mTask.LinkManager == null ||
-                        (mTask.LinkManager != null && string.IsNullOrEmpty (mTask.LinkManager.UploadResult.URL))); i++)
+                        (mTask.LinkManager != null && string.IsNullOrEmpty(mTask.LinkManager.UploadResult.URL))); i++)
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            mTask.LinkManager.UploadResult = imageUploader.UploadImage(fullFilePath);
+                            mTask.UpdateRemoteFilePath(imageUploader.UploadImage(fullFilePath));
                         }
                         else if (mTask.MyImage != null && mTask.FileName != null)
                         {
-                            mTask.LinkManager.UploadResult = imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString());
+                            mTask.UpdateRemoteFilePath(imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString()));
                         }
 
                         mTask.Errors = imageUploader.Errors;
@@ -488,7 +487,6 @@ namespace ZScreenLib
                 }
             }
 
-            this.SetRemoteFilePath();
             mTask.EndTime = DateTime.Now;
 
             if (Engine.conf.ImageUploadRetryOnTimeout && mTask.UploadDuration > (int)Engine.conf.UploadDurationLimit)
@@ -507,16 +505,6 @@ namespace ZScreenLib
             if (mTask.LinkManager != null)
             {
                 FlashIcon(mTask);
-            }
-        }
-
-        private void SetRemoteFilePath()
-        {
-            if (mTask.LinkManager != null && !string.IsNullOrEmpty(mTask.LinkManager.UploadResult.URL))
-            {
-                string url = mTask.LinkManager.GetFullImageUrl();
-                mTask.RemoteFilePath = url;
-                FileSystem.AppendDebug("URL: " + mTask.RemoteFilePath);
             }
         }
 
@@ -575,8 +563,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        mTask.RemoteFilePath = url;
-                        mTask.LinkManager.UploadResult.URL = url;
+                        mTask.UpdateRemoteFilePath(new UploadResult() { URL = url });
 
                         if (CreateThumbnail())
                         {
@@ -667,8 +654,8 @@ namespace ZScreenLib
                     FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", mTask.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
-                    mTask.LinkManager.UploadResult = uploader.UploadImage(mTask.LocalFilePath);
-                    mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath));
+                    // mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath)); todo: check same output as getUriPath is possible else where
+                    mTask.UpdateRemoteFilePath(uploader.UploadImage(mTask.LocalFilePath));
 
                     DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
                     connector.UpdateHistory();
@@ -695,8 +682,9 @@ namespace ZScreenLib
                 mTask.DestinationName = acc.Name;
                 FileSystem.AppendDebug(string.Format("Uploading {0} to MediaWiki: {1}", mTask.FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
-                mTask.LinkManager.UploadResult = uploader.UploadImage(mTask.LocalFilePath);
-                mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
+                mTask.UpdateRemoteFilePath(uploader.UploadImage(mTask.LocalFilePath));
+                // mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
+
                 return true;
             }
             return false;
@@ -707,53 +695,55 @@ namespace ZScreenLib
             mTask.StartTime = DateTime.Now;
             mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (mTask.MyTextUploader == TextUploaderType.FileUploader)
-            {
-                UploadFile();
-            }
-            else if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
+            if (mTask.Job3 == WorkerTask.JobLevel3.ShortenURL)
             {
                 // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png
-                ShortenURL();
+                mTask.ShortenURL(mTask.LinkManager.UploadResult.URL);
             }
             else
             {
-                TextUploader textUploader = null;
-
-                switch (mTask.MyTextUploader)
+                if (mTask.MyTextUploader == TextUploaderType.FileUploader)
                 {
-                    case TextUploaderType.PASTE2:
-                        textUploader = new Paste2Uploader();
-                        break;
-                    case TextUploaderType.PASTEBIN:
-                        textUploader = new PastebinUploader(Engine.PastebinKey);
-                        break;
-                    case TextUploaderType.PASTEBIN_CA:
-                        textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
-                        break;
-                    case TextUploaderType.SLEXY:
-                        textUploader = new SlexyUploader();
-                        break;
+                    UploadFile();
                 }
-
-                if (textUploader != null)
+                else
                 {
-                    FileSystem.AppendDebug("Uploading to " + textUploader.Name);
+                    TextUploader textUploader = null;
 
-                    string url = string.Empty;
-
-                    if (!string.IsNullOrEmpty(mTask.MyText))
+                    switch (mTask.MyTextUploader)
                     {
-                        url = textUploader.UploadText(mTask.MyText);
-                    }
-                    else
-                    {
-                        url = textUploader.UploadTextFile(mTask.LocalFilePath);
+                        case TextUploaderType.PASTE2:
+                            textUploader = new Paste2Uploader();
+                            break;
+                        case TextUploaderType.PASTEBIN:
+                            textUploader = new PastebinUploader(Engine.PastebinKey);
+                            break;
+                        case TextUploaderType.PASTEBIN_CA:
+                            textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
+                            break;
+                        case TextUploaderType.SLEXY:
+                            textUploader = new SlexyUploader();
+                            break;
                     }
 
-                    mTask.RemoteFilePath = url;
-                    mTask.LinkManager.UploadResult.URL = url;
-                    mTask.Errors = textUploader.Errors;
+                    if (textUploader != null)
+                    {
+                        FileSystem.AppendDebug("Uploading to " + textUploader.Name);
+
+                        string url = string.Empty;
+
+                        if (!string.IsNullOrEmpty(mTask.MyText))
+                        {
+                            url = textUploader.UploadText(mTask.MyText);
+                        }
+                        else
+                        {
+                            url = textUploader.UploadTextFile(mTask.LocalFilePath);
+                        }
+
+                        mTask.UpdateRemoteFilePath(new UploadResult() { URL = url });
+                        mTask.Errors = textUploader.Errors;
+                    }
                 }
             }
             mTask.EndTime = DateTime.Now;
@@ -812,52 +802,6 @@ namespace ZScreenLib
             }
         }
 
-        public bool ShortenURL()
-        {
-            if (!string.IsNullOrEmpty(mTask.MyText))
-            {
-                URLShortener us = null;
-
-                switch (mTask.MyUrlShortener)
-                {
-                    case UrlShortenerType.BITLY:
-                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
-                        break;
-                    case UrlShortenerType.Google:
-                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
-                        break;
-                    case UrlShortenerType.ISGD:
-                        us = new IsgdURLShortener();
-                        break;
-                    case UrlShortenerType.Jmp:
-                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
-                        break;
-                    case UrlShortenerType.THREELY:
-                        us = new ThreelyURLShortener(Engine.ThreelyKey);
-                        break;
-                    case UrlShortenerType.TINYURL:
-                        us = new TinyURLShortener();
-                        break;
-                    case UrlShortenerType.TURL:
-                        us = new TurlURLShortener();
-                        break;
-                }
-
-                if (us != null)
-                {
-                    string shortenUrl = us.ShortenURL(mTask.MyText);
-
-                    if (!string.IsNullOrEmpty(shortenUrl))
-                    {
-                        mTask.RemoteFilePath = shortenUrl;
-                        return true;
-                    }
-                }
-            }
-
-            mTask.RemoteFilePath = mTask.MyText;
-            return false;
-        }
 
         public override string ToString()
         {

@@ -36,7 +36,7 @@ namespace UploadersLib.HelperClasses
         /// </summary>
         public string LocalFilePath { get; set; }
 
-        public UploadResult UploadResult { get; set; }
+        public UploadResult UploadResult { get; private set; }
 
         private ImageFileManager()
         {
@@ -47,6 +47,11 @@ namespace UploadersLib.HelperClasses
             : this()
         {
             this.LocalFilePath = fp;
+        }
+
+        public void SetUploadResult(UploadResult ur)
+        {
+            UploadResult = ur;
         }
 
         /// <summary>

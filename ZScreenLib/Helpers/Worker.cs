@@ -301,21 +301,6 @@ namespace ZScreenLib
                 FileSystem.WriteText(fp, cbText);
                 temp.UpdateLocalFilePath(fp);
                 temp.SetText(cbText);
-                if (temp.CanShortenUrl())
-                {
-                    temp.Job3 = WorkerTask.JobLevel3.ShortenURL;
-                    FileSystem.AppendDebug(string.Format("URL: {0}; Length {1}; Shortening after {2}", temp.MyText, temp.MyText.Length, Engine.conf.ShortenUrlAfterUploadAfter));
-                    temp.MyUrlShortener = Engine.conf.URLShortenerType;
-                }
-                else if (Directory.Exists(cbText))
-                {
-                    temp.Job3 = WorkerTask.JobLevel3.IndexFolder;
-                    temp.MyFileUploader = Engine.conf.FileUploaderType;
-                }
-                else
-                {
-                    temp.Job3 = WorkerTask.JobLevel3.UploadText;
-                }
                 textWorkers.Add(temp);
             }
             else if (Clipboard.ContainsFileDropList())

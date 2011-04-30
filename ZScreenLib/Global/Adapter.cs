@@ -125,7 +125,14 @@ namespace ZScreenLib
                         sbMsg.Append(task.MyImageUploader.GetDescription());
                         break;
                     case JobLevel1.Text:
-                        sbMsg.Append(task.MyTextUploader.ToString());
+                        if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
+                        {
+                            sbMsg.Append(task.MyUrlShortener.ToString());
+                        }
+                        else
+                        {
+                            sbMsg.Append(task.MyTextUploader.ToString());
+                        }
                         break;
                     case JobLevel1.File:
                         sbMsg.Append(Path.GetFileName(task.LocalFilePath));
@@ -388,10 +395,6 @@ namespace ZScreenLib
                 {
                     FileSystem.AppendDebug("Shortening URL for Twitter.");
                 }
-                else
-                {
-                    FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
-                }
 
                 if (Engine.conf.ShortenUrlAfterUploadAfter == 0 || Engine.conf.TwitterEnabled ||
                     (Engine.conf.ShortenUrlAfterUploadAfter > 0 && url.Length > Engine.conf.ShortenUrlAfterUploadAfter) ||
@@ -413,8 +416,7 @@ namespace ZScreenLib
             {
                 WorkerTask task = new Worker().CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
                 task.SetText(url);
-                TaskManager tm = new TaskManager(task);
-                tm.ShortenURL();
+                task.ShortenURL(url);
                 return task.RemoteFilePath;
             }
             return url;

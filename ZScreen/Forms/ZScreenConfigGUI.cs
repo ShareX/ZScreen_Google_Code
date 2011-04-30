@@ -301,6 +301,7 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_History()
         {
             nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
+            cbHistorySave.Checked = Engine.conf.HistorySave;
         }
 
         private void ZScreen_ConfigGUI_Hotkeys()
