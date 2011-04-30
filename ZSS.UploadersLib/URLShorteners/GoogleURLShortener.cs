@@ -23,6 +23,8 @@
 
 #endregion License Information (GPL v2)
 
+using Newtonsoft.Json;
+
 namespace UploadersLib.URLShorteners
 {
     public class GoogleURLShortener : URLShortener
@@ -47,8 +49,14 @@ namespace UploadersLib.URLShorteners
             {
                 string query = string.Format("{0}?key={1}", APIURL, APIKey);
                 string json = string.Format("{{\"longUrl\":\"{0}\"}}", url);
-                GoogleURLShortenerResponse result = GetResponseJSON<GoogleURLShortenerResponse>(query, json);
-                if (result != null) return result.id;
+
+                string response = SendPostRequestJSON(query, json);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    GoogleURLShortenerResponse result = JsonConvert.DeserializeObject<GoogleURLShortenerResponse>(response);
+                    if (result != null) return result.id;
+                }
             }
 
             return null;
