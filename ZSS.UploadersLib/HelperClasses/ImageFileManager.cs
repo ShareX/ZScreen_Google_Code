@@ -112,7 +112,7 @@ namespace UploadersLib.HelperClasses
             {
                 return string.Format("<a target='_blank' href=\"{0}\"><img src=\"{1}\" border='0'/></a>", url, th);
             }
-            return string.Empty;
+            return GetFullImageHTML();
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace UploadersLib.HelperClasses
             {
                 return string.Format("[IMG]{0}[/IMG]", url);
             }
-            return string.Empty;
+            return GetFullImageUrl();
         }
 
         public string GetFullImageWiki()
@@ -165,7 +165,7 @@ namespace UploadersLib.HelperClasses
             {
                 return string.Format("[{0}]", url);
             }
-            return string.Empty;
+            return GetFullImageUrl();
         }
 
         public string GetFullImageMediaWikiInnerLink()
@@ -188,19 +188,19 @@ namespace UploadersLib.HelperClasses
             {
                 return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", full, thumb);
             }
-            return string.Empty;
+            return GetFullImageForumsUrl();
         }
 
         public string GetLinkedThumbnailWikiUrl()
         {
-            // [http://code.google.com/ http://code.google.com/images/code_sm.png]
+            // e.g. [http://code.google.com http://code.google.com/images/code_sm.png]
             string full = GetFullImageUrl();
             string thumb = GetThumbnailUrl();
             if (!string.IsNullOrEmpty(full) && !string.IsNullOrEmpty(thumb))
             {
                 return string.Format("[{0} {1}]", full, thumb);
             }
-            return string.Empty;
+            return GetFullImageWiki();
         }
 
         public string GetFullImageHTML()
@@ -210,7 +210,7 @@ namespace UploadersLib.HelperClasses
             {
                 return string.Format("<img src=\"{0}\"/>", url);
             }
-            return string.Empty;
+            return GetFullImageUrl();
         }
 
         public enum SourceType

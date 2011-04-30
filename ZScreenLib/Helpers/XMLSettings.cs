@@ -406,7 +406,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // History Settings
-        public int HistoryMaxNumber = 50;
+        public int HistoryMaxNumber = 100;
         public bool HistorySave = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
