@@ -11,7 +11,7 @@ namespace ZScreenLib
         private Timer timer;
         private TextureBrush backgroundBrush;
         private Pen rectanglePen;
-        private Point positionOnClick, positionCurrent;
+        private Point positionOnClick, positionCurrent, positionOld;
         private bool isMouseDown;
 
         public Rectangle SelectionRectangle { get; private set; }
@@ -38,12 +38,16 @@ namespace ZScreenLib
         {
             if (isMouseDown)
             {
+                positionOld = positionCurrent;
                 positionCurrent = PointToClient(Cursor.Position);
-                SelectionRectangle =  GraphicsMgr.FixRectangle(positionOnClick.X, positionOnClick.Y,
-                    positionCurrent.X - positionOnClick.X + 1, positionCurrent.Y - positionOnClick.Y + 1);
-            }
 
-            Refresh();
+                if (positionCurrent != positionOld)
+                {
+                    SelectionRectangle = GraphicsMgr.FixRectangle(positionOnClick.X, positionOnClick.Y,
+                        positionCurrent.X - positionOnClick.X + 1, positionCurrent.Y - positionOnClick.Y + 1);
+                    Refresh();
+                }
+            }
         }
 
         private void Crop_KeyDown(object sender, KeyEventArgs e)
@@ -63,6 +67,7 @@ namespace ZScreenLib
                 if (isMouseDown)
                 {
                     isMouseDown = false;
+                    Refresh();
                 }
                 else
                 {

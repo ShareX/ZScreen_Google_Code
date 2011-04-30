@@ -102,27 +102,101 @@ namespace UploadersLib
 
         protected string SendPostRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
         {
-            using (HttpWebResponse response = GetResponseUsingPost(url, arguments))
+            using (HttpWebResponse response = PostResponseMultiPart(url, arguments))
             {
                 return ResponseToString(response, responseType);
             }
         }
 
-        protected T GetResponseJSON<T>(string url, string json)
+        protected string SendPostRequestURLEncoded(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
+        {
+            using (HttpWebResponse response = PostResponseURLEncoded(url, arguments))
+            {
+                return ResponseToString(response, responseType);
+            }
+        }
+
+        protected string SendPostRequestURLEncoded(string url, string arguments = null, ResponseType responseType = ResponseType.Text)
+        {
+            using (HttpWebResponse response = PostResponseURLEncoded(url, arguments))
+            {
+                return ResponseToString(response, responseType);
+            }
+        }
+
+        protected string SendPostRequestJSON(string url, string json, ResponseType responseType = ResponseType.Text)
+        {
+            using (HttpWebResponse response = PostResponseJSON(url, json))
+            {
+                return ResponseToString(response, responseType);
+            }
+        }
+
+        private HttpWebResponse PostResponseMultiPart(string url, Dictionary<string, string> arguments)
         {
             string boundary = CreateBoundary();
+            byte[] data = MakeInputContent(boundary, arguments);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+                return GetResponseUsingPost(url, stream, boundary, "multipart/form-data");
+            }
+        }
+
+        private HttpWebResponse PostResponseURLEncoded(string url, string arguments)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(arguments);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(data, 0, data.Length);
+                return GetResponseUsingPost(url, stream, null, "application/x-www-form-urlencoded");
+            }
+        }
+
+        private HttpWebResponse PostResponseURLEncoded(string url, Dictionary<string, string> arguments)
+        {
+            return PostResponseURLEncoded(url, CreateQuery(arguments));
+        }
+
+        private HttpWebResponse PostResponseJSON(string url, string json)
+        {
             byte[] data = Encoding.UTF8.GetBytes(json);
 
             using (MemoryStream stream = new MemoryStream())
             {
                 stream.Write(data, 0, data.Length);
-
-                using (HttpWebResponse response = GetResponseUsingPost(url, stream, boundary, "application/json"))
-                {
-                    string jsonResponse = ResponseToString(response);
-                    return JSONHelper.JSONToObject<T>(jsonResponse);
-                }
+                return GetResponseUsingPost(url, stream, null, "application/json");
             }
+        }
+
+        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary, string contentType)
+        {
+            IsUploading = true;
+            stopUpload = false;
+
+            try
+            {
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length, contentType);
+
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    if (!TransferData(dataStream, requestStream)) return null;
+                }
+
+                return (HttpWebResponse)request.GetResponse();
+            }
+            catch (Exception e)
+            {
+                if (!stopUpload) AddWebError(e);
+            }
+            finally
+            {
+                IsUploading = false;
+            }
+
+            return null;
         }
 
         protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null)
@@ -153,47 +227,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                if (!stopUpload) Errors.Add(GetWebError(e));
-            }
-            finally
-            {
-                IsUploading = false;
-            }
-
-            return null;
-        }
-
-        private HttpWebResponse GetResponseUsingPost(string url, Dictionary<string, string> arguments)
-        {
-            string boundary = CreateBoundary();
-            byte[] data = MakeInputContent(boundary, arguments);
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(data, 0, data.Length);
-                return GetResponseUsingPost(url, stream, boundary);
-            }
-        }
-
-        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary, string contentType = "multipart/form-data")
-        {
-            IsUploading = true;
-            stopUpload = false;
-
-            try
-            {
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length, contentType);
-
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    if (!TransferData(dataStream, requestStream)) return null;
-                }
-
-                return (HttpWebResponse)request.GetResponse();
-            }
-            catch (Exception e)
-            {
-                if (!stopUpload) Errors.Add(GetWebError(e));
+                if (!stopUpload) AddWebError(e);
             }
             finally
             {
@@ -219,10 +253,7 @@ namespace UploadersLib
         {
             IsUploading = true;
 
-            if (arguments != null && arguments.Count > 0)
-            {
-                url += "?" + string.Join("&", arguments.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
-            }
+            url = CreateQuery(url, arguments);
 
             try
             {
@@ -230,7 +261,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                Errors.Add(GetWebError(e));
+                AddWebError(e);
             }
             finally
             {
@@ -378,28 +409,53 @@ namespace UploadersLib
             return null;
         }
 
-        private string GetWebError(Exception e)
+        private string CreateQuery(Dictionary<string, string> args)
         {
-            StringBuilder str = new StringBuilder();
-            str.AppendLine("Message:");
-            str.AppendLine(e.Message);
-            str.AppendLine();
-            str.AppendLine("StackTrace:");
-            str.AppendLine(e.StackTrace);
-
-            if (e is WebException)
+            if (args != null && args.Count > 0)
             {
-                string response = ResponseToString(((WebException)e).Response);
-
-                if (!string.IsNullOrEmpty(response))
-                {
-                    str.AppendLine();
-                    str.AppendLine("Response:");
-                    str.AppendLine(response);
-                }
+                return string.Join("&", args.Select(x => x.Key + "=" + HttpUtility.UrlEncode(x.Value)).ToArray());
             }
 
-            return str.ToString();
+            return string.Empty;
+        }
+
+        private string CreateQuery(string url, Dictionary<string, string> args)
+        {
+            string query = CreateQuery(args);
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                return url + "?" + query;
+            }
+
+            return url;
+        }
+
+        private void AddWebError(Exception e)
+        {
+            if (Errors != null && e != null)
+            {
+                StringBuilder str = new StringBuilder();
+                str.AppendLine("Message:");
+                str.AppendLine(e.Message);
+                str.AppendLine();
+                str.AppendLine("StackTrace:");
+                str.AppendLine(e.StackTrace);
+
+                if (e is WebException)
+                {
+                    string response = ResponseToString(((WebException)e).Response);
+
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        str.AppendLine();
+                        str.AppendLine("Response:");
+                        str.AppendLine(response);
+                    }
+                }
+
+                Errors.Add(str.ToString());
+            }
         }
 
         #endregion Helper methods

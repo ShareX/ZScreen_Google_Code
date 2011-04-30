@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using HelpersLib;
+using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
@@ -72,7 +73,7 @@ namespace UploadersLib.FileUploaders
 
                 string response = SendGetRequest(url);
 
-                DropboxUserLogin login = JSONHelper.JSONToObject<DropboxUserLogin>(response);
+                DropboxUserLogin login = JsonConvert.DeserializeObject<DropboxUserLogin>(response);
 
                 if (login != null)
                 {
@@ -94,7 +95,7 @@ namespace UploadersLib.FileUploaders
 
                 string response = SendGetRequest(url);
 
-                DropboxAccountInfo account = JSONHelper.JSONToObject<DropboxAccountInfo>(response);
+                DropboxAccountInfo account = JsonConvert.DeserializeObject<DropboxAccountInfo>(response);
 
                 if (account != null)
                 {
