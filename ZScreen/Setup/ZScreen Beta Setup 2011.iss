@@ -81,7 +81,9 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: ..\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ..\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ..\bin\Release\*.dll; Excludes: System.Data.SQLite.dll, SQLite.Interop.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: "..\..\HistoryLib\Lib\32-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: Not IsWin64
+Source: "..\..\HistoryLib\Lib\64-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: IsWin64
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
