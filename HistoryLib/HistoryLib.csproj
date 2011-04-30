@@ -34,13 +34,16 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.SQLite, Version=1.0.71.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\32-bit\System.Data.SQLite.dll</HintPath>
+      <HintPath>Lib\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -100,9 +103,8 @@
   <ItemGroup>
     <Content Include="History.ico" />
     <Content Include="Lib\32-bit\SQLite.Interop.dll" />
-    <Content Include="Lib\32-bit\System.Data.SQLite.dll" />
+    <Content Include="Lib\System.Data.SQLite.dll" />
     <Content Include="Lib\64-bit\SQLite.Interop.dll" />
-    <Content Include="Lib\64-bit\System.Data.SQLite.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
@@ -112,6 +114,26 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>IF EXIST "%25programfiles(x86)%25" (GOTO 64-Bit) ELSE (GOTO 32-Bit)
+
+:32-Bit
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\32-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZScreen\bin\Debug\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\32-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZScreen\bin\Release\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\32-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZUploader\bin\Debug\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\32-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZUploader\bin\Release\SQLite.Interop.dll"
+GOTO END
+
+:64-Bit
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\64-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZScreen\bin\Debug\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\64-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZScreen\bin\Release\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\64-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZUploader\bin\Debug\SQLite.Interop.dll"
+copy "$(TargetDir)..\..\..\HistoryLib\Lib\64-bit\SQLite.Interop.dll" "$(TargetDir)..\..\..\ZUploader\bin\Release\SQLite.Interop.dll"
+GOTO END
+
+:END
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
