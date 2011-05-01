@@ -571,28 +571,32 @@ namespace ZScreenGUI
         /// </summary>
         private void DelayedTrimMemoryUse()
         {
-            try
+            if (Engine.conf.EnableAutoMemoryTrim)
             {
-                lock (trimMemoryLock)
+                try
                 {
-                    //System.Console.WriteLine("DelayedTrimMemoryUse");
-                    if (timerTrimMemory == null)
+                    lock (trimMemoryLock)
                     {
-                        timerTrimMemory = new System.Timers.Timer();
-                        timerTrimMemory.AutoReset = false;
-                        timerTrimMemory.Interval = 10000;
-                        timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
+                        //System.Console.WriteLine("DelayedTrimMemoryUse");
+                        if (timerTrimMemory == null)
+                        {
+                            timerTrimMemory = new System.Timers.Timer();
+                            timerTrimMemory.AutoReset = false;
+                            timerTrimMemory.Interval = 10000;
+                            timerTrimMemory.Elapsed += new System.Timers.ElapsedEventHandler(timerTrimMemory_Elapsed);
+                        }
+                        else
+                        {
+                            timerTrimMemory.Stop();
+                        }
+
+                        timerTrimMemory.Start();
                     }
-                    else
-                    {
-                        timerTrimMemory.Stop();
-                    }
-                    timerTrimMemory.Start();
                 }
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
+                catch (Exception ex)
+                {
+                    FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
+                }
             }
         }
 
@@ -605,6 +609,7 @@ namespace ZScreenGUI
                     timerTrimMemory.Stop();
                     timerTrimMemory.Close();
                 }
+
                 NativeMethods.TrimMemoryUse();
             }
         }

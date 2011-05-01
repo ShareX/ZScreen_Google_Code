@@ -505,6 +505,8 @@ namespace ZScreenLib
         public bool ShowTrayUploadProgress { get; set; }
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+        [Category("Options / General"), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
+        public bool EnableAutoMemoryTrim { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
         public bool EnableKeyboardHookTimer { get; set; }
 
