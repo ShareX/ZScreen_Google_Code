@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -2047,9 +2048,9 @@ namespace ZScreenLib
 
         public static void TrimMemoryUse()
         {
-            System.GC.Collect();
-            System.GC.WaitForFullGCComplete();
-            SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, (IntPtr)(-1), (IntPtr)(-1));
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+            SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, (IntPtr)(-1), (IntPtr)(-1));
         }
 
         public static bool IsWindowMaximized(IntPtr handle)
