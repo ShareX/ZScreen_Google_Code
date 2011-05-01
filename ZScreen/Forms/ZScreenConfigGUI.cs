@@ -321,6 +321,7 @@ namespace ZScreenGUI
             chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
             chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
             cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
+            cbLanguageAutoDetect.Checked = Engine.conf.GoogleAutoDetectSource;
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
             cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
@@ -680,6 +681,5 @@ namespace ZScreenGUI
             }
             CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
         }
-
     }
 }
