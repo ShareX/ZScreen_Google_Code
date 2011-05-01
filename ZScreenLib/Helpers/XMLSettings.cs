@@ -41,6 +41,7 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.TextServices;
 using ZSS.IndexersLib;
 
 namespace ZScreenLib
@@ -394,7 +395,9 @@ namespace ZScreenLib
 
         // Language Translator
 
-        public string GoogleSourceLanguage = "auto";
+        public List<GoogleLanguage> GoogleLanguages;
+        public string GoogleSourceLanguage = "en";
+        public bool GoogleAutoDetectSource = true;
         public string GoogleTargetLanguage = "en";
         public string GoogleTargetLanguage2 = "?";
         public bool ClipboardTranslate = false;

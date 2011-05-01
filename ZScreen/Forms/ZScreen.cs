@@ -35,7 +35,6 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Threading;
-using System.Web;
 using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
@@ -51,7 +50,6 @@ using UploadersLib.TextServices;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
-using ZScreenLib.Helpers;
 using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
@@ -2017,24 +2015,22 @@ namespace ZScreenGUI
 
         private void btnTranslate_Click(object sender, EventArgs e)
         {
-            btnTranslateMethod();
-        }
-
-        private void btnTranslateMethod()
-        {
-            /*Loader.Worker.StartBW_LanguageTranslator(new GoogleTranslate.TranslationInfo(txtTranslateText.Text,
-                GoogleTranslate.FindLanguage(Engine.conf.GoogleSourceLanguage, ZScreen.mGTranslator.LanguageOptions.SourceLangList),
-                GoogleTranslate.FindLanguage(Engine.conf.GoogleTargetLanguage, ZScreen.mGTranslator.LanguageOptions.TargetLangList)));*/
+            Loader.Worker.Translate();
         }
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.GoogleSourceLanguage = GoogleTranslate.Languages[cbFromLanguage.SelectedIndex].Name;
+            Engine.conf.GoogleSourceLanguage = Engine.conf.GoogleLanguages[cbFromLanguage.SelectedIndex].Language;
+        }
+
+        private void cbLanguageAutoDetect_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.GoogleAutoDetectSource = cbLanguageAutoDetect.Checked;
         }
 
         private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.GoogleTargetLanguage = GoogleTranslate.Languages[cbToLanguage.SelectedIndex].Name;
+            Engine.conf.GoogleTargetLanguage = Engine.conf.GoogleLanguages[cbToLanguage.SelectedIndex].Language;
         }
 
         private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
@@ -2047,8 +2043,35 @@ namespace ZScreenGUI
             if (e.Control && e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                btnTranslateMethod();
+                Loader.Worker.Translate();
             }
+        }
+
+        private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (cbToLanguage.SelectedIndex > -1)
+            {
+                cbToLanguage.DoDragDrop(Engine.conf.GoogleTargetLanguage, DragDropEffects.Move);
+            }
+        }
+
+        private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text) && e.AllowedEffect == DragDropEffects.Move)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
+        {
+            Engine.conf.GoogleTargetLanguage2 = e.Data.GetData(DataFormats.Text).ToString();
+            btnTranslateTo1.Text = "To " + Loader.Worker2.GetLanguageName(Engine.conf.GoogleTargetLanguage2);
+        }
+
+        private void btnTranslateTo1_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.TranslateTo1();
         }
 
         #endregion Language Translator
@@ -2762,35 +2785,6 @@ namespace ZScreenGUI
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ScreenshotDelayTimes = nudScreenshotDelay.Time;
-        }
-
-        private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (cbToLanguage.SelectedIndex > -1)
-            {
-                cbToLanguage.DoDragDrop(Engine.conf.GoogleTargetLanguage, DragDropEffects.Move);
-            }
-        }
-
-        private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.Text) && e.AllowedEffect == DragDropEffects.Move)
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-        }
-
-        private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
-        {
-            /*GoogleTranslate.GTLanguage lang = GoogleTranslate.FindLanguage(e.Data.GetData(DataFormats.Text).ToString(),
-               ZScreen.mGTranslator.LanguageOptions.TargetLangList);
-            Engine.conf.GoogleTargetLanguage2 = lang.Value;
-            btnTranslateTo1.Text = "To " + lang.Name;*/
-        }
-
-        private void btnTranslateTo1_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.TranslateTo1();
         }
 
         /// <summary>
@@ -3716,7 +3710,6 @@ namespace ZScreenGUI
 
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             // TODO: Edit in Picnik in the new Hustory
             //Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
             //                    HttpUtility.UrlEncode(hi.RemotePath), Engine.PicnikKey));

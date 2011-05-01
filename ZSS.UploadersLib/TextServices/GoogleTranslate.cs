@@ -36,8 +36,6 @@ namespace UploadersLib.TextServices
 
         private string APIKey;
 
-        public static List<GoogleLanguage> Languages;
-
         public GoogleTranslate(string apiKey)
         {
             APIKey = apiKey;
@@ -122,6 +120,8 @@ namespace UploadersLib.TextServices
     {
         public string Language { get; set; }
         public string Name { get; set; }
+
+        public GoogleLanguage() { }
 
         public GoogleLanguage(string language, string name)
         {
