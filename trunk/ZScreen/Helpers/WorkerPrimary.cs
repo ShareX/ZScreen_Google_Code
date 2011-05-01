@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -347,7 +346,6 @@ namespace ZScreenGUI
                 {
                     AddHistoryItem(task);
                 }
-
             }
 
             catch (Exception ex)
@@ -660,14 +658,11 @@ namespace ZScreenGUI
 
         public void StartBW_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
-            if (mZScreen.cbFromLanguage.Items.Count > 0 && mZScreen.cbToLanguage.Items.Count > 0)
-            {
-                WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
-                mZScreen.btnTranslate.Enabled = false;
-                mZScreen.btnTranslateTo1.Enabled = false;
-                t.TranslationInfo = translationInfo;
-                t.MyWorker.RunWorkerAsync(t);
-            }
+            WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
+            mZScreen.btnTranslate.Enabled = false;
+            mZScreen.btnTranslateTo1.Enabled = false;
+            t.TranslationInfo = translationInfo;
+            t.MyWorker.RunWorkerAsync(t);
         }
 
         public void StartBW_EntireScreen()
@@ -819,6 +814,16 @@ namespace ZScreenGUI
 
         #region Translate
 
+        public void Translate()
+        {
+            StartBW_LanguageTranslator(new GoogleTranslateInfo
+            {
+                Text = mZScreen.txtTranslateText.Text,
+                SourceLanguage = Engine.conf.GoogleAutoDetectSource ? null : Engine.conf.GoogleSourceLanguage,
+                TargetLanguage = Engine.conf.GoogleTargetLanguage
+            });
+        }
+
         public void TranslateTo1()
         {
             if (Engine.conf.GoogleTargetLanguage2 == "?")
@@ -833,13 +838,12 @@ namespace ZScreenGUI
                 StartBW_LanguageTranslator(new GoogleTranslateInfo()
                 {
                     Text = mZScreen.txtTranslateText.Text,
-                    SourceLanguage = Engine.conf.GoogleSourceLanguage,
+                    SourceLanguage = Engine.conf.GoogleAutoDetectSource ? null : Engine.conf.GoogleSourceLanguage,
                     TargetLanguage = Engine.conf.GoogleTargetLanguage2
                 });
             }
         }
 
         #endregion Translate
-
     }
 }
