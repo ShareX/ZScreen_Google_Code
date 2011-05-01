@@ -2015,7 +2015,10 @@ namespace ZScreenGUI
 
         private void btnTranslate_Click(object sender, EventArgs e)
         {
-            Loader.Worker.Translate();
+            if (!string.IsNullOrEmpty(txtTranslateText.Text))
+            {
+                Loader.Worker.Translate();
+            }
         }
 
         private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
@@ -2043,7 +2046,11 @@ namespace ZScreenGUI
             if (e.Control && e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                Loader.Worker.Translate();
+
+                if (!string.IsNullOrEmpty(txtTranslateText.Text))
+                {
+                    Loader.Worker.Translate();
+                }
             }
         }
 

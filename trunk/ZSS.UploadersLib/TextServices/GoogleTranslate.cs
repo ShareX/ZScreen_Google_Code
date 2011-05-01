@@ -87,10 +87,10 @@ namespace UploadersLib.TextServices
                 try
                 {
                     JToken jt = JObject.Parse(response).SelectToken("data.translations");
-                    translateInfo.Result = (string)jt.SelectToken("translatedText");
+                    translateInfo.Result = (string)jt[0]["translatedText"];
                     if (string.IsNullOrEmpty(sourceLanguage))
                     {
-                        translateInfo.SourceLanguage = (string)jt.SelectToken("detectedSourceLanguage");
+                        translateInfo.SourceLanguage = (string)jt[0]["detectedSourceLanguage"];
                     }
                 }
                 catch (Exception e)
