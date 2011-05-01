@@ -3615,6 +3615,10 @@ namespace ZScreenGUI
         private void chkMonUrls_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.MonitorUrls = chkMonUrls.Checked;
+            if (chkMonUrls.Checked)
+            {
+                Engine.ClipboardHook();
+            }
         }
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
