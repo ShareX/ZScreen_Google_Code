@@ -272,7 +272,7 @@ namespace ZScreenLib
         public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
-        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
+        [Category("Screenshots / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
         public bool ShowSaveFileDialogImages { get; set; }
 
         // Image Settings
@@ -510,14 +510,15 @@ namespace ZScreenLib
 
         // Options / Interaction
 
-        [Category("Options / General"), DefaultValue(true),
+        [Category("Options / URL Shorteners"), DefaultValue(true),
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
-        [Category("Options / General"), DefaultValue(80),
+        [Category("Options / URL Shorteners"), DefaultValue(80),
         Description("ShortenUrlAfterUpload will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int ShortenUrlAfterUploadAfter { get; set; }
-        [Category("Options / General"), DefaultValue(true), Description("Optionally shorten the URL after completing a task.")]
+        [Category("Options / URL Shorteners"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
+
         [Category("Options / General"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Do not store any data in the hard disk.")]
