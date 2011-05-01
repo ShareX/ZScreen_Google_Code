@@ -79,8 +79,8 @@ namespace UploadersLib.FileUploaders
 
                     if (login != null)
                     {
-                        AuthInfo.UserToken = login.token;
-                        AuthInfo.UserSecret = login.secret;
+                        AuthInfo.UserToken = login.Token;
+                        AuthInfo.UserSecret = login.Secret;
                         return login;
                     }
                 }
@@ -103,7 +103,7 @@ namespace UploadersLib.FileUploaders
 
                     if (account != null)
                     {
-                        UserID = account.uid.ToString();
+                        UserID = account.Uid.ToString();
                         return account;
                     }
                 }
@@ -120,7 +120,6 @@ namespace UploadersLib.FileUploaders
             }
 
             string url = Helpers.CombineURL(URLFiles, UploadPath);
-            if (!url.EndsWith("/")) url += "/";
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("file", fileName);
@@ -141,35 +140,48 @@ namespace UploadersLib.FileUploaders
 
         public static string GetDropboxURL(string userID, string uploadPath, string fileName)
         {
-            if (uploadPath.StartsWith("Public/"))
+            if (!string.IsNullOrEmpty(uploadPath))
             {
-                return Helpers.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
+                if (uploadPath.StartsWith("Public/", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return Helpers.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
+                }
             }
 
-            return "Upload path is private. Use Public folder for get public URL.";
+            return "Upload path is private. Use \"Public\" folder to get public URL.";
+        }
+
+        public static string TidyUploadPath(string uploadPath)
+        {
+            if (!string.IsNullOrEmpty(uploadPath))
+            {
+                return uploadPath.Trim().Replace('\\', '/').Trim('/') + "/";
+            }
+
+            return string.Empty;
         }
     }
 
     public class DropboxUserLogin
     {
-        public string token { get; set; }
-        public string secret { get; set; }
+        public string Token { get; set; }
+        public string Secret { get; set; }
     }
 
     public class DropboxAccountInfo
     {
-        public string referral_link { get; set; }
-        public string display_name { get; set; }
-        public long uid { get; set; }
-        public string country { get; set; }
-        public DropboxQuotaInfo quota_info { get; set; }
-        public string email { get; set; }
+        public string Referral_link { get; set; }
+        public string Display_name { get; set; }
+        public long Uid { get; set; }
+        public string Country { get; set; }
+        public DropboxQuotaInfo Quota_info { get; set; }
+        public string Email { get; set; }
     }
 
     public class DropboxQuotaInfo
     {
-        public long shared { get; set; }
-        public long quota { get; set; }
-        public long normal { get; set; }
+        public long Shared { get; set; }
+        public long Quota { get; set; }
+        public long Normal { get; set; }
     }
 }

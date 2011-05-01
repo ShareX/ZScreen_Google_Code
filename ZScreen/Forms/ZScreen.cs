@@ -32,7 +32,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -3796,14 +3795,14 @@ namespace ZScreenGUI
 
                         if (account != null)
                         {
-                            Engine.conf.DropboxUserToken = login.token;
-                            Engine.conf.DropboxUserSecret = login.secret;
-                            Engine.conf.DropboxEmail = account.email;
-                            Engine.conf.DropboxName = account.display_name;
-                            Engine.conf.DropboxUserID = account.uid.ToString();
+                            Engine.conf.DropboxUserToken = login.Token;
+                            Engine.conf.DropboxUserSecret = login.Secret;
+                            Engine.conf.DropboxEmail = account.Email;
+                            Engine.conf.DropboxName = account.Display_name;
+                            Engine.conf.DropboxUserID = account.Uid.ToString();
                             Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
                             UpdateDropboxStatus();
-                            SystemSounds.Exclamation.Play();
+                            MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
                         else
@@ -3835,9 +3834,9 @@ namespace ZScreenGUI
                 sb.AppendLine("Email: " + Engine.conf.DropboxEmail);
                 sb.AppendLine("Name: " + Engine.conf.DropboxName);
                 sb.AppendLine("User ID: " + Engine.conf.DropboxUserID);
-                if (!string.IsNullOrEmpty(Engine.conf.DropboxUploadPath))
+                string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
+                if (!string.IsNullOrEmpty(uploadPath))
                 {
-                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Engine.conf.DropboxUploadPath);
                     sb.AppendLine("Upload path: " + uploadPath);
                     sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Engine.conf.DropboxUserID, uploadPath, "{Filename}"));
                 }
