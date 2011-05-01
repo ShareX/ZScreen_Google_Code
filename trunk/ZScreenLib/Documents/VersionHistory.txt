@@ -1,6 +1,7 @@
 3.36.5.0 SQLite based History Viewer from ZUploader {Jaex/McoreD}
 3.36.4.0 Option to enable Crop Lite for slower computers {Jaex}
 3.36.3.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment {McoreD}
+3.36.2.2 Fixes for tweeting unicode charactors {Jaex}
 3.36.2.1 Fixed Unable to replace image with same filename using ftp upload [Issue 406] {simonw1485}
 3.36.2.0 Ability to use File Destination to upload Text and Images {Jaex}
 3.36.1.0 Option to copy URL to Clipboard after task is complete {Jaex}
