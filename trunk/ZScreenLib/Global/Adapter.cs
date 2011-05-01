@@ -553,7 +553,7 @@ namespace ZScreenLib
                 return false;
             }
 
-            return Engine.conf.ImageEditorsEnabled;
+            return Engine.conf.PerformActions;
         }
 
         public static void DeleteFile(string fp)

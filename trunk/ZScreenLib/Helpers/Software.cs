@@ -45,9 +45,23 @@ namespace ZScreenLib
         /// </summary>
         public bool Protected;
 
-        public Software() { }
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
+
+        public Software()
+        {
+            ApplyDefaultValues(this);
+        }
 
         public Software(string sName, string sPath)
+            : this()
         {
             this.Name = sName;
             this.Path = sPath;
@@ -59,6 +73,13 @@ namespace ZScreenLib
             this.Protected = bProtected;
         }
 
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images.")]
+        public bool TriggerForImages { get; set; }
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for text.")]
+        public bool TriggerForText { get; set; }
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for files.")]
+        public bool TriggerForFiles { get; set; }
+
         public Software(string sName, string sPath, bool bProtected, bool bEnabled)
             : this(sName, sPath, bProtected)
         {
@@ -67,7 +88,7 @@ namespace ZScreenLib
 
         public static Software GetByName(string sName)
         {
-            foreach (Software software in Engine.conf.ImageEditors)
+            foreach (Software software in Engine.conf.ActionsList)
             {
                 if (software.Name == sName) return software;
             }
@@ -81,7 +102,7 @@ namespace ZScreenLib
 
         public static bool Exist(string sName)
         {
-            foreach (Software software in Engine.conf.ImageEditors)
+            foreach (Software software in Engine.conf.ActionsList)
             {
                 if (software.Name == sName) return true;
             }
@@ -92,11 +113,11 @@ namespace ZScreenLib
         {
             if (Exist(sName))
             {
-                foreach (Software software in Engine.conf.ImageEditors)
+                foreach (Software software in Engine.conf.ActionsList)
                 {
                     if (software.Name == sName)
                     {
-                        Engine.conf.ImageEditors.Remove(software);
+                        Engine.conf.ActionsList.Remove(software);
                         return true;
                     }
                 }
