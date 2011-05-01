@@ -73,15 +73,17 @@ namespace UploadersLib.FileUploaders
 
                 string response = SendGetRequest(url);
 
-                DropboxUserLogin login = JsonConvert.DeserializeObject<DropboxUserLogin>(response);
-
-                if (login != null)
+                if (!string.IsNullOrEmpty(response))
                 {
-                    AuthInfo.UserToken = login.token;
-                    AuthInfo.UserSecret = login.secret;
-                }
+                    DropboxUserLogin login = JsonConvert.DeserializeObject<DropboxUserLogin>(response);
 
-                return login;
+                    if (login != null)
+                    {
+                        AuthInfo.UserToken = login.token;
+                        AuthInfo.UserSecret = login.secret;
+                        return login;
+                    }
+                }
             }
 
             return null;
@@ -95,14 +97,16 @@ namespace UploadersLib.FileUploaders
 
                 string response = SendGetRequest(url);
 
-                DropboxAccountInfo account = JsonConvert.DeserializeObject<DropboxAccountInfo>(response);
-
-                if (account != null)
+                if (!string.IsNullOrEmpty(response))
                 {
-                    UserID = account.uid.ToString();
-                }
+                    DropboxAccountInfo account = JsonConvert.DeserializeObject<DropboxAccountInfo>(response);
 
-                return account;
+                    if (account != null)
+                    {
+                        UserID = account.uid.ToString();
+                        return account;
+                    }
+                }
             }
 
             return null;
