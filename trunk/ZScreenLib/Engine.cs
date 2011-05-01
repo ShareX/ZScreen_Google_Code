@@ -292,6 +292,7 @@ namespace ZScreenLib
             if (string.IsNullOrEmpty(fp))
             {
                 Engine.conf = XMLSettings.Read();
+                FileSystem.AppendDebug("Finished reading " + Engine.mAppSettings.XMLSettingsFile);
             }
             else
             {
