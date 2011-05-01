@@ -232,6 +232,10 @@ namespace ZScreenLib
         {
             this.MyWorker = worker;
             this.Job2 = job;
+            if (job == JobLevel2.LANGUAGE_TRANSLATOR)
+            {
+                this.Job1 = JobLevel1.Text;
+            }
         }
 
         public void SetImage(Image img)
@@ -361,14 +365,18 @@ namespace ZScreenLib
         {
             HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
             hi.DateTimeUtc = this.EndTime;
-            hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
+            if (this.LinkManager != null)
+            {
+                hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
+                hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
+                hi.TinyURL = this.LinkManager.UploadResult.TinyURL;
+                hi.URL = this.LinkManager.UploadResult.URL;
+            }
             hi.Filename = this.FileName;
             hi.Filepath = this.LocalFilePath;
             hi.Host = this.GetDestinationName();
-            hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
-            hi.TinyURL = this.LinkManager.UploadResult.TinyURL;
             hi.Type = this.Job1.GetDescription();
-            hi.URL = this.LinkManager.UploadResult.URL;
+
 
             return hi;
         }
@@ -464,7 +472,7 @@ namespace ZScreenLib
         }
 
         public bool ShouldShortenURL(string url)
-        {          
+        {
             if (FileSystem.IsValidLink(url))
             {
                 if (Engine.conf.ShortenUrlAfterUpload)
