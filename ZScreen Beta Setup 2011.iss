@@ -26,7 +26,7 @@
 		);; \
 	);
 
-#define ExePath "..\bin\Release\ZScreen.exe"
+#define ExePath "ZScreen\bin\Release\ZScreen.exe"
 #define MyAppVersion GetFileVersion(ExePath)
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
@@ -51,15 +51,15 @@ CreateAppDir=true
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DirExistsWarning=no
-InfoAfterFile=..\..\ZScreenLib\Documents\license.txt
-InfoBeforeFile=..\..\ZScreenLib\Documents\VersionHistory.txt
+InfoAfterFile=ZScreenLib\Documents\license.txt
+InfoBeforeFile=ZScreenLib\Documents\VersionHistory.txt
 InternalCompressLevel=ultra64
 LanguageDetectionMethod=uilanguage
 MinVersion=4.90.3000,5.0.2195sp3
 OutputBaseFilename={#MyAppName}-{#MyAppVersion}-setup
-OutputDir=..\..\..\Output\
+OutputDir=..\Output\
 PrivilegesRequired=none
-;SetupIconFile=..\Resources\zss-main.ico
+;SetupIconFile=ZScreen\Resources\zss-main.ico
 ShowLanguageDialog=auto
 ShowUndisplayableLanguages=false
 SignedUninstaller=false
@@ -80,11 +80,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: ..\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ..\bin\Release\*.dll; Excludes: System.Data.SQLite.dll, SQLite.Interop.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
-Source: "..\..\HistoryLib\Lib\*.dll"; DestDir: "{app}"; Flags: ignoreversion;
-Source: "..\..\HistoryLib\Lib\32-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: Not IsWin64
-Source: "..\..\HistoryLib\Lib\64-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: IsWin64
+Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\Release\*.dll; Excludes: System.Data.SQLite.dll, SQLite.Interop.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: "HistoryLib\Lib\*.dll"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "HistoryLib\Lib\32-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: Not IsWin64
+Source: "HistoryLib\Lib\64-bit\*.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: IsWin64
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"

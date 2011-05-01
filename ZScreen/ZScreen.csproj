@@ -335,7 +335,6 @@
     <None Include="Resources\application_go.png" />
     <None Include="Resources\DropboxLogo.png" />
     <Content Include="Resources\zss-main.ico" />
-    <Content Include="Setup\ZScreen Beta Setup 2011.iss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DavuxLibMin\DavuxLib.csproj">
@@ -387,5 +386,6 @@
       <Name>ZSS.UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
