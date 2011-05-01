@@ -322,11 +322,11 @@ namespace ZScreenLib
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public List<Software> ImageEditors = new List<Software>();
+        public List<Software> ActionsList = new List<Software>();
         public Software ImageEditor = null;
         public Software TextEditorActive;
         public List<Software> TextEditors = new List<Software>();
-        public bool ImageEditorsEnabled = false;
+        public bool PerformActions = false;
         public bool TextEditorEnabled = false;
         public bool ImageEditorAutoSave = true;
 

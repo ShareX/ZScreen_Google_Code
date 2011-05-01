@@ -93,7 +93,7 @@ namespace ZScreenGUI
                     {
                         if (!Software.Exist(sName)) // If not added to Software list before
                         {
-                            Engine.conf.ImageEditors.Add(new Software(sName, filePath, false));
+                            Engine.conf.ActionsList.Add(new Software(sName, filePath, false));
                         }
 
                         return true;

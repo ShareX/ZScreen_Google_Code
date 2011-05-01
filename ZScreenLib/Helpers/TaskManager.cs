@@ -263,7 +263,7 @@ namespace ZScreenLib
         {
             if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
             {
-                ImageEdit();
+                PerformActions(mTask);
             }
 
             if (mTask.MyImageUploader == ImageUploaderType.FileUploader)
@@ -765,13 +765,13 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Edit Image in selected Image Editor
+        /// Perform Actions after capturing image/text/file objects
         /// </summary>
-        public void ImageEdit()
+        public void PerformActions(WorkerTask task)
         {
-            if (File.Exists(mTask.LocalFilePath))
+            if (File.Exists(task.LocalFilePath))
             {
-                foreach (Software app in Engine.conf.ImageEditors)
+                foreach (Software app in Engine.conf.ActionsList)
                 {
                     if (app.Enabled)
                     {
@@ -782,9 +782,9 @@ namespace ZScreenLib
                                 Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
                                 Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
                                 editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                                editor.MyWorker = mTask.MyWorker;
-                                editor.SetImage(mTask.MyImage);
-                                editor.SetImagePath(mTask.LocalFilePath);
+                                editor.MyWorker = task.MyWorker;
+                                editor.SetImage(task.MyImage);
+                                editor.SetImagePath(task.LocalFilePath);
                                 editor.ShowDialog();
                             }
                             catch (Exception ex)
@@ -794,7 +794,12 @@ namespace ZScreenLib
                         }
                         else if (File.Exists(app.Path))
                         {
-                            app.OpenFile(mTask.LocalFilePath);
+                            if (task.Job1 == JobLevel1.File && app.TriggerForFiles ||
+                                task.Job1 == JobLevel1.Image && app.TriggerForImages ||
+                                task.Job1 == JobLevel1.Text && app.TriggerForText)
+                            {
+                                app.OpenFile(task.LocalFilePath);
+                            }
                         }
                     }
                 }

@@ -242,34 +242,35 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Editors()
         {
-            chkEditorsEnabled.Checked = Engine.conf.ImageEditorsEnabled;
-            tsmEditinImageSoftware.Checked = Engine.conf.ImageEditorsEnabled;
+            chkPerformActions.Checked = Engine.conf.PerformActions;
+            tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            string mspaint = "Paint";
-            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, false);
+            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, false) { TriggerForFiles = false, TriggerForText = false };
             if (Software.Exist(Engine.ZSCREEN_IMAGE_EDITOR))
             {
                 editor = Software.GetByName(Engine.ZSCREEN_IMAGE_EDITOR);
             }
-            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), false);
+
+            string mspaint = "Paint";
+            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), false) { TriggerForFiles = false, TriggerForText = false };
             if (Software.Exist(mspaint))
             {
                 paint = Software.GetByName(mspaint);
             }
 
-            Engine.conf.ImageEditors.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
+            Engine.conf.ActionsList.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
 
-            Engine.conf.ImageEditors.Insert(0, editor);
+            Engine.conf.ActionsList.Insert(0, editor);
             if (File.Exists(paint.Path))
             {
-                Engine.conf.ImageEditors.Insert(1, paint);
+                Engine.conf.ActionsList.Insert(1, paint);
             }
 
             RegistryMgr.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
-            foreach (Software app in Engine.conf.ImageEditors)
+            foreach (Software app in Engine.conf.ActionsList)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {

@@ -1,3 +1,4 @@
+3.36.6.0 Image Editors are now called Actions to support post-actions after capturing images/text/files {McoreD}
 3.36.5.0 SQLite based History Viewer from ZUploader {Jaex/McoreD}
 3.36.4.0 Option to enable Crop Lite for slower computers {Jaex}
 3.36.3.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment {McoreD}
