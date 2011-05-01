@@ -39,7 +39,6 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
-using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
 using ZUploader.HelperClasses;
@@ -319,7 +318,8 @@ namespace ZScreenLib
                     break;
                 case FileUploaderType.Dropbox:
                     OAuthInfo oauth = new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret, Engine.conf.DropboxUserToken, Engine.conf.DropboxUserSecret);
-                    fileHost = new Dropbox(oauth, new NameParser { IsFolderPath = true }.Convert(Engine.conf.DropboxUploadPath), Engine.conf.DropboxUserID);
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
+                    fileHost = new Dropbox(oauth, uploadPath, Engine.conf.DropboxUserID);
                     break;
                 /*case FileUploaderType.FileBin:
                     fileHost = new FileBin();
@@ -800,7 +800,6 @@ namespace ZScreenLib
                 }
             }
         }
-
 
         public override string ToString()
         {
