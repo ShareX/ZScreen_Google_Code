@@ -208,8 +208,6 @@ namespace ZScreenLib
             sbDesc.AppendLine();
             sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("PIN-based authorization through oAuth for Twitter API by James Devlin: http://www.codingthewheel.com/archives/coding-the-tweet-redux");
-            sbDesc.AppendLine();
             sbDesc.AppendLine("GIF file creation uses Image Quantizer Example Project by Brendan Tompkins: http://codebetter.com/media/p/164230.aspx");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
