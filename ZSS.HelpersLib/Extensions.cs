@@ -57,6 +57,12 @@ namespace HelpersLib
             return num;
         }
 
+        public static int BetweenOrDefault(this int num, int min, int max, int defaultValue = 0)
+        {
+            if (num >= min && num <= max) return num;
+            return defaultValue;
+        }
+
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (source == null) throw new ArgumentNullException("source");

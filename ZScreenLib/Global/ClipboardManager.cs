@@ -26,7 +26,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
@@ -112,28 +111,28 @@ namespace ZScreenLib
                 cmp.Icon = Resources.zss_main;
                 if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
             }
-                // If the user requests for the full image URL, preference is given for the Shortened URL is exists
-            else if (task.Job1 == JobLevel1.Image && Engine.conf.ClipboardUriMode == ClipboardUriType.FULL)
+            // If the user requests for the full image URL, preference is given for the Shortened URL is exists
+            else if (task.Job1 == JobLevel1.Image && Engine.conf.MyClipboardUriMode == (int)ClipboardUriType.FULL)
             {
                 if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.TinyURL))
                 {
                     clipboardText = task.LinkManager.UploadResult.TinyURL;
                 }
-                    // If no shortened URL exists then default full URL will be used
+                // If no shortened URL exists then default full URL will be used
                 else
                 {
                     clipboardText = task.RemoteFilePath;
                 }
             }
-             
+
             else
             {
                 // From this point onwards app needs to respect all other Clipboard URL modes for Images
                 if (task.Job1 == JobLevel1.Image)
                 {
-                    clipboardText = LinkMgr.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
+                    clipboardText = LinkMgr.GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim();
                 }
-                    // Text and File catagories are still left to process. Exception for Google Translate
+                // Text and File catagories are still left to process. Exception for Google Translate
                 else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                 {
                     if (task.TranslationInfo != null)
@@ -146,7 +145,7 @@ namespace ZScreenLib
                 {
                     clipboardText = task.LinkManager.UploadResult.TinyURL;
                 }
-                    // Otherwise full URL for Text or File is used
+                // Otherwise full URL for Text or File is used
                 else
                 {
                     clipboardText = task.RemoteFilePath;

@@ -22,9 +22,9 @@ namespace ZScreenGUI
             FileSystem.AppendDebug("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
             pgApp.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
+            ZScreen_ConfigGUI_Main();
             ZScreen_ConfigGUI_TrayMenu();
             ZScreen_ConfigGUI_Options();
-            ZScreen_ConfigGUI_Main();
             ZScreen_ConfigGUI_Destinations();
             ZScreen_ConfigGUI_Hotkeys();
             ZScreen_ConfigGUI_Screenshots();
@@ -35,6 +35,42 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_History();
 
             CheckFormSettings();
+        }
+
+        private void ZScreen_ConfigGUI_Main()
+        {
+            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
+            {
+                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
+                ucDestOptions.cboImageUploaders.SelectedIndex = Engine.conf.MyImageUploader.BetweenOrDefault(0, ucDestOptions.cboImageUploaders.Items.Count - 1);
+            }
+
+            if (ucDestOptions.cboTextUploaders.Items.Count == 0)
+            {
+                ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
+                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.MyTextUploader.BetweenOrDefault(0, ucDestOptions.cboTextUploaders.Items.Count - 1);
+            }
+
+            if (ucDestOptions.cboFileUploaders.Items.Count == 0)
+            {
+                ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+                ucDestOptions.cboFileUploaders.SelectedIndex = Engine.conf.MyFileUploader.BetweenOrDefault(0, ucDestOptions.cboFileUploaders.Items.Count - 1);
+            }
+
+            if (ucDestOptions.cboURLShorteners.Items.Count == 0)
+            {
+                ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.MyURLShortener.BetweenOrDefault(0, ucDestOptions.cboURLShorteners.Items.Count - 1);
+            }
+
+            if (cboClipboardTextMode.Items.Count == 0)
+            {
+                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
+                cboClipboardTextMode.SelectedIndex =  Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboClipboardTextMode.Items.Count - 1);
+            }
+
+            chkManualNaming.Checked = Engine.conf.ManualNaming;
+            chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
         private void ZScreen_ConfigGUI_Destinations()
@@ -355,43 +391,6 @@ namespace ZScreenGUI
             cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
         }
 
-        private void ZScreen_ConfigGUI_Main()
-        {
-            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
-            {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
-                ucDestOptions.cboImageUploaders.SelectedIndex = Math.Min(ucDestOptions.cboImageUploaders.Items.Count, (int)Engine.conf.MyImageUploader);
-            }
-            
-            if (ucDestOptions.cboTextUploaders.Items.Count == 0)
-            {
-                ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-                ucDestOptions.cboTextUploaders.SelectedIndex = Math.Min(ucDestOptions.cboTextUploaders.Items.Count, (int)Engine.conf.MyTextUploader);
-            }
-
-            if (ucDestOptions.cboFileUploaders.Items.Count == 0)
-            {
-                ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
-                ucDestOptions.cboFileUploaders.SelectedIndex = Math.Min(ucDestOptions.cboFileUploaders.Items.Count, (int)Engine.conf.MyFileUploader);
-            }
-            
-            if (ucDestOptions.cboURLShorteners.Items.Count == 0)
-            {
-                ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-                ucDestOptions.cboURLShorteners.SelectedIndex = Math.Min(ucDestOptions.cboURLShorteners.Items.Count, (int)Engine.conf.MyURLShortener);
-            }
-            
-
-            if (cboClipboardTextMode.Items.Count == 0)
-            {
-                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
-                cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
-            }
-            
-            chkManualNaming.Checked = Engine.conf.ManualNaming;
-            chkShowCursor.Checked = Engine.conf.ShowCursor;
-        }
-
         private void ZScreen_ConfigGUI_Options()
         {
             Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
@@ -638,7 +637,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_TextServices()
         {
-
         }
 
         private void ZScreen_ConfigGUI_Translator()

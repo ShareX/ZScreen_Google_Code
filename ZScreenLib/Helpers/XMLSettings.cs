@@ -70,15 +70,11 @@ namespace ZScreenLib
         public int MyFileUploader = (int)FileUploaderType.SendSpace;
         public int MyTextUploader = (int)TextUploaderType.PASTEBIN;
         public int MyURLShortener = (int)UrlShortenerType.BITLY;
-        public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
+        public int MyClipboardUriMode = (int)ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
-        public bool ShowWatermark = false;
-        public bool CropGridToggle = false;
-        public Size CropGridSize = new Size(100, 100);
-        public string HelpToLanguage = "en";
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Destinations
@@ -218,6 +214,9 @@ namespace ZScreenLib
         public bool CropShotRoundedCorners { get; set; }
         [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
         public bool CropShotShadow { get; set; }
+
+        public bool CropGridToggle = false;
+        public Size CropGridSize = new Size(100, 100);
 
         // Selected Window
 

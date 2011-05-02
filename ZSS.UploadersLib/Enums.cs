@@ -175,6 +175,8 @@ namespace UploadersLib
         SendSpace,
         [Description("Dropbox - dropbox.com")]
         Dropbox,
+        [Description("FileSonic - filesonic.com")]
+        FileSonic,
         //[Description("filebin.ca")]
         //FileBin,
         //[Description("drop.io")]
