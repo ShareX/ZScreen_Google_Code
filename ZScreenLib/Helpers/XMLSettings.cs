@@ -66,10 +66,10 @@ namespace ZScreenLib
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public ImageUploaderType ImageUploaderType = ImageUploaderType.CLIPBOARD;
-        public FileUploaderType FileUploaderType = FileUploaderType.RapidShare;
-        public TextUploaderType TextUploaderType = TextUploaderType.PASTEBIN;
-        public UrlShortenerType URLShortenerType = UrlShortenerType.BITLY;
+        public int MyImageUploader = (int)ImageUploaderType.CLIPBOARD;
+        public int MyFileUploader = (int)FileUploaderType.SendSpace;
+        public int MyTextUploader = (int)TextUploaderType.PASTEBIN;
+        public int MyURLShortener = (int)UrlShortenerType.BITLY;
         public ClipboardUriType ClipboardUriMode = ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;

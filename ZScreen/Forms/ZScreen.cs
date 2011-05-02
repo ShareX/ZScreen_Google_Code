@@ -1125,7 +1125,7 @@ namespace ZScreenGUI
         private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             ImageUploaderType uploader = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Engine.conf.ImageUploaderType = uploader;
+            Engine.conf.MyImageUploader = (int)uploader;
             cboClipboardTextMode.Enabled = uploader != ImageUploaderType.CLIPBOARD;
 
             CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(uploader));
@@ -1133,21 +1133,21 @@ namespace ZScreenGUI
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.TextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
+            Engine.conf.MyTextUploader = ucDestOptions.cboTextUploaders.SelectedIndex;
 
             // TODO: CheckToolStripMenuItem(tsmTextDest?, GetFileDestMenuItem(uploader));
         }
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
+            Engine.conf.MyFileUploader = ucDestOptions.cboFileUploaders.SelectedIndex;
 
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem((FileUploaderType)Engine.conf.MyFileUploader));
         }
 
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.URLShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
+            Engine.conf.MyURLShortener = ucDestOptions.cboURLShorteners.SelectedIndex;
 
             // TODO: CheckToolStripMenuItem(tsmURLShortenerDest?, GetFileDestMenuItem(Engine.conf.TextUploaderType));
         }

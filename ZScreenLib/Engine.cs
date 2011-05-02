@@ -196,10 +196,10 @@ namespace ZScreenLib
                     configResult = cw.ShowDialog();
                     Engine.mAppSettings.RootDir = cw.RootFolder;
                     Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
-                    Engine.mAppSettings.ImageUploader = cw.ImageDestinationType;
-                    Engine.mAppSettings.FileUploader = cw.FileUploaderType;
-                    Engine.mAppSettings.TextUploaderSelected = cw.MyTextUploaderType;
-                    Engine.mAppSettings.UrlShortenerSelected = cw.MyUrlShortenerType;
+                    Engine.mAppSettings.ImageUploader = (int)cw.ImageDestinationType;
+                    Engine.mAppSettings.FileUploader = (int)cw.FileUploaderType;
+                    Engine.mAppSettings.TextUploader = (int)cw.MyTextUploaderType;
+                    Engine.mAppSettings.UrlShortener = (int)cw.MyUrlShortenerType;
                     if (!Portable)
                     {
                         mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
@@ -306,10 +306,10 @@ namespace ZScreenLib
             if (RunConfig)
             {
                 Engine.conf.PreferSystemFolders = Engine.mAppSettings.PreferSystemFolders;
-                Engine.conf.ImageUploaderType = Engine.mAppSettings.ImageUploader;
-                Engine.conf.FileUploaderType = Engine.mAppSettings.FileUploader;
-                Engine.conf.TextUploaderType = Engine.mAppSettings.TextUploaderSelected;
-                Engine.conf.URLShortenerType = Engine.mAppSettings.UrlShortenerSelected;
+                Engine.conf.MyImageUploader = Engine.mAppSettings.ImageUploader;
+                Engine.conf.MyFileUploader = Engine.mAppSettings.FileUploader;
+                Engine.conf.MyTextUploader = Engine.mAppSettings.TextUploader;
+                Engine.conf.MyURLShortener = Engine.mAppSettings.UrlShortener;
             }
             // Portable then we don't need PreferSystemFolders to be true
             if (Portable)

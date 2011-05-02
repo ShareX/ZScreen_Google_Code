@@ -214,10 +214,10 @@ namespace ZScreenLib
             WorkerTask task = new WorkerTask(bwApp, job);
             if (task.Job2 != WorkerTask.JobLevel2.CustomUploaderTest)
             {
-                task.MyImageUploader = Engine.conf.ImageUploaderType;
-                task.MyTextUploader = Engine.conf.TextUploaderType;
-                task.MyFileUploader = Engine.conf.FileUploaderType;
-                task.MyUrlShortener = Engine.conf.URLShortenerType;
+                task.MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
+                task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+                task.MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
+                task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
             }
             else
             {
@@ -240,7 +240,7 @@ namespace ZScreenLib
         {
             WorkerTask t = CreateTask(job);
             // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = Engine.conf.TextUploaderType;
+            t.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
             if (!string.IsNullOrEmpty(localFilePath))
             {
                 t.UpdateLocalFilePath(localFilePath);
