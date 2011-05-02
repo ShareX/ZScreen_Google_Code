@@ -652,7 +652,7 @@ namespace ZScreenGUI
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text + "...");
                     tsmi.Click += new EventHandler(tsmiTab_Click);
-                    tsmi.Image = ilApp.Images[tp.ImageKey];
+                    tsmi.Image = tabImageList.Images[tp.ImageKey];
                     tsmi.Tag = tp.Name;
                     tsmiTabs.DropDownItems.Add(tsmi);
                 }

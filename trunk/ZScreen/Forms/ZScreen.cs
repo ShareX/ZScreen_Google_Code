@@ -65,6 +65,7 @@ namespace ZScreenGUI
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private DebugHelper mDebug = null;
         private ZScreenLib.ImageEffects.TurnImage turnLogo;
+        private ImageList tabImageList = new ImageList();
 
         #endregion Variables
 
@@ -182,6 +183,29 @@ namespace ZScreenGUI
                     Engine.conf.WindowSize = this.Size;
                 }
             }
+
+            tabImageList.ColorDepth = ColorDepth.Depth32Bit;
+            tabImageList.Images.Add("application_form", Resources.application_form);
+            tabImageList.Images.Add("server", Resources.server);
+            tabImageList.Images.Add("keyboard", Resources.keyboard);
+            tabImageList.Images.Add("monitor", Resources.monitor);
+            tabImageList.Images.Add("picture_edit", Resources.picture_edit);
+            tabImageList.Images.Add("picture_go", Resources.picture_go);
+            tabImageList.Images.Add("text_signature", Resources.text_signature);
+            tabImageList.Images.Add("comments", Resources.comments);
+            tabImageList.Images.Add("pictures", Resources.pictures);
+            tabImageList.Images.Add("application_edit", Resources.application_edit);
+            tcApp.ImageList = tabImageList;
+            tpMain.ImageKey = "application_form";
+            tpDestinations.ImageKey = "server";
+            tpHotkeys.ImageKey = "keyboard";
+            tpScreenshots.ImageKey = "monitor";
+            tpMainActions.ImageKey = "picture_edit";
+            tpImageHosting.ImageKey = "picture_go";
+            tpTextServices.ImageKey = "text_signature";
+            tpTranslator.ImageKey = "comments";
+            tpHistory.ImageKey = "pictures";
+            tpOptions.ImageKey = "application_edit";
 
             // Accounts - FTP
             ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
@@ -418,10 +442,6 @@ namespace ZScreenGUI
             {
                 base.WndProc(ref m);
             }
-        }
-
-        private void UpdateFtpControls()
-        {
         }
 
         private void tsmiTab_Click(object sender, EventArgs e)

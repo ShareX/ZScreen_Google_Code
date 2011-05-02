@@ -27,3 +27,5 @@ Archived Members
 Index based Settings for Destinations
 
 Recommended Active Window Settings for XP
+
+Tray menu need text and url shortener destination
