@@ -23,32 +23,11 @@
 
 #endregion License Information (GPL v2)
 
-using System.IO;
-using UploadersLib.HelperClasses;
-
-namespace UploadersLib.ImageUploaders
+namespace UploadersLib.HelperClasses
 {
-    public sealed class Img1Uploader : ImageUploader
+    public class AccountInfo
     {
-        public override string Name
-        {
-            get { return "Img1"; }
-        }
-
-        private const string uploadURL = "http://img1.us/?app";
-
-        public override UploadResult Upload(Stream stream, string fileName)
-        {
-            UploadResult ur = new UploadResult();
-            ur.Source = UploadData(stream, uploadURL, fileName, "fileup");
-
-            if (!string.IsNullOrEmpty(ur.Source))
-            {
-                string lastLine = ur.Source.Remove(0, ur.Source.LastIndexOf('\n') + 1).Trim();
-                ur.URL = lastLine;
-            }
-
-            return ur;
-        }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

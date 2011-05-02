@@ -216,8 +216,10 @@ namespace UploadersLib.ImageUploaders
 
         #endregion Helpers
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
+            UploadResult ur = new UploadResult();
+
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("api_key", API_Key);
             args.Add("auth_token", this.Auth.Token);
@@ -234,20 +236,21 @@ namespace UploadersLib.ImageUploaders
 
             args.Add("api_sig", GetAPISig(args));
 
-            string response = UploadData(stream, API_Upload_URL, fileName, "photo", args);
+            ur.Source = UploadData(stream, API_Upload_URL, fileName, "photo", args);
 
-            XElement xele = ParseResponse(response, "photoid");
-            string photoid = string.Empty;
-            string url2 = string.Empty;
-
-            if (null != xele)
+            if (!string.IsNullOrEmpty(ur.Source))
             {
-                photoid = xele.Value;
-                string url = Helpers.CombineURL(GetPhotosLink(), photoid);
-                url2 = Helpers.CombineURL(url, "sizes/o");
+                XElement xele = ParseResponse(ur.Source, "photoid");
+
+                if (null != xele)
+                {
+                    string photoid = xele.Value;
+                    string url = Helpers.CombineURL(GetPhotosLink(), photoid);
+                    ur.URL = Helpers.CombineURL(url, "sizes/o");
+                }
             }
 
-            return new UploadResult(url2, response);
+            return ur;
         }
 
         public class AuthInfo

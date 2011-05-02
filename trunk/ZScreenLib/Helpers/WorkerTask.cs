@@ -31,13 +31,12 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HistoryLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
-using ZScreenLib.Properties;
-using ZScreenLib.Helpers;
-using HistoryLib;
 using UploadersLib.URLShorteners;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -168,10 +167,16 @@ namespace ZScreenLib
         {
             get
             {
-                if (this.LinkManager != null)
+                if (LinkManager != null)
                 {
-                    return this.LinkManager.UploadResult.URL;
+                    if (!string.IsNullOrEmpty(LinkManager.UploadResult.TinyURL))
+                    {
+                        return LinkManager.UploadResult.TinyURL;
+                    }
+
+                    return LinkManager.UploadResult.URL;
                 }
+
                 FileSystem.AppendDebug("Attempted to access RemoteFilePath when LinkManager is null.");
                 return string.Empty;
             }
@@ -377,7 +382,6 @@ namespace ZScreenLib
             hi.Host = this.GetDestinationName();
             hi.Type = this.Job1.GetDescription();
 
-
             return hi;
         }
 
@@ -509,9 +513,9 @@ namespace ZScreenLib
                     case UrlShortenerType.Jmp:
                         us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
                         break;
-                    case UrlShortenerType.THREELY:
+                    /*case UrlShortenerType.THREELY:
                         us = new ThreelyURLShortener(Engine.ThreelyKey);
-                        break;
+                        break;*/
                     case UrlShortenerType.TINYURL:
                         us = new TinyURLShortener();
                         break;
@@ -527,7 +531,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
                         FileSystem.AppendDebug(string.Format("Shortened URL: {0}", shortenUrl));
-                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, TinyURL = shortenUrl, Source = fullUrl });
+                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, TinyURL = shortenUrl });
                         return true;
                     }
                 }

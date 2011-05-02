@@ -79,7 +79,7 @@ namespace UploadersLib.ImageUploaders
             AuthInfo = oauth;
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult ifm = null;
 
@@ -133,7 +133,7 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult ParseResponse(string source)
         {
-            UploadResult ifm = new UploadResult { Source = source };
+            UploadResult ur = new UploadResult(source);
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -142,10 +142,10 @@ namespace UploadersLib.ImageUploaders
 
                 if ((xe = xd.GetNode("upload|images/links")) != null)
                 {
-                    ifm.URL = xe.GetElementValue("original");
-                    ifm.ThumbnailURL = xe.GetElementValue("large_thumbnail");
+                    ur.URL = xe.GetElementValue("original");
+                    ur.ThumbnailURL = xe.GetElementValue("large_thumbnail");
                     //ifm.Add(xele.ElementValue("small_square"), LinkType.THUMBNAIL);
-                    ifm.DeletionURL = xe.GetElementValue("delete_page");
+                    ur.DeletionURL = xe.GetElementValue("delete_page");
                 }
                 else if ((xe = xd.GetElement("error")) != null)
                 {
@@ -153,7 +153,7 @@ namespace UploadersLib.ImageUploaders
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

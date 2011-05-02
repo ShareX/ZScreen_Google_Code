@@ -51,27 +51,24 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageShack"; }
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
-            UploadResult ifm = new UploadResult();
+            UploadResult ur = new UploadResult();
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", DeveloperKey);
             arguments.Add("public", Public ? "yes" : "no");
             if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
 
-            ifm.Source = UploadData(stream, "http://www.imageshack.us/upload_api.php", fileName, "fileupload", arguments);
+            ur.Source = UploadData(stream, "http://www.imageshack.us/upload_api.php", fileName, "fileupload", arguments);
 
-            if (!string.IsNullOrEmpty(ifm.Source))
+            if (!string.IsNullOrEmpty(ur.Source))
             {
-                string fullimage = Helpers.GetXMLValue(ifm.Source, "image_link");
-                string thumbnail = Helpers.GetXMLValue(ifm.Source, "thumb_link");
-
-                ifm.URL = fullimage;
-                ifm.ThumbnailURL = thumbnail;
+                ur.URL = Helpers.GetXMLValue(ur.Source, "image_link");
+                ur.ThumbnailURL = Helpers.GetXMLValue(ur.Source, "thumb_link");
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

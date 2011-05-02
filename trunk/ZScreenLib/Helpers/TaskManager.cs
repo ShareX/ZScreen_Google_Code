@@ -326,10 +326,10 @@ namespace ZScreenLib
                     break;
                 case FileUploaderType.DropIO:
                     fileHost = new DropIO();
-                    break;*/
+                    break;
                 case FileUploaderType.FilezFiles:
                     fileHost = new FilezFiles();
-                    break;
+                    break;*/
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
                     break;
@@ -390,15 +390,12 @@ namespace ZScreenLib
                 case ImageUploaderType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
-                case ImageUploaderType.FTP:
-                    UploadFTP(Engine.conf.FtpImages);
-                    break;
-                case ImageUploaderType.IMAGEBAM:
+                /*case ImageUploaderType.IMAGEBAM:
                     ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
                         Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
                     imageUploader = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret, imageBamOptions);
                     break;
-                /*case ImageDestType.IMAGEBIN:
+                case ImageDestType.IMAGEBIN:
                     imageUploader = new ImageBin();
                     break;*/
                 case ImageUploaderType.IMAGESHACK:
@@ -431,7 +428,7 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.UserName = Engine.conf.TwitterUsername;
+                    twitpicOpt.Username = Engine.conf.TwitterUsername;
                     twitpicOpt.Password = Engine.conf.TwitterPassword;
                     // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
@@ -443,7 +440,7 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(Engine.ImageShackKey);
-                    yfrogOp.UserName = Engine.conf.TwitterUsername;
+                    yfrogOp.Username = Engine.conf.TwitterUsername;
                     yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
                     // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
@@ -465,11 +462,11 @@ namespace ZScreenLib
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            mTask.UpdateRemoteFilePath(imageUploader.UploadImage(fullFilePath));
+                            mTask.UpdateRemoteFilePath(imageUploader.Upload(fullFilePath));
                         }
                         else if (mTask.MyImage != null && mTask.FileName != null)
                         {
-                            mTask.UpdateRemoteFilePath(imageUploader.UploadImage(mTask.MyImage, mTask.FileName.ToString()));
+                            mTask.UpdateRemoteFilePath(imageUploader.Upload(mTask.MyImage, mTask.FileName.ToString()));
                         }
 
                         mTask.Errors = imageUploader.Errors;

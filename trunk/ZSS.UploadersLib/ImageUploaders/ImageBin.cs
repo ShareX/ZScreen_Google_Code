@@ -37,9 +37,9 @@ namespace UploadersLib.ImageUploaders
             get { return "ImageBin"; }
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
-            UploadResult ifm = new UploadResult();
+            UploadResult ur = new UploadResult();
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("t", "file");
@@ -50,19 +50,19 @@ namespace UploadersLib.ImageUploaders
             arguments.Add("sfile", "Upload");
             arguments.Add("url", string.Empty);
 
-            ifm.Source = UploadData(stream, "http://imagebin.ca/upload.php", fileName, "f", arguments);
+            ur.Source = UploadData(stream, "http://imagebin.ca/upload.php", fileName, "f", arguments);
 
-            if (!string.IsNullOrEmpty(ifm.Source))
+            if (!string.IsNullOrEmpty(ur.Source))
             {
-                Match match = Regex.Match(ifm.Source, @"(?<=ca/view/).+(?=\.html'>)");
+                Match match = Regex.Match(ur.Source, @"(?<=ca/view/).+(?=\.html'>)");
                 if (match != null)
                 {
                     string url = "http://imagebin.ca/img/" + match.Value + Path.GetExtension(fileName);
-                    ifm.URL = url;
+                    ur.URL = url;
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

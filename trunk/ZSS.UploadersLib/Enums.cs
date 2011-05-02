@@ -115,28 +115,28 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("FTP Server")]
-        FTP,
+        [Description("Clipboard - Copy bitmap")]
+        CLIPBOARD,
+        [Description("File - Copy local file path")]
+        FILE,
         [Description("Localhost")]
         Localhost,
-        [Description("Clipboard")]
-        CLIPBOARD,
-        [Description("File")]
-        FILE,
+        [Description("Printer")]
+        PRINTER,
         [Description("ImageShack - imageshack.us")]
         IMAGESHACK,
         [Description("TinyPic - tinypic.com")]
         TINYPIC,
+        [Description("Imgur - imgur.com")]
+        IMGUR,
         [Description("Flickr - flickr.com")]
         FLICKR,
         //[Description("ImageBin - imagebin.ca")]
         //IMAGEBIN,
         //[Description("Img1 - img1.us")]
         //IMG1,
-        [Description("ImageBam - imagebam.com")]
-        IMAGEBAM,
-        [Description("Imgur - imgur.com")]
-        IMGUR,
+        //[Description("ImageBam - imagebam.com")]
+        //IMAGEBAM,
         [Description("Uploadscreenshot - uploadscreenshot.com")]
         UPLOADSCREENSHOT,
         [Description("TwitPic - twitpic.com")]
@@ -149,8 +149,6 @@ namespace UploadersLib
         DEKIWIKI,
         [Description("MediaWiki")]
         MEDIAWIKI,
-        [Description("Printer")]
-        PRINTER,
         [Description("Use file uploader")]
         FileUploader
     }
@@ -183,8 +181,8 @@ namespace UploadersLib
         //DropIO,
         [Description("ShareCX - share.cx")]
         ShareCX,
-        [Description("FileZ - filez.muffinz.eu")]
-        FilezFiles,
+        //[Description("FileZ - filez.muffinz.eu")]
+        //FilezFiles,
         [Description("Use custom uploader")]
         CustomUploader,
         [Description("FTP Server")]
@@ -197,8 +195,8 @@ namespace UploadersLib
         Google,
         [Description("bit.ly - www.bit.ly")]
         BITLY,
-        [Description("Threely - www.3.ly")]
-        THREELY,
+        //[Description("Threely - www.3.ly")]
+        //THREELY,
         [Description("j.mp - www.j.mp")]
         Jmp,
         [Description("is.gd - www.is.gd")]

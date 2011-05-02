@@ -107,6 +107,7 @@
     <Compile Include="FileUploaders\SendSpace.cs" />
     <Compile Include="FileUploaders\SendSpaceManager.cs" />
     <Compile Include="FileUploaders\ShareCX.cs" />
+    <Compile Include="HelperClasses\AccountInfo.cs" />
     <Compile Include="HelperClasses\Argument.cs" />
     <Compile Include="HelperClasses\MediaWiki.cs" />
     <Compile Include="HelperClasses\MediaWikiHistory.cs" />
@@ -135,8 +136,6 @@
     <Compile Include="HelperClasses\ImageFileManager.cs" />
     <Compile Include="HelperClasses\CustomUploaderInfo.cs" />
     <Compile Include="HelperClasses\CustomUploaderManager.cs" />
-    <Compile Include="HelperClasses\ITextUploader.cs" />
-    <Compile Include="HelperClasses\IUploader.cs" />
     <Compile Include="TextServices\Twitter.cs" />
     <Compile Include="HelperClasses\ProgressManager.cs" />
     <Compile Include="HelperClasses\ProxyInfo.cs" />

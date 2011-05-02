@@ -3486,14 +3486,7 @@ namespace ZScreenGUI
 
         private void btnOpenZScreenTester_Click(object sender, EventArgs e)
         {
-            TesterGUI testerGUI = new TesterGUI
-            { // TODO: TesterGUI paths
-                TestFileBinaryPath = "",
-                TestFilePicturePath = "",
-                TestFileTextPath = ""
-            };
-
-            testerGUI.Show();
+            new TesterGUI().ShowDialog();
         }
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)

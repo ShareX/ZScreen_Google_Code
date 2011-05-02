@@ -32,7 +32,6 @@ using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
 using UploadersLib;
-using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
@@ -181,7 +180,7 @@ namespace ZScreenLib
                 {
                     ClipboardManager.SetClipboard(task, false);
                 }
-       
+
                 if (task.Errors.Count > 0)
                 {
                     foreach (var error in task.Errors)
@@ -509,19 +508,7 @@ namespace ZScreenLib
                     {
                         if (Engine.conf.ImageUploadRandomRetryOnFail)
                         {
-                            List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC };
-                            if (!string.IsNullOrEmpty(Engine.conf.ImageBamApiKey))
-                            {
-                                randomDest.Add(ImageUploaderType.IMAGEBAM);
-                            }
-                            if (null != Engine.conf.FlickrAuthInfo)
-                            {
-                                randomDest.Add(ImageUploaderType.FLICKR);
-                            }
-                            if (Adapter.CheckFTPAccounts() && null != Adapter.GetFtpAcctActive())
-                            {
-                                randomDest.Add(ImageUploaderType.FTP);
-                            }
+                            List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             while ((ImageUploaderType)r == task2.MyImageUploader || (ImageUploaderType)r == ImageUploaderType.FILE || (ImageUploaderType)r == ImageUploaderType.CLIPBOARD)
                             {

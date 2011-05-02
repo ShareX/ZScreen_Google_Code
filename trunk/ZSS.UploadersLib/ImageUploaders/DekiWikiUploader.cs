@@ -31,7 +31,7 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
-    public sealed class DekiWikiUploader : IUploader
+    public sealed class DekiWikiUploader
     {
         public DekiWikiOptions Options { get; set; }
 
@@ -57,9 +57,9 @@ namespace UploadersLib.ImageUploaders
             connector.UploadImage(localFilePath, fName);
 
             // Create the file manager object
-            UploadResult ifm = new UploadResult() { URL = this.Options.Account.getUriPath(fName) };
+            UploadResult ur = new UploadResult() { URL = this.Options.Account.getUriPath(fName) };
 
-            return ifm;
+            return ur;
         }
 
         public string ToErrorString()

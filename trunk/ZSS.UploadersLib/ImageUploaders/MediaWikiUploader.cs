@@ -31,7 +31,7 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
-    public sealed class MediaWikiUploader : IUploader
+    public sealed class MediaWikiUploader
     {
         public MediaWikiOptions Options { get; set; }
 

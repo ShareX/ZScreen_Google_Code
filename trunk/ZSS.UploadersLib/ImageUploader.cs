@@ -29,40 +29,15 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib
 {
-    public abstract class ImageUploader : Uploader
+    public abstract class ImageUploader : FileUploader
     {
-        public abstract string Name { get; }
-
-        public abstract UploadResult UploadImage(Stream stream, string fileName);
-
-        public UploadResult UploadImage(Image image, string fileName)
+        public UploadResult Upload(Image image, string fileName)
         {
             using (MemoryStream stream = new MemoryStream())
             {
                 image.Save(stream, image.RawFormat);
-                return UploadImage(stream, fileName);
+                return Upload(stream, fileName);
             }
         }
-
-        public UploadResult UploadImage(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    UploadResult ifm = UploadImage(stream, Path.GetFileName(filePath));
-                    // ifm.LocalFilePath = filePath;
-                    return ifm;
-                }
-            }
-
-            return null;
-        }
-    }
-
-    public abstract class ImageUploaderOptions
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
     }
 }
