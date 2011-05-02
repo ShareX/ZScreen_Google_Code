@@ -48,7 +48,7 @@ namespace UploadersLib.ImageUploaders
         UPLOAD_IMAGE_AND_TWITTER
     }
 
-    public class TwitPicOptions : ImageUploaderOptions
+    public class TwitPicOptions : AccountInfo
     {
         public TwitPicUploadType TwitPicUploadType { get; set; }
         public bool ShowFull { get; set; }
@@ -69,7 +69,7 @@ namespace UploadersLib.ImageUploaders
             this.Options = options;
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             switch (this.Options.TwitPicUploadType)
             {
@@ -91,7 +91,7 @@ namespace UploadersLib.ImageUploaders
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-            arguments.Add("username", this.Options.UserName);
+            arguments.Add("username", this.Options.Username);
             arguments.Add("password", this.Options.Password);
 
             if (!string.IsNullOrEmpty(msg))
@@ -111,7 +111,7 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult ParseResult(string source)
         {
-            UploadResult ifm = new UploadResult { Source = source };
+            UploadResult ur = new UploadResult(source);
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -129,8 +129,8 @@ namespace UploadersLib.ImageUploaders
                             mediaid = xele.GetElementValue("mediaid");
                             mediaurl = xele.GetElementValue("mediaurl");
                             if (this.Options.ShowFull) mediaurl = mediaurl + "/full";
-                            ifm.URL = mediaurl;
-                            ifm.ThumbnailURL = string.Format("http://twitpic.com/show/{0}/{1}", this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid);
+                            ur.URL = mediaurl;
+                            ur.ThumbnailURL = string.Format("http://twitpic.com/show/{0}/{1}", this.Options.TwitPicThumbnailMode.ToString().ToLowerInvariant(), mediaid);
                             break;
                         case "fail":
                             string code, msg;
@@ -142,7 +142,7 @@ namespace UploadersLib.ImageUploaders
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

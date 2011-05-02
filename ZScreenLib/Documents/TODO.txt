@@ -24,3 +24,6 @@ Clipboard Upload Wizard
 
 Archived Members
 
+Index based Settings for Destinations
+
+Recommended Active Window Settings for XP

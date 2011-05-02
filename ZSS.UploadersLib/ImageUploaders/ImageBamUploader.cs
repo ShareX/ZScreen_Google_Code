@@ -54,7 +54,7 @@ namespace UploadersLib.ImageUploaders
         }
     }
 
-    public sealed class ImageBamUploader : ImageUploader
+    public sealed class ImageBamUploader : ImageUploader // TODO: Use new API
     {
         private string Key, Secret;
 
@@ -81,7 +81,7 @@ namespace UploadersLib.ImageUploaders
 
         // http://www.imagebam.com/nav/API_uploading_photos
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
@@ -125,7 +125,7 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult ParseResult(string source)
         {
-            UploadResult ifm = new UploadResult { Source = source };
+            UploadResult ur = new UploadResult(source);
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -143,8 +143,8 @@ namespace UploadersLib.ImageUploaders
                             thumbnail = xele.GetElementValue("thumbnail");
                             delcode = xele.GetElementValue("delcode");
 
-                            ifm.URL = URL;
-                            ifm.ThumbnailURL = thumbnail;
+                            ur.URL = URL;
+                            ur.ThumbnailURL = thumbnail;
 
                             break;
                         case "fail":
@@ -159,7 +159,7 @@ namespace UploadersLib.ImageUploaders
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

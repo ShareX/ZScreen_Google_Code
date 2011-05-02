@@ -40,6 +40,7 @@ namespace ZSS.FTPClientLib
         /// <summary>
         /// MessageHeader for WM_NOTIFY
         /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
         private struct NMHDR
         {
             public IntPtr hwndFrom;

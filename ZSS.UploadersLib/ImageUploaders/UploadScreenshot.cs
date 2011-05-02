@@ -45,7 +45,7 @@ namespace UploadersLib.ImageUploaders
             get { return "UploadScreenshot"; }
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("apiKey", APIKey);
@@ -59,7 +59,7 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult ParseResult(string source)
         {
-            UploadResult ifm = new UploadResult { Source = source };
+            UploadResult ur = new UploadResult(source);
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -96,13 +96,13 @@ namespace UploadersLib.ImageUploaders
                 }
                 else
                 {
-                    ifm.URL = xele.GetElementValue("original");
-                    ifm.ThumbnailURL = xele.GetElementValue("small");
-                    ifm.DeletionURL = xele.GetElementValue("deleteurl");
+                    ur.URL = xele.GetElementValue("original");
+                    ur.ThumbnailURL = xele.GetElementValue("small");
+                    ur.DeletionURL = xele.GetElementValue("deleteurl");
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

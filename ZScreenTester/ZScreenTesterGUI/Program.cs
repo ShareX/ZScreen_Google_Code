@@ -21,9 +21,9 @@ namespace ZScreenTesterGUI
 
             TesterGUI testerGUI = new TesterGUI
             {
-                TestFileBinaryPath = TestFileBinary,
-                TestFilePicturePath = TestFilePicture,
-                TestFileTextPath = TestFileText
+                TestFilePath = TestFileBinary,
+                TestImageFilePath = TestFilePicture,
+                TestText = TestFileText
             };
 
             Application.Run(testerGUI);

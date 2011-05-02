@@ -54,9 +54,9 @@ namespace UploadersLib.ImageUploaders
             get { return "TinyPic"; }
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
-            UploadResult ifm = new UploadResult();
+            UploadResult ur = new UploadResult();
 
             string action = "getuploadkey", tpid = TinyPicID, tpk = TinyPicKey;
             string upk = GetUploadKey(action, tpid, tpk);
@@ -83,19 +83,16 @@ namespace UploadersLib.ImageUploaders
                 arguments.Add("type", "image");
                 arguments.Add("tags", string.Empty);
 
-                ifm.Source = UploadData(stream, URLAPI, fileName, "uploadfile", arguments);
+                ur.Source = UploadData(stream, URLAPI, fileName, "uploadfile", arguments);
 
-                if (!string.IsNullOrEmpty(ifm.Source) && CheckResponse(ifm.Source))
+                if (!string.IsNullOrEmpty(ur.Source) && CheckResponse(ur.Source))
                 {
-                    string fullimage = Helpers.GetXMLValue(ifm.Source, "fullsize");
-                    string thumbnail = Helpers.GetXMLValue(ifm.Source, "thumbnail");
-
-                    ifm.URL = fullimage;
-                    ifm.ThumbnailURL = thumbnail;
+                    ur.URL = Helpers.GetXMLValue(ur.Source, "fullsize");
+                    ur.ThumbnailURL = Helpers.GetXMLValue(ur.Source, "thumbnail");
                 }
             }
 
-            return ifm;
+            return ur;
         }
 
         public string UserAuth(string email, string password)

@@ -47,9 +47,10 @@ namespace ZScreenTesterGUI
             }
         }
 
-        public string TestFileBinaryPath { get; set; }
-        public string TestFilePicturePath { get; set; }
-        public string TestFileTextPath { get; set; }
+        public string TestImageFilePath { get; set; }
+        public string TestFilePath { get; set; }
+        public string TestText { get; set; }
+        public string TestURL { get; set; }
 
         private bool isTesting = false;
 
@@ -75,7 +76,10 @@ namespace ZScreenTesterGUI
                 {
                     case ImageUploaderType.CLIPBOARD:
                     case ImageUploaderType.FILE:
+                    case ImageUploaderType.Localhost:
                     case ImageUploaderType.PRINTER:
+                    case ImageUploaderType.DEKIWIKI:
+                    case ImageUploaderType.MEDIAWIKI:
                     case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
                     case ImageUploaderType.FileUploader: // We are going to test this in File Uploader tests
                         continue;
@@ -89,6 +93,12 @@ namespace ZScreenTesterGUI
 
             foreach (TextUploaderType uploader in Enum.GetValues(typeof(TextUploaderType)))
             {
+                switch (uploader)
+                {
+                    case TextUploaderType.FileUploader:
+                        continue;
+                }
+
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.TextUploader, TextUploader = uploader };
                 lvi.Group = textUploadersGroup;
@@ -97,6 +107,12 @@ namespace ZScreenTesterGUI
 
             foreach (FileUploaderType uploader in Enum.GetValues(typeof(FileUploaderType)))
             {
+                switch (uploader)
+                {
+                    case FileUploaderType.CustomUploader:
+                        continue;
+                }
+
                 lvi = new ListViewItem(uploader.GetDescription());
                 lvi.Tag = new UploaderInfo { UploaderType = UploaderType.FileUploader, FileUploader = uploader };
                 lvi.Group = fileUploadersGroup;
@@ -121,16 +137,33 @@ namespace ZScreenTesterGUI
 
         private void CheckPaths()
         {
-            if (!File.Exists(this.TestFilePicturePath))
+            if (string.IsNullOrEmpty(TestImageFilePath) || !File.Exists(TestImageFilePath) ||
+                string.IsNullOrEmpty(TestFilePath) || !File.Exists(TestFilePath))
             {
-                OpenFileDialog dlg = new OpenFileDialog();
-                dlg.Filter = "Image Files (*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
-                dlg.Title = "Browse for a test image file...";
-
-                if (dlg.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog dlg = new OpenFileDialog())
                 {
-                    this.TestFileBinaryPath = this.TestFilePicturePath = dlg.FileName;
+                    dlg.Filter = "Image Files (*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+                    dlg.Title = "Browse for a test image file. It will be used for Image/File upload tests.";
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        TestFilePath = TestImageFilePath = dlg.FileName;
+                    }
+                    else
+                    {
+                        Close();
+                    }
                 }
+            }
+
+            if (string.IsNullOrEmpty(TestText))
+            {
+                TestText = "ZScreen test.";
+            }
+
+            if (string.IsNullOrEmpty(TestURL))
+            {
+                TestURL = "http://code.google.com/p/zscreen/";
             }
         }
 
@@ -162,7 +195,7 @@ namespace ZScreenTesterGUI
             {
                 this.Invoke(new MethodInvoker(delegate
                     {
-                        txtConsole.AppendText(value);
+                        txtConsole.AppendText(value + "\r\n");
                     }));
             }
         }
@@ -204,30 +237,36 @@ namespace ZScreenTesterGUI
 
                 bw.ReportProgress((int)UploadStatus.Uploading, uploader);
 
-                switch (uploader.UploaderType)
+                try
                 {
-                    case UploaderType.ImageUploader:
-                        task.MyImageUploader = uploader.ImageUploader;
-                        task.UpdateLocalFilePath(this.TestFilePicturePath);
-                        new TaskManager(task).UploadImage();
-                        break;
-                    case UploaderType.FileUploader:
-                        task.MyFileUploader = uploader.FileUploader;
-                        task.UpdateLocalFilePath(this.TestFileBinaryPath);
-                        new TaskManager(task).UploadFile();
-                        break;
-                    case UploaderType.TextUploader:
-                        task.MyTextUploader = uploader.TextUploader;
-                        task.SetText("ZScreen testing...");
-                        new TaskManager(task).UploadText();
-                        break;
-                    case UploaderType.UrlShortener:
-                        task.MyUrlShortener = uploader.UrlShortener;
-                        task.SetText("http://code.google.com/p/zscreen/");
-                        task.ShortenURL(task.MyText);
-                        break;
-                    default:
-                        throw new Exception("Unknown uploader.");
+                    switch (uploader.UploaderType)
+                    {
+                        case UploaderType.ImageUploader:
+                            task.MyImageUploader = uploader.ImageUploader;
+                            task.UpdateLocalFilePath(TestImageFilePath);
+                            new TaskManager(task).UploadImage();
+                            break;
+                        case UploaderType.FileUploader:
+                            task.MyFileUploader = uploader.FileUploader;
+                            task.UpdateLocalFilePath(TestFilePath);
+                            new TaskManager(task).UploadFile();
+                            break;
+                        case UploaderType.TextUploader:
+                            task.MyTextUploader = uploader.TextUploader;
+                            task.SetText(TestText);
+                            new TaskManager(task).UploadText();
+                            break;
+                        case UploaderType.UrlShortener:
+                            task.MyUrlShortener = uploader.UrlShortener;
+                            task.ShortenURL(TestURL);
+                            break;
+                        default:
+                            throw new Exception("Unknown uploader.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
                 }
 
                 uploader.Timer.Stop();
@@ -305,7 +344,7 @@ namespace ZScreenTesterGUI
 
                 if (urls.Count > 0)
                 {
-                    Clipboard.SetText(string.Join("\r\n", urls.ToArray())); // ok
+                    Clipboard.SetText(string.Join("\r\n", urls.ToArray()));
                 }
             }
         }

@@ -50,7 +50,7 @@ namespace UploadersLib.ImageUploaders
             AuthInfo = oauth;
         }
 
-        public override UploadResult UploadImage(Stream stream, string fileName)
+        public override UploadResult Upload(Stream stream, string fileName)
         {
             using (TwitterMsg msgBox = new TwitterMsg("Update Twitter Status"))
             {
@@ -80,7 +80,7 @@ namespace UploadersLib.ImageUploaders
 
         private UploadResult ParseResult(string source)
         {
-            UploadResult ifm = new UploadResult { Source = source };
+            UploadResult ur = new UploadResult(source);
 
             if (!string.IsNullOrEmpty(source))
             {
@@ -92,8 +92,8 @@ namespace UploadersLib.ImageUploaders
                 if (xe != null)
                 {
                     string id = xe.GetElementValue("id");
-                    ifm.URL = "http://twitsnaps.com/snap/" + id;
-                    ifm.ThumbnailURL = "http://twitsnaps.com/thumb/" + id;
+                    ur.URL = "http://twitsnaps.com/snap/" + id;
+                    ur.ThumbnailURL = "http://twitsnaps.com/thumb/" + id;
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace UploadersLib.ImageUploaders
                 }
             }
 
-            return ifm;
+            return ur;
         }
     }
 }

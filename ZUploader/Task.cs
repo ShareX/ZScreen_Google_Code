@@ -232,9 +232,7 @@ namespace ZUploader
             if (imageUploader != null)
             {
                 PrepareUploader(imageUploader);
-                UploadResult ur = imageUploader.UploadImage(stream, fileName);
-
-                return ur;
+                return imageUploader.Upload(stream, fileName);
             }
 
             return null;
@@ -295,9 +293,9 @@ namespace ZUploader
                 case FileUploaderType.ShareCX:
                     fileUploader = new ShareCX();
                     break;
-                case FileUploaderType.FilezFiles:
+                /*case FileUploaderType.FilezFiles:
                     fileUploader = new FilezFiles();
-                    break;
+                    break;*/
                 case FileUploaderType.CustomUploader:
                     fileUploader = new CustomUploader(Program.Settings.CustomUploader);
                     break;
