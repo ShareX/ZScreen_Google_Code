@@ -486,7 +486,7 @@ namespace ZScreenLib
                 return Engine.conf.TwitterEnabled ||
                     Engine.conf.ShortenUrlUsingClipboardUpload && this.Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(MyText) ||
                     Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
-                    Engine.conf.ClipboardUriMode == ClipboardUriType.FULL_TINYURL;
+                    Engine.conf.MyClipboardUriMode == (int)ClipboardUriType.FULL_TINYURL;
             }
 
             return false;

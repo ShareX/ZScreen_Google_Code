@@ -789,16 +789,16 @@ namespace ZScreenGUI
                 tsmCopytoClipboardMode.DropDownItems.Add(tsm);
             }
 
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
             tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
         }
 
         private void ClipboardModeClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            Engine.conf.ClipboardUriMode = (ClipboardUriType)tsm.Tag;
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
-            cboClipboardTextMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
+            Engine.conf.MyClipboardUriMode = (int)tsm.Tag;
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
+            cboClipboardTextMode.SelectedIndex = Engine.conf.MyClipboardUriMode;
         }
 
         /// <summary>
@@ -1203,7 +1203,7 @@ namespace ZScreenGUI
 
         private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ClipboardUriMode = (ClipboardUriType)cboClipboardTextMode.SelectedIndex;
+            Engine.conf.MyClipboardUriMode = cboClipboardTextMode.SelectedIndex;
             UpdateClipboardTextTrayMenu();
         }
 
@@ -1214,7 +1214,7 @@ namespace ZScreenGUI
                 tsmi.Checked = false;
             }
 
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, (int)Engine.conf.ClipboardUriMode);
+            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
         }
 
         private void txtFileDirectory_TextChanged(object sender, EventArgs e)

@@ -599,10 +599,10 @@ namespace ZScreenLib
         private bool CreateThumbnail()
         {
             return GraphicsMgr.IsValidImage(mTask.LocalFilePath) && mTask.MyImage != null &&
-                (Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
-                 Engine.conf.ClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
-                 Engine.conf.ClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
-                 Engine.conf.ClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
+                ((ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
                 (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (mTask.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
         }
 
