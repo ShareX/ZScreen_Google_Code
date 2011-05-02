@@ -489,11 +489,11 @@ namespace ZScreenLib
             {
                 if (mTask.MyImageUploader == ImageUploaderType.IMAGESHACK)
                 {
-                    Engine.conf.ImageUploaderType = ImageUploaderType.TINYPIC;
+                    Engine.conf.MyImageUploader = (int)ImageUploaderType.TINYPIC;
                 }
                 else if (mTask.MyImageUploader == ImageUploaderType.TINYPIC)
                 {
-                    Engine.conf.ImageUploaderType = ImageUploaderType.IMAGESHACK;
+                    Engine.conf.MyImageUploader = (int)ImageUploaderType.IMAGESHACK;
                 }
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }

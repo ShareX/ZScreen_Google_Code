@@ -53,28 +53,28 @@ namespace ZScreenLib
             {
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileUploaderType;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.MyFileUploader;
 
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.MyImageUploader;
 
             // Text Uploaders
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.TextUploaderType;
+            ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.MyTextUploader;
 
             // URL Shorteners
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
             {
                 ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
             }
-            ucDestOptions.cboURLShorteners.SelectedIndex = (int)Engine.conf.URLShortenerType;
+            ucDestOptions.cboURLShorteners.SelectedIndex = (int)Engine.conf.MyURLShortener;
 
             // Dest Selector Events
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
@@ -96,12 +96,12 @@ namespace ZScreenLib
 
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Task.MyUrlShortener = Engine.conf.URLShortenerType;
+            Task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
         }
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Task.MyTextUploader = Engine.conf.TextUploaderType;
+            Task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
         }
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)

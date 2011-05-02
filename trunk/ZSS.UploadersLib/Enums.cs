@@ -115,12 +115,12 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("Clipboard - Copy bitmap")]
+        [Description("Clipboard - Copy Bitmap")]
         CLIPBOARD,
         [Description("File - Copy local file path")]
         FILE,
-        [Description("Localhost")]
-        Localhost,
+        //[Description("Localhost")]
+        //Localhost,
         [Description("Printer")]
         PRINTER,
         [Description("ImageShack - imageshack.us")]

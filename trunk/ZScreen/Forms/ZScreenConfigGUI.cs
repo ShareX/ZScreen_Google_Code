@@ -206,7 +206,7 @@ namespace ZScreenGUI
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             }
 
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.FileUploaderType;
+            ucDestOptions.cboFileUploaders.SelectedIndex = (int)Engine.conf.MyFileUploader;
 
             // RapidShare
 
@@ -368,7 +368,7 @@ namespace ZScreenGUI
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
             }
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.ImageUploaderType;
+            ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.MyImageUploader;
 
             if (cboClipboardTextMode.Items.Count == 0)
             {
@@ -629,13 +629,13 @@ namespace ZScreenGUI
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-                ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.TextUploaderType;
+                ucDestOptions.cboTextUploaders.SelectedIndex = (int)Engine.conf.MyTextUploader;
             }
 
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
             {
                 ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-                ucDestOptions.cboURLShorteners.SelectedIndex = (int)Engine.conf.URLShortenerType;
+                ucDestOptions.cboURLShorteners.SelectedIndex = (int)Engine.conf.MyURLShortener;
             }
         }
 
@@ -668,7 +668,7 @@ namespace ZScreenGUI
                     tsmImageDest.DropDownItems.Add(tsmi);
                 }
             }
-            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(Engine.conf.ImageUploaderType));
+            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem((ImageUploaderType)Engine.conf.MyImageUploader));
 
             if (tsmFileDest.DropDownItems.Count == 0)
             {
@@ -680,7 +680,7 @@ namespace ZScreenGUI
                     tsmFileDest.DropDownItems.Add(tsmi);
                 }
             }
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem(Engine.conf.FileUploaderType));
+            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem((FileUploaderType)Engine.conf.MyFileUploader));
         }
     }
 }

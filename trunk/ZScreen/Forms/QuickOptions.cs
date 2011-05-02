@@ -53,7 +53,7 @@ namespace ZScreenLib
             System.Threading.Thread.Sleep(100);
             NativeMethods.ActivateWindow(this.Handle);
             lbDest.Focus();
-            lbDest.SelectedIndex = (int)Engine.conf.ImageUploaderType;
+            lbDest.SelectedIndex = (int)Engine.conf.MyImageUploader;
             lbClipboardMode.SelectedIndex = (int)Engine.conf.ClipboardUriMode;
         }
 
@@ -83,7 +83,7 @@ namespace ZScreenLib
         private void ApplyOptions()
         {
             if (lbDest.SelectedIndex > -1)
-                Engine.conf.ImageUploaderType = (ImageUploaderType)lbDest.SelectedIndex;
+                Engine.conf.MyImageUploader = lbDest.SelectedIndex;
             if (lbClipboardMode.SelectedIndex > -1)
                 Engine.conf.ClipboardUriMode = (ClipboardUriType)lbClipboardMode.SelectedIndex;
             ApplySettings(this, EventArgs.Empty);
