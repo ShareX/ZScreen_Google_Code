@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
@@ -21,20 +22,24 @@ namespace HistoryLib
 
             if (!string.IsNullOrEmpty(xmlPath) && File.Exists(xmlPath))
             {
-                XmlDocument xd = new XmlDocument();
-                xd.Load(xmlPath);
+                XmlDocument xml = new XmlDocument();
+                xml.Load(xmlPath);
 
-                // XmlNodeList historyItems = xd.GetElementsByTagName("HistoryItem");
-                // XmlNodeList historyItems = xd.SelectSingleNode("HistoryItems").ChildNodes;
-                XmlNodeList historyItems = xd.ChildNodes[1].ChildNodes;
+                XmlNode rootNode = xml.ChildNodes[1];
 
-                HistoryItem hi;
-
-                foreach (XmlNode historyItem in historyItems)
+                if (rootNode.Name == "HistoryItems")
                 {
-                    hi = ParseHistoryItem(historyItem.ChildNodes);
+                    HistoryItem hi;
 
-                    if (hi != null) historyItemList.Add(hi);
+                    foreach (XmlNode historyItem in rootNode.ChildNodes)
+                    {
+                        hi = ParseHistoryItem(historyItem.ChildNodes);
+
+                        if (hi != null)
+                        {
+                            historyItemList.Add(hi);
+                        }
+                    }
                 }
             }
 
@@ -47,6 +52,8 @@ namespace HistoryLib
 
             foreach (XmlNode node in nodes)
             {
+                if (node == null || string.IsNullOrEmpty(node.InnerText)) continue;
+
                 switch (node.Name)
                 {
                     case "Filename":
@@ -54,6 +61,15 @@ namespace HistoryLib
                         break;
                     case "Filepath":
                         hi.Filepath = node.InnerText;
+                        break;
+                    case "DateTimeUtc":
+                        hi.DateTimeUtc = DateTime.Parse(node.InnerText);
+                        break;
+                    case "Type":
+                        hi.Type = node.InnerText;
+                        break;
+                    case "Host":
+                        hi.Host = node.InnerText;
                         break;
                     case "URL":
                         hi.URL = node.InnerText;
@@ -80,30 +96,43 @@ namespace HistoryLib
 
         public bool AddHistoryItem(HistoryItem historyItem)
         {
-            XmlDocument xml = new XmlDocument();
-            xml.Load(xmlPath);
-
-            if (xml.ChildNodes.Count == 0)
+            if (!string.IsNullOrEmpty(xmlPath))
             {
-                xml.AppendChild(xml.CreateXmlDeclaration("1.0", "UTF-8", null));
-                xml.AppendElement("HistoryItems");
+                XmlDocument xml = new XmlDocument();
+
+                if (File.Exists(xmlPath))
+                {
+                    xml.Load(xmlPath);
+                }
+
+                if (xml.ChildNodes.Count == 0)
+                {
+                    xml.AppendChild(xml.CreateXmlDeclaration("1.0", "UTF-8", null));
+                    xml.AppendElement("HistoryItems");
+                }
+
+                XmlNode rootNode = xml.ChildNodes[1];
+
+                if (rootNode.Name == "HistoryItems")
+                {
+                    XmlNode historyItemNode = rootNode.PrependElement("HistoryItem");
+                    historyItemNode.AppendElement("Filename", historyItem.Filename);
+                    historyItemNode.AppendElement("Filepath", historyItem.Filepath);
+                    historyItemNode.AppendElement("DateTimeUtc", historyItem.DateTimeUtc.ToString("o"));
+                    historyItemNode.AppendElement("Type", historyItem.Type);
+                    historyItemNode.AppendElement("Host", historyItem.Host);
+                    historyItemNode.AppendElement("URL", historyItem.URL);
+                    historyItemNode.AppendElement("ThumbnailURL", historyItem.ThumbnailURL);
+                    historyItemNode.AppendElement("DeletionURL", historyItem.DeletionURL);
+                    historyItemNode.AppendElement("TinyURL", historyItem.TinyURL);
+
+                    xml.Save(xmlPath);
+
+                    return true;
+                }
             }
 
-            XmlNode rootNode = xml.ChildNodes[1];
-            XmlNode historyItemNode = rootNode.PrependElement("HistoryItem");
-            historyItemNode.AppendElement("Filename", historyItem.Filename);
-            historyItemNode.AppendElement("Filepath", historyItem.Filepath);
-            historyItemNode.AppendElement("DateTimeUtc", historyItem.DateTimeUtc.ToString());
-            historyItemNode.AppendElement("Type", historyItem.Type);
-            historyItemNode.AppendElement("Host", historyItem.Host);
-            historyItemNode.AppendElement("URL", historyItem.URL);
-            historyItemNode.AppendElement("ThumbnailURL", historyItem.ThumbnailURL);
-            historyItemNode.AppendElement("DeletionURL", historyItem.DeletionURL);
-            historyItemNode.AppendElement("TinyURL", historyItem.TinyURL);
-
-            xml.Save(xmlPath);
-
-            return true;
+            return false;
         }
     }
 }

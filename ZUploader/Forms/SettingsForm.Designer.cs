@@ -75,10 +75,10 @@
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpProxy = new System.Windows.Forms.TabPage();
-            this.tpDebug = new System.Windows.Forms.TabPage();
-            this.txtDebugLog = new System.Windows.Forms.TextBox();
             this.tpCustomUploader = new System.Windows.Forms.TabPage();
             this.pgCustomUploaderSettings = new System.Windows.Forms.PropertyGrid();
+            this.tpDebug = new System.Windows.Forms.TabPage();
+            this.txtDebugLog = new System.Windows.Forms.TextBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -91,8 +91,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).BeginInit();
             this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
-            this.tpDebug.SuspendLayout();
             this.tpCustomUploader.SuspendLayout();
+            this.tpDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // pgFTPSettings
@@ -567,7 +567,7 @@
             this.lblHistoryInfo.Name = "lblHistoryInfo";
             this.lblHistoryInfo.Size = new System.Drawing.Size(517, 29);
             this.lblHistoryInfo.TabIndex = 15;
-            this.lblHistoryInfo.Text = "ZUploader uses SQLite to store history items.";
+            this.lblHistoryInfo.Text = "ZUploader uses XML to store history items.";
             this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // nudHistoryMaxItemCount
@@ -665,6 +665,27 @@
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
+            // tpCustomUploader
+            // 
+            this.tpCustomUploader.Controls.Add(this.pgCustomUploaderSettings);
+            this.tpCustomUploader.Location = new System.Drawing.Point(4, 22);
+            this.tpCustomUploader.Name = "tpCustomUploader";
+            this.tpCustomUploader.Padding = new System.Windows.Forms.Padding(3);
+            this.tpCustomUploader.Size = new System.Drawing.Size(523, 259);
+            this.tpCustomUploader.TabIndex = 8;
+            this.tpCustomUploader.Text = "Custom Uploader";
+            this.tpCustomUploader.UseVisualStyleBackColor = true;
+            // 
+            // pgCustomUploaderSettings
+            // 
+            this.pgCustomUploaderSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgCustomUploaderSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgCustomUploaderSettings.Name = "pgCustomUploaderSettings";
+            this.pgCustomUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgCustomUploaderSettings.Size = new System.Drawing.Size(517, 253);
+            this.pgCustomUploaderSettings.TabIndex = 1;
+            this.pgCustomUploaderSettings.ToolbarVisible = false;
+            // 
             // tpDebug
             // 
             this.tpDebug.Controls.Add(this.txtDebugLog);
@@ -686,27 +707,6 @@
             this.txtDebugLog.Size = new System.Drawing.Size(517, 253);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
-            // 
-            // tpCustomUploader
-            // 
-            this.tpCustomUploader.Controls.Add(this.pgCustomUploaderSettings);
-            this.tpCustomUploader.Location = new System.Drawing.Point(4, 22);
-            this.tpCustomUploader.Name = "tpCustomUploader";
-            this.tpCustomUploader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploader.Size = new System.Drawing.Size(523, 259);
-            this.tpCustomUploader.TabIndex = 8;
-            this.tpCustomUploader.Text = "Custom Uploader";
-            this.tpCustomUploader.UseVisualStyleBackColor = true;
-            // 
-            // pgCustomUploaderSettings
-            // 
-            this.pgCustomUploaderSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgCustomUploaderSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgCustomUploaderSettings.Name = "pgCustomUploaderSettings";
-            this.pgCustomUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgCustomUploaderSettings.Size = new System.Drawing.Size(517, 253);
-            this.pgCustomUploaderSettings.TabIndex = 1;
-            this.pgCustomUploaderSettings.ToolbarVisible = false;
             // 
             // SettingsForm
             // 
@@ -739,9 +739,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).EndInit();
             this.tpFTP.ResumeLayout(false);
             this.tpProxy.ResumeLayout(false);
+            this.tpCustomUploader.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
-            this.tpCustomUploader.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

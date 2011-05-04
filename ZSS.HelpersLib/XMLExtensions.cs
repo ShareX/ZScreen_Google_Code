@@ -184,32 +184,74 @@ namespace HelpersLib
             return string.Empty;
         }
 
-        public static XmlNode AppendElement(this XmlNode parent, string tagName, string textContent = null)
+        public static XmlNode AppendElement(this XmlNode parent, string tagName)
         {
-            XmlNode node = parent.OwnerDocument.CreateElement(tagName);
-            parent.AppendChild(node);
-
-            if (textContent != null)
-            {
-                XmlNode content = parent.OwnerDocument.CreateTextNode(textContent);
-                node.AppendChild(content);
-            }
-
-            return node;
+            return parent.AppendElement(tagName, null, false);
         }
 
-        public static XmlNode PrependElement(this XmlNode parent, string tagName, string textContent = null)
+        public static XmlNode AppendElement(this XmlNode parent, string tagName, string textContent, bool checkTextContent = true)
         {
-            XmlNode node = parent.OwnerDocument.CreateElement(tagName);
-            parent.PrependChild(node);
-
-            if (textContent != null)
+            if (!checkTextContent || !string.IsNullOrEmpty(textContent))
             {
-                XmlNode content = parent.OwnerDocument.CreateTextNode(textContent);
-                node.PrependChild(content);
+                XmlDocument xd;
+
+                if (parent is XmlDocument)
+                {
+                    xd = (XmlDocument)parent;
+                }
+                else
+                {
+                    xd = parent.OwnerDocument;
+                }
+
+                XmlNode node = xd.CreateElement(tagName);
+                parent.AppendChild(node);
+
+                if (textContent != null)
+                {
+                    XmlNode content = xd.CreateTextNode(textContent);
+                    node.AppendChild(content);
+                }
+
+                return node;
             }
 
-            return node;
+            return null;
+        }
+
+        public static XmlNode PrependElement(this XmlNode parent, string tagName)
+        {
+            return parent.PrependElement(tagName, null, false);
+        }
+
+        public static XmlNode PrependElement(this XmlNode parent, string tagName, string textContent, bool checkTextContent = true)
+        {
+            if (!checkTextContent || !string.IsNullOrEmpty(textContent))
+            {
+                XmlDocument xd;
+
+                if (parent is XmlDocument)
+                {
+                    xd = (XmlDocument)parent;
+                }
+                else
+                {
+                    xd = parent.OwnerDocument;
+                }
+
+                XmlNode node = xd.CreateElement(tagName);
+                parent.PrependChild(node);
+
+                if (textContent != null)
+                {
+                    XmlNode content = xd.CreateTextNode(textContent);
+                    node.PrependChild(content);
+                }
+
+                return node;
+            }
+
+            return null;
         }
     }
 }

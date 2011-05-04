@@ -33,14 +33,15 @@ namespace HistoryLib
     {
         private XMLManager xml;
 
-        public HistoryManager(string xmlFilePath)
+        public HistoryManager(string historyPath)
         {
-            xml = new XMLManager(xmlFilePath);
+            xml = new XMLManager(historyPath);
         }
 
         public bool AddHistoryItem(HistoryItem historyItem)
         {
-            if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) && historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
+            if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) &&
+                historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
             {
                 return xml.AddHistoryItem(historyItem);
             }
@@ -60,11 +61,11 @@ namespace HistoryLib
             return false;
         }
 
-        public static void AutomaticlyAddHistoryItemAsync(string databasePath, HistoryItem historyItem)
+        public static void AutomaticlyAddHistoryItemAsync(string historyPath, HistoryItem historyItem)
         {
             WaitCallback thread = state =>
             {
-                HistoryManager history = new HistoryManager(databasePath);
+                HistoryManager history = new HistoryManager(historyPath);
                 history.AddHistoryItem(historyItem);
             };
 
