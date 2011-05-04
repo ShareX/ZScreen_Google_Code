@@ -9,6 +9,8 @@ namespace HistoryLib
 {
     internal class XMLManager
     {
+        private static object thisLock = new object();
+
         private string xmlPath;
 
         public XMLManager(string xmlFilePath)
@@ -20,23 +22,22 @@ namespace HistoryLib
         {
             List<HistoryItem> historyItemList = new List<HistoryItem>();
 
-            if (!string.IsNullOrEmpty(xmlPath) && File.Exists(xmlPath))
+            lock (thisLock)
             {
-                XmlDocument xml = new XmlDocument();
-                xml.Load(xmlPath);
-
-                XmlNode rootNode = xml.ChildNodes[1];
-
-                if (rootNode.Name == "HistoryItems")
+                if (!string.IsNullOrEmpty(xmlPath) && File.Exists(xmlPath))
                 {
-                    HistoryItem hi;
+                    XmlDocument xml = new XmlDocument();
+                    xml.Load(xmlPath);
 
-                    foreach (XmlNode historyItem in rootNode.ChildNodes)
+                    XmlNode rootNode = xml.ChildNodes[1];
+
+                    if (rootNode.Name == "HistoryItems" && rootNode.ChildNodes != null && rootNode.ChildNodes.Count > 0)
                     {
-                        hi = ParseHistoryItem(historyItem.ChildNodes);
+                        HistoryItem hi;
 
-                        if (hi != null)
+                        foreach (XmlNode historyItem in rootNode.ChildNodes)
                         {
+                            hi = ParseHistoryItem(historyItem.ChildNodes);
                             historyItemList.Add(hi);
                         }
                     }
@@ -98,37 +99,64 @@ namespace HistoryLib
         {
             if (!string.IsNullOrEmpty(xmlPath))
             {
-                XmlDocument xml = new XmlDocument();
-
-                if (File.Exists(xmlPath))
+                lock (thisLock)
                 {
+                    XmlDocument xml = new XmlDocument();
+
+                    if (File.Exists(xmlPath))
+                    {
+                        xml.Load(xmlPath);
+                    }
+
+                    if (xml.ChildNodes.Count == 0)
+                    {
+                        xml.AppendChild(xml.CreateXmlDeclaration("1.0", "UTF-8", null));
+                        xml.AppendElement("HistoryItems");
+                    }
+
+                    XmlNode rootNode = xml.ChildNodes[1];
+
+                    if (rootNode.Name == "HistoryItems")
+                    {
+                        XmlNode historyItemNode = rootNode.PrependElement("HistoryItem");
+                        historyItemNode.AppendElement("Filename", historyItem.Filename);
+                        historyItemNode.AppendElement("Filepath", historyItem.Filepath);
+                        historyItemNode.AppendElement("DateTimeUtc", historyItem.DateTimeUtc.ToString("o"));
+                        historyItemNode.AppendElement("Type", historyItem.Type);
+                        historyItemNode.AppendElement("Host", historyItem.Host);
+                        historyItemNode.AppendElement("URL", historyItem.URL);
+                        historyItemNode.AppendElement("ThumbnailURL", historyItem.ThumbnailURL);
+                        historyItemNode.AppendElement("DeletionURL", historyItem.DeletionURL);
+                        historyItemNode.AppendElement("TinyURL", historyItem.TinyURL);
+
+                        xml.Save(xmlPath);
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool RemoveHistoryItemByIndex(int index) // TODO: History Remove
+        {
+            lock (thisLock)
+            {
+                if (!string.IsNullOrEmpty(xmlPath) && File.Exists(xmlPath))
+                {
+                    XmlDocument xml = new XmlDocument();
                     xml.Load(xmlPath);
-                }
 
-                if (xml.ChildNodes.Count == 0)
-                {
-                    xml.AppendChild(xml.CreateXmlDeclaration("1.0", "UTF-8", null));
-                    xml.AppendElement("HistoryItems");
-                }
+                    XmlNode rootNode = xml.ChildNodes[1];
 
-                XmlNode rootNode = xml.ChildNodes[1];
-
-                if (rootNode.Name == "HistoryItems")
-                {
-                    XmlNode historyItemNode = rootNode.PrependElement("HistoryItem");
-                    historyItemNode.AppendElement("Filename", historyItem.Filename);
-                    historyItemNode.AppendElement("Filepath", historyItem.Filepath);
-                    historyItemNode.AppendElement("DateTimeUtc", historyItem.DateTimeUtc.ToString("o"));
-                    historyItemNode.AppendElement("Type", historyItem.Type);
-                    historyItemNode.AppendElement("Host", historyItem.Host);
-                    historyItemNode.AppendElement("URL", historyItem.URL);
-                    historyItemNode.AppendElement("ThumbnailURL", historyItem.ThumbnailURL);
-                    historyItemNode.AppendElement("DeletionURL", historyItem.DeletionURL);
-                    historyItemNode.AppendElement("TinyURL", historyItem.TinyURL);
-
-                    xml.Save(xmlPath);
-
-                    return true;
+                    if (rootNode.Name == "HistoryItems" && rootNode.ChildNodes != null &&
+                        rootNode.ChildNodes.Count > 0 && index.IsBetween(0, rootNode.ChildNodes.Count))
+                    {
+                        rootNode.RemoveChild(rootNode.ChildNodes[index]);
+                        xml.Save(xmlPath);
+                        return true;
+                    }
                 }
             }
 

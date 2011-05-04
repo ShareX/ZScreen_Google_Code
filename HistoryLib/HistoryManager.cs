@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace HistoryLib
@@ -40,10 +41,17 @@ namespace HistoryLib
 
         public bool AddHistoryItem(HistoryItem historyItem)
         {
-            if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) &&
-                historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
+            try
             {
-                return xml.AddHistoryItem(historyItem);
+                if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) &&
+                historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
+                {
+                    return xml.AddHistoryItem(historyItem);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
             }
 
             return false;
@@ -51,7 +59,16 @@ namespace HistoryLib
 
         public List<HistoryItem> GetHistoryItems()
         {
-            return xml.Load();
+            try
+            {
+                return xml.Load();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            return new List<HistoryItem>();
         }
 
         public bool RemoveHistoryItem(HistoryItem historyItem)
