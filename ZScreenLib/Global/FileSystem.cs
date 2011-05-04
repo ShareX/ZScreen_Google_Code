@@ -520,5 +520,11 @@ namespace ZScreenLib
 
             return false;
         }
+
+        public static string GetBrowserFriendlyUrl(string url)
+        {
+            url = Regex.Replace(url, " ", "%20");
+            return url;
+        }
     }
 }
