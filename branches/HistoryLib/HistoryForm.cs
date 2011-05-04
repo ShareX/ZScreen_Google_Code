@@ -81,7 +81,7 @@ namespace HistoryLib
 
         private HistoryItem[] GetHistoryItems()
         {
-            IEnumerable<HistoryItem> historyItems = history.GetHistoryItems();
+            IEnumerable<HistoryItem> historyItems = history.GetHistoryItems().Reverse();
 
             if (MaxItemCount > -1)
             {

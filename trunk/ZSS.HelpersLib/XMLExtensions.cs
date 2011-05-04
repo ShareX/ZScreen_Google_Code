@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace HelpersLib
@@ -181,6 +182,34 @@ namespace HelpersLib
             }
 
             return string.Empty;
+        }
+
+        public static XmlNode AppendElement(this XmlNode parent, string tagName, string textContent = null)
+        {
+            XmlNode node = parent.OwnerDocument.CreateElement(tagName);
+            parent.AppendChild(node);
+
+            if (textContent != null)
+            {
+                XmlNode content = parent.OwnerDocument.CreateTextNode(textContent);
+                node.AppendChild(content);
+            }
+
+            return node;
+        }
+
+        public static XmlNode PrependElement(this XmlNode parent, string tagName, string textContent = null)
+        {
+            XmlNode node = parent.OwnerDocument.CreateElement(tagName);
+            parent.PrependChild(node);
+
+            if (textContent != null)
+            {
+                XmlNode content = parent.OwnerDocument.CreateTextNode(textContent);
+                node.PrependChild(content);
+            }
+
+            return node;
         }
     }
 }
