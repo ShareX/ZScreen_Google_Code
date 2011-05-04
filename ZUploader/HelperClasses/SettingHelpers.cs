@@ -44,7 +44,8 @@ namespace ZUploader
                 if (!string.IsNullOrEmpty(path))
                 {
                     string directoryName = Path.GetDirectoryName(path);
-                    if (!Directory.Exists(directoryName))
+
+                    if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
                     {
                         Directory.CreateDirectory(directoryName);
                     }

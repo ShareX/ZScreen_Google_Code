@@ -730,13 +730,15 @@ namespace ZScreenLib
             }
         }
 
-        public void Write(string filePath)
+        public bool Write(string filePath)
         {
             try
             {
-                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+                string directoryName = Path.GetDirectoryName(filePath);
+
+                if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    Directory.CreateDirectory(directoryName);
                 }
 
                 XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
@@ -744,12 +746,16 @@ namespace ZScreenLib
                 {
                     xs.Serialize(fs, this);
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 FileSystem.AppendDebug("Error while writing settings", ex);
                 MessageBox.Show(ex.Message);
             }
+
+            return false;
         }
 
         public static XMLSettings Read()
@@ -782,37 +788,30 @@ namespace ZScreenLib
 
         public static XMLSettings Read(string filePath)
         {
-            if (!string.IsNullOrEmpty(filePath))
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                string settingsDir = Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(settingsDir))
+                try
                 {
-                    Directory.CreateDirectory(settingsDir);
-                }
-
-                if (File.Exists(filePath))
-                {
-                    try
+                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
-                        using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                        {
-                            return xs.Deserialize(fs) as XMLSettings;
-                        }
+                        return xs.Deserialize(fs) as XMLSettings;
                     }
-                    catch (Exception ex)
+                }
+                catch (Exception ex)
+                {
+                    // We dont need a MessageBox when we rename enumerations
+                    // Renaming enums tend to break parts of serialization
+                    FileSystem.AppendDebug("Error while reading settings", ex);
+
+                    using (OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS })
                     {
-                        // We dont need a MessageBox when we rename enumerations
-                        // Renaming enums tend to break parts of serialization
-                        FileSystem.AppendDebug("Error while reading settings", ex);
-                        using (OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS })
+                        dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
+                        dlg.InitialDirectory = Engine.mAppSettings.RootDir;
+
+                        if (dlg.ShowDialog() == DialogResult.OK)
                         {
-                            dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                            dlg.InitialDirectory = Engine.mAppSettings.RootDir;
-                            if (dlg.ShowDialog() == DialogResult.OK)
-                            {
-                                return XMLSettings.Read(dlg.FileName);
-                            }
+                            return Read(dlg.FileName);
                         }
                     }
                 }

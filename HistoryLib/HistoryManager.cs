@@ -25,99 +25,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Reflection;
 using System.Threading;
-using HelpersLib;
 
 namespace HistoryLib
 {
-    public class HistoryManager : IDisposable
+    public class HistoryManager
     {
-        private const string EmptyDatabasePath = "HistoryLib.Database.History.db3";
+        private XMLManager xml;
 
-        private SQLiteWrapper sqlite;
-
-        public HistoryManager(string databasePath)
+        public HistoryManager(string xmlFilePath)
         {
-            CreateDatabaseIfNotExist(databasePath);
-            sqlite = new SQLiteWrapper(databasePath, true);
-            sqlite.UseLockProtection = true;
-            sqlite.OpenDatabase();
-        }
-
-        private bool CreateDatabaseIfNotExist(string databasePath)
-        {
-            if (!File.Exists(databasePath))
-            {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(EmptyDatabasePath))
-                {
-                    stream.WriteFile(databasePath);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public void Dispose()
-        {
-            sqlite.Dispose();
+            xml = new XMLManager(xmlFilePath);
         }
 
         public bool AddHistoryItem(HistoryItem historyItem)
         {
             if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) && historyItem.DateTimeUtc != DateTime.MinValue && !string.IsNullOrEmpty(historyItem.URL))
             {
-                Dictionary<string, object> parameters = new Dictionary<string, object>
-                {
-                    {"Filename", historyItem.Filename},
-                    {"Filepath", historyItem.Filepath},
-                    {"DateTime", historyItem.DateTimeUtc},
-                    {"Type", historyItem.Type},
-                    {"Host", historyItem.Host},
-                    {"URL", historyItem.URL},
-                    {"ThumbnailURL", historyItem.ThumbnailURL},
-                    {"DeletionURL", historyItem.DeletionURL}
-                };
-
-                return sqlite.Insert("History", parameters);
+                return xml.AddHistoryItem(historyItem);
             }
 
             return false;
         }
 
-        public HistoryItem[] GetHistoryItems()
+        public List<HistoryItem> GetHistoryItems()
         {
-            DataTable historyTable = sqlite.SelectAll("History");
-
-            HistoryItem[] historyItems = new HistoryItem[historyTable.Rows.Count];
-
-            for (int i = 0; i < historyItems.Length; i++)
-            {
-                historyItems[i] = (HistoryItem)historyTable.Rows[i];
-            }
-
-            return historyItems;
+            return xml.Load();
         }
 
         public bool RemoveHistoryItem(HistoryItem historyItem)
         {
-            return sqlite.Delete("History", "ID", historyItem.ID.ToString()) == 1;
+            // TODO: Remove history item
+
+            return false;
         }
 
         public static void AutomaticlyAddHistoryItemAsync(string databasePath, HistoryItem historyItem)
         {
-            ThreadStart thread = () =>
+            WaitCallback thread = state =>
             {
-                using (HistoryManager history = new HistoryManager(databasePath))
-                {
-                    history.AddHistoryItem(historyItem);
-                }
+                HistoryManager history = new HistoryManager(databasePath);
+                history.AddHistoryItem(historyItem);
             };
 
-            new Thread(thread).Start();
+            ThreadPool.QueueUserWorkItem(thread);
         }
     }
 }
