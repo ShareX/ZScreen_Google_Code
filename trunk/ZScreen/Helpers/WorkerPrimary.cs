@@ -31,6 +31,7 @@ using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
+using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
@@ -642,8 +643,9 @@ namespace ZScreenGUI
         {
             if (Engine.conf.HistorySave)
             {
-                HistoryLib.HistoryManager.AutomaticlyAddHistoryItemAsync(Engine.HistoryDbPath, task.GenerateHistoryItem());
+                HistoryManager.AutomaticlyAddHistoryItemAsync(Engine.HistoryDbPath, task.GenerateHistoryItem());
             }
+
             Adapter.AddRecentItem(task.LocalFilePath);
         }
 
