@@ -281,7 +281,7 @@ namespace ZUploader
                     fileUploader = new SendSpace(Program.SendSpaceKey);
                     SendSpaceManager.PrepareUploadInfo(Program.SendSpaceKey, null, null);
                     break;
-                case FileUploaderType.Dropbox: // TODO: Dropbox
+                case FileUploaderType.Dropbox: // TODO: Dropbox account
                     fileUploader = new Dropbox(new OAuthInfo(Program.DropboxConsumerKey, Program.DropboxConsumerSecret));
                     break;
                 case FileUploaderType.FileSonic:

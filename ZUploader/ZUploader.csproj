@@ -139,6 +139,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -189,17 +190,19 @@
     <None Include="Resources\folder--plus.png" />
     <None Include="Resources\document-copy.png" />
     <None Include="Resources\document--arrow.png" />
-    <None Include="Resources\image--plus.png" />
-    <None Include="Resources\application--plus.png" />
-    <None Include="Resources\document--plus.png" />
     <None Include="Resources\application-form.png" />
-    <None Include="Resources\information.png" />
     <None Include="Resources\address-book-blue.png" />
     <Content Include="Docs\VersionHistory.txt" />
     <None Include="Resources\navigation-000-button.png" />
     <None Include="Resources\tr.png" />
     <None Include="Resources\au.png" />
     <None Include="Resources\us.png" />
+    <None Include="Resources\application-block.png" />
+    <None Include="Resources\edit-scale.png" />
+    <None Include="Resources\drive-globe.png" />
+    <None Include="Resources\diamond.png" />
+    <None Include="Resources\notebook.png" />
+    <None Include="Resources\image.png" />
     <None Include="Resources\application-browser.png" />
     <Content Include="zss-main.ico" />
   </ItemGroup>

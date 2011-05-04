@@ -67,9 +67,9 @@ namespace ZUploader.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap application__plus {
+        internal static System.Drawing.Bitmap application_block {
             get {
-                object obj = ResourceManager.GetObject("application--plus", resourceCulture);
+                object obj = ResourceManager.GetObject("application-block", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -109,16 +109,16 @@ namespace ZUploader.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap document__arrow {
+        internal static System.Drawing.Bitmap diamond {
             get {
-                object obj = ResourceManager.GetObject("document--arrow", resourceCulture);
+                object obj = ResourceManager.GetObject("diamond", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap document__plus {
+        internal static System.Drawing.Bitmap document__arrow {
             get {
-                object obj = ResourceManager.GetObject("document--plus", resourceCulture);
+                object obj = ResourceManager.GetObject("document--arrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -130,6 +130,20 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap drive_globe {
+            get {
+                object obj = ResourceManager.GetObject("drive-globe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap edit_scale {
+            get {
+                object obj = ResourceManager.GetObject("edit-scale", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap folder__plus {
             get {
                 object obj = ResourceManager.GetObject("folder--plus", resourceCulture);
@@ -137,16 +151,9 @@ namespace ZUploader.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap image__plus {
+        internal static System.Drawing.Bitmap image {
             get {
-                object obj = ResourceManager.GetObject("image--plus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap information {
-            get {
-                object obj = ResourceManager.GetObject("information", resourceCulture);
+                object obj = ResourceManager.GetObject("image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -161,6 +168,13 @@ namespace ZUploader.Properties {
         internal static System.Drawing.Bitmap navigation_090_button {
             get {
                 object obj = ResourceManager.GetObject("navigation_090_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap notebook {
+            get {
+                object obj = ResourceManager.GetObject("notebook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
