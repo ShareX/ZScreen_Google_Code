@@ -38,6 +38,7 @@ namespace ZUploader
         public int SelectedImageUploaderDestination = 0;
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
+        public int SelectedURLShortenerDestination = 0;
 
         // Settings Form
 

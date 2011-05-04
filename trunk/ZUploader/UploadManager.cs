@@ -42,6 +42,7 @@ namespace ZUploader
         public static ImageDestination ImageUploader { get; set; }
         public static TextUploaderType TextUploader { get; set; }
         public static FileUploaderType FileUploader { get; set; }
+        public static UrlShortenerType URLShortener { get; set; }
         public static MyListView ListViewControl { get; set; }
         public static List<Task> Tasks { get; private set; }
 

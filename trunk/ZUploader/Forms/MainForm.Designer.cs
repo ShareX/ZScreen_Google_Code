@@ -72,9 +72,11 @@ namespace ZUploader
             this.tsbCopy = new System.Windows.Forms.ToolStripButton();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
             this.tss2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsddbImageUploaders = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddbTextUploaders = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddbFileUploaders = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbImageUploaders = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsddbTextUploaders = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsddbFileUploaders = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsddbURLShorteners = new System.Windows.Forms.ToolStripMenuItem();
             this.tss3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbHistory = new System.Windows.Forms.ToolStripButton();
             this.tsbSettings = new System.Windows.Forms.ToolStripButton();
@@ -188,9 +190,7 @@ namespace ZUploader
             this.tsbCopy,
             this.tsbOpen,
             this.tss2,
-            this.tsddbImageUploaders,
-            this.tsddbTextUploaders,
-            this.tsddbFileUploaders,
+            this.toolStripDropDownButton1,
             this.tss3,
             this.tsbHistory,
             this.tsbSettings,
@@ -199,7 +199,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(951, 33);
+            this.tsMain.Size = new System.Drawing.Size(686, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -251,29 +251,46 @@ namespace ZUploader
             this.tss2.Name = "tss2";
             this.tss2.Size = new System.Drawing.Size(6, 23);
             // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddbImageUploaders,
+            this.tsddbTextUploaders,
+            this.tsddbFileUploaders,
+            this.tsddbURLShorteners});
+            this.toolStripDropDownButton1.Image = global::ZUploader.Properties.Resources.drive_globe;
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(101, 20);
+            this.toolStripDropDownButton1.Text = "Destinations";
+            // 
             // tsddbImageUploaders
             // 
-            this.tsddbImageUploaders.Image = global::ZUploader.Properties.Resources.image__plus;
-            this.tsddbImageUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbImageUploaders.Image = global::ZUploader.Properties.Resources.image;
             this.tsddbImageUploaders.Name = "tsddbImageUploaders";
-            this.tsddbImageUploaders.Size = new System.Drawing.Size(124, 20);
+            this.tsddbImageUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsddbImageUploaders.Text = "Image uploaders";
             // 
             // tsddbTextUploaders
             // 
-            this.tsddbTextUploaders.Image = global::ZUploader.Properties.Resources.document__plus;
-            this.tsddbTextUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbTextUploaders.Image = global::ZUploader.Properties.Resources.notebook;
             this.tsddbTextUploaders.Name = "tsddbTextUploaders";
-            this.tsddbTextUploaders.Size = new System.Drawing.Size(113, 20);
+            this.tsddbTextUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsddbTextUploaders.Text = "Text uploaders";
             // 
             // tsddbFileUploaders
             // 
-            this.tsddbFileUploaders.Image = global::ZUploader.Properties.Resources.application__plus;
-            this.tsddbFileUploaders.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbFileUploaders.Image = global::ZUploader.Properties.Resources.application_block;
             this.tsddbFileUploaders.Name = "tsddbFileUploaders";
-            this.tsddbFileUploaders.Size = new System.Drawing.Size(109, 20);
+            this.tsddbFileUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsddbFileUploaders.Text = "File uploaders";
+            // 
+            // tsddbURLShorteners
+            // 
+            this.tsddbURLShorteners.Image = global::ZUploader.Properties.Resources.edit_scale;
+            this.tsddbURLShorteners.Name = "tsddbURLShorteners";
+            this.tsddbURLShorteners.Size = new System.Drawing.Size(162, 22);
+            this.tsddbURLShorteners.Text = "URL shorteners";
             // 
             // tss3
             // 
@@ -300,7 +317,7 @@ namespace ZUploader
             // 
             // tsbAbout
             // 
-            this.tsbAbout.Image = global::ZUploader.Properties.Resources.information;
+            this.tsbAbout.Image = global::ZUploader.Properties.Resources.diamond;
             this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAbout.Name = "tsbAbout";
             this.tsbAbout.Size = new System.Drawing.Size(69, 20);
@@ -315,13 +332,13 @@ namespace ZUploader
             // 
             this.tscMain.ContentPanel.Controls.Add(this.lvUploads);
             this.tscMain.ContentPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.tscMain.ContentPanel.Size = new System.Drawing.Size(954, 331);
+            this.tscMain.ContentPanel.Size = new System.Drawing.Size(924, 331);
             this.tscMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tscMain.LeftToolStripPanelVisible = false;
             this.tscMain.Location = new System.Drawing.Point(0, 0);
             this.tscMain.Name = "tscMain";
             this.tscMain.RightToolStripPanelVisible = false;
-            this.tscMain.Size = new System.Drawing.Size(954, 364);
+            this.tscMain.Size = new System.Drawing.Size(924, 364);
             this.tscMain.TabIndex = 88;
             this.tscMain.Text = "toolStripContainer1";
             // 
@@ -348,7 +365,7 @@ namespace ZUploader
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.ShowItemToolTips = true;
-            this.lvUploads.Size = new System.Drawing.Size(948, 325);
+            this.lvUploads.Size = new System.Drawing.Size(918, 325);
             this.lvUploads.TabIndex = 3;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
@@ -406,7 +423,7 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 364);
+            this.ClientSize = new System.Drawing.Size(924, 364);
             this.Controls.Add(this.tscMain);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -454,10 +471,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripButton tsbOpen;
         private System.Windows.Forms.ToolStripButton tsbSettings;
         private System.Windows.Forms.ToolStripButton tsbAbout;
-        private System.Windows.Forms.ToolStripDropDownButton tsddbImageUploaders;
-        private System.Windows.Forms.ToolStripDropDownButton tsddbFileUploaders;
         private System.Windows.Forms.ToolStripSeparator tss1;
-        private System.Windows.Forms.ToolStripDropDownButton tsddbTextUploaders;
         private System.Windows.Forms.ToolStripSeparator tss2;
         private System.Windows.Forms.ToolStripContainer tscMain;
         private System.Windows.Forms.ColumnHeader chSpeed;
@@ -468,5 +482,10 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem showErrorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator tss3;
         private System.Windows.Forms.ToolStripMenuItem showResponseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsddbImageUploaders;
+        private System.Windows.Forms.ToolStripMenuItem tsddbTextUploaders;
+        private System.Windows.Forms.ToolStripMenuItem tsddbFileUploaders;
+        private System.Windows.Forms.ToolStripMenuItem tsddbURLShorteners;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
     }
 }

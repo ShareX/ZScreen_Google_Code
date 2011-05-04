@@ -88,6 +88,12 @@ namespace ZUploader
             }
             tsddbTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
 
+            foreach (string urlShortener in Helpers.GetEnumDescriptions<UrlShortenerType>())
+            {
+                tsddbURLShorteners.DropDownItems.Add(new ToolStripMenuItem(urlShortener));
+            }
+            tsddbURLShorteners.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbURLShorteners_DropDownItemClicked);
+
             ImageList il = new ImageList();
             il.ColorDepth = ColorDepth.Depth32Bit;
             il.Images.Add(Properties.Resources.navigation_090_button);
@@ -127,6 +133,14 @@ namespace ZUploader
 
             ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextUploaderType)Program.Settings.SelectedTextUploaderDestination;
+
+            if (Helpers.GetEnumLength<UrlShortenerType>() <= Program.Settings.SelectedURLShortenerDestination)
+            {
+                Program.Settings.SelectedURLShortenerDestination = 0;
+            }
+
+            ((ToolStripMenuItem)tsddbURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
+            UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
 
             RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
         }
@@ -510,6 +524,19 @@ namespace ZUploader
                 {
                     Program.Settings.SelectedTextUploaderDestination = i;
                     UploadManager.TextUploader = (TextUploaderType)i;
+                }
+            }
+        }
+
+        private void tsddbURLShorteners_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            for (int i = 0; i < tsddbURLShorteners.DropDownItems.Count; i++)
+            {
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbURLShorteners.DropDownItems[i];
+                if (tsmi.Checked = tsmi == e.ClickedItem)
+                {
+                    Program.Settings.SelectedURLShortenerDestination = i;
+                    UploadManager.URLShortener = (UrlShortenerType)i;
                 }
             }
         }
