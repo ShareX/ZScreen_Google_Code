@@ -1,15 +1,16 @@
-
-
-3.36.6.0 Image Editors are now called Actions to support post-actions after capturing images/text/files {McoreD}
-3.36.5.0 SQLite based History Viewer from ZUploader {Jaex/McoreD}
-3.36.4.0 Advanced Option to enable Crop Lite for slower computers {Jaex}
+3.36.9.0 Improved Pastebin.com implementation with user accounts support {Jaex}
+3.36.8.0 Image Editors are now called Actions to support post-actions after capturing images/text/files {McoreD}
+3.36.7.0 TwitSnaps is now using Twitter Open Authorisation {Jaex}
+3.36.6.0 Improved performance in Crop Shot at least by 150% {Jaex}
+3.36.5.0 Revamped History Viewer for permanent storage can be accessed from Tray Menu {Jaex}
+3.36.4.0 Advanced tab Option to enable Crop Lite for slower computers{Jaex}
 3.36.3.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment {McoreD}
 3.36.2.2 Fixes for tweeting unicode charactors {Jaex}
-3.36.2.1 Fixed Unable to replace image with same filename using ftp upload [Issue 406] {simonw1485}
+3.36.2.1 Fixed Unable to replace image with same filename using upload [Issue 406] {simonw1485}
 3.36.2.0 Ability to use File Destination to upload Text and Images {Jaex}
-3.36.1.0 Option to copy URL to Clipboard after task is complete {Jaex}
+3.36.1.0 Copying URL to Clipboard after task is complete is now optional {Jaex}
 3.36.0.0 Freehand Crop Shot support {Jaex}
-3.35.1.0 Support for Imgur User Accounts using Open Authorization {Jaex}
+3.35.1.0 Added Support for Imgur User Accounts using Open Authorization {Jaex}
 3.35.0.0 Added Dropbox file uploader support {Jaex}
 
 Version 3.34 - 20110404

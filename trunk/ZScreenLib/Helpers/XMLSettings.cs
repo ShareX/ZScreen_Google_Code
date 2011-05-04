@@ -135,8 +135,10 @@ namespace ZScreenLib
         public int TwitterAcctSelected = 0;
         public List<OAuthInfo> TwitterOAuthInfoList = new List<OAuthInfo>();
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
-        public string TwitterUsername = string.Empty;
-        public string TwitterPassword = string.Empty;
+        [Category("Destinations / Twitter"), DefaultValue(""), Description("Twitter Username for yfrog etc. services")]
+        public string TwitterUsername { get; set; }
+        [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
+        public string TwitterPassword { get; set; }
         public bool TwitterEnabled = false;
 
         // TwitPic

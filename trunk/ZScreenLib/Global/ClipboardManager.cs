@@ -156,8 +156,8 @@ namespace ZScreenLib
             {
                 Engine.ClipboardUnhook();
                 FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
-                Clipboard.SetText(clipboardText); // auto
-
+                clipboardText = FileSystem.GetBrowserFriendlyUrl(clipboardText);
+                Clipboard.SetText(clipboardText); // auto                
                 // optional deletion link
                 string linkdel = LinkMgr.UploadResult.DeletionURL;
                 if (!string.IsNullOrEmpty(linkdel))
