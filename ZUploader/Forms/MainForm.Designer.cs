@@ -92,6 +92,7 @@ namespace ZUploader
             this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.copyShortenedURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -104,6 +105,7 @@ namespace ZUploader
             this.cmsUploads.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openURLToolStripMenuItem,
             this.copyURLToolStripMenuItem,
+            this.copyShortenedURLToolStripMenuItem,
             this.copyThumbnailURLToolStripMenuItem,
             this.copyDeletionURLToolStripMenuItem,
             this.showErrorsToolStripMenuItem,
@@ -114,7 +116,7 @@ namespace ZUploader
             this.cmsUploads.Name = "cmsUploads";
             this.cmsUploads.ShowImageMargin = false;
             this.cmsUploads.ShowItemToolTips = false;
-            this.cmsUploads.Size = new System.Drawing.Size(163, 202);
+            this.cmsUploads.Size = new System.Drawing.Size(163, 246);
             // 
             // openURLToolStripMenuItem
             // 
@@ -418,6 +420,13 @@ namespace ZUploader
             this.chURL.Text = "URL";
             this.chURL.Width = 225;
             // 
+            // copyShortenedURLToolStripMenuItem
+            // 
+            this.copyShortenedURLToolStripMenuItem.Name = "copyShortenedURLToolStripMenuItem";
+            this.copyShortenedURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.copyShortenedURLToolStripMenuItem.Text = "Copy Shortened URL";
+            this.copyShortenedURLToolStripMenuItem.Click += new System.EventHandler(this.copyShortenedURLToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -487,5 +496,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsddbFileUploaders;
         private System.Windows.Forms.ToolStripMenuItem tsddbURLShorteners;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem copyShortenedURLToolStripMenuItem;
     }
 }

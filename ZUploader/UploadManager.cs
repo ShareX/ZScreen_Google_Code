@@ -291,6 +291,11 @@ namespace ZUploader
                         lvi.SubItems[1].Text = "Error";
                         lvi.SubItems[8].Text = string.Empty;
                         lvi.ImageIndex = 1;
+
+                        if (Program.Settings.AutoPlaySound)
+                        {
+                            SystemSounds.Asterisk.Play();
+                        }
                     }
                     else
                     {
@@ -298,33 +303,32 @@ namespace ZUploader
                             info.Result.URL, (int)info.UploadDuration.TotalMilliseconds);
 
                         lvi.SubItems[1].Text = info.Status;
-                        lvi.SubItems[8].Text = info.Result.URL;
                         lvi.ImageIndex = 2;
-                    }
 
-                    lvi.EnsureVisible();
-
-                    if (Program.Settings.ClipboardAutoCopy && !string.IsNullOrEmpty(info.Result.URL))
-                    {
-                        Helpers.CopyTextSafely(info.Result.URL);
-                    }
-
-                    if (Program.Settings.AutoPlaySound)
-                    {
-                        if (info.Result.IsError)
+                        if (!string.IsNullOrEmpty(info.Result.URL))
                         {
-                            SystemSounds.Asterisk.Play();
+                            string url = string.IsNullOrEmpty(info.Result.TinyURL) ? info.Result.URL : info.Result.TinyURL;
+
+                            lvi.SubItems[8].Text = url;
+
+                            if (Program.Settings.ClipboardAutoCopy)
+                            {
+                                Helpers.CopyTextSafely(url);
+                            }
+
+                            if (Program.Settings.SaveHistory)
+                            {
+                                HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
+                            }
                         }
-                        else
+
+                        if (Program.Settings.AutoPlaySound)
                         {
                             SystemSounds.Exclamation.Play();
                         }
                     }
 
-                    if (Program.Settings.SaveHistory && !string.IsNullOrEmpty(info.Result.URL) && !info.Result.IsError)
-                    {
-                        HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
-                    }
+                    lvi.EnsureVisible();
                 }
             }
             finally
