@@ -79,6 +79,7 @@
             this.pgCustomUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -158,6 +159,7 @@
             // 
             // tpGeneral
             // 
+            this.tpGeneral.Controls.Add(this.cbURLShortenAfterUpload);
             this.tpGeneral.Controls.Add(this.label1);
             this.tpGeneral.Controls.Add(this.btnOpenZUploaderPath);
             this.tpGeneral.Controls.Add(this.lblGeneralInfo);
@@ -175,7 +177,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 128);
+            this.label1.Location = new System.Drawing.Point(16, 152);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(264, 13);
             this.label1.TabIndex = 18;
@@ -183,7 +185,7 @@
             // 
             // btnOpenZUploaderPath
             // 
-            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 96);
+            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 120);
             this.btnOpenZUploaderPath.Name = "btnOpenZUploaderPath";
             this.btnOpenZUploaderPath.Size = new System.Drawing.Size(176, 23);
             this.btnOpenZUploaderPath.TabIndex = 17;
@@ -207,7 +209,7 @@
             // cbShellContextMenu
             // 
             this.cbShellContextMenu.AutoSize = true;
-            this.cbShellContextMenu.Location = new System.Drawing.Point(16, 64);
+            this.cbShellContextMenu.Location = new System.Drawing.Point(16, 88);
             this.cbShellContextMenu.Name = "cbShellContextMenu";
             this.cbShellContextMenu.Size = new System.Drawing.Size(285, 17);
             this.cbShellContextMenu.TabIndex = 4;
@@ -708,6 +710,17 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // cbURLShortenAfterUpload
+            // 
+            this.cbURLShortenAfterUpload.AutoSize = true;
+            this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 64);
+            this.cbURLShortenAfterUpload.Name = "cbURLShortenAfterUpload";
+            this.cbURLShortenAfterUpload.Size = new System.Drawing.Size(240, 17);
+            this.cbURLShortenAfterUpload.TabIndex = 19;
+            this.cbURLShortenAfterUpload.Text = "Use URL Shortener after upload is completed";
+            this.cbURLShortenAfterUpload.UseVisualStyleBackColor = true;
+            this.cbURLShortenAfterUpload.CheckedChanged += new System.EventHandler(this.cbURLShortenAfterUpload_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -800,5 +813,6 @@
         private System.Windows.Forms.Label lblUploadLimit;
         private System.Windows.Forms.TabPage tpCustomUploader;
         private System.Windows.Forms.PropertyGrid pgCustomUploaderSettings;
+        private System.Windows.Forms.CheckBox cbURLShortenAfterUpload;
     }
 }

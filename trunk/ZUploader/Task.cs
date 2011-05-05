@@ -34,6 +34,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
+using UploadersLib.URLShorteners;
 using ZUploader.HelperClasses;
 
 namespace ZUploader
@@ -180,9 +181,17 @@ namespace ZUploader
                 Info.Result.Errors = uploader.Errors;
             }
 
-            if (!IsStopped && Info.Result != null && !Info.Result.IsError && string.IsNullOrEmpty(Info.Result.URL))
+            if (!IsStopped && Info.Result != null)
             {
-                Info.Result.Errors.Add("URL is empty.");
+                if (!Info.Result.IsError && string.IsNullOrEmpty(Info.Result.URL))
+                {
+                    Info.Result.Errors.Add("URL is empty.");
+                }
+
+                if (!Info.Result.IsError && Program.Settings.URLShortenAfterUpload)
+                {
+                    Info.Result.TinyURL = ShortenURL(Info.Result.URL);
+                }
             }
 
             Info.UploadTime = DateTime.UtcNow;
@@ -311,6 +320,44 @@ namespace ZUploader
             {
                 PrepareUploader(fileUploader);
                 return fileUploader.Upload(stream, fileName);
+            }
+
+            return null;
+        }
+
+        public string ShortenURL(string url)
+        {
+            URLShortener urlShortener = null;
+
+            switch (UploadManager.URLShortener)
+            {
+                case UrlShortenerType.BITLY:
+                    urlShortener = new BitlyURLShortener(Program.BitlyLogin, Program.BitlyKey);
+                    break;
+                case UrlShortenerType.Google:
+                    urlShortener = new GoogleURLShortener(Program.GoogleURLShortenerKey);
+                    break;
+                case UrlShortenerType.ISGD:
+                    urlShortener = new IsgdURLShortener();
+                    break;
+                case UrlShortenerType.Jmp:
+                    urlShortener = new JmpURLShortener(Program.BitlyLogin, Program.BitlyKey);
+                    break;
+                /*case UrlShortenerType.THREELY:
+                    urlShortener = new ThreelyURLShortener(Program.ThreelyKey);
+                    break;*/
+                case UrlShortenerType.TINYURL:
+                    urlShortener = new TinyURLShortener();
+                    break;
+                case UrlShortenerType.TURL:
+                    urlShortener = new TurlURLShortener();
+                    break;
+            }
+
+            if (urlShortener != null)
+            {
+                Status = TaskStatus.URLShortening;
+                return urlShortener.ShortenURL(url);
             }
 
             return null;

@@ -27,7 +27,7 @@ namespace ZUploader
 {
     public enum TaskStatus
     {
-        InQueue, Preparing, Uploading, Completed
+        InQueue, Preparing, Uploading, URLShortening, Completed
     }
 
     public enum TaskProgress

@@ -154,9 +154,9 @@ namespace ZUploader
         private void UpdateControls()
         {
             tsbCopy.Enabled = tsbOpen.Enabled = copyURLToolStripMenuItem.Visible = openURLToolStripMenuItem.Visible =
-                copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible = showErrorsToolStripMenuItem.Visible =
-                copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible = uploadFileToolStripMenuItem.Visible =
-                stopUploadToolStripMenuItem.Visible = false;
+                copyShortenedURLToolStripMenuItem.Visible = copyThumbnailURLToolStripMenuItem.Visible = copyDeletionURLToolStripMenuItem.Visible =
+                showErrorsToolStripMenuItem.Visible = copyErrorsToolStripMenuItem.Visible = showResponseToolStripMenuItem.Visible =
+                uploadFileToolStripMenuItem.Visible = stopUploadToolStripMenuItem.Visible = false;
 
             int itemsCount = lvUploads.SelectedItems.Count;
 
@@ -188,6 +188,11 @@ namespace ZUploader
                     if (!string.IsNullOrEmpty(result.DeletionURL))
                     {
                         copyDeletionURLToolStripMenuItem.Visible = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(result.TinyURL))
+                    {
+                        copyShortenedURLToolStripMenuItem.Visible = true;
                     }
 
                     if (result.IsError)
@@ -266,6 +271,16 @@ namespace ZUploader
                         Helpers.CopyTextSafely(urls);
                     }
                 }
+            }
+        }
+
+        private void CopyShortenedURL()
+        {
+            UploadResult result = GetCurrentUploadResult();
+
+            if (result != null && !string.IsNullOrEmpty(result.TinyURL))
+            {
+                Helpers.CopyTextSafely(result.TinyURL);
             }
         }
 
@@ -441,6 +456,11 @@ namespace ZUploader
         private void copyURLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyURL();
+        }
+
+        private void copyShortenedURLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyShortenedURL();
         }
 
         private void copyThumbnailURLToolStripMenuItem_Click(object sender, EventArgs e)

@@ -51,6 +51,7 @@ namespace ZUploader
         {
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
+            cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbShellContextMenu.Checked = ShellContextMenu.Check();
 
             for (int i = 0; i < MaxBufferSizePower; i++)
@@ -137,6 +138,11 @@ namespace ZUploader
         private void cbAutoPlaySound_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.AutoPlaySound = cbAutoPlaySound.Checked;
+        }
+
+        private void cbURLShortenAfterUpload_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.URLShortenAfterUpload = cbURLShortenAfterUpload.Checked;
         }
 
         private void cbShellContextMenu_CheckedChanged(object sender, EventArgs e)
