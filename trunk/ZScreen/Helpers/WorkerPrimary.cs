@@ -135,7 +135,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            if (task.ShouldShortenURL(task.RemoteFilePath))
+            if (task.LinkManager != null && task.ShouldShortenURL(task.RemoteFilePath))
             {
                 task.ShortenURL(task.RemoteFilePath);
             }
@@ -314,7 +314,7 @@ namespace ZScreenGUI
                         mZScreen.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (!string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                     {
                         if (Engine.conf.CompleteSound)
                         {

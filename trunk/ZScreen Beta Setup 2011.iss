@@ -82,12 +82,16 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZUploader\bin\Release\*.dll; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion onlyifdoesntexist
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\ZUploader.exe"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"; Tasks: quicklaunchicon
 
 [Run]
 Filename: {app}\{#MyAppName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
+Filename: {app}\ZUploader.exe.; Description: {cm:LaunchProgram,ZUploader}; Flags: nowait postinstall skipifsilent unchecked
 
