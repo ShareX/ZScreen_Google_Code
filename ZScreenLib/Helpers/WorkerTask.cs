@@ -176,9 +176,7 @@ namespace ZScreenLib
 
                     return LinkManager.UploadResult.URL;
                 }
-
-                FileSystem.AppendDebug("Attempted to access RemoteFilePath when LinkManager is null.");
-                return string.Empty;
+                throw new Exception("Attempted to access RemoteFilePath when LinkManager is null. Check for task.LinkManager != null before accessing RemoteFilePath.");
             }
         }
 

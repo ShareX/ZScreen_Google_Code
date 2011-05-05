@@ -95,7 +95,6 @@ namespace ZScreenLib
         public static void SetClipboard(WorkerTask task, bool showDialog)
         {
             string clipboardText = "";
-            LinkMgr = task.LinkManager;
 
             if (task.JobIsImageToClipboard())
             {
@@ -128,9 +127,9 @@ namespace ZScreenLib
             else
             {
                 // From this point onwards app needs to respect all other Clipboard URL modes for Images
-                if (task.Job1 == JobLevel1.Image)
+                if (task.LinkManager != null && task.Job1 == JobLevel1.Image)
                 {
-                    clipboardText = LinkMgr.GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim();
+                    clipboardText = task.LinkManager.GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim();
                 }
                 // Text and File catagories are still left to process. Exception for Google Translate
                 else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
@@ -141,12 +140,12 @@ namespace ZScreenLib
                     }
                 }
                 // Text and File catagories are still left to process. If shortened URL exists, preference is given to that
-                else if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.TinyURL))
+                else if (task.LinkManager != null && task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.TinyURL))
                 {
                     clipboardText = task.LinkManager.UploadResult.TinyURL;
                 }
                 // Otherwise full URL for Text or File is used
-                else
+                else if (task.LinkManager != null)
                 {
                     clipboardText = task.RemoteFilePath;
                 }

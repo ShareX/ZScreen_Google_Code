@@ -80,7 +80,7 @@ namespace ZScreenLib
             }
         }
 
-        public string CaptureRegionOrWindow() // TODO: Crop cancel fix required
+        public string CaptureRegionOrWindow()
         {
             mTakingScreenShot = true;
             string filePath = string.Empty;
