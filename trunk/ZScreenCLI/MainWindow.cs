@@ -30,6 +30,11 @@ namespace ZScreenCLI
                         // Crop Shot
                         mWorker.StartBw_CropShot();
                     }
+                    else if (args[1].ToLower() == "entire_screen")
+                    {
+                        // Entire Screen
+                        mWorker.StartBw_EntireScreen();   
+                    }
                     else if (args[1].ToLower() == "selected_window")
                     {
                         // Selected Window
