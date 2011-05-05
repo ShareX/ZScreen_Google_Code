@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
+using System;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -42,7 +43,6 @@ namespace ZScreenLib
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
 
-        private static ImageFileManager LinkMgr = null;
         private static int UniqueNumber = 0;
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace ZScreenLib
 
         public static ImageFileManager GetLastImageUpload()
         {
-            return LinkMgr;
+            throw new Exception("Not yet implemented.");
         }
 
         public static int GetAverageProgress()
@@ -158,7 +158,7 @@ namespace ZScreenLib
                 clipboardText = FileSystem.GetBrowserFriendlyUrl(clipboardText);
                 Clipboard.SetText(clipboardText); // auto                
                 // optional deletion link
-                string linkdel = LinkMgr.UploadResult.DeletionURL;
+                string linkdel = task.LinkManager.UploadResult.DeletionURL;
                 if (!string.IsNullOrEmpty(linkdel))
                 {
                     FileSystem.AppendDebug("Deletion Link: " + linkdel);

@@ -253,6 +253,14 @@ namespace ZScreenLib
 
         #region User Tasks
 
+        public void StartBw_EntireScreen()
+        {
+            if (!TaskManager.mTakingScreenShot)
+            {
+                StartWorkerScreenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN);
+            }
+        }
+
         public void StartBw_SelectedWindow()
         {
             if (!TaskManager.mTakingScreenShot)
