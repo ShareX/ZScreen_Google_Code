@@ -101,7 +101,7 @@ namespace ZUploader
             il.Images.Add(Properties.Resources.tick_button);
             il.Images.Add(Properties.Resources.navigation_000_button);
             lvUploads.SmallImageList = il;
-            lvUploads.AutoResizeLastColumn();
+            lvUploads.FillLastColumn();
 
             UploadManager.ListViewControl = lvUploads;
 

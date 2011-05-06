@@ -108,7 +108,7 @@ namespace ZUploader
                 URL = Result.URL,
                 ThumbnailURL = Result.ThumbnailURL,
                 DeletionURL = Result.DeletionURL,
-                TinyURL = Result.TinyURL
+                ShortenedURL = Result.TinyURL
             };
         }
     }

@@ -58,7 +58,7 @@ namespace HistoryLib
             cbTypeFilterSelection.SelectedIndex = 0; // Image
             cbFilenameFilterCulture.Items[0] = string.Format("Current culture ({0})", CultureInfo.CurrentCulture.Parent.EnglishName);
             pbThumbnail.LoadingImage = LoadImageFromResources("Loading.gif");
-            lvHistory.AutoResizeLastColumn();
+            lvHistory.FillLastColumn();
         }
 
         private Image LoadImageFromResources(string imageName)
@@ -188,7 +188,7 @@ namespace HistoryLib
                 lvHistory.Items.Add(lvi);
             }
 
-            lvHistory.AutoResizeLastColumn();
+            lvHistory.FillLastColumn();
             lvHistory.Focus();
             lvHistory.ResumeLayout(true);
         }
@@ -408,6 +408,11 @@ namespace HistoryLib
         private void tsmiOpenURL_Click(object sender, EventArgs e)
         {
             him.OpenURL();
+        }
+
+        private void tsmiOpenShortenedURL_Click(object sender, EventArgs e)
+        {
+            him.OpenShortenedURL();
         }
 
         private void tsmiOpenThumbnailURL_Click(object sender, EventArgs e)

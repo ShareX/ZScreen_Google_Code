@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -30,46 +31,58 @@ namespace HelpersLib.Custom_Controls
 {
     public class MyListView : ListView
     {
+        private const int WM_PAINT = 0xF;
         private const int WM_ERASEBKGND = 0x14;
+
+        [DefaultValue(false)]
+        public bool AutoFillColumn { get; set; }
+
+        [DefaultValue(-1)]
+        public int AutoFillColumnIndex { get; set; }
 
         public MyListView()
         {
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.EnableNotifyMessage, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.EnableNotifyMessage, true);
 
-            this.FullRowSelect = true;
-            this.HideSelection = false;
-            this.View = View.Details;
+            AutoFillColumn = false;
+            AutoFillColumnIndex = -1;
+            FullRowSelect = true;
+            View = View.Details;
         }
 
-        public void AutoResizeLastColumn()
+        public void FillColumn(int index)
         {
-            if (this.View == View.Details && this.Columns.Count > 0)
+            if (View == View.Details && Columns.Count > 0 && index >= -1 && index < Columns.Count)
             {
-                if (this.Columns.Count == 1)
+                if (index == -1)
                 {
-                    if (this.Columns[0].Width != this.ClientSize.Width)
-                    {
-                        this.Columns[0].Width = this.ClientSize.Width;
-                    }
+                    index = Columns.Count - 1;
                 }
-                else
+
+                int width = 0;
+
+                for (int i = 0; i < Columns.Count; i++)
                 {
-                    int columns = this.Columns.Count - 1;
-                    int width = 0;
-
-                    for (int i = 0; i < columns; i++)
-                    {
-                        width += this.Columns[i].Width;
-                    }
-
-                    this.Columns[this.Columns.Count - 1].Width = this.ClientSize.Width - width;
+                    if (i != index) width += Columns[i].Width;
                 }
+
+                Columns[index].Width = ClientSize.Width - width;
             }
+        }
+
+        public void FillLastColumn()
+        {
+            FillColumn(-1);
         }
 
         [DebuggerStepThrough]
         protected override void OnNotifyMessage(Message m)
         {
+            if (m.Msg == WM_PAINT && !DesignMode && AutoFillColumn)
+            {
+                FillColumn(AutoFillColumnIndex);
+            }
+
             if (m.Msg != WM_ERASEBKGND)
             {
                 base.OnNotifyMessage(m);
@@ -78,9 +91,9 @@ namespace HelpersLib.Custom_Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (this.MultiSelect && e.Control && e.KeyCode == Keys.A)
+            if (MultiSelect && e.Control && e.KeyCode == Keys.A)
             {
-                foreach (ListViewItem lvi in this.Items)
+                foreach (ListViewItem lvi in Items)
                 {
                     lvi.Selected = true;
                 }

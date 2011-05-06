@@ -238,7 +238,7 @@ namespace ZUploader
                 lvi.ImageIndex = 3;
                 ListViewControl.Items.Add(lvi);
                 lvi.EnsureVisible();
-                ListViewControl.AutoResizeLastColumn();
+                ListViewControl.FillLastColumn();
             }
         }
 

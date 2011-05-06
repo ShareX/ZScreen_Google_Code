@@ -372,7 +372,7 @@ namespace ZScreenLib
             {
                 hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
                 hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
-                hi.TinyURL = this.LinkManager.UploadResult.TinyURL;
+                hi.ShortenedURL = this.LinkManager.UploadResult.TinyURL;
                 hi.URL = this.LinkManager.UploadResult.URL;
             }
             hi.Filename = this.FileName;
