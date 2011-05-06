@@ -34,6 +34,7 @@
             this.cmsHistory = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenURL = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOpenShortenedURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenThumbnailURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenDeletionURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tssOpen1 = new System.Windows.Forms.ToolStripSeparator();
@@ -41,6 +42,7 @@
             this.tsmiOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopyURL = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCopyShortenedURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopyThumbnailURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopyDeletionURL = new System.Windows.Forms.ToolStripMenuItem();
             this.tssCopy1 = new System.Windows.Forms.ToolStripSeparator();
@@ -97,8 +99,6 @@
             this.gbSelectedHistoryItem = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
-            this.tsmiOpenShortenedURL = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiCopyShortenedURL = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.gbFilters.SuspendLayout();
@@ -137,6 +137,13 @@
             this.tsmiOpenURL.Size = new System.Drawing.Size(156, 22);
             this.tsmiOpenURL.Text = "URL";
             this.tsmiOpenURL.Click += new System.EventHandler(this.tsmiOpenURL_Click);
+            // 
+            // tsmiOpenShortenedURL
+            // 
+            this.tsmiOpenShortenedURL.Name = "tsmiOpenShortenedURL";
+            this.tsmiOpenShortenedURL.Size = new System.Drawing.Size(156, 22);
+            this.tsmiOpenShortenedURL.Text = "Shortened URL";
+            this.tsmiOpenShortenedURL.Click += new System.EventHandler(this.tsmiOpenShortenedURL_Click);
             // 
             // tsmiOpenThumbnailURL
             // 
@@ -205,6 +212,13 @@
             this.tsmiCopyURL.Size = new System.Drawing.Size(233, 22);
             this.tsmiCopyURL.Text = "URL";
             this.tsmiCopyURL.Click += new System.EventHandler(this.tsmiCopyURL_Click);
+            // 
+            // tsmiCopyShortenedURL
+            // 
+            this.tsmiCopyShortenedURL.Name = "tsmiCopyShortenedURL";
+            this.tsmiCopyShortenedURL.Size = new System.Drawing.Size(233, 22);
+            this.tsmiCopyShortenedURL.Text = "Shortened URL";
+            this.tsmiCopyShortenedURL.Click += new System.EventHandler(this.tsmiCopyShortenedURL_Click);
             // 
             // tsmiCopyThumbnailURL
             // 
@@ -685,19 +699,6 @@
             this.pbThumbnail.Name = "pbThumbnail";
             this.pbThumbnail.Size = new System.Drawing.Size(328, 232);
             this.pbThumbnail.TabIndex = 14;
-            // 
-            // tsmiOpenShortenedURL
-            // 
-            this.tsmiOpenShortenedURL.Name = "tsmiOpenShortenedURL";
-            this.tsmiOpenShortenedURL.Size = new System.Drawing.Size(156, 22);
-            this.tsmiOpenShortenedURL.Text = "Shortened URL";
-            // 
-            // tsmiCopyShortenedURL
-            // 
-            this.tsmiCopyShortenedURL.Name = "tsmiCopyShortenedURL";
-            this.tsmiCopyShortenedURL.Size = new System.Drawing.Size(233, 22);
-            this.tsmiCopyShortenedURL.Text = "Shortened URL";
-            this.tsmiCopyShortenedURL.Click += new System.EventHandler(this.tsmiCopyShortenedURL_Click);
             // 
             // HistoryForm
             // 

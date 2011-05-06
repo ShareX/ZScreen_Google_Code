@@ -81,8 +81,8 @@ namespace HistoryLib
                     case "DeletionURL":
                         hi.DeletionURL = node.InnerText;
                         break;
-                    case "TinyURL":
-                        hi.TinyURL = node.InnerText;
+                    case "ShortenedURL":
+                        hi.ShortenedURL = node.InnerText;
                         break;
                     default:
                         Debug.WriteLine("Unknown node: " + node.Name);
@@ -127,7 +127,7 @@ namespace HistoryLib
                         historyItemNode.AppendElement("URL", historyItem.URL);
                         historyItemNode.AppendElement("ThumbnailURL", historyItem.ThumbnailURL);
                         historyItemNode.AppendElement("DeletionURL", historyItem.DeletionURL);
-                        historyItemNode.AppendElement("TinyURL", historyItem.TinyURL);
+                        historyItemNode.AppendElement("ShortenedURL", historyItem.ShortenedURL);
 
                         xml.Save(xmlPath);
 

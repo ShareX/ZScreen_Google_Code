@@ -66,7 +66,7 @@ namespace HistoryLib
                     HistoryItem = tempHistoryItem;
 
                     IsURLExist = !string.IsNullOrEmpty(HistoryItem.URL);
-                    IsShortenedURLExist = !string.IsNullOrEmpty(HistoryItem.TinyURL);
+                    IsShortenedURLExist = !string.IsNullOrEmpty(HistoryItem.ShortenedURL);
                     IsThumbnailURLExist = !string.IsNullOrEmpty(HistoryItem.ThumbnailURL);
                     IsDeletionURLExist = !string.IsNullOrEmpty(HistoryItem.DeletionURL);
                     IsImageURL = IsURLExist && Helpers.IsImageFile(HistoryItem.URL);
@@ -101,6 +101,11 @@ namespace HistoryLib
         public void OpenURL()
         {
             if (HistoryItem != null && IsURLExist) Process.Start(HistoryItem.URL);
+        }
+
+        public void OpenShortenedURL()
+        {
+            if (HistoryItem != null && IsShortenedURLExist) Process.Start(HistoryItem.ShortenedURL);
         }
 
         public void OpenThumbnailURL()
@@ -144,7 +149,7 @@ namespace HistoryLib
 
         public void CopyShortenedURL()
         {
-            if (HistoryItem != null && IsShortenedURLExist) Helpers.CopyTextSafely(HistoryItem.TinyURL);
+            if (HistoryItem != null && IsShortenedURLExist) Helpers.CopyTextSafely(HistoryItem.ShortenedURL);
         }
 
         public void CopyThumbnailURL()

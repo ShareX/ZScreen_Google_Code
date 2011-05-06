@@ -27,7 +27,7 @@ using System;
 
 namespace HistoryLib
 {
-    public class HistoryItem // TODO: Things to add? -Source,Errors
+    public class HistoryItem // TODO: Things to add?
     {
         public string Filename { get; set; }
         public string Filepath { get; set; }
@@ -37,6 +37,6 @@ namespace HistoryLib
         public string URL { get; set; }
         public string ThumbnailURL { get; set; }
         public string DeletionURL { get; set; }
-        public string TinyURL { get; set; }
+        public string ShortenedURL { get; set; }
     }
 }

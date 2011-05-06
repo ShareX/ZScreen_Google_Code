@@ -79,7 +79,7 @@ namespace HistoryLib.Custom_Controls
                     }
                 }
 
-                AutoResizeLastColumn();
+                FillLastColumn();
             }
         }
 
