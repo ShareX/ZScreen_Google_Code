@@ -93,6 +93,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\GUI\AccountsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Config\GUI\AccountsControl.Designer.cs">
+      <DependentUpon>AccountsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GUI\FileUploadersConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\GUI\FileUploaders.Designer.cs">
+      <DependentUpon>FileUploadersConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GUI\ImageUploadersConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\GUI\ImageUploadersConfig.Designer.cs">
+      <DependentUpon>ImageUploadersConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GUI\TextUploadersConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\GUI\TextUploadersConfig.Designer.cs">
+      <DependentUpon>TextUploadersConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\UploadersConfig.cs" />
+    <Compile Include="Config\GUI\URLShortenersConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\GUI\URLShortenersConfig.Designer.cs">
+      <DependentUpon>URLShortenersConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
     <Compile Include="FileUploaders\DropIO.cs" />
@@ -178,6 +209,9 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Config\GUI\AccountsControl.resx">
+      <DependentUpon>AccountsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -1,4 +1,5 @@
 using ZScreenLib;
+using UploadersLib;
 
 namespace ZScreenGUI
 {
@@ -554,12 +555,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.ucFTPAccounts = new ZScreenGUI.AccountsControl();
-            this.ucLocalhostAccounts = new ZScreenGUI.AccountsControl();
-            this.ucTwitterAccounts = new ZScreenGUI.AccountsControl();
-            this.ucMindTouchAccounts = new ZScreenGUI.AccountsControl();
-            this.ucMediaWikiAccounts = new ZScreenGUI.AccountsControl();
-            this.ucProxyAccounts = new ZScreenGUI.AccountsControl();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.ucProxyAccounts = new UploadersLib.AccountsControl();
             this.cmTray.SuspendLayout();
             this.tcApp.SuspendLayout();
             this.tpMain.SuspendLayout();
