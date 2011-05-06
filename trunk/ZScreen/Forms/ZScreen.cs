@@ -3665,7 +3665,9 @@ namespace ZScreenGUI
             int sel = lbSoftware.IndexFromPoint(e.X, e.Y);
             if (sel != -1)
             {
-                lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
+               // The following lines have been commented out because of unusual check/uncheck behavior
+               // MessageBox.Show(lbSoftware.GetItemChecked(sel).ToString());
+               // lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
             }
         }
 

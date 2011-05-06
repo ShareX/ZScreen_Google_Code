@@ -26,7 +26,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ZScreenGUI
+namespace UploadersLib
 {
     public partial class AccountsControl : UserControl
     {

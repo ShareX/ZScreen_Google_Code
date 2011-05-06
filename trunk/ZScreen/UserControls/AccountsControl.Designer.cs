@@ -1,6 +1,6 @@
-﻿namespace ZScreenGUI
+﻿namespace UploadersLib
 {
-    partial class AccountsControl
+    public partial class AccountsControl
     {
         /// <summary>
         /// Required designer variable.
@@ -136,12 +136,12 @@
 
         #endregion Component Designer generated code
 
-        internal System.Windows.Forms.Button btnAdd;
-        internal System.Windows.Forms.Button btnTest;
-        internal System.Windows.Forms.Button btnRemove;
+        public System.Windows.Forms.Button btnAdd;
+        public System.Windows.Forms.Button btnTest;
+        public System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.TableLayoutPanel AccountsLayout;
-        internal System.Windows.Forms.PropertyGrid SettingsGrid;
-        internal System.Windows.Forms.ListBox AccountsList;
-        internal System.Windows.Forms.Button btnClone;
+        public System.Windows.Forms.PropertyGrid SettingsGrid;
+        public System.Windows.Forms.ListBox AccountsList;
+        public System.Windows.Forms.Button btnClone;
     }
 }

@@ -302,6 +302,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DestSelector.resx">
+      <DependentUpon>DestSelector.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zss-green.ico" />
@@ -359,9 +362,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ShowScreenshot.resx">
       <DependentUpon>ShowScreenshot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DestSelector.resx">
-      <DependentUpon>DestSelector.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
