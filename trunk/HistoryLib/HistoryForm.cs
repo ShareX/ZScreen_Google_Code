@@ -260,6 +260,7 @@ namespace HistoryLib
 
             // Open
             tsmiOpenURL.Enabled = him.IsURLExist;
+            tsmiOpenShortenedURL.Enabled = him.IsShortenedURLExist;
             tsmiOpenThumbnailURL.Enabled = him.IsThumbnailURLExist;
             tsmiOpenDeletionURL.Enabled = him.IsDeletionURLExist;
 
@@ -268,6 +269,7 @@ namespace HistoryLib
 
             // Copy
             tsmiCopyURL.Enabled = him.IsURLExist;
+            tsmiCopyShortenedURL.Enabled = him.IsShortenedURLExist;
             tsmiCopyThumbnailURL.Enabled = him.IsThumbnailURLExist;
             tsmiCopyDeletionURL.Enabled = him.IsDeletionURLExist;
 
@@ -431,6 +433,11 @@ namespace HistoryLib
         private void tsmiCopyURL_Click(object sender, EventArgs e)
         {
             him.CopyURL();
+        }
+
+        private void tsmiCopyShortenedURL_Click(object sender, EventArgs e)
+        {
+            him.CopyShortenedURL();
         }
 
         private void tsmiCopyThumbnailURL_Click(object sender, EventArgs e)
