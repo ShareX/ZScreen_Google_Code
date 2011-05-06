@@ -93,12 +93,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\GUI\AccountsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Config\GUI\AccountsControl.Designer.cs">
-      <DependentUpon>AccountsControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Config\GUI\FileUploadersConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +117,12 @@
     </Compile>
     <Compile Include="Config\GUI\URLShortenersConfig.Designer.cs">
       <DependentUpon>URLShortenersConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AccountsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AccountsControl.Designer.cs">
+      <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
@@ -209,7 +209,10 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\GUI\AccountsControl.resx">
+    <EmbeddedResource Include="Config\GUI\ImageUploadersConfig.resx">
+      <DependentUpon>ImageUploadersConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">
