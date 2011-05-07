@@ -123,7 +123,8 @@ namespace ZScreenLib
         public string TinyPicUserName = string.Empty;
         public string TinyPicPassword = string.Empty;
         public bool RememberTinyPicUserPass = false;
-        public bool TinyPicSizeCheck = true;
+        [Category("Options / Image Uploaders"), DefaultValue(true), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
+        public bool TinyPicSizeCheck { get; set; }
 
         // Imgur
 
@@ -369,14 +370,19 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // Image Uploaders
-
-        public bool AutoSwitchFileUploader = true;
-        public decimal ErrorRetryCount = 2;
-        public bool ImageUploadRetryOnFail = true;
-        public bool ImageUploadRandomRetryOnFail = false;
+        [Category("Options / Image Uploaders"), DefaultValue(true), Description("Automatically switch to File Uploader if a user copies (Clipboard Upload) or drags a non-Image.")]
+        public bool AutoSwitchFileUploader { get; set; }
+        [Category("Options / Image Uploaders"), DefaultValue(2), Description("Number of Retries if image uploading fails.")]
+        public int ErrorRetryCount { get; set; }
+        [Category("Options / Image Uploaders"), DefaultValue(true), Description("Retry with between TinyPic and ImageShack if the TinyPic or ImageShack fails the first attempt.")]
+        public bool ImageUploadRetryOnFail { get; set; }
+        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Randomly select a valid destination when instead of retrying between ImageShack and TinyPic.")]
+        public bool ImageUploadRandomRetryOnFail { get; set; }
         public bool AddFailedScreenshot = true;
-        public bool ImageUploadRetryOnTimeout = false;
-        public decimal UploadDurationLimit = 15000;
+        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
+        public bool ImageUploadRetryOnTimeout { get; set; }
+        [Category("Options / Image Uploaders"), DefaultValue(15000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
+        public int UploadDurationLimit { get; set; }
 
         // Indexer
 

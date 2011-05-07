@@ -343,19 +343,11 @@ namespace ZScreenGUI
         {
             // Image Uploaders
 
-            chkAutoSwitchFileUploader.Checked = Engine.conf.AutoSwitchFileUploader;
-            nudErrorRetry.Value = Engine.conf.ErrorRetryCount;
-            cboImageUploadRetryOnTimeout.Checked = Engine.conf.ImageUploadRetryOnTimeout;
-            nudUploadDurationLimit.Value = Engine.conf.UploadDurationLimit;
-
-            chkImageUploadRetryOnFail.Checked = Engine.conf.ImageUploadRetryOnFail;
-            chkImageUploadRandomRetryOnFail.Checked = Engine.conf.ImageUploadRandomRetryOnFail;
             cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
             cbLanguageAutoDetect.Checked = Engine.conf.GoogleAutoDetectSource;
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
             cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
-            cbTinyPicSizeCheck.Checked = Engine.conf.TinyPicSizeCheck;
 
             // Custom Image Uploaders
             lbImageUploader.Items.Clear();
