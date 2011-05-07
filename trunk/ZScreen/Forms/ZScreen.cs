@@ -89,7 +89,7 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            this.ShowInTaskbar = Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
+            this.ShowInTaskbar = this.WindowState == FormWindowState.Normal && Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
 
             if (!Engine.conf.Windows7TaskbarIntegration)
             {
@@ -3300,7 +3300,7 @@ namespace ZScreenGUI
             if (mGuiIsReady)
             {
                 Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
-                chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
+                // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
         }
@@ -3665,9 +3665,9 @@ namespace ZScreenGUI
             int sel = lbSoftware.IndexFromPoint(e.X, e.Y);
             if (sel != -1)
             {
-               // The following lines have been commented out because of unusual check/uncheck behavior
-               // MessageBox.Show(lbSoftware.GetItemChecked(sel).ToString());
-               // lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
+                // The following lines have been commented out because of unusual check/uncheck behavior
+                // MessageBox.Show(lbSoftware.GetItemChecked(sel).ToString());
+                // lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
             }
         }
 
