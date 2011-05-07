@@ -408,7 +408,7 @@ namespace ZScreenGUI
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
-            chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
+            // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
             // Interaction
