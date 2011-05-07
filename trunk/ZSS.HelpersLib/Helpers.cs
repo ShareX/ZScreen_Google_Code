@@ -353,5 +353,26 @@ namespace HelpersLib
 
             return null;
         }
+
+        public const string UnreservedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+
+        public static string URLEncode(string text)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (char symbol in text)
+            {
+                if (UnreservedCharacters.Contains(symbol))
+                {
+                    result.Append(symbol);
+                }
+                else
+                {
+                    result.AppendFormat("%{0:X2}", (int)symbol);
+                }
+            }
+
+            return result.ToString();
+        }
     }
 }

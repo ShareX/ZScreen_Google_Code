@@ -81,19 +81,19 @@ namespace UploadersLib.ImageUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            UploadResult ifm = null;
+            UploadResult ur = null;
 
             switch (UploadMethod)
             {
                 case AccountType.Anonymous:
-                    ifm = AnonymousUpload(stream, fileName);
+                    ur = AnonymousUpload(stream, fileName);
                     break;
                 case AccountType.User:
-                    ifm = UserUpload(stream, fileName);
+                    ur = UserUpload(stream, fileName);
                     break;
             }
 
-            return ifm;
+            return ur;
         }
 
         public string GetAuthorizationURL()
