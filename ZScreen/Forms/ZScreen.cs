@@ -89,8 +89,6 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            this.ShowInTaskbar = this.WindowState == FormWindowState.Normal && Engine.conf.Windows7TaskbarIntegration && CoreHelpers.RunningOnWin7;
-
             if (!Engine.conf.Windows7TaskbarIntegration)
             {
                 if (Engine.zJumpList != null)
@@ -107,41 +105,44 @@ namespace ZScreenGUI
                     Engine.zWindowsTaskbar = TaskbarManager.Instance;
                     Engine.zWindowsTaskbar.ApplicationId = Engine.appId;
 
-                    Engine.zJumpList = JumpList.CreateJumpList();
+                    if (this.WindowState == FormWindowState.Normal)
+                    {
+                        Engine.zJumpList = JumpList.CreateJumpList();
 
-                    // User Tasks
-                    JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
-                    jlCropShot.Arguments = "crop_shot";
-                    jlCropShot.IconReference = new IconReference(Adapter.ResourcePath, 1);
-                    Engine.zJumpList.AddUserTasks(jlCropShot);
+                        // User Tasks
+                        JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
+                        jlCropShot.Arguments = "crop_shot";
+                        jlCropShot.IconReference = new IconReference(Adapter.ResourcePath, 1);
+                        Engine.zJumpList.AddUserTasks(jlCropShot);
 
-                    JumpListLink jlSelectedWindow = new JumpListLink(Adapter.ZScreenCliPath(), "Selected Window");
-                    jlSelectedWindow.Arguments = "selected_window";
-                    jlSelectedWindow.IconReference = new IconReference(Adapter.ResourcePath, 2);
-                    Engine.zJumpList.AddUserTasks(jlSelectedWindow);
+                        JumpListLink jlSelectedWindow = new JumpListLink(Adapter.ZScreenCliPath(), "Selected Window");
+                        jlSelectedWindow.Arguments = "selected_window";
+                        jlSelectedWindow.IconReference = new IconReference(Adapter.ResourcePath, 2);
+                        Engine.zJumpList.AddUserTasks(jlSelectedWindow);
 
-                    JumpListLink jlClipboardUpload = new JumpListLink(Adapter.ZScreenCliPath(), "Clipboard Upload");
-                    jlClipboardUpload.Arguments = "clipboard_upload";
-                    jlClipboardUpload.IconReference = new IconReference(Adapter.ResourcePath, 3);
-                    Engine.zJumpList.AddUserTasks(jlClipboardUpload);
+                        JumpListLink jlClipboardUpload = new JumpListLink(Adapter.ZScreenCliPath(), "Clipboard Upload");
+                        jlClipboardUpload.Arguments = "clipboard_upload";
+                        jlClipboardUpload.IconReference = new IconReference(Adapter.ResourcePath, 3);
+                        Engine.zJumpList.AddUserTasks(jlClipboardUpload);
 
-                    // Recent Items
-                    Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
+                        // Recent Items
+                        Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
 
-                    // Custom Categories
-                    JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
+                        // Custom Categories
+                        JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
 
-                    JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
-                    imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+                        JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
+                        imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
-                    JumpListLink settingsJumpListLink = new JumpListLink(Engine.SettingsDir, "Settings");
-                    settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+                        JumpListLink settingsJumpListLink = new JumpListLink(Engine.SettingsDir, "Settings");
+                        settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
-                    JumpListLink logsJumpListLink = new JumpListLink(Engine.LogsDir, "Logs");
-                    logsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
+                        JumpListLink logsJumpListLink = new JumpListLink(Engine.LogsDir, "Logs");
+                        logsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
 
-                    paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink, logsJumpListLink);
-                    Engine.zJumpList.AddCustomCategories(paths);
+                        paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink, logsJumpListLink);
+                        Engine.zJumpList.AddCustomCategories(paths);
+                    }
 
                     // Taskbar Buttons
                     ThumbnailToolBarButton cropShot = new ThumbnailToolBarButton(Resources.shape_square_ico, "Crop Shot");
@@ -154,7 +155,12 @@ namespace ZScreenGUI
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
                     Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                    Engine.zJumpList.Refresh();
+                    
+                    if (this.WindowState == FormWindowState.Normal)
+                    {
+                        Engine.zJumpList.Refresh();
+                    }
+
                     FileSystem.AppendDebug("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)
