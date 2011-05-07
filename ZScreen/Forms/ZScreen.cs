@@ -207,7 +207,6 @@ namespace ZScreenGUI
             tpHotkeys.ImageKey = "keyboard";
             tpScreenshots.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
-            tpImageHosting.ImageKey = "picture_go";
             tpTextServices.ImageKey = "text_signature";
             tpTranslator.ImageKey = "comments";
             tpHistory.ImageKey = "pictures";
@@ -526,11 +525,6 @@ namespace ZScreenGUI
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
             Process.Start("http://my.imageshack.us/registration/");
-        }
-
-        private void nErrorRetry_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ErrorRetryCount = nudErrorRetry.Value;
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
@@ -2113,11 +2107,6 @@ namespace ZScreenGUI
 
         #endregion Language Translator
 
-        private void cbImageUploadRetry_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageUploadRetryOnFail = chkImageUploadRetryOnFail.Checked;
-        }
-
         private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
         {
             if (accs != null)
@@ -2441,11 +2430,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void chkAutoSwitchFTP_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.AutoSwitchFileUploader = chkAutoSwitchFileUploader.Checked;
-        }
-
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
@@ -2647,11 +2631,6 @@ namespace ZScreenGUI
             Engine.conf.CropGridToggle = cboCropGridMode.Checked;
         }
 
-        private void cbTinyPicSizeCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.TinyPicSizeCheck = cbTinyPicSizeCheck.Checked;
-        }
-
         private void txtWatermarkImageLocation_TextChanged(object sender, EventArgs e)
         {
             if (File.Exists(txtWatermarkImageLocation.Text))
@@ -2671,16 +2650,6 @@ namespace ZScreenGUI
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
             }
-        }
-
-        private void cbAutoChangeUploadDestination_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageUploadRetryOnTimeout = cboImageUploadRetryOnTimeout.Checked;
-        }
-
-        private void nudUploadDurationLimit_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.conf.UploadDurationLimit = nudUploadDurationLimit.Value;
         }
 
         private void StartDebug()
@@ -3563,11 +3532,6 @@ namespace ZScreenGUI
             Engine.conf.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
             gbGradientMakerBasic.Enabled = !cboUseCustomGradient.Checked;
             TestWatermark();
-        }
-
-        private void chkImageUploadRandomRetryOnFail_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageUploadRandomRetryOnFail = chkImageUploadRandomRetryOnFail.Checked;
         }
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
