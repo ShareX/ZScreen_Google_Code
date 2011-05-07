@@ -50,8 +50,6 @@ namespace UploadersLib.HelperClasses
         private const string HMACSHA1SignatureType = "HMAC-SHA1";
         private const string RSASHA1SignatureType = "RSA-SHA1";
 
-        private const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
-
         public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod, OAuthInfo oauth)
         {
             if (string.IsNullOrEmpty(oauth.ConsumerKey) || string.IsNullOrEmpty(oauth.ConsumerSecret))
@@ -142,8 +140,8 @@ namespace UploadersLib.HelperClasses
         {
             StringBuilder signatureBase = new StringBuilder();
             signatureBase.AppendFormat("{0}&", httpMethod.ToString().ToUpperInvariant());
-            signatureBase.AppendFormat("{0}&", URLEncode(normalizedUrl));
-            signatureBase.AppendFormat("{0}", URLEncode(normalizedParameters));
+            signatureBase.AppendFormat("{0}&", Helpers.URLEncode(normalizedUrl));
+            signatureBase.AppendFormat("{0}", Helpers.URLEncode(normalizedParameters));
             return signatureBase.ToString();
         }
 
@@ -161,7 +159,7 @@ namespace UploadersLib.HelperClasses
 
                 string signature = Convert.ToBase64String(hashBytes);
 
-                return URLEncode(signature);
+                return Helpers.URLEncode(signature);
             }
         }
 
@@ -199,26 +197,7 @@ namespace UploadersLib.HelperClasses
 
         private static string NormalizeParameters(Dictionary<string, string> parameters)
         {
-            return string.Join("&", parameters.OrderBy(x => x.Key).ThenBy(x => x.Value).Select(x => x.Key + "=" + URLEncode(x.Value)).ToArray());
-        }
-
-        private static string URLEncode(string text)
-        {
-            StringBuilder result = new StringBuilder();
-
-            foreach (char symbol in text)
-            {
-                if (AllowedChars.Contains(symbol))
-                {
-                    result.Append(symbol);
-                }
-                else
-                {
-                    result.AppendFormat("%{0:X2}", (int)symbol);
-                }
-            }
-
-            return result.ToString();
+            return string.Join("&", parameters.OrderBy(x => x.Key).ThenBy(x => x.Value).Select(x => x.Key + "=" + Helpers.URLEncode(x.Value)).ToArray());
         }
     }
 }

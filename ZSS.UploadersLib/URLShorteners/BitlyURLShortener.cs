@@ -24,7 +24,8 @@
 #endregion License Information (GPL v2)
 
 using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Linq;
+using HelpersLib;
 
 namespace UploadersLib.URLShorteners
 {
@@ -35,9 +36,10 @@ namespace UploadersLib.URLShorteners
             get { return "Bitly"; }
         }
 
-        private const string APIURL = "http://api.bit.ly/shorten";
+        private const string URLShorten = "http://api.bit.ly/v3/shorten";
 
-        private string APILogin, APIKey;
+        public string APILogin { get; set; }
+        public string APIKey { get; set; }
 
         public BitlyURLShortener(string login, string key)
         {
@@ -50,21 +52,15 @@ namespace UploadersLib.URLShorteners
             if (!string.IsNullOrEmpty(url))
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
-                arguments.Add("version", "2.0.1");
+                arguments.Add("format", "xml");
                 arguments.Add("longUrl", url);
                 arguments.Add("login", APILogin);
                 arguments.Add("apiKey", APIKey);
-                arguments.Add("format", "xml");
 
-                string result = SendGetRequest(APIURL, arguments);
+                string result = SendGetRequest(URLShorten, arguments);
 
-                XmlDocument xdoc = new XmlDocument();
-                xdoc.LoadXml(result);
-                XmlNode xnode = xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl");
-                if (xnode != null)
-                {
-                    return xnode.InnerText;
-                }
+                XDocument xd = XDocument.Parse(result);
+                return xd.GetValue("response/data/url");
             }
 
             return null;
