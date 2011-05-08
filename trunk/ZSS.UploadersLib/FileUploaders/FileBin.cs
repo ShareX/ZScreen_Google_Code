@@ -31,11 +31,6 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class FileBin : FileUploader
     {
-        public override string Name
-        {
-            get { return "FileBin"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();

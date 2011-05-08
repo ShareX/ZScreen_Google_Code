@@ -131,12 +131,6 @@ namespace UploadersLib
         IMGUR,
         [Description("Flickr - flickr.com")]
         FLICKR,
-        //[Description("ImageBin - imagebin.ca")]
-        //IMAGEBIN,
-        //[Description("Img1 - img1.us")]
-        //IMG1,
-        //[Description("ImageBam - imagebam.com")]
-        //IMAGEBAM,
         [Description("Uploadscreenshot - uploadscreenshot.com")]
         UPLOADSCREENSHOT,
         [Description("TwitPic - twitpic.com")]
@@ -177,14 +171,8 @@ namespace UploadersLib
         Dropbox,
         [Description("FileSonic - filesonic.com")]
         FileSonic,
-        //[Description("filebin.ca")]
-        //FileBin,
-        //[Description("drop.io")]
-        //DropIO,
         [Description("ShareCX - share.cx")]
         ShareCX,
-        //[Description("FileZ - filez.muffinz.eu")]
-        //FilezFiles,
         [Description("Use custom uploader")]
         CustomUploader,
         [Description("FTP Server")]
@@ -207,7 +195,5 @@ namespace UploadersLib
         TINYURL,
         [Description("TURL - www.turl.ca")]
         TURL
-        //[Description("kl.am - www.kl.am")]
-        //KLAM
     }
 }

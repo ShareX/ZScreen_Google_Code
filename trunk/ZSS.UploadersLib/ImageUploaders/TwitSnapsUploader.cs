@@ -33,11 +33,6 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class TwitSnapsUploader : ImageUploader
     {
-        public override string Name
-        {
-            get { return "TwitSnaps"; }
-        }
-
         public OAuthInfo AuthInfo { get; set; }
 
         private const string APIURL = "http://twitsnaps.com/dev/image/upload.xml";

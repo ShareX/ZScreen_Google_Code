@@ -33,11 +33,6 @@ namespace UploadersLib.TextUploaders
     [Serializable]
     public sealed class PastebinUploader : TextUploader
     {
-        public override string Name
-        {
-            get { return "PasteBin"; }
-        }
-
         private const string APIURL = "http://pastebin.com/api/api_post.php";
         private const string APILoginURL = "http://pastebin.com/api/api_login.php";
 

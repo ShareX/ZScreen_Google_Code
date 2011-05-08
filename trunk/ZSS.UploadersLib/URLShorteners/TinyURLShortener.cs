@@ -29,11 +29,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class TinyURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "TinyURL"; }
-        }
-
         private const string APIURL = "http://tinyurl.com/api-create.php";
 
         public override string ShortenURL(string url)

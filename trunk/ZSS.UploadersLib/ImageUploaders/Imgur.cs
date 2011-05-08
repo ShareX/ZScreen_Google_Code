@@ -40,11 +40,6 @@ namespace UploadersLib.ImageUploaders
         private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
         private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
 
-        public override string Name
-        {
-            get { return "Imgur"; }
-        }
-
         /// <summary>
         /// Upload method: Anonymous or User?
         /// </summary>

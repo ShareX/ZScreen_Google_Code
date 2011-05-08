@@ -30,11 +30,6 @@ namespace UploadersLib.TextUploaders
 {
     public sealed class PastebinCaUploader : TextUploader
     {
-        public override string Name
-        {
-            get { return "PasteBinCa"; }
-        }
-
         private const string APIURL = "http://pastebin.ca/quiet-paste.php";
 
         private string APIKey;

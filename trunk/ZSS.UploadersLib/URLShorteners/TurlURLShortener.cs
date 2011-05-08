@@ -29,11 +29,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class TurlURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Turl"; }
-        }
-
         private const string APIURL = "http://turl.ca/api.php";
 
         public override string ShortenURL(string url)

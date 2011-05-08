@@ -36,7 +36,7 @@ namespace UploadersLib.ImageUploaders
         public MediaWikiOptions Options { get; set; }
 
         private List<string> Errors { get; set; }
-        public string Name { get; private set; }
+
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         public MediaWikiUploader(MediaWikiOptions options)

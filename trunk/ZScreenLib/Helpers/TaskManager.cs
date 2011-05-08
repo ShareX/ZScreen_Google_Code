@@ -347,7 +347,7 @@ namespace ZScreenLib
             if (fileHost != null)
             {
                 mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-                mTask.DestinationName = fileHost.Name;
+                mTask.DestinationName = mTask.MyFileUploader.GetDescription();
                 fileHost.ProgressChanged += UploadProgressChanged;
                 UploadResult ur = fileHost.Upload(mTask.LocalFilePath);
                 if (ur != null)
@@ -393,21 +393,10 @@ namespace ZScreenLib
                 case ImageUploaderType.FLICKR:
                     imageUploader = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
-                /*case ImageUploaderType.IMAGEBAM:
-                    ImageBamUploaderOptions imageBamOptions = new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret,
-                        Adapter.GetImageBamGalleryActive()) { NSFW = Engine.conf.ImageBamContentNSFW };
-                    imageUploader = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret, imageBamOptions);
-                    break;
-                case ImageDestType.IMAGEBIN:
-                    imageUploader = new ImageBin();
-                    break;*/
                 case ImageUploaderType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(Engine.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
-                /*case ImageDestType.IMG1:
-                    imageUploader = new Img1Uploader();
-                    break;*/
                 case ImageUploaderType.IMGUR:
                     imageUploader = new Imgur(Engine.conf.ImgurAccountType, Engine.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
                     break;
@@ -456,8 +445,8 @@ namespace ZScreenLib
             if (imageUploader != null)
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
-                FileSystem.AppendDebug("Initialized " + imageUploader.Name);
-                mTask.DestinationName = imageUploader.Name;
+                mTask.DestinationName = mTask.MyImageUploader.GetDescription();
+                FileSystem.AppendDebug("Initialized " + mTask.DestinationName);
                 string fullFilePath = mTask.LocalFilePath;
                 if (File.Exists(fullFilePath) || mTask.MyImage != null)
                 {
@@ -727,7 +716,8 @@ namespace ZScreenLib
 
                     if (textUploader != null)
                     {
-                        FileSystem.AppendDebug("Uploading to " + textUploader.Name);
+                        mTask.DestinationName = mTask.MyTextUploader.GetDescription();
+                        FileSystem.AppendDebug("Uploading to " + mTask.DestinationName);
 
                         string url = string.Empty;
 

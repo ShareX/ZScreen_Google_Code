@@ -54,11 +54,6 @@ namespace UploadersLib.FileUploaders
             APIKey = apiKey;
         }
 
-        public override string Name
-        {
-            get { return "SendSpace"; }
-        }
-
         #region Helpers
 
         public class ResponsePacket

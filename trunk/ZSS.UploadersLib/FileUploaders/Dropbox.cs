@@ -34,11 +34,6 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class Dropbox : FileUploader
     {
-        public override string Name
-        {
-            get { return "Dropbox"; }
-        }
-
         public OAuthInfo AuthInfo { get; set; }
         public string UploadPath { get; set; }
         public string UserID { get; set; }

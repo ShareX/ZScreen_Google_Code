@@ -30,11 +30,6 @@ namespace UploadersLib.TextUploaders
 {
     public sealed class SlexyUploader : TextUploader
     {
-        public override string Name
-        {
-            get { return "Slexy"; }
-        }
-
         private const string APIURL = "http://slexy.org/index.php/submit";
 
         private SlexySettings settings;

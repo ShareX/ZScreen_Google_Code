@@ -42,13 +42,9 @@ namespace UploadersLib.FileUploaders
 
     public sealed class RapidShare : FileUploader
     {
-        private string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
-        private RapidShareOptions Options { get; set; }
+        private const string rapidshareURL = "http://api.rapidshare.com/cgi-bin/rsapi.cgi";
 
-        public override string Name
-        {
-            get { return "RapidShare"; }
-        }
+        private RapidShareOptions Options { get; set; }
 
         public RapidShare()
         {

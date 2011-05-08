@@ -119,8 +119,8 @@ namespace ZScreenLib
         public const string FlickrKey = "009382d913746758f23d0ba9906b9fde";
         public const string FlickrSecret = "7a147b763b1c7ebc";
         public const string UploadScreenshotKey = "2807828f379860848433221358";
-        public const string ImageBamKey = "3702805a5d94b0161052e7aa4c69f046";
-        public const string ImageBamSecret = "9b7ae269fee7f2aa5253a4d4b7608b9c";
+        public const string ImageBamKey = "P9MMWVORXYCVM9LL";
+        public const string ImageBamSecret = "8NHVT2W777DEHZBV54A4CIT23XJFTL1D";
         public const string TwitsnapsKey = "694aaea3bc8f28479c383cbcc094fb55";
 
         // File Uploaders

@@ -34,11 +34,6 @@ namespace UploadersLib.FileUploaders
     {
         public FTPAccount FTPAccount;
 
-        public override string Name
-        {
-            get { return "FTP Uploader"; }
-        }
-
         public FTPUploader(FTPAccount account)
         {
             FTPAccount = account;

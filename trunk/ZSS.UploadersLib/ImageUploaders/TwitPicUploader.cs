@@ -62,8 +62,6 @@ namespace UploadersLib.ImageUploaders
         private const string UploadLink = "http://twitpic.com/api/upload";
         private const string UploadAndPostLink = "http://twitpic.com/api/uploadAndPost";
 
-        public override string Name { get { return "TwitPic"; } }
-
         public TwitPicUploader(TwitPicOptions options)
         {
             this.Options = options;
