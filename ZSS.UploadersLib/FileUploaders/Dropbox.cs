@@ -32,7 +32,7 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
-    public sealed class Dropbox : FileUploader
+    public sealed class Dropbox : FileUploader, IOAuth
     {
         public OAuthInfo AuthInfo { get; set; }
         public string UploadPath { get; set; }
@@ -44,6 +44,10 @@ namespace UploadersLib.FileUploaders
         private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
+        private const string URLRequestToken = "https://api.dropbox.com/0/oauth/request_token";
+        private const string URLAuthorize = "https://www.dropbox.com/0/oauth/authorize";
+        private const string URLAccessToken = "https://api.dropbox.com/0/oauth/access_token";
+
         public Dropbox(OAuthInfo oauth)
         {
             AuthInfo = oauth;
@@ -54,6 +58,17 @@ namespace UploadersLib.FileUploaders
         {
             UploadPath = uploadPath;
             UserID = userID;
+        }
+
+        public string GetAuthorizationURL()
+        {
+            return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo);
+        }
+
+        public bool GetAccessToken(string verificationCode)
+        {
+            AuthInfo.AuthVerifier = verificationCode;
+            return GetAccessToken(URLAccessToken, AuthInfo);
         }
 
         public DropboxUserLogin Login(string email, string password)

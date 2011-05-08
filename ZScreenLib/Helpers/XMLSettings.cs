@@ -75,6 +75,7 @@ namespace ZScreenLib
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
+        public bool ShowClipboardContentViewer = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Destinations
