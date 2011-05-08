@@ -397,7 +397,22 @@ namespace ZUploader
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
-            UploadManager.ClipboardUpload();
+            if (Program.Settings.ShowClipboardContentViewer)
+            {
+                using (ClipboardContentViewer ccv = new ClipboardContentViewer())
+                {
+                    if (ccv.ShowDialog() == DialogResult.OK && !ccv.IsClipboardEmpty)
+                    {
+                        UploadManager.ClipboardUpload();
+                    }
+
+                    Program.Settings.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
+                }
+            }
+            else
+            {
+                UploadManager.ClipboardUpload();
+            }
         }
 
         private void tsbFileUpload_Click(object sender, EventArgs e)

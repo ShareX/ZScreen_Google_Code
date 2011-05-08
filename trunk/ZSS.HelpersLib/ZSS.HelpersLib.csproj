@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClipboardContentViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClipboardContentViewer.Designer.cs">
+      <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Custom Controls\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="XMLExtensions.cs" />
+    <EmbeddedResource Include="ClipboardContentViewer.resx">
+      <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

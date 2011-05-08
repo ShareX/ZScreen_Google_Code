@@ -3910,20 +3910,33 @@ namespace ZScreenGUI
 
         private void btnFileSystemUploadFiles_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Title = "Upload files...";
-            ofd.Filter = "All Files (*.*)|*.*";
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                UploadFiles(ofd.FileNames);
+                ofd.Multiselect = true;
+                ofd.Title = "Upload files...";
+                ofd.Filter = "All Files (*.*)|*.*";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    UploadFiles(ofd.FileNames);
+                }
             }
         }
 
         private void btnFileSystemUploadDir_Click(object sender, EventArgs e)
         {
-            ClipboardContentViewer ccv = new ClipboardContentViewer();
-            if (ccv.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (Engine.conf.ShowClipboardContentViewer)
+            {
+                using (ClipboardContentViewer ccv = new ClipboardContentViewer())
+                {
+                    if (ccv.ShowDialog() == DialogResult.OK && !ccv.IsClipboardEmpty)
+                    {
+                        Loader.Worker.UploadUsingClipboard();
+                    }
+
+                    Engine.conf.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
+                }
+            }
+            else
             {
                 Loader.Worker.UploadUsingClipboard();
             }
