@@ -30,11 +30,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class JmpURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Isgd"; }
-        }
-
         private const string APIURL = "http://api.j.mp/shorten";
 
         private string APILogin, APIKey;

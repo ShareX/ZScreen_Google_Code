@@ -27,8 +27,6 @@ namespace UploadersLib
 {
     public abstract class URLShortener : Uploader
     {
-        public abstract string Name { get; }
-
         public abstract string ShortenURL(string url);
     }
 }

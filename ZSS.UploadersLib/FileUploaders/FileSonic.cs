@@ -8,11 +8,6 @@ namespace UploadersLib.FileUploaders
 {
     public class FileSonic : FileUploader
     {
-        public override string Name
-        {
-            get { return "FileSonic"; }
-        }
-
         public string Username { get; set; }
         public string Password { get; set; }
 

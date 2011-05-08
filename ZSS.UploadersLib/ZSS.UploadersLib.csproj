@@ -179,7 +179,6 @@
     <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
     <Compile Include="ImageUploaders\FlickrUploader.cs" />
     <Compile Include="FileUploaders\FTPUploader.cs" />
-    <Compile Include="ImageUploaders\ImageBamUploader.cs" />
     <Compile Include="ImageUploaders\ImageBin.cs" />
     <Compile Include="ImageUploaders\ImageShackUploader.cs" />
     <Compile Include="ImageUploaders\Img1Uploader.cs" />

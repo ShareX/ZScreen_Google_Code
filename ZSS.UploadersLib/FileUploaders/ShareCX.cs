@@ -31,11 +31,6 @@ namespace UploadersLib.FileUploaders
 {
     public sealed class ShareCX : FileUploader
     {
-        public override string Name
-        {
-            get { return "ShareCX"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             string response = UploadData(stream, "http://file1.share.cx/cgi-bin/upload.cgi", fileName, "file_0");

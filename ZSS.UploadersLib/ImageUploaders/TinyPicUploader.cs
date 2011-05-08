@@ -49,11 +49,6 @@ namespace UploadersLib.ImageUploaders
 
         public TinyPicUploader(string id, string key) : this(id, key, string.Empty) { }
 
-        public override string Name
-        {
-            get { return "TinyPic"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult ur = new UploadResult();

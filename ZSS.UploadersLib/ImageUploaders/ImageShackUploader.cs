@@ -46,11 +46,6 @@ namespace UploadersLib.ImageUploaders
             RegistrationCode = registrationCode;
         }
 
-        public override string Name
-        {
-            get { return "ImageShack"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult ur = new UploadResult();

@@ -37,11 +37,6 @@ namespace UploadersLib.FileUploaders
         public string Password { get; set; }
         public bool HideFile { get; set; }
 
-        public override string Name
-        {
-            get { return "Filez"; }
-        }
-
         public FilezFiles(string username = "", string password = "", bool hideFile = true)
         {
             Username = username;

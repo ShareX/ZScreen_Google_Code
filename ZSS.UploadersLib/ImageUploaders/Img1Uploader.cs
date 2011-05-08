@@ -30,11 +30,6 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class Img1Uploader : ImageUploader
     {
-        public override string Name
-        {
-            get { return "Img1"; }
-        }
-
         private const string uploadURL = "http://img1.us/?app";
 
         public override UploadResult Upload(Stream stream, string fileName)

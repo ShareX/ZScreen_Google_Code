@@ -29,11 +29,6 @@ namespace UploadersLib.URLShorteners
 {
     public class GoogleURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Google"; }
-        }
-
         private const string APIURL = "https://www.googleapis.com/urlshortener/v1/url";
 
         private string APIKey;

@@ -31,11 +31,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class BitlyURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Bitly"; }
-        }
-
         private const string URLShorten = "http://api.bit.ly/v3/shorten";
 
         public string APILogin { get; set; }

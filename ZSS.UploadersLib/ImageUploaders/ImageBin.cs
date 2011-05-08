@@ -32,11 +32,6 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class ImageBin : ImageUploader
     {
-        public override string Name
-        {
-            get { return "ImageBin"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult ur = new UploadResult();

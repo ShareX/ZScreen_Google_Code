@@ -36,7 +36,7 @@ namespace UploadersLib.ImageUploaders
         public DekiWikiOptions Options { get; set; }
 
         private List<string> Errors { get; set; }
-        public string Name { get; private set; }
+
         public string WorkingDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         public DekiWikiUploader(DekiWikiOptions options)

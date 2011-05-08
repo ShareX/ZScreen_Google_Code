@@ -37,11 +37,6 @@ namespace UploadersLib.ImageUploaders
             this.imageHosting = imageHosting;
         }
 
-        public override string Name
-        {
-            get { return imageHosting.Name; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             string response = UploadData(stream, imageHosting.UploadURL, fileName, imageHosting.FileFormName, imageHosting.GetArguments());

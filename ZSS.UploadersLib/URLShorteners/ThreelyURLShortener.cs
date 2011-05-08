@@ -29,11 +29,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class ThreelyURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Threely"; }
-        }
-
         private const string APIURL = "http://3.ly";
 
         private string APIKey;

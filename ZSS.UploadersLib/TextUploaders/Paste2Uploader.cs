@@ -29,11 +29,6 @@ namespace UploadersLib.TextUploaders
 {
     public sealed class Paste2Uploader : TextUploader
     {
-        public override string Name
-        {
-            get { return "Paste2"; }
-        }
-
         private const string APIURL = "http://paste2.org/new-paste";
 
         private Paste2Settings settings;

@@ -30,8 +30,6 @@ namespace UploadersLib
 {
     public abstract class TextUploader : Uploader
     {
-        public abstract string Name { get; }
-
         public abstract string UploadText(string text);
 
         public string UploadText(Stream stream)

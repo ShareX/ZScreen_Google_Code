@@ -58,11 +58,6 @@ namespace UploadersLib.ImageUploaders
             this.Settings = settings;
         }
 
-        public override string Name
-        {
-            get { return "Flickr"; }
-        }
-
         #region Auth
 
         /// <summary>

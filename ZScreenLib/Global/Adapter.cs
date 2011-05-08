@@ -43,7 +43,6 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib
@@ -356,29 +355,6 @@ namespace ZScreenLib
         }
 
         #endregion TinyPic Methods
-
-        #region ImageBam Methods
-
-        public static string CreateImageBamGallery()
-        {
-            ImageBamUploader ibu = new ImageBamUploader(Engine.ImageBamKey, Engine.ImageBamSecret,
-                new ImageBamUploaderOptions(Engine.conf.ImageBamApiKey, Engine.conf.ImageBamSecret));
-            string galleryId = ibu.CreateGalleryID();
-            Engine.conf.ImageBamGallery.Add(galleryId);
-            return galleryId;
-        }
-
-        public static string GetImageBamGalleryActive()
-        {
-            string galleryId = string.Empty;
-            if (CheckImageBamGallery())
-            {
-                galleryId = Engine.conf.ImageBamGallery[Engine.conf.ImageBamGalleryActive];
-            }
-            return galleryId;
-        }
-
-        #endregion ImageBam Methods
 
         public static bool CheckList<T>(List<T> list, int selected)
         {

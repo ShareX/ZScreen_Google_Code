@@ -37,11 +37,6 @@ namespace UploadersLib.FileUploaders
         public string DropName { get; set; }
         public string DropDescription { get; set; }
 
-        public override string Name
-        {
-            get { return "Drop.io"; }
-        }
-
         public class Asset
         {
             public string Name { get; set; }

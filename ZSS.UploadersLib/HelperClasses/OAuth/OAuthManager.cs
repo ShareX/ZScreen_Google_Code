@@ -89,7 +89,6 @@ namespace UploadersLib.HelperClasses
             string normalizedUrl = NormalizeUrl(url);
             string normalizedParameters = NormalizeParameters(parameters);
             string signatureBase = GenerateSignatureBase(httpMethod, normalizedUrl, normalizedParameters);
-            Console.WriteLine("Signature base: " + signatureBase);
             string signature = GenerateSignature(signatureBase, oauth.ConsumerSecret, secret);
 
             normalizedParameters += "&" + ParameterSignature + "=" + signature;

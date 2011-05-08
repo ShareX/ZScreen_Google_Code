@@ -29,11 +29,6 @@ namespace UploadersLib.URLShorteners
 {
     public sealed class IsgdURLShortener : URLShortener
     {
-        public override string Name
-        {
-            get { return "Isgd"; }
-        }
-
         private const string APIURL = "http://is.gd/api.php";
 
         public override string ShortenURL(string url)

@@ -40,11 +40,6 @@ namespace UploadersLib.ImageUploaders
             APIKey = key;
         }
 
-        public override string Name
-        {
-            get { return "UploadScreenshot"; }
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();

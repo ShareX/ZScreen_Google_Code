@@ -3151,6 +3151,7 @@ namespace ZScreenGUI
             Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
+        // TODO: Remove ImageBam
         private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageBamApiKey = txtImageBamApiKey.Text;
@@ -3173,7 +3174,7 @@ namespace ZScreenGUI
 
         private void btnImageBamCreateGallery_Click(object sender, EventArgs e)
         {
-            lbImageBamGalleries.Items.Add(Adapter.CreateImageBamGallery());
+            //lbImageBamGalleries.Items.Add(Adapter.CreateImageBamGallery());
         }
 
         private void lbImageBamGalleries_SelectedIndexChanged(object sender, EventArgs e)
@@ -3183,14 +3184,14 @@ namespace ZScreenGUI
 
         private void btnImageBamRemoveGallery_Click(object sender, EventArgs e)
         {
-            if (lbImageBamGalleries.SelectedIndex > -1)
+            /*if (lbImageBamGalleries.SelectedIndex > -1)
             {
                 if (!string.IsNullOrEmpty(Adapter.GetImageBamGalleryActive()))
                 {
                     lbImageBamGalleries.Items.RemoveAt(lbImageBamGalleries.SelectedIndex);
                     Engine.conf.ImageBamGallery.RemoveAt(lbImageBamGalleries.SelectedIndex);
                 }
-            }
+            }*/
         }
 
         private void chkImageBamContentNSFW_CheckedChanged(object sender, EventArgs e)
