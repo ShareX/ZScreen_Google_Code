@@ -82,13 +82,20 @@ namespace ZScreenGUI
             this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
-            this.btnFileSystemUploadDir = new System.Windows.Forms.Button();
+            this.btnClipboardUpload = new System.Windows.Forms.Button();
             this.btnFileSystemUploadFiles = new System.Windows.Forms.Button();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblLogo = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.tpHotkeys = new System.Windows.Forms.TabPage();
+            this.btnResetHotkeys = new System.Windows.Forms.Button();
+            this.lblHotkeyStatus = new System.Windows.Forms.Label();
+            this.dgvHotkeys = new System.Windows.Forms.DataGridView();
+            this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.DefaultKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpMainInput = new System.Windows.Forms.TabPage();
             this.tcScreenshots = new System.Windows.Forms.TabControl();
             this.tpCropShot = new System.Windows.Forms.TabPage();
@@ -433,10 +440,6 @@ namespace ZScreenGUI
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.cbAddFailedScreenshot = new System.Windows.Forms.CheckBox();
-            this.tpTextServices = new System.Windows.Forms.TabPage();
-            this.tcTextUploaders = new System.Windows.Forms.TabControl();
-            this.tpTreeGUI = new System.Windows.Forms.TabPage();
-            this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.cbLanguageAutoDetect = new System.Windows.Forms.CheckBox();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
@@ -474,18 +477,20 @@ namespace ZScreenGUI
             this.lblCloseButtonAction = new System.Windows.Forms.Label();
             this.lblMinimizeButtonAction = new System.Windows.Forms.Label();
             this.tpInteraction = new System.Windows.Forms.TabPage();
+            this.btnOptionsBalloonTip = new System.Windows.Forms.GroupBox();
+            this.cbShowPopup = new System.Windows.Forms.CheckBox();
+            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
+            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
             this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
             this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
             this.gbDropBox = new System.Windows.Forms.GroupBox();
             this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
             this.gbAppearance = new System.Windows.Forms.GroupBox();
+            this.chkShortenURL = new System.Windows.Forms.CheckBox();
             this.cbCopyClipboardAfterTask = new System.Windows.Forms.CheckBox();
             this.chkTwitterEnable = new System.Windows.Forms.CheckBox();
             this.cbCompleteSound = new System.Windows.Forms.CheckBox();
             this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
-            this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
-            this.cbShowPopup = new System.Windows.Forms.CheckBox();
             this.lblTrayFlash = new System.Windows.Forms.Label();
             this.nudFlashIconCount = new System.Windows.Forms.NumericUpDown();
             this.tpAdvPaths = new System.Windows.Forms.TabPage();
@@ -519,6 +524,8 @@ namespace ZScreenGUI
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.cboProxyConfig = new System.Windows.Forms.ComboBox();
             this.ucProxyAccounts = new UploadersLib.AccountsControl();
+            this.tpTreeGUI = new System.Windows.Forms.TabPage();
+            this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpOptionsAdv = new System.Windows.Forms.TabPage();
             this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.tpStats = new System.Windows.Forms.TabPage();
@@ -532,13 +539,6 @@ namespace ZScreenGUI
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
             this.tpDebugLog = new System.Windows.Forms.TabPage();
             this.rtbDebugLog = new System.Windows.Forms.RichTextBox();
-            this.tpHotkeys = new System.Windows.Forms.TabPage();
-            this.btnResetHotkeys = new System.Windows.Forms.Button();
-            this.lblHotkeyStatus = new System.Windows.Forms.Label();
-            this.dgvHotkeys = new System.Windows.Forms.DataGridView();
-            this.chHotkeys_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.DefaultKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpOptionsClipboard = new System.Windows.Forms.TabPage();
             this.gbMonitorClipboard = new System.Windows.Forms.GroupBox();
             this.chkMonUrls = new System.Windows.Forms.CheckBox();
@@ -556,6 +556,8 @@ namespace ZScreenGUI
             this.tpMain.SuspendLayout();
             this.gbImageSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
+            this.tpHotkeys.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpMainInput.SuspendLayout();
             this.tcScreenshots.SuspendLayout();
             this.tpCropShot.SuspendLayout();
@@ -653,9 +655,6 @@ namespace ZScreenGUI
             this.gbArguments.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
-            this.tpTextServices.SuspendLayout();
-            this.tcTextUploaders.SuspendLayout();
-            this.tpTreeGUI.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
@@ -664,6 +663,7 @@ namespace ZScreenGUI
             this.gbMisc.SuspendLayout();
             this.gbWindowButtons.SuspendLayout();
             this.tpInteraction.SuspendLayout();
+            this.btnOptionsBalloonTip.SuspendLayout();
             this.gbActionsToolbarSettings.SuspendLayout();
             this.gbDropBox.SuspendLayout();
             this.gbAppearance.SuspendLayout();
@@ -676,13 +676,12 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).BeginInit();
             this.tpProxy.SuspendLayout();
             this.gpProxySettings.SuspendLayout();
+            this.tpTreeGUI.SuspendLayout();
             this.tpOptionsAdv.SuspendLayout();
             this.tpStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
-            this.tpHotkeys.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpOptionsClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
             this.SuspendLayout();
@@ -972,7 +971,6 @@ namespace ZScreenGUI
             this.tcApp.Controls.Add(this.tpMainActions);
             this.tcApp.Controls.Add(this.tpDestinations);
             this.tcApp.Controls.Add(this.tpHistory);
-            this.tcApp.Controls.Add(this.tpTextServices);
             this.tcApp.Controls.Add(this.tpTranslator);
             this.tcApp.Controls.Add(this.tpOptions);
             this.tcApp.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -990,7 +988,7 @@ namespace ZScreenGUI
             this.tpMain.Controls.Add(this.lblFileSystemNote);
             this.tpMain.Controls.Add(this.ucDestOptions);
             this.tpMain.Controls.Add(this.gbImageSettings);
-            this.tpMain.Controls.Add(this.btnFileSystemUploadDir);
+            this.tpMain.Controls.Add(this.btnClipboardUpload);
             this.tpMain.Controls.Add(this.btnFileSystemUploadFiles);
             this.tpMain.Controls.Add(this.llProjectPage);
             this.tpMain.Controls.Add(this.llWebsite);
@@ -1117,17 +1115,17 @@ namespace ZScreenGUI
             this.chkManualNaming.UseVisualStyleBackColor = true;
             this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
-            // btnFileSystemUploadDir
+            // btnClipboardUpload
             // 
-            this.btnFileSystemUploadDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFileSystemUploadDir.AutoSize = true;
-            this.btnFileSystemUploadDir.Location = new System.Drawing.Point(608, 24);
-            this.btnFileSystemUploadDir.Name = "btnFileSystemUploadDir";
-            this.btnFileSystemUploadDir.Size = new System.Drawing.Size(156, 24);
-            this.btnFileSystemUploadDir.TabIndex = 116;
-            this.btnFileSystemUploadDir.Text = "Upload files in a &directory...";
-            this.btnFileSystemUploadDir.UseVisualStyleBackColor = true;
-            this.btnFileSystemUploadDir.Click += new System.EventHandler(this.btnFileSystemUploadDir_Click);
+            this.btnClipboardUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClipboardUpload.AutoSize = true;
+            this.btnClipboardUpload.Location = new System.Drawing.Point(608, 24);
+            this.btnClipboardUpload.Name = "btnClipboardUpload";
+            this.btnClipboardUpload.Size = new System.Drawing.Size(156, 24);
+            this.btnClipboardUpload.TabIndex = 116;
+            this.btnClipboardUpload.Text = "Upload Clipboard...";
+            this.btnClipboardUpload.UseVisualStyleBackColor = true;
+            this.btnClipboardUpload.Click += new System.EventHandler(this.btnFileSystemUploadDir_Click);
             // 
             // btnFileSystemUploadFiles
             // 
@@ -1213,6 +1211,126 @@ namespace ZScreenGUI
             this.pbLogo.TabStop = false;
             this.pbLogo.MouseEnter += new System.EventHandler(this.pbLogo_MouseEnter);
             this.pbLogo.MouseLeave += new System.EventHandler(this.pbLogo_MouseLeave);
+            // 
+            // tpHotkeys
+            // 
+            this.tpHotkeys.Controls.Add(this.btnResetHotkeys);
+            this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
+            this.tpHotkeys.Controls.Add(this.dgvHotkeys);
+            this.tpHotkeys.ImageKey = "(none)";
+            this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
+            this.tpHotkeys.Name = "tpHotkeys";
+            this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
+            this.tpHotkeys.Size = new System.Drawing.Size(805, 436);
+            this.tpHotkeys.TabIndex = 1;
+            this.tpHotkeys.Text = "Hotkeys";
+            this.tpHotkeys.UseVisualStyleBackColor = true;
+            // 
+            // btnResetHotkeys
+            // 
+            this.btnResetHotkeys.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResetHotkeys.AutoSize = true;
+            this.btnResetHotkeys.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnResetHotkeys.Location = new System.Drawing.Point(688, 376);
+            this.btnResetHotkeys.Name = "btnResetHotkeys";
+            this.btnResetHotkeys.Size = new System.Drawing.Size(101, 23);
+            this.btnResetHotkeys.TabIndex = 69;
+            this.btnResetHotkeys.Text = "Reset &All Hotkeys";
+            this.btnResetHotkeys.UseVisualStyleBackColor = true;
+            this.btnResetHotkeys.Click += new System.EventHandler(this.btnResetHotkeys_Click);
+            // 
+            // lblHotkeyStatus
+            // 
+            this.lblHotkeyStatus.BackColor = System.Drawing.SystemColors.Info;
+            this.lblHotkeyStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblHotkeyStatus.Location = new System.Drawing.Point(3, 410);
+            this.lblHotkeyStatus.Name = "lblHotkeyStatus";
+            this.lblHotkeyStatus.Size = new System.Drawing.Size(799, 23);
+            this.lblHotkeyStatus.TabIndex = 68;
+            this.lblHotkeyStatus.Text = "Click on a Hotkey to set";
+            this.lblHotkeyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dgvHotkeys
+            // 
+            this.dgvHotkeys.AllowUserToAddRows = false;
+            this.dgvHotkeys.AllowUserToDeleteRows = false;
+            this.dgvHotkeys.AllowUserToResizeColumns = false;
+            this.dgvHotkeys.AllowUserToResizeRows = false;
+            this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.chHotkeys_Description,
+            this.chHotkeys_Keys,
+            this.DefaultKeys});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvHotkeys.Location = new System.Drawing.Point(3, 3);
+            this.dgvHotkeys.MultiSelect = false;
+            this.dgvHotkeys.Name = "dgvHotkeys";
+            this.dgvHotkeys.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvHotkeys.RowHeadersVisible = false;
+            this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvHotkeys.RowTemplate.Height = 24;
+            this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvHotkeys.Size = new System.Drawing.Size(799, 430);
+            this.dgvHotkeys.TabIndex = 67;
+            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
+            this.dgvHotkeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvHotkeys_KeyDown);
+            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
+            this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
+            // 
+            // chHotkeys_Description
+            // 
+            this.chHotkeys_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.chHotkeys_Description.HeaderText = "Description";
+            this.chHotkeys_Description.Name = "chHotkeys_Description";
+            this.chHotkeys_Description.ReadOnly = true;
+            this.chHotkeys_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // chHotkeys_Keys
+            // 
+            this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.chHotkeys_Keys.HeaderText = "Hotkey";
+            this.chHotkeys_Keys.Name = "chHotkeys_Keys";
+            this.chHotkeys_Keys.ReadOnly = true;
+            this.chHotkeys_Keys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // DefaultKeys
+            // 
+            this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.DefaultKeys.HeaderText = "Default Hotkey";
+            this.DefaultKeys.Name = "DefaultKeys";
+            this.DefaultKeys.ReadOnly = true;
+            this.DefaultKeys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DefaultKeys.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tpMainInput
             // 
@@ -5139,47 +5257,6 @@ namespace ZScreenGUI
             this.cbAddFailedScreenshot.UseVisualStyleBackColor = true;
             this.cbAddFailedScreenshot.CheckedChanged += new System.EventHandler(this.cbAddFailedScreenshot_CheckedChanged);
             // 
-            // tpTextServices
-            // 
-            this.tpTextServices.Controls.Add(this.tcTextUploaders);
-            this.tpTextServices.ImageKey = "(none)";
-            this.tpTextServices.Location = new System.Drawing.Point(4, 22);
-            this.tpTextServices.Name = "tpTextServices";
-            this.tpTextServices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextServices.Size = new System.Drawing.Size(805, 436);
-            this.tpTextServices.TabIndex = 13;
-            this.tpTextServices.Text = "Text Services";
-            this.tpTextServices.UseVisualStyleBackColor = true;
-            // 
-            // tcTextUploaders
-            // 
-            this.tcTextUploaders.Controls.Add(this.tpTreeGUI);
-            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.tcTextUploaders.Name = "tcTextUploaders";
-            this.tcTextUploaders.SelectedIndex = 0;
-            this.tcTextUploaders.Size = new System.Drawing.Size(799, 430);
-            this.tcTextUploaders.TabIndex = 0;
-            // 
-            // tpTreeGUI
-            // 
-            this.tpTreeGUI.Controls.Add(this.pgIndexer);
-            this.tpTreeGUI.Location = new System.Drawing.Point(4, 22);
-            this.tpTreeGUI.Name = "tpTreeGUI";
-            this.tpTreeGUI.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTreeGUI.Size = new System.Drawing.Size(791, 404);
-            this.tpTreeGUI.TabIndex = 15;
-            this.tpTreeGUI.Text = "Directory Indexer";
-            this.tpTreeGUI.UseVisualStyleBackColor = true;
-            // 
-            // pgIndexer
-            // 
-            this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgIndexer.Location = new System.Drawing.Point(3, 3);
-            this.pgIndexer.Name = "pgIndexer";
-            this.pgIndexer.Size = new System.Drawing.Size(785, 398);
-            this.pgIndexer.TabIndex = 0;
-            // 
             // tpTranslator
             // 
             this.tpTranslator.Controls.Add(this.cbLanguageAutoDetect);
@@ -5367,6 +5444,7 @@ namespace ZScreenGUI
             this.tcOptions.Controls.Add(this.tpInteraction);
             this.tcOptions.Controls.Add(this.tpAdvPaths);
             this.tcOptions.Controls.Add(this.tpProxy);
+            this.tcOptions.Controls.Add(this.tpTreeGUI);
             this.tcOptions.Controls.Add(this.tpOptionsAdv);
             this.tcOptions.Controls.Add(this.tpStats);
             this.tcOptions.Controls.Add(this.tpDebugLog);
@@ -5609,6 +5687,7 @@ namespace ZScreenGUI
             // 
             // tpInteraction
             // 
+            this.tpInteraction.Controls.Add(this.btnOptionsBalloonTip);
             this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
             this.tpInteraction.Controls.Add(this.gbDropBox);
             this.tpInteraction.Controls.Add(this.gbAppearance);
@@ -5620,10 +5699,55 @@ namespace ZScreenGUI
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
             // 
+            // btnOptionsBalloonTip
+            // 
+            this.btnOptionsBalloonTip.Controls.Add(this.cbShowPopup);
+            this.btnOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
+            this.btnOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
+            this.btnOptionsBalloonTip.Location = new System.Drawing.Point(8, 144);
+            this.btnOptionsBalloonTip.Name = "btnOptionsBalloonTip";
+            this.btnOptionsBalloonTip.Size = new System.Drawing.Size(752, 104);
+            this.btnOptionsBalloonTip.TabIndex = 8;
+            this.btnOptionsBalloonTip.TabStop = false;
+            this.btnOptionsBalloonTip.Text = "Balloon Tip Options";
+            // 
+            // cbShowPopup
+            // 
+            this.cbShowPopup.AutoSize = true;
+            this.cbShowPopup.Location = new System.Drawing.Point(16, 24);
+            this.cbShowPopup.Name = "cbShowPopup";
+            this.cbShowPopup.Size = new System.Drawing.Size(250, 17);
+            this.cbShowPopup.TabIndex = 5;
+            this.cbShowPopup.Text = "Show balloon tip after upload/task is completed";
+            this.cbShowPopup.UseVisualStyleBackColor = true;
+            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
+            // 
+            // chkBalloonTipOpenLink
+            // 
+            this.chkBalloonTipOpenLink.AutoSize = true;
+            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 48);
+            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
+            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(189, 17);
+            this.chkBalloonTipOpenLink.TabIndex = 6;
+            this.chkBalloonTipOpenLink.Text = "Open URL/File on balloon tip click";
+            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
+            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
+            // 
+            // cbShowUploadDuration
+            // 
+            this.cbShowUploadDuration.AutoSize = true;
+            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 72);
+            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
+            this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
+            this.cbShowUploadDuration.TabIndex = 8;
+            this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
+            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
+            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
+            // 
             // gbActionsToolbarSettings
             // 
             this.gbActionsToolbarSettings.Controls.Add(this.cbCloseQuickActions);
-            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 208);
+            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 320);
             this.gbActionsToolbarSettings.Name = "gbActionsToolbarSettings";
             this.gbActionsToolbarSettings.Size = new System.Drawing.Size(752, 56);
             this.gbActionsToolbarSettings.TabIndex = 7;
@@ -5644,7 +5768,7 @@ namespace ZScreenGUI
             // gbDropBox
             // 
             this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 144);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 256);
             this.gbDropBox.Name = "gbDropBox";
             this.gbDropBox.Size = new System.Drawing.Size(752, 56);
             this.gbDropBox.TabIndex = 6;
@@ -5665,13 +5789,11 @@ namespace ZScreenGUI
             // gbAppearance
             // 
             this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.gbAppearance.Controls.Add(this.chkShortenURL);
             this.gbAppearance.Controls.Add(this.cbCopyClipboardAfterTask);
             this.gbAppearance.Controls.Add(this.chkTwitterEnable);
             this.gbAppearance.Controls.Add(this.cbCompleteSound);
             this.gbAppearance.Controls.Add(this.chkCaptureFallback);
-            this.gbAppearance.Controls.Add(this.cbShowUploadDuration);
-            this.gbAppearance.Controls.Add(this.chkBalloonTipOpenLink);
-            this.gbAppearance.Controls.Add(this.cbShowPopup);
             this.gbAppearance.Controls.Add(this.lblTrayFlash);
             this.gbAppearance.Controls.Add(this.nudFlashIconCount);
             this.gbAppearance.Location = new System.Drawing.Point(8, 8);
@@ -5681,10 +5803,21 @@ namespace ZScreenGUI
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
             // 
+            // chkShortenURL
+            // 
+            this.chkShortenURL.AutoSize = true;
+            this.chkShortenURL.Location = new System.Drawing.Point(16, 24);
+            this.chkShortenURL.Name = "chkShortenURL";
+            this.chkShortenURL.Size = new System.Drawing.Size(190, 17);
+            this.chkShortenURL.TabIndex = 11;
+            this.chkShortenURL.Text = "Shorten URL if the URL is too long";
+            this.chkShortenURL.UseVisualStyleBackColor = true;
+            this.chkShortenURL.CheckedChanged += new System.EventHandler(this.chkShortenURL_CheckedChanged);
+            // 
             // cbCopyClipboardAfterTask
             // 
             this.cbCopyClipboardAfterTask.AutoSize = true;
-            this.cbCopyClipboardAfterTask.Location = new System.Drawing.Point(16, 24);
+            this.cbCopyClipboardAfterTask.Location = new System.Drawing.Point(16, 48);
             this.cbCopyClipboardAfterTask.Name = "cbCopyClipboardAfterTask";
             this.cbCopyClipboardAfterTask.Size = new System.Drawing.Size(279, 17);
             this.cbCopyClipboardAfterTask.TabIndex = 10;
@@ -5706,7 +5839,7 @@ namespace ZScreenGUI
             // cbCompleteSound
             // 
             this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 48);
+            this.cbCompleteSound.Location = new System.Drawing.Point(16, 72);
             this.cbCompleteSound.Name = "cbCompleteSound";
             this.cbCompleteSound.Size = new System.Drawing.Size(224, 17);
             this.cbCompleteSound.TabIndex = 5;
@@ -5717,46 +5850,13 @@ namespace ZScreenGUI
             // chkCaptureFallback
             // 
             this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(352, 72);
+            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 96);
             this.chkCaptureFallback.Name = "chkCaptureFallback";
             this.chkCaptureFallback.Size = new System.Drawing.Size(332, 17);
             this.chkCaptureFallback.TabIndex = 7;
             this.chkCaptureFallback.Text = "Capture entire screen if Active Window capture or Crop Shot fails";
             this.chkCaptureFallback.UseVisualStyleBackColor = true;
             this.chkCaptureFallback.CheckedChanged += new System.EventHandler(this.chkCaptureFallback_CheckedChanged);
-            // 
-            // cbShowUploadDuration
-            // 
-            this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(352, 96);
-            this.cbShowUploadDuration.Name = "cbShowUploadDuration";
-            this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
-            this.cbShowUploadDuration.TabIndex = 8;
-            this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
-            this.cbShowUploadDuration.UseVisualStyleBackColor = true;
-            this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
-            // 
-            // chkBalloonTipOpenLink
-            // 
-            this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 96);
-            this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
-            this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(189, 17);
-            this.chkBalloonTipOpenLink.TabIndex = 6;
-            this.chkBalloonTipOpenLink.Text = "Open URL/File on balloon tip click";
-            this.chkBalloonTipOpenLink.UseVisualStyleBackColor = true;
-            this.chkBalloonTipOpenLink.CheckedChanged += new System.EventHandler(this.chkBalloonTipOpenLink_CheckedChanged);
-            // 
-            // cbShowPopup
-            // 
-            this.cbShowPopup.AutoSize = true;
-            this.cbShowPopup.Location = new System.Drawing.Point(16, 72);
-            this.cbShowPopup.Name = "cbShowPopup";
-            this.cbShowPopup.Size = new System.Drawing.Size(250, 17);
-            this.cbShowPopup.TabIndex = 5;
-            this.cbShowPopup.Text = "Show balloon tip after upload/task is completed";
-            this.cbShowPopup.UseVisualStyleBackColor = true;
-            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
             // 
             // lblTrayFlash
             // 
@@ -6174,6 +6274,25 @@ namespace ZScreenGUI
             this.ucProxyAccounts.Size = new System.Drawing.Size(787, 314);
             this.ucProxyAccounts.TabIndex = 0;
             // 
+            // tpTreeGUI
+            // 
+            this.tpTreeGUI.Controls.Add(this.pgIndexer);
+            this.tpTreeGUI.Location = new System.Drawing.Point(4, 22);
+            this.tpTreeGUI.Name = "tpTreeGUI";
+            this.tpTreeGUI.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTreeGUI.Size = new System.Drawing.Size(791, 404);
+            this.tpTreeGUI.TabIndex = 15;
+            this.tpTreeGUI.Text = "Directory Indexer";
+            this.tpTreeGUI.UseVisualStyleBackColor = true;
+            // 
+            // pgIndexer
+            // 
+            this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgIndexer.Location = new System.Drawing.Point(3, 3);
+            this.pgIndexer.Name = "pgIndexer";
+            this.pgIndexer.Size = new System.Drawing.Size(785, 398);
+            this.pgIndexer.TabIndex = 0;
+            // 
             // tpOptionsAdv
             // 
             this.tpOptionsAdv.Controls.Add(this.pgApp);
@@ -6328,126 +6447,6 @@ namespace ZScreenGUI
             this.rtbDebugLog.Text = "";
             this.rtbDebugLog.WordWrap = false;
             // 
-            // tpHotkeys
-            // 
-            this.tpHotkeys.Controls.Add(this.btnResetHotkeys);
-            this.tpHotkeys.Controls.Add(this.lblHotkeyStatus);
-            this.tpHotkeys.Controls.Add(this.dgvHotkeys);
-            this.tpHotkeys.ImageKey = "(none)";
-            this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
-            this.tpHotkeys.Name = "tpHotkeys";
-            this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHotkeys.Size = new System.Drawing.Size(805, 436);
-            this.tpHotkeys.TabIndex = 1;
-            this.tpHotkeys.Text = "Hotkeys";
-            this.tpHotkeys.UseVisualStyleBackColor = true;
-            // 
-            // btnResetHotkeys
-            // 
-            this.btnResetHotkeys.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetHotkeys.AutoSize = true;
-            this.btnResetHotkeys.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnResetHotkeys.Location = new System.Drawing.Point(688, 376);
-            this.btnResetHotkeys.Name = "btnResetHotkeys";
-            this.btnResetHotkeys.Size = new System.Drawing.Size(101, 23);
-            this.btnResetHotkeys.TabIndex = 69;
-            this.btnResetHotkeys.Text = "Reset &All Hotkeys";
-            this.btnResetHotkeys.UseVisualStyleBackColor = true;
-            this.btnResetHotkeys.Click += new System.EventHandler(this.btnResetHotkeys_Click);
-            // 
-            // lblHotkeyStatus
-            // 
-            this.lblHotkeyStatus.BackColor = System.Drawing.SystemColors.Info;
-            this.lblHotkeyStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblHotkeyStatus.Location = new System.Drawing.Point(3, 384);
-            this.lblHotkeyStatus.Name = "lblHotkeyStatus";
-            this.lblHotkeyStatus.Size = new System.Drawing.Size(791, 23);
-            this.lblHotkeyStatus.TabIndex = 68;
-            this.lblHotkeyStatus.Text = "Click on a Hotkey to set";
-            this.lblHotkeyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // dgvHotkeys
-            // 
-            this.dgvHotkeys.AllowUserToAddRows = false;
-            this.dgvHotkeys.AllowUserToDeleteRows = false;
-            this.dgvHotkeys.AllowUserToResizeColumns = false;
-            this.dgvHotkeys.AllowUserToResizeRows = false;
-            this.dgvHotkeys.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvHotkeys.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvHotkeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.chHotkeys_Description,
-            this.chHotkeys_Keys,
-            this.DefaultKeys});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHotkeys.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvHotkeys.Location = new System.Drawing.Point(3, 3);
-            this.dgvHotkeys.MultiSelect = false;
-            this.dgvHotkeys.Name = "dgvHotkeys";
-            this.dgvHotkeys.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHotkeys.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvHotkeys.RowHeadersVisible = false;
-            this.dgvHotkeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvHotkeys.RowTemplate.Height = 24;
-            this.dgvHotkeys.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvHotkeys.Size = new System.Drawing.Size(791, 404);
-            this.dgvHotkeys.TabIndex = 67;
-            this.dgvHotkeys.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHotkeys_CellClick);
-            this.dgvHotkeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvHotkeys_KeyDown);
-            this.dgvHotkeys.Leave += new System.EventHandler(this.dgvHotkeys_Leave);
-            this.dgvHotkeys.MouseLeave += new System.EventHandler(this.dgvHotkeys_MouseLeave);
-            // 
-            // chHotkeys_Description
-            // 
-            this.chHotkeys_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Description.HeaderText = "Description";
-            this.chHotkeys_Description.Name = "chHotkeys_Description";
-            this.chHotkeys_Description.ReadOnly = true;
-            this.chHotkeys_Description.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // chHotkeys_Keys
-            // 
-            this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.HeaderText = "Hotkey";
-            this.chHotkeys_Keys.Name = "chHotkeys_Keys";
-            this.chHotkeys_Keys.ReadOnly = true;
-            this.chHotkeys_Keys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // DefaultKeys
-            // 
-            this.DefaultKeys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DefaultKeys.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DefaultKeys.HeaderText = "Default Hotkey";
-            this.DefaultKeys.Name = "DefaultKeys";
-            this.DefaultKeys.ReadOnly = true;
-            this.DefaultKeys.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DefaultKeys.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // tpOptionsClipboard
             // 
             this.tpOptionsClipboard.Controls.Add(this.gbMonitorClipboard);
@@ -6594,6 +6593,9 @@ namespace ZScreenGUI
             this.gbImageSettings.ResumeLayout(false);
             this.gbImageSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
+            this.tpHotkeys.ResumeLayout(false);
+            this.tpHotkeys.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
             this.tpMainInput.ResumeLayout(false);
             this.tcScreenshots.ResumeLayout(false);
             this.tpCropShot.ResumeLayout(false);
@@ -6734,9 +6736,6 @@ namespace ZScreenGUI
             this.tpHistory.ResumeLayout(false);
             this.tpHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
-            this.tpTextServices.ResumeLayout(false);
-            this.tcTextUploaders.ResumeLayout(false);
-            this.tpTreeGUI.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
@@ -6749,6 +6748,8 @@ namespace ZScreenGUI
             this.gbWindowButtons.ResumeLayout(false);
             this.gbWindowButtons.PerformLayout();
             this.tpInteraction.ResumeLayout(false);
+            this.btnOptionsBalloonTip.ResumeLayout(false);
+            this.btnOptionsBalloonTip.PerformLayout();
             this.gbActionsToolbarSettings.ResumeLayout(false);
             this.gbActionsToolbarSettings.PerformLayout();
             this.gbDropBox.ResumeLayout(false);
@@ -6769,14 +6770,12 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).EndInit();
             this.tpProxy.ResumeLayout(false);
             this.gpProxySettings.ResumeLayout(false);
+            this.tpTreeGUI.ResumeLayout(false);
             this.tpOptionsAdv.ResumeLayout(false);
             this.tpStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
-            this.tpHotkeys.ResumeLayout(false);
-            this.tpHotkeys.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
             this.tpOptionsClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
@@ -7101,8 +7100,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.TabControl tcDestinations;
         internal System.Windows.Forms.TabPage tpDestTinyPic;
         internal System.Windows.Forms.TabPage tpDestImageShack;
-        internal System.Windows.Forms.TabPage tpTextServices;
-        internal System.Windows.Forms.TabControl tcTextUploaders;
         internal System.Windows.Forms.GroupBox gbImageSettings;
         internal System.Windows.Forms.GroupBox gpCropRegion;
         internal System.Windows.Forms.TextBox txtAutoTranslate;
@@ -7299,7 +7296,9 @@ namespace ZScreenGUI
         private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.TabPage tpOptionsClipboard;
         private System.Windows.Forms.Label lblFileSystemNote;
-        internal System.Windows.Forms.Button btnFileSystemUploadDir;
+        internal System.Windows.Forms.Button btnClipboardUpload;
         internal System.Windows.Forms.Button btnFileSystemUploadFiles;
+        private System.Windows.Forms.GroupBox btnOptionsBalloonTip;
+        private System.Windows.Forms.CheckBox chkShortenURL;
     }
 }

@@ -66,7 +66,7 @@ namespace ZScreenGUI
             if (cboClipboardTextMode.Items.Count == 0)
             {
                 cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
-                cboClipboardTextMode.SelectedIndex =  Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboClipboardTextMode.Items.Count - 1);
+                cboClipboardTextMode.SelectedIndex = Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboClipboardTextMode.Items.Count - 1);
             }
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;
@@ -404,6 +404,7 @@ namespace ZScreenGUI
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
             // Interaction
+            chkShortenURL.Checked = Engine.conf.ShortenUrlAfterUpload;
             nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
             chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
             cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
