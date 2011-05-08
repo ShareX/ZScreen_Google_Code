@@ -210,7 +210,7 @@ namespace ZScreenGUI
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
-            tpTextServices.ImageKey = "text_signature";
+            // tpTextServices.ImageKey = "text_signature";
             tpTranslator.ImageKey = "comments";
             tpHistory.ImageKey = "pictures";
             tpOptions.ImageKey = "application_edit";
@@ -3922,11 +3922,10 @@ namespace ZScreenGUI
 
         private void btnFileSystemUploadDir_Click(object sender, EventArgs e)
         {
-            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Upload files in a directory...");
-            if (!string.IsNullOrEmpty(dirNew))
+            ClipboardContentViewer ccv = new ClipboardContentViewer();
+            if (ccv.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string[] files = Directory.GetFiles(dirNew, "*.*", SearchOption.AllDirectories);
-                UploadFiles(files);
+                Loader.Worker.UploadUsingClipboard();
             }
         }
 
@@ -3944,8 +3943,25 @@ namespace ZScreenGUI
 
         private void tpMain_DragDrop(object sender, DragEventArgs e)
         {
-            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            UploadFiles(filePaths);
+            string[] fileDirPaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            List<string> files = new List<string>();
+            foreach (string fdp in fileDirPaths)
+            {
+                if (File.Exists(fdp))
+                {
+                    files.Add(fdp);
+                }
+                else if (Directory.Exists(fdp))
+                {
+                    files.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
+                }
+            }
+            UploadFiles(files.ToArray());
+        }
+
+        private void chkShortenURL_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ShortenUrlAfterUpload = chkShortenURL.Checked;
         }
     }
 }

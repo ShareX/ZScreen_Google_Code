@@ -262,7 +262,7 @@ namespace ZScreenLib
         public bool ShowBalloonTip = true;
         public bool BalloonTipOpenLink = true;
         public bool ShowUploadDuration = true;
-        public decimal FlashTrayCount = 1;
+        public decimal FlashTrayCount = 2;
         public bool CaptureEntireScreenOnError = false;
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
