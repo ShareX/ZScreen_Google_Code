@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using ZScreenLib;
+using System.Collections.Generic;
 
 namespace ZScreenGUI
 {
@@ -16,6 +17,13 @@ namespace ZScreenGUI
             Engine.conf.ProxyList.Add(acc);
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
+        }
+
+        public void UploadFiles(string[] filePaths)
+        {
+            List<string> files = new List<string>();
+            files.AddRange(filePaths);
+            Loader.Worker.UploadUsingFileSystem(files);
         }
     }
 }

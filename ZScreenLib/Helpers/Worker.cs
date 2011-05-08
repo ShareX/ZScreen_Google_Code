@@ -123,7 +123,7 @@ namespace ZScreenLib
                     //Issue 331
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(GUI.niTray, progress);
-                    Adapter.TaskbarSetProgressValue(progress);
+                    Adapter.TaskbarSetProgressValue(null, progress);
                     GUI.Text = string.Format("{0}% - {1}", progress, Engine.GetProductName());
                     break;
             }

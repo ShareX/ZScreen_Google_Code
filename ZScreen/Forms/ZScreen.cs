@@ -207,8 +207,8 @@ namespace ZScreenGUI
             tcApp.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
             tpDestinations.ImageKey = "server";
-            tpHotkeys.ImageKey = "keyboard";
-            tpScreenshots.ImageKey = "monitor";
+            tpInterface.ImageKey = "keyboard";
+            tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
             tpTextServices.ImageKey = "text_signature";
             tpTranslator.ImageKey = "comments";
@@ -3382,26 +3382,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void lbHistory_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            List<string> files = new List<string>();
-            files.AddRange(FilePaths);
-            Loader.Worker.UploadUsingFileSystem(files);
-        }
-
-        private void lbHistory_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.All;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
         private void chkHotkeys_CheckedChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
@@ -3907,6 +3887,46 @@ namespace ZScreenGUI
         private void historyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenHistory();
+        }
+
+        private void tpSourceFileSystem_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            UploadFiles(filePaths);
+        }
+
+        private void tpSourceFileSystem_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void btnFileSystemUploadFiles_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Title = "Upload files...";
+            ofd.Filter = "All Files (*.*)|*.*";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                UploadFiles(ofd.FileNames);
+            }
+        }
+
+        private void btnFileSystemUploadDir_Click(object sender, EventArgs e)
+        {
+            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Upload files in a directory...");
+            if (!string.IsNullOrEmpty(dirNew))
+            {
+                string[] files = Directory.GetFiles(dirNew, "*.*", SearchOption.AllDirectories);
+                UploadFiles(files);
+            }
         }
     }
 }

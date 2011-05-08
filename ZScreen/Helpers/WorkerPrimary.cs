@@ -191,16 +191,16 @@ namespace ZScreenGUI
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
-                    Adapter.TaskbarSetProgressValue(progress);
+                    Adapter.TaskbarSetProgressValue(mZScreen, progress);
                     mZScreen.Text = string.Format("{0}% - {1}", ClipboardManager.GetAverageProgress(), Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
-                    Adapter.TaskbarSetProgressState(tbps);
+                    Adapter.TaskbarSetProgressState(mZScreen, tbps);
                     break;
                 case WorkerTask.ProgressType.ShowTrayWarning:
-                    Adapter.TaskbarSetProgressValue(33);
-                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.Error);
+                    Adapter.TaskbarSetProgressValue(mZScreen, 33);
+                    Adapter.TaskbarSetProgressState(mZScreen, TaskbarProgressBarState.Error);
                     Adapter.SetNotifyIconBalloonTip(mZScreen.niTray, mZScreen.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
             }
@@ -360,7 +360,7 @@ namespace ZScreenGUI
 
                 if (CoreHelpers.RunningOnWin7)
                 {
-                    Adapter.TaskbarSetProgressState(TaskbarProgressBarState.NoProgress);
+                    Adapter.TaskbarSetProgressState(mZScreen, TaskbarProgressBarState.NoProgress);
                 }
 
                 mZScreen.btnUploadersTest.Enabled = true;
