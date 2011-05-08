@@ -207,7 +207,7 @@ namespace ZScreenGUI
             tcApp.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
             tpDestinations.ImageKey = "server";
-            tpInterface.ImageKey = "keyboard";
+            tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
             tpTextServices.ImageKey = "text_signature";
@@ -3927,6 +3927,24 @@ namespace ZScreenGUI
                 string[] files = Directory.GetFiles(dirNew, "*.*", SearchOption.AllDirectories);
                 UploadFiles(files);
             }
+        }
+
+        private void tpMain_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void tpMain_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            UploadFiles(filePaths);
         }
     }
 }
