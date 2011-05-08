@@ -290,6 +290,9 @@ namespace ZScreenLib
                         case JobLevel1.Text:
                             UploadFTP(Engine.conf.FtpText);
                             break;
+                        case JobLevel1.Image:
+                            UploadFTP(Engine.conf.FtpImages);
+                            break;
                         default:
                             UploadFTP(Engine.conf.FtpFiles);
                             break;
