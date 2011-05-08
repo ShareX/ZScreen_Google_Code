@@ -154,8 +154,11 @@ namespace ZScreenGUI
                     ThumbnailToolBarButton clipboardUpload = new ThumbnailToolBarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-                    
+                    if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                    {
+                        Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    }
+
                     if (this.WindowState == FormWindowState.Normal)
                     {
                         Engine.zJumpList.Refresh();
@@ -309,7 +312,7 @@ namespace ZScreenGUI
                     this.WindowState = Engine.conf.WindowState;
                     ShowInTaskbar = Engine.conf.ShowInTaskbar;
                 }
-                else if (Engine.conf.ShowInTaskbar && Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
+                else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
                 {
                     this.WindowState = FormWindowState.Minimized;
                     ShowInTaskbar = true;
@@ -419,7 +422,7 @@ namespace ZScreenGUI
                         int command = m.WParam.ToInt32() & 0xfff0;
                         if (command == NativeMethods.SC_MINIMIZE)
                         {
-                            switch (Engine.conf.MinimizeButtonAction)
+                            switch (Engine.conf.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.CloseApplication:
                                     mClose = true;
@@ -564,15 +567,15 @@ namespace ZScreenGUI
                 WriteSettings();
             }
 
-            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.CloseButtonAction != WindowButtonAction.CloseApplication && !mClose)
+            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !mClose)
             {
                 e.Cancel = true;
 
-                if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
+                if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
                 {
                     this.WindowState = FormWindowState.Minimized;
                 }
-                else if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTray)
+                else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
                 {
                     this.Hide();
                 }
@@ -989,17 +992,9 @@ namespace ZScreenGUI
             {
                 if (Engine.conf.FirstRun)
                 {
-                    Engine.conf.CloseButtonAction = WindowButtonAction.MinimizeToTaskbar;
+                    Engine.conf.WindowButtonActionClose = WindowButtonAction.MinimizeToTaskbar;
                 }
                 ZScreen_Windows7onlyTasks();
-                if (Engine.conf.CloseButtonAction == WindowButtonAction.MinimizeToTaskbar)
-                {
-                    this.ShowInTaskbar = true;
-                    if (!Engine.conf.ShowMainWindow)
-                    {
-                        this.WindowState = FormWindowState.Minimized;
-                    }
-                }
             }
 
             Loader.KeyboardHook();
@@ -3622,12 +3617,12 @@ namespace ZScreenGUI
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.CloseButtonAction = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
+            Engine.conf.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
         }
 
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.MinimizeButtonAction = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
+            Engine.conf.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
 
         private void LbSoftwareMouseClick(object sender, MouseEventArgs e)

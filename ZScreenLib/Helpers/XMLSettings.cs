@@ -434,8 +434,8 @@ namespace ZScreenLib
         [Category("Options / General"), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
         public bool AutoSaveSettings = false;
-        public WindowButtonAction CloseButtonAction = WindowButtonAction.MinimizeToTray;
-        public WindowButtonAction MinimizeButtonAction = WindowButtonAction.MinimizeToTaskbar;
+        public WindowButtonAction WindowButtonActionClose = WindowButtonAction.MinimizeToTray;
+        public WindowButtonAction WindowButtonActionMinimize = WindowButtonAction.MinimizeToTaskbar;
 
         // General - Monitor Clipboard
 

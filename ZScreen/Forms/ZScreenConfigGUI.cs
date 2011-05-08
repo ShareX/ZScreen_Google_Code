@@ -435,8 +435,8 @@ namespace ZScreenGUI
             {
                 cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
             }
-            cboCloseButtonAction.SelectedIndex = (int)Engine.conf.CloseButtonAction;
-            cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.MinimizeButtonAction;
+            cboCloseButtonAction.SelectedIndex = (int)Engine.conf.WindowButtonActionClose;
+            cboMinimizeButtonAction.SelectedIndex = (int)Engine.conf.WindowButtonActionMinimize;
 
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
