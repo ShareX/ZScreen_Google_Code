@@ -3623,7 +3623,7 @@ namespace ZScreenGUI
 
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Edit in Picnik in the new Hustory
+            // TODO: Edit in Picnik in the new History
             //Process.Start(string.Format("http://www.picnik.com/service/?_import={0}&_apikey={1}",
             //                    HttpUtility.UrlEncode(hi.RemotePath), Engine.PicnikKey));
         }

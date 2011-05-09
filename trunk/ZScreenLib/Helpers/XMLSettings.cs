@@ -533,7 +533,7 @@ namespace ZScreenLib
         [Category("Options / General"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Do not store any data in the hard disk.")]
-        public bool MemoryMode { get; set; }
+        public bool MemoryMode = false; // TODO: Make this a property after implementation
 
         // Options / Paths
 

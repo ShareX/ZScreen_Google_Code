@@ -1,3 +1,5 @@
+Version 3.36 - 20110515
+
 3.36.12.0 Improved Crop Shot to allow user to nudge the cropshot points with keyboard [Issue 86] {Jaex}
 3.36.11.0 Greatly improved ZScreen startup time using precompiled serialization assemblies {Jaex/McoreD}
 3.36.10.0 Buttons for Clipboard Upload and File Upload in the Main Window {McoreD}
@@ -437,3 +439,7 @@ Version 1.1 - 20071016
 Version 1.0 - 20070822
 
 1.0.0.0 Initial Release
+
+inf1ni = http://code.google.com/u/rgrthat
+McoreD = http://code.google.com/u/mcored
+Jaex = http://code.google.com/u/flexy123
