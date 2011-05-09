@@ -52,9 +52,9 @@
             // 
             // pbClipboard
             // 
-            this.pbClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pbClipboard.BackColor = System.Drawing.Color.White;
             this.pbClipboard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbClipboard.Location = new System.Drawing.Point(8, 32);
@@ -88,9 +88,9 @@
             // 
             // txtClipboard
             // 
-            this.txtClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtClipboard.BackColor = System.Drawing.Color.White;
             this.txtClipboard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtClipboard.Location = new System.Drawing.Point(8, 32);
@@ -102,9 +102,9 @@
             // 
             // lbClipboard
             // 
-            this.lbClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lbClipboard.FormattingEnabled = true;
             this.lbClipboard.IntegralHeight = false;
             this.lbClipboard.Location = new System.Drawing.Point(8, 32);
@@ -114,6 +114,7 @@
             // 
             // cbDontShowThisWindow
             // 
+            this.cbDontShowThisWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbDontShowThisWindow.AutoSize = true;
             this.cbDontShowThisWindow.Location = new System.Drawing.Point(9, 332);
             this.cbDontShowThisWindow.Name = "cbDontShowThisWindow";
@@ -138,6 +139,7 @@
             this.Controls.Add(this.txtClipboard);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(401, 398);
             this.Name = "ClipboardContentViewer";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

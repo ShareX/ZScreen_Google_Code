@@ -75,7 +75,8 @@ namespace ZScreenLib
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
-        public bool ShowClipboardContentViewer = true;
+        [Category("Options / Clipboard Upload"), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
+        public bool ShowClipboardContentViewer { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Destinations
