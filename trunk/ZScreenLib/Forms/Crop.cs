@@ -459,25 +459,6 @@ namespace ZScreenLib
                 {
                     CancelAndRestart();
                 }
-                for (int i = 0; i < (e.Shift ? 5 : 1); i++)
-                {
-                    if (e.KeyCode == Keys.Left)
-                    {
-                        mousePosOnClick.X--;
-                    }
-                    else if (e.KeyCode == Keys.Right)
-                    {
-                        mousePosOnClick.X++;
-                    }
-                    else if (e.KeyCode == Keys.Up)
-                    {
-                        mousePosOnClick.Y--;
-                    }
-                    else if (e.KeyCode == Keys.Down)
-                    {
-                        mousePosOnClick.Y++;
-                    }
-                }
             }
             else
             {
@@ -491,10 +472,30 @@ namespace ZScreenLib
                     ReturnNullAndExit();
                 }
             }
+
             if (e.KeyCode == Keys.Tab && !selectedWindowMode)
             {
                 Engine.conf.CropGridToggle = !Engine.conf.CropGridToggle;
                 forceCheck = true;
+            }
+
+            int move = e.Shift ? 5 : 1;
+
+            if (e.KeyCode == Keys.Left)
+            {
+                Cursor.Position = new Point(Cursor.Position.X - move, Cursor.Position.Y);
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                Cursor.Position = new Point(Cursor.Position.X + move, Cursor.Position.Y);
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y - move);
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y + move);
             }
         }
 
