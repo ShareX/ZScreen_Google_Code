@@ -2,6 +2,7 @@
 using UploadersLib.HelperClasses;
 using ZScreenLib;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ZScreenGUI
 {
@@ -10,6 +11,35 @@ namespace ZScreenGUI
         public void OpenHistory()
         {
             new HistoryLib.HistoryForm(Engine.HistoryDbPath, Engine.conf.HistoryMaxNumber, string.Format("{0} - History", Engine.GetProductName())).Show();
+        }
+
+        private void OpenLastSource(ImageFileManager.SourceType sType)
+        {
+            OpenSource(UploadManager.LinkManagerLast, sType);
+        }
+
+        private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
+        {
+            if (ifm != null)
+            {
+                string path = ifm.GetSource(Engine.TempDir, sType);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
+                    {
+                        Process.Start(path);
+                        return true;
+                    }
+
+                    if (sType == ImageFileManager.SourceType.STRING)
+                    {
+                        Clipboard.SetText(path); // ok
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public void ProxyAdd(ProxyInfo acc)

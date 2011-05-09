@@ -155,7 +155,7 @@ namespace ZScreenLib
         {
             if (ni != null)
             {
-                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(ClipboardManager.GetAverageProgress()))
+                using (Bitmap img = (Bitmap)GraphicsMgr.DrawProgressIcon(UploadManager.GetAverageProgress()))
                 {
                     IntPtr hicon = img.GetHicon();
                     ni.Icon = Icon.FromHandle(hicon);

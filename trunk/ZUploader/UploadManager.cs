@@ -307,7 +307,7 @@ namespace ZUploader
 
                         if (!string.IsNullOrEmpty(info.Result.URL))
                         {
-                            string url = string.IsNullOrEmpty(info.Result.TinyURL) ? info.Result.URL : info.Result.TinyURL;
+                            string url = string.IsNullOrEmpty(info.Result.ShortenedURL) ? info.Result.URL : info.Result.ShortenedURL;
 
                             lvi.SubItems[8].Text = url;
 

@@ -26,10 +26,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
+using System;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -39,11 +39,11 @@ namespace ZScreenLib
     /// <summary>
     /// Class reponsible for Adding or Retrieving Clipboard Text and Setting Text to Clipboard
     /// </summary>
-    public static class ClipboardManager
+    public static class UploadManager
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
+        public static ImageFileManager LinkManagerLast { get; set; }
 
-        private static ImageFileManager ScreenshotsHistory = new ImageFileManager();
         private static int UniqueNumber = 0;
 
         /// <summary>
@@ -79,11 +79,6 @@ namespace ZScreenLib
             return UploadInfoList.Find(x => x.UniqueID == number);
         }
 
-        public static ImageFileManager GetLastImageUpload()
-        {
-            return ScreenshotsHistory;
-        }
-
         public static int GetAverageProgress()
         {
             return UploadInfoList.Sum(x => x.UploadPercentage) / UploadInfoList.Count;
@@ -105,85 +100,68 @@ namespace ZScreenLib
             {
                 clipboardText = task.LocalFilePath;
             }
+            else if (Engine.conf.ShowClipboardModeChooser || showDialog)
+            {
+                ClipboardOptions cmp = new ClipboardOptions(task);
+                cmp.Icon = Resources.zss_main;
+                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+            }
+            // If the user requests for the full image URL, preference is given for the Shortened URL is exists
+            else if (task.Job1 == JobLevel1.Image && Engine.conf.MyClipboardUriMode == (int)ClipboardUriType.FULL)
+            {
+                if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.ShortenedURL))
+                {
+                    clipboardText = task.LinkManager.UploadResult.ShortenedURL;
+                }
+                // If no shortened URL exists then default full URL will be used
+                else
+                {
+                    clipboardText = task.RemoteFilePath;
+                }
+            }
+
             else
             {
-                switch (task.Job1)
+                // From this point onwards app needs to respect all other Clipboard URL modes for Images
+                if (task.LinkManager != null && task.Job1 == JobLevel1.Image)
                 {
-                    case JobLevel1.Images:
-                        ScreenshotsHistory = task.LinkManager;
-                        if (GraphicsMgr.IsValidImage(task.LocalFilePath))
-                        {
-                            if (Engine.conf.ShowClipboardModeChooser || showDialog)
-                            {
-                                ClipboardOptions cmp = new ClipboardOptions(task);
-                                cmp.Icon = Resources.zss_main;
-                                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-                            }
-                            else
-                            {
-                                if (task.MakeTinyURL)
-                                {
-                                    string tinyUrl = ScreenshotsHistory.GetUrlByType(ClipboardUriType.FULL_TINYURL);
-                                    if (!string.IsNullOrEmpty(tinyUrl))
-                                    {
-                                        clipboardText = tinyUrl.Trim();
-                                    }
-                                }
-                                else
-                                {
-                                    clipboardText = ScreenshotsHistory.GetUrlByType(Engine.conf.ClipboardUriMode).ToString().Trim();
-                                }
-                            }
-                        }
-                        break;
-
-                    case JobLevel1.Binary:
-                        clipboardText = task.RemoteFilePath;
-                        break;
-
-                    case JobLevel1.Text:
-                        switch (task.Job2)
-                        {
-                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                if (task.TranslationInfo != null)
-                                {
-                                    clipboardText = task.TranslationInfo.Result;
-                                }
-                                break;
-                            default:
-                                if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                                {
-                                    clipboardText = task.RemoteFilePath;
-                                }
-                                else if (null != task.MyText)
-                                {
-                                    clipboardText = task.MyText;
-                                }
-                                else
-                                {
-                                    clipboardText = task.LocalFilePath;
-                                }
-                                break;
-                        }
-                        break;
+                    clipboardText = task.LinkManager.GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim();
                 }
-
-                if (!string.IsNullOrEmpty(clipboardText))
+                // Text and File catagories are still left to process. Exception for Google Translate
+                else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                 {
-                    Engine.ClipboardUnhook();
-                    FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
-                    Clipboard.SetText(clipboardText); // auto
-
-                    // optional deletion link
-                    string linkdel = ScreenshotsHistory.GetDeletionLink();
-                    if (!string.IsNullOrEmpty(linkdel))
+                    if (task.TranslationInfo != null)
                     {
-                        FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                        clipboardText = task.TranslationInfo.Result;
                     }
-
-                    Engine.zClipboardText = clipboardText;
-                    Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
                 }
+                // Text and File catagories are still left to process. If shortened URL exists, preference is given to that
+                else if (task.LinkManager != null && task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.LinkManager.UploadResult.ShortenedURL))
+                {
+                    clipboardText = task.LinkManager.UploadResult.ShortenedURL;
+                }
+                // Otherwise full URL for Text or File is used
+                else if (task.LinkManager != null)
+                {
+                    clipboardText = task.RemoteFilePath;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(clipboardText))
+            {
+                Engine.ClipboardUnhook();
+                FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
+                clipboardText = FileSystem.GetBrowserFriendlyUrl(clipboardText);
+                Clipboard.SetText(clipboardText); // auto                
+                // optional deletion link
+                string linkdel = task.LinkManager.UploadResult.DeletionURL;
+                if (!string.IsNullOrEmpty(linkdel))
+                {
+                    FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                }
+
+                Engine.zClipboardText = clipboardText;
+                Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
             }
         }
     }

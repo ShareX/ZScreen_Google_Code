@@ -65,7 +65,7 @@ namespace ZScreenLib
         public virtual void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
-            task.UniqueNumber = ClipboardManager.Queue();
+            task.UniqueNumber = UploadManager.Queue();
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
 
             switch (task.Job1)
@@ -154,7 +154,7 @@ namespace ZScreenLib
                 }
 
                 this.GUI.niTray.Text = this.GUI.Text;
-                if (ClipboardManager.UploadInfoList.Count > 1)
+                if (UploadManager.UploadInfoList.Count > 1)
                 {
                     this.GUI.niTray.Icon = Resources.zss_busy;
                 }
@@ -178,7 +178,7 @@ namespace ZScreenLib
 
                 if (Engine.conf.CopyClipboardAfterTask)
                 {
-                    ClipboardManager.SetClipboard(task, false);
+                    UploadManager.SetClipboard(task, false);
                 }
 
                 if (task.Errors.Count > 0)
@@ -199,7 +199,7 @@ namespace ZScreenLib
             }
             finally
             {
-                ClipboardManager.Commit(task.UniqueNumber);
+                UploadManager.Commit(task.UniqueNumber);
                 this.IsBusy = false;
             }
         }

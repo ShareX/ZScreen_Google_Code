@@ -169,9 +169,9 @@ namespace ZScreenLib
             {
                 if (LinkManager != null)
                 {
-                    if (!string.IsNullOrEmpty(LinkManager.UploadResult.TinyURL))
+                    if (!string.IsNullOrEmpty(LinkManager.UploadResult.ShortenedURL))
                     {
-                        return LinkManager.UploadResult.TinyURL;
+                        return LinkManager.UploadResult.ShortenedURL;
                     }
 
                     return LinkManager.UploadResult.URL;
@@ -372,7 +372,7 @@ namespace ZScreenLib
             {
                 hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
                 hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
-                hi.ShortenedURL = this.LinkManager.UploadResult.TinyURL;
+                hi.ShortenedURL = this.LinkManager.UploadResult.ShortenedURL;
                 hi.URL = this.LinkManager.UploadResult.URL;
             }
             hi.Filename = this.FileName;
@@ -529,7 +529,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
                         FileSystem.AppendDebug(string.Format("Shortened URL: {0}", shortenUrl));
-                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, TinyURL = shortenUrl });
+                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, ShortenedURL = shortenUrl });
                         return true;
                     }
                 }
