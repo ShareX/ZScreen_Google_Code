@@ -1,4 +1,9 @@
-﻿Version 3.8 - 2011-01-02
+﻿Version 3.12 - 2011-05-09
+
+3.10 Added Clipboard Content Viewer to confirm uploading using Clipboard
+3.09 Added URL Shortener support
+
+Version 3.8 - 2011-01-02
 
 3.8 - Added ClipboardUpload hotkey (Ctrl + Page up)
 3.7 - Added upload queue system to limit simultaneous uploads
@@ -11,6 +16,7 @@ Version 3.6 - 2010-12-15
 3.3 - Image and text encoding operations moved to upload thread to prevent the main window from freezing {Jaex}
 3.2 - Drag & drop bitmap / text support {Jaex}
 3.1 - Startup time improved by using precompiled xml serialization dll (SGEN) and threads {Jaex}
+
 3.0 - Improved uploading speed and memory allocation especially for big uploads, many bug fixes {Jaex}
 2.8 - Added auto naming settings for clipboard upload {Jaex}
 2.7 - Added new file uploader: filez.muffinz.eu {semas123}
@@ -20,6 +26,7 @@ Version 3.6 - 2010-12-15
 2.3 - Portable support {Jaex}
 2.2 - Added image viewer to history form {Jaex}
 2.1 - Added filters to history form {Jaex}
+
 2.0 - History support using SQLite as database {Jaex}
 1.5 - Image settings for changing image related settings such as image format, quality etc. {Jaex}
 1.4 - Single instance support for better shell extension uploading (Useful for CLI uploads) {Jaex}
