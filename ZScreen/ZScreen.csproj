@@ -64,6 +64,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -130,12 +131,6 @@
     </Compile>
     <Compile Include="Forms\DropWindow.Designer.cs">
       <DependentUpon>DropWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SplashScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SplashScreen.Designer.cs">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ToolbarWindow.cs">
       <SubType>Form</SubType>
@@ -294,10 +289,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DropWindow.resx">
       <DependentUpon>DropWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SplashScreen.resx">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ToolbarWindow.resx">

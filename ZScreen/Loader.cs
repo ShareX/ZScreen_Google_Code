@@ -34,11 +34,9 @@ namespace ZScreenGUI
 {
     public static class Loader
     {
-        // internal static ZSS.Forms.SplashScreen Splash = null;
         public static WorkerPrimary Worker;
         public static WorkerSecondary Worker2;
         public static WorkerTask zLastTask;
-        public static Queue<string> AsmLoads = new Queue<string>();
         public static List<string> LibNames = new List<string>();
 
         [STAThread]
@@ -46,9 +44,7 @@ namespace ZScreenGUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            // FileSystem.AppendDebug("Starting Splash Screen");
-            // Splash = new ZSS.Forms.SplashScreen();
-            // Splash.Show();
+
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
 
             string[] args = Environment.GetCommandLineArgs();
@@ -63,11 +59,19 @@ namespace ZScreenGUI
             }
             else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
             {
-                Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, Engine.ZScreenCLI));
-                psi.Arguments = args[1];
-                p.StartInfo = psi;
-                p.Start();
+                string arg1 = args[1].ToLower();
+                if (File.Exists(arg1))
+                {
+                    Process p = new Process();
+                    ProcessStartInfo psi = new ProcessStartInfo(Path.Combine(Application.StartupPath, Engine.ZScreenCLI));
+                    psi.Arguments = "upload " + arg1;
+                    p.StartInfo = psi;
+                    p.Start();
+                }
+                else if (arg1 == "history")
+                {
+                    Application.Run(new HistoryLib.HistoryForm(Engine.HistoryDbPath, 100, string.Format("{0} - History", Engine.GetProductName())));
+                }
             }
             else if (Engine.mAppInfo.ApplicationState == McoreSystem.AppInfo.SoftwareCycle.Beta)
             {
@@ -153,7 +157,6 @@ namespace ZScreenGUI
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
-            AsmLoads.Enqueue("Loading " + args.LoadedAssembly.GetName().Name);
             LibNames.Add(Path.GetFileName(args.LoadedAssembly.FullName));
         }
     }

@@ -5603,18 +5603,18 @@ namespace ZScreenGUI
             // chkShowTaskbar
             // 
             this.chkShowTaskbar.AutoSize = true;
-            this.chkShowTaskbar.Location = new System.Drawing.Point(16, 48);
+            this.chkShowTaskbar.Location = new System.Drawing.Point(424, 24);
             this.chkShowTaskbar.Name = "chkShowTaskbar";
-            this.chkShowTaskbar.Size = new System.Drawing.Size(174, 17);
+            this.chkShowTaskbar.Size = new System.Drawing.Size(161, 17);
             this.chkShowTaskbar.TabIndex = 3;
-            this.chkShowTaskbar.Text = "Show Main Window in Taskbar";
+            this.chkShowTaskbar.Text = "Show Application in Taskbar";
             this.chkShowTaskbar.UseVisualStyleBackColor = true;
             this.chkShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
             // 
             // chkOpenMainWindow
             // 
             this.chkOpenMainWindow.AutoSize = true;
-            this.chkOpenMainWindow.Location = new System.Drawing.Point(16, 24);
+            this.chkOpenMainWindow.Location = new System.Drawing.Point(16, 48);
             this.chkOpenMainWindow.Name = "chkOpenMainWindow";
             this.chkOpenMainWindow.Size = new System.Drawing.Size(158, 17);
             this.chkOpenMainWindow.TabIndex = 2;
@@ -5626,7 +5626,7 @@ namespace ZScreenGUI
             // 
             this.chkStartWin.AutoSize = true;
             this.chkStartWin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkStartWin.Location = new System.Drawing.Point(424, 24);
+            this.chkStartWin.Location = new System.Drawing.Point(16, 24);
             this.chkStartWin.Name = "chkStartWin";
             this.chkStartWin.Size = new System.Drawing.Size(117, 17);
             this.chkStartWin.TabIndex = 0;
