@@ -4,21 +4,27 @@
 
 = Main Window =
 == Main == 
-== Destinations == 
-=== FTP ===
-Main Article: [FTPAccounts]
+
 == Hotkeys == 
+
+== Input ==
 === Clipboard Upload ===
 Main Article: [ClipboardUpload]
 
-== Screenshots == 
 === Watermark ===
 Main Article: [Watermark]
-== Image Hosting == 
-== Text Services == 
-== Translator == 
+
+=== Output ===
+== FTP ==
+Main Article: [FTPAccounts]
+
 == History == 
+
 == Options == 
+
+=== General === 
+Main Article: [Windows7TaskbarIntegration]
+
 === Watch Folder ===
 Main Article: [WatchFolder]
 
