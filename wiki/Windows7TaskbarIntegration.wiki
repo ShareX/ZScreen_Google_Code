@@ -10,6 +10,10 @@ Best performance is achieved by configuring ZScreen according to the following s
 
 [http://mcored.zscreen.net/2011-05/Screenshot-2011-05-09_08.24.01.png]
 
+== Upload Progress ==
+
+[http://mcored.zscreen.net/2011-05/Screenshot-2011-05-09_08.26.25.png]
+
 == Taskbar Buttons == 
 
 [http://mcored.zscreen.net/2011-05/Screenshot-2011-05-09_08.19.54.png]
