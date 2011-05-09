@@ -135,7 +135,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            if (task.LinkManager != null && task.ShouldShortenURL(task.RemoteFilePath))
+            if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE  && task.ShouldShortenURL(task.RemoteFilePath))
             {
                 task.ShortenURL(task.RemoteFilePath);
             }
