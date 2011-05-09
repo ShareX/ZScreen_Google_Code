@@ -8,9 +8,15 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
-        public void OpenHistory()
+        public static void OpenHistory()
         {
-            new HistoryLib.HistoryForm(Engine.HistoryDbPath, Engine.conf.HistoryMaxNumber, string.Format("{0} - History", Engine.GetProductName())).Show();
+            // if Engine.conf is null then open use default amount
+            int maxNum = 100;
+            if (Engine.conf != null)
+            {
+                maxNum = Engine.conf.HistoryMaxNumber;
+            }
+            new HistoryLib.HistoryForm(Engine.HistoryDbPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
 
         private void OpenLastSource(ImageFileManager.SourceType sType)
