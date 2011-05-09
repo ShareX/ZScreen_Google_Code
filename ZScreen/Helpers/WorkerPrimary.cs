@@ -83,9 +83,9 @@ namespace ZScreenGUI
                 return;
             }
 
-            if (task.Job1 == JobLevel1.Image)
+            if (task.WasToTakeScreenshot)
             {
-                if (Engine.conf.ScreenshotDelayTime != 0)
+                if (Engine.conf.ScreenshotDelayTime > 0)
                 {
                     Thread.Sleep((int)Engine.conf.ScreenshotDelayTime);
                 }
@@ -135,7 +135,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE  && task.ShouldShortenURL(task.RemoteFilePath))
+            if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
             {
                 task.ShortenURL(task.RemoteFilePath);
             }
