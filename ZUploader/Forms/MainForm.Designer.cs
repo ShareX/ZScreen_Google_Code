@@ -58,6 +58,7 @@ namespace ZUploader
             this.cmsUploads = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyShortenedURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyThumbnailURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDeletionURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,7 +93,6 @@ namespace ZUploader
             this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.copyShortenedURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -131,6 +131,13 @@ namespace ZUploader
             this.copyURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.copyURLToolStripMenuItem.Text = "Copy URL";
             this.copyURLToolStripMenuItem.Click += new System.EventHandler(this.copyURLToolStripMenuItem_Click);
+            // 
+            // copyShortenedURLToolStripMenuItem
+            // 
+            this.copyShortenedURLToolStripMenuItem.Name = "copyShortenedURLToolStripMenuItem";
+            this.copyShortenedURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.copyShortenedURLToolStripMenuItem.Text = "Copy Shortened URL";
+            this.copyShortenedURLToolStripMenuItem.Click += new System.EventHandler(this.copyShortenedURLToolStripMenuItem_Click);
             // 
             // copyThumbnailURLToolStripMenuItem
             // 
@@ -201,7 +208,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(686, 33);
+            this.tsMain.Size = new System.Drawing.Size(695, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -210,8 +217,8 @@ namespace ZUploader
             this.tsbClipboardUpload.Image = global::ZUploader.Properties.Resources.clipboard__plus;
             this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClipboardUpload.Name = "tsbClipboardUpload";
-            this.tsbClipboardUpload.Size = new System.Drawing.Size(119, 20);
-            this.tsbClipboardUpload.Text = "Clipboard upload";
+            this.tsbClipboardUpload.Size = new System.Drawing.Size(128, 20);
+            this.tsbClipboardUpload.Text = "Clipboard upload...";
             this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
             // 
             // tsbFileUpload
@@ -419,13 +426,6 @@ namespace ZUploader
             // 
             this.chURL.Text = "URL";
             this.chURL.Width = 225;
-            // 
-            // copyShortenedURLToolStripMenuItem
-            // 
-            this.copyShortenedURLToolStripMenuItem.Name = "copyShortenedURLToolStripMenuItem";
-            this.copyShortenedURLToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.copyShortenedURLToolStripMenuItem.Text = "Copy Shortened URL";
-            this.copyShortenedURLToolStripMenuItem.Click += new System.EventHandler(this.copyShortenedURLToolStripMenuItem_Click);
             // 
             // MainForm
             // 
