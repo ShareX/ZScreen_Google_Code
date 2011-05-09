@@ -78,7 +78,7 @@ namespace UploadersLib.HelperClasses
                 case ClipboardUriType.FULL:
                     return GetFullImageUrl();
                 case ClipboardUriType.FULL_TINYURL:
-                    return UploadResult.TinyURL;
+                    return UploadResult.ShortenedURL;
                 case ClipboardUriType.FULL_IMAGE_FORUMS:
                     return GetFullImageForumsUrl();
                 case ClipboardUriType.FULL_IMAGE_HTML:

@@ -188,7 +188,7 @@
     <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="Global\Structures.cs" />
     <Compile Include="Global\UploadInfo.cs" />
-    <Compile Include="Global\ClipboardManager.cs" />
+    <Compile Include="Global\UploadManager.cs" />
     <Compile Include="Global\NativeMethods.cs" />
     <Compile Include="Helpers\AppInfo.cs" />
     <Compile Include="Helpers\AppSettings.cs" />

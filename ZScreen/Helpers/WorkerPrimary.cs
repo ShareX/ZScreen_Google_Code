@@ -70,7 +70,7 @@ namespace ZScreenGUI
         {
             WorkerTask task = (WorkerTask)e.Argument;
             task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
-            task.UniqueNumber = ClipboardManager.Queue();
+            task.UniqueNumber = UploadManager.Queue();
 
             if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
                 task.MyImageUploader != ImageUploaderType.FILE &&
@@ -192,7 +192,7 @@ namespace ZScreenGUI
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
                     Adapter.UpdateNotifyIconProgress(mZScreen.niTray, progress);
                     Adapter.TaskbarSetProgressValue(mZScreen, progress);
-                    mZScreen.Text = string.Format("{0}% - {1}", ClipboardManager.GetAverageProgress(), Engine.GetProductName());
+                    mZScreen.Text = string.Format("{0}% - {1}", UploadManager.GetAverageProgress(), Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
@@ -210,6 +210,7 @@ namespace ZScreenGUI
         {
             WorkerTask task = (WorkerTask)e.Result;
             mZScreen.Text = Engine.GetProductName();
+            UploadManager.LinkManagerLast = task.LinkManager;
 
             try
             {
@@ -289,7 +290,7 @@ namespace ZScreenGUI
 
                     if (Engine.conf.CopyClipboardAfterTask)
                     {
-                        ClipboardManager.SetClipboard(task, false);
+                        UploadManager.SetClipboard(task, false);
                     }
 
                     if (Engine.conf.TwitterEnabled)
@@ -297,14 +298,12 @@ namespace ZScreenGUI
                         Adapter.TwitterMsg(task);
                     }
 
-                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.Source))
-                    {
-                        mZScreen.btnOpenSourceText.Enabled = true;
-                        mZScreen.btnOpenSourceBrowser.Enabled = true;
-                        mZScreen.btnOpenSourceString.Enabled = true;
-                    }
+                    bool bLastSourceButtonsEnabled = task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.Source);
+                    mZScreen.btnOpenSourceText.Enabled = bLastSourceButtonsEnabled;
+                    mZScreen.btnOpenSourceBrowser.Enabled = bLastSourceButtonsEnabled;
+                    mZScreen.btnOpenSourceString.Enabled = bLastSourceButtonsEnabled;
 
-                    if (ClipboardManager.UploadInfoList.Count > 1)
+                    if (UploadManager.UploadInfoList.Count > 1)
                     {
                         mZScreen.niTray.Icon = Resources.zss_busy;
                     }
@@ -356,7 +355,7 @@ namespace ZScreenGUI
 
             finally
             {
-                ClipboardManager.Commit(task.UniqueNumber);
+                UploadManager.Commit(task.UniqueNumber);
 
                 if (CoreHelpers.RunningOnWin7)
                 {

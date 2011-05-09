@@ -190,7 +190,7 @@ namespace ZUploader
 
                 if (!Info.Result.IsError && Program.Settings.URLShortenAfterUpload)
                 {
-                    Info.Result.TinyURL = ShortenURL(Info.Result.URL);
+                    Info.Result.ShortenedURL = ShortenURL(Info.Result.URL);
                 }
             }
 

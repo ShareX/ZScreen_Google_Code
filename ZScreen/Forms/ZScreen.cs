@@ -1587,35 +1587,6 @@ namespace ZScreenGUI
             OpenLastSource(ImageFileManager.SourceType.STRING);
         }
 
-        private void OpenLastSource(ImageFileManager.SourceType sType)
-        {
-            OpenSource(ClipboardManager.GetLastImageUpload(), sType);
-        }
-
-        private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
-        {
-            if (ifm != null)
-            {
-                string path = ifm.GetSource(Engine.TempDir, sType);
-                if (!string.IsNullOrEmpty(path))
-                {
-                    if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
-                    {
-                        Process.Start(path);
-                        return true;
-                    }
-
-                    if (sType == ImageFileManager.SourceType.STRING)
-                    {
-                        Clipboard.SetText(path); // ok
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         private void txtUploadersLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);

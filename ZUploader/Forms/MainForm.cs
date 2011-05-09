@@ -190,7 +190,7 @@ namespace ZUploader
                         copyDeletionURLToolStripMenuItem.Visible = true;
                     }
 
-                    if (!string.IsNullOrEmpty(result.TinyURL))
+                    if (!string.IsNullOrEmpty(result.ShortenedURL))
                     {
                         copyShortenedURLToolStripMenuItem.Visible = true;
                     }
@@ -278,9 +278,9 @@ namespace ZUploader
         {
             UploadResult result = GetCurrentUploadResult();
 
-            if (result != null && !string.IsNullOrEmpty(result.TinyURL))
+            if (result != null && !string.IsNullOrEmpty(result.ShortenedURL))
             {
-                Helpers.CopyTextSafely(result.TinyURL);
+                Helpers.CopyTextSafely(result.ShortenedURL);
             }
         }
 

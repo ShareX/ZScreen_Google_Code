@@ -602,7 +602,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {
-                UploadInfo uploadInfo = ClipboardManager.GetInfo(mTask.UniqueNumber);
+                UploadInfo uploadInfo = UploadManager.GetInfo(mTask.UniqueNumber);
                 if (uploadInfo != null)
                 {
                     uploadInfo.UploadPercentage = (int)progress.Percentage;
