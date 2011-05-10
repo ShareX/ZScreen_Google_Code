@@ -1,14 +1,13 @@
 #labels Featured
 #Table of content for the User Manual for Zscreen.
 
-1. Overview of ZScreen: capture and (optionally) upload
-2. Settings
-2.1 Main
-2.2 Hotkeys
-2.3 Input
-2.4 Actions
-2.5 Output
-2.6 History
-2.7 Translator
-2.8 Options
-
+# Overview of ZScreen: capture and (optionally) upload
+# Settings
+## Main
+## Hotkeys
+## Input
+## Actions
+## Output
+## History
+## Translator
+## Options
