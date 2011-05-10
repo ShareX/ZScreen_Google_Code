@@ -211,7 +211,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (mTask.MyImage != null)
+            if (mTask.MyImageUploader != ImageUploaderType.CLIPBOARD && mTask.MyImage != null)
             {
                 NameParserType type;
                 string pattern = string.Empty;
@@ -363,7 +363,10 @@ namespace ZScreenLib
         public void UploadImage()
         {
             mTask.StartTime = DateTime.Now;
-            FileSystem.AppendDebug("Uploading Image: " + mTask.LocalFilePath);
+            if (mTask.MyImageUploader != ImageUploaderType.CLIPBOARD)
+            {
+                FileSystem.AppendDebug("Uploading Image: " + mTask.LocalFilePath);
+            }
 
             ImageUploader imageUploader = null;
 
