@@ -4,7 +4,7 @@
   # Overview of ZScreen: capture and (optionally) upload
   # Settings
     # [ZScreenSetting_MainTab  Main]
-    # Hotkeys
+    # [HotKeysTab Hotkeys]
     # Input
     # Actions
     # Output
