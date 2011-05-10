@@ -79,7 +79,7 @@ namespace ZScreenGUI
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
-            this.cboClipboardTextMode = new System.Windows.Forms.ComboBox();
+            this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.btnClipboardUpload = new System.Windows.Forms.Button();
@@ -1032,7 +1032,7 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.lblScreenshotDelay);
             this.gbImageSettings.Controls.Add(this.nudScreenshotDelay);
             this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
-            this.gbImageSettings.Controls.Add(this.cboClipboardTextMode);
+            this.gbImageSettings.Controls.Add(this.cboURLFormat);
             this.gbImageSettings.Controls.Add(this.chkShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
             this.gbImageSettings.Location = new System.Drawing.Point(48, 200);
@@ -1078,15 +1078,15 @@ namespace ZScreenGUI
             // 
             // cboClipboardTextMode
             // 
-            this.cboClipboardTextMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboClipboardTextMode.FormattingEnabled = true;
-            this.cboClipboardTextMode.Location = new System.Drawing.Point(114, 48);
-            this.cboClipboardTextMode.Name = "cboClipboardTextMode";
-            this.cboClipboardTextMode.Size = new System.Drawing.Size(232, 21);
-            this.cboClipboardTextMode.TabIndex = 116;
-            this.ttZScreen.SetToolTip(this.cboClipboardTextMode, "Specify the way in which screenshot links\r\nshould be added to your clipboard.\r\nDe" +
+            this.cboURLFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboURLFormat.FormattingEnabled = true;
+            this.cboURLFormat.Location = new System.Drawing.Point(114, 48);
+            this.cboURLFormat.Name = "cboClipboardTextMode";
+            this.cboURLFormat.Size = new System.Drawing.Size(232, 21);
+            this.cboURLFormat.TabIndex = 116;
+            this.ttZScreen.SetToolTip(this.cboURLFormat, "Specify the way in which screenshot links\r\nshould be added to your clipboard.\r\nDe" +
                     "fault: Full Image.");
-            this.cboClipboardTextMode.SelectedIndexChanged += new System.EventHandler(this.cboClipboardTextMode_SelectedIndexChanged);
+            this.cboURLFormat.SelectedIndexChanged += new System.EventHandler(this.cboClipboardTextMode_SelectedIndexChanged);
             // 
             // chkShowCursor
             // 
@@ -6836,7 +6836,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.LinkLabel llblBugReports;
         private NumericUpDownTimer nudScreenshotDelay;
         internal System.Windows.Forms.Label lblCopytoClipboard;
-        internal System.Windows.Forms.ComboBox cboClipboardTextMode;
+        internal System.Windows.Forms.ComboBox cboURLFormat;
         internal System.Windows.Forms.CheckBox chkManualNaming;
         internal System.Windows.Forms.CheckBox chkShowCursor;
         internal System.Windows.Forms.Label lblLogo;
