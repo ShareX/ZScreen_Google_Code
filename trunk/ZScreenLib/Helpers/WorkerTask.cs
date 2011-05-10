@@ -37,6 +37,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -546,6 +547,42 @@ namespace ZScreenLib
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
+        }
+
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage()
+        {
+            if (!Engine.conf.MemoryMode && this.MyImage != null)
+            {
+                NameParserType type;
+                string pattern = string.Empty;
+                if (this.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                {
+                    type = NameParserType.ActiveWindow;
+                    pattern = Engine.conf.ActiveWindowPattern;
+                }
+                else
+                {
+                    type = NameParserType.EntireScreen;
+                    pattern = Engine.conf.EntireScreenPattern;
+                }
+
+                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
+                {
+                    if (this.SetFilePathFromPattern(parser.Convert(pattern)))
+                    {
+                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+                        FileSystem.WriteImage(this);
+                        if (!File.Exists(this.LocalFilePath))
+                        {
+                            this.Errors.Add(string.Format("{0} does not exist", this.LocalFilePath));
+                        }
+                    }
+                }
+            }
         }
     }
 }

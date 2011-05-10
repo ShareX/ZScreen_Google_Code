@@ -96,12 +96,12 @@ namespace ZScreenLib
         /// <param name="img">The actual image</param>
         /// <param name="filePath">The path to where the image will be saved</param>
         /// <returns>Returns the file path to a screenshot</returns>
-        public static string SaveImage(ref WorkerTask task)
+        public static string WriteImage(WorkerTask task)
         {
             Image img = task.MyImage;
             string filePath = task.LocalFilePath;
 
-            if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && !string.IsNullOrEmpty(filePath))
+            if (!Engine.conf.MemoryMode && !string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
                 img = ImageEffects.ApplyScreenshotEffects(img);

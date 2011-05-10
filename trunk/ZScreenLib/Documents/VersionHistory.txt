@@ -1,5 +1,7 @@
 Version 3.36 - 20110515
 
+3.36.15.0 Advanced setting to prevent overwriting Clipboard content [Issue 364] {McoreD}
+3.36.14.0 Advanced setting to prevent writing image to file system when destination is set to Clipboard [Issue 390] {McoreD}
 3.36.13.0 Ability to enable/disable destinations by setting the destination to None [Issue 388] {McoreD}
 3.36.12.0 Improved Crop Shot to allow user to nudge the cropshot points with keyboard [Issue 86] {Jaex}
 3.36.11.0 Greatly improved ZScreen startup time using precompiled serialization assemblies {Jaex/McoreD}

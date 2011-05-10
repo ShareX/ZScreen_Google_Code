@@ -170,7 +170,7 @@ namespace ZScreenGUI
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (mZScreen == null) return; 
+            if (mZScreen == null) return;
 
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
@@ -314,7 +314,10 @@ namespace ZScreenGUI
 
                     if (Engine.conf.CopyClipboardAfterTask)
                     {
-                        UploadManager.SetClipboard(task, false);
+                        if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
+                        {
+                            UploadManager.SetClipboard(task, false);
+                        }
                     }
 
                     if (Engine.conf.TwitterEnabled)
