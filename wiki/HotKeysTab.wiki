@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This section describes the Hotkeys tab of Zscreen.
+This section describes the *Hotkeys* tab of Zscreen.
 
 
 = Details =
