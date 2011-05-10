@@ -641,7 +641,7 @@ namespace ZScreenGUI
         {
             if (tsmiTabs.DropDownItems.Count == 0)
             {
-                foreach (TabPage tp in tcApp.TabPages)
+                foreach (TabPage tp in tcMain.TabPages)
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(tp.Text + "...");
                     tsmi.Click += new EventHandler(tsmiTab_Click);
