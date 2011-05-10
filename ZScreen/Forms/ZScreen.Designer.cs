@@ -2446,7 +2446,7 @@ namespace ZScreenGUI
             this.tcDestinations.Controls.Add(this.tpDestFlickr);
             this.tcDestinations.Controls.Add(this.tpDestImageShack);
             this.tcDestinations.Controls.Add(this.tpDestImgur);
-            this.tcDestinations.Controls.Add(this.tpDestImageBam);
+           // this.tcDestinations.Controls.Add(this.tpDestImageBam); // TODO: Complete ImageBAM OAuth based API implementation
             this.tcDestinations.Controls.Add(this.tpDestTinyPic);
             this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
