@@ -1,0 +1,14 @@
+#Describes the "Main" tab of Zscreen.
+
+= Introduction =
+
+This page describes the "Main" tab of Zscreen.
+
+
+= Details =
+
+This tab is designed to provide quick-change settings.
+
+\bYou can change the destination websites (Zscreen lets you define a separate destination site for image, text, file and URL.)
+
+The 
