@@ -66,89 +66,111 @@ namespace ZScreenGUI
 
         #region Worker Events
 
-        public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        private bool CanStartWork(WorkerTask task)
         {
-            WorkerTask task = (WorkerTask)e.Argument;
-            task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
-            task.UniqueNumber = UploadManager.Queue();
-
-            if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
-                task.MyImageUploader != ImageUploaderType.FILE &&
-                (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
-                task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
-                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-            {
-                e.Result = task;
-                return;
-            }
-
-            if (task.WasToTakeScreenshot)
-            {
-                if (Engine.conf.ScreenshotDelayTime > 0)
-                {
-                    Thread.Sleep((int)Engine.conf.ScreenshotDelayTime);
-                }
-            }
-
-            FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job2));
-
+            bool can = false; ;
             switch (task.Job1)
             {
                 case JobLevel1.Image:
-                case JobLevel1.File:
-                    switch (task.Job2)
-                    {
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                            new TaskManager(task).CaptureScreen();
-                            break;
-                        case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
-                        case WorkerTask.JobLevel2.TakeScreenshotCropped:
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                            new TaskManager(task).CaptureRegionOrWindow();
-                            break;
-                        case WorkerTask.JobLevel2.CustomUploaderTest:
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            new TaskManager(task).CaptureActiveWindow();
-                            break;
-                        case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
-                            new TaskManager(task).CaptureFreehandCrop();
-                            break;
-                        case WorkerTask.JobLevel2.UPLOAD_IMAGE:
-                        case WorkerTask.JobLevel2.UploadFromClipboard:
-                        case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
-                            new TaskManager(task).PublishData();
-                            break;
-                    }
-
+                    can = task.MyImageUploader != ImageUploaderType.NONE || task.MyImageUploader == ImageUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
                     break;
                 case JobLevel1.Text:
-                    switch (task.Job2)
-                    {
-                        case WorkerTask.JobLevel2.UploadFromClipboard:
-                            PublishText(task);
-                            break;
-                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                            LanguageTranslator(task);
-                            break;
-                    }
+                    can = task.MyTextUploader != TextUploaderType.NONE || task.MyTextUploader == TextUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
+                    break;
+                case JobLevel1.File:
+                    can = task.MyFileUploader != FileUploaderType.NONE;
                     break;
             }
+            return can;
+        }
 
-            if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
+        public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        {
+            WorkerTask task = (WorkerTask)e.Argument;
+            if (!CanStartWork(task))
             {
-                task.ShortenURL(task.RemoteFilePath);
+                e.Result = null; // Pass a null object because there is nothing else to do
             }
+            else
+            {
+                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
+                task.UniqueNumber = UploadManager.Queue();
 
-            e.Result = task;
+                if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
+                    task.MyImageUploader != ImageUploaderType.FILE &&
+                    (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
+                    task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
+                    MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
+                    Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    e.Result = task;
+                    return;
+                }
+
+                if (task.WasToTakeScreenshot)
+                {
+                    if (Engine.conf.ScreenshotDelayTime > 0)
+                    {
+                        Thread.Sleep((int)Engine.conf.ScreenshotDelayTime);
+                    }
+                }
+
+                FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job2));
+
+                switch (task.Job1)
+                {
+                    case JobLevel1.Image:
+                    case JobLevel1.File:
+                        switch (task.Job2)
+                        {
+                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
+                                new TaskManager(task).CaptureScreen();
+                                break;
+                            case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
+                            case WorkerTask.JobLevel2.TakeScreenshotCropped:
+                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
+                                new TaskManager(task).CaptureRegionOrWindow();
+                                break;
+                            case WorkerTask.JobLevel2.CustomUploaderTest:
+                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
+                                new TaskManager(task).CaptureActiveWindow();
+                                break;
+                            case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
+                                new TaskManager(task).CaptureFreehandCrop();
+                                break;
+                            case WorkerTask.JobLevel2.UPLOAD_IMAGE:
+                            case WorkerTask.JobLevel2.UploadFromClipboard:
+                            case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
+                                new TaskManager(task).PublishData();
+                                break;
+                        }
+
+                        break;
+                    case JobLevel1.Text:
+                        switch (task.Job2)
+                        {
+                            case WorkerTask.JobLevel2.UploadFromClipboard:
+                                PublishText(task);
+                                break;
+                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                                LanguageTranslator(task);
+                                break;
+                        }
+                        break;
+                }
+
+                if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
+                {
+                    task.ShortenURL(task.RemoteFilePath);
+                }
+
+                e.Result = task;
+            }
         }
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (mZScreen == null)
-            {
-                return;
-            }
+            if (mZScreen == null) return; 
 
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
@@ -209,6 +231,8 @@ namespace ZScreenGUI
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Result;
+            if (task == null) return;
+
             mZScreen.Text = Engine.GetProductName();
             UploadManager.LinkManagerLast = task.LinkManager;
 
