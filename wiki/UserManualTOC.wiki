@@ -3,11 +3,11 @@
 
   #Overview of ZScreen: capture and (optionally) upload
   #Settings
-    #Main
-  ##Hotkeys
-  ##Input
-  ##Actions
-  ##Output
-  ##History
-  ##Translator
-  ##Options
+    # Main
+    # Hotkeys
+    # Input
+    # Actions
+    # Output
+    # History
+    # Translator
+    # Options
