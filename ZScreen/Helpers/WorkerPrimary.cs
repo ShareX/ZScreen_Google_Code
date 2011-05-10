@@ -760,7 +760,7 @@ namespace ZScreenGUI
         private void QuickOptionsApplySettings(object sender, EventArgs e)
         {
             mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = Engine.conf.MyImageUploader;
-            mZScreen.cboClipboardTextMode.SelectedIndex = Engine.conf.MyClipboardUriMode;
+            mZScreen.cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode;
         }
 
         private void QuickOptionsFormClosed(object sender, FormClosedEventArgs e)

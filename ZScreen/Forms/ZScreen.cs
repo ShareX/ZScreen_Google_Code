@@ -806,7 +806,7 @@ namespace ZScreenGUI
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
             Engine.conf.MyClipboardUriMode = (int)tsm.Tag;
             CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
-            cboClipboardTextMode.SelectedIndex = Engine.conf.MyClipboardUriMode;
+            cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode;
         }
 
         /// <summary>
@@ -1126,7 +1126,7 @@ namespace ZScreenGUI
         {
             ImageUploaderType uploader = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
             Engine.conf.MyImageUploader = (int)uploader;
-            cboClipboardTextMode.Enabled = uploader != ImageUploaderType.CLIPBOARD;
+            cboURLFormat.Enabled = uploader != ImageUploaderType.CLIPBOARD;
 
             CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(uploader));
         }
@@ -1203,7 +1203,7 @@ namespace ZScreenGUI
 
         private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.MyClipboardUriMode = cboClipboardTextMode.SelectedIndex;
+            Engine.conf.MyClipboardUriMode = cboURLFormat.SelectedIndex;
             UpdateClipboardTextTrayMenu();
         }
 
@@ -1337,16 +1337,15 @@ namespace ZScreenGUI
                                 switch (t.MyImageUploader)
                                 {
                                     case ImageUploaderType.FILE:
-                                    case ImageUploaderType.CLIPBOARD:
                                         cbString = t.LocalFilePath;
-                                        if (!string.IsNullOrEmpty(cbString))
+                                        if (File.Exists(cbString))
                                         {
                                             Process.Start(cbString);
                                         }
                                         break;
                                     default:
                                         cbString = t.RemoteFilePath;
-                                        if (!string.IsNullOrEmpty(cbString))
+                                        if (File.Exists(cbString))
                                         {
                                             Process.Start(cbString);
                                         }

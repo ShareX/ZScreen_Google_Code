@@ -63,10 +63,10 @@ namespace ZScreenGUI
                 ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.MyURLShortener.BetweenOrDefault(0, ucDestOptions.cboURLShorteners.Items.Count - 1);
             }
 
-            if (cboClipboardTextMode.Items.Count == 0)
+            if (cboURLFormat.Items.Count == 0)
             {
-                cboClipboardTextMode.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
-                cboClipboardTextMode.SelectedIndex = Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboClipboardTextMode.Items.Count - 1);
+                cboURLFormat.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
+                cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboURLFormat.Items.Count - 1);
             }
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;

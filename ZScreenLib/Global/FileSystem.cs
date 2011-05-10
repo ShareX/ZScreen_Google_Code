@@ -101,7 +101,7 @@ namespace ZScreenLib
             Image img = task.MyImage;
             string filePath = task.LocalFilePath;
 
-            if (!string.IsNullOrEmpty(filePath))
+            if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && !string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
                 img = ImageEffects.ApplyScreenshotEffects(img);
