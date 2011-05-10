@@ -1,5 +1,5 @@
+#summary Table of content for the User Manual for Zscreen.
 #labels Featured
-#Summary Table of content for the User Manual for Zscreen.
 
   # Overview of ZScreen: capture and (optionally) upload
   # Settings
