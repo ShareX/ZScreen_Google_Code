@@ -209,7 +209,7 @@ namespace ZScreenGUI
             tabImageList.Images.Add("comments", Resources.comments);
             tabImageList.Images.Add("pictures", Resources.pictures);
             tabImageList.Images.Add("application_edit", Resources.application_edit);
-            tcApp.ImageList = tabImageList;
+            tcMain.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
             tpDestinations.ImageKey = "server";
             tpHotkeys.ImageKey = "keyboard";
@@ -460,10 +460,10 @@ namespace ZScreenGUI
         private void tsmiTab_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            tcApp.SelectedTab = tcApp.TabPages[(string)tsmi.Tag];
+            tcMain.SelectedTab = tcMain.TabPages[(string)tsmi.Tag];
 
             BringUpMenu();
-            tcApp.Focus();
+            tcMain.Focus();
         }
 
         private void tsmiDestImages_Click(object sender, EventArgs e)
@@ -3379,7 +3379,7 @@ namespace ZScreenGUI
             if (!Adapter.CheckTwitterAccounts())
             {
                 MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tcApp.SelectedTab = tpDestinations;
+                tcMain.SelectedTab = tpDestinations;
                 tcDestinations.SelectedTab = tpDestTwitter;
             }
 
