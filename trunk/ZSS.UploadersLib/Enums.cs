@@ -115,6 +115,8 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
+        [Description("None")]
+        NONE,
         [Description("Clipboard - Copy Bitmap")]
         CLIPBOARD,
         [Description("File - Copy local file path")]
@@ -149,6 +151,8 @@ namespace UploadersLib
 
     public enum TextUploaderType
     {
+        [Description("None")]
+        NONE,
         [Description("Pastebin - pastebin.com")]
         PASTEBIN,
         [Description("Pastebin - pastebin.ca")]
@@ -163,6 +167,8 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
+        [Description("None")]
+        NONE,
         [Description("RapidShare - rapidshare.com")]
         RapidShare,
         [Description("SendSpace - sendspace.com")]
@@ -181,6 +187,8 @@ namespace UploadersLib
 
     public enum UrlShortenerType
     {
+        [Description("None")]
+        NONE,
         [Description("Google - www.goo.gl")]
         Google,
         [Description("bit.ly - www.bit.ly")]

@@ -473,9 +473,14 @@ namespace ZScreenLib
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
         }
 
+        /// <summary>
+        /// Function to test if the URL should or could shorten
+        /// </summary>
+        /// <param name="url">Long URL</param>
+        /// <returns>true/false whether URL should or could shorten</returns>
         public bool ShouldShortenURL(string url)
         {
-            if (FileSystem.IsValidLink(url))
+            if (FileSystem.IsValidLink(url) && this.MyUrlShortener != UrlShortenerType.NONE)
             {
                 if (Engine.conf.ShortenUrlAfterUpload)
                 {
