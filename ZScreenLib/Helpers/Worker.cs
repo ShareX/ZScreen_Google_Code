@@ -296,7 +296,7 @@ namespace ZScreenLib
                 task.SetImage(Clipboard.GetImage());
                 if (task.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
                 {
-                    FileSystem.SaveImage(ref task);
+                    FileSystem.WriteImage(task);
                     StartWorkerPictures(task, task.LocalFilePath);
                 }
             }
@@ -417,7 +417,7 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             WorkerTask t = CreateTask(job);
             t.SetImage(img);
-            new TaskManager(t).WriteImage();
+            t.WriteImage();
             t.MyWorker.RunWorkerAsync(t);
         }
 

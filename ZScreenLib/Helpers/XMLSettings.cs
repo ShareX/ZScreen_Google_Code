@@ -530,10 +530,10 @@ namespace ZScreenLib
         [Category("Options / URL Shorteners"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
 
-        [Category("Options / General"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
+        [Category("Options / Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
-        [Category("Options / General"), DefaultValue(false), Description("Do not store any data in the hard disk.")]
-        public bool MemoryMode = false; // TODO: Make this a property after implementation
+        [Category("Options / Clipboard"), DefaultValue(false), Description("Do not store any data in the hard disk when destination is set to Clipboard.")]
+        public bool MemoryMode { get; set; }
 
         // Options / Paths
 

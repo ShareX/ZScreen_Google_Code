@@ -62,7 +62,7 @@ namespace ZScreenLib
             try
             {
                 mTask.CaptureActiveWindow();
-                WriteImage();
+                mTask.WriteImage();
                 PublishData();
             }
             catch (ArgumentOutOfRangeException aor)
@@ -152,7 +152,7 @@ namespace ZScreenLib
                         mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage, roundedShadowCorners));
                     }
 
-                    WriteImage();
+                    mTask.WriteImage();
                     PublishData();
                 }
             }
@@ -177,7 +177,7 @@ namespace ZScreenLib
         public void CaptureScreen()
         {
             mTask.CaptureScreen();
-            WriteImage();
+            mTask.WriteImage();
             PublishData();
         }
 
@@ -200,44 +200,8 @@ namespace ZScreenLib
 
             if (mTask.MyImage != null)
             {
-                WriteImage();
+                mTask.WriteImage();
                 PublishData();
-            }
-        }
-
-        /// <summary>
-        /// Writes MyImage object in a WorkerTask into a file
-        /// </summary>
-        /// <param name="t">WorkerTask</param>
-        public void WriteImage()
-        {
-            if (mTask.MyImageUploader != ImageUploaderType.CLIPBOARD && mTask.MyImage != null)
-            {
-                NameParserType type;
-                string pattern = string.Empty;
-                if (mTask.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
-                {
-                    type = NameParserType.ActiveWindow;
-                    pattern = Engine.conf.ActiveWindowPattern;
-                }
-                else
-                {
-                    type = NameParserType.EntireScreen;
-                    pattern = Engine.conf.EntireScreenPattern;
-                }
-
-                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
-                {
-                    if (mTask.SetFilePathFromPattern(parser.Convert(pattern)))
-                    {
-                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
-                        FileSystem.SaveImage(ref mTask);
-                        if (!File.Exists(mTask.LocalFilePath))
-                        {
-                            mTask.Errors.Add(string.Format("{0} does not exist", mTask.LocalFilePath));
-                        }
-                    }
-                }
             }
         }
 
