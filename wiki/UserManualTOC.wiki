@@ -1,7 +1,7 @@
 #summary Table of content for the User Manual for Zscreen.
 #labels Featured
 
-  # Overview of ZScreen: capture and (optionally) upload
+  # Overview
   # Settings
     # [ZScreenSetting_MainTab  Main]
     # [HotKeysTab Hotkeys]
