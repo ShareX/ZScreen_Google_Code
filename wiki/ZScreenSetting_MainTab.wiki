@@ -1,3 +1,5 @@
+#summary The Main tab of Zscreen
+
 = Introduction =
 
 This page describes the "Main" tab of Zscreen.
