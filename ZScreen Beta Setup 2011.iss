@@ -87,7 +87,7 @@ Source: ZUploader\bin\Release\*.dll; Excludes: *.vshost.exe; DestDir: {app}; Fla
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
-Name: "{group}\{#MyAppName}"; Filename: "{app}\ZUploader.exe"
+Name: "{group}\ZUploader"; Filename: "{app}\ZUploader.exe"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"; Tasks: quicklaunchicon
 
