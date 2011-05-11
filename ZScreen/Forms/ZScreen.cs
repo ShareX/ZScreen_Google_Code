@@ -1004,6 +1004,11 @@ namespace ZScreenGUI
 
             Loader.KeyboardHook();
             Engine.conf.FirstRun = false;
+
+            if (Engine.MultipleInstance)
+            {
+                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+            }
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
