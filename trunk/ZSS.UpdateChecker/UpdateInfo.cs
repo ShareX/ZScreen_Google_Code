@@ -25,6 +25,7 @@
 
 using System;
 using System.Text;
+using HelpersLib;
 
 namespace ZSS.UpdateCheckerLib
 {

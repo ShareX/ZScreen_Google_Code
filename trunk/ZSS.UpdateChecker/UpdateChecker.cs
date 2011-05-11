@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -32,7 +33,6 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using HelpersLib;
-using System.ComponentModel;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -79,7 +79,23 @@ namespace ZSS.UpdateCheckerLib
 
                     if (xd != null)
                     {
-                        string path = string.Format("Update/{0}/{1}", ApplicationName, ReleaseChannel.ToString());
+                        string node;
+
+                        switch (ReleaseChannel)
+                        {
+                            default:
+                            case ReleaseChannelType.Stable:
+                                node = "Stable";
+                                break;
+                            case ReleaseChannelType.Beta:
+                                node = "Beta|Stable";
+                                break;
+                            case ReleaseChannelType.Dev:
+                                node = "Dev|Beta|Stable";
+                                break;
+                        }
+
+                        string path = string.Format("Update/{0}/{1}", ApplicationName, node);
                         XElement xe = xd.GetNode(path);
 
                         if (xe != null)
