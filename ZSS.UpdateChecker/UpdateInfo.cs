@@ -56,7 +56,7 @@ namespace ZSS.UpdateCheckerLib
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(string.Format("Version {0} is your current version.", ApplicationVersion));
+            sb.AppendLine(string.Format("Version {0} is your current version", ApplicationVersion));
             sb.AppendLine(string.Format("Version {0} is the latest {1} version", LatestVersion, ReleaseChannel.GetDescription()));
             sb.AppendLine(string.Format("{1} was last updated on {0}", Date.ToLongDateString(), ReleaseChannel.GetDescription()));
             return sb.ToString();
