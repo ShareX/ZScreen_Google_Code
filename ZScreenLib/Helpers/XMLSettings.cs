@@ -381,7 +381,6 @@ namespace ZScreenLib
         public bool ImageUploadRetryOnFail { get; set; }
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Randomly select a valid destination when instead of retrying between ImageShack and TinyPic.")]
         public bool ImageUploadRandomRetryOnFail { get; set; }
-        public bool AddFailedScreenshot = true;
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
         public bool ImageUploadRetryOnTimeout { get; set; }
         [Category("Options / Image Uploaders"), DefaultValue(15000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]

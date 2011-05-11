@@ -238,7 +238,7 @@ namespace ZScreenGUI
 
             try
             {
-                if (task.Errors.Count > 0 && task.Errors[0].Contains(ExceptionMessage.ProxyAuthenticationRequired))
+                if (task.IsError && task.Errors[0].Contains(ExceptionMessage.ProxyAuthenticationRequired))
                 {
                     ProxyConfig pc = new ProxyConfig();
                     if (pc.ShowDialog() == DialogResult.OK)
@@ -353,9 +353,9 @@ namespace ZScreenGUI
                         }
                     }
 
-                    if (task.Errors.Count > 0)
+                    if (task.IsError)
                     {
-                        foreach (var error in task.Errors)
+                        foreach (string error in task.Errors)
                         {
                             FileSystem.AppendDebug(error);
                         }
@@ -369,7 +369,7 @@ namespace ZScreenGUI
                     task.MyImage.Dispose(); // For fix memory leak
                 }
 
-                if (Engine.conf.AddFailedScreenshot || (!Engine.conf.AddFailedScreenshot && task.Errors.Count == 0))
+                if (!task.IsError)
                 {
                     AddHistoryItem(task);
                 }
@@ -669,7 +669,7 @@ namespace ZScreenGUI
         {
             if (Engine.conf.HistorySave)
             {
-                HistoryManager.AutomaticlyAddHistoryItemAsync(Engine.HistoryDbPath, task.GenerateHistoryItem());
+                HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem());
             }
 
             Adapter.AddRecentItem(task.LocalFilePath);

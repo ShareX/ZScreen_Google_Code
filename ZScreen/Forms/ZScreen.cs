@@ -2426,11 +2426,6 @@ namespace ZScreenGUI
             Loader.Worker2.CheckUpdates();
         }
 
-        private void cbAddFailedScreenshot_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.AddFailedScreenshot = cbAddFailedScreenshot.Checked;
-        }
-
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
@@ -3956,6 +3951,18 @@ namespace ZScreenGUI
         private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
+        }
+
+        private void btnClearHistory_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Engine.HistoryPath))
+            {
+                if (MessageBox.Show("Are you really want to delete History?\r\nHistory file path: " + Engine.HistoryPath, "ZScreen - History",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    File.Delete(Engine.HistoryPath);
+                }
+            }
         }
     }
 }

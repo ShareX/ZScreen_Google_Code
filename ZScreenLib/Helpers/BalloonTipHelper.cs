@@ -103,7 +103,7 @@ namespace ZScreenLib
                         }
                         fileOrUrl = string.Format("URL: {0}", task.RemoteFilePath);
 
-                        if (string.IsNullOrEmpty(task.RemoteFilePath) && task.Errors.Count > 0)
+                        if (string.IsNullOrEmpty(task.RemoteFilePath) && task.IsError)
                         {
                             tti = ToolTipIcon.Warning;
                             sbMsg.AppendLine("Warnings: ");
@@ -115,7 +115,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        if (task.Errors.Count > 0)
+                        if (task.IsError)
                         {
                             tti = ToolTipIcon.Error;
                             fileOrUrl = "Warning: " + task.Errors[task.Errors.Count - 1];

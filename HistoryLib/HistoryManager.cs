@@ -78,7 +78,7 @@ namespace HistoryLib
             return false;
         }
 
-        public static void AutomaticlyAddHistoryItemAsync(string historyPath, HistoryItem historyItem)
+        public static void AddHistoryItemAsync(string historyPath, HistoryItem historyItem)
         {
             WaitCallback thread = state =>
             {

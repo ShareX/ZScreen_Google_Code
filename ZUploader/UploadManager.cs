@@ -318,7 +318,7 @@ namespace ZUploader
 
                             if (Program.Settings.SaveHistory)
                             {
-                                HistoryManager.AutomaticlyAddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
+                                HistoryManager.AddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
                             }
                         }
 

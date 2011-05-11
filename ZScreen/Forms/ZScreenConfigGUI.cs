@@ -348,7 +348,6 @@ namespace ZScreenGUI
             cbLanguageAutoDetect.Checked = Engine.conf.GoogleAutoDetectSource;
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
-            cbAddFailedScreenshot.Checked = Engine.conf.AddFailedScreenshot;
 
             // Custom Image Uploaders
             lbImageUploader.Items.Clear();
