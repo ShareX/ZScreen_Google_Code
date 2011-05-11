@@ -35,8 +35,14 @@ namespace ZSS.UpdateCheckerLib
         public string URL { get; set; }
         public DateTime Date { get; set; }
         public string Summary { get; set; }
+        public ReleaseChannelType ReleaseChannel { get; private set; }
 
         private const bool ForceUpdate = false;
+
+        public UpdateInfo(ReleaseChannelType channel)
+        {
+            this.ReleaseChannel = channel;
+        }
 
         public bool IsUpdateRequired
         {
@@ -50,9 +56,9 @@ namespace ZSS.UpdateCheckerLib
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Current version: " + ApplicationVersion);
-            sb.AppendLine("Latest version: " + LatestVersion);
-            sb.AppendLine("Latest version date: " + Date.ToLongDateString());
+            sb.AppendLine(string.Format("Version {0} is your current version.", ApplicationVersion));
+            sb.AppendLine(string.Format("Version {0} is the latest {1} version", LatestVersion, ReleaseChannel.GetDescription()));
+            sb.AppendLine(string.Format("{1} was last updated on {0}", Date.ToLongDateString(), ReleaseChannel.GetDescription()));
             return sb.ToString();
         }
     }

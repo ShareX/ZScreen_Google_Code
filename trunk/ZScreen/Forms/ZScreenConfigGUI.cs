@@ -12,6 +12,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
@@ -442,7 +443,11 @@ namespace ZScreenGUI
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
 
             chkCheckUpdates.Checked = Engine.conf.CheckUpdates;
-            chkCheckUpdatesBeta.Checked = Engine.conf.CheckUpdatesBeta;
+            if (cboReleaseChannel.Items.Count == 0)
+            {
+                cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetDescriptions());
+                cboReleaseChannel.SelectedIndex = (int)Engine.conf.ReleaseChannel;
+            }
             nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
             chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
 

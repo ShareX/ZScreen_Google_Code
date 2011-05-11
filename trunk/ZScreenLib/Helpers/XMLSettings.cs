@@ -43,6 +43,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
 using ZSS.IndexersLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZScreenLib
 {
@@ -450,6 +451,7 @@ namespace ZScreenLib
 
         public bool CheckUpdates = true;
         public bool CheckUpdatesBeta = false;
+        public ReleaseChannelType ReleaseChannel = ReleaseChannelType.Stable;
 
         //~~~~~~~~~~~~~~~
         // Proxy Settings

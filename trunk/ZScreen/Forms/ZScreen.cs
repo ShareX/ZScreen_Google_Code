@@ -52,6 +52,7 @@ using ZScreenLib;
 using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
@@ -2990,11 +2991,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void cbCheckUpdatesBeta_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.CheckUpdatesBeta = chkCheckUpdatesBeta.Checked;
-        }
-
         private void rbImageSize_CheckedChanged(object sender, EventArgs e)
         {
             if (rbImageSizeDefault.Checked)
@@ -3955,6 +3951,11 @@ namespace ZScreenGUI
         private void chkShortenURL_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShortenUrlAfterUpload = chkShortenURL.Checked;
+        }
+
+        private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
         }
     }
 }
