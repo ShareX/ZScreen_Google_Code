@@ -2,17 +2,23 @@
 <Update>
 	<ZScreen>
 		<Stable>
-			<Version>3.27.3.1</Version>
+			<Version>3.27.03.1</Version>
 			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.27.3.1-setup.exe</URL>
 			<Date>2011-03-15</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Stable>
 		<Beta>
-			<Version>3.34.0.1</Version>
+			<Version>3.34.00.1</Version>
 			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.34.0.1-setup.exe</URL>
 			<Date>2011-04-03</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Beta>
+    <Dev>
+      <Version>3.36.16.2</Version>
+      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.36.15.2-setup.exe</URL>
+      <Date>2011-05-11</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+    </Dev>
 	</ZScreen>
 	<ZUploader>
 		<Stable>

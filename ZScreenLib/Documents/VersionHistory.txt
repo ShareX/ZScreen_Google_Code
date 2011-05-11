@@ -1,5 +1,6 @@
 Version 3.36 - 20110515
 
+3.36.16.0 Provision for checking updates for Dev channel releases {McoreD}
 3.36.15.0 Advanced setting to prevent overwriting Clipboard content [Issue 364] {McoreD}
 3.36.14.0 Advanced setting to prevent writing image to file system when destination is set to Clipboard [Issue 390] {McoreD}
 3.36.13.0 Ability to enable/disable destinations by setting the destination to None [Issue 388] {McoreD}

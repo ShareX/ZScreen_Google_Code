@@ -32,26 +32,37 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using HelpersLib;
+using System.ComponentModel;
 
 namespace ZSS.UpdateCheckerLib
 {
+    public enum ReleaseChannelType
+    {
+        [Description("Stable channel")]
+        Stable,
+        [Description("Beta channel")]
+        Beta,
+        [Description("Dev channel")]
+        Dev
+    }
+
     public class UpdateChecker
     {
         public string URL { get; private set; }
         public string ApplicationName { get; private set; }
         public Version ApplicationVersion { get; private set; }
-        public bool CheckBeta { get; private set; }
+        public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateInfo UpdateInfo { get; private set; }
 
         private IWebProxy proxy;
         private NewVersionWindowOptions nvwo;
 
-        public UpdateChecker(string url, string applicationName, Version applicationVersion, bool checkBeta, IWebProxy proxy, NewVersionWindowOptions nvwo)
+        public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo)
         {
             URL = url;
             ApplicationName = applicationName;
             ApplicationVersion = applicationVersion;
-            CheckBeta = checkBeta;
+            ReleaseChannel = channel;
             this.proxy = proxy;
             this.nvwo = nvwo;
         }
@@ -68,12 +79,12 @@ namespace ZSS.UpdateCheckerLib
 
                     if (xd != null)
                     {
-                        string path = string.Format("Update/{0}/{1}", ApplicationName, CheckBeta ? "Beta|Stable" : "Stable");
+                        string path = string.Format("Update/{0}/{1}", ApplicationName, ReleaseChannel.ToString());
                         XElement xe = xd.GetNode(path);
 
                         if (xe != null)
                         {
-                            UpdateInfo = new UpdateInfo
+                            UpdateInfo = new UpdateInfo(ReleaseChannel)
                             {
                                 ApplicationVersion = ApplicationVersion,
                                 LatestVersion = new Version(xe.GetValue("Version")),
