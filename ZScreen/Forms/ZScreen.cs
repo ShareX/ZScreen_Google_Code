@@ -3122,7 +3122,6 @@ namespace ZScreenGUI
             Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
-        // TODO: Remove ImageBam
         private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageBamApiKey = txtImageBamApiKey.Text;
@@ -3957,7 +3956,7 @@ namespace ZScreenGUI
         {
             if (File.Exists(Engine.HistoryPath))
             {
-                if (MessageBox.Show("Are you really want to delete History?\r\nHistory file path: " + Engine.HistoryPath, "ZScreen - History",
+                if (MessageBox.Show("Do you really want to delete History?\r\nHistory file path: " + Engine.HistoryPath, "ZScreen - History",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     File.Delete(Engine.HistoryPath);
