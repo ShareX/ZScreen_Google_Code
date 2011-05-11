@@ -1343,6 +1343,7 @@ namespace ZScreenGUI
                                 switch (t.MyImageUploader)
                                 {
                                     case ImageUploaderType.FILE:
+                                    case ImageUploaderType.CLIPBOARD:
                                         cbString = t.LocalFilePath;
                                         if (File.Exists(cbString))
                                         {
@@ -1351,7 +1352,7 @@ namespace ZScreenGUI
                                         break;
                                     default:
                                         cbString = t.RemoteFilePath;
-                                        if (File.Exists(cbString))
+                                        if (!string.IsNullOrEmpty(cbString)) // Cannot use File.Exists
                                         {
                                             Process.Start(cbString);
                                         }
