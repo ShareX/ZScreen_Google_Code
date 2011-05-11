@@ -180,7 +180,7 @@ namespace ZScreenLib
         public static bool TurnOn(EngineOptions options)
         {
             FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
-            FileSystem.AppendDebug(string.Format("Product Version: {0}, Rev {1}", mAppInfo.GetApplicationTitleFull(), Adapter.AppRevision));
+            FileSystem.AppendDebug(string.Format("Product Version: {0} rev {1}", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
             DialogResult configResult = DialogResult.OK;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
