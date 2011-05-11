@@ -284,9 +284,8 @@ namespace ZScreenLib
                     });
                     break;
                 case FileUploaderType.Dropbox:
-                    OAuthInfo oauth = new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret, Engine.conf.DropboxUserToken, Engine.conf.DropboxUserSecret);
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
-                    fileHost = new Dropbox(oauth, uploadPath, Engine.conf.DropboxUserID);
+                    fileHost = new Dropbox(Engine.conf.DropboxOAuthInfo, uploadPath, Engine.conf.DropboxUserID);
                     break;
                 /*case FileUploaderType.FileBin:
                     fileHost = new FileBin();

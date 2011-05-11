@@ -263,7 +263,6 @@ namespace ZScreenGUI
 
             // Dropbox
 
-            txtDropboxEmail.Text = Engine.conf.DropboxEmail;
             txtDropboxPath.Text = Engine.conf.DropboxUploadPath;
             UpdateDropboxStatus();
 
