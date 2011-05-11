@@ -98,12 +98,18 @@
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbSelectedHistoryItem = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
+            this.tlpMainTop = new System.Windows.Forms.TableLayoutPanel();
             this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
+            this.flpLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
             this.gbFilters.SuspendLayout();
             this.gbSelectedHistoryItem.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tlpMain.SuspendLayout();
+            this.tlpMainTop.SuspendLayout();
+            this.flpLeft.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmsHistory
@@ -115,7 +121,7 @@
             this.tsmiMoreInfo});
             this.cmsHistory.Name = "cmsHistory";
             this.cmsHistory.ShowImageMargin = false;
-            this.cmsHistory.Size = new System.Drawing.Size(128, 114);
+            this.cmsHistory.Size = new System.Drawing.Size(106, 92);
             // 
             // tsmiOpen
             // 
@@ -128,7 +134,7 @@
             this.tsmiOpenFile,
             this.tsmiOpenFolder});
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(127, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(105, 22);
             this.tsmiOpen.Text = "Open";
             // 
             // tsmiOpenURL
@@ -203,7 +209,7 @@
             this.tsmiCopyFileNameWithExtension,
             this.tsmiCopyFolder});
             this.tsmiCopy.Name = "tsmiCopy";
-            this.tsmiCopy.Size = new System.Drawing.Size(127, 22);
+            this.tsmiCopy.Size = new System.Drawing.Size(105, 22);
             this.tsmiCopy.Text = "Copy";
             // 
             // tsmiCopyURL
@@ -352,7 +358,7 @@
             this.tsmiDeleteLocalFile,
             this.tsmiDeleteFromHistoryAndLocalFile});
             this.tsmiDelete.Name = "tsmiDelete";
-            this.tsmiDelete.Size = new System.Drawing.Size(127, 22);
+            this.tsmiDelete.Size = new System.Drawing.Size(105, 22);
             this.tsmiDelete.Text = "Delete";
             // 
             // tsmiDeleteFromHistory
@@ -379,7 +385,7 @@
             // tsmiMoreInfo
             // 
             this.tsmiMoreInfo.Name = "tsmiMoreInfo";
-            this.tsmiMoreInfo.Size = new System.Drawing.Size(127, 22);
+            this.tsmiMoreInfo.Size = new System.Drawing.Size(105, 22);
             this.tsmiMoreInfo.Text = "More info";
             this.tsmiMoreInfo.Click += new System.EventHandler(this.tsmiMoreInfo_Click);
             // 
@@ -387,7 +393,7 @@
             // 
             this.dtpFilterFrom.Location = new System.Drawing.Point(56, 46);
             this.dtpFilterFrom.Name = "dtpFilterFrom";
-            this.dtpFilterFrom.Size = new System.Drawing.Size(239, 20);
+            this.dtpFilterFrom.Size = new System.Drawing.Size(230, 20);
             this.dtpFilterFrom.TabIndex = 1;
             // 
             // cbDateFilter
@@ -422,7 +428,7 @@
             // 
             this.dtpFilterTo.Location = new System.Drawing.Point(56, 70);
             this.dtpFilterTo.Name = "dtpFilterTo";
-            this.dtpFilterTo.Size = new System.Drawing.Size(239, 20);
+            this.dtpFilterTo.Size = new System.Drawing.Size(230, 20);
             this.dtpFilterTo.TabIndex = 5;
             // 
             // btnApplyFilters
@@ -437,9 +443,9 @@
             // 
             // txtFilenameFilter
             // 
-            this.txtFilenameFilter.Location = new System.Drawing.Point(16, 120);
+            this.txtFilenameFilter.Location = new System.Drawing.Point(16, 119);
             this.txtFilenameFilter.Name = "txtFilenameFilter";
-            this.txtFilenameFilter.Size = new System.Drawing.Size(176, 20);
+            this.txtFilenameFilter.Size = new System.Drawing.Size(170, 20);
             this.txtFilenameFilter.TabIndex = 8;
             // 
             // cbFilenameFilterMethod
@@ -450,7 +456,7 @@
             "Contains",
             "Starts with",
             "Exact match"});
-            this.cbFilenameFilterMethod.Location = new System.Drawing.Point(200, 120);
+            this.cbFilenameFilterMethod.Location = new System.Drawing.Point(192, 119);
             this.cbFilenameFilterMethod.Name = "cbFilenameFilterMethod";
             this.cbFilenameFilterMethod.Size = new System.Drawing.Size(96, 21);
             this.cbFilenameFilterMethod.TabIndex = 10;
@@ -463,9 +469,9 @@
             "Current culture",
             "Invariant culture (English)",
             "Ordinal (English)"});
-            this.cbFilenameFilterCulture.Location = new System.Drawing.Point(16, 144);
+            this.cbFilenameFilterCulture.Location = new System.Drawing.Point(16, 145);
             this.cbFilenameFilterCulture.Name = "cbFilenameFilterCulture";
-            this.cbFilenameFilterCulture.Size = new System.Drawing.Size(176, 21);
+            this.cbFilenameFilterCulture.Size = new System.Drawing.Size(170, 21);
             this.cbFilenameFilterCulture.TabIndex = 11;
             // 
             // cbFilenameFilter
@@ -481,7 +487,7 @@
             // cbFilenameFilterCase
             // 
             this.cbFilenameFilterCase.AutoSize = true;
-            this.cbFilenameFilterCase.Location = new System.Drawing.Point(200, 146);
+            this.cbFilenameFilterCase.Location = new System.Drawing.Point(192, 146);
             this.cbFilenameFilterCase.Name = "cbFilenameFilterCase";
             this.cbFilenameFilterCase.Size = new System.Drawing.Size(94, 17);
             this.cbFilenameFilterCase.TabIndex = 13;
@@ -492,9 +498,9 @@
             // 
             this.ssMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslStatus});
-            this.ssMain.Location = new System.Drawing.Point(0, 612);
+            this.ssMain.Location = new System.Drawing.Point(0, 669);
             this.ssMain.Name = "ssMain";
-            this.ssMain.Size = new System.Drawing.Size(825, 22);
+            this.ssMain.Size = new System.Drawing.Size(917, 22);
             this.ssMain.TabIndex = 15;
             this.ssMain.Text = "statusStrip1";
             // 
@@ -520,18 +526,18 @@
             this.gbFilters.Controls.Add(this.cbFilenameFilterCulture);
             this.gbFilters.Controls.Add(this.txtFilenameFilter);
             this.gbFilters.Controls.Add(this.cbFilenameFilterMethod);
-            this.gbFilters.Location = new System.Drawing.Point(168, 8);
+            this.gbFilters.Location = new System.Drawing.Point(161, 3);
             this.gbFilters.Name = "gbFilters";
-            this.gbFilters.Size = new System.Drawing.Size(312, 232);
+            this.gbFilters.Size = new System.Drawing.Size(310, 241);
             this.gbFilters.TabIndex = 16;
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
             // 
             // txtHostFilter
             // 
-            this.txtHostFilter.Location = new System.Drawing.Point(112, 200);
+            this.txtHostFilter.Location = new System.Drawing.Point(112, 199);
             this.txtHostFilter.Name = "txtHostFilter";
-            this.txtHostFilter.Size = new System.Drawing.Size(184, 20);
+            this.txtHostFilter.Size = new System.Drawing.Size(128, 20);
             this.txtHostFilter.TabIndex = 17;
             // 
             // cbTypeFilterSelection
@@ -542,15 +548,15 @@
             "Image",
             "File",
             "Text"});
-            this.cbTypeFilterSelection.Location = new System.Drawing.Point(112, 174);
+            this.cbTypeFilterSelection.Location = new System.Drawing.Point(112, 172);
             this.cbTypeFilterSelection.Name = "cbTypeFilterSelection";
-            this.cbTypeFilterSelection.Size = new System.Drawing.Size(96, 21);
+            this.cbTypeFilterSelection.Size = new System.Drawing.Size(128, 21);
             this.cbTypeFilterSelection.TabIndex = 16;
             // 
             // cbHostFilter
             // 
             this.cbHostFilter.AutoSize = true;
-            this.cbHostFilter.Location = new System.Drawing.Point(16, 202);
+            this.cbHostFilter.Location = new System.Drawing.Point(16, 201);
             this.cbHostFilter.Name = "cbHostFilter";
             this.cbHostFilter.Size = new System.Drawing.Size(73, 17);
             this.cbHostFilter.TabIndex = 15;
@@ -560,7 +566,7 @@
             // cbTypeFilter
             // 
             this.cbTypeFilter.AutoSize = true;
-            this.cbTypeFilter.Location = new System.Drawing.Point(16, 176);
+            this.cbTypeFilter.Location = new System.Drawing.Point(16, 174);
             this.cbTypeFilter.Name = "cbTypeFilter";
             this.cbTypeFilter.Size = new System.Drawing.Size(90, 17);
             this.cbTypeFilter.TabIndex = 14;
@@ -631,9 +637,9 @@
             this.lvHistory.FullRowSelect = true;
             this.lvHistory.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvHistory.HideSelection = false;
-            this.lvHistory.Location = new System.Drawing.Point(8, 248);
+            this.lvHistory.Location = new System.Drawing.Point(3, 304);
             this.lvHistory.Name = "lvHistory";
-            this.lvHistory.Size = new System.Drawing.Size(808, 355);
+            this.lvHistory.Size = new System.Drawing.Size(911, 362);
             this.lvHistory.TabIndex = 0;
             this.lvHistory.UseCompatibleStateImageBehavior = false;
             this.lvHistory.View = System.Windows.Forms.View.Details;
@@ -671,7 +677,7 @@
             this.gbSelectedHistoryItem.Controls.Add(this.btnCopyURL);
             this.gbSelectedHistoryItem.Controls.Add(this.btnOpenURL);
             this.gbSelectedHistoryItem.Controls.Add(this.btnOpenLocalFile);
-            this.gbSelectedHistoryItem.Location = new System.Drawing.Point(8, 120);
+            this.gbSelectedHistoryItem.Location = new System.Drawing.Point(3, 113);
             this.gbSelectedHistoryItem.Name = "gbSelectedHistoryItem";
             this.gbSelectedHistoryItem.Size = new System.Drawing.Size(152, 104);
             this.gbSelectedHistoryItem.TabIndex = 18;
@@ -683,35 +689,73 @@
             this.groupBox1.Controls.Add(this.btnRefreshList);
             this.groupBox1.Controls.Add(this.btnApplyFilters);
             this.groupBox1.Controls.Add(this.btnRemoveFilters);
-            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(152, 104);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
             // 
+            // tlpMain
+            // 
+            this.tlpMain.ColumnCount = 1;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpMain.Controls.Add(this.lvHistory, 0, 1);
+            this.tlpMain.Controls.Add(this.tlpMainTop, 0, 0);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(0, 0);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 2;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tlpMain.Size = new System.Drawing.Size(917, 669);
+            this.tlpMain.TabIndex = 19;
+            // 
+            // tlpMainTop
+            // 
+            this.tlpMainTop.ColumnCount = 2;
+            this.tlpMainTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53F));
+            this.tlpMainTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47F));
+            this.tlpMainTop.Controls.Add(this.pbThumbnail, 1, 0);
+            this.tlpMainTop.Controls.Add(this.flpLeft, 0, 0);
+            this.tlpMainTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMainTop.Location = new System.Drawing.Point(3, 3);
+            this.tlpMainTop.Name = "tlpMainTop";
+            this.tlpMainTop.RowCount = 1;
+            this.tlpMainTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMainTop.Size = new System.Drawing.Size(911, 295);
+            this.tlpMainTop.TabIndex = 0;
+            // 
             // pbThumbnail
             // 
-            this.pbThumbnail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pbThumbnail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbThumbnail.Location = new System.Drawing.Point(488, 8);
+            this.pbThumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbThumbnail.Location = new System.Drawing.Point(485, 3);
             this.pbThumbnail.Name = "pbThumbnail";
-            this.pbThumbnail.Size = new System.Drawing.Size(328, 232);
+            this.pbThumbnail.Size = new System.Drawing.Size(423, 289);
             this.pbThumbnail.TabIndex = 14;
+            // 
+            // flpLeft
+            // 
+            this.flpLeft.Controls.Add(this.groupBox1);
+            this.flpLeft.Controls.Add(this.gbSelectedHistoryItem);
+            this.flpLeft.Controls.Add(this.gbFilters);
+            this.flpLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpLeft.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpLeft.Location = new System.Drawing.Point(3, 3);
+            this.flpLeft.Name = "flpLeft";
+            this.flpLeft.Size = new System.Drawing.Size(476, 289);
+            this.flpLeft.TabIndex = 17;
             // 
             // HistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 634);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.gbSelectedHistoryItem);
+            this.ClientSize = new System.Drawing.Size(917, 691);
+            this.Controls.Add(this.tlpMain);
             this.Controls.Add(this.ssMain);
-            this.Controls.Add(this.gbFilters);
-            this.Controls.Add(this.pbThumbnail);
-            this.Controls.Add(this.lvHistory);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(925, 725);
             this.Name = "HistoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistoryFormTest";
@@ -723,6 +767,9 @@
             this.gbFilters.PerformLayout();
             this.gbSelectedHistoryItem.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.tlpMain.ResumeLayout(false);
+            this.tlpMainTop.ResumeLayout(false);
+            this.flpLeft.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -798,5 +845,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenShortenedURL;
         private System.Windows.Forms.ToolStripMenuItem tsmiCopyShortenedURL;
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
+        private System.Windows.Forms.TableLayoutPanel tlpMainTop;
+        private System.Windows.Forms.FlowLayoutPanel flpLeft;
     }
 }
