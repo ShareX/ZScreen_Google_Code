@@ -462,7 +462,7 @@ namespace UploadersLib
 
         #region OAuth methods
 
-        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo)
+        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo, string callback = null)
         {
             string url = OAuthManager.GenerateQuery(requestTokenURL, null, HttpMethod.GET, authInfo);
 
@@ -470,7 +470,7 @@ namespace UploadersLib
 
             if (!string.IsNullOrEmpty(response))
             {
-                return OAuthManager.GetAuthorizationURL(response, authInfo, authorizeURL);
+                return OAuthManager.GetAuthorizationURL(response, authInfo, authorizeURL, callback);
             }
 
             return null;

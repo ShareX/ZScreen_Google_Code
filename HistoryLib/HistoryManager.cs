@@ -73,7 +73,7 @@ namespace HistoryLib
 
         public bool RemoveHistoryItem(HistoryItem historyItem)
         {
-            // TODO: Remove history item
+            xml.RemoveHistoryItem(historyItem);
 
             return false;
         }
