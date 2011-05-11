@@ -65,7 +65,7 @@ namespace UploadersLib.FileUploaders
             return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo);
         }
 
-        public bool GetAccessToken(string verificationCode)
+        public bool GetAccessToken(string verificationCode = null)
         {
             AuthInfo.AuthVerifier = verificationCode;
             return GetAccessToken(URLAccessToken, AuthInfo);

@@ -13,12 +13,12 @@
 			<Date>2011-04-03</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Beta>
-    <Dev>
-      <Version>3.36.16.2</Version>
-      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.36.15.2-setup.exe</URL>
-      <Date>2011-05-11</Date>
-      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
-    </Dev>
+		<Dev>
+			<Version>3.36.16.2</Version>
+			<URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.36.15.2-setup.exe</URL>
+			<Date>2011-05-11</Date>
+			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+		</Dev>
 	</ZScreen>
 	<ZUploader>
 		<Stable>

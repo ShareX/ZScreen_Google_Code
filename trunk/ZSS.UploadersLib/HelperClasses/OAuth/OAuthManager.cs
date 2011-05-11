@@ -72,11 +72,15 @@ namespace UploadersLib.HelperClasses
                 secret = oauth.UserSecret;
                 parameters.Add(ParameterToken, oauth.UserToken);
             }
-            else if (!string.IsNullOrEmpty(oauth.AuthToken) && !string.IsNullOrEmpty(oauth.AuthSecret) && !string.IsNullOrEmpty(oauth.AuthVerifier))
+            else if (!string.IsNullOrEmpty(oauth.AuthToken) && !string.IsNullOrEmpty(oauth.AuthSecret))
             {
                 secret = oauth.AuthSecret;
                 parameters.Add(ParameterToken, oauth.AuthToken);
-                parameters.Add(ParameterVerifier, oauth.AuthVerifier);
+
+                if (!string.IsNullOrEmpty(oauth.AuthVerifier))
+                {
+                    parameters.Add(ParameterVerifier, oauth.AuthVerifier);
+                }
             }
 
             if (args != null)

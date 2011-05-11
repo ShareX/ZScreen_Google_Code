@@ -478,9 +478,9 @@ namespace UploadersLib
 
         protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo)
         {
-            if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret) || string.IsNullOrEmpty(authInfo.AuthVerifier))
+            if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret))
             {
-                throw new Exception("Auth infos missing. Open Authorization URL first and copy verifier code.");
+                throw new Exception("Auth infos missing. Open Authorization URL first.");
             }
 
             string url = OAuthManager.GenerateQuery(accessTokenURL, null, HttpMethod.GET, authInfo);

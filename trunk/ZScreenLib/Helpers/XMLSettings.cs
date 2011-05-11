@@ -107,8 +107,7 @@ namespace ZScreenLib
 
         // Dropbox
 
-        public string DropboxUserToken = string.Empty;
-        public string DropboxUserSecret = string.Empty;
+        public OAuthInfo DropboxOAuthInfo = null;
         public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
         public string DropboxEmail = string.Empty;
         public string DropboxName = string.Empty;

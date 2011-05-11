@@ -3677,55 +3677,69 @@ namespace ZScreenGUI
 
         private void btnDropboxLogin_Click(object sender, EventArgs e)
         {
-            string email = txtDropboxEmail.Text;
-            string password = txtDropboxPassword.Text;
-
-            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            try
             {
-                try
+                OAuthInfo oauth = new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret);
+
+                string url = new Dropbox(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
                 {
-                    Dropbox dropbox = new Dropbox(new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret));
-                    DropboxUserLogin login = dropbox.Login(email, password);
+                    Engine.conf.DropboxOAuthInfo = oauth;
+                    Process.Start(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                    if (login != null)
+        private void btnDropboxCompleteAuth_Click(object sender, EventArgs e)
+        {
+            if (Engine.conf.DropboxOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.AuthToken) &&
+                !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.AuthSecret))
+            {
+                Dropbox dropbox = new Dropbox(Engine.conf.DropboxOAuthInfo);
+                bool result = dropbox.GetAccessToken();
+
+                if (result)
+                {
+                    DropboxAccountInfo account = dropbox.GetAccountInfo();
+
+                    if (account != null)
                     {
-                        DropboxAccountInfo account = dropbox.GetAccountInfo();
-
-                        if (account != null)
-                        {
-                            Engine.conf.DropboxUserToken = login.Token;
-                            Engine.conf.DropboxUserSecret = login.Secret;
-                            Engine.conf.DropboxEmail = account.Email;
-                            Engine.conf.DropboxName = account.Display_name;
-                            Engine.conf.DropboxUserID = account.Uid.ToString();
-                            Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
-                            UpdateDropboxStatus();
-                            MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
-                        else
-                        {
-                            MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        Engine.conf.DropboxEmail = account.Email;
+                        Engine.conf.DropboxName = account.Display_name;
+                        Engine.conf.DropboxUserID = account.Uid.ToString();
+                        Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
+                        UpdateDropboxStatus();
+                        MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
                     else
                     {
-                        MessageBox.Show("Login failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                Engine.conf.DropboxUserToken = Engine.conf.DropboxUserSecret = string.Empty;
-                UpdateDropboxStatus();
             }
+            else
+            {
+                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Engine.conf.DropboxOAuthInfo = null;
+            UpdateDropboxStatus();
         }
 
         private void UpdateDropboxStatus()
         {
-            if (!string.IsNullOrEmpty(Engine.conf.DropboxUserToken) && !string.IsNullOrEmpty(Engine.conf.DropboxUserSecret))
+            if (Engine.conf.DropboxOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.UserToken) &&
+                !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.UserSecret))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("Login status: Success");
@@ -3742,7 +3756,7 @@ namespace ZScreenGUI
             }
             else
             {
-                lblDropboxStatus.Text = "Login status: Login is required";
+                lblDropboxStatus.Text = "Login status: Authorize required";
             }
         }
 
