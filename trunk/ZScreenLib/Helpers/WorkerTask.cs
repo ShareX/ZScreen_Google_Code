@@ -31,13 +31,13 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 using HistoryLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
-using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -126,6 +126,12 @@ namespace ZScreenLib
         /// List of Errors the Worker had during its operation
         /// </summary>
         public List<string> Errors { get; set; }
+
+        public bool IsError
+        {
+            get { return Errors != null && Errors.Count > 0; }
+        }
+
         public bool RetryPending { get; set; }
         public DateTime StartTime { get; set; }
         private DateTime mEndTime;

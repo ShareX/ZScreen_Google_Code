@@ -16,7 +16,7 @@ namespace ZScreenGUI
             {
                 maxNum = Engine.conf.HistoryMaxNumber;
             }
-            new HistoryLib.HistoryForm(Engine.HistoryDbPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
+            new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
 
         private void OpenLastSource(ImageFileManager.SourceType sType)

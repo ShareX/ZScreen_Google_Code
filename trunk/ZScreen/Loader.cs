@@ -70,7 +70,7 @@ namespace ZScreenGUI
                 }
                 else if (arg1 == "history")
                 {
-                    Application.Run(new HistoryLib.HistoryForm(Engine.HistoryDbPath, 100, string.Format("{0} - History", Engine.GetProductName())));
+                    Application.Run(new HistoryLib.HistoryForm(Engine.HistoryPath, 100, string.Format("{0} - History", Engine.GetProductName())));
                 }
             }
             else if (Engine.mAppInfo.ApplicationState == McoreSystem.AppInfo.SoftwareCycle.Beta)

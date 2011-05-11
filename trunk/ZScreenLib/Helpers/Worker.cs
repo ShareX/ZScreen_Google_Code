@@ -181,10 +181,13 @@ namespace ZScreenLib
                     UploadManager.SetClipboard(task, false);
                 }
 
-                if (task.Errors.Count > 0)
+                if (task.IsError)
                 {
-                    foreach (var error in task.Errors)
+                    foreach (string error in task.Errors)
+                    {
                         FileSystem.AppendDebug(error);
+                    }
+
                     MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
