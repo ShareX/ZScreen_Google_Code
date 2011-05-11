@@ -44,7 +44,7 @@ namespace McoreSystem
         private string mAppSuffix = "setup.zip";
         public string AppSuffix { get { return mAppSuffix; } set { mAppSuffix = value; } }
 
-        private SoftwareCycle mSoftwareState = SoftwareCycle.Final;
+        private SoftwareCycle mSoftwareState = SoftwareCycle.Stable;
 
         public SoftwareCycle ApplicationState
         {
@@ -70,9 +70,9 @@ namespace McoreSystem
 
         public enum SoftwareCycle
         {
-            Alpha,
+            Dev,
             Beta,
-            Final
+            Stable
         }
 
         #endregion "Enumerations"
@@ -124,7 +124,7 @@ namespace McoreSystem
         {
             if (!string.IsNullOrEmpty(AppName) && !string.IsNullOrEmpty(mLocalVersion))
             {
-                if (cycle == SoftwareCycle.Final && showFinal || cycle != SoftwareCycle.Final)
+                if (cycle == SoftwareCycle.Stable && showFinal || cycle != SoftwareCycle.Stable)
                 {
                     return GetApplicationTitle(AppName, mLocalVersion, depth, cycle);
                 }
@@ -152,7 +152,7 @@ namespace McoreSystem
             string betaTag = "";
             switch (mSoftwareState)
             {
-                case SoftwareCycle.Alpha:
+                case SoftwareCycle.Dev:
                     betaTag = " ALPHA";
                     break;
                 case SoftwareCycle.Beta:
