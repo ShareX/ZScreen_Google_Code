@@ -24,11 +24,13 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Xml;
 
 namespace HistoryLib
 {
     public class HistoryItem // TODO: Things to add?
     {
+        public string ID { get; set; }
         public string Filename { get; set; }
         public string Filepath { get; set; }
         public DateTime DateTimeUtc { get; set; }
@@ -38,5 +40,6 @@ namespace HistoryLib
         public string ThumbnailURL { get; set; }
         public string DeletionURL { get; set; }
         public string ShortenedURL { get; set; }
+        public XmlNode Node { get; set; }
     }
 }

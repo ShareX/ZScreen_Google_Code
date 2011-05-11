@@ -45,6 +45,7 @@ namespace UploadersLib.HelperClasses
         private const string ParameterToken = "oauth_token";
         private const string ParameterTokenSecret = "oauth_token_secret";
         private const string ParameterVerifier = "oauth_verifier";
+        private const string ParameterCallback = "oauth_callback";
 
         private const string PlainTextSignatureType = "PLAINTEXT";
         private const string HMACSHA1SignatureType = "HMAC-SHA1";
@@ -96,7 +97,7 @@ namespace UploadersLib.HelperClasses
             return normalizedUrl + "?" + normalizedParameters;
         }
 
-        public static string GetAuthorizationURL(string requestTokenResponse, OAuthInfo oauth, string authorizeURL)
+        public static string GetAuthorizationURL(string requestTokenResponse, OAuthInfo oauth, string authorizeURL, string callback = null)
         {
             string url = null;
 
@@ -106,6 +107,11 @@ namespace UploadersLib.HelperClasses
             {
                 oauth.AuthToken = args[ParameterToken];
                 url = string.Format("{0}?{1}={2}", authorizeURL, ParameterToken, oauth.AuthToken);
+
+                if (!string.IsNullOrEmpty(callback))
+                {
+                    url += ParameterCallback + "=" + Helpers.URLEncode(callback);
+                }
 
                 if (args[ParameterTokenSecret] != null)
                 {

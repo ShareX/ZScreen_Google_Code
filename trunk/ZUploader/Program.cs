@@ -79,7 +79,7 @@ namespace ZUploader
         private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
 
         private const string SettingsFileName = "Settings.xml";
-        private const string HistoryFileName = "History.xml";
+        private const string HistoryFileName = "ZUploaderHistory.xml";
 
         // URLS
         public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
