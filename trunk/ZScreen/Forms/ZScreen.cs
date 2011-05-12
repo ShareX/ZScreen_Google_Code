@@ -46,6 +46,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
+using UploadersLib.TextUploaders;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
@@ -3975,6 +3976,31 @@ namespace ZScreenGUI
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     File.Delete(Engine.HistoryPath);
+                }
+            }
+        }
+
+        private void btnPastebinLogin_Click(object sender, EventArgs e)
+        {
+            if (Engine.conf.PastebinSettings != null)
+            {
+                try
+                {
+                    PastebinUploader pastebin = new PastebinUploader(Engine.PastebinKey, Engine.conf.PastebinSettings);
+
+                    if (pastebin.Login())
+                    {
+                        pgPastebinSettings.SelectedObject = Engine.conf.PastebinSettings;
+                        MessageBox.Show("Login success.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

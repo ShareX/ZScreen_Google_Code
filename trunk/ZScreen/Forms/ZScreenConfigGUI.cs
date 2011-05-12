@@ -267,6 +267,12 @@ namespace ZScreenGUI
             UpdateDropboxStatus();
 
             #endregion File Uploaders
+
+            #region Text Uploaders
+
+            pgPastebinSettings.SelectedObject = Engine.conf.PastebinSettings;
+
+            #endregion Text Uploaders
         }
 
         private void ZScreen_ConfigGUI_Editors()

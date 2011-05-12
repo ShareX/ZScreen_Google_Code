@@ -38,23 +38,49 @@ namespace UploadersLib.TextUploaders
 
         private string APIKey;
 
-        private PastebinSettings settings;
+        public PastebinSettings Settings { get; private set; }
 
         public PastebinUploader(string apiKey)
         {
             APIKey = apiKey;
-            settings = new PastebinSettings();
+            Settings = new PastebinSettings();
         }
 
         public PastebinUploader(string apiKey, PastebinSettings settings)
         {
             APIKey = apiKey;
-            this.settings = settings;
+            Settings = settings;
+        }
+
+        public bool Login()
+        {
+            if (!string.IsNullOrEmpty(Settings.Username) && !string.IsNullOrEmpty(Settings.Password))
+            {
+                Dictionary<string, string> loginArgs = new Dictionary<string, string>();
+
+                loginArgs.Add("api_dev_key", APIKey);
+                loginArgs.Add("api_user_name", Settings.Username);
+                loginArgs.Add("api_user_password", Settings.Password);
+
+                string loginResponse = SendPostRequest(APILoginURL, loginArgs);
+
+                if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Bad API request"))
+                {
+                    Settings.UserKey = loginResponse;
+                    return true;
+                }
+                else
+                {
+                    Errors.Add("Pastebin login failed.");
+                }
+            }
+
+            return false;
         }
 
         public override string UploadText(string text)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text) && Settings != null)
             {
                 Dictionary<string, string> args = new Dictionary<string, string>();
 
@@ -63,35 +89,14 @@ namespace UploadersLib.TextUploaders
                 args.Add("api_paste_code", text); // this is the text that will be written inside your paste
 
                 // Optional args
-                args.Add("api_paste_name", settings.Title); // this will be the name / title of your paste
-                args.Add("api_paste_format", settings.TextFormat); // this will be the syntax highlighting value
-                args.Add("api_paste_private", settings.IsPublic ? "0" : "1"); // this makes a paste public or private, public = 0, private = 1
-                args.Add("api_paste_expire_date", settings.ExpireTime); // this sets the expiration date of your paste
+                args.Add("api_paste_name", Settings.Title); // this will be the name / title of your paste
+                args.Add("api_paste_format", Settings.TextFormat); // this will be the syntax highlighting value
+                args.Add("api_paste_private", Settings.IsPublic ? "0" : "1"); // this makes a paste public or private, public = 0, private = 1
+                args.Add("api_paste_expire_date", Settings.ExpireTime); // this sets the expiration date of your paste
 
-                if (string.IsNullOrEmpty(settings.UserKey) && !string.IsNullOrEmpty(settings.Username) && !string.IsNullOrEmpty(settings.Password))
+                if (!string.IsNullOrEmpty(Settings.UserKey))
                 {
-                    Dictionary<string, string> loginArgs = new Dictionary<string, string>();
-
-                    loginArgs.Add("api_dev_key", APIKey);
-                    loginArgs.Add("api_user_name", settings.Username);
-                    loginArgs.Add("api_user_password", settings.Password);
-
-                    string loginResponse = SendPostRequest(APILoginURL, loginArgs);
-
-                    if (!string.IsNullOrEmpty(loginResponse) && !loginResponse.StartsWith("Bad API request"))
-                    {
-                        settings.UserKey = loginResponse;
-                    }
-                    else
-                    {
-                        Errors.Add("Pastebin login failed.");
-                        return string.Empty;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(settings.UserKey))
-                {
-                    args.Add("api_user_key", settings.UserKey); // this paramater is part of the login system
+                    args.Add("api_user_key", Settings.UserKey); // this paramater is part of the login system
                 }
 
                 string response = SendPostRequest(APIURL, args);
