@@ -413,7 +413,6 @@ namespace ZScreenLib
         public bool GoogleAutoDetectSource = true;
         public string GoogleTargetLanguage = "en";
         public string GoogleTargetLanguage2 = "?";
-        public bool ClipboardTranslate = false;
         public bool AutoTranslate = false;
         public int AutoTranslateLength = 20;
 

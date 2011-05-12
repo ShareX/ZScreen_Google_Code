@@ -349,7 +349,6 @@ namespace ZScreenGUI
         {
             // Image Uploaders
 
-            cbClipboardTranslate.Checked = Engine.conf.ClipboardTranslate;
             cbLanguageAutoDetect.Checked = Engine.conf.GoogleAutoDetectSource;
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
