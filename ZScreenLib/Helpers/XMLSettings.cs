@@ -42,6 +42,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextServices;
+using UploadersLib.TextUploaders;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
 
@@ -153,6 +154,10 @@ namespace ZScreenLib
 
         public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
         public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
+
+        // Pastebin
+
+        public PastebinSettings PastebinSettings = new PastebinSettings();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

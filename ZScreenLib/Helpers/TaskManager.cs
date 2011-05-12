@@ -670,7 +670,7 @@ namespace ZScreenLib
                             textUploader = new Paste2Uploader();
                             break;
                         case TextUploaderType.PASTEBIN:
-                            textUploader = new PastebinUploader(Engine.PastebinKey);
+                            textUploader = new PastebinUploader(Engine.PastebinKey, Engine.conf.PastebinSettings);
                             break;
                         case TextUploaderType.PASTEBIN_CA:
                             textUploader = new PastebinCaUploader(Engine.PastebinCaKey);
