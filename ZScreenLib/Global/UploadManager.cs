@@ -154,10 +154,13 @@ namespace ZScreenLib
                 clipboardText = FileSystem.GetBrowserFriendlyUrl(clipboardText);
                 Clipboard.SetText(clipboardText); // auto                
                 // optional deletion link
-                string linkdel = task.LinkManager.UploadResult.DeletionURL;
-                if (!string.IsNullOrEmpty(linkdel))
+                if (task.LinkManager != null)
                 {
-                    FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                    string linkdel = task.LinkManager.UploadResult.DeletionURL;
+                    if (!string.IsNullOrEmpty(linkdel))
+                    {
+                        FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                    }
                 }
 
                 Engine.zClipboardText = clipboardText;
