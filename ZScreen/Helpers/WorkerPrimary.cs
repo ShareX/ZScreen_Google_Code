@@ -68,18 +68,21 @@ namespace ZScreenGUI
 
         private bool CanStartWork(WorkerTask task)
         {
-            bool can = false; ;
-            switch (task.Job1)
+            bool can = task.WasToTakeScreenshot;
+            if (!task.WasToTakeScreenshot)
             {
-                case JobLevel1.Image:
-                    can = task.MyImageUploader != ImageUploaderType.NONE || task.MyImageUploader == ImageUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
-                    break;
-                case JobLevel1.Text:
-                    can = task.MyTextUploader != TextUploaderType.NONE || task.MyTextUploader == TextUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
-                    break;
-                case JobLevel1.File:
-                    can = task.MyFileUploader != FileUploaderType.NONE;
-                    break;
+                switch (task.Job1)
+                {
+                    case JobLevel1.Image:
+                        can = task.MyImageUploader != ImageUploaderType.NONE || task.MyImageUploader == ImageUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
+                        break;
+                    case JobLevel1.Text:
+                        can = task.MyTextUploader != TextUploaderType.NONE || task.MyTextUploader == TextUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
+                        break;
+                    case JobLevel1.File:
+                        can = task.MyFileUploader != FileUploaderType.NONE;
+                        break;
+                }
             }
             return can;
         }
