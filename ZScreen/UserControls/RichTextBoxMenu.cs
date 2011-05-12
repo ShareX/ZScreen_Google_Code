@@ -22,6 +22,8 @@ namespace ZScreenGUI.UserControls
             cms.Items.Add("Copy Selected Line").Click += new EventHandler(RichTextBoxMenuCopySelectedLine_Click);
             cms.Items.Add("Copy All").Click += new EventHandler(RichTextBoxMenuCopyAll_Click);
             cms.Items.Add("Select All").Click += new EventHandler(RichTextBoxMenuSelectAll_Click);
+            cms.Items.Add(new ToolStripSeparator());
+            cms.Items.Add("Clear All").Click += new EventHandler(RichTextBoxMenuClearAll_Click);
 
             rtb.ContextMenuStrip = cms;
         }
@@ -79,6 +81,11 @@ namespace ZScreenGUI.UserControls
         private void RichTextBoxMenuSelectAll_Click(object sender, EventArgs e)
         {
             rtb.SelectAll();
+        }
+
+        public void RichTextBoxMenuClearAll_Click(object sender, EventArgs e)
+        {
+            rtb.Clear();
         }
     }
 }
