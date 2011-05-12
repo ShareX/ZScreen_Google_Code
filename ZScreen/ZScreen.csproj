@@ -321,6 +321,7 @@
     <None Include="Resources\application_go.png" />
     <None Include="Resources\DropboxLogo.png" />
     <None Include="Resources\small_logo.png" />
+    <None Include="Resources\ZScreen_256.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

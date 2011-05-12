@@ -403,6 +403,13 @@ namespace ZScreenGUI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ZScreen_256 {
+            get {
+                object obj = ResourceManager.GetObject("ZScreen_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon zss_busy {
             get {
                 object obj = ResourceManager.GetObject("zss_busy", resourceCulture);

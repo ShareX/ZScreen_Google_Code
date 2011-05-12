@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -66,7 +65,6 @@ namespace ZScreenGUI
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
         private DebugHelper mDebug = null;
-        private ZScreenLib.ImageEffects.TurnImage turnLogo;
         private ImageList tabImageList = new ImageList();
 
         #endregion Variables
@@ -341,9 +339,6 @@ namespace ZScreenGUI
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
-
-            turnLogo = new ZScreenLib.ImageEffects.TurnImage((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject(("pbLogo.Image")));
-            turnLogo.ImageTurned += new ZScreenLib.ImageEffects.TurnImage.ImageEventHandler(x => pbLogo.Image = x);
 
             niTray.Visible = true;
             // Loader.Splash.Close();
@@ -1881,9 +1876,7 @@ namespace ZScreenGUI
 
         private void TestWatermark()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(ZScreen));
-            using (Bitmap bmp = new Bitmap((Image)resources.GetObject("pbLogo.Image")).
-                Clone(new Rectangle(62, 33, 199, 140), PixelFormat.Format32bppArgb))
+            using (Bitmap bmp = Resources.main.Clone(new Rectangle(62, 33, 199, 140), PixelFormat.Format32bppArgb))
             {
                 Bitmap bmp2 = new Bitmap(pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height);
                 Graphics g = Graphics.FromImage(bmp2);
@@ -2733,22 +2726,6 @@ namespace ZScreenGUI
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropShowMagnifyingGlass = chkCropShowMagnifyingGlass.Checked;
-        }
-
-        private void pbLogo_MouseEnter(object sender, EventArgs e)
-        {
-            if (!turnLogo.IsTurning)
-            {
-                pbLogo.Image = ImageEffects.GetRandomLogo(Resources.main);
-            }
-        }
-
-        private void pbLogo_MouseLeave(object sender, EventArgs e)
-        {
-            if (!turnLogo.IsTurning)
-            {
-                pbLogo.Image = new Bitmap((Image)new ComponentResourceManager(typeof(ZScreen)).GetObject("pbLogo.Image"));
-            }
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
