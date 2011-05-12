@@ -2031,11 +2031,6 @@ namespace ZScreenGUI
             Engine.conf.GoogleTargetLanguage = Engine.conf.GoogleLanguages[cbToLanguage.SelectedIndex].Language;
         }
 
-        private void cbClipboardTranslate_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ClipboardTranslate = cbClipboardTranslate.Checked;
-        }
-
         private void txtTranslateText_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.Enter)
