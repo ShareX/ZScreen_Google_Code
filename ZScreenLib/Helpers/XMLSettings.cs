@@ -71,7 +71,7 @@ namespace ZScreenLib
         public int MyImageUploader = (int)ImageUploaderType.CLIPBOARD;
         public int MyFileUploader = (int)FileUploaderType.SendSpace;
         public int MyTextUploader = (int)TextUploaderType.PASTEBIN;
-        public int MyURLShortener = (int)UrlShortenerType.BITLY;
+        public int MyURLShortener = (int)UrlShortenerType.Google;
         public int MyClipboardUriMode = (int)ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
@@ -168,7 +168,7 @@ namespace ZScreenLib
         public const Keys DefaultHotkeyCropShot = Keys.Control | Keys.PrintScreen;
         public const Keys DefaultHotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
         public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.F6;
-        public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.PageDown;
+        public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.Shift | Keys.F;
         public const Keys DefaultHotkeyLastCropShot = Keys.None;
         public const Keys DefaultHotkeyAutoCapture = Keys.None;
         public const Keys DefaultHotkeyDropWindow = Keys.None;
@@ -252,7 +252,7 @@ namespace ZScreenLib
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowTryCaptureChildren = false;
-        public bool ActiveWindowPreferDWM = true;
+        public bool ActiveWindowPreferDWM = false;
         public bool ActiveWindowGDIFreezeWindow = false;
 
         // Freehand Crop Shot
@@ -787,6 +787,7 @@ namespace ZScreenLib
                     // Step 3 - Attempt to read conventional Settings file
                     settingsFile = Engine.XMLSettingsFile;
                 }
+                FileSystem.AppendDebug("Using " + settingsFile);
             }
 
             if (File.Exists(settingsFile) && settingsFile != Engine.mAppSettings.GetSettingsFilePath())
