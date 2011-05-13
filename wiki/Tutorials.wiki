@@ -1,6 +1,5 @@
 #summary ZScreen Tutorials
 #labels Phase-Support
-#sidebar TableOfContents
 
 <wiki:toc max_depth="3" />
 
