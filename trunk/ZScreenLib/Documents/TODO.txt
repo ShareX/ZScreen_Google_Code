@@ -6,7 +6,6 @@ Option to prevent writing to hard disk
 Run the following tasks before uploading
 	Image Editor
 	Command Line Tools 
-Move MakeTinyURL to before AddToListBox
 	Need to share bw_DoWork in Worker and WorkerPrimary first
 
 Windwos.Forms.WebBrowser			
@@ -18,9 +17,5 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
-
-Archived Members
-
-Recommended Active Window Settings for XP
 
 Tray menu need text and url shortener destination

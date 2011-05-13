@@ -14,11 +14,11 @@ namespace ZScreenLib
 
         public string RootDir { get; set; }
         public string XMLSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, XMLSettings.XMLFileName);
-        [Category("Options / General"), DefaultValue(ImageUploaderType.CLIPBOARD), Description("Image Destination")]
-        public int ImageUploader { get; set; }
-        public int FileUploader { get; set; }
-        public int TextUploader { get; set; }
-        public int UrlShortener { get; set; }
+
+        public int ImageUploader = (int)ImageUploaderType.CLIPBOARD;
+        public int FileUploader = (int)FileUploaderType.SendSpace;
+        public int TextUploader = (int)TextUploaderType.PASTEBIN;
+        public int UrlShortener = (int)UrlShortenerType.Google;
 
         [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }
