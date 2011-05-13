@@ -14,7 +14,7 @@ Version 3.36 - 20110515
 3.36.06.0 Improved performance in Crop Shot at least by 150% {Jaex}
 3.36.05.0 Revamped History Viewer for permanent storage can be accessed from Tray Menu {Jaex}
 3.36.04.0 Advanced tab Option to enable Crop Lite for slower computers{Jaex}
-3.36.03.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment {McoreD}
+3.36.03.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment and retry the task {McoreD}
 3.36.02.2 Fixes for tweeting unicode charactors {Jaex}
 3.36.02.1 Fixed Unable to replace image with same filename using upload [Issue 406] {simonw1485}
 3.36.02.0 Ability to use File Destination to upload Text and Images {Jaex}
@@ -22,30 +22,27 @@ Version 3.36 - 20110515
 3.36.00.0 Freehand Crop Shot support {Jaex}
 3.35.01.0 Added Support for Imgur User Accounts using Open Authorization {Jaex}
 3.35.00.0 Added Dropbox file uploader support {Jaex}
-
-Version 3.34 - 20110404
-
-3.34.1.0 Changes to Update Checker {Jaex}
-3.34.0.1 Fixed configuration always launching at startup [Issue 277] {McoreD}
-3.34.0.0 Added MediaWiki Image Uploader support [Issue 213] {theone256}
-3.33.1.0 New syntax support for file naming to support UserName, UserDomainName and MachineName {Jaex}
-3.33.0.0 Added Google URL Shortener support [Issue 331] {Jaex}
-3.32.0.1 Explorer context menu for uploading did not work [Issue 331] {rgrthat}
-3.32.0.0 Added filez.muffinz.eu File Uploader support {semas123}	
-3.31.0.0 Advanced option to enable Crop Shot with multiple regions selection {Jaex} 
-3.30.0.0 Added share.cx File Uploader support {Jaex}
-3.29.0.0 Added UploadScreenshot Image Uploader support {Jaex}
-3.28.3.2 Uploading did not work in portable mode [Issue 268] {McoreD}
-3.28.3.1 Fixes related to Progress percentage with support for simultaneous uploads {Jaex}
-3.28.3.0 More descriptive text in the NotifyIcon text {McoreD}
-3.28.2.1 Fixes to upload using Drag n Drop window [Issue 264] {McoreD}
-3.28.2.0 File upload enhancements to support uploading large files without significant memory usage {Jaex}
-3.28.1.0 Active FTP Accounts can be chosen seperately for Images, Text and Files [Issue 259] {McoreD}
-3.28.0.0 Added Drop.IO file uploader support [Issue 248] {Jaex}
-3.27.5.0 Progress percentage now works for all image uploaders {Jaex}
-3.27.4.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
-3.27.4.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
-3.27.4.0 Deletion links of uploaded images (if available) will appear in the Debug log {McoreD}
+3.34.01.0 Changes to Update Checker {Jaex}
+3.34.00.1 Fixed configuration always launching at startup [Issue 277] {McoreD}
+3.34.00.0 Added MediaWiki Image Uploader support [Issue 213] {theone256}
+3.33.01.0 New syntax support for file naming to support UserName, UserDomainName and MachineName {Jaex}
+3.33.00.0 Added Google URL Shortener support [Issue 331] {Jaex}
+3.32.00.1 Explorer context menu for uploading did not work [Issue 331] {rgrthat}
+3.32.00.0 Added filez.muffinz.eu File Uploader support {semas123}	
+3.31.00.0 Advanced option to enable Crop Shot with multiple regions selection {Jaex} 
+3.30.00.0 Added share.cx File Uploader support {Jaex}
+3.29.00.0 Added UploadScreenshot Image Uploader support {Jaex}
+3.28.03.2 Uploading did not work in portable mode [Issue 268] {McoreD}
+3.28.03.1 Fixes related to Progress percentage with support for simultaneous uploads {Jaex}
+3.28.03.0 More descriptive text in the NotifyIcon text {McoreD}
+3.28.02.1 Fixes to upload using Drag n Drop window [Issue 264] {McoreD}
+3.28.02.0 File upload enhancements to support uploading large files without significant memory usage {Jaex}
+3.28.01.0 Active FTP Accounts can be chosen seperately for Images, Text and Files [Issue 259] {McoreD}
+3.28.00.0 Added Drop.IO file uploader support [Issue 248] {Jaex}
+3.27.05.0 Progress percentage now works for all image uploaders {Jaex}
+3.27.04.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
+3.27.04.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
+3.27.04.0 Deletion links of uploaded images (if available) will appear in the Debug log {McoreD}
 
 Version 3.27 - 20100315
 
