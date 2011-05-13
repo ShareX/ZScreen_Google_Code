@@ -52,30 +52,32 @@ namespace ZScreenLib
             if (ucDestOptions.cboFileUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
+                ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
             }
-            ucDestOptions.cboFileUploaders.SelectedIndex = Math.Min(ucDestOptions.cboFileUploaders.Items.Count, (int)Engine.conf.MyFileUploader);
-
+            
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
+                ucDestOptions.cboImageUploaders.SelectedIndex = (int)ImageUploaderType.CLIPBOARD;
             }
-            ucDestOptions.cboImageUploaders.SelectedIndex = Math.Min(ucDestOptions.cboImageUploaders.Items.Count, (int)Engine.conf.MyImageUploader);
+            
 
             // Text Uploaders
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
+                ucDestOptions.cboTextUploaders.SelectedIndex = (int)TextUploaderType.PASTE2;
             }
-            ucDestOptions.cboTextUploaders.SelectedIndex = Math.Min(ucDestOptions.cboTextUploaders.Items.Count, (int)Engine.conf.MyTextUploader);
+            
 
             // URL Shorteners
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
             {
                 ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+                ucDestOptions.cboURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
             }
-            ucDestOptions.cboURLShorteners.SelectedIndex = Math.Min(ucDestOptions.cboURLShorteners.Items.Count, (int)Engine.conf.MyURLShortener);
-
+            
             // Dest Selector Events
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);

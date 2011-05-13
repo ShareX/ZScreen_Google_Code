@@ -333,7 +333,10 @@ namespace ZScreenLib
                 FileSystem.AppendDebug("Keyboard Hook terminated");
             }
             FileSystem.WriteDebugFile();
-            Engine.conf.Write();
+            if (Engine.conf != null)
+            {
+                Engine.conf.Write();
+            }
         }
 
         public static void SetRootFolder(string dp)

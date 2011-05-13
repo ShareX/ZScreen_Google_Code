@@ -229,7 +229,7 @@ namespace ZScreenLib
 
         public static void WriteDebugFile()
         {
-            if (!string.IsNullOrEmpty(Engine.LogsDir))
+            if (Engine.conf != null && !string.IsNullOrEmpty(Engine.LogsDir))
             {
                 string dir = Engine.LogsDir;
                 if (Engine.Portable)
