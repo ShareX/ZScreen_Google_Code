@@ -53,15 +53,15 @@ namespace UploadersLib
         public OAuthInfo ImgurOAuthInfo = null;
         public AccountType ImgurAccountType = AccountType.Anonymous;
 
-        // TwitPic
-
-        public bool TwitPicShowFull = true;
-        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
         // Flickr
 
         public FlickrAuthInfo FlickrAuthInfo = new FlickrAuthInfo();
         public FlickrSettings FlickrSettings = new FlickrSettings();
+
+        // TwitPic
+
+        public bool TwitPicShowFull = true;
+        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
 
         // MediaWiki
 
@@ -109,6 +109,11 @@ namespace UploadersLib
         public string SendSpaceUsername = string.Empty;
         public string SendSpacePassword = string.Empty;
 
+        // Custom Uploaders
+
+        public List<CustomUploaderInfo> CustomUploadersList = new List<CustomUploaderInfo>();
+        public int CustomUploaderSelected = 0;
+
         #endregion File uploaders
 
         #region Text uploaders
@@ -123,7 +128,7 @@ namespace UploadersLib
 
         #endregion URL shorteners
 
-        #region Text services
+        #region Other services
 
         // Twitter
 
@@ -132,7 +137,7 @@ namespace UploadersLib
         public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
         public bool TwitterEnabled = false;
 
-        #endregion Text services
+        #endregion Other services
 
         #region Other destinations
 

@@ -36,7 +36,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using UploadersLib.TextServices;
+using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
