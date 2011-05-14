@@ -40,12 +40,14 @@ namespace ZScreenLib
         public FileUploaderType FileUploaderType { get; private set; }
         public TextUploaderType MyTextUploaderType { get; private set; }
         public UrlShortenerType MyUrlShortenerType { get; private set; }
+        private string DefaultRootFolder;
 
         public ConfigWizard(string rootDir)
         {
             InitializeComponent();
             this.Text = string.Format("ZScreen {0} - Configuration Wizard", Application.ProductVersion);
-            txtRootFolder.Text = rootDir;
+            DefaultRootFolder = rootDir;
+            txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
 
             ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
@@ -55,14 +57,17 @@ namespace ZScreenLib
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
 
             ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-            ucDestOptions.cboTextUploaders.SelectedIndex = (int)MyTextUploaderType;
+            ucDestOptions.cboTextUploaders.SelectedIndex = (int)TextUploaderType.PASTE2;
 
             ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-            ucDestOptions.cboURLShorteners.SelectedIndex = (int)MyUrlShortenerType;
+            ucDestOptions.cboURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            PreferSystemFolders = chkPreferSystemFolders.Checked;
+            RootFolder = txtRootFolder.Text;
+
             FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
             ImageDestinationType = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
             MyTextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
@@ -79,7 +84,6 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(newDir))
             {
                 txtRootFolder.Text = newDir;
-                RootFolder = txtRootFolder.Text;
                 FileSystem.MoveDirectory(oldDir, txtRootFolder.Text);
             }
         }
@@ -94,8 +98,9 @@ namespace ZScreenLib
 
         private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
         {
-            gbRoot.Enabled = !chkPreferSystemFolders.Checked;
-            this.PreferSystemFolders = chkPreferSystemFolders.Checked;
+            PreferSystemFolders = chkPreferSystemFolders.Checked;
+            txtRootFolder.Text = PreferSystemFolders ? Engine.zRoamingAppDataFolder : DefaultRootFolder;
+            gbRoot.Enabled = !PreferSystemFolders;
         }
 
         private void ConfigWizard_Load(object sender, EventArgs e)
@@ -114,6 +119,11 @@ namespace ZScreenLib
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void ConfigWizard_Shown(object sender, EventArgs e)
+        {
+            chkPreferSystemFolders.Checked = true;
         }
     }
 }

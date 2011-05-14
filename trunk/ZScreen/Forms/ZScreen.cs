@@ -301,23 +301,6 @@ namespace ZScreenGUI
                 this.Hide();
                 Loader.Worker.ShowActionsToolbar(false);
             }
-            else
-            {
-                if (Engine.conf.ShowMainWindow)
-                {
-                    this.WindowState = Engine.conf.WindowState;
-                    ShowInTaskbar = Engine.conf.ShowInTaskbar;
-                }
-                else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
-                {
-                    this.WindowState = FormWindowState.Minimized;
-                    ShowInTaskbar = true;
-                }
-                else
-                {
-                    Hide();
-                }
-            }
 
             Adapter.AddToClipboardByDoubleClick(tpHistory);
 
@@ -988,6 +971,20 @@ namespace ZScreenGUI
                     Engine.conf.WindowButtonActionClose = WindowButtonAction.MinimizeToTaskbar;
                 }
                 ZScreen_Windows7onlyTasks();
+            }
+
+            if (Engine.conf.ShowMainWindow)
+            {
+                this.WindowState = Engine.conf.WindowState;
+                ShowInTaskbar = Engine.conf.ShowInTaskbar;
+            }
+            else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                Hide();
             }
 
             Loader.KeyboardHook();

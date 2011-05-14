@@ -6502,7 +6502,6 @@ namespace ZScreenGUI
             this.MinimumSize = new System.Drawing.Size(822, 497);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZScreen";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
