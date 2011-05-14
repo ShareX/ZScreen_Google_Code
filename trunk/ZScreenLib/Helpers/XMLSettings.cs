@@ -85,7 +85,7 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // TODO: Use UploadersConfig.cs
+        public UploadersConfig UploadersConfig = new UploadersConfig();
 
         #region Image uploaders
 
