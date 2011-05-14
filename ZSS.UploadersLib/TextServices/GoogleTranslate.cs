@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
@@ -60,7 +61,7 @@ namespace UploadersLib.TextServices
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    Debug.WriteLine(e.ToString());
                 }
             }
 
@@ -95,7 +96,7 @@ namespace UploadersLib.TextServices
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    Debug.WriteLine(e.ToString());
                 }
             }
 

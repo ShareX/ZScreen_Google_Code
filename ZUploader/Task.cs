@@ -293,10 +293,10 @@ namespace ZUploader
                 case FileUploaderType.Dropbox: // TODO: Dropbox account
                     fileUploader = new Dropbox(new OAuthInfo(Program.DropboxConsumerKey, Program.DropboxConsumerSecret));
                     break;
-                case FileUploaderType.FileSonic:
-                    fileUploader = new FileSonic("", ""); // TODO: FileSonic
+                /*case FileUploaderType.FileSonic:
+                    fileUploader = new FileSonic("", "");
                     break;
-                /*case FileUploaderType2.FileBin:
+                case FileUploaderType2.FileBin:
                     fileUploader = new FileBin();
                     break;
                 case FileDestination.DropIO:

@@ -33,7 +33,6 @@ using HelpersLib;
 
 namespace UploadersLib
 {
-    [Serializable]
     public class LocalhostAccount
     {
         [Category("Localhost"), Description("Shown in the list as: Name - LocalhostRoot:Port")]

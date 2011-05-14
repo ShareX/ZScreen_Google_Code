@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.ComponentModel;
 
 namespace ZSS.IndexersLib
@@ -52,14 +51,12 @@ namespace ZSS.IndexersLib
         TreeNetLib
     }
 
-    [Serializable]
     public enum XHTMLFileListMode
     {
         Bullets,
         Numbered
     }
 
-    [Serializable]
     public enum FileSortMode
     {
         Ascending,

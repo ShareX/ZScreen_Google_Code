@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using HelpersLib;
 using UploadersLib.HelperClasses;
@@ -63,8 +64,8 @@ namespace UploadersLib.FileUploaders
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
-                    this.Errors.Add(e.Message);
+                    Debug.WriteLine(e.ToString());
+                    Errors.Add(e.Message);
                 }
 
                 if (Errors.Count == 0)

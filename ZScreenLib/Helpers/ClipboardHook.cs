@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace ZScreenLib
@@ -252,7 +253,7 @@ namespace ZScreenLib
             catch (Exception ex)
             {
                 FileSystem.AppendDebug("Error in SendMessage", ex);
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
                 return -1;
             }
         }

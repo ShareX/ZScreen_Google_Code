@@ -23,14 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using HelpersLib;
 
 namespace UploadersLib.TextUploaders
 {
-    [Serializable]
     public sealed class PastebinUploader : TextUploader
     {
         private const string APIURL = "http://pastebin.com/api/api_post.php";

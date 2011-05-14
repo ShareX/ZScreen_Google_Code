@@ -144,7 +144,6 @@ namespace ZScreenLib.Shapes
 
         public Image GetScreenshot(Image fullscreenSS)
         {
-            Console.WriteLine(path.GetBounds().ToString());
             Rectangle rect = Rectangle.Round(path.GetBounds());
             rect.Location = NativeMethods.ConvertPoint(rect.Location);
 

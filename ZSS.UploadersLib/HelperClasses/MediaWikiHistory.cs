@@ -28,7 +28,6 @@ using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable]
     public class MediaWikiHistory
     {
         public string Path;

@@ -35,6 +35,7 @@
 #endregion Source code: Greenshot (GPL)
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -144,7 +145,7 @@ namespace Greenshot.Configuration
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
                 if (s != null)
                 {
                     s.Close();
@@ -187,7 +188,7 @@ namespace Greenshot.Configuration
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Image Editor: " + ex.Message);
+                Debug.WriteLine("Image Editor: " + ex.Message);
             }
         }
 

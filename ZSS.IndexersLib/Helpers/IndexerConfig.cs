@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
@@ -34,7 +33,6 @@ using ZSS.IndexersLib.Helpers;
 
 namespace ZSS.IndexersLib
 {
-    [Serializable()]
     public class IndexerConfig
     {
         //Default to Tree.NET

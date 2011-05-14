@@ -44,6 +44,7 @@
 ////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -180,7 +181,7 @@ public class IECapt
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Debug.WriteLine(ex.Message);
             ReportCapture(null);
         }
 

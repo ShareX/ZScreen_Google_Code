@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using ZScreenLib;
@@ -33,7 +34,7 @@ namespace ZScreenCLI
                     else if (args[1].ToLower() == "entire_screen")
                     {
                         // Entire Screen
-                        mWorker.StartBw_EntireScreen();   
+                        mWorker.StartBw_EntireScreen();
                     }
                     else if (args[1].ToLower() == "selected_window")
                     {
@@ -115,11 +116,11 @@ namespace ZScreenCLI
 
         private void tmrClose_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("UploadInfoList: " + UploadManager.UploadInfoList.Count);
-            Console.WriteLine("OpenForms: " + Application.OpenForms.Count);
+            Debug.WriteLine("UploadInfoList: " + UploadManager.UploadInfoList.Count);
+            Debug.WriteLine("OpenForms: " + Application.OpenForms.Count);
             if (null != mWorker)
             {
-                Console.WriteLine("WorkerIsBusy: " + mWorker.IsBusy);
+                Debug.WriteLine("WorkerIsBusy: " + mWorker.IsBusy);
             }
 
             if (0 == UploadManager.UploadInfoList.Count && 1 == Application.OpenForms.Count && null != mWorker && !mWorker.IsBusy)

@@ -93,31 +93,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\GUI\FileUploadersConfig.cs">
+    <Compile Include="Config\GUI\UploadersConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\GUI\FileUploaders.Designer.cs">
-      <DependentUpon>FileUploadersConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Config\GUI\ImageUploadersConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Config\GUI\ImageUploadersConfig.Designer.cs">
-      <DependentUpon>ImageUploadersConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Config\GUI\TextUploadersConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Config\GUI\TextUploadersConfig.Designer.cs">
-      <DependentUpon>TextUploadersConfig.cs</DependentUpon>
+    <Compile Include="Config\GUI\UploadersConfigForm.Designer.cs">
+      <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\UploadersConfig.cs" />
-    <Compile Include="Config\GUI\URLShortenersConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Config\GUI\URLShortenersConfig.Designer.cs">
-      <DependentUpon>URLShortenersConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\AccountsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -208,9 +190,6 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\GUI\ImageUploadersConfig.resx">
-      <DependentUpon>ImageUploadersConfig.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>

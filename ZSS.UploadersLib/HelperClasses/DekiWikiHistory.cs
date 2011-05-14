@@ -28,7 +28,6 @@ using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable]
     public class DekiWikiHistory
     {
         public string Path;

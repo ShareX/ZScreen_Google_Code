@@ -6219,7 +6219,6 @@ namespace ZScreenGUI
             this.lbImageBamGalleries.Name = "lbImageBamGalleries";
             this.lbImageBamGalleries.Size = new System.Drawing.Size(440, 108);
             this.lbImageBamGalleries.TabIndex = 0;
-            this.lbImageBamGalleries.SelectedIndexChanged += new System.EventHandler(this.lbImageBamGalleries_SelectedIndexChanged);
             // 
             // gbImageBamLinks
             // 
@@ -6245,7 +6244,6 @@ namespace ZScreenGUI
             this.chkImageBamContentNSFW.Text = "NSFW Content";
             this.ttZScreen.SetToolTip(this.chkImageBamContentNSFW, "If you are uploading NSFW (Not Safe for Work) content then tick this checkbox");
             this.chkImageBamContentNSFW.UseVisualStyleBackColor = true;
-            this.chkImageBamContentNSFW.CheckedChanged += new System.EventHandler(this.chkImageBamContentNSFW_CheckedChanged);
             // 
             // btnImageBamRemoveGallery
             // 
@@ -6255,7 +6253,6 @@ namespace ZScreenGUI
             this.btnImageBamRemoveGallery.TabIndex = 9;
             this.btnImageBamRemoveGallery.Text = "Remove &Gallery";
             this.btnImageBamRemoveGallery.UseVisualStyleBackColor = true;
-            this.btnImageBamRemoveGallery.Click += new System.EventHandler(this.btnImageBamRemoveGallery_Click);
             // 
             // btnImageBamCreateGallery
             // 
@@ -6265,7 +6262,6 @@ namespace ZScreenGUI
             this.btnImageBamCreateGallery.TabIndex = 8;
             this.btnImageBamCreateGallery.Text = "Create &Gallery";
             this.btnImageBamCreateGallery.UseVisualStyleBackColor = true;
-            this.btnImageBamCreateGallery.Click += new System.EventHandler(this.btnImageBamCreateGallery_Click);
             // 
             // btnImageBamRegister
             // 
@@ -6276,7 +6272,6 @@ namespace ZScreenGUI
             this.btnImageBamRegister.TabIndex = 7;
             this.btnImageBamRegister.Text = "Register at ImageBam...";
             this.btnImageBamRegister.UseVisualStyleBackColor = true;
-            this.btnImageBamRegister.Click += new System.EventHandler(this.btnImageBamRegister_Click);
             // 
             // btnImageBamApiKeysUrl
             // 
@@ -6287,7 +6282,6 @@ namespace ZScreenGUI
             this.btnImageBamApiKeysUrl.TabIndex = 6;
             this.btnImageBamApiKeysUrl.Text = "View your API Keys...";
             this.btnImageBamApiKeysUrl.UseVisualStyleBackColor = true;
-            this.btnImageBamApiKeysUrl.Click += new System.EventHandler(this.btnImageBamApiKeysUrl_Click);
             // 
             // gbImageBamApiKeys
             // 
@@ -6319,7 +6313,6 @@ namespace ZScreenGUI
             this.txtImageBamSecret.Name = "txtImageBamSecret";
             this.txtImageBamSecret.Size = new System.Drawing.Size(393, 20);
             this.txtImageBamSecret.TabIndex = 4;
-            this.txtImageBamSecret.TextChanged += new System.EventHandler(this.txtImageBamSecret_TextChanged);
             // 
             // lblImageBamKey
             // 
@@ -6338,7 +6331,6 @@ namespace ZScreenGUI
             this.txtImageBamApiKey.Name = "txtImageBamApiKey";
             this.txtImageBamApiKey.Size = new System.Drawing.Size(394, 20);
             this.txtImageBamApiKey.TabIndex = 2;
-            this.txtImageBamApiKey.TextChanged += new System.EventHandler(this.txtImageBamApiKey_TextChanged);
             // 
             // tpOptionsClipboard
             // 
@@ -6770,7 +6762,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.LinkLabel llProjectPage;
         internal System.Windows.Forms.LinkLabel llWebsite;
         internal System.Windows.Forms.LinkLabel llblBugReports;
-        private NumericUpDownTimer nudScreenshotDelay;
+        internal NumericUpDownTimer nudScreenshotDelay;
         internal System.Windows.Forms.Label lblCopytoClipboard;
         internal System.Windows.Forms.ComboBox cboURLFormat;
         internal System.Windows.Forms.CheckBox chkManualNaming;
