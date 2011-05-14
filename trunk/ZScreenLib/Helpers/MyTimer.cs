@@ -57,7 +57,7 @@ namespace ZScreenLib.Helpers
             }
             else
             {
-                Console.WriteLine(text);
+                Debug.WriteLine(text);
             }
 
             return text;

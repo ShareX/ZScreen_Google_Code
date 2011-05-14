@@ -23,14 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 
 namespace ZUploader
 {
-    [Serializable]
     public class Settings
     {
         // Main Form

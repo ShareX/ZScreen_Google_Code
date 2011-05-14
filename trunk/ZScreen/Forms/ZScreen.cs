@@ -3096,53 +3096,6 @@ namespace ZScreenGUI
             Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
-        private void txtImageBamApiKey_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageBamApiKey = txtImageBamApiKey.Text;
-        }
-
-        private void txtImageBamSecret_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageBamSecret = txtImageBamSecret.Text;
-        }
-
-        private void btnImageBamApiKeysUrl_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://www.imagebam.com/nav/API_Keys");
-        }
-
-        private void btnImageBamRegister_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://www.imagebam.com/register");
-        }
-
-        private void btnImageBamCreateGallery_Click(object sender, EventArgs e)
-        {
-            //lbImageBamGalleries.Items.Add(Adapter.CreateImageBamGallery());
-        }
-
-        private void lbImageBamGalleries_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageBamGalleryActive = lbImageBamGalleries.SelectedIndex;
-        }
-
-        private void btnImageBamRemoveGallery_Click(object sender, EventArgs e)
-        {
-            /*if (lbImageBamGalleries.SelectedIndex > -1)
-            {
-                if (!string.IsNullOrEmpty(Adapter.GetImageBamGalleryActive()))
-                {
-                    lbImageBamGalleries.Items.RemoveAt(lbImageBamGalleries.SelectedIndex);
-                    Engine.conf.ImageBamGallery.RemoveAt(lbImageBamGalleries.SelectedIndex);
-                }
-            }*/
-        }
-
-        private void chkImageBamContentNSFW_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageBamContentNSFW = chkImageBamContentNSFW.Checked;
-        }
-
         private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
@@ -3241,7 +3194,7 @@ namespace ZScreenGUI
             {
                 FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
                 btnFlickrGetFrob.Tag = flickr.GetFrob();
-                string url = flickr.GetAuthLink(FlickrUploader.Permission.Write);
+                string url = flickr.GetAuthLink(FlickrPermission.Write);
                 Process.Start(url);
                 btnFlickrGetToken.Enabled = true;
             }

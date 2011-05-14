@@ -4,7 +4,7 @@ using System.Security.Permissions;
 namespace SingleInstanceApplication
 {
     /// <summary>
-    /// shared object for processes
+    /// Shared object for processes
     /// </summary>
     [Serializable]
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]

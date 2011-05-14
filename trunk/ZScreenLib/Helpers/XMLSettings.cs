@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
@@ -84,35 +85,9 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // ImageBam
+        // TODO: Use UploadersConfig.cs
 
-        public string ImageBamApiKey = string.Empty;
-        public string ImageBamSecret = string.Empty;
-        public int ImageBamGalleryActive = 0;
-        public bool ImageBamContentNSFW = false;
-        public List<string> ImageBamGallery = new List<string>();
-        public int ImageBamGallerySelected = 0;
-
-        // Rapid Share
-
-        public string RapidSharePremiumUserName = string.Empty;
-        public string RapidShareCollectorsID = string.Empty;
-        public string RapidSharePassword = string.Empty;
-        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
-
-        // SendSpace
-
-        public AccountType SendSpaceAccountType = AccountType.Anonymous;
-        public string SendSpaceUserName = string.Empty;
-        public string SendSpacePassword = string.Empty;
-
-        // Dropbox
-
-        public OAuthInfo DropboxOAuthInfo = null;
-        public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
-        public string DropboxEmail = string.Empty;
-        public string DropboxName = string.Empty;
-        public string DropboxUserID = string.Empty;
+        #region Image uploaders
 
         // ImageShack
 
@@ -134,17 +109,6 @@ namespace ZScreenLib
         public AccountType ImgurAccountType = AccountType.Anonymous;
         public OAuthInfo ImgurOAuthInfo = null;
 
-        // Twitter
-
-        public int TwitterAcctSelected = 0;
-        public List<OAuthInfo> TwitterOAuthInfoList = new List<OAuthInfo>();
-        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
-        [Category("Destinations / Twitter"), DefaultValue(""), Description("Twitter Username for yfrog etc. services")]
-        public string TwitterUsername { get; set; }
-        [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
-        public string TwitterPassword { get; set; }
-        public bool TwitterEnabled = false;
-
         // TwitPic
 
         public bool TwitPicShowFull = true;
@@ -152,12 +116,91 @@ namespace ZScreenLib
 
         // Flickr
 
-        public FlickrUploader.AuthInfo FlickrAuthInfo = new FlickrUploader.AuthInfo();
-        public FlickrUploader.FlickrSettings FlickrSettings = new FlickrUploader.FlickrSettings();
+        public FlickrAuthInfo FlickrAuthInfo = new FlickrAuthInfo();
+        public FlickrSettings FlickrSettings = new FlickrSettings();
+
+        // MediaWiki
+
+        public List<MediaWikiAccount> MediaWikiAccountList = new List<MediaWikiAccount>();
+        public int MediaWikiAccountSelected = 0;
+
+        // DekiWiki
+
+        public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
+        public int DekiWikiSelected = 0;
+        public bool DekiWikiForcePath = false;
+
+        #endregion Image uploaders
+
+        #region File uploaders
+
+        // FTP
+
+        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
+        public int FtpImages = 0;
+        public int FtpText = 0;
+        public int FtpFiles = 0;
+        public int FTPThumbnailWidth = 150;
+        public bool FTPThumbnailCheckSize = true;
+
+        // Dropbox
+
+        public OAuthInfo DropboxOAuthInfo = null;
+        public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
+        public string DropboxEmail = string.Empty;
+        public string DropboxName = string.Empty;
+        public string DropboxUserID = string.Empty;
+
+        // RapidShare
+
+        public string RapidSharePremiumUserName = string.Empty;
+        public string RapidShareCollectorsID = string.Empty;
+        public string RapidSharePassword = string.Empty;
+        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
+
+        // SendSpace
+
+        public AccountType SendSpaceAccountType = AccountType.Anonymous;
+        public string SendSpaceUserName = string.Empty;
+        public string SendSpacePassword = string.Empty;
+
+        #endregion File uploaders
+
+        #region Text uploaders
 
         // Pastebin
 
         public PastebinSettings PastebinSettings = new PastebinSettings();
+
+        #endregion Text uploaders
+
+        #region URL shorteners
+
+        #endregion URL shorteners
+
+        #region Text services
+
+        // Twitter
+
+        public int TwitterAcctSelected = 0;
+        public List<OAuthInfo> TwitterOAuthInfoList = new List<OAuthInfo>();
+        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
+        public bool TwitterEnabled = false;
+        [Category("Destinations / Twitter"), DefaultValue(""), Description("Twitter Username for yfrog etc. services")]
+        public string TwitterUsername { get; set; }
+        [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
+        public string TwitterPassword { get; set; }
+
+        #endregion Text services
+
+        #region Other destinations
+
+        // Localhost
+
+        public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
+        public int LocalhostSelected = 0;
+
+        #endregion Other destinations
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -340,39 +383,6 @@ namespace ZScreenLib
         public bool ImageEditorAutoSave = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
-        //  FTP
-        //~~~~~~~~~~~~~~~~~~~~~
-
-        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FtpImages = 0;
-        public int FtpText = 0;
-        public int FtpFiles = 0;
-        public int FTPThumbnailWidth = 150;
-        public bool FTPThumbnailCheckSize = true;
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  Localhost
-        //~~~~~~~~~~~~~~~~~~~~~
-
-        public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
-        public int LocalhostSelected = 0;
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  DekiWiki
-        //~~~~~~~~~~~~~~~~~~~~~
-
-        public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
-        public int DekiWikiSelected = 0;
-        public bool DekiWikiForcePath = false;
-
-        //~~~~~~~~~~~~~~~~~~~~~
-        //  MediaWiki
-        //~~~~~~~~~~~~~~~~~~~~~
-
-        public List<MediaWikiAccount> MediaWikiAccountList = new List<MediaWikiAccount>();
-        public int MediaWikiAccountSelected = 0;
-
-        //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
         //~~~~~~~~~~~~~~~~~~~~~
 
@@ -492,7 +502,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 

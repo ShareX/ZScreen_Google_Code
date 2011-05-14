@@ -41,7 +41,7 @@ namespace UploadersLib.ImageUploaders
         private const string API_Auth_URL = "http://www.flickr.com/services/auth/";
         private const string API_Upload_URL = "http://api.flickr.com/services/upload/";
 
-        public AuthInfo Auth = new AuthInfo();
+        public FlickrAuthInfo Auth = new FlickrAuthInfo();
         public FlickrSettings Settings = new FlickrSettings();
         public string Frob;
 
@@ -51,7 +51,7 @@ namespace UploadersLib.ImageUploaders
             API_Secret = secret;
         }
 
-        public FlickrUploader(string key, string secret, AuthInfo auth, FlickrSettings settings)
+        public FlickrUploader(string key, string secret, FlickrAuthInfo auth, FlickrSettings settings)
             : this(key, secret)
         {
             this.Auth = auth;
@@ -64,7 +64,7 @@ namespace UploadersLib.ImageUploaders
         /// Returns the credentials attached to an authentication token.
         /// http://www.flickr.com/services/api/flickr.auth.checkToken.html
         /// </summary>
-        public AuthInfo CheckToken(string token)
+        public FlickrAuthInfo CheckToken(string token)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "flickr.auth.checkToken");
@@ -74,7 +74,7 @@ namespace UploadersLib.ImageUploaders
 
             string response = SendPostRequest(API_URL, args);
 
-            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new FlickrAuthInfo(ParseResponse(response, "auth"));
 
             return this.Auth;
         }
@@ -101,7 +101,7 @@ namespace UploadersLib.ImageUploaders
         /// Get the full authentication token for a mini-token.
         /// http://www.flickr.com/services/api/flickr.auth.getFullToken.html
         /// </summary>
-        public AuthInfo GetFullToken(string frob)
+        public FlickrAuthInfo GetFullToken(string frob)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "flickr.auth.getFullToken");
@@ -111,7 +111,7 @@ namespace UploadersLib.ImageUploaders
 
             string response = SendPostRequest(API_URL, args);
 
-            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new FlickrAuthInfo(ParseResponse(response, "auth"));
 
             return this.Auth;
         }
@@ -121,7 +121,7 @@ namespace UploadersLib.ImageUploaders
         /// http://www.flickr.com/services/api/flickr.auth.getToken.html
         /// </summary>
         /// <returns></returns>
-        public AuthInfo GetToken(string frob)
+        public FlickrAuthInfo GetToken(string frob)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("method", "flickr.auth.getToken");
@@ -131,22 +131,22 @@ namespace UploadersLib.ImageUploaders
 
             string response = SendPostRequest(API_URL, args);
 
-            this.Auth = new AuthInfo(ParseResponse(response, "auth"));
+            this.Auth = new FlickrAuthInfo(ParseResponse(response, "auth"));
 
             return this.Auth;
         }
 
-        public AuthInfo GetToken()
+        public FlickrAuthInfo GetToken()
         {
             return GetToken(this.Frob);
         }
 
         public string GetAuthLink()
         {
-            return GetAuthLink(Permission.Write);
+            return GetAuthLink(FlickrPermission.Write);
         }
 
-        public string GetAuthLink(Permission perm)
+        public string GetAuthLink(FlickrPermission perm)
         {
             if (!string.IsNullOrEmpty(Frob))
             {
@@ -247,109 +247,109 @@ namespace UploadersLib.ImageUploaders
 
             return ur;
         }
+    }
 
-        public class AuthInfo
+    public class FlickrAuthInfo
+    {
+        [Description("Token string"), ReadOnly(true), PasswordPropertyText(true)]
+        public string Token { get; set; }
+
+        [Description("Permission"), ReadOnly(true)]
+        public string Permission { get; set; }
+
+        [Description("User ID that can be used in a URL")]
+        public string UserID { get; set; }
+
+        [Description("Your Flickr username"), ReadOnly(true)]
+        public string Username { get; set; }
+
+        [Description("Full name"), ReadOnly(true)]
+        public string Fullname { get; set; }
+
+        public FlickrAuthInfo() { }
+
+        public FlickrAuthInfo(XElement element)
         {
-            [Description("Token string"), ReadOnly(true), PasswordPropertyText(true)]
-            public string Token { get; set; }
-
-            [Description("Permission"), ReadOnly(true)]
-            public string Permission { get; set; }
-
-            [Description("User ID that can be used in a URL")]
-            public string UserID { get; set; }
-
-            [Description("Your Flickr username"), ReadOnly(true)]
-            public string Username { get; set; }
-
-            [Description("Full name"), ReadOnly(true)]
-            public string Fullname { get; set; }
-
-            public AuthInfo() { }
-
-            public AuthInfo(XElement element)
-            {
-                Token = element.GetElementValue("token");
-                Permission = element.GetElementValue("perms");
-                XElement user = element.Element("user");
-                UserID = user.GetAttributeValue("nsid");
-                Username = user.GetAttributeValue("username");
-                Fullname = user.GetAttributeValue("fullname");
-            }
+            Token = element.GetElementValue("token");
+            Permission = element.GetElementValue("perms");
+            XElement user = element.Element("user");
+            UserID = user.GetAttributeValue("nsid");
+            Username = user.GetAttributeValue("username");
+            Fullname = user.GetAttributeValue("fullname");
         }
+    }
 
-        public class FlickrSettings
-        {
-            /// <summary>
-            /// The title of the photo.
-            /// </summary>
-            [Description("The title of the photo.")]
-            public string Title { get; set; }
+    public class FlickrSettings
+    {
+        /// <summary>
+        /// The title of the photo.
+        /// </summary>
+        [Description("The title of the photo.")]
+        public string Title { get; set; }
 
-            /// <summary>
-            /// A description of the photo. May contain some limited HTML.
-            /// </summary>
-            [Description("A description of the photo. May contain some limited HTML.")]
-            public string Description { get; set; }
+        /// <summary>
+        /// A description of the photo. May contain some limited HTML.
+        /// </summary>
+        [Description("A description of the photo. May contain some limited HTML.")]
+        public string Description { get; set; }
 
-            /// <summary>
-            /// A space-seperated list of tags to apply to the photo.
-            /// </summary>
-            [Description("A space-seperated list of tags to apply to the photo.")]
-            public string Tags { get; set; }
+        /// <summary>
+        /// A space-seperated list of tags to apply to the photo.
+        /// </summary>
+        [Description("A space-seperated list of tags to apply to the photo.")]
+        public string Tags { get; set; }
 
-            /// <summary>
-            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
-            /// </summary>
-            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
-            public string IsPublic { get; set; }
+        /// <summary>
+        /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+        /// </summary>
+        [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
+        public string IsPublic { get; set; }
 
-            /// <summary>
-            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
-            /// </summary>
-            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
-            public string IsFriend { get; set; }
+        /// <summary>
+        /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+        /// </summary>
+        [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
+        public string IsFriend { get; set; }
 
-            /// <summary>
-            /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
-            /// </summary>
-            [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
-            public string IsFamily { get; set; }
+        /// <summary>
+        /// Set to 0 for no, 1 for yes. Specifies who can view the photo.
+        /// </summary>
+        [Description("Set to 0 for no, 1 for yes. Specifies who can view the photo.")]
+        public string IsFamily { get; set; }
 
-            /// <summary>
-            /// Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.
-            /// </summary>
-            [Description("Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.")]
-            public string SafetyLevel { get; set; }
+        /// <summary>
+        /// Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.
+        /// </summary>
+        [Description("Set to 1 for Safe, 2 for Moderate, or 3 for Restricted.")]
+        public string SafetyLevel { get; set; }
 
-            /// <summary>
-            /// Set to 1 for Photo, 2 for Screenshot, or 3 for Other.
-            /// </summary>
-            [Description("Set to 1 for Photo, 2 for Screenshot, or 3 for Other.")]
-            public string ContentType { get; set; }
+        /// <summary>
+        /// Set to 1 for Photo, 2 for Screenshot, or 3 for Other.
+        /// </summary>
+        [Description("Set to 1 for Photo, 2 for Screenshot, or 3 for Other.")]
+        public string ContentType { get; set; }
 
-            /// <summary>
-            /// Set to 1 to keep the photo in global search results, 2 to hide from public searches.
-            /// </summary>
-            [Description("Set to 1 to keep the photo in global search results, 2 to hide from public searches.")]
-            public string Hidden { get; set; }
-        }
+        /// <summary>
+        /// Set to 1 to keep the photo in global search results, 2 to hide from public searches.
+        /// </summary>
+        [Description("Set to 1 to keep the photo in global search results, 2 to hide from public searches.")]
+        public string Hidden { get; set; }
+    }
 
-        public enum Permission
-        {
-            None,
-            /// <summary>
-            /// Permission to read private information
-            /// </summary>
-            Read,
-            /// <summary>
-            /// Permission to add, edit and delete photo metadata (includes 'read')
-            /// </summary>
-            Write,
-            /// <summary>
-            /// Permission to delete photos (includes 'write' and 'read')
-            /// </summary>
-            Delete
-        }
+    public enum FlickrPermission
+    {
+        None,
+        /// <summary>
+        /// Permission to read private information
+        /// </summary>
+        Read,
+        /// <summary>
+        /// Permission to add, edit and delete photo metadata (includes 'read')
+        /// </summary>
+        Write,
+        /// <summary>
+        /// Permission to delete photos (includes 'write' and 'read')
+        /// </summary>
+        Delete
     }
 }

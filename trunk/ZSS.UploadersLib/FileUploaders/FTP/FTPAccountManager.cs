@@ -25,12 +25,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 
 namespace UploadersLib
 {
-    [Serializable]
     public class FTPAccountManager
     {
         public List<FTPAccount> FTPAccounts { get; set; }
@@ -57,7 +57,7 @@ namespace UploadersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 

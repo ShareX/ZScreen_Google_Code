@@ -7,7 +7,6 @@ using UploadersLib;
 
 namespace ZScreenLib
 {
-    [Serializable]
     public class AppSettings
     {
         public readonly static string AppSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, "AppSettings.xml");

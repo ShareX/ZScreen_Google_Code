@@ -23,13 +23,11 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable()]
     public class MediaWikiAccount
     {
         [Category("MediaWiki")]

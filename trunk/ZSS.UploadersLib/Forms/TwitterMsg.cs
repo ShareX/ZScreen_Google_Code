@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.TextServices;
@@ -154,15 +155,15 @@ namespace UploadersLib
 
         public TwitterClientSettings()
         {
-            this.Addressees = new List<string>();
+            Addressees = new List<string>();
         }
 
         public void AddUser(string user)
         {
             if (!string.IsNullOrEmpty(user) && !this.Addressees.Contains(user))
             {
-                Console.WriteLine("Added new user to the user list: " + user);
-                this.Addressees.Add(user);
+                Debug.WriteLine("Added new user to the user list: " + user);
+                Addressees.Add(user);
             }
         }
     }

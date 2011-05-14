@@ -192,30 +192,6 @@ namespace ZScreenGUI
                 lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
             }
 
-            // ImageBam
-
-            txtImageBamApiKey.Text = Engine.conf.ImageBamApiKey;
-            txtImageBamSecret.Text = Engine.conf.ImageBamSecret;
-            chkImageBamContentNSFW.Checked = Engine.conf.ImageBamContentNSFW;
-            if (Engine.conf.ImageBamGallery.Count == 0)
-            {
-                Engine.conf.ImageBamGallery.Add(string.Empty);
-            }
-
-            foreach (string id in Engine.conf.ImageBamGallery)
-            {
-                lbImageBamGalleries.Items.Add(id);
-            }
-
-            if (lbImageBamGalleries.Items.Count > Engine.conf.ImageBamGalleryActive)
-            {
-                lbImageBamGalleries.SelectedIndex = Engine.conf.ImageBamGalleryActive;
-            }
-            else
-            {
-                lbImageBamGalleries.SelectedIndex = 0;
-            }
-
             // Twitter
 
             ucTwitterAccounts.AccountsList.Items.Clear();

@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -391,7 +392,7 @@ namespace UploadersLib.HelperClasses
             try
             {
                 string postData = "format=xml&action=query&prop=info&intoken=edit&titles=Foo";
-                Console.WriteLine(postData);
+                Debug.WriteLine(postData);
 
                 ASCIIEncoding encoding = new ASCIIEncoding();
                 byte[] postBytes = encoding.GetBytes(postData);

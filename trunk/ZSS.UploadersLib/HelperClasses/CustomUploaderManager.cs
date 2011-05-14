@@ -25,12 +25,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable]
     public class CustomUploaderManager
     {
         public List<CustomUploaderInfo> ImageHostingServices { get; set; }
@@ -52,7 +52,7 @@ namespace UploadersLib.HelperClasses
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
             }
         }
 

@@ -397,11 +397,6 @@ namespace ZScreenLib
             return result;
         }
 
-        public static bool CheckImageBamGallery()
-        {
-            return CheckList(Engine.conf.ImageBamGallery, Engine.conf.ImageBamGallerySelected);
-        }
-
         public static void TestDekiWikiAccount(DekiWikiAccount acc)
         {
             string msg = "Success!";

@@ -30,7 +30,6 @@ using System.Text.RegularExpressions;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable]
     public class CustomUploaderInfo
     {
         public string Name { get; set; }

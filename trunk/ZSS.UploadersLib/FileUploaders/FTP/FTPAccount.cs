@@ -29,7 +29,6 @@ using HelpersLib;
 
 namespace UploadersLib
 {
-    [Serializable]
     public class FTPAccount : ICloneable
     {
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]

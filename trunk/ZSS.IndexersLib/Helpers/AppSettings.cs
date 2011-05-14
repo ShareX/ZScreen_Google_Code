@@ -23,14 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace ZSS.IndexersLib
 {
-    [Serializable()]
     public class AppSettings
     {
         private string m_TasksFolderPath;

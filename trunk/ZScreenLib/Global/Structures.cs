@@ -23,13 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace ZScreenLib
 {
-    [Serializable, StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct RECT
     {
         public int Left;

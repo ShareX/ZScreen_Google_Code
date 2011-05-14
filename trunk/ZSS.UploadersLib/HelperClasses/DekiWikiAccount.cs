@@ -23,14 +23,12 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
 
 namespace UploadersLib.HelperClasses
 {
-    [Serializable()]
     public class DekiWikiAccount
     {
         [Category("MindTouch")]

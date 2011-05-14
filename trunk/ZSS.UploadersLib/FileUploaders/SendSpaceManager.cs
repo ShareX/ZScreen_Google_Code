@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using HelpersLib;
 
 namespace UploadersLib.FileUploaders
@@ -77,11 +78,11 @@ namespace UploadersLib.FileUploaders
             {
                 if (sendSpace.Errors.Count > 0)
                 {
-                    Console.WriteLine(sendSpace.ToErrorString());
+                    Debug.WriteLine(sendSpace.ToErrorString());
                 }
                 else
                 {
-                    Console.WriteLine(e.ToString());
+                    Debug.WriteLine(e.ToString());
                 }
             }
 

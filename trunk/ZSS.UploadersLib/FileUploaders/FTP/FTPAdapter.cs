@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -171,7 +172,7 @@ namespace UploadersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 
