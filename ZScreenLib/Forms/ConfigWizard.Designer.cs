@@ -47,6 +47,7 @@
             this.gbRoot.Controls.Add(this.btnViewRootDir);
             this.gbRoot.Controls.Add(this.btnBrowseRootDir);
             this.gbRoot.Controls.Add(this.txtRootFolder);
+            this.gbRoot.Enabled = false;
             this.gbRoot.Location = new System.Drawing.Point(8, 33);
             this.gbRoot.Name = "gbRoot";
             this.gbRoot.Size = new System.Drawing.Size(608, 64);
@@ -110,6 +111,8 @@
             // chkPreferSystemFolders
             // 
             this.chkPreferSystemFolders.AutoSize = true;
+            this.chkPreferSystemFolders.Checked = true;
+            this.chkPreferSystemFolders.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPreferSystemFolders.Location = new System.Drawing.Point(8, 8);
             this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
             this.chkPreferSystemFolders.Size = new System.Drawing.Size(230, 17);
@@ -136,11 +139,11 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // ucDestinations
+            // ucDestOptions
             // 
             this.ucDestOptions.Location = new System.Drawing.Point(8, 112);
             this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestinations";
+            this.ucDestOptions.Name = "ucDestOptions";
             this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
             this.ucDestOptions.TabIndex = 123;
             // 

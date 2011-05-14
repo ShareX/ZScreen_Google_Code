@@ -208,13 +208,17 @@ namespace ZScreenLib
                     }
                     RunConfig = true;
                 }
-                if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
+                if (Engine.mAppSettings.PreferSystemFolders)
+                {
+                    RootAppFolder = zLocalAppDataFolder;
+                }
+                else if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
                 {
                     RootAppFolder = Engine.mAppSettings.RootDir;
                 }
                 else
                 {
-                    RootAppFolder = Engine.mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : DefaultRootAppFolder;
+                    RootAppFolder = DefaultRootAppFolder;
                 }
             }
 
@@ -224,7 +228,6 @@ namespace ZScreenLib
                 FileSystem.AppendDebug(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
                 FileSystem.AppendDebug("Initializing Default folder paths...");
                 Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
-                // ZSS.Loader.Splash.AsmLoads.Enqueue("Reading " + Path.GetFileName(Program.XMLSettingsFile));
 
                 bool bGrantedOwnership;
                 try
