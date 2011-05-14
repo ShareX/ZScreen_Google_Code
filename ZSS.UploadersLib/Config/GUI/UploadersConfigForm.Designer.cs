@@ -32,8 +32,32 @@
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.tcImageUploaders = new System.Windows.Forms.TabControl();
             this.tpImageShack = new System.Windows.Forms.TabPage();
+            this.btnImageShackOpenPublicProfile = new System.Windows.Forms.Button();
+            this.cbImageShackIsPublic = new System.Windows.Forms.CheckBox();
+            this.btnImageShackOpenMyImages = new System.Windows.Forms.Button();
+            this.lblImageShackUsername = new System.Windows.Forms.Label();
+            this.btnImageShackOpenRegistrationCode = new System.Windows.Forms.Button();
+            this.txtImageShackUsername = new System.Windows.Forms.TextBox();
+            this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
+            this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
+            this.btnTinyPicLogin = new System.Windows.Forms.Button();
+            this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
+            this.lblTinyPicPassword = new System.Windows.Forms.Label();
+            this.txtTinyPicUsername = new System.Windows.Forms.TextBox();
+            this.lblTinyPicUsername = new System.Windows.Forms.Label();
+            this.btnTinyPicOpenMyImages = new System.Windows.Forms.Button();
+            this.cbTinyPicRememberUsernamePassword = new System.Windows.Forms.CheckBox();
+            this.lblTinyPicRegistrationCode = new System.Windows.Forms.Label();
+            this.txtTinyPicRegistrationCode = new System.Windows.Forms.TextBox();
             this.tpImgur = new System.Windows.Forms.TabPage();
+            this.gbImgurUserAccount = new System.Windows.Forms.GroupBox();
+            this.btnImgurOpenAuthorizePage = new System.Windows.Forms.Button();
+            this.lblImgurVerificationCode = new System.Windows.Forms.Label();
+            this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
+            this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
+            this.lblImgurAccountStatus = new System.Windows.Forms.Label();
+            this.cbImgurUseUserAccount = new System.Windows.Forms.CheckBox();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
@@ -57,36 +81,13 @@
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
-            this.cbImageShackIsPublic = new System.Windows.Forms.CheckBox();
-            this.btnImageShackOpenPublicProfile = new System.Windows.Forms.Button();
-            this.lblImageShackUsername = new System.Windows.Forms.Label();
-            this.txtImageShackUsername = new System.Windows.Forms.TextBox();
-            this.btnImageShackOpenMyImages = new System.Windows.Forms.Button();
-            this.btnImageShackOpenRegistrationCode = new System.Windows.Forms.Button();
-            this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
-            this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
-            this.btnTinyPicOpenMyImages = new System.Windows.Forms.Button();
-            this.lblTinyPicRegistrationCode = new System.Windows.Forms.Label();
-            this.txtTinyPicRegistrationCode = new System.Windows.Forms.TextBox();
-            this.cbTinyPicRememberUsernamePassword = new System.Windows.Forms.CheckBox();
-            this.lblTinyPicUsername = new System.Windows.Forms.Label();
-            this.txtTinyPicUsername = new System.Windows.Forms.TextBox();
-            this.lblTinyPicPassword = new System.Windows.Forms.Label();
-            this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
-            this.btnTinyPicLogin = new System.Windows.Forms.Button();
-            this.cbImgurUseUserAccount = new System.Windows.Forms.CheckBox();
-            this.btnImgurOpenAuthorizePage = new System.Windows.Forms.Button();
-            this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
-            this.lblImgurAccountStatus = new System.Windows.Forms.Label();
-            this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
-            this.lblImgurVerificationCode = new System.Windows.Forms.Label();
-            this.gbImgurUserAccount = new System.Windows.Forms.GroupBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
             this.tpImageShack.SuspendLayout();
             this.tpTinyPic.SuspendLayout();
             this.tpImgur.SuspendLayout();
+            this.gbImgurUserAccount.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
@@ -96,7 +97,6 @@
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
-            this.gbImgurUserAccount.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -160,6 +160,85 @@
             this.tpImageShack.Text = "ImageShack";
             this.tpImageShack.UseVisualStyleBackColor = true;
             // 
+            // btnImageShackOpenPublicProfile
+            // 
+            this.btnImageShackOpenPublicProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenPublicProfile.Location = new System.Drawing.Point(16, 208);
+            this.btnImageShackOpenPublicProfile.Name = "btnImageShackOpenPublicProfile";
+            this.btnImageShackOpenPublicProfile.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenPublicProfile.TabIndex = 6;
+            this.btnImageShackOpenPublicProfile.Text = "Open public profile page...";
+            this.btnImageShackOpenPublicProfile.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenPublicProfile.Click += new System.EventHandler(this.btnImageShackOpenPublicProfile_Click);
+            // 
+            // cbImageShackIsPublic
+            // 
+            this.cbImageShackIsPublic.AutoSize = true;
+            this.cbImageShackIsPublic.Location = new System.Drawing.Point(16, 136);
+            this.cbImageShackIsPublic.Name = "cbImageShackIsPublic";
+            this.cbImageShackIsPublic.Size = new System.Drawing.Size(307, 17);
+            this.cbImageShackIsPublic.TabIndex = 3;
+            this.cbImageShackIsPublic.Text = "Show images uploaded to ImageShack in your public profile";
+            this.cbImageShackIsPublic.UseVisualStyleBackColor = true;
+            // 
+            // btnImageShackOpenMyImages
+            // 
+            this.btnImageShackOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenMyImages.Location = new System.Drawing.Point(16, 240);
+            this.btnImageShackOpenMyImages.Name = "btnImageShackOpenMyImages";
+            this.btnImageShackOpenMyImages.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenMyImages.TabIndex = 3;
+            this.btnImageShackOpenMyImages.Text = "Open my images page...";
+            this.btnImageShackOpenMyImages.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenMyImages.Click += new System.EventHandler(this.btnImageShackOpenMyImages_Click);
+            // 
+            // lblImageShackUsername
+            // 
+            this.lblImageShackUsername.AutoSize = true;
+            this.lblImageShackUsername.Location = new System.Drawing.Point(16, 72);
+            this.lblImageShackUsername.Name = "lblImageShackUsername";
+            this.lblImageShackUsername.Size = new System.Drawing.Size(242, 13);
+            this.lblImageShackUsername.TabIndex = 5;
+            this.lblImageShackUsername.Text = "Username (to be able to open public profile page):";
+            // 
+            // btnImageShackOpenRegistrationCode
+            // 
+            this.btnImageShackOpenRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenRegistrationCode.Location = new System.Drawing.Point(16, 176);
+            this.btnImageShackOpenRegistrationCode.Name = "btnImageShackOpenRegistrationCode";
+            this.btnImageShackOpenRegistrationCode.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenRegistrationCode.TabIndex = 2;
+            this.btnImageShackOpenRegistrationCode.Text = "Open registration code page...";
+            this.btnImageShackOpenRegistrationCode.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenRegistrationCode.Click += new System.EventHandler(this.btnImageShackOpenRegistrationCode_Click);
+            // 
+            // txtImageShackUsername
+            // 
+            this.txtImageShackUsername.Location = new System.Drawing.Point(16, 96);
+            this.txtImageShackUsername.Name = "txtImageShackUsername";
+            this.txtImageShackUsername.Size = new System.Drawing.Size(360, 20);
+            this.txtImageShackUsername.TabIndex = 4;
+            this.txtImageShackUsername.TextChanged += new System.EventHandler(this.txtImageShackUsername_TextChanged);
+            // 
+            // txtImageShackRegistrationCode
+            // 
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
+            this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtImageShackRegistrationCode.TabIndex = 0;
+            this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
+            // 
+            // lblImageShackRegistrationCode
+            // 
+            this.lblImageShackRegistrationCode.AutoSize = true;
+            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 16);
+            this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
+            this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
+            this.lblImageShackRegistrationCode.TabIndex = 1;
+            this.lblImageShackRegistrationCode.Text = "Registration code:";
+            // 
             // tpTinyPic
             // 
             this.tpTinyPic.Controls.Add(this.btnTinyPicLogin);
@@ -179,6 +258,93 @@
             this.tpTinyPic.Text = "TinyPic";
             this.tpTinyPic.UseVisualStyleBackColor = true;
             // 
+            // btnTinyPicLogin
+            // 
+            this.btnTinyPicLogin.Location = new System.Drawing.Point(16, 128);
+            this.btnTinyPicLogin.Name = "btnTinyPicLogin";
+            this.btnTinyPicLogin.Size = new System.Drawing.Size(80, 23);
+            this.btnTinyPicLogin.TabIndex = 13;
+            this.btnTinyPicLogin.Text = "Login";
+            this.btnTinyPicLogin.UseVisualStyleBackColor = true;
+            this.btnTinyPicLogin.Click += new System.EventHandler(this.btnTinyPicLogin_Click);
+            // 
+            // txtTinyPicPassword
+            // 
+            this.txtTinyPicPassword.Location = new System.Drawing.Point(16, 96);
+            this.txtTinyPicPassword.Name = "txtTinyPicPassword";
+            this.txtTinyPicPassword.PasswordChar = '*';
+            this.txtTinyPicPassword.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicPassword.TabIndex = 12;
+            this.txtTinyPicPassword.TextChanged += new System.EventHandler(this.txtTinyPicPassword_TextChanged);
+            // 
+            // lblTinyPicPassword
+            // 
+            this.lblTinyPicPassword.AutoSize = true;
+            this.lblTinyPicPassword.Location = new System.Drawing.Point(16, 72);
+            this.lblTinyPicPassword.Name = "lblTinyPicPassword";
+            this.lblTinyPicPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblTinyPicPassword.TabIndex = 11;
+            this.lblTinyPicPassword.Text = "Password:";
+            // 
+            // txtTinyPicUsername
+            // 
+            this.txtTinyPicUsername.Location = new System.Drawing.Point(16, 40);
+            this.txtTinyPicUsername.Name = "txtTinyPicUsername";
+            this.txtTinyPicUsername.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicUsername.TabIndex = 10;
+            this.txtTinyPicUsername.TextChanged += new System.EventHandler(this.txtTinyPicUsername_TextChanged);
+            // 
+            // lblTinyPicUsername
+            // 
+            this.lblTinyPicUsername.AutoSize = true;
+            this.lblTinyPicUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblTinyPicUsername.Name = "lblTinyPicUsername";
+            this.lblTinyPicUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblTinyPicUsername.TabIndex = 9;
+            this.lblTinyPicUsername.Text = "Username:";
+            // 
+            // btnTinyPicOpenMyImages
+            // 
+            this.btnTinyPicOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTinyPicOpenMyImages.Location = new System.Drawing.Point(16, 224);
+            this.btnTinyPicOpenMyImages.Name = "btnTinyPicOpenMyImages";
+            this.btnTinyPicOpenMyImages.Size = new System.Drawing.Size(200, 23);
+            this.btnTinyPicOpenMyImages.TabIndex = 8;
+            this.btnTinyPicOpenMyImages.Text = "Open my images page...";
+            this.btnTinyPicOpenMyImages.UseVisualStyleBackColor = true;
+            this.btnTinyPicOpenMyImages.Click += new System.EventHandler(this.btnTinyPicOpenMyImages_Click);
+            // 
+            // cbTinyPicRememberUsernamePassword
+            // 
+            this.cbTinyPicRememberUsernamePassword.AutoSize = true;
+            this.cbTinyPicRememberUsernamePassword.Location = new System.Drawing.Point(112, 131);
+            this.cbTinyPicRememberUsernamePassword.Name = "cbTinyPicRememberUsernamePassword";
+            this.cbTinyPicRememberUsernamePassword.Size = new System.Drawing.Size(233, 17);
+            this.cbTinyPicRememberUsernamePassword.TabIndex = 8;
+            this.cbTinyPicRememberUsernamePassword.Text = "Remember TinyPic username and password";
+            this.cbTinyPicRememberUsernamePassword.UseVisualStyleBackColor = true;
+            this.cbTinyPicRememberUsernamePassword.CheckedChanged += new System.EventHandler(this.cbTinyPicRememberUsernamePassword_CheckedChanged);
+            // 
+            // lblTinyPicRegistrationCode
+            // 
+            this.lblTinyPicRegistrationCode.AutoSize = true;
+            this.lblTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 168);
+            this.lblTinyPicRegistrationCode.Name = "lblTinyPicRegistrationCode";
+            this.lblTinyPicRegistrationCode.Size = new System.Drawing.Size(335, 13);
+            this.lblTinyPicRegistrationCode.TabIndex = 4;
+            this.lblTinyPicRegistrationCode.Text = "Registration code (You must login for be able to get registration code):";
+            // 
+            // txtTinyPicRegistrationCode
+            // 
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
+            this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
+            this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
+            this.txtTinyPicRegistrationCode.ReadOnly = true;
+            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicRegistrationCode.TabIndex = 3;
+            // 
             // tpImgur
             // 
             this.tpImgur.Controls.Add(this.gbImgurUserAccount);
@@ -190,6 +356,76 @@
             this.tpImgur.TabIndex = 2;
             this.tpImgur.Text = "Imgur";
             this.tpImgur.UseVisualStyleBackColor = true;
+            // 
+            // gbImgurUserAccount
+            // 
+            this.gbImgurUserAccount.Controls.Add(this.btnImgurOpenAuthorizePage);
+            this.gbImgurUserAccount.Controls.Add(this.lblImgurVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.btnImgurEnterVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.txtImgurVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.lblImgurAccountStatus);
+            this.gbImgurUserAccount.Location = new System.Drawing.Point(16, 48);
+            this.gbImgurUserAccount.Name = "gbImgurUserAccount";
+            this.gbImgurUserAccount.Size = new System.Drawing.Size(392, 192);
+            this.gbImgurUserAccount.TabIndex = 6;
+            this.gbImgurUserAccount.TabStop = false;
+            this.gbImgurUserAccount.Text = "User account";
+            // 
+            // btnImgurOpenAuthorizePage
+            // 
+            this.btnImgurOpenAuthorizePage.Location = new System.Drawing.Point(16, 24);
+            this.btnImgurOpenAuthorizePage.Name = "btnImgurOpenAuthorizePage";
+            this.btnImgurOpenAuthorizePage.Size = new System.Drawing.Size(200, 23);
+            this.btnImgurOpenAuthorizePage.TabIndex = 1;
+            this.btnImgurOpenAuthorizePage.Text = "Open authorize page...";
+            this.btnImgurOpenAuthorizePage.UseVisualStyleBackColor = true;
+            this.btnImgurOpenAuthorizePage.Click += new System.EventHandler(this.btnImgurOpenAuthorizePage_Click);
+            // 
+            // lblImgurVerificationCode
+            // 
+            this.lblImgurVerificationCode.AutoSize = true;
+            this.lblImgurVerificationCode.Location = new System.Drawing.Point(16, 64);
+            this.lblImgurVerificationCode.Name = "lblImgurVerificationCode";
+            this.lblImgurVerificationCode.Size = new System.Drawing.Size(292, 13);
+            this.lblImgurVerificationCode.TabIndex = 5;
+            this.lblImgurVerificationCode.Text = "Verification code (Get verification code from authorize page):";
+            // 
+            // btnImgurEnterVerificationCode
+            // 
+            this.btnImgurEnterVerificationCode.Location = new System.Drawing.Point(16, 120);
+            this.btnImgurEnterVerificationCode.Name = "btnImgurEnterVerificationCode";
+            this.btnImgurEnterVerificationCode.Size = new System.Drawing.Size(200, 23);
+            this.btnImgurEnterVerificationCode.TabIndex = 2;
+            this.btnImgurEnterVerificationCode.Text = "Complete authorization";
+            this.btnImgurEnterVerificationCode.UseVisualStyleBackColor = true;
+            this.btnImgurEnterVerificationCode.Click += new System.EventHandler(this.btnImgurEnterVerificationCode_Click);
+            // 
+            // txtImgurVerificationCode
+            // 
+            this.txtImgurVerificationCode.Location = new System.Drawing.Point(16, 88);
+            this.txtImgurVerificationCode.Name = "txtImgurVerificationCode";
+            this.txtImgurVerificationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtImgurVerificationCode.TabIndex = 4;
+            // 
+            // lblImgurAccountStatus
+            // 
+            this.lblImgurAccountStatus.AutoSize = true;
+            this.lblImgurAccountStatus.Location = new System.Drawing.Point(16, 160);
+            this.lblImgurAccountStatus.Name = "lblImgurAccountStatus";
+            this.lblImgurAccountStatus.Size = new System.Drawing.Size(77, 13);
+            this.lblImgurAccountStatus.TabIndex = 3;
+            this.lblImgurAccountStatus.Text = "Login required.";
+            // 
+            // cbImgurUseUserAccount
+            // 
+            this.cbImgurUseUserAccount.AutoSize = true;
+            this.cbImgurUseUserAccount.Location = new System.Drawing.Point(16, 16);
+            this.cbImgurUseUserAccount.Name = "cbImgurUseUserAccount";
+            this.cbImgurUseUserAccount.Size = new System.Drawing.Size(142, 17);
+            this.cbImgurUseUserAccount.TabIndex = 0;
+            this.cbImgurUseUserAccount.Text = "Upload via user account";
+            this.cbImgurUseUserAccount.UseVisualStyleBackColor = true;
+            this.cbImgurUseUserAccount.CheckedChanged += new System.EventHandler(this.cbImgurUseUserAccount_CheckedChanged);
             // 
             // tpFlickr
             // 
@@ -430,242 +666,6 @@
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
-            // cbImageShackIsPublic
-            // 
-            this.cbImageShackIsPublic.AutoSize = true;
-            this.cbImageShackIsPublic.Location = new System.Drawing.Point(16, 136);
-            this.cbImageShackIsPublic.Name = "cbImageShackIsPublic";
-            this.cbImageShackIsPublic.Size = new System.Drawing.Size(307, 17);
-            this.cbImageShackIsPublic.TabIndex = 3;
-            this.cbImageShackIsPublic.Text = "Show images uploaded to ImageShack in your public profile";
-            this.cbImageShackIsPublic.UseVisualStyleBackColor = true;
-            // 
-            // btnImageShackOpenPublicProfile
-            // 
-            this.btnImageShackOpenPublicProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenPublicProfile.Location = new System.Drawing.Point(16, 208);
-            this.btnImageShackOpenPublicProfile.Name = "btnImageShackOpenPublicProfile";
-            this.btnImageShackOpenPublicProfile.Size = new System.Drawing.Size(200, 23);
-            this.btnImageShackOpenPublicProfile.TabIndex = 6;
-            this.btnImageShackOpenPublicProfile.Text = "Open public profile page...";
-            this.btnImageShackOpenPublicProfile.UseVisualStyleBackColor = true;
-            this.btnImageShackOpenPublicProfile.Click += new System.EventHandler(this.btnImageShackOpenPublicProfile_Click);
-            // 
-            // lblImageShackUsername
-            // 
-            this.lblImageShackUsername.AutoSize = true;
-            this.lblImageShackUsername.Location = new System.Drawing.Point(16, 72);
-            this.lblImageShackUsername.Name = "lblImageShackUsername";
-            this.lblImageShackUsername.Size = new System.Drawing.Size(248, 13);
-            this.lblImageShackUsername.TabIndex = 5;
-            this.lblImageShackUsername.Text = "Username (For be able to open public profile page):";
-            // 
-            // txtImageShackUsername
-            // 
-            this.txtImageShackUsername.Location = new System.Drawing.Point(16, 96);
-            this.txtImageShackUsername.Name = "txtImageShackUsername";
-            this.txtImageShackUsername.Size = new System.Drawing.Size(360, 20);
-            this.txtImageShackUsername.TabIndex = 4;
-            this.txtImageShackUsername.TextChanged += new System.EventHandler(this.txtImageShackUsername_TextChanged);
-            // 
-            // btnImageShackOpenMyImages
-            // 
-            this.btnImageShackOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenMyImages.Location = new System.Drawing.Point(16, 240);
-            this.btnImageShackOpenMyImages.Name = "btnImageShackOpenMyImages";
-            this.btnImageShackOpenMyImages.Size = new System.Drawing.Size(200, 23);
-            this.btnImageShackOpenMyImages.TabIndex = 3;
-            this.btnImageShackOpenMyImages.Text = "Open my images page...";
-            this.btnImageShackOpenMyImages.UseVisualStyleBackColor = true;
-            this.btnImageShackOpenMyImages.Click += new System.EventHandler(this.btnImageShackOpenMyImages_Click);
-            // 
-            // btnImageShackOpenRegistrationCode
-            // 
-            this.btnImageShackOpenRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenRegistrationCode.Location = new System.Drawing.Point(16, 176);
-            this.btnImageShackOpenRegistrationCode.Name = "btnImageShackOpenRegistrationCode";
-            this.btnImageShackOpenRegistrationCode.Size = new System.Drawing.Size(200, 23);
-            this.btnImageShackOpenRegistrationCode.TabIndex = 2;
-            this.btnImageShackOpenRegistrationCode.Text = "Open registration code page...";
-            this.btnImageShackOpenRegistrationCode.UseVisualStyleBackColor = true;
-            this.btnImageShackOpenRegistrationCode.Click += new System.EventHandler(this.btnImageShackOpenRegistrationCode_Click);
-            // 
-            // lblImageShackRegistrationCode
-            // 
-            this.lblImageShackRegistrationCode.AutoSize = true;
-            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 16);
-            this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
-            this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
-            this.lblImageShackRegistrationCode.TabIndex = 1;
-            this.lblImageShackRegistrationCode.Text = "Registration code:";
-            // 
-            // txtImageShackRegistrationCode
-            // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
-            this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
-            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
-            this.txtImageShackRegistrationCode.TabIndex = 0;
-            this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
-            // 
-            // btnTinyPicOpenMyImages
-            // 
-            this.btnTinyPicOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTinyPicOpenMyImages.Location = new System.Drawing.Point(16, 224);
-            this.btnTinyPicOpenMyImages.Name = "btnTinyPicOpenMyImages";
-            this.btnTinyPicOpenMyImages.Size = new System.Drawing.Size(200, 23);
-            this.btnTinyPicOpenMyImages.TabIndex = 8;
-            this.btnTinyPicOpenMyImages.Text = "Open my images page...";
-            this.btnTinyPicOpenMyImages.UseVisualStyleBackColor = true;
-            this.btnTinyPicOpenMyImages.Click += new System.EventHandler(this.btnTinyPicOpenMyImages_Click);
-            // 
-            // lblTinyPicRegistrationCode
-            // 
-            this.lblTinyPicRegistrationCode.AutoSize = true;
-            this.lblTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 168);
-            this.lblTinyPicRegistrationCode.Name = "lblTinyPicRegistrationCode";
-            this.lblTinyPicRegistrationCode.Size = new System.Drawing.Size(335, 13);
-            this.lblTinyPicRegistrationCode.TabIndex = 4;
-            this.lblTinyPicRegistrationCode.Text = "Registration code (You must login for be able to get registration code):";
-            // 
-            // txtTinyPicRegistrationCode
-            // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
-            this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
-            this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
-            this.txtTinyPicRegistrationCode.ReadOnly = true;
-            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(360, 20);
-            this.txtTinyPicRegistrationCode.TabIndex = 3;
-            // 
-            // cbTinyPicRememberUsernamePassword
-            // 
-            this.cbTinyPicRememberUsernamePassword.AutoSize = true;
-            this.cbTinyPicRememberUsernamePassword.Location = new System.Drawing.Point(112, 131);
-            this.cbTinyPicRememberUsernamePassword.Name = "cbTinyPicRememberUsernamePassword";
-            this.cbTinyPicRememberUsernamePassword.Size = new System.Drawing.Size(233, 17);
-            this.cbTinyPicRememberUsernamePassword.TabIndex = 8;
-            this.cbTinyPicRememberUsernamePassword.Text = "Remember TinyPic username and password";
-            this.cbTinyPicRememberUsernamePassword.UseVisualStyleBackColor = true;
-            this.cbTinyPicRememberUsernamePassword.CheckedChanged += new System.EventHandler(this.cbTinyPicRememberUsernamePassword_CheckedChanged);
-            // 
-            // lblTinyPicUsername
-            // 
-            this.lblTinyPicUsername.AutoSize = true;
-            this.lblTinyPicUsername.Location = new System.Drawing.Point(16, 16);
-            this.lblTinyPicUsername.Name = "lblTinyPicUsername";
-            this.lblTinyPicUsername.Size = new System.Drawing.Size(58, 13);
-            this.lblTinyPicUsername.TabIndex = 9;
-            this.lblTinyPicUsername.Text = "Username:";
-            // 
-            // txtTinyPicUsername
-            // 
-            this.txtTinyPicUsername.Location = new System.Drawing.Point(16, 40);
-            this.txtTinyPicUsername.Name = "txtTinyPicUsername";
-            this.txtTinyPicUsername.Size = new System.Drawing.Size(360, 20);
-            this.txtTinyPicUsername.TabIndex = 10;
-            this.txtTinyPicUsername.TextChanged += new System.EventHandler(this.txtTinyPicUsername_TextChanged);
-            // 
-            // lblTinyPicPassword
-            // 
-            this.lblTinyPicPassword.AutoSize = true;
-            this.lblTinyPicPassword.Location = new System.Drawing.Point(16, 72);
-            this.lblTinyPicPassword.Name = "lblTinyPicPassword";
-            this.lblTinyPicPassword.Size = new System.Drawing.Size(56, 13);
-            this.lblTinyPicPassword.TabIndex = 11;
-            this.lblTinyPicPassword.Text = "Password:";
-            // 
-            // txtTinyPicPassword
-            // 
-            this.txtTinyPicPassword.Location = new System.Drawing.Point(16, 96);
-            this.txtTinyPicPassword.Name = "txtTinyPicPassword";
-            this.txtTinyPicPassword.PasswordChar = '*';
-            this.txtTinyPicPassword.Size = new System.Drawing.Size(360, 20);
-            this.txtTinyPicPassword.TabIndex = 12;
-            this.txtTinyPicPassword.TextChanged += new System.EventHandler(this.txtTinyPicPassword_TextChanged);
-            // 
-            // btnTinyPicLogin
-            // 
-            this.btnTinyPicLogin.Location = new System.Drawing.Point(16, 128);
-            this.btnTinyPicLogin.Name = "btnTinyPicLogin";
-            this.btnTinyPicLogin.Size = new System.Drawing.Size(80, 23);
-            this.btnTinyPicLogin.TabIndex = 13;
-            this.btnTinyPicLogin.Text = "Login";
-            this.btnTinyPicLogin.UseVisualStyleBackColor = true;
-            this.btnTinyPicLogin.Click += new System.EventHandler(this.btnTinyPicLogin_Click);
-            // 
-            // cbImgurUseUserAccount
-            // 
-            this.cbImgurUseUserAccount.AutoSize = true;
-            this.cbImgurUseUserAccount.Location = new System.Drawing.Point(16, 16);
-            this.cbImgurUseUserAccount.Name = "cbImgurUseUserAccount";
-            this.cbImgurUseUserAccount.Size = new System.Drawing.Size(160, 17);
-            this.cbImgurUseUserAccount.TabIndex = 0;
-            this.cbImgurUseUserAccount.Text = "Use user account for upload";
-            this.cbImgurUseUserAccount.UseVisualStyleBackColor = true;
-            this.cbImgurUseUserAccount.CheckedChanged += new System.EventHandler(this.cbImgurUseUserAccount_CheckedChanged);
-            // 
-            // btnImgurOpenAuthorizePage
-            // 
-            this.btnImgurOpenAuthorizePage.Location = new System.Drawing.Point(16, 24);
-            this.btnImgurOpenAuthorizePage.Name = "btnImgurOpenAuthorizePage";
-            this.btnImgurOpenAuthorizePage.Size = new System.Drawing.Size(200, 23);
-            this.btnImgurOpenAuthorizePage.TabIndex = 1;
-            this.btnImgurOpenAuthorizePage.Text = "Open authorize page...";
-            this.btnImgurOpenAuthorizePage.UseVisualStyleBackColor = true;
-            this.btnImgurOpenAuthorizePage.Click += new System.EventHandler(this.btnImgurOpenAuthorizePage_Click);
-            // 
-            // btnImgurEnterVerificationCode
-            // 
-            this.btnImgurEnterVerificationCode.Location = new System.Drawing.Point(16, 120);
-            this.btnImgurEnterVerificationCode.Name = "btnImgurEnterVerificationCode";
-            this.btnImgurEnterVerificationCode.Size = new System.Drawing.Size(200, 23);
-            this.btnImgurEnterVerificationCode.TabIndex = 2;
-            this.btnImgurEnterVerificationCode.Text = "Complete authorization";
-            this.btnImgurEnterVerificationCode.UseVisualStyleBackColor = true;
-            this.btnImgurEnterVerificationCode.Click += new System.EventHandler(this.btnImgurEnterVerificationCode_Click);
-            // 
-            // lblImgurAccountStatus
-            // 
-            this.lblImgurAccountStatus.AutoSize = true;
-            this.lblImgurAccountStatus.Location = new System.Drawing.Point(16, 160);
-            this.lblImgurAccountStatus.Name = "lblImgurAccountStatus";
-            this.lblImgurAccountStatus.Size = new System.Drawing.Size(77, 13);
-            this.lblImgurAccountStatus.TabIndex = 3;
-            this.lblImgurAccountStatus.Text = "Login required.";
-            // 
-            // txtImgurVerificationCode
-            // 
-            this.txtImgurVerificationCode.Location = new System.Drawing.Point(16, 88);
-            this.txtImgurVerificationCode.Name = "txtImgurVerificationCode";
-            this.txtImgurVerificationCode.Size = new System.Drawing.Size(360, 20);
-            this.txtImgurVerificationCode.TabIndex = 4;
-            // 
-            // lblImgurVerificationCode
-            // 
-            this.lblImgurVerificationCode.AutoSize = true;
-            this.lblImgurVerificationCode.Location = new System.Drawing.Point(16, 64);
-            this.lblImgurVerificationCode.Name = "lblImgurVerificationCode";
-            this.lblImgurVerificationCode.Size = new System.Drawing.Size(292, 13);
-            this.lblImgurVerificationCode.TabIndex = 5;
-            this.lblImgurVerificationCode.Text = "Verification code (Get verification code from authorize page):";
-            // 
-            // gbImgurUserAccount
-            // 
-            this.gbImgurUserAccount.Controls.Add(this.btnImgurOpenAuthorizePage);
-            this.gbImgurUserAccount.Controls.Add(this.lblImgurVerificationCode);
-            this.gbImgurUserAccount.Controls.Add(this.btnImgurEnterVerificationCode);
-            this.gbImgurUserAccount.Controls.Add(this.txtImgurVerificationCode);
-            this.gbImgurUserAccount.Controls.Add(this.lblImgurAccountStatus);
-            this.gbImgurUserAccount.Location = new System.Drawing.Point(16, 48);
-            this.gbImgurUserAccount.Name = "gbImgurUserAccount";
-            this.gbImgurUserAccount.Size = new System.Drawing.Size(392, 192);
-            this.gbImgurUserAccount.TabIndex = 6;
-            this.gbImgurUserAccount.TabStop = false;
-            this.gbImgurUserAccount.Text = "User account";
-            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -684,6 +684,8 @@
             this.tpTinyPic.PerformLayout();
             this.tpImgur.ResumeLayout(false);
             this.tpImgur.PerformLayout();
+            this.gbImgurUserAccount.ResumeLayout(false);
+            this.gbImgurUserAccount.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
             this.tpFileUploaders.ResumeLayout(false);
@@ -694,8 +696,6 @@
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
-            this.gbImgurUserAccount.ResumeLayout(false);
-            this.gbImgurUserAccount.PerformLayout();
             this.ResumeLayout(false);
 
         }
