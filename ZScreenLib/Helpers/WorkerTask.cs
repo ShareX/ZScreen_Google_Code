@@ -35,7 +35,7 @@ using HelpersLib;
 using HistoryLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using UploadersLib.TextServices;
+using UploadersLib.OtherServices;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 

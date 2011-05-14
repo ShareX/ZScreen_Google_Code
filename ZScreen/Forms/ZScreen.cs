@@ -44,7 +44,7 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.TextServices;
+using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;

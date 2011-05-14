@@ -42,7 +42,7 @@ using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.TextServices;
+using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
@@ -109,15 +109,15 @@ namespace ZScreenLib
         public AccountType ImgurAccountType = AccountType.Anonymous;
         public OAuthInfo ImgurOAuthInfo = null;
 
-        // TwitPic
-
-        public bool TwitPicShowFull = true;
-        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
         // Flickr
 
         public FlickrAuthInfo FlickrAuthInfo = new FlickrAuthInfo();
         public FlickrSettings FlickrSettings = new FlickrSettings();
+
+        // TwitPic
+
+        public bool TwitPicShowFull = true;
+        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
 
         // MediaWiki
 
@@ -164,6 +164,11 @@ namespace ZScreenLib
         public string SendSpaceUserName = string.Empty;
         public string SendSpacePassword = string.Empty;
 
+        // Custom Uploaders
+
+        public List<CustomUploaderInfo> CustomUploadersList = new List<CustomUploaderInfo>();
+        public int CustomUploaderSelected = 0;
+
         #endregion File uploaders
 
         #region Text uploaders
@@ -178,7 +183,7 @@ namespace ZScreenLib
 
         #endregion URL shorteners
 
-        #region Text services
+        #region Other services
 
         // Twitter
 
@@ -191,7 +196,7 @@ namespace ZScreenLib
         [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
         public string TwitterPassword { get; set; }
 
-        #endregion Text services
+        #endregion Other services
 
         #region Other destinations
 
@@ -404,11 +409,6 @@ namespace ZScreenLib
 
         public IndexerConfig IndexerConfig = new IndexerConfig();
 
-        // Custom Uploaders
-
-        public List<CustomUploaderInfo> CustomUploadersList = null;
-        public int CustomUploaderSelected = 0;
-
         // Web Page Upload
 
         public bool WebPageUseCustomSize = true;
@@ -430,7 +430,6 @@ namespace ZScreenLib
         //  History
         //~~~~~~~~~~~~~~~~~~~~~
 
-        // History Settings
         public int HistoryMaxNumber = 100;
         public bool HistorySave = true;
 

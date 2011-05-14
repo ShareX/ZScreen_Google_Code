@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
-using UploadersLib.TextServices;
+using UploadersLib.OtherServices;
 
 namespace UploadersLib
 {
