@@ -1,4 +1,4 @@
-﻿namespace UploadersLib.Config.GUI
+﻿namespace UploadersLib
 {
     partial class UploadersConfigForm
     {
@@ -53,7 +53,7 @@
             this.tpPastebin = new System.Windows.Forms.TabPage();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tcURLShorteners = new System.Windows.Forms.TabControl();
-            this.tpTabPage1 = new System.Windows.Forms.TabPage();
+            this.tpURLShortenerPage1 = new System.Windows.Forms.TabPage();
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
@@ -74,11 +74,19 @@
             this.lblTinyPicPassword = new System.Windows.Forms.Label();
             this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
             this.btnTinyPicLogin = new System.Windows.Forms.Button();
+            this.cbImgurUseUserAccount = new System.Windows.Forms.CheckBox();
+            this.btnImgurOpenAuthorizePage = new System.Windows.Forms.Button();
+            this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
+            this.lblImgurAccountStatus = new System.Windows.Forms.Label();
+            this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
+            this.lblImgurVerificationCode = new System.Windows.Forms.Label();
+            this.gbImgurUserAccount = new System.Windows.Forms.GroupBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
             this.tpImageShack.SuspendLayout();
             this.tpTinyPic.SuspendLayout();
+            this.tpImgur.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
@@ -88,6 +96,7 @@
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
+            this.gbImgurUserAccount.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -172,6 +181,8 @@
             // 
             // tpImgur
             // 
+            this.tpImgur.Controls.Add(this.gbImgurUserAccount);
+            this.tpImgur.Controls.Add(this.cbImgurUseUserAccount);
             this.tpImgur.Location = new System.Drawing.Point(4, 22);
             this.tpImgur.Name = "tpImgur";
             this.tpImgur.Padding = new System.Windows.Forms.Padding(3);
@@ -370,7 +381,7 @@
             // 
             // tcURLShorteners
             // 
-            this.tcURLShorteners.Controls.Add(this.tpTabPage1);
+            this.tcURLShorteners.Controls.Add(this.tpURLShortenerPage1);
             this.tcURLShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcURLShorteners.Location = new System.Drawing.Point(3, 3);
             this.tcURLShorteners.Name = "tcURLShorteners";
@@ -378,15 +389,15 @@
             this.tcURLShorteners.Size = new System.Drawing.Size(842, 490);
             this.tcURLShorteners.TabIndex = 0;
             // 
-            // tpTabPage1
+            // tpURLShortenerPage1
             // 
-            this.tpTabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tpTabPage1.Name = "tpTabPage1";
-            this.tpTabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTabPage1.Size = new System.Drawing.Size(834, 464);
-            this.tpTabPage1.TabIndex = 0;
-            this.tpTabPage1.Text = "Nothing yet";
-            this.tpTabPage1.UseVisualStyleBackColor = true;
+            this.tpURLShortenerPage1.Location = new System.Drawing.Point(4, 22);
+            this.tpURLShortenerPage1.Name = "tpURLShortenerPage1";
+            this.tpURLShortenerPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tpURLShortenerPage1.Size = new System.Drawing.Size(834, 464);
+            this.tpURLShortenerPage1.TabIndex = 0;
+            this.tpURLShortenerPage1.Text = "Nothing yet";
+            this.tpURLShortenerPage1.UseVisualStyleBackColor = true;
             // 
             // tpOtherServices
             // 
@@ -436,7 +447,7 @@
             this.btnImageShackOpenPublicProfile.Name = "btnImageShackOpenPublicProfile";
             this.btnImageShackOpenPublicProfile.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenPublicProfile.TabIndex = 6;
-            this.btnImageShackOpenPublicProfile.Text = "Open public profile page";
+            this.btnImageShackOpenPublicProfile.Text = "Open public profile page...";
             this.btnImageShackOpenPublicProfile.UseVisualStyleBackColor = true;
             this.btnImageShackOpenPublicProfile.Click += new System.EventHandler(this.btnImageShackOpenPublicProfile_Click);
             // 
@@ -464,7 +475,7 @@
             this.btnImageShackOpenMyImages.Name = "btnImageShackOpenMyImages";
             this.btnImageShackOpenMyImages.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenMyImages.TabIndex = 3;
-            this.btnImageShackOpenMyImages.Text = "Open my images page";
+            this.btnImageShackOpenMyImages.Text = "Open my images page...";
             this.btnImageShackOpenMyImages.UseVisualStyleBackColor = true;
             this.btnImageShackOpenMyImages.Click += new System.EventHandler(this.btnImageShackOpenMyImages_Click);
             // 
@@ -475,7 +486,7 @@
             this.btnImageShackOpenRegistrationCode.Name = "btnImageShackOpenRegistrationCode";
             this.btnImageShackOpenRegistrationCode.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenRegistrationCode.TabIndex = 2;
-            this.btnImageShackOpenRegistrationCode.Text = "Open registration code page";
+            this.btnImageShackOpenRegistrationCode.Text = "Open registration code page...";
             this.btnImageShackOpenRegistrationCode.UseVisualStyleBackColor = true;
             this.btnImageShackOpenRegistrationCode.Click += new System.EventHandler(this.btnImageShackOpenRegistrationCode_Click);
             // 
@@ -505,7 +516,7 @@
             this.btnTinyPicOpenMyImages.Name = "btnTinyPicOpenMyImages";
             this.btnTinyPicOpenMyImages.Size = new System.Drawing.Size(200, 23);
             this.btnTinyPicOpenMyImages.TabIndex = 8;
-            this.btnTinyPicOpenMyImages.Text = "Open my images page";
+            this.btnTinyPicOpenMyImages.Text = "Open my images page...";
             this.btnTinyPicOpenMyImages.UseVisualStyleBackColor = true;
             this.btnTinyPicOpenMyImages.Click += new System.EventHandler(this.btnTinyPicOpenMyImages_Click);
             // 
@@ -585,6 +596,76 @@
             this.btnTinyPicLogin.UseVisualStyleBackColor = true;
             this.btnTinyPicLogin.Click += new System.EventHandler(this.btnTinyPicLogin_Click);
             // 
+            // cbImgurUseUserAccount
+            // 
+            this.cbImgurUseUserAccount.AutoSize = true;
+            this.cbImgurUseUserAccount.Location = new System.Drawing.Point(16, 16);
+            this.cbImgurUseUserAccount.Name = "cbImgurUseUserAccount";
+            this.cbImgurUseUserAccount.Size = new System.Drawing.Size(160, 17);
+            this.cbImgurUseUserAccount.TabIndex = 0;
+            this.cbImgurUseUserAccount.Text = "Use user account for upload";
+            this.cbImgurUseUserAccount.UseVisualStyleBackColor = true;
+            this.cbImgurUseUserAccount.CheckedChanged += new System.EventHandler(this.cbImgurUseUserAccount_CheckedChanged);
+            // 
+            // btnImgurOpenAuthorizePage
+            // 
+            this.btnImgurOpenAuthorizePage.Location = new System.Drawing.Point(16, 24);
+            this.btnImgurOpenAuthorizePage.Name = "btnImgurOpenAuthorizePage";
+            this.btnImgurOpenAuthorizePage.Size = new System.Drawing.Size(200, 23);
+            this.btnImgurOpenAuthorizePage.TabIndex = 1;
+            this.btnImgurOpenAuthorizePage.Text = "Open authorize page...";
+            this.btnImgurOpenAuthorizePage.UseVisualStyleBackColor = true;
+            this.btnImgurOpenAuthorizePage.Click += new System.EventHandler(this.btnImgurOpenAuthorizePage_Click);
+            // 
+            // btnImgurEnterVerificationCode
+            // 
+            this.btnImgurEnterVerificationCode.Location = new System.Drawing.Point(16, 120);
+            this.btnImgurEnterVerificationCode.Name = "btnImgurEnterVerificationCode";
+            this.btnImgurEnterVerificationCode.Size = new System.Drawing.Size(200, 23);
+            this.btnImgurEnterVerificationCode.TabIndex = 2;
+            this.btnImgurEnterVerificationCode.Text = "Complete authorization";
+            this.btnImgurEnterVerificationCode.UseVisualStyleBackColor = true;
+            this.btnImgurEnterVerificationCode.Click += new System.EventHandler(this.btnImgurEnterVerificationCode_Click);
+            // 
+            // lblImgurAccountStatus
+            // 
+            this.lblImgurAccountStatus.AutoSize = true;
+            this.lblImgurAccountStatus.Location = new System.Drawing.Point(16, 160);
+            this.lblImgurAccountStatus.Name = "lblImgurAccountStatus";
+            this.lblImgurAccountStatus.Size = new System.Drawing.Size(77, 13);
+            this.lblImgurAccountStatus.TabIndex = 3;
+            this.lblImgurAccountStatus.Text = "Login required.";
+            // 
+            // txtImgurVerificationCode
+            // 
+            this.txtImgurVerificationCode.Location = new System.Drawing.Point(16, 88);
+            this.txtImgurVerificationCode.Name = "txtImgurVerificationCode";
+            this.txtImgurVerificationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtImgurVerificationCode.TabIndex = 4;
+            // 
+            // lblImgurVerificationCode
+            // 
+            this.lblImgurVerificationCode.AutoSize = true;
+            this.lblImgurVerificationCode.Location = new System.Drawing.Point(16, 64);
+            this.lblImgurVerificationCode.Name = "lblImgurVerificationCode";
+            this.lblImgurVerificationCode.Size = new System.Drawing.Size(292, 13);
+            this.lblImgurVerificationCode.TabIndex = 5;
+            this.lblImgurVerificationCode.Text = "Verification code (Get verification code from authorize page):";
+            // 
+            // gbImgurUserAccount
+            // 
+            this.gbImgurUserAccount.Controls.Add(this.btnImgurOpenAuthorizePage);
+            this.gbImgurUserAccount.Controls.Add(this.lblImgurVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.btnImgurEnterVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.txtImgurVerificationCode);
+            this.gbImgurUserAccount.Controls.Add(this.lblImgurAccountStatus);
+            this.gbImgurUserAccount.Location = new System.Drawing.Point(16, 48);
+            this.gbImgurUserAccount.Name = "gbImgurUserAccount";
+            this.gbImgurUserAccount.Size = new System.Drawing.Size(392, 192);
+            this.gbImgurUserAccount.TabIndex = 6;
+            this.gbImgurUserAccount.TabStop = false;
+            this.gbImgurUserAccount.Text = "User account";
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -601,6 +682,8 @@
             this.tpImageShack.PerformLayout();
             this.tpTinyPic.ResumeLayout(false);
             this.tpTinyPic.PerformLayout();
+            this.tpImgur.ResumeLayout(false);
+            this.tpImgur.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
             this.tpFileUploaders.ResumeLayout(false);
@@ -611,6 +694,8 @@
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
+            this.gbImgurUserAccount.ResumeLayout(false);
+            this.gbImgurUserAccount.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -643,7 +728,7 @@
         private System.Windows.Forms.TabControl tcTextUploaders;
         private System.Windows.Forms.TabPage tpPastebin;
         private System.Windows.Forms.TabControl tcURLShorteners;
-        private System.Windows.Forms.TabPage tpTabPage1;
+        private System.Windows.Forms.TabPage tpURLShortenerPage1;
         private System.Windows.Forms.TabControl tcOtherServices;
         private System.Windows.Forms.TabPage tpTwitter;
         internal System.Windows.Forms.Button btnImageShackOpenPublicProfile;
@@ -663,5 +748,12 @@
         private System.Windows.Forms.TextBox txtTinyPicUsername;
         private System.Windows.Forms.Label lblTinyPicUsername;
         private System.Windows.Forms.Button btnTinyPicLogin;
+        private System.Windows.Forms.CheckBox cbImgurUseUserAccount;
+        private System.Windows.Forms.Button btnImgurOpenAuthorizePage;
+        private System.Windows.Forms.Label lblImgurAccountStatus;
+        private System.Windows.Forms.Button btnImgurEnterVerificationCode;
+        private System.Windows.Forms.TextBox txtImgurVerificationCode;
+        private System.Windows.Forms.GroupBox gbImgurUserAccount;
+        private System.Windows.Forms.Label lblImgurVerificationCode;
     }
 }
