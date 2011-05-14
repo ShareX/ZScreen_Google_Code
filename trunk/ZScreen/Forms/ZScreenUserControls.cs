@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using ZScreenLib;
-using UploadersLib.HelperClasses;
 using UploadersLib;
+using UploadersLib.HelperClasses;
+using ZScreenLib;
 
 namespace ZScreenGUI
 {
@@ -23,7 +20,7 @@ namespace ZScreenGUI
         private void ProxyAccountsRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucProxyAccounts.AccountsList.SelectedIndex;
-            if (ucProxyAccounts.RemoveItem(sel) == true)
+            if (ucProxyAccounts.RemoveItem(sel))
             {
                 Engine.conf.ProxyList.RemoveAt(sel);
             }

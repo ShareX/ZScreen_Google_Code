@@ -30,45 +30,64 @@
         {
             this.tcUploaders = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
-            this.tpFileUploaders = new System.Windows.Forms.TabPage();
-            this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcImageUploaders = new System.Windows.Forms.TabControl();
             this.tpImageShack = new System.Windows.Forms.TabPage();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
             this.tpImgur = new System.Windows.Forms.TabPage();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
-            this.tpMediaWiki = new System.Windows.Forms.TabPage();
-            this.tpDekiWiki = new System.Windows.Forms.TabPage();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
             this.tpYFrog = new System.Windows.Forms.TabPage();
+            this.tpMediaWiki = new System.Windows.Forms.TabPage();
+            this.tpDekiWiki = new System.Windows.Forms.TabPage();
+            this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
             this.tpDropbox = new System.Windows.Forms.TabPage();
             this.tpSendSpace = new System.Windows.Forms.TabPage();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
+            this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpPastebin = new System.Windows.Forms.TabPage();
-            this.tcOtherServices = new System.Windows.Forms.TabControl();
-            this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tcURLShorteners = new System.Windows.Forms.TabControl();
             this.tpTabPage1 = new System.Windows.Forms.TabPage();
+            this.tpOtherServices = new System.Windows.Forms.TabPage();
+            this.tcOtherServices = new System.Windows.Forms.TabControl();
+            this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.cbImageShackIsPublic = new System.Windows.Forms.CheckBox();
+            this.btnImageShackOpenPublicProfile = new System.Windows.Forms.Button();
+            this.lblImageShackUsername = new System.Windows.Forms.Label();
+            this.txtImageShackUsername = new System.Windows.Forms.TextBox();
+            this.btnImageShackOpenMyImages = new System.Windows.Forms.Button();
+            this.btnImageShackOpenRegistrationCode = new System.Windows.Forms.Button();
+            this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
+            this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
+            this.btnTinyPicOpenMyImages = new System.Windows.Forms.Button();
+            this.lblTinyPicRegistrationCode = new System.Windows.Forms.Label();
+            this.txtTinyPicRegistrationCode = new System.Windows.Forms.TextBox();
+            this.cbTinyPicRememberUsernamePassword = new System.Windows.Forms.CheckBox();
+            this.lblTinyPicUsername = new System.Windows.Forms.Label();
+            this.txtTinyPicUsername = new System.Windows.Forms.TextBox();
+            this.lblTinyPicPassword = new System.Windows.Forms.Label();
+            this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
+            this.btnTinyPicLogin = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
-            this.tpFileUploaders.SuspendLayout();
-            this.tpTextUploaders.SuspendLayout();
-            this.tpURLShorteners.SuspendLayout();
-            this.tpOtherServices.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
+            this.tpImageShack.SuspendLayout();
+            this.tpTinyPic.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
+            this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
+            this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
-            this.tcOtherServices.SuspendLayout();
+            this.tpURLShorteners.SuspendLayout();
             this.tcURLShorteners.SuspendLayout();
+            this.tpOtherServices.SuspendLayout();
+            this.tcOtherServices.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -96,50 +115,6 @@
             this.tpImageUploaders.Text = "Image uploaders";
             this.tpImageUploaders.UseVisualStyleBackColor = true;
             // 
-            // tpFileUploaders
-            // 
-            this.tpFileUploaders.Controls.Add(this.tcFileUploaders);
-            this.tpFileUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpFileUploaders.Name = "tpFileUploaders";
-            this.tpFileUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFileUploaders.Size = new System.Drawing.Size(848, 496);
-            this.tpFileUploaders.TabIndex = 1;
-            this.tpFileUploaders.Text = "File uploaders";
-            this.tpFileUploaders.UseVisualStyleBackColor = true;
-            // 
-            // tpTextUploaders
-            // 
-            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaders.Name = "tpTextUploaders";
-            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(848, 496);
-            this.tpTextUploaders.TabIndex = 2;
-            this.tpTextUploaders.Text = "Text uploaders";
-            this.tpTextUploaders.UseVisualStyleBackColor = true;
-            // 
-            // tpURLShorteners
-            // 
-            this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
-            this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
-            this.tpURLShorteners.Name = "tpURLShorteners";
-            this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShorteners.Size = new System.Drawing.Size(848, 496);
-            this.tpURLShorteners.TabIndex = 3;
-            this.tpURLShorteners.Text = "URL Shorteners";
-            this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // tpOtherServices
-            // 
-            this.tpOtherServices.Controls.Add(this.tcOtherServices);
-            this.tpOtherServices.Location = new System.Drawing.Point(4, 22);
-            this.tpOtherServices.Name = "tpOtherServices";
-            this.tpOtherServices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOtherServices.Size = new System.Drawing.Size(848, 496);
-            this.tpOtherServices.TabIndex = 4;
-            this.tpOtherServices.Text = "Other Services";
-            this.tpOtherServices.UseVisualStyleBackColor = true;
-            // 
             // tcImageUploaders
             // 
             this.tcImageUploaders.Controls.Add(this.tpImageShack);
@@ -160,6 +135,14 @@
             // 
             // tpImageShack
             // 
+            this.tpImageShack.Controls.Add(this.btnImageShackOpenPublicProfile);
+            this.tpImageShack.Controls.Add(this.cbImageShackIsPublic);
+            this.tpImageShack.Controls.Add(this.btnImageShackOpenMyImages);
+            this.tpImageShack.Controls.Add(this.lblImageShackUsername);
+            this.tpImageShack.Controls.Add(this.btnImageShackOpenRegistrationCode);
+            this.tpImageShack.Controls.Add(this.txtImageShackUsername);
+            this.tpImageShack.Controls.Add(this.txtImageShackRegistrationCode);
+            this.tpImageShack.Controls.Add(this.lblImageShackRegistrationCode);
             this.tpImageShack.Location = new System.Drawing.Point(4, 22);
             this.tpImageShack.Name = "tpImageShack";
             this.tpImageShack.Padding = new System.Windows.Forms.Padding(3);
@@ -170,6 +153,15 @@
             // 
             // tpTinyPic
             // 
+            this.tpTinyPic.Controls.Add(this.btnTinyPicLogin);
+            this.tpTinyPic.Controls.Add(this.txtTinyPicPassword);
+            this.tpTinyPic.Controls.Add(this.lblTinyPicPassword);
+            this.tpTinyPic.Controls.Add(this.txtTinyPicUsername);
+            this.tpTinyPic.Controls.Add(this.lblTinyPicUsername);
+            this.tpTinyPic.Controls.Add(this.btnTinyPicOpenMyImages);
+            this.tpTinyPic.Controls.Add(this.cbTinyPicRememberUsernamePassword);
+            this.tpTinyPic.Controls.Add(this.lblTinyPicRegistrationCode);
+            this.tpTinyPic.Controls.Add(this.txtTinyPicRegistrationCode);
             this.tpTinyPic.Location = new System.Drawing.Point(4, 22);
             this.tpTinyPic.Name = "tpTinyPic";
             this.tpTinyPic.Padding = new System.Windows.Forms.Padding(3);
@@ -208,26 +200,6 @@
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
             // 
-            // tpMediaWiki
-            // 
-            this.tpMediaWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpMediaWiki.Name = "tpMediaWiki";
-            this.tpMediaWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMediaWiki.Size = new System.Drawing.Size(834, 464);
-            this.tpMediaWiki.TabIndex = 5;
-            this.tpMediaWiki.Text = "MediaWiki";
-            this.tpMediaWiki.UseVisualStyleBackColor = true;
-            // 
-            // tpDekiWiki
-            // 
-            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpDekiWiki.Name = "tpDekiWiki";
-            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDekiWiki.Size = new System.Drawing.Size(834, 464);
-            this.tpDekiWiki.TabIndex = 6;
-            this.tpDekiWiki.Text = "DekiWiki";
-            this.tpDekiWiki.UseVisualStyleBackColor = true;
-            // 
             // tpTwitSnaps
             // 
             this.tpTwitSnaps.Controls.Add(this.lblTwitSnapsTip);
@@ -258,6 +230,37 @@
             this.tpYFrog.TabIndex = 8;
             this.tpYFrog.Text = "YFrog";
             this.tpYFrog.UseVisualStyleBackColor = true;
+            // 
+            // tpMediaWiki
+            // 
+            this.tpMediaWiki.Location = new System.Drawing.Point(4, 22);
+            this.tpMediaWiki.Name = "tpMediaWiki";
+            this.tpMediaWiki.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMediaWiki.Size = new System.Drawing.Size(834, 464);
+            this.tpMediaWiki.TabIndex = 5;
+            this.tpMediaWiki.Text = "MediaWiki";
+            this.tpMediaWiki.UseVisualStyleBackColor = true;
+            // 
+            // tpDekiWiki
+            // 
+            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
+            this.tpDekiWiki.Name = "tpDekiWiki";
+            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDekiWiki.Size = new System.Drawing.Size(834, 464);
+            this.tpDekiWiki.TabIndex = 6;
+            this.tpDekiWiki.Text = "DekiWiki";
+            this.tpDekiWiki.UseVisualStyleBackColor = true;
+            // 
+            // tpFileUploaders
+            // 
+            this.tpFileUploaders.Controls.Add(this.tcFileUploaders);
+            this.tpFileUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpFileUploaders.Name = "tpFileUploaders";
+            this.tpFileUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpFileUploaders.Size = new System.Drawing.Size(848, 496);
+            this.tpFileUploaders.TabIndex = 1;
+            this.tpFileUploaders.Text = "File uploaders";
+            this.tpFileUploaders.UseVisualStyleBackColor = true;
             // 
             // tcFileUploaders
             // 
@@ -323,6 +326,17 @@
             this.tpCustomUploaders.Text = "Custom uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
             // 
+            // tpTextUploaders
+            // 
+            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpTextUploaders.Name = "tpTextUploaders";
+            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextUploaders.Size = new System.Drawing.Size(848, 496);
+            this.tpTextUploaders.TabIndex = 2;
+            this.tpTextUploaders.Text = "Text uploaders";
+            this.tpTextUploaders.UseVisualStyleBackColor = true;
+            // 
             // tcTextUploaders
             // 
             this.tcTextUploaders.Controls.Add(this.tpPastebin);
@@ -343,25 +357,16 @@
             this.tpPastebin.Text = "Pastebin";
             this.tpPastebin.UseVisualStyleBackColor = true;
             // 
-            // tcOtherServices
+            // tpURLShorteners
             // 
-            this.tcOtherServices.Controls.Add(this.tpTwitter);
-            this.tcOtherServices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcOtherServices.Location = new System.Drawing.Point(3, 3);
-            this.tcOtherServices.Name = "tcOtherServices";
-            this.tcOtherServices.SelectedIndex = 0;
-            this.tcOtherServices.Size = new System.Drawing.Size(842, 490);
-            this.tcOtherServices.TabIndex = 0;
-            // 
-            // tpTwitter
-            // 
-            this.tpTwitter.Location = new System.Drawing.Point(4, 22);
-            this.tpTwitter.Name = "tpTwitter";
-            this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitter.Size = new System.Drawing.Size(834, 464);
-            this.tpTwitter.TabIndex = 0;
-            this.tpTwitter.Text = "Twitter";
-            this.tpTwitter.UseVisualStyleBackColor = true;
+            this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
+            this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
+            this.tpURLShorteners.Name = "tpURLShorteners";
+            this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
+            this.tpURLShorteners.Size = new System.Drawing.Size(848, 496);
+            this.tpURLShorteners.TabIndex = 3;
+            this.tpURLShorteners.Text = "URL Shorteners";
+            this.tpURLShorteners.UseVisualStyleBackColor = true;
             // 
             // tcURLShorteners
             // 
@@ -383,6 +388,203 @@
             this.tpTabPage1.Text = "Nothing yet";
             this.tpTabPage1.UseVisualStyleBackColor = true;
             // 
+            // tpOtherServices
+            // 
+            this.tpOtherServices.Controls.Add(this.tcOtherServices);
+            this.tpOtherServices.Location = new System.Drawing.Point(4, 22);
+            this.tpOtherServices.Name = "tpOtherServices";
+            this.tpOtherServices.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOtherServices.Size = new System.Drawing.Size(848, 496);
+            this.tpOtherServices.TabIndex = 4;
+            this.tpOtherServices.Text = "Other Services";
+            this.tpOtherServices.UseVisualStyleBackColor = true;
+            // 
+            // tcOtherServices
+            // 
+            this.tcOtherServices.Controls.Add(this.tpTwitter);
+            this.tcOtherServices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcOtherServices.Location = new System.Drawing.Point(3, 3);
+            this.tcOtherServices.Name = "tcOtherServices";
+            this.tcOtherServices.SelectedIndex = 0;
+            this.tcOtherServices.Size = new System.Drawing.Size(842, 490);
+            this.tcOtherServices.TabIndex = 0;
+            // 
+            // tpTwitter
+            // 
+            this.tpTwitter.Location = new System.Drawing.Point(4, 22);
+            this.tpTwitter.Name = "tpTwitter";
+            this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTwitter.Size = new System.Drawing.Size(834, 464);
+            this.tpTwitter.TabIndex = 0;
+            this.tpTwitter.Text = "Twitter";
+            this.tpTwitter.UseVisualStyleBackColor = true;
+            // 
+            // cbImageShackIsPublic
+            // 
+            this.cbImageShackIsPublic.AutoSize = true;
+            this.cbImageShackIsPublic.Location = new System.Drawing.Point(16, 136);
+            this.cbImageShackIsPublic.Name = "cbImageShackIsPublic";
+            this.cbImageShackIsPublic.Size = new System.Drawing.Size(307, 17);
+            this.cbImageShackIsPublic.TabIndex = 3;
+            this.cbImageShackIsPublic.Text = "Show images uploaded to ImageShack in your public profile";
+            this.cbImageShackIsPublic.UseVisualStyleBackColor = true;
+            // 
+            // btnImageShackOpenPublicProfile
+            // 
+            this.btnImageShackOpenPublicProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenPublicProfile.Location = new System.Drawing.Point(16, 208);
+            this.btnImageShackOpenPublicProfile.Name = "btnImageShackOpenPublicProfile";
+            this.btnImageShackOpenPublicProfile.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenPublicProfile.TabIndex = 6;
+            this.btnImageShackOpenPublicProfile.Text = "Open public profile page";
+            this.btnImageShackOpenPublicProfile.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenPublicProfile.Click += new System.EventHandler(this.btnImageShackOpenPublicProfile_Click);
+            // 
+            // lblImageShackUsername
+            // 
+            this.lblImageShackUsername.AutoSize = true;
+            this.lblImageShackUsername.Location = new System.Drawing.Point(16, 72);
+            this.lblImageShackUsername.Name = "lblImageShackUsername";
+            this.lblImageShackUsername.Size = new System.Drawing.Size(248, 13);
+            this.lblImageShackUsername.TabIndex = 5;
+            this.lblImageShackUsername.Text = "Username (For be able to open public profile page):";
+            // 
+            // txtImageShackUsername
+            // 
+            this.txtImageShackUsername.Location = new System.Drawing.Point(16, 96);
+            this.txtImageShackUsername.Name = "txtImageShackUsername";
+            this.txtImageShackUsername.Size = new System.Drawing.Size(360, 20);
+            this.txtImageShackUsername.TabIndex = 4;
+            this.txtImageShackUsername.TextChanged += new System.EventHandler(this.txtImageShackUsername_TextChanged);
+            // 
+            // btnImageShackOpenMyImages
+            // 
+            this.btnImageShackOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenMyImages.Location = new System.Drawing.Point(16, 240);
+            this.btnImageShackOpenMyImages.Name = "btnImageShackOpenMyImages";
+            this.btnImageShackOpenMyImages.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenMyImages.TabIndex = 3;
+            this.btnImageShackOpenMyImages.Text = "Open my images page";
+            this.btnImageShackOpenMyImages.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenMyImages.Click += new System.EventHandler(this.btnImageShackOpenMyImages_Click);
+            // 
+            // btnImageShackOpenRegistrationCode
+            // 
+            this.btnImageShackOpenRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImageShackOpenRegistrationCode.Location = new System.Drawing.Point(16, 176);
+            this.btnImageShackOpenRegistrationCode.Name = "btnImageShackOpenRegistrationCode";
+            this.btnImageShackOpenRegistrationCode.Size = new System.Drawing.Size(200, 23);
+            this.btnImageShackOpenRegistrationCode.TabIndex = 2;
+            this.btnImageShackOpenRegistrationCode.Text = "Open registration code page";
+            this.btnImageShackOpenRegistrationCode.UseVisualStyleBackColor = true;
+            this.btnImageShackOpenRegistrationCode.Click += new System.EventHandler(this.btnImageShackOpenRegistrationCode_Click);
+            // 
+            // lblImageShackRegistrationCode
+            // 
+            this.lblImageShackRegistrationCode.AutoSize = true;
+            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 16);
+            this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
+            this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
+            this.lblImageShackRegistrationCode.TabIndex = 1;
+            this.lblImageShackRegistrationCode.Text = "Registration code:";
+            // 
+            // txtImageShackRegistrationCode
+            // 
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
+            this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtImageShackRegistrationCode.TabIndex = 0;
+            this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
+            // 
+            // btnTinyPicOpenMyImages
+            // 
+            this.btnTinyPicOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTinyPicOpenMyImages.Location = new System.Drawing.Point(16, 224);
+            this.btnTinyPicOpenMyImages.Name = "btnTinyPicOpenMyImages";
+            this.btnTinyPicOpenMyImages.Size = new System.Drawing.Size(200, 23);
+            this.btnTinyPicOpenMyImages.TabIndex = 8;
+            this.btnTinyPicOpenMyImages.Text = "Open my images page";
+            this.btnTinyPicOpenMyImages.UseVisualStyleBackColor = true;
+            this.btnTinyPicOpenMyImages.Click += new System.EventHandler(this.btnTinyPicOpenMyImages_Click);
+            // 
+            // lblTinyPicRegistrationCode
+            // 
+            this.lblTinyPicRegistrationCode.AutoSize = true;
+            this.lblTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 168);
+            this.lblTinyPicRegistrationCode.Name = "lblTinyPicRegistrationCode";
+            this.lblTinyPicRegistrationCode.Size = new System.Drawing.Size(335, 13);
+            this.lblTinyPicRegistrationCode.TabIndex = 4;
+            this.lblTinyPicRegistrationCode.Text = "Registration code (You must login for be able to get registration code):";
+            // 
+            // txtTinyPicRegistrationCode
+            // 
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
+            this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
+            this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
+            this.txtTinyPicRegistrationCode.ReadOnly = true;
+            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicRegistrationCode.TabIndex = 3;
+            // 
+            // cbTinyPicRememberUsernamePassword
+            // 
+            this.cbTinyPicRememberUsernamePassword.AutoSize = true;
+            this.cbTinyPicRememberUsernamePassword.Location = new System.Drawing.Point(112, 131);
+            this.cbTinyPicRememberUsernamePassword.Name = "cbTinyPicRememberUsernamePassword";
+            this.cbTinyPicRememberUsernamePassword.Size = new System.Drawing.Size(233, 17);
+            this.cbTinyPicRememberUsernamePassword.TabIndex = 8;
+            this.cbTinyPicRememberUsernamePassword.Text = "Remember TinyPic username and password";
+            this.cbTinyPicRememberUsernamePassword.UseVisualStyleBackColor = true;
+            this.cbTinyPicRememberUsernamePassword.CheckedChanged += new System.EventHandler(this.cbTinyPicRememberUsernamePassword_CheckedChanged);
+            // 
+            // lblTinyPicUsername
+            // 
+            this.lblTinyPicUsername.AutoSize = true;
+            this.lblTinyPicUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblTinyPicUsername.Name = "lblTinyPicUsername";
+            this.lblTinyPicUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblTinyPicUsername.TabIndex = 9;
+            this.lblTinyPicUsername.Text = "Username:";
+            // 
+            // txtTinyPicUsername
+            // 
+            this.txtTinyPicUsername.Location = new System.Drawing.Point(16, 40);
+            this.txtTinyPicUsername.Name = "txtTinyPicUsername";
+            this.txtTinyPicUsername.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicUsername.TabIndex = 10;
+            this.txtTinyPicUsername.TextChanged += new System.EventHandler(this.txtTinyPicUsername_TextChanged);
+            // 
+            // lblTinyPicPassword
+            // 
+            this.lblTinyPicPassword.AutoSize = true;
+            this.lblTinyPicPassword.Location = new System.Drawing.Point(16, 72);
+            this.lblTinyPicPassword.Name = "lblTinyPicPassword";
+            this.lblTinyPicPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblTinyPicPassword.TabIndex = 11;
+            this.lblTinyPicPassword.Text = "Password:";
+            // 
+            // txtTinyPicPassword
+            // 
+            this.txtTinyPicPassword.Location = new System.Drawing.Point(16, 96);
+            this.txtTinyPicPassword.Name = "txtTinyPicPassword";
+            this.txtTinyPicPassword.PasswordChar = '*';
+            this.txtTinyPicPassword.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicPassword.TabIndex = 12;
+            this.txtTinyPicPassword.TextChanged += new System.EventHandler(this.txtTinyPicPassword_TextChanged);
+            // 
+            // btnTinyPicLogin
+            // 
+            this.btnTinyPicLogin.Location = new System.Drawing.Point(16, 128);
+            this.btnTinyPicLogin.Name = "btnTinyPicLogin";
+            this.btnTinyPicLogin.Size = new System.Drawing.Size(80, 23);
+            this.btnTinyPicLogin.TabIndex = 13;
+            this.btnTinyPicLogin.Text = "Login";
+            this.btnTinyPicLogin.UseVisualStyleBackColor = true;
+            this.btnTinyPicLogin.Click += new System.EventHandler(this.btnTinyPicLogin_Click);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,20 +593,24 @@
             this.Controls.Add(this.tcUploaders);
             this.Name = "UploadersConfigForm";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "THIS IS UPLOADERS CONFIG FORM!";
+            this.Text = "Uploaders config";
             this.tcUploaders.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
-            this.tpFileUploaders.ResumeLayout(false);
-            this.tpTextUploaders.ResumeLayout(false);
-            this.tpURLShorteners.ResumeLayout(false);
-            this.tpOtherServices.ResumeLayout(false);
             this.tcImageUploaders.ResumeLayout(false);
+            this.tpImageShack.ResumeLayout(false);
+            this.tpImageShack.PerformLayout();
+            this.tpTinyPic.ResumeLayout(false);
+            this.tpTinyPic.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
+            this.tpFileUploaders.ResumeLayout(false);
             this.tcFileUploaders.ResumeLayout(false);
+            this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
-            this.tcOtherServices.ResumeLayout(false);
+            this.tpURLShorteners.ResumeLayout(false);
             this.tcURLShorteners.ResumeLayout(false);
+            this.tpOtherServices.ResumeLayout(false);
+            this.tcOtherServices.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -440,5 +646,22 @@
         private System.Windows.Forms.TabPage tpTabPage1;
         private System.Windows.Forms.TabControl tcOtherServices;
         private System.Windows.Forms.TabPage tpTwitter;
+        internal System.Windows.Forms.Button btnImageShackOpenPublicProfile;
+        internal System.Windows.Forms.CheckBox cbImageShackIsPublic;
+        internal System.Windows.Forms.Button btnImageShackOpenMyImages;
+        internal System.Windows.Forms.Label lblImageShackUsername;
+        internal System.Windows.Forms.Button btnImageShackOpenRegistrationCode;
+        internal System.Windows.Forms.TextBox txtImageShackUsername;
+        internal System.Windows.Forms.TextBox txtImageShackRegistrationCode;
+        internal System.Windows.Forms.Label lblImageShackRegistrationCode;
+        internal System.Windows.Forms.Button btnTinyPicOpenMyImages;
+        internal System.Windows.Forms.CheckBox cbTinyPicRememberUsernamePassword;
+        internal System.Windows.Forms.Label lblTinyPicRegistrationCode;
+        internal System.Windows.Forms.TextBox txtTinyPicRegistrationCode;
+        private System.Windows.Forms.TextBox txtTinyPicPassword;
+        private System.Windows.Forms.Label lblTinyPicPassword;
+        private System.Windows.Forms.TextBox txtTinyPicUsername;
+        private System.Windows.Forms.Label lblTinyPicUsername;
+        private System.Windows.Forms.Button btnTinyPicLogin;
     }
 }

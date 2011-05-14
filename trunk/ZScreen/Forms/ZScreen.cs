@@ -2120,16 +2120,15 @@ namespace ZScreenGUI
             if (accs != null)
             {
                 int selFtpList = ucFTPAccounts.AccountsList.SelectedIndex;
-                int selFtpImages = cboFtpImages.SelectedIndex;
-                int selFtpText = cboFtpText.SelectedIndex;
-                int selFtpFiles = cboFtpFiles.SelectedIndex;
 
                 ucFTPAccounts.AccountsList.Items.Clear();
                 cboFtpImages.Items.Clear();
                 cboFtpText.Items.Clear();
                 cboFtpFiles.Items.Clear();
+
                 Engine.conf.FTPAccountList = new List<FTPAccount>();
                 Engine.conf.FTPAccountList.AddRange(accs);
+
                 foreach (FTPAccount acc in Engine.conf.FTPAccountList)
                 {
                     ucFTPAccounts.AccountsList.Items.Add(acc);
@@ -2137,12 +2136,13 @@ namespace ZScreenGUI
                     cboFtpText.Items.Add(acc);
                     cboFtpFiles.Items.Add(acc);
                 }
+
                 if (ucFTPAccounts.AccountsList.Items.Count > 0)
                 {
-                    ucFTPAccounts.AccountsList.SelectedIndex = Math.Max(Math.Min(selFtpList, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
-                    cboFtpImages.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpImages, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
-                    cboFtpText.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpText, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
-                    cboFtpFiles.SelectedIndex = Math.Max(Math.Min(Engine.conf.FtpFiles, ucFTPAccounts.AccountsList.Items.Count - 1), 0);
+                    ucFTPAccounts.AccountsList.SelectedIndex = selFtpList.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
+                    cboFtpImages.SelectedIndex = Engine.conf.FtpImages.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
+                    cboFtpText.SelectedIndex = Engine.conf.FtpText.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
+                    cboFtpFiles.SelectedIndex = Engine.conf.FtpFiles.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
                 }
             }
         }
@@ -2150,7 +2150,7 @@ namespace ZScreenGUI
         private void FTPAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-            if (ucFTPAccounts.RemoveItem(sel) == true)
+            if (ucFTPAccounts.RemoveItem(sel))
             {
                 Engine.conf.FTPAccountList.RemoveAt(sel);
             }
@@ -2171,7 +2171,7 @@ namespace ZScreenGUI
         private void LocalhostAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
-            if (ucLocalhostAccounts.RemoveItem(sel) == true)
+            if (ucLocalhostAccounts.RemoveItem(sel))
             {
                 Engine.conf.LocalhostAccountList.RemoveAt(sel);
             }
@@ -2202,7 +2202,7 @@ namespace ZScreenGUI
         private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            if (ucMindTouchAccounts.RemoveItem(sel) == true)
+            if (ucMindTouchAccounts.RemoveItem(sel))
             {
                 Engine.conf.DekiWikiAccountList.RemoveAt(sel);
             }
@@ -3343,7 +3343,7 @@ namespace ZScreenGUI
         private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
-            if (ucTwitterAccounts.RemoveItem(sel) == true)
+            if (ucTwitterAccounts.RemoveItem(sel))
             {
                 Engine.conf.TwitterOAuthInfoList.RemoveAt(sel);
             }
