@@ -25,6 +25,7 @@
 
 using System;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace UploadersLib
 {
@@ -35,14 +36,15 @@ namespace UploadersLib
             InitializeComponent();
         }
 
-        public virtual bool RemoveItem(int sel)
+        public virtual bool RemoveItem(int selected)
         {
-            if (sel != -1)
+            if (selected.IsBetween(0, AccountsList.Items.Count - 1))
             {
-                this.AccountsList.Items.RemoveAt(sel);
-                if (this.AccountsList.Items.Count > 0)
+                AccountsList.Items.RemoveAt(selected);
+
+                if (AccountsList.Items.Count > 0)
                 {
-                    this.AccountsList.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
+                    AccountsList.SelectedIndex = (selected > 0) ? (selected - 1) : 0;
                 }
 
                 return true;
@@ -53,9 +55,9 @@ namespace UploadersLib
 
         private void SettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            if (this.AccountsList.SelectedIndex > -1)
+            if (AccountsList.SelectedIndex > -1)
             {
-                this.AccountsList.Items[this.AccountsList.SelectedIndex] = SettingsGrid.SelectedObject;
+                AccountsList.Items[AccountsList.SelectedIndex] = SettingsGrid.SelectedObject;
             }
         }
 

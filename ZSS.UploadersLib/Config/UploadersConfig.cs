@@ -43,7 +43,7 @@ namespace UploadersLib
 
         // TinyPic
 
-        public string TinyPicShuk = string.Empty;
+        public string TinyPicRegistrationCode = string.Empty;
         public string TinyPicUsername = string.Empty;
         public string TinyPicPassword = string.Empty;
         public bool TinyPicRememberUserPass = false;
