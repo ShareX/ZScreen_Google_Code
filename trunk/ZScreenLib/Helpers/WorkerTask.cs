@@ -45,7 +45,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib.TextUploaders;
 using System.Threading;
 using ZScreenLib.Helpers;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZScreenLib
 {

@@ -36,7 +36,7 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZUploader.HelperClasses;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZUploader
 {

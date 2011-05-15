@@ -32,6 +32,7 @@ using HistoryLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZUploaderPlugin;
+using UploadersAPILib;
 
 namespace ZUploader
 {
@@ -323,7 +324,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(errors))
             {
-                new ErrorForm("ZUploader - Errors", "Upload errors:", errors, Program.LogFilePath, Program.URL_ISSUES).ShowDialog();
+                new ErrorForm("ZUploader - Errors", "Upload errors:", errors, Program.LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
             }
         }
 

@@ -29,6 +29,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Windows.Forms;
+using UploadersAPILib;
 
 namespace ZUploader
 {
@@ -73,27 +74,27 @@ namespace ZUploader
 
         private void lblZScreen_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.URL_WEBSITE);
+            Process.Start(ZLinks.URL_WEBSITE);
         }
 
         private void lblBugs_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.URL_ISSUES);
+            Process.Start(ZLinks.URL_ISSUES);
         }
 
         private void pbBerkURL_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.URL_BERK);
+            Process.Start(ZLinks.URL_BERK);
         }
 
         private void pbMikeURL_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.URL_MIKE);
+            Process.Start(ZLinks.URL_MIKE);
         }
 
         private void pbBrandonURL_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.URL_BRANDON);
+            Process.Start(ZLinks.URL_BRANDON);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

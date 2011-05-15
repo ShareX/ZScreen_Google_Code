@@ -44,7 +44,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZScreenLib
 {

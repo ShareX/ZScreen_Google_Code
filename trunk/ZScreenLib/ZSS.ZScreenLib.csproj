@@ -242,9 +242,9 @@
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZAPILib\ZAPILib.csproj">
+    <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>ZAPILib</Name>
+      <Name>ZSS.UploadersAPILib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\ZSS.GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>
