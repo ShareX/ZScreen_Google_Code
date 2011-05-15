@@ -665,7 +665,7 @@ namespace ZScreenLib
         public static string GetDirPathUsingFolderBrowser(string title)
         {
             string newDir = string.Empty;
-            if (CoreHelpers.RunningOnWin7)
+            if (TaskbarManager.IsPlatformSupported)
             {
                 CommonOpenFileDialog dlg = new CommonOpenFileDialog();
                 dlg.EnsureReadOnly = true;
