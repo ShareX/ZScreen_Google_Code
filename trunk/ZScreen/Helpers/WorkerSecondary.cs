@@ -117,7 +117,7 @@ namespace ZScreenGUI
             {
                 if (Engine.conf.GoogleLanguages == null || Engine.conf.GoogleLanguages.Count < 1)
                 {
-                    Engine.conf.GoogleLanguages = new GoogleTranslate(Engine.GoogleTranslateKey).GetLanguages();
+                    Engine.conf.GoogleLanguages = new GoogleTranslate(ZAPILib.Keys.GoogleTranslateKey).GetLanguages();
                 }
 
                 if (Uploader.ProxySettings != null)

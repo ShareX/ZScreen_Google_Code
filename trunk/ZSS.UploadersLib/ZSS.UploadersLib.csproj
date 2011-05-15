@@ -93,10 +93,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\GUI\UploadersConfigForm.cs">
+    <Compile Include="Config\UploadersConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\GUI\UploadersConfigForm.Designer.cs">
+    <Compile Include="Config\UploadersConfigForm.Designer.cs">
       <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\UploadersConfig.cs" />
@@ -195,7 +195,7 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\GUI\UploadersConfigForm.resx">
+    <EmbeddedResource Include="Config\UploadersConfigForm.resx">
       <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AccountsControl.resx">
@@ -211,6 +211,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZAPILib\ZAPILib.csproj">
+      <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
+      <Name>ZAPILib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>

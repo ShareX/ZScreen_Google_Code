@@ -153,7 +153,7 @@ namespace ZScreenGUI
                         switch (task.Job2)
                         {
                             case WorkerTask.JobLevel2.UploadFromClipboard:
-                                PublishText(task);
+                                task.UploadText();
                                 break;
                             case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                                 LanguageTranslator(task);
@@ -489,7 +489,7 @@ namespace ZScreenGUI
 
         public void LanguageTranslator(WorkerTask task)
         {
-            task.TranslationInfo = new GoogleTranslate(Engine.GoogleTranslateKey).TranslateText(task.TranslationInfo);
+            task.TranslationInfo = new GoogleTranslate(ZAPILib.Keys.GoogleTranslateKey).TranslateText(task.TranslationInfo);
             task.SetText(task.TranslationInfo.Result);
         }
 

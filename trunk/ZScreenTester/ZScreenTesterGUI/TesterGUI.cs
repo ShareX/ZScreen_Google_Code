@@ -246,18 +246,18 @@ namespace ZScreenTesterGUI
                             {
                                 task.MyImageUploader = uploader.ImageUploader;
                                 task.UpdateLocalFilePath(TestImageFilePath);
-                                new TaskManager(task).UploadImage();
+                                task.UploadImage();
                             }
                             break;
                         case UploaderType.FileUploader:
                             task.MyFileUploader = uploader.FileUploader;
                             task.UpdateLocalFilePath(TestFilePath);
-                            new TaskManager(task).UploadFile();
+                            task.UploadFile();
                             break;
                         case UploaderType.TextUploader:
                             task.MyTextUploader = uploader.TextUploader;
                             task.SetText(TestText);
-                            new TaskManager(task).UploadText();
+                            task.UploadText();
                             break;
                         case UploaderType.UrlShortener:
                             task.MyUrlShortener = uploader.UrlShortener;

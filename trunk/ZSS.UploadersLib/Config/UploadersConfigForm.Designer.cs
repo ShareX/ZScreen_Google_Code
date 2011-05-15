@@ -674,7 +674,7 @@
             this.Controls.Add(this.tcUploaders);
             this.Name = "UploadersConfigForm";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "Uploaders config";
+            this.Text = "Uploaders Configuration";
             this.tcUploaders.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
             this.tcImageUploaders.ResumeLayout(false);

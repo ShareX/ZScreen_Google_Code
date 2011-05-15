@@ -93,6 +93,8 @@ namespace ZUploader
             this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsddbUploadersConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -208,7 +210,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(695, 33);
+            this.tsMain.Size = new System.Drawing.Size(726, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -266,7 +268,9 @@ namespace ZUploader
             this.tsddbImageUploaders,
             this.tsddbTextUploaders,
             this.tsddbFileUploaders,
-            this.tsddbURLShorteners});
+            this.tsddbURLShorteners,
+            this.toolStripSeparator1,
+            this.tsddbUploadersConfig});
             this.toolStripDropDownButton1.Image = global::ZUploader.Properties.Resources.drive_globe;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -427,6 +431,18 @@ namespace ZUploader
             this.chURL.Text = "URL";
             this.chURL.Width = 225;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(159, 6);
+            // 
+            // tsddbUploadersConfig
+            // 
+            this.tsddbUploadersConfig.Name = "tsddbUploadersConfig";
+            this.tsddbUploadersConfig.Size = new System.Drawing.Size(162, 22);
+            this.tsddbUploadersConfig.Text = "Configuration...";
+            this.tsddbUploadersConfig.Click += new System.EventHandler(this.tsddbUploadersConfig_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -497,5 +513,7 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsddbURLShorteners;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem copyShortenedURLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem tsddbUploadersConfig;
     }
 }

@@ -503,7 +503,7 @@ namespace ZScreenGUI
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
-            Process.Start("http://my.imageshack.us/registration/");
+            Process.Start("http://profile.imageshack.us/prefs");
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
@@ -3188,7 +3188,7 @@ namespace ZScreenGUI
         {
             try
             {
-                FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
+                FlickrUploader flickr = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret);
                 btnFlickrGetFrob.Tag = flickr.GetFrob();
                 string url = flickr.GetAuthLink(FlickrPermission.Write);
                 Process.Start(url);
@@ -3207,7 +3207,7 @@ namespace ZScreenGUI
                 string token = btnFlickrGetFrob.Tag as string;
                 if (!string.IsNullOrEmpty(token))
                 {
-                    FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
+                    FlickrUploader flickr = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret);
                     Engine.conf.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
                     // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
@@ -3229,7 +3229,7 @@ namespace ZScreenGUI
                     string token = Engine.conf.FlickrAuthInfo.Token;
                     if (!string.IsNullOrEmpty(token))
                     {
-                        FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
+                        FlickrUploader flickr = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret);
                         Engine.conf.FlickrAuthInfo = flickr.CheckToken(token);
                         pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
 
@@ -3250,7 +3250,7 @@ namespace ZScreenGUI
                 string userID = Engine.conf.FlickrAuthInfo.UserID;
                 if (!string.IsNullOrEmpty(userID))
                 {
-                    FlickrUploader flickr = new FlickrUploader(Engine.FlickrKey, Engine.FlickrSecret);
+                    FlickrUploader flickr = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret);
                     string url = flickr.GetPhotosLink(userID);
                     Process.Start(url);
                 }
@@ -3359,7 +3359,7 @@ namespace ZScreenGUI
 
         private void TwitterAccountAddButton_Click(object sender, EventArgs e)
         {
-            OAuthInfo acc = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            OAuthInfo acc = new OAuthInfo(ZAPILib.Keys.TwitterConsumerKey, ZAPILib.Keys.TwitterConsumerSecret);
             Engine.conf.TwitterOAuthInfoList.Add(acc);
             ucTwitterAccounts.AccountsList.Items.Add(acc);
             ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
@@ -3601,7 +3601,7 @@ namespace ZScreenGUI
         {
             try
             {
-                OAuthInfo oauth = new OAuthInfo(Engine.DropboxConsumerKey, Engine.DropboxConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(ZAPILib.Keys.DropboxConsumerKey, ZAPILib.Keys.DropboxConsumerSecret);
 
                 string url = new Dropbox(oauth).GetAuthorizationURL();
 
@@ -3702,7 +3702,7 @@ namespace ZScreenGUI
         {
             try
             {
-                OAuthInfo oauth = new OAuthInfo(Engine.ImgurConsumerKey, Engine.ImgurConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(ZAPILib.Keys.ImgurConsumerKey, ZAPILib.Keys.ImgurConsumerSecret);
 
                 string url = new Imgur(oauth).GetAuthorizationURL();
 
@@ -3907,7 +3907,7 @@ namespace ZScreenGUI
             {
                 try
                 {
-                    PastebinUploader pastebin = new PastebinUploader(Engine.PastebinKey, Engine.conf.PastebinSettings);
+                    PastebinUploader pastebin = new PastebinUploader(ZAPILib.Keys.PastebinKey, Engine.conf.PastebinSettings);
 
                     if (pastebin.Login())
                     {
