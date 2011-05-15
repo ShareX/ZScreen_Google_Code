@@ -3,6 +3,8 @@
 = Introduction =
 
 ZScreen is a powerful and flexible Screen capture-cum-upload software.
+
+
 It has various capture modes: 
   * Crop shot (any random region of the screen)
   * Selected window part
