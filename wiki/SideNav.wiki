@@ -8,7 +8,7 @@
   * [Introduction Introduction]
   * [Installation Installation]
   * [QuickGuide Quick Guide]
-  * [SettingScreens Setting screens]
+  * [Settings Settings]
     * [Hotkeys Hotkeys]
     * [Capture Capture]
       * [CropShot Crop Shot]
