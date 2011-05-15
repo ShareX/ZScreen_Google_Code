@@ -53,7 +53,7 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZScreenGUI
 {

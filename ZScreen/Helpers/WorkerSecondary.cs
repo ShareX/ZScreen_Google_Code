@@ -31,7 +31,7 @@ using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZScreenGUI
 {

@@ -41,7 +41,7 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZUploader.HelperClasses;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace ZScreenGUI
 {

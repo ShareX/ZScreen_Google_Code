@@ -31,6 +31,7 @@ using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using SingleInstanceApplication;
+using UploadersAPILib;
 
 namespace ZUploader
 {
@@ -80,16 +81,6 @@ namespace ZUploader
 
         private const string SettingsFileName = "Settings.xml";
         private const string HistoryFileName = "ZUploaderHistory.xml";
-
-        // URLS
-        public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
-        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
-        public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
-        public const string URL_HELP = "http://code.google.com/p/zscreen/wiki/Tutorials";
-        public const string URL_UPDATE = "http://zscreen.googlecode.com/svn/trunk/Update.xml";
-        public const string URL_BERK = "http://code.google.com/u/flexy123";
-        public const string URL_MIKE = "http://code.google.com/u/mcored";
-        public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
 
         public static bool IsBeta { get { return true; } }
         public static bool IsPortable { get; private set; }
@@ -163,7 +154,7 @@ namespace ZUploader
             MyLogger.WriteException("Unhandled exception", e);
             MyLogger.WriteLine("ZUploader closing. Reason: Unhandled exception");
             MyLogger.SaveLog(LogFilePath);
-            new ErrorForm("ZUploader - Error", e, LogFilePath, URL_ISSUES).ShowDialog();
+            new ErrorForm("ZUploader - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
             Application.Exit();
         }
 

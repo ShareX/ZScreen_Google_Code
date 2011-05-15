@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.Properties;
-using ZAPILib;
+using UploadersAPILib;
 
 namespace UploadersLib
 {

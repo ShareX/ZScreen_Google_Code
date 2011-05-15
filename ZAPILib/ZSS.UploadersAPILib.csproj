@@ -8,7 +8,7 @@
     <ProjectGuid>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZAPILib</RootNamespace>
+    <RootNamespace>UploadersAPILib</RootNamespace>
     <AssemblyName>ZAPIKeys</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Keys.cs" />
+    <Compile Include="ZKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZLinks.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
