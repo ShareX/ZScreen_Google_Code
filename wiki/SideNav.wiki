@@ -1,7 +1,7 @@
 #summary Side Navigation
 #labels Phase-Design
 
- * Features
+ * [Features Features]
 
 *User Manual
   * [Introduction Introduction]
