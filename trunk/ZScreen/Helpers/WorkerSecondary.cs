@@ -31,6 +31,7 @@ using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
+using ZAPILib;
 
 namespace ZScreenGUI
 {
@@ -117,7 +118,7 @@ namespace ZScreenGUI
             {
                 if (Engine.conf.GoogleLanguages == null || Engine.conf.GoogleLanguages.Count < 1)
                 {
-                    Engine.conf.GoogleLanguages = new GoogleTranslate(ZAPILib.Keys.GoogleTranslateKey).GetLanguages();
+                    Engine.conf.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
                 }
 
                 if (Uploader.ProxySettings != null)

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.Properties;
+using ZAPILib;
 
 namespace UploadersLib
 {
@@ -123,8 +124,7 @@ namespace UploadersLib
             {
                 try
                 {
-                    // TODO: API KEYS
-                    TinyPicUploader tpu = new TinyPicUploader("", "");
+                    TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
                     string registrationCode = tpu.UserAuth(username, password);
 
                     if (!string.IsNullOrEmpty(registrationCode))
@@ -168,8 +168,7 @@ namespace UploadersLib
         {
             try
             {
-                // TODO: API KEYS
-                OAuthInfo oauth = new OAuthInfo(ZAPILib.Keys.ImgurConsumerKey, ZAPILib.Keys.ImgurConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(ZKeys.ImgurConsumerKey, ZKeys.ImgurConsumerSecret);
 
                 string url = new Imgur(oauth).GetAuthorizationURL();
 

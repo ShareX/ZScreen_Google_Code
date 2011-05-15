@@ -36,6 +36,7 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZUploader.HelperClasses;
+using ZAPILib;
 
 namespace ZUploader
 {
@@ -222,10 +223,10 @@ namespace ZUploader
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestination.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZAPILib.Keys.ImageShackKey, Program.Settings.UploadersConfig.ImageShackRegistrationCode);
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.Settings.UploadersConfig.ImageShackRegistrationCode);
                     break;
                 case ImageDestination.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey, Program.Settings.UploadersConfig.TinyPicRegistrationCode);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.Settings.UploadersConfig.TinyPicRegistrationCode);
                     break;
                 /*case ImageDestType2.IMAGEBIN:
                     imageUploader = new ImageBin();
@@ -234,7 +235,7 @@ namespace ZUploader
                     imageUploader = new Img1Uploader();
                     break;*/
                 case ImageDestination.IMGUR:
-                    imageUploader = new Imgur(Program.Settings.UploadersConfig.ImgurAccountType, ZAPILib.Keys.ImgurAnonymousKey, Program.Settings.UploadersConfig.ImgurOAuthInfo);
+                    imageUploader = new Imgur(Program.Settings.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.Settings.UploadersConfig.ImgurOAuthInfo);
                     break;
             }
 
@@ -254,10 +255,10 @@ namespace ZUploader
             switch (UploadManager.TextUploader)
             {
                 case TextUploaderType.PASTEBIN:
-                    textUploader = new PastebinUploader(ZAPILib.Keys.PastebinKey);
+                    textUploader = new PastebinUploader(ZKeys.PastebinKey);
                     break;
                 case TextUploaderType.PASTEBIN_CA:
-                    textUploader = new PastebinCaUploader(ZAPILib.Keys.PastebinCaKey);
+                    textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
                     break;
                 case TextUploaderType.SLEXY:
                     textUploader = new SlexyUploader();
@@ -287,11 +288,11 @@ namespace ZUploader
                     fileUploader = new RapidShare();
                     break;
                 case FileUploaderType.SendSpace:
-                    fileUploader = new SendSpace(ZAPILib.Keys.SendSpaceKey);
-                    SendSpaceManager.PrepareUploadInfo(ZAPILib.Keys.SendSpaceKey, null, null);
+                    fileUploader = new SendSpace(ZKeys.SendSpaceKey);
+                    SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
                     break;
                 case FileUploaderType.Dropbox: // TODO: Dropbox account
-                    fileUploader = new Dropbox(new OAuthInfo(ZAPILib.Keys.DropboxConsumerKey, ZAPILib.Keys.DropboxConsumerSecret));
+                    fileUploader = new Dropbox(new OAuthInfo(ZKeys.DropboxConsumerKey, ZKeys.DropboxConsumerSecret));
                     break;
                 /*case FileUploaderType.FileSonic:
                     fileUploader = new FileSonic("", "");
@@ -332,16 +333,16 @@ namespace ZUploader
             switch (UploadManager.URLShortener)
             {
                 case UrlShortenerType.BITLY:
-                    urlShortener = new BitlyURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
+                    urlShortener = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                     break;
                 case UrlShortenerType.Google:
-                    urlShortener = new GoogleURLShortener(ZAPILib.Keys.GoogleURLShortenerKey);
+                    urlShortener = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
                     break;
                 case UrlShortenerType.ISGD:
                     urlShortener = new IsgdURLShortener();
                     break;
                 case UrlShortenerType.Jmp:
-                    urlShortener = new JmpURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
+                    urlShortener = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                     break;
                 /*case UrlShortenerType.THREELY:
                     urlShortener = new ThreelyURLShortener(Program.ThreelyKey);

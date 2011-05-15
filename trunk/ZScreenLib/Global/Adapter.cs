@@ -44,6 +44,7 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
+using ZAPILib;
 
 namespace ZScreenLib
 {
@@ -322,7 +323,7 @@ namespace ZScreenLib
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
-                TinyPicUploader tpu = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey);
+                TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
                 if (Engine.conf.RememberTinyPicUserPass)
                 {
                     Engine.conf.TinyPicUserName = ub.UserName;
@@ -341,7 +342,7 @@ namespace ZScreenLib
             if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
                 !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
             {
-                TinyPicUploader tpu = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey);
+                TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
                 string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
@@ -507,7 +508,7 @@ namespace ZScreenLib
             upb.ShowDialog();
             if (upb.DialogResult == DialogResult.OK)
             {
-                SendSpace sendSpace = new SendSpace(ZAPILib.Keys.SendSpaceKey);
+                SendSpace sendSpace = new SendSpace(ZKeys.SendSpaceKey);
                 upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
                 if (!upb.Success && sendSpace.Errors.Count > 0)
                 {
@@ -544,7 +545,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAcct()
         {
-            OAuthInfo acc = new OAuthInfo(ZAPILib.Keys.TwitterConsumerKey, ZAPILib.Keys.TwitterConsumerSecret);
+            OAuthInfo acc = new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
             if (CheckTwitterAccounts())
             {
                 acc = Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected];

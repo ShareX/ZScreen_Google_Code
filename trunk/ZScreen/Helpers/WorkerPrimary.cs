@@ -41,6 +41,7 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZUploader.HelperClasses;
+using ZAPILib;
 
 namespace ZScreenGUI
 {
@@ -489,7 +490,7 @@ namespace ZScreenGUI
 
         public void LanguageTranslator(WorkerTask task)
         {
-            task.TranslationInfo = new GoogleTranslate(ZAPILib.Keys.GoogleTranslateKey).TranslateText(task.TranslationInfo);
+            task.TranslationInfo = new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo);
             task.SetText(task.TranslationInfo.Result);
         }
 
