@@ -44,7 +44,6 @@ namespace HistoryLib
         public bool IsTextURL { get; private set; }
         public bool IsFilePathValid { get; private set; }
         public bool IsFileExist { get; private set; }
-        public bool IsFolderExist { get; private set; }
         public bool IsImageFile { get; private set; }
         public bool IsTextFile { get; private set; }
 
@@ -73,7 +72,6 @@ namespace HistoryLib
                     IsTextURL = IsURLExist && Helpers.IsTextFile(HistoryItem.URL);
                     IsFilePathValid = !string.IsNullOrEmpty(HistoryItem.Filepath) && Path.HasExtension(HistoryItem.Filepath);
                     IsFileExist = IsFilePathValid && File.Exists(HistoryItem.Filepath);
-                    IsFolderExist= IsFilePathValid && Directory.Exists(Path.GetDirectoryName(HistoryItem.Filepath));
                     IsImageFile = IsFileExist && Helpers.IsImageFile(HistoryItem.Filepath);
                     IsTextFile = IsFileExist && Helpers.IsTextFile(HistoryItem.Filepath);
 
@@ -125,7 +123,7 @@ namespace HistoryLib
 
         public void OpenFolder()
         {
-            if (HistoryItem != null && IsFolderExist) Process.Start(Path.GetDirectoryName(HistoryItem.Filepath));
+            if (HistoryItem != null && IsFileExist) Helpers.OpenFolderWithFile(HistoryItem.Filepath);
         }
 
         public void CopyURL()

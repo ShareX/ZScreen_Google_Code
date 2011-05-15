@@ -175,7 +175,8 @@ namespace ZScreenGUI
             this.Icon = Resources.zss_main;
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
-            this.lblLogo.Text = this.Text;
+
+            this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
             if (this.WindowState == FormWindowState.Normal)
             {
@@ -264,8 +265,6 @@ namespace ZScreenGUI
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-
-            DrawZScreenLabel(false);
         }
 
         private void FtpAccountSettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -2814,34 +2813,6 @@ namespace ZScreenGUI
             Engine.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
         }
 
-        private void lblLogo_Click(object sender, EventArgs e)
-        {
-            FormsMgr.ShowAboutWindow();
-        }
-
-        private void DrawZScreenLabel(bool hover)
-        {
-            Color color = hover ? Color.LightGray : Color.WhiteSmoke;
-            Bitmap bmpVersion = new Bitmap(lblLogo.Width, lblLogo.Height);
-            Graphics g = Graphics.FromImage(bmpVersion);
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, lblLogo.Width, lblLogo.Height), color,
-               lblLogo.BackColor, LinearGradientMode.Horizontal);
-            brush.SetSigmaBellShape(0.50f);
-            g.FillRectangle(brush, new Rectangle(0, 0, lblLogo.Width, lblLogo.Height));
-            lblLogo.Image = bmpVersion;
-        }
-
-        private void lblLogo_MouseEnter(object sender, EventArgs e)
-        {
-            DrawZScreenLabel(true);
-        }
-
-        private void lblLogo_MouseLeave(object sender, EventArgs e)
-        {
-            DrawZScreenLabel(false);
-        }
-
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
@@ -3924,7 +3895,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 1750)
+        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 2000)
         {
             Hide();
 
@@ -3958,7 +3929,8 @@ namespace ZScreenGUI
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow(), 1250, 2000);
+            // TODO: Find last active window
+            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow());
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
@@ -4014,6 +3986,16 @@ namespace ZScreenGUI
         private void tsbOpenHistory_Click(object sender, EventArgs e)
         {
             OpenHistory();
+        }
+
+        private void tsbImageDirectory_Click(object sender, EventArgs e)
+        {
+            ShowDirectory(FileSystem.GetImagesDir());
+        }
+
+        private void tsbAbout_Click(object sender, EventArgs e)
+        {
+            FormsMgr.ShowAboutWindow();
         }
 
         #endregion Main tab toolbar

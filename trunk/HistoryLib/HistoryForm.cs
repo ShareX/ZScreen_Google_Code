@@ -265,7 +265,7 @@ namespace HistoryLib
             tsmiOpenDeletionURL.Enabled = him.IsDeletionURLExist;
 
             tsmiOpenFile.Enabled = him.IsFileExist;
-            tsmiOpenFolder.Enabled = him.IsFolderExist;
+            tsmiOpenFolder.Enabled = him.IsFileExist;
 
             // Copy
             tsmiCopyURL.Enabled = him.IsURLExist;

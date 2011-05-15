@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -373,6 +374,11 @@ namespace HelpersLib
             }
 
             return result.ToString();
+        }
+
+        public static void OpenFolderWithFile(string filePath)
+        {
+            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", filePath));
         }
     }
 }
