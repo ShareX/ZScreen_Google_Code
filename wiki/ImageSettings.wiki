@@ -1,0 +1,2 @@
+#summary Setting of the captured images to be saved.
+
