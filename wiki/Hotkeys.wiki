@@ -1,0 +1,2 @@
+#summary Explains the hot keys (keyboard shortcuts) used in Zscreen.
+
