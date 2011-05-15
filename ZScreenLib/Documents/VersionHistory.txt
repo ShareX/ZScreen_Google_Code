@@ -1,3 +1,5 @@
+3.37.0.0 New toolbar in the main tab to easily access quick actions {Jaex}
+
 Version 3.36 - 20110515
 
 3.36.17.1 Fixed issues with Windows 7 Taskbar integration {McoreD}

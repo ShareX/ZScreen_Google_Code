@@ -962,10 +962,6 @@ namespace ZScreenGUI
 
             if (Engine.conf.Windows7TaskbarIntegration && Engine.HasWindows7)
             {
-                if (Engine.conf.FirstRun)
-                {
-                    Engine.conf.WindowButtonActionClose = WindowButtonAction.MinimizeToTaskbar;
-                }
                 ZScreen_Windows7onlyTasks();
             }
 
