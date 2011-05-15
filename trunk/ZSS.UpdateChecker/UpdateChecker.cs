@@ -38,11 +38,11 @@ namespace ZSS.UpdateCheckerLib
 {
     public enum ReleaseChannelType
     {
-        [Description("Stable channel")]
+        [Description("Stable version")]
         Stable,
-        [Description("Beta channel")]
+        [Description("Beta version")]
         Beta,
-        [Description("Dev channel")]
+        [Description("Dev version")]
         Dev
     }
 
