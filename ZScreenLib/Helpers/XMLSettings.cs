@@ -39,6 +39,7 @@ using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
 using UploadersLib;
+using UploadersLib.Config;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
@@ -215,8 +216,8 @@ namespace ZScreenLib
         public const Keys DefaultHotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
         public const Keys DefaultHotkeyCropShot = Keys.Control | Keys.PrintScreen;
         public const Keys DefaultHotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
-        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.F6;
-        public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.Shift | Keys.F;
+        public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.Shift | Keys.PrintScreen;
+        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.PageUp;
         public const Keys DefaultHotkeyLastCropShot = Keys.None;
         public const Keys DefaultHotkeyAutoCapture = Keys.None;
         public const Keys DefaultHotkeyDropWindow = Keys.None;
@@ -230,8 +231,8 @@ namespace ZScreenLib
         public Keys HotkeyActiveWindow = DefaultHotkeyActiveWindow;
         public Keys HotkeyCropShot = DefaultHotkeyCropShot;
         public Keys HotkeySelectedWindow = DefaultHotkeySelectedWindow;
-        public Keys HotkeyClipboardUpload = DefaultHotkeyClipboardUpload;
         public Keys HotkeyFreehandCropShot = DefaultHotkeyFreehandCropShot;
+        public Keys HotkeyClipboardUpload = DefaultHotkeyClipboardUpload;
         public Keys HotkeyLastCropShot = DefaultHotkeyLastCropShot;
         public Keys HotkeyAutoCapture = DefaultHotkeyAutoCapture;
         public Keys HotkeyDropWindow = DefaultHotkeyDropWindow;

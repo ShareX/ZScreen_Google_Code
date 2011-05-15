@@ -1,21 +1,47 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.Properties;
-using UploadersAPILib;
 
-namespace UploadersLib
+namespace UploadersLib.Config
 {
     public partial class UploadersConfigForm : Form
     {
         public UploadersConfig Config { get; private set; }
+        public UploadersAPIKeys APIKeys { get; private set; }
 
-        public UploadersConfigForm(UploadersConfig uploadersConfig)
+        public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
             LoadTabIcons();
+            APIKeys = uploadersAPIKeys;
             LoadSettings(uploadersConfig);
         }
 
@@ -60,7 +86,7 @@ namespace UploadersLib
 
             if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
             {
-                lblImgurAccountStatus.Text = "Login success, User token: " + Config.ImgurOAuthInfo.UserToken;
+                lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
             }
 
             #endregion Image uploaders
@@ -89,7 +115,14 @@ namespace UploadersLib
 
         private void btnImageShackOpenPublicProfile_Click(object sender, EventArgs e)
         {
-            Process.Start("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
+            if (!string.IsNullOrEmpty(Config.ImageShackUsername))
+            {
+                Process.Start("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
+            }
+            else
+            {
+                txtImageShackUsername.Focus();
+            }
         }
 
         private void btnImageShackOpenMyImages_Click(object sender, EventArgs e)
@@ -124,7 +157,7 @@ namespace UploadersLib
             {
                 try
                 {
-                    TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
+                    TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
                     string registrationCode = tpu.UserAuth(username, password);
 
                     if (!string.IsNullOrEmpty(registrationCode))
@@ -143,6 +176,17 @@ namespace UploadersLib
         private void cbTinyPicRememberUsernamePassword_CheckedChanged(object sender, EventArgs e)
         {
             Config.TinyPicRememberUserPass = cbTinyPicRememberUsernamePassword.Checked;
+
+            if (Config.TinyPicRememberUserPass)
+            {
+                Config.TinyPicUsername = txtTinyPicUsername.Text;
+                Config.TinyPicPassword = txtTinyPicPassword.Text;
+            }
+            else
+            {
+                Config.TinyPicUsername = string.Empty;
+                Config.TinyPicPassword = string.Empty;
+            }
         }
 
         private void btnTinyPicOpenMyImages_Click(object sender, EventArgs e)
@@ -168,7 +212,7 @@ namespace UploadersLib
         {
             try
             {
-                OAuthInfo oauth = new OAuthInfo(ZKeys.ImgurConsumerKey, ZKeys.ImgurConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(APIKeys.ImgurConsumerKey, APIKeys.ImgurConsumerSecret);
 
                 string url = new Imgur(oauth).GetAuthorizationURL();
 
@@ -197,7 +241,7 @@ namespace UploadersLib
 
                     if (result)
                     {
-                        lblImgurAccountStatus.Text = "Login success, User token: " + Config.ImgurOAuthInfo.UserToken;
+                        lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
                         MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else

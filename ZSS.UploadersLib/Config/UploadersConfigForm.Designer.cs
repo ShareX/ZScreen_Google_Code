@@ -1,4 +1,4 @@
-﻿namespace UploadersLib
+﻿namespace UploadersLib.Config
 {
     partial class UploadersConfigForm
     {
@@ -197,9 +197,9 @@
             this.lblImageShackUsername.AutoSize = true;
             this.lblImageShackUsername.Location = new System.Drawing.Point(16, 72);
             this.lblImageShackUsername.Name = "lblImageShackUsername";
-            this.lblImageShackUsername.Size = new System.Drawing.Size(242, 13);
+            this.lblImageShackUsername.Size = new System.Drawing.Size(246, 13);
             this.lblImageShackUsername.TabIndex = 5;
-            this.lblImageShackUsername.Text = "Username (to be able to open public profile page):";
+            this.lblImageShackUsername.Text = "Username (To be able to open public profile page):";
             // 
             // btnImageShackOpenRegistrationCode
             // 
@@ -222,8 +222,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
@@ -336,8 +336,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
