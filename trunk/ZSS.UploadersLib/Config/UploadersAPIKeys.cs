@@ -23,18 +23,22 @@
 
 #endregion License Information (GPL v2)
 
-namespace UploadersAPILib
+namespace UploadersLib.Config
 {
-    public static class ZLinks
+    public class UploadersAPIKeys
     {
-        // URLS
-        public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
-        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
-        public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
-        public const string URL_HELP = "http://code.google.com/p/zscreen/wiki/Tutorials";
-        public const string URL_UPDATE = "http://zscreen.googlecode.com/svn/trunk/Update.xml";
-        public const string URL_BERK = "http://code.google.com/u/flexy123";
-        public const string URL_MIKE = "http://code.google.com/u/mcored";
-        public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
+        // Image Uploaders
+        public string ImageShackKey { get; set; }
+        public string TinyPicID { get; set; }
+        public string TinyPicKey { get; set; }
+        public string ImgurAnonymousKey { get; set; }
+        public string ImgurConsumerKey { get; set; }
+        public string ImgurConsumerSecret { get; set; }
+        public string FlickrKey { get; set; }
+        public string FlickrSecret { get; set; }
+        public string UploadScreenshotKey { get; set; }
+        public string ImageBamKey { get; set; }
+        public string ImageBamSecret { get; set; }
+        public string TwitsnapsKey { get; set; }
     }
 }

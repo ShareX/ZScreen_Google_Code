@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\UploadersAPIKeys.cs" />
     <Compile Include="Config\UploadersConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,10 +212,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
-      <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>ZSS.UploadersAPILib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>

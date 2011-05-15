@@ -29,10 +29,11 @@ using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 using HistoryLib;
+using UploadersAPILib;
 using UploadersLib;
+using UploadersLib.Config;
 using UploadersLib.HelperClasses;
 using ZUploaderPlugin;
-using UploadersAPILib;
 
 namespace ZUploader
 {
@@ -577,12 +578,11 @@ namespace ZUploader
             }
         }
 
-        #endregion Form events
-
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ucf = new UploadersConfigForm(Program.Settings.UploadersConfig);
-            ucf.Show();
+            new UploadersConfigForm(Program.Settings.UploadersConfig, ZKeys.GetAPIKeys()).ShowDialog();
         }
+
+        #endregion Form events
     }
 }
