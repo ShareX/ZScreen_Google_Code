@@ -1019,12 +1019,12 @@ namespace ZScreenGUI
             this.tpMain.Controls.Add(this.tsMainTab);
             this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.Controls.Add(this.lblFileSystemNote);
-            this.tpMain.Controls.Add(this.ucDestOptions);
             this.tpMain.Controls.Add(this.gbImageSettings);
             this.tpMain.Controls.Add(this.llProjectPage);
             this.tpMain.Controls.Add(this.llWebsite);
             this.tpMain.Controls.Add(this.llblBugReports);
             this.tpMain.Controls.Add(this.lblLogo);
+            this.tpMain.Controls.Add(this.ucDestOptions);
             this.tpMain.ImageKey = "(none)";
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
@@ -1057,14 +1057,15 @@ namespace ZScreenGUI
             this.toolStripSeparator8,
             this.tsbOpenHistory});
             this.tsMainTab.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.tsMainTab.Location = new System.Drawing.Point(377, 12);
+            this.tsMainTab.Location = new System.Drawing.Point(648, 9);
             this.tsMainTab.Name = "tsMainTab";
-            this.tsMainTab.Size = new System.Drawing.Size(151, 332);
+            this.tsMainTab.Size = new System.Drawing.Size(151, 290);
             this.tsMainTab.TabIndex = 126;
             // 
             // tsbFullscreenCapture
             // 
             this.tsbFullscreenCapture.Image = global::ZScreenGUI.Properties.Resources.monitor;
+            this.tsbFullscreenCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbFullscreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFullscreenCapture.Name = "tsbFullscreenCapture";
             this.tsbFullscreenCapture.Size = new System.Drawing.Size(149, 20);
@@ -1074,6 +1075,7 @@ namespace ZScreenGUI
             // tsbActiveWindow
             // 
             this.tsbActiveWindow.Image = global::ZScreenGUI.Properties.Resources.application_go;
+            this.tsbActiveWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbActiveWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbActiveWindow.Name = "tsbActiveWindow";
             this.tsbActiveWindow.Size = new System.Drawing.Size(149, 20);
@@ -1084,6 +1086,7 @@ namespace ZScreenGUI
             // tsbSelectedWindow
             // 
             this.tsbSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
+            this.tsbSelectedWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbSelectedWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSelectedWindow.Name = "tsbSelectedWindow";
             this.tsbSelectedWindow.Size = new System.Drawing.Size(149, 20);
@@ -1093,6 +1096,7 @@ namespace ZScreenGUI
             // tsbCropShot
             // 
             this.tsbCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
+            this.tsbCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbCropShot.Name = "tsbCropShot";
             this.tsbCropShot.Size = new System.Drawing.Size(149, 20);
@@ -1102,6 +1106,7 @@ namespace ZScreenGUI
             // tsbLastCropShot
             // 
             this.tsbLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
+            this.tsbLastCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbLastCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLastCropShot.Name = "tsbLastCropShot";
             this.tsbLastCropShot.Size = new System.Drawing.Size(149, 20);
@@ -1111,6 +1116,7 @@ namespace ZScreenGUI
             // tsbFreehandCropShot
             // 
             this.tsbFreehandCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_edit;
+            this.tsbFreehandCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbFreehandCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFreehandCropShot.Name = "tsbFreehandCropShot";
             this.tsbFreehandCropShot.Size = new System.Drawing.Size(149, 20);
@@ -1120,6 +1126,7 @@ namespace ZScreenGUI
             // tsbAutoCapture
             // 
             this.tsbAutoCapture.Image = global::ZScreenGUI.Properties.Resources.images_stack;
+            this.tsbAutoCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAutoCapture.Name = "tsbAutoCapture";
             this.tsbAutoCapture.Size = new System.Drawing.Size(149, 20);
@@ -1134,6 +1141,7 @@ namespace ZScreenGUI
             // tsbFileUpload
             // 
             this.tsbFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
+            this.tsbFileUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFileUpload.Name = "tsbFileUpload";
             this.tsbFileUpload.Size = new System.Drawing.Size(149, 20);
@@ -1143,6 +1151,7 @@ namespace ZScreenGUI
             // tsbClipboardUpload
             // 
             this.tsbClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
+            this.tsbClipboardUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClipboardUpload.Name = "tsbClipboardUpload";
             this.tsbClipboardUpload.Size = new System.Drawing.Size(149, 20);
@@ -1152,6 +1161,7 @@ namespace ZScreenGUI
             // tsbDragDropWindow
             // 
             this.tsbDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
+            this.tsbDragDropWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbDragDropWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDragDropWindow.Name = "tsbDragDropWindow";
             this.tsbDragDropWindow.Size = new System.Drawing.Size(149, 20);
@@ -1161,6 +1171,7 @@ namespace ZScreenGUI
             // tsbLanguageTranslate
             // 
             this.tsbLanguageTranslate.Image = global::ZScreenGUI.Properties.Resources.comments;
+            this.tsbLanguageTranslate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbLanguageTranslate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLanguageTranslate.Name = "tsbLanguageTranslate";
             this.tsbLanguageTranslate.Size = new System.Drawing.Size(149, 20);
@@ -1170,6 +1181,7 @@ namespace ZScreenGUI
             // tsbScreenColorPicker
             // 
             this.tsbScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
+            this.tsbScreenColorPicker.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbScreenColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbScreenColorPicker.Name = "tsbScreenColorPicker";
             this.tsbScreenColorPicker.Size = new System.Drawing.Size(149, 20);
@@ -1184,6 +1196,7 @@ namespace ZScreenGUI
             // tsbOpenHistory
             // 
             this.tsbOpenHistory.Image = global::ZScreenGUI.Properties.Resources.pictures;
+            this.tsbOpenHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbOpenHistory.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpenHistory.Name = "tsbOpenHistory";
             this.tsbOpenHistory.Size = new System.Drawing.Size(149, 20);
@@ -1195,7 +1208,7 @@ namespace ZScreenGUI
             this.pbLogo.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbLogo.Image = global::ZScreenGUI.Properties.Resources.ZScreen_256;
             this.pbLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pbLogo.Location = new System.Drawing.Point(536, 8);
+            this.pbLogo.Location = new System.Drawing.Point(382, 8);
             this.pbLogo.Name = "pbLogo";
             this.pbLogo.Size = new System.Drawing.Size(256, 256);
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1300,7 +1313,7 @@ namespace ZScreenGUI
             // 
             this.llProjectPage.AutoSize = true;
             this.llProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llProjectPage.Location = new System.Drawing.Point(536, 328);
+            this.llProjectPage.Location = new System.Drawing.Point(382, 328);
             this.llProjectPage.Name = "llProjectPage";
             this.llProjectPage.Size = new System.Drawing.Size(61, 13);
             this.llProjectPage.TabIndex = 83;
@@ -1313,7 +1326,7 @@ namespace ZScreenGUI
             // 
             this.llWebsite.AutoSize = true;
             this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(728, 328);
+            this.llWebsite.Location = new System.Drawing.Point(574, 328);
             this.llWebsite.Name = "llWebsite";
             this.llWebsite.Size = new System.Drawing.Size(66, 13);
             this.llWebsite.TabIndex = 82;
@@ -1326,7 +1339,7 @@ namespace ZScreenGUI
             // 
             this.llblBugReports.AutoSize = true;
             this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(616, 328);
+            this.llblBugReports.Location = new System.Drawing.Point(462, 328);
             this.llblBugReports.Name = "llblBugReports";
             this.llblBugReports.Size = new System.Drawing.Size(100, 13);
             this.llblBugReports.TabIndex = 81;
@@ -1344,7 +1357,7 @@ namespace ZScreenGUI
             this.lblLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblLogo.ForeColor = System.Drawing.Color.Black;
             this.lblLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblLogo.Location = new System.Drawing.Point(536, 272);
+            this.lblLogo.Location = new System.Drawing.Point(382, 272);
             this.lblLogo.Name = "lblLogo";
             this.lblLogo.Size = new System.Drawing.Size(256, 40);
             this.lblLogo.TabIndex = 74;
@@ -6654,7 +6667,7 @@ namespace ZScreenGUI
             this.ClientSize = new System.Drawing.Size(817, 466);
             this.Controls.Add(this.tcMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(822, 497);
+            this.MinimumSize = new System.Drawing.Size(833, 504);
             this.Name = "ZScreen";
             this.Padding = new System.Windows.Forms.Padding(2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

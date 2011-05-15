@@ -196,11 +196,9 @@ namespace ZScreenGUI
             tabImageList.Images.Add("keyboard", Resources.keyboard);
             tabImageList.Images.Add("monitor", Resources.monitor);
             tabImageList.Images.Add("picture_edit", Resources.picture_edit);
-            tabImageList.Images.Add("picture_go", Resources.picture_go);
-            tabImageList.Images.Add("text_signature", Resources.text_signature);
             tabImageList.Images.Add("comments", Resources.comments);
-            tabImageList.Images.Add("pictures", Resources.pictures);
             tabImageList.Images.Add("application_edit", Resources.application_edit);
+            tabImageList.Images.Add("wrench", Resources.wrench);
             tcMain.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
             tpDestinations.ImageKey = "server";
@@ -209,6 +207,7 @@ namespace ZScreenGUI
             tpMainActions.ImageKey = "picture_edit";
             tpTranslator.ImageKey = "comments";
             tpOptions.ImageKey = "application_edit";
+            tpAdvanced.ImageKey = "wrench";
 
             // Accounts - FTP
             ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
