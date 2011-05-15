@@ -1,0 +1,17 @@
+#summary Introduction to ZScreen.
+
+= Introduction =
+
+ZScreen is a power and flexible Screen capture-cum-upload software.
+It has various capture modes: 
+  * Crop shot (any random region of the screen)
+  * Selected window part
+  * Active window (when multiple windows are open on the screen)
+  * Freehand crop shot (draw any freehand shape to capture specific parts of screen)
+  * Webpage (scroll down the page and capture the entire page)
+
+After capturing, you can optionally edit the image.
+  * Built-in editor
+  * Select any external editor (GIMP, InkScape, etc.)
+
+Upload the raw or edited image to any host service of your choice.
