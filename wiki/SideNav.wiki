@@ -5,7 +5,7 @@
   * [Features Features]
   * [Screenshots Screenshots]
 <br />
-<br />
+
 =User Manual=
   * [Introduction Introduction]
   * [Installation Installation]
@@ -50,7 +50,6 @@
     * [AdvancedOptions Advanced Options]
 
 <br />
-<br />
 =Tutorials=
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
@@ -59,13 +58,13 @@
   * [PortableMode Portable Mode] 
 
 <br />
-<br />
+
 =Downloads=
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Stable Stable channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Beta Beta channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Dev Dev channel]
 <br />
-<br />
+
 =Development=
   * [RunningFromSource Running from Source]
  * Management
