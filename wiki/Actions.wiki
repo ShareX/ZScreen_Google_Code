@@ -1,1 +1,1 @@
-#summary Overview of post-capture actions.
+#summary What you can do after capturing the screen.
