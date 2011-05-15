@@ -305,7 +305,7 @@ namespace ZScreenLib
             return CheckList(Engine.conf.TwitterOAuthInfoList, Engine.conf.TwitterAcctSelected);
         }
 
-        public static bool CheckFTPAccounts(ref WorkerTask task)
+        public static bool CheckFTPAccounts(WorkerTask task)
         {
             bool result = CheckFTPAccounts();
             if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
@@ -322,7 +322,7 @@ namespace ZScreenLib
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey);
+                TinyPicUploader tpu = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey);
                 if (Engine.conf.RememberTinyPicUserPass)
                 {
                     Engine.conf.TinyPicUserName = ub.UserName;
@@ -341,7 +341,7 @@ namespace ZScreenLib
             if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
                 !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
             {
-                TinyPicUploader tpu = new TinyPicUploader(Engine.TinyPicID, Engine.TinyPicKey);
+                TinyPicUploader tpu = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey);
                 string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
@@ -383,14 +383,14 @@ namespace ZScreenLib
             return CheckList(Engine.conf.MediaWikiAccountList, Engine.conf.MediaWikiAccountSelected);
         }
 
-        public static bool CheckDekiWikiAccounts(ref WorkerTask task)
+        public static bool CheckDekiWikiAccounts(WorkerTask task)
         {
             bool result = CheckDekiWikiAccounts();
             if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
             return result;
         }
 
-        public static bool CheckMediaWikiAccounts(ref WorkerTask task)
+        public static bool CheckMediaWikiAccounts(WorkerTask task)
         {
             bool result = CheckMediaWikiAccounts();
             if (!result) task.Errors.Add("A MediaWiki account does not exist or not selected properly.");
@@ -507,7 +507,7 @@ namespace ZScreenLib
             upb.ShowDialog();
             if (upb.DialogResult == DialogResult.OK)
             {
-                SendSpace sendSpace = new SendSpace(Engine.SendSpaceKey);
+                SendSpace sendSpace = new SendSpace(ZAPILib.Keys.SendSpaceKey);
                 upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
                 if (!upb.Success && sendSpace.Errors.Count > 0)
                 {
@@ -544,7 +544,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAcct()
         {
-            OAuthInfo acc = new OAuthInfo(Engine.TwitterConsumerKey, Engine.TwitterConsumerSecret);
+            OAuthInfo acc = new OAuthInfo(ZAPILib.Keys.TwitterConsumerKey, ZAPILib.Keys.TwitterConsumerSecret);
             if (CheckTwitterAccounts())
             {
                 acc = Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected];

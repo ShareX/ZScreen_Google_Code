@@ -38,6 +38,13 @@ using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
+using UploadersLib.ImageUploaders;
+using ZUploader.HelperClasses;
+using UploadersLib.FileUploaders;
+using Microsoft.WindowsAPICodePack.Taskbar;
+using UploadersLib.TextUploaders;
+using System.Threading;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -475,6 +482,470 @@ namespace ZScreenLib
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD;
         }
 
+        private bool CreateThumbnail()
+        {
+            return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.MyImage != null &&
+                ((ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
+                (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (this.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
+        }
+
+        public void UploadImage()
+        {
+            this.StartTime = DateTime.Now;
+            if (this.MyImageUploader != ImageUploaderType.CLIPBOARD)
+            {
+                FileSystem.AppendDebug("Uploading Image: " + this.LocalFilePath);
+            }
+
+            ImageUploader imageUploader = null;
+
+            if (Engine.conf.TinyPicSizeCheck && this.MyImageUploader == ImageUploaderType.TINYPIC && File.Exists(this.LocalFilePath))
+            {
+                SizeF size = Image.FromFile(this.LocalFilePath).PhysicalDimension;
+                if (size.Width > 1600 || size.Height > 1600)
+                {
+                    FileSystem.AppendDebug("Changing from TinyPic to ImageShack due to large image size");
+                    this.MyImageUploader = ImageUploaderType.IMAGESHACK;
+                }
+            }
+
+            switch (this.MyImageUploader)
+            {
+                case ImageUploaderType.DEKIWIKI:
+                    UploadDekiWiki();
+                    break;
+                case ImageUploaderType.FILE:
+                    string fp = this.LocalFilePath;
+                    if (Engine.Portable)
+                    {
+                        fp = Path.Combine(Application.StartupPath, fp);
+                        this.UpdateLocalFilePath(fp);
+                    }
+                    break;
+                case ImageUploaderType.FLICKR:
+                    imageUploader = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
+                    break;
+                case ImageUploaderType.IMAGESHACK:
+                    imageUploader = new ImageShackUploader(ZAPILib.Keys.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
+                    ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
+                    break;
+                case ImageUploaderType.IMGUR:
+                    imageUploader = new Imgur(Engine.conf.ImgurAccountType, ZAPILib.Keys.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
+                    break;
+                case ImageUploaderType.UPLOADSCREENSHOT:
+                    imageUploader = new UploadScreenshot(ZAPILib.Keys.UploadScreenshotKey);
+                    break;
+                case ImageUploaderType.Localhost:
+                    UploadLocalhost();
+                    break;
+                case ImageUploaderType.MEDIAWIKI:
+                    UploadMediaWiki();
+                    break;
+                case ImageUploaderType.PRINTER:
+                    if (this.MyImage != null)
+                    {
+                        this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
+                    }
+                    break;
+                case ImageUploaderType.TINYPIC:
+                    imageUploader = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey, Engine.conf.TinyPicShuk);
+                    break;
+                case ImageUploaderType.TWITPIC:
+                    TwitPicOptions twitpicOpt = new TwitPicOptions();
+                    twitpicOpt.Username = Engine.conf.TwitterUsername;
+                    twitpicOpt.Password = Engine.conf.TwitterPassword;
+                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Engine.conf.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Engine.conf.TwitPicShowFull;
+                    imageUploader = new TwitPicUploader(twitpicOpt);
+                    break;
+                case ImageUploaderType.TWITSNAPS:
+                    imageUploader = new TwitSnapsUploader(ZAPILib.Keys.TwitsnapsKey, Adapter.TwitterGetActiveAcct());
+                    break;
+                case ImageUploaderType.YFROG:
+                    YfrogOptions yfrogOp = new YfrogOptions(ZAPILib.Keys.ImageShackKey);
+                    yfrogOp.Username = Engine.conf.TwitterUsername;
+                    yfrogOp.Password = Engine.conf.TwitterPassword;
+                    yfrogOp.Source = Application.ProductName;
+                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                    imageUploader = new YfrogUploader(yfrogOp);
+                    break;
+            }
+
+            //imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
+
+            if (imageUploader != null)
+            {
+                imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
+                this.DestinationName = this.MyImageUploader.GetDescription();
+                FileSystem.AppendDebug("Initialized " + this.DestinationName);
+                string fullFilePath = this.LocalFilePath;
+                if (File.Exists(fullFilePath) || this.MyImage != null)
+                {
+                    for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
+                    {
+                        if (File.Exists(fullFilePath))
+                        {
+                            this.UpdateRemoteFilePath(imageUploader.Upload(fullFilePath));
+                        }
+                        else if (this.MyImage != null && this.FileName != null)
+                        {
+                            this.UpdateRemoteFilePath(imageUploader.Upload(this.MyImage, this.FileName.ToString()));
+                        }
+
+                        this.Errors = imageUploader.Errors;
+
+                        if (string.IsNullOrEmpty(this.LinkManager.UploadResult.URL))
+                        {
+                            this.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", this.MyImageUploader.GetDescription(), i));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            this.EndTime = DateTime.Now;
+
+            if (Engine.conf.ImageUploadRetryOnTimeout && this.UploadDuration > (int)Engine.conf.UploadDurationLimit)
+            {
+                if (this.MyImageUploader == ImageUploaderType.IMAGESHACK)
+                {
+                    Engine.conf.MyImageUploader = (int)ImageUploaderType.TINYPIC;
+                }
+                else if (this.MyImageUploader == ImageUploaderType.TINYPIC)
+                {
+                    Engine.conf.MyImageUploader = (int)ImageUploaderType.IMAGESHACK;
+                }
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
+            }
+
+            if (this.LinkManager != null)
+            {
+                FlashIcon(this);
+            }
+        }
+
+        public void UploadText()
+        {
+            this.StartTime = DateTime.Now;
+            this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+
+            if (this.ShouldShortenURL(this.MyText))
+            {
+                // Need this for shortening URL using Clipboard Upload http://imgur.com/DzBJQ.png
+                this.ShortenURL(this.MyText);
+            }
+            else
+            {
+                if (this.MyTextUploader == TextUploaderType.FileUploader)
+                {
+                    UploadFile();
+                }
+                else
+                {
+                    TextUploader textUploader = null;
+
+                    switch (this.MyTextUploader)
+                    {
+                        case TextUploaderType.PASTE2:
+                            textUploader = new Paste2Uploader();
+                            break;
+                        case TextUploaderType.PASTEBIN:
+                            textUploader = new PastebinUploader(ZAPILib.Keys.PastebinKey, Engine.conf.PastebinSettings);
+                            break;
+                        case TextUploaderType.PASTEBIN_CA:
+                            textUploader = new PastebinCaUploader(ZAPILib.Keys.PastebinCaKey);
+                            break;
+                        case TextUploaderType.SLEXY:
+                            textUploader = new SlexyUploader();
+                            break;
+                    }
+
+                    if (textUploader != null)
+                    {
+                        this.DestinationName = this.MyTextUploader.GetDescription();
+                        FileSystem.AppendDebug("Uploading to " + this.DestinationName);
+
+                        string url = string.Empty;
+
+                        if (!string.IsNullOrEmpty(this.MyText))
+                        {
+                            url = textUploader.UploadText(this.MyText);
+                        }
+                        else
+                        {
+                            url = textUploader.UploadTextFile(this.LocalFilePath);
+                        }
+
+                        this.UpdateRemoteFilePath(new UploadResult() { URL = url });
+                        this.Errors = textUploader.Errors;
+                    }
+                }
+            }
+            this.EndTime = DateTime.Now;
+        }
+
+        public void UploadFile()
+        {
+            this.StartTime = DateTime.Now;
+            FileSystem.AppendDebug("Uploading File: " + this.LocalFilePath);
+
+            FileUploader fileHost = null;
+            switch (this.MyFileUploader)
+            {
+                case FileUploaderType.FTP:
+                    switch (this.Job1)
+                    {
+                        case JobLevel1.Text:
+                            UploadFTP(Engine.conf.FtpText);
+                            break;
+                        case JobLevel1.Image:
+                            UploadFTP(Engine.conf.FtpImages);
+                            break;
+                        default:
+                            UploadFTP(Engine.conf.FtpFiles);
+                            break;
+                    }
+                    break;
+                case FileUploaderType.SendSpace:
+                    fileHost = new SendSpace(ZAPILib.Keys.SendSpaceKey);
+                    switch (Engine.conf.SendSpaceAccountType)
+                    {
+                        case AccountType.Anonymous:
+                            SendSpaceManager.PrepareUploadInfo(ZAPILib.Keys.SendSpaceKey, null, null);
+                            break;
+                        case AccountType.User:
+                            SendSpaceManager.PrepareUploadInfo(ZAPILib.Keys.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
+                            break;
+                    }
+                    break;
+                case FileUploaderType.RapidShare:
+                    fileHost = new RapidShare(new RapidShareOptions()
+                    {
+                        AccountType = Engine.conf.RapidShareAccountType,
+                        PremiumUsername = Engine.conf.RapidSharePremiumUserName,
+                        Password = Engine.conf.RapidSharePassword,
+                        CollectorsID = Engine.conf.RapidShareCollectorsID
+                    });
+                    break;
+                case FileUploaderType.Dropbox:
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
+                    fileHost = new Dropbox(Engine.conf.DropboxOAuthInfo, uploadPath, Engine.conf.DropboxUserID);
+                    break;
+                /*case FileUploaderType.FileBin:
+                    fileHost = new FileBin();
+                    break;
+                case FileUploaderType.DropIO:
+                    fileHost = new DropIO();
+                    break;
+                case FileUploaderType.FilezFiles:
+                    fileHost = new FilezFiles();
+                    break;*/
+                case FileUploaderType.ShareCX:
+                    fileHost = new ShareCX();
+                    break;
+                case FileUploaderType.CustomUploader:
+                    if (Adapter.CheckList(Engine.conf.CustomUploadersList, Engine.conf.CustomUploaderSelected))
+                    {
+                        fileHost = new CustomUploader(Engine.conf.CustomUploadersList[Engine.conf.CustomUploaderSelected]);
+                    }
+                    break;
+            }
+
+            if (fileHost != null)
+            {
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                this.DestinationName = this.MyFileUploader.GetDescription();
+                fileHost.ProgressChanged += UploadProgressChanged;
+                UploadResult ur = fileHost.Upload(this.LocalFilePath);
+                if (ur != null)
+                {
+                    this.UpdateRemoteFilePath(ur);
+                }
+                this.Errors = fileHost.Errors;
+            }
+
+            this.EndTime = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Funtion to FTP the Screenshot
+        /// </summary>
+        /// <returns>Retuns a List of Screenshots</returns>
+        public bool UploadFTP(int FtpAccountId)
+        {
+            try
+            {
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+
+                if (Adapter.CheckFTPAccounts(this) && File.Exists(this.LocalFilePath))
+                {
+                    FTPAccount acc = Engine.conf.FTPAccountList[FtpAccountId];
+                    this.DestinationName = string.Format("FTP - {0}", acc.Name);
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", this.FileName, acc.Host));
+
+                    FTPUploader fu = new FTPUploader(acc);
+                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+
+                    this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+
+                    string url = fu.Upload(this.LocalFilePath).URL;
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        this.UpdateRemoteFilePath(new UploadResult() { URL = url });
+
+                        if (CreateThumbnail())
+                        {
+                            double thar = (double)Engine.conf.FTPThumbnailWidth / (double)this.MyImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(this.MyImage, Engine.conf.FTPThumbnailWidth, (int)(thar * this.MyImage.Height)))
+                            {
+                                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(this.LocalFilePath));
+                                sb.Append(".th");
+                                sb.Append(Path.GetExtension(this.LocalFilePath));
+                                string thPath = Path.Combine(Path.GetDirectoryName(this.LocalFilePath), sb.ToString());
+                                img.Save(thPath);
+                                if (File.Exists(thPath))
+                                {
+                                    string thumb = fu.Upload(thPath).URL;
+
+                                    if (!string.IsNullOrEmpty(thumb))
+                                    {
+                                        this.LinkManager.UploadResult.ThumbnailURL = thumb;
+                                    }
+                                }
+                            }
+                        }
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileSystem.AppendDebug("Error while uploading to FTP Server", ex);
+                this.Errors.Add("FTP upload failed.\r\n" + ex.Message);
+            }
+
+            return false;
+        }
+
+        public void UploadLocalhost()
+        {
+            if (Adapter.CheckList(Engine.conf.LocalhostAccountList, Engine.conf.LocalhostSelected) && File.Exists(this.LocalFilePath))
+            {
+                LocalhostAccount acc = Engine.conf.LocalhostAccountList[Engine.conf.LocalhostSelected];
+                string fn = Path.GetFileName(this.LocalFilePath);
+                string destFile = acc.GetLocalhostPath(fn);
+                string destDir = Path.GetDirectoryName(destFile);
+                if (!Directory.Exists(destDir))
+                {
+                    Directory.CreateDirectory(destDir);
+                }
+                File.Move(this.LocalFilePath, destFile);
+                this.UpdateLocalFilePath(destFile);
+                this.LinkManager.UploadResult.URL = acc.GetUriPath(fn);
+            }
+        }
+
+        public bool UploadMediaWiki()
+        {
+            string fullFilePath = this.LocalFilePath;
+
+            if (Adapter.CheckMediaWikiAccounts(this) && File.Exists(fullFilePath))
+            {
+                MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
+                System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
+                this.DestinationName = acc.Name;
+                FileSystem.AppendDebug(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));
+                MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
+                this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
+                // mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool UploadDekiWiki()
+        {
+            try
+            {
+                string fullFilePath = this.LocalFilePath;
+
+                if (Adapter.CheckDekiWikiAccounts(this) && File.Exists(fullFilePath))
+                {
+                    DekiWikiAccount acc = Engine.conf.DekiWikiAccountList[Engine.conf.DekiWikiSelected];
+
+                    System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
+
+                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Engine.conf.DekiWikiForcePath == true)
+                    {
+                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, proxy));
+                        diag.history = acc.History;
+                        diag.ShowDialog();
+
+                        if (diag.DialogResult != DialogResult.OK)
+                        {
+                            throw new Exception("User canceled the operation.");
+                        }
+
+                        DekiWiki.savePath = diag.path;
+                    }
+
+                    this.DestinationName = acc.Name;
+
+                    FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", this.FileName, acc.Url));
+
+                    DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
+                    // mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath)); todo: check same output as getUriPath is possible else where
+                    this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
+
+                    DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
+                    connector.UpdateHistory();
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
+            }
+
+            return false;
+        }
+
+        private void FlashIcon(WorkerTask t)
+        {
+            for (int i = 0; i < (int)Engine.conf.FlashTrayCount; i++)
+            {
+                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
+                Thread.Sleep(250);
+                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_green);
+                Thread.Sleep(250);
+            }
+            t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_tray);
+        }
+
+        private void UploadProgressChanged(ProgressManager progress)
+        {
+            if (Engine.conf.ShowTrayUploadProgress)
+            {
+                UploadInfo uploadInfo = UploadManager.GetInfo(this.UniqueNumber);
+                if (uploadInfo != null)
+                {
+                    uploadInfo.UploadPercentage = (int)progress.Percentage;
+                    this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS, progress);
+                }
+            }
+        }
+
         public bool WasImageToFile()
         {
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
@@ -512,16 +983,16 @@ namespace ZScreenLib
                 switch (MyUrlShortener)
                 {
                     case UrlShortenerType.BITLY:
-                        us = new BitlyURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        us = new BitlyURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
                         break;
                     case UrlShortenerType.Google:
-                        us = new GoogleURLShortener(Engine.GoogleURLShortenerKey);
+                        us = new GoogleURLShortener(ZAPILib.Keys.GoogleURLShortenerKey);
                         break;
                     case UrlShortenerType.ISGD:
                         us = new IsgdURLShortener();
                         break;
                     case UrlShortenerType.Jmp:
-                        us = new JmpURLShortener(Engine.BitlyLogin, Engine.BitlyKey);
+                        us = new JmpURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
                         break;
                     /*case UrlShortenerType.THREELY:
                         us = new ThreelyURLShortener(Engine.ThreelyKey);

@@ -100,7 +100,7 @@ namespace ZScreenLib
                     switch (task.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
-                            PublishText(task);
+                            task.UploadText();
                             break;
                         case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                             // LanguageTranslator(ref task);
@@ -482,26 +482,6 @@ namespace ZScreenLib
         }
 
         #endregion User Tasks
-
-        #region Publish Workers
-
-        /// <summary>
-        /// Function to edit Text in a Text Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        protected void PublishText(WorkerTask task)
-        {
-            TaskManager tm = new TaskManager(task);
-            tm.UploadText();
-        }
-
-        protected void PublishBinary(WorkerTask task)
-        {
-            TaskManager tm = new TaskManager(task);
-            tm.UploadFile();
-        }
-
-        #endregion Publish Workers
 
         public WorkerTask RetryUpload(WorkerTask task)
         {

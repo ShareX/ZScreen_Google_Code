@@ -83,7 +83,7 @@ namespace UploadersLib
 
         private void btnImageShackOpenRegistrationCode_Click(object sender, EventArgs e)
         {
-            Process.Start("http://my.imageshack.us/registration/");
+            Process.Start("http://profile.imageshack.us/prefs/");
         }
 
         private void btnImageShackOpenPublicProfile_Click(object sender, EventArgs e)
@@ -169,7 +169,7 @@ namespace UploadersLib
             try
             {
                 // TODO: API KEYS
-                OAuthInfo oauth = new OAuthInfo("", "");
+                OAuthInfo oauth = new OAuthInfo(ZAPILib.Keys.ImgurConsumerKey, ZAPILib.Keys.ImgurConsumerSecret);
 
                 string url = new Imgur(oauth).GetAuthorizationURL();
 

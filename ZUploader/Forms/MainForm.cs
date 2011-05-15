@@ -577,5 +577,11 @@ namespace ZUploader
         }
 
         #endregion Form events
+
+        private void tsddbUploadersConfig_Click(object sender, EventArgs e)
+        {
+            UploadersConfigForm ucf = new UploadersConfigForm(Program.Settings.UploadersConfig);
+            ucf.Show();
+        }
     }
 }

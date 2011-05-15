@@ -62,6 +62,7 @@ namespace ZUploader
         public string CustomHistoryPath = string.Empty;
         public int HistoryMaxItemCount = -1;
 
+        public UploadersConfig UploadersConfig = new UploadersConfig();
         public FTPAccount FTPAccount = new FTPAccount();
         public CustomUploaderInfo CustomUploader = new CustomUploaderInfo();
         public ProxyInfo ProxySettings = new ProxyInfo();
