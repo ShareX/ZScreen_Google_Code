@@ -73,11 +73,15 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
+            Engine.zWindowsTaskbar = TaskbarManager.Instance;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
+
             ZScreen_SetFormSettings();
+
             Loader.Worker = new WorkerPrimary(this);
             Loader.Worker2 = new WorkerSecondary(this);
             Loader.Worker.mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
+
             ZScreen_ConfigGUI();
 
             Loader.Worker2.PerformOnlineTasks();
@@ -85,6 +89,7 @@ namespace ZScreenGUI
             {
                 Loader.Worker2.CheckUpdates();
             }
+
             Application.Idle += new EventHandler(Application_Idle);
         }
 
@@ -95,15 +100,15 @@ namespace ZScreenGUI
                 if (Engine.zJumpList != null)
                 {
                     Engine.zJumpList.ClearAllUserTasks();
+                    Engine.zJumpList.Refresh();
                 }
             }
-            else if (this.Handle != IntPtr.Zero && CoreHelpers.RunningOnWin7 && this.ShowInTaskbar)
+            else if (this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
             {
                 try
                 {
                     Engine.CheckFileRegistration();
 
-                    Engine.zWindowsTaskbar = TaskbarManager.Instance;
                     Engine.zWindowsTaskbar.ApplicationId = Engine.appId;
 
                     Engine.zJumpList = JumpList.CreateJumpList();

@@ -388,7 +388,7 @@ namespace ZScreenGUI
             {
                 UploadManager.Commit(task.UniqueNumber);
 
-                if (CoreHelpers.RunningOnWin7)
+                if (TaskbarManager.IsPlatformSupported)
                 {
                     Adapter.TaskbarSetProgressState(mZScreen, TaskbarProgressBarState.NoProgress);
                 }

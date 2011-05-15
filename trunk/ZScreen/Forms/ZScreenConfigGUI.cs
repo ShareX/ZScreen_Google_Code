@@ -13,6 +13,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace ZScreenGUI
 {
@@ -378,8 +379,8 @@ namespace ZScreenGUI
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = CoreHelpers.RunningOnWin7 && Engine.conf.Windows7TaskbarIntegration;
-            chkWindows7TaskbarIntegration.Enabled = CoreHelpers.RunningOnWin7;
+            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.conf.Windows7TaskbarIntegration;
+            chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
             // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
