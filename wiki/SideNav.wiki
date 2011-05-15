@@ -1,17 +1,19 @@
 #summary Side Navigation
 #labels Phase-Design
 
- * [Tutorials Tutorials]
+ * Features
+  * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
+  * [PortableMode Portable Mode] 
+* [Tutorials Tutorials]
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
   * [ClipboardUpload Uploading Clipboard Content]
+
  * Downloads
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Stable Stable channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Beta Beta channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Dev Dev channel]
- * Features
-  * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
-  * [PortableMode Portable Mode]
+
  * Development
   * [RunningFromSource Running from Source]
  * Management
