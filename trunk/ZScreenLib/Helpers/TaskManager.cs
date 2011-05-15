@@ -28,20 +28,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using Crop;
 using GraphicsMgrLib;
-using HelpersLib;
-using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
-using UploadersLib.FileUploaders;
-using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
-using UploadersLib.TextUploaders;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
-using ZUploader.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -239,8 +231,6 @@ namespace ZScreenLib
                 mTask.UploadImage();
             }
         }
-
-
 
         public void TextEdit()
         {

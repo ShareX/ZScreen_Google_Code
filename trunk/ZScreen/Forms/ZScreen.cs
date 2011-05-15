@@ -40,6 +40,7 @@ using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
+using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -53,7 +54,6 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
-using UploadersAPILib;
 
 namespace ZScreenGUI
 {
@@ -1825,14 +1825,25 @@ namespace ZScreenGUI
             Loader.Worker.StartBW_LastCropShot();
         }
 
+        private void tsmFreehandCropShot_Click(object sender, EventArgs e)
+        {
+            Thread.Sleep(300);
+            Loader.Worker.StartBw_FreehandCropShot();
+        }
+
         private void tsmDropWindow_Click(object sender, EventArgs e)
         {
             Loader.Worker.ShowDropWindow();
         }
 
+        private void tsmFileUpload_Click(object sender, EventArgs e)
+        {
+            FileUpload();
+        }
+
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
-            Loader.Worker.UploadUsingClipboard();
+            ClipboardUpload();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3788,11 +3799,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnHistoryOpen_Click(object sender, EventArgs e)
-        {
-            OpenHistory();
-        }
-
         private void historyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenHistory();
@@ -3816,7 +3822,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnFileSystemUploadFiles_Click(object sender, EventArgs e)
+        private void FileUpload()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -3830,7 +3836,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnFileSystemUploadDir_Click(object sender, EventArgs e)
+        private void ClipboardUpload()
         {
             if (Engine.conf.ShowClipboardContentViewer)
             {
@@ -3925,6 +3931,21 @@ namespace ZScreenGUI
                     MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnFileSystemUploadFiles_Click(object sender, EventArgs e)
+        {
+            FileUpload();
+        }
+
+        private void btnClipboardUpload_Click(object sender, EventArgs e)
+        {
+            ClipboardUpload();
+        }
+
+        private void btnOpenHistory_Click(object sender, EventArgs e)
+        {
+            OpenHistory();
         }
     }
 }

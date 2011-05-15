@@ -326,6 +326,7 @@
     <None Include="Resources\DropboxLogo.png" />
     <None Include="Resources\small_logo.png" />
     <None Include="Resources\ZScreen_256.png" />
+    <None Include="Resources\shape_square_edit.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
