@@ -221,7 +221,6 @@ namespace ZScreenLib
         public const Keys DefaultHotkeyLastCropShot = Keys.None;
         public const Keys DefaultHotkeyAutoCapture = Keys.None;
         public const Keys DefaultHotkeyDropWindow = Keys.None;
-        public const Keys DefaultHotkeyActionsToolbar = Keys.None;
         public const Keys DefaultHotkeyQuickOptions = Keys.None;
         public const Keys DefaultHotkeyLanguageTranslator = Keys.None;
         public const Keys DefaultHotkeyScreenColorPicker = Keys.None;
@@ -236,7 +235,6 @@ namespace ZScreenLib
         public Keys HotkeyLastCropShot = DefaultHotkeyLastCropShot;
         public Keys HotkeyAutoCapture = DefaultHotkeyAutoCapture;
         public Keys HotkeyDropWindow = DefaultHotkeyDropWindow;
-        public Keys HotkeyActionsToolbar = DefaultHotkeyActionsToolbar;
         public Keys HotkeyQuickOptions = DefaultHotkeyQuickOptions;
         public Keys HotkeyLanguageTranslator = DefaultHotkeyLanguageTranslator;
         public Keys HotkeyScreenColorPicker = DefaultHotkeyScreenColorPicker;
@@ -322,7 +320,6 @@ namespace ZScreenLib
         public bool CaptureEntireScreenOnError = false;
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
-        public bool CloseQuickActions = false;
 
         // Naming Conventions
 
@@ -510,13 +507,6 @@ namespace ZScreenLib
 
         [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
-
-        // Options / Actions Toolbar
-
-        [Category("Options / Actions Toolbar"), DefaultValue(false), Description("Open Actions Toolbar on startup.")]
-        public bool ActionsToolbarMode { get; set; }
-        [Category("Options / Actions Toolbar"), Description("Action Toolbar Location.")]
-        public Point ActionToolbarLocation { get; set; }
 
         // Options / General
 

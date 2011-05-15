@@ -393,7 +393,6 @@ namespace ZScreenGUI
             cbCopyClipboardAfterTask.Checked = Engine.conf.CopyClipboardAfterTask;
             cbCompleteSound.Checked = Engine.conf.CompleteSound;
             cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
-            cbCloseQuickActions.Checked = Engine.conf.CloseQuickActions;
 
             // Proxy
             if (cboProxyConfig.Items.Count == 0)

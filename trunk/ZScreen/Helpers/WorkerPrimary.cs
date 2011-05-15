@@ -34,6 +34,7 @@ using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using MS.WindowsAPICodePack.Internal;
+using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
@@ -41,14 +42,13 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZUploader.HelperClasses;
-using UploadersAPILib;
 
 namespace ZScreenGUI
 {
     public class WorkerPrimary : Worker
     {
         private ZScreen mZScreen;
-        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
+        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickOptionsOpened;
         internal HotkeyMgr mHotkeyMgr = null;
 
         public WorkerPrimary(ZScreen myZScreen)
@@ -590,12 +590,6 @@ namespace ZScreenGUI
                     return true;
                 }
 
-                if (Engine.conf.HotkeyActionsToolbar == key) // Actions Toolbar
-                {
-                    ShowActionsToolbar(true);
-                    return true;
-                }
-
                 if (Engine.conf.HotkeyQuickOptions == key) // Quick Options
                 {
                     ShowQuickOptions();
@@ -713,39 +707,6 @@ namespace ZScreenGUI
         }
 
         #endregion Start Workers
-
-        #region Quick Actions
-
-        /// <summary>
-        /// Show Actions Toolbar
-        /// </summary>
-        /// <param name="manual">If user clicks from Tray Menu then Manual is set to true.</param>
-        public void ShowActionsToolbar(bool manual)
-        {
-            if (!bQuickActionsOpened)
-            {
-                bQuickActionsOpened = true;
-                ToolbarWindow actionsToolbar = new ToolbarWindow { Icon = Resources.zss_main };
-                actionsToolbar.Location = Engine.conf.ActionToolbarLocation;
-                actionsToolbar.EventJob += new JobsEventHandler(EventJobs);
-                actionsToolbar.FormClosed += new FormClosedEventHandler(quickActions_FormClosed);
-                actionsToolbar.Show();
-                if (manual)
-                {
-                    actionsToolbar.Show();
-                    Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
-                    actionsToolbar.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - actionsToolbar.Width - 100,
-                        SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - actionsToolbar.Height - 10);
-                }
-            }
-        }
-
-        private void quickActions_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            bQuickActionsOpened = false;
-        }
-
-        #endregion Quick Actions
 
         #region "Show Quick Actions"
 

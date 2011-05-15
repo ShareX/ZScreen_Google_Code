@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +61,6 @@ namespace ZScreenGUI
             this.tsmDragDropWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLanguageTranslator = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmScreenColorPicker = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmQuickActions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmQuickOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,10 +88,13 @@ namespace ZScreenGUI
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbOpenHistory = new System.Windows.Forms.ToolStripButton();
+            this.tsbImageDirectory = new System.Windows.Forms.ToolStripButton();
+            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
@@ -371,8 +373,6 @@ namespace ZScreenGUI
             this.cbShowPopup = new System.Windows.Forms.CheckBox();
             this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
             this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
-            this.gbActionsToolbarSettings = new System.Windows.Forms.GroupBox();
-            this.cbCloseQuickActions = new System.Windows.Forms.CheckBox();
             this.gbDropBox = new System.Windows.Forms.GroupBox();
             this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
             this.gbAppearance = new System.Windows.Forms.GroupBox();
@@ -559,9 +559,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.tsbImageDirectory = new System.Windows.Forms.ToolStripButton();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -641,7 +638,6 @@ namespace ZScreenGUI
             this.gbWindowButtons.SuspendLayout();
             this.tpInteraction.SuspendLayout();
             this.btnOptionsBalloonTip.SuspendLayout();
-            this.gbActionsToolbarSettings.SuspendLayout();
             this.gbDropBox.SuspendLayout();
             this.gbAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
@@ -720,13 +716,12 @@ namespace ZScreenGUI
             this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
             this.tsmActions,
-            this.tsmQuickActions,
             this.tsmQuickOptions,
             this.toolStripSeparator7,
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 314);
+            this.cmTray.Size = new System.Drawing.Size(206, 292);
             // 
             // tsmiTabs
             // 
@@ -918,14 +913,6 @@ namespace ZScreenGUI
             this.tsmScreenColorPicker.Size = new System.Drawing.Size(197, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
-            // 
-            // tsmQuickActions
-            // 
-            this.tsmQuickActions.Image = global::ZScreenGUI.Properties.Resources.application_lightning;
-            this.tsmQuickActions.Name = "tsmQuickActions";
-            this.tsmQuickActions.Size = new System.Drawing.Size(205, 22);
-            this.tsmQuickActions.Text = "Actions Toolbar...";
-            this.tsmQuickActions.Click += new System.EventHandler(this.tsmQuickActions_Click);
             // 
             // tsmQuickOptions
             // 
@@ -1205,6 +1192,26 @@ namespace ZScreenGUI
             this.tsbOpenHistory.Text = "History...";
             this.tsbOpenHistory.Click += new System.EventHandler(this.tsbOpenHistory_Click);
             // 
+            // tsbImageDirectory
+            // 
+            this.tsbImageDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
+            this.tsbImageDirectory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbImageDirectory.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbImageDirectory.Name = "tsbImageDirectory";
+            this.tsbImageDirectory.Size = new System.Drawing.Size(148, 20);
+            this.tsbImageDirectory.Text = "Images Directory...";
+            this.tsbImageDirectory.Click += new System.EventHandler(this.tsbImageDirectory_Click);
+            // 
+            // tsbAbout
+            // 
+            this.tsbAbout.Image = global::ZScreenGUI.Properties.Resources.information;
+            this.tsbAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAbout.Name = "tsbAbout";
+            this.tsbAbout.Size = new System.Drawing.Size(148, 20);
+            this.tsbAbout.Text = "About...";
+            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
+            // 
             // pbLogo
             // 
             this.pbLogo.Cursor = System.Windows.Forms.Cursors.Default;
@@ -1252,6 +1259,22 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
+            // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
             // 
             // lblCopytoClipboard
             // 
@@ -1432,7 +1455,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -4361,7 +4384,6 @@ namespace ZScreenGUI
             // tpInteraction
             // 
             this.tpInteraction.Controls.Add(this.btnOptionsBalloonTip);
-            this.tpInteraction.Controls.Add(this.gbActionsToolbarSettings);
             this.tpInteraction.Controls.Add(this.gbDropBox);
             this.tpInteraction.Controls.Add(this.gbAppearance);
             this.tpInteraction.Location = new System.Drawing.Point(4, 22);
@@ -4416,27 +4438,6 @@ namespace ZScreenGUI
             this.cbShowUploadDuration.Text = "Show upload duration in balloon tip";
             this.cbShowUploadDuration.UseVisualStyleBackColor = true;
             this.cbShowUploadDuration.CheckedChanged += new System.EventHandler(this.cbShowUploadDuration_CheckedChanged);
-            // 
-            // gbActionsToolbarSettings
-            // 
-            this.gbActionsToolbarSettings.Controls.Add(this.cbCloseQuickActions);
-            this.gbActionsToolbarSettings.Location = new System.Drawing.Point(8, 320);
-            this.gbActionsToolbarSettings.Name = "gbActionsToolbarSettings";
-            this.gbActionsToolbarSettings.Size = new System.Drawing.Size(752, 56);
-            this.gbActionsToolbarSettings.TabIndex = 7;
-            this.gbActionsToolbarSettings.TabStop = false;
-            this.gbActionsToolbarSettings.Text = "Actions Toolbar Settings";
-            // 
-            // cbCloseQuickActions
-            // 
-            this.cbCloseQuickActions.AutoSize = true;
-            this.cbCloseQuickActions.Location = new System.Drawing.Point(16, 24);
-            this.cbCloseQuickActions.Name = "cbCloseQuickActions";
-            this.cbCloseQuickActions.Size = new System.Drawing.Size(214, 17);
-            this.cbCloseQuickActions.TabIndex = 0;
-            this.cbCloseQuickActions.Text = "Close Actions Toolbar after Mouse Click";
-            this.cbCloseQuickActions.UseVisualStyleBackColor = true;
-            this.cbCloseQuickActions.CheckedChanged += new System.EventHandler(this.cbCloseQuickActions_CheckedChanged);
             // 
             // gbDropBox
             // 
@@ -6627,42 +6628,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tsbAbout
-            // 
-            this.tsbAbout.Image = global::ZScreenGUI.Properties.Resources.information;
-            this.tsbAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(148, 20);
-            this.tsbAbout.Text = "About...";
-            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
-            // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
-            // tsbImageDirectory
-            // 
-            this.tsbImageDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
-            this.tsbImageDirectory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbImageDirectory.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbImageDirectory.Name = "tsbImageDirectory";
-            this.tsbImageDirectory.Size = new System.Drawing.Size(148, 20);
-            this.tsbImageDirectory.Text = "Images Directory...";
-            this.tsbImageDirectory.Click += new System.EventHandler(this.tsbImageDirectory_Click);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6801,8 +6766,6 @@ namespace ZScreenGUI
             this.tpInteraction.ResumeLayout(false);
             this.btnOptionsBalloonTip.ResumeLayout(false);
             this.btnOptionsBalloonTip.PerformLayout();
-            this.gbActionsToolbarSettings.ResumeLayout(false);
-            this.gbActionsToolbarSettings.PerformLayout();
             this.gbDropBox.ResumeLayout(false);
             this.gbDropBox.PerformLayout();
             this.gbAppearance.ResumeLayout(false);
@@ -6920,7 +6883,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripMenuItem tsmScreenColorPicker;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         internal System.Windows.Forms.ToolStripMenuItem tsmDragDropWindow;
-        internal System.Windows.Forms.ToolStripMenuItem tsmQuickActions;
         internal System.Windows.Forms.ToolStripMenuItem autoScreenshotsToolStripMenuItem;
         internal System.Windows.Forms.Timer tmrApp;
         internal System.Windows.Forms.TabControl tcMain;
@@ -6996,8 +6958,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblSelectedWindowBorderSize;
         internal System.Windows.Forms.PictureBox pbSelectedWindowBorderColor;
         internal System.Windows.Forms.TabPage tpInteraction;
-        internal System.Windows.Forms.GroupBox gbActionsToolbarSettings;
-        internal System.Windows.Forms.CheckBox cbCloseQuickActions;
         internal System.Windows.Forms.GroupBox gbDropBox;
         internal System.Windows.Forms.CheckBox cbCloseDropBox;
         internal System.Windows.Forms.GroupBox gbAppearance;

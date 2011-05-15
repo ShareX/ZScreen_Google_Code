@@ -293,12 +293,6 @@ namespace ZScreenGUI
                 }
             }
 
-            if (Engine.conf.ActionsToolbarMode)
-            {
-                this.Hide();
-                Loader.Worker.ShowActionsToolbar(false);
-            }
-
             Loader.Worker2.CleanCache();
             StartDebug();
 
@@ -463,11 +457,6 @@ namespace ZScreenGUI
             gbImages.Enabled = !Engine.Portable;
             gbCache.Enabled = !Engine.Portable;
             chkPreferSystemFolders.Enabled = !Engine.Portable;
-        }
-
-        private void cbCloseQuickActions_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.CloseQuickActions = cbCloseQuickActions.Checked;
         }
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2469,11 +2458,6 @@ namespace ZScreenGUI
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CloseDropBox = cbCloseDropBox.Checked;
-        }
-
-        private void tsmQuickActions_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.ShowActionsToolbar(true);
         }
 
         private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
