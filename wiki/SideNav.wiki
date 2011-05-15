@@ -2,8 +2,6 @@
 #labels Phase-Design
 
  * Features
-  * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
-  * [PortableMode Portable Mode] 
 
 *User Manual
   * [Introduction Introduction]
@@ -53,6 +51,9 @@
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
   * [ClipboardUpload Uploading Clipboard Content]
+  * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
+  * [PortableMode Portable Mode] 
+
 
  * Downloads
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Stable Stable channel]
