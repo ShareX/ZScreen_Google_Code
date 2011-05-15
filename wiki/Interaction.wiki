@@ -1,0 +1,1 @@
+#summary How ZScreen should behave during capture and upload.
