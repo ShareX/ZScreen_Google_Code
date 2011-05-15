@@ -49,7 +49,7 @@
     * [AdvancedOptions Advanced Options]
 
 
-* [Tutorials Tutorials]
+=Tutorials=
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
   * [ClipboardUpload Uploading Clipboard Content]
