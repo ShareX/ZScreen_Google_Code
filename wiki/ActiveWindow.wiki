@@ -1,2 +1,2 @@
-#summary Active Window settings explained
+#summary Capturing the window that is active on screen
 #labels Phase-Support
