@@ -3,7 +3,7 @@
 
 * [Features Features]
 
-*User Manual
+=*User Manual=
   * [Introduction Introduction]
   * [Installation Installation]
   * [QuickGuide Quick Guide]
@@ -55,12 +55,12 @@
   * [PortableMode Portable Mode] 
 
 
-* Downloads
+=* Downloads=
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Stable Stable channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Beta Beta channel]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AChannel-Dev Dev channel]
 
-* Development
+=* Development=
   * [RunningFromSource Running from Source]
  * Management
   * [Roadmap Roadmap]
