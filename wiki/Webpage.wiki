@@ -1,0 +1,2 @@
+#summary Capturing a web page (with scrolling).
+
