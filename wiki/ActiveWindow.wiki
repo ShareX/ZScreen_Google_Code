@@ -1,8 +1,2 @@
 #summary Active Window settings explained
 #labels Phase-Support
-
-[http://dl.dropbox.com/u/25501373/ZScreen/2011-05/ZScreen_3.36.9.0_Beta-2011-05-05_16.55.21.png]
-
-= Clear Background = 
-
-= Show checkerboard pattern behind the image = 
