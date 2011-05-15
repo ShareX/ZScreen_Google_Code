@@ -5,7 +5,6 @@
   * [Features Features]
   * [Screenshots Screenshots]
 <br />
-
 =User Manual=
   * [Introduction Introduction]
   * [Installation Installation]
