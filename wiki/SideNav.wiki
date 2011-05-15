@@ -47,15 +47,14 @@
       * [Statistics Statistics]
       * [Debug Debug]
     * [AdvancedOptions Advanced Options]
-
 <br />
+
 =Tutorials=
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
   * [ClipboardUpload Uploading Clipboard Content]
   * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
   * [PortableMode Portable Mode] 
-
 <br />
 
 =Downloads=
