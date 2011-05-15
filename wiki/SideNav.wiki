@@ -1,11 +1,11 @@
 #summary Side Navigation
 #labels Phase-Design
 
-=General=
+==General==
   * [Features Features]
   * [Screenshots Screenshots]
 <br />
-=User Manual=
+==User Manual==
   * [Introduction Introduction]
   * [Installation Installation]
   * [QuickGuide Quick Guide]
