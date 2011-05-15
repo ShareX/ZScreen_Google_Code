@@ -2,8 +2,8 @@
 #labels Phase-Design
 
 =General=
-* [Features Features]
-* [Screenshots Screenshots]
+  * [Features Features]
+  * [Screenshots Screenshots]
 
 =User Manual=
   * [Introduction Introduction]
