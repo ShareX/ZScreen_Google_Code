@@ -2,9 +2,12 @@
 #labels Featured
 
 ZScreen is a powerful and flexible screen capture, editing and uploading  tool. 
-  * Capture screenshots, text and files, 
+  * Capture screenshots,<br/>(many modes available: crop shot, selected window, active window, freeehand, object, etc.) 
+  * Capture text and files 
   * Automatically upload them to online servers
   * Place the reference URL into your clipboard for instant pasting or sharing. 
-  * Many online services are pre-configured <br />(Twitter, Pastebin,ImageShack, RapidShare, TinyURL and many others) 
-  * Translate the text in clipboard to any language <br />(all major languages available)
-  * zScreen supports a full range of screen capture features with support for different capture modes (active window, area, object etc.), optional watermark overlays, automatic image resizing, customizable file naming patterns and more. In addition to capturing and processing screenshots, the program can also process files or text snippets that you copy to the clipboard and automatically upload them to the selected destination. ZScreen is highly customizable and can perform almost any job that involves automatic capture and uploading of files. 
+  * Many online services are pre-configured <br/>(Twitter, Pastebin,ImageShack, RapidShare, TinyURL and many others) 
+  * Translate the text in clipboard to any language <br/>(all major languages available)
+  * optional watermark overlay
+  * Automatic image resizing, 
+  * Customizable automatic file naming pattern
