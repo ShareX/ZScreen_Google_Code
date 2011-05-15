@@ -4,7 +4,7 @@
  * General
   * [Features Feature list]
   * [Screenshots Screenshots]
- * *User Manual*
+ * User Manual
   * [Introduction Introduction]
   * [Installation Installation]
   * [QuickGuide Quick Guide]
@@ -46,18 +46,18 @@
       * [Statistics Statistics]
       * [Debug Debug]
     * [AdvancedOptions Advanced Options]
- * *Tutorials*
+ * Tutorials
   * [FTPAccounts Configure FTP Accounts]
   * [WebpageCapture Capture Webpages]
   * [ClipboardUpload Uploading Clipboard Content]
   * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
   * [PortableMode Portable Mode] 
- * *Downloads*
+ * Downloads
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AStable Stable version]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Beta Beta version]
   * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Dev Development version]
- * *Development*
+ * Development
   * [RunningFromSource Running from Source]
- * *Management*
+ * Management
   * [Roadmap Roadmap]
   * [Milestones Milestones]
