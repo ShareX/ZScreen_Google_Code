@@ -1,0 +1,2 @@
+#summary Paths for saving the files and temporary folders for ZScreen's own use.
+
