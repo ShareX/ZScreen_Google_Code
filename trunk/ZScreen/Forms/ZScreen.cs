@@ -3924,7 +3924,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 1000)
+        private void HideFormTemporary(MethodInvoker method, int executeTime = 1250, int showTime = 1500)
         {
             Hide();
 
@@ -3958,7 +3958,7 @@ namespace ZScreenGUI
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow(), 500, 2000);
+            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow(), 1250, 2000);
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
