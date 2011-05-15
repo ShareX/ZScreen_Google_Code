@@ -1,0 +1,2 @@
+#summary Capturing a randomly selected rectangular area on screen.
+
