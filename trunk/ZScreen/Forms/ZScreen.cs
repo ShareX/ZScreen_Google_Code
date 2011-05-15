@@ -3924,7 +3924,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void HideFormTemporary(MethodInvoker method, int executeTime = 1250, int showTime = 1500)
+        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 1750)
         {
             Hide();
 

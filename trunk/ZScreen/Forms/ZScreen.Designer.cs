@@ -1,5 +1,6 @@
 using ZScreenLib;
 using UploadersLib;
+using System.Windows.Forms;
 
 namespace ZScreenGUI
 {
@@ -6671,7 +6672,7 @@ namespace ZScreenGUI
             this.Padding = new System.Windows.Forms.Padding(2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZScreen";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ZScreen_FormClosed);
