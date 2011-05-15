@@ -72,23 +72,35 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.btnOpenHistory = new System.Windows.Forms.Button();
+            this.tsMainTab = new System.Windows.Forms.ToolStrip();
+            this.tsbFullscreenCapture = new System.Windows.Forms.ToolStripButton();
+            this.tsbActiveWindow = new System.Windows.Forms.ToolStripButton();
+            this.tsbSelectedWindow = new System.Windows.Forms.ToolStripButton();
+            this.tsbCropShot = new System.Windows.Forms.ToolStripButton();
+            this.tsbLastCropShot = new System.Windows.Forms.ToolStripButton();
+            this.tsbFreehandCropShot = new System.Windows.Forms.ToolStripButton();
+            this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
+            this.tsbLanguageTranslate = new System.Windows.Forms.ToolStripButton();
+            this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbOpenHistory = new System.Windows.Forms.ToolStripButton();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
-            this.btnClipboardUpload = new System.Windows.Forms.Button();
-            this.btnFileSystemUploadFiles = new System.Windows.Forms.Button();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.lblLogo = new System.Windows.Forms.Label();
-            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
@@ -319,11 +331,6 @@ namespace ZScreenGUI
             this.tpDestPastebin = new System.Windows.Forms.TabPage();
             this.btnPastebinLogin = new System.Windows.Forms.Button();
             this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
-            this.tpHistory = new System.Windows.Forms.TabPage();
-            this.btnClearHistory = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.cbLanguageAutoDetect = new System.Windows.Forms.CheckBox();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
@@ -431,6 +438,11 @@ namespace ZScreenGUI
             this.lblKB = new System.Windows.Forms.Label();
             this.lblAfter = new System.Windows.Forms.Label();
             this.lblSwitchTo = new System.Windows.Forms.Label();
+            this.tpHistoryOptions = new System.Windows.Forms.TabPage();
+            this.btnClearHistory = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbHistorySave = new System.Windows.Forms.CheckBox();
+            this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
@@ -547,11 +559,13 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
-            this.gbImageSettings.SuspendLayout();
+            this.tsMainTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
+            this.gbImageSettings.SuspendLayout();
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpMainInput.SuspendLayout();
@@ -616,8 +630,6 @@ namespace ZScreenGUI
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
             this.tpDestPastebin.SuspendLayout();
-            this.tpHistory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
@@ -644,6 +656,8 @@ namespace ZScreenGUI
             this.gbPictureQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).BeginInit();
+            this.tpHistoryOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpWatermark.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).BeginInit();
             this.gbWatermarkGeneral.SuspendLayout();
@@ -865,7 +879,7 @@ namespace ZScreenGUI
             // 
             // tsmFileUpload
             // 
-            this.tsmFileUpload.Image = global::ZScreenGUI.Properties.Resources.application_go;
+            this.tsmFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
             this.tsmFileUpload.Name = "tsmFileUpload";
             this.tsmFileUpload.Size = new System.Drawing.Size(197, 22);
             this.tsmFileUpload.Text = "File Upload...";
@@ -985,7 +999,6 @@ namespace ZScreenGUI
             this.tcMain.Controls.Add(this.tpMainInput);
             this.tcMain.Controls.Add(this.tpMainActions);
             this.tcMain.Controls.Add(this.tpDestinations);
-            this.tcMain.Controls.Add(this.tpHistory);
             this.tcMain.Controls.Add(this.tpTranslator);
             this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
@@ -1001,18 +1014,17 @@ namespace ZScreenGUI
             // tpMain
             // 
             this.tpMain.AllowDrop = true;
+            this.tpMain.BackColor = System.Drawing.Color.White;
             this.tpMain.ContextMenuStrip = this.cmTray;
-            this.tpMain.Controls.Add(this.btnOpenHistory);
+            this.tpMain.Controls.Add(this.tsMainTab);
+            this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.Controls.Add(this.lblFileSystemNote);
             this.tpMain.Controls.Add(this.ucDestOptions);
             this.tpMain.Controls.Add(this.gbImageSettings);
-            this.tpMain.Controls.Add(this.btnClipboardUpload);
-            this.tpMain.Controls.Add(this.btnFileSystemUploadFiles);
             this.tpMain.Controls.Add(this.llProjectPage);
             this.tpMain.Controls.Add(this.llWebsite);
             this.tpMain.Controls.Add(this.llblBugReports);
             this.tpMain.Controls.Add(this.lblLogo);
-            this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.ImageKey = "(none)";
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
@@ -1020,19 +1032,175 @@ namespace ZScreenGUI
             this.tpMain.Size = new System.Drawing.Size(805, 436);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
-            this.tpMain.UseVisualStyleBackColor = true;
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
             // 
-            // btnOpenHistory
+            // tsMainTab
             // 
-            this.btnOpenHistory.Location = new System.Drawing.Point(288, 16);
-            this.btnOpenHistory.Name = "btnOpenHistory";
-            this.btnOpenHistory.Size = new System.Drawing.Size(128, 23);
-            this.btnOpenHistory.TabIndex = 125;
-            this.btnOpenHistory.Text = "Open History...";
-            this.btnOpenHistory.UseVisualStyleBackColor = true;
-            this.btnOpenHistory.Click += new System.EventHandler(this.btnOpenHistory_Click);
+            this.tsMainTab.BackColor = System.Drawing.Color.White;
+            this.tsMainTab.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsMainTab.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsMainTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbFullscreenCapture,
+            this.tsbActiveWindow,
+            this.tsbSelectedWindow,
+            this.tsbCropShot,
+            this.tsbLastCropShot,
+            this.tsbFreehandCropShot,
+            this.tsbAutoCapture,
+            this.toolStripSeparator2,
+            this.tsbFileUpload,
+            this.tsbClipboardUpload,
+            this.tsbDragDropWindow,
+            this.tsbLanguageTranslate,
+            this.tsbScreenColorPicker,
+            this.toolStripSeparator8,
+            this.tsbOpenHistory});
+            this.tsMainTab.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+            this.tsMainTab.Location = new System.Drawing.Point(377, 12);
+            this.tsMainTab.Name = "tsMainTab";
+            this.tsMainTab.Size = new System.Drawing.Size(151, 332);
+            this.tsMainTab.TabIndex = 126;
+            // 
+            // tsbFullscreenCapture
+            // 
+            this.tsbFullscreenCapture.Image = global::ZScreenGUI.Properties.Resources.monitor;
+            this.tsbFullscreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFullscreenCapture.Name = "tsbFullscreenCapture";
+            this.tsbFullscreenCapture.Size = new System.Drawing.Size(149, 20);
+            this.tsbFullscreenCapture.Text = "Fullscreen Capture";
+            this.tsbFullscreenCapture.Click += new System.EventHandler(this.tsbFullscreenCapture_Click);
+            // 
+            // tsbActiveWindow
+            // 
+            this.tsbActiveWindow.Image = global::ZScreenGUI.Properties.Resources.application_go;
+            this.tsbActiveWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbActiveWindow.Name = "tsbActiveWindow";
+            this.tsbActiveWindow.Size = new System.Drawing.Size(149, 20);
+            this.tsbActiveWindow.Text = "Active Window";
+            this.tsbActiveWindow.Visible = false;
+            this.tsbActiveWindow.Click += new System.EventHandler(this.tsbActiveWindow_Click);
+            // 
+            // tsbSelectedWindow
+            // 
+            this.tsbSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
+            this.tsbSelectedWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSelectedWindow.Name = "tsbSelectedWindow";
+            this.tsbSelectedWindow.Size = new System.Drawing.Size(149, 20);
+            this.tsbSelectedWindow.Text = "Selected Window...";
+            this.tsbSelectedWindow.Click += new System.EventHandler(this.tsbSelectedWindow_Click);
+            // 
+            // tsbCropShot
+            // 
+            this.tsbCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
+            this.tsbCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCropShot.Name = "tsbCropShot";
+            this.tsbCropShot.Size = new System.Drawing.Size(149, 20);
+            this.tsbCropShot.Text = "Crop Shot...";
+            this.tsbCropShot.Click += new System.EventHandler(this.tsbCropShot_Click);
+            // 
+            // tsbLastCropShot
+            // 
+            this.tsbLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
+            this.tsbLastCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLastCropShot.Name = "tsbLastCropShot";
+            this.tsbLastCropShot.Size = new System.Drawing.Size(149, 20);
+            this.tsbLastCropShot.Text = "Last Crop Shot";
+            this.tsbLastCropShot.Click += new System.EventHandler(this.tsbLastCropShot_Click);
+            // 
+            // tsbFreehandCropShot
+            // 
+            this.tsbFreehandCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_edit;
+            this.tsbFreehandCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFreehandCropShot.Name = "tsbFreehandCropShot";
+            this.tsbFreehandCropShot.Size = new System.Drawing.Size(149, 20);
+            this.tsbFreehandCropShot.Text = "Freehand Crop Shot...";
+            this.tsbFreehandCropShot.Click += new System.EventHandler(this.tsbFreehandCropShot_Click);
+            // 
+            // tsbAutoCapture
+            // 
+            this.tsbAutoCapture.Image = global::ZScreenGUI.Properties.Resources.images_stack;
+            this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAutoCapture.Name = "tsbAutoCapture";
+            this.tsbAutoCapture.Size = new System.Drawing.Size(149, 20);
+            this.tsbAutoCapture.Text = "Auto Capture...";
+            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // tsbFileUpload
+            // 
+            this.tsbFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
+            this.tsbFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFileUpload.Name = "tsbFileUpload";
+            this.tsbFileUpload.Size = new System.Drawing.Size(149, 20);
+            this.tsbFileUpload.Text = "File Upload...";
+            this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
+            // 
+            // tsbClipboardUpload
+            // 
+            this.tsbClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
+            this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbClipboardUpload.Name = "tsbClipboardUpload";
+            this.tsbClipboardUpload.Size = new System.Drawing.Size(149, 20);
+            this.tsbClipboardUpload.Text = "Clipboard Upload...";
+            this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
+            // 
+            // tsbDragDropWindow
+            // 
+            this.tsbDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
+            this.tsbDragDropWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDragDropWindow.Name = "tsbDragDropWindow";
+            this.tsbDragDropWindow.Size = new System.Drawing.Size(149, 20);
+            this.tsbDragDropWindow.Text = "Drag && Drop Window...";
+            this.tsbDragDropWindow.Click += new System.EventHandler(this.tsbDragDropWindow_Click);
+            // 
+            // tsbLanguageTranslate
+            // 
+            this.tsbLanguageTranslate.Image = global::ZScreenGUI.Properties.Resources.comments;
+            this.tsbLanguageTranslate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLanguageTranslate.Name = "tsbLanguageTranslate";
+            this.tsbLanguageTranslate.Size = new System.Drawing.Size(149, 20);
+            this.tsbLanguageTranslate.Text = "Language Translate";
+            this.tsbLanguageTranslate.Click += new System.EventHandler(this.tsbLanguageTranslate_Click);
+            // 
+            // tsbScreenColorPicker
+            // 
+            this.tsbScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
+            this.tsbScreenColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbScreenColorPicker.Name = "tsbScreenColorPicker";
+            this.tsbScreenColorPicker.Size = new System.Drawing.Size(149, 20);
+            this.tsbScreenColorPicker.Text = "Screen Color Picker...";
+            this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(149, 6);
+            // 
+            // tsbOpenHistory
+            // 
+            this.tsbOpenHistory.Image = global::ZScreenGUI.Properties.Resources.pictures;
+            this.tsbOpenHistory.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbOpenHistory.Name = "tsbOpenHistory";
+            this.tsbOpenHistory.Size = new System.Drawing.Size(149, 20);
+            this.tsbOpenHistory.Text = "Open History...";
+            this.tsbOpenHistory.Click += new System.EventHandler(this.tsbOpenHistory_Click);
+            // 
+            // pbLogo
+            // 
+            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pbLogo.Image = global::ZScreenGUI.Properties.Resources.ZScreen_256;
+            this.pbLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pbLogo.Location = new System.Drawing.Point(536, 8);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(256, 256);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbLogo.TabIndex = 72;
+            this.pbLogo.TabStop = false;
             // 
             // lblFileSystemNote
             // 
@@ -1048,7 +1216,7 @@ namespace ZScreenGUI
             // 
             // ucDestOptions
             // 
-            this.ucDestOptions.Location = new System.Drawing.Point(32, 72);
+            this.ucDestOptions.Location = new System.Drawing.Point(0, 0);
             this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
             this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
             this.ucDestOptions.Name = "ucDestOptions";
@@ -1064,9 +1232,9 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.cboURLFormat);
             this.gbImageSettings.Controls.Add(this.chkShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(40, 216);
+            this.gbImageSettings.Location = new System.Drawing.Point(8, 144);
             this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(360, 144);
+            this.gbImageSettings.Size = new System.Drawing.Size(360, 136);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
@@ -1079,22 +1247,6 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
-            // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
             // 
             // lblCopytoClipboard
             // 
@@ -1144,36 +1296,11 @@ namespace ZScreenGUI
             this.chkManualNaming.UseVisualStyleBackColor = true;
             this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
-            // btnClipboardUpload
-            // 
-            this.btnClipboardUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClipboardUpload.AutoSize = true;
-            this.btnClipboardUpload.Location = new System.Drawing.Point(152, 16);
-            this.btnClipboardUpload.Name = "btnClipboardUpload";
-            this.btnClipboardUpload.Size = new System.Drawing.Size(128, 24);
-            this.btnClipboardUpload.TabIndex = 116;
-            this.btnClipboardUpload.Text = "Upload Clipboard...";
-            this.btnClipboardUpload.UseVisualStyleBackColor = true;
-            this.btnClipboardUpload.Click += new System.EventHandler(this.btnClipboardUpload_Click);
-            // 
-            // btnFileSystemUploadFiles
-            // 
-            this.btnFileSystemUploadFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFileSystemUploadFiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnFileSystemUploadFiles.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFileSystemUploadFiles.Location = new System.Drawing.Point(16, 16);
-            this.btnFileSystemUploadFiles.Name = "btnFileSystemUploadFiles";
-            this.btnFileSystemUploadFiles.Size = new System.Drawing.Size(128, 24);
-            this.btnFileSystemUploadFiles.TabIndex = 115;
-            this.btnFileSystemUploadFiles.Text = "Upload &files...";
-            this.btnFileSystemUploadFiles.UseVisualStyleBackColor = true;
-            this.btnFileSystemUploadFiles.Click += new System.EventHandler(this.btnFileSystemUploadFiles_Click);
-            // 
             // llProjectPage
             // 
             this.llProjectPage.AutoSize = true;
             this.llProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llProjectPage.Location = new System.Drawing.Point(440, 360);
+            this.llProjectPage.Location = new System.Drawing.Point(536, 328);
             this.llProjectPage.Name = "llProjectPage";
             this.llProjectPage.Size = new System.Drawing.Size(61, 13);
             this.llProjectPage.TabIndex = 83;
@@ -1186,7 +1313,7 @@ namespace ZScreenGUI
             // 
             this.llWebsite.AutoSize = true;
             this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(696, 360);
+            this.llWebsite.Location = new System.Drawing.Point(728, 328);
             this.llWebsite.Name = "llWebsite";
             this.llWebsite.Size = new System.Drawing.Size(66, 13);
             this.llWebsite.TabIndex = 82;
@@ -1199,7 +1326,7 @@ namespace ZScreenGUI
             // 
             this.llblBugReports.AutoSize = true;
             this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(552, 360);
+            this.llblBugReports.Location = new System.Drawing.Point(616, 328);
             this.llblBugReports.Name = "llblBugReports";
             this.llblBugReports.Size = new System.Drawing.Size(100, 13);
             this.llblBugReports.TabIndex = 81;
@@ -1217,27 +1344,15 @@ namespace ZScreenGUI
             this.lblLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblLogo.ForeColor = System.Drawing.Color.Black;
             this.lblLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblLogo.Location = new System.Drawing.Point(440, 312);
+            this.lblLogo.Location = new System.Drawing.Point(536, 272);
             this.lblLogo.Name = "lblLogo";
-            this.lblLogo.Size = new System.Drawing.Size(328, 40);
+            this.lblLogo.Size = new System.Drawing.Size(256, 40);
             this.lblLogo.TabIndex = 74;
             this.lblLogo.Text = "ZScreen vW.X.Y.Z";
             this.lblLogo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblLogo.Click += new System.EventHandler(this.lblLogo_Click);
             this.lblLogo.MouseEnter += new System.EventHandler(this.lblLogo_MouseEnter);
             this.lblLogo.MouseLeave += new System.EventHandler(this.lblLogo_MouseLeave);
-            // 
-            // pbLogo
-            // 
-            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbLogo.Image = global::ZScreenGUI.Properties.Resources.ZScreen_256;
-            this.pbLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pbLogo.Location = new System.Drawing.Point(480, 56);
-            this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(256, 256);
-            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbLogo.TabIndex = 72;
-            this.pbLogo.TabStop = false;
             // 
             // tpHotkeys
             // 
@@ -3829,69 +3944,6 @@ namespace ZScreenGUI
             this.pgPastebinSettings.Size = new System.Drawing.Size(504, 384);
             this.pgPastebinSettings.TabIndex = 0;
             // 
-            // tpHistory
-            // 
-            this.tpHistory.Controls.Add(this.btnClearHistory);
-            this.tpHistory.Controls.Add(this.label1);
-            this.tpHistory.Controls.Add(this.cbHistorySave);
-            this.tpHistory.Controls.Add(this.nudHistoryMaxItems);
-            this.tpHistory.Location = new System.Drawing.Point(4, 22);
-            this.tpHistory.Name = "tpHistory";
-            this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(805, 436);
-            this.tpHistory.TabIndex = 14;
-            this.tpHistory.Text = "History";
-            this.tpHistory.UseVisualStyleBackColor = true;
-            // 
-            // btnClearHistory
-            // 
-            this.btnClearHistory.Location = new System.Drawing.Point(16, 80);
-            this.btnClearHistory.Name = "btnClearHistory";
-            this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
-            this.btnClearHistory.TabIndex = 12;
-            this.btnClearHistory.Text = "Clear History...";
-            this.btnClearHistory.UseVisualStyleBackColor = true;
-            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Maximum number of items in history";
-            // 
-            // cbHistorySave
-            // 
-            this.cbHistorySave.AutoSize = true;
-            this.cbHistorySave.Location = new System.Drawing.Point(16, 48);
-            this.cbHistorySave.Name = "cbHistorySave";
-            this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
-            this.cbHistorySave.TabIndex = 10;
-            this.cbHistorySave.Text = "Save successfully uploaded items to History";
-            this.cbHistorySave.UseVisualStyleBackColor = true;
-            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
-            // 
-            // nudHistoryMaxItems
-            // 
-            this.nudHistoryMaxItems.Location = new System.Drawing.Point(192, 16);
-            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudHistoryMaxItems.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
-            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
-            this.nudHistoryMaxItems.TabIndex = 4;
-            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
-            // 
             // tpTranslator
             // 
             this.tpTranslator.Controls.Add(this.cbLanguageAutoDetect);
@@ -4067,6 +4119,7 @@ namespace ZScreenGUI
             this.tcOptions.Controls.Add(this.tpProxy);
             this.tcOptions.Controls.Add(this.tpPaths);
             this.tcOptions.Controls.Add(this.tpCaptureQuality);
+            this.tcOptions.Controls.Add(this.tpHistoryOptions);
             this.tcOptions.Controls.Add(this.tpWatermark);
             this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
@@ -5180,6 +5233,69 @@ namespace ZScreenGUI
             this.lblSwitchTo.Size = new System.Drawing.Size(54, 13);
             this.lblSwitchTo.TabIndex = 92;
             this.lblSwitchTo.Text = "Switch to:";
+            // 
+            // tpHistoryOptions
+            // 
+            this.tpHistoryOptions.Controls.Add(this.btnClearHistory);
+            this.tpHistoryOptions.Controls.Add(this.label1);
+            this.tpHistoryOptions.Controls.Add(this.cbHistorySave);
+            this.tpHistoryOptions.Controls.Add(this.nudHistoryMaxItems);
+            this.tpHistoryOptions.Location = new System.Drawing.Point(4, 22);
+            this.tpHistoryOptions.Name = "tpHistoryOptions";
+            this.tpHistoryOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tpHistoryOptions.Size = new System.Drawing.Size(791, 404);
+            this.tpHistoryOptions.TabIndex = 16;
+            this.tpHistoryOptions.Text = "History";
+            this.tpHistoryOptions.UseVisualStyleBackColor = true;
+            // 
+            // btnClearHistory
+            // 
+            this.btnClearHistory.Location = new System.Drawing.Point(16, 77);
+            this.btnClearHistory.Name = "btnClearHistory";
+            this.btnClearHistory.Size = new System.Drawing.Size(136, 23);
+            this.btnClearHistory.TabIndex = 12;
+            this.btnClearHistory.Text = "Clear History...";
+            this.btnClearHistory.UseVisualStyleBackColor = true;
+            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Maximum number of items in history";
+            // 
+            // cbHistorySave
+            // 
+            this.cbHistorySave.AutoSize = true;
+            this.cbHistorySave.Location = new System.Drawing.Point(16, 45);
+            this.cbHistorySave.Name = "cbHistorySave";
+            this.cbHistorySave.Size = new System.Drawing.Size(232, 17);
+            this.cbHistorySave.TabIndex = 10;
+            this.cbHistorySave.Text = "Save successfully uploaded items to History";
+            this.cbHistorySave.UseVisualStyleBackColor = true;
+            this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
+            // 
+            // nudHistoryMaxItems
+            // 
+            this.nudHistoryMaxItems.Location = new System.Drawing.Point(192, 13);
+            this.nudHistoryMaxItems.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudHistoryMaxItems.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.nudHistoryMaxItems.Name = "nudHistoryMaxItems";
+            this.nudHistoryMaxItems.Size = new System.Drawing.Size(72, 20);
+            this.nudHistoryMaxItems.TabIndex = 4;
+            this.nudHistoryMaxItems.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudHistoryMaxItems.ValueChanged += new System.EventHandler(this.nudHistoryMaxItems_ValueChanged);
             // 
             // tpWatermark
             // 
@@ -6514,6 +6630,22 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6539,9 +6671,11 @@ namespace ZScreenGUI
             this.tcMain.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
+            this.tsMainTab.ResumeLayout(false);
+            this.tsMainTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.gbImageSettings.ResumeLayout(false);
             this.gbImageSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.tpHotkeys.ResumeLayout(false);
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
@@ -6636,9 +6770,6 @@ namespace ZScreenGUI
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
             this.tpDestPastebin.ResumeLayout(false);
-            this.tpHistory.ResumeLayout(false);
-            this.tpHistory.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
@@ -6680,6 +6811,9 @@ namespace ZScreenGUI
             this.gbPictureQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageQuality)).EndInit();
+            this.tpHistoryOptions.ResumeLayout(false);
+            this.tpHistoryOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.tpWatermark.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).EndInit();
             this.gbWatermarkGeneral.ResumeLayout(false);
@@ -7230,11 +7364,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbLanguageAutoDetect;
-        private System.Windows.Forms.TabPage tpHistory;
         private System.Windows.Forms.TabPage tpOptionsClipboard;
         private System.Windows.Forms.Label lblFileSystemNote;
-        internal System.Windows.Forms.Button btnClipboardUpload;
-        internal System.Windows.Forms.Button btnFileSystemUploadFiles;
         private System.Windows.Forms.GroupBox btnOptionsBalloonTip;
         private System.Windows.Forms.CheckBox chkShortenURL;
         private System.Windows.Forms.ComboBox cboReleaseChannel;
@@ -7246,8 +7377,24 @@ namespace ZScreenGUI
         private System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
         private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
         private System.Windows.Forms.DataGridViewTextBoxColumn DefaultKeys;
-        private System.Windows.Forms.Button btnOpenHistory;
         private System.Windows.Forms.ToolStripMenuItem tsmFreehandCropShot;
         private System.Windows.Forms.ToolStripMenuItem tsmFileUpload;
+        private System.Windows.Forms.ToolStrip tsMainTab;
+        private System.Windows.Forms.ToolStripButton tsbFullscreenCapture;
+        private System.Windows.Forms.ToolStripButton tsbSelectedWindow;
+        private System.Windows.Forms.ToolStripButton tsbCropShot;
+        private System.Windows.Forms.ToolStripButton tsbLastCropShot;
+        private System.Windows.Forms.ToolStripButton tsbFreehandCropShot;
+        private System.Windows.Forms.ToolStripButton tsbAutoCapture;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton tsbFileUpload;
+        private System.Windows.Forms.ToolStripButton tsbClipboardUpload;
+        private System.Windows.Forms.ToolStripButton tsbDragDropWindow;
+        private System.Windows.Forms.ToolStripButton tsbLanguageTranslate;
+        private System.Windows.Forms.ToolStripButton tsbScreenColorPicker;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton tsbOpenHistory;
+        private System.Windows.Forms.TabPage tpHistoryOptions;
+        private System.Windows.Forms.ToolStripButton tsbActiveWindow;
     }
 }

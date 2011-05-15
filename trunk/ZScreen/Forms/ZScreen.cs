@@ -207,9 +207,7 @@ namespace ZScreenGUI
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
-            // tpTextServices.ImageKey = "text_signature";
             tpTranslator.ImageKey = "comments";
-            tpHistory.ImageKey = "pictures";
             tpOptions.ImageKey = "application_edit";
 
             // Accounts - FTP
@@ -302,8 +300,6 @@ namespace ZScreenGUI
                 this.Hide();
                 Loader.Worker.ShowActionsToolbar(false);
             }
-
-            Adapter.AddToClipboardByDoubleClick(tpHistory);
 
             Loader.Worker2.CleanCache();
             StartDebug();
@@ -1831,9 +1827,9 @@ namespace ZScreenGUI
             Loader.Worker.StartBw_FreehandCropShot();
         }
 
-        private void tsmDropWindow_Click(object sender, EventArgs e)
+        private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ShowDropWindow();
+            Loader.Worker.ShowAutoCapture();
         }
 
         private void tsmFileUpload_Click(object sender, EventArgs e)
@@ -1844,6 +1840,11 @@ namespace ZScreenGUI
         private void tsmUploadFromClipboard_Click(object sender, EventArgs e)
         {
             ClipboardUpload();
+        }
+
+        private void tsmDropWindow_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.ShowDropWindow();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2725,11 +2726,6 @@ namespace ZScreenGUI
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropShowMagnifyingGlass = chkCropShowMagnifyingGlass.Checked;
-        }
-
-        private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.ShowAutoCapture();
         }
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
@@ -3933,19 +3929,98 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnFileSystemUploadFiles_Click(object sender, EventArgs e)
+        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 1000)
+        {
+            Hide();
+
+            var timer = new System.Windows.Forms.Timer();
+            timer.Interval = executeTime;
+            var timer2 = new System.Windows.Forms.Timer();
+            timer2.Interval = showTime;
+
+            timer.Tick += (sender, e) =>
+                {
+                    timer.Stop();
+                    method();
+                    timer2.Start();
+                };
+
+            timer2.Tick += (sender, e) =>
+                {
+                    timer2.Stop();
+                    Show();
+                };
+
+            timer.Start();
+        }
+
+        #region Main tab toolbar
+
+        private void tsbFullscreenCapture_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBw_EntireScreen());
+        }
+
+        private void tsbActiveWindow_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow(), 500, 2000);
+        }
+
+        private void tsbSelectedWindow_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
+        }
+
+        private void tsbCropShot_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBw_CropShot());
+        }
+
+        private void tsbLastCropShot_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBW_LastCropShot());
+        }
+
+        private void tsbFreehandCropShot_Click(object sender, EventArgs e)
+        {
+            HideFormTemporary(() => Loader.Worker.StartBw_FreehandCropShot());
+        }
+
+        private void tsbAutoCapture_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.ShowAutoCapture();
+        }
+
+        private void tsbFileUpload_Click(object sender, EventArgs e)
         {
             FileUpload();
         }
 
-        private void btnClipboardUpload_Click(object sender, EventArgs e)
+        private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
             ClipboardUpload();
         }
 
-        private void btnOpenHistory_Click(object sender, EventArgs e)
+        private void tsbDragDropWindow_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.ShowDropWindow();
+        }
+
+        private void tsbLanguageTranslate_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.StartWorkerTranslator();
+        }
+
+        private void tsbScreenColorPicker_Click(object sender, EventArgs e)
+        {
+            Loader.Worker.ScreenColorPicker();
+        }
+
+        private void tsbOpenHistory_Click(object sender, EventArgs e)
         {
             OpenHistory();
         }
+
+        #endregion Main tab toolbar
     }
 }
