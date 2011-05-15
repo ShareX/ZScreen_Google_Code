@@ -1,0 +1,1 @@
+#summary Capturing a random area on screen (drawn freehand).
