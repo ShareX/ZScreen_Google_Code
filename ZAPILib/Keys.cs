@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ZAPILib
 {
-    public static class Keys
+    public static class ZKeys
     {
         // Image Uploaders
         public const string ImageShackKey = "78EHNOPS04e77bc6df1cc0c5fc2e92e11c7b4a1a";

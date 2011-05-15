@@ -45,6 +45,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib.TextUploaders;
 using System.Threading;
 using ZScreenLib.Helpers;
+using ZAPILib;
 
 namespace ZScreenLib
 {
@@ -526,17 +527,17 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageUploaderType.FLICKR:
-                    imageUploader = new FlickrUploader(ZAPILib.Keys.FlickrKey, ZAPILib.Keys.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
+                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
                 case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZAPILib.Keys.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
                     ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
                     break;
                 case ImageUploaderType.IMGUR:
-                    imageUploader = new Imgur(Engine.conf.ImgurAccountType, ZAPILib.Keys.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
+                    imageUploader = new Imgur(Engine.conf.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
                     break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
-                    imageUploader = new UploadScreenshot(ZAPILib.Keys.UploadScreenshotKey);
+                    imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
                     break;
                 case ImageUploaderType.Localhost:
                     UploadLocalhost();
@@ -551,7 +552,7 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZAPILib.Keys.TinyPicID, ZAPILib.Keys.TinyPicKey, Engine.conf.TinyPicShuk);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.conf.TinyPicShuk);
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
@@ -563,10 +564,10 @@ namespace ZScreenLib
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.TWITSNAPS:
-                    imageUploader = new TwitSnapsUploader(ZAPILib.Keys.TwitsnapsKey, Adapter.TwitterGetActiveAcct());
+                    imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAcct());
                     break;
                 case ImageUploaderType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(ZAPILib.Keys.ImageShackKey);
+                    YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
                     yfrogOp.Username = Engine.conf.TwitterUsername;
                     yfrogOp.Password = Engine.conf.TwitterPassword;
                     yfrogOp.Source = Application.ProductName;
@@ -657,10 +658,10 @@ namespace ZScreenLib
                             textUploader = new Paste2Uploader();
                             break;
                         case TextUploaderType.PASTEBIN:
-                            textUploader = new PastebinUploader(ZAPILib.Keys.PastebinKey, Engine.conf.PastebinSettings);
+                            textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.conf.PastebinSettings);
                             break;
                         case TextUploaderType.PASTEBIN_CA:
-                            textUploader = new PastebinCaUploader(ZAPILib.Keys.PastebinCaKey);
+                            textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
                             break;
                         case TextUploaderType.SLEXY:
                             textUploader = new SlexyUploader();
@@ -714,14 +715,14 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.SendSpace:
-                    fileHost = new SendSpace(ZAPILib.Keys.SendSpaceKey);
+                    fileHost = new SendSpace(ZKeys.SendSpaceKey);
                     switch (Engine.conf.SendSpaceAccountType)
                     {
                         case AccountType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(ZAPILib.Keys.SendSpaceKey, null, null);
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
                             break;
                         case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(ZAPILib.Keys.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
                             break;
                     }
                     break;
@@ -983,16 +984,16 @@ namespace ZScreenLib
                 switch (MyUrlShortener)
                 {
                     case UrlShortenerType.BITLY:
-                        us = new BitlyURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
+                        us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                         break;
                     case UrlShortenerType.Google:
-                        us = new GoogleURLShortener(ZAPILib.Keys.GoogleURLShortenerKey);
+                        us = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
                         break;
                     case UrlShortenerType.ISGD:
                         us = new IsgdURLShortener();
                         break;
                     case UrlShortenerType.Jmp:
-                        us = new JmpURLShortener(ZAPILib.Keys.BitlyLogin, ZAPILib.Keys.BitlyKey);
+                        us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                         break;
                     /*case UrlShortenerType.THREELY:
                         us = new ThreelyURLShortener(Engine.ThreelyKey);
