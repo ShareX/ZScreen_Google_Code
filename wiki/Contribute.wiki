@@ -1,7 +1,7 @@
 #summary Guidelines for coders who want to join the project.
 
 ==What it takes==
-The Zscreen project has exciting [goals Roadmap] ahead.
+The Zscreen project has exciting [Roadmap goals] ahead.
 Would you like to participate in coding them?
 
 If you have working experience of C#, you can join us!
