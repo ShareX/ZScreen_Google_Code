@@ -5,7 +5,7 @@
 ==General==
 This page describes how to write the wiki for ZScreen.
 
-=Screenshots=
+==Screenshots==
 
 First, ensure that your screenshots comply to these norms:
   * Maximum size:
