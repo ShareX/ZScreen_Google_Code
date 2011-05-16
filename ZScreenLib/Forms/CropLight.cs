@@ -113,6 +113,7 @@ namespace ZScreenLib
                 components.Dispose();
             }
 
+            if (timer != null) timer.Dispose();
             if (backgroundBrush != null) backgroundBrush.Dispose();
             if (rectanglePen != null) rectanglePen.Dispose();
 
