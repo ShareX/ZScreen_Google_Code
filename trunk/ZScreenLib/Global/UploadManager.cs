@@ -30,6 +30,10 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
 using System;
+using System.Drawing.Imaging;
+using HelpersLib;
+using System.IO;
+using System.Drawing;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -88,13 +92,26 @@ namespace ZScreenLib
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static void SetClipboard(WorkerTask task, bool showDialog)
+        public static void SetClipboard(IntPtr handle, WorkerTask task, bool showDialog)
         {
             string clipboardText = "";
 
             if (task.JobIsImageToClipboard())
             {
-                Clipboard.SetImage(task.MyImage);
+                //if (handle != IntPtr.Zero)
+                //{
+                //    MemoryStream ms = new MemoryStream();
+                //    Graphics g = Graphics.FromImage(task.MyImage);
+                //    IntPtr ipHdc = g.GetHdc();
+                //    Metafile mf = new Metafile(ms, ipHdc);
+                //    g.ReleaseHdc(ipHdc);
+                //    g.Dispose();
+                //    ClipboardMetafileHelper.PutEnhMetafileOnClipboard(handle, mf);
+                //}
+                //else
+                //{
+                    Clipboard.SetImage(task.MyImage);
+                //}
             }
             else if (task.WasImageToFile())
             {

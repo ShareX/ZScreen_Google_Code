@@ -178,7 +178,7 @@ namespace ZScreenLib
 
                 if (Engine.conf.CopyClipboardAfterTask)
                 {
-                    UploadManager.SetClipboard(task, false);
+                    UploadManager.SetClipboard(IntPtr.Zero, task, false);
                 }
 
                 if (task.IsError)
