@@ -101,19 +101,20 @@ namespace ZScreenLib
                 //if (handle != IntPtr.Zero)
                 //{
                 //    MemoryStream ms = new MemoryStream();
-                //    Graphics g = Graphics.FromImage(task.MyImage);
+                //    Graphics g = Graphics.FromImage(new Bitmap(task.MyImage)); 
                 //    IntPtr ipHdc = g.GetHdc();
                 //    Metafile mf = new Metafile(ms, ipHdc);
+                //    FileSystem.AppendDebug(mf.Width.ToString());
+                //    ClipboardMetafileHelper.PutEnhMetafileOnClipboard(handle, mf);
                 //    g.ReleaseHdc(ipHdc);
                 //    g.Dispose();
-                //    ClipboardMetafileHelper.PutEnhMetafileOnClipboard(handle, mf);
                 //}
                 //else
                 //{
                     Clipboard.SetImage(task.MyImage);
                 //}
             }
-            else if (task.WasImageToFile())
+            else if (task.JobIsImageToFile())
             {
                 clipboardText = task.LocalFilePath;
             }

@@ -947,7 +947,7 @@ namespace ZScreenLib
             }
         }
 
-        public bool WasImageToFile()
+        public bool JobIsImageToFile()
         {
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
         }
