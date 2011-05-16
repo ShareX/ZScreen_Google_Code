@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -559,6 +559,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -1004,6 +1005,7 @@ namespace ZScreenGUI
             // 
             this.tpMain.AllowDrop = true;
             this.tpMain.BackColor = System.Drawing.Color.White;
+            this.tpMain.Controls.Add(this.label2);
             this.tpMain.Controls.Add(this.tsMainTab);
             this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.Controls.Add(this.lblFileSystemNote);
@@ -1063,13 +1065,12 @@ namespace ZScreenGUI
             // 
             // tsbActiveWindow
             // 
-            this.tsbActiveWindow.Enabled = false;
             this.tsbActiveWindow.Image = global::ZScreenGUI.Properties.Resources.application_go;
             this.tsbActiveWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbActiveWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbActiveWindow.Name = "tsbActiveWindow";
             this.tsbActiveWindow.Size = new System.Drawing.Size(148, 20);
-            this.tsbActiveWindow.Text = "Active Window";
+            this.tsbActiveWindow.Text = "Active Window*";
             this.tsbActiveWindow.Click += new System.EventHandler(this.tsbActiveWindow_Click);
             // 
             // tsbSelectedWindow
@@ -1455,7 +1456,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -6628,6 +6629,16 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(654, 392);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(143, 13);
+            this.label2.TabIndex = 127;
+            this.label2.Text = "* = Use hotkey for this action";
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -7374,5 +7385,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripButton tsbActiveWindow;
         private ToolStripButton tsbAbout;
         private ToolStripButton tsbImageDirectory;
+        private Label label2;
     }
 }

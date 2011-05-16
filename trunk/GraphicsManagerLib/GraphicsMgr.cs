@@ -146,6 +146,39 @@ namespace GraphicsMgrLib
             return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
 
+        public static Rectangle GetScreenBounds2()
+        {
+            Point topLeft = new Point(int.MaxValue, int.MaxValue);
+            Point bottomRight = new Point(int.MinValue, int.MinValue);
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                topLeft.X = Math.Min(topLeft.X, screen.Bounds.X);
+                topLeft.Y = Math.Min(topLeft.Y, screen.Bounds.Y);
+                bottomRight.X = Math.Max(bottomRight.X, screen.Bounds.Right);
+                bottomRight.Y = Math.Max(bottomRight.Y, screen.Bounds.Bottom);
+            }
+
+            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+        }
+
+        public static Rectangle GetScreenBounds3()
+        {
+            Rectangle rect = new Rectangle(int.MaxValue, int.MaxValue, int.MinValue, int.MinValue);
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                rect = Rectangle.Union(rect, screen.Bounds);
+            }
+
+            return rect;
+        }
+
+        public static Rectangle GetScreenBounds4()
+        {
+            return SystemInformation.VirtualScreen;
+        }
+
         /// <summary>
         /// Function to get Image without memory errors
         /// </summary>
