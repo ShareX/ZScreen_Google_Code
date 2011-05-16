@@ -73,7 +73,6 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
-            Engine.zWindowsTaskbar = TaskbarManager.Instance;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
             ZScreen_SetFormSettings();
@@ -109,6 +108,7 @@ namespace ZScreenGUI
                 {
                     Engine.CheckFileRegistration();
 
+                    Engine.zWindowsTaskbar = TaskbarManager.Instance;
                     Engine.zWindowsTaskbar.ApplicationId = Engine.appId;
 
                     Engine.zJumpList = JumpList.CreateJumpList();
@@ -3870,7 +3870,7 @@ namespace ZScreenGUI
                     if (pastebin.Login())
                     {
                         pgPastebinSettings.SelectedObject = Engine.conf.PastebinSettings;
-                        MessageBox.Show("Login success.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -3918,13 +3918,12 @@ namespace ZScreenGUI
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            // TODO: Find last active window
-            HideFormTemporary(() => Loader.Worker.StartBW_ActiveWindow());
+            Loader.Worker.StartBW_ActiveWindow();
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
+            Loader.Worker.StartBw_SelectedWindow();
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
