@@ -21,6 +21,6 @@ You can set ZScreen itself for this job, as follows:
   # Upload settings:
 
 ==Miscellaneous tips==
-To format your text (italics, bols, headings, bullets, etc), you have to insert the mediawiki markup in your text. 
+To format your text (italics, bold, headings, bullets, etc), you have to insert the mediawiki markup in your text. 
 
 The Google wiki follows a variant of mediawiki syntax. The exact syntax is explained [http://code.google.com/p/support/wiki/WikiSyntax here]
