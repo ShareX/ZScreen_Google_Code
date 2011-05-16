@@ -15,7 +15,7 @@ First, ensure that your screenshots comply to these norms:
 Next, upload the screenshots to ....
 
 ==Setting up ZScreen for the job==
-You can set SZreen itself for this job, as follows:
+You can set ZScreen itself for this job, as follows:
 
   # Naming convention tab:
   # Upload settings:
