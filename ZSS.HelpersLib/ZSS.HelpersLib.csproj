@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClipboardMetafileHelper.cs" />
     <Compile Include="ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +101,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
+      <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
+      <Name>ImageQuantization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

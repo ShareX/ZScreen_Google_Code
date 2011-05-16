@@ -320,7 +320,7 @@ namespace ZScreenGUI
                     {
                         if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
                         {
-                            UploadManager.SetClipboard(task, false);
+                            UploadManager.SetClipboard(mZScreen.Handle, task, false);
                         }
                     }
 

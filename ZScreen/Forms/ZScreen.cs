@@ -3919,7 +3919,7 @@ namespace ZScreenGUI
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
+            Loader.Worker.StartBw_SelectedWindow()); // need to be able to capture ZScreen window as part of Selected Window as well so ZScreen should not hide
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)

@@ -480,7 +480,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD;
+            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD && this.MyImage != null;
         }
 
         private bool CreateThumbnail()
