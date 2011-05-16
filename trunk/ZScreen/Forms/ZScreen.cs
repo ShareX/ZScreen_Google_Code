@@ -39,7 +39,6 @@ using GraphicsMgrLib;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using MS.WindowsAPICodePack.Internal;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
@@ -3886,26 +3885,23 @@ namespace ZScreenGUI
 
         private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 2000)
         {
-            Hide();
-
-            var timer = new System.Windows.Forms.Timer();
-            timer.Interval = executeTime;
-            var timer2 = new System.Windows.Forms.Timer();
-            timer2.Interval = showTime;
+            var timer = new System.Windows.Forms.Timer { Interval = executeTime };
+            var timer2 = new System.Windows.Forms.Timer { Interval = showTime };
 
             timer.Tick += (sender, e) =>
-                {
-                    timer.Stop();
-                    method();
-                    timer2.Start();
-                };
+            {
+                timer.Stop();
+                method();
+                timer2.Start();
+            };
 
             timer2.Tick += (sender, e) =>
-                {
-                    timer2.Stop();
-                    Show();
-                };
+            {
+                timer2.Stop();
+                NativeMethods.ShowWindow(Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+            };
 
+            Hide();
             timer.Start();
         }
 
@@ -3923,7 +3919,7 @@ namespace ZScreenGUI
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBw_SelectedWindow();
+            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
