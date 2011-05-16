@@ -1,0 +1,2 @@
+#summary Guidelines for coders who want to join the project.
+
