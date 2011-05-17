@@ -95,6 +95,13 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap block {
+            get {
+                object obj = ResourceManager.GetObject("block", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clipboard__plus {
             get {
                 object obj = ResourceManager.GetObject("clipboard--plus", resourceCulture);
@@ -147,6 +154,13 @@ namespace ZUploader.Properties {
         internal static System.Drawing.Bitmap folder__plus {
             get {
                 object obj = ResourceManager.GetObject("folder--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap gear {
+            get {
+                object obj = ResourceManager.GetObject("gear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
