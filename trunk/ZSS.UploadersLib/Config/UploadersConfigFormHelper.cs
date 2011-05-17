@@ -1,23 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UploadersLib.HelperClasses;
-using System.Windows.Forms;
 using System.Diagnostics;
-using UploadersLib.FileUploaders;
+using System.Text;
+using System.Windows.Forms;
 using HelpersLib;
+using UploadersLib.FileUploaders;
+using UploadersLib.HelperClasses;
+using UploadersLib.ImageUploaders;
 
 namespace UploadersLib.Config
 {
     public partial class UploadersConfigForm : Form
     {
+        // Imgur
+
+        public void ImgurAuthOpen()
+        {
+            try
+            {
+                OAuthInfo oauth = new OAuthInfo(APIKeys.ImgurConsumerKey, APIKeys.ImgurConsumerSecret);
+
+                string url = new Imgur(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.ImgurOAuthInfo = oauth;
+                    Process.Start(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void ImgurAuthComplete()
+        {
+            try
+            {
+                string verification = txtImgurVerificationCode.Text;
+
+                if (!string.IsNullOrEmpty(verification) && Config.ImgurOAuthInfo != null &&
+                    !string.IsNullOrEmpty(Config.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Config.ImgurOAuthInfo.AuthSecret))
+                {
+                    bool result = new Imgur(Config.ImgurOAuthInfo).GetAccessToken(verification);
+
+                    if (result)
+                    {
+                        lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
+                        MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        lblImgurAccountStatus.Text = "Login failed.";
+                        MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Dropbox
 
         public void DropboxAuthOpen()
         {
             try
             {
-                OAuthInfo oauth = new OAuthInfo(ZKeys.DropboxConsumerKey, ZKeys.DropboxConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(APIKeys.DropboxConsumerKey, APIKeys.DropboxConsumerSecret);
 
                 string url = new Dropbox(oauth).GetAuthorizationURL();
 

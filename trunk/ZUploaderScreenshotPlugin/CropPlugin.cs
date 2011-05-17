@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using ZUploaderCropPlugin.Properties;
 using ZUploaderPlugin;
+using ZUploaderScreenshotPlugin.Properties;
 
-namespace ZUploaderCropPlugin
+namespace ZUploaderScreenshotPlugin
 {
     public class CropPlugin : IPlugin
     {

@@ -66,14 +66,14 @@ namespace ZUploader
             get
             {
                 DateTime now = FastDateTime.Now;
-                string fileName = string.Format("Log_{0}_{1}.txt", now.Month, now.Year);
+                string fileName = string.Format("Log_{0}_{1}.txt", now.Year, now.Month);
                 return Path.Combine(ZUploaderPersonalPath, fileName);
             }
         }
 
         public static string PluginFolderPath
         {
-            get { return Path.Combine(ZUploaderPersonalPath, "Plugins"); }
+            get { return Path.Combine(Application.StartupPath, "Plugins"); }
         }
 
         private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
