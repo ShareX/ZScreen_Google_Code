@@ -3,14 +3,17 @@
 
 ZScreen is a powerful and flexible screen capture, editing and uploading  tool. 
   * Capture screenshots in one of the many modes:
-   * crop shot (with magnifier and cross-hair across the screen)
+   * Crop shot (with magnifier and cross-hair across the screen)
    * Crop shot with "snap to grid" mode to take fixed size screenshots
-   * selected window
-   * active window
-   * freehand 
-   * window object 
-   * web page with scrolling
-  * Capture text and files 
+   * Selected window
+   * Active window
+   * Freehand crop shot 
+   * Window object (menu, etc.)
+   * Web page with automatic scrolling
+  * Options to facilitate screen-capture
+   * Delayed capture (user-settable delay, in milliseconds or seconds)
+   * Option to capture mouse pointer (useful in capturing specially shaped pointers)
+  * Capture text and files
   * Automatically upload the image, text, URL and files to online servers
    * Each type of content can be sent to a different server automatically
   * Place the captured content on your clipboard for instant pasting or sharing.
