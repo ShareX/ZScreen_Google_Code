@@ -53,9 +53,9 @@
   * [Windows7TaskbarIntegration	Windows 7 Taskbar Integration]
   * [PortableMode Portable Mode] 
  * Downloads
-  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AStable Stable version]
-  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Beta Beta version]
-  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Dev Development version]
+  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3AStable Stable versions]
+  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Beta Beta versions]
+  * [http://code.google.com/p/zscreen/downloads/list?can=1&q=label%3A-Dev Development versions]
  * Development
   * [RunningFromSource Running from Source]
   * [Contribute Contribute!]
