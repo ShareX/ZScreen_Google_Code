@@ -35,13 +35,13 @@ namespace UploadersLib.Config
     public partial class UploadersConfigForm : Form
     {
         public UploadersConfig Config { get; private set; }
-        public UploadersAPIKeys ZKeys { get; private set; }
+        public UploadersAPIKeys APIKeys { get; private set; }
 
         public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
             LoadTabIcons();
-            ZKeys = uploadersAPIKeys;
+            APIKeys = uploadersAPIKeys;
             LoadSettings(uploadersConfig);
         }
 
@@ -93,12 +93,12 @@ namespace UploadersLib.Config
 
             #region File uploaders
 
-            // Dropbox 
+            // Dropbox
+
             txtDropboxPath.Text = Config.DropboxUploadPath;
             UpdateDropboxStatus();
 
-            #endregion
-
+            #endregion File uploaders
         }
 
         #region Events
@@ -166,7 +166,7 @@ namespace UploadersLib.Config
             {
                 try
                 {
-                    TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
+                    TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
                     string registrationCode = tpu.UserAuth(username, password);
 
                     if (!string.IsNullOrEmpty(registrationCode))
@@ -219,61 +219,24 @@ namespace UploadersLib.Config
 
         private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
         {
-            try
-            {
-                OAuthInfo oauth = new OAuthInfo(ZKeys.ImgurConsumerKey, ZKeys.ImgurConsumerSecret);
-
-                string url = new Imgur(oauth).GetAuthorizationURL();
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    Config.ImgurOAuthInfo = oauth;
-                    Process.Start(url);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ImgurAuthOpen();
         }
 
         private void btnImgurEnterVerificationCode_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string verification = txtImgurVerificationCode.Text;
-
-                if (!string.IsNullOrEmpty(verification) && Config.ImgurOAuthInfo != null &&
-                    !string.IsNullOrEmpty(Config.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Config.ImgurOAuthInfo.AuthSecret))
-                {
-                    bool result = new Imgur(Config.ImgurOAuthInfo).GetAccessToken(verification);
-
-                    if (result)
-                    {
-                        lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
-                        MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        lblImgurAccountStatus.Text = "Login failed.";
-                        MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ImgurAuthComplete();
         }
 
         #endregion Image uploaders
+
+        #region File uploaders
+
+        // Dropbox
 
         private void pbDropboxLogo_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.dropbox.com");
         }
-
-        #endregion Events
 
         private void btnDropboxRegister_Click(object sender, EventArgs e)
         {
@@ -289,5 +252,9 @@ namespace UploadersLib.Config
         {
             DropboxAuthComplete();
         }
+
+        #endregion File uploaders
+
+        #endregion Events
     }
 }
