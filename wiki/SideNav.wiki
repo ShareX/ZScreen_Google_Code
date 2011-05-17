@@ -9,6 +9,7 @@
   * [Installation Installation]
   * [QuickGuide Quick Guide]
   * [SettingScreens Settings]
+    * [Main Main]
     * [Hotkeys Hotkeys]
     * [Capture Capture]
       * [CropShot Crop Shot]
