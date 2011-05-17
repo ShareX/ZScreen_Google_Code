@@ -1,11 +1,18 @@
 #summary Overview of setting screens in ZScreen.
 
-ZScreen is very flexible. 
+ZScreen is very flexible. Practically all operations can be configured.
 
-Practically all operations can be configured.
-
-The ZScreen settings are divided in tabs. 
-
+The ZScreen settings are divided in tabs. <br/>
+These tabs are arranged logically, in the order of operations. <br/>
 Some of the tabs have sub-tabs.
 
-These tabs are arranged logically, in the order of operations.
+The tabs are:
+  * Main: Quick general-purpose settings
+  * Hotkeys: Change the keyboard shortcuts to your liking
+  * Capture: Settings related to all different screen-capture modes
+  * Actions: Actions that can be taken on the captured image (e.g. edit)
+  * Destinations: Set the destinations for uploading.
+  * History: If there is an error in an upload, trace it and correct the mistake.
+  * Translator: User Google Translator to translate the contents of your clipboard.
+  * Options: General program options (unrelated with screen-capture or uploading)
+  * Advanced options: Detailed options
