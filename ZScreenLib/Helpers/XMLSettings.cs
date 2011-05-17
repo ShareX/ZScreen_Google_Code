@@ -86,7 +86,7 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public UploadersConfig UploadersConfig = new UploadersConfig();
+        public UploadersConfig UploadersConfig2 = new UploadersConfig();
 
         #region Image uploaders
 

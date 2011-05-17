@@ -35,13 +35,13 @@ namespace UploadersLib.Config
     public partial class UploadersConfigForm : Form
     {
         public UploadersConfig Config { get; private set; }
-        public UploadersAPIKeys APIKeys { get; private set; }
+        public UploadersAPIKeys ZKeys { get; private set; }
 
         public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
             LoadTabIcons();
-            APIKeys = uploadersAPIKeys;
+            ZKeys = uploadersAPIKeys;
             LoadSettings(uploadersConfig);
         }
 
@@ -90,6 +90,15 @@ namespace UploadersLib.Config
             }
 
             #endregion Image uploaders
+
+            #region File uploaders
+
+            // Dropbox 
+            txtDropboxPath.Text = Config.DropboxUploadPath;
+            UpdateDropboxStatus();
+
+            #endregion
+
         }
 
         #region Events
@@ -157,7 +166,7 @@ namespace UploadersLib.Config
             {
                 try
                 {
-                    TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
+                    TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
                     string registrationCode = tpu.UserAuth(username, password);
 
                     if (!string.IsNullOrEmpty(registrationCode))
@@ -212,7 +221,7 @@ namespace UploadersLib.Config
         {
             try
             {
-                OAuthInfo oauth = new OAuthInfo(APIKeys.ImgurConsumerKey, APIKeys.ImgurConsumerSecret);
+                OAuthInfo oauth = new OAuthInfo(ZKeys.ImgurConsumerKey, ZKeys.ImgurConsumerSecret);
 
                 string url = new Imgur(oauth).GetAuthorizationURL();
 
@@ -259,6 +268,26 @@ namespace UploadersLib.Config
 
         #endregion Image uploaders
 
+        private void pbDropboxLogo_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.dropbox.com");
+        }
+
         #endregion Events
+
+        private void btnDropboxRegister_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.dropbox.com/register");
+        }
+
+        private void btnDropboxAuthOpen_Click(object sender, EventArgs e)
+        {
+            DropboxAuthOpen();
+        }
+
+        private void btnDropboxAuthComplete_Click(object sender, EventArgs e)
+        {
+            DropboxAuthComplete();
+        }
     }
 }

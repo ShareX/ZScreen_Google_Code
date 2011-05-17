@@ -40,5 +40,11 @@ namespace UploadersLib.Config
         public string ImageBamKey { get; set; }
         public string ImageBamSecret { get; set; }
         public string TwitsnapsKey { get; set; }
+
+        // File Uploaders
+        public string DropboxConsumerKey { get; set; }
+        public string DropboxConsumerSecret { get; set; }
+        public string SendSpaceKey { get; set; }
+        public string DropIOKey { get; set; }
     }
 }

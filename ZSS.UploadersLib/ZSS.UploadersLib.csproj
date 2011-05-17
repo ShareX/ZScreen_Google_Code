@@ -93,6 +93,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\UploadersConfigFormHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Config\UploadersAPIKeys.cs" />
     <Compile Include="Config\UploadersConfigForm.cs">
       <SubType>Form</SubType>

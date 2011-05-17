@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UploadersConfigForm));
             this.tcUploaders = new System.Windows.Forms.TabControl();
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.tcImageUploaders = new System.Windows.Forms.TabControl();
@@ -81,6 +82,14 @@
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.btnDropboxCompleteAuth = new System.Windows.Forms.Button();
+            this.pbDropboxLogo = new System.Windows.Forms.PictureBox();
+            this.btnDropboxRegister = new System.Windows.Forms.Button();
+            this.lblDropboxStatus = new System.Windows.Forms.Label();
+            this.lblDropboxPathTip = new System.Windows.Forms.Label();
+            this.lblDropboxPath = new System.Windows.Forms.Label();
+            this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
+            this.txtDropboxPath = new System.Windows.Forms.TextBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -91,12 +100,14 @@
             this.tpTwitSnaps.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
+            this.tpDropbox.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -222,8 +233,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
@@ -336,8 +347,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -511,9 +522,9 @@
             // 
             // tcFileUploaders
             // 
+            this.tcFileUploaders.Controls.Add(this.tpDropbox);
             this.tcFileUploaders.Controls.Add(this.tpFTP);
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
-            this.tcFileUploaders.Controls.Add(this.tpDropbox);
             this.tcFileUploaders.Controls.Add(this.tpSendSpace);
             this.tcFileUploaders.Controls.Add(this.tpCustomUploaders);
             this.tcFileUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -545,6 +556,14 @@
             // 
             // tpDropbox
             // 
+            this.tpDropbox.Controls.Add(this.btnDropboxCompleteAuth);
+            this.tpDropbox.Controls.Add(this.pbDropboxLogo);
+            this.tpDropbox.Controls.Add(this.btnDropboxRegister);
+            this.tpDropbox.Controls.Add(this.lblDropboxStatus);
+            this.tpDropbox.Controls.Add(this.lblDropboxPathTip);
+            this.tpDropbox.Controls.Add(this.lblDropboxPath);
+            this.tpDropbox.Controls.Add(this.btnDropboxOpenAuthorize);
+            this.tpDropbox.Controls.Add(this.txtDropboxPath);
             this.tpDropbox.Location = new System.Drawing.Point(4, 22);
             this.tpDropbox.Name = "tpDropbox";
             this.tpDropbox.Padding = new System.Windows.Forms.Padding(3);
@@ -666,6 +685,82 @@
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
+            // btnDropboxCompleteAuth
+            // 
+            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(158, 110);
+            this.btnDropboxCompleteAuth.Name = "btnDropboxCompleteAuth";
+            this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(144, 23);
+            this.btnDropboxCompleteAuth.TabIndex = 20;
+            this.btnDropboxCompleteAuth.Text = "Complete authorization";
+            this.btnDropboxCompleteAuth.UseVisualStyleBackColor = true;
+            this.btnDropboxCompleteAuth.Click += new System.EventHandler(this.btnDropboxAuthComplete_Click);
+            // 
+            // pbDropboxLogo
+            // 
+            this.pbDropboxLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbDropboxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pbDropboxLogo.Image")));
+            this.pbDropboxLogo.Location = new System.Drawing.Point(6, 6);
+            this.pbDropboxLogo.Name = "pbDropboxLogo";
+            this.pbDropboxLogo.Size = new System.Drawing.Size(248, 64);
+            this.pbDropboxLogo.TabIndex = 19;
+            this.pbDropboxLogo.TabStop = false;
+            this.pbDropboxLogo.Click += new System.EventHandler(this.pbDropboxLogo_Click);
+            // 
+            // btnDropboxRegister
+            // 
+            this.btnDropboxRegister.Location = new System.Drawing.Point(262, 6);
+            this.btnDropboxRegister.Name = "btnDropboxRegister";
+            this.btnDropboxRegister.Size = new System.Drawing.Size(96, 24);
+            this.btnDropboxRegister.TabIndex = 15;
+            this.btnDropboxRegister.Text = "Register...";
+            this.btnDropboxRegister.UseVisualStyleBackColor = true;
+            this.btnDropboxRegister.Click += new System.EventHandler(this.btnDropboxRegister_Click);
+            // 
+            // lblDropboxStatus
+            // 
+            this.lblDropboxStatus.AutoSize = true;
+            this.lblDropboxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDropboxStatus.Location = new System.Drawing.Point(6, 150);
+            this.lblDropboxStatus.Name = "lblDropboxStatus";
+            this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
+            this.lblDropboxStatus.TabIndex = 18;
+            this.lblDropboxStatus.Text = "Login status:";
+            // 
+            // lblDropboxPathTip
+            // 
+            this.lblDropboxPathTip.AutoSize = true;
+            this.lblDropboxPathTip.Location = new System.Drawing.Point(334, 82);
+            this.lblDropboxPathTip.Name = "lblDropboxPathTip";
+            this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
+            this.lblDropboxPathTip.TabIndex = 17;
+            this.lblDropboxPathTip.Text = "Use \"Public\" folder for be able to get URL.";
+            // 
+            // lblDropboxPath
+            // 
+            this.lblDropboxPath.AutoSize = true;
+            this.lblDropboxPath.Location = new System.Drawing.Point(6, 82);
+            this.lblDropboxPath.Name = "lblDropboxPath";
+            this.lblDropboxPath.Size = new System.Drawing.Size(68, 13);
+            this.lblDropboxPath.TabIndex = 16;
+            this.lblDropboxPath.Text = "Upload path:";
+            // 
+            // btnDropboxOpenAuthorize
+            // 
+            this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(6, 110);
+            this.btnDropboxOpenAuthorize.Name = "btnDropboxOpenAuthorize";
+            this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(144, 24);
+            this.btnDropboxOpenAuthorize.TabIndex = 14;
+            this.btnDropboxOpenAuthorize.Text = "Open authorize page...";
+            this.btnDropboxOpenAuthorize.UseVisualStyleBackColor = true;
+            this.btnDropboxOpenAuthorize.Click += new System.EventHandler(this.btnDropboxAuthOpen_Click);
+            // 
+            // txtDropboxPath
+            // 
+            this.txtDropboxPath.Location = new System.Drawing.Point(78, 78);
+            this.txtDropboxPath.Name = "txtDropboxPath";
+            this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
+            this.txtDropboxPath.TabIndex = 13;
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -690,12 +785,15 @@
             this.tpTwitSnaps.PerformLayout();
             this.tpFileUploaders.ResumeLayout(false);
             this.tcFileUploaders.ResumeLayout(false);
+            this.tpDropbox.ResumeLayout(false);
+            this.tpDropbox.PerformLayout();
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -755,5 +853,13 @@
         private System.Windows.Forms.TextBox txtImgurVerificationCode;
         private System.Windows.Forms.GroupBox gbImgurUserAccount;
         private System.Windows.Forms.Label lblImgurVerificationCode;
+        private System.Windows.Forms.Button btnDropboxCompleteAuth;
+        private System.Windows.Forms.PictureBox pbDropboxLogo;
+        private System.Windows.Forms.Button btnDropboxRegister;
+        private System.Windows.Forms.Label lblDropboxStatus;
+        private System.Windows.Forms.Label lblDropboxPathTip;
+        private System.Windows.Forms.Label lblDropboxPath;
+        private System.Windows.Forms.Button btnDropboxOpenAuthorize;
+        private System.Windows.Forms.TextBox txtDropboxPath;
     }
 }
