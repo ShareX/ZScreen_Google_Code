@@ -153,6 +153,7 @@ namespace ZUploaderCropPlugin
             this.Bounds = Helpers.GetScreenBounds();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.Cursor = Cursors.Cross;
+            this.ShowInTaskbar = false;
             this.TopMost = true;
             this.KeyDown += new KeyEventHandler(this.Crop_KeyDown);
             this.MouseDown += new MouseEventHandler(this.Crop_MouseDown);
