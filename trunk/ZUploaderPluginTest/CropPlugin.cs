@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
+using ZUploaderCropPlugin.Properties;
 using ZUploaderPlugin;
 
 namespace ZUploaderCropPlugin
@@ -11,12 +14,12 @@ namespace ZUploaderCropPlugin
 
         public string Name
         {
-            get { return "Crop Plugin"; }
+            get { return "Crop Capture"; }
         }
 
         public string Description
         {
-            get { return "For testing."; }
+            get { return "..."; }
         }
 
         public string Author
@@ -32,22 +35,39 @@ namespace ZUploaderCropPlugin
         public void Init()
         {
             ToolStripMenuItem tsmi = new ToolStripMenuItem();
-            tsmi.Text = "Crop";
+            tsmi.Text = "Crop capture";
+            tsmi.Image = Resources.layer_shape;
             tsmi.Click += new EventHandler(tsmi_Click);
             Host.AddPluginButton(tsmi);
         }
 
         private void tsmi_Click(object sender, EventArgs e)
         {
-            Image screenshot = Helpers.GetScreenshot();
+            Host.Hide();
 
-            using (CropLight crop = new CropLight(screenshot))
+            Thread.Sleep(500);
+
+            try
             {
-                if (crop.ShowDialog() == DialogResult.OK)
+                Image screenshot = Helpers.GetScreenshot();
+
+                using (CropLight crop = new CropLight(screenshot))
                 {
-                    screenshot = Helpers.CropImage(screenshot, crop.SelectionRectangle);
-                    Host.UploadImage(screenshot);
+                    if (crop.ShowDialog() == DialogResult.OK)
+                    {
+                        screenshot = Helpers.CropImage(screenshot, crop.SelectionRectangle);
+                        Host.Show();
+                        Host.UploadImage(screenshot);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                Host.Show();
             }
         }
     }

@@ -29,6 +29,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using HelpersLib;
+using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -36,7 +37,6 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZUploader.HelperClasses;
-using UploadersAPILib;
 
 namespace ZUploader
 {
@@ -291,8 +291,10 @@ namespace ZUploader
                     fileUploader = new SendSpace(ZKeys.SendSpaceKey);
                     SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
                     break;
-                case FileUploaderType.Dropbox: // TODO: Dropbox account
-                    fileUploader = new Dropbox(new OAuthInfo(ZKeys.DropboxConsumerKey, ZKeys.DropboxConsumerSecret));
+                case FileUploaderType.Dropbox:
+                    NameParser parser = new NameParser { IsFolderPath = true };
+                    string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.Settings.UploadersConfig.DropboxUploadPath));
+                    fileUploader = new Dropbox(Program.Settings.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.Settings.UploadersConfig.DropboxUserID);
                     break;
                 /*case FileUploaderType.FileSonic:
                     fileUploader = new FileSonic("", "");

@@ -14,5 +14,9 @@ namespace ZUploaderPlugin
         void UploadImage(Image img);
 
         void UploadText(string text);
+
+        void Hide();
+
+        void Show();
     }
 }
