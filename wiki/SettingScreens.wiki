@@ -9,10 +9,10 @@ Some of the tabs have sub-tabs.
 The tabs are:
   * [Main Main]: Quick general-purpose settings
   * [Hotkeys Hotkeys]: Change the keyboard shortcuts to your liking
-  * Capture: Settings related to all different screen-capture modes
-  * Actions: Actions that can be taken on the captured image (e.g. edit)
-  * Destinations: Set the destinations for uploading.
-  * History: If there is an error in an upload, trace it and correct the mistake.
-  * Translator: User Google Translator to translate the contents of your clipboard.
-  * Options: General program options (unrelated with screen-capture or uploading)
-  * Advanced options: Detailed options
+  * [Capture Capture]: Settings related to all different screen-capture modes
+  * [Actions Actions]: Actions that can be taken on the captured image (e.g. edit)
+  * [Destinations Destinations]: Set the destinations for uploading.
+  * [History History]: If there is an error in an upload, trace it and correct the mistake.
+  * [Translator Translator]: User Google Translator to translate the contents of your clipboard.
+  * [Options Options]: General program options (unrelated with screen-capture or uploading)
+  * [AdvancedOptions Advanced options]: Detailed options
