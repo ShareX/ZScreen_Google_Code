@@ -2,12 +2,23 @@
 #labels Featured
 
 ZScreen is a powerful and flexible screen capture, editing and uploading  tool. 
-  * Capture screenshots,<br/>(many modes available: crop shot, selected window, active window, freeehand, object, etc.) 
+  * Capture screenshots in one of the many modes:
+   * crop shot (with magnifier and cross-hair across the screen)
+   * Crop shot with "snap to grid" mode to take fixed size screenshots
+   * selected window
+   * active window
+   * freehand 
+   * window object 
+   * web page with scrolling
   * Capture text and files 
-  * Automatically upload them to online servers
-  * Place the reference URL into your clipboard for instant pasting or sharing. 
-  * Many online services are pre-configured <br/>(Twitter, Pastebin,ImageShack, RapidShare, TinyURL and many others) 
-  * Translate the text in clipboard to any language <br/>(all major languages available)
+  * Automatically upload the image, text, URL and files to online servers
+   * Each type of content can be sent to a different server automatically
+  * Place the captured content on your clipboard for instant pasting or sharing.
+  * Many online services are pre-configured (Twitter, Pastebin, ImageShack, RapidShare, TinyURL etc.) 
+  * Translate the text in clipboard to any language (all major languages available)
   * optional watermark overlay
-  * Automatic image resizing, 
+  * User-selectable file type for captured screenshots
+   * Option to select the image quality
+   * Option to switch saved file type beyond a threshold size. 
+   * User-selectable image size (ZScreen resizes the image while saving)
   * Customizable automatic file naming pattern
