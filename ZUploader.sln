@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderPlugin", "ZUploade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersAPILib", "ZAPILib\ZSS.UploadersAPILib.csproj", "{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderPluginTest", "ZUploaderPluginTest\ZUploaderPluginTest.csproj", "{A269F11C-43AC-4210-B716-BD621C915B43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,16 @@ Global
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}.Release|x86.ActiveCfg = Release|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ namespace ZUploader
         public PluginManager(string pluginFolderPath, IPluginHost pluginHost)
         {
             PluginFolderPath = pluginFolderPath;
-            manager =  new ExtensionManager<IPlugin, IPluginHost>();
+            manager = new ExtensionManager<IPlugin, IPluginHost>();
             manager.LoadDefaultFileExtensions();
             manager.AssemblyFailedLoading += new ExtensionManager<IPlugin, IPluginHost>.AssemblyFailedLoadingEventHandler(manager_AssemblyFailedLoading);
             manager.AssemblyLoading += new ExtensionManager<IPlugin, IPluginHost>.AssemblyLoadingEventHandler(manager_AssemblyLoading);
@@ -42,7 +42,9 @@ namespace ZUploader
 
             foreach (Extension<IPlugin> extension in manager.Extensions)
             {
-                extension.Instance.Host = host;
+                IPlugin plugin = extension.Instance;
+                plugin.Host = host;
+                plugin.Init();
             }
         }
     }

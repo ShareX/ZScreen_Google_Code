@@ -52,18 +52,13 @@ namespace ZUploader
         private void AfterLoadJobs()
         {
             LoadSettings();
-            //LoadPlugins();
+            LoadPlugins();
         }
 
         private void AfterShownJobs()
         {
             UseCommandLineArg(Program.CommandLineArg);
             IsReady = true;
-        }
-
-        public void TestPlugin(string text)
-        {
-            Debug.WriteLine(text);
         }
 
         private void InitControls()
@@ -74,27 +69,27 @@ namespace ZUploader
 
             foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestination>())
             {
-                tsddbImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
+                tsmiImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
-            tsddbImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
+            tsmiImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
             foreach (string fileUploader in Helpers.GetEnumDescriptions<FileUploaderType>())
             {
-                tsddbFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
+                tsmiFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
-            tsddbFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
+            tsmiFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
             foreach (string textUploader in Helpers.GetEnumDescriptions<TextUploaderType>())
             {
-                tsddbTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
+                tsmiTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
-            tsddbTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
+            tsmiTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
 
             foreach (string urlShortener in Helpers.GetEnumDescriptions<UrlShortenerType>())
             {
-                tsddbURLShorteners.DropDownItems.Add(new ToolStripMenuItem(urlShortener));
+                tsmiURLShorteners.DropDownItems.Add(new ToolStripMenuItem(urlShortener));
             }
-            tsddbURLShorteners.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbURLShorteners_DropDownItemClicked);
+            tsmiURLShorteners.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbURLShorteners_DropDownItemClicked);
 
             ImageList il = new ImageList();
             il.ColorDepth = ColorDepth.Depth32Bit;
@@ -117,7 +112,7 @@ namespace ZUploader
                 Program.Settings.SelectedImageUploaderDestination = 0;
             }
 
-            ((ToolStripMenuItem)tsddbImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
+            ((ToolStripMenuItem)tsmiImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
             UploadManager.ImageUploader = (ImageDestination)Program.Settings.SelectedImageUploaderDestination;
 
             if (Helpers.GetEnumLength<FileUploaderType>() <= Program.Settings.SelectedFileUploaderDestination)
@@ -125,7 +120,7 @@ namespace ZUploader
                 Program.Settings.SelectedFileUploaderDestination = 0;
             }
 
-            ((ToolStripMenuItem)tsddbFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
+            ((ToolStripMenuItem)tsmiFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
             UploadManager.FileUploader = (FileUploaderType)Program.Settings.SelectedFileUploaderDestination;
 
             if (Helpers.GetEnumLength<TextUploaderType>() <= Program.Settings.SelectedTextUploaderDestination)
@@ -133,7 +128,7 @@ namespace ZUploader
                 Program.Settings.SelectedTextUploaderDestination = 0;
             }
 
-            ((ToolStripMenuItem)tsddbTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
+            ((ToolStripMenuItem)tsmiTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextUploaderType)Program.Settings.SelectedTextUploaderDestination;
 
             if (Helpers.GetEnumLength<UrlShortenerType>() <= Program.Settings.SelectedURLShortenerDestination)
@@ -141,7 +136,7 @@ namespace ZUploader
                 Program.Settings.SelectedURLShortenerDestination = 0;
             }
 
-            ((ToolStripMenuItem)tsddbURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
+            ((ToolStripMenuItem)tsmiURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
 
             RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
@@ -528,9 +523,9 @@ namespace ZUploader
 
         private void tsddbImageUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            for (int i = 0; i < tsddbImageUploaders.DropDownItems.Count; i++)
+            for (int i = 0; i < tsmiImageUploaders.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbImageUploaders.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiImageUploaders.DropDownItems[i];
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedImageUploaderDestination = i;
@@ -541,9 +536,9 @@ namespace ZUploader
 
         private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            for (int i = 0; i < tsddbFileUploaders.DropDownItems.Count; i++)
+            for (int i = 0; i < tsmiFileUploaders.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbFileUploaders.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiFileUploaders.DropDownItems[i];
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedFileUploaderDestination = i;
@@ -554,9 +549,9 @@ namespace ZUploader
 
         private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            for (int i = 0; i < tsddbTextUploaders.DropDownItems.Count; i++)
+            for (int i = 0; i < tsmiTextUploaders.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbTextUploaders.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiTextUploaders.DropDownItems[i];
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedTextUploaderDestination = i;
@@ -567,9 +562,9 @@ namespace ZUploader
 
         private void tsddbURLShorteners_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            for (int i = 0; i < tsddbURLShorteners.DropDownItems.Count; i++)
+            for (int i = 0; i < tsmiURLShorteners.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbURLShorteners.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsmiURLShorteners.DropDownItems[i];
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedURLShortenerDestination = i;
@@ -584,5 +579,14 @@ namespace ZUploader
         }
 
         #endregion Form events
+
+        #region IPluginHost
+
+        public void AddPluginButton(ToolStripMenuItem tsmi)
+        {
+            tsddbPlugins.DropDownItems.Add(tsmi);
+        }
+
+        #endregion IPluginHost
     }
 }

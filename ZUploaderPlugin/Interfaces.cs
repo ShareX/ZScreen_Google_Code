@@ -1,8 +1,10 @@
-﻿namespace ZUploaderPlugin
+﻿using System.Windows.Forms;
+
+namespace ZUploaderPlugin
 {
     public interface IPluginHost
     {
-        void TestPlugin(string text);
+        void AddPluginButton(ToolStripMenuItem tsmi);
     }
 
     public interface IPlugin
@@ -14,6 +16,6 @@
         string Author { get; }
         string Version { get; }
 
-        void Test();
+        void Init();
     }
 }

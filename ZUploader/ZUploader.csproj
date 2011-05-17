@@ -208,6 +208,8 @@
     <None Include="Resources\notebook.png" />
     <None Include="Resources\image.png" />
     <None Include="Resources\application-browser.png" />
+    <None Include="Resources\gear.png" />
+    <None Include="Resources\block.png" />
     <Content Include="zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
