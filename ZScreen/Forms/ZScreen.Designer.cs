@@ -39,7 +39,7 @@ namespace ZScreenGUI
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmImageDest = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDestinations = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFileDest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
@@ -677,7 +677,7 @@ namespace ZScreenGUI
             this.cmTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiTabs,
             this.toolStripSeparator4,
-            this.tsmImageDest,
+            this.tsmiDestinations,
             this.tsmFileDest,
             this.tsmEditinImageSoftware,
             this.tsmCopytoClipboardMode,
@@ -710,10 +710,10 @@ namespace ZScreenGUI
             // 
             // tsmImageDest
             // 
-            this.tsmImageDest.Image = global::ZScreenGUI.Properties.Resources.picture_go;
-            this.tsmImageDest.Name = "tsmImageDest";
-            this.tsmImageDest.Size = new System.Drawing.Size(200, 22);
-            this.tsmImageDest.Text = "Send Image To";
+            this.tsmiDestinations.Image = global::ZScreenGUI.Properties.Resources.picture_go;
+            this.tsmiDestinations.Name = "tsmImageDest";
+            this.tsmiDestinations.Size = new System.Drawing.Size(200, 22);
+            this.tsmiDestinations.Text = "Send Image To";
             // 
             // tsmFileDest
             // 
@@ -6567,7 +6567,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         internal System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmImageDest;
+        internal System.Windows.Forms.ToolStripMenuItem tsmiDestinations;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         internal System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
