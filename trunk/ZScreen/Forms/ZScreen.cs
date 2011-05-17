@@ -1073,7 +1073,7 @@ namespace ZScreenGUI
 
         private ToolStripMenuItem GetImageDestMenuItem(ImageUploaderType idt)
         {
-            foreach (ToolStripMenuItem tsmi in tsmImageDest.DropDownItems)
+            foreach (ToolStripMenuItem tsmi in tsmiDestinations.DropDownItems)
             {
                 if ((ImageUploaderType)tsmi.Tag == idt)
                 {
@@ -1103,7 +1103,7 @@ namespace ZScreenGUI
             Engine.conf.MyImageUploader = (int)uploader;
             cboURLFormat.Enabled = uploader != ImageUploaderType.CLIPBOARD;
 
-            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem(uploader));
+            CheckToolStripMenuItem(tsmiDestinations, GetImageDestMenuItem(uploader));
         }
 
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)

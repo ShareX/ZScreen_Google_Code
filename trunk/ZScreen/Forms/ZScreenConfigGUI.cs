@@ -615,17 +615,17 @@ namespace ZScreenGUI
                 }
             }
 
-            if (tsmImageDest.DropDownItems.Count == 0)
+            if (tsmiDestinations.DropDownItems.Count == 0)
             {
                 foreach (ImageUploaderType idt in Enum.GetValues(typeof(ImageUploaderType)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
                     tsmi.Click += new EventHandler(tsmiDestImages_Click);
                     tsmi.Tag = idt;
-                    tsmImageDest.DropDownItems.Add(tsmi);
+                    tsmiDestinations.DropDownItems.Add(tsmi);
                 }
             }
-            CheckToolStripMenuItem(tsmImageDest, GetImageDestMenuItem((ImageUploaderType)Engine.conf.MyImageUploader));
+            CheckToolStripMenuItem(tsmiDestinations, GetImageDestMenuItem((ImageUploaderType)Engine.conf.MyImageUploader));
 
             if (tsmFileDest.DropDownItems.Count == 0)
             {
