@@ -164,17 +164,6 @@ namespace ZScreenGUI
             // Image Uploader Settings
             ///////////////////////////////////
 
-            // ImageShack
-
-            txtImageShackRegistrationCode.Text = Engine.conf.ImageShackRegistrationCode;
-            txtUserNameImageShack.Text = Engine.conf.ImageShackUserName;
-            chkPublicImageShack.Checked = Engine.conf.ImageShackShowImagesInPublic;
-
-            // TinyPic
-
-            txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
-            chkRememberTinyPicUserPass.Checked = Engine.conf.RememberTinyPicUserPass;
-
             // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
             cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
             if (cboTwitPicThumbnailMode.Items.Count == 0)
@@ -183,15 +172,6 @@ namespace ZScreenGUI
             }
 
             cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
-
-            // Imgur
-
-            chkImgurUserAccount.Checked = Engine.conf.ImgurAccountType == AccountType.User;
-
-            if (OAuthInfo.CheckOAuth(Engine.conf.ImgurOAuthInfo))
-            {
-                lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
-            }
 
             // Twitter
 

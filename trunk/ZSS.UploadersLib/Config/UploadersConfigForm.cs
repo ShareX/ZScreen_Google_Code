@@ -86,7 +86,7 @@ namespace UploadersLib.Config
 
             if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
             {
-                lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
+                lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
             }
 
             #endregion Image uploaders

@@ -530,11 +530,11 @@ namespace ZScreenLib
                     imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
                     break;
                 case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.conf.ImageShackRegistrationCode);
-                    ((ImageShackUploader)imageUploader).Public = Engine.conf.ImageShackShowImagesInPublic;
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.conf.UploadersConfig2.ImageShackRegistrationCode);
+                    ((ImageShackUploader)imageUploader).Public = Engine.conf.UploadersConfig2.ImageShackShowImagesInPublic;
                     break;
                 case ImageUploaderType.IMGUR:
-                    imageUploader = new Imgur(Engine.conf.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.conf.ImgurOAuthInfo);
+                    imageUploader = new Imgur(Engine.conf.UploadersConfig2.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.conf.UploadersConfig2.ImgurOAuthInfo);
                     break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
@@ -552,7 +552,7 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.conf.TinyPicShuk);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.conf.UploadersConfig2.TinyPicRegistrationCode);
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();

@@ -1243,14 +1243,6 @@ namespace ZScreenGUI
             Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.conf.ImageFormatSwitch);
         }
 
-        private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
-        {
-            if (mGuiIsReady)
-            {
-                Engine.conf.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
-            }
-        }
-
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShowBalloonTip = cbShowPopup.Checked;
@@ -1605,20 +1597,7 @@ namespace ZScreenGUI
             Loader.Worker.QuitSettingHotkeys();
         }
 
-        private void btnRegCodeTinyPic_Click(object sender, EventArgs e)
-        {
-            string shuk = Adapter.GetTinyPicShuk();
-            if (null != shuk)
-            {
-                txtTinyPicShuk.Text = shuk;
-            }
-            this.BringToFront();
-        }
-
-        private void txtTinyPicShuk_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.TinyPicShuk = txtTinyPicShuk.Text;
-        }
+        // TODO: TinyPic - re-add recurring task to update reg code
 
         private void CheckFormSettings()
         {
@@ -2465,11 +2444,6 @@ namespace ZScreenGUI
             Engine.conf.CloseDropBox = cbCloseDropBox.Checked;
         }
 
-        private void chkRememberTinyPicUserPass_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.RememberTinyPicUserPass = chkRememberTinyPicUserPass.Checked;
-        }
-
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
             Engine.conf.AutoIncrement = 0;
@@ -2772,21 +2746,6 @@ namespace ZScreenGUI
         private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
-        }
-
-        private void btnImageShackProfile_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://profile.imageshack.us/user/" + txtUserNameImageShack.Text);
-        }
-
-        private void chkPublicImageShack_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageShackShowImagesInPublic = chkPublicImageShack.Checked;
-        }
-
-        private void txtUserNameImageShack_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageShackUserName = txtUserNameImageShack.Text;
         }
 
         private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
@@ -3671,60 +3630,13 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(url))
                 {
-                    Engine.conf.ImgurOAuthInfo = oauth;
+                    Engine.conf.UploadersConfig2.ImgurOAuthInfo = oauth;
                     Process.Start(url);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnImgurLogin_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (ZScreenLib.InputBox inputBox = new ZScreenLib.InputBox("Imgur user account", "Enter verification code:"))
-                {
-                    if (inputBox.ShowDialog() == DialogResult.OK)
-                    {
-                        string verification = inputBox.InputText;
-
-                        if (!string.IsNullOrEmpty(verification) && Engine.conf.ImgurOAuthInfo != null &&
-                            !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Engine.conf.ImgurOAuthInfo.AuthSecret))
-                        {
-                            bool result = new Imgur(Engine.conf.ImgurOAuthInfo).GetAccessToken(verification);
-
-                            if (result)
-                            {
-                                lblImgurStatus.Text = "User token: " + Engine.conf.ImgurOAuthInfo.UserToken;
-                                MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                lblImgurStatus.Text = "Login is required";
-                                MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void cbImgurUseAccount_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkImgurUserAccount.Checked)
-            {
-                Engine.conf.ImgurAccountType = AccountType.User;
-            }
-            else
-            {
-                Engine.conf.ImgurAccountType = AccountType.Anonymous;
             }
         }
 
@@ -4002,7 +3914,7 @@ namespace ZScreenGUI
 
         private void tssMaintoolbar1_Click(object sender, EventArgs e)
         {
-            new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
+            new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.Show();
         }
     }
 }

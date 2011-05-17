@@ -319,15 +319,16 @@ namespace ZScreenLib
 
         public static string GetTinyPicShuk()
         {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Engine.conf.TinyPicUserName) ? "someone@gmail.com" : Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword) { Icon = Resources.zss_main };
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicUsername) ? "someone@gmail.com" :
+                Engine.conf.UploadersConfig2.TinyPicUsername, Engine.conf.UploadersConfig2.TinyPicPassword) { Icon = Resources.zss_main };
             ub.ShowDialog();
             if (ub.DialogResult == DialogResult.OK)
             {
                 TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
-                if (Engine.conf.RememberTinyPicUserPass)
+                if (Engine.conf.UploadersConfig2.TinyPicRememberUserPass)
                 {
-                    Engine.conf.TinyPicUserName = ub.UserName;
-                    Engine.conf.TinyPicPassword = ub.Password;
+                    Engine.conf.UploadersConfig2.TinyPicUsername = ub.UserName;
+                    Engine.conf.UploadersConfig2.TinyPicPassword = ub.Password;
                 }
                 return tpu.UserAuth(ub.UserName, ub.Password);
             }
@@ -339,18 +340,18 @@ namespace ZScreenLib
         /// </summary>
         public static void UpdateTinyPicShuk()
         {
-            if (Engine.conf.RememberTinyPicUserPass && !string.IsNullOrEmpty(Engine.conf.TinyPicUserName) &&
-                !string.IsNullOrEmpty(Engine.conf.TinyPicPassword))
+            if (Engine.conf.UploadersConfig2.TinyPicRememberUserPass && !string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicUsername) &&
+                !string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicPassword))
             {
                 TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
-                string shuk = tpu.UserAuth(Engine.conf.TinyPicUserName, Engine.conf.TinyPicPassword);
+                string shuk = tpu.UserAuth(Engine.conf.UploadersConfig2.TinyPicUsername, Engine.conf.UploadersConfig2.TinyPicPassword);
                 if (!string.IsNullOrEmpty(shuk))
                 {
-                    if (Engine.conf.TinyPicShuk != shuk)
+                    if (Engine.conf.UploadersConfig2.TinyPicRegistrationCode != shuk)
                     {
-                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.TinyPicShuk, shuk));
+                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.UploadersConfig2.TinyPicRegistrationCode, shuk));
                     }
-                    Engine.conf.TinyPicShuk = shuk;
+                    Engine.conf.UploadersConfig2.TinyPicRegistrationCode = shuk;
                 }
             }
         }
