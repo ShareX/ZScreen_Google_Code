@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
@@ -584,7 +585,30 @@ namespace ZUploader
 
         public void AddPluginButton(ToolStripMenuItem tsmi)
         {
-            tsddbPlugins.DropDownItems.Add(tsmi);
+            if (tsmi != null)
+            {
+                tsddbPlugins.DropDownItems.Add(tsmi);
+            }
+        }
+
+        public void UploadFile(string path)
+        {
+            UploadManager.UploadFile(path);
+        }
+
+        public void UploadFile(string[] files)
+        {
+            UploadManager.UploadFile(files);
+        }
+
+        public void UploadImage(Image img)
+        {
+            UploadManager.UploadImage(img);
+        }
+
+        public void UploadText(string text)
+        {
+            UploadManager.UploadText(text);
         }
 
         #endregion IPluginHost

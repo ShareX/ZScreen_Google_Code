@@ -76,7 +76,7 @@ namespace HelpersLib
                     lock (ClipboardLock)
                     {
                         Clipboard.Clear();
-                        Clipboard.SetText(text); // ok (unused)
+                        Clipboard.SetText(text);
                     }
                 }
                 catch (ExternalException)
