@@ -3905,6 +3905,21 @@ namespace ZScreenGUI
             timer.Start();
         }
 
+        private void ExecuteTimer(MethodInvoker method, ToolStripItem control, int executeTime = 3000)
+        {
+            var timer = new System.Windows.Forms.Timer { Interval = executeTime };
+
+            timer.Tick += (sender, e) =>
+            {
+                timer.Stop();
+                method();
+                control.Enabled = true;
+            };
+
+            control.Enabled = false;
+            timer.Start();
+        }
+
         #region Main tab toolbar
 
         private void tsbFullscreenCapture_Click(object sender, EventArgs e)
@@ -3914,12 +3929,12 @@ namespace ZScreenGUI
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBW_ActiveWindow();
+            ExecuteTimer(() => Loader.Worker.StartBW_ActiveWindow(), tsbActiveWindow);
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBw_SelectedWindow(); // need to be able to capture ZScreen window as part of Selected Window as well so ZScreen should not hide
+            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
