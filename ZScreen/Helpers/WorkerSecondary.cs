@@ -140,11 +140,6 @@ namespace ZScreenGUI
         private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             FillLanguages();
-
-            if (!string.IsNullOrEmpty(Engine.conf.TinyPicShuk) && Engine.conf.TinyPicShuk != mZScreen.txtTinyPicShuk.Text)
-            {
-                mZScreen.txtTinyPicShuk.Text = Engine.conf.TinyPicShuk;
-            }
         }
 
         public void FillLanguages()

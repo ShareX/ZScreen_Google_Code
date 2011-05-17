@@ -90,25 +90,9 @@ namespace ZScreenLib
 
         #region Image uploaders
 
-        // ImageShack
-
-        public string ImageShackRegistrationCode = string.Empty;
-        public string ImageShackUserName = string.Empty;
-        public bool ImageShackShowImagesInPublic = false;
-
         // TinyPic
-
-        public string TinyPicShuk = string.Empty;
-        public string TinyPicUserName = string.Empty;
-        public string TinyPicPassword = string.Empty;
-        public bool RememberTinyPicUserPass = false;
         [Category("Options / Image Uploaders"), DefaultValue(true), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
         public bool TinyPicSizeCheck { get; set; }
-
-        // Imgur
-
-        public AccountType ImgurAccountType = AccountType.Anonymous;
-        public OAuthInfo ImgurOAuthInfo = null;
 
         // Flickr
 
