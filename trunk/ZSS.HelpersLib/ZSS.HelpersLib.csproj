@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClipboardMetafileHelper.cs" />
     <Compile Include="ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
