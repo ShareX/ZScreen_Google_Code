@@ -23,17 +23,16 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
-using System;
-using System.Drawing.Imaging;
-using HelpersLib;
-using System.IO;
-using System.Drawing;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -98,21 +97,17 @@ namespace ZScreenLib
 
             if (task.JobIsImageToClipboard())
             {
-                //if (handle != IntPtr.Zero)
-                //{
-                //    MemoryStream ms = new MemoryStream();
-                //    Graphics g = Graphics.FromImage(new Bitmap(task.MyImage)); 
-                //    IntPtr ipHdc = g.GetHdc();
-                //    Metafile mf = new Metafile(ms, ipHdc);
-                //    FileSystem.AppendDebug(mf.Width.ToString());
-                //    ClipboardMetafileHelper.PutEnhMetafileOnClipboard(handle, mf);
-                //    g.ReleaseHdc(ipHdc);
-                //    g.Dispose();
-                //}
-                //else
-                //{
-                    Clipboard.SetImage(task.MyImage);
-                //}
+                MemoryStream ms = new MemoryStream();
+                MemoryStream ms2 = new MemoryStream();
+                Bitmap bmp = new Bitmap(task.MyImage);
+                bmp.Save(ms, ImageFormat.Bmp);
+                byte[] b = ms.GetBuffer();
+                ms2.Write(b, 14, (int)ms.Length - 14);
+                ms.Position = 0;
+                DataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.Bitmap, bmp);
+                dataObject.SetData(DataFormats.Dib, ms2);
+                Clipboard.SetDataObject(dataObject, true, 3, 1000);
             }
             else if (task.JobIsImageToFile())
             {
