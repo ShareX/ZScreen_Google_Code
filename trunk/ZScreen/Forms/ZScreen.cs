@@ -53,6 +53,7 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
+using UploadersLib.Config;
 
 namespace ZScreenGUI
 {
@@ -3998,5 +3999,10 @@ namespace ZScreenGUI
         }
 
         #endregion Main tab toolbar
+
+        private void tssMaintoolbar1_Click(object sender, EventArgs e)
+        {
+            new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
+        }
     }
 }

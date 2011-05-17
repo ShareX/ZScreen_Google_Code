@@ -75,7 +75,9 @@ namespace UploadersAPILib
                 TinyPicID = TinyPicID,
                 TinyPicKey = TinyPicKey,
                 ImgurConsumerKey = ImgurConsumerKey,
-                ImgurConsumerSecret = ImgurConsumerSecret
+                ImgurConsumerSecret = ImgurConsumerSecret,
+                DropboxConsumerKey = DropboxConsumerKey,
+                DropboxConsumerSecret = DropboxConsumerSecret
             };
         }
     }
