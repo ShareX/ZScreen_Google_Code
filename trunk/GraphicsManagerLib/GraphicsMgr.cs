@@ -61,6 +61,7 @@ namespace GraphicsMgrLib
         public static Image CropImage(Image img, Rectangle rect)
         {
             Image bmp = new Bitmap(rect.Width, rect.Height);
+
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.CompositingQuality = CompositingQuality.HighQuality;
