@@ -14,12 +14,12 @@ namespace ZUploaderCropPlugin
 
         public string Name
         {
-            get { return "Crop Capture"; }
+            get { return "Screenshot capture"; }
         }
 
         public string Description
         {
-            get { return "..."; }
+            get { return "Fullscreen capture, Crop capture"; }
         }
 
         public string Author
@@ -34,18 +34,45 @@ namespace ZUploaderCropPlugin
 
         public void Init()
         {
-            ToolStripMenuItem tsmi = new ToolStripMenuItem();
-            tsmi.Text = "Crop capture";
-            tsmi.Image = Resources.layer_shape;
-            tsmi.Click += new EventHandler(tsmi_Click);
-            Host.AddPluginButton(tsmi);
+            ToolStripMenuItem tsmiFullscreen = new ToolStripMenuItem();
+            tsmiFullscreen.Text = "Fullscreen capture";
+            tsmiFullscreen.Image = Resources.layer;
+            tsmiFullscreen.Click += new EventHandler(tsmiFullscreen_Click);
+
+            ToolStripMenuItem tsmiCrop = new ToolStripMenuItem();
+            tsmiCrop.Text = "Crop capture";
+            tsmiCrop.Image = Resources.layer_shape;
+            tsmiCrop.Click += new EventHandler(tsmiCrop_Click);
+
+            Host.AddPluginButton(tsmiFullscreen);
+            Host.AddPluginButton(tsmiCrop);
         }
 
-        private void tsmi_Click(object sender, EventArgs e)
+        private void tsmiFullscreen_Click(object sender, EventArgs e)
         {
             Host.Hide();
+            Thread.Sleep(250);
 
-            Thread.Sleep(500);
+            try
+            {
+                Image screenshot = Helpers.GetScreenshot();
+                Host.Show();
+                Host.UploadImage(screenshot);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                Host.Show();
+            }
+        }
+
+        private void tsmiCrop_Click(object sender, EventArgs e)
+        {
+            Host.Hide();
+            Thread.Sleep(250);
 
             try
             {

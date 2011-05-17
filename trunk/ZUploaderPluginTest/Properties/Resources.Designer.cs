@@ -60,6 +60,13 @@ namespace ZUploaderCropPlugin.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap layer {
+            get {
+                object obj = ResourceManager.GetObject("layer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap layer_shape {
             get {
                 object obj = ResourceManager.GetObject("layer_shape", resourceCulture);
