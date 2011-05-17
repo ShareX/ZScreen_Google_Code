@@ -1,5 +1,11 @@
 #summary Overview of setting screens in ZScreen.
 
-ZScreen is very flexible. Practically all operations can be configured.
-The ZScreen settings are divided in tabs. Some of the tabs have sub-tabs.
+ZScreen is very flexible. 
+
+Practically all operations can be configured.
+
+The ZScreen settings are divided in tabs. 
+
+Some of the tabs have sub-tabs.
+
 These tabs are arranged logically, in the order of operations.
