@@ -241,11 +241,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Favicons\DropboxIcon.png" />
-    <Content Include="Favicons\FlickrIcon.png" />
-    <Content Include="Favicons\ImageShackIcon.png" />
-    <Content Include="Favicons\ImgurIcon.png" />
-    <Content Include="Favicons\TinyPicIcon.png" />
+    <Content Include="Favicons\Dropbox.ico" />
+    <Content Include="Favicons\Flickr.ico" />
+    <Content Include="Favicons\ImageShack.ico" />
+    <Content Include="Favicons\Imgur.ico" />
+    <Content Include="Favicons\MediaWiki.ico" />
+    <Content Include="Favicons\Pastebin.ico" />
+    <Content Include="Favicons\RapidShare.ico" />
+    <Content Include="Favicons\SendSpace.ico" />
+    <Content Include="Favicons\TinyPic.ico" />
+    <Content Include="Favicons\TwitPic.ico" />
+    <Content Include="Favicons\TwitSnaps.ico" />
+    <Content Include="Favicons\Twitter.ico" />
+    <Content Include="Favicons\YFrog.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
