@@ -47,18 +47,52 @@ namespace UploadersLib.Config
 
         private void LoadTabIcons()
         {
-            ImageList tabImageList = new ImageList();
-            tabImageList.ColorDepth = ColorDepth.Depth32Bit;
-            tabImageList.Images.Add("ImageShackIcon", Resources.ImageShackIcon);
-            tabImageList.Images.Add("TinyPicIcon", Resources.TinyPicIcon);
-            tabImageList.Images.Add("ImgurIcon", Resources.ImgurIcon);
-            tabImageList.Images.Add("FlickrIcon", Resources.FlickrIcon);
-            tabImageList.Images.Add("DropboxIcon", Resources.DropboxIcon);
-            tcImageUploaders.ImageList = tabImageList;
-            tpImageShack.ImageKey = "ImageShackIcon";
-            tpTinyPic.ImageKey = "TinyPicIcon";
-            tpImgur.ImageKey = "ImgurIcon";
-            tpFlickr.ImageKey = "FlickrIcon";
+            ImageList imageUploadersImageList = new ImageList();
+            imageUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
+            imageUploadersImageList.Images.Add("ImageShack", Resources.ImageShack);
+            imageUploadersImageList.Images.Add("TinyPic", Resources.TinyPic);
+            imageUploadersImageList.Images.Add("Imgur", Resources.Imgur);
+            imageUploadersImageList.Images.Add("Flickr", Resources.Flickr);
+            imageUploadersImageList.Images.Add("TwitPic", Resources.TwitPic);
+            imageUploadersImageList.Images.Add("TwitSnaps", Resources.TwitSnaps);
+            imageUploadersImageList.Images.Add("YFrog", Resources.YFrog);
+            imageUploadersImageList.Images.Add("MediaWiki", Resources.MediaWiki);
+            tcImageUploaders.ImageList = imageUploadersImageList;
+
+            ImageList fileUploadersImageList = new ImageList();
+            fileUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
+            fileUploadersImageList.Images.Add("Dropbox", Resources.Dropbox);
+            fileUploadersImageList.Images.Add("RapidShare", Resources.RapidShare);
+            fileUploadersImageList.Images.Add("SendSpace", Resources.SendSpace);
+            tcFileUploaders.ImageList = fileUploadersImageList;
+
+            ImageList textUploadersImageList = new ImageList();
+            textUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
+            textUploadersImageList.Images.Add("Pastebin", Resources.Pastebin);
+            tcTextUploaders.ImageList = textUploadersImageList;
+
+            ImageList urlShortenersImageList = new ImageList();
+            urlShortenersImageList.ColorDepth = ColorDepth.Depth32Bit;
+            tcURLShorteners.ImageList = urlShortenersImageList;
+
+            ImageList otherServicesImageList = new ImageList();
+            otherServicesImageList.ColorDepth = ColorDepth.Depth32Bit;
+            otherServicesImageList.Images.Add("Twitter", Resources.Twitter);
+            tcOtherServices.ImageList = otherServicesImageList;
+
+            tpImageShack.ImageKey = "ImageShack";
+            tpTinyPic.ImageKey = "TinyPic";
+            tpImgur.ImageKey = "Imgur";
+            tpFlickr.ImageKey = "Flickr";
+            tpTwitPic.ImageKey = "TwitPic";
+            tpTwitSnaps.ImageKey = "TwitSnaps";
+            tpYFrog.ImageKey = "YFrog";
+            tpMediaWiki.ImageKey = "MediaWiki";
+            tpDropbox.ImageKey = "Dropbox";
+            tpRapidShare.ImageKey = "RapidShare";
+            tpSendSpace.ImageKey = "SendSpace";
+            tpPastebin.ImageKey = "Pastebin";
+            tpTwitter.ImageKey = "Twitter";
         }
 
         public void LoadSettings(UploadersConfig uploadersConfig)

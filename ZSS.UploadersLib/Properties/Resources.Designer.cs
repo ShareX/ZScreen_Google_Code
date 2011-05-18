@@ -60,38 +60,94 @@ namespace UploadersLib.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap DropboxIcon {
+        internal static System.Drawing.Icon Dropbox {
             get {
-                object obj = ResourceManager.GetObject("DropboxIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("Dropbox", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap FlickrIcon {
+        internal static System.Drawing.Icon Flickr {
             get {
-                object obj = ResourceManager.GetObject("FlickrIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("Flickr", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ImageShackIcon {
+        internal static System.Drawing.Icon ImageShack {
             get {
-                object obj = ResourceManager.GetObject("ImageShackIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("ImageShack", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ImgurIcon {
+        internal static System.Drawing.Icon Imgur {
             get {
-                object obj = ResourceManager.GetObject("ImgurIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("Imgur", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap TinyPicIcon {
+        internal static System.Drawing.Icon MediaWiki {
             get {
-                object obj = ResourceManager.GetObject("TinyPicIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("MediaWiki", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon Pastebin {
+            get {
+                object obj = ResourceManager.GetObject("Pastebin", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon RapidShare {
+            get {
+                object obj = ResourceManager.GetObject("RapidShare", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon SendSpace {
+            get {
+                object obj = ResourceManager.GetObject("SendSpace", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon TinyPic {
+            get {
+                object obj = ResourceManager.GetObject("TinyPic", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon TwitPic {
+            get {
+                object obj = ResourceManager.GetObject("TwitPic", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon TwitSnaps {
+            get {
+                object obj = ResourceManager.GetObject("TwitSnaps", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon Twitter {
+            get {
+                object obj = ResourceManager.GetObject("Twitter", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon YFrog {
+            get {
+                object obj = ResourceManager.GetObject("YFrog", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }
