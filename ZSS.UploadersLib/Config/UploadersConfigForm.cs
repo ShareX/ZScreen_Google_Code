@@ -78,6 +78,10 @@ namespace UploadersLib
 
             #endregion Image uploaders
 
+            #region Text uploaders
+            pgPastebinSettings.SelectedObject = Config.PastebinSettings;
+            #endregion
+
             #region File uploaders
 
             // Dropbox
@@ -399,6 +403,11 @@ namespace UploadersLib
         }
 
         #endregion 
+
+        private void btnPastebinLogin_Click(object sender, EventArgs e)
+        {
+            PastebinLogin();
+        }
 
     }
 }
