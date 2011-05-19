@@ -42,5 +42,9 @@ namespace UploadersLib
 
         // Text Uploaders
         public string PastebinKey { get; set; }
+
+        // Other Services
+        public string TwitterConsumerKey { get; set; }
+        public string TwitterConsumerSecret { get; set; }
     }
 }

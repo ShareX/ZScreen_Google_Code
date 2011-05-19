@@ -75,8 +75,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Destinations()
         {
-            #region MindTouch Settings
-
             ///////////////////////////////////
             // MindTouch Deki Wiki Settings
             ///////////////////////////////////
@@ -96,18 +94,6 @@ namespace ZScreenGUI
 
             chkDekiWikiForcePath.Checked = Engine.conf.DekiWikiForcePath;
 
-            #endregion MindTouch Settings
-
-            #region MediaWiki Settings
-
-            ///////////////////////////////////
-            // MediaWiki Settings
-            ///////////////////////////////////
-
-            #endregion MediaWiki Settings
-
-            #region Image Uploaders
-
             ///////////////////////////////////
             // Image Uploader Settings
             ///////////////////////////////////
@@ -120,20 +106,6 @@ namespace ZScreenGUI
             }
 
             cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
-
-            // Twitter
-
-            ucTwitterAccounts.AccountsList.Items.Clear();
-            foreach (OAuthInfo acc in Engine.conf.TwitterOAuthInfoList)
-            {
-                ucTwitterAccounts.AccountsList.Items.Add(acc);
-            }
-            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
-            {
-                ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
-            }
-
-            #endregion Image Uploaders
         }
 
         private void ZScreen_ConfigGUI_Editors()

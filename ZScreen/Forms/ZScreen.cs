@@ -219,15 +219,6 @@ namespace ZScreenGUI
             ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
             ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
-            // Accounts - Twitter
-            ucTwitterAccounts.btnAdd.Text = "Add";
-            ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
-            ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
-            ucTwitterAccounts.btnTest.Text = "Authorize";
-            ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
-            ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.NoSort;
-            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
-
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
             ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
@@ -2038,7 +2029,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
+                acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage];
             }
 
             return acc;
@@ -2763,13 +2754,6 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            if (!Adapter.CheckTwitterAccounts())
-            {
-                MessageBox.Show("Configure your Twitter accounts in Destinations tab", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tcMain.SelectedTab = tpDestinations;
-                tcDestinations.SelectedTab = tpDestTwitter;
-            }
-
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
@@ -2786,56 +2770,6 @@ namespace ZScreenGUI
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
             Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
-        }
-
-        private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
-        {
-            if (Adapter.CheckTwitterAccounts())
-            {
-                OAuthInfo acc = Adapter.TwitterGetActiveAcct();
-                Twitter twitter = new Twitter(acc);
-                string url = twitter.GetAuthorizationURL();
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected] = acc;
-                    Process.Start(url);
-                    ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-                }
-            }
-        }
-
-        private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
-            if (ucTwitterAccounts.RemoveItem(sel))
-            {
-                Engine.conf.TwitterOAuthInfoList.RemoveAt(sel);
-            }
-        }
-
-        private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
-            Engine.conf.TwitterAcctSelected = sel;
-
-            if (Adapter.CheckList(Engine.conf.TwitterOAuthInfoList, Engine.conf.TwitterAcctSelected))
-            {
-                OAuthInfo acc = Engine.conf.TwitterOAuthInfoList[sel];
-                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-            }
-        }
-
-        private void TwitterAccountAddButton_Click(object sender, EventArgs e)
-        {
-            OAuthInfo acc = new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
-            Engine.conf.TwitterOAuthInfoList.Add(acc);
-            ucTwitterAccounts.AccountsList.Items.Add(acc);
-            ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
-            if (Adapter.CheckTwitterAccounts())
-            {
-                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
-            }
         }
 
         private void SetToolTip(Control original)
@@ -3048,48 +2982,6 @@ namespace ZScreenGUI
             if (mGuiIsReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
-            }
-        }
-
-        private void btnDropboxLogin_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OAuthInfo oauth = new OAuthInfo(ZKeys.DropboxConsumerKey, ZKeys.DropboxConsumerSecret);
-
-                string url = new Dropbox(oauth).GetAuthorizationURL();
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    Engine.conf.DropboxOAuthInfo = oauth;
-                    Process.Start(url);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnTwitterLogin_Click(object sender, EventArgs e)
-        {
-            OAuthInfo acc = Adapter.TwitterGetActiveAcct();
-            string verification = acc.AuthVerifier;
-
-            if (!string.IsNullOrEmpty(verification) && acc != null &&
-                !string.IsNullOrEmpty(acc.AuthToken) && !string.IsNullOrEmpty(acc.AuthSecret))
-            {
-                Twitter twitter = new Twitter(acc);
-                bool result = twitter.GetAccessToken(acc.AuthVerifier);
-
-                if (result)
-                {
-                    MessageBox.Show("Login success.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
         }
 

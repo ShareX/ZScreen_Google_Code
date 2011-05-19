@@ -356,5 +356,14 @@ namespace UploadersLib
         #endregion Pastebin
 
         #endregion Text uploaders
+
+        #region Other Services
+
+        private void btnTwitterLogin_Click(object sender, EventArgs e)
+        {
+            TwitterLogin();
+        }
+
+        #endregion Other Services
     }
 }

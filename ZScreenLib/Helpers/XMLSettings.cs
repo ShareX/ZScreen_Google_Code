@@ -38,15 +38,13 @@ using System.Windows.Forms.Design;
 using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
+using HelpersLib;
 using UploadersLib;
-using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
-using UploadersLib.TextUploaders;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
-using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -88,26 +86,14 @@ namespace ZScreenLib
 
         public UploadersConfig UploadersConfig2 = new UploadersConfig();
 
-        #region Image uploaders
-
         // TinyPic
         [Category("Options / Image Uploaders"), DefaultValue(true), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
         public bool TinyPicSizeCheck { get; set; }
-
-        // Flickr
-
-        public FlickrAuthInfo FlickrAuthInfo = new FlickrAuthInfo();
-        public FlickrSettings FlickrSettings = new FlickrSettings();
 
         // TwitPic
 
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
-        // MediaWiki
-
-        public List<MediaWikiAccount> MediaWikiAccountList = new List<MediaWikiAccount>();
-        public int MediaWikiAccountSelected = 0;
 
         // DekiWiki
 
@@ -115,60 +101,10 @@ namespace ZScreenLib
         public int DekiWikiSelected = 0;
         public bool DekiWikiForcePath = false;
 
-        #endregion Image uploaders
-
-        #region File uploaders
-
-        // FTP
-
-        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
-        public int FtpImages = 0;
-        public int FtpText = 0;
-        public int FtpFiles = 0;
-        public int FTPThumbnailWidth = 150;
-        public bool FTPThumbnailCheckSize = true;
-
-        // Dropbox
-
-        public OAuthInfo DropboxOAuthInfo = null;
-        public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
-        public string DropboxEmail = string.Empty;
-        public string DropboxName = string.Empty;
-        public string DropboxUserID = string.Empty;
-
-        // RapidShare
-
-        public string RapidSharePremiumUserName = string.Empty;
-        public string RapidShareCollectorsID = string.Empty;
-        public string RapidSharePassword = string.Empty;
-        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
-
-        // SendSpace
-
-        public AccountType SendSpaceAccountType = AccountType.Anonymous;
-        public string SendSpaceUserName = string.Empty;
-        public string SendSpacePassword = string.Empty;
-
         // Custom Uploaders
 
         public List<CustomUploaderInfo> CustomUploadersList = new List<CustomUploaderInfo>();
         public int CustomUploaderSelected = 0;
-
-        #endregion File uploaders
-
-        #region Text uploaders
-
-        // Pastebin
-
-        public PastebinSettings PastebinSettings = new PastebinSettings();
-
-        #endregion Text uploaders
-
-        #region URL shorteners
-
-        #endregion URL shorteners
-
-        #region Other services
 
         // Twitter
 
@@ -180,17 +116,6 @@ namespace ZScreenLib
         public string TwitterUsername { get; set; }
         [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
         public string TwitterPassword { get; set; }
-
-        #endregion Other services
-
-        #region Other destinations
-
-        // Localhost
-
-        public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
-        public int LocalhostSelected = 0;
-
-        #endregion Other destinations
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
@@ -764,7 +689,6 @@ namespace ZScreenLib
 
         public static XMLSettings Read(string filePath)
         {
-
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
                 return HelpersLib.SettingsHelper.Load<XMLSettings>(filePath, HelpersLib.SerializationType.Xml, Engine.MyLogger);

@@ -35,6 +35,7 @@ using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 
 namespace UploadersLib
@@ -125,7 +126,7 @@ namespace UploadersLib
                     FlickrUploader flickr = new FlickrUploader(APIKeys.FlickrKey, APIKeys.FlickrSecret);
                     Config.FlickrAuthInfo = flickr.GetToken(token);
                     pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;
-                    // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
+                    // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Config.FlickrAuthInfo.Username);
                     MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -536,5 +537,50 @@ namespace UploadersLib
         }
 
         #endregion Pastebin
+
+        #region Twitter
+
+        public bool CheckTwitterAccounts()
+        {
+            return Config.TwitterOAuthInfoList.CheckSelected(Config.TwitterSelectedAccount);
+        }
+
+        /// <summary>
+        /// Returns the active TwitterAuthInfo object; if nothing is active then a new TwitterAuthInfo object is returned
+        /// </summary>
+        /// <returns></returns>
+        public OAuthInfo TwitterGetActiveAccount()
+        {
+            if (CheckTwitterAccounts())
+            {
+                return Config.TwitterOAuthInfoList[Config.TwitterSelectedAccount];
+            }
+
+            return new OAuthInfo(APIKeys.TwitterConsumerKey, APIKeys.TwitterConsumerSecret);
+        }
+
+        public void TwitterLogin()
+        {
+            OAuthInfo acc = TwitterGetActiveAccount();
+            string verification = acc.AuthVerifier;
+
+            if (!string.IsNullOrEmpty(verification) && acc != null &&
+                !string.IsNullOrEmpty(acc.AuthToken) && !string.IsNullOrEmpty(acc.AuthSecret))
+            {
+                Twitter twitter = new Twitter(acc);
+                bool result = twitter.GetAccessToken(acc.AuthVerifier);
+
+                if (result)
+                {
+                    MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        #endregion Twitter
     }
 }

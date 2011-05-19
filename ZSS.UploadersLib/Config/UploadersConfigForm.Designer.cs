@@ -88,7 +88,6 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -117,7 +116,6 @@
             this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
@@ -131,6 +129,10 @@
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
+            this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -159,6 +161,7 @@
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
+            this.tpTwitter.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -603,9 +606,9 @@
             this.lblTwitSnapsTip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTwitSnapsTip.Location = new System.Drawing.Point(16, 16);
             this.lblTwitSnapsTip.Name = "lblTwitSnapsTip";
-            this.lblTwitSnapsTip.Size = new System.Drawing.Size(182, 20);
+            this.lblTwitSnapsTip.Size = new System.Drawing.Size(368, 40);
             this.lblTwitSnapsTip.TabIndex = 0;
-            this.lblTwitSnapsTip.Text = "Other Services -> Twitter";
+            this.lblTwitSnapsTip.Text = "TwitSnaps using Twitter settings for authentication.\r\nOther Services -> Twitter";
             // 
             // tpYFrog
             // 
@@ -824,16 +827,6 @@
             this.btnFtpHelp.Text = "&Help...";
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.MinimumSize = new System.Drawing.Size(760, 400);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
-            this.ucFTPAccounts.TabIndex = 0;
             // 
             // gbFtpSettings
             // 
@@ -1122,15 +1115,6 @@
             this.tbLocalhost.Text = "Localhost";
             this.tbLocalhost.UseVisualStyleBackColor = true;
             // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 542);
-            this.ucLocalhostAccounts.TabIndex = 2;
-            // 
             // tpCustomUploaders
             // 
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 22);
@@ -1247,6 +1231,8 @@
             // 
             // tpTwitter
             // 
+            this.tpTwitter.Controls.Add(this.btnTwitterLogin);
+            this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
             this.tpTwitter.Location = new System.Drawing.Point(4, 22);
             this.tpTwitter.Name = "tpTwitter";
             this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
@@ -1266,6 +1252,42 @@
             this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
             this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 528);
             this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.MinimumSize = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 542);
+            this.ucLocalhostAccounts.TabIndex = 2;
+            // 
+            // btnTwitterLogin
+            // 
+            this.btnTwitterLogin.Location = new System.Drawing.Point(234, 16);
+            this.btnTwitterLogin.Name = "btnTwitterLogin";
+            this.btnTwitterLogin.Size = new System.Drawing.Size(60, 24);
+            this.btnTwitterLogin.TabIndex = 23;
+            this.btnTwitterLogin.Text = "Login";
+            this.btnTwitterLogin.UseVisualStyleBackColor = true;
+            this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
+            // 
+            // ucTwitterAccounts
+            // 
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(752, 536);
+            this.ucTwitterAccounts.TabIndex = 24;
             // 
             // UploadersConfigForm
             // 
@@ -1316,6 +1338,7 @@
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
+            this.tpTwitter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1424,5 +1447,7 @@
         private System.Windows.Forms.Button btnFlickrCompleteAuth;
         private System.Windows.Forms.Button btnFlickrOpenAuthorize;
         internal AccountsControl ucMediaWikiAccounts;
+        private System.Windows.Forms.Button btnTwitterLogin;
+        private AccountsControl ucTwitterAccounts;
     }
 }
