@@ -1,4 +1,6 @@
 ﻿using System.Windows.Forms;
+using UploadersLib;
+using UploadersAPILib;
 
 namespace ZScreenLib
 {
@@ -7,6 +9,11 @@ namespace ZScreenLib
         public DestSelector()
         {
             InitializeComponent();
+        }
+
+        private void btnOpenUploadersConfig_Click(object sender, System.EventArgs e)
+        {
+            new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()).Show();
         }
     }
 }

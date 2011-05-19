@@ -1,11 +1,35 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using UploadersLib.Properties;
-using UploadersLib.HelperClasses;
+using HelpersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.HelperClasses;
+using UploadersLib.Properties;
 
 namespace UploadersLib
 {
@@ -61,6 +85,110 @@ namespace UploadersLib
             tpTwitter.ImageKey = "Twitter";
         }
 
+        public void LoadSettings(UploadersConfig uploadersConfig)
+        {
+            Config = uploadersConfig;
+
+            #region Image uploaders
+
+            // ImageShack
+
+            txtImageShackRegistrationCode.Text = Config.ImageShackRegistrationCode;
+            txtImageShackUsername.Text = Config.ImageShackUsername;
+            cbImageShackIsPublic.Checked = Config.ImageShackShowImagesInPublic;
+
+            // TinyPic
+
+            txtTinyPicUsername.Text = Config.TinyPicUsername;
+            txtTinyPicPassword.Text = Config.TinyPicPassword;
+            cbTinyPicRememberUsernamePassword.Checked = Config.TinyPicRememberUserPass;
+            txtTinyPicRegistrationCode.Text = Config.TinyPicRegistrationCode;
+
+            // Imgur
+
+            cbImgurUseUserAccount.Checked = Config.ImgurAccountType == AccountType.User;
+
+            if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
+            {
+                lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
+            }
+
+            #endregion Image uploaders
+
+            #region Text uploaders
+
+            // Pastebin
+
+            pgPastebinSettings.SelectedObject = Config.PastebinSettings;
+
+            #endregion Text uploaders
+
+            #region File uploaders
+
+            // Dropbox
+
+            txtDropboxPath.Text = Config.DropboxUploadPath;
+            UpdateDropboxStatus();
+
+            // FTP
+
+            if (Config.FTPAccountList == null || Config.FTPAccountList.Count == 0)
+            {
+                FTPSetup(new List<FTPAccount>());
+            }
+            else
+            {
+                FTPSetup(Config.FTPAccountList);
+                if (ucFTPAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucFTPAccounts.AccountsList.SelectedIndex = 0;
+                }
+            }
+
+            txtFTPThumbWidth.Text = Config.FTPThumbnailWidthLimit.ToString();
+            chkFTPThumbnailCheckSize.Checked = Config.FTPThumbnailCheckSize;
+
+            // RapidShare
+
+            if (cboRapidShareAcctType.Items.Count == 0)
+            {
+                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetEnumDescriptions());
+            }
+
+            cboRapidShareAcctType.SelectedIndex = (int)Config.RapidShareAccountType;
+            txtRapidShareCollectorID.Text = Config.RapidShareCollectorsID;
+            txtRapidSharePassword.Text = Config.RapidSharePassword;
+            txtRapidSharePremiumUserName.Text = Config.RapidSharePremiumUserName;
+
+            // SendSpace
+
+            if (cboSendSpaceAcctType.Items.Count == 0)
+            {
+                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetEnumDescriptions());
+            }
+
+            cboSendSpaceAcctType.SelectedIndex = (int)Config.SendSpaceAccountType;
+            txtSendSpacePassword.Text = Config.SendSpacePassword;
+            txtSendSpaceUserName.Text = Config.SendSpaceUsername;
+
+            // Localhost
+
+            if (Config.LocalhostAccountList == null || Config.LocalhostAccountList.Count == 0)
+            {
+                LocalhostAccountsSetup(new List<LocalhostAccount>());
+            }
+            else
+            {
+                LocalhostAccountsSetup(Config.LocalhostAccountList);
+                if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucLocalhostAccounts.AccountsList.SelectedIndex = Config.LocalhostSelected;
+                }
+            }
+
+            #endregion File uploaders
+        }
+
         private void CreateUserControlEvents()
         {
             // FTP
@@ -79,7 +207,6 @@ namespace UploadersLib
             ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
             ucLocalhostAccounts.btnTest.Visible = false;
             ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
-
         }
 
         #region Localhost UserControl Events
@@ -113,7 +240,7 @@ namespace UploadersLib
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
             Config.LocalhostSelected = sel;
-            if (StaticHelper.CheckList(Config.LocalhostAccountList, sel))
+            if (Config.LocalhostAccountList.CheckSelected(sel))
             {
                 LocalhostAccount acc = Config.LocalhostAccountList[sel];
                 ucLocalhostAccounts.SettingsGrid.SelectedObject = acc;
@@ -134,7 +261,7 @@ namespace UploadersLib
             }
         }
 
-        #endregion
+        #endregion Localhost UserControl Events
 
         #region FTP UserControl Events
 
@@ -217,7 +344,7 @@ namespace UploadersLib
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
 
-            if (StaticHelper.CheckList(Config.FTPAccountList, sel))
+            if (Config.FTPAccountList.CheckSelected(sel))
             {
                 FTPAccount acc = Config.FTPAccountList[sel];
                 ucFTPAccounts.SettingsGrid.SelectedObject = acc;
@@ -230,110 +357,5 @@ namespace UploadersLib
         }
 
         #endregion FTP UserControl Events
-
-        public void LoadSettings(UploadersConfig uploadersConfig)
-        {
-            Config = uploadersConfig;
-
-            #region Image uploaders
-
-            // ImageShack
-
-            txtImageShackRegistrationCode.Text = Config.ImageShackRegistrationCode;
-            txtImageShackUsername.Text = Config.ImageShackUsername;
-            cbImageShackIsPublic.Checked = Config.ImageShackShowImagesInPublic;
-
-            // TinyPic
-
-            txtTinyPicUsername.Text = Config.TinyPicUsername;
-            txtTinyPicPassword.Text = Config.TinyPicPassword;
-            cbTinyPicRememberUsernamePassword.Checked = Config.TinyPicRememberUserPass;
-            txtTinyPicRegistrationCode.Text = Config.TinyPicRegistrationCode;
-
-            // Imgur
-
-            cbImgurUseUserAccount.Checked = Config.ImgurAccountType == AccountType.User;
-
-            if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
-            {
-                lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
-            }
-
-            #endregion Image uploaders
-
-            #region Text uploaders
-
-            // Pastebin
-
-            pgPastebinSettings.SelectedObject = Config.PastebinSettings;
-
-            #endregion
-
-            #region File uploaders
-
-            // Dropbox
-
-            txtDropboxPath.Text = Config.DropboxUploadPath;
-            UpdateDropboxStatus();
-
-            // FTP 
-
-            if (Config.FTPAccountList == null || Config.FTPAccountList.Count == 0)
-            {
-                FTPSetup(new List<FTPAccount>());
-            }
-            else
-            {
-                FTPSetup(Config.FTPAccountList);
-                if (ucFTPAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucFTPAccounts.AccountsList.SelectedIndex = 0;
-                }
-            }
-
-            txtFTPThumbWidth.Text = Config.FTPThumbnailWidthLimit.ToString();
-            chkFTPThumbnailCheckSize.Checked = Config.FTPThumbnailCheckSize;
-
-            // RapidShare
-
-            if (cboRapidShareAcctType.Items.Count == 0)
-            {
-                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
-            }
-
-            cboRapidShareAcctType.SelectedIndex = (int)Config.RapidShareAccountType;
-            txtRapidShareCollectorID.Text = Config.RapidShareCollectorsID;
-            txtRapidSharePassword.Text = Config.RapidSharePassword;
-            txtRapidSharePremiumUserName.Text = Config.RapidSharePremiumUserName;
-
-            // SendSpace
-
-            if (cboSendSpaceAcctType.Items.Count == 0)
-            {
-                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetDescriptions());
-            }
-
-            cboSendSpaceAcctType.SelectedIndex = (int)Config.SendSpaceAccountType;
-            txtSendSpacePassword.Text = Config.SendSpacePassword;
-            txtSendSpaceUserName.Text = Config.SendSpaceUsername;
-
-            // Localhost
-
-            if (Config.LocalhostAccountList == null || Config.LocalhostAccountList.Count == 0)
-            {
-                LocalhostAccountsSetup(new List<LocalhostAccount>());
-            }
-            else
-            {
-                LocalhostAccountsSetup(Config.LocalhostAccountList);
-                if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucLocalhostAccounts.AccountsList.SelectedIndex = Config.LocalhostSelected;
-                }
-            }
-
-            #endregion File uploaders
-        }
-
     }
 }

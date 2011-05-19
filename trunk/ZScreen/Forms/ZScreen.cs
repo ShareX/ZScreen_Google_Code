@@ -45,7 +45,6 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
-using UploadersLib.TextUploaders;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
@@ -1392,7 +1391,7 @@ namespace ZScreenGUI
             txtThumbnail.Text = imageUploader.ThumbnailURL;
         }
 
-        private void btnUploadersUpdate_Click(object sender, EventArgs e)
+        private void UpdateCustomUploader()
         {
             if (lbImageUploader.SelectedIndex != -1)
             {
@@ -1404,6 +1403,11 @@ namespace ZScreenGUI
             RewriteCustomUploaderRightClickMenu();
         }
 
+        private void btnUploadersUpdate_Click(object sender, EventArgs e)
+        {
+            UpdateCustomUploader();
+        }
+
         private void btnUploadersClear_Click(object sender, EventArgs e)
         {
             LoadImageUploaders(new CustomUploaderInfo());
@@ -1411,6 +1415,8 @@ namespace ZScreenGUI
 
         private void btUploadersTest_Click(object sender, EventArgs e)
         {
+            UpdateCustomUploader();
+
             if (lbImageUploader.SelectedIndex != -1)
             {
                 btnUploadersTest.Enabled = false;
@@ -2018,7 +2024,6 @@ namespace ZScreenGUI
             }
         }
 
-
         private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
@@ -2030,8 +2035,6 @@ namespace ZScreenGUI
                 // RewriteFTPRightClickMenu();
             }
         }
-
-
 
         private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
         {
@@ -2113,7 +2116,6 @@ namespace ZScreenGUI
 
             return account;
         }
-
 
         private ProxyInfo GetSelectedProxy()
         {
@@ -3212,7 +3214,7 @@ namespace ZScreenGUI
             }
         }
 
-       private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
             if (mGuiIsReady)
@@ -3488,15 +3490,9 @@ namespace ZScreenGUI
 
         #endregion Main tab toolbar
 
-        private void tsbDestinations_Click(object sender, EventArgs e)
-        {
-            new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.Show();
-        }
-
         private void pbDonate_Click(object sender, EventArgs e)
         {
             Process.Start(ZAppHelper.DonateURL);
         }
-
     }
 }

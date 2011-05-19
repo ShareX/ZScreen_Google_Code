@@ -26,11 +26,8 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
-using UploadersLib.Properties;
-using System.Collections.Generic;
 using UploadersLib.FileUploaders;
+using UploadersLib.ImageUploaders;
 
 namespace UploadersLib
 {
@@ -50,7 +47,7 @@ namespace UploadersLib
 
         #region Image uploaders
 
-        // ImageShack
+        #region ImageShack
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
         {
@@ -84,7 +81,9 @@ namespace UploadersLib
             Process.Start("http://my.imageshack.us/v_images.php");
         }
 
-        // TinyPic
+        #endregion ImageShack
+
+        #region TinyPic
 
         private void txtTinyPicUsername_TextChanged(object sender, EventArgs e)
         {
@@ -148,7 +147,9 @@ namespace UploadersLib
             Process.Start("http://tinypic.com/yourstuff.php");
         }
 
-        // Imgur
+        #endregion TinyPic
+
+        #region Imgur
 
         private void cbImgurUseUserAccount_CheckedChanged(object sender, EventArgs e)
         {
@@ -172,11 +173,11 @@ namespace UploadersLib
             ImgurAuthComplete();
         }
 
+        #endregion Imgur
+
         #endregion Image uploaders
 
         #region File uploaders
-        // TODO: wrap all the methods when all the destinations are complete
-        #endregion File uploaders
 
         #region Dropbox
 
@@ -254,7 +255,7 @@ namespace UploadersLib
             }
         }
 
-        #endregion
+        #endregion FTP
 
         #region RapidShare
 
@@ -281,7 +282,7 @@ namespace UploadersLib
             Config.RapidSharePassword = txtRapidSharePassword.Text;
         }
 
-        #endregion
+        #endregion RapidShare
 
         #region SendSpace
 
@@ -315,12 +316,21 @@ namespace UploadersLib
             Config.SendSpacePassword = txtSendSpacePassword.Text;
         }
 
-        #endregion
+        #endregion SendSpace
+
+        #endregion File uploaders
+
+        #region Text uploaders
+
+        #region Pastebin
 
         private void btnPastebinLogin_Click(object sender, EventArgs e)
         {
             PastebinLogin();
         }
 
+        #endregion Pastebin
+
+        #endregion Text uploaders
     }
 }

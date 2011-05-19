@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace HelpersLib
@@ -40,6 +41,11 @@ namespace HelpersLib
             FieldInfo fi = value.GetType().GetField(value.ToString());
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+        }
+
+        public static string[] GetEnumDescriptions(this Type type)
+        {
+            return Enum.GetValues(type).OfType<Enum>().Select(x => x.GetDescription()).ToArray();
         }
 
         public static bool HasFlag(this Enum keys, Enum flag)
@@ -142,6 +148,17 @@ namespace HelpersLib
 
             result = text.Remove(location, search.Length).Insert(location, replace);
             return true;
+        }
+
+        public static bool CheckSelected<T>(this IEnumerable<T> list, int selected)
+        {
+            if (list != null)
+            {
+                int count = list.Count();
+                return count > 0 && selected.IsBetween(0, count - 1);
+            }
+
+            return false;
         }
     }
 }
