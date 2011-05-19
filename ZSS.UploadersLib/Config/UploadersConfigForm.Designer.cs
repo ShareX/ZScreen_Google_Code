@@ -130,6 +130,7 @@
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -139,6 +140,7 @@
             this.gbImgurUserAccount.SuspendLayout();
             this.tpFlickr.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
+            this.tpMediaWiki.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
             this.tpDropbox.SuspendLayout();
@@ -617,6 +619,7 @@
             // 
             // tpMediaWiki
             // 
+            this.tpMediaWiki.Controls.Add(this.ucMediaWikiAccounts);
             this.tpMediaWiki.Location = new System.Drawing.Point(4, 22);
             this.tpMediaWiki.Name = "tpMediaWiki";
             this.tpMediaWiki.Padding = new System.Windows.Forms.Padding(3);
@@ -1252,6 +1255,18 @@
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 528);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1277,6 +1292,7 @@
             this.tpFlickr.ResumeLayout(false);
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
+            this.tpMediaWiki.ResumeLayout(false);
             this.tpFileUploaders.ResumeLayout(false);
             this.tcFileUploaders.ResumeLayout(false);
             this.tpDropbox.ResumeLayout(false);
@@ -1407,5 +1423,6 @@
         private System.Windows.Forms.Button btnFlickrCheckToken;
         private System.Windows.Forms.Button btnFlickrCompleteAuth;
         private System.Windows.Forms.Button btnFlickrOpenAuthorize;
+        internal AccountsControl ucMediaWikiAccounts;
     }
 }
