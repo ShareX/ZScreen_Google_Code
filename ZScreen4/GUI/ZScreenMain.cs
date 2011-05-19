@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
 using HelpersLib;
+using ZScreenLib;
+using UploadersAPILib;
 
 namespace ZScreen4
 {
@@ -32,6 +34,11 @@ namespace ZScreen4
         private void btnCaptureScreen_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDestinations_Click(object sender, EventArgs e)
+        {
+          //  new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.Show();
         }
     }
 }

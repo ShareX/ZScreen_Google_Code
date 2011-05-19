@@ -78,24 +78,6 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_Destinations()
         {
 
-
-            #region Localhost Settings
-
-            if (Engine.conf.LocalhostAccountList == null || Engine.conf.LocalhostAccountList.Count == 0)
-            {
-                LocalhostAccountsSetup(new List<LocalhostAccount>());
-            }
-            else
-            {
-                LocalhostAccountsSetup(Engine.conf.LocalhostAccountList);
-                if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucLocalhostAccounts.AccountsList.SelectedIndex = Engine.conf.LocalhostSelected;
-                }
-            }
-
-            #endregion Localhost Settings
-
             #region MindTouch Settings
 
             ///////////////////////////////////
@@ -174,12 +156,6 @@ namespace ZScreenGUI
             // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
 
             #endregion Image Uploaders
-
-            #region File Uploaders
-
-
-            
-            #endregion File Uploaders
         }
 
         private void ZScreen_ConfigGUI_Editors()

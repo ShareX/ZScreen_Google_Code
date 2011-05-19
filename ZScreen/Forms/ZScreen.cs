@@ -214,12 +214,6 @@ namespace ZScreenGUI
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
 
-            // Accounts - Localhost
-            ucLocalhostAccounts.btnAdd.Click += new EventHandler(LocalhostAccountAddButton_Click);
-            ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
-            ucLocalhostAccounts.btnTest.Visible = false;
-            ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
-
             // Accounts - MindTouch
             ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
             ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
@@ -2015,52 +2009,6 @@ namespace ZScreenGUI
             }
         }
 
-
-
-
-
-        private void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
-            Engine.conf.LocalhostSelected = sel;
-            if (Adapter.CheckList(Engine.conf.LocalhostAccountList, sel))
-            {
-                LocalhostAccount acc = Engine.conf.LocalhostAccountList[sel];
-                ucLocalhostAccounts.SettingsGrid.SelectedObject = acc;
-            }
-        }
-
-        private void LocalhostAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
-            if (ucLocalhostAccounts.RemoveItem(sel))
-            {
-                Engine.conf.LocalhostAccountList.RemoveAt(sel);
-            }
-        }
-
-        private void LocalhostAccountsSetup(IEnumerable<LocalhostAccount> accs)
-        {
-            if (accs != null)
-            {
-                ucLocalhostAccounts.AccountsList.Items.Clear();
-                Engine.conf.LocalhostAccountList = new List<LocalhostAccount>();
-                Engine.conf.LocalhostAccountList.AddRange(accs);
-                foreach (LocalhostAccount acc in Engine.conf.LocalhostAccountList)
-                {
-                    ucLocalhostAccounts.AccountsList.Items.Add(acc);
-                }
-            }
-        }
-
-        private void LocalhostAccountAddButton_Click(object sender, EventArgs e)
-        {
-            LocalhostAccount acc = new LocalhostAccount("New Account");
-            Engine.conf.LocalhostAccountList.Add(acc);
-            ucLocalhostAccounts.AccountsList.Items.Add(acc);
-            ucLocalhostAccounts.AccountsList.SelectedIndex = ucLocalhostAccounts.AccountsList.Items.Count - 1;
-        }
-
         private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
         {
             int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
@@ -2069,7 +2017,6 @@ namespace ZScreenGUI
                 Engine.conf.DekiWikiAccountList.RemoveAt(sel);
             }
         }
-
 
 
         private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)

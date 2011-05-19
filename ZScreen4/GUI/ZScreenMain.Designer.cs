@@ -175,6 +175,7 @@
             this.btnDestinations.TabIndex = 7;
             this.btnDestinations.Text = "Destinations..";
             this.btnDestinations.UseVisualStyleBackColor = true;
+            this.btnDestinations.Click += new System.EventHandler(this.btnDestinations_Click);
             // 
             // btnCropShotFreehand
             // 

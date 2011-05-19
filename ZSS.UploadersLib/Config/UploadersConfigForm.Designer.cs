@@ -82,6 +82,7 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -113,15 +114,16 @@
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpPastebin = new System.Windows.Forms.TabPage();
+            this.btnPastebinLogin = new System.Windows.Forms.Button();
+            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tcURLShorteners = new System.Windows.Forms.TabControl();
             this.tpURLShortenerPage1 = new System.Windows.Forms.TabPage();
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
-            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
-            this.btnPastebinLogin = new System.Windows.Forms.Button();
+            this.tbLocalhost = new System.Windows.Forms.TabPage();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -147,6 +149,7 @@
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
+            this.tbLocalhost.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -554,6 +557,7 @@
             this.tcFileUploaders.Controls.Add(this.tpFTP);
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
             this.tcFileUploaders.Controls.Add(this.tpSendSpace);
+            this.tcFileUploaders.Controls.Add(this.tbLocalhost);
             this.tcFileUploaders.Controls.Add(this.tpCustomUploaders);
             this.tcFileUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcFileUploaders.Location = new System.Drawing.Point(3, 3);
@@ -732,6 +736,16 @@
             this.btnFtpHelp.Text = "&Help...";
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.MinimumSize = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.TabIndex = 0;
             // 
             // gbFtpSettings
             // 
@@ -1052,6 +1066,25 @@
             this.tpPastebin.Text = "Pastebin";
             this.tpPastebin.UseVisualStyleBackColor = true;
             // 
+            // btnPastebinLogin
+            // 
+            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
+            this.btnPastebinLogin.Name = "btnPastebinLogin";
+            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
+            this.btnPastebinLogin.TabIndex = 2;
+            this.btnPastebinLogin.Text = "Login";
+            this.btnPastebinLogin.UseVisualStyleBackColor = true;
+            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
+            // 
+            // pgPastebinSettings
+            // 
+            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgPastebinSettings.Name = "pgPastebinSettings";
+            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 542);
+            this.pgPastebinSettings.TabIndex = 1;
+            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
@@ -1114,34 +1147,25 @@
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
-            // ucFTPAccounts
+            // tbLocalhost
             // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.MinimumSize = new System.Drawing.Size(760, 400);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
-            this.ucFTPAccounts.TabIndex = 0;
+            this.tbLocalhost.Controls.Add(this.ucLocalhostAccounts);
+            this.tbLocalhost.Location = new System.Drawing.Point(4, 22);
+            this.tbLocalhost.Name = "tbLocalhost";
+            this.tbLocalhost.Padding = new System.Windows.Forms.Padding(3);
+            this.tbLocalhost.Size = new System.Drawing.Size(772, 548);
+            this.tbLocalhost.TabIndex = 5;
+            this.tbLocalhost.Text = "Localhost";
+            this.tbLocalhost.UseVisualStyleBackColor = true;
             // 
-            // pgPastebinSettings
+            // ucLocalhostAccounts
             // 
-            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgPastebinSettings.Name = "pgPastebinSettings";
-            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 542);
-            this.pgPastebinSettings.TabIndex = 1;
-            // 
-            // btnPastebinLogin
-            // 
-            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
-            this.btnPastebinLogin.Name = "btnPastebinLogin";
-            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
-            this.btnPastebinLogin.TabIndex = 2;
-            this.btnPastebinLogin.Text = "Login";
-            this.btnPastebinLogin.UseVisualStyleBackColor = true;
-            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 542);
+            this.ucLocalhostAccounts.TabIndex = 2;
             // 
             // UploadersConfigForm
             // 
@@ -1189,6 +1213,7 @@
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
+            this.tbLocalhost.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1288,5 +1313,7 @@
         private System.Windows.Forms.Label lblSendSpaceAccountType;
         private System.Windows.Forms.PropertyGrid pgPastebinSettings;
         private System.Windows.Forms.Button btnPastebinLogin;
+        private System.Windows.Forms.TabPage tbLocalhost;
+        internal AccountsControl ucLocalhostAccounts;
     }
 }

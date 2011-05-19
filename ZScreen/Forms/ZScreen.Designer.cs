@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,13 +81,13 @@ namespace ZScreenGUI
             this.tsbFreehandCropShot = new System.Windows.Forms.ToolStripButton();
             this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
             this.tssMaintoolbar1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbDestinations = new System.Windows.Forms.ToolStripButton();
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
             this.tsbLanguageTranslate = new System.Windows.Forms.ToolStripButton();
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbDestinations = new System.Windows.Forms.ToolStripButton();
             this.tsbOpenHistory = new System.Windows.Forms.ToolStripButton();
             this.tsbImageDirectory = new System.Windows.Forms.ToolStripButton();
             this.tsbAbout = new System.Windows.Forms.ToolStripButton();
@@ -208,8 +208,6 @@ namespace ZScreenGUI
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcDestinations = new System.Windows.Forms.TabControl();
-            this.tpDestLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpDestFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -538,7 +536,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.SuspendLayout();
             this.tpDestinations.SuspendLayout();
             this.tcDestinations.SuspendLayout();
-            this.tpDestLocalhost.SuspendLayout();
             this.tpDestFlickr.SuspendLayout();
             this.tpDestTwitter.SuspendLayout();
             this.tlpTwitter.SuspendLayout();
@@ -958,13 +955,13 @@ namespace ZScreenGUI
             this.tsbFreehandCropShot,
             this.tsbAutoCapture,
             this.tssMaintoolbar1,
-            this.tsbDestinations,
             this.tsbFileUpload,
             this.tsbClipboardUpload,
             this.tsbDragDropWindow,
             this.tsbLanguageTranslate,
             this.tsbScreenColorPicker,
             this.toolStripSeparator8,
+            this.tsbDestinations,
             this.tsbOpenHistory,
             this.tsbImageDirectory,
             this.tsbAbout});
@@ -1050,16 +1047,6 @@ namespace ZScreenGUI
             this.tssMaintoolbar1.Name = "tssMaintoolbar1";
             this.tssMaintoolbar1.Size = new System.Drawing.Size(137, 6);
             // 
-            // tsbDestinations
-            // 
-            this.tsbDestinations.Image = global::ZScreenGUI.Properties.Resources.server_edit;
-            this.tsbDestinations.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbDestinations.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDestinations.Name = "tsbDestinations";
-            this.tsbDestinations.Size = new System.Drawing.Size(137, 20);
-            this.tsbDestinations.Text = "Destinations...";
-            this.tsbDestinations.Click += new System.EventHandler(this.tsbDestinations_Click);
-            // 
             // tsbFileUpload
             // 
             this.tsbFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
@@ -1114,6 +1101,16 @@ namespace ZScreenGUI
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(137, 6);
+            // 
+            // tsbDestinations
+            // 
+            this.tsbDestinations.Image = global::ZScreenGUI.Properties.Resources.server_edit;
+            this.tsbDestinations.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestinations.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDestinations.Name = "tsbDestinations";
+            this.tsbDestinations.Size = new System.Drawing.Size(137, 20);
+            this.tsbDestinations.Text = "Destinations...";
+            this.tsbDestinations.Click += new System.EventHandler(this.tsbDestinations_Click);
             // 
             // tsbOpenHistory
             // 
@@ -1389,7 +1386,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2535,7 +2532,6 @@ namespace ZScreenGUI
             // 
             // tcDestinations
             // 
-            this.tcDestinations.Controls.Add(this.tpDestLocalhost);
             this.tcDestinations.Controls.Add(this.tpDestFlickr);
             this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
@@ -2548,26 +2544,6 @@ namespace ZScreenGUI
             this.tcDestinations.SelectedIndex = 0;
             this.tcDestinations.Size = new System.Drawing.Size(807, 434);
             this.tcDestinations.TabIndex = 0;
-            // 
-            // tpDestLocalhost
-            // 
-            this.tpDestLocalhost.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestLocalhost.Controls.Add(this.ucLocalhostAccounts);
-            this.tpDestLocalhost.Location = new System.Drawing.Point(4, 22);
-            this.tpDestLocalhost.Name = "tpDestLocalhost";
-            this.tpDestLocalhost.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestLocalhost.Size = new System.Drawing.Size(799, 408);
-            this.tpDestLocalhost.TabIndex = 11;
-            this.tpDestLocalhost.Text = "Localhost";
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(793, 402);
-            this.ucLocalhostAccounts.TabIndex = 1;
             // 
             // tpDestFlickr
             // 
@@ -5931,7 +5907,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.PerformLayout();
             this.tpDestinations.ResumeLayout(false);
             this.tcDestinations.ResumeLayout(false);
-            this.tpDestLocalhost.ResumeLayout(false);
             this.tpDestFlickr.ResumeLayout(false);
             this.tpDestTwitter.ResumeLayout(false);
             this.tlpTwitter.ResumeLayout(false);
@@ -6459,8 +6434,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
-        private System.Windows.Forms.TabPage tpDestLocalhost;
-        internal AccountsControl ucLocalhostAccounts;
         private System.Windows.Forms.TabPage tpDestMediaWiki;
         internal AccountsControl ucMediaWikiAccounts;
         private System.Windows.Forms.GroupBox gbTwitterOthers;
