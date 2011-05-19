@@ -25,7 +25,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_Main();
             ZScreen_ConfigGUI_TrayMenu();
             ZScreen_ConfigGUI_Options();
-            ZScreen_ConfigGUI_Destinations();
             ZScreen_ConfigGUI_Hotkeys();
             ZScreen_ConfigGUI_Screenshots();
             ZScreen_ConfigGUI_Editors();
@@ -71,41 +70,6 @@ namespace ZScreenGUI
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
-        }
-
-        private void ZScreen_ConfigGUI_Destinations()
-        {
-            ///////////////////////////////////
-            // MindTouch Deki Wiki Settings
-            ///////////////////////////////////
-
-            if (Engine.conf.DekiWikiAccountList == null || Engine.conf.DekiWikiAccountList.Count == 0)
-            {
-                DekiWikiSetup(new List<DekiWikiAccount>());
-            }
-            else
-            {
-                DekiWikiSetup(Engine.conf.DekiWikiAccountList);
-                if (ucMindTouchAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucMindTouchAccounts.AccountsList.SelectedIndex = Engine.conf.DekiWikiSelected;
-                }
-            }
-
-            chkDekiWikiForcePath.Checked = Engine.conf.DekiWikiForcePath;
-
-            ///////////////////////////////////
-            // Image Uploader Settings
-            ///////////////////////////////////
-
-            // cboTwitPicUploadMode.SelectedIndex = (int)Engine.conf.TwitPicUploadMode;
-            cbTwitPicShowFull.Checked = Engine.conf.TwitPicShowFull;
-            if (cboTwitPicThumbnailMode.Items.Count == 0)
-            {
-                cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetDescriptions());
-            }
-
-            cboTwitPicThumbnailMode.SelectedIndex = (int)Engine.conf.TwitPicThumbnailMode;
         }
 
         private void ZScreen_ConfigGUI_Editors()

@@ -45,8 +45,12 @@ namespace UploadersLib
                 if (AccountsList.Items.Count > 0)
                 {
                     AccountsList.SelectedIndex = (selected > 0) ? (selected - 1) : 0;
+                    SettingsGrid.SelectedObject = AccountsList.Items[selected.Between(0, selected - 1)];
                 }
-
+                else
+                {
+                    SettingsGrid.SelectedObject = null;
+                }
                 return true;
             }
 

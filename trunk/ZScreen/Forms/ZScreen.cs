@@ -203,7 +203,6 @@ namespace ZScreenGUI
             tabImageList.Images.Add("wrench", Resources.wrench);
             tcMain.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
-            tpDestinations.ImageKey = "server";
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
@@ -211,11 +210,7 @@ namespace ZScreenGUI
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
 
-            // Accounts - MindTouch
-            ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
-            ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
-            ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
-            ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
+
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -1707,19 +1702,6 @@ namespace ZScreenGUI
 
         #endregion Language Translator
 
-        private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
-        {
-            if (accs != null)
-            {
-                ucMindTouchAccounts.AccountsList.Items.Clear();
-                Engine.conf.DekiWikiAccountList = new List<DekiWikiAccount>();
-                Engine.conf.DekiWikiAccountList.AddRange(accs);
-                foreach (DekiWikiAccount acc in Engine.conf.DekiWikiAccountList)
-                {
-                    ucMindTouchAccounts.AccountsList.Items.Add(acc);
-                }
-            }
-        }
 
         private void ProxySetup(IEnumerable<ProxyInfo> accs)
         {
@@ -1735,34 +1717,11 @@ namespace ZScreenGUI
             }
         }
 
-        private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            if (ucMindTouchAccounts.RemoveItem(sel))
-            {
-                Engine.conf.DekiWikiAccountList.RemoveAt(sel);
-            }
-        }
 
-        private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            Engine.conf.DekiWikiSelected = sel;
-            if (Engine.conf.DekiWikiAccountList != null && sel != -1 && sel < Engine.conf.DekiWikiAccountList.Count && Engine.conf.DekiWikiAccountList[sel] != null)
-            {
-                DekiWikiAccount acc = Engine.conf.DekiWikiAccountList[sel];
-                ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;
-                // RewriteFTPRightClickMenu();
-            }
-        }
 
-        private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
-        {
-            DekiWikiAccount acc = new DekiWikiAccount("New Account");
-            Engine.conf.DekiWikiAccountList.Add(acc);
-            ucMindTouchAccounts.AccountsList.Items.Add(acc);
-            ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
-        }
+
+
+
 
         private ProxyInfo GetSelectedProxy()
         {
@@ -1784,26 +1743,6 @@ namespace ZScreenGUI
             }
 
             return acc;
-        }
-
-        private DekiWikiAccount GetSelectedDekiWiki()
-        {
-            DekiWikiAccount acc = null;
-            if (Adapter.CheckDekiWikiAccounts())
-            {
-                acc = Engine.conf.DekiWikiAccountList[Engine.conf.DekiWikiSelected];
-            }
-
-            return acc;
-        }
-
-        private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
-        {
-            DekiWikiAccount acc = GetSelectedDekiWiki();
-            if (acc != null)
-            {
-                Adapter.TestDekiWikiAccount(acc);
-            }
         }
 
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
@@ -2189,11 +2128,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
-        }
-
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
@@ -2259,16 +2193,6 @@ namespace ZScreenGUI
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
-        }
-
-        private void cbTwitPicShowFull_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.TwitPicShowFull = cbTwitPicShowFull.Checked;
-        }
-
-        private void cbTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
         }
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
