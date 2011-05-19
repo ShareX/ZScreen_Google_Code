@@ -36,6 +36,7 @@ using System.Threading;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using Greenshot.Helpers;
+using HelpersLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
@@ -285,7 +286,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts()
         {
-            return CheckList(Engine.conf.FTPAccountList, Engine.conf.FtpImages);
+            return CheckList(Engine.conf.UploadersConfig2.FTPAccountList, Engine.conf.UploadersConfig2.FTPSelectedImage);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -293,14 +294,9 @@ namespace ZScreenLib
             FTPAccount acc = null;
             if (CheckFTPAccounts())
             {
-                acc = Engine.conf.FTPAccountList[Engine.conf.FtpImages];
+                acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage];
             }
             return acc;
-        }
-
-        public static bool CheckTwitterAccounts()
-        {
-            return CheckList(Engine.conf.TwitterOAuthInfoList, Engine.conf.TwitterAcctSelected);
         }
 
         public static bool CheckFTPAccounts(WorkerTask task)
@@ -428,14 +424,14 @@ namespace ZScreenLib
         /// Returns the active TwitterAuthInfo object; if nothing is active then a new TwitterAuthInfo object is returned
         /// </summary>
         /// <returns></returns>
-        public static OAuthInfo TwitterGetActiveAcct()
+        public static OAuthInfo TwitterGetActiveAccount()
         {
-            OAuthInfo acc = new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
-            if (CheckTwitterAccounts())
+            if (Engine.conf.UploadersConfig2.TwitterOAuthInfoList.CheckSelected(Engine.conf.UploadersConfig2.TwitterSelectedAccount))
             {
-                acc = Engine.conf.TwitterOAuthInfoList[Engine.conf.TwitterAcctSelected];
+                return Engine.conf.UploadersConfig2.TwitterOAuthInfoList[Engine.conf.UploadersConfig2.TwitterSelectedAccount];
             }
-            return acc;
+
+            return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
         }
 
         public static void TwitterMsg(WorkerTask task)
@@ -448,10 +444,10 @@ namespace ZScreenLib
 
         public static void TwitterMsg(string url)
         {
-            OAuthInfo acc = TwitterGetActiveAcct();
+            OAuthInfo acc = TwitterGetActiveAccount();
             if (!string.IsNullOrEmpty(acc.UserToken))
             {
-                TwitterMsg msg = new TwitterMsg(Adapter.TwitterGetActiveAcct(), string.Format("{0} - Update Twitter Status...", acc.Description));
+                TwitterMsg msg = new TwitterMsg(TwitterGetActiveAccount(), string.Format("{0} - Update Twitter Status...", acc.Description));
                 msg.ActiveAccountName = acc.Description;
                 msg.Icon = Resources.zss_main;
                 msg.Config = Engine.conf.TwitterClientConfig;

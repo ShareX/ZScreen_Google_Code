@@ -25,10 +25,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
+using UploadersLib.OtherServices;
 using UploadersLib.Properties;
 
 namespace UploadersLib
@@ -207,6 +209,22 @@ namespace UploadersLib
             }
 
             #endregion File uploaders
+
+            #region Other Services
+
+            ucTwitterAccounts.AccountsList.Items.Clear();
+
+            foreach (OAuthInfo acc in Config.TwitterOAuthInfoList)
+            {
+                ucTwitterAccounts.AccountsList.Items.Add(acc);
+            }
+
+            if (ucTwitterAccounts.AccountsList.Items.Count > 0)
+            {
+                ucTwitterAccounts.AccountsList.SelectedIndex = Config.TwitterSelectedAccount;
+            }
+
+            #endregion Other Services
         }
 
         private void CreateUserControlEvents()
@@ -234,6 +252,16 @@ namespace UploadersLib
             ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
             ucLocalhostAccounts.btnTest.Visible = false;
             ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
+
+            // Twitter
+
+            ucTwitterAccounts.btnAdd.Text = "Add";
+            ucTwitterAccounts.btnAdd.Click += new EventHandler(TwitterAccountAddButton_Click);
+            ucTwitterAccounts.btnRemove.Click += new EventHandler(TwitterAccountRemoveButton_Click);
+            ucTwitterAccounts.btnTest.Text = "Authorize";
+            ucTwitterAccounts.btnTest.Click += new EventHandler(TwitterAccountAuthButton_Click);
+            ucTwitterAccounts.SettingsGrid.PropertySort = PropertySort.NoSort;
+            ucTwitterAccounts.AccountsList.SelectedIndexChanged += new EventHandler(TwitterAccountList_SelectedIndexChanged);
         }
 
         #region MediaWiki
@@ -450,5 +478,59 @@ namespace UploadersLib
         }
 
         #endregion FTP
+
+        #region Twitter
+
+        private void TwitterAccountAuthButton_Click(object sender, EventArgs e)
+        {
+            if (CheckTwitterAccounts())
+            {
+                OAuthInfo acc = TwitterGetActiveAccount();
+                Twitter twitter = new Twitter(acc);
+                string url = twitter.GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.TwitterOAuthInfoList[Config.TwitterSelectedAccount] = acc;
+                    Process.Start(url);
+                    ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+                }
+            }
+        }
+
+        private void TwitterAccountRemoveButton_Click(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            if (ucTwitterAccounts.RemoveItem(sel))
+            {
+                Config.TwitterOAuthInfoList.RemoveAt(sel);
+            }
+        }
+
+        private void TwitterAccountList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int sel = ucTwitterAccounts.AccountsList.SelectedIndex;
+            Config.TwitterSelectedAccount = sel;
+
+            if (CheckTwitterAccounts())
+            {
+                OAuthInfo acc = Config.TwitterOAuthInfoList[sel];
+                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        private void TwitterAccountAddButton_Click(object sender, EventArgs e)
+        {
+            OAuthInfo acc = new OAuthInfo(APIKeys.TwitterConsumerKey, APIKeys.TwitterConsumerSecret);
+            Config.TwitterOAuthInfoList.Add(acc);
+            ucTwitterAccounts.AccountsList.Items.Add(acc);
+            ucTwitterAccounts.AccountsList.SelectedIndex = ucTwitterAccounts.AccountsList.Items.Count - 1;
+            if (CheckTwitterAccounts())
+            {
+                ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
+            }
+        }
+
+        #endregion Twitter
     }
 }

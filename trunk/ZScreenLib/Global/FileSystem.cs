@@ -26,10 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GraphicsMgrLib;
@@ -139,7 +137,6 @@ namespace ZScreenLib
                         Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
                         ms.WriteTo(fi);
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -406,7 +403,7 @@ namespace ZScreenLib
                 string fp = Path.Combine(Engine.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.conf.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.conf.UploadersConfig2.FTPAccountList);
                     fam.Save(fp);
                 }
             }

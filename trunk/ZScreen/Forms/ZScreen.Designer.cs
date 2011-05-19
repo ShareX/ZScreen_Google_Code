@@ -208,11 +208,6 @@ namespace ZScreenGUI
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcDestinations = new System.Windows.Forms.TabControl();
-            this.tpDestTwitter = new System.Windows.Forms.TabPage();
-            this.tlpTwitter = new System.Windows.Forms.TableLayoutPanel();
-            this.panelTwitter = new System.Windows.Forms.Panel();
-            this.btnTwitterLogin = new System.Windows.Forms.Button();
-            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
             this.gbTwitterOthers = new System.Windows.Forms.GroupBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
@@ -528,9 +523,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.SuspendLayout();
             this.tpDestinations.SuspendLayout();
             this.tcDestinations.SuspendLayout();
-            this.tpDestTwitter.SuspendLayout();
-            this.tlpTwitter.SuspendLayout();
-            this.panelTwitter.SuspendLayout();
             this.gbTwitterOthers.SuspendLayout();
             this.tpDestMindTouch.SuspendLayout();
             this.gbMindTouchOptions.SuspendLayout();
@@ -2523,7 +2515,6 @@ namespace ZScreenGUI
             // 
             // tcDestinations
             // 
-            this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
             this.tcDestinations.Controls.Add(this.tpDestCustom);
             this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2534,73 +2525,17 @@ namespace ZScreenGUI
             this.tcDestinations.Size = new System.Drawing.Size(807, 434);
             this.tcDestinations.TabIndex = 0;
             // 
-            // tpDestTwitter
-            // 
-            this.tpDestTwitter.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestTwitter.Controls.Add(this.tlpTwitter);
-            this.tpDestTwitter.ImageKey = "(none)";
-            this.tpDestTwitter.Location = new System.Drawing.Point(4, 22);
-            this.tpDestTwitter.Name = "tpDestTwitter";
-            this.tpDestTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestTwitter.Size = new System.Drawing.Size(799, 408);
-            this.tpDestTwitter.TabIndex = 6;
-            this.tpDestTwitter.Text = "Twitter";
-            // 
-            // tlpTwitter
-            // 
-            this.tlpTwitter.ColumnCount = 1;
-            this.tlpTwitter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTwitter.Controls.Add(this.panelTwitter, 0, 0);
-            this.tlpTwitter.Controls.Add(this.gbTwitterOthers, 0, 1);
-            this.tlpTwitter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpTwitter.Location = new System.Drawing.Point(3, 3);
-            this.tlpTwitter.Name = "tlpTwitter";
-            this.tlpTwitter.RowCount = 2;
-            this.tlpTwitter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tlpTwitter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpTwitter.Size = new System.Drawing.Size(793, 402);
-            this.tlpTwitter.TabIndex = 23;
-            // 
-            // panelTwitter
-            // 
-            this.panelTwitter.Controls.Add(this.btnTwitterLogin);
-            this.panelTwitter.Controls.Add(this.ucTwitterAccounts);
-            this.panelTwitter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTwitter.Location = new System.Drawing.Point(3, 3);
-            this.panelTwitter.Name = "panelTwitter";
-            this.panelTwitter.Size = new System.Drawing.Size(787, 295);
-            this.panelTwitter.TabIndex = 24;
-            // 
-            // btnTwitterLogin
-            // 
-            this.btnTwitterLogin.Location = new System.Drawing.Point(226, 8);
-            this.btnTwitterLogin.Name = "btnTwitterLogin";
-            this.btnTwitterLogin.Size = new System.Drawing.Size(60, 24);
-            this.btnTwitterLogin.TabIndex = 19;
-            this.btnTwitterLogin.Text = "Login";
-            this.btnTwitterLogin.UseVisualStyleBackColor = true;
-            this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(787, 295);
-            this.ucTwitterAccounts.TabIndex = 22;
-            // 
             // gbTwitterOthers
             // 
             this.gbTwitterOthers.Controls.Add(this.cbTwitPicShowFull);
             this.gbTwitterOthers.Controls.Add(this.cboTwitPicThumbnailMode);
             this.gbTwitterOthers.Controls.Add(this.lblTwitPicThumbnailMode);
-            this.gbTwitterOthers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbTwitterOthers.Location = new System.Drawing.Point(3, 304);
+            this.gbTwitterOthers.Location = new System.Drawing.Point(8, 280);
             this.gbTwitterOthers.Name = "gbTwitterOthers";
-            this.gbTwitterOthers.Size = new System.Drawing.Size(787, 95);
+            this.gbTwitterOthers.Size = new System.Drawing.Size(295, 95);
             this.gbTwitterOthers.TabIndex = 20;
             this.gbTwitterOthers.TabStop = false;
-            this.gbTwitterOthers.Text = "Other Twitter services (yfrog, twitsnaps etc.)";
+            this.gbTwitterOthers.Text = "Other Twitter services (yfrog, twitsnaps etc.) <-- TODO!";
             // 
             // cbTwitPicShowFull
             // 
@@ -2684,6 +2619,7 @@ namespace ZScreenGUI
             // tpDestCustom
             // 
             this.tpDestCustom.BackColor = System.Drawing.SystemColors.Window;
+            this.tpDestCustom.Controls.Add(this.gbTwitterOthers);
             this.tpDestCustom.Controls.Add(this.txtUploadersLog);
             this.tpDestCustom.Controls.Add(this.btnUploadersTest);
             this.tpDestCustom.Controls.Add(this.txtFullImage);
@@ -5782,9 +5718,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.PerformLayout();
             this.tpDestinations.ResumeLayout(false);
             this.tcDestinations.ResumeLayout(false);
-            this.tpDestTwitter.ResumeLayout(false);
-            this.tlpTwitter.ResumeLayout(false);
-            this.panelTwitter.ResumeLayout(false);
             this.gbTwitterOthers.ResumeLayout(false);
             this.gbTwitterOthers.PerformLayout();
             this.tpDestMindTouch.ResumeLayout(false);
@@ -6204,7 +6137,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblScreenshotDelay;
         internal System.Windows.Forms.GroupBox gbDynamicCrosshair;
         internal System.Windows.Forms.GroupBox gbDynamicRegionBorderColorSettings;
-        internal System.Windows.Forms.TabPage tpDestTwitter;
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.TabPage tpProxy;
@@ -6301,10 +6233,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
         private System.Windows.Forms.GroupBox gbTwitterOthers;
-        private System.Windows.Forms.Button btnTwitterLogin;
-        private AccountsControl ucTwitterAccounts;
-        private System.Windows.Forms.TableLayoutPanel tlpTwitter;
-        private System.Windows.Forms.Panel panelTwitter;
         private System.Windows.Forms.CheckBox cbCopyClipboardAfterTask;
         internal AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.ComboBox cboProxyConfig;

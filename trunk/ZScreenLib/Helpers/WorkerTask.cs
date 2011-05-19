@@ -489,7 +489,8 @@ namespace ZScreenLib
                  (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
                  (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
                  (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
-                (!Engine.conf.FTPThumbnailCheckSize || (Engine.conf.FTPThumbnailCheckSize && (this.MyImage.Width > Engine.conf.FTPThumbnailWidth)));
+                (!Engine.conf.UploadersConfig2.FTPThumbnailCheckSize || (Engine.conf.UploadersConfig2.FTPThumbnailCheckSize &&
+                (this.MyImage.Width > Engine.conf.UploadersConfig2.FTPThumbnailWidthLimit)));
         }
 
         public void UploadImage()
@@ -526,7 +527,8 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageUploaderType.FLICKR:
-                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Engine.conf.FlickrAuthInfo, Engine.conf.FlickrSettings);
+                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
+                        Engine.conf.UploadersConfig2.FlickrAuthInfo, Engine.conf.UploadersConfig2.FlickrSettings);
                     break;
                 case ImageUploaderType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.conf.UploadersConfig2.ImageShackRegistrationCode);
@@ -563,7 +565,7 @@ namespace ZScreenLib
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.TWITSNAPS:
-                    imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAcct());
+                    imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
                     break;
                 case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
@@ -657,7 +659,7 @@ namespace ZScreenLib
                             textUploader = new Paste2Uploader();
                             break;
                         case TextUploaderType.PASTEBIN:
-                            textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.conf.PastebinSettings);
+                            textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.conf.UploadersConfig2.PastebinSettings);
                             break;
                         case TextUploaderType.PASTEBIN_CA:
                             textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
@@ -703,40 +705,41 @@ namespace ZScreenLib
                     switch (this.Job1)
                     {
                         case JobLevel1.Text:
-                            UploadFTP(Engine.conf.FtpText);
+                            UploadFTP(Engine.conf.UploadersConfig2.FTPSelectedText);
                             break;
                         case JobLevel1.Image:
-                            UploadFTP(Engine.conf.FtpImages);
+                            UploadFTP(Engine.conf.UploadersConfig2.FTPSelectedImage);
                             break;
                         default:
-                            UploadFTP(Engine.conf.FtpFiles);
+                            UploadFTP(Engine.conf.UploadersConfig2.FTPSelectedFile);
                             break;
                     }
                     break;
                 case FileUploaderType.SendSpace:
                     fileHost = new SendSpace(ZKeys.SendSpaceKey);
-                    switch (Engine.conf.SendSpaceAccountType)
+                    switch (Engine.conf.UploadersConfig2.SendSpaceAccountType)
                     {
                         case AccountType.Anonymous:
                             SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
                             break;
                         case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.conf.SendSpaceUserName, Engine.conf.SendSpacePassword);
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.conf.UploadersConfig2.SendSpaceUsername,
+                                Engine.conf.UploadersConfig2.SendSpacePassword);
                             break;
                     }
                     break;
                 case FileUploaderType.RapidShare:
                     fileHost = new RapidShare(new RapidShareOptions()
                     {
-                        AccountType = Engine.conf.RapidShareAccountType,
-                        PremiumUsername = Engine.conf.RapidSharePremiumUserName,
-                        Password = Engine.conf.RapidSharePassword,
-                        CollectorsID = Engine.conf.RapidShareCollectorsID
+                        AccountType = Engine.conf.UploadersConfig2.RapidShareAccountType,
+                        PremiumUsername = Engine.conf.UploadersConfig2.RapidSharePremiumUserName,
+                        Password = Engine.conf.UploadersConfig2.RapidSharePassword,
+                        CollectorsID = Engine.conf.UploadersConfig2.RapidShareCollectorsID
                     });
                     break;
                 case FileUploaderType.Dropbox:
-                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
-                    fileHost = new Dropbox(Engine.conf.DropboxOAuthInfo, uploadPath, Engine.conf.DropboxUserID);
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.UploadersConfig2.DropboxUploadPath));
+                    fileHost = new Dropbox(Engine.conf.UploadersConfig2.DropboxOAuthInfo, uploadPath, Engine.conf.UploadersConfig2.DropboxUserID);
                     break;
                 /*case FileUploaderType.FileBin:
                     fileHost = new FileBin();
@@ -786,7 +789,7 @@ namespace ZScreenLib
 
                 if (Adapter.CheckFTPAccounts(this) && File.Exists(this.LocalFilePath))
                 {
-                    FTPAccount acc = Engine.conf.FTPAccountList[FtpAccountId];
+                    FTPAccount acc = Engine.conf.UploadersConfig2.FTPAccountList[FtpAccountId];
                     this.DestinationName = string.Format("FTP - {0}", acc.Name);
                     Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", this.FileName, acc.Host));
 
@@ -803,8 +806,9 @@ namespace ZScreenLib
 
                         if (CreateThumbnail())
                         {
-                            double thar = (double)Engine.conf.FTPThumbnailWidth / (double)this.MyImage.Width;
-                            using (Image img = GraphicsMgr.ChangeImageSize(this.MyImage, Engine.conf.FTPThumbnailWidth, (int)(thar * this.MyImage.Height)))
+                            double thar = (double)Engine.conf.UploadersConfig2.FTPThumbnailWidthLimit / (double)this.MyImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(this.MyImage, Engine.conf.UploadersConfig2.FTPThumbnailWidthLimit,
+                                (int)(thar * this.MyImage.Height)))
                             {
                                 StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(this.LocalFilePath));
                                 sb.Append(".th");
@@ -838,9 +842,9 @@ namespace ZScreenLib
 
         public void UploadLocalhost()
         {
-            if (Adapter.CheckList(Engine.conf.LocalhostAccountList, Engine.conf.LocalhostSelected) && File.Exists(this.LocalFilePath))
+            if (Engine.conf.UploadersConfig2.LocalhostAccountList.CheckSelected(Engine.conf.UploadersConfig2.LocalhostSelected) && File.Exists(this.LocalFilePath))
             {
-                LocalhostAccount acc = Engine.conf.LocalhostAccountList[Engine.conf.LocalhostSelected];
+                LocalhostAccount acc = Engine.conf.UploadersConfig2.LocalhostAccountList[Engine.conf.UploadersConfig2.LocalhostSelected];
                 string fn = Path.GetFileName(this.LocalFilePath);
                 string destFile = acc.GetLocalhostPath(fn);
                 string destDir = Path.GetDirectoryName(destFile);
@@ -858,9 +862,9 @@ namespace ZScreenLib
         {
             string fullFilePath = this.LocalFilePath;
 
-            if (Engine.conf.MediaWikiAccountList.CheckSelected(Engine.conf.MediaWikiAccountSelected) && File.Exists(fullFilePath))
+            if (Engine.conf.UploadersConfig2.MediaWikiAccountList.CheckSelected(Engine.conf.UploadersConfig2.MediaWikiAccountSelected) && File.Exists(fullFilePath))
             {
-                MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
+                MediaWikiAccount acc = Engine.conf.UploadersConfig2.MediaWikiAccountList[Engine.conf.UploadersConfig2.MediaWikiAccountSelected];
                 System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
                 this.DestinationName = acc.Name;
                 Engine.MyLogger.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));

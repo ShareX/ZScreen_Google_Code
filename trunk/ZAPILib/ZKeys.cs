@@ -81,7 +81,9 @@ namespace UploadersAPILib
                 DropboxConsumerKey = DropboxConsumerKey,
                 DropboxConsumerSecret = DropboxConsumerSecret,
                 SendSpaceKey = SendSpaceKey,
-                PastebinKey = PastebinKey
+                PastebinKey = PastebinKey,
+                TwitterConsumerKey = TwitterConsumerKey,
+                TwitterConsumerSecret = TwitterConsumerSecret
             };
         }
     }
