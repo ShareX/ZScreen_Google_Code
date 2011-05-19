@@ -4,11 +4,11 @@
 
 =What programming language is ZScreen made in?=
 
-ZScreen is made with C# 3.0 for Microsoft Windows.
+ZScreen is made with C# for Microsoft Windows.
 
 =Does that mean I need the .NET framework to run it?=
 
-Yes, that is correct, you do need the .NET 3.5 framework to run ZScreen, but the InnoSetup installer I am using will automatically download it and install it for you if you do not have it.
+Yes, that is correct, you do need the .NET 3.5 framework to run ZScreen. Current Windows version already has Microsoft .NET Framework 3.5. 
 
 =Is ZScreen free? Is there any kind of fee for using it?=
 
@@ -16,7 +16,7 @@ ZScreen is completely free. The source code is published on http://code.google.c
 
 =Why are you not selling this software?=
 
-I am not selling this software because I believe everyone should be able to enjoy this program at no cost. Also I would much rather receive [http://brandonz.net/donate.html donations] instead of forcing people to pay for my software.
+I am not selling this software because I believe everyone should be able to enjoy this program at no cost. Also I would much rather receive [https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=zscreendev%40gmail%2ecom&lc=AU&item_name=ZScreen%20Group&item_number=ZScreen&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted donations] instead of forcing people to pay for my software.
 
 =Why does ZScreen not close when I press the X on the top right of the window?=
 
