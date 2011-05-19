@@ -286,7 +286,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts()
         {
-            return CheckList(Engine.conf.UploadersConfig2.FTPAccountList, Engine.conf.UploadersConfig2.FTPSelectedImage);
+            return CheckList(Engine.conf.UploadersConfig.FTPAccountList, Engine.conf.UploadersConfig.FTPSelectedImage);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -294,7 +294,7 @@ namespace ZScreenLib
             FTPAccount acc = null;
             if (CheckFTPAccounts())
             {
-                acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage];
+                acc = Engine.conf.UploadersConfig.FTPAccountList[Engine.conf.UploadersConfig.FTPSelectedImage];
             }
             return acc;
         }
@@ -426,9 +426,9 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAccount()
         {
-            if (Engine.conf.UploadersConfig2.TwitterOAuthInfoList.CheckSelected(Engine.conf.UploadersConfig2.TwitterSelectedAccount))
+            if (Engine.conf.UploadersConfig.TwitterOAuthInfoList.CheckSelected(Engine.conf.UploadersConfig.TwitterSelectedAccount))
             {
-                return Engine.conf.UploadersConfig2.TwitterOAuthInfoList[Engine.conf.UploadersConfig2.TwitterSelectedAccount];
+                return Engine.conf.UploadersConfig.TwitterOAuthInfoList[Engine.conf.UploadersConfig.TwitterSelectedAccount];
             }
 
             return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);

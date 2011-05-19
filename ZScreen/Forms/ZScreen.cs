@@ -41,10 +41,8 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
-using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
@@ -2029,7 +2027,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage];
+                acc = Engine.conf.UploadersConfig.FTPAccountList[Engine.conf.UploadersConfig.FTPSelectedImage];
             }
 
             return acc;
@@ -2708,9 +2706,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.conf.UploadersConfig2.FTPAccountList.Count > 0)
+            if (Engine.conf.UploadersConfig.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.conf.UploadersConfig.FTPAccountList[Engine.conf.UploadersConfig.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
