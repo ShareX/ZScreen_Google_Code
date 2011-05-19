@@ -1,4 +1,4 @@
-﻿namespace UploadersLib.Config
+﻿namespace UploadersLib
 {
     partial class UploadersConfigForm
     {
@@ -65,7 +65,6 @@
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
             this.tpYFrog = new System.Windows.Forms.TabPage();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
-            this.tpDekiWiki = new System.Windows.Forms.TabPage();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
@@ -78,6 +77,21 @@
             this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
             this.txtDropboxPath = new System.Windows.Forms.TextBox();
             this.tpFTP = new System.Windows.Forms.TabPage();
+            this.tlpFtp = new System.Windows.Forms.TableLayoutPanel();
+            this.panelFtp = new System.Windows.Forms.Panel();
+            this.btnFTPExport = new System.Windows.Forms.Button();
+            this.btnFTPImport = new System.Windows.Forms.Button();
+            this.btnFtpHelp = new System.Windows.Forms.Button();
+            this.gbFtpSettings = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboFtpFiles = new System.Windows.Forms.ComboBox();
+            this.cboFtpText = new System.Windows.Forms.ComboBox();
+            this.cboFtpImages = new System.Windows.Forms.ComboBox();
+            this.chkFTPThumbnailCheckSize = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
             this.tpSendSpace = new System.Windows.Forms.TabPage();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
@@ -90,6 +104,7 @@
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -102,6 +117,10 @@
             this.tcFileUploaders.SuspendLayout();
             this.tpDropbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).BeginInit();
+            this.tpFTP.SuspendLayout();
+            this.tlpFtp.SuspendLayout();
+            this.panelFtp.SuspendLayout();
+            this.gbFtpSettings.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
@@ -121,7 +140,7 @@
             this.tcUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcUploaders.Name = "tcUploaders";
             this.tcUploaders.SelectedIndex = 0;
-            this.tcUploaders.Size = new System.Drawing.Size(856, 522);
+            this.tcUploaders.Size = new System.Drawing.Size(794, 606);
             this.tcUploaders.TabIndex = 0;
             // 
             // tpImageUploaders
@@ -130,7 +149,7 @@
             this.tpImageUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpImageUploaders.Name = "tpImageUploaders";
             this.tpImageUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageUploaders.Size = new System.Drawing.Size(848, 496);
+            this.tpImageUploaders.Size = new System.Drawing.Size(786, 580);
             this.tpImageUploaders.TabIndex = 0;
             this.tpImageUploaders.Text = "Image uploaders";
             this.tpImageUploaders.UseVisualStyleBackColor = true;
@@ -145,12 +164,11 @@
             this.tcImageUploaders.Controls.Add(this.tpTwitSnaps);
             this.tcImageUploaders.Controls.Add(this.tpYFrog);
             this.tcImageUploaders.Controls.Add(this.tpMediaWiki);
-            this.tcImageUploaders.Controls.Add(this.tpDekiWiki);
             this.tcImageUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcImageUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcImageUploaders.Name = "tcImageUploaders";
             this.tcImageUploaders.SelectedIndex = 0;
-            this.tcImageUploaders.Size = new System.Drawing.Size(842, 490);
+            this.tcImageUploaders.Size = new System.Drawing.Size(780, 574);
             this.tcImageUploaders.TabIndex = 0;
             // 
             // tpImageShack
@@ -166,7 +184,7 @@
             this.tpImageShack.Location = new System.Drawing.Point(4, 22);
             this.tpImageShack.Name = "tpImageShack";
             this.tpImageShack.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageShack.Size = new System.Drawing.Size(834, 464);
+            this.tpImageShack.Size = new System.Drawing.Size(772, 548);
             this.tpImageShack.TabIndex = 0;
             this.tpImageShack.Text = "ImageShack";
             this.tpImageShack.UseVisualStyleBackColor = true;
@@ -233,11 +251,11 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
-            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
             this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
             // 
@@ -264,7 +282,7 @@
             this.tpTinyPic.Location = new System.Drawing.Point(4, 22);
             this.tpTinyPic.Name = "tpTinyPic";
             this.tpTinyPic.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTinyPic.Size = new System.Drawing.Size(834, 464);
+            this.tpTinyPic.Size = new System.Drawing.Size(772, 548);
             this.tpTinyPic.TabIndex = 1;
             this.tpTinyPic.Text = "TinyPic";
             this.tpTinyPic.UseVisualStyleBackColor = true;
@@ -347,13 +365,13 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
             this.txtTinyPicRegistrationCode.ReadOnly = true;
-            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(360, 20);
+            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(298, 20);
             this.txtTinyPicRegistrationCode.TabIndex = 3;
             // 
             // tpImgur
@@ -363,7 +381,7 @@
             this.tpImgur.Location = new System.Drawing.Point(4, 22);
             this.tpImgur.Name = "tpImgur";
             this.tpImgur.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImgur.Size = new System.Drawing.Size(834, 464);
+            this.tpImgur.Size = new System.Drawing.Size(772, 548);
             this.tpImgur.TabIndex = 2;
             this.tpImgur.Text = "Imgur";
             this.tpImgur.UseVisualStyleBackColor = true;
@@ -443,7 +461,7 @@
             this.tpFlickr.Location = new System.Drawing.Point(4, 22);
             this.tpFlickr.Name = "tpFlickr";
             this.tpFlickr.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFlickr.Size = new System.Drawing.Size(834, 464);
+            this.tpFlickr.Size = new System.Drawing.Size(772, 548);
             this.tpFlickr.TabIndex = 3;
             this.tpFlickr.Text = "Flickr";
             this.tpFlickr.UseVisualStyleBackColor = true;
@@ -453,7 +471,7 @@
             this.tpTwitPic.Location = new System.Drawing.Point(4, 22);
             this.tpTwitPic.Name = "tpTwitPic";
             this.tpTwitPic.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitPic.Size = new System.Drawing.Size(834, 464);
+            this.tpTwitPic.Size = new System.Drawing.Size(772, 548);
             this.tpTwitPic.TabIndex = 4;
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
@@ -464,7 +482,7 @@
             this.tpTwitSnaps.Location = new System.Drawing.Point(4, 22);
             this.tpTwitSnaps.Name = "tpTwitSnaps";
             this.tpTwitSnaps.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitSnaps.Size = new System.Drawing.Size(834, 464);
+            this.tpTwitSnaps.Size = new System.Drawing.Size(772, 548);
             this.tpTwitSnaps.TabIndex = 7;
             this.tpTwitSnaps.Text = "TwitSnaps";
             this.tpTwitSnaps.UseVisualStyleBackColor = true;
@@ -484,7 +502,7 @@
             this.tpYFrog.Location = new System.Drawing.Point(4, 22);
             this.tpYFrog.Name = "tpYFrog";
             this.tpYFrog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpYFrog.Size = new System.Drawing.Size(834, 464);
+            this.tpYFrog.Size = new System.Drawing.Size(772, 548);
             this.tpYFrog.TabIndex = 8;
             this.tpYFrog.Text = "YFrog";
             this.tpYFrog.UseVisualStyleBackColor = true;
@@ -494,20 +512,10 @@
             this.tpMediaWiki.Location = new System.Drawing.Point(4, 22);
             this.tpMediaWiki.Name = "tpMediaWiki";
             this.tpMediaWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMediaWiki.Size = new System.Drawing.Size(834, 464);
+            this.tpMediaWiki.Size = new System.Drawing.Size(772, 548);
             this.tpMediaWiki.TabIndex = 5;
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
-            // 
-            // tpDekiWiki
-            // 
-            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpDekiWiki.Name = "tpDekiWiki";
-            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDekiWiki.Size = new System.Drawing.Size(834, 464);
-            this.tpDekiWiki.TabIndex = 6;
-            this.tpDekiWiki.Text = "DekiWiki";
-            this.tpDekiWiki.UseVisualStyleBackColor = true;
             // 
             // tpFileUploaders
             // 
@@ -515,7 +523,7 @@
             this.tpFileUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpFileUploaders.Name = "tpFileUploaders";
             this.tpFileUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFileUploaders.Size = new System.Drawing.Size(848, 496);
+            this.tpFileUploaders.Size = new System.Drawing.Size(786, 580);
             this.tpFileUploaders.TabIndex = 1;
             this.tpFileUploaders.Text = "File uploaders";
             this.tpFileUploaders.UseVisualStyleBackColor = true;
@@ -531,7 +539,7 @@
             this.tcFileUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcFileUploaders.Name = "tcFileUploaders";
             this.tcFileUploaders.SelectedIndex = 0;
-            this.tcFileUploaders.Size = new System.Drawing.Size(842, 490);
+            this.tcFileUploaders.Size = new System.Drawing.Size(780, 574);
             this.tcFileUploaders.TabIndex = 0;
             // 
             // tpDropbox
@@ -547,7 +555,7 @@
             this.tpDropbox.Location = new System.Drawing.Point(4, 22);
             this.tpDropbox.Name = "tpDropbox";
             this.tpDropbox.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDropbox.Size = new System.Drawing.Size(834, 464);
+            this.tpDropbox.Size = new System.Drawing.Size(772, 548);
             this.tpDropbox.TabIndex = 2;
             this.tpDropbox.Text = "Dropbox";
             this.tpDropbox.UseVisualStyleBackColor = true;
@@ -627,23 +635,196 @@
             this.txtDropboxPath.Name = "txtDropboxPath";
             this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
             this.txtDropboxPath.TabIndex = 13;
+            this.txtDropboxPath.TextChanged += new System.EventHandler(this.txtDropboxPath_TextChanged);
             // 
             // tpFTP
             // 
+            this.tpFTP.Controls.Add(this.tlpFtp);
             this.tpFTP.Location = new System.Drawing.Point(4, 22);
             this.tpFTP.Name = "tpFTP";
             this.tpFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFTP.Size = new System.Drawing.Size(834, 464);
+            this.tpFTP.Size = new System.Drawing.Size(772, 548);
             this.tpFTP.TabIndex = 0;
             this.tpFTP.Text = "FTP";
             this.tpFTP.UseVisualStyleBackColor = true;
+            // 
+            // tlpFtp
+            // 
+            this.tlpFtp.ColumnCount = 1;
+            this.tlpFtp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFtp.Controls.Add(this.panelFtp, 0, 0);
+            this.tlpFtp.Controls.Add(this.gbFtpSettings, 0, 1);
+            this.tlpFtp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpFtp.Location = new System.Drawing.Point(3, 3);
+            this.tlpFtp.Name = "tlpFtp";
+            this.tlpFtp.RowCount = 2;
+            this.tlpFtp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tlpFtp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpFtp.Size = new System.Drawing.Size(766, 542);
+            this.tlpFtp.TabIndex = 0;
+            // 
+            // panelFtp
+            // 
+            this.panelFtp.Controls.Add(this.btnFTPExport);
+            this.panelFtp.Controls.Add(this.btnFTPImport);
+            this.panelFtp.Controls.Add(this.btnFtpHelp);
+            this.panelFtp.Controls.Add(this.ucFTPAccounts);
+            this.panelFtp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFtp.Location = new System.Drawing.Point(3, 3);
+            this.panelFtp.Name = "panelFtp";
+            this.panelFtp.Size = new System.Drawing.Size(760, 400);
+            this.panelFtp.TabIndex = 116;
+            // 
+            // btnFTPExport
+            // 
+            this.btnFTPExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFTPExport.AutoSize = true;
+            this.btnFTPExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFTPExport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPExport.Location = new System.Drawing.Point(618, 8);
+            this.btnFTPExport.Name = "btnFTPExport";
+            this.btnFTPExport.Size = new System.Drawing.Size(127, 23);
+            this.btnFTPExport.TabIndex = 76;
+            this.btnFTPExport.Text = "Export FTP Accounts...";
+            this.btnFTPExport.UseVisualStyleBackColor = true;
+            this.btnFTPExport.Click += new System.EventHandler(this.btnFTPExport_Click);
+            // 
+            // btnFTPImport
+            // 
+            this.btnFTPImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFTPImport.AutoSize = true;
+            this.btnFTPImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnFTPImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFTPImport.Location = new System.Drawing.Point(482, 8);
+            this.btnFTPImport.Name = "btnFTPImport";
+            this.btnFTPImport.Size = new System.Drawing.Size(126, 23);
+            this.btnFTPImport.TabIndex = 77;
+            this.btnFTPImport.Text = "Import FTP Accounts...";
+            this.btnFTPImport.UseVisualStyleBackColor = true;
+            this.btnFTPImport.Click += new System.EventHandler(this.btnFTPImport_Click);
+            // 
+            // btnFtpHelp
+            // 
+            this.btnFtpHelp.Location = new System.Drawing.Point(304, 8);
+            this.btnFtpHelp.Name = "btnFtpHelp";
+            this.btnFtpHelp.Size = new System.Drawing.Size(64, 24);
+            this.btnFtpHelp.TabIndex = 75;
+            this.btnFtpHelp.Text = "&Help...";
+            this.btnFtpHelp.UseVisualStyleBackColor = true;
+            this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
+            // 
+            // gbFtpSettings
+            // 
+            this.gbFtpSettings.Controls.Add(this.label1);
+            this.gbFtpSettings.Controls.Add(this.label2);
+            this.gbFtpSettings.Controls.Add(this.label3);
+            this.gbFtpSettings.Controls.Add(this.cboFtpFiles);
+            this.gbFtpSettings.Controls.Add(this.cboFtpText);
+            this.gbFtpSettings.Controls.Add(this.cboFtpImages);
+            this.gbFtpSettings.Controls.Add(this.chkFTPThumbnailCheckSize);
+            this.gbFtpSettings.Controls.Add(this.label4);
+            this.gbFtpSettings.Controls.Add(this.txtFTPThumbWidth);
+            this.gbFtpSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbFtpSettings.Location = new System.Drawing.Point(3, 409);
+            this.gbFtpSettings.Name = "gbFtpSettings";
+            this.gbFtpSettings.Size = new System.Drawing.Size(760, 130);
+            this.gbFtpSettings.TabIndex = 115;
+            this.gbFtpSettings.TabStop = false;
+            this.gbFtpSettings.Text = "FTP Settings";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(432, 70);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 13);
+            this.label1.TabIndex = 136;
+            this.label1.Text = "Files";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(432, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 135;
+            this.label2.Text = "Text";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(419, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 134;
+            this.label3.Text = "Images";
+            // 
+            // cboFtpFiles
+            // 
+            this.cboFtpFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFtpFiles.FormattingEnabled = true;
+            this.cboFtpFiles.Location = new System.Drawing.Point(472, 64);
+            this.cboFtpFiles.Name = "cboFtpFiles";
+            this.cboFtpFiles.Size = new System.Drawing.Size(272, 21);
+            this.cboFtpFiles.TabIndex = 133;
+            this.cboFtpFiles.SelectedIndexChanged += new System.EventHandler(this.cboFtpFiles_SelectedIndexChanged);
+            // 
+            // cboFtpText
+            // 
+            this.cboFtpText.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFtpText.FormattingEnabled = true;
+            this.cboFtpText.Location = new System.Drawing.Point(472, 40);
+            this.cboFtpText.Name = "cboFtpText";
+            this.cboFtpText.Size = new System.Drawing.Size(272, 21);
+            this.cboFtpText.TabIndex = 132;
+            this.cboFtpText.SelectedIndexChanged += new System.EventHandler(this.cboFtpText_SelectedIndexChanged);
+            // 
+            // cboFtpImages
+            // 
+            this.cboFtpImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFtpImages.FormattingEnabled = true;
+            this.cboFtpImages.Location = new System.Drawing.Point(472, 16);
+            this.cboFtpImages.Name = "cboFtpImages";
+            this.cboFtpImages.Size = new System.Drawing.Size(272, 21);
+            this.cboFtpImages.TabIndex = 117;
+            this.cboFtpImages.SelectedIndexChanged += new System.EventHandler(this.cboFtpImages_SelectedIndexChanged);
+            // 
+            // chkFTPThumbnailCheckSize
+            // 
+            this.chkFTPThumbnailCheckSize.AutoSize = true;
+            this.chkFTPThumbnailCheckSize.Location = new System.Drawing.Point(16, 48);
+            this.chkFTPThumbnailCheckSize.Name = "chkFTPThumbnailCheckSize";
+            this.chkFTPThumbnailCheckSize.Size = new System.Drawing.Size(331, 17);
+            this.chkFTPThumbnailCheckSize.TabIndex = 131;
+            this.chkFTPThumbnailCheckSize.Text = "If image size smaller than thumbnail size then not make thumbnail";
+            this.chkFTPThumbnailCheckSize.UseVisualStyleBackColor = true;
+            this.chkFTPThumbnailCheckSize.CheckedChanged += new System.EventHandler(this.chkFTPThumbnailCheckSize_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 25);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(107, 13);
+            this.label4.TabIndex = 129;
+            this.label4.Text = "Thumbnail width (px):";
+            // 
+            // txtFTPThumbWidth
+            // 
+            this.txtFTPThumbWidth.Location = new System.Drawing.Point(128, 22);
+            this.txtFTPThumbWidth.Name = "txtFTPThumbWidth";
+            this.txtFTPThumbWidth.Size = new System.Drawing.Size(40, 20);
+            this.txtFTPThumbWidth.TabIndex = 127;
+            this.txtFTPThumbWidth.Text = "2500";
+            this.txtFTPThumbWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtFTPThumbWidth.TextChanged += new System.EventHandler(this.txtFTPThumbWidth_TextChanged);
             // 
             // tpRapidShare
             // 
             this.tpRapidShare.Location = new System.Drawing.Point(4, 22);
             this.tpRapidShare.Name = "tpRapidShare";
             this.tpRapidShare.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRapidShare.Size = new System.Drawing.Size(834, 464);
+            this.tpRapidShare.Size = new System.Drawing.Size(772, 548);
             this.tpRapidShare.TabIndex = 1;
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
@@ -653,7 +834,7 @@
             this.tpSendSpace.Location = new System.Drawing.Point(4, 22);
             this.tpSendSpace.Name = "tpSendSpace";
             this.tpSendSpace.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSendSpace.Size = new System.Drawing.Size(834, 464);
+            this.tpSendSpace.Size = new System.Drawing.Size(772, 548);
             this.tpSendSpace.TabIndex = 3;
             this.tpSendSpace.Text = "SendSpace";
             this.tpSendSpace.UseVisualStyleBackColor = true;
@@ -663,7 +844,7 @@
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpCustomUploaders.Name = "tpCustomUploaders";
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploaders.Size = new System.Drawing.Size(834, 464);
+            this.tpCustomUploaders.Size = new System.Drawing.Size(772, 548);
             this.tpCustomUploaders.TabIndex = 4;
             this.tpCustomUploaders.Text = "Custom uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
@@ -674,7 +855,7 @@
             this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpTextUploaders.Name = "tpTextUploaders";
             this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(848, 496);
+            this.tpTextUploaders.Size = new System.Drawing.Size(786, 580);
             this.tpTextUploaders.TabIndex = 2;
             this.tpTextUploaders.Text = "Text uploaders";
             this.tpTextUploaders.UseVisualStyleBackColor = true;
@@ -686,7 +867,7 @@
             this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
             this.tcTextUploaders.Name = "tcTextUploaders";
             this.tcTextUploaders.SelectedIndex = 0;
-            this.tcTextUploaders.Size = new System.Drawing.Size(842, 490);
+            this.tcTextUploaders.Size = new System.Drawing.Size(780, 574);
             this.tcTextUploaders.TabIndex = 0;
             // 
             // tpPastebin
@@ -694,7 +875,7 @@
             this.tpPastebin.Location = new System.Drawing.Point(4, 22);
             this.tpPastebin.Name = "tpPastebin";
             this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPastebin.Size = new System.Drawing.Size(834, 464);
+            this.tpPastebin.Size = new System.Drawing.Size(772, 548);
             this.tpPastebin.TabIndex = 0;
             this.tpPastebin.Text = "Pastebin";
             this.tpPastebin.UseVisualStyleBackColor = true;
@@ -705,7 +886,7 @@
             this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
             this.tpURLShorteners.Name = "tpURLShorteners";
             this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShorteners.Size = new System.Drawing.Size(848, 496);
+            this.tpURLShorteners.Size = new System.Drawing.Size(786, 580);
             this.tpURLShorteners.TabIndex = 3;
             this.tpURLShorteners.Text = "URL Shorteners";
             this.tpURLShorteners.UseVisualStyleBackColor = true;
@@ -717,7 +898,7 @@
             this.tcURLShorteners.Location = new System.Drawing.Point(3, 3);
             this.tcURLShorteners.Name = "tcURLShorteners";
             this.tcURLShorteners.SelectedIndex = 0;
-            this.tcURLShorteners.Size = new System.Drawing.Size(842, 490);
+            this.tcURLShorteners.Size = new System.Drawing.Size(780, 574);
             this.tcURLShorteners.TabIndex = 0;
             // 
             // tpURLShortenerPage1
@@ -725,7 +906,7 @@
             this.tpURLShortenerPage1.Location = new System.Drawing.Point(4, 22);
             this.tpURLShortenerPage1.Name = "tpURLShortenerPage1";
             this.tpURLShortenerPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShortenerPage1.Size = new System.Drawing.Size(834, 464);
+            this.tpURLShortenerPage1.Size = new System.Drawing.Size(772, 548);
             this.tpURLShortenerPage1.TabIndex = 0;
             this.tpURLShortenerPage1.Text = "Nothing yet";
             this.tpURLShortenerPage1.UseVisualStyleBackColor = true;
@@ -736,7 +917,7 @@
             this.tpOtherServices.Location = new System.Drawing.Point(4, 22);
             this.tpOtherServices.Name = "tpOtherServices";
             this.tpOtherServices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOtherServices.Size = new System.Drawing.Size(848, 496);
+            this.tpOtherServices.Size = new System.Drawing.Size(786, 580);
             this.tpOtherServices.TabIndex = 4;
             this.tpOtherServices.Text = "Other Services";
             this.tpOtherServices.UseVisualStyleBackColor = true;
@@ -748,7 +929,7 @@
             this.tcOtherServices.Location = new System.Drawing.Point(3, 3);
             this.tcOtherServices.Name = "tcOtherServices";
             this.tcOtherServices.SelectedIndex = 0;
-            this.tcOtherServices.Size = new System.Drawing.Size(842, 490);
+            this.tcOtherServices.Size = new System.Drawing.Size(780, 574);
             this.tcOtherServices.TabIndex = 0;
             // 
             // tpTwitter
@@ -756,16 +937,26 @@
             this.tpTwitter.Location = new System.Drawing.Point(4, 22);
             this.tpTwitter.Name = "tpTwitter";
             this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitter.Size = new System.Drawing.Size(834, 464);
+            this.tpTwitter.Size = new System.Drawing.Size(772, 548);
             this.tpTwitter.TabIndex = 0;
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.MinimumSize = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
+            this.ucFTPAccounts.TabIndex = 0;
             // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 528);
+            this.ClientSize = new System.Drawing.Size(800, 612);
             this.Controls.Add(this.tcUploaders);
             this.Name = "UploadersConfigForm";
             this.Padding = new System.Windows.Forms.Padding(3);
@@ -788,6 +979,12 @@
             this.tpDropbox.ResumeLayout(false);
             this.tpDropbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).EndInit();
+            this.tpFTP.ResumeLayout(false);
+            this.tlpFtp.ResumeLayout(false);
+            this.panelFtp.ResumeLayout(false);
+            this.panelFtp.PerformLayout();
+            this.gbFtpSettings.ResumeLayout(false);
+            this.gbFtpSettings.PerformLayout();
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
@@ -813,7 +1010,6 @@
         private System.Windows.Forms.TabPage tpFlickr;
         private System.Windows.Forms.TabPage tpTwitPic;
         private System.Windows.Forms.TabPage tpMediaWiki;
-        private System.Windows.Forms.TabPage tpDekiWiki;
         private System.Windows.Forms.TabPage tpTwitSnaps;
         private System.Windows.Forms.Label lblTwitSnapsTip;
         private System.Windows.Forms.TabPage tpYFrog;
@@ -861,5 +1057,21 @@
         private System.Windows.Forms.Label lblDropboxPath;
         private System.Windows.Forms.Button btnDropboxOpenAuthorize;
         private System.Windows.Forms.TextBox txtDropboxPath;
+        private System.Windows.Forms.TableLayoutPanel tlpFtp;
+        private System.Windows.Forms.GroupBox gbFtpSettings;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboFtpFiles;
+        private System.Windows.Forms.ComboBox cboFtpText;
+        private System.Windows.Forms.ComboBox cboFtpImages;
+        private System.Windows.Forms.CheckBox chkFTPThumbnailCheckSize;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtFTPThumbWidth;
+        private System.Windows.Forms.Panel panelFtp;
+        private AccountsControl ucFTPAccounts;
+        private System.Windows.Forms.Button btnFtpHelp;
+        internal System.Windows.Forms.Button btnFTPExport;
+        internal System.Windows.Forms.Button btnFTPImport;
     }
 }

@@ -194,7 +194,7 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(msg))
             {
                 // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
-                string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss - ") + msg;
+                string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff - ") + msg;
                 Debug.WriteLine(line);
                 DebugLog.AppendLine(line);
                 OnDebugLogChanged(line);

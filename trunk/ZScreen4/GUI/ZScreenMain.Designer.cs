@@ -47,6 +47,9 @@
             this.btnCropShotFreehand = new System.Windows.Forms.Button();
             this.btnCaptureActiveWindow = new System.Windows.Forms.Button();
             this.btnCropShotLast = new System.Windows.Forms.Button();
+            this.btnGoogleTranslateOpen = new System.Windows.Forms.Button();
+            this.btnScreenColorPicker = new System.Windows.Forms.Button();
+            this.btnAutoCapture = new System.Windows.Forms.Button();
             this.cmsApp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +106,7 @@
             // 
             this.btnCaptureCropShot.Image = ((System.Drawing.Image)(resources.GetObject("btnCaptureCropShot.Image")));
             this.btnCaptureCropShot.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCaptureCropShot.Location = new System.Drawing.Point(16, 112);
+            this.btnCaptureCropShot.Location = new System.Drawing.Point(112, 16);
             this.btnCaptureCropShot.Name = "btnCaptureCropShot";
             this.btnCaptureCropShot.Size = new System.Drawing.Size(80, 80);
             this.btnCaptureCropShot.TabIndex = 1;
@@ -114,7 +117,7 @@
             // 
             this.btnCaptureSelectedWindow.Image = ((System.Drawing.Image)(resources.GetObject("btnCaptureSelectedWindow.Image")));
             this.btnCaptureSelectedWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCaptureSelectedWindow.Location = new System.Drawing.Point(224, 16);
+            this.btnCaptureSelectedWindow.Location = new System.Drawing.Point(16, 208);
             this.btnCaptureSelectedWindow.Name = "btnCaptureSelectedWindow";
             this.btnCaptureSelectedWindow.Size = new System.Drawing.Size(80, 80);
             this.btnCaptureSelectedWindow.TabIndex = 2;
@@ -146,7 +149,7 @@
             // 
             this.btnUploadClipboard.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadClipboard.Image")));
             this.btnUploadClipboard.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnUploadClipboard.Location = new System.Drawing.Point(16, 216);
+            this.btnUploadClipboard.Location = new System.Drawing.Point(208, 112);
             this.btnUploadClipboard.Name = "btnUploadClipboard";
             this.btnUploadClipboard.Size = new System.Drawing.Size(80, 80);
             this.btnUploadClipboard.TabIndex = 5;
@@ -157,7 +160,7 @@
             // 
             this.btnUploadFiles.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFiles.Image")));
             this.btnUploadFiles.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnUploadFiles.Location = new System.Drawing.Point(120, 216);
+            this.btnUploadFiles.Location = new System.Drawing.Point(208, 208);
             this.btnUploadFiles.Name = "btnUploadFiles";
             this.btnUploadFiles.Size = new System.Drawing.Size(80, 80);
             this.btnUploadFiles.TabIndex = 6;
@@ -166,18 +169,18 @@
             // 
             // btnDestinations
             // 
-            this.btnDestinations.Location = new System.Drawing.Point(120, 408);
+            this.btnDestinations.Location = new System.Drawing.Point(112, 408);
             this.btnDestinations.Name = "btnDestinations";
             this.btnDestinations.Size = new System.Drawing.Size(80, 24);
             this.btnDestinations.TabIndex = 7;
-            this.btnDestinations.Text = "Destinations...";
+            this.btnDestinations.Text = "Destinations..";
             this.btnDestinations.UseVisualStyleBackColor = true;
             // 
             // btnCropShotFreehand
             // 
             this.btnCropShotFreehand.Image = ((System.Drawing.Image)(resources.GetObject("btnCropShotFreehand.Image")));
             this.btnCropShotFreehand.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCropShotFreehand.Location = new System.Drawing.Point(224, 112);
+            this.btnCropShotFreehand.Location = new System.Drawing.Point(112, 208);
             this.btnCropShotFreehand.Name = "btnCropShotFreehand";
             this.btnCropShotFreehand.Size = new System.Drawing.Size(80, 80);
             this.btnCropShotFreehand.TabIndex = 8;
@@ -188,7 +191,7 @@
             // 
             this.btnCaptureActiveWindow.Image = ((System.Drawing.Image)(resources.GetObject("btnCaptureActiveWindow.Image")));
             this.btnCaptureActiveWindow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCaptureActiveWindow.Location = new System.Drawing.Point(120, 16);
+            this.btnCaptureActiveWindow.Location = new System.Drawing.Point(16, 112);
             this.btnCaptureActiveWindow.Name = "btnCaptureActiveWindow";
             this.btnCaptureActiveWindow.Size = new System.Drawing.Size(80, 80);
             this.btnCaptureActiveWindow.TabIndex = 9;
@@ -199,19 +202,55 @@
             // 
             this.btnCropShotLast.Image = ((System.Drawing.Image)(resources.GetObject("btnCropShotLast.Image")));
             this.btnCropShotLast.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCropShotLast.Location = new System.Drawing.Point(120, 112);
+            this.btnCropShotLast.Location = new System.Drawing.Point(112, 112);
             this.btnCropShotLast.Name = "btnCropShotLast";
             this.btnCropShotLast.Size = new System.Drawing.Size(80, 80);
             this.btnCropShotLast.TabIndex = 10;
             this.btnCropShotLast.Text = "Capture &Last Cropped Area";
             this.btnCropShotLast.UseVisualStyleBackColor = true;
             // 
+            // btnGoogleTranslateOpen
+            // 
+            this.btnGoogleTranslateOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnGoogleTranslateOpen.Image")));
+            this.btnGoogleTranslateOpen.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnGoogleTranslateOpen.Location = new System.Drawing.Point(304, 112);
+            this.btnGoogleTranslateOpen.Name = "btnGoogleTranslateOpen";
+            this.btnGoogleTranslateOpen.Size = new System.Drawing.Size(80, 80);
+            this.btnGoogleTranslateOpen.TabIndex = 11;
+            this.btnGoogleTranslateOpen.Text = "Google &Translator";
+            this.btnGoogleTranslateOpen.UseVisualStyleBackColor = true;
+            // 
+            // btnScreenColorPicker
+            // 
+            this.btnScreenColorPicker.Image = ((System.Drawing.Image)(resources.GetObject("btnScreenColorPicker.Image")));
+            this.btnScreenColorPicker.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnScreenColorPicker.Location = new System.Drawing.Point(304, 16);
+            this.btnScreenColorPicker.Name = "btnScreenColorPicker";
+            this.btnScreenColorPicker.Size = new System.Drawing.Size(80, 80);
+            this.btnScreenColorPicker.TabIndex = 12;
+            this.btnScreenColorPicker.Text = "Screen Color Picker";
+            this.btnScreenColorPicker.UseVisualStyleBackColor = true;
+            // 
+            // btnAutoCapture
+            // 
+            this.btnAutoCapture.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoCapture.Image")));
+            this.btnAutoCapture.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnAutoCapture.Location = new System.Drawing.Point(208, 16);
+            this.btnAutoCapture.Name = "btnAutoCapture";
+            this.btnAutoCapture.Size = new System.Drawing.Size(80, 80);
+            this.btnAutoCapture.TabIndex = 13;
+            this.btnAutoCapture.Text = "Auto Capture";
+            this.btnAutoCapture.UseVisualStyleBackColor = true;
+            // 
             // ZScreenMain
             // 
             this.AcceptButton = this.btnCaptureScreen;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 446);
+            this.ClientSize = new System.Drawing.Size(400, 446);
+            this.Controls.Add(this.btnAutoCapture);
+            this.Controls.Add(this.btnScreenColorPicker);
+            this.Controls.Add(this.btnGoogleTranslateOpen);
             this.Controls.Add(this.btnCropShotLast);
             this.Controls.Add(this.btnCaptureActiveWindow);
             this.Controls.Add(this.btnCropShotFreehand);
@@ -250,6 +289,9 @@
         private System.Windows.Forms.Button btnCropShotFreehand;
         private System.Windows.Forms.Button btnCaptureActiveWindow;
         private System.Windows.Forms.Button btnCropShotLast;
+        private System.Windows.Forms.Button btnGoogleTranslateOpen;
+        private System.Windows.Forms.Button btnScreenColorPicker;
+        private System.Windows.Forms.Button btnAutoCapture;
     }
 }
 

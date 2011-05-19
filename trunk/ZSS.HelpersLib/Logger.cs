@@ -43,7 +43,7 @@ namespace HelpersLib
         public Logger()
         {
             Messages = new StringBuilder();
-            MessageFormat = "{0:dd/MM/yyyy HH:mm:ss.fff} - {1}";
+            MessageFormat = "{0:yyyy-MM-dd HH:mm:ss.fff} - {1}";
             ExceptionFormat = "{0}:\r\n{1}";
         }
 

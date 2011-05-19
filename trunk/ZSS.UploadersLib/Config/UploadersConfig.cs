@@ -29,7 +29,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
 
-namespace UploadersLib.Config
+namespace UploadersLib
 {
     public class UploadersConfig
     {

@@ -93,6 +93,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\UploadersConfigFormGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Config\UploadersConfigFormHelper.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +113,7 @@
     <Compile Include="Controls\AccountsControl.Designer.cs">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="StaticHelpers.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
     <Compile Include="FileUploaders\DropIO.cs" />

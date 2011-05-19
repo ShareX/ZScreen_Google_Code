@@ -220,30 +220,5 @@ namespace ZScreenGUI
             return -1;
         }
 
-        #region Test FTP Account asynchronously
-
-        public void TestFTPAccountAsync(FTPAccount acc)
-        {
-            if (acc != null)
-            {
-                mZScreen.ucFTPAccounts.btnTest.Enabled = false;
-                BackgroundWorker bw = new BackgroundWorker();
-                bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
-                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
-                bw.RunWorkerAsync(acc);
-            }
-        }
-
-        private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
-        {
-            Adapter.TestFTPAccount((FTPAccount)e.Argument, false);
-        }
-
-        private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)
-        {
-            mZScreen.ucFTPAccounts.btnTest.Enabled = true;
-        }
-
-        #endregion Test FTP Account asynchronously
     }
 }

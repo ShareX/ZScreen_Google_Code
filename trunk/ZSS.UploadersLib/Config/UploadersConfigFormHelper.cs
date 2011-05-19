@@ -6,8 +6,11 @@ using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using System.ComponentModel;
+using System.Net.NetworkInformation;
+using System.Threading;
 
-namespace UploadersLib.Config
+namespace UploadersLib
 {
     public partial class UploadersConfigForm : Form
     {
@@ -148,5 +151,157 @@ namespace UploadersLib.Config
                 lblDropboxStatus.Text = "Login status: Authorize required";
             }
         }
+
+        #region FTP
+
+        public void TestFTPAccountAsync(FTPAccount acc)
+        {
+            if (acc != null)
+            {
+                ucFTPAccounts.btnTest.Enabled = false;
+                BackgroundWorker bw = new BackgroundWorker();
+                bw.DoWork += new DoWorkEventHandler(bw_DoWorkTestFTPAccount);
+                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompletedTestFTPAccount);
+                bw.RunWorkerAsync(acc);
+            }
+        }
+
+        private void bw_DoWorkTestFTPAccount(object sender, DoWorkEventArgs e)
+        {
+            TestFTPAccount((FTPAccount)e.Argument, false);
+        }
+
+        private void bw_RunWorkerCompletedTestFTPAccount(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ucFTPAccounts.btnTest.Enabled = true;
+        }
+
+        private void FTPAccountsExport()
+        {
+            if (Config.FTPAccountList != null)
+            {
+                SaveFileDialog dlg = new SaveFileDialog
+                {
+                    FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
+                    Filter = StaticHelpers.FilterFTPAccounts
+                };
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    FTPAccountManager fam = new FTPAccountManager(Config.FTPAccountList);
+                    fam.Save(dlg.FileName);
+                }
+            }
+        }
+
+        private void FTPAccountsImport()
+        {
+            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelpers.FilterFTPAccounts };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
+                FTPSetup(fam.FTPAccounts);
+            }
+        }
+
+
+        public static void TestFTPAccount(FTPAccount account, bool silent)
+        {
+            string msg;
+            string sfp = account.GetSubFolderPath();
+            using (FTP ftpClient = new FTP(account))
+            {
+                try
+                {
+                    DateTime time = DateTime.Now;
+                    ftpClient.Test(sfp);
+                    msg = "Success!";
+                }
+                catch (Exception e)
+                {
+                    if (e.Message.StartsWith("Could not change working directory to"))
+                    {
+                        try
+                        {
+                            ftpClient.MakeMultiDirectory(sfp);
+                            ftpClient.Test(sfp);
+                            msg = "Success!\nAuto created folders: " + sfp;
+                        }
+                        catch (Exception e2)
+                        {
+                            msg = e2.Message;
+                        }
+                    }
+                    else
+                    {
+                        msg = e.Message;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(msg))
+            {
+                string ping = SendPing(account.Host, 3);
+                if (!string.IsNullOrEmpty(ping))
+                {
+                    msg += "\n\nPing results:\n" + ping;
+                }
+                if (silent)
+                {
+                    // FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                }
+                else
+                {
+                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        public static string SendPing(string host)
+        {
+            return SendPing(host, 1);
+        }
+
+        public static string SendPing(string host, int count)
+        {
+            string[] status = new string[count];
+
+            using (Ping ping = new Ping())
+            {
+                PingReply reply;
+                //byte[] buffer = Encoding.ASCII.GetBytes(new string('a', 32));
+                for (int i = 0; i < count; i++)
+                {
+                    reply = ping.Send(host, 3000);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        status[i] = reply.RoundtripTime.ToString() + " ms";
+                    }
+                    else
+                    {
+                        status[i] = "Timeout";
+                    }
+                    Thread.Sleep(100);
+                }
+            }
+
+            return string.Join(", ", status);
+        }
+
+        public bool CheckFTPAccounts()
+        {
+            return StaticHelpers.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
+        }
+
+        public FTPAccount GetFtpAcctActive()
+        {
+            FTPAccount acc = null;
+            if (CheckFTPAccounts())
+            {
+                acc = Config.FTPAccountList[Config.FTPSelectedImage];
+            }
+            return acc;
+        }
+
+        #endregion FTP Methods
     }
 }

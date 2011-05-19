@@ -39,7 +39,6 @@ using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
 using UploadersLib;
-using UploadersLib.Config;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;

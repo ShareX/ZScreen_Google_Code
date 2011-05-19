@@ -32,7 +32,6 @@ using HelpersLib;
 using HistoryLib;
 using UploadersAPILib;
 using UploadersLib;
-using UploadersLib.Config;
 using UploadersLib.HelperClasses;
 using ZUploaderPlugin;
 
@@ -576,7 +575,7 @@ namespace ZUploader
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
         {
-            new UploadersConfigForm(Program.Settings.UploadersConfig, ZKeys.GetAPIKeys()).ShowDialog();
+            new UploadersConfigForm(Program.Settings.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
         }
 
         #endregion Form events

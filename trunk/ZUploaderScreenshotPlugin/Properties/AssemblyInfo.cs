@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZUploaderPluginTest")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ZUploader Screenshot Plugin")]
+[assembly: AssemblyDescription("A program that allows you to upload images, texts or files")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("ZUploaderPluginTest")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCompany("ZScreen Developers")]
+[assembly: AssemblyProduct("ZUploader")]
+[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

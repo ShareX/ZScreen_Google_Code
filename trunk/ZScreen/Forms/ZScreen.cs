@@ -53,7 +53,6 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
-using UploadersLib.Config;
 
 namespace ZScreenGUI
 {
@@ -215,15 +214,6 @@ namespace ZScreenGUI
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
 
-            // Accounts - FTP
-            ucFTPAccounts.btnAdd.Click += new EventHandler(FTPAccountAddButton_Click);
-            ucFTPAccounts.btnRemove.Click += new EventHandler(FTPAccountRemoveButton_Click);
-            ucFTPAccounts.btnTest.Click += new EventHandler(FTPAccountTestButton_Click);
-            ucFTPAccounts.btnClone.Visible = true;
-            ucFTPAccounts.btnClone.Click += new EventHandler(FTPAccountCloneButton_Click);
-            ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
-            ucFTPAccounts.SettingsGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(FtpAccountSettingsGrid_PropertyValueChanged);
-
             // Accounts - Localhost
             ucLocalhostAccounts.btnAdd.Click += new EventHandler(LocalhostAccountAddButton_Click);
             ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
@@ -270,19 +260,6 @@ namespace ZScreenGUI
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-        }
-
-        private void FtpAccountSettingsGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            FTPSetup(Engine.conf.FTPAccountList);
-        }
-
-        private void FTPAccountCloneButton_Click(object sender, EventArgs e)
-        {
-            FTPAccount src = ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] as FTPAccount;
-            Engine.conf.FTPAccountList.Add(src.Clone());
-            ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
-            FTPSetup(Engine.conf.FTPAccountList);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -767,53 +744,6 @@ namespace ZScreenGUI
             Engine.conf.MyClipboardUriMode = (int)tsm.Tag;
             CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
             cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode;
-        }
-
-        /// <summary>
-        /// Annoying method until somebody fixes it
-        /// </summary>
-        private void RewriteFTPRightClickMenu()
-        {
-            //if (Engine.conf.FTPAccountList != null)
-            //{
-            //    List<ToolStripMenuItem> tsmList = new List<ToolStripMenuItem>();
-            //    tsmList.Add(GetImageDestMenuItem(ImageDestType.FTP));
-            //    tsmList.Add(GetFileDestMenuItem(FileUploaderType.FTP));
-
-            //    foreach (ToolStripMenuItem tsmi in tsmList)
-            //    {
-            //        tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
-            //        tsmi.DropDownItems.Clear();
-            //        List<FTPAccount> accs = Engine.conf.FTPAccountList;
-            //        ToolStripMenuItem temp;
-
-            //        for (int x = 0; x < accs.Count; x++)
-            //        {
-            //            temp = new ToolStripMenuItem { Tag = x, CheckOnClick = true, Text = accs[x].Name };
-            //            temp.Click += rightClickFTPItem_Click;
-            //            tsmi.DropDownItems.Add(temp);
-            //        }
-
-            //        temp = tsmi;
-
-            //        // Check the active ftpUpload account
-            //        CheckCorrectMenuItemClicked(ref temp, Engine.conf.FtpImages);
-            //        tsmi.DropDownDirection = ToolStripDropDownDirection.Right;
-
-            //        // Show drop down menu in the correct place if menu is selected
-            //        if (tsmi.Selected)
-            //        {
-            //            tsmi.DropDown.Hide();
-            //            tsmi.DropDown.Show();
-            //        }
-            //    }
-            //}
-        }
-
-        private void rightClickFTPItem_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            ucFTPAccounts.AccountsList.SelectedIndex = (int)tsm.Tag;
         }
 
         private void CheckCorrectMenuItemClicked(ref ToolStripMenuItem mi, int index)
@@ -2087,47 +2017,9 @@ namespace ZScreenGUI
             }
         }
 
-        private void FTPSetup(IEnumerable<FTPAccount> accs)
-        {
-            if (accs != null)
-            {
-                int selFtpList = ucFTPAccounts.AccountsList.SelectedIndex;
 
-                ucFTPAccounts.AccountsList.Items.Clear();
-                cboFtpImages.Items.Clear();
-                cboFtpText.Items.Clear();
-                cboFtpFiles.Items.Clear();
 
-                Engine.conf.FTPAccountList = new List<FTPAccount>();
-                Engine.conf.FTPAccountList.AddRange(accs);
 
-                foreach (FTPAccount acc in Engine.conf.FTPAccountList)
-                {
-                    ucFTPAccounts.AccountsList.Items.Add(acc);
-                    cboFtpImages.Items.Add(acc);
-                    cboFtpText.Items.Add(acc);
-                    cboFtpFiles.Items.Add(acc);
-                }
-
-                if (ucFTPAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucFTPAccounts.AccountsList.SelectedIndex = selFtpList.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
-                    cboFtpImages.SelectedIndex = Engine.conf.FtpImages.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
-                    cboFtpText.SelectedIndex = Engine.conf.FtpText.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
-                    cboFtpFiles.SelectedIndex = Engine.conf.FtpFiles.Between(0, ucFTPAccounts.AccountsList.Items.Count - 1);
-                }
-            }
-        }
-
-        private void FTPAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucFTPAccounts.AccountsList.SelectedIndex;
-            if (ucFTPAccounts.RemoveItem(sel))
-            {
-                Engine.conf.FTPAccountList.RemoveAt(sel);
-            }
-            FTPSetup(Engine.conf.FTPAccountList);
-        }
 
         private void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2180,17 +2072,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void FTPAccountsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucFTPAccounts.AccountsList.SelectedIndex;
 
-            if (Adapter.CheckList(Engine.conf.FTPAccountList, sel))
-            {
-                FTPAccount acc = Engine.conf.FTPAccountList[sel];
-                ucFTPAccounts.SettingsGrid.SelectedObject = acc;
-                RewriteFTPRightClickMenu();
-            }
-        }
 
         private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -2204,14 +2086,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void FTPAccountAddButton_Click(object sender, EventArgs e)
-        {
-            FTPAccount acc = new FTPAccount("New Account");
-            Engine.conf.FTPAccountList.Add(acc);
-            ucFTPAccounts.AccountsList.Items.Add(acc);
-            ucFTPAccounts.AccountsList.SelectedIndex = ucFTPAccounts.AccountsList.Items.Count - 1;
-            FTPSetup(Engine.conf.FTPAccountList);
-        }
+
 
         private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
         {
@@ -2294,32 +2169,6 @@ namespace ZScreenGUI
             return account;
         }
 
-        private void btnExportAccounts_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.FTPAccountList != null)
-            {
-                SaveFileDialog dlg = new SaveFileDialog
-                {
-                    FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = Engine.FILTER_ACCOUNTS
-                };
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.conf.FTPAccountList);
-                    fam.Save(dlg.FileName);
-                }
-            }
-        }
-
-        private void btnAccsImport_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_ACCOUNTS };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
-                FTPSetup(fam.FTPAccounts);
-            }
-        }
 
         private ProxyInfo GetSelectedProxy()
         {
@@ -2352,11 +2201,6 @@ namespace ZScreenGUI
             }
 
             return acc;
-        }
-
-        private void FTPAccountTestButton_Click(object sender, EventArgs e)
-        {
-            Loader.Worker2.TestFTPAccountAsync(GetSelectedFTP());
         }
 
         private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
@@ -2710,11 +2554,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI();
         }
 
-        private void pgFTPSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            RewriteFTPRightClickMenu();
-        }
-
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             Software temp = Engine.conf.ActionsList[lbSoftware.SelectedIndex];
@@ -3063,20 +2902,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
-        {
-            int width;
-            if (int.TryParse(txtFTPThumbWidth.Text, out width))
-            {
-                Engine.conf.FTPThumbnailWidth = width;
-            }
-        }
-
-        private void cbFTPThumbnailCheckSize_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FTPThumbnailCheckSize = cbFTPThumbnailCheckSize.Checked;
-        }
-
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
@@ -3093,9 +2918,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (ucFTPAccounts.AccountsList.SelectedIndex > -1)
+            if (Engine.conf.UploadersConfig2.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = ucFTPAccounts.AccountsList.Items[ucFTPAccounts.AccountsList.SelectedIndex] as FTPAccount;
+                FTPAccount acc = Engine.conf.UploadersConfig2.FTPAccountList[Engine.conf.UploadersConfig2.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
@@ -3495,22 +3320,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void cboFtpImages_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FtpImages = cboFtpImages.SelectedIndex;
-        }
-
-        private void cboFtpText_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FtpText = cboFtpText.SelectedIndex;
-        }
-
-        private void cboFtpFiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.FtpFiles = cboFtpFiles.SelectedIndex;
-        }
-
-        private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
+       private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
             if (mGuiIsReady)
@@ -3530,107 +3340,6 @@ namespace ZScreenGUI
                 if (!string.IsNullOrEmpty(url))
                 {
                     Engine.conf.DropboxOAuthInfo = oauth;
-                    Process.Start(url);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnDropboxCompleteAuth_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.DropboxOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.AuthToken) &&
-                !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.AuthSecret))
-            {
-                Dropbox dropbox = new Dropbox(Engine.conf.DropboxOAuthInfo);
-                bool result = dropbox.GetAccessToken();
-
-                if (result)
-                {
-                    DropboxAccountInfo account = dropbox.GetAccountInfo();
-
-                    if (account != null)
-                    {
-                        Engine.conf.DropboxEmail = account.Email;
-                        Engine.conf.DropboxName = account.Display_name;
-                        Engine.conf.DropboxUserID = account.Uid.ToString();
-                        Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
-                        UpdateDropboxStatus();
-                        MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show("GetAccountInfo failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            Engine.conf.DropboxOAuthInfo = null;
-            UpdateDropboxStatus();
-        }
-
-        private void UpdateDropboxStatus()
-        {
-            if (Engine.conf.DropboxOAuthInfo != null && !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.UserToken) &&
-                !string.IsNullOrEmpty(Engine.conf.DropboxOAuthInfo.UserSecret))
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Login status: Success");
-                sb.AppendLine("Email: " + Engine.conf.DropboxEmail);
-                sb.AppendLine("Name: " + Engine.conf.DropboxName);
-                sb.AppendLine("User ID: " + Engine.conf.DropboxUserID);
-                string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.conf.DropboxUploadPath));
-                if (!string.IsNullOrEmpty(uploadPath))
-                {
-                    sb.AppendLine("Upload path: " + uploadPath);
-                    sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Engine.conf.DropboxUserID, uploadPath, "{Filename}"));
-                }
-                lblDropboxStatus.Text = sb.ToString();
-            }
-            else
-            {
-                lblDropboxStatus.Text = "Login status: Authorize required";
-            }
-        }
-
-        private void txtDropboxPath_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.DropboxUploadPath = txtDropboxPath.Text;
-            UpdateDropboxStatus();
-        }
-
-        private void pbDropboxLogo_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://www.dropbox.com");
-        }
-
-        private void btnDropboxRegister_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://www.dropbox.com/register");
-        }
-
-        private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OAuthInfo oauth = new OAuthInfo(ZKeys.ImgurConsumerKey, ZKeys.ImgurConsumerSecret);
-
-                string url = new Imgur(oauth).GetAuthorizationURL();
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    Engine.conf.UploadersConfig2.ImgurOAuthInfo = oauth;
                     Process.Start(url);
                 }
             }

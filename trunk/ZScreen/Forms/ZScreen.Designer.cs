@@ -94,6 +94,7 @@ namespace ZScreenGUI
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
@@ -101,6 +102,7 @@ namespace ZScreenGUI
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
@@ -205,29 +207,8 @@ namespace ZScreenGUI
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcDestinations = new System.Windows.Forms.TabControl();
-            this.tpDestFTP = new System.Windows.Forms.TabPage();
-            this.btnFtpHelp = new System.Windows.Forms.Button();
-            this.btnFTPOpenClient = new System.Windows.Forms.Button();
-            this.gbFTPSettings = new System.Windows.Forms.GroupBox();
-            this.lblFtpFiles = new System.Windows.Forms.Label();
-            this.lblFtpText = new System.Windows.Forms.Label();
-            this.lblFtpImages = new System.Windows.Forms.Label();
-            this.cboFtpFiles = new System.Windows.Forms.ComboBox();
-            this.cboFtpText = new System.Windows.Forms.ComboBox();
-            this.cboFtpImages = new System.Windows.Forms.ComboBox();
-            this.cbFTPThumbnailCheckSize = new System.Windows.Forms.CheckBox();
-            this.lblFTPThumbWidth = new System.Windows.Forms.Label();
-            this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
-            this.tpDestDropbox = new System.Windows.Forms.TabPage();
-            this.btnDropboxCompleteAuth = new System.Windows.Forms.Button();
-            this.pbDropboxLogo = new System.Windows.Forms.PictureBox();
-            this.btnDropboxRegister = new System.Windows.Forms.Button();
-            this.lblDropboxStatus = new System.Windows.Forms.Label();
-            this.lblDropboxPathTip = new System.Windows.Forms.Label();
-            this.lblDropboxPath = new System.Windows.Forms.Label();
-            this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
-            this.txtDropboxPath = new System.Windows.Forms.TextBox();
             this.tpDestLocalhost = new System.Windows.Forms.TabPage();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpDestRapidShare = new System.Windows.Forms.TabPage();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
@@ -256,6 +237,7 @@ namespace ZScreenGUI
             this.tlpTwitter = new System.Windows.Forms.TableLayoutPanel();
             this.panelTwitter = new System.Windows.Forms.Panel();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
             this.gbTwitterOthers = new System.Windows.Forms.GroupBox();
             this.cbTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
@@ -263,7 +245,9 @@ namespace ZScreenGUI
             this.tpDestMindTouch = new System.Windows.Forms.TabPage();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
+            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
             this.tpDestMediaWiki = new System.Windows.Forms.TabPage();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpDestCustom = new System.Windows.Forms.TabPage();
             this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
             this.btnUploadersTest = new System.Windows.Forms.Button();
@@ -356,6 +340,7 @@ namespace ZScreenGUI
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.gpProxySettings = new System.Windows.Forms.GroupBox();
             this.cboProxyConfig = new System.Windows.Forms.ComboBox();
+            this.ucProxyAccounts = new UploadersLib.AccountsControl();
             this.tpPaths = new System.Windows.Forms.TabPage();
             this.chkPreferSystemFolders = new System.Windows.Forms.CheckBox();
             this.gbRoot = new System.Windows.Forms.GroupBox();
@@ -528,14 +513,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
-            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
-            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
-            this.ucProxyAccounts = new UploadersLib.AccountsControl();
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -580,10 +557,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.SuspendLayout();
             this.tpDestinations.SuspendLayout();
             this.tcDestinations.SuspendLayout();
-            this.tpDestFTP.SuspendLayout();
-            this.gbFTPSettings.SuspendLayout();
-            this.tpDestDropbox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).BeginInit();
             this.tpDestLocalhost.SuspendLayout();
             this.tpDestRapidShare.SuspendLayout();
             this.tpDestSendSpace.SuspendLayout();
@@ -708,10 +681,10 @@ namespace ZScreenGUI
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
             // 
-            // tsmImageDest
+            // tsmiDestinations
             // 
             this.tsmiDestinations.Image = global::ZScreenGUI.Properties.Resources.picture_go;
-            this.tsmiDestinations.Name = "tsmImageDest";
+            this.tsmiDestinations.Name = "tsmiDestinations";
             this.tsmiDestinations.Size = new System.Drawing.Size(200, 22);
             this.tsmiDestinations.Text = "Send Image To";
             // 
@@ -1232,6 +1205,22 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
             // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            // 
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
@@ -1319,6 +1308,17 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\r\nCome visit our website and create an i" +
                     "ssue.");
             this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(0, 0);
+            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
+            this.ucDestOptions.MaximumSize = new System.Drawing.Size(376, 144);
+            this.ucDestOptions.MinimumSize = new System.Drawing.Size(376, 144);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(376, 144);
+            this.ucDestOptions.TabIndex = 124;
+            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
             // tpHotkeys
             // 
@@ -2547,8 +2547,6 @@ namespace ZScreenGUI
             // 
             // tcDestinations
             // 
-            this.tcDestinations.Controls.Add(this.tpDestFTP);
-            this.tcDestinations.Controls.Add(this.tpDestDropbox);
             this.tcDestinations.Controls.Add(this.tpDestLocalhost);
             this.tcDestinations.Controls.Add(this.tpDestRapidShare);
             this.tcDestinations.Controls.Add(this.tpDestSendSpace);
@@ -2566,243 +2564,6 @@ namespace ZScreenGUI
             this.tcDestinations.Size = new System.Drawing.Size(807, 434);
             this.tcDestinations.TabIndex = 0;
             // 
-            // tpDestFTP
-            // 
-            this.tpDestFTP.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestFTP.Controls.Add(this.btnFtpHelp);
-            this.tpDestFTP.Controls.Add(this.btnFTPOpenClient);
-            this.tpDestFTP.Controls.Add(this.ucFTPAccounts);
-            this.tpDestFTP.Controls.Add(this.gbFTPSettings);
-            this.tpDestFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpDestFTP.Name = "tpDestFTP";
-            this.tpDestFTP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestFTP.Size = new System.Drawing.Size(799, 408);
-            this.tpDestFTP.TabIndex = 5;
-            this.tpDestFTP.Text = "FTP";
-            // 
-            // btnFtpHelp
-            // 
-            this.btnFtpHelp.Location = new System.Drawing.Point(312, 11);
-            this.btnFtpHelp.Name = "btnFtpHelp";
-            this.btnFtpHelp.Size = new System.Drawing.Size(64, 24);
-            this.btnFtpHelp.TabIndex = 75;
-            this.btnFtpHelp.Text = "&Help...";
-            this.btnFtpHelp.UseVisualStyleBackColor = true;
-            this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
-            // 
-            // btnFTPOpenClient
-            // 
-            this.btnFTPOpenClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFTPOpenClient.Location = new System.Drawing.Point(657, 11);
-            this.btnFTPOpenClient.Name = "btnFTPOpenClient";
-            this.btnFTPOpenClient.Size = new System.Drawing.Size(128, 24);
-            this.btnFTPOpenClient.TabIndex = 116;
-            this.btnFTPOpenClient.Text = "Open FTP &Client...";
-            this.btnFTPOpenClient.UseVisualStyleBackColor = true;
-            this.btnFTPOpenClient.Click += new System.EventHandler(this.btnFTPOpenClient_Click);
-            // 
-            // gbFTPSettings
-            // 
-            this.gbFTPSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbFTPSettings.Controls.Add(this.lblFtpFiles);
-            this.gbFTPSettings.Controls.Add(this.lblFtpText);
-            this.gbFTPSettings.Controls.Add(this.lblFtpImages);
-            this.gbFTPSettings.Controls.Add(this.cboFtpFiles);
-            this.gbFTPSettings.Controls.Add(this.cboFtpText);
-            this.gbFTPSettings.Controls.Add(this.cboFtpImages);
-            this.gbFTPSettings.Controls.Add(this.cbFTPThumbnailCheckSize);
-            this.gbFTPSettings.Controls.Add(this.lblFTPThumbWidth);
-            this.gbFTPSettings.Controls.Add(this.txtFTPThumbWidth);
-            this.gbFTPSettings.Location = new System.Drawing.Point(8, 308);
-            this.gbFTPSettings.Name = "gbFTPSettings";
-            this.gbFTPSettings.Size = new System.Drawing.Size(767, 94);
-            this.gbFTPSettings.TabIndex = 115;
-            this.gbFTPSettings.TabStop = false;
-            this.gbFTPSettings.Text = "FTP Settings";
-            // 
-            // lblFtpFiles
-            // 
-            this.lblFtpFiles.AutoSize = true;
-            this.lblFtpFiles.Location = new System.Drawing.Point(432, 70);
-            this.lblFtpFiles.Name = "lblFtpFiles";
-            this.lblFtpFiles.Size = new System.Drawing.Size(28, 13);
-            this.lblFtpFiles.TabIndex = 136;
-            this.lblFtpFiles.Text = "Files";
-            // 
-            // lblFtpText
-            // 
-            this.lblFtpText.AutoSize = true;
-            this.lblFtpText.Location = new System.Drawing.Point(432, 44);
-            this.lblFtpText.Name = "lblFtpText";
-            this.lblFtpText.Size = new System.Drawing.Size(28, 13);
-            this.lblFtpText.TabIndex = 135;
-            this.lblFtpText.Text = "Text";
-            // 
-            // lblFtpImages
-            // 
-            this.lblFtpImages.AutoSize = true;
-            this.lblFtpImages.Location = new System.Drawing.Point(419, 19);
-            this.lblFtpImages.Name = "lblFtpImages";
-            this.lblFtpImages.Size = new System.Drawing.Size(41, 13);
-            this.lblFtpImages.TabIndex = 134;
-            this.lblFtpImages.Text = "Images";
-            // 
-            // cboFtpFiles
-            // 
-            this.cboFtpFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFtpFiles.FormattingEnabled = true;
-            this.cboFtpFiles.Location = new System.Drawing.Point(472, 64);
-            this.cboFtpFiles.Name = "cboFtpFiles";
-            this.cboFtpFiles.Size = new System.Drawing.Size(272, 21);
-            this.cboFtpFiles.TabIndex = 133;
-            this.cboFtpFiles.SelectedIndexChanged += new System.EventHandler(this.cboFtpFiles_SelectedIndexChanged);
-            // 
-            // cboFtpText
-            // 
-            this.cboFtpText.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFtpText.FormattingEnabled = true;
-            this.cboFtpText.Location = new System.Drawing.Point(472, 40);
-            this.cboFtpText.Name = "cboFtpText";
-            this.cboFtpText.Size = new System.Drawing.Size(272, 21);
-            this.cboFtpText.TabIndex = 132;
-            this.cboFtpText.SelectedIndexChanged += new System.EventHandler(this.cboFtpText_SelectedIndexChanged);
-            // 
-            // cboFtpImages
-            // 
-            this.cboFtpImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFtpImages.FormattingEnabled = true;
-            this.cboFtpImages.Location = new System.Drawing.Point(472, 16);
-            this.cboFtpImages.Name = "cboFtpImages";
-            this.cboFtpImages.Size = new System.Drawing.Size(272, 21);
-            this.cboFtpImages.TabIndex = 117;
-            this.cboFtpImages.SelectedIndexChanged += new System.EventHandler(this.cboFtpImages_SelectedIndexChanged);
-            // 
-            // cbFTPThumbnailCheckSize
-            // 
-            this.cbFTPThumbnailCheckSize.AutoSize = true;
-            this.cbFTPThumbnailCheckSize.Location = new System.Drawing.Point(16, 48);
-            this.cbFTPThumbnailCheckSize.Name = "cbFTPThumbnailCheckSize";
-            this.cbFTPThumbnailCheckSize.Size = new System.Drawing.Size(331, 17);
-            this.cbFTPThumbnailCheckSize.TabIndex = 131;
-            this.cbFTPThumbnailCheckSize.Text = "If image size smaller than thumbnail size then not make thumbnail";
-            this.cbFTPThumbnailCheckSize.UseVisualStyleBackColor = true;
-            this.cbFTPThumbnailCheckSize.CheckedChanged += new System.EventHandler(this.cbFTPThumbnailCheckSize_CheckedChanged);
-            // 
-            // lblFTPThumbWidth
-            // 
-            this.lblFTPThumbWidth.AutoSize = true;
-            this.lblFTPThumbWidth.Location = new System.Drawing.Point(16, 25);
-            this.lblFTPThumbWidth.Name = "lblFTPThumbWidth";
-            this.lblFTPThumbWidth.Size = new System.Drawing.Size(107, 13);
-            this.lblFTPThumbWidth.TabIndex = 129;
-            this.lblFTPThumbWidth.Text = "Thumbnail width (px):";
-            // 
-            // txtFTPThumbWidth
-            // 
-            this.txtFTPThumbWidth.Location = new System.Drawing.Point(128, 22);
-            this.txtFTPThumbWidth.Name = "txtFTPThumbWidth";
-            this.txtFTPThumbWidth.Size = new System.Drawing.Size(40, 20);
-            this.txtFTPThumbWidth.TabIndex = 127;
-            this.txtFTPThumbWidth.Text = "2500";
-            this.txtFTPThumbWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtFTPThumbWidth.TextChanged += new System.EventHandler(this.txtFTPThumbWidth_TextChanged);
-            // 
-            // tpDestDropbox
-            // 
-            this.tpDestDropbox.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestDropbox.Controls.Add(this.btnDropboxCompleteAuth);
-            this.tpDestDropbox.Controls.Add(this.pbDropboxLogo);
-            this.tpDestDropbox.Controls.Add(this.btnDropboxRegister);
-            this.tpDestDropbox.Controls.Add(this.lblDropboxStatus);
-            this.tpDestDropbox.Controls.Add(this.lblDropboxPathTip);
-            this.tpDestDropbox.Controls.Add(this.lblDropboxPath);
-            this.tpDestDropbox.Controls.Add(this.btnDropboxOpenAuthorize);
-            this.tpDestDropbox.Controls.Add(this.txtDropboxPath);
-            this.tpDestDropbox.Location = new System.Drawing.Point(4, 22);
-            this.tpDestDropbox.Name = "tpDestDropbox";
-            this.tpDestDropbox.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestDropbox.Size = new System.Drawing.Size(799, 408);
-            this.tpDestDropbox.TabIndex = 14;
-            this.tpDestDropbox.Text = "Dropbox";
-            // 
-            // btnDropboxCompleteAuth
-            // 
-            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(168, 120);
-            this.btnDropboxCompleteAuth.Name = "btnDropboxCompleteAuth";
-            this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(144, 23);
-            this.btnDropboxCompleteAuth.TabIndex = 12;
-            this.btnDropboxCompleteAuth.Text = "Complete authorization";
-            this.btnDropboxCompleteAuth.UseVisualStyleBackColor = true;
-            this.btnDropboxCompleteAuth.Click += new System.EventHandler(this.btnDropboxCompleteAuth_Click);
-            // 
-            // pbDropboxLogo
-            // 
-            this.pbDropboxLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDropboxLogo.Image = global::ZScreenGUI.Properties.Resources.DropboxLogo;
-            this.pbDropboxLogo.Location = new System.Drawing.Point(16, 16);
-            this.pbDropboxLogo.Name = "pbDropboxLogo";
-            this.pbDropboxLogo.Size = new System.Drawing.Size(248, 64);
-            this.pbDropboxLogo.TabIndex = 11;
-            this.pbDropboxLogo.TabStop = false;
-            this.pbDropboxLogo.Click += new System.EventHandler(this.pbDropboxLogo_Click);
-            // 
-            // btnDropboxRegister
-            // 
-            this.btnDropboxRegister.Location = new System.Drawing.Point(272, 16);
-            this.btnDropboxRegister.Name = "btnDropboxRegister";
-            this.btnDropboxRegister.Size = new System.Drawing.Size(96, 24);
-            this.btnDropboxRegister.TabIndex = 4;
-            this.btnDropboxRegister.Text = "Register...";
-            this.btnDropboxRegister.UseVisualStyleBackColor = true;
-            this.btnDropboxRegister.Click += new System.EventHandler(this.btnDropboxRegister_Click);
-            // 
-            // lblDropboxStatus
-            // 
-            this.lblDropboxStatus.AutoSize = true;
-            this.lblDropboxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 160);
-            this.lblDropboxStatus.Name = "lblDropboxStatus";
-            this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
-            this.lblDropboxStatus.TabIndex = 8;
-            this.lblDropboxStatus.Text = "Login status:";
-            // 
-            // lblDropboxPathTip
-            // 
-            this.lblDropboxPathTip.AutoSize = true;
-            this.lblDropboxPathTip.Location = new System.Drawing.Point(344, 92);
-            this.lblDropboxPathTip.Name = "lblDropboxPathTip";
-            this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
-            this.lblDropboxPathTip.TabIndex = 7;
-            this.lblDropboxPathTip.Text = "Use \"Public\" folder for be able to get URL.";
-            // 
-            // lblDropboxPath
-            // 
-            this.lblDropboxPath.AutoSize = true;
-            this.lblDropboxPath.Location = new System.Drawing.Point(16, 92);
-            this.lblDropboxPath.Name = "lblDropboxPath";
-            this.lblDropboxPath.Size = new System.Drawing.Size(68, 13);
-            this.lblDropboxPath.TabIndex = 6;
-            this.lblDropboxPath.Text = "Upload path:";
-            // 
-            // btnDropboxOpenAuthorize
-            // 
-            this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(16, 120);
-            this.btnDropboxOpenAuthorize.Name = "btnDropboxOpenAuthorize";
-            this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(144, 24);
-            this.btnDropboxOpenAuthorize.TabIndex = 3;
-            this.btnDropboxOpenAuthorize.Text = "Open authorize page...";
-            this.btnDropboxOpenAuthorize.UseVisualStyleBackColor = true;
-            this.btnDropboxOpenAuthorize.Click += new System.EventHandler(this.btnDropboxLogin_Click);
-            // 
-            // txtDropboxPath
-            // 
-            this.txtDropboxPath.Location = new System.Drawing.Point(88, 88);
-            this.txtDropboxPath.Name = "txtDropboxPath";
-            this.txtDropboxPath.Size = new System.Drawing.Size(248, 20);
-            this.txtDropboxPath.TabIndex = 2;
-            this.txtDropboxPath.TextChanged += new System.EventHandler(this.txtDropboxPath_TextChanged);
-            // 
             // tpDestLocalhost
             // 
             this.tpDestLocalhost.BackColor = System.Drawing.SystemColors.Window;
@@ -2813,6 +2574,15 @@ namespace ZScreenGUI
             this.tpDestLocalhost.Size = new System.Drawing.Size(799, 408);
             this.tpDestLocalhost.TabIndex = 11;
             this.tpDestLocalhost.Text = "Localhost";
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(793, 402);
+            this.ucLocalhostAccounts.TabIndex = 1;
             // 
             // tpDestRapidShare
             // 
@@ -3124,6 +2894,14 @@ namespace ZScreenGUI
             this.btnTwitterLogin.UseVisualStyleBackColor = true;
             this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
             // 
+            // ucTwitterAccounts
+            // 
+            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(787, 295);
+            this.ucTwitterAccounts.TabIndex = 22;
+            // 
             // gbTwitterOthers
             // 
             this.gbTwitterOthers.Controls.Add(this.cbTwitPicShowFull);
@@ -3205,6 +2983,17 @@ namespace ZScreenGUI
             this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
             this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
             // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(787, 314);
+            this.ucMindTouchAccounts.TabIndex = 0;
+            // 
             // tpDestMediaWiki
             // 
             this.tpDestMediaWiki.BackColor = System.Drawing.SystemColors.Window;
@@ -3215,6 +3004,18 @@ namespace ZScreenGUI
             this.tpDestMediaWiki.Size = new System.Drawing.Size(799, 408);
             this.tpDestMediaWiki.TabIndex = 13;
             this.tpDestMediaWiki.Text = "MediaWiki";
+            // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(787, 394);
+            this.ucMediaWikiAccounts.TabIndex = 0;
             // 
             // tpDestCustom
             // 
@@ -4227,6 +4028,17 @@ namespace ZScreenGUI
             this.cboProxyConfig.TabIndex = 114;
             this.cboProxyConfig.SelectedIndexChanged += new System.EventHandler(this.cboProxyConfig_SelectedIndexChanged);
             // 
+            // ucProxyAccounts
+            // 
+            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucProxyAccounts.Name = "ucProxyAccounts";
+            this.ucProxyAccounts.Size = new System.Drawing.Size(787, 314);
+            this.ucProxyAccounts.TabIndex = 0;
+            // 
             // tpPaths
             // 
             this.tpPaths.Controls.Add(this.chkPreferSystemFolders);
@@ -4463,7 +4275,6 @@ namespace ZScreenGUI
             this.btnFTPExport.TabIndex = 38;
             this.btnFTPExport.Text = "Export FTP Accounts...";
             this.btnFTPExport.UseVisualStyleBackColor = true;
-            this.btnFTPExport.Click += new System.EventHandler(this.btnExportAccounts_Click);
             // 
             // btnFTPImport
             // 
@@ -4477,7 +4288,6 @@ namespace ZScreenGUI
             this.btnFTPImport.TabIndex = 39;
             this.btnFTPImport.Text = "Import FTP Accounts...";
             this.btnFTPImport.UseVisualStyleBackColor = true;
-            this.btnFTPImport.Click += new System.EventHandler(this.btnAccsImport_Click);
             // 
             // btnSettingsImport
             // 
@@ -6255,94 +6065,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucFTPAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(795, 307);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(793, 402);
-            this.ucLocalhostAccounts.TabIndex = 1;
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(787, 295);
-            this.ucTwitterAccounts.TabIndex = 22;
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(787, 314);
-            this.ucMindTouchAccounts.TabIndex = 0;
-            // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(787, 394);
-            this.ucMediaWikiAccounts.TabIndex = 0;
-            // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(787, 314);
-            this.ucProxyAccounts.TabIndex = 0;
-            // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(112, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(234, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(0, 0);
-            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
-            this.ucDestOptions.TabIndex = 124;
-            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -6425,12 +6147,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.PerformLayout();
             this.tpDestinations.ResumeLayout(false);
             this.tcDestinations.ResumeLayout(false);
-            this.tpDestFTP.ResumeLayout(false);
-            this.gbFTPSettings.ResumeLayout(false);
-            this.gbFTPSettings.PerformLayout();
-            this.tpDestDropbox.ResumeLayout(false);
-            this.tpDestDropbox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).EndInit();
             this.tpDestLocalhost.ResumeLayout(false);
             this.tpDestRapidShare.ResumeLayout(false);
             this.tpDestRapidShare.PerformLayout();
@@ -6756,7 +6472,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnRemoveImageEditor;
         internal System.Windows.Forms.CheckedListBox lbSoftware;
         internal System.Windows.Forms.Button btnAddImageSoftware;
-        internal System.Windows.Forms.GroupBox gbFTPSettings;
         internal System.Windows.Forms.Button btnFTPImport;
         internal System.Windows.Forms.Button btnFTPExport;
         internal System.Windows.Forms.TabPage tpDestCustom;
@@ -6859,8 +6574,6 @@ namespace ZScreenGUI
         internal AccountsControl ucMindTouchAccounts;
         internal System.Windows.Forms.GroupBox gbImageEditorSettings;
         internal System.Windows.Forms.CheckBox chkImageEditorAutoSave;
-        internal System.Windows.Forms.TabPage tpDestFTP;
-        internal AccountsControl ucFTPAccounts;
         internal System.Windows.Forms.Label lblScreenshotDelay;
         internal System.Windows.Forms.GroupBox gbDynamicCrosshair;
         internal System.Windows.Forms.GroupBox gbDynamicRegionBorderColorSettings;
@@ -6936,9 +6649,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblSendSpaceAccountType;
         private System.Windows.Forms.Button btnSendSpaceRegister;
         internal System.Windows.Forms.RichTextBox rtbDebugInfo;
-        private System.Windows.Forms.Label lblFTPThumbWidth;
-        private System.Windows.Forms.TextBox txtFTPThumbWidth;
-        private System.Windows.Forms.CheckBox cbFTPThumbnailCheckSize;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
         private System.Windows.Forms.TabPage tpDestFlickr;
         private System.Windows.Forms.Button btnFlickrGetToken;
@@ -6948,12 +6658,10 @@ namespace ZScreenGUI
         private System.Windows.Forms.PropertyGrid pgFlickrSettings;
         private System.Windows.Forms.Button btnFlickrOpenImages;
         internal DestSelector ucDestOptions;
-        private System.Windows.Forms.Button btnFTPOpenClient;
         private System.Windows.Forms.CheckBox chkShellExt;
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;
         private System.Windows.Forms.CheckBox chkHotkeys;
         private System.Windows.Forms.CheckBox chkTwitterEnable;
-        private System.Windows.Forms.Button btnFtpHelp;
         private System.Windows.Forms.Button btnOpenZScreenTester;
         private System.Windows.Forms.Label lblMaxNameLength;
         private System.Windows.Forms.NumericUpDown nudMaxNameLength;
@@ -6991,22 +6699,8 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
         private System.Windows.Forms.TabPage tpDestLocalhost;
         internal AccountsControl ucLocalhostAccounts;
-        private System.Windows.Forms.Label lblFtpFiles;
-        private System.Windows.Forms.Label lblFtpText;
-        private System.Windows.Forms.Label lblFtpImages;
-        private System.Windows.Forms.ComboBox cboFtpFiles;
-        private System.Windows.Forms.ComboBox cboFtpText;
-        private System.Windows.Forms.ComboBox cboFtpImages;
         private System.Windows.Forms.TabPage tpDestMediaWiki;
         internal AccountsControl ucMediaWikiAccounts;
-        private System.Windows.Forms.TabPage tpDestDropbox;
-        private System.Windows.Forms.Label lblDropboxPathTip;
-        private System.Windows.Forms.Label lblDropboxPath;
-        private System.Windows.Forms.Button btnDropboxOpenAuthorize;
-        private System.Windows.Forms.TextBox txtDropboxPath;
-        private System.Windows.Forms.Label lblDropboxStatus;
-        private System.Windows.Forms.Button btnDropboxRegister;
-        private System.Windows.Forms.PictureBox pbDropboxLogo;
         private System.Windows.Forms.GroupBox gbTwitterOthers;
         private System.Windows.Forms.Button btnTwitterLogin;
         private AccountsControl ucTwitterAccounts;
@@ -7026,7 +6720,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkShortenURL;
         private System.Windows.Forms.ComboBox cboReleaseChannel;
         private System.Windows.Forms.Button btnClearHistory;
-        private System.Windows.Forms.Button btnDropboxCompleteAuth;
         private System.Windows.Forms.TabPage tpDestPastebin;
         private System.Windows.Forms.Button btnPastebinLogin;
         private System.Windows.Forms.PropertyGrid pgPastebinSettings;
