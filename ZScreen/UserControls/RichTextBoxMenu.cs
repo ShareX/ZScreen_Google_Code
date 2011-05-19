@@ -74,7 +74,7 @@ namespace ZScreenGUI.UserControls
             string text = new StreamReader(stream).ReadToEnd();
             if (!string.IsNullOrEmpty(text))
             {
-                Clipboard.SetText(text); // ok
+                Clipboard.SetText(text);
             }
         }
 

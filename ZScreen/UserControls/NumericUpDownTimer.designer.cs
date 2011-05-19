@@ -32,9 +32,9 @@
             this.cbDelay = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // nudDelay
-            //
+            // 
             this.nudDelay.Location = new System.Drawing.Point(2, 3);
             this.nudDelay.Maximum = new decimal(new int[] {
             1000000000,
@@ -46,9 +46,10 @@
             this.nudDelay.TabIndex = 1;
             this.nudDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
-            //
+            // 
             // cbDelay
-            //
+            // 
+            this.cbDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDelay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDelay.FormattingEnabled = true;
             this.cbDelay.ItemHeight = 13;
@@ -57,9 +58,9 @@
             this.cbDelay.Size = new System.Drawing.Size(159, 21);
             this.cbDelay.TabIndex = 2;
             this.cbDelay.SelectedIndexChanged += new System.EventHandler(this.cbDelay_SelectedIndexChanged);
-            //
+            // 
             // NumericUpDownTimer
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.cbDelay);
@@ -68,6 +69,7 @@
             this.Size = new System.Drawing.Size(233, 27);
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         #endregion Component Designer generated code

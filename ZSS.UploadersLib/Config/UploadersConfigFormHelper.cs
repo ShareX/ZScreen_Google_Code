@@ -1,64 +1,46 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
-using System.Threading;
 using UploadersLib.TextUploaders;
 
 namespace UploadersLib
 {
     public partial class UploadersConfigForm : Form
     {
-        #region TinyPic Methods
-
-        public string GetTinyPicShuk()
-        {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Config.TinyPicUsername) ? "someone@gmail.com" :
-                Config.TinyPicUsername, Config.TinyPicPassword);
-            ub.ShowDialog();
-            if (ub.DialogResult == DialogResult.OK)
-            {
-                TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey);
-                if (Config.TinyPicRememberUserPass)
-                {
-                    Config.TinyPicUsername = ub.UserName;
-                    Config.TinyPicPassword = ub.Password;
-                }
-                return tpu.UserAuth(ub.UserName, ub.Password);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Method to update TinyPic Shuk; Run periodically
-        /// </summary>
-        public void UpdateTinyPicShuk()
-        {
-            if (Config.TinyPicRememberUserPass && !string.IsNullOrEmpty(Config.TinyPicUsername) &&
-                !string.IsNullOrEmpty(Config.TinyPicPassword))
-            {
-                TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey);
-                string shuk = tpu.UserAuth(Config.TinyPicUsername, Config.TinyPicPassword);
-                if (!string.IsNullOrEmpty(shuk))
-                {
-                    if (Config.TinyPicRegistrationCode != shuk)
-                    {
-                        StaticHelper.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Config.TinyPicRegistrationCode, shuk));
-                    }
-                    Config.TinyPicRegistrationCode = shuk;
-                }
-            }
-        }
-
-        #endregion TinyPic Methods
-
-        // Imgur
+        #region Imgur
 
         public void ImgurAuthOpen()
         {
@@ -109,7 +91,9 @@ namespace UploadersLib
             }
         }
 
-        // Dropbox
+        #endregion Imgur
+
+        #region Dropbox
 
         public void DropboxAuthOpen()
         {
@@ -196,11 +180,13 @@ namespace UploadersLib
             }
         }
 
+        #endregion Dropbox
+
         #region FTP
 
         public bool CheckFTPAccounts()
         {
-            return StaticHelper.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
+            return Config.FTPAccountList.CheckSelected(Config.FTPSelectedImage);
         }
 
         public void TestFTPAccountAsync(FTPAccount acc)
@@ -251,7 +237,6 @@ namespace UploadersLib
                 FTPSetup(fam.FTPAccounts);
             }
         }
-
 
         public static void TestFTPAccount(FTPAccount account, bool silent)
         {
@@ -346,7 +331,9 @@ namespace UploadersLib
             return acc;
         }
 
-        #endregion FTP Methods
+        #endregion FTP
+
+        #region SendSpace
 
         public UserPassBox SendSpaceRegister()
         {
@@ -363,6 +350,10 @@ namespace UploadersLib
             }
             return upb;
         }
+
+        #endregion SendSpace
+
+        #region Pastebin
 
         public void PastebinLogin()
         {
@@ -388,5 +379,7 @@ namespace UploadersLib
                 }
             }
         }
+
+        #endregion Pastebin
     }
 }
