@@ -120,6 +120,8 @@
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
+            this.btnPastebinLogin = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -140,6 +142,7 @@
             this.tpSendSpace.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
+            this.tpPastebin.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
@@ -1039,6 +1042,8 @@
             // 
             // tpPastebin
             // 
+            this.tpPastebin.Controls.Add(this.btnPastebinLogin);
+            this.tpPastebin.Controls.Add(this.pgPastebinSettings);
             this.tpPastebin.Location = new System.Drawing.Point(4, 22);
             this.tpPastebin.Name = "tpPastebin";
             this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
@@ -1119,6 +1124,25 @@
             this.ucFTPAccounts.Size = new System.Drawing.Size(760, 400);
             this.ucFTPAccounts.TabIndex = 0;
             // 
+            // pgPastebinSettings
+            // 
+            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgPastebinSettings.Name = "pgPastebinSettings";
+            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 542);
+            this.pgPastebinSettings.TabIndex = 1;
+            // 
+            // btnPastebinLogin
+            // 
+            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
+            this.btnPastebinLogin.Name = "btnPastebinLogin";
+            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
+            this.btnPastebinLogin.TabIndex = 2;
+            this.btnPastebinLogin.Text = "Login";
+            this.btnPastebinLogin.UseVisualStyleBackColor = true;
+            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1160,6 +1184,7 @@
             this.tpSendSpace.PerformLayout();
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
+            this.tpPastebin.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
@@ -1261,5 +1286,7 @@
         private System.Windows.Forms.TextBox txtSendSpaceUserName;
         private System.Windows.Forms.ComboBox cboSendSpaceAcctType;
         private System.Windows.Forms.Label lblSendSpaceAccountType;
+        private System.Windows.Forms.PropertyGrid pgPastebinSettings;
+        private System.Windows.Forms.Button btnPastebinLogin;
     }
 }

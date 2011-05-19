@@ -9,6 +9,7 @@ using UploadersLib.ImageUploaders;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Threading;
+using UploadersLib.TextUploaders;
 
 namespace UploadersLib
 {
@@ -361,6 +362,31 @@ namespace UploadersLib
                 }
             }
             return upb;
+        }
+
+        public void PastebinLogin()
+        {
+            if (Config.PastebinSettings != null)
+            {
+                try
+                {
+                    PastebinUploader pastebin = new PastebinUploader(APIKeys.PastebinKey, Config.PastebinSettings);
+
+                    if (pastebin.Login())
+                    {
+                        pgPastebinSettings.SelectedObject = Config.PastebinSettings;
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

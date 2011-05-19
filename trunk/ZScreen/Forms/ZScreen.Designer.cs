@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -268,9 +268,6 @@ namespace ZScreenGUI
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnArgAdd = new System.Windows.Forms.Button();
             this.txtArg1 = new System.Windows.Forms.TextBox();
-            this.tpDestPastebin = new System.Windows.Forms.TabPage();
-            this.btnPastebinLogin = new System.Windows.Forms.Button();
-            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
             this.tpTranslator = new System.Windows.Forms.TabPage();
             this.cbLanguageAutoDetect = new System.Windows.Forms.CheckBox();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
@@ -554,7 +551,6 @@ namespace ZScreenGUI
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
             this.gbArguments.SuspendLayout();
-            this.tpDestPastebin.SuspendLayout();
             this.tpTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
@@ -1393,7 +1389,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2545,7 +2541,6 @@ namespace ZScreenGUI
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
             this.tcDestinations.Controls.Add(this.tpDestMediaWiki);
             this.tcDestinations.Controls.Add(this.tpDestCustom);
-            this.tcDestinations.Controls.Add(this.tpDestPastebin);
             this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcDestinations.Location = new System.Drawing.Point(3, 3);
             this.tcDestinations.Multiline = true;
@@ -3191,36 +3186,6 @@ namespace ZScreenGUI
             this.txtArg1.Name = "txtArg1";
             this.txtArg1.Size = new System.Drawing.Size(112, 20);
             this.txtArg1.TabIndex = 0;
-            // 
-            // tpDestPastebin
-            // 
-            this.tpDestPastebin.Controls.Add(this.btnPastebinLogin);
-            this.tpDestPastebin.Controls.Add(this.pgPastebinSettings);
-            this.tpDestPastebin.Location = new System.Drawing.Point(4, 22);
-            this.tpDestPastebin.Name = "tpDestPastebin";
-            this.tpDestPastebin.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestPastebin.Size = new System.Drawing.Size(799, 408);
-            this.tpDestPastebin.TabIndex = 16;
-            this.tpDestPastebin.Text = "Pastebin";
-            this.tpDestPastebin.UseVisualStyleBackColor = true;
-            // 
-            // btnPastebinLogin
-            // 
-            this.btnPastebinLogin.Location = new System.Drawing.Point(421, 9);
-            this.btnPastebinLogin.Name = "btnPastebinLogin";
-            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
-            this.btnPastebinLogin.TabIndex = 1;
-            this.btnPastebinLogin.Text = "Login";
-            this.btnPastebinLogin.UseVisualStyleBackColor = true;
-            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
-            // 
-            // pgPastebinSettings
-            // 
-            this.pgPastebinSettings.Location = new System.Drawing.Point(8, 8);
-            this.pgPastebinSettings.Name = "pgPastebinSettings";
-            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 384);
-            this.pgPastebinSettings.TabIndex = 0;
             // 
             // tpTranslator
             // 
@@ -5985,7 +5950,6 @@ namespace ZScreenGUI
             this.gbRegexp.PerformLayout();
             this.gbArguments.ResumeLayout(false);
             this.gbArguments.PerformLayout();
-            this.tpDestPastebin.ResumeLayout(false);
             this.tpTranslator.ResumeLayout(false);
             this.tpTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
@@ -6518,9 +6482,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkShortenURL;
         private System.Windows.Forms.ComboBox cboReleaseChannel;
         private System.Windows.Forms.Button btnClearHistory;
-        private System.Windows.Forms.TabPage tpDestPastebin;
-        private System.Windows.Forms.Button btnPastebinLogin;
-        private System.Windows.Forms.PropertyGrid pgPastebinSettings;
         private System.Windows.Forms.DataGridViewTextBoxColumn chHotkeys_Description;
         private System.Windows.Forms.DataGridViewButtonColumn chHotkeys_Keys;
         private System.Windows.Forms.DataGridViewTextBoxColumn DefaultKeys;

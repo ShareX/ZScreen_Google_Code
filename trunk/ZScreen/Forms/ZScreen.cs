@@ -3425,31 +3425,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnPastebinLogin_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.PastebinSettings != null)
-            {
-                try
-                {
-                    PastebinUploader pastebin = new PastebinUploader(ZKeys.PastebinKey, Engine.conf.PastebinSettings);
-
-                    if (pastebin.Login())
-                    {
-                        pgPastebinSettings.SelectedObject = Engine.conf.PastebinSettings;
-                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 2000)
         {
             var timer = new System.Windows.Forms.Timer { Interval = executeTime };
