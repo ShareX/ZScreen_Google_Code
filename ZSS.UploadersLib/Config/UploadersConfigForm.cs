@@ -30,6 +30,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.Properties;
 using System.Collections.Generic;
+using UploadersLib.FileUploaders;
 
 namespace UploadersLib
 {
@@ -102,10 +103,33 @@ namespace UploadersLib
             txtFTPThumbWidth.Text = Config.FTPThumbnailWidthLimit.ToString();
             chkFTPThumbnailCheckSize.Checked = Config.FTPThumbnailCheckSize;
 
+
+            // RapidShare
+
+            if (cboRapidShareAcctType.Items.Count == 0)
+            {
+                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
+            }
+
+            cboRapidShareAcctType.SelectedIndex = (int)Config.RapidShareAccountType;
+            txtRapidShareCollectorID.Text = Config.RapidShareCollectorsID;
+            txtRapidSharePassword.Text = Config.RapidSharePassword;
+            txtRapidSharePremiumUserName.Text = Config.RapidSharePremiumUserName;
+
+            // SendSpace
+
+            if (cboSendSpaceAcctType.Items.Count == 0)
+            {
+                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetDescriptions());
+            }
+
+            cboSendSpaceAcctType.SelectedIndex = (int)Config.SendSpaceAccountType;
+            txtSendSpacePassword.Text = Config.SendSpacePassword;
+            txtSendSpaceUserName.Text = Config.SendSpaceUsername;
+
             #endregion File uploaders
         }
 
-        #region Events
 
         #region Image uploaders
 
@@ -234,8 +258,10 @@ namespace UploadersLib
         #endregion Image uploaders
 
         #region File uploaders
+        // TODO: wrap all the methods when all the destinations are complete
+        #endregion File uploaders
 
-        // Dropbox
+        #region Dropbox
 
         private void pbDropboxLogo_Click(object sender, EventArgs e)
         {
@@ -263,7 +289,9 @@ namespace UploadersLib
             UpdateDropboxStatus();
         }
 
-        // FTP
+#endregion Dropbox
+
+        #region FTP
 
         private void cboFtpImages_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -295,14 +323,10 @@ namespace UploadersLib
             FTPAccountsExport();
         }
 
-        #endregion File uploaders
-
         private void chkFTPThumbnailCheckSize_CheckedChanged(object sender, EventArgs e)
         {
             Config.FTPThumbnailCheckSize = chkFTPThumbnailCheckSize.Checked;
         }
-
-        #endregion Events
 
         private void txtFTPThumbWidth_TextChanged(object sender, EventArgs e)
         {
@@ -312,5 +336,69 @@ namespace UploadersLib
                 Config.FTPThumbnailWidthLimit = width;
             }
         }
+
+        #endregion
+
+        #region RapidShare
+
+        private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
+            txtRapidSharePremiumUserName.Enabled = Config.RapidShareAccountType == RapidShareAcctType.Premium;
+            txtRapidShareCollectorID.Enabled = Config.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
+            txtRapidSharePassword.Enabled = Config.RapidShareAccountType != RapidShareAcctType.Free;
+        }
+
+        private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
+        {
+            Config.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
+        }
+
+        private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
+        {
+            Config.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
+        }
+
+        private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
+        {
+            Config.RapidSharePassword = txtRapidSharePassword.Text;
+        }
+
+        #endregion
+
+        #region SendSpace
+
+        private void btnSendSpaceRegister_Click(object sender, EventArgs e)
+        {
+            using (UserPassBox upb = SendSpaceRegister())
+            {
+                if (upb.Success)
+                {
+                    txtSendSpaceUserName.Text = upb.UserName;
+                    txtSendSpacePassword.Text = upb.Password;
+                    cboSendSpaceAcctType.SelectedIndex = (int)AccountType.User;
+                }
+            }
+        }
+
+        private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.SendSpaceAccountType = (AccountType)cboSendSpaceAcctType.SelectedIndex;
+            txtSendSpacePassword.Enabled = Config.SendSpaceAccountType == AccountType.User;
+            txtSendSpaceUserName.Enabled = Config.SendSpaceAccountType == AccountType.User;
+        }
+
+        private void txtSendSpaceUserName_TextChanged(object sender, EventArgs e)
+        {
+            Config.SendSpaceUsername = txtSendSpaceUserName.Text;
+        }
+
+        private void txtSendSpacePassword_TextChanged(object sender, EventArgs e)
+        {
+            Config.SendSpacePassword = txtSendSpacePassword.Text;
+        }
+
+        #endregion 
+
     }
 }

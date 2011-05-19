@@ -14,6 +14,49 @@ namespace UploadersLib
 {
     public partial class UploadersConfigForm : Form
     {
+        #region TinyPic Methods
+
+        public string GetTinyPicShuk()
+        {
+            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Config.TinyPicUsername) ? "someone@gmail.com" :
+                Config.TinyPicUsername, Config.TinyPicPassword);
+            ub.ShowDialog();
+            if (ub.DialogResult == DialogResult.OK)
+            {
+                TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey);
+                if (Config.TinyPicRememberUserPass)
+                {
+                    Config.TinyPicUsername = ub.UserName;
+                    Config.TinyPicPassword = ub.Password;
+                }
+                return tpu.UserAuth(ub.UserName, ub.Password);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Method to update TinyPic Shuk; Run periodically
+        /// </summary>
+        public void UpdateTinyPicShuk()
+        {
+            if (Config.TinyPicRememberUserPass && !string.IsNullOrEmpty(Config.TinyPicUsername) &&
+                !string.IsNullOrEmpty(Config.TinyPicPassword))
+            {
+                TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey);
+                string shuk = tpu.UserAuth(Config.TinyPicUsername, Config.TinyPicPassword);
+                if (!string.IsNullOrEmpty(shuk))
+                {
+                    if (Config.TinyPicRegistrationCode != shuk)
+                    {
+                        StaticHelper.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Config.TinyPicRegistrationCode, shuk));
+                    }
+                    Config.TinyPicRegistrationCode = shuk;
+                }
+            }
+        }
+
+        #endregion TinyPic Methods
+
         // Imgur
 
         public void ImgurAuthOpen()
@@ -183,7 +226,7 @@ namespace UploadersLib
                 SaveFileDialog dlg = new SaveFileDialog
                 {
                     FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = StaticHelpers.FilterFTPAccounts
+                    Filter = StaticHelper.FilterFTPAccounts
                 };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -195,7 +238,7 @@ namespace UploadersLib
 
         private void FTPAccountsImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelpers.FilterFTPAccounts };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FilterFTPAccounts };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);
@@ -289,7 +332,7 @@ namespace UploadersLib
 
         public bool CheckFTPAccounts()
         {
-            return StaticHelpers.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
+            return StaticHelper.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
         }
 
         public FTPAccount GetFtpAcctActive()
@@ -303,5 +346,21 @@ namespace UploadersLib
         }
 
         #endregion FTP Methods
+
+        public UserPassBox SendSpaceRegister()
+        {
+            UserPassBox upb = new UserPassBox("SendSpace Registration...", "John Doe", "john.doe@gmail.com", "JohnDoe", "");
+            upb.ShowDialog();
+            if (upb.DialogResult == DialogResult.OK)
+            {
+                SendSpace sendSpace = new SendSpace(APIKeys.SendSpaceKey);
+                upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
+                if (!upb.Success && sendSpace.Errors.Count > 0)
+                {
+                    MessageBox.Show(sendSpace.ToErrorString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            return upb;
+        }
     }
 }

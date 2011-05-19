@@ -2847,59 +2847,6 @@ namespace ZScreenGUI
             Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
         }
 
-        private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
-            txtRapidSharePremiumUserName.Enabled = Engine.conf.RapidShareAccountType == RapidShareAcctType.Premium;
-            txtRapidShareCollectorID.Enabled = Engine.conf.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
-            txtRapidSharePassword.Enabled = Engine.conf.RapidShareAccountType != RapidShareAcctType.Free;
-        }
-
-        private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
-        }
-
-        private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
-        }
-
-        private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.RapidSharePassword = txtRapidSharePassword.Text;
-        }
-
-        private void txtSendSpaceUserName_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.SendSpaceUserName = txtSendSpaceUserName.Text;
-        }
-
-        private void txtSendSpacePassword_TextChanged(object sender, EventArgs e)
-        {
-            Engine.conf.SendSpacePassword = txtSendSpacePassword.Text;
-        }
-
-        private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.SendSpaceAccountType = (AccountType)cboSendSpaceAcctType.SelectedIndex;
-            txtSendSpacePassword.Enabled = Engine.conf.SendSpaceAccountType == AccountType.User;
-            txtSendSpaceUserName.Enabled = Engine.conf.SendSpaceAccountType == AccountType.User;
-        }
-
-        private void btnSendSpaceRegister_Click(object sender, EventArgs e)
-        {
-            using (UserPassBox upb = Adapter.SendSpaceRegister())
-            {
-                if (upb.Success)
-                {
-                    txtSendSpaceUserName.Text = upb.UserName;
-                    txtSendSpacePassword.Text = upb.Password;
-                    cboSendSpaceAcctType.SelectedIndex = (int)AccountType.User;
-                }
-            }
-        }
-
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (mGuiIsReady)
@@ -3619,9 +3566,10 @@ namespace ZScreenGUI
 
         #endregion Main tab toolbar
 
-        private void tssMaintoolbar1_Click(object sender, EventArgs e)
+        private void tsbDestinations_Click(object sender, EventArgs e)
         {
             new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.Show();
         }
+
     }
 }

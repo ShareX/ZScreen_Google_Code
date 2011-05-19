@@ -123,7 +123,7 @@ namespace ZScreenGUI
 
                 if (Uploader.ProxySettings != null)
                 {
-                    Adapter.UpdateTinyPicShuk();
+                    // TODO: Method to update TinyPic RegCode automatically
                 }
 
                 if (Adapter.CheckFTPAccounts())

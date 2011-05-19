@@ -177,28 +177,7 @@ namespace ZScreenGUI
 
             #region File Uploaders
 
-            // RapidShare
 
-            if (cboRapidShareAcctType.Items.Count == 0)
-            {
-                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
-            }
-
-            cboRapidShareAcctType.SelectedIndex = (int)Engine.conf.RapidShareAccountType;
-            txtRapidShareCollectorID.Text = Engine.conf.RapidShareCollectorsID;
-            txtRapidSharePassword.Text = Engine.conf.RapidSharePassword;
-            txtRapidSharePremiumUserName.Text = Engine.conf.RapidSharePremiumUserName;
-
-            // SendSpace
-
-            if (cboSendSpaceAcctType.Items.Count == 0)
-            {
-                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetDescriptions());
-            }
-
-            cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
-            txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
-            txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
             
             #endregion File Uploaders
 

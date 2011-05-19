@@ -142,7 +142,7 @@ namespace UploadersLib
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
 
-            if (StaticHelpers.CheckList(Config.FTPAccountList, sel))
+            if (StaticHelper.CheckList(Config.FTPAccountList, sel))
             {
                 FTPAccount acc = Config.FTPAccountList[sel];
                 ucFTPAccounts.SettingsGrid.SelectedObject = acc;
