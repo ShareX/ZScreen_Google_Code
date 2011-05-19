@@ -56,7 +56,7 @@
             this.gbMainOptions.Size = new System.Drawing.Size(360, 128);
             this.gbMainOptions.TabIndex = 80;
             this.gbMainOptions.TabStop = false;
-            this.gbMainOptions.Text = "Destinations";
+            this.gbMainOptions.Text = "Active Destinations";
             // 
             // cboFileUploaders
             // 

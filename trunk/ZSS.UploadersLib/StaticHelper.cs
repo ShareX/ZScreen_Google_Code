@@ -5,13 +5,18 @@ using System.Text;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
+using UploadersLib.FileUploaders;
+using System.Reflection;
+using System.ComponentModel;
+using HelpersLib;
 
 namespace UploadersLib
 {
-    internal static class StaticHelpers
+    internal static class StaticHelper
     {
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public static readonly string FilterFTPAccounts = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
+        public static Logger MyLogger { get; private set; }
 
         public static bool CheckList<T>(List<T> list, int selected)
         {
@@ -37,6 +42,23 @@ namespace UploadersLib
             return num >= min && num <= max;
         }
 
+        internal static string GetDescription(this Enum value)
+        {
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+        }
+
+        public static string[] GetDescriptions(this Type type)
+        {
+            string[] descriptions = new string[Enum.GetValues(type).Length];
+            int i = 0;
+            foreach (int value in Enum.GetValues(type))
+            {
+                descriptions[i++] = ((Enum)Enum.ToObject(type, value)).GetDescription();
+            }
+            return descriptions;
+        }
 
     }
 }

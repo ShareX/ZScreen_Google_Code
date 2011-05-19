@@ -93,7 +93,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
+            this.lblRapidSharePassword = new System.Windows.Forms.Label();
+            this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
+            this.lblRapidShareCollectorsID = new System.Windows.Forms.Label();
+            this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
+            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
+            this.txtRapidShareCollectorID = new System.Windows.Forms.TextBox();
+            this.cboRapidShareAcctType = new System.Windows.Forms.ComboBox();
+            this.lblRapidShareAccountType = new System.Windows.Forms.Label();
             this.tpSendSpace = new System.Windows.Forms.TabPage();
+            this.btnSendSpaceRegister = new System.Windows.Forms.Button();
+            this.lblSendSpacePassword = new System.Windows.Forms.Label();
+            this.lblSendSpaceUsername = new System.Windows.Forms.Label();
+            this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
+            this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
+            this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
+            this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
@@ -121,6 +136,8 @@
             this.tlpFtp.SuspendLayout();
             this.panelFtp.SuspendLayout();
             this.gbFtpSettings.SuspendLayout();
+            this.tpRapidShare.SuspendLayout();
+            this.tpSendSpace.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
@@ -821,6 +838,14 @@
             // 
             // tpRapidShare
             // 
+            this.tpRapidShare.Controls.Add(this.lblRapidSharePassword);
+            this.tpRapidShare.Controls.Add(this.lblRapidSharePremiumUsername);
+            this.tpRapidShare.Controls.Add(this.lblRapidShareCollectorsID);
+            this.tpRapidShare.Controls.Add(this.txtRapidSharePassword);
+            this.tpRapidShare.Controls.Add(this.txtRapidSharePremiumUserName);
+            this.tpRapidShare.Controls.Add(this.txtRapidShareCollectorID);
+            this.tpRapidShare.Controls.Add(this.cboRapidShareAcctType);
+            this.tpRapidShare.Controls.Add(this.lblRapidShareAccountType);
             this.tpRapidShare.Location = new System.Drawing.Point(4, 22);
             this.tpRapidShare.Name = "tpRapidShare";
             this.tpRapidShare.Padding = new System.Windows.Forms.Padding(3);
@@ -829,8 +854,86 @@
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
             // 
+            // lblRapidSharePassword
+            // 
+            this.lblRapidSharePassword.AutoSize = true;
+            this.lblRapidSharePassword.Location = new System.Drawing.Point(72, 128);
+            this.lblRapidSharePassword.Name = "lblRapidSharePassword";
+            this.lblRapidSharePassword.Size = new System.Drawing.Size(53, 13);
+            this.lblRapidSharePassword.TabIndex = 15;
+            this.lblRapidSharePassword.Text = "Password";
+            // 
+            // lblRapidSharePremiumUsername
+            // 
+            this.lblRapidSharePremiumUsername.AutoSize = true;
+            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 96);
+            this.lblRapidSharePremiumUsername.Name = "lblRapidSharePremiumUsername";
+            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(103, 13);
+            this.lblRapidSharePremiumUsername.TabIndex = 14;
+            this.lblRapidSharePremiumUsername.Text = "Premium User Name";
+            // 
+            // lblRapidShareCollectorsID
+            // 
+            this.lblRapidShareCollectorsID.AutoSize = true;
+            this.lblRapidShareCollectorsID.Location = new System.Drawing.Point(56, 64);
+            this.lblRapidShareCollectorsID.Name = "lblRapidShareCollectorsID";
+            this.lblRapidShareCollectorsID.Size = new System.Drawing.Size(69, 13);
+            this.lblRapidShareCollectorsID.TabIndex = 13;
+            this.lblRapidShareCollectorsID.Text = "Collector\'s ID";
+            // 
+            // txtRapidSharePassword
+            // 
+            this.txtRapidSharePassword.Location = new System.Drawing.Point(136, 120);
+            this.txtRapidSharePassword.Name = "txtRapidSharePassword";
+            this.txtRapidSharePassword.PasswordChar = '*';
+            this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePassword.TabIndex = 12;
+            this.txtRapidSharePassword.TextChanged += new System.EventHandler(this.txtRapidSharePassword_TextChanged);
+            // 
+            // txtRapidSharePremiumUserName
+            // 
+            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(136, 88);
+            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
+            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePremiumUserName.TabIndex = 11;
+            this.txtRapidSharePremiumUserName.TextChanged += new System.EventHandler(this.txtRapidSharePremiumUserName_TextChanged);
+            // 
+            // txtRapidShareCollectorID
+            // 
+            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(136, 56);
+            this.txtRapidShareCollectorID.Name = "txtRapidShareCollectorID";
+            this.txtRapidShareCollectorID.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidShareCollectorID.TabIndex = 10;
+            this.txtRapidShareCollectorID.TextChanged += new System.EventHandler(this.txtRapidShareCollectorID_TextChanged);
+            // 
+            // cboRapidShareAcctType
+            // 
+            this.cboRapidShareAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRapidShareAcctType.FormattingEnabled = true;
+            this.cboRapidShareAcctType.Location = new System.Drawing.Point(136, 24);
+            this.cboRapidShareAcctType.Name = "cboRapidShareAcctType";
+            this.cboRapidShareAcctType.Size = new System.Drawing.Size(121, 21);
+            this.cboRapidShareAcctType.TabIndex = 9;
+            this.cboRapidShareAcctType.SelectedIndexChanged += new System.EventHandler(this.cboRapidShareAcctType_SelectedIndexChanged);
+            // 
+            // lblRapidShareAccountType
+            // 
+            this.lblRapidShareAccountType.AutoSize = true;
+            this.lblRapidShareAccountType.Location = new System.Drawing.Point(48, 32);
+            this.lblRapidShareAccountType.Name = "lblRapidShareAccountType";
+            this.lblRapidShareAccountType.Size = new System.Drawing.Size(74, 13);
+            this.lblRapidShareAccountType.TabIndex = 8;
+            this.lblRapidShareAccountType.Text = "Account Type";
+            // 
             // tpSendSpace
             // 
+            this.tpSendSpace.Controls.Add(this.btnSendSpaceRegister);
+            this.tpSendSpace.Controls.Add(this.lblSendSpacePassword);
+            this.tpSendSpace.Controls.Add(this.lblSendSpaceUsername);
+            this.tpSendSpace.Controls.Add(this.txtSendSpacePassword);
+            this.tpSendSpace.Controls.Add(this.txtSendSpaceUserName);
+            this.tpSendSpace.Controls.Add(this.cboSendSpaceAcctType);
+            this.tpSendSpace.Controls.Add(this.lblSendSpaceAccountType);
             this.tpSendSpace.Location = new System.Drawing.Point(4, 22);
             this.tpSendSpace.Name = "tpSendSpace";
             this.tpSendSpace.Padding = new System.Windows.Forms.Padding(3);
@@ -838,6 +941,70 @@
             this.tpSendSpace.TabIndex = 3;
             this.tpSendSpace.Text = "SendSpace";
             this.tpSendSpace.UseVisualStyleBackColor = true;
+            // 
+            // btnSendSpaceRegister
+            // 
+            this.btnSendSpaceRegister.Location = new System.Drawing.Point(264, 24);
+            this.btnSendSpaceRegister.Name = "btnSendSpaceRegister";
+            this.btnSendSpaceRegister.Size = new System.Drawing.Size(75, 23);
+            this.btnSendSpaceRegister.TabIndex = 23;
+            this.btnSendSpaceRegister.Text = "&Register...";
+            this.btnSendSpaceRegister.UseVisualStyleBackColor = true;
+            this.btnSendSpaceRegister.Click += new System.EventHandler(this.btnSendSpaceRegister_Click);
+            // 
+            // lblSendSpacePassword
+            // 
+            this.lblSendSpacePassword.AutoSize = true;
+            this.lblSendSpacePassword.Location = new System.Drawing.Point(72, 96);
+            this.lblSendSpacePassword.Name = "lblSendSpacePassword";
+            this.lblSendSpacePassword.Size = new System.Drawing.Size(53, 13);
+            this.lblSendSpacePassword.TabIndex = 22;
+            this.lblSendSpacePassword.Text = "Password";
+            // 
+            // lblSendSpaceUsername
+            // 
+            this.lblSendSpaceUsername.AutoSize = true;
+            this.lblSendSpaceUsername.Location = new System.Drawing.Point(64, 64);
+            this.lblSendSpaceUsername.Name = "lblSendSpaceUsername";
+            this.lblSendSpaceUsername.Size = new System.Drawing.Size(60, 13);
+            this.lblSendSpaceUsername.TabIndex = 21;
+            this.lblSendSpaceUsername.Text = "User Name";
+            // 
+            // txtSendSpacePassword
+            // 
+            this.txtSendSpacePassword.Location = new System.Drawing.Point(136, 88);
+            this.txtSendSpacePassword.Name = "txtSendSpacePassword";
+            this.txtSendSpacePassword.PasswordChar = '*';
+            this.txtSendSpacePassword.Size = new System.Drawing.Size(120, 20);
+            this.txtSendSpacePassword.TabIndex = 20;
+            this.txtSendSpacePassword.TextChanged += new System.EventHandler(this.txtSendSpacePassword_TextChanged);
+            // 
+            // txtSendSpaceUserName
+            // 
+            this.txtSendSpaceUserName.Location = new System.Drawing.Point(136, 56);
+            this.txtSendSpaceUserName.Name = "txtSendSpaceUserName";
+            this.txtSendSpaceUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtSendSpaceUserName.TabIndex = 19;
+            this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
+            // 
+            // cboSendSpaceAcctType
+            // 
+            this.cboSendSpaceAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSendSpaceAcctType.FormattingEnabled = true;
+            this.cboSendSpaceAcctType.Location = new System.Drawing.Point(136, 24);
+            this.cboSendSpaceAcctType.Name = "cboSendSpaceAcctType";
+            this.cboSendSpaceAcctType.Size = new System.Drawing.Size(121, 21);
+            this.cboSendSpaceAcctType.TabIndex = 18;
+            this.cboSendSpaceAcctType.SelectedIndexChanged += new System.EventHandler(this.cboSendSpaceAcctType_SelectedIndexChanged);
+            // 
+            // lblSendSpaceAccountType
+            // 
+            this.lblSendSpaceAccountType.AutoSize = true;
+            this.lblSendSpaceAccountType.Location = new System.Drawing.Point(48, 32);
+            this.lblSendSpaceAccountType.Name = "lblSendSpaceAccountType";
+            this.lblSendSpaceAccountType.Size = new System.Drawing.Size(74, 13);
+            this.lblSendSpaceAccountType.TabIndex = 17;
+            this.lblSendSpaceAccountType.Text = "Account Type";
             // 
             // tpCustomUploaders
             // 
@@ -958,8 +1125,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 612);
             this.Controls.Add(this.tcUploaders);
+            this.MinimumSize = new System.Drawing.Size(808, 646);
             this.Name = "UploadersConfigForm";
             this.Padding = new System.Windows.Forms.Padding(3);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Uploaders Configuration";
             this.tcUploaders.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);
@@ -985,6 +1154,10 @@
             this.panelFtp.PerformLayout();
             this.gbFtpSettings.ResumeLayout(false);
             this.gbFtpSettings.PerformLayout();
+            this.tpRapidShare.ResumeLayout(false);
+            this.tpRapidShare.PerformLayout();
+            this.tpSendSpace.ResumeLayout(false);
+            this.tpSendSpace.PerformLayout();
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
@@ -1073,5 +1246,20 @@
         private System.Windows.Forms.Button btnFtpHelp;
         internal System.Windows.Forms.Button btnFTPExport;
         internal System.Windows.Forms.Button btnFTPImport;
+        private System.Windows.Forms.Label lblRapidSharePassword;
+        private System.Windows.Forms.Label lblRapidSharePremiumUsername;
+        private System.Windows.Forms.Label lblRapidShareCollectorsID;
+        private System.Windows.Forms.TextBox txtRapidSharePassword;
+        private System.Windows.Forms.TextBox txtRapidSharePremiumUserName;
+        private System.Windows.Forms.TextBox txtRapidShareCollectorID;
+        private System.Windows.Forms.ComboBox cboRapidShareAcctType;
+        private System.Windows.Forms.Label lblRapidShareAccountType;
+        private System.Windows.Forms.Button btnSendSpaceRegister;
+        private System.Windows.Forms.Label lblSendSpacePassword;
+        private System.Windows.Forms.Label lblSendSpaceUsername;
+        private System.Windows.Forms.TextBox txtSendSpacePassword;
+        private System.Windows.Forms.TextBox txtSendSpaceUserName;
+        private System.Windows.Forms.ComboBox cboSendSpaceAcctType;
+        private System.Windows.Forms.Label lblSendSpaceAccountType;
     }
 }

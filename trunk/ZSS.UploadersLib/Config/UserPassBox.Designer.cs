@@ -1,4 +1,4 @@
-﻿namespace ZScreenLib
+﻿namespace UploadersLib
 {
     partial class UserPassBox
     {
@@ -148,7 +148,6 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.GlassArea = new System.Windows.Forms.Padding(0, 5, 0, 35);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UserPassBox";

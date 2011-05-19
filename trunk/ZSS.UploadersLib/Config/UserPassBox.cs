@@ -25,11 +25,10 @@
 
 using System;
 using System.Windows.Forms;
-using DavuxLib.Controls;
 
-namespace ZScreenLib
+namespace UploadersLib
 {
-    public partial class UserPassBox : GlassForm
+    public partial class UserPassBox : Form
     {
         public string FullName { get; private set; }
         public string UserName { get; private set; }

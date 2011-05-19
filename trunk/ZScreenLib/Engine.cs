@@ -45,7 +45,7 @@ namespace ZScreenLib
         // App Info
         private static string mProductName = Application.ProductName;
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static Logger MyLogger { get; set; }
+        public static Logger MyLogger { get; private set; }
 
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));

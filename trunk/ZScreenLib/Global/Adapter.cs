@@ -315,49 +315,6 @@ namespace ZScreenLib
 
         #endregion FTP Methods
 
-        #region TinyPic Methods
-
-        public static string GetTinyPicShuk()
-        {
-            UserPassBox ub = new UserPassBox("Enter TinyPic Email Address and Password", string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicUsername) ? "someone@gmail.com" :
-                Engine.conf.UploadersConfig2.TinyPicUsername, Engine.conf.UploadersConfig2.TinyPicPassword) { Icon = Resources.zss_main };
-            ub.ShowDialog();
-            if (ub.DialogResult == DialogResult.OK)
-            {
-                TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
-                if (Engine.conf.UploadersConfig2.TinyPicRememberUserPass)
-                {
-                    Engine.conf.UploadersConfig2.TinyPicUsername = ub.UserName;
-                    Engine.conf.UploadersConfig2.TinyPicPassword = ub.Password;
-                }
-                return tpu.UserAuth(ub.UserName, ub.Password);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Method to update TinyPic Shuk; Run periodically
-        /// </summary>
-        public static void UpdateTinyPicShuk()
-        {
-            if (Engine.conf.UploadersConfig2.TinyPicRememberUserPass && !string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicUsername) &&
-                !string.IsNullOrEmpty(Engine.conf.UploadersConfig2.TinyPicPassword))
-            {
-                TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey);
-                string shuk = tpu.UserAuth(Engine.conf.UploadersConfig2.TinyPicUsername, Engine.conf.UploadersConfig2.TinyPicPassword);
-                if (!string.IsNullOrEmpty(shuk))
-                {
-                    if (Engine.conf.UploadersConfig2.TinyPicRegistrationCode != shuk)
-                    {
-                        Engine.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.UploadersConfig2.TinyPicRegistrationCode, shuk));
-                    }
-                    Engine.conf.UploadersConfig2.TinyPicRegistrationCode = shuk;
-                }
-            }
-        }
-
-        #endregion TinyPic Methods
-
         public static bool CheckList<T>(List<T> list, int selected)
         {
             return list.Count > 0 && selected >= 0 && list.Count > selected;
@@ -502,22 +459,6 @@ namespace ZScreenLib
         }
 
         #endregion Proxy Methods
-
-        public static UserPassBox SendSpaceRegister()
-        {
-            UserPassBox upb = new UserPassBox("SendSpace Registration...", "John Doe", "john.doe@gmail.com", "JohnDoe", "");
-            upb.ShowDialog();
-            if (upb.DialogResult == DialogResult.OK)
-            {
-                SendSpace sendSpace = new SendSpace(ZKeys.SendSpaceKey);
-                upb.Success = sendSpace.AuthRegister(upb.UserName, upb.FullName, upb.Email, upb.Password);
-                if (!upb.Success && sendSpace.Errors.Count > 0)
-                {
-                    MessageBox.Show(sendSpace.ToErrorString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            return upb;
-        }
 
         public static bool ImageSoftwareEnabled()
         {

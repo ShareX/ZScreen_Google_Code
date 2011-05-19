@@ -81,6 +81,7 @@ namespace ZScreenGUI
             this.tsbFreehandCropShot = new System.Windows.Forms.ToolStripButton();
             this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
             this.tssMaintoolbar1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbDestinations = new System.Windows.Forms.ToolStripButton();
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
@@ -209,23 +210,6 @@ namespace ZScreenGUI
             this.tcDestinations = new System.Windows.Forms.TabControl();
             this.tpDestLocalhost = new System.Windows.Forms.TabPage();
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
-            this.tpDestRapidShare = new System.Windows.Forms.TabPage();
-            this.lblRapidSharePassword = new System.Windows.Forms.Label();
-            this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
-            this.lblRapidShareCollectorsID = new System.Windows.Forms.Label();
-            this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
-            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
-            this.txtRapidShareCollectorID = new System.Windows.Forms.TextBox();
-            this.cboRapidShareAcctType = new System.Windows.Forms.ComboBox();
-            this.lblRapidShareAccountType = new System.Windows.Forms.Label();
-            this.tpDestSendSpace = new System.Windows.Forms.TabPage();
-            this.btnSendSpaceRegister = new System.Windows.Forms.Button();
-            this.lblSendSpacePassword = new System.Windows.Forms.Label();
-            this.lblSendSpaceUsername = new System.Windows.Forms.Label();
-            this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
-            this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
-            this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
-            this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tpDestFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -558,8 +542,6 @@ namespace ZScreenGUI
             this.tpDestinations.SuspendLayout();
             this.tcDestinations.SuspendLayout();
             this.tpDestLocalhost.SuspendLayout();
-            this.tpDestRapidShare.SuspendLayout();
-            this.tpDestSendSpace.SuspendLayout();
             this.tpDestFlickr.SuspendLayout();
             this.tpDestTwitter.SuspendLayout();
             this.tlpTwitter.SuspendLayout();
@@ -980,6 +962,7 @@ namespace ZScreenGUI
             this.tsbFreehandCropShot,
             this.tsbAutoCapture,
             this.tssMaintoolbar1,
+            this.tsbDestinations,
             this.tsbFileUpload,
             this.tsbClipboardUpload,
             this.tsbDragDropWindow,
@@ -1070,7 +1053,16 @@ namespace ZScreenGUI
             // 
             this.tssMaintoolbar1.Name = "tssMaintoolbar1";
             this.tssMaintoolbar1.Size = new System.Drawing.Size(137, 6);
-            this.tssMaintoolbar1.Click += new System.EventHandler(this.tssMaintoolbar1_Click);
+            // 
+            // tsbDestinations
+            // 
+            this.tsbDestinations.Image = global::ZScreenGUI.Properties.Resources.server_edit;
+            this.tsbDestinations.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestinations.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDestinations.Name = "tsbDestinations";
+            this.tsbDestinations.Size = new System.Drawing.Size(137, 20);
+            this.tsbDestinations.Text = "Destinations...";
+            this.tsbDestinations.Click += new System.EventHandler(this.tsbDestinations_Click);
             // 
             // tsbFileUpload
             // 
@@ -2548,8 +2540,6 @@ namespace ZScreenGUI
             // tcDestinations
             // 
             this.tcDestinations.Controls.Add(this.tpDestLocalhost);
-            this.tcDestinations.Controls.Add(this.tpDestRapidShare);
-            this.tcDestinations.Controls.Add(this.tpDestSendSpace);
             this.tcDestinations.Controls.Add(this.tpDestFlickr);
             this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
@@ -2583,177 +2573,6 @@ namespace ZScreenGUI
             this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
             this.ucLocalhostAccounts.Size = new System.Drawing.Size(793, 402);
             this.ucLocalhostAccounts.TabIndex = 1;
-            // 
-            // tpDestRapidShare
-            // 
-            this.tpDestRapidShare.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestRapidShare.Controls.Add(this.lblRapidSharePassword);
-            this.tpDestRapidShare.Controls.Add(this.lblRapidSharePremiumUsername);
-            this.tpDestRapidShare.Controls.Add(this.lblRapidShareCollectorsID);
-            this.tpDestRapidShare.Controls.Add(this.txtRapidSharePassword);
-            this.tpDestRapidShare.Controls.Add(this.txtRapidSharePremiumUserName);
-            this.tpDestRapidShare.Controls.Add(this.txtRapidShareCollectorID);
-            this.tpDestRapidShare.Controls.Add(this.cboRapidShareAcctType);
-            this.tpDestRapidShare.Controls.Add(this.lblRapidShareAccountType);
-            this.tpDestRapidShare.ImageKey = "(none)";
-            this.tpDestRapidShare.Location = new System.Drawing.Point(4, 22);
-            this.tpDestRapidShare.Name = "tpDestRapidShare";
-            this.tpDestRapidShare.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestRapidShare.Size = new System.Drawing.Size(799, 408);
-            this.tpDestRapidShare.TabIndex = 8;
-            this.tpDestRapidShare.Text = "RapidShare";
-            // 
-            // lblRapidSharePassword
-            // 
-            this.lblRapidSharePassword.AutoSize = true;
-            this.lblRapidSharePassword.Location = new System.Drawing.Point(72, 120);
-            this.lblRapidSharePassword.Name = "lblRapidSharePassword";
-            this.lblRapidSharePassword.Size = new System.Drawing.Size(53, 13);
-            this.lblRapidSharePassword.TabIndex = 7;
-            this.lblRapidSharePassword.Text = "Password";
-            // 
-            // lblRapidSharePremiumUsername
-            // 
-            this.lblRapidSharePremiumUsername.AutoSize = true;
-            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(22, 88);
-            this.lblRapidSharePremiumUsername.Name = "lblRapidSharePremiumUsername";
-            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(103, 13);
-            this.lblRapidSharePremiumUsername.TabIndex = 6;
-            this.lblRapidSharePremiumUsername.Text = "Premium User Name";
-            // 
-            // lblRapidShareCollectorsID
-            // 
-            this.lblRapidShareCollectorsID.AutoSize = true;
-            this.lblRapidShareCollectorsID.Location = new System.Drawing.Point(56, 56);
-            this.lblRapidShareCollectorsID.Name = "lblRapidShareCollectorsID";
-            this.lblRapidShareCollectorsID.Size = new System.Drawing.Size(69, 13);
-            this.lblRapidShareCollectorsID.TabIndex = 5;
-            this.lblRapidShareCollectorsID.Text = "Collector\'s ID";
-            // 
-            // txtRapidSharePassword
-            // 
-            this.txtRapidSharePassword.Location = new System.Drawing.Point(136, 117);
-            this.txtRapidSharePassword.Name = "txtRapidSharePassword";
-            this.txtRapidSharePassword.PasswordChar = '*';
-            this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePassword.TabIndex = 4;
-            this.txtRapidSharePassword.TextChanged += new System.EventHandler(this.txtRapidSharePassword_TextChanged);
-            // 
-            // txtRapidSharePremiumUserName
-            // 
-            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(136, 85);
-            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
-            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePremiumUserName.TabIndex = 3;
-            this.txtRapidSharePremiumUserName.TextChanged += new System.EventHandler(this.txtRapidSharePremiumUserName_TextChanged);
-            // 
-            // txtRapidShareCollectorID
-            // 
-            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(136, 53);
-            this.txtRapidShareCollectorID.Name = "txtRapidShareCollectorID";
-            this.txtRapidShareCollectorID.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidShareCollectorID.TabIndex = 2;
-            this.txtRapidShareCollectorID.TextChanged += new System.EventHandler(this.txtRapidShareCollectorID_TextChanged);
-            // 
-            // cboRapidShareAcctType
-            // 
-            this.cboRapidShareAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboRapidShareAcctType.FormattingEnabled = true;
-            this.cboRapidShareAcctType.Location = new System.Drawing.Point(136, 21);
-            this.cboRapidShareAcctType.Name = "cboRapidShareAcctType";
-            this.cboRapidShareAcctType.Size = new System.Drawing.Size(121, 21);
-            this.cboRapidShareAcctType.TabIndex = 1;
-            this.cboRapidShareAcctType.SelectedIndexChanged += new System.EventHandler(this.cboRapidShareAcctType_SelectedIndexChanged);
-            // 
-            // lblRapidShareAccountType
-            // 
-            this.lblRapidShareAccountType.AutoSize = true;
-            this.lblRapidShareAccountType.Location = new System.Drawing.Point(51, 24);
-            this.lblRapidShareAccountType.Name = "lblRapidShareAccountType";
-            this.lblRapidShareAccountType.Size = new System.Drawing.Size(74, 13);
-            this.lblRapidShareAccountType.TabIndex = 0;
-            this.lblRapidShareAccountType.Text = "Account Type";
-            // 
-            // tpDestSendSpace
-            // 
-            this.tpDestSendSpace.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestSendSpace.Controls.Add(this.btnSendSpaceRegister);
-            this.tpDestSendSpace.Controls.Add(this.lblSendSpacePassword);
-            this.tpDestSendSpace.Controls.Add(this.lblSendSpaceUsername);
-            this.tpDestSendSpace.Controls.Add(this.txtSendSpacePassword);
-            this.tpDestSendSpace.Controls.Add(this.txtSendSpaceUserName);
-            this.tpDestSendSpace.Controls.Add(this.cboSendSpaceAcctType);
-            this.tpDestSendSpace.Controls.Add(this.lblSendSpaceAccountType);
-            this.tpDestSendSpace.Location = new System.Drawing.Point(4, 22);
-            this.tpDestSendSpace.Name = "tpDestSendSpace";
-            this.tpDestSendSpace.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestSendSpace.Size = new System.Drawing.Size(799, 408);
-            this.tpDestSendSpace.TabIndex = 9;
-            this.tpDestSendSpace.Text = "SendSpace";
-            // 
-            // btnSendSpaceRegister
-            // 
-            this.btnSendSpaceRegister.Location = new System.Drawing.Point(256, 24);
-            this.btnSendSpaceRegister.Name = "btnSendSpaceRegister";
-            this.btnSendSpaceRegister.Size = new System.Drawing.Size(75, 23);
-            this.btnSendSpaceRegister.TabIndex = 16;
-            this.btnSendSpaceRegister.Text = "&Register...";
-            this.btnSendSpaceRegister.UseVisualStyleBackColor = true;
-            this.btnSendSpaceRegister.Click += new System.EventHandler(this.btnSendSpaceRegister_Click);
-            // 
-            // lblSendSpacePassword
-            // 
-            this.lblSendSpacePassword.AutoSize = true;
-            this.lblSendSpacePassword.Location = new System.Drawing.Point(64, 92);
-            this.lblSendSpacePassword.Name = "lblSendSpacePassword";
-            this.lblSendSpacePassword.Size = new System.Drawing.Size(53, 13);
-            this.lblSendSpacePassword.TabIndex = 15;
-            this.lblSendSpacePassword.Text = "Password";
-            // 
-            // lblSendSpaceUsername
-            // 
-            this.lblSendSpaceUsername.AutoSize = true;
-            this.lblSendSpaceUsername.Location = new System.Drawing.Point(56, 60);
-            this.lblSendSpaceUsername.Name = "lblSendSpaceUsername";
-            this.lblSendSpaceUsername.Size = new System.Drawing.Size(60, 13);
-            this.lblSendSpaceUsername.TabIndex = 14;
-            this.lblSendSpaceUsername.Text = "User Name";
-            // 
-            // txtSendSpacePassword
-            // 
-            this.txtSendSpacePassword.Location = new System.Drawing.Point(128, 89);
-            this.txtSendSpacePassword.Name = "txtSendSpacePassword";
-            this.txtSendSpacePassword.PasswordChar = '*';
-            this.txtSendSpacePassword.Size = new System.Drawing.Size(120, 20);
-            this.txtSendSpacePassword.TabIndex = 12;
-            this.txtSendSpacePassword.TextChanged += new System.EventHandler(this.txtSendSpacePassword_TextChanged);
-            // 
-            // txtSendSpaceUserName
-            // 
-            this.txtSendSpaceUserName.Location = new System.Drawing.Point(128, 57);
-            this.txtSendSpaceUserName.Name = "txtSendSpaceUserName";
-            this.txtSendSpaceUserName.Size = new System.Drawing.Size(120, 20);
-            this.txtSendSpaceUserName.TabIndex = 11;
-            this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
-            // 
-            // cboSendSpaceAcctType
-            // 
-            this.cboSendSpaceAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSendSpaceAcctType.FormattingEnabled = true;
-            this.cboSendSpaceAcctType.Location = new System.Drawing.Point(128, 25);
-            this.cboSendSpaceAcctType.Name = "cboSendSpaceAcctType";
-            this.cboSendSpaceAcctType.Size = new System.Drawing.Size(121, 21);
-            this.cboSendSpaceAcctType.TabIndex = 9;
-            this.cboSendSpaceAcctType.SelectedIndexChanged += new System.EventHandler(this.cboSendSpaceAcctType_SelectedIndexChanged);
-            // 
-            // lblSendSpaceAccountType
-            // 
-            this.lblSendSpaceAccountType.AutoSize = true;
-            this.lblSendSpaceAccountType.Location = new System.Drawing.Point(43, 28);
-            this.lblSendSpaceAccountType.Name = "lblSendSpaceAccountType";
-            this.lblSendSpaceAccountType.Size = new System.Drawing.Size(74, 13);
-            this.lblSendSpaceAccountType.TabIndex = 8;
-            this.lblSendSpaceAccountType.Text = "Account Type";
             // 
             // tpDestFlickr
             // 
@@ -6148,10 +5967,6 @@ namespace ZScreenGUI
             this.tpDestinations.ResumeLayout(false);
             this.tcDestinations.ResumeLayout(false);
             this.tpDestLocalhost.ResumeLayout(false);
-            this.tpDestRapidShare.ResumeLayout(false);
-            this.tpDestRapidShare.PerformLayout();
-            this.tpDestSendSpace.ResumeLayout(false);
-            this.tpDestSendSpace.PerformLayout();
             this.tpDestFlickr.ResumeLayout(false);
             this.tpDestTwitter.ResumeLayout(false);
             this.tlpTwitter.ResumeLayout(false);
@@ -6631,23 +6446,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnImageBamCreateGallery;
         private System.Windows.Forms.Button btnImageBamRemoveGallery;
         private System.Windows.Forms.CheckBox chkImageBamContentNSFW;
-        private System.Windows.Forms.TabPage tpDestRapidShare;
-        private System.Windows.Forms.Label lblRapidSharePassword;
-        private System.Windows.Forms.Label lblRapidSharePremiumUsername;
-        private System.Windows.Forms.Label lblRapidShareCollectorsID;
-        private System.Windows.Forms.TextBox txtRapidSharePassword;
-        private System.Windows.Forms.TextBox txtRapidSharePremiumUserName;
-        private System.Windows.Forms.TextBox txtRapidShareCollectorID;
-        private System.Windows.Forms.ComboBox cboRapidShareAcctType;
-        private System.Windows.Forms.Label lblRapidShareAccountType;
-        private System.Windows.Forms.TabPage tpDestSendSpace;
-        private System.Windows.Forms.Label lblSendSpacePassword;
-        private System.Windows.Forms.Label lblSendSpaceUsername;
-        private System.Windows.Forms.TextBox txtSendSpacePassword;
-        private System.Windows.Forms.TextBox txtSendSpaceUserName;
-        private System.Windows.Forms.ComboBox cboSendSpaceAcctType;
-        private System.Windows.Forms.Label lblSendSpaceAccountType;
-        private System.Windows.Forms.Button btnSendSpaceRegister;
         internal System.Windows.Forms.RichTextBox rtbDebugInfo;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
         private System.Windows.Forms.TabPage tpDestFlickr;
@@ -6747,5 +6545,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripButton tsbActiveWindow;
         private ToolStripButton tsbAbout;
         private ToolStripButton tsbImageDirectory;
+        private ToolStripButton tsbDestinations;
     }
 }
