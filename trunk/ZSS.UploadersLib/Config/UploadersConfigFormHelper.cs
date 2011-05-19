@@ -582,5 +582,78 @@ namespace UploadersLib
         }
 
         #endregion Twitter
+
+        #region Custom uploader
+
+        private void UpdateCustomUploader()
+        {
+            if (lbCustomUploaderList.SelectedIndex != -1)
+            {
+                CustomUploaderInfo iUploader = GetCustomUploaderFromFields();
+                iUploader.Name = lbCustomUploaderList.SelectedItem.ToString();
+                Config.CustomUploadersList[lbCustomUploaderList.SelectedIndex] = iUploader;
+            }
+        }
+
+        private void LoadCustomUploader(CustomUploaderInfo imageUploader)
+        {
+            txtCustomUploaderArgName.Text = string.Empty;
+            txtCustomUploaderArgValue.Text = string.Empty;
+            lvCustomUploaderArguments.Items.Clear();
+            foreach (Argument arg in imageUploader.Arguments)
+            {
+                lvCustomUploaderArguments.Items.Add(arg.Name).SubItems.Add(arg.Value);
+            }
+
+            txtCustomUploaderURL.Text = imageUploader.UploadURL;
+            txtCustomUploaderFileForm.Text = imageUploader.FileFormName;
+            txtCustomUploaderRegexp.Text = string.Empty;
+            lvCustomUploaderRegexps.Items.Clear();
+            foreach (string regexp in imageUploader.RegexpList)
+            {
+                lvCustomUploaderRegexps.Items.Add(regexp);
+            }
+
+            txtCustomUploaderFullImage.Text = imageUploader.URL;
+            txtCustomUploaderThumbnail.Text = imageUploader.ThumbnailURL;
+        }
+
+        private CustomUploaderInfo GetCustomUploaderFromFields()
+        {
+            CustomUploaderInfo iUploader = new CustomUploaderInfo(txtCustomUploaderName.Text);
+            foreach (ListViewItem lvItem in lvCustomUploaderArguments.Items)
+            {
+                iUploader.Arguments.Add(new Argument(lvItem.Text, lvItem.SubItems[1].Text));
+            }
+
+            iUploader.UploadURL = txtCustomUploaderURL.Text;
+            iUploader.FileFormName = txtCustomUploaderFileForm.Text;
+            foreach (ListViewItem lvItem in lvCustomUploaderRegexps.Items)
+            {
+                iUploader.RegexpList.Add(lvItem.Text);
+            }
+
+            iUploader.URL = txtCustomUploaderFullImage.Text;
+            iUploader.ThumbnailURL = txtCustomUploaderThumbnail.Text;
+
+            return iUploader;
+        }
+
+        private void ImportImageUploaders(string fp)
+        {
+            CustomUploaderManager tmp = CustomUploaderManager.Read(fp);
+
+            if (tmp != null)
+            {
+                Config.CustomUploadersList = new List<CustomUploaderInfo>();
+                Config.CustomUploadersList.AddRange(tmp.ImageHostingServices);
+                foreach (CustomUploaderInfo iHostingService in Config.CustomUploadersList)
+                {
+                    lbCustomUploaderList.Items.Add(iHostingService.Name);
+                }
+            }
+        }
+
+        #endregion Custom uploader
     }
 }

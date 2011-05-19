@@ -33,7 +33,6 @@ using System.Windows.Forms;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using MS.WindowsAPICodePack.Internal;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -289,17 +288,7 @@ namespace ZScreenGUI
                         case JobLevel1.Image:
                             if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.URL))
                             {
-                                if (!string.IsNullOrEmpty(task.LinkManager.GetFullImageUrl()))
-                                {
-                                    this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " full image: " +
-                                                task.LinkManager.GetFullImageUrl() + "\r\n");
-                                }
-
-                                if (!string.IsNullOrEmpty(task.LinkManager.GetThumbnailUrl()))
-                                {
-                                    this.mZScreen.txtUploadersLog.AppendText(task.DestinationName + " thumbnail: " +
-                                                task.LinkManager.GetThumbnailUrl() + "\r\n");
-                                }
+                                // TODO: What to do?
                             }
 
                             if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
@@ -378,12 +367,10 @@ namespace ZScreenGUI
                     AddHistoryItem(task);
                 }
             }
-
             catch (Exception ex)
             {
                 Engine.MyLogger.WriteException("Job Completed with errors: ", ex);
             }
-
             finally
             {
                 UploadManager.Commit(task.UniqueNumber);
@@ -392,8 +379,6 @@ namespace ZScreenGUI
                 {
                     Adapter.TaskbarSetProgressState(mZScreen, TaskbarProgressBarState.NoProgress);
                 }
-
-                mZScreen.btnUploadersTest.Enabled = true;
             }
         }
 
