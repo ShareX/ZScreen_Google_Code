@@ -147,7 +147,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while setting shell extensions", ex);
+                Engine.MyLogger.WriteException("Error while setting shell extensions", ex);
             }
             finally
             {
@@ -183,7 +183,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while unsetting shell extensions", ex);
+                Engine.MyLogger.WriteException("Error while unsetting shell extensions", ex);
             }
         }
 

@@ -135,7 +135,7 @@ namespace ZScreenLib
 
             try
             {
-                FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
+                Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
                 WorkerTask checkTask = RetryUpload(task);
 
                 if (task.WasToTakeScreenshot)
@@ -148,7 +148,7 @@ namespace ZScreenLib
                         }
                         catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
                         {
-                            FileSystem.AppendDebug("Error while finalizing job", ex);
+                            Engine.MyLogger.WriteException("Error while finalizing job", ex);
                         }
                     }
                 }
@@ -185,7 +185,7 @@ namespace ZScreenLib
                 {
                     foreach (string error in task.Errors)
                     {
-                        FileSystem.AppendDebug(error);
+                        Engine.MyLogger.WriteLine(error);
                     }
 
                     MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -198,7 +198,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while finalizing Worker job", ex);
+                Engine.MyLogger.WriteException("Error while finalizing Worker job", ex);
             }
             finally
             {
@@ -360,7 +360,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error while uploading using file system", ex);
+                    Engine.MyLogger.WriteException("Error while uploading using file system", ex);
                     succ = false;
                 }
             }

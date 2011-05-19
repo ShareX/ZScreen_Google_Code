@@ -25,7 +25,7 @@ namespace ZScreenCLI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug(ex);
+                Engine.MyLogger.WriteLine(ex);
             }
             finally
             {

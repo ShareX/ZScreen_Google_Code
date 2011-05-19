@@ -21,7 +21,7 @@ namespace ZScreenGUI
     {
         private void ZScreen_ConfigGUI()
         {
-            FileSystem.AppendDebug("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
+            Engine.MyLogger.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
             pgApp.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
             ZScreen_ConfigGUI_Main();

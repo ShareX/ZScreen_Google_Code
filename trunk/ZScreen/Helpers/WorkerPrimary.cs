@@ -119,7 +119,7 @@ namespace ZScreenGUI
                     }
                 }
 
-                FileSystem.AppendDebug(string.Format("Job started: {0}", task.Job2));
+                Engine.MyLogger.WriteLine(string.Format("Job started: {0}", task.Job2));
 
                 switch (task.Job1)
                 {
@@ -264,7 +264,7 @@ namespace ZScreenGUI
 
                 else
                 {
-                    FileSystem.AppendDebug(string.Format("Job completed: {0}", task.Job2));
+                    Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
                     if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
                     {
@@ -310,7 +310,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
-                                    FileSystem.AppendDebug("Error while finalizing job", ex);
+                                    Engine.MyLogger.WriteException("Error while finalizing job", ex);
                                 }
                             }
                             break;
@@ -361,7 +361,7 @@ namespace ZScreenGUI
                     {
                         foreach (string error in task.Errors)
                         {
-                            FileSystem.AppendDebug(error);
+                            Engine.MyLogger.WriteLine(error);
                         }
 
                         MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -381,7 +381,7 @@ namespace ZScreenGUI
 
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Job Completed with errors: ", ex);
+                Engine.MyLogger.WriteException("Job Completed with errors: ", ex);
             }
 
             finally
@@ -555,7 +555,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
-                    FileSystem.AppendDebug("Crop Shot Hotkey triggered: " + key.ToSpecialString());
+                    Engine.MyLogger.WriteLine("Crop Shot Hotkey triggered: " + key.ToSpecialString());
                     StartBw_CropShot();
                     return true;
                 }

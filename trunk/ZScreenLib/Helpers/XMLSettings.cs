@@ -46,6 +46,7 @@ using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -729,30 +730,7 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            try
-            {
-                string directoryName = Path.GetDirectoryName(filePath);
-
-                if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
-                {
-                    Directory.CreateDirectory(directoryName);
-                }
-
-                XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
-                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
-                {
-                    xs.Serialize(fs, this);
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                FileSystem.AppendDebug("Error while writing settings", ex);
-                MessageBox.Show(ex.Message);
-            }
-
-            return false;
+            return SettingsHelper.Save<XMLSettings>(this, filePath, SerializationType.Xml, Engine.MyLogger);
         }
 
         public static XMLSettings Read()
@@ -770,7 +748,7 @@ namespace ZScreenLib
                     // Step 3 - Attempt to read conventional Settings file
                     settingsFile = Engine.XMLSettingsFile;
                 }
-                FileSystem.AppendDebug("Using " + settingsFile);
+                Engine.MyLogger.WriteLine("Using " + settingsFile);
             }
 
             if (File.Exists(settingsFile) && settingsFile != Engine.mAppSettings.GetSettingsFilePath())
@@ -780,39 +758,16 @@ namespace ZScreenLib
             }
 
             Engine.mAppSettings.XMLSettingsFile = Engine.mAppSettings.GetSettingsFilePath();
-            FileSystem.AppendDebug("Reading " + Engine.mAppSettings.XMLSettingsFile);
+            Engine.MyLogger.WriteLine("Reading " + Engine.mAppSettings.XMLSettingsFile);
             return Read(Engine.mAppSettings.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)
         {
+
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(XMLSettings));
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        return xs.Deserialize(fs) as XMLSettings;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // We dont need a MessageBox when we rename enumerations
-                    // Renaming enums tend to break parts of serialization
-                    FileSystem.AppendDebug("Error while reading settings", ex);
-
-                    using (OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS })
-                    {
-                        dlg.Title = string.Format("{0} Load Settings from Backup...", ex.Message);
-                        dlg.InitialDirectory = Engine.mAppSettings.RootDir;
-
-                        if (dlg.ShowDialog() == DialogResult.OK)
-                        {
-                            return Read(dlg.FileName);
-                        }
-                    }
-                }
+                return HelpersLib.SettingsHelper.Load<XMLSettings>(filePath, HelpersLib.SerializationType.Xml, Engine.MyLogger);
             }
 
             return new XMLSettings();

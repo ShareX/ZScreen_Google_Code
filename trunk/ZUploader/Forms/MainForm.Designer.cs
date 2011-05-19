@@ -71,7 +71,7 @@ namespace ZUploader
             this.tssMain2 = new System.Windows.Forms.ToolStripSeparator();
             this.tssMain3 = new System.Windows.Forms.ToolStripSeparator();
             this.tscMain = new System.Windows.Forms.ToolStripContainer();
-            this.lvUploads = new HelpersLib.Custom_Controls.MyListView();
+            this.lvUploads = new HelpersLib.MyListView();
             this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -486,7 +486,7 @@ namespace ZUploader
 
         #endregion Windows Form Designer generated code
 
-        private HelpersLib.Custom_Controls.MyListView lvUploads;
+        private HelpersLib.MyListView lvUploads;
         private System.Windows.Forms.ColumnHeader chStatus;
         private System.Windows.Forms.ColumnHeader chURL;
         private System.Windows.Forms.ContextMenuStrip cmsUploads;

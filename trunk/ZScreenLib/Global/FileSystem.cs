@@ -42,7 +42,6 @@ namespace ZScreenLib
     {
         public delegate void DebugLogEventHandler(string line);
         public static event DebugLogEventHandler DebugLogChanged;
-        public static StringBuilder DebugLog = new StringBuilder();
 
         /// <summary>
         /// Returns a list of file paths from a collection of files and directories
@@ -137,14 +136,14 @@ namespace ZScreenLib
 
                     using (FileStream fi = File.Create(filePath))
                     {
-                        FileSystem.AppendDebug(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+                        Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
                         ms.WriteTo(fi);
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error while saving image", ex);
+                    Engine.MyLogger.WriteException("Error while saving image", ex);
                 }
                 finally
                 {
@@ -186,19 +185,7 @@ namespace ZScreenLib
 
         public static void AppendDebug(string descr, Exception ex)
         {
-            AppendDebug(descr + " " + ex.ToString());
-        }
-
-        public static void AppendDebug(string msg)
-        {
-            if (!string.IsNullOrEmpty(msg))
-            {
-                // a modified http://iso.org/iso/en/prods-services/popstds/datesandtime.html - McoreD
-                string line = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff - ") + msg;
-                Debug.WriteLine(line);
-                DebugLog.AppendLine(line);
-                OnDebugLogChanged(line);
-            }
+            Engine.MyLogger.WriteException(descr, ex);
         }
 
         private static void OnDebugLogChanged(string line)
@@ -221,7 +208,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug(ex.ToString());
+                    Engine.MyLogger.WriteException("WriteText", ex);
                 }
             }
             return succ;
@@ -237,15 +224,14 @@ namespace ZScreenLib
                     dir = Path.Combine(Application.StartupPath, Engine.LogsDir);
                 }
                 string fpDebug = Path.Combine(dir, string.Format("{0}-{1}-debug.txt", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")));
-                AppendDebug("Writing Debug file: " + fpDebug);
+                Engine.MyLogger.WriteLine("Writing Debug file: " + fpDebug);
                 if (Engine.conf.WriteDebugFile)
                 {
-                    if (DebugLog.Length > 0)
+                    if (Engine.MyLogger.Messages.Length > 0)
                     {
                         using (StreamWriter sw = new StreamWriter(fpDebug, true))
                         {
-                            sw.WriteLine(DebugLog.ToString());
-                            DebugLog = new StringBuilder();
+                            sw.WriteLine(Engine.MyLogger.Messages.ToString());
                         }
                     }
                 }
@@ -264,7 +250,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while exporting text", ex);
+                Engine.MyLogger.WriteException("Error while exporting text", ex);
                 succ = false;
             }
 
@@ -293,7 +279,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while getting text from resource", ex);
+                Engine.MyLogger.WriteException("Error while getting text from resource", ex);
             }
 
             return text;

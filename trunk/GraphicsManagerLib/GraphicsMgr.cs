@@ -197,7 +197,7 @@ namespace GraphicsMgrLib
                 }
                 catch (Exception)
                 {
-                    //  FileSystem.AppendDebug("GetImageSafely", ex);
+                    //  Engine.MyLogger.WriteLine("GetImageSafely", ex);
                 }
             }
             return bmp;
@@ -268,7 +268,7 @@ namespace GraphicsMgrLib
             }
             catch (Exception)
             {
-                // FileSystem.AppendDebug("Error at SaveImageToMemoryStream", ex);
+                // Engine.MyLogger.WriteException("Error at SaveImageToMemoryStream", ex);
             }
 
             return ms;

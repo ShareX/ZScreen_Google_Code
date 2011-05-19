@@ -115,7 +115,7 @@ namespace ZScreenLib
         /// <returns>the captured window image</returns>
         public static Image CaptureWithGDI(IntPtr handle)
         {
-            FileSystem.AppendDebug("Capturing with GDI");
+            Engine.MyLogger.WriteLine("Capturing with GDI");
             Rectangle windowRect;
 
             if (Engine.conf.ActiveWindowTryCaptureChildren)
@@ -129,7 +129,7 @@ namespace ZScreenLib
 
             windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
 
-            FileSystem.AppendDebug("Window rectangle: " + windowRect.ToString());
+            Engine.MyLogger.WriteLine("Window rectangle: " + windowRect.ToString());
 
             Image windowImage = null;
 
@@ -254,7 +254,7 @@ namespace ZScreenLib
         /// <returns>the captured window image</returns>
         public static Image CaptureWithDWM(IntPtr handle)
         {
-            FileSystem.AppendDebug("Capturing with DWM");
+            Engine.MyLogger.WriteLine("Capturing with DWM");
             Image windowImage = null;
             Bitmap redBGImage = null;
 
@@ -268,7 +268,7 @@ namespace ZScreenLib
 
             if (windowImage == null)
             {
-                FileSystem.AppendDebug("Standard capture (no transparency)");
+                Engine.MyLogger.WriteLine("Standard capture (no transparency)");
                 windowImage = CaptureRectangle(windowRect);
             }
 
@@ -319,7 +319,7 @@ namespace ZScreenLib
             const int cornerSize = 5;
             if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
             {
-                FileSystem.AppendDebug("Clean transparent corners");
+                Engine.MyLogger.WriteLine("Clean transparent corners");
 
                 if (redBGImage == null)
                 {
@@ -420,7 +420,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    FileSystem.AppendDebug("Detected animated image => cannot compute transparency");
+                    Engine.MyLogger.WriteLine("Detected animated image => cannot compute transparency");
                     form.Close();
                     Application.DoEvents();
                     Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);

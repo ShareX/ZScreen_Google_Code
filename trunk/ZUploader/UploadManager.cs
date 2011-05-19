@@ -31,7 +31,6 @@ using System.Linq;
 using System.Media;
 using System.Windows.Forms;
 using HelpersLib;
-using HelpersLib.Custom_Controls;
 using HistoryLib;
 using UploadersLib;
 

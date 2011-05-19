@@ -53,7 +53,7 @@ namespace ZScreenGUI
                     {
                         // check if the file is complete
                     }
-                    FileSystem.AppendDebug(string.Format("Created {0}", filePath));
+                    Engine.MyLogger.WriteLine(string.Format("Created {0}", filePath));
                     Loader.Worker.UploadUsingFileSystem(new List<string>() { filePath });
                     break;
                 }
@@ -61,7 +61,7 @@ namespace ZScreenGUI
                 {
                     if (--retry == 0)
                     {
-                        FileSystem.AppendDebug("Unable to open file '" + filePath + "'");
+                        Engine.MyLogger.WriteLine("Unable to open file '" + filePath + "'");
                     }
                     Thread.Sleep(500);
                 }

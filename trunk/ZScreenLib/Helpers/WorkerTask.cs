@@ -258,7 +258,7 @@ namespace ZScreenLib
 
         public void SetImage(Image img)
         {
-            FileSystem.AppendDebug(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+            Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
             this.MyImage = img;
             this.Job1 = JobLevel1.Image;
             if (Engine.conf.CopyImageUntilURL)
@@ -498,7 +498,7 @@ namespace ZScreenLib
             this.StartTime = DateTime.Now;
             if (this.MyImageUploader != ImageUploaderType.CLIPBOARD)
             {
-                FileSystem.AppendDebug("Uploading Image: " + this.LocalFilePath);
+                Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
             }
 
             ImageUploader imageUploader = null;
@@ -508,7 +508,7 @@ namespace ZScreenLib
                 SizeF size = Image.FromFile(this.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
-                    FileSystem.AppendDebug("Changing from TinyPic to ImageShack due to large image size");
+                    Engine.MyLogger.WriteLine("Changing from TinyPic to ImageShack due to large image size");
                     this.MyImageUploader = ImageUploaderType.IMAGESHACK;
                 }
             }
@@ -582,7 +582,7 @@ namespace ZScreenLib
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
                 this.DestinationName = this.MyImageUploader.GetDescription();
-                FileSystem.AppendDebug("Initialized " + this.DestinationName);
+                Engine.MyLogger.WriteLine("Initialized " + this.DestinationName);
                 string fullFilePath = this.LocalFilePath;
                 if (File.Exists(fullFilePath) || this.MyImage != null)
                 {
@@ -671,7 +671,7 @@ namespace ZScreenLib
                     if (textUploader != null)
                     {
                         this.DestinationName = this.MyTextUploader.GetDescription();
-                        FileSystem.AppendDebug("Uploading to " + this.DestinationName);
+                        Engine.MyLogger.WriteLine("Uploading to " + this.DestinationName);
 
                         string url = string.Empty;
 
@@ -695,7 +695,7 @@ namespace ZScreenLib
         public void UploadFile()
         {
             this.StartTime = DateTime.Now;
-            FileSystem.AppendDebug("Uploading File: " + this.LocalFilePath);
+            Engine.MyLogger.WriteLine("Uploading File: " + this.LocalFilePath);
 
             FileUploader fileHost = null;
             switch (this.MyFileUploader)
@@ -789,7 +789,7 @@ namespace ZScreenLib
                 {
                     FTPAccount acc = Engine.conf.FTPAccountList[FtpAccountId];
                     this.DestinationName = string.Format("FTP - {0}", acc.Name);
-                    FileSystem.AppendDebug(string.Format("Uploading {0} to FTP: {1}", this.FileName, acc.Host));
+                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", this.FileName, acc.Host));
 
                     FTPUploader fu = new FTPUploader(acc);
                     fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
@@ -830,7 +830,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while uploading to FTP Server", ex);
+                Engine.MyLogger.WriteException("Error while uploading to FTP Server", ex);
                 this.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
@@ -864,7 +864,7 @@ namespace ZScreenLib
                 MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
                 System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
                 this.DestinationName = acc.Name;
-                FileSystem.AppendDebug(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));
+                Engine.MyLogger.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
                 this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
                 // mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
@@ -902,7 +902,7 @@ namespace ZScreenLib
 
                     this.DestinationName = acc.Name;
 
-                    FileSystem.AppendDebug(string.Format("Uploading {0} to Mindtouch: {1}", this.FileName, acc.Url));
+                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to Mindtouch: {1}", this.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
                     // mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath)); todo: check same output as getUriPath is possible else where
@@ -963,7 +963,7 @@ namespace ZScreenLib
             {
                 if (Engine.conf.ShortenUrlAfterUpload)
                 {
-                    FileSystem.AppendDebug(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                    Engine.MyLogger.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
                 }
                 return Engine.conf.TwitterEnabled ||
                     Engine.conf.ShortenUrlUsingClipboardUpload && this.Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(MyText) ||
@@ -1012,7 +1012,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
-                        FileSystem.AppendDebug(string.Format("Shortened URL: {0}", shortenUrl));
+                        Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
                         UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, ShortenedURL = shortenUrl });
                         return true;
                     }

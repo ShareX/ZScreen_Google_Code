@@ -95,7 +95,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Running ZScreen", ex);
+                Engine.MyLogger.WriteException("Running ZScreen", ex);
                 Engine.conf.Write();
                 throw ex;
             }
@@ -121,7 +121,7 @@ namespace ZScreenGUI
         {
             InitKeyboardHook();
 
-            FileSystem.AppendDebug("Keyboard Hook initiated");
+            Engine.MyLogger.WriteLine("Keyboard Hook initiated");
 
             if (Engine.conf.EnableKeyboardHookTimer)
             {

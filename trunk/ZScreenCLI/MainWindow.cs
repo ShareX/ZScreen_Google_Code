@@ -23,7 +23,7 @@ namespace ZScreenCLI
             if (args.Length > 1)
             {
                 this.niTray.Icon = ResxMgr.BusyIcon;
-                FileSystem.AppendDebug("Command Line: " + Environment.CommandLine);
+
                 try
                 {
                     if (args[1].ToLower() == "crop_shot")

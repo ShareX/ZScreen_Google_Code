@@ -27,7 +27,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace HelpersLib.Custom_Controls
+namespace HelpersLib
 {
     public class MyListView : ListView
     {

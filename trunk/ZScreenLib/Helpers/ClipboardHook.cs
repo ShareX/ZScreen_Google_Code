@@ -252,7 +252,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error in SendMessage", ex);
+                Engine.MyLogger.WriteException("Error in SendMessage", ex);
                 Debug.WriteLine(ex.ToString());
                 return -1;
             }
