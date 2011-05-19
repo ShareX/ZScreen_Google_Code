@@ -24,9 +24,11 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using UploadersLib.FileUploaders;
+using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 
 namespace UploadersLib
@@ -365,5 +367,181 @@ namespace UploadersLib
         }
 
         #endregion Other Services
+
+        #region Custom uploadr
+
+        private void btnCustomUploaderAdd_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtCustomUploaderName.Text))
+            {
+                CustomUploaderInfo iUploader = GetCustomUploaderFromFields();
+                Config.CustomUploadersList.Add(iUploader);
+                lbCustomUploaderList.Items.Add(iUploader.Name);
+                lbCustomUploaderList.SelectedIndex = lbCustomUploaderList.Items.Count - 1;
+            }
+        }
+
+        private void btnCustomUploaderRemove_Click(object sender, EventArgs e)
+        {
+            if (lbCustomUploaderList.SelectedIndex > -1)
+            {
+                int selected = lbCustomUploaderList.SelectedIndex;
+                Config.CustomUploadersList.RemoveAt(selected);
+                lbCustomUploaderList.Items.RemoveAt(selected);
+                LoadCustomUploader(new CustomUploaderInfo());
+            }
+        }
+
+        private void btnCustomUploaderUpdate_Click(object sender, EventArgs e)
+        {
+            UpdateCustomUploader();
+        }
+
+        private void lbCustomUploaderList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = lbCustomUploaderList.SelectedIndex;
+
+            if (index > -1)
+            {
+                LoadCustomUploader(Config.CustomUploadersList[index]);
+                Config.CustomUploaderSelected = index;
+            }
+        }
+
+        private void btnCustomUploaderRegexpAdd_Click(object sender, EventArgs e)
+        {
+            string regexp = txtCustomUploaderRegexp.Text;
+
+            if (!string.IsNullOrEmpty(regexp))
+            {
+                if (regexp.StartsWith("!tag"))
+                {
+                    lvCustomUploaderRegexps.Items.Add(String.Format("(?<={0}>).*(?=</{0})",
+                        regexp.Substring(4, regexp.Length - 4).Trim()));
+                }
+                else
+                {
+                    lvCustomUploaderRegexps.Items.Add(regexp);
+                }
+
+                txtCustomUploaderRegexp.Text = string.Empty;
+                txtCustomUploaderRegexp.Focus();
+            }
+        }
+
+        private void btnCustomUploaderRegexpRemove_Click(object sender, EventArgs e)
+        {
+            if (lvCustomUploaderRegexps.SelectedItems.Count > 0)
+            {
+                lvCustomUploaderRegexps.SelectedItems[0].Remove();
+            }
+        }
+
+        private void btnCustomUploaderRegexpEdit_Click(object sender, EventArgs e)
+        {
+            string regexp = txtCustomUploaderRegexp.Text;
+
+            if (lvCustomUploaderRegexps.SelectedItems.Count > 0 && !string.IsNullOrEmpty(regexp))
+            {
+                lvCustomUploaderRegexps.SelectedItems[0].Text = regexp;
+            }
+        }
+
+        private void btnCustomUploaderArgAdd_Click(object sender, EventArgs e)
+        {
+            string name = txtCustomUploaderArgName.Text;
+            string value = txtCustomUploaderArgValue.Text;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                lvCustomUploaderArguments.Items.Add(name).SubItems.Add(value);
+                txtCustomUploaderArgName.Text = string.Empty;
+                txtCustomUploaderArgValue.Text = string.Empty;
+                txtCustomUploaderArgName.Focus();
+            }
+        }
+
+        private void btnCustomUploaderArgRemove_Click(object sender, EventArgs e)
+        {
+            if (lvCustomUploaderArguments.SelectedItems.Count > 0)
+            {
+                lvCustomUploaderArguments.SelectedItems[0].Remove();
+            }
+        }
+
+        private void btnCustomUploaderArgEdit_Click(object sender, EventArgs e)
+        {
+            string name = txtCustomUploaderArgName.Text;
+            string value = txtCustomUploaderArgValue.Text;
+
+            if (lvCustomUploaderArguments.SelectedItems.Count > 0 && !string.IsNullOrEmpty(name))
+            {
+                lvCustomUploaderArguments.SelectedItems[0].Text = name;
+                lvCustomUploaderArguments.SelectedItems[0].SubItems[1].Text = value;
+            }
+        }
+
+        private void btnCustomUploaderImport_Click(object sender, EventArgs e)
+        {
+            if (Config.CustomUploadersList == null)
+            {
+                Config.CustomUploadersList = new List<CustomUploaderInfo>();
+            }
+
+            using (OpenFileDialog dlg = new OpenFileDialog { Filter = "ZScreen Image Uploaders(*.zihs)|*.zihs" })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    ImportImageUploaders(dlg.FileName);
+                }
+            }
+        }
+
+        private void btnCustomUploaderExport_Click(object sender, EventArgs e)
+        {
+            if (Config.CustomUploadersList != null)
+            {
+                using (SaveFileDialog dlg = new SaveFileDialog
+                {
+                    FileName = string.Format("{0}-{1}-uploaders", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
+                    Filter = "ZScreen Image Uploaders(*.zihs)|*.zihs"
+                })
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        CustomUploaderManager ihsm = new CustomUploaderManager
+                        {
+                            ImageHostingServices = Config.CustomUploadersList
+                        };
+
+                        ihsm.Save(dlg.FileName);
+                    }
+                }
+            }
+        }
+
+        private void btnCustomUploaderClear_Click(object sender, EventArgs e)
+        {
+            LoadCustomUploader(new CustomUploaderInfo());
+        }
+
+        private void btnCustomUploaderTest_Click(object sender, EventArgs e)
+        {
+            UpdateCustomUploader();
+
+            if (lbCustomUploaderList.SelectedIndex > -1)
+            {
+                btnCustomUploaderTest.Enabled = false;
+
+                // TODO: Loader.Worker.StartWorkerScreenshots(WorkerTask.JobLevel2.CustomUploaderTest);
+            }
+        }
+
+        private void txtCustomUploaderLog_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
+        }
+
+        #endregion Custom uploadr
     }
 }

@@ -659,6 +659,8 @@ namespace ZScreenGUI
 
         private void RewriteCustomUploaderRightClickMenu()
         {
+            // TODO: Custom uploader tray
+
             if (Engine.conf.CustomUploadersList != null)
             {
                 List<CustomUploaderInfo> lUploaders = Engine.conf.CustomUploadersList;
@@ -671,7 +673,7 @@ namespace ZScreenGUI
                 for (int i = 0; i < lUploaders.Count; i++)
                 {
                     tsm = new ToolStripMenuItem { CheckOnClick = true, Tag = i, Text = lUploaders[i].Name };
-                    tsm.Click += rightClickIHS_Click;
+                    // tsm.Click += rightClickIHS_Click;
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
@@ -686,12 +688,6 @@ namespace ZScreenGUI
                     tsmDestCustomHTTP.DropDown.Show();
                 }
             }
-        }
-
-        private void rightClickIHS_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            lbImageUploader.SelectedIndex = (int)tsm.Tag;
         }
 
         private void FillClipboardMenu()
@@ -1233,249 +1229,6 @@ namespace ZScreenGUI
                 }
             }
         }
-
-        #region Image MyCollection
-
-        private void btnUploaderAdd_Click(object sender, EventArgs e)
-        {
-            if (txtUploader.Text != string.Empty)
-            {
-                CustomUploaderInfo iUploader = GetUploaderFromFields();
-                Engine.conf.CustomUploadersList.Add(iUploader);
-                lbImageUploader.Items.Add(iUploader.Name);
-                lbImageUploader.SelectedIndex = lbImageUploader.Items.Count - 1;
-            }
-        }
-
-        private void btnUploaderRemove_Click(object sender, EventArgs e)
-        {
-            if (lbImageUploader.SelectedIndex != -1)
-            {
-                int selected = lbImageUploader.SelectedIndex;
-                Engine.conf.CustomUploadersList.RemoveAt(selected);
-                lbImageUploader.Items.RemoveAt(selected);
-                LoadImageUploaders(new CustomUploaderInfo());
-            }
-        }
-
-        private CustomUploaderInfo GetUploaderFromFields()
-        {
-            CustomUploaderInfo iUploader = new CustomUploaderInfo(txtUploader.Text);
-            foreach (ListViewItem lvItem in lvArguments.Items)
-            {
-                iUploader.Arguments.Add(new Argument(lvItem.Text, lvItem.SubItems[1].Text));
-            }
-
-            iUploader.UploadURL = txtUploadURL.Text;
-            iUploader.FileFormName = txtFileForm.Text;
-            foreach (ListViewItem lvItem in lvRegexps.Items)
-            {
-                iUploader.RegexpList.Add(lvItem.Text);
-            }
-
-            iUploader.URL = txtFullImage.Text;
-            iUploader.ThumbnailURL = txtThumbnail.Text;
-            return iUploader;
-        }
-
-        private void btnArgAdd_Click(object sender, EventArgs e)
-        {
-            if (txtArg1.Text != string.Empty)
-            {
-                lvArguments.Items.Add(txtArg1.Text).SubItems.Add(txtArg2.Text);
-                txtArg1.Text = string.Empty;
-                txtArg2.Text = string.Empty;
-                txtArg1.Focus();
-            }
-        }
-
-        private void btnArgEdit_Click(object sender, EventArgs e)
-        {
-            if (lvArguments.SelectedItems.Count > 0 && txtArg1.Text != string.Empty)
-            {
-                lvArguments.SelectedItems[0].Text = txtArg1.Text;
-                lvArguments.SelectedItems[0].SubItems[1].Text = txtArg2.Text;
-            }
-        }
-
-        private void btnArgRemove_Click(object sender, EventArgs e)
-        {
-            if (lvArguments.SelectedItems.Count > 0)
-            {
-                lvArguments.SelectedItems[0].Remove();
-            }
-        }
-
-        private void btnRegexpAdd_Click(object sender, EventArgs e)
-        {
-            if (txtRegexp.Text != string.Empty)
-            {
-                if (txtRegexp.Text.StartsWith("!tag"))
-                {
-                    lvRegexps.Items.Add(String.Format("(?<={0}>).*(?=</{0})",
-                        txtRegexp.Text.Substring(4, txtRegexp.Text.Length - 4).Trim()));
-                }
-                else
-                {
-                    lvRegexps.Items.Add(txtRegexp.Text);
-                }
-
-                txtRegexp.Text = string.Empty;
-                txtRegexp.Focus();
-            }
-        }
-
-        private void btnRegexpEdit_Click(object sender, EventArgs e)
-        {
-            if (lvRegexps.SelectedItems.Count > 0 && txtRegexp.Text != string.Empty)
-            {
-                lvRegexps.SelectedItems[0].Text = txtRegexp.Text;
-            }
-        }
-
-        private void btnRegexpRemove_Click(object sender, EventArgs e)
-        {
-            if (lvRegexps.SelectedItems.Count > 0)
-            {
-                lvRegexps.SelectedItems[0].Remove();
-            }
-        }
-
-        private void lbImageUploader_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbImageUploader.SelectedIndex != -1)
-            {
-                LoadImageUploaders(Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex]);
-                Engine.conf.CustomUploaderSelected = lbImageUploader.SelectedIndex;
-                RewriteCustomUploaderRightClickMenu();
-            }
-        }
-
-        private void LoadImageUploaders(CustomUploaderInfo imageUploader)
-        {
-            txtArg1.Text = string.Empty;
-            txtArg2.Text = string.Empty;
-            lvArguments.Items.Clear();
-            foreach (Argument arg in imageUploader.Arguments)
-            {
-                lvArguments.Items.Add(arg.Name).SubItems.Add(arg.Value);
-            }
-
-            txtUploadURL.Text = imageUploader.UploadURL;
-            txtFileForm.Text = imageUploader.FileFormName;
-            txtRegexp.Text = string.Empty;
-            lvRegexps.Items.Clear();
-            foreach (string regexp in imageUploader.RegexpList)
-            {
-                lvRegexps.Items.Add(regexp);
-            }
-
-            txtFullImage.Text = imageUploader.URL;
-            txtThumbnail.Text = imageUploader.ThumbnailURL;
-        }
-
-        private void UpdateCustomUploader()
-        {
-            if (lbImageUploader.SelectedIndex != -1)
-            {
-                CustomUploaderInfo iUploader = GetUploaderFromFields();
-                iUploader.Name = lbImageUploader.SelectedItem.ToString();
-                Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex] = iUploader;
-            }
-
-            RewriteCustomUploaderRightClickMenu();
-        }
-
-        private void btnUploadersUpdate_Click(object sender, EventArgs e)
-        {
-            UpdateCustomUploader();
-        }
-
-        private void btnUploadersClear_Click(object sender, EventArgs e)
-        {
-            LoadImageUploaders(new CustomUploaderInfo());
-        }
-
-        private void btUploadersTest_Click(object sender, EventArgs e)
-        {
-            UpdateCustomUploader();
-
-            if (lbImageUploader.SelectedIndex != -1)
-            {
-                btnUploadersTest.Enabled = false;
-                Loader.Worker.StartWorkerScreenshots(WorkerTask.JobLevel2.CustomUploaderTest);
-            }
-        }
-
-        private void btnUploaderExport_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.CustomUploadersList != null)
-            {
-                SaveFileDialog dlg = new SaveFileDialog
-                {
-                    FileName = string.Format("{0}-{1}-uploaders", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = Engine.FILTER_IMAGE_HOSTING_SERVICES
-                };
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    CustomUploaderManager ihsm = new CustomUploaderManager
-                    {
-                        ImageHostingServices = Engine.conf.CustomUploadersList
-                    };
-                    ihsm.Save(dlg.FileName);
-                }
-            }
-        }
-
-        private void ImportImageUploaders(string fp)
-        {
-            CustomUploaderManager tmp = CustomUploaderManager.Read(fp);
-            if (tmp != null)
-            {
-                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
-                Engine.conf.CustomUploadersList.AddRange(tmp.ImageHostingServices);
-                foreach (CustomUploaderInfo iHostingService in Engine.conf.CustomUploadersList)
-                {
-                    lbImageUploader.Items.Add(iHostingService.Name);
-                }
-            }
-        }
-
-        private void btnUploaderImport_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.CustomUploadersList == null)
-            {
-                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
-            }
-
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_IMAGE_HOSTING_SERVICES };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                ImportImageUploaders(dlg.FileName);
-            }
-        }
-
-        private void btnOpenSourceText_Click(object sender, EventArgs e)
-        {
-            OpenLastSource(ImageFileManager.SourceType.TEXT);
-        }
-
-        private void btnOpenSourceBrowser_Click(object sender, EventArgs e)
-        {
-            OpenLastSource(ImageFileManager.SourceType.HTML);
-        }
-
-        private void btnOpenSourceString_Click(object sender, EventArgs e)
-        {
-            OpenLastSource(ImageFileManager.SourceType.STRING);
-        }
-
-        private void txtUploadersLog_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Process.Start(e.LinkText);
-        }
-
-        #endregion Image MyCollection
 
         private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)
         {

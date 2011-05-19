@@ -208,6 +208,34 @@ namespace UploadersLib
                 }
             }
 
+            // Custom uploaders
+
+            lbCustomUploaderList.Items.Clear();
+
+            if (Config.CustomUploadersList == null)
+            {
+                Config.CustomUploadersList = new List<CustomUploaderInfo>();
+                LoadCustomUploader(new CustomUploaderInfo());
+            }
+            else
+            {
+                List<CustomUploaderInfo> iUploaders = Config.CustomUploadersList;
+                foreach (CustomUploaderInfo iUploader in iUploaders)
+                {
+                    lbCustomUploaderList.Items.Add(iUploader.Name);
+                }
+
+                if (lbCustomUploaderList.Items.Count > 0)
+                {
+                    lbCustomUploaderList.SelectedIndex = Config.CustomUploaderSelected;
+                }
+
+                if (lbCustomUploaderList.SelectedIndex > -1)
+                {
+                    LoadCustomUploader(Config.CustomUploadersList[lbCustomUploaderList.SelectedIndex]);
+                }
+            }
+
             #endregion File uploaders
 
             #region Other Services

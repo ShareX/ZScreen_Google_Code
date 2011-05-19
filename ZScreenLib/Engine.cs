@@ -128,6 +128,19 @@ namespace ZScreenLib
         public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;
 
+        public static XMLSettings conf;
+
+        public const string EXT_FTP_ACCOUNTS = "zfa";
+        public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
+        public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
+
+        public static Rectangle LastRegion = Rectangle.Empty;
+        public static Rectangle LastCapture = Rectangle.Empty;
+
+        public static Mutex mAppMutex;
+
+        public static KeyboardHook ZScreenKeyboardHook;
+
         public class EngineOptions
         {
             public bool KeyboardHook { get; set; }
@@ -541,18 +554,5 @@ namespace ZScreenLib
                     break;
             }
         }
-
-        public static XMLSettings conf;
-
-        public const string EXT_FTP_ACCOUNTS = "zfa";
-        public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
-        public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
-
-        public static Rectangle LastRegion = Rectangle.Empty;
-        public static Rectangle LastCapture = Rectangle.Empty;
-
-        public static Mutex mAppMutex;
-
-        public static KeyboardHook ZScreenKeyboardHook;
     }
 }

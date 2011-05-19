@@ -186,32 +186,6 @@ namespace ZScreenGUI
             cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
             txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
 
-            // Custom Image Uploaders
-            lbImageUploader.Items.Clear();
-            if (Engine.conf.CustomUploadersList == null)
-            {
-                Engine.conf.CustomUploadersList = new List<CustomUploaderInfo>();
-                LoadImageUploaders(new CustomUploaderInfo());
-            }
-            else
-            {
-                List<CustomUploaderInfo> iUploaders = Engine.conf.CustomUploadersList;
-                foreach (CustomUploaderInfo iUploader in iUploaders)
-                {
-                    lbImageUploader.Items.Add(iUploader.Name);
-                }
-
-                if (lbImageUploader.Items.Count > 0)
-                {
-                    lbImageUploader.SelectedIndex = Engine.conf.CustomUploaderSelected;
-                }
-
-                if (lbImageUploader.SelectedIndex != -1)
-                {
-                    LoadImageUploaders(Engine.conf.CustomUploadersList[lbImageUploader.SelectedIndex]);
-                }
-            }
-
             // Web Page Upload
 
             cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;
