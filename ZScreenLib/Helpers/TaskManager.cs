@@ -60,11 +60,11 @@ namespace ZScreenLib
             catch (ArgumentOutOfRangeException aor)
             {
                 mTask.Errors.Add("Invalid FTP Account Selection");
-                FileSystem.AppendDebug(aor.ToString());
+                Engine.MyLogger.WriteLine(aor.ToString());
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while capturing active window", ex);
+                Engine.MyLogger.WriteException("Error while capturing active window", ex);
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
                     CaptureRegionOrWindow();
@@ -150,7 +150,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while capturing region", ex);
+                Engine.MyLogger.WriteException("Error while capturing region", ex);
                 mTask.Errors.Add(ex.Message);
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
@@ -273,7 +273,7 @@ namespace ZScreenLib
                             }
                             catch (Exception ex)
                             {
-                                FileSystem.AppendDebug("ImageEdit", ex);
+                                Engine.MyLogger.WriteException("ImageEdit", ex);
                             }
                         }
                         else if (File.Exists(app.Path))

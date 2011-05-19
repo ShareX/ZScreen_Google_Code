@@ -140,7 +140,7 @@ namespace ZScreenLib
             else
             {
                 psi.Arguments = this.Args.Replace(SyntaxParser.FilePath, fp);
-                FileSystem.AppendDebug(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
+                Engine.MyLogger.WriteLine(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
             }
             p.StartInfo = psi;
             p.Start();

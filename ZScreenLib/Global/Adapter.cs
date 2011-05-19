@@ -83,7 +83,7 @@ namespace ZScreenLib
                     }
                     catch (Exception ex)
                     {
-                        FileSystem.AppendDebug("Error while copying image to clipboard", ex);
+                        Engine.MyLogger.WriteException("Error while copying image to clipboard", ex);
                     }
                 }
             }
@@ -98,7 +98,7 @@ namespace ZScreenLib
                     CopyImageToClipboard(img);
                 }
 
-                FileSystem.AppendDebug(string.Format("Saved {0} as an Image to Clipboard...", filePath));
+                Engine.MyLogger.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));
             }
         }
 
@@ -246,7 +246,7 @@ namespace ZScreenLib
                 }
                 if (silent)
                 {
-                    FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                    Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
                 }
                 else
                 {
@@ -349,7 +349,7 @@ namespace ZScreenLib
                 {
                     if (Engine.conf.UploadersConfig2.TinyPicRegistrationCode != shuk)
                     {
-                        FileSystem.AppendDebug(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.UploadersConfig2.TinyPicRegistrationCode, shuk));
+                        Engine.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.conf.UploadersConfig2.TinyPicRegistrationCode, shuk));
                     }
                     Engine.conf.UploadersConfig2.TinyPicRegistrationCode = shuk;
                 }
@@ -475,7 +475,7 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            FileSystem.AppendDebug("Proxy Enabled: " + Engine.conf.ProxyConfig.ToString());
+            Engine.MyLogger.WriteLine("Proxy Enabled: " + Engine.conf.ProxyConfig.ToString());
             return new ProxySettings { ProxyConfig = Engine.conf.ProxyConfig, ProxyActive = Engine.conf.ProxyActive };
         }
 
@@ -641,7 +641,7 @@ namespace ZScreenLib
                 }
                 catch (Exception err)
                 {
-                    FileSystem.AppendDebug("Error while initializing Font and Color", err);
+                    Engine.MyLogger.WriteException("Error while initializing Font and Color", err);
                 }
 
                 result = fDialog.ShowDialog();
@@ -653,7 +653,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while setting Watermark Font", ex);
+                Engine.MyLogger.WriteException("Error while setting Watermark Font", ex);
             }
             return result;
         }
@@ -720,7 +720,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error while adding Recent Item to Windows 7 Taskbar", ex);
+                    Engine.MyLogger.WriteException("Error while adding Recent Item to Windows 7 Taskbar", ex);
                 }
             }
         }

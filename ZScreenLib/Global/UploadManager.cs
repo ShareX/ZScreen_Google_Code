@@ -163,7 +163,7 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(clipboardText))
             {
                 Engine.ClipboardUnhook();
-                FileSystem.AppendDebug("Setting Clipboard with URL: " + clipboardText);
+                Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + clipboardText);
                 clipboardText = FileSystem.GetBrowserFriendlyUrl(clipboardText);
                 Clipboard.SetText(clipboardText); // auto                
                 // optional deletion link
@@ -172,7 +172,7 @@ namespace ZScreenLib
                     string linkdel = task.LinkManager.UploadResult.DeletionURL;
                     if (!string.IsNullOrEmpty(linkdel))
                     {
-                        FileSystem.AppendDebug("Deletion Link: " + linkdel);
+                        Engine.MyLogger.WriteLine("Deletion Link: " + linkdel);
                     }
                 }
 

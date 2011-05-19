@@ -165,11 +165,11 @@ namespace ZScreenGUI
 
                     Engine.zJumpList.Refresh();
 
-                    FileSystem.AppendDebug("Integrated into Windows 7 Taskbar");
+                    Engine.MyLogger.WriteLine("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error while configuring Windows 7 Taskbar", ex);
+                    Engine.MyLogger.WriteException("Error while configuring Windows 7 Taskbar", ex);
                 }
             }
         }
@@ -286,16 +286,14 @@ namespace ZScreenGUI
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
 
             niTray.Visible = true;
-            // Loader.Splash.Close();
-            // FileSystem.AppendDebug("Closed Splash Screen");
 
-            rtbDebugLog.Text = FileSystem.DebugLog.ToString();
+            rtbDebugLog.Text = Engine.MyLogger.Messages.ToString();
             FileSystem.DebugLogChanged += new FileSystem.DebugLogEventHandler(FileSystem_DebugLogChanged);
 
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbDebugInfo, true);
 
-            FileSystem.AppendDebug("Loaded ZScreen GUI...");
+            Engine.MyLogger.WriteLine("Loaded ZScreen GUI...");
         }
 
         private void FileSystem_DebugLogChanged(string line)
@@ -349,7 +347,7 @@ namespace ZScreenGUI
                         }
                         catch (Exception ex)
                         {
-                            FileSystem.AppendDebug("Error monitoring clipboard", ex);
+                            Engine.MyLogger.WriteException("Error monitoring clipboard", ex);
                             return;
                         }
                         // pass message on to next clipboard listener
@@ -560,7 +558,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error in DelayedTrimMemoryUse", ex);
+                    Engine.MyLogger.WriteException("Error in DelayedTrimMemoryUse", ex);
                 }
             }
         }
@@ -591,7 +589,7 @@ namespace ZScreenGUI
 
             Engine.conf.WindowState = this.WindowState;
             Engine.conf.Write();
-            FileSystem.AppendDebug("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
+            Engine.MyLogger.WriteLine("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
         }
 
         private void RewriteImageEditorsRightClickMenu()
@@ -862,7 +860,7 @@ namespace ZScreenGUI
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)
             {
-                FileSystem.AppendDebug("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
+                Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
             if (Engine.conf.FirstRun)
@@ -1255,7 +1253,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Error while clicking Balloon Tip", ex);
+                    Engine.MyLogger.WriteException("Error while clicking Balloon Tip", ex);
                 }
             }
         }
@@ -2708,7 +2706,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while moving image files", ex);
+                Engine.MyLogger.WriteException("Error while moving image files", ex);
                 MessageBox.Show(ex.Message);
             }
         }

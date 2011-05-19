@@ -58,7 +58,8 @@
     <Compile Include="ClipboardContentViewer.Designer.cs">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Custom Controls\MyListView.cs">
+    <Compile Include="SettingsHelper.cs" />
+    <Compile Include="UserControls\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DebugTimer.cs" />

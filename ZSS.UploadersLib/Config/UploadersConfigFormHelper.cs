@@ -247,7 +247,7 @@ namespace UploadersLib
                 }
                 if (silent)
                 {
-                    // FileSystem.AppendDebug(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                    // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
                 }
                 else
                 {

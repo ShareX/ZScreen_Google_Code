@@ -45,6 +45,7 @@ namespace ZScreenLib
         // App Info
         private static string mProductName = Application.ProductName;
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
+        public static Logger MyLogger { get; set; }
 
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
@@ -135,13 +136,15 @@ namespace ZScreenLib
 
         public static void TurnOn()
         {
+            Engine.MyLogger = new Logger();
             TurnOn(new EngineOptions());
         }
 
         public static bool TurnOn(EngineOptions options)
         {
-            FileSystem.AppendDebug("Operating System: " + Environment.OSVersion.VersionString);
-            FileSystem.AppendDebug(string.Format("Product Version: {0} rev {1}", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
+            Engine.MyLogger = new Logger();
+            Engine.MyLogger.WriteLine("Operating System: " + Environment.OSVersion.VersionString);
+            Engine.MyLogger.WriteLine(string.Format("Product Version: {0} rev {1}", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
             DialogResult configResult = DialogResult.OK;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
@@ -185,9 +188,9 @@ namespace ZScreenLib
 
             if (configResult == DialogResult.OK)
             {
-                FileSystem.AppendDebug("Config file: " + AppSettings.AppSettingsFile);
-                FileSystem.AppendDebug(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
-                FileSystem.AppendDebug("Initializing Default folder paths...");
+                Engine.MyLogger.WriteLine("Config file: " + AppSettings.AppSettingsFile);
+                Engine.MyLogger.WriteLine(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
+                Engine.MyLogger.WriteLine("Initializing Default folder paths...");
                 Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
 
                 bool bGrantedOwnership;
@@ -259,11 +262,11 @@ namespace ZScreenLib
             if (string.IsNullOrEmpty(fp))
             {
                 Engine.conf = XMLSettings.Read();
-                FileSystem.AppendDebug("Finished reading " + Engine.mAppSettings.XMLSettingsFile);
+                Engine.MyLogger.WriteLine("Finished reading " + Engine.mAppSettings.XMLSettingsFile);
             }
             else
             {
-                FileSystem.AppendDebug("Reading " + fp);
+                Engine.MyLogger.WriteLine("Reading " + fp);
                 Engine.conf = XMLSettings.Read(fp);
             }
 
@@ -294,7 +297,7 @@ namespace ZScreenLib
             if (null != ZScreenKeyboardHook)
             {
                 ZScreenKeyboardHook.Dispose();
-                FileSystem.AppendDebug("Keyboard Hook terminated");
+                Engine.MyLogger.WriteLine("Keyboard Hook terminated");
             }
             FileSystem.WriteDebugFile();
             if (Engine.conf != null)
@@ -504,7 +507,7 @@ namespace ZScreenLib
             if (null != zClipboardHook && Adapter.ClipboardMonitor)
             {
                 zClipboardHook.RegisterClipboardViewer();
-                FileSystem.AppendDebug("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+                Engine.MyLogger.WriteLine("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
             }
         }
 
@@ -513,7 +516,7 @@ namespace ZScreenLib
             if (null != zClipboardHook && Adapter.ClipboardMonitor)
             {
                 zClipboardHook.UnregisterClipboardViewer();
-                FileSystem.AppendDebug("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+                Engine.MyLogger.WriteLine("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
             }
         }
 

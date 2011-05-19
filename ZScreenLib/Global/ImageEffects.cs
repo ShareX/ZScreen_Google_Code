@@ -171,7 +171,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    FileSystem.AppendDebug("Errow while drawing watermark", ex);
+                    Engine.MyLogger.WriteException("Errow while drawing watermark", ex);
                 }
             }
 
@@ -211,7 +211,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                FileSystem.AppendDebug("Error while drwaing image watermark", ex);
+                Engine.MyLogger.WriteException("Error while drwaing image watermark", ex);
             }
             return img;
         }
