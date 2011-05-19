@@ -1,6 +1,7 @@
 #summary Side Navigation
 #labels Phase-Design
 
+ * [FAQ Frequently Asked Questions]
  * General
   * [Features Feature list]
   * [Screenshots Screenshots]
