@@ -323,7 +323,7 @@ namespace ZScreenLib
                 {
                     if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(dialog.InputText))
                     {
-                        this.FileName = HelpersLib.Helpers.NormalizeString(dialog.InputText);
+                        this.FileName = HelpersLib.ZAppHelper.NormalizeString(dialog.InputText);
                     }
                 }
                 else

@@ -60,7 +60,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(text))
             {
-                Helpers.CopyTextSafely(text);
+                ZAppHelper.CopyTextSafely(text);
             }
         }
 

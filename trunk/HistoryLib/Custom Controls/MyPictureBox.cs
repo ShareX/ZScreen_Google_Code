@@ -55,13 +55,13 @@ namespace HistoryLib.Custom_Controls
 
         public void LoadImage(string imagePath, string imageURL)
         {
-            if (!string.IsNullOrEmpty(imagePath) && Helpers.IsImageFile(imagePath) && File.Exists(imagePath))
+            if (!string.IsNullOrEmpty(imagePath) && ZAppHelper.IsImageFile(imagePath) && File.Exists(imagePath))
             {
                 lblStatus.Text = "Loading local image...";
                 isLoadLocal = true;
                 LoadImage(imagePath);
             }
-            else if (!string.IsNullOrEmpty(imageURL) && Helpers.IsImageFile(imageURL))
+            else if (!string.IsNullOrEmpty(imageURL) && ZAppHelper.IsImageFile(imageURL))
             {
                 lblStatus.Text = "Downloading image from URL...";
                 isLoadLocal = false;

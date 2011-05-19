@@ -67,25 +67,25 @@ namespace ZUploader
 
             this.Text = Program.Title;
 
-            foreach (string imageUploader in Helpers.GetEnumDescriptions<ImageDestination>())
+            foreach (string imageUploader in ZAppHelper.GetEnumDescriptions<ImageDestination>())
             {
                 tsmiImageUploaders.DropDownItems.Add(new ToolStripMenuItem(imageUploader));
             }
             tsmiImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
-            foreach (string fileUploader in Helpers.GetEnumDescriptions<FileUploaderType>())
+            foreach (string fileUploader in ZAppHelper.GetEnumDescriptions<FileUploaderType>())
             {
                 tsmiFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsmiFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
-            foreach (string textUploader in Helpers.GetEnumDescriptions<TextUploaderType>())
+            foreach (string textUploader in ZAppHelper.GetEnumDescriptions<TextUploaderType>())
             {
                 tsmiTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
             tsmiTextUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbTextUploaders_DropDownItemClicked);
 
-            foreach (string urlShortener in Helpers.GetEnumDescriptions<UrlShortenerType>())
+            foreach (string urlShortener in ZAppHelper.GetEnumDescriptions<UrlShortenerType>())
             {
                 tsmiURLShorteners.DropDownItems.Add(new ToolStripMenuItem(urlShortener));
             }
@@ -107,7 +107,7 @@ namespace ZUploader
 
         private void LoadSettings()
         {
-            if (Helpers.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
+            if (ZAppHelper.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
             {
                 Program.Settings.SelectedImageUploaderDestination = 0;
             }
@@ -115,7 +115,7 @@ namespace ZUploader
             ((ToolStripMenuItem)tsmiImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
             UploadManager.ImageUploader = (ImageDestination)Program.Settings.SelectedImageUploaderDestination;
 
-            if (Helpers.GetEnumLength<FileUploaderType>() <= Program.Settings.SelectedFileUploaderDestination)
+            if (ZAppHelper.GetEnumLength<FileUploaderType>() <= Program.Settings.SelectedFileUploaderDestination)
             {
                 Program.Settings.SelectedFileUploaderDestination = 0;
             }
@@ -123,7 +123,7 @@ namespace ZUploader
             ((ToolStripMenuItem)tsmiFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
             UploadManager.FileUploader = (FileUploaderType)Program.Settings.SelectedFileUploaderDestination;
 
-            if (Helpers.GetEnumLength<TextUploaderType>() <= Program.Settings.SelectedTextUploaderDestination)
+            if (ZAppHelper.GetEnumLength<TextUploaderType>() <= Program.Settings.SelectedTextUploaderDestination)
             {
                 Program.Settings.SelectedTextUploaderDestination = 0;
             }
@@ -131,7 +131,7 @@ namespace ZUploader
             ((ToolStripMenuItem)tsmiTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
             UploadManager.TextUploader = (TextUploaderType)Program.Settings.SelectedTextUploaderDestination;
 
-            if (Helpers.GetEnumLength<UrlShortenerType>() <= Program.Settings.SelectedURLShortenerDestination)
+            if (ZAppHelper.GetEnumLength<UrlShortenerType>() <= Program.Settings.SelectedURLShortenerDestination)
             {
                 Program.Settings.SelectedURLShortenerDestination = 0;
             }
@@ -265,7 +265,7 @@ namespace ZUploader
 
                     if (!string.IsNullOrEmpty(urls))
                     {
-                        Helpers.CopyTextSafely(urls);
+                        ZAppHelper.CopyTextSafely(urls);
                     }
                 }
             }
@@ -277,7 +277,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.ShortenedURL))
             {
-                Helpers.CopyTextSafely(result.ShortenedURL);
+                ZAppHelper.CopyTextSafely(result.ShortenedURL);
             }
         }
 
@@ -287,7 +287,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.ThumbnailURL))
             {
-                Helpers.CopyTextSafely(result.ThumbnailURL);
+                ZAppHelper.CopyTextSafely(result.ThumbnailURL);
             }
         }
 
@@ -297,7 +297,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.DeletionURL))
             {
-                Helpers.CopyTextSafely(result.DeletionURL);
+                ZAppHelper.CopyTextSafely(result.DeletionURL);
             }
         }
 
@@ -330,7 +330,7 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(errors))
             {
-                Helpers.CopyTextSafely(errors);
+                ZAppHelper.CopyTextSafely(errors);
             }
         }
 

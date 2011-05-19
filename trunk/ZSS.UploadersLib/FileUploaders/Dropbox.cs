@@ -129,7 +129,7 @@ namespace UploadersLib.FileUploaders
                 throw new Exception("UserToken or UserSecret is empty. Login is required.");
             }
 
-            string url = Helpers.CombineURL(URLFiles, UploadPath);
+            string url = ZAppHelper.CombineURL(URLFiles, UploadPath);
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("file", fileName);
@@ -154,7 +154,7 @@ namespace UploadersLib.FileUploaders
             {
                 if (uploadPath.StartsWith("Public/", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return Helpers.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
+                    return ZAppHelper.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
                 }
             }
 

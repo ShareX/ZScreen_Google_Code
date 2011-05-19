@@ -58,11 +58,11 @@ namespace ZUploader
                 {
                     EDataType type;
 
-                    if (ImageUploader != ImageDestination.FILE && Helpers.IsImageFile(path))
+                    if (ImageUploader != ImageDestination.FILE && ZAppHelper.IsImageFile(path))
                     {
                         type = EDataType.Image;
                     }
-                    else if (TextUploader != TextUploaderType.FileUploader && Helpers.IsTextFile(path))
+                    else if (TextUploader != TextUploaderType.FileUploader && ZAppHelper.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
@@ -312,7 +312,7 @@ namespace ZUploader
 
                             if (Program.Settings.ClipboardAutoCopy)
                             {
-                                Helpers.CopyTextSafely(url);
+                                ZAppHelper.CopyTextSafely(url);
                             }
 
                             if (Program.Settings.SaveHistory)

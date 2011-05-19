@@ -72,7 +72,7 @@ namespace UploadersLib.ImageUploaders
 
                 arguments.Add("action", action);
                 arguments.Add("tpid", tpid);
-                arguments.Add("sig", Helpers.GetMD5(action + tpid + tpk));
+                arguments.Add("sig", ZAppHelper.GetMD5(action + tpid + tpk));
                 arguments.Add("responsetype", "XML");
                 arguments.Add("upk", upk);
                 arguments.Add("type", "image");
@@ -82,8 +82,8 @@ namespace UploadersLib.ImageUploaders
 
                 if (!string.IsNullOrEmpty(ur.Source) && CheckResponse(ur.Source))
                 {
-                    ur.URL = Helpers.GetXMLValue(ur.Source, "fullsize");
-                    ur.ThumbnailURL = Helpers.GetXMLValue(ur.Source, "thumbnail");
+                    ur.URL = ZAppHelper.GetXMLValue(ur.Source, "fullsize");
+                    ur.ThumbnailURL = ZAppHelper.GetXMLValue(ur.Source, "thumbnail");
                 }
             }
 
@@ -98,7 +98,7 @@ namespace UploadersLib.ImageUploaders
             {
                 { "action", action },
                 { "tpid", tpid },
-                { "sig", Helpers.GetMD5(action + tpid + tpk) },
+                { "sig", ZAppHelper.GetMD5(action + tpid + tpk) },
                 { "email", email },
                 { "pass", password }
             };
@@ -107,7 +107,7 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                string result = Helpers.GetXMLValue(response, "shuk");
+                string result = ZAppHelper.GetXMLValue(response, "shuk");
 
                 return HttpUtility.HtmlEncode(result);
             }
@@ -120,14 +120,14 @@ namespace UploadersLib.ImageUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("action", action);
             args.Add("tpid", tpid);
-            args.Add("sig", Helpers.GetMD5(action + tpid + tpk));
+            args.Add("sig", ZAppHelper.GetMD5(action + tpid + tpk));
             args.Add("responsetype", "XML");
 
             string response = SendGetRequest(URLAPI, args);
 
             if (!string.IsNullOrEmpty(response) && CheckResponse(response))
             {
-                string upk = Helpers.GetXMLValue(response, "uploadkey");
+                string upk = ZAppHelper.GetXMLValue(response, "uploadkey");
 
                 if (string.IsNullOrEmpty(upk))
                 {

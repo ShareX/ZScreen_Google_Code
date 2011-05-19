@@ -38,7 +38,7 @@ namespace HistoryLib.Custom_Controls
                 string text = this.SelectedItems[0].Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    Helpers.CopyTextSafely(text);
+                    ZAppHelper.CopyTextSafely(text);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace HistoryLib.Custom_Controls
                 string text = this.SelectedItems[0].SubItems[1].Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    Helpers.CopyTextSafely(text);
+                    ZAppHelper.CopyTextSafely(text);
                 }
             }
         }

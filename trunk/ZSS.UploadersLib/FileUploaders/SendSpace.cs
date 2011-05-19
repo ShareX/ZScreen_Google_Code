@@ -253,7 +253,7 @@ namespace UploadersLib.FileUploaders
             args.Add("token", token);
             args.Add("user_name", username);
             // lowercase(md5(token+lowercase(md5(password)))) - md5 values should always be lowercase.
-            args.Add("tokened_password", Helpers.GetMD5(token + Helpers.GetMD5(password)));
+            args.Add("tokened_password", ZAppHelper.GetMD5(token + ZAppHelper.GetMD5(password)));
 
             string response = SendPostRequest(APIURL, args);
 
