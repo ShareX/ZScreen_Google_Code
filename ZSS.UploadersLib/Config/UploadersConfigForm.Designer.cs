@@ -67,10 +67,14 @@
             this.btnFlickrCompleteAuth = new System.Windows.Forms.Button();
             this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
+            this.chkTwitPicShowFull = new System.Windows.Forms.CheckBox();
+            this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
+            this.lblTwitPicThumbnailMode = new System.Windows.Forms.Label();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
             this.tpYFrog = new System.Windows.Forms.TabPage();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
@@ -88,6 +92,7 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -116,23 +121,8 @@
             this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
-            this.tpCustomUploaders = new System.Windows.Forms.TabPage();
-            this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.tcTextUploaders = new System.Windows.Forms.TabControl();
-            this.tpPastebin = new System.Windows.Forms.TabPage();
-            this.btnPastebinLogin = new System.Windows.Forms.Button();
-            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
-            this.tpURLShorteners = new System.Windows.Forms.TabPage();
-            this.tcURLShorteners = new System.Windows.Forms.TabControl();
-            this.tpURLShortenerPage1 = new System.Windows.Forms.TabPage();
-            this.tpOtherServices = new System.Windows.Forms.TabPage();
-            this.tcOtherServices = new System.Windows.Forms.TabControl();
-            this.tpTwitter = new System.Windows.Forms.TabPage();
-            this.btnTwitterLogin = new System.Windows.Forms.Button();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
-            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
             this.txtCustomUploaderFullImage = new System.Windows.Forms.TextBox();
@@ -168,6 +158,25 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnCustomUploaderArgAdd = new System.Windows.Forms.Button();
             this.txtCustomUploaderArgName = new System.Windows.Forms.TextBox();
+            this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.tcTextUploaders = new System.Windows.Forms.TabControl();
+            this.tpPastebin = new System.Windows.Forms.TabPage();
+            this.btnPastebinLogin = new System.Windows.Forms.Button();
+            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
+            this.tpURLShorteners = new System.Windows.Forms.TabPage();
+            this.tcURLShorteners = new System.Windows.Forms.TabControl();
+            this.tpURLShortenerPage1 = new System.Windows.Forms.TabPage();
+            this.tpOtherServices = new System.Windows.Forms.TabPage();
+            this.tcOtherServices = new System.Windows.Forms.TabControl();
+            this.tpTwitter = new System.Windows.Forms.TabPage();
+            this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.tpDekiWiki = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
+            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
+            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -176,6 +185,7 @@
             this.tpImgur.SuspendLayout();
             this.gbImgurUserAccount.SuspendLayout();
             this.tpFlickr.SuspendLayout();
+            this.tpTwitPic.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpMediaWiki.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
@@ -190,6 +200,9 @@
             this.tpSendSpace.SuspendLayout();
             this.tbLocalhost.SuspendLayout();
             this.tpCustomUploaders.SuspendLayout();
+            this.gbCustomUploaders.SuspendLayout();
+            this.gbCustomUploaderRegexp.SuspendLayout();
+            this.gbCustomUploaderArguments.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpPastebin.SuspendLayout();
@@ -198,9 +211,10 @@
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
             this.tpTwitter.SuspendLayout();
-            this.gbCustomUploaders.SuspendLayout();
-            this.gbCustomUploaderRegexp.SuspendLayout();
-            this.gbCustomUploaderArguments.SuspendLayout();
+            this.tpDekiWiki.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.gbMindTouchOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -325,8 +339,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
@@ -439,8 +453,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -559,8 +573,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(8, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -571,9 +585,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(8, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -620,6 +634,9 @@
             // 
             // tpTwitPic
             // 
+            this.tpTwitPic.Controls.Add(this.chkTwitPicShowFull);
+            this.tpTwitPic.Controls.Add(this.cboTwitPicThumbnailMode);
+            this.tpTwitPic.Controls.Add(this.lblTwitPicThumbnailMode);
             this.tpTwitPic.Location = new System.Drawing.Point(4, 22);
             this.tpTwitPic.Name = "tpTwitPic";
             this.tpTwitPic.Padding = new System.Windows.Forms.Padding(3);
@@ -627,6 +644,36 @@
             this.tpTwitPic.TabIndex = 4;
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
+            // 
+            // chkTwitPicShowFull
+            // 
+            this.chkTwitPicShowFull.AutoSize = true;
+            this.chkTwitPicShowFull.Location = new System.Drawing.Point(16, 48);
+            this.chkTwitPicShowFull.Name = "chkTwitPicShowFull";
+            this.chkTwitPicShowFull.Size = new System.Drawing.Size(94, 17);
+            this.chkTwitPicShowFull.TabIndex = 13;
+            this.chkTwitPicShowFull.Text = "Show full URL";
+            this.chkTwitPicShowFull.UseVisualStyleBackColor = true;
+            this.chkTwitPicShowFull.CheckedChanged += new System.EventHandler(this.chkTwitPicShowFull_CheckedChanged);
+            // 
+            // cboTwitPicThumbnailMode
+            // 
+            this.cboTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTwitPicThumbnailMode.FormattingEnabled = true;
+            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 19);
+            this.cboTwitPicThumbnailMode.Name = "cboTwitPicThumbnailMode";
+            this.cboTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
+            this.cboTwitPicThumbnailMode.TabIndex = 14;
+            this.cboTwitPicThumbnailMode.SelectedIndexChanged += new System.EventHandler(this.cboTwitPicThumbnailMode_SelectedIndexChanged);
+            // 
+            // lblTwitPicThumbnailMode
+            // 
+            this.lblTwitPicThumbnailMode.AutoSize = true;
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 24);
+            this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
+            this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
+            this.lblTwitPicThumbnailMode.TabIndex = 15;
+            this.lblTwitPicThumbnailMode.Text = "Thumbnail Mode:";
             // 
             // tpTwitSnaps
             // 
@@ -670,6 +717,18 @@
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
             // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 428);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
             // tpFileUploaders
             // 
             this.tpFileUploaders.Controls.Add(this.tcFileUploaders);
@@ -688,6 +747,7 @@
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
             this.tcFileUploaders.Controls.Add(this.tpSendSpace);
             this.tcFileUploaders.Controls.Add(this.tbLocalhost);
+            this.tcFileUploaders.Controls.Add(this.tpDekiWiki);
             this.tcFileUploaders.Controls.Add(this.tpCustomUploaders);
             this.tcFileUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcFileUploaders.Location = new System.Drawing.Point(3, 3);
@@ -866,6 +926,15 @@
             this.btnFtpHelp.Text = "&Help...";
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucFTPAccounts.TabIndex = 0;
             // 
             // gbFtpSettings
             // 
@@ -1154,6 +1223,15 @@
             this.tbLocalhost.Text = "Localhost";
             this.tbLocalhost.UseVisualStyleBackColor = true;
             // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
+            this.ucLocalhostAccounts.TabIndex = 2;
+            // 
             // tpCustomUploaders
             // 
             this.tpCustomUploaders.Controls.Add(this.txtCustomUploaderLog);
@@ -1176,170 +1254,6 @@
             this.tpCustomUploaders.TabIndex = 4;
             this.tpCustomUploaders.Text = "Custom uploaders";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
-            // 
-            // tpTextUploaders
-            // 
-            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaders.Name = "tpTextUploaders";
-            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(786, 480);
-            this.tpTextUploaders.TabIndex = 2;
-            this.tpTextUploaders.Text = "Text uploaders";
-            this.tpTextUploaders.UseVisualStyleBackColor = true;
-            // 
-            // tcTextUploaders
-            // 
-            this.tcTextUploaders.Controls.Add(this.tpPastebin);
-            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.tcTextUploaders.Name = "tcTextUploaders";
-            this.tcTextUploaders.SelectedIndex = 0;
-            this.tcTextUploaders.Size = new System.Drawing.Size(780, 474);
-            this.tcTextUploaders.TabIndex = 0;
-            // 
-            // tpPastebin
-            // 
-            this.tpPastebin.Controls.Add(this.btnPastebinLogin);
-            this.tpPastebin.Controls.Add(this.pgPastebinSettings);
-            this.tpPastebin.Location = new System.Drawing.Point(4, 22);
-            this.tpPastebin.Name = "tpPastebin";
-            this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPastebin.Size = new System.Drawing.Size(772, 448);
-            this.tpPastebin.TabIndex = 0;
-            this.tpPastebin.Text = "Pastebin";
-            this.tpPastebin.UseVisualStyleBackColor = true;
-            // 
-            // btnPastebinLogin
-            // 
-            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
-            this.btnPastebinLogin.Name = "btnPastebinLogin";
-            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
-            this.btnPastebinLogin.TabIndex = 2;
-            this.btnPastebinLogin.Text = "Login";
-            this.btnPastebinLogin.UseVisualStyleBackColor = true;
-            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
-            // 
-            // pgPastebinSettings
-            // 
-            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgPastebinSettings.Name = "pgPastebinSettings";
-            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 442);
-            this.pgPastebinSettings.TabIndex = 1;
-            // 
-            // tpURLShorteners
-            // 
-            this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
-            this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
-            this.tpURLShorteners.Name = "tpURLShorteners";
-            this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShorteners.Size = new System.Drawing.Size(786, 480);
-            this.tpURLShorteners.TabIndex = 3;
-            this.tpURLShorteners.Text = "URL Shorteners";
-            this.tpURLShorteners.UseVisualStyleBackColor = true;
-            // 
-            // tcURLShorteners
-            // 
-            this.tcURLShorteners.Controls.Add(this.tpURLShortenerPage1);
-            this.tcURLShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcURLShorteners.Location = new System.Drawing.Point(3, 3);
-            this.tcURLShorteners.Name = "tcURLShorteners";
-            this.tcURLShorteners.SelectedIndex = 0;
-            this.tcURLShorteners.Size = new System.Drawing.Size(780, 474);
-            this.tcURLShorteners.TabIndex = 0;
-            // 
-            // tpURLShortenerPage1
-            // 
-            this.tpURLShortenerPage1.Location = new System.Drawing.Point(4, 22);
-            this.tpURLShortenerPage1.Name = "tpURLShortenerPage1";
-            this.tpURLShortenerPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShortenerPage1.Size = new System.Drawing.Size(772, 448);
-            this.tpURLShortenerPage1.TabIndex = 0;
-            this.tpURLShortenerPage1.Text = "Nothing yet";
-            this.tpURLShortenerPage1.UseVisualStyleBackColor = true;
-            // 
-            // tpOtherServices
-            // 
-            this.tpOtherServices.Controls.Add(this.tcOtherServices);
-            this.tpOtherServices.Location = new System.Drawing.Point(4, 22);
-            this.tpOtherServices.Name = "tpOtherServices";
-            this.tpOtherServices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOtherServices.Size = new System.Drawing.Size(786, 480);
-            this.tpOtherServices.TabIndex = 4;
-            this.tpOtherServices.Text = "Other Services";
-            this.tpOtherServices.UseVisualStyleBackColor = true;
-            // 
-            // tcOtherServices
-            // 
-            this.tcOtherServices.Controls.Add(this.tpTwitter);
-            this.tcOtherServices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcOtherServices.Location = new System.Drawing.Point(3, 3);
-            this.tcOtherServices.Name = "tcOtherServices";
-            this.tcOtherServices.SelectedIndex = 0;
-            this.tcOtherServices.Size = new System.Drawing.Size(780, 474);
-            this.tcOtherServices.TabIndex = 0;
-            // 
-            // tpTwitter
-            // 
-            this.tpTwitter.Controls.Add(this.btnTwitterLogin);
-            this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
-            this.tpTwitter.Location = new System.Drawing.Point(4, 22);
-            this.tpTwitter.Name = "tpTwitter";
-            this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTwitter.Size = new System.Drawing.Size(772, 448);
-            this.tpTwitter.TabIndex = 0;
-            this.tpTwitter.Text = "Twitter";
-            this.tpTwitter.UseVisualStyleBackColor = true;
-            // 
-            // btnTwitterLogin
-            // 
-            this.btnTwitterLogin.Location = new System.Drawing.Point(224, 11);
-            this.btnTwitterLogin.Name = "btnTwitterLogin";
-            this.btnTwitterLogin.Size = new System.Drawing.Size(60, 24);
-            this.btnTwitterLogin.TabIndex = 23;
-            this.btnTwitterLogin.Text = "Login";
-            this.btnTwitterLogin.UseVisualStyleBackColor = true;
-            this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
-            // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 428);
-            this.ucMediaWikiAccounts.TabIndex = 1;
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
-            this.ucLocalhostAccounts.TabIndex = 2;
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
-            this.ucTwitterAccounts.TabIndex = 24;
             // 
             // txtCustomUploaderLog
             // 
@@ -1674,6 +1588,208 @@
             this.txtCustomUploaderArgName.Size = new System.Drawing.Size(112, 20);
             this.txtCustomUploaderArgName.TabIndex = 0;
             // 
+            // tpTextUploaders
+            // 
+            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpTextUploaders.Name = "tpTextUploaders";
+            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextUploaders.Size = new System.Drawing.Size(786, 480);
+            this.tpTextUploaders.TabIndex = 2;
+            this.tpTextUploaders.Text = "Text uploaders";
+            this.tpTextUploaders.UseVisualStyleBackColor = true;
+            // 
+            // tcTextUploaders
+            // 
+            this.tcTextUploaders.Controls.Add(this.tpPastebin);
+            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.tcTextUploaders.Name = "tcTextUploaders";
+            this.tcTextUploaders.SelectedIndex = 0;
+            this.tcTextUploaders.Size = new System.Drawing.Size(780, 474);
+            this.tcTextUploaders.TabIndex = 0;
+            // 
+            // tpPastebin
+            // 
+            this.tpPastebin.Controls.Add(this.btnPastebinLogin);
+            this.tpPastebin.Controls.Add(this.pgPastebinSettings);
+            this.tpPastebin.Location = new System.Drawing.Point(4, 22);
+            this.tpPastebin.Name = "tpPastebin";
+            this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
+            this.tpPastebin.Size = new System.Drawing.Size(772, 448);
+            this.tpPastebin.TabIndex = 0;
+            this.tpPastebin.Text = "Pastebin";
+            this.tpPastebin.UseVisualStyleBackColor = true;
+            // 
+            // btnPastebinLogin
+            // 
+            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
+            this.btnPastebinLogin.Name = "btnPastebinLogin";
+            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
+            this.btnPastebinLogin.TabIndex = 2;
+            this.btnPastebinLogin.Text = "Login";
+            this.btnPastebinLogin.UseVisualStyleBackColor = true;
+            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
+            // 
+            // pgPastebinSettings
+            // 
+            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgPastebinSettings.Name = "pgPastebinSettings";
+            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 442);
+            this.pgPastebinSettings.TabIndex = 1;
+            // 
+            // tpURLShorteners
+            // 
+            this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
+            this.tpURLShorteners.Location = new System.Drawing.Point(4, 22);
+            this.tpURLShorteners.Name = "tpURLShorteners";
+            this.tpURLShorteners.Padding = new System.Windows.Forms.Padding(3);
+            this.tpURLShorteners.Size = new System.Drawing.Size(786, 480);
+            this.tpURLShorteners.TabIndex = 3;
+            this.tpURLShorteners.Text = "URL Shorteners";
+            this.tpURLShorteners.UseVisualStyleBackColor = true;
+            // 
+            // tcURLShorteners
+            // 
+            this.tcURLShorteners.Controls.Add(this.tpURLShortenerPage1);
+            this.tcURLShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcURLShorteners.Location = new System.Drawing.Point(3, 3);
+            this.tcURLShorteners.Name = "tcURLShorteners";
+            this.tcURLShorteners.SelectedIndex = 0;
+            this.tcURLShorteners.Size = new System.Drawing.Size(780, 474);
+            this.tcURLShorteners.TabIndex = 0;
+            // 
+            // tpURLShortenerPage1
+            // 
+            this.tpURLShortenerPage1.Location = new System.Drawing.Point(4, 22);
+            this.tpURLShortenerPage1.Name = "tpURLShortenerPage1";
+            this.tpURLShortenerPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tpURLShortenerPage1.Size = new System.Drawing.Size(772, 448);
+            this.tpURLShortenerPage1.TabIndex = 0;
+            this.tpURLShortenerPage1.Text = "Nothing yet";
+            this.tpURLShortenerPage1.UseVisualStyleBackColor = true;
+            // 
+            // tpOtherServices
+            // 
+            this.tpOtherServices.Controls.Add(this.tcOtherServices);
+            this.tpOtherServices.Location = new System.Drawing.Point(4, 22);
+            this.tpOtherServices.Name = "tpOtherServices";
+            this.tpOtherServices.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOtherServices.Size = new System.Drawing.Size(786, 480);
+            this.tpOtherServices.TabIndex = 4;
+            this.tpOtherServices.Text = "Other Services";
+            this.tpOtherServices.UseVisualStyleBackColor = true;
+            // 
+            // tcOtherServices
+            // 
+            this.tcOtherServices.Controls.Add(this.tpTwitter);
+            this.tcOtherServices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcOtherServices.Location = new System.Drawing.Point(3, 3);
+            this.tcOtherServices.Name = "tcOtherServices";
+            this.tcOtherServices.SelectedIndex = 0;
+            this.tcOtherServices.Size = new System.Drawing.Size(780, 474);
+            this.tcOtherServices.TabIndex = 0;
+            // 
+            // tpTwitter
+            // 
+            this.tpTwitter.Controls.Add(this.btnTwitterLogin);
+            this.tpTwitter.Controls.Add(this.ucTwitterAccounts);
+            this.tpTwitter.Location = new System.Drawing.Point(4, 22);
+            this.tpTwitter.Name = "tpTwitter";
+            this.tpTwitter.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTwitter.Size = new System.Drawing.Size(772, 448);
+            this.tpTwitter.TabIndex = 0;
+            this.tpTwitter.Text = "Twitter";
+            this.tpTwitter.UseVisualStyleBackColor = true;
+            // 
+            // btnTwitterLogin
+            // 
+            this.btnTwitterLogin.Location = new System.Drawing.Point(224, 11);
+            this.btnTwitterLogin.Name = "btnTwitterLogin";
+            this.btnTwitterLogin.Size = new System.Drawing.Size(60, 24);
+            this.btnTwitterLogin.TabIndex = 23;
+            this.btnTwitterLogin.Text = "Login";
+            this.btnTwitterLogin.UseVisualStyleBackColor = true;
+            this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
+            // 
+            // ucTwitterAccounts
+            // 
+            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
+            this.ucTwitterAccounts.TabIndex = 24;
+            // 
+            // tpDekiWiki
+            // 
+            this.tpDekiWiki.Controls.Add(this.tableLayoutPanel1);
+            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
+            this.tpDekiWiki.Name = "tpDekiWiki";
+            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDekiWiki.Size = new System.Drawing.Size(772, 448);
+            this.tpDekiWiki.TabIndex = 6;
+            this.tpDekiWiki.Text = "Deki Wiki";
+            this.tpDekiWiki.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.gbMindTouchOptions, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(766, 442);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.ucMindTouchAccounts);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(760, 325);
+            this.panel1.TabIndex = 116;
+            // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucMindTouchAccounts.TabIndex = 0;
+            // 
+            // gbMindTouchOptions
+            // 
+            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
+            this.gbMindTouchOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbMindTouchOptions.Location = new System.Drawing.Point(3, 334);
+            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
+            this.gbMindTouchOptions.Size = new System.Drawing.Size(760, 105);
+            this.gbMindTouchOptions.TabIndex = 117;
+            this.gbMindTouchOptions.TabStop = false;
+            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
+            // 
+            // chkDekiWikiForcePath
+            // 
+            this.chkDekiWikiForcePath.AutoSize = true;
+            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
+            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
+            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
+            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
+            this.chkDekiWikiForcePath.TabIndex = 113;
+            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
+            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
+            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1696,6 +1812,8 @@
             this.gbImgurUserAccount.ResumeLayout(false);
             this.gbImgurUserAccount.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
+            this.tpTwitPic.ResumeLayout(false);
+            this.tpTwitPic.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
             this.tpMediaWiki.ResumeLayout(false);
@@ -1717,6 +1835,12 @@
             this.tbLocalhost.ResumeLayout(false);
             this.tpCustomUploaders.ResumeLayout(false);
             this.tpCustomUploaders.PerformLayout();
+            this.gbCustomUploaders.ResumeLayout(false);
+            this.gbCustomUploaders.PerformLayout();
+            this.gbCustomUploaderRegexp.ResumeLayout(false);
+            this.gbCustomUploaderRegexp.PerformLayout();
+            this.gbCustomUploaderArguments.ResumeLayout(false);
+            this.gbCustomUploaderArguments.PerformLayout();
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpPastebin.ResumeLayout(false);
@@ -1725,12 +1849,11 @@
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
             this.tpTwitter.ResumeLayout(false);
-            this.gbCustomUploaders.ResumeLayout(false);
-            this.gbCustomUploaders.PerformLayout();
-            this.gbCustomUploaderRegexp.ResumeLayout(false);
-            this.gbCustomUploaderRegexp.PerformLayout();
-            this.gbCustomUploaderArguments.ResumeLayout(false);
-            this.gbCustomUploaderArguments.PerformLayout();
+            this.tpDekiWiki.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.gbMindTouchOptions.ResumeLayout(false);
+            this.gbMindTouchOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1876,5 +1999,14 @@
         internal System.Windows.Forms.ColumnHeader columnHeader2;
         internal System.Windows.Forms.Button btnCustomUploaderArgAdd;
         internal System.Windows.Forms.TextBox txtCustomUploaderArgName;
+        private System.Windows.Forms.CheckBox chkTwitPicShowFull;
+        private System.Windows.Forms.ComboBox cboTwitPicThumbnailMode;
+        private System.Windows.Forms.Label lblTwitPicThumbnailMode;
+        private System.Windows.Forms.TabPage tpDekiWiki;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
+        private AccountsControl ucMindTouchAccounts;
+        internal System.Windows.Forms.GroupBox gbMindTouchOptions;
+        internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
     }
 }

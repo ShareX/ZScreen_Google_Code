@@ -201,6 +201,20 @@ namespace UploadersLib
 
         #endregion Flickr
 
+        #region TwitPic
+
+        private void cboTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
+        }
+
+        private void chkTwitPicShowFull_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.TwitPicShowFull = chkTwitPicShowFull.Checked;
+        }
+
+        #endregion
+
         #endregion Image uploaders
 
         #region File uploaders
@@ -344,6 +358,15 @@ namespace UploadersLib
 
         #endregion SendSpace
 
+        #region MindTouch Deki Wiki
+
+        private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
+        }
+
+        #endregion
+
         #endregion File uploaders
 
         #region Text uploaders
@@ -368,7 +391,7 @@ namespace UploadersLib
 
         #endregion Other Services
 
-        #region Custom uploadr
+        #region Custom uploader
 
         private void btnCustomUploaderAdd_Click(object sender, EventArgs e)
         {
@@ -543,5 +566,7 @@ namespace UploadersLib
         }
 
         #endregion Custom uploadr
+
+
     }
 }

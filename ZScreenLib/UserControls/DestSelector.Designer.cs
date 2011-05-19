@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.btnOpenUploadersConfig = new System.Windows.Forms.Button();
             this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.lblFileUploader = new System.Windows.Forms.Label();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
@@ -37,7 +38,6 @@
             this.lblTextUploader = new System.Windows.Forms.Label();
             this.cboImageUploaders = new System.Windows.Forms.ComboBox();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-            this.btnOpenUploadersConfig = new System.Windows.Forms.Button();
             this.gbMainOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +60,16 @@
             this.gbMainOptions.TabIndex = 80;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Active Destinations";
+            // 
+            // btnOpenUploadersConfig
+            // 
+            this.btnOpenUploadersConfig.Location = new System.Drawing.Point(120, 118);
+            this.btnOpenUploadersConfig.Name = "btnOpenUploadersConfig";
+            this.btnOpenUploadersConfig.Size = new System.Drawing.Size(208, 23);
+            this.btnOpenUploadersConfig.TabIndex = 127;
+            this.btnOpenUploadersConfig.Text = "Open destinations configuration...";
+            this.btnOpenUploadersConfig.UseVisualStyleBackColor = true;
+            this.btnOpenUploadersConfig.Click += new System.EventHandler(this.btnOpenUploadersConfig_Click);
             // 
             // cboFileUploaders
             // 
@@ -132,16 +142,6 @@
             this.cboTextUploaders.Name = "cboTextUploaders";
             this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
             this.cboTextUploaders.TabIndex = 121;
-            // 
-            // btnOpenUploadersConfig
-            // 
-            this.btnOpenUploadersConfig.Location = new System.Drawing.Point(120, 118);
-            this.btnOpenUploadersConfig.Name = "btnOpenUploadersConfig";
-            this.btnOpenUploadersConfig.Size = new System.Drawing.Size(208, 23);
-            this.btnOpenUploadersConfig.TabIndex = 127;
-            this.btnOpenUploadersConfig.Text = "Open destinations config...";
-            this.btnOpenUploadersConfig.UseVisualStyleBackColor = true;
-            this.btnOpenUploadersConfig.Click += new System.EventHandler(this.btnOpenUploadersConfig_Click);
             // 
             // DestSelector
             // 
