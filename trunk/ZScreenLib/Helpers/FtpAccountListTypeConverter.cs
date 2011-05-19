@@ -6,7 +6,7 @@ namespace ZScreenLib
 {
     public class FtpAccountListTypeConverter : TypeConverter
     {
-        private static List<FTPAccount> mList = Engine.conf.UploadersConfig2.FTPAccountList;
+        private static List<FTPAccount> mList = Engine.conf.UploadersConfig.FTPAccountList;
 
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
