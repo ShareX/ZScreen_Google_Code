@@ -28,7 +28,7 @@ using System.Xml;
 
 namespace HistoryLib
 {
-    public class HistoryItem // TODO: Things to add?
+    public class HistoryItem
     {
         public string ID { get; set; }
         public string Filename { get; set; }

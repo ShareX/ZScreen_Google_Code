@@ -56,7 +56,7 @@ namespace UploadersLib.FileUploaders
 
                 if (!string.IsNullOrEmpty(ur.Source))
                 {
-                    ur.URL = ur.Source; // TODO: FileSonic response
+                    ur.URL = ur.Source;
                 }
             }
             else

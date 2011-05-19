@@ -1525,8 +1525,6 @@ namespace ZScreenGUI
             Loader.Worker.QuitSettingHotkeys();
         }
 
-        // TODO: TinyPic - re-add recurring task to update reg code
-
         private void CheckFormSettings()
         {
             if (Engine.conf.LockFormSize)
@@ -2823,83 +2821,6 @@ namespace ZScreenGUI
             }
         }
 
-        #region Flickr
-
-        private void btnFlickrGetFrob_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                FlickrUploader flickr = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret);
-                btnFlickrGetFrob.Tag = flickr.GetFrob();
-                string url = flickr.GetAuthLink(FlickrPermission.Write);
-                Process.Start(url);
-                btnFlickrGetToken.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnFlickrGetToken_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string token = btnFlickrGetFrob.Tag as string;
-                if (!string.IsNullOrEmpty(token))
-                {
-                    FlickrUploader flickr = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret);
-                    Engine.conf.FlickrAuthInfo = flickr.GetToken(token);
-                    pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
-                    // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
-                    MessageBox.Show("Success.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnFlickrCheckToken_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Engine.conf.FlickrAuthInfo != null)
-                {
-                    string token = Engine.conf.FlickrAuthInfo.Token;
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        FlickrUploader flickr = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret);
-                        Engine.conf.FlickrAuthInfo = flickr.CheckToken(token);
-                        pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
-
-                        MessageBox.Show("Success.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnFlickrOpenImages_Click(object sender, EventArgs e)
-        {
-            if (Engine.conf.FlickrAuthInfo != null)
-            {
-                string userID = Engine.conf.FlickrAuthInfo.UserID;
-                if (!string.IsNullOrEmpty(userID))
-                {
-                    FlickrUploader flickr = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret);
-                    string url = flickr.GetPhotosLink(userID);
-                    Process.Start(url);
-                }
-            }
-        }
-
-        #endregion Flickr
-
         private void btnFTPOpenClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
@@ -3492,7 +3413,7 @@ namespace ZScreenGUI
 
         private void pbDonate_Click(object sender, EventArgs e)
         {
-            Process.Start(ZAppHelper.DonateURL);
+            Process.Start(ZLinks.URL_DONATE);
         }
     }
 }

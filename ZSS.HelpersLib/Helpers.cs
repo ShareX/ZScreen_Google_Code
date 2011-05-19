@@ -43,7 +43,6 @@ namespace HelpersLib
     {
         private static readonly object ClipboardLock = new object();
         private static readonly Random Random = new Random();
-        public static readonly string DonateURL = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=zscreendev%40gmail%2ecom&lc=AU&item_name=ZScreen%20Group&item_number=ZScreen&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
 
         private static bool IsValidFile(string path, Type enumType)
         {
