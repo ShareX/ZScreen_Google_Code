@@ -198,6 +198,11 @@ namespace UploadersLib
 
         #region FTP
 
+        public bool CheckFTPAccounts()
+        {
+            return StaticHelper.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
+        }
+
         public void TestFTPAccountAsync(FTPAccount acc)
         {
             if (acc != null)
@@ -329,11 +334,6 @@ namespace UploadersLib
             }
 
             return string.Join(", ", status);
-        }
-
-        public bool CheckFTPAccounts()
-        {
-            return StaticHelper.CheckList(Config.FTPAccountList, Config.FTPSelectedImage);
         }
 
         public FTPAccount GetFtpAcctActive()

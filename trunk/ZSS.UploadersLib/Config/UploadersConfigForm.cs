@@ -42,98 +42,11 @@ namespace UploadersLib
         public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
-            LoadTabIcons();           
-            ConfigureUserControlEvents();
+            LoadTabIcons();
+            CreateUserControlEvents();
             LoadSettings(uploadersConfig);
             APIKeys = uploadersAPIKeys;
         }
-
-           public void LoadSettings(UploadersConfig uploadersConfig)
-        {
-            Config = uploadersConfig;
-
-            #region Image uploaders
-
-            // ImageShack
-
-            txtImageShackRegistrationCode.Text = Config.ImageShackRegistrationCode;
-            txtImageShackUsername.Text = Config.ImageShackUsername;
-            cbImageShackIsPublic.Checked = Config.ImageShackShowImagesInPublic;
-
-            // TinyPic
-
-            txtTinyPicUsername.Text = Config.TinyPicUsername;
-            txtTinyPicPassword.Text = Config.TinyPicPassword;
-            cbTinyPicRememberUsernamePassword.Checked = Config.TinyPicRememberUserPass;
-            txtTinyPicRegistrationCode.Text = Config.TinyPicRegistrationCode;
-
-            // Imgur
-
-            cbImgurUseUserAccount.Checked = Config.ImgurAccountType == AccountType.User;
-
-            if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
-            {
-                lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
-            }
-
-            #endregion Image uploaders
-
-            #region Text uploaders
-            pgPastebinSettings.SelectedObject = Config.PastebinSettings;
-            #endregion
-
-            #region File uploaders
-
-            // Dropbox
-
-            txtDropboxPath.Text = Config.DropboxUploadPath;
-            UpdateDropboxStatus();
-
-            // FTP 
-
-            if (Config.FTPAccountList == null || Config.FTPAccountList.Count == 0)
-            {
-                FTPSetup(new List<FTPAccount>());
-            }
-            else
-            {
-                FTPSetup(Config.FTPAccountList);
-                if (ucFTPAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucFTPAccounts.AccountsList.SelectedIndex = 0;
-                }
-            }
-
-            txtFTPThumbWidth.Text = Config.FTPThumbnailWidthLimit.ToString();
-            chkFTPThumbnailCheckSize.Checked = Config.FTPThumbnailCheckSize;
-
-
-            // RapidShare
-
-            if (cboRapidShareAcctType.Items.Count == 0)
-            {
-                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetDescriptions());
-            }
-
-            cboRapidShareAcctType.SelectedIndex = (int)Config.RapidShareAccountType;
-            txtRapidShareCollectorID.Text = Config.RapidShareCollectorsID;
-            txtRapidSharePassword.Text = Config.RapidSharePassword;
-            txtRapidSharePremiumUserName.Text = Config.RapidSharePremiumUserName;
-
-            // SendSpace
-
-            if (cboSendSpaceAcctType.Items.Count == 0)
-            {
-                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetDescriptions());
-            }
-
-            cboSendSpaceAcctType.SelectedIndex = (int)Config.SendSpaceAccountType;
-            txtSendSpacePassword.Text = Config.SendSpacePassword;
-            txtSendSpaceUserName.Text = Config.SendSpaceUsername;
-
-            #endregion File uploaders
-        }
-
 
         #region Image uploaders
 
@@ -293,7 +206,7 @@ namespace UploadersLib
             UpdateDropboxStatus();
         }
 
-#endregion Dropbox
+        #endregion Dropbox
 
         #region FTP
 
@@ -402,7 +315,7 @@ namespace UploadersLib
             Config.SendSpacePassword = txtSendSpacePassword.Text;
         }
 
-        #endregion 
+        #endregion
 
         private void btnPastebinLogin_Click(object sender, EventArgs e)
         {
