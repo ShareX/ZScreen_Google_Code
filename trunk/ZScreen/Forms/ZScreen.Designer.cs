@@ -221,8 +221,6 @@ namespace ZScreenGUI
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
-            this.tpDestMediaWiki = new System.Windows.Forms.TabPage();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpDestCustom = new System.Windows.Forms.TabPage();
             this.txtUploadersLog = new System.Windows.Forms.RichTextBox();
             this.btnUploadersTest = new System.Windows.Forms.Button();
@@ -536,7 +534,6 @@ namespace ZScreenGUI
             this.gbTwitterOthers.SuspendLayout();
             this.tpDestMindTouch.SuspendLayout();
             this.gbMindTouchOptions.SuspendLayout();
-            this.tpDestMediaWiki.SuspendLayout();
             this.tpDestCustom.SuspendLayout();
             this.gbImageUploaders.SuspendLayout();
             this.gbRegexp.SuspendLayout();
@@ -2528,7 +2525,6 @@ namespace ZScreenGUI
             // 
             this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
-            this.tcDestinations.Controls.Add(this.tpDestMediaWiki);
             this.tcDestinations.Controls.Add(this.tpDestCustom);
             this.tcDestinations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcDestinations.Location = new System.Drawing.Point(3, 3);
@@ -2684,29 +2680,6 @@ namespace ZScreenGUI
             this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
             this.ucMindTouchAccounts.Size = new System.Drawing.Size(787, 314);
             this.ucMindTouchAccounts.TabIndex = 0;
-            // 
-            // tpDestMediaWiki
-            // 
-            this.tpDestMediaWiki.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestMediaWiki.Controls.Add(this.ucMediaWikiAccounts);
-            this.tpDestMediaWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpDestMediaWiki.Name = "tpDestMediaWiki";
-            this.tpDestMediaWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestMediaWiki.Size = new System.Drawing.Size(799, 408);
-            this.tpDestMediaWiki.TabIndex = 13;
-            this.tpDestMediaWiki.Text = "MediaWiki";
-            // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(787, 394);
-            this.ucMediaWikiAccounts.TabIndex = 0;
             // 
             // tpDestCustom
             // 
@@ -5817,7 +5790,6 @@ namespace ZScreenGUI
             this.tpDestMindTouch.ResumeLayout(false);
             this.gbMindTouchOptions.ResumeLayout(false);
             this.gbMindTouchOptions.PerformLayout();
-            this.tpDestMediaWiki.ResumeLayout(false);
             this.tpDestCustom.ResumeLayout(false);
             this.tpDestCustom.PerformLayout();
             this.gbImageUploaders.ResumeLayout(false);
@@ -6328,8 +6300,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
-        private System.Windows.Forms.TabPage tpDestMediaWiki;
-        internal AccountsControl ucMediaWikiAccounts;
         private System.Windows.Forms.GroupBox gbTwitterOthers;
         private System.Windows.Forms.Button btnTwitterLogin;
         private AccountsControl ucTwitterAccounts;

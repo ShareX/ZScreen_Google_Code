@@ -29,23 +29,22 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
+using Microsoft.WindowsAPICodePack.Taskbar;
+using UploadersAPILib;
 using UploadersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
+using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
+using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
-using UploadersLib.ImageUploaders;
 using ZUploader.HelperClasses;
-using UploadersLib.FileUploaders;
-using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersLib.TextUploaders;
-using System.Threading;
-using ZScreenLib.Helpers;
-using UploadersAPILib;
 
 namespace ZScreenLib
 {
@@ -859,7 +858,7 @@ namespace ZScreenLib
         {
             string fullFilePath = this.LocalFilePath;
 
-            if (Adapter.CheckMediaWikiAccounts(this) && File.Exists(fullFilePath))
+            if (Engine.conf.MediaWikiAccountList.CheckSelected(Engine.conf.MediaWikiAccountSelected) && File.Exists(fullFilePath))
             {
                 MediaWikiAccount acc = Engine.conf.MediaWikiAccountList[Engine.conf.MediaWikiAccountSelected];
                 System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;

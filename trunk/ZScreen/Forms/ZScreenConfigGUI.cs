@@ -104,19 +104,6 @@ namespace ZScreenGUI
             // MediaWiki Settings
             ///////////////////////////////////
 
-            if (Engine.conf.MediaWikiAccountList == null || Engine.conf.MediaWikiAccountList.Count == 0)
-            {
-                MediaWikiSetup(new List<MediaWikiAccount>());
-            }
-            else
-            {
-                MediaWikiSetup(Engine.conf.MediaWikiAccountList);
-                if (ucMediaWikiAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucMediaWikiAccounts.AccountsList.SelectedIndex = Engine.conf.MediaWikiAccountSelected;
-                }
-            }
-
             #endregion MediaWiki Settings
 
             #region Image Uploaders

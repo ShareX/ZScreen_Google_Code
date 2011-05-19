@@ -38,13 +38,10 @@ using GraphicsMgrLib;
 using Greenshot.Helpers;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using MS.WindowsAPICodePack.Internal;
-using UploadersLib;
-using UploadersLib.FileUploaders;
-using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
-using ZScreenLib.Properties;
 using UploadersAPILib;
+using UploadersLib;
+using UploadersLib.HelperClasses;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -337,22 +334,10 @@ namespace ZScreenLib
             return CheckList(Engine.conf.DekiWikiAccountList, Engine.conf.DekiWikiSelected);
         }
 
-        public static bool CheckMediaWikiAccounts()
-        {
-            return CheckList(Engine.conf.MediaWikiAccountList, Engine.conf.MediaWikiAccountSelected);
-        }
-
         public static bool CheckDekiWikiAccounts(WorkerTask task)
         {
             bool result = CheckDekiWikiAccounts();
             if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
-            return result;
-        }
-
-        public static bool CheckMediaWikiAccounts(WorkerTask task)
-        {
-            bool result = CheckMediaWikiAccounts();
-            if (!result) task.Errors.Add("A MediaWiki account does not exist or not selected properly.");
             return result;
         }
 
@@ -373,48 +358,6 @@ namespace ZScreenLib
             if (!string.IsNullOrEmpty(msg))
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        public static void TestMediaWikiAccount(MediaWikiAccount account, Action success, Action<string> failure)
-        {
-            var timeoutTimer = new System.Windows.Forms.Timer();
-            Thread thread = new Thread(new ThreadStart(delegate
-            {
-                TestMediaWikiAccountThread(account,
-                    delegate()
-                    {
-                        timeoutTimer.Stop(); success();
-                    },
-                    delegate(string msg)
-                    {
-                        timeoutTimer.Stop(); failure(msg);
-                    });
-            }));
-            thread.Start();
-            timeoutTimer.Interval = 10000;
-            timeoutTimer.Tick += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                thread.Interrupt();
-                timeoutTimer.Stop();
-                failure("The website at the URL you specified doesn't answer");
-            });
-            timeoutTimer.Start();
-        }
-
-        private static void TestMediaWikiAccountThread(MediaWikiAccount acc, Action success, Action<string> failure)
-        {
-            try
-            {
-                MediaWiki connector = new MediaWiki(new MediaWikiOptions(acc, CheckProxySettings().GetWebProxy));
-                connector.Login();
-                success();
-            }
-            catch (Exception ex)
-            {
-                // ignore ThreadInterruptedException : the request timed out and the thread was interrupted
-                if (!(ex.InnerException is ThreadInterruptedException))
-                    failure(ex.Message);
             }
         }
 
