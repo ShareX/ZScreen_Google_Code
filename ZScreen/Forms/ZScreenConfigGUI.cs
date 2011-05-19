@@ -77,25 +77,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Destinations()
         {
-            #region FTP Settings
 
-            if (Engine.conf.FTPAccountList == null || Engine.conf.FTPAccountList.Count == 0)
-            {
-                FTPSetup(new List<FTPAccount>());
-            }
-            else
-            {
-                FTPSetup(Engine.conf.FTPAccountList);
-                if (ucFTPAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucFTPAccounts.AccountsList.SelectedIndex = 0;
-                }
-            }
-
-            txtFTPThumbWidth.Text = Engine.conf.FTPThumbnailWidth.ToString();
-            cbFTPThumbnailCheckSize.Checked = Engine.conf.FTPThumbnailCheckSize;
-
-            #endregion FTP Settings
 
             #region Localhost Settings
 
@@ -217,12 +199,7 @@ namespace ZScreenGUI
             cboSendSpaceAcctType.SelectedIndex = (int)Engine.conf.SendSpaceAccountType;
             txtSendSpacePassword.Text = Engine.conf.SendSpacePassword;
             txtSendSpaceUserName.Text = Engine.conf.SendSpaceUserName;
-
-            // Dropbox
-
-            txtDropboxPath.Text = Engine.conf.DropboxUploadPath;
-            UpdateDropboxStatus();
-
+            
             #endregion File Uploaders
 
             #region Text Uploaders

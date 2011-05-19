@@ -542,7 +542,6 @@ namespace ZScreenLib
         public static XMLSettings conf;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
-        public static readonly string FILTER_ACCOUNTS = string.Format("ZScreen FTP Accounts(*.{0})|*.{0}", EXT_FTP_ACCOUNTS);
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
         public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
 

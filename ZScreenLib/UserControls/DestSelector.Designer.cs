@@ -135,9 +135,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gbMainOptions);
-            this.MaximumSize = new System.Drawing.Size(378, 145);
+            this.MaximumSize = new System.Drawing.Size(376, 144);
+            this.MinimumSize = new System.Drawing.Size(376, 144);
             this.Name = "DestSelector";
-            this.Size = new System.Drawing.Size(378, 145);
+            this.Size = new System.Drawing.Size(376, 144);
             this.gbMainOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -23,7 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-namespace UploadersLib.Config
+namespace UploadersLib
 {
     public class UploadersAPIKeys
     {

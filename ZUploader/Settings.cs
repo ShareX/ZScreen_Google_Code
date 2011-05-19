@@ -25,7 +25,6 @@
 
 using System.Windows.Forms;
 using UploadersLib;
-using UploadersLib.Config;
 using UploadersLib.HelperClasses;
 
 namespace ZUploader

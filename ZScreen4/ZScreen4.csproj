@@ -53,6 +53,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\GoogleTranslateGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\GoogleTranslateGUI.Designer.cs">
+      <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ZScreenMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="GUI\ZScreenMainHelper.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="GUI\GoogleTranslateGUI.resx">
+      <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\ZScreenMain.resx">
       <DependentUpon>ZScreenMain.cs</DependentUpon>
     </EmbeddedResource>
