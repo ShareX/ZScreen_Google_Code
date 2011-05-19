@@ -75,13 +75,13 @@ namespace UploadersLib
 
                     if (result)
                     {
-                        lblImgurAccountStatus.Text = "Login success: " + Config.ImgurOAuthInfo.UserToken;
-                        MessageBox.Show("Login success.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         lblImgurAccountStatus.Text = "Login failed.";
-                        MessageBox.Show("Login failed.", "ZScreen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -92,6 +92,88 @@ namespace UploadersLib
         }
 
         #endregion Imgur
+
+        #region Flickr
+
+        public void FlickrAuthOpen()
+        {
+            try
+            {
+                FlickrUploader flickr = new FlickrUploader(APIKeys.FlickrKey, APIKeys.FlickrSecret);
+                btnFlickrOpenAuthorize.Tag = flickr.GetFrob();
+                string url = flickr.GetAuthLink(FlickrPermission.Write);
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Process.Start(url);
+                    btnFlickrCompleteAuth.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void FlickrAuthComplete()
+        {
+            try
+            {
+                string token = btnFlickrOpenAuthorize.Tag as string;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    FlickrUploader flickr = new FlickrUploader(APIKeys.FlickrKey, APIKeys.FlickrSecret);
+                    Config.FlickrAuthInfo = flickr.GetToken(token);
+                    pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;
+                    // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
+                    MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void FlickrCheckToken()
+        {
+            try
+            {
+                if (Config.FlickrAuthInfo != null)
+                {
+                    string token = Config.FlickrAuthInfo.Token;
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        FlickrUploader flickr = new FlickrUploader(APIKeys.FlickrKey, APIKeys.FlickrSecret);
+                        Config.FlickrAuthInfo = flickr.CheckToken(token);
+                        pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void FlickrOpenImages()
+        {
+            if (Config.FlickrAuthInfo != null)
+            {
+                string userID = Config.FlickrAuthInfo.UserID;
+                if (!string.IsNullOrEmpty(userID))
+                {
+                    FlickrUploader flickr = new FlickrUploader(APIKeys.FlickrKey, APIKeys.FlickrSecret);
+                    string url = flickr.GetPhotosLink(userID);
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        Process.Start(url);
+                    }
+                }
+            }
+        }
+
+        #endregion Flickr
 
         #region Dropbox
 

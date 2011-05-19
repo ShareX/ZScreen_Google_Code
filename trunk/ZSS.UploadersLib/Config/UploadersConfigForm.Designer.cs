@@ -60,6 +60,12 @@
             this.lblImgurAccountStatus = new System.Windows.Forms.Label();
             this.cbImgurUseUserAccount = new System.Windows.Forms.CheckBox();
             this.tpFlickr = new System.Windows.Forms.TabPage();
+            this.btnFlickrOpenImages = new System.Windows.Forms.Button();
+            this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
+            this.pgFlickrSettings = new System.Windows.Forms.PropertyGrid();
+            this.btnFlickrCheckToken = new System.Windows.Forms.Button();
+            this.btnFlickrCompleteAuth = new System.Windows.Forms.Button();
+            this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
@@ -110,6 +116,8 @@
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
             this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
+            this.tbLocalhost = new System.Windows.Forms.TabPage();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
@@ -122,8 +130,6 @@
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
-            this.tbLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -131,6 +137,7 @@
             this.tpTinyPic.SuspendLayout();
             this.tpImgur.SuspendLayout();
             this.gbImgurUserAccount.SuspendLayout();
+            this.tpFlickr.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
@@ -142,6 +149,7 @@
             this.gbFtpSettings.SuspendLayout();
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
+            this.tbLocalhost.SuspendLayout();
             this.tpTextUploaders.SuspendLayout();
             this.tcTextUploaders.SuspendLayout();
             this.tpPastebin.SuspendLayout();
@@ -149,7 +157,6 @@
             this.tcURLShorteners.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
-            this.tbLocalhost.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -274,8 +281,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
@@ -388,8 +395,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -481,6 +488,12 @@
             // 
             // tpFlickr
             // 
+            this.tpFlickr.Controls.Add(this.btnFlickrOpenImages);
+            this.tpFlickr.Controls.Add(this.pgFlickrAuthInfo);
+            this.tpFlickr.Controls.Add(this.pgFlickrSettings);
+            this.tpFlickr.Controls.Add(this.btnFlickrCheckToken);
+            this.tpFlickr.Controls.Add(this.btnFlickrCompleteAuth);
+            this.tpFlickr.Controls.Add(this.btnFlickrOpenAuthorize);
             this.tpFlickr.Location = new System.Drawing.Point(4, 22);
             this.tpFlickr.Name = "tpFlickr";
             this.tpFlickr.Padding = new System.Windows.Forms.Padding(3);
@@ -488,6 +501,78 @@
             this.tpFlickr.TabIndex = 3;
             this.tpFlickr.Text = "Flickr";
             this.tpFlickr.UseVisualStyleBackColor = true;
+            // 
+            // btnFlickrOpenImages
+            // 
+            this.btnFlickrOpenImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFlickrOpenImages.Location = new System.Drawing.Point(584, 213);
+            this.btnFlickrOpenImages.Name = "btnFlickrOpenImages";
+            this.btnFlickrOpenImages.Size = new System.Drawing.Size(168, 23);
+            this.btnFlickrOpenImages.TabIndex = 13;
+            this.btnFlickrOpenImages.Text = "Your photostream...";
+            this.btnFlickrOpenImages.UseVisualStyleBackColor = true;
+            this.btnFlickrOpenImages.Click += new System.EventHandler(this.btnFlickrOpenImages_Click);
+            // 
+            // pgFlickrAuthInfo
+            // 
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
+            this.pgFlickrAuthInfo.Location = new System.Drawing.Point(8, 16);
+            this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
+            this.pgFlickrAuthInfo.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgFlickrAuthInfo.Size = new System.Drawing.Size(562, 160);
+            this.pgFlickrAuthInfo.TabIndex = 12;
+            this.pgFlickrAuthInfo.ToolbarVisible = false;
+            // 
+            // pgFlickrSettings
+            // 
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
+            this.pgFlickrSettings.Location = new System.Drawing.Point(8, 184);
+            this.pgFlickrSettings.Name = "pgFlickrSettings";
+            this.pgFlickrSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgFlickrSettings.Size = new System.Drawing.Size(562, 352);
+            this.pgFlickrSettings.TabIndex = 11;
+            this.pgFlickrSettings.ToolbarVisible = false;
+            // 
+            // btnFlickrCheckToken
+            // 
+            this.btnFlickrCheckToken.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFlickrCheckToken.Location = new System.Drawing.Point(584, 184);
+            this.btnFlickrCheckToken.Name = "btnFlickrCheckToken";
+            this.btnFlickrCheckToken.Size = new System.Drawing.Size(168, 23);
+            this.btnFlickrCheckToken.TabIndex = 10;
+            this.btnFlickrCheckToken.Text = "Check Token...";
+            this.btnFlickrCheckToken.UseVisualStyleBackColor = true;
+            this.btnFlickrCheckToken.Click += new System.EventHandler(this.btnFlickrCheckToken_Click);
+            // 
+            // btnFlickrCompleteAuth
+            // 
+            this.btnFlickrCompleteAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFlickrCompleteAuth.Enabled = false;
+            this.btnFlickrCompleteAuth.Location = new System.Drawing.Point(584, 47);
+            this.btnFlickrCompleteAuth.Name = "btnFlickrCompleteAuth";
+            this.btnFlickrCompleteAuth.Size = new System.Drawing.Size(168, 24);
+            this.btnFlickrCompleteAuth.TabIndex = 9;
+            this.btnFlickrCompleteAuth.Text = "Step 2. Complete authorization";
+            this.btnFlickrCompleteAuth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFlickrCompleteAuth.UseVisualStyleBackColor = true;
+            this.btnFlickrCompleteAuth.Click += new System.EventHandler(this.btnFlickrCompleteAuth_Click);
+            // 
+            // btnFlickrOpenAuthorize
+            // 
+            this.btnFlickrOpenAuthorize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFlickrOpenAuthorize.Location = new System.Drawing.Point(584, 18);
+            this.btnFlickrOpenAuthorize.Name = "btnFlickrOpenAuthorize";
+            this.btnFlickrOpenAuthorize.Size = new System.Drawing.Size(168, 23);
+            this.btnFlickrOpenAuthorize.TabIndex = 8;
+            this.btnFlickrOpenAuthorize.Text = "Step 1. Open authorize page...";
+            this.btnFlickrOpenAuthorize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFlickrOpenAuthorize.UseVisualStyleBackColor = true;
+            this.btnFlickrOpenAuthorize.Click += new System.EventHandler(this.btnFlickrOpenAuthorize_Click);
             // 
             // tpTwitPic
             // 
@@ -1023,6 +1108,26 @@
             this.lblSendSpaceAccountType.TabIndex = 17;
             this.lblSendSpaceAccountType.Text = "Account Type";
             // 
+            // tbLocalhost
+            // 
+            this.tbLocalhost.Controls.Add(this.ucLocalhostAccounts);
+            this.tbLocalhost.Location = new System.Drawing.Point(4, 22);
+            this.tbLocalhost.Name = "tbLocalhost";
+            this.tbLocalhost.Padding = new System.Windows.Forms.Padding(3);
+            this.tbLocalhost.Size = new System.Drawing.Size(772, 548);
+            this.tbLocalhost.TabIndex = 5;
+            this.tbLocalhost.Text = "Localhost";
+            this.tbLocalhost.UseVisualStyleBackColor = true;
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 542);
+            this.ucLocalhostAccounts.TabIndex = 2;
+            // 
             // tpCustomUploaders
             // 
             this.tpCustomUploaders.Location = new System.Drawing.Point(4, 22);
@@ -1147,26 +1252,6 @@
             this.tpTwitter.Text = "Twitter";
             this.tpTwitter.UseVisualStyleBackColor = true;
             // 
-            // tbLocalhost
-            // 
-            this.tbLocalhost.Controls.Add(this.ucLocalhostAccounts);
-            this.tbLocalhost.Location = new System.Drawing.Point(4, 22);
-            this.tbLocalhost.Name = "tbLocalhost";
-            this.tbLocalhost.Padding = new System.Windows.Forms.Padding(3);
-            this.tbLocalhost.Size = new System.Drawing.Size(772, 548);
-            this.tbLocalhost.TabIndex = 5;
-            this.tbLocalhost.Text = "Localhost";
-            this.tbLocalhost.UseVisualStyleBackColor = true;
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 542);
-            this.ucLocalhostAccounts.TabIndex = 2;
-            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1189,6 +1274,7 @@
             this.tpImgur.PerformLayout();
             this.gbImgurUserAccount.ResumeLayout(false);
             this.gbImgurUserAccount.PerformLayout();
+            this.tpFlickr.ResumeLayout(false);
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
             this.tpFileUploaders.ResumeLayout(false);
@@ -1206,6 +1292,7 @@
             this.tpRapidShare.PerformLayout();
             this.tpSendSpace.ResumeLayout(false);
             this.tpSendSpace.PerformLayout();
+            this.tbLocalhost.ResumeLayout(false);
             this.tpTextUploaders.ResumeLayout(false);
             this.tcTextUploaders.ResumeLayout(false);
             this.tpPastebin.ResumeLayout(false);
@@ -1213,7 +1300,6 @@
             this.tcURLShorteners.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
-            this.tbLocalhost.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1315,5 +1401,11 @@
         private System.Windows.Forms.Button btnPastebinLogin;
         private System.Windows.Forms.TabPage tbLocalhost;
         internal AccountsControl ucLocalhostAccounts;
+        private System.Windows.Forms.Button btnFlickrOpenImages;
+        private System.Windows.Forms.PropertyGrid pgFlickrAuthInfo;
+        private System.Windows.Forms.PropertyGrid pgFlickrSettings;
+        private System.Windows.Forms.Button btnFlickrCheckToken;
+        private System.Windows.Forms.Button btnFlickrCompleteAuth;
+        private System.Windows.Forms.Button btnFlickrOpenAuthorize;
     }
 }

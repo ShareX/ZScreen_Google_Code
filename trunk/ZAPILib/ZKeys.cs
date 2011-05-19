@@ -76,9 +76,12 @@ namespace UploadersAPILib
                 TinyPicKey = TinyPicKey,
                 ImgurConsumerKey = ImgurConsumerKey,
                 ImgurConsumerSecret = ImgurConsumerSecret,
-                PastebinKey = PastebinKey,
+                FlickrKey = FlickrKey,
+                FlickrSecret = FlickrSecret,
                 DropboxConsumerKey = DropboxConsumerKey,
-                DropboxConsumerSecret = DropboxConsumerSecret
+                DropboxConsumerSecret = DropboxConsumerSecret,
+                SendSpaceKey = SendSpaceKey,
+                PastebinKey = PastebinKey
             };
         }
     }

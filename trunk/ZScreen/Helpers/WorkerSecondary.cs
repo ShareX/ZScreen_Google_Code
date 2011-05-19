@@ -26,12 +26,12 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using UploadersAPILib;
 
 namespace ZScreenGUI
 {
@@ -219,6 +219,5 @@ namespace ZScreenGUI
 
             return -1;
         }
-
     }
 }

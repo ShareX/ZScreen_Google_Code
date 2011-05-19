@@ -113,6 +113,11 @@ namespace UploadersLib
                 lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
             }
 
+            // Flickr
+
+            pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;
+            pgFlickrSettings.SelectedObject = Config.FlickrSettings;
+
             #endregion Image uploaders
 
             #region Text uploaders

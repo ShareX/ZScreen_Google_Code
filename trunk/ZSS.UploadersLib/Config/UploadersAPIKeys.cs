@@ -28,24 +28,17 @@ namespace UploadersLib
     public class UploadersAPIKeys
     {
         // Image Uploaders
-        public string ImageShackKey { get; set; }
         public string TinyPicID { get; set; }
         public string TinyPicKey { get; set; }
-        public string ImgurAnonymousKey { get; set; }
         public string ImgurConsumerKey { get; set; }
         public string ImgurConsumerSecret { get; set; }
         public string FlickrKey { get; set; }
         public string FlickrSecret { get; set; }
-        public string UploadScreenshotKey { get; set; }
-        public string ImageBamKey { get; set; }
-        public string ImageBamSecret { get; set; }
-        public string TwitsnapsKey { get; set; }
 
         // File Uploaders
         public string DropboxConsumerKey { get; set; }
         public string DropboxConsumerSecret { get; set; }
         public string SendSpaceKey { get; set; }
-        public string DropIOKey { get; set; }
 
         // Text Uploaders
         public string PastebinKey { get; set; }

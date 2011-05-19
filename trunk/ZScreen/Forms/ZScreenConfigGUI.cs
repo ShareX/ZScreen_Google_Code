@@ -6,14 +6,12 @@ using System.IO;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
-using MS.WindowsAPICodePack.Internal;
+using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
-using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace ZScreenGUI
 {
@@ -77,7 +75,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Destinations()
         {
-
             #region MindTouch Settings
 
             ///////////////////////////////////
@@ -148,12 +145,6 @@ namespace ZScreenGUI
             {
                 ucTwitterAccounts.AccountsList.SelectedIndex = Engine.conf.TwitterAcctSelected;
             }
-
-            // Flickr
-
-            pgFlickrAuthInfo.SelectedObject = Engine.conf.FlickrAuthInfo;
-            pgFlickrSettings.SelectedObject = Engine.conf.FlickrSettings;
-            // btnFlickrOpenImages.Text = string.Format("{0}'s photostream", Engine.conf.FlickrAuthInfo.Username);
 
             #endregion Image Uploaders
         }

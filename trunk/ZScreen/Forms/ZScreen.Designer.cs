@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,6 +95,7 @@ namespace ZScreenGUI
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
             this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
@@ -207,13 +208,6 @@ namespace ZScreenGUI
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
             this.tpDestinations = new System.Windows.Forms.TabPage();
             this.tcDestinations = new System.Windows.Forms.TabControl();
-            this.tpDestFlickr = new System.Windows.Forms.TabPage();
-            this.btnFlickrOpenImages = new System.Windows.Forms.Button();
-            this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
-            this.pgFlickrSettings = new System.Windows.Forms.PropertyGrid();
-            this.btnFlickrCheckToken = new System.Windows.Forms.Button();
-            this.btnFlickrGetToken = new System.Windows.Forms.Button();
-            this.btnFlickrGetFrob = new System.Windows.Forms.Button();
             this.tpDestTwitter = new System.Windows.Forms.TabPage();
             this.tlpTwitter = new System.Windows.Forms.TableLayoutPanel();
             this.panelTwitter = new System.Windows.Forms.Panel();
@@ -491,7 +485,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -537,7 +530,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.SuspendLayout();
             this.tpDestinations.SuspendLayout();
             this.tcDestinations.SuspendLayout();
-            this.tpDestFlickr.SuspendLayout();
             this.tpDestTwitter.SuspendLayout();
             this.tlpTwitter.SuspendLayout();
             this.panelTwitter.SuspendLayout();
@@ -1194,6 +1186,22 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
             // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            // 
             // lblCopytoClipboard
             // 
             this.lblCopytoClipboard.AutoSize = true;
@@ -1372,7 +1380,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle3;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2518,7 +2526,6 @@ namespace ZScreenGUI
             // 
             // tcDestinations
             // 
-            this.tcDestinations.Controls.Add(this.tpDestFlickr);
             this.tcDestinations.Controls.Add(this.tpDestTwitter);
             this.tcDestinations.Controls.Add(this.tpDestMindTouch);
             this.tcDestinations.Controls.Add(this.tpDestMediaWiki);
@@ -2530,98 +2537,6 @@ namespace ZScreenGUI
             this.tcDestinations.SelectedIndex = 0;
             this.tcDestinations.Size = new System.Drawing.Size(807, 434);
             this.tcDestinations.TabIndex = 0;
-            // 
-            // tpDestFlickr
-            // 
-            this.tpDestFlickr.BackColor = System.Drawing.SystemColors.Window;
-            this.tpDestFlickr.Controls.Add(this.btnFlickrOpenImages);
-            this.tpDestFlickr.Controls.Add(this.pgFlickrAuthInfo);
-            this.tpDestFlickr.Controls.Add(this.pgFlickrSettings);
-            this.tpDestFlickr.Controls.Add(this.btnFlickrCheckToken);
-            this.tpDestFlickr.Controls.Add(this.btnFlickrGetToken);
-            this.tpDestFlickr.Controls.Add(this.btnFlickrGetFrob);
-            this.tpDestFlickr.Location = new System.Drawing.Point(4, 22);
-            this.tpDestFlickr.Name = "tpDestFlickr";
-            this.tpDestFlickr.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDestFlickr.Size = new System.Drawing.Size(799, 408);
-            this.tpDestFlickr.TabIndex = 10;
-            this.tpDestFlickr.Text = "Flickr";
-            // 
-            // btnFlickrOpenImages
-            // 
-            this.btnFlickrOpenImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrOpenImages.Location = new System.Drawing.Point(617, 213);
-            this.btnFlickrOpenImages.Name = "btnFlickrOpenImages";
-            this.btnFlickrOpenImages.Size = new System.Drawing.Size(168, 23);
-            this.btnFlickrOpenImages.TabIndex = 7;
-            this.btnFlickrOpenImages.Text = "Your photostream...";
-            this.ttZScreen.SetToolTip(this.btnFlickrOpenImages, "Opens http://www.flickr.com/photos/<UserID>");
-            this.btnFlickrOpenImages.UseVisualStyleBackColor = true;
-            this.btnFlickrOpenImages.Click += new System.EventHandler(this.btnFlickrOpenImages_Click);
-            // 
-            // pgFlickrAuthInfo
-            // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
-            this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 18);
-            this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
-            this.pgFlickrAuthInfo.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFlickrAuthInfo.Size = new System.Drawing.Size(562, 160);
-            this.pgFlickrAuthInfo.TabIndex = 6;
-            this.pgFlickrAuthInfo.ToolbarVisible = false;
-            // 
-            // pgFlickrSettings
-            // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
-            this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
-            this.pgFlickrSettings.Name = "pgFlickrSettings";
-            this.pgFlickrSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFlickrSettings.Size = new System.Drawing.Size(562, 211);
-            this.pgFlickrSettings.TabIndex = 5;
-            this.pgFlickrSettings.ToolbarVisible = false;
-            // 
-            // btnFlickrCheckToken
-            // 
-            this.btnFlickrCheckToken.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrCheckToken.Location = new System.Drawing.Point(617, 184);
-            this.btnFlickrCheckToken.Name = "btnFlickrCheckToken";
-            this.btnFlickrCheckToken.Size = new System.Drawing.Size(168, 23);
-            this.btnFlickrCheckToken.TabIndex = 4;
-            this.btnFlickrCheckToken.Text = "Check Token...";
-            this.ttZScreen.SetToolTip(this.btnFlickrCheckToken, "Returns the credentials attached to an authentication token.");
-            this.btnFlickrCheckToken.UseVisualStyleBackColor = true;
-            this.btnFlickrCheckToken.Click += new System.EventHandler(this.btnFlickrCheckToken_Click);
-            // 
-            // btnFlickrGetToken
-            // 
-            this.btnFlickrGetToken.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrGetToken.Enabled = false;
-            this.btnFlickrGetToken.Location = new System.Drawing.Point(617, 47);
-            this.btnFlickrGetToken.Name = "btnFlickrGetToken";
-            this.btnFlickrGetToken.Size = new System.Drawing.Size(168, 24);
-            this.btnFlickrGetToken.TabIndex = 1;
-            this.btnFlickrGetToken.Text = "Step 2. Finalize Authentication...";
-            this.btnFlickrGetToken.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ttZScreen.SetToolTip(this.btnFlickrGetToken, "Returns the auth token for the given frob, if one has been attached.");
-            this.btnFlickrGetToken.UseVisualStyleBackColor = true;
-            this.btnFlickrGetToken.Click += new System.EventHandler(this.btnFlickrGetToken_Click);
-            // 
-            // btnFlickrGetFrob
-            // 
-            this.btnFlickrGetFrob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrGetFrob.Location = new System.Drawing.Point(617, 18);
-            this.btnFlickrGetFrob.Name = "btnFlickrGetFrob";
-            this.btnFlickrGetFrob.Size = new System.Drawing.Size(168, 23);
-            this.btnFlickrGetFrob.TabIndex = 0;
-            this.btnFlickrGetFrob.Text = "Step 1. Authenticate ZScreen...";
-            this.btnFlickrGetFrob.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ttZScreen.SetToolTip(this.btnFlickrGetFrob, "Returns a frob to be used during authentication.");
-            this.btnFlickrGetFrob.UseVisualStyleBackColor = true;
-            this.btnFlickrGetFrob.Click += new System.EventHandler(this.btnFlickrGetFrob_Click);
             // 
             // tpDestTwitter
             // 
@@ -5811,22 +5726,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5910,7 +5809,6 @@ namespace ZScreenGUI
             this.gbImageEditorSettings.PerformLayout();
             this.tpDestinations.ResumeLayout(false);
             this.tcDestinations.ResumeLayout(false);
-            this.tpDestFlickr.ResumeLayout(false);
             this.tpDestTwitter.ResumeLayout(false);
             this.tlpTwitter.ResumeLayout(false);
             this.panelTwitter.ResumeLayout(false);
@@ -6390,13 +6288,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkImageBamContentNSFW;
         internal System.Windows.Forms.RichTextBox rtbDebugInfo;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
-        private System.Windows.Forms.TabPage tpDestFlickr;
-        private System.Windows.Forms.Button btnFlickrGetToken;
-        private System.Windows.Forms.Button btnFlickrGetFrob;
-        private System.Windows.Forms.Button btnFlickrCheckToken;
-        private System.Windows.Forms.PropertyGrid pgFlickrAuthInfo;
-        private System.Windows.Forms.PropertyGrid pgFlickrSettings;
-        private System.Windows.Forms.Button btnFlickrOpenImages;
         internal DestSelector ucDestOptions;
         private System.Windows.Forms.CheckBox chkShellExt;
         private System.Windows.Forms.ToolStripMenuItem tsmFileDest;

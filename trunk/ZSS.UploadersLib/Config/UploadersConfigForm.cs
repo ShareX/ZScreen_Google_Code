@@ -175,6 +175,30 @@ namespace UploadersLib
 
         #endregion Imgur
 
+        #region Flickr
+
+        private void btnFlickrOpenAuthorize_Click(object sender, EventArgs e)
+        {
+            FlickrAuthOpen();
+        }
+
+        private void btnFlickrCompleteAuth_Click(object sender, EventArgs e)
+        {
+            FlickrAuthComplete();
+        }
+
+        private void btnFlickrCheckToken_Click(object sender, EventArgs e)
+        {
+            FlickrCheckToken();
+        }
+
+        private void btnFlickrOpenImages_Click(object sender, EventArgs e)
+        {
+            FlickrOpenImages();
+        }
+
+        #endregion Flickr
+
         #endregion Image uploaders
 
         #region File uploaders
