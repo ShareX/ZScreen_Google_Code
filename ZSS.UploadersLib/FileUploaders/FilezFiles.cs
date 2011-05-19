@@ -66,11 +66,11 @@ namespace UploadersLib.FileUploaders
 
                 if (data != null && data["info"] != null)
                 {
-                    if (Helpers.IsImageFile(fileName))
+                    if (ZAppHelper.IsImageFile(fileName))
                     {
                         result.URL = data["info"]["dl"];
                     }
-                    else if (Helpers.IsTextFile(fileName))
+                    else if (ZAppHelper.IsTextFile(fileName))
                     {
                         result.URL = data["info"]["highlight"];
                     }

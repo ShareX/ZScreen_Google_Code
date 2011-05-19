@@ -108,7 +108,7 @@ namespace HistoryLib.Custom_Controls
 
             this.BackColor = Color.FloralWhite;
             this.BackgroundImage = screenshot;
-            this.Bounds = Helpers.GetScreenBounds();
+            this.Bounds = ZAppHelper.GetScreenBounds();
             this.Cursor = Cursors.Hand;
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;

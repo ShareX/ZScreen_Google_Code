@@ -3493,5 +3493,10 @@ namespace ZScreenGUI
             new UploadersConfigForm(Engine.conf.UploadersConfig2, ZKeys.GetAPIKeys()) { Icon = this.Icon }.Show();
         }
 
+        private void pbDonate_Click(object sender, EventArgs e)
+        {
+            Process.Start(ZAppHelper.DonateURL);
+        }
+
     }
 }

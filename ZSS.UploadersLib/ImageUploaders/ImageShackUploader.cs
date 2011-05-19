@@ -59,8 +59,8 @@ namespace UploadersLib.ImageUploaders
 
             if (!string.IsNullOrEmpty(ur.Source))
             {
-                ur.URL = Helpers.GetXMLValue(ur.Source, "image_link");
-                ur.ThumbnailURL = Helpers.GetXMLValue(ur.Source, "thumb_link");
+                ur.URL = ZAppHelper.GetXMLValue(ur.Source, "image_link");
+                ur.ThumbnailURL = ZAppHelper.GetXMLValue(ur.Source, "thumb_link");
             }
 
             return ur;

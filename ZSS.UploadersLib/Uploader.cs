@@ -373,7 +373,7 @@ namespace UploadersLib
         private byte[] MakeFileInputContentOpen(string boundary, string fileFormName, string fileName)
         {
             string format = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                boundary, fileFormName, fileName, Helpers.GetMimeType(fileName));
+                boundary, fileFormName, fileName, ZAppHelper.GetMimeType(fileName));
             return Encoding.UTF8.GetBytes(format);
         }
 

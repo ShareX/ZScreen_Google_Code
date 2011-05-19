@@ -48,7 +48,7 @@ namespace UploadersLib.FileUploaders
             {
                 ftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
 
-                fileName = Helpers.ReplaceIllegalChars(fileName, '_');
+                fileName = ZAppHelper.ReplaceIllegalChars(fileName, '_');
 
                 while (fileName.IndexOf("__") != -1)
                 {
