@@ -96,7 +96,7 @@ namespace ZScreenGUI
             catch (Exception ex)
             {
                 Engine.MyLogger.WriteException("Running ZScreen", ex);
-                Engine.conf.Write();
+                Engine.WriteSettings();
                 throw ex;
             }
             finally
@@ -112,7 +112,7 @@ namespace ZScreenGUI
                 Engine.LoadSettings();
                 Application.Run(new ZScreen());
 
-                Engine.conf.Write();
+                Engine.WriteSettings();
                 Engine.TurnOff();
             }
         }

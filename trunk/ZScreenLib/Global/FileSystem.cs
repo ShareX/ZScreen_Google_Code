@@ -403,7 +403,7 @@ namespace ZScreenLib
                 string fp = Path.Combine(Engine.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.conf.UploadersConfig.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.MyUploadersConfig.FTPAccountList);
                     fam.Save(fp);
                 }
             }

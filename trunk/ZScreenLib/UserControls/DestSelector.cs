@@ -13,7 +13,7 @@ namespace ZScreenLib
 
         private void btnOpenUploadersConfig_Click(object sender, System.EventArgs e)
         {
-            new UploadersConfigForm(Engine.conf.UploadersConfig, ZKeys.GetAPIKeys()).Show();
+            new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys()).Show();
         }
     }
 }

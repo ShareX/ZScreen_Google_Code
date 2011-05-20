@@ -559,7 +559,7 @@ namespace ZScreenGUI
             }
 
             Engine.conf.WindowState = this.WindowState;
-            Engine.conf.Write();
+            Engine.WriteSettings();
             Engine.MyLogger.WriteLine("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
         }
 
@@ -654,11 +654,9 @@ namespace ZScreenGUI
 
         private void RewriteCustomUploaderRightClickMenu()
         {
-            // TODO: Custom uploader tray
-
-            if (Engine.conf.CustomUploadersList != null)
+            if (Engine.MyUploadersConfig.CustomUploadersList != null)
             {
-                List<CustomUploaderInfo> lUploaders = Engine.conf.CustomUploadersList;
+                List<CustomUploaderInfo> lUploaders = Engine.MyUploadersConfig.CustomUploadersList;
 
                 ToolStripMenuItem tsmDestCustomHTTP = GetFileDestMenuItem(FileUploaderType.CustomUploader);
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -672,7 +670,7 @@ namespace ZScreenGUI
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
-                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.conf.CustomUploaderSelected);
+                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.MyUploadersConfig.CustomUploaderSelected);
 
                 tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
 
@@ -1148,7 +1146,7 @@ namespace ZScreenGUI
             Engine.conf = new XMLSettings();
             ZScreen_ConfigGUI();
             Engine.conf.FirstRun = false;
-            Engine.conf.Write();
+            Engine.WriteSettings();
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -1739,7 +1737,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.conf.UploadersConfig.FTPAccountList[Engine.conf.UploadersConfig.FTPSelectedImage];
+                acc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage];
             }
 
             return acc;
@@ -2383,9 +2381,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.conf.UploadersConfig.FTPAccountList.Count > 0)
+            if (Engine.MyUploadersConfig.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.conf.UploadersConfig.FTPAccountList[Engine.conf.UploadersConfig.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
