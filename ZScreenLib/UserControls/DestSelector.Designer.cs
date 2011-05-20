@@ -63,7 +63,7 @@
             // 
             // btnOpenUploadersConfig
             // 
-            this.btnOpenUploadersConfig.Location = new System.Drawing.Point(120, 118);
+            this.btnOpenUploadersConfig.Location = new System.Drawing.Point(120, 120);
             this.btnOpenUploadersConfig.Name = "btnOpenUploadersConfig";
             this.btnOpenUploadersConfig.Size = new System.Drawing.Size(208, 23);
             this.btnOpenUploadersConfig.TabIndex = 127;
@@ -75,7 +75,7 @@
             // 
             this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(120, 70);
+            this.cboFileUploaders.Location = new System.Drawing.Point(120, 72);
             this.cboFileUploaders.Name = "cboFileUploaders";
             this.cboFileUploaders.Size = new System.Drawing.Size(208, 21);
             this.cboFileUploaders.TabIndex = 126;
@@ -84,7 +84,7 @@
             // 
             this.lblFileUploader.Location = new System.Drawing.Point(16, 72);
             this.lblFileUploader.Name = "lblFileUploader";
-            this.lblFileUploader.Size = new System.Drawing.Size(96, 16);
+            this.lblFileUploader.Size = new System.Drawing.Size(96, 21);
             this.lblFileUploader.TabIndex = 125;
             this.lblFileUploader.Text = "File destination:";
             this.lblFileUploader.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -93,7 +93,7 @@
             // 
             this.cboURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboURLShorteners.FormattingEnabled = true;
-            this.cboURLShorteners.Location = new System.Drawing.Point(120, 94);
+            this.cboURLShorteners.Location = new System.Drawing.Point(120, 96);
             this.cboURLShorteners.Name = "cboURLShorteners";
             this.cboURLShorteners.Size = new System.Drawing.Size(208, 21);
             this.cboURLShorteners.TabIndex = 124;
@@ -102,7 +102,7 @@
             // 
             this.lblURLShortener.Location = new System.Drawing.Point(16, 96);
             this.lblURLShortener.Name = "lblURLShortener";
-            this.lblURLShortener.Size = new System.Drawing.Size(96, 16);
+            this.lblURLShortener.Size = new System.Drawing.Size(96, 21);
             this.lblURLShortener.TabIndex = 123;
             this.lblURLShortener.Text = "URL Shortener:";
             this.lblURLShortener.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -111,7 +111,7 @@
             // 
             this.lblImageUploader.Location = new System.Drawing.Point(16, 24);
             this.lblImageUploader.Name = "lblImageUploader";
-            this.lblImageUploader.Size = new System.Drawing.Size(96, 16);
+            this.lblImageUploader.Size = new System.Drawing.Size(96, 21);
             this.lblImageUploader.TabIndex = 1;
             this.lblImageUploader.Text = "Image destination:";
             this.lblImageUploader.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -120,7 +120,7 @@
             // 
             this.lblTextUploader.Location = new System.Drawing.Point(16, 48);
             this.lblTextUploader.Name = "lblTextUploader";
-            this.lblTextUploader.Size = new System.Drawing.Size(96, 16);
+            this.lblTextUploader.Size = new System.Drawing.Size(96, 21);
             this.lblTextUploader.TabIndex = 122;
             this.lblTextUploader.Text = "Text destination:";
             this.lblTextUploader.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -138,7 +138,7 @@
             // 
             this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(120, 46);
+            this.cboTextUploaders.Location = new System.Drawing.Point(120, 48);
             this.cboTextUploaders.Name = "cboTextUploaders";
             this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
             this.cboTextUploaders.TabIndex = 121;

@@ -200,6 +200,7 @@ namespace ZScreenGUI
             tabImageList.Images.Add("comments", Resources.comments);
             tabImageList.Images.Add("application_edit", Resources.application_edit);
             tabImageList.Images.Add("wrench", Resources.wrench);
+            tabImageList.Images.Add("info", Resources.info);
             tcMain.ImageList = tabImageList;
             tpMain.ImageKey = "application_form";
             tpHotkeys.ImageKey = "keyboard";
@@ -207,6 +208,7 @@ namespace ZScreenGUI
             tpMainActions.ImageKey = "picture_edit";
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
+            tpHelp.ImageKey = "info";
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
