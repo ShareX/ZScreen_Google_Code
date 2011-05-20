@@ -213,22 +213,7 @@ namespace ZScreenLib
 
         public WorkerTask CreateTask(WorkerTask.JobLevel2 job)
         {
-            BackgroundWorker bwApp = CreateWorker();
-            WorkerTask task = new WorkerTask(bwApp, job);
-            if (task.Job2 != WorkerTask.JobLevel2.CustomUploaderTest)
-            {
-                task.MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
-                task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
-                task.MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
-                task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
-            }
-            else
-            {
-                task.MyImageUploader = ImageUploaderType.FileUploader;
-                task.MyFileUploader = FileUploaderType.CustomUploader;
-            }
-
-            return task;
+            return new WorkerTask(CreateWorker(), job);
         }
 
         public WorkerTask GetWorkerText(WorkerTask.JobLevel2 job)

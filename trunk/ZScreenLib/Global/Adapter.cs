@@ -116,7 +116,7 @@ namespace ZScreenLib
                 // Text length must be less than 64 characters long
                 StringBuilder sbMsg = new StringBuilder();
                 sbMsg.Append(task.Job2.GetDescription());
-                sbMsg.Append(": ");
+                sbMsg.Append(" to ");
                 switch (task.Job1)
                 {
                     case JobLevel1.Image:
@@ -133,8 +133,6 @@ namespace ZScreenLib
                         }
                         break;
                     case JobLevel1.File:
-                        sbMsg.Append(Path.GetFileName(task.LocalFilePath));
-                        sbMsg.Append(" to ");
                         sbMsg.Append(task.MyFileUploader.GetDescription());
                         break;
                 }
