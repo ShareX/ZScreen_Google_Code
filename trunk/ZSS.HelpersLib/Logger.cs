@@ -49,9 +49,12 @@ namespace HelpersLib
 
         public void WriteLine(string message)
         {
-            string msg = string.Format(MessageFormat, FastDateTime.Now, message);
-            Messages.AppendLine(msg);
-            Debug.WriteLine(msg);
+            lock (this)
+            {
+                string msg = string.Format(MessageFormat, FastDateTime.Now, message);
+                Messages.AppendLine(msg);
+                Debug.WriteLine(msg);
+            }
         }
 
         public void WriteLine(string format, params object[] args)
@@ -71,8 +74,11 @@ namespace HelpersLib
 
         public void SaveLog(string filepath)
         {
-            File.AppendAllText(filepath, Messages.ToString());
-            Messages = new StringBuilder();
+            lock (this)
+            {
+                File.AppendAllText(filepath, Messages.ToString());
+                Messages = new StringBuilder();
+            }
         }
     }
 }

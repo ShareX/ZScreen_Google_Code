@@ -41,8 +41,6 @@ using GraphicsMgrLib;
 using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
-using UploadersLib.OtherServices;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
 
@@ -653,7 +651,6 @@ namespace ZScreenLib
             }
 
             Engine.mAppSettings.XMLSettingsFile = Engine.mAppSettings.GetSettingsFilePath();
-            Engine.MyLogger.WriteLine("Reading " + Engine.mAppSettings.XMLSettingsFile);
             return Read(Engine.mAppSettings.XMLSettingsFile);
         }
 

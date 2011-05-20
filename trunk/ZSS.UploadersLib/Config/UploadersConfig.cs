@@ -24,12 +24,11 @@
 #endregion License Information (GPL v2)
 
 using System.Collections.Generic;
+using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
-using HelpersLib;
-using System.IO;
 
 namespace UploadersLib
 {
@@ -44,15 +43,10 @@ namespace UploadersLib
 
         public static UploadersConfig Read(string filePath)
         {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                return HelpersLib.SettingsHelper.Load<UploadersConfig>(filePath, HelpersLib.SerializationType.Xml, StaticHelper.MyLogger);
-            }
-
-            return new UploadersConfig();
+            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml, StaticHelper.MyLogger);
         }
 
-        #endregion
+        #endregion I/O Methods
 
         #region Image uploaders
 

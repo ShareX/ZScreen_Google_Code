@@ -36,8 +36,8 @@ using HelpersLib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersLib.HelperClasses;
 using UploadersLib;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -281,26 +281,42 @@ namespace ZScreenLib
 
         public static void LoadSettings(string fp)
         {
-            if (string.IsNullOrEmpty(fp))
+            Thread settingsThread = new Thread(() =>
             {
-                Engine.MyLogger.WriteLine("Reading " + Engine.mAppSettings.XMLSettingsFile);
-                Engine.conf = XMLSettings.Read();
-                Engine.MyLogger.WriteLine("Finished reading " + Engine.mAppSettings.XMLSettingsFile);
-            }
-            else
+                if (string.IsNullOrEmpty(fp))
+                {
+                    Engine.MyLogger.WriteLine("Reading: " + Engine.mAppSettings.XMLSettingsFile);
+                    Engine.conf = XMLSettings.Read();
+                    Engine.MyLogger.WriteLine("Finished reading: " + Engine.mAppSettings.XMLSettingsFile);
+                }
+                else
+                {
+                    Engine.MyLogger.WriteLine("Reading: " + fp);
+                    Engine.conf = XMLSettings.Read(fp);
+                    Engine.MyLogger.WriteLine("Finished reading: " + fp);
+                }
+            });
+
+            Thread uploadersConfigThread = new Thread(() =>
             {
-                Engine.MyLogger.WriteLine("Reading " + fp);
-                Engine.conf = XMLSettings.Read(fp);
-                Engine.MyLogger.WriteLine("Finished reading " + fp);
-            }
+                Engine.MyLogger.WriteLine("Reading: " + UploaderConfigPath);
+                Engine.MyUploadersConfig = UploadersConfig.Read(UploaderConfigPath);
+                Engine.MyLogger.WriteLine("Finished reading: " + UploaderConfigPath);
+            });
 
-            Engine.MyLogger.WriteLine("Reading " + UploaderConfigPath);
-            Engine.MyUploadersConfig = UploadersConfig.Read(UploaderConfigPath);
-            Engine.MyLogger.WriteLine("Finished reading " + UploaderConfigPath);
+            Thread googleTranslateThread = new Thread(() =>
+            {
+                Engine.MyLogger.WriteLine("Reading: " + GTConfigPath);
+                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GTConfigPath);
+                Engine.MyLogger.WriteLine("Finished reading: " + GTConfigPath);
+            });
 
-            Engine.MyLogger.WriteLine("Reading " + GTConfigPath);
-            Engine.MyGTConfig = GoogleTranslatorConfig.Read(GTConfigPath);
-            Engine.MyLogger.WriteLine("Finished reading " + GTConfigPath);
+            settingsThread.Start();
+            uploadersConfigThread.Start();
+            googleTranslateThread.Start();
+            settingsThread.Join();
+            uploadersConfigThread.Join();
+            googleTranslateThread.Join();
 
             Engine.InitializeFiles();
 
