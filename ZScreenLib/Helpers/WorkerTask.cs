@@ -197,7 +197,7 @@ namespace ZScreenLib
         /// <summary>
         /// FTP Account Name, TinyPic, ImageShack
         /// </summary>
-        public string DestinationName = string.Empty;
+        private string DestinationName = string.Empty;
         /// <summary>
         /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
         /// </summary>
@@ -249,9 +249,31 @@ namespace ZScreenLib
         {
             this.MyWorker = worker;
             this.Job2 = job;
-            if (job == JobLevel2.LANGUAGE_TRANSLATOR)
+
+            if (Job2 == WorkerTask.JobLevel2.CustomUploaderTest)
+            {
+                MyImageUploader = ImageUploaderType.FileUploader;
+                MyFileUploader = FileUploaderType.CustomUploader;
+            }
+            else
+            {
+                MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
+                MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+                MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
+                MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
+            }
+
+            if (MyImageUploader == ImageUploaderType.FileUploader)
+            {
+                this.Job1 = JobLevel1.File;
+            }
+            else if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
             {
                 this.Job1 = JobLevel1.Text;
+            }
+            else
+            {
+                this.Job1 = JobLevel1.Image;
             }
         }
 
@@ -561,7 +583,7 @@ namespace ZScreenLib
                     twitpicOpt.Password = Engine.conf.TwitterPassword;
                     // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;;
+                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull; ;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.TWITSNAPS:
