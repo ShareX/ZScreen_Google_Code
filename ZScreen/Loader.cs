@@ -35,7 +35,6 @@ namespace ZScreenGUI
     public static class Loader
     {
         public static WorkerPrimary Worker;
-        public static WorkerSecondary Worker2;
         public static WorkerTask zLastTask;
         public static UploadersLib.GoogleTranslateGUI MyGTGUI;
         public static List<string> LibNames = new List<string>();

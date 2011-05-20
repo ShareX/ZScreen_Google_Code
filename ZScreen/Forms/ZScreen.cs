@@ -74,15 +74,14 @@ namespace ZScreenGUI
             ZScreen_SetFormSettings();
 
             Loader.Worker = new WorkerPrimary(this);
-            Loader.Worker2 = new WorkerSecondary(this);
             Loader.Worker.mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
 
             ZScreen_ConfigGUI();
 
-            Loader.Worker2.PerformOnlineTasks();
+            PerformOnlineTasks();
             if (Engine.conf.CheckUpdates)
             {
-                Loader.Worker2.CheckUpdates();
+                CheckUpdates();
             }
 
             Application.Idle += new EventHandler(Application_Idle);
@@ -243,7 +242,7 @@ namespace ZScreenGUI
                 }
             }
 
-            Loader.Worker2.CleanCache();
+            CleanCache();
             StartDebug();
 
             SetToolTip(nudScreenshotDelay);
@@ -1689,7 +1688,7 @@ namespace ZScreenGUI
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            Loader.Worker2.CheckUpdates();
+            CheckUpdates();
         }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
@@ -2006,7 +2005,7 @@ namespace ZScreenGUI
         /// <param name="e"></param>
         private void tmrApp_Tick(object sender, EventArgs e)
         {
-            Loader.Worker2.PerformOnlineTasks();
+            PerformOnlineTasks();
         }
 
         private void pgApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)

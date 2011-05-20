@@ -38,21 +38,14 @@ namespace ZScreenGUI
     /// <summary>
     /// Class responsible for all other tasks except for Image Uploading
     /// </summary>
-    public class WorkerSecondary
+    public partial class ZScreen : Form
     {
-        private ZScreen mZScreen;
-
-        public WorkerSecondary(ZScreen myZScreen)
-        {
-            this.mZScreen = myZScreen;
-        }
-
         #region Check Updates
 
         public void CheckUpdates()
         {
-            mZScreen.btnCheckUpdate.Enabled = false;
-            mZScreen.lblUpdateInfo.Text = "Checking for Updates...";
+            btnCheckUpdate.Enabled = false;
+            lblUpdateInfo.Text = "Checking for Updates...";
             BackgroundWorker updateThread = new BackgroundWorker { WorkerReportsProgress = true };
             updateThread.DoWork += new DoWorkEventHandler(updateThread_DoWork);
             updateThread.ProgressChanged += new ProgressChangedEventHandler(updateThread_ProgressChanged);
@@ -65,7 +58,7 @@ namespace ZScreenGUI
             switch (e.ProgressPercentage)
             {
                 case 1:
-                    mZScreen.lblUpdateInfo.Text = (string)e.UserState;
+                    lblUpdateInfo.Text = (string)e.UserState;
                     break;
             }
         }
@@ -82,7 +75,7 @@ namespace ZScreenGUI
 
         private void updateThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mZScreen.btnCheckUpdate.Enabled = true;
+            btnCheckUpdate.Enabled = true;
         }
 
         #endregion Check Updates
@@ -108,7 +101,6 @@ namespace ZScreenGUI
         {
             BackgroundWorker bwOnlineWorker = new BackgroundWorker();
             bwOnlineWorker.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
-            bwOnlineWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwOnlineTasks_RunWorkerCompleted);
             bwOnlineWorker.RunWorkerAsync();
         }
 
@@ -123,7 +115,7 @@ namespace ZScreenGUI
 
                 if (Uploader.ProxySettings != null)
                 {
-                    // TODO: Method to update TinyPic RegCode automatically
+                    // TODO: Method to update TinyPic RegCode automatically - implement BackgroundTasks in UploaderConfig
                 }
 
                 if (Adapter.CheckFTPAccounts())
@@ -135,79 +127,6 @@ namespace ZScreenGUI
             {
                 Engine.MyLogger.WriteException("Error while performing Online Tasks", ex);
             }
-        }
-
-        private void bwOnlineTasks_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            FillLanguages();
-        }
-
-        public void FillLanguages()
-        {
-            if (Loader.MyGTGUI != null && Engine.MyGTConfig.GoogleLanguages != null && Engine.MyGTConfig.GoogleLanguages.Count > 0)
-            {
-                Loader.MyGTGUI.cbFromLanguage.Items.Clear();
-                Loader.MyGTGUI.cbToLanguage.Items.Clear();
-
-                foreach (GoogleLanguage lang in Engine.MyGTConfig.GoogleLanguages)
-                {
-                    Loader.MyGTGUI.cbFromLanguage.Items.Add(lang.Name);
-                    Loader.MyGTGUI.cbToLanguage.Items.Add(lang.Name);
-                }
-
-                SelectLanguage(Engine.MyGTConfig.GoogleSourceLanguage, Engine.MyGTConfig.GoogleTargetLanguage, Engine.MyGTConfig.GoogleTargetLanguage2);
-
-                if (Loader.MyGTGUI.cbFromLanguage.Items.Count > 0)
-                {
-                    Loader.MyGTGUI.cbFromLanguage.Enabled = true;
-                }
-
-                if (Loader.MyGTGUI.cbToLanguage.Items.Count > 0)
-                {
-                    Loader.MyGTGUI.cbToLanguage.Enabled = true;
-                }
-            }
-        }
-
-        public void SelectLanguage(string sourceLanguage, string targetLanguage, string targetLanguage2)
-        {
-            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
-            {
-                if (Engine.MyGTConfig.GoogleLanguages[i].Language == sourceLanguage)
-                {
-                    if (Loader.MyGTGUI.cbFromLanguage.Items.Count > i)
-                    {
-                        Loader.MyGTGUI.cbFromLanguage.SelectedIndex = i;
-                    }
-
-                    break;
-                }
-            }
-
-            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
-            {
-                if (Engine.MyGTConfig.GoogleLanguages[i].Language == targetLanguage)
-                {
-                    if (Loader.MyGTGUI.cbToLanguage.Items.Count > i)
-                    {
-                        Loader.MyGTGUI.cbToLanguage.SelectedIndex = i;
-                    }
-
-                    break;
-                }
-            }
-
-            Loader.MyGTGUI.btnTranslateTo1.Text = "To " + GetLanguageName(targetLanguage2);
-        }
-
-        public string GetLanguageName(string language)
-        {
-            foreach (GoogleLanguage gl in Engine.MyGTConfig.GoogleLanguages)
-            {
-                if (gl.Language == language) return gl.Name;
-            }
-
-            return string.Empty;
         }
 
         public int GetLanguageIndex(string language)

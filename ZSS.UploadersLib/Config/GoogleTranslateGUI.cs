@@ -26,6 +26,71 @@ namespace UploadersLib
             cbLanguageAutoDetect.Checked = config.GoogleAutoDetectSource;
             cbAutoTranslate.Checked = config.AutoTranslate;
             txtAutoTranslate.Text = config.AutoTranslateLength.ToString();
+
+            if (Config.GoogleLanguages != null && Config.GoogleLanguages.Count > 0)
+            {
+                cbFromLanguage.Items.Clear();
+                cbToLanguage.Items.Clear();
+
+                foreach (GoogleLanguage lang in Config.GoogleLanguages)
+                {
+                    cbFromLanguage.Items.Add(lang.Name);
+                    cbToLanguage.Items.Add(lang.Name);
+                }
+
+                SelectLanguage(Config.GoogleSourceLanguage, Config.GoogleTargetLanguage, Config.GoogleTargetLanguage2);
+
+                if (cbFromLanguage.Items.Count > 0)
+                {
+                    cbFromLanguage.Enabled = true;
+                }
+
+                if (cbToLanguage.Items.Count > 0)
+                {
+                    cbToLanguage.Enabled = true;
+                }
+            }
+        }
+
+        public void SelectLanguage(string sourceLanguage, string targetLanguage, string targetLanguage2)
+        {
+            for (int i = 0; i < Config.GoogleLanguages.Count; i++)
+            {
+                if (Config.GoogleLanguages[i].Language == sourceLanguage)
+                {
+                    if (cbFromLanguage.Items.Count > i)
+                    {
+                        cbFromLanguage.SelectedIndex = i;
+                    }
+
+                    break;
+                }
+            }
+
+            for (int i = 0; i < Config.GoogleLanguages.Count; i++)
+            {
+                if (Config.GoogleLanguages[i].Language == targetLanguage)
+                {
+                    if (cbToLanguage.Items.Count > i)
+                    {
+                        cbToLanguage.SelectedIndex = i;
+                    }
+
+                    break;
+                }
+            }
+
+            btnTranslateTo1.Text = "To " + GetLanguageName(targetLanguage2);
+        }
+
+        public string GetLanguageName(string language)
+        {
+            foreach (GoogleLanguage gl in Config.GoogleLanguages)
+            {
+                if (gl.Language == language) return gl.Name;
+            }
+
+            return string.Empty;
         }
 
         private void btnTranslate_Click(object sender, EventArgs e)
