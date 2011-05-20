@@ -221,7 +221,7 @@ namespace UploadersLib
         {
             try
             {
-                MediaWiki connector = new MediaWiki(new MediaWikiOptions(acc, null)); // TODO: CheckProxySettings().GetWebProxy
+                MediaWiki connector = new MediaWiki(new MediaWikiOptions(acc, null)); // TODO: MediaWiki CheckProxySettings().GetWebProxy
                 connector.Login();
                 success();
             }
