@@ -28,11 +28,32 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
+using HelpersLib;
+using System.IO;
 
 namespace UploadersLib
 {
     public class UploadersConfig
     {
+        #region I/O Methods
+
+        public bool Write(string filePath)
+        {
+            return SettingsHelper.Save<UploadersConfig>(this, filePath, SerializationType.Xml, StaticHelper.MyLogger);
+        }
+
+        public static UploadersConfig Read(string filePath)
+        {
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                return HelpersLib.SettingsHelper.Load<UploadersConfig>(filePath, HelpersLib.SerializationType.Xml, StaticHelper.MyLogger);
+            }
+
+            return new UploadersConfig();
+        }
+
+        #endregion
+
         #region Image uploaders
 
         // ImageShack

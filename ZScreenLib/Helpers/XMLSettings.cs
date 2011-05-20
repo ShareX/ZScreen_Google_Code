@@ -62,7 +62,7 @@ namespace ZScreenLib
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
         public bool Windows7TaskbarIntegration = true;
-        public static string XMLFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
+        public static string SettingsFileName = string.Format("{0}-{1}-Settings.xml", Application.ProductName, Application.ProductVersion);
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
@@ -84,27 +84,9 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public UploadersConfig UploadersConfig = new UploadersConfig();
-
         // TinyPic
         [Category("Options / Image Uploaders"), DefaultValue(true), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
         public bool TinyPicSizeCheck { get; set; }
-
-        // TwitPic
-
-        public bool TwitPicShowFull = true;
-        public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
-
-        // DekiWiki
-
-        public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
-        public int DekiWikiSelected = 0;
-        public bool DekiWikiForcePath = false;
-
-        // Custom Uploaders
-
-        public List<CustomUploaderInfo> CustomUploadersList = new List<CustomUploaderInfo>();
-        public int CustomUploaderSelected = 0;
 
         // Twitter
 
@@ -640,10 +622,10 @@ namespace ZScreenLib
 
         public void Write()
         {
-            new Thread(SaveThread).Start(Engine.mAppSettings.GetSettingsFilePath());
+            new Thread(WriteThread).Start(Engine.mAppSettings.GetSettingsFilePath());
         }
 
-        public void SaveThread(object filePath)
+        public void WriteThread(object filePath)
         {
             lock (this)
             {

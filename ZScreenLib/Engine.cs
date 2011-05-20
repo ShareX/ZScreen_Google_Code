@@ -37,6 +37,7 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib.HelperClasses;
+using UploadersLib;
 
 namespace ZScreenLib
 {
@@ -67,10 +68,8 @@ namespace ZScreenLib
 
         public static AppSettings mAppSettings = AppSettings.Read();
 
-        private static readonly string XMLFileName = XMLSettings.XMLFileName;
         private static readonly string HistoryFileName = "ZScreenHistory.xml";
-        private static readonly string OldXMLFilePath = Path.Combine(zLocalAppDataFolder, XMLFileName);
-        private static readonly string OldXMLPortableFile = Path.Combine(Application.StartupPath, XMLFileName);
+        private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
 
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
@@ -129,6 +128,7 @@ namespace ZScreenLib
         private static bool RunConfig = false;
 
         public static XMLSettings conf;
+        public static UploadersConfig MyUploadersConfig;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -145,6 +145,12 @@ namespace ZScreenLib
         {
             public bool KeyboardHook { get; set; }
             public bool ShowConfigWizard { get; set; }
+        }
+
+        public static void WriteSettings()
+        {
+            Engine.MyUploadersConfig.Write(UploaderConfigPath);
+            Engine.conf.Write();
         }
 
         public static void TurnOn()
@@ -241,7 +247,7 @@ namespace ZScreenLib
         public static void LoadSettingsLatest()
         {
             string fp = GetLatestSettingsFile();
-            XMLSettings.XMLFileName = Path.GetFileName(fp);
+            XMLSettings.SettingsFileName = Path.GetFileName(fp);
             LoadSettings(fp);
         }
 
@@ -274,6 +280,7 @@ namespace ZScreenLib
         {
             if (string.IsNullOrEmpty(fp))
             {
+                Engine.MyLogger.WriteLine("Reading " + Engine.mAppSettings.XMLSettingsFile);
                 Engine.conf = XMLSettings.Read();
                 Engine.MyLogger.WriteLine("Finished reading " + Engine.mAppSettings.XMLSettingsFile);
             }
@@ -281,7 +288,12 @@ namespace ZScreenLib
             {
                 Engine.MyLogger.WriteLine("Reading " + fp);
                 Engine.conf = XMLSettings.Read(fp);
+                Engine.MyLogger.WriteLine("Finished reading " + fp);
             }
+
+            Engine.MyLogger.WriteLine("Reading " + UploaderConfigPath);
+            Engine.MyUploadersConfig = UploadersConfig.Read(UploaderConfigPath);
+            Engine.MyLogger.WriteLine("Finished reading " + UploaderConfigPath);
 
             Engine.InitializeFiles();
 
@@ -315,7 +327,7 @@ namespace ZScreenLib
             FileSystem.WriteDebugFile();
             if (Engine.conf != null)
             {
-                Engine.conf.Write();
+                Engine.WriteSettings();
             }
         }
 
@@ -381,7 +393,7 @@ namespace ZScreenLib
                 }
             }
 
-            string latestSettingsFile = Path.Combine(SettingsDir, XMLSettings.XMLFileName);
+            string latestSettingsFile = Path.Combine(SettingsDir, XMLSettings.SettingsFileName);
             if (File.Exists(latestSettingsFile))
             {
                 Engine.mAppSettings.XMLSettingsFile = latestSettingsFile;
@@ -508,6 +520,14 @@ namespace ZScreenLib
             get
             {
                 return Path.Combine(SettingsDir, HistoryFileName);
+            }
+        }
+
+        public static string UploaderConfigPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, UploadersConfigFileName);
             }
         }
 
