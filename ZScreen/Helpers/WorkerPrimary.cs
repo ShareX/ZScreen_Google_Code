@@ -281,8 +281,8 @@ namespace ZScreenGUI
                             {
                                 FillGoogleTranslateInfo(task.TranslationInfo);
 
-                                mZScreen.btnTranslate.Enabled = true;
-                                mZScreen.btnTranslateTo1.Enabled = true;
+                                Loader.MyGTGUI.btnTranslate.Enabled = true;
+                                Loader.MyGTGUI.btnTranslateTo1.Enabled = true;
                             }
                             break;
                         case JobLevel1.Image:
@@ -395,12 +395,12 @@ namespace ZScreenGUI
             switch (job)
             {
                 case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                    mZScreen.btnTranslate.Enabled = false;
+                    Loader.MyGTGUI.btnTranslate.Enabled = false;
                     task.TranslationInfo = new GoogleTranslateInfo()
                     {
-                        Text = mZScreen.txtTranslateText.Text,
-                        SourceLanguage = Engine.conf.GoogleSourceLanguage,
-                        TargetLanguage = Engine.conf.GoogleTargetLanguage
+                        Text = Loader.MyGTGUI.txtTranslateText.Text,
+                        SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
+                        TargetLanguage = Engine.MyGTConfig.GoogleTargetLanguage
                     };
 
                     break;
@@ -486,8 +486,8 @@ namespace ZScreenGUI
                 StartBW_LanguageTranslator(new GoogleTranslateInfo()
                 {
                     Text = Clipboard.GetText(),
-                    SourceLanguage = Engine.conf.GoogleSourceLanguage,
-                    TargetLanguage = Engine.conf.GoogleTargetLanguage
+                    SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
+                    TargetLanguage = Engine.MyGTConfig.GoogleTargetLanguage
                 });
             }
         }
@@ -638,7 +638,7 @@ namespace ZScreenGUI
         public void UploadUsingClipboard()
         {
             Engine.ClipboardUnhook();
-            if (Clipboard.ContainsText() && Engine.conf.AutoTranslate && Clipboard.GetText().Length <= Engine.conf.AutoTranslateLength)
+            if (Clipboard.ContainsText() && Engine.MyGTConfig.AutoTranslate && Clipboard.GetText().Length <= Engine.MyGTConfig.AutoTranslateLength)
             {
                 StartWorkerTranslator();
             }
@@ -660,9 +660,9 @@ namespace ZScreenGUI
 
         private void FillGoogleTranslateInfo(GoogleTranslateInfo info)
         {
-            mZScreen.txtTranslateText.Text = info.Text;
-            mZScreen.txtLanguages.Text = info.SourceLanguage + " -> " + info.TargetLanguage;
-            mZScreen.txtTranslateResult.Text = info.Result;
+            Loader.MyGTGUI.txtTranslateText.Text = info.Text;
+            Loader.MyGTGUI.txtLanguages.Text = info.SourceLanguage + " -> " + info.TargetLanguage;
+            Loader.MyGTGUI.txtTranslateResult.Text = info.Result;
         }
 
         #region Start Workers
@@ -670,8 +670,8 @@ namespace ZScreenGUI
         public void StartBW_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
             WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
-            mZScreen.btnTranslate.Enabled = false;
-            mZScreen.btnTranslateTo1.Enabled = false;
+            Loader.MyGTGUI.btnTranslate.Enabled = false;
+            Loader.MyGTGUI.btnTranslateTo1.Enabled = false;
             t.TranslationInfo = translationInfo;
             t.MyWorker.RunWorkerAsync(t);
         }
@@ -792,35 +792,7 @@ namespace ZScreenGUI
 
         #region Translate
 
-        public void Translate()
-        {
-            StartBW_LanguageTranslator(new GoogleTranslateInfo
-            {
-                Text = mZScreen.txtTranslateText.Text,
-                SourceLanguage = Engine.conf.GoogleAutoDetectSource ? null : Engine.conf.GoogleSourceLanguage,
-                TargetLanguage = Engine.conf.GoogleTargetLanguage
-            });
-        }
 
-        public void TranslateTo1()
-        {
-            if (Engine.conf.GoogleTargetLanguage2 == "?")
-            {
-                mZScreen.lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
-                MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", mZScreen.Text,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                mZScreen.lblToLanguage.BorderStyle = BorderStyle.None;
-            }
-            else
-            {
-                StartBW_LanguageTranslator(new GoogleTranslateInfo()
-                {
-                    Text = mZScreen.txtTranslateText.Text,
-                    SourceLanguage = Engine.conf.GoogleAutoDetectSource ? null : Engine.conf.GoogleSourceLanguage,
-                    TargetLanguage = Engine.conf.GoogleTargetLanguage2
-                });
-            }
-        }
 
         #endregion Translate
     }

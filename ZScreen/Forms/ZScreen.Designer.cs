@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +85,7 @@ namespace ZScreenGUI
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
-            this.tsbLanguageTranslate = new System.Windows.Forms.ToolStripButton();
+            this.tsbLanguageTranslator = new System.Windows.Forms.ToolStripButton();
             this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbOpenHistory = new System.Windows.Forms.ToolStripButton();
@@ -94,6 +94,7 @@ namespace ZScreenGUI
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.lblCopytoClipboard = new System.Windows.Forms.Label();
@@ -199,26 +200,12 @@ namespace ZScreenGUI
             this.btnWebPageCaptureImage = new System.Windows.Forms.Button();
             this.txtWebPageURL = new System.Windows.Forms.TextBox();
             this.tpMainActions = new System.Windows.Forms.TabPage();
-            this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.gbImageEditorSettings = new System.Windows.Forms.GroupBox();
             this.chkImageEditorAutoSave = new System.Windows.Forms.CheckBox();
             this.lbSoftware = new System.Windows.Forms.CheckedListBox();
             this.pgEditorsImage = new System.Windows.Forms.PropertyGrid();
             this.btnRemoveImageEditor = new System.Windows.Forms.Button();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.tpTranslator = new System.Windows.Forms.TabPage();
-            this.cbLanguageAutoDetect = new System.Windows.Forms.CheckBox();
-            this.txtAutoTranslate = new System.Windows.Forms.TextBox();
-            this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
-            this.btnTranslateTo1 = new System.Windows.Forms.Button();
-            this.txtTranslateResult = new System.Windows.Forms.TextBox();
-            this.txtLanguages = new System.Windows.Forms.TextBox();
-            this.btnTranslate = new System.Windows.Forms.Button();
-            this.txtTranslateText = new System.Windows.Forms.TextBox();
-            this.lblToLanguage = new System.Windows.Forms.Label();
-            this.lblFromLanguage = new System.Windows.Forms.Label();
-            this.cbToLanguage = new System.Windows.Forms.ComboBox();
-            this.cbFromLanguage = new System.Windows.Forms.ComboBox();
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpOptionsGeneral = new System.Windows.Forms.TabPage();
@@ -475,7 +462,6 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).BeginInit();
             this.tpMainActions.SuspendLayout();
             this.gbImageEditorSettings.SuspendLayout();
-            this.tpTranslator.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
             this.tpOptionsGeneral.SuspendLayout();
@@ -833,7 +819,6 @@ namespace ZScreenGUI
             this.tcMain.Controls.Add(this.tpHotkeys);
             this.tcMain.Controls.Add(this.tpMainInput);
             this.tcMain.Controls.Add(this.tpMainActions);
-            this.tcMain.Controls.Add(this.tpTranslator);
             this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -898,7 +883,7 @@ namespace ZScreenGUI
             this.tsbFileUpload,
             this.tsbClipboardUpload,
             this.tsbDragDropWindow,
-            this.tsbLanguageTranslate,
+            this.tsbLanguageTranslator,
             this.tsbScreenColorPicker,
             this.toolStripSeparator8,
             this.tsbOpenHistory,
@@ -1016,15 +1001,15 @@ namespace ZScreenGUI
             this.tsbDragDropWindow.Text = "Drag && Drop Window...";
             this.tsbDragDropWindow.Click += new System.EventHandler(this.tsbDragDropWindow_Click);
             // 
-            // tsbLanguageTranslate
+            // tsbLanguageTranslator
             // 
-            this.tsbLanguageTranslate.Image = global::ZScreenGUI.Properties.Resources.comments;
-            this.tsbLanguageTranslate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbLanguageTranslate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbLanguageTranslate.Name = "tsbLanguageTranslate";
-            this.tsbLanguageTranslate.Size = new System.Drawing.Size(137, 20);
-            this.tsbLanguageTranslate.Text = "Language Translate";
-            this.tsbLanguageTranslate.Click += new System.EventHandler(this.tsbLanguageTranslate_Click);
+            this.tsbLanguageTranslator.Image = global::ZScreenGUI.Properties.Resources.comments;
+            this.tsbLanguageTranslator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbLanguageTranslator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLanguageTranslator.Name = "tsbLanguageTranslator";
+            this.tsbLanguageTranslator.Size = new System.Drawing.Size(137, 20);
+            this.tsbLanguageTranslator.Text = "Language Translator...";
+            this.tsbLanguageTranslator.Click += new System.EventHandler(this.tsbLanguageTranslate_Click);
             // 
             // tsbScreenColorPicker
             // 
@@ -1110,6 +1095,19 @@ namespace ZScreenGUI
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Image Settings";
+            // 
+            // chkPerformActions
+            // 
+            this.chkPerformActions.AutoSize = true;
+            this.chkPerformActions.Checked = true;
+            this.chkPerformActions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPerformActions.Location = new System.Drawing.Point(16, 136);
+            this.chkPerformActions.Name = "chkPerformActions";
+            this.chkPerformActions.Size = new System.Drawing.Size(203, 17);
+            this.chkPerformActions.TabIndex = 68;
+            this.chkPerformActions.Text = "Perform &Actions after capturing Image";
+            this.chkPerformActions.UseVisualStyleBackColor = true;
+            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.ChkEditorsEnableCheckedChanged);
             // 
             // lblScreenshotDelay
             // 
@@ -1314,7 +1312,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle5;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2360,19 +2358,6 @@ namespace ZScreenGUI
             this.tpMainActions.Text = "Actions";
             this.tpMainActions.UseVisualStyleBackColor = true;
             // 
-            // chkPerformActions
-            // 
-            this.chkPerformActions.AutoSize = true;
-            this.chkPerformActions.Checked = true;
-            this.chkPerformActions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPerformActions.Location = new System.Drawing.Point(16, 136);
-            this.chkPerformActions.Name = "chkPerformActions";
-            this.chkPerformActions.Size = new System.Drawing.Size(203, 17);
-            this.chkPerformActions.TabIndex = 68;
-            this.chkPerformActions.Text = "Perform &Actions after capturing Image";
-            this.chkPerformActions.UseVisualStyleBackColor = true;
-            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.ChkEditorsEnableCheckedChanged);
-            // 
             // gbImageEditorSettings
             // 
             this.gbImageEditorSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -2444,162 +2429,6 @@ namespace ZScreenGUI
             this.btnAddImageSoftware.Text = "Add...";
             this.btnAddImageSoftware.UseVisualStyleBackColor = false;
             this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
-            // 
-            // tpTranslator
-            // 
-            this.tpTranslator.Controls.Add(this.cbLanguageAutoDetect);
-            this.tpTranslator.Controls.Add(this.txtAutoTranslate);
-            this.tpTranslator.Controls.Add(this.cbAutoTranslate);
-            this.tpTranslator.Controls.Add(this.btnTranslateTo1);
-            this.tpTranslator.Controls.Add(this.txtTranslateResult);
-            this.tpTranslator.Controls.Add(this.txtLanguages);
-            this.tpTranslator.Controls.Add(this.btnTranslate);
-            this.tpTranslator.Controls.Add(this.txtTranslateText);
-            this.tpTranslator.Controls.Add(this.lblToLanguage);
-            this.tpTranslator.Controls.Add(this.lblFromLanguage);
-            this.tpTranslator.Controls.Add(this.cbToLanguage);
-            this.tpTranslator.Controls.Add(this.cbFromLanguage);
-            this.tpTranslator.ImageKey = "(none)";
-            this.tpTranslator.Location = new System.Drawing.Point(4, 22);
-            this.tpTranslator.Name = "tpTranslator";
-            this.tpTranslator.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTranslator.Size = new System.Drawing.Size(813, 440);
-            this.tpTranslator.TabIndex = 1;
-            this.tpTranslator.Text = "Translator";
-            this.tpTranslator.UseVisualStyleBackColor = true;
-            // 
-            // cbLanguageAutoDetect
-            // 
-            this.cbLanguageAutoDetect.AutoSize = true;
-            this.cbLanguageAutoDetect.Location = new System.Drawing.Point(224, 18);
-            this.cbLanguageAutoDetect.Name = "cbLanguageAutoDetect";
-            this.cbLanguageAutoDetect.Size = new System.Drawing.Size(128, 17);
-            this.cbLanguageAutoDetect.TabIndex = 13;
-            this.cbLanguageAutoDetect.Text = "Auto detect language";
-            this.cbLanguageAutoDetect.UseVisualStyleBackColor = true;
-            this.cbLanguageAutoDetect.CheckedChanged += new System.EventHandler(this.cbLanguageAutoDetect_CheckedChanged);
-            // 
-            // txtAutoTranslate
-            // 
-            this.txtAutoTranslate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtAutoTranslate.Location = new System.Drawing.Point(432, 273);
-            this.txtAutoTranslate.Name = "txtAutoTranslate";
-            this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
-            this.txtAutoTranslate.TabIndex = 11;
-            this.txtAutoTranslate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtAutoTranslate.TextChanged += new System.EventHandler(this.txtAutoTranslate_TextChanged);
-            // 
-            // cbAutoTranslate
-            // 
-            this.cbAutoTranslate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbAutoTranslate.AutoSize = true;
-            this.cbAutoTranslate.Location = new System.Drawing.Point(16, 275);
-            this.cbAutoTranslate.Name = "cbAutoTranslate";
-            this.cbAutoTranslate.Size = new System.Drawing.Size(416, 17);
-            this.cbAutoTranslate.TabIndex = 10;
-            this.cbAutoTranslate.Text = "Automatically translate text instead of uploading text if the text length is smal" +
-                "ler than";
-            this.ttZScreen.SetToolTip(this.cbAutoTranslate, "Maximum number of characters before Clipboard Upload switches from Translate to T" +
-                    "ext Upload.");
-            this.cbAutoTranslate.UseVisualStyleBackColor = true;
-            this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
-            // 
-            // btnTranslateTo1
-            // 
-            this.btnTranslateTo1.AllowDrop = true;
-            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 208);
-            this.btnTranslateTo1.Name = "btnTranslateTo1";
-            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
-            this.btnTranslateTo1.TabIndex = 9;
-            this.btnTranslateTo1.Text = "???";
-            this.btnTranslateTo1.UseVisualStyleBackColor = true;
-            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
-            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
-            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
-            // 
-            // txtTranslateResult
-            // 
-            this.txtTranslateResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtTranslateResult.Location = new System.Drawing.Point(360, 104);
-            this.txtTranslateResult.Multiline = true;
-            this.txtTranslateResult.Name = "txtTranslateResult";
-            this.txtTranslateResult.ReadOnly = true;
-            this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateResult.Size = new System.Drawing.Size(336, 129);
-            this.txtTranslateResult.TabIndex = 5;
-            // 
-            // txtLanguages
-            // 
-            this.txtLanguages.Location = new System.Drawing.Point(360, 80);
-            this.txtLanguages.Name = "txtLanguages";
-            this.txtLanguages.ReadOnly = true;
-            this.txtLanguages.Size = new System.Drawing.Size(336, 20);
-            this.txtLanguages.TabIndex = 4;
-            // 
-            // btnTranslate
-            // 
-            this.btnTranslate.Location = new System.Drawing.Point(16, 208);
-            this.btnTranslate.Name = "btnTranslate";
-            this.btnTranslate.Size = new System.Drawing.Size(192, 24);
-            this.btnTranslate.TabIndex = 3;
-            this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
-            this.btnTranslate.UseVisualStyleBackColor = true;
-            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
-            // 
-            // txtTranslateText
-            // 
-            this.txtTranslateText.Location = new System.Drawing.Point(16, 80);
-            this.txtTranslateText.Multiline = true;
-            this.txtTranslateText.Name = "txtTranslateText";
-            this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateText.TabIndex = 2;
-            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
-            // 
-            // lblToLanguage
-            // 
-            this.lblToLanguage.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lblToLanguage.Location = new System.Drawing.Point(16, 40);
-            this.lblToLanguage.Name = "lblToLanguage";
-            this.lblToLanguage.Size = new System.Drawing.Size(48, 32);
-            this.lblToLanguage.TabIndex = 3;
-            this.lblToLanguage.Text = "Target:";
-            this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
-            // 
-            // lblFromLanguage
-            // 
-            this.lblFromLanguage.Location = new System.Drawing.Point(16, 10);
-            this.lblFromLanguage.Name = "lblFromLanguage";
-            this.lblFromLanguage.Size = new System.Drawing.Size(48, 32);
-            this.lblFromLanguage.TabIndex = 2;
-            this.lblFromLanguage.Text = "Source:";
-            this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cbToLanguage
-            // 
-            this.cbToLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbToLanguage.Enabled = false;
-            this.cbToLanguage.FormattingEnabled = true;
-            this.cbToLanguage.Location = new System.Drawing.Point(72, 48);
-            this.cbToLanguage.MaxDropDownItems = 20;
-            this.cbToLanguage.Name = "cbToLanguage";
-            this.cbToLanguage.Size = new System.Drawing.Size(144, 21);
-            this.cbToLanguage.TabIndex = 1;
-            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
-            // 
-            // cbFromLanguage
-            // 
-            this.cbFromLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFromLanguage.Enabled = false;
-            this.cbFromLanguage.FormattingEnabled = true;
-            this.cbFromLanguage.Location = new System.Drawing.Point(72, 16);
-            this.cbFromLanguage.MaxDropDownItems = 20;
-            this.cbFromLanguage.Name = "cbFromLanguage";
-            this.cbFromLanguage.Size = new System.Drawing.Size(144, 21);
-            this.cbFromLanguage.TabIndex = 0;
-            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
             // tpOptions
             // 
@@ -5184,8 +5013,6 @@ namespace ZScreenGUI
             this.tpMainActions.ResumeLayout(false);
             this.gbImageEditorSettings.ResumeLayout(false);
             this.gbImageEditorSettings.PerformLayout();
-            this.tpTranslator.ResumeLayout(false);
-            this.tpTranslator.PerformLayout();
             this.tpOptions.ResumeLayout(false);
             this.tcOptions.ResumeLayout(false);
             this.tpOptionsGeneral.ResumeLayout(false);
@@ -5487,16 +5314,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnAddImageSoftware;
         internal System.Windows.Forms.Button btnFTPImport;
         internal System.Windows.Forms.Button btnFTPExport;
-        internal System.Windows.Forms.TabPage tpTranslator;
-        internal System.Windows.Forms.Button btnTranslateTo1;
-        internal System.Windows.Forms.TextBox txtTranslateResult;
-        internal System.Windows.Forms.TextBox txtLanguages;
-        internal System.Windows.Forms.Button btnTranslate;
-        internal System.Windows.Forms.TextBox txtTranslateText;
-        internal System.Windows.Forms.Label lblToLanguage;
-        internal System.Windows.Forms.Label lblFromLanguage;
-        internal System.Windows.Forms.ComboBox cbToLanguage;
-        internal System.Windows.Forms.ComboBox cbFromLanguage;
         internal System.Windows.Forms.TabPage tpOptions;
         internal System.Windows.Forms.TabControl tcOptions;
         internal System.Windows.Forms.TabPage tpOptionsGeneral;
@@ -5541,8 +5358,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.PropertyGrid pgEditorsImage;
         internal System.Windows.Forms.GroupBox gbImageSettings;
         internal System.Windows.Forms.GroupBox gpCropRegion;
-        internal System.Windows.Forms.TextBox txtAutoTranslate;
-        internal System.Windows.Forms.CheckBox cbAutoTranslate;
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.GroupBox gbImageEditorSettings;
@@ -5647,7 +5462,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
-        private System.Windows.Forms.CheckBox cbLanguageAutoDetect;
         private System.Windows.Forms.TabPage tpOptionsClipboard;
         private System.Windows.Forms.Label lblFileSystemNote;
         private System.Windows.Forms.GroupBox btnOptionsBalloonTip;
@@ -5670,7 +5484,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripButton tsbFileUpload;
         private System.Windows.Forms.ToolStripButton tsbClipboardUpload;
         private System.Windows.Forms.ToolStripButton tsbDragDropWindow;
-        private System.Windows.Forms.ToolStripButton tsbLanguageTranslate;
+        private System.Windows.Forms.ToolStripButton tsbLanguageTranslator;
         private System.Windows.Forms.ToolStripButton tsbScreenColorPicker;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripButton tsbOpenHistory;

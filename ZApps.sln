@@ -72,7 +72,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersAPILib", "ZAPILib\ZSS.UploadersAPILib.csproj", "{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen4", "ZScreen4\ZScreen4.csproj", "{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen5", "ZScreen4\ZScreen5.csproj", "{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderScreenshotPlugin", "ZUploaderScreenshotPlugin\ZUploaderScreenshotPlugin.csproj", "{A269F11C-43AC-4210-B716-BD621C915B43}"
 EndProject

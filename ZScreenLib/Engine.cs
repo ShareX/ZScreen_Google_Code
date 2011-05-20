@@ -70,6 +70,7 @@ namespace ZScreenLib
 
         private static readonly string HistoryFileName = "ZScreenHistory.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
+        private static readonly string GTConfigFileName = "GTConfig.xml";
 
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
@@ -129,6 +130,7 @@ namespace ZScreenLib
 
         public static XMLSettings conf;
         public static UploadersConfig MyUploadersConfig;
+        public static GoogleTranslatorConfig MyGTConfig;
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -149,6 +151,7 @@ namespace ZScreenLib
 
         public static void WriteSettings()
         {
+            Engine.MyGTConfig.Write(GTConfigPath);
             Engine.MyUploadersConfig.Write(UploaderConfigPath);
             Engine.conf.Write();
         }
@@ -294,6 +297,10 @@ namespace ZScreenLib
             Engine.MyLogger.WriteLine("Reading " + UploaderConfigPath);
             Engine.MyUploadersConfig = UploadersConfig.Read(UploaderConfigPath);
             Engine.MyLogger.WriteLine("Finished reading " + UploaderConfigPath);
+
+            Engine.MyLogger.WriteLine("Reading " + GTConfigPath);
+            Engine.MyGTConfig = GoogleTranslatorConfig.Read(GTConfigPath);
+            Engine.MyLogger.WriteLine("Finished reading " + GTConfigPath);
 
             Engine.InitializeFiles();
 
@@ -528,6 +535,14 @@ namespace ZScreenLib
             get
             {
                 return Path.Combine(SettingsDir, UploadersConfigFileName);
+            }
+        }
+
+        public static string GTConfigPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, GTConfigFileName);
             }
         }
 

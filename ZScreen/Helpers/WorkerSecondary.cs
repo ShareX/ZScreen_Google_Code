@@ -116,9 +116,9 @@ namespace ZScreenGUI
         {
             try
             {
-                if (Engine.conf.GoogleLanguages == null || Engine.conf.GoogleLanguages.Count < 1)
+                if (Engine.MyGTConfig.GoogleLanguages == null || Engine.MyGTConfig.GoogleLanguages.Count < 1)
                 {
-                    Engine.conf.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
+                    Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
                 }
 
                 if (Uploader.ProxySettings != null)
@@ -144,65 +144,65 @@ namespace ZScreenGUI
 
         public void FillLanguages()
         {
-            if (Engine.conf.GoogleLanguages != null && Engine.conf.GoogleLanguages.Count > 0)
+            if (Loader.MyGTGUI != null && Engine.MyGTConfig.GoogleLanguages != null && Engine.MyGTConfig.GoogleLanguages.Count > 0)
             {
-                mZScreen.cbFromLanguage.Items.Clear();
-                mZScreen.cbToLanguage.Items.Clear();
+                Loader.MyGTGUI.cbFromLanguage.Items.Clear();
+                Loader.MyGTGUI.cbToLanguage.Items.Clear();
 
-                foreach (GoogleLanguage lang in Engine.conf.GoogleLanguages)
+                foreach (GoogleLanguage lang in Engine.MyGTConfig.GoogleLanguages)
                 {
-                    mZScreen.cbFromLanguage.Items.Add(lang.Name);
-                    mZScreen.cbToLanguage.Items.Add(lang.Name);
+                    Loader.MyGTGUI.cbFromLanguage.Items.Add(lang.Name);
+                    Loader.MyGTGUI.cbToLanguage.Items.Add(lang.Name);
                 }
 
-                SelectLanguage(Engine.conf.GoogleSourceLanguage, Engine.conf.GoogleTargetLanguage, Engine.conf.GoogleTargetLanguage2);
+                SelectLanguage(Engine.MyGTConfig.GoogleSourceLanguage, Engine.MyGTConfig.GoogleTargetLanguage, Engine.MyGTConfig.GoogleTargetLanguage2);
 
-                if (mZScreen.cbFromLanguage.Items.Count > 0)
+                if (Loader.MyGTGUI.cbFromLanguage.Items.Count > 0)
                 {
-                    mZScreen.cbFromLanguage.Enabled = true;
+                    Loader.MyGTGUI.cbFromLanguage.Enabled = true;
                 }
 
-                if (mZScreen.cbToLanguage.Items.Count > 0)
+                if (Loader.MyGTGUI.cbToLanguage.Items.Count > 0)
                 {
-                    mZScreen.cbToLanguage.Enabled = true;
+                    Loader.MyGTGUI.cbToLanguage.Enabled = true;
                 }
             }
         }
 
         public void SelectLanguage(string sourceLanguage, string targetLanguage, string targetLanguage2)
         {
-            for (int i = 0; i < Engine.conf.GoogleLanguages.Count; i++)
+            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
             {
-                if (Engine.conf.GoogleLanguages[i].Language == sourceLanguage)
+                if (Engine.MyGTConfig.GoogleLanguages[i].Language == sourceLanguage)
                 {
-                    if (mZScreen.cbFromLanguage.Items.Count > i)
+                    if (Loader.MyGTGUI.cbFromLanguage.Items.Count > i)
                     {
-                        mZScreen.cbFromLanguage.SelectedIndex = i;
+                        Loader.MyGTGUI.cbFromLanguage.SelectedIndex = i;
                     }
 
                     break;
                 }
             }
 
-            for (int i = 0; i < Engine.conf.GoogleLanguages.Count; i++)
+            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
             {
-                if (Engine.conf.GoogleLanguages[i].Language == targetLanguage)
+                if (Engine.MyGTConfig.GoogleLanguages[i].Language == targetLanguage)
                 {
-                    if (mZScreen.cbToLanguage.Items.Count > i)
+                    if (Loader.MyGTGUI.cbToLanguage.Items.Count > i)
                     {
-                        mZScreen.cbToLanguage.SelectedIndex = i;
+                        Loader.MyGTGUI.cbToLanguage.SelectedIndex = i;
                     }
 
                     break;
                 }
             }
 
-            mZScreen.btnTranslateTo1.Text = "To " + GetLanguageName(targetLanguage2);
+            Loader.MyGTGUI.btnTranslateTo1.Text = "To " + GetLanguageName(targetLanguage2);
         }
 
         public string GetLanguageName(string language)
         {
-            foreach (GoogleLanguage gl in Engine.conf.GoogleLanguages)
+            foreach (GoogleLanguage gl in Engine.MyGTConfig.GoogleLanguages)
             {
                 if (gl.Language == language) return gl.Name;
             }
@@ -212,9 +212,9 @@ namespace ZScreenGUI
 
         public int GetLanguageIndex(string language)
         {
-            for (int i = 0; i < Engine.conf.GoogleLanguages.Count; i++)
+            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
             {
-                if (Engine.conf.GoogleLanguages[i].Language == language) return i;
+                if (Engine.MyGTConfig.GoogleLanguages[i].Language == language) return i;
             }
 
             return -1;
