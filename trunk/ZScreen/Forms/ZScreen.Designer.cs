@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -380,6 +380,10 @@ namespace ZScreenGUI
             this.txtActiveWindow = new System.Windows.Forms.TextBox();
             this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
+            this.tpAdvanced = new System.Windows.Forms.TabPage();
+            this.pgApp = new System.Windows.Forms.PropertyGrid();
+            this.tpHelp = new System.Windows.Forms.TabPage();
+            this.tcHelp = new System.Windows.Forms.TabControl();
             this.tpStats = new System.Windows.Forms.TabPage();
             this.btnOpenZScreenTester = new System.Windows.Forms.Button();
             this.gbStatistics = new System.Windows.Forms.GroupBox();
@@ -391,8 +395,6 @@ namespace ZScreenGUI
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
             this.tpDebugLog = new System.Windows.Forms.TabPage();
             this.rtbDebugLog = new System.Windows.Forms.RichTextBox();
-            this.tpAdvanced = new System.Windows.Forms.TabPage();
-            this.pgApp = new System.Windows.Forms.PropertyGrid();
             this.tpDestImageBam = new System.Windows.Forms.TabPage();
             this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
             this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
@@ -514,11 +516,13 @@ namespace ZScreenGUI
             this.gbCodeTitle.SuspendLayout();
             this.gbActiveWindowNaming.SuspendLayout();
             this.tpTreeGUI.SuspendLayout();
+            this.tpAdvanced.SuspendLayout();
+            this.tpHelp.SuspendLayout();
+            this.tcHelp.SuspendLayout();
             this.tpStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
             this.tpDebugLog.SuspendLayout();
-            this.tpAdvanced.SuspendLayout();
             this.tpDestImageBam.SuspendLayout();
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
@@ -821,6 +825,7 @@ namespace ZScreenGUI
             this.tcMain.Controls.Add(this.tpMainActions);
             this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
+            this.tcMain.Controls.Add(this.tpHelp);
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcMain.Location = new System.Drawing.Point(2, 2);
             this.tcMain.Multiline = true;
@@ -1312,7 +1317,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2453,8 +2458,6 @@ namespace ZScreenGUI
             this.tcOptions.Controls.Add(this.tpWatermark);
             this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
-            this.tcOptions.Controls.Add(this.tpStats);
-            this.tcOptions.Controls.Add(this.tpDebugLog);
             this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcOptions.Location = new System.Drawing.Point(3, 3);
             this.tcOptions.Name = "tcOptions";
@@ -4522,6 +4525,48 @@ namespace ZScreenGUI
             this.pgIndexer.Size = new System.Drawing.Size(793, 402);
             this.pgIndexer.TabIndex = 0;
             // 
+            // tpAdvanced
+            // 
+            this.tpAdvanced.Controls.Add(this.pgApp);
+            this.tpAdvanced.Location = new System.Drawing.Point(4, 22);
+            this.tpAdvanced.Name = "tpAdvanced";
+            this.tpAdvanced.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAdvanced.Size = new System.Drawing.Size(813, 440);
+            this.tpAdvanced.TabIndex = 3;
+            this.tpAdvanced.Text = "Advanced Options";
+            this.tpAdvanced.UseVisualStyleBackColor = true;
+            // 
+            // pgApp
+            // 
+            this.pgApp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgApp.Location = new System.Drawing.Point(3, 3);
+            this.pgApp.Name = "pgApp";
+            this.pgApp.Size = new System.Drawing.Size(807, 434);
+            this.pgApp.TabIndex = 0;
+            this.pgApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgApp_PropertyValueChanged);
+            // 
+            // tpHelp
+            // 
+            this.tpHelp.Controls.Add(this.tcHelp);
+            this.tpHelp.Location = new System.Drawing.Point(4, 22);
+            this.tpHelp.Name = "tpHelp";
+            this.tpHelp.Padding = new System.Windows.Forms.Padding(3);
+            this.tpHelp.Size = new System.Drawing.Size(813, 440);
+            this.tpHelp.TabIndex = 10;
+            this.tpHelp.Text = "Help";
+            this.tpHelp.UseVisualStyleBackColor = true;
+            // 
+            // tcHelp
+            // 
+            this.tcHelp.Controls.Add(this.tpDebugLog);
+            this.tcHelp.Controls.Add(this.tpStats);
+            this.tcHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcHelp.Location = new System.Drawing.Point(3, 3);
+            this.tcHelp.Name = "tcHelp";
+            this.tcHelp.SelectedIndex = 0;
+            this.tcHelp.Size = new System.Drawing.Size(807, 434);
+            this.tcHelp.TabIndex = 0;
+            // 
             // tpStats
             // 
             this.tpStats.Controls.Add(this.btnOpenZScreenTester);
@@ -4652,26 +4697,6 @@ namespace ZScreenGUI
             this.rtbDebugLog.TabIndex = 0;
             this.rtbDebugLog.Text = "";
             this.rtbDebugLog.WordWrap = false;
-            // 
-            // tpAdvanced
-            // 
-            this.tpAdvanced.Controls.Add(this.pgApp);
-            this.tpAdvanced.Location = new System.Drawing.Point(4, 22);
-            this.tpAdvanced.Name = "tpAdvanced";
-            this.tpAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanced.Size = new System.Drawing.Size(813, 440);
-            this.tpAdvanced.TabIndex = 3;
-            this.tpAdvanced.Text = "Advanced Options";
-            this.tpAdvanced.UseVisualStyleBackColor = true;
-            // 
-            // pgApp
-            // 
-            this.pgApp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgApp.Location = new System.Drawing.Point(3, 3);
-            this.pgApp.Name = "pgApp";
-            this.pgApp.Size = new System.Drawing.Size(807, 434);
-            this.pgApp.TabIndex = 0;
-            this.pgApp.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgApp_PropertyValueChanged);
             // 
             // tpDestImageBam
             // 
@@ -5088,11 +5113,13 @@ namespace ZScreenGUI
             this.gbActiveWindowNaming.ResumeLayout(false);
             this.gbActiveWindowNaming.PerformLayout();
             this.tpTreeGUI.ResumeLayout(false);
+            this.tpAdvanced.ResumeLayout(false);
+            this.tpHelp.ResumeLayout(false);
+            this.tcHelp.ResumeLayout(false);
             this.tpStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
             this.tpDebugLog.ResumeLayout(false);
-            this.tpAdvanced.ResumeLayout(false);
             this.tpDestImageBam.ResumeLayout(false);
             this.gbImageBamGalleries.ResumeLayout(false);
             this.gbImageBamLinks.ResumeLayout(false);
@@ -5493,5 +5520,7 @@ namespace ZScreenGUI
         private ToolStripButton tsbAbout;
         private ToolStripButton tsbImageDirectory;
         private PictureBox pbDonate;
+        private TabPage tpHelp;
+        private TabControl tcHelp;
     }
 }
