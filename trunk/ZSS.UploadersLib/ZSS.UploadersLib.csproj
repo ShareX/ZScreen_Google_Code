@@ -93,6 +93,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\GoogleTranslateGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\GoogleTranslateGUI.Designer.cs">
+      <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config\UploadersConfigFormGUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,7 @@
     <Compile Include="Controls\AccountsControl.Designer.cs">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config\GoogleTranslatorConfig.cs" />
     <Compile Include="StaticHelper.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
@@ -209,6 +216,9 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Config\GoogleTranslateGUI.resx">
+      <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Config\UploadersConfigForm.resx">
       <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </EmbeddedResource>

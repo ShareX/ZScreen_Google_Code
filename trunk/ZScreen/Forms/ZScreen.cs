@@ -206,11 +206,8 @@ namespace ZScreenGUI
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
             tpMainActions.ImageKey = "picture_edit";
-            tpTranslator.ImageKey = "comments";
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
-
-
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -1635,68 +1632,6 @@ namespace ZScreenGUI
 
         #region Language Translator
 
-        private void btnTranslate_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtTranslateText.Text))
-            {
-                Loader.Worker.Translate();
-            }
-        }
-
-        private void cbFromLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.GoogleSourceLanguage = Engine.conf.GoogleLanguages[cbFromLanguage.SelectedIndex].Language;
-        }
-
-        private void cbLanguageAutoDetect_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.GoogleAutoDetectSource = cbLanguageAutoDetect.Checked;
-        }
-
-        private void cbToLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.GoogleTargetLanguage = Engine.conf.GoogleLanguages[cbToLanguage.SelectedIndex].Language;
-        }
-
-        private void txtTranslateText_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-
-                if (!string.IsNullOrEmpty(txtTranslateText.Text))
-                {
-                    Loader.Worker.Translate();
-                }
-            }
-        }
-
-        private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (cbToLanguage.SelectedIndex > -1)
-            {
-                cbToLanguage.DoDragDrop(Engine.conf.GoogleTargetLanguage, DragDropEffects.Move);
-            }
-        }
-
-        private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.Text) && e.AllowedEffect == DragDropEffects.Move)
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-        }
-
-        private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
-        {
-            Engine.conf.GoogleTargetLanguage2 = e.Data.GetData(DataFormats.Text).ToString();
-            btnTranslateTo1.Text = "To " + Loader.Worker2.GetLanguageName(Engine.conf.GoogleTargetLanguage2);
-        }
-
-        private void btnTranslateTo1_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.TranslateTo1();
-        }
 
         #endregion Language Translator
 
@@ -1714,12 +1649,6 @@ namespace ZScreenGUI
                 }
             }
         }
-
-
-
-
-
-
 
         private ProxyInfo GetSelectedProxy()
         {
@@ -2091,20 +2020,6 @@ namespace ZScreenGUI
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
             Engine.conf.ActionsList[lbSoftware.SelectedIndex] = temp;
             RewriteImageEditorsRightClickMenu();
-        }
-
-        private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.AutoTranslate = cbAutoTranslate.Checked;
-        }
-
-        private void txtAutoTranslate_TextChanged(object sender, EventArgs e)
-        {
-            int number;
-            if (int.TryParse(txtAutoTranslate.Text, out number))
-            {
-                Engine.conf.AutoTranslateLength = number;
-            }
         }
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
@@ -2858,7 +2773,8 @@ namespace ZScreenGUI
 
         private void tsbLanguageTranslate_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartWorkerTranslator();
+            Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig) { Icon = this.Icon };
+            Loader.MyGTGUI.Show();
         }
 
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)

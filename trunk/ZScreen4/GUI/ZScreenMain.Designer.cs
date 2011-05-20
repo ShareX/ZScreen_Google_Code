@@ -1,4 +1,4 @@
-﻿namespace ZScreen4
+﻿namespace ZScreen5
 {
     partial class ZScreenMain
     {

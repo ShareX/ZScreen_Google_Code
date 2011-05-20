@@ -144,12 +144,6 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_ImageHosting()
         {
-            // Image Uploaders
-
-            cbLanguageAutoDetect.Checked = Engine.conf.GoogleAutoDetectSource;
-            cbAutoTranslate.Checked = Engine.conf.AutoTranslate;
-            txtAutoTranslate.Text = Engine.conf.AutoTranslateLength.ToString();
-
             // Web Page Upload
 
             cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;

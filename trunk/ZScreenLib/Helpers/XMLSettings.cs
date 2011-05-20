@@ -303,16 +303,6 @@ namespace ZScreenLib
         public int WebPageHeight = 768;
         public bool WebPageAutoUpload = true;
 
-        // Language Translator
-
-        public List<GoogleLanguage> GoogleLanguages;
-        public string GoogleSourceLanguage = "en";
-        public bool GoogleAutoDetectSource = true;
-        public string GoogleTargetLanguage = "en";
-        public string GoogleTargetLanguage2 = "?";
-        public bool AutoTranslate = false;
-        public int AutoTranslateLength = 20;
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
         //~~~~~~~~~~~~~~~~~~~~~

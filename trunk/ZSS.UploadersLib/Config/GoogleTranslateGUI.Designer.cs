@@ -1,4 +1,4 @@
-﻿namespace ZScreen4
+﻿namespace UploadersLib
 {
     partial class GoogleTranslateGUI
     {
@@ -51,6 +51,7 @@
             this.cbLanguageAutoDetect.TabIndex = 25;
             this.cbLanguageAutoDetect.Text = "Auto detect language";
             this.cbLanguageAutoDetect.UseVisualStyleBackColor = true;
+            this.cbLanguageAutoDetect.CheckedChanged += new System.EventHandler(this.cbLanguageAutoDetect_CheckedChanged);
             // 
             // txtAutoTranslate
             // 
@@ -72,6 +73,7 @@
             this.cbAutoTranslate.Text = "Automatically translate text instead of uploading text if the text length is smal" +
                 "ler than";
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
+            this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
             // 
             // btnTranslateTo1
             // 
@@ -82,6 +84,9 @@
             this.btnTranslateTo1.TabIndex = 22;
             this.btnTranslateTo1.Text = "???";
             this.btnTranslateTo1.UseVisualStyleBackColor = true;
+            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
+            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
+            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
             // 
             // txtTranslateResult
             // 
@@ -111,6 +116,7 @@
             this.btnTranslate.TabIndex = 18;
             this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
             this.btnTranslate.UseVisualStyleBackColor = true;
+            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
             // 
             // txtTranslateText
             // 
@@ -120,6 +126,8 @@
             this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
             this.txtTranslateText.TabIndex = 16;
+            this.txtTranslateText.TextChanged += new System.EventHandler(this.txtTranslateText_TextChanged);
+            this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
             // 
             // lblToLanguage
             // 
@@ -130,6 +138,7 @@
             this.lblToLanguage.TabIndex = 19;
             this.lblToLanguage.Text = "Target:";
             this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
             // 
             // lblFromLanguage
             // 
@@ -150,6 +159,7 @@
             this.cbToLanguage.Name = "cbToLanguage";
             this.cbToLanguage.Size = new System.Drawing.Size(144, 21);
             this.cbToLanguage.TabIndex = 15;
+            this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
             // 
             // cbFromLanguage
             // 
@@ -161,6 +171,8 @@
             this.cbFromLanguage.Name = "cbFromLanguage";
             this.cbFromLanguage.Size = new System.Drawing.Size(144, 21);
             this.cbFromLanguage.TabIndex = 14;
+            this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
+            this.cbFromLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbFromLanguage_MouseDown);
             // 
             // GoogleTranslateGUI
             // 
@@ -189,16 +201,16 @@
         #endregion
 
         private System.Windows.Forms.CheckBox cbLanguageAutoDetect;
-        internal System.Windows.Forms.TextBox txtAutoTranslate;
-        internal System.Windows.Forms.CheckBox cbAutoTranslate;
-        internal System.Windows.Forms.Button btnTranslateTo1;
-        internal System.Windows.Forms.TextBox txtTranslateResult;
-        internal System.Windows.Forms.TextBox txtLanguages;
-        internal System.Windows.Forms.Button btnTranslate;
-        internal System.Windows.Forms.TextBox txtTranslateText;
-        internal System.Windows.Forms.Label lblToLanguage;
-        internal System.Windows.Forms.Label lblFromLanguage;
-        internal System.Windows.Forms.ComboBox cbToLanguage;
-        internal System.Windows.Forms.ComboBox cbFromLanguage;
+        public System.Windows.Forms.TextBox txtAutoTranslate;
+        public System.Windows.Forms.CheckBox cbAutoTranslate;
+        public System.Windows.Forms.Button btnTranslateTo1;
+        public System.Windows.Forms.TextBox txtTranslateResult;
+        public System.Windows.Forms.TextBox txtLanguages;
+        public System.Windows.Forms.Button btnTranslate;
+        public System.Windows.Forms.TextBox txtTranslateText;
+        public System.Windows.Forms.Label lblToLanguage;
+        public System.Windows.Forms.Label lblFromLanguage;
+        public System.Windows.Forms.ComboBox cbToLanguage;
+        public System.Windows.Forms.ComboBox cbFromLanguage;
     }
 }
