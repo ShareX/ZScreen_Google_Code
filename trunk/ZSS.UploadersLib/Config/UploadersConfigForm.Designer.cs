@@ -780,9 +780,9 @@
             // 
             this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 86);
             this.btnDropboxShowFiles.Name = "btnDropboxShowFiles";
-            this.btnDropboxShowFiles.Size = new System.Drawing.Size(32, 24);
+            this.btnDropboxShowFiles.Size = new System.Drawing.Size(56, 24);
             this.btnDropboxShowFiles.TabIndex = 21;
-            this.btnDropboxShowFiles.Text = "...";
+            this.btnDropboxShowFiles.Text = "Open...";
             this.btnDropboxShowFiles.UseVisualStyleBackColor = true;
             this.btnDropboxShowFiles.Click += new System.EventHandler(this.btnDropboxShowFiles_Click);
             // 
@@ -830,7 +830,7 @@
             // lblDropboxPathTip
             // 
             this.lblDropboxPathTip.AutoSize = true;
-            this.lblDropboxPathTip.Location = new System.Drawing.Point(384, 92);
+            this.lblDropboxPathTip.Location = new System.Drawing.Point(408, 92);
             this.lblDropboxPathTip.Name = "lblDropboxPathTip";
             this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
             this.lblDropboxPathTip.TabIndex = 17;

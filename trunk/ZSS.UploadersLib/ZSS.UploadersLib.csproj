@@ -281,6 +281,8 @@
     <Content Include="Favicons\TwitSnaps.ico" />
     <Content Include="Favicons\Twitter.ico" />
     <Content Include="Favicons\YFrog.ico" />
+    <None Include="Resources\page_white.gif" />
+    <None Include="Resources\folder.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
