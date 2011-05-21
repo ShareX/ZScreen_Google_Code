@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using UploadersLib.OtherServices;
 
@@ -97,7 +91,7 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(txtTranslateText.Text))
             {
-               // TODO: Loader.Worker.Translate();
+                // TODO: Loader.Worker.Translate();
             }
         }
 
@@ -115,7 +109,6 @@ namespace UploadersLib
         {
             Config.GoogleTargetLanguage = Config.GoogleLanguages[cbToLanguage.SelectedIndex].Language;
         }
-
 
         private void cbAutoTranslate_CheckedChanged(object sender, EventArgs e)
         {
@@ -137,7 +130,6 @@ namespace UploadersLib
 
         private void cbFromLanguage_MouseDown(object sender, MouseEventArgs e)
         {
-
         }
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
@@ -199,7 +191,7 @@ namespace UploadersLib
 
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
-           // Loader.Worker.TranslateTo1();
+            // Loader.Worker.TranslateTo1();
         }
 
         private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
@@ -209,6 +201,5 @@ namespace UploadersLib
                 e.Effect = DragDropEffects.Move;
             }
         }
-
     }
 }

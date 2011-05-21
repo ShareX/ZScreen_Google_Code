@@ -107,9 +107,7 @@ namespace UploadersLib
 
         public OAuthInfo DropboxOAuthInfo = null;
         public string DropboxUploadPath = "Public/ZScreen/%y-%mo";
-        public string DropboxEmail = string.Empty;
-        public string DropboxName = string.Empty;
-        public string DropboxUserID = string.Empty;
+        public DropboxAccountInfo DropboxAccountInfo = null;
 
         // RapidShare
 

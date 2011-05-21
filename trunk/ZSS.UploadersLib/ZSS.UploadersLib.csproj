@@ -126,6 +126,12 @@
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\GoogleTranslatorConfig.cs" />
+    <Compile Include="Forms\DropboxFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DropboxFiles.Designer.cs">
+      <DependentUpon>DropboxFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="StaticHelper.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
@@ -228,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DropboxFiles.resx">
+      <DependentUpon>DropboxFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
