@@ -126,12 +126,13 @@
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\GoogleTranslatorConfig.cs" />
-    <Compile Include="Forms\DropboxFiles.cs">
+    <Compile Include="Forms\DropboxFilesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DropboxFiles.Designer.cs">
-      <DependentUpon>DropboxFiles.cs</DependentUpon>
+    <Compile Include="Forms\DropboxFilesForm.Designer.cs">
+      <DependentUpon>DropboxFilesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\ImageListManager.cs" />
     <Compile Include="StaticHelper.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
@@ -235,8 +236,8 @@
     <EmbeddedResource Include="Controls\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DropboxFiles.resx">
-      <DependentUpon>DropboxFiles.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DropboxFilesForm.resx">
+      <DependentUpon>DropboxFilesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TwitterMsg.resx">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
@@ -281,8 +282,38 @@
     <Content Include="Favicons\TwitSnaps.ico" />
     <Content Include="Favicons\Twitter.ico" />
     <Content Include="Favicons\YFrog.ico" />
+    <None Include="Resources\page_white_powerpoint.gif" />
+    <None Include="Resources\page_white_picture.gif" />
+    <None Include="Resources\page_white_php.gif" />
+    <None Include="Resources\page_white_paint.gif" />
+    <None Include="Resources\page_white_gear.gif" />
+    <None Include="Resources\page_white_flash.gif" />
+    <None Include="Resources\page_white_film.gif" />
+    <None Include="Resources\page_white_excel.gif" />
+    <None Include="Resources\page_white_dvd.gif" />
+    <None Include="Resources\page_white_cup.gif" />
+    <None Include="Resources\page_white_csharp.gif" />
+    <None Include="Resources\page_white_cplusplus.gif" />
+    <None Include="Resources\page_white_compressed.gif" />
+    <None Include="Resources\page_white_code.gif" />
+    <None Include="Resources\page_white_c.gif" />
+    <None Include="Resources\page_white_actionscript.gif" />
+    <None Include="Resources\page_white_acrobat.gif" />
     <None Include="Resources\page_white.gif" />
+    <None Include="Resources\package.gif" />
+    <None Include="Resources\folder_user.gif" />
+    <None Include="Resources\folder_star.gif" />
+    <None Include="Resources\folder_public.gif" />
+    <None Include="Resources\folder_photos.gif" />
+    <None Include="Resources\folder_gray.gif" />
     <None Include="Resources\folder.gif" />
+    <None Include="Resources\page_white_word.gif" />
+    <None Include="Resources\page_white_visualstudio.gif" />
+    <None Include="Resources\page_white_vector.gif" />
+    <None Include="Resources\page_white_tux.gif" />
+    <None Include="Resources\page_white_text.gif" />
+    <None Include="Resources\page_white_sound.gif" />
+    <None Include="Resources\page_white_ruby.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">

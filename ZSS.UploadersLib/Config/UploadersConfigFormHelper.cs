@@ -256,7 +256,7 @@ namespace UploadersLib
         {
             if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo))
             {
-                DropboxFiles dropboxForm = new DropboxFiles(Config.DropboxOAuthInfo);
+                DropboxFilesForm dropboxForm = new DropboxFilesForm(Config.DropboxOAuthInfo);
                 if (dropboxForm.OpenDirectory(GetDropboxUploadPath()))
                 {
                     dropboxForm.ShowDialog();
