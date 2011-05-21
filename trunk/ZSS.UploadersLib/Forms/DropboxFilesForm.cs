@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 
@@ -11,46 +12,76 @@ namespace UploadersLib.Forms
         private Dropbox dropbox;
         private ImageListManager ilm;
 
-        public DropboxFilesForm(OAuthInfo oauth)
+        public DropboxFilesForm(OAuthInfo oauth, string path = null)
         {
             InitializeComponent();
             dropbox = new Dropbox(oauth);
             ilm = new ImageListManager(lvDropboxFiles);
+
+            if (path != null)
+            {
+                Shown += (sender, e) => OpenDirectory(path);
+            }
         }
 
-        public bool OpenDirectory(string path)
+        public void OpenDirectory(string path)
         {
-            bool result = false;
-
-            Cursor.Current = Cursors.WaitCursor;
-
-            DropboxDirectoryInfo directory = dropbox.GetFilesList(path);
-
             lvDropboxFiles.Items.Clear();
 
-            if (directory != null)
+            DropboxDirectoryInfo directory = null;
+
+            AsyncHelper.AsyncJob(() =>
             {
-                foreach (DropboxContentInfo content in directory.Contents.OrderBy(x => !x.Is_dir))
+                directory  = dropbox.GetFilesList(path);
+            },
+            () =>
+            {
+                if (directory != null)
                 {
-                    string filename = Path.GetFileName(content.Path);
-                    ListViewItem lvi = new ListViewItem(filename);
-                    lvi.SubItems.Add(content.Size);
-                    lvi.SubItems.Add(content.Modified);
-                    lvi.ImageKey = ilm.AddImage(content.Icon);
-                    lvi.Tag = content;
-                    lvDropboxFiles.Items.Add(lvi);
+                    lvDropboxFiles.Tag = directory;
+
+                    ListViewItem lvi = GetParentFolder(directory.Path);
+
+                    if (lvi != null)
+                    {
+                        lvDropboxFiles.Items.Add(lvi);
+                    }
+
+                    foreach (DropboxContentInfo content in directory.Contents.OrderBy(x => !x.Is_dir))
+                    {
+                        string filename = Path.GetFileName(content.Path);
+                        lvi = new ListViewItem(filename);
+                        lvi.SubItems.Add(content.Size);
+                        lvi.SubItems.Add(content.Modified);
+                        lvi.ImageKey = ilm.AddImage(content.Icon);
+                        lvi.Tag = content;
+                        lvDropboxFiles.Items.Add(lvi);
+                    }
+
+                    Text = "Dropbox - Path: " + ZAppHelper.CombineURL(directory.Root, directory.Path);
                 }
+                else
+                {
+                    MessageBox.Show("Path not exist: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
+        }
 
-                result = true;
-            }
-            else
+        public ListViewItem GetParentFolder(string currentPath)
+        {
+            if (!string.IsNullOrEmpty(currentPath))
             {
-                MessageBox.Show("Path not exist: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string parentFolder = currentPath.Remove(currentPath.LastIndexOf('/'));
+
+                DropboxContentInfo content = new DropboxContentInfo() { Icon = "folder", Is_dir = true, Path = parentFolder };
+
+                ListViewItem lvi = new ListViewItem("Parent folder");
+                lvi.ImageKey = ilm.AddImage(content.Icon);
+                lvi.Tag = content;
+                return lvi;
             }
 
-            Cursor.Current = Cursors.Default;
-
-            return result;
+            return null;
         }
 
         private void lvDropboxFiles_MouseDoubleClick(object sender, MouseEventArgs e)
