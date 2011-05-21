@@ -256,11 +256,7 @@ namespace UploadersLib
         {
             if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo))
             {
-                DropboxFilesForm dropboxForm = new DropboxFilesForm(Config.DropboxOAuthInfo);
-                if (dropboxForm.OpenDirectory(GetDropboxUploadPath()))
-                {
-                    dropboxForm.ShowDialog();
-                }
+                new DropboxFilesForm(Config.DropboxOAuthInfo, GetDropboxUploadPath()).ShowDialog();
             }
         }
 
@@ -276,6 +272,7 @@ namespace UploadersLib
                 {
                     Config.DropboxOAuthInfo = oauth;
                     Process.Start(url);
+                    btnDropboxCompleteAuth.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -328,7 +325,7 @@ namespace UploadersLib
             if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo) && Config.DropboxAccountInfo != null)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Login status: Success");
+                sb.AppendLine("Login status: Successful");
                 sb.AppendLine("Email: " + Config.DropboxAccountInfo.Email);
                 sb.AppendLine("Name: " + Config.DropboxAccountInfo.Display_name);
                 sb.AppendLine("User ID: " + Config.DropboxAccountInfo.Uid.ToString());
@@ -339,6 +336,7 @@ namespace UploadersLib
                     sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Config.DropboxAccountInfo.Uid, uploadPath, "{Filename}"));
                 }
                 lblDropboxStatus.Text = sb.ToString();
+                btnDropboxShowFiles.Enabled = true;
             }
             else
             {

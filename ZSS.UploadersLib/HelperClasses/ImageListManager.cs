@@ -7,7 +7,6 @@ namespace UploadersLib.HelperClasses
 {
     public class ImageListManager
     {
-        private ListView lv;
         private ImageList il;
 
         public ImageListManager(ListView listView)

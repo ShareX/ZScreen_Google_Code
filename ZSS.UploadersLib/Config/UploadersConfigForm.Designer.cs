@@ -74,7 +74,6 @@
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
             this.tpYFrog = new System.Windows.Forms.TabPage();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
@@ -82,7 +81,6 @@
             this.btnDropboxCompleteAuth = new System.Windows.Forms.Button();
             this.pbDropboxLogo = new System.Windows.Forms.PictureBox();
             this.btnDropboxRegister = new System.Windows.Forms.Button();
-            this.lblDropboxStatus = new System.Windows.Forms.Label();
             this.lblDropboxPathTip = new System.Windows.Forms.Label();
             this.lblDropboxPath = new System.Windows.Forms.Label();
             this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
@@ -93,7 +91,6 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -122,13 +119,11 @@
             this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpDekiWiki = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
             this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -177,7 +172,12 @@
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
+            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
             this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.lblDropboxStatus = new System.Windows.Forms.Label();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -718,18 +718,6 @@
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
             // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 428);
-            this.ucMediaWikiAccounts.TabIndex = 1;
-            // 
             // tpFileUploaders
             // 
             this.tpFileUploaders.Controls.Add(this.tcFileUploaders);
@@ -778,6 +766,7 @@
             // 
             // btnDropboxShowFiles
             // 
+            this.btnDropboxShowFiles.Enabled = false;
             this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 86);
             this.btnDropboxShowFiles.Name = "btnDropboxShowFiles";
             this.btnDropboxShowFiles.Size = new System.Drawing.Size(56, 24);
@@ -788,11 +777,12 @@
             // 
             // btnDropboxCompleteAuth
             // 
-            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(168, 120);
+            this.btnDropboxCompleteAuth.Enabled = false;
+            this.btnDropboxCompleteAuth.Location = new System.Drawing.Point(176, 120);
             this.btnDropboxCompleteAuth.Name = "btnDropboxCompleteAuth";
-            this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(144, 23);
+            this.btnDropboxCompleteAuth.Size = new System.Drawing.Size(152, 24);
             this.btnDropboxCompleteAuth.TabIndex = 20;
-            this.btnDropboxCompleteAuth.Text = "Complete authorization";
+            this.btnDropboxCompleteAuth.Text = "2. Complete authorization";
             this.btnDropboxCompleteAuth.UseVisualStyleBackColor = true;
             this.btnDropboxCompleteAuth.Click += new System.EventHandler(this.btnDropboxAuthComplete_Click);
             // 
@@ -817,16 +807,6 @@
             this.btnDropboxRegister.UseVisualStyleBackColor = true;
             this.btnDropboxRegister.Click += new System.EventHandler(this.btnDropboxRegister_Click);
             // 
-            // lblDropboxStatus
-            // 
-            this.lblDropboxStatus.AutoSize = true;
-            this.lblDropboxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 160);
-            this.lblDropboxStatus.Name = "lblDropboxStatus";
-            this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
-            this.lblDropboxStatus.TabIndex = 18;
-            this.lblDropboxStatus.Text = "Login status:";
-            // 
             // lblDropboxPathTip
             // 
             this.lblDropboxPathTip.AutoSize = true;
@@ -849,9 +829,9 @@
             // 
             this.btnDropboxOpenAuthorize.Location = new System.Drawing.Point(16, 120);
             this.btnDropboxOpenAuthorize.Name = "btnDropboxOpenAuthorize";
-            this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(144, 24);
+            this.btnDropboxOpenAuthorize.Size = new System.Drawing.Size(152, 24);
             this.btnDropboxOpenAuthorize.TabIndex = 14;
-            this.btnDropboxOpenAuthorize.Text = "Open authorize page...";
+            this.btnDropboxOpenAuthorize.Text = "1. Open authorize page...";
             this.btnDropboxOpenAuthorize.UseVisualStyleBackColor = true;
             this.btnDropboxOpenAuthorize.Click += new System.EventHandler(this.btnDropboxAuthOpen_Click);
             // 
@@ -938,15 +918,6 @@
             this.btnFtpHelp.Text = "&Help...";
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucFTPAccounts.TabIndex = 0;
             // 
             // gbFtpSettings
             // 
@@ -1235,15 +1206,6 @@
             this.tbLocalhost.Text = "Localhost";
             this.tbLocalhost.UseVisualStyleBackColor = true;
             // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
-            this.ucLocalhostAccounts.TabIndex = 2;
-            // 
             // tpDekiWiki
             // 
             this.tpDekiWiki.Controls.Add(this.tableLayoutPanel1);
@@ -1302,15 +1264,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(760, 325);
             this.panel1.TabIndex = 116;
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucMindTouchAccounts.TabIndex = 0;
             // 
             // tpCustomUploaders
             // 
@@ -1794,6 +1747,45 @@
             this.btnTwitterLogin.UseVisualStyleBackColor = true;
             this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
             // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 428);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
+            this.ucLocalhostAccounts.TabIndex = 2;
+            // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucMindTouchAccounts.TabIndex = 0;
+            // 
             // ucTwitterAccounts
             // 
             this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1801,6 +1793,16 @@
             this.ucTwitterAccounts.Name = "ucTwitterAccounts";
             this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucTwitterAccounts.TabIndex = 24;
+            // 
+            // lblDropboxStatus
+            // 
+            this.lblDropboxStatus.AutoSize = true;
+            this.lblDropboxStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblDropboxStatus.Location = new System.Drawing.Point(16, 160);
+            this.lblDropboxStatus.Name = "lblDropboxStatus";
+            this.lblDropboxStatus.Size = new System.Drawing.Size(82, 16);
+            this.lblDropboxStatus.TabIndex = 18;
+            this.lblDropboxStatus.Text = "Login status:";
             // 
             // UploadersConfigForm
             // 
@@ -1927,7 +1929,6 @@
         private System.Windows.Forms.Button btnDropboxCompleteAuth;
         private System.Windows.Forms.PictureBox pbDropboxLogo;
         private System.Windows.Forms.Button btnDropboxRegister;
-        private System.Windows.Forms.Label lblDropboxStatus;
         private System.Windows.Forms.Label lblDropboxPathTip;
         private System.Windows.Forms.Label lblDropboxPath;
         private System.Windows.Forms.Button btnDropboxOpenAuthorize;
@@ -2021,5 +2022,6 @@
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.Button btnDropboxShowFiles;
+        private System.Windows.Forms.Label lblDropboxStatus;
     }
 }

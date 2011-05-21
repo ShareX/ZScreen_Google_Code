@@ -43,6 +43,7 @@
             this.chModified});
             this.lvDropboxFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDropboxFiles.FullRowSelect = true;
+            this.lvDropboxFiles.GridLines = true;
             this.lvDropboxFiles.Location = new System.Drawing.Point(0, 0);
             this.lvDropboxFiles.Name = "lvDropboxFiles";
             this.lvDropboxFiles.Size = new System.Drawing.Size(559, 491);
@@ -66,14 +67,15 @@
             this.chModified.Text = "Modified";
             this.chModified.Width = 200;
             // 
-            // DropboxFiles
+            // DropboxFilesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(559, 491);
             this.Controls.Add(this.lvDropboxFiles);
-            this.Name = "DropboxFiles";
-            this.Text = "DropboxFiles";
+            this.Name = "DropboxFilesForm";
+            this.ShowIcon = false;
+            this.Text = "Dropbox";
             this.ResumeLayout(false);
 
         }
