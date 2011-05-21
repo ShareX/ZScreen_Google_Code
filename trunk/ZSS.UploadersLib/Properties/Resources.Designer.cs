@@ -81,6 +81,41 @@ namespace UploadersLib.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap folder_gray {
+            get {
+                object obj = ResourceManager.GetObject("folder_gray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder_photos {
+            get {
+                object obj = ResourceManager.GetObject("folder_photos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder_public {
+            get {
+                object obj = ResourceManager.GetObject("folder_public", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder_star {
+            get {
+                object obj = ResourceManager.GetObject("folder_star", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder_user {
+            get {
+                object obj = ResourceManager.GetObject("folder_user", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon ImageShack {
             get {
                 object obj = ResourceManager.GetObject("ImageShack", resourceCulture);
@@ -102,9 +137,184 @@ namespace UploadersLib.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap package {
+            get {
+                object obj = ResourceManager.GetObject("package", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap page_white {
             get {
                 object obj = ResourceManager.GetObject("page_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_acrobat {
+            get {
+                object obj = ResourceManager.GetObject("page_white_acrobat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_actionscript {
+            get {
+                object obj = ResourceManager.GetObject("page_white_actionscript", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_c {
+            get {
+                object obj = ResourceManager.GetObject("page_white_c", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_code {
+            get {
+                object obj = ResourceManager.GetObject("page_white_code", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_compressed {
+            get {
+                object obj = ResourceManager.GetObject("page_white_compressed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_cplusplus {
+            get {
+                object obj = ResourceManager.GetObject("page_white_cplusplus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_csharp {
+            get {
+                object obj = ResourceManager.GetObject("page_white_csharp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_cup {
+            get {
+                object obj = ResourceManager.GetObject("page_white_cup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_dvd {
+            get {
+                object obj = ResourceManager.GetObject("page_white_dvd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_excel {
+            get {
+                object obj = ResourceManager.GetObject("page_white_excel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_film {
+            get {
+                object obj = ResourceManager.GetObject("page_white_film", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_flash {
+            get {
+                object obj = ResourceManager.GetObject("page_white_flash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_gear {
+            get {
+                object obj = ResourceManager.GetObject("page_white_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_paint {
+            get {
+                object obj = ResourceManager.GetObject("page_white_paint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_php {
+            get {
+                object obj = ResourceManager.GetObject("page_white_php", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_picture {
+            get {
+                object obj = ResourceManager.GetObject("page_white_picture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_powerpoint {
+            get {
+                object obj = ResourceManager.GetObject("page_white_powerpoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_ruby {
+            get {
+                object obj = ResourceManager.GetObject("page_white_ruby", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_sound {
+            get {
+                object obj = ResourceManager.GetObject("page_white_sound", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_text {
+            get {
+                object obj = ResourceManager.GetObject("page_white_text", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_tux {
+            get {
+                object obj = ResourceManager.GetObject("page_white_tux", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_vector {
+            get {
+                object obj = ResourceManager.GetObject("page_white_vector", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_visualstudio {
+            get {
+                object obj = ResourceManager.GetObject("page_white_visualstudio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap page_white_word {
+            get {
+                object obj = ResourceManager.GetObject("page_white_word", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
