@@ -78,6 +78,7 @@
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
+            this.btnDropboxShowFiles = new System.Windows.Forms.Button();
             this.btnDropboxCompleteAuth = new System.Windows.Forms.Button();
             this.pbDropboxLogo = new System.Windows.Forms.PictureBox();
             this.btnDropboxRegister = new System.Windows.Forms.Button();
@@ -122,6 +123,12 @@
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
+            this.tpDekiWiki = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
+            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -171,12 +178,6 @@
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
             this.ucTwitterAccounts = new UploadersLib.AccountsControl();
-            this.tpDekiWiki = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
-            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
-            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -199,6 +200,10 @@
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
             this.tbLocalhost.SuspendLayout();
+            this.tpDekiWiki.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.gbMindTouchOptions.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tpCustomUploaders.SuspendLayout();
             this.gbCustomUploaders.SuspendLayout();
             this.gbCustomUploaderRegexp.SuspendLayout();
@@ -211,10 +216,6 @@
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
             this.tpTwitter.SuspendLayout();
-            this.tpDekiWiki.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.gbMindTouchOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -339,8 +340,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
@@ -453,8 +454,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -573,8 +574,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(8, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -585,9 +586,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(8, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -719,9 +720,9 @@
             // 
             // ucMediaWikiAccounts
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
@@ -758,6 +759,7 @@
             // 
             // tpDropbox
             // 
+            this.tpDropbox.Controls.Add(this.btnDropboxShowFiles);
             this.tpDropbox.Controls.Add(this.btnDropboxCompleteAuth);
             this.tpDropbox.Controls.Add(this.pbDropboxLogo);
             this.tpDropbox.Controls.Add(this.btnDropboxRegister);
@@ -773,6 +775,16 @@
             this.tpDropbox.TabIndex = 2;
             this.tpDropbox.Text = "Dropbox";
             this.tpDropbox.UseVisualStyleBackColor = true;
+            // 
+            // btnDropboxShowFiles
+            // 
+            this.btnDropboxShowFiles.Location = new System.Drawing.Point(344, 86);
+            this.btnDropboxShowFiles.Name = "btnDropboxShowFiles";
+            this.btnDropboxShowFiles.Size = new System.Drawing.Size(32, 24);
+            this.btnDropboxShowFiles.TabIndex = 21;
+            this.btnDropboxShowFiles.Text = "...";
+            this.btnDropboxShowFiles.UseVisualStyleBackColor = true;
+            this.btnDropboxShowFiles.Click += new System.EventHandler(this.btnDropboxShowFiles_Click);
             // 
             // btnDropboxCompleteAuth
             // 
@@ -818,7 +830,7 @@
             // lblDropboxPathTip
             // 
             this.lblDropboxPathTip.AutoSize = true;
-            this.lblDropboxPathTip.Location = new System.Drawing.Point(344, 92);
+            this.lblDropboxPathTip.Location = new System.Drawing.Point(384, 92);
             this.lblDropboxPathTip.Name = "lblDropboxPathTip";
             this.lblDropboxPathTip.Size = new System.Drawing.Size(208, 13);
             this.lblDropboxPathTip.TabIndex = 17;
@@ -1231,6 +1243,74 @@
             this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
             this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucLocalhostAccounts.TabIndex = 2;
+            // 
+            // tpDekiWiki
+            // 
+            this.tpDekiWiki.Controls.Add(this.tableLayoutPanel1);
+            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
+            this.tpDekiWiki.Name = "tpDekiWiki";
+            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDekiWiki.Size = new System.Drawing.Size(772, 448);
+            this.tpDekiWiki.TabIndex = 6;
+            this.tpDekiWiki.Text = "Deki Wiki";
+            this.tpDekiWiki.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.gbMindTouchOptions, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(766, 442);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // gbMindTouchOptions
+            // 
+            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
+            this.gbMindTouchOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbMindTouchOptions.Location = new System.Drawing.Point(3, 334);
+            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
+            this.gbMindTouchOptions.Size = new System.Drawing.Size(760, 105);
+            this.gbMindTouchOptions.TabIndex = 117;
+            this.gbMindTouchOptions.TabStop = false;
+            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
+            // 
+            // chkDekiWikiForcePath
+            // 
+            this.chkDekiWikiForcePath.AutoSize = true;
+            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
+            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
+            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
+            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
+            this.chkDekiWikiForcePath.TabIndex = 113;
+            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
+            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
+            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.ucMindTouchAccounts);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(760, 325);
+            this.panel1.TabIndex = 116;
+            // 
+            // ucMindTouchAccounts
+            // 
+            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
+            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucMindTouchAccounts.TabIndex = 0;
             // 
             // tpCustomUploaders
             // 
@@ -1722,74 +1802,6 @@
             this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucTwitterAccounts.TabIndex = 24;
             // 
-            // tpDekiWiki
-            // 
-            this.tpDekiWiki.Controls.Add(this.tableLayoutPanel1);
-            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpDekiWiki.Name = "tpDekiWiki";
-            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDekiWiki.Size = new System.Drawing.Size(772, 448);
-            this.tpDekiWiki.TabIndex = 6;
-            this.tpDekiWiki.Text = "Deki Wiki";
-            this.tpDekiWiki.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.gbMindTouchOptions, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(766, 442);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.ucMindTouchAccounts);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(760, 325);
-            this.panel1.TabIndex = 116;
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucMindTouchAccounts.TabIndex = 0;
-            // 
-            // gbMindTouchOptions
-            // 
-            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
-            this.gbMindTouchOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbMindTouchOptions.Location = new System.Drawing.Point(3, 334);
-            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
-            this.gbMindTouchOptions.Size = new System.Drawing.Size(760, 105);
-            this.gbMindTouchOptions.TabIndex = 117;
-            this.gbMindTouchOptions.TabStop = false;
-            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
-            // 
-            // chkDekiWikiForcePath
-            // 
-            this.chkDekiWikiForcePath.AutoSize = true;
-            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
-            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
-            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
-            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
-            this.chkDekiWikiForcePath.TabIndex = 113;
-            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
-            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
-            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
-            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1833,6 +1845,11 @@
             this.tpSendSpace.ResumeLayout(false);
             this.tpSendSpace.PerformLayout();
             this.tbLocalhost.ResumeLayout(false);
+            this.tpDekiWiki.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.gbMindTouchOptions.ResumeLayout(false);
+            this.gbMindTouchOptions.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.tpCustomUploaders.ResumeLayout(false);
             this.tpCustomUploaders.PerformLayout();
             this.gbCustomUploaders.ResumeLayout(false);
@@ -1849,11 +1866,6 @@
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
             this.tpTwitter.ResumeLayout(false);
-            this.tpDekiWiki.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.gbMindTouchOptions.ResumeLayout(false);
-            this.gbMindTouchOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2008,5 +2020,6 @@
         private AccountsControl ucMindTouchAccounts;
         internal System.Windows.Forms.GroupBox gbMindTouchOptions;
         internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
+        private System.Windows.Forms.Button btnDropboxShowFiles;
     }
 }

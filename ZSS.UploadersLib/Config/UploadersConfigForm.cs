@@ -213,7 +213,7 @@ namespace UploadersLib
             Config.TwitPicShowFull = chkTwitPicShowFull.Checked;
         }
 
-        #endregion
+        #endregion TwitPic
 
         #endregion Image uploaders
 
@@ -229,6 +229,11 @@ namespace UploadersLib
         private void btnDropboxRegister_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.dropbox.com/register");
+        }
+
+        private void btnDropboxShowFiles_Click(object sender, EventArgs e)
+        {
+            DropboxOpenFiles();
         }
 
         private void btnDropboxAuthOpen_Click(object sender, EventArgs e)
@@ -365,7 +370,7 @@ namespace UploadersLib
             Config.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
         }
 
-        #endregion
+        #endregion MindTouch Deki Wiki
 
         #endregion File uploaders
 
@@ -565,8 +570,6 @@ namespace UploadersLib
             Process.Start(e.LinkText);
         }
 
-        #endregion Custom uploadr
-
-
+        #endregion Custom uploader
     }
 }

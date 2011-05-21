@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using HelpersLib;
-using System.IO;
 using UploadersLib.OtherServices;
 
 namespace UploadersLib
@@ -12,22 +8,17 @@ namespace UploadersLib
     {
         #region I/O Methods
 
+        public static GoogleTranslatorConfig Read(string filePath)
+        {
+            return SettingsHelper.Load<GoogleTranslatorConfig>(filePath, SerializationType.Xml, StaticHelper.MyLogger);
+        }
+
         public bool Write(string filePath)
         {
             return SettingsHelper.Save<GoogleTranslatorConfig>(this, filePath, SerializationType.Xml, StaticHelper.MyLogger);
         }
 
-        public static GoogleTranslatorConfig Read(string filePath)
-        {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                return HelpersLib.SettingsHelper.Load<GoogleTranslatorConfig>(filePath, HelpersLib.SerializationType.Xml, StaticHelper.MyLogger);
-            }
-
-            return new GoogleTranslatorConfig();
-        }
-
-        #endregion
+        #endregion I/O Methods
 
         public List<GoogleLanguage> GoogleLanguages;
         public string GoogleSourceLanguage = "en";

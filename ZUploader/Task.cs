@@ -294,7 +294,7 @@ namespace ZUploader
                 case FileUploaderType.Dropbox:
                     NameParser parser = new NameParser { IsFolderPath = true };
                     string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.Settings.UploadersConfig.DropboxUploadPath));
-                    fileUploader = new Dropbox(Program.Settings.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.Settings.UploadersConfig.DropboxUserID);
+                    fileUploader = new Dropbox(Program.Settings.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.Settings.UploadersConfig.DropboxAccountInfo);
                     break;
                 /*case FileUploaderType.FileSonic:
                     fileUploader = new FileSonic("", "");

@@ -33,6 +33,7 @@ using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
@@ -251,6 +252,16 @@ namespace UploadersLib
 
         #region Dropbox
 
+        public void DropboxOpenFiles()
+        {
+            if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo))
+            {
+                DropboxFiles dropboxForm = new DropboxFiles(Config.DropboxOAuthInfo);
+                dropboxForm.OpenDirectory(GetDropboxUploadPath());
+                dropboxForm.ShowDialog();
+            }
+        }
+
         public void DropboxAuthOpen()
         {
             try
@@ -285,9 +296,7 @@ namespace UploadersLib
 
                     if (account != null)
                     {
-                        Config.DropboxEmail = account.Email;
-                        Config.DropboxName = account.Display_name;
-                        Config.DropboxUserID = account.Uid.ToString();
+                        Config.DropboxAccountInfo = account;
                         Config.DropboxUploadPath = txtDropboxPath.Text;
                         UpdateDropboxStatus();
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -314,19 +323,18 @@ namespace UploadersLib
 
         private void UpdateDropboxStatus()
         {
-            if (Config.DropboxOAuthInfo != null && !string.IsNullOrEmpty(Config.DropboxOAuthInfo.UserToken) &&
-                !string.IsNullOrEmpty(Config.DropboxOAuthInfo.UserSecret))
+            if (OAuthInfo.CheckOAuth(Config.DropboxOAuthInfo) && Config.DropboxAccountInfo != null)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("Login status: Success");
-                sb.AppendLine("Email: " + Config.DropboxEmail);
-                sb.AppendLine("Name: " + Config.DropboxName);
-                sb.AppendLine("User ID: " + Config.DropboxUserID);
-                string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Config.DropboxUploadPath));
+                sb.AppendLine("Email: " + Config.DropboxAccountInfo.Email);
+                sb.AppendLine("Name: " + Config.DropboxAccountInfo.Display_name);
+                sb.AppendLine("User ID: " + Config.DropboxAccountInfo.Uid.ToString());
+                string uploadPath = GetDropboxUploadPath();
                 if (!string.IsNullOrEmpty(uploadPath))
                 {
                     sb.AppendLine("Upload path: " + uploadPath);
-                    sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Config.DropboxUserID, uploadPath, "{Filename}"));
+                    sb.AppendLine("Download path: " + Dropbox.GetDropboxURL(Config.DropboxAccountInfo.Uid, uploadPath, "{Filename}"));
                 }
                 lblDropboxStatus.Text = sb.ToString();
             }
@@ -334,6 +342,11 @@ namespace UploadersLib
             {
                 lblDropboxStatus.Text = "Login status: Authorize required";
             }
+        }
+
+        private string GetDropboxUploadPath()
+        {
+            return new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Config.DropboxUploadPath));
         }
 
         #endregion Dropbox

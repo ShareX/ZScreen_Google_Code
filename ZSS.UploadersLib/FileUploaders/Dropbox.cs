@@ -35,29 +35,32 @@ namespace UploadersLib.FileUploaders
     public sealed class Dropbox : FileUploader, IOAuth
     {
         public OAuthInfo AuthInfo { get; set; }
+        public DropboxAccountInfo AccountInfo { get; set; }
         public string UploadPath { get; set; }
-        public string UserID { get; set; }
 
         private const string APIVersion = "0";
-        private const string URLToken = "https://api.dropbox.com/" + APIVersion + "/token";
-        private const string URLAccountInfo = "https://api.dropbox.com/" + APIVersion + "/account/info";
+        private const string URLAPI = "https://api.dropbox.com/" + APIVersion;
+
+        private const string URLToken = URLAPI + "/token";
+        private const string URLAccountInfo = URLAPI + "/account/info";
         private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
+        private const string URLMetaData = URLAPI + "/metadata/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
-        private const string URLRequestToken = "https://api.dropbox.com/0/oauth/request_token";
+        private const string URLRequestToken = URLAPI + "/oauth/request_token";
         private const string URLAuthorize = "https://www.dropbox.com/0/oauth/authorize";
-        private const string URLAccessToken = "https://api.dropbox.com/0/oauth/access_token";
+        private const string URLAccessToken = URLAPI + "/oauth/access_token";
 
         public Dropbox(OAuthInfo oauth)
         {
             AuthInfo = oauth;
         }
 
-        public Dropbox(OAuthInfo oauth, string uploadPath, string userID)
+        public Dropbox(OAuthInfo oauth, string uploadPath, DropboxAccountInfo accountInfo)
             : this(oauth)
         {
             UploadPath = uploadPath;
-            UserID = userID;
+            AccountInfo = accountInfo;
         }
 
         public string GetAuthorizationURL()
@@ -101,7 +104,7 @@ namespace UploadersLib.FileUploaders
 
         public DropboxAccountInfo GetAccountInfo()
         {
-            if (!string.IsNullOrEmpty(AuthInfo.UserToken) && !string.IsNullOrEmpty(AuthInfo.UserSecret))
+            if (OAuthInfo.CheckOAuth(AuthInfo))
             {
                 string url = OAuthManager.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, AuthInfo);
 
@@ -113,13 +116,32 @@ namespace UploadersLib.FileUploaders
 
                     if (account != null)
                     {
-                        UserID = account.Uid.ToString();
+                        AccountInfo = account;
                         return account;
                     }
                 }
             }
 
             return null;
+        }
+
+        public DropboxDirectoryInfo GetFilesList(string path)
+        {
+            DropboxDirectoryInfo directoryInfo = null;
+
+            if (OAuthInfo.CheckOAuth(AuthInfo))
+            {
+                string url = OAuthManager.GenerateQuery(ZAppHelper.CombineURL(URLMetaData, path), null, HttpMethod.GET, AuthInfo);
+
+                string response = SendGetRequest(url);
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    directoryInfo = JsonConvert.DeserializeObject<DropboxDirectoryInfo>(response);
+                }
+            }
+
+            return directoryInfo;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
@@ -142,19 +164,19 @@ namespace UploadersLib.FileUploaders
 
             if (!string.IsNullOrEmpty(response))
             {
-                result.URL = GetDropboxURL(UserID, UploadPath, fileName);
+                result.URL = GetDropboxURL(AccountInfo.Uid, UploadPath, fileName);
             }
 
             return result;
         }
 
-        public static string GetDropboxURL(string userID, string uploadPath, string fileName)
+        public static string GetDropboxURL(long userID, string uploadPath, string fileName)
         {
             if (!string.IsNullOrEmpty(uploadPath))
             {
                 if (uploadPath.StartsWith("Public/", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return ZAppHelper.CombineURL(URLDownload, userID, uploadPath.Substring(7), fileName);
+                    return ZAppHelper.CombineURL(URLDownload, userID.ToString(), uploadPath.Substring(7), fileName);
                 }
             }
 
@@ -193,5 +215,30 @@ namespace UploadersLib.FileUploaders
         public long Shared { get; set; }
         public long Quota { get; set; }
         public long Normal { get; set; }
+    }
+
+    public class DropboxDirectoryInfo
+    {
+        public string Hash { get; set; }
+        public bool Thumb_exists { get; set; }
+        public long Bytes { get; set; }
+        public string Path { get; set; }
+        public bool Is_dir { get; set; }
+        public string Size { get; set; }
+        public string Root { get; set; }
+        public DropboxContentInfo[] Contents { get; set; }
+        public string Icon { get; set; }
+    }
+
+    public class DropboxContentInfo
+    {
+        public long Revision { get; set; }
+        public bool Thumb_exists { get; set; }
+        public long Bytes { get; set; }
+        public string Modified { get; set; }
+        public string Path { get; set; }
+        public bool Is_dir { get; set; }
+        public string Icon { get; set; }
+        public string Size { get; set; }
     }
 }
