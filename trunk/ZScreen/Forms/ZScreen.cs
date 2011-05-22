@@ -869,7 +869,14 @@ namespace ZScreenGUI
             if (Engine.MultipleInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+                niTray.BalloonTipClicked +=new EventHandler(niTray2_BalloonTipClicked);
             }
+        }
+
+        private void niTray2_BalloonTipClicked(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;            
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
