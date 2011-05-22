@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using HelpersLib;
@@ -162,9 +161,6 @@ namespace HistoryLib
                             break;
                         case "ShortenedURL":
                             hi.ShortenedURL = node.InnerText;
-                            break;
-                        default:
-                            Debug.WriteLine("Unknown node: " + node.Name);
                             break;
                     }
                 }

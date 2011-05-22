@@ -57,7 +57,7 @@ namespace ZScreenLib.Helpers
             }
             else
             {
-                Debug.WriteLine(text);
+                Engine.MyLogger.WriteLine(text);
             }
 
             return text;

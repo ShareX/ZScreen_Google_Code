@@ -121,7 +121,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while deleting file in View Remote", ex);
+                Engine.MyLogger.WriteException(ex, "Error while deleting file in View Remote");
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -252,7 +252,7 @@ namespace ZScreenLib
                 }
                 catch (System.Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while viewing file in View Remote", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while viewing file in View Remote");
                     // bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.VIEWING_FILE, "");
                 }
             }

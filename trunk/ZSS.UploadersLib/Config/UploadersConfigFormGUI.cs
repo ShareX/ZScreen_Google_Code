@@ -30,15 +30,15 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
+using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.Properties;
-using UploadersLib.ImageUploaders;
 
 namespace UploadersLib
 {
     public partial class UploadersConfigForm : Form
     {
-        private void LoadTabIcons()
+        private void ControlSettings()
         {
             ImageList imageUploadersImageList = new ImageList();
             imageUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -574,11 +574,11 @@ namespace UploadersLib
             if (Config.DekiWikiAccountList != null && sel != -1 && sel < Config.DekiWikiAccountList.Count && Config.DekiWikiAccountList[sel] != null)
             {
                 DekiWikiAccount acc = Config.DekiWikiAccountList[sel];
-                ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;                
+                ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;
             }
         }
 
-        #endregion
+        #endregion MindTouch Deki Wiki
 
         #region Twitter
 

@@ -125,7 +125,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while performing Online Tasks", ex);
+                Engine.MyLogger.WriteException(ex, "Error while performing Online Tasks");
             }
         }
 

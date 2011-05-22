@@ -42,7 +42,6 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
@@ -50,6 +49,7 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
+using System.Runtime.InteropServices;
 
 namespace ZScreenGUI
 {
@@ -165,7 +165,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while configuring Windows 7 Taskbar", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while configuring Windows 7 Taskbar");
                 }
             }
         }
@@ -256,27 +256,27 @@ namespace ZScreenGUI
 
             niTray.Visible = true;
 
-            rtbDebugLog.Text = Engine.MyLogger.Messages.ToString();
-            FileSystem.DebugLogChanged += new FileSystem.DebugLogEventHandler(FileSystem_DebugLogChanged);
-
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbDebugInfo, true);
+
+            rtbDebugLog.Text = Engine.MyLogger.Messages.ToString();
+            Engine.MyLogger.MessageAdded += new Logger.MessageAddedEventHandler(MyLogger_MessageAdded);
 
             Engine.MyLogger.WriteLine("Loaded ZScreen GUI...");
         }
 
-        private void FileSystem_DebugLogChanged(string line)
+        private void MyLogger_MessageAdded(string message)
         {
             if (!rtbDebugLog.IsDisposed)
             {
                 MethodInvoker method = delegate
                 {
-                    rtbDebugLog.AppendText(line + Environment.NewLine);
+                    rtbDebugLog.AppendText(message + Environment.NewLine);
                 };
 
-                if (this.InvokeRequired)
+                if (InvokeRequired)
                 {
-                    this.Invoke(method);
+                    Invoke(method);
                 }
                 else
                 {
@@ -308,15 +308,15 @@ namespace ZScreenGUI
                                 }
                             }
                         }
-                        catch (System.Runtime.InteropServices.ExternalException externEx)
+                        catch (ExternalException ex)
                         {
                             // Copying a field definition in Access 2002 causes this sometimes?
-                            Debug.WriteLine("InteropServices.ExternalException: {0}", externEx.Message);
+                            Engine.MyLogger.WriteException(ex, "InteropServices.ExternalException in ZScreen.WndProc");
                             return;
                         }
                         catch (Exception ex)
                         {
-                            Engine.MyLogger.WriteException("Error monitoring clipboard", ex);
+                            Engine.MyLogger.WriteException(ex, "Error monitoring clipboard");
                             return;
                         }
                         // pass message on to next clipboard listener
@@ -527,7 +527,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error in DelayedTrimMemoryUse", ex);
+                    Engine.MyLogger.WriteException(ex, "Error in DelayedTrimMemoryUse");
                 }
             }
         }
@@ -876,7 +876,7 @@ namespace ZScreenGUI
         private void niTray2_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();
-            this.WindowState = FormWindowState.Normal;            
+            this.WindowState = FormWindowState.Normal;
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
@@ -1223,7 +1223,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while clicking Balloon Tip", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while clicking Balloon Tip");
                 }
             }
         }
@@ -1640,9 +1640,7 @@ namespace ZScreenGUI
 
         #region Language Translator
 
-
         #endregion Language Translator
-
 
         private void ProxySetup(IEnumerable<ProxyInfo> accs)
         {
@@ -2147,7 +2145,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while moving image files", ex);
+                Engine.MyLogger.WriteException(ex, "Error while moving image files");
                 MessageBox.Show(ex.Message);
             }
         }

@@ -148,7 +148,7 @@ namespace ZScreenLib
                         }
                         catch (Exception ex) // sometimes file is still locked... ToDo: delete those files sometime
                         {
-                            Engine.MyLogger.WriteException("Error while finalizing job", ex);
+                            Engine.MyLogger.WriteException(ex, "Error while finalizing job");
                         }
                     }
                 }
@@ -198,7 +198,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while finalizing Worker job", ex);
+                Engine.MyLogger.WriteException(ex, "Error while finalizing Worker job");
             }
             finally
             {
@@ -346,7 +346,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while uploading using file system", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while uploading using file system");
                     succ = false;
                 }
             }

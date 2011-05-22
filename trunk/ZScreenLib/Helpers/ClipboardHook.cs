@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace ZScreenLib
@@ -252,8 +251,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error in SendMessage", ex);
-                Debug.WriteLine(ex.ToString());
+                Engine.MyLogger.WriteException(ex, "Error in ClipboardHook.SendMessage");
                 return -1;
             }
         }

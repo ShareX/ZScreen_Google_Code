@@ -66,7 +66,7 @@ namespace ZUploader
             get
             {
                 DateTime now = FastDateTime.Now;
-                string fileName = string.Format("Log_{0}_{1}.txt", now.Year, now.Month);
+                string fileName = string.Format("{0}Log-{1}-{2}.txt", Application.ProductName, now.Year, now.Month);
                 return Path.Combine(ZUploaderPersonalPath, fileName);
             }
         }
@@ -151,7 +151,7 @@ namespace ZUploader
 
         private static void OnError(Exception e)
         {
-            MyLogger.WriteException("Unhandled exception", e);
+            MyLogger.WriteException(e, "Unhandled exception");
             MyLogger.WriteLine("ZUploader closing. Reason: Unhandled exception");
             MyLogger.SaveLog(LogFilePath);
             new ErrorForm("ZUploader - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();

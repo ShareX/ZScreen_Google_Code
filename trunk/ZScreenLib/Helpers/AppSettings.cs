@@ -64,7 +64,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while reading appSettings", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while reading appSettings");
                 }
             }
 
@@ -99,7 +99,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while writing appSettings", ex);
+                Engine.MyLogger.WriteException(ex, "Error while writing appSettings");
             }
         }
     }

@@ -387,7 +387,7 @@ namespace UploadersLib
                 SaveFileDialog dlg = new SaveFileDialog
                 {
                     FileName = string.Format("{0}-{1}-accounts", Application.ProductName, DateTime.Now.ToString("yyyyMMdd")),
-                    Filter = StaticHelper.FilterFTPAccounts
+                    Filter = "FTP Accounts(*.zfa)|*.zfa"
                 };
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -399,7 +399,7 @@ namespace UploadersLib
 
         private void FTPAccountsImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FilterFTPAccounts };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = "FTP Accounts(*.zfa)|*.zfa" };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 FTPAccountManager fam = FTPAccountManager.Read(dlg.FileName);

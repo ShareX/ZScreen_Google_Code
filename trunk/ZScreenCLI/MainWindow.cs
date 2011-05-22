@@ -54,7 +54,7 @@ namespace ZScreenCLI
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex.ToString());
+                    Debug.WriteLine(ex.ToString());
                 }
 
                 this.niTray.Icon = ResxMgr.ReadyIcon;
