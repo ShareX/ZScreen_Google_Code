@@ -81,7 +81,7 @@ namespace ZScreenLib
                     }
                     catch (Exception ex)
                     {
-                        Engine.MyLogger.WriteException("Error while copying image to clipboard", ex);
+                        Engine.MyLogger.WriteException(ex, "Error while copying image to clipboard");
                     }
                 }
             }
@@ -519,7 +519,7 @@ namespace ZScreenLib
                 }
                 catch (Exception err)
                 {
-                    Engine.MyLogger.WriteException("Error while initializing Font and Color", err);
+                    Engine.MyLogger.WriteException(err, "Error while initializing Font and Color");
                 }
 
                 result = fDialog.ShowDialog();
@@ -531,7 +531,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while setting Watermark Font", ex);
+                Engine.MyLogger.WriteException(ex, "Error while setting Watermark Font");
             }
             return result;
         }
@@ -598,7 +598,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException("Error while adding Recent Item to Windows 7 Taskbar", ex);
+                    Engine.MyLogger.WriteException(ex, "Error while adding Recent Item to Windows 7 Taskbar");
                 }
             }
         }

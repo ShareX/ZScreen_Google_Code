@@ -64,7 +64,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while capturing active window", ex);
+                Engine.MyLogger.WriteException(ex, "Error while capturing active window");
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
                     CaptureRegionOrWindow();
@@ -150,7 +150,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while capturing region", ex);
+                Engine.MyLogger.WriteException(ex, "Error while capturing region");
                 mTask.Errors.Add(ex.Message);
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
@@ -273,7 +273,7 @@ namespace ZScreenLib
                             }
                             catch (Exception ex)
                             {
-                                Engine.MyLogger.WriteException("ImageEdit", ex);
+                                Engine.MyLogger.WriteException(ex, "ImageEdit");
                             }
                         }
                         else if (File.Exists(app.Path))

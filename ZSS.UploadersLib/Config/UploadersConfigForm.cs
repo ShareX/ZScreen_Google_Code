@@ -41,7 +41,7 @@ namespace UploadersLib
         public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
-            LoadTabIcons();
+            ControlSettings();
             CreateUserControlEvents();
             LoadSettings(uploadersConfig);
             APIKeys = uploadersAPIKeys;

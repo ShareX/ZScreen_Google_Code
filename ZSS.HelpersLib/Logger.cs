@@ -32,6 +32,9 @@ namespace HelpersLib
 {
     public class Logger
     {
+        public delegate void MessageAddedEventHandler(string message);
+        public event MessageAddedEventHandler MessageAdded;
+
         public StringBuilder Messages { get; private set; }
 
         /// <summary>{0} = DateTime, {1} = Message</summary>
@@ -42,7 +45,7 @@ namespace HelpersLib
 
         public Logger()
         {
-            Messages = new StringBuilder();
+            Messages = new StringBuilder(1024);
             MessageFormat = "{0:yyyy-MM-dd HH:mm:ss.fff} - {1}";
             ExceptionFormat = "{0}:\r\n{1}";
         }
@@ -54,6 +57,7 @@ namespace HelpersLib
                 string msg = string.Format(MessageFormat, FastDateTime.Now, message);
                 Messages.AppendLine(msg);
                 Debug.WriteLine(msg);
+                OnMessageAdded(msg);
             }
         }
 
@@ -62,22 +66,28 @@ namespace HelpersLib
             WriteLine(string.Format(format, args));
         }
 
-        public void WriteException(string message, Exception exception)
+        public void WriteException(Exception exception, string message = "Exception")
         {
             WriteLine(string.Format(ExceptionFormat, message, exception));
-        }
-
-        public void WriteException(Exception exception)
-        {
-            WriteException("Exception", exception);
         }
 
         public void SaveLog(string filepath)
         {
             lock (this)
             {
-                File.AppendAllText(filepath, Messages.ToString());
-                Messages = new StringBuilder();
+                if (Messages.Length > 0)
+                {
+                    File.AppendAllText(filepath, Messages.ToString());
+                    Messages = new StringBuilder();
+                }
+            }
+        }
+
+        protected void OnMessageAdded(string message)
+        {
+            if (MessageAdded != null)
+            {
+                MessageAdded(message);
             }
         }
     }

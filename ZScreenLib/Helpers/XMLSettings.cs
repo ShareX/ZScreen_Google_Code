@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
@@ -376,7 +375,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                Engine.MyLogger.WriteException(ex);
             }
         }
 

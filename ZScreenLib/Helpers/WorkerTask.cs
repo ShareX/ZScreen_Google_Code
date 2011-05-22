@@ -855,7 +855,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Error while uploading to FTP Server", ex);
+                Engine.MyLogger.WriteException(ex, "Error while uploading to FTP Server");
                 this.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 

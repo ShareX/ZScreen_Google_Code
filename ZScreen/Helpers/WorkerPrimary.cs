@@ -299,7 +299,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
-                                    Engine.MyLogger.WriteException("Error while finalizing job", ex);
+                                    Engine.MyLogger.WriteException(ex, "Error while finalizing job");
                                 }
                             }
                             break;
@@ -369,7 +369,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException("Job Completed with errors: ", ex);
+                Engine.MyLogger.WriteException(ex, "Job Completed with errors: ");
             }
             finally
             {
