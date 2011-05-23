@@ -48,16 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Custom Controls\ImageViewer.cs">
+    <Compile Include="UserControls\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Custom Controls\MyPictureBox.cs">
+    <Compile Include="UserControls\MyPictureBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Custom Controls\MyPictureBox.Designer.cs">
+    <Compile Include="UserControls\MyPictureBox.Designer.cs">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Custom Controls\ObjectListView.cs">
+    <Compile Include="UserControls\ObjectListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Enums.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="XMLManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Custom Controls\MyPictureBox.resx">
+    <EmbeddedResource Include="UserControls\MyPictureBox.resx">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HistoryForm.resx">

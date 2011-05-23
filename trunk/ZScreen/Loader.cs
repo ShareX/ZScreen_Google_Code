@@ -73,47 +73,26 @@ namespace ZScreenGUI
                     Application.Run(new HistoryLib.HistoryForm(Engine.HistoryPath, 100, string.Format("{0} - History", Engine.GetProductName())));
                 }
             }
-            else if (Engine.mAppInfo.ApplicationState == McoreSystem.AppInfo.SoftwareCycle.Beta)
-            {
-                RunZScreenBeta();
-            }
             else
             {
-                RunZScreen();
-            }
-        }
-
-        private static void RunZScreen()
-        {
-            try
-            {
-                if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+                try
                 {
-                    Engine.LoadSettings();
-                    Application.Run(new ZScreen());
+                    if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+                    {
+                        Engine.LoadSettings();
+                        Application.Run(new ZScreen());
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Running ZScreen");
-                Engine.WriteSettings();
-                throw ex;
-            }
-            finally
-            {
-                Engine.TurnOff();
-            }
-        }
-
-        private static void RunZScreenBeta()
-        {
-            if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
-            {
-                Engine.LoadSettings();
-                Application.Run(new ZScreen());
-
-                Engine.WriteSettings();
-                Engine.TurnOff();
+                catch (Exception ex)
+                {
+                    Engine.MyLogger.WriteException(ex, "Running ZScreen");
+                    Engine.WriteSettings();
+                    throw ex;
+                }
+                finally
+                {
+                    Engine.TurnOff();
+                }
             }
         }
 

@@ -56,8 +56,6 @@ namespace ZScreenLib
 
         public static IntPtr zHandle = IntPtr.Zero;
 
-        public static McoreSystem.AppInfo mAppInfo = new McoreSystem.AppInfo(mProductName, Application.ProductVersion);
-
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mProductName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), mProductName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
@@ -159,7 +157,7 @@ namespace ZScreenLib
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine(string.Format("{0} rev {1} started", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
+            MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             DialogResult configResult = DialogResult.OK;
@@ -169,7 +167,6 @@ namespace ZScreenLib
                 mAppSettings.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
                 mProductName += " Portable";
-                mAppInfo.AppName = mProductName;
             }
             else
             {
@@ -230,7 +227,6 @@ namespace ZScreenLib
                 {
                     MultipleInstance = true;
                     mProductName += "*";
-                    mAppInfo.AppName = mProductName;
                 }
             }
 
@@ -357,7 +353,7 @@ namespace ZScreenLib
 
         public static string GetProductName()
         {
-            return mAppInfo.GetApplicationTitle(McoreSystem.AppInfo.VersionDepth.MajorMinorBuildRevision);
+            return string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
         }
 
         private static string GetDefaultImagesDir()

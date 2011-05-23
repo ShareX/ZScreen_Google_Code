@@ -208,7 +208,6 @@ namespace ZScreenGUI
             tpMainActions.ImageKey = "picture_edit";
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
-            tpHelp.ImageKey = "info";
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -2474,14 +2473,6 @@ namespace ZScreenGUI
         private void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
         {
             UpdateGuiEditors(sender);
-        }
-
-        private void tcOptions_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tcOptions.SelectedTab == tpStats && !mDebug.DebugTimer.Enabled)
-            {
-                btnDebugStart_Click(sender, e);
-            }
         }
 
         private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
