@@ -121,7 +121,7 @@ namespace ZSS.UpdateCheckerLib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                StaticHelper.WriteException(ex);
                 return "Update check failed:\r\n" + ex.ToString();
             }
 

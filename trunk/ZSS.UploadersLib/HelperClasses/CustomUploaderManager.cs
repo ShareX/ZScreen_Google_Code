@@ -25,9 +25,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
@@ -52,7 +52,7 @@ namespace UploadersLib.HelperClasses
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                StaticHelper.WriteException(e);
             }
         }
 

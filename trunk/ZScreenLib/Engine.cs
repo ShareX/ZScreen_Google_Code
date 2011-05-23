@@ -46,7 +46,9 @@ namespace ZScreenLib
         // App Info
         private static string mProductName = Application.ProductName;
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
+
         public static Logger MyLogger { get; private set; }
+        public static Stopwatch StartTimer { get; private set; }
 
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
@@ -100,16 +102,6 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
-        // URLS
-        public const string URL_WEBSITE = "http://code.google.com/p/zscreen";
-        public const string URL_ISSUES = "http://code.google.com/p/zscreen/issues/entry";
-        public const string URL_WIKIPAGES = "http://code.google.com/p/zscreen/w/list";
-        public const string URL_HELP = "http://code.google.com/p/zscreen/wiki/Tutorials";
-        public const string URL_UPDATE = "http://zscreen.googlecode.com/svn/trunk/Update.xml";
-        public const string URL_BERK = "http://code.google.com/u/flexy123";
-        public const string URL_MIKE = "http://code.google.com/u/mcored";
-        public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
-
         public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
         private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
@@ -158,15 +150,18 @@ namespace ZScreenLib
 
         public static void TurnOn()
         {
-            Engine.MyLogger = new Logger();
             TurnOn(new EngineOptions());
         }
 
         public static bool TurnOn(EngineOptions options)
         {
-            Engine.MyLogger = new Logger();
-            Engine.MyLogger.WriteLine("Operating System: " + Environment.OSVersion.VersionString);
-            Engine.MyLogger.WriteLine(string.Format("Product Version: {0} rev {1}", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
+            StartTimer = Stopwatch.StartNew();
+
+            MyLogger = new Logger();
+            StaticHelper.MyLogger = MyLogger;
+            MyLogger.WriteLine(string.Format("{0} rev {1} started", mAppInfo.GetApplicationTitle(), Adapter.AppRevision));
+            MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
+
             DialogResult configResult = DialogResult.OK;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))

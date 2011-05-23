@@ -25,8 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using HelpersLib;
 using Newtonsoft.Json.Linq;
 
 namespace UploadersLib.OtherServices
@@ -61,7 +61,7 @@ namespace UploadersLib.OtherServices
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                    StaticHelper.WriteException(e);
                 }
             }
 
@@ -96,7 +96,7 @@ namespace UploadersLib.OtherServices
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                    StaticHelper.WriteException(e);
                 }
             }
 

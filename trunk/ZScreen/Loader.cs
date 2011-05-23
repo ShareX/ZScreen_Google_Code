@@ -87,7 +87,7 @@ namespace ZScreenGUI
         {
             try
             {
-                if (Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+                if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
                 {
                     Engine.LoadSettings();
                     Application.Run(new ZScreen());

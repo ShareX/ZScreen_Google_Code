@@ -37,7 +37,7 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save<T>(T obj, string path, SerializationType type, Logger logger)
+        public static bool Save<T>(T obj, string path, SerializationType type, Logger logger = null)
         {
             lock (obj)
             {
@@ -69,7 +69,7 @@ namespace HelpersLib
                     }
                     catch (Exception e)
                     {
-                       logger.WriteException(e);
+                        StaticHelper.WriteException(e);
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace HelpersLib
             return false;
         }
 
-        public static T Load<T>(string path, SerializationType type, Logger logger) where T : new()
+        public static T Load<T>(string path, SerializationType type, Logger logger = null) where T : new()
         {
             if (!string.IsNullOrEmpty(path) && File.Exists(path))
             {
@@ -96,7 +96,7 @@ namespace HelpersLib
                 }
                 catch (Exception e)
                 {
-                    logger.WriteException(e);
+                    StaticHelper.WriteException(e);
                 }
             }
 

@@ -109,7 +109,9 @@ namespace ZUploader
 
             StartTimer = Stopwatch.StartNew();
             MyLogger = new Logger();
-            MyLogger.WriteLine("ZUploader started");
+            StaticHelper.MyLogger = MyLogger;
+            MyLogger.WriteLine("{0} {1} started", Application.ProductName, Application.ProductVersion);
+            MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             IsPortable = CheckPortable();
             MyLogger.WriteLine("IsPortable = {0}", IsPortable);

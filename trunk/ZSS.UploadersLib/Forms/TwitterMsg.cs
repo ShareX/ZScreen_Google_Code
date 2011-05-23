@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
@@ -162,7 +161,6 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(user) && !this.Addressees.Contains(user))
             {
-                Debug.WriteLine("Added new user to the user list: " + user);
                 Addressees.Add(user);
             }
         }

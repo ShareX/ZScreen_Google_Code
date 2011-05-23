@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -85,7 +84,7 @@ namespace HelpersLib
             catch (Exception e)
             {
                 UnregisterHotkey(id);
-                Debug.WriteLine(e);
+                StaticHelper.WriteException(e);
             }
 
             return false;

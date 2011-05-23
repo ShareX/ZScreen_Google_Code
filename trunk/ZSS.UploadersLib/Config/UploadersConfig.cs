@@ -38,12 +38,12 @@ namespace UploadersLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<UploadersConfig>(this, filePath, SerializationType.Xml, StaticHelper.MyLogger);
+            return SettingsHelper.Save<UploadersConfig>(this, filePath, SerializationType.Xml);
         }
 
         public static UploadersConfig Read(string filePath)
         {
-            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml, StaticHelper.MyLogger);
+            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
         }
 
         #endregion I/O Methods

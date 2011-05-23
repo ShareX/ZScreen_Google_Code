@@ -24,10 +24,10 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
@@ -47,7 +47,7 @@ namespace UploadersLib.HelperClasses
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                    StaticHelper.WriteException(e);
                 }
             }
 
@@ -69,7 +69,7 @@ namespace UploadersLib.HelperClasses
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                    StaticHelper.WriteException(e);
                 }
             }
 

@@ -25,10 +25,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using HelpersLib;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 using ZUploader.HelperClasses;
@@ -232,7 +232,7 @@ namespace UploadersLib
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                StaticHelper.WriteException(e);
             }
         }
 

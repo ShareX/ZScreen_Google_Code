@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -74,9 +75,9 @@ namespace ZSS.IndexersLib
                     dir.SetFile(filepath, TreeDir.BinaryPrefix.Kibibytes);
                 }
             }
-            catch (System.UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
 
             try
@@ -90,7 +91,7 @@ namespace ZSS.IndexersLib
             }
             catch (UnauthorizedAccessException ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
 
             return dir;
@@ -287,7 +288,7 @@ namespace ZSS.IndexersLib
                             if (!mFilter.IsBannedFile(fp.GetFilePath()))
                             {
                                 booPrintList = true;
-                                break; 
+                                break;
                             }
                         }
 
@@ -366,14 +367,14 @@ namespace ZSS.IndexersLib
 
                                             if (dura > 0)
                                             {
-                                                Console.WriteLine(fsize / dura);
+                                                Debug.WriteLine(fsize / dura);
                                                 lLine += Xhtml.GetSpan(string.Format(" [{0} kb/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audioinfo");
                                                 lLine += Xhtml.GetSpan(string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds)), "audiolength");
                                             }
                                         }
                                         catch (Exception ex)
                                         {
-                                            Console.WriteLine(ex.ToString() + "\n" + f.GetFilePath());
+                                            Debug.WriteLine(ex.ToString() + "\n" + f.GetFilePath());
                                         }
                                     }
 
@@ -606,14 +607,14 @@ namespace ZSS.IndexersLib
 
                             if (dura > 0)
                             {
-                                Console.WriteLine(fsize / dura);
+                                Debug.WriteLine(fsize / dura);
                                 fileDesc += string.Format(" [{0} Kibit/s]", (fsize / dura).ToString("0.00"), fGetHMS(audioFile.Properties.Duration.TotalSeconds));
                                 fileDesc += string.Format(" [{0}]", fGetHMS(audioFile.Properties.Duration.TotalSeconds));
                             }
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex.ToString() + "\n" + fi.GetFilePath());
+                            Debug.WriteLine(ex.ToString() + "\n" + fi.GetFilePath());
                         }
                     }
                     sw.WriteLine(fileDesc);

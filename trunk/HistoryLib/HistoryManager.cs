@@ -25,8 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
+using HelpersLib;
 
 namespace HistoryLib
 {
@@ -51,7 +51,7 @@ namespace HistoryLib
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                StaticHelper.WriteException(e);
             }
 
             return false;
@@ -65,7 +65,7 @@ namespace HistoryLib
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                StaticHelper.WriteException(e);
             }
 
             return new List<HistoryItem>();
