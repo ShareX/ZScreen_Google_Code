@@ -125,11 +125,11 @@ namespace ZScreenLib
                     case JobLevel1.Text:
                         if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
                         {
-                            sbMsg.Append(task.MyUrlShortener.ToString());
+                            sbMsg.Append(task.MyUrlShortener.GetDescription());
                         }
                         else
                         {
-                            sbMsg.Append(task.MyTextUploader.ToString());
+                            sbMsg.Append(task.MyTextUploader.GetDescription());
                         }
                         break;
                     case JobLevel1.File:
