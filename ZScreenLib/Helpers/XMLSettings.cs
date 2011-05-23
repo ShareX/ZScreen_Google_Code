@@ -350,7 +350,8 @@ namespace ZScreenLib
         //~~~~~~~~~
 
         public bool DeleteLocal = false;
-        public decimal ScreenshotCacheSize = 50;
+        [Category("Destinations / FTP Server"), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
+        public int ScreenshotCacheSize { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture

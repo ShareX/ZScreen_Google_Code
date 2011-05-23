@@ -389,7 +389,7 @@ namespace ZScreenGUI
         {
             Engine.InitializeDefaultFolderPaths();
             txtImagesDir.Text = Engine.ImagesDir;
-            txtCacheDir.Text = Engine.CacheDir;
+            txtTextDir.Text = Engine.LogsDir;
             if (Engine.conf.PreferSystemFolders)
             {
                 txtRootFolder.Text = Engine.SettingsDir;
@@ -402,7 +402,7 @@ namespace ZScreenGUI
             }
             gbRoot.Enabled = !Engine.Portable;
             gbImages.Enabled = !Engine.Portable;
-            gbCache.Enabled = !Engine.Portable;
+            gbLogs.Enabled = !Engine.Portable;
             chkPreferSystemFolders.Enabled = !Engine.Portable;
         }
 
@@ -897,11 +897,6 @@ namespace ZScreenGUI
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
         {
             Engine.conf.FlashTrayCount = nudFlashIconCount.Value;
-        }
-
-        private void nudCacheSize_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ScreenshotCacheSize = nudCacheSize.Value;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
@@ -1565,7 +1560,7 @@ namespace ZScreenGUI
 
         private void btnViewRemoteDirectory_Click(object sender, EventArgs e)
         {
-            ShowDirectory(Engine.CacheDir);
+            ShowDirectory(Engine.LogsDir);
         }
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)

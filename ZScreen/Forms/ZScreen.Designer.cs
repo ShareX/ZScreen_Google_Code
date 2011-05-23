@@ -266,12 +266,9 @@ namespace ZScreenGUI
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnSettingsImport = new System.Windows.Forms.Button();
-            this.gbCache = new System.Windows.Forms.GroupBox();
+            this.gbLogs = new System.Windows.Forms.GroupBox();
             this.btnViewCacheDir = new System.Windows.Forms.Button();
-            this.lblCacheSize = new System.Windows.Forms.Label();
-            this.lblMebibytes = new System.Windows.Forms.Label();
-            this.nudCacheSize = new System.Windows.Forms.NumericUpDown();
-            this.txtCacheDir = new System.Windows.Forms.TextBox();
+            this.txtTextDir = new System.Windows.Forms.TextBox();
             this.tpCaptureQuality = new System.Windows.Forms.TabPage();
             this.gbImageSize = new System.Windows.Forms.GroupBox();
             this.rbImageSizeDefault = new System.Windows.Forms.RadioButton();
@@ -479,8 +476,7 @@ namespace ZScreenGUI
             this.gbRoot.SuspendLayout();
             this.gbImages.SuspendLayout();
             this.gbSettingsExportImport.SuspendLayout();
-            this.gbCache.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).BeginInit();
+            this.gbLogs.SuspendLayout();
             this.tpCaptureQuality.SuspendLayout();
             this.gbImageSize.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
@@ -2900,7 +2896,7 @@ namespace ZScreenGUI
             this.tpPaths.Controls.Add(this.gbRoot);
             this.tpPaths.Controls.Add(this.gbImages);
             this.tpPaths.Controls.Add(this.gbSettingsExportImport);
-            this.tpPaths.Controls.Add(this.gbCache);
+            this.tpPaths.Controls.Add(this.gbLogs);
             this.tpPaths.Location = new System.Drawing.Point(4, 22);
             this.tpPaths.Name = "tpPaths";
             this.tpPaths.Size = new System.Drawing.Size(799, 408);
@@ -3086,7 +3082,7 @@ namespace ZScreenGUI
             this.gbSettingsExportImport.Controls.Add(this.btnFTPExport);
             this.gbSettingsExportImport.Controls.Add(this.btnFTPImport);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 336);
+            this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 312);
             this.gbSettingsExportImport.Name = "gbSettingsExportImport";
             this.gbSettingsExportImport.Size = new System.Drawing.Size(765, 56);
             this.gbSettingsExportImport.TabIndex = 6;
@@ -3157,22 +3153,19 @@ namespace ZScreenGUI
             this.btnSettingsImport.UseVisualStyleBackColor = true;
             this.btnSettingsImport.Click += new System.EventHandler(this.btnSettingsImport_Click);
             // 
-            // gbCache
+            // gbLogs
             // 
-            this.gbCache.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.gbLogs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbCache.BackColor = System.Drawing.Color.Transparent;
-            this.gbCache.Controls.Add(this.btnViewCacheDir);
-            this.gbCache.Controls.Add(this.lblCacheSize);
-            this.gbCache.Controls.Add(this.lblMebibytes);
-            this.gbCache.Controls.Add(this.nudCacheSize);
-            this.gbCache.Controls.Add(this.txtCacheDir);
-            this.gbCache.Location = new System.Drawing.Point(8, 240);
-            this.gbCache.Name = "gbCache";
-            this.gbCache.Size = new System.Drawing.Size(765, 88);
-            this.gbCache.TabIndex = 1;
-            this.gbCache.TabStop = false;
-            this.gbCache.Text = "Cache";
+            this.gbLogs.BackColor = System.Drawing.Color.Transparent;
+            this.gbLogs.Controls.Add(this.btnViewCacheDir);
+            this.gbLogs.Controls.Add(this.txtTextDir);
+            this.gbLogs.Location = new System.Drawing.Point(8, 240);
+            this.gbLogs.Name = "gbLogs";
+            this.gbLogs.Size = new System.Drawing.Size(765, 64);
+            this.gbLogs.TabIndex = 1;
+            this.gbLogs.TabStop = false;
+            this.gbLogs.Text = "Logs";
             // 
             // btnViewCacheDir
             // 
@@ -3185,60 +3178,17 @@ namespace ZScreenGUI
             this.btnViewCacheDir.UseVisualStyleBackColor = true;
             this.btnViewCacheDir.Click += new System.EventHandler(this.btnViewRemoteDirectory_Click);
             // 
-            // lblCacheSize
-            // 
-            this.lblCacheSize.AutoSize = true;
-            this.lblCacheSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblCacheSize.Location = new System.Drawing.Point(14, 60);
-            this.lblCacheSize.Name = "lblCacheSize";
-            this.lblCacheSize.Size = new System.Drawing.Size(62, 13);
-            this.lblCacheSize.TabIndex = 5;
-            this.lblCacheSize.Text = "Cache size:";
-            // 
-            // lblMebibytes
-            // 
-            this.lblMebibytes.AutoSize = true;
-            this.lblMebibytes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblMebibytes.Location = new System.Drawing.Point(200, 60);
-            this.lblMebibytes.Name = "lblMebibytes";
-            this.lblMebibytes.Size = new System.Drawing.Size(25, 13);
-            this.lblMebibytes.TabIndex = 4;
-            this.lblMebibytes.Text = "MiB";
-            // 
-            // nudCacheSize
-            // 
-            this.nudCacheSize.Location = new System.Drawing.Point(80, 56);
-            this.nudCacheSize.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.nudCacheSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCacheSize.Name = "nudCacheSize";
-            this.nudCacheSize.Size = new System.Drawing.Size(112, 20);
-            this.nudCacheSize.TabIndex = 3;
-            this.nudCacheSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudCacheSize.ValueChanged += new System.EventHandler(this.nudCacheSize_ValueChanged);
-            // 
             // txtCacheDir
             // 
-            this.txtCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtTextDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCacheDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtCacheDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtCacheDir.Location = new System.Drawing.Point(16, 24);
-            this.txtCacheDir.Name = "txtCacheDir";
-            this.txtCacheDir.ReadOnly = true;
-            this.txtCacheDir.Size = new System.Drawing.Size(623, 20);
-            this.txtCacheDir.TabIndex = 0;
+            this.txtTextDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtTextDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtTextDir.Location = new System.Drawing.Point(16, 24);
+            this.txtTextDir.Name = "txtCacheDir";
+            this.txtTextDir.ReadOnly = true;
+            this.txtTextDir.Size = new System.Drawing.Size(623, 20);
+            this.txtTextDir.TabIndex = 0;
             // 
             // tpCaptureQuality
             // 
@@ -5047,9 +4997,8 @@ namespace ZScreenGUI
             this.gbImages.PerformLayout();
             this.gbSettingsExportImport.ResumeLayout(false);
             this.gbSettingsExportImport.PerformLayout();
-            this.gbCache.ResumeLayout(false);
-            this.gbCache.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCacheSize)).EndInit();
+            this.gbLogs.ResumeLayout(false);
+            this.gbLogs.PerformLayout();
             this.tpCaptureQuality.ResumeLayout(false);
             this.gbImageSize.ResumeLayout(false);
             this.gbImageSize.PerformLayout();
@@ -5115,7 +5064,7 @@ namespace ZScreenGUI
 
         }
 
-        internal System.Windows.Forms.GroupBox gbCache;
+        internal System.Windows.Forms.GroupBox gbLogs;
         internal System.Windows.Forms.GroupBox gbImages;
         internal System.Windows.Forms.Button btnBrowseImagesDir;
         private System.Windows.Forms.GroupBox gbWindowButtons;
@@ -5344,10 +5293,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnSettingsExport;
         internal System.Windows.Forms.Button btnSettingsImport;
         internal System.Windows.Forms.Button btnViewCacheDir;
-        internal System.Windows.Forms.Label lblCacheSize;
-        internal System.Windows.Forms.Label lblMebibytes;
-        internal System.Windows.Forms.NumericUpDown nudCacheSize;
-        internal System.Windows.Forms.TextBox txtCacheDir;
+        internal System.Windows.Forms.TextBox txtTextDir;
         internal System.Windows.Forms.TabPage tpStats;
         internal System.Windows.Forms.GroupBox gbStatistics;
         internal System.Windows.Forms.Button btnDebugStart;
