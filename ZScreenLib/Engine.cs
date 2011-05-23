@@ -68,9 +68,10 @@ namespace ZScreenLib
 
         public static AppSettings mAppSettings = AppSettings.Read();
 
-        private static readonly string HistoryFileName = "ZScreenHistory.xml";
+        private static readonly string HistoryFileName = Application.ProductName + "History.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
-        private static readonly string GTConfigFileName = "GTConfig.xml";
+        private static readonly string LogFileName = string.Format(Application.ProductName + "Log-{0}-{1}.txt", DateTime.Now.Year, DateTime.Now.Month);
+        private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
 
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
         public static string RootAppFolder = zLocalAppDataFolder;
@@ -551,11 +552,19 @@ namespace ZScreenLib
             }
         }
 
+        public static string LogFilePath
+        {
+            get
+            {
+                return Path.Combine(LogsDir, LogFileName);
+            }
+        }
+
         public static string GTConfigPath
         {
             get
             {
-                return Path.Combine(SettingsDir, GTConfigFileName);
+                return Path.Combine(SettingsDir, GoogleTranslateConfigFileName);
             }
         }
 
