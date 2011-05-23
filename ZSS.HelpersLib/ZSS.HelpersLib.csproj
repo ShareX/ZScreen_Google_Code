@@ -59,10 +59,10 @@
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingsHelper.cs" />
+    <Compile Include="StaticHelper.cs" />
     <Compile Include="UserControls\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DebugTimer.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="FastDateTime.cs" />

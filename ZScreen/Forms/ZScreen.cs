@@ -31,6 +31,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -49,7 +50,6 @@ using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
-using System.Runtime.InteropServices;
 
 namespace ZScreenGUI
 {
@@ -261,8 +261,7 @@ namespace ZScreenGUI
 
             rtbDebugLog.Text = Engine.MyLogger.Messages.ToString();
             Engine.MyLogger.MessageAdded += new Logger.MessageAddedEventHandler(MyLogger_MessageAdded);
-
-            Engine.MyLogger.WriteLine("Loaded ZScreen GUI...");
+            Engine.MyLogger.WriteLine("ZScreen_Load");
         }
 
         private void MyLogger_MessageAdded(string message)
@@ -448,11 +447,11 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
-                if (this.WindowState == FormWindowState.Minimized)
+                if (WindowState == FormWindowState.Minimized)
                 {
                     if (!Engine.conf.ShowInTaskbar)
                     {
-                        this.Hide();
+                        Hide();
                     }
 
                     if (Engine.conf.AutoSaveSettings)
@@ -462,11 +461,13 @@ namespace ZScreenGUI
                 }
                 else if (this.WindowState == FormWindowState.Normal)
                 {
-                    this.ShowInTaskbar = Engine.conf.ShowInTaskbar;
+                    ShowInTaskbar = Engine.conf.ShowInTaskbar;
                 }
 
-                this.Refresh();
+                Refresh();
             }
+
+            Engine.MyLogger.WriteLine("ZScreen_Resize. WindowState: " + WindowState);
         }
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -475,7 +476,7 @@ namespace ZScreenGUI
             {
                 WriteSettings();
             }
-
+            
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !mClose)
             {
                 e.Cancel = true;
@@ -871,6 +872,8 @@ namespace ZScreenGUI
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
                 niTray.BalloonTipClicked +=new EventHandler(niTray2_BalloonTipClicked);
             }
+
+            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0}ms", Engine.StartTimer.ElapsedMilliseconds);
         }
 
         private void niTray2_BalloonTipClicked(object sender, EventArgs e)
@@ -1310,7 +1313,7 @@ namespace ZScreenGUI
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Engine.URL_ISSUES);
+            Process.Start(ZLinks.URL_ISSUES);
         }
 
         private void cbCopyClipboardAfterTask_CheckedChanged(object sender, EventArgs e)
@@ -1593,12 +1596,12 @@ namespace ZScreenGUI
 
         private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Engine.URL_WEBSITE);
+            Process.Start(ZLinks.URL_WEBSITE);
         }
 
         private void llProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Engine.URL_WIKIPAGES);
+            Process.Start(ZLinks.URL_WIKIPAGES);
         }
 
         private void ZScreen_Deactivate(object sender, EventArgs e)

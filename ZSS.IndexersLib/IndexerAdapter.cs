@@ -181,7 +181,7 @@ namespace ZSS.IndexersLib
                     }
                     catch (System.UnauthorizedAccessException ex)
                     {
-                        Console.WriteLine(ex.ToString());
+                        Debug.WriteLine(ex.ToString());
                     }
                 }
             }
@@ -236,7 +236,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception err)
             {
-                Console.WriteLine(err.ToString());
+                Debug.WriteLine(err.ToString());
                 m_Count = m_Count + 1;
                 RenameFile(filePath, oldFileName, m_Count);
             }
@@ -322,7 +322,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -339,7 +339,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -368,7 +368,7 @@ namespace ZSS.IndexersLib
         {
             if (File.Exists(filePath))
             {
-                Console.WriteLine("Accessed BF TGC Reader...");
+                Debug.WriteLine("Accessed BF TGC Reader...");
 
                 FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
@@ -380,7 +380,7 @@ namespace ZSS.IndexersLib
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Debug.WriteLine(ex.ToString());
                     fs.Close();
                     return false;
                 }
@@ -499,7 +499,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 
@@ -525,7 +525,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
 
             return text;

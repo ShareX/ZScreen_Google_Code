@@ -43,6 +43,8 @@ namespace HelpersLib
         /// <summary>{0} = Message, {1} = Exception</summary>
         public string ExceptionFormat { get; set; }
 
+        private readonly object thisLock = new object();
+
         public Logger()
         {
             Messages = new StringBuilder(1024);
@@ -52,12 +54,15 @@ namespace HelpersLib
 
         public void WriteLine(string message)
         {
-            lock (this)
+            lock (thisLock)
             {
-                string msg = string.Format(MessageFormat, FastDateTime.Now, message);
-                Messages.AppendLine(msg);
-                Debug.WriteLine(msg);
-                OnMessageAdded(msg);
+                if (!string.IsNullOrEmpty(message))
+                {
+                    string msg = string.Format(MessageFormat, FastDateTime.Now, message);
+                    Messages.AppendLine(msg);
+                    Debug.WriteLine(msg);
+                    OnMessageAdded(msg);
+                }
             }
         }
 
@@ -73,12 +78,12 @@ namespace HelpersLib
 
         public void SaveLog(string filepath)
         {
-            lock (this)
+            lock (thisLock)
             {
-                if (Messages.Length > 0)
+                if (!string.IsNullOrEmpty(filepath) && Messages.Length > 0)
                 {
-                    File.AppendAllText(filepath, Messages.ToString());
-                    Messages = new StringBuilder();
+                    File.AppendAllText(filepath, Messages.ToString(), Encoding.UTF8);
+                    Messages = new StringBuilder(1024);
                 }
             }
         }

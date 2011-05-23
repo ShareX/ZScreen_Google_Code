@@ -8,14 +8,14 @@ namespace UploadersLib
     {
         #region I/O Methods
 
-        public static GoogleTranslatorConfig Read(string filePath)
-        {
-            return SettingsHelper.Load<GoogleTranslatorConfig>(filePath, SerializationType.Xml, StaticHelper.MyLogger);
-        }
-
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<GoogleTranslatorConfig>(this, filePath, SerializationType.Xml, StaticHelper.MyLogger);
+            return SettingsHelper.Save<GoogleTranslatorConfig>(this, filePath, SerializationType.Xml);
+        }
+
+        public static GoogleTranslatorConfig Read(string filePath)
+        {
+            return SettingsHelper.Load<GoogleTranslatorConfig>(filePath, SerializationType.Xml);
         }
 
         #endregion I/O Methods

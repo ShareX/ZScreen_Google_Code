@@ -134,7 +134,6 @@
     </Compile>
     <Compile Include="HelperClasses\AsyncHelper.cs" />
     <Compile Include="HelperClasses\ImageListManager.cs" />
-    <Compile Include="StaticHelper.cs" />
     <Compile Include="FileUploader.cs" />
     <Compile Include="FileUploaders\Dropbox.cs" />
     <Compile Include="FileUploaders\DropIO.cs" />

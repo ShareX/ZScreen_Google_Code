@@ -58,10 +58,6 @@ namespace ZScreenTesterGUI
         {
             InitializeComponent();
 
-            MyConsole myConsole = new MyConsole();
-            myConsole.ConsoleWriteLine += new MyConsole.ConsoleEventHandler(myConsole_ConsoleWriteLine);
-            Console.SetOut(myConsole);
-
             ListViewItem lvi;
 
             ListViewGroup imageUploadersGroup = new ListViewGroup("Image Uploaders", HorizontalAlignment.Left);
@@ -189,7 +185,7 @@ namespace ZScreenTesterGUI
             }
         }
 
-        private void myConsole_ConsoleWriteLine(string value)
+        private void ConsoleWriteLine(string value)
         {
             if (!this.IsDisposed)
             {
@@ -269,7 +265,7 @@ namespace ZScreenTesterGUI
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    ConsoleWriteLine(ex.ToString());
                 }
 
                 uploader.Timer.Stop();

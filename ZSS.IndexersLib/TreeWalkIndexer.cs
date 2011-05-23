@@ -132,7 +132,7 @@ namespace ZSS.IndexersLib
                 string TEMP_FILE = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\temp" + i.ToString() + ".bat";
                 string CURRENT_DIR = mSettings.GetConfig().FolderList[i];
                 string TREE_COMMAND = "%windir%\\system32\\tree.com " + tree.getSourceSwitch(CURRENT_DIR) + tree.getAsciiSwitch() + tree.getAddFilesSwitch() + tree.getOutputSwitch(CURRENT_DIR, mIndexMode);
-                Console.WriteLine(TREE_COMMAND);
+                Debug.WriteLine(TREE_COMMAND);
                 using (StreamWriter sw = new StreamWriter(TEMP_FILE))
                 {
                     sw.WriteLine(TREE_COMMAND);
@@ -201,7 +201,7 @@ namespace ZSS.IndexersLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 
