@@ -1,4 +1,7 @@
+4.00.1.0 Application wide improvements to the logging system {Jaex}
 4.00.0.0 Core change to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
+3.38.1.0 Renamed and rearranged main tabs to simplify user interface {Jaex/McoreD}
+3.38.0.0 Easier access to all the main functions using a new toolstrip in the main tab {Jaex}
 
 Version 3.37 - 20110514
 

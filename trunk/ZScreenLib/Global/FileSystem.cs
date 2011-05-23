@@ -204,7 +204,7 @@ namespace ZScreenLib
                 if (Engine.conf != null && !string.IsNullOrEmpty(dir))
                 {
                     DateTime now = FastDateTime.Now;
-                    string path = Path.Combine(dir, string.Format("{0}Log-{1}-{2}.txt", Application.ProductName, now.Year, now.Month));
+                    string path = Engine.LogFilePath;
 
                     Engine.MyLogger.WriteLine("Writing debug file: " + path);
 
