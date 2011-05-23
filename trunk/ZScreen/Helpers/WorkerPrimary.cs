@@ -47,7 +47,7 @@ namespace ZScreenGUI
     public class WorkerPrimary : Worker
     {
         private ZScreen mZScreen;
-        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickOptionsOpened;
+        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened;
         internal HotkeyMgr mHotkeyMgr = null;
 
         public WorkerPrimary(ZScreen myZScreen)
@@ -575,12 +575,6 @@ namespace ZScreenGUI
                     return true;
                 }
 
-                if (Engine.conf.HotkeyQuickOptions == key) // Quick Options
-                {
-                    ShowQuickOptions();
-                    return true;
-                }
-
                 if (Engine.conf.HotkeyLanguageTranslator == key) // Language Translator
                 {
                     StartWorkerTranslator();
@@ -692,36 +686,6 @@ namespace ZScreenGUI
         }
 
         #endregion Start Workers
-
-        #region "Show Quick Actions"
-
-        public void ShowQuickOptions()
-        {
-            if (!bQuickOptionsOpened)
-            {
-                bQuickOptionsOpened = true;
-                QuickOptions quickOptions = new QuickOptions { Icon = Resources.zss_main };
-                quickOptions.FormClosed += new FormClosedEventHandler(QuickOptionsFormClosed);
-                quickOptions.ApplySettings += new EventHandler(QuickOptionsApplySettings);
-                quickOptions.Show();
-                Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
-                quickOptions.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - quickOptions.Width - 100,
-                    SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - quickOptions.Height - 10);
-            }
-        }
-
-        private void QuickOptionsApplySettings(object sender, EventArgs e)
-        {
-            mZScreen.ucDestOptions.cboImageUploaders.SelectedIndex = Engine.conf.MyImageUploader;
-            mZScreen.cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode;
-        }
-
-        private void QuickOptionsFormClosed(object sender, FormClosedEventArgs e)
-        {
-            bQuickOptionsOpened = false;
-        }
-
-        #endregion "Show Quick Actions"
 
         public void ShowAutoCapture()
         {

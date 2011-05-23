@@ -107,7 +107,6 @@ namespace ZScreenLib
         public const Keys DefaultHotkeyLastCropShot = Keys.None;
         public const Keys DefaultHotkeyAutoCapture = Keys.None;
         public const Keys DefaultHotkeyDropWindow = Keys.None;
-        public const Keys DefaultHotkeyQuickOptions = Keys.None;
         public const Keys DefaultHotkeyLanguageTranslator = Keys.None;
         public const Keys DefaultHotkeyScreenColorPicker = Keys.None;
         public const Keys DefaultHotkeyTwitterClient = Keys.None;
@@ -121,7 +120,6 @@ namespace ZScreenLib
         public Keys HotkeyLastCropShot = DefaultHotkeyLastCropShot;
         public Keys HotkeyAutoCapture = DefaultHotkeyAutoCapture;
         public Keys HotkeyDropWindow = DefaultHotkeyDropWindow;
-        public Keys HotkeyQuickOptions = DefaultHotkeyQuickOptions;
         public Keys HotkeyLanguageTranslator = DefaultHotkeyLanguageTranslator;
         public Keys HotkeyScreenColorPicker = DefaultHotkeyScreenColorPicker;
         public Keys HotkeyTwitterClient = DefaultHotkeyTwitterClient;
