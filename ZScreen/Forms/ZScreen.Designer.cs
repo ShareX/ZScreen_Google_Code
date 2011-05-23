@@ -61,8 +61,6 @@ namespace ZScreenGUI
             this.tsmDragDropWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLanguageTranslator = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmScreenColorPicker = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmQuickOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
@@ -419,8 +417,8 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucDestOptions = new ZScreenLib.DestSelector();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -552,12 +550,10 @@ namespace ZScreenGUI
             this.tsmViewLocalDirectory,
             this.toolStripSeparator1,
             this.tsmActions,
-            this.tsmQuickOptions,
-            this.toolStripSeparator7,
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(201, 292);
+            this.cmTray.Size = new System.Drawing.Size(201, 286);
             // 
             // tsmiTabs
             // 
@@ -749,19 +745,6 @@ namespace ZScreenGUI
             this.tsmScreenColorPicker.Size = new System.Drawing.Size(197, 22);
             this.tsmScreenColorPicker.Text = "Screen Color Picker...";
             this.tsmScreenColorPicker.Click += new System.EventHandler(this.screenColorPickerToolStripMenuItem_Click);
-            // 
-            // tsmQuickOptions
-            // 
-            this.tsmQuickOptions.Image = global::ZScreenGUI.Properties.Resources.application_edit;
-            this.tsmQuickOptions.Name = "tsmQuickOptions";
-            this.tsmQuickOptions.Size = new System.Drawing.Size(200, 22);
-            this.tsmQuickOptions.Text = "&Quick Options...";
-            this.tsmQuickOptions.Click += new System.EventHandler(this.tsmQuickOptions_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmHelp
             // 
@@ -4932,6 +4915,15 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
+            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(344, 155);
+            this.ucDestOptions.TabIndex = 124;
+            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
+            // 
             // nudScreenshotDelay
             // 
             this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
@@ -4947,15 +4939,6 @@ namespace ZScreenGUI
             this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
             this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
-            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(344, 155);
-            this.ucDestOptions.TabIndex = 124;
-            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
             // ZScreen
             // 
@@ -5151,8 +5134,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
         internal System.Windows.Forms.ToolStripMenuItem tsmiDestinations;
         internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
-        internal System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        internal System.Windows.Forms.ToolStripMenuItem tsmQuickOptions;
         internal System.Windows.Forms.ToolStripMenuItem tsmActions;
         internal System.Windows.Forms.ToolStripMenuItem tsmCropShot;
         internal System.Windows.Forms.ToolStripMenuItem tsmClipboardUpload;

@@ -427,11 +427,6 @@ namespace ZScreenGUI
             ShowMainWindow();
         }
 
-        private void tsmQuickOptions_Click(object sender, EventArgs e)
-        {
-            Loader.Worker.ShowQuickOptions();
-        }
-
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
             Process.Start("http://profile.imageshack.us/prefs");
