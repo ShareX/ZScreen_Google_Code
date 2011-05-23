@@ -228,12 +228,6 @@ namespace ZUploader
                 case ImageDestination.TINYPIC:
                     imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.Settings.UploadersConfig.TinyPicRegistrationCode);
                     break;
-                /*case ImageDestType2.IMAGEBIN:
-                    imageUploader = new ImageBin();
-                    break;
-                case ImageDestType2.IMG1:
-                    imageUploader = new Img1Uploader();
-                    break;*/
                 case ImageDestination.IMGUR:
                     imageUploader = new Imgur(Program.Settings.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.Settings.UploadersConfig.ImgurOAuthInfo);
                     break;
@@ -255,16 +249,16 @@ namespace ZUploader
             switch (UploadManager.TextUploader)
             {
                 case TextUploaderType.PASTEBIN:
-                    textUploader = new PastebinUploader(ZKeys.PastebinKey);
+                    textUploader = new PastebinUploader(ZKeys.PastebinKey, Program.UploadersConfig.PastebinSettings);
                     break;
                 case TextUploaderType.PASTEBIN_CA:
                     textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
                     break;
-                case TextUploaderType.SLEXY:
-                    textUploader = new SlexyUploader();
-                    break;
                 case TextUploaderType.PASTE2:
                     textUploader = new Paste2Uploader();
+                    break;
+                case TextUploaderType.SLEXY:
+                    textUploader = new SlexyUploader();
                     break;
             }
 
@@ -285,7 +279,13 @@ namespace ZUploader
             switch (UploadManager.FileUploader)
             {
                 case FileUploaderType.RapidShare:
-                    fileUploader = new RapidShare();
+                    fileUploader = new RapidShare(new RapidShareOptions()
+                    {
+                        AccountType = Program.UploadersConfig.RapidShareAccountType,
+                        PremiumUsername = Program.UploadersConfig.RapidSharePremiumUserName,
+                        Password = Program.UploadersConfig.RapidSharePassword,
+                        CollectorsID = Program.UploadersConfig.RapidShareCollectorsID
+                    });
                     break;
                 case FileUploaderType.SendSpace:
                     fileUploader = new SendSpace(ZKeys.SendSpaceKey);
@@ -312,10 +312,16 @@ namespace ZUploader
                     fileUploader = new FilezFiles();
                     break;*/
                 case FileUploaderType.CustomUploader:
-                    fileUploader = new CustomUploader(Program.Settings.CustomUploader);
+                    if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
+                    {
+                        fileUploader = new CustomUploader(Program.UploadersConfig.CustomUploadersList[Program.UploadersConfig.CustomUploaderSelected]);
+                    }
                     break;
                 case FileUploaderType.FTP:
-                    fileUploader = new FTPUploader(Program.Settings.FTPAccount);
+                    if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
+                    {
+                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
+                    }
                     break;
             }
 

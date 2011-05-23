@@ -460,8 +460,6 @@ namespace ZScreenGUI
 
                 Refresh();
             }
-
-            Engine.MyLogger.WriteLine("ZScreen_Resize. WindowState: " + WindowState);
         }
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -470,7 +468,7 @@ namespace ZScreenGUI
             {
                 WriteSettings();
             }
-            
+
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !mClose)
             {
                 e.Cancel = true;
@@ -611,7 +609,7 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Adapter.CheckList(Engine.conf.ActionsList, lbSoftware.SelectedIndex))
+                    if (Engine.conf.ActionsList.CheckSelected(lbSoftware.SelectedIndex))
                     {
                         Engine.conf.ActionsList[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
@@ -622,7 +620,7 @@ namespace ZScreenGUI
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Adapter.CheckList(Engine.conf.ActionsList, sel))
+                    if (Engine.conf.ActionsList.CheckSelected(sel))
                     {
                         Engine.conf.ActionsList[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);

@@ -284,7 +284,8 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts()
         {
-            return CheckList(Engine.MyUploadersConfig.FTPAccountList, Engine.MyUploadersConfig.FTPSelectedImage);
+            // TODO: Only using Image index for FTP
+            return Engine.MyUploadersConfig.FTPAccountList.CheckSelected(Engine.MyUploadersConfig.FTPSelectedImage);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -306,11 +307,6 @@ namespace ZScreenLib
 
         #endregion FTP Methods
 
-        public static bool CheckList<T>(List<T> list, int selected)
-        {
-            return list.Count > 0 && selected >= 0 && list.Count > selected;
-        }
-
         public static bool FindItemInList<T>(List<T> list, string name)
         {
             foreach (T item in list)
@@ -325,7 +321,7 @@ namespace ZScreenLib
 
         public static bool CheckDekiWikiAccounts()
         {
-            return CheckList(Engine.MyUploadersConfig.DekiWikiAccountList, Engine.MyUploadersConfig.DekiWikiSelected);
+            return Engine.MyUploadersConfig.DekiWikiAccountList.CheckSelected(Engine.MyUploadersConfig.DekiWikiSelected);
         }
 
         public static bool CheckDekiWikiAccounts(WorkerTask task)
