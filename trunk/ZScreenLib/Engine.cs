@@ -141,9 +141,18 @@ namespace ZScreenLib
 
         public static void WriteSettings()
         {
-            Engine.MyGTConfig.Write(GTConfigPath);
-            Engine.MyUploadersConfig.Write(UploaderConfigPath);
-            Engine.conf.Write();
+            if (Engine.MyGTConfig != null)
+            {
+                Engine.MyGTConfig.Write(GTConfigPath);
+            }
+            if (Engine.MyUploadersConfig != null)
+            {
+                Engine.MyUploadersConfig.Write(UploaderConfigPath);
+            }
+            if (Engine.conf != null)
+            {
+                Engine.conf.Write();
+            }
         }
 
         public static void TurnOn()
@@ -339,10 +348,7 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteLine("Keyboard Hook terminated");
             }
             FileSystem.WriteDebugFile();
-            if (Engine.conf != null)
-            {
-                Engine.WriteSettings();
-            }
+            Engine.WriteSettings();
         }
 
         public static void SetRootFolder(string dp)
