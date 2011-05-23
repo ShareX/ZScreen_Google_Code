@@ -37,7 +37,7 @@ using ZUploaderPlugin;
 
 namespace ZUploader
 {
-    public partial class MainForm : HotkeyForm, IPluginHost
+    public partial class MainForm : Form, IPluginHost
     {
         public bool IsReady { get; private set; }
 
@@ -101,8 +101,6 @@ namespace ZUploader
             lvUploads.FillLastColumn();
 
             UploadManager.ListViewControl = lvUploads;
-
-            HotkeyPress += new HotkeyEventHandler(MainForm_HotkeyPress);
         }
 
         private void LoadSettings()
@@ -138,8 +136,6 @@ namespace ZUploader
 
             ((ToolStripMenuItem)tsmiURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
-
-            RegisterHotkey(Program.Settings.HotkeyClipboardUpload);
         }
 
         private void LoadPlugins()
@@ -384,14 +380,6 @@ namespace ZUploader
             UploadManager.DragDropUpload(e.Data);
         }
 
-        private void MainForm_HotkeyPress(KeyEventArgs e)
-        {
-            if (e.KeyData == Program.Settings.HotkeyClipboardUpload)
-            {
-                UploadManager.ClipboardUpload();
-            }
-        }
-
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
             if (Program.Settings.ShowClipboardContentViewer)
@@ -575,7 +563,7 @@ namespace ZUploader
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
         {
-            new UploadersConfigForm(Program.Settings.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
+            new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
         }
 
         #endregion Form events

@@ -265,7 +265,7 @@ namespace ZScreenGUI
 
         private void MyLogger_MessageAdded(string message)
         {
-            if (!rtbDebugLog.IsDisposed)
+            if (!IsDisposed && !rtbDebugLog.IsDisposed)
             {
                 MethodInvoker method = delegate
                 {

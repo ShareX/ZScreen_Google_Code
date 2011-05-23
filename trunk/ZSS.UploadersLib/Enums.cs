@@ -145,7 +145,7 @@ namespace UploadersLib
         DEKIWIKI,
         [Description("MediaWiki")]
         MEDIAWIKI,
-        [Description("Use file uploader")]
+        [Description("Use File Uploader")]
         FileUploader
     }
 
@@ -161,7 +161,7 @@ namespace UploadersLib
         PASTE2,
         [Description("Slexy 2.0 - slexy.org")]
         SLEXY,
-        [Description("Use file uploader")]
+        [Description("Use File Uploader")]
         FileUploader
     }
 
@@ -175,11 +175,9 @@ namespace UploadersLib
         SendSpace,
         [Description("Dropbox - dropbox.com")]
         Dropbox,
-        //[Description("FileSonic - filesonic.com")]
-        //FileSonic,
         [Description("ShareCX - share.cx")]
         ShareCX,
-        [Description("Use custom uploader")]
+        [Description("Use Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
         FTP

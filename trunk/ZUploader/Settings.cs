@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using HelpersLib;
-using UploadersLib;
 using UploadersLib.HelperClasses;
 
 namespace ZUploader
@@ -39,59 +38,53 @@ namespace ZUploader
         public int SelectedURLShortenerDestination = 0;
         public bool ShowClipboardContentViewer = true;
 
-        // Settings Form
+        #region Settings Form
 
+        // General
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
 
+        // Upload
         public bool UseCustomUploadersConfigPath = false;
         public string CustomUploadersConfigPath = string.Empty;
         public int UploadLimit = 5;
         public int BufferSizePower = 3;
 
+        // Image
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public int ImageJPEGQuality = 90;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
+        // Clipboard upload
         // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver
         public string NameFormatPattern = "%y-%mo-%d_%h-%mi-%s";
 
+        // History
         public bool SaveHistory = true;
         public bool UseCustomHistoryPath = false;
         public string CustomHistoryPath = string.Empty;
         public int HistoryMaxItemCount = -1;
 
-        public UploadersConfig UploadersConfig = new UploadersConfig();
-
+        // Proxy
         public ProxyInfo ProxySettings = new ProxyInfo();
 
-        public bool Write(string filePath)
-        {
-            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
-        }
+        #endregion Settings Form
 
-        public static UploadersConfig Read(string filePath)
-        {
-            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
-        }
+        #region I/O Methods
 
         public bool Save()
         {
-            Program.MyLogger.WriteLine("Settings.Save() started = " + Program.SettingsFilePath);
-            bool result = SettingsHelper.Save(this, Program.SettingsFilePath, SerializationType.Xml);
-            Program.MyLogger.WriteLine("Settings.Save() finished = " + result);
-            return result;
+            return SettingsHelper.Save(this, Program.SettingsFilePath, SerializationType.Xml);
         }
 
         public static Settings Load()
         {
-            Program.MyLogger.WriteLine("Settings.Load() started = {0}", Program.SettingsFilePath);
-            Settings result = SettingsHelper.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
-            Program.MyLogger.WriteLine("Settings.Load() finished");
-            return result;
+            return SettingsHelper.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
         }
+
+        #endregion I/O Methods
     }
 }

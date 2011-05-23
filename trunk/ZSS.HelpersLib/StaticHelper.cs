@@ -32,6 +32,18 @@ namespace HelpersLib
     {
         public static Logger MyLogger { get; set; }
 
+        public static void WriteLine(string message)
+        {
+            if (MyLogger != null)
+            {
+                MyLogger.WriteLine(message);
+            }
+            else
+            {
+                Debug.WriteLine(message);
+            }
+        }
+
         public static void WriteException(Exception e)
         {
             if (MyLogger != null)

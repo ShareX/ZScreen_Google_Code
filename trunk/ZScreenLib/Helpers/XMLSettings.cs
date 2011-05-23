@@ -606,22 +606,14 @@ namespace ZScreenLib
 
         #region I/O Methods
 
-        public void Write()
+        public void WriteAsync()
         {
-            new Thread(WriteThread).Start(Engine.mAppSettings.GetSettingsFilePath());
-        }
-
-        public void WriteThread(object filePath)
-        {
-            lock (this)
-            {
-                Write((string)filePath);
-            }
+            ThreadPool.QueueUserWorkItem(state => Write(Engine.mAppSettings.GetSettingsFilePath()));
         }
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<XMLSettings>(this, filePath, SerializationType.Xml, Engine.MyLogger);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public static XMLSettings Read()
@@ -649,18 +641,18 @@ namespace ZScreenLib
             }
 
             Engine.mAppSettings.XMLSettingsFile = Engine.mAppSettings.GetSettingsFilePath();
+
             return Read(Engine.mAppSettings.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)
         {
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                return SettingsHelper.Load<XMLSettings>(filePath, HelpersLib.SerializationType.Xml, Engine.MyLogger);
-            }
-
-            return new XMLSettings();
+            return SettingsHelper.Load<XMLSettings>(filePath, SerializationType.Xml);
         }
+
+        #endregion I/O Methods
+
+        #region Other methods
 
         public static void ApplyDefaultValues(object self)
         {
@@ -671,10 +663,6 @@ namespace ZScreenLib
                 prop.SetValue(self, attr.Value);
             }
         }
-
-        #endregion I/O Methods
-
-        #region Other methods
 
         public object GetFieldValue(string name)
         {

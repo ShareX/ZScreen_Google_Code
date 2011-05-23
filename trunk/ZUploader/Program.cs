@@ -163,9 +163,10 @@ namespace ZUploader
             MyLogger.WriteLine("CommandLineArg = \"{0}\"", CommandLineArg);
 
             Thread settingThread = new Thread(() =>
-                {
-                    Settings = Settings.Load();
-                });
+            {
+                Settings = Settings.Load();
+                UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
+            });
             settingThread.Start();
 
             Application.EnableVisualStyles();

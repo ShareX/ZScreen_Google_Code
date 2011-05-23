@@ -68,9 +68,11 @@ namespace ZScreenLib
 
         public static AppSettings mAppSettings = AppSettings.Read();
 
-        private static readonly string HistoryFileName = Application.ProductName + "History.xml";
+        private static readonly string ApplicationName = Application.ProductName;
+        private static readonly string HistoryFileName = "UploadersHistory.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
-        private static readonly string LogFileName = string.Format(Application.ProductName + "Log-{0}.txt", DateTime.Now.ToString("yyyy-MM"));
+        private static readonly string LogFileName = ApplicationName + "Log-{0}-{1}.txt";
+        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
         private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
 
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
@@ -148,11 +150,11 @@ namespace ZScreenLib
             }
             if (Engine.MyUploadersConfig != null)
             {
-                Engine.MyUploadersConfig.Write(UploaderConfigPath);
+                Engine.MyUploadersConfig.Save(UploaderConfigPath);
             }
             if (Engine.conf != null)
             {
-                Engine.conf.Write();
+                Engine.conf.WriteAsync();
             }
         }
 
@@ -245,7 +247,7 @@ namespace ZScreenLib
 
         public static void LoadSettings()
         {
-            LoadSettings(string.Empty);
+            LoadSettings(null);
         }
 
         public static void LoadSettingsLatest()
@@ -286,30 +288,22 @@ namespace ZScreenLib
             {
                 if (string.IsNullOrEmpty(fp))
                 {
-                    Engine.MyLogger.WriteLine("Reading: " + Engine.mAppSettings.XMLSettingsFile);
                     Engine.conf = XMLSettings.Read();
-                    Engine.MyLogger.WriteLine("Finished reading: " + Engine.mAppSettings.XMLSettingsFile);
                 }
                 else
                 {
-                    Engine.MyLogger.WriteLine("Reading: " + fp);
                     Engine.conf = XMLSettings.Read(fp);
-                    Engine.MyLogger.WriteLine("Finished reading: " + fp);
                 }
             });
 
             Thread uploadersConfigThread = new Thread(() =>
             {
-                Engine.MyLogger.WriteLine("Reading: " + UploaderConfigPath);
-                Engine.MyUploadersConfig = UploadersConfig.Read(UploaderConfigPath);
-                Engine.MyLogger.WriteLine("Finished reading: " + UploaderConfigPath);
+                Engine.MyUploadersConfig = UploadersConfig.Load(UploaderConfigPath);
             });
 
             Thread googleTranslateThread = new Thread(() =>
             {
-                Engine.MyLogger.WriteLine("Reading: " + GTConfigPath);
                 Engine.MyGTConfig = GoogleTranslatorConfig.Read(GTConfigPath);
-                Engine.MyLogger.WriteLine("Finished reading: " + GTConfigPath);
             });
 
             settingsThread.Start();
@@ -330,6 +324,7 @@ namespace ZScreenLib
                 Engine.conf.MyTextUploader = Engine.mAppSettings.TextUploader;
                 Engine.conf.MyURLShortener = Engine.mAppSettings.UrlShortener;
             }
+
             // Portable then we don't need PreferSystemFolders to be true
             if (Portable)
             {
@@ -556,7 +551,8 @@ namespace ZScreenLib
         {
             get
             {
-                return Path.Combine(LogsDir, LogFileName);
+                DateTime now = FastDateTime.Now;
+                return Path.Combine(LogsDir, string.Format(LogFileName, now.Year, now.Month));
             }
         }
 
