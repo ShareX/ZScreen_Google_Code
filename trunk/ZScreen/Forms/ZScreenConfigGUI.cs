@@ -215,7 +215,6 @@ namespace ZScreenGUI
                 cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetDescriptions());
                 cboReleaseChannel.SelectedIndex = (int)Engine.conf.ReleaseChannel;
             }
-            nudCacheSize.Value = Engine.conf.ScreenshotCacheSize;
             chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);

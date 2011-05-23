@@ -70,7 +70,7 @@ namespace ZScreenLib
 
         private static readonly string HistoryFileName = Application.ProductName + "History.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
-        private static readonly string LogFileName = string.Format(Application.ProductName + "Log-{0}-{1}.txt", DateTime.Now.Year, DateTime.Now.Month);
+        private static readonly string LogFileName = string.Format(Application.ProductName + "Log-{0}.txt", DateTime.Now.ToString("yyyy-MM"));
         private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
 
         public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
