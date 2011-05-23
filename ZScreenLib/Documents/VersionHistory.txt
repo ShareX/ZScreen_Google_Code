@@ -1,9 +1,9 @@
-3.37.0.2 Fixed issue 430 Custom Uploader Test Upload button did not work as expected {McoreD}
+4.00.0.0 Core change to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
+
+Version 3.37 - 20110514
+
 3.37.0.1 Fixed issue 275 Metafiles on Clipboard Are Not Visible to All Applications {McoreD}
 3.37.0.0 New toolbar in the main tab to easily access quick actions {Jaex}
-
-Version 3.36 - 20110515
-
 3.36.17.1 Fixed issues with Windows 7 Taskbar integration {McoreD}
 3.36.17.0 Much more reliable Google Translator engine powered by the API {Jaex}
 3.36.16.0 Provision for checking updates for Dev channel releases {McoreD}
