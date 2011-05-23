@@ -223,13 +223,22 @@ namespace ZUploader
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestination.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.Settings.UploadersConfig.ImageShackRegistrationCode);
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.UploadersConfig.ImageShackRegistrationCode)
+                    {
+                        Public = Program.UploadersConfig.ImageShackShowImagesInPublic
+                    };
                     break;
                 case ImageDestination.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.Settings.UploadersConfig.TinyPicRegistrationCode);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.UploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageDestination.IMGUR:
-                    imageUploader = new Imgur(Program.Settings.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.Settings.UploadersConfig.ImgurOAuthInfo);
+                    imageUploader = new Imgur(Program.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.UploadersConfig.ImgurOAuthInfo);
+                    break;
+                case ImageDestination.FLICKR:
+                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Program.UploadersConfig.FlickrAuthInfo, Program.UploadersConfig.FlickrSettings);
+                    break;
+                case ImageDestination.UPLOADSCREENSHOT:
+                    imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
                     break;
             }
 
@@ -278,6 +287,29 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
+                case FileUploaderType.FTP:
+                    if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
+                    {
+                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
+                    }
+                    break;
+                case FileUploaderType.Dropbox:
+                    NameParser parser = new NameParser { IsFolderPath = true };
+                    string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.UploadersConfig.DropboxUploadPath));
+                    fileUploader = new Dropbox(Program.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.UploadersConfig.DropboxAccountInfo);
+                    break;
+                case FileUploaderType.SendSpace:
+                    fileUploader = new SendSpace(ZKeys.SendSpaceKey);
+                    switch (Program.UploadersConfig.SendSpaceAccountType)
+                    {
+                        case AccountType.Anonymous:
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
+                            break;
+                        case AccountType.User:
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Program.UploadersConfig.SendSpaceUsername, Program.UploadersConfig.SendSpacePassword);
+                            break;
+                    }
+                    break;
                 case FileUploaderType.RapidShare:
                     fileUploader = new RapidShare(new RapidShareOptions()
                     {
@@ -287,40 +319,13 @@ namespace ZUploader
                         CollectorsID = Program.UploadersConfig.RapidShareCollectorsID
                     });
                     break;
-                case FileUploaderType.SendSpace:
-                    fileUploader = new SendSpace(ZKeys.SendSpaceKey);
-                    SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
-                    break;
-                case FileUploaderType.Dropbox:
-                    NameParser parser = new NameParser { IsFolderPath = true };
-                    string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.Settings.UploadersConfig.DropboxUploadPath));
-                    fileUploader = new Dropbox(Program.Settings.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.Settings.UploadersConfig.DropboxAccountInfo);
-                    break;
-                /*case FileUploaderType.FileSonic:
-                    fileUploader = new FileSonic("", "");
-                    break;
-                case FileUploaderType2.FileBin:
-                    fileUploader = new FileBin();
-                    break;
-                case FileDestination.DropIO:
-                    fileUploader = new DropIO(Program.DropIOKey);
-                    break;*/
                 case FileUploaderType.ShareCX:
                     fileUploader = new ShareCX();
                     break;
-                /*case FileUploaderType.FilezFiles:
-                    fileUploader = new FilezFiles();
-                    break;*/
                 case FileUploaderType.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
                     {
                         fileUploader = new CustomUploader(Program.UploadersConfig.CustomUploadersList[Program.UploadersConfig.CustomUploaderSelected]);
-                    }
-                    break;
-                case FileUploaderType.FTP:
-                    if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
-                    {
-                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
                     }
                     break;
             }

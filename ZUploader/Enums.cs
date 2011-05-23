@@ -29,17 +29,19 @@ namespace ZUploader
 {
     public enum ImageDestination
     {
-        [Description("imageshack.us")]
+        [Description("None")]
+        NONE,
+        [Description("ImageShack - imageshack.us")]
         IMAGESHACK,
-        [Description("tinypic.com")]
+        [Description("TinyPic - tinypic.com")]
         TINYPIC,
-        //[Description("imagebin.ca")]
-        //IMAGEBIN,
-        //[Description("img1.us")]
-        //IMG1,
-        [Description("imgur.com")]
+        [Description("Imgur - imgur.com")]
         IMGUR,
-        [Description("Use file uploader")]
+        [Description("Flickr - flickr.com")]
+        FLICKR,
+        [Description("Uploadscreenshot - uploadscreenshot.com")]
+        UPLOADSCREENSHOT,
+        [Description("Use File Uploader")]
         FILE
     }
 

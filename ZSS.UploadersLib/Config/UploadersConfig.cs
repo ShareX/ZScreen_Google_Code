@@ -34,20 +34,6 @@ namespace UploadersLib
 {
     public class UploadersConfig
     {
-        #region I/O Methods
-
-        public bool Write(string filePath)
-        {
-            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
-        }
-
-        public static UploadersConfig Read(string filePath)
-        {
-            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
-        }
-
-        #endregion I/O Methods
-
         #region Image uploaders
 
         // ImageShack
@@ -160,5 +146,19 @@ namespace UploadersLib
         public int LocalhostSelected = 0;
 
         #endregion Other destinations
+
+        #region I/O Methods
+
+        public bool Save(string filePath)
+        {
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
+        }
+
+        public static UploadersConfig Load(string filePath)
+        {
+            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
+        }
+
+        #endregion I/O Methods
     }
 }

@@ -548,16 +548,21 @@ namespace ZScreenLib
                         this.UpdateLocalFilePath(fp);
                     }
                     break;
-                case ImageUploaderType.FLICKR:
-                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
-                        Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
-                    break;
                 case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackRegistrationCode);
-                    ((ImageShackUploader)imageUploader).Public = Engine.MyUploadersConfig.ImageShackShowImagesInPublic;
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackRegistrationCode)
+                    {
+                        Public = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
+                    };
+                    break;
+                case ImageUploaderType.TINYPIC:
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageUploaderType.IMGUR:
                     imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);
+                    break;
+                case ImageUploaderType.FLICKR:
+                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
+                        Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
                     break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
@@ -573,9 +578,6 @@ namespace ZScreenLib
                     {
                         this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
                     }
-                    break;
-                case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
@@ -737,12 +739,16 @@ namespace ZScreenLib
                             break;
                     }
                     break;
+                case FileUploaderType.Dropbox:
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
+                    fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
+                    break;
                 case FileUploaderType.SendSpace:
                     fileHost = new SendSpace(ZKeys.SendSpaceKey);
                     switch (Engine.MyUploadersConfig.SendSpaceAccountType)
                     {
                         case AccountType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, null, null);
+                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
                             break;
                         case AccountType.User:
                             SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.MyUploadersConfig.SendSpaceUsername,
@@ -759,19 +765,6 @@ namespace ZScreenLib
                         CollectorsID = Engine.MyUploadersConfig.RapidShareCollectorsID
                     });
                     break;
-                case FileUploaderType.Dropbox:
-                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
-                    fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
-                    break;
-                /*case FileUploaderType.FileBin:
-                    fileHost = new FileBin();
-                    break;
-                case FileUploaderType.DropIO:
-                    fileHost = new DropIO();
-                    break;
-                case FileUploaderType.FilezFiles:
-                    fileHost = new FilezFiles();
-                    break;*/
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();
                     break;

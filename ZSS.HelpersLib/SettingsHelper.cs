@@ -37,21 +37,23 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save<T>(T obj, string path, SerializationType type, Logger logger = null)
+        public static bool Save<T>(T obj, string path, SerializationType type)
         {
-            lock (obj)
+            StaticHelper.WriteLine("Settings save started: " + path);
+
+            try
             {
-                if (!string.IsNullOrEmpty(path))
+                lock (obj)
                 {
-                    string directoryName = Path.GetDirectoryName(path);
-
-                    if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
+                    if (!string.IsNullOrEmpty(path))
                     {
-                        Directory.CreateDirectory(directoryName);
-                    }
+                        string directoryName = Path.GetDirectoryName(path);
 
-                    try
-                    {
+                        if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
+                        {
+                            Directory.CreateDirectory(directoryName);
+                        }
+
                         using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
                         {
                             switch (type)
@@ -67,21 +69,27 @@ namespace HelpersLib
                             return true;
                         }
                     }
-                    catch (Exception e)
-                    {
-                        StaticHelper.WriteException(e);
-                    }
                 }
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
+            }
+            finally
+            {
+                StaticHelper.WriteLine("Settings save finished: " + path);
             }
 
             return false;
         }
 
-        public static T Load<T>(string path, SerializationType type, Logger logger = null) where T : new()
+        public static T Load<T>(string path, SerializationType type) where T : new()
         {
-            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            StaticHelper.WriteLine("Settings load started: " + path);
+
+            try
             {
-                try
+                if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 {
                     using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
@@ -94,10 +102,14 @@ namespace HelpersLib
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    StaticHelper.WriteException(e);
-                }
+            }
+            catch (Exception e)
+            {
+                StaticHelper.WriteException(e);
+            }
+            finally
+            {
+                StaticHelper.WriteLine("Settings load finished: " + path);
             }
 
             return new T();
