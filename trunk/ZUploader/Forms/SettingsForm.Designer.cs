@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pgFTPSettings = new System.Windows.Forms.PropertyGrid();
             this.cbClipboardAutoCopy = new System.Windows.Forms.CheckBox();
             this.cbAutoPlaySound = new System.Windows.Forms.CheckBox();
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOpenZUploaderPath = new System.Windows.Forms.Button();
             this.lblGeneralInfo = new System.Windows.Forms.Label();
@@ -73,13 +73,12 @@
             this.txtCustomHistoryPath = new System.Windows.Forms.TextBox();
             this.cbUseCustomHistoryPath = new System.Windows.Forms.CheckBox();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
-            this.tpFTP = new System.Windows.Forms.TabPage();
             this.tpProxy = new System.Windows.Forms.TabPage();
-            this.tpCustomUploader = new System.Windows.Forms.TabPage();
-            this.pgCustomUploaderSettings = new System.Windows.Forms.PropertyGrid();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
+            this.btnBrowseCustomUploadersConfigPath = new System.Windows.Forms.Button();
+            this.txtCustomUploadersConfigPath = new System.Windows.Forms.TextBox();
+            this.cbUseCustomUploadersConfigPath = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -90,22 +89,9 @@
             this.tpClipboardUpload.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).BeginInit();
-            this.tpFTP.SuspendLayout();
             this.tpProxy.SuspendLayout();
-            this.tpCustomUploader.SuspendLayout();
             this.tpDebug.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pgFTPSettings
-            // 
-            this.pgFTPSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgFTPSettings.Location = new System.Drawing.Point(4, 4);
-            this.pgFTPSettings.Name = "pgFTPSettings";
-            this.pgFTPSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgFTPSettings.Size = new System.Drawing.Size(515, 251);
-            this.pgFTPSettings.TabIndex = 0;
-            this.pgFTPSettings.ToolbarVisible = false;
-            this.pgFTPSettings.SelectedObjectsChanged += new System.EventHandler(this.pgFTPSettings_SelectedObjectsChanged);
             // 
             // cbClipboardAutoCopy
             // 
@@ -146,9 +132,7 @@
             this.tcSettings.Controls.Add(this.tpImage);
             this.tcSettings.Controls.Add(this.tpClipboardUpload);
             this.tcSettings.Controls.Add(this.tpHistory);
-            this.tcSettings.Controls.Add(this.tpFTP);
             this.tcSettings.Controls.Add(this.tpProxy);
-            this.tcSettings.Controls.Add(this.tpCustomUploader);
             this.tcSettings.Controls.Add(this.tpDebug);
             this.tcSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
@@ -173,6 +157,17 @@
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbURLShortenAfterUpload
+            // 
+            this.cbURLShortenAfterUpload.AutoSize = true;
+            this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 64);
+            this.cbURLShortenAfterUpload.Name = "cbURLShortenAfterUpload";
+            this.cbURLShortenAfterUpload.Size = new System.Drawing.Size(240, 17);
+            this.cbURLShortenAfterUpload.TabIndex = 19;
+            this.cbURLShortenAfterUpload.Text = "Use URL Shortener after upload is completed";
+            this.cbURLShortenAfterUpload.UseVisualStyleBackColor = true;
+            this.cbURLShortenAfterUpload.CheckedChanged += new System.EventHandler(this.cbURLShortenAfterUpload_CheckedChanged);
             // 
             // label1
             // 
@@ -219,6 +214,9 @@
             // 
             // tpUpload
             // 
+            this.tpUpload.Controls.Add(this.btnBrowseCustomUploadersConfigPath);
+            this.tpUpload.Controls.Add(this.txtCustomUploadersConfigPath);
+            this.tpUpload.Controls.Add(this.cbUseCustomUploadersConfigPath);
             this.tpUpload.Controls.Add(this.lblUploadLimitHint);
             this.tpUpload.Controls.Add(this.nudUploadLimit);
             this.tpUpload.Controls.Add(this.lblUploadLimit);
@@ -235,7 +233,7 @@
             // lblUploadLimitHint
             // 
             this.lblUploadLimitHint.AutoSize = true;
-            this.lblUploadLimitHint.Location = new System.Drawing.Point(216, 16);
+            this.lblUploadLimitHint.Location = new System.Drawing.Point(216, 80);
             this.lblUploadLimitHint.Name = "lblUploadLimitHint";
             this.lblUploadLimitHint.Size = new System.Drawing.Size(90, 13);
             this.lblUploadLimitHint.TabIndex = 5;
@@ -243,7 +241,7 @@
             // 
             // nudUploadLimit
             // 
-            this.nudUploadLimit.Location = new System.Drawing.Point(152, 12);
+            this.nudUploadLimit.Location = new System.Drawing.Point(152, 76);
             this.nudUploadLimit.Maximum = new decimal(new int[] {
             25,
             0,
@@ -263,7 +261,7 @@
             // lblUploadLimit
             // 
             this.lblUploadLimit.AutoSize = true;
-            this.lblUploadLimit.Location = new System.Drawing.Point(16, 16);
+            this.lblUploadLimit.Location = new System.Drawing.Point(16, 80);
             this.lblUploadLimit.Name = "lblUploadLimit";
             this.lblUploadLimit.Size = new System.Drawing.Size(128, 13);
             this.lblUploadLimit.TabIndex = 3;
@@ -272,7 +270,7 @@
             // lblBufferSize
             // 
             this.lblBufferSize.AutoSize = true;
-            this.lblBufferSize.Location = new System.Drawing.Point(16, 48);
+            this.lblBufferSize.Location = new System.Drawing.Point(16, 112);
             this.lblBufferSize.Name = "lblBufferSize";
             this.lblBufferSize.Size = new System.Drawing.Size(59, 13);
             this.lblBufferSize.TabIndex = 2;
@@ -281,7 +279,7 @@
             // lblBufferSizeInfo
             // 
             this.lblBufferSizeInfo.AutoSize = true;
-            this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 48);
+            this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 112);
             this.lblBufferSizeInfo.Name = "lblBufferSizeInfo";
             this.lblBufferSizeInfo.Size = new System.Drawing.Size(23, 13);
             this.lblBufferSizeInfo.TabIndex = 1;
@@ -291,7 +289,7 @@
             // 
             this.cbBufferSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBufferSize.FormattingEnabled = true;
-            this.cbBufferSize.Location = new System.Drawing.Point(80, 44);
+            this.cbBufferSize.Location = new System.Drawing.Point(80, 108);
             this.cbBufferSize.Name = "cbBufferSize";
             this.cbBufferSize.Size = new System.Drawing.Size(64, 21);
             this.cbBufferSize.TabIndex = 0;
@@ -645,17 +643,6 @@
             this.cbHistorySave.UseVisualStyleBackColor = true;
             this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
             // 
-            // tpFTP
-            // 
-            this.tpFTP.Controls.Add(this.pgFTPSettings);
-            this.tpFTP.Location = new System.Drawing.Point(4, 22);
-            this.tpFTP.Name = "tpFTP";
-            this.tpFTP.Padding = new System.Windows.Forms.Padding(4);
-            this.tpFTP.Size = new System.Drawing.Size(523, 259);
-            this.tpFTP.TabIndex = 1;
-            this.tpFTP.Text = "FTP";
-            this.tpFTP.UseVisualStyleBackColor = true;
-            // 
             // tpProxy
             // 
             this.tpProxy.Controls.Add(this.pgProxy);
@@ -666,27 +653,6 @@
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
-            // 
-            // tpCustomUploader
-            // 
-            this.tpCustomUploader.Controls.Add(this.pgCustomUploaderSettings);
-            this.tpCustomUploader.Location = new System.Drawing.Point(4, 22);
-            this.tpCustomUploader.Name = "tpCustomUploader";
-            this.tpCustomUploader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCustomUploader.Size = new System.Drawing.Size(523, 259);
-            this.tpCustomUploader.TabIndex = 8;
-            this.tpCustomUploader.Text = "Custom Uploader";
-            this.tpCustomUploader.UseVisualStyleBackColor = true;
-            // 
-            // pgCustomUploaderSettings
-            // 
-            this.pgCustomUploaderSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgCustomUploaderSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgCustomUploaderSettings.Name = "pgCustomUploaderSettings";
-            this.pgCustomUploaderSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgCustomUploaderSettings.Size = new System.Drawing.Size(517, 253);
-            this.pgCustomUploaderSettings.TabIndex = 1;
-            this.pgCustomUploaderSettings.ToolbarVisible = false;
             // 
             // tpDebug
             // 
@@ -710,16 +676,34 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbURLShortenAfterUpload
+            // btnBrowseCustomUploadersConfigPath
             // 
-            this.cbURLShortenAfterUpload.AutoSize = true;
-            this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 64);
-            this.cbURLShortenAfterUpload.Name = "cbURLShortenAfterUpload";
-            this.cbURLShortenAfterUpload.Size = new System.Drawing.Size(240, 17);
-            this.cbURLShortenAfterUpload.TabIndex = 19;
-            this.cbURLShortenAfterUpload.Text = "Use URL Shortener after upload is completed";
-            this.cbURLShortenAfterUpload.UseVisualStyleBackColor = true;
-            this.cbURLShortenAfterUpload.CheckedChanged += new System.EventHandler(this.cbURLShortenAfterUpload_CheckedChanged);
+            this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(392, 38);
+            this.btnBrowseCustomUploadersConfigPath.Name = "btnBrowseCustomUploadersConfigPath";
+            this.btnBrowseCustomUploadersConfigPath.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseCustomUploadersConfigPath.TabIndex = 12;
+            this.btnBrowseCustomUploadersConfigPath.Text = "Browse...";
+            this.btnBrowseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
+            this.btnBrowseCustomUploadersConfigPath.Click += new System.EventHandler(this.btnBrowseCustomUploadersConfigPath_Click);
+            // 
+            // txtCustomUploadersConfigPath
+            // 
+            this.txtCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 40);
+            this.txtCustomUploadersConfigPath.Name = "txtCustomUploadersConfigPath";
+            this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(368, 20);
+            this.txtCustomUploadersConfigPath.TabIndex = 11;
+            this.txtCustomUploadersConfigPath.TextChanged += new System.EventHandler(this.txtCustomUploadersConfigPath_TextChanged);
+            // 
+            // cbUseCustomUploadersConfigPath
+            // 
+            this.cbUseCustomUploadersConfigPath.AutoSize = true;
+            this.cbUseCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 16);
+            this.cbUseCustomUploadersConfigPath.Name = "cbUseCustomUploadersConfigPath";
+            this.cbUseCustomUploadersConfigPath.Size = new System.Drawing.Size(158, 17);
+            this.cbUseCustomUploadersConfigPath.TabIndex = 10;
+            this.cbUseCustomUploadersConfigPath.Text = "Use custom history file path:";
+            this.cbUseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
+            this.cbUseCustomUploadersConfigPath.CheckedChanged += new System.EventHandler(this.cbUseCustomUploadersConfigPath_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -750,9 +734,7 @@
             this.tpHistory.ResumeLayout(false);
             this.tpHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).EndInit();
-            this.tpFTP.ResumeLayout(false);
             this.tpProxy.ResumeLayout(false);
-            this.tpCustomUploader.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
             this.ResumeLayout(false);
@@ -763,12 +745,10 @@
 
         #endregion Windows Form Designer generated code
 
-        private System.Windows.Forms.PropertyGrid pgFTPSettings;
         private System.Windows.Forms.CheckBox cbClipboardAutoCopy;
         private System.Windows.Forms.CheckBox cbAutoPlaySound;
         private System.Windows.Forms.TabControl tcSettings;
         private System.Windows.Forms.TabPage tpGeneral;
-        private System.Windows.Forms.TabPage tpFTP;
         private System.Windows.Forms.TabPage tpProxy;
         private System.Windows.Forms.CheckBox cbShellContextMenu;
         private System.Windows.Forms.TabPage tpHistory;
@@ -811,8 +791,9 @@
         private System.Windows.Forms.Label lblUploadLimitHint;
         private System.Windows.Forms.NumericUpDown nudUploadLimit;
         private System.Windows.Forms.Label lblUploadLimit;
-        private System.Windows.Forms.TabPage tpCustomUploader;
-        private System.Windows.Forms.PropertyGrid pgCustomUploaderSettings;
         private System.Windows.Forms.CheckBox cbURLShortenAfterUpload;
+        private System.Windows.Forms.Button btnBrowseCustomUploadersConfigPath;
+        private System.Windows.Forms.TextBox txtCustomUploadersConfigPath;
+        private System.Windows.Forms.CheckBox cbUseCustomUploadersConfigPath;
     }
 }

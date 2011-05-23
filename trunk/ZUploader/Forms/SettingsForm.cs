@@ -49,37 +49,45 @@ namespace ZUploader
 
         private void LoadSettings()
         {
+            // General
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbShellContextMenu.Checked = ShellContextMenu.Check();
+
+            // Upload
+            cbUseCustomUploadersConfigPath.Checked = Program.Settings.UseCustomUploadersConfigPath;
+            txtCustomUploadersConfigPath.Text = Program.Settings.CustomUploadersConfigPath;
+            nudUploadLimit.Value = Program.Settings.UploadLimit;
 
             for (int i = 0; i < MaxBufferSizePower; i++)
             {
                 cbBufferSize.Items.Add(Math.Pow(2, i).ToString("N0"));
             }
 
-            nudUploadLimit.Value = Program.Settings.UploadLimit;
             cbBufferSize.SelectedIndex = Program.Settings.BufferSizePower.Between(0, MaxBufferSizePower);
 
+            // Image
             cbImageFormat.SelectedIndex = (int)Program.Settings.ImageFormat;
             nudImageJPEGQuality.Value = Program.Settings.ImageJPEGQuality;
             cbImageGIFQuality.SelectedIndex = (int)Program.Settings.ImageGIFQuality;
             nudUseImageFormat2After.Value = Program.Settings.ImageSizeLimit;
             cbImageFormat2.SelectedIndex = (int)Program.Settings.ImageFormat2;
 
+            // Clipboard upload
             txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
             CreateCodesMenu();
 
+            // History
             cbHistorySave.Checked = Program.Settings.SaveHistory;
             cbUseCustomHistoryPath.Checked = Program.Settings.UseCustomHistoryPath;
             txtCustomHistoryPath.Text = Program.Settings.CustomHistoryPath;
             nudHistoryMaxItemCount.Value = Program.Settings.HistoryMaxItemCount;
 
-            pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
-            pgCustomUploaderSettings.SelectedObject = Program.Settings.CustomUploader;
+            // Proxy
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
 
+            // Debug
             txtDebugLog.Text = Program.MyLogger.Messages.ToString();
             txtDebugLog.ScrollToCaret();
         }
@@ -128,6 +136,44 @@ namespace ZUploader
             }
         }
 
+        private bool ChooseFolder(string title, TextBox tb)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = title;
+
+                try
+                {
+                    string path = tb.Text;
+
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        path = Path.GetDirectoryName(path);
+
+                        if (Directory.Exists(path))
+                        {
+                            ofd.InitialDirectory = path;
+                        }
+                    }
+                }
+                finally
+                {
+                    if (string.IsNullOrEmpty(ofd.InitialDirectory))
+                    {
+                        ofd.InitialDirectory = Program.PersonalPath;
+                    }
+                }
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    tb.Text = ofd.FileName;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #region General
 
         private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
@@ -162,15 +208,30 @@ namespace ZUploader
 
         private void btnOpenZUploaderPath_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Program.ZUploaderPersonalPath) && Directory.Exists(Program.ZUploaderPersonalPath))
+            if (!string.IsNullOrEmpty(Program.PersonalPath) && Directory.Exists(Program.PersonalPath))
             {
-                Process.Start(Program.ZUploaderPersonalPath);
+                Process.Start(Program.PersonalPath);
             }
         }
 
         #endregion General
 
         #region Upload
+
+        private void cbUseCustomUploadersConfigPath_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.UseCustomUploadersConfigPath = cbUseCustomUploadersConfigPath.Checked;
+        }
+
+        private void txtCustomUploadersConfigPath_TextChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CustomUploadersConfigPath = txtCustomUploadersConfigPath.Text;
+        }
+
+        private void btnBrowseCustomUploadersConfigPath_Click(object sender, EventArgs e)
+        {
+            ChooseFolder("ZUploader - Choose uploaders config file path", txtCustomUploadersConfigPath);
+        }
 
         private void nudUploadLimit_ValueChanged(object sender, EventArgs e)
         {
@@ -249,35 +310,7 @@ namespace ZUploader
 
         private void btnBrowseCustomHistoryPath_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Title = "ZUploader - Custom history file path";
-
-                try
-                {
-                    string path = txtCustomHistoryPath.Text;
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        path = Path.GetDirectoryName(path);
-                        if (Directory.Exists(path))
-                        {
-                            ofd.InitialDirectory = path;
-                        }
-                    }
-                }
-                finally
-                {
-                    if (string.IsNullOrEmpty(ofd.InitialDirectory))
-                    {
-                        ofd.InitialDirectory = Program.ZUploaderPersonalPath;
-                    }
-                }
-
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    txtCustomHistoryPath.Text = ofd.FileName;
-                }
-            }
+            ChooseFolder("ZUploader - Choose history file path", txtCustomHistoryPath);
         }
 
         private void nudHistoryMaxItemCount_ValueChanged(object sender, EventArgs e)
@@ -286,14 +319,5 @@ namespace ZUploader
         }
 
         #endregion History
-
-        #region FTP
-
-        private void pgFTPSettings_SelectedObjectsChanged(object sender, EventArgs e)
-        {
-            pgFTPSettings.SelectedObject = Program.Settings.FTPAccount;
-        }
-
-        #endregion FTP
     }
 }

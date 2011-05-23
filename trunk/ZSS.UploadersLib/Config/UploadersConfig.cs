@@ -38,7 +38,7 @@ namespace UploadersLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<UploadersConfig>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
         public static UploadersConfig Read(string filePath)

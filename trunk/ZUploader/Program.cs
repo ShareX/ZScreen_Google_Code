@@ -32,18 +32,48 @@ using System.Windows.Forms;
 using HelpersLib;
 using SingleInstanceApplication;
 using UploadersAPILib;
+using UploadersLib;
 
 namespace ZUploader
 {
     internal static class Program
     {
         public static Settings Settings { get; private set; }
+        public static UploadersConfig UploadersConfig { get; private set; }
 
-        public static string ZUploaderPersonalPath { get; private set; }
+        #region Paths
+
+        private static readonly string ApplicationName = Application.ProductName;
+        private static readonly string DefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ApplicationName);
+        private static readonly string PortablePersonalPath = Path.Combine(Application.StartupPath, ApplicationName);
+
+        private static readonly string SettingsFileName = ApplicationName + "Settings.xml";
+        private static readonly string HistoryFileName = "UploadersHistory.xml";
+        private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
+        private static readonly string LogFileName = ApplicationName + "Log-{0}-{1}.txt";
+        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
+
+        public static string PersonalPath
+        {
+            get
+            {
+                if (IsPortable)
+                {
+                    return PortablePersonalPath;
+                }
+                else
+                {
+                    return DefaultPersonalPath;
+                }
+            }
+        }
 
         public static string SettingsFilePath
         {
-            get { return Path.Combine(ZUploaderPersonalPath, SettingsFileName); }
+            get
+            {
+                return Path.Combine(PersonalPath, SettingsFileName);
+            }
         }
 
         public static string HistoryFilePath
@@ -56,7 +86,22 @@ namespace ZUploader
                 }
                 else
                 {
-                    return Path.Combine(ZUploaderPersonalPath, HistoryFileName);
+                    return Path.Combine(PersonalPath, HistoryFileName);
+                }
+            }
+        }
+
+        public static string UploadersConfigFilePath
+        {
+            get
+            {
+                if (Settings != null && Settings.UseCustomUploadersConfigPath && !string.IsNullOrEmpty(Program.Settings.CustomUploadersConfigPath))
+                {
+                    return Settings.CustomUploadersConfigPath;
+                }
+                else
+                {
+                    return Path.Combine(PersonalPath, UploadersConfigFileName);
                 }
             }
         }
@@ -66,21 +111,19 @@ namespace ZUploader
             get
             {
                 DateTime now = FastDateTime.Now;
-                string fileName = string.Format("{0}Log-{1}-{2}.txt", Application.ProductName, now.Year, now.Month);
-                return Path.Combine(ZUploaderPersonalPath, fileName);
+                return Path.Combine(PersonalPath, string.Format(LogFileName, now.Year, now.Month));
             }
         }
 
-        public static string PluginFolderPath
+        public static string PluginsFolderPath
         {
-            get { return Path.Combine(Application.StartupPath, "Plugins"); }
+            get
+            {
+                return Path.Combine(Application.StartupPath, PluginsFolderName);
+            }
         }
 
-        private static string ZUploaderDefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Application.ProductName);
-        private static string ZUploaderPortablePersonalPath = Path.Combine(Application.StartupPath, Application.ProductName);
-
-        private const string SettingsFileName = "Settings.xml";
-        private const string HistoryFileName = "ZUploaderHistory.xml";
+        #endregion Paths
 
         public static bool IsBeta { get { return true; } }
         public static bool IsPortable { get; private set; }
@@ -119,7 +162,10 @@ namespace ZUploader
             if (args != null && args.Length > 0) CommandLineArg = args[0];
             MyLogger.WriteLine("CommandLineArg = \"{0}\"", CommandLineArg);
 
-            Thread settingThread = new Thread(() => Settings = Settings.Load());
+            Thread settingThread = new Thread(() =>
+                {
+                    Settings = Settings.Load();
+                });
             settingThread.Start();
 
             Application.EnableVisualStyles();
@@ -141,6 +187,11 @@ namespace ZUploader
             MyLogger.SaveLog(LogFilePath);
         }
 
+        private static bool CheckPortable()
+        {
+            return Directory.Exists(PortablePersonalPath);
+        }
+
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             OnError(e.Exception);
@@ -158,20 +209,6 @@ namespace ZUploader
             MyLogger.SaveLog(LogFilePath);
             new ErrorForm("ZUploader - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
             Application.Exit();
-        }
-
-        private static bool CheckPortable()
-        {
-            if (Directory.Exists(ZUploaderPortablePersonalPath))
-            {
-                ZUploaderPersonalPath = ZUploaderPortablePersonalPath;
-                return true;
-            }
-            else
-            {
-                ZUploaderPersonalPath = ZUploaderDefaultPersonalPath;
-                return false;
-            }
         }
 
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)

@@ -144,7 +144,7 @@ namespace ZUploader
 
         private void LoadPlugins()
         {
-            pluginManager = new PluginManager(Program.PluginFolderPath, this);
+            pluginManager = new PluginManager(Program.PluginsFolderPath, this);
             pluginManager.LoadPlugins();
         }
 

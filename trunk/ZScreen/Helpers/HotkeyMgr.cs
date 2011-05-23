@@ -20,7 +20,6 @@ namespace ZScreenGUI
             "Clipboard Upload",
             "Last Crop Shot",
             "Auto Capture",
-            "Quick Options",
             "Drop Window",
             "Language Translator",
             "Screen Color Picker",

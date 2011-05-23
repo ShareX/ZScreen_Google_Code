@@ -655,7 +655,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                return HelpersLib.SettingsHelper.Load<XMLSettings>(filePath, HelpersLib.SerializationType.Xml, Engine.MyLogger);
+                return SettingsHelper.Load<XMLSettings>(filePath, HelpersLib.SerializationType.Xml, Engine.MyLogger);
             }
 
             return new XMLSettings();

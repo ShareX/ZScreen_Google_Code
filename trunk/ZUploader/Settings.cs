@@ -23,7 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 
@@ -45,6 +45,8 @@ namespace ZUploader
         public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
 
+        public bool UseCustomUploadersConfigPath = false;
+        public string CustomUploadersConfigPath = string.Empty;
         public int UploadLimit = 5;
         public int BufferSizePower = 3;
 
@@ -63,16 +65,23 @@ namespace ZUploader
         public int HistoryMaxItemCount = -1;
 
         public UploadersConfig UploadersConfig = new UploadersConfig();
-        public FTPAccount FTPAccount = new FTPAccount();
-        public CustomUploaderInfo CustomUploader = new CustomUploaderInfo();
+
         public ProxyInfo ProxySettings = new ProxyInfo();
 
-        public Keys HotkeyClipboardUpload = Keys.Control | Keys.PageUp;
+        public bool Write(string filePath)
+        {
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
+        }
+
+        public static UploadersConfig Read(string filePath)
+        {
+            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
+        }
 
         public bool Save()
         {
             Program.MyLogger.WriteLine("Settings.Save() started = " + Program.SettingsFilePath);
-            bool result = SettingHelpers.Save(this, Program.SettingsFilePath, SerializationType.Xml);
+            bool result = SettingsHelper.Save(this, Program.SettingsFilePath, SerializationType.Xml);
             Program.MyLogger.WriteLine("Settings.Save() finished = " + result);
             return result;
         }
@@ -80,7 +89,7 @@ namespace ZUploader
         public static Settings Load()
         {
             Program.MyLogger.WriteLine("Settings.Load() started = {0}", Program.SettingsFilePath);
-            Settings result = SettingHelpers.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
+            Settings result = SettingsHelper.Load<Settings>(Program.SettingsFilePath, SerializationType.Xml);
             Program.MyLogger.WriteLine("Settings.Load() finished");
             return result;
         }

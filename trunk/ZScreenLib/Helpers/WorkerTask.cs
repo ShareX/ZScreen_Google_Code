@@ -677,14 +677,14 @@ namespace ZScreenLib
 
                     switch (this.MyTextUploader)
                     {
-                        case TextUploaderType.PASTE2:
-                            textUploader = new Paste2Uploader();
-                            break;
                         case TextUploaderType.PASTEBIN:
                             textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.MyUploadersConfig.PastebinSettings);
                             break;
                         case TextUploaderType.PASTEBIN_CA:
                             textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
+                            break;
+                        case TextUploaderType.PASTE2:
+                            textUploader = new Paste2Uploader();
                             break;
                         case TextUploaderType.SLEXY:
                             textUploader = new SlexyUploader();
@@ -776,7 +776,7 @@ namespace ZScreenLib
                     fileHost = new ShareCX();
                     break;
                 case FileUploaderType.CustomUploader:
-                    if (Adapter.CheckList(Engine.MyUploadersConfig.CustomUploadersList, Engine.MyUploadersConfig.CustomUploaderSelected))
+                    if (Engine.MyUploadersConfig.CustomUploadersList.CheckSelected(Engine.MyUploadersConfig.CustomUploaderSelected))
                     {
                         fileHost = new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]);
                     }
