@@ -272,7 +272,7 @@ namespace ZScreenGUI
                     rtbDebugLog.AppendText(message + Environment.NewLine);
                 };
 
-                if (InvokeRequired)
+                if (InvokeRequired && !IsDisposed)
                 {
                     Invoke(method);
                 }
@@ -441,21 +441,24 @@ namespace ZScreenGUI
         {
             if (mGuiIsReady)
             {
+                Engine.conf.WindowState = this.WindowState;
+
                 if (WindowState == FormWindowState.Minimized)
                 {
                     if (!Engine.conf.ShowInTaskbar)
                     {
                         Hide();
                     }
-
-                    if (Engine.conf.AutoSaveSettings)
-                    {
-                        WriteSettings();
-                    }
                 }
                 else if (this.WindowState == FormWindowState.Normal)
                 {
                     ShowInTaskbar = Engine.conf.ShowInTaskbar;
+
+                    if (Engine.conf.SaveFormSizePosition)
+                    {
+                        Engine.conf.WindowLocation = this.Location;
+                        Engine.conf.WindowSize = this.Size;
+                    }
                 }
 
                 Refresh();
@@ -466,7 +469,7 @@ namespace ZScreenGUI
         {
             if (e.CloseReason != CloseReason.WindowsShutDown)
             {
-                WriteSettings();
+                Engine.WriteSettings();
             }
 
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !mClose)
@@ -540,18 +543,6 @@ namespace ZScreenGUI
         }
 
         #endregion Trim memory
-
-        private void WriteSettings()
-        {
-            if (mGuiIsReady && Engine.conf.SaveFormSizePosition && this.WindowState == FormWindowState.Normal)
-            {
-                Engine.conf.WindowLocation = this.Location;
-                Engine.conf.WindowSize = this.Size;
-            }
-
-            Engine.conf.WindowState = this.WindowState;
-            Engine.WriteSettings();
-        }
 
         private void RewriteImageEditorsRightClickMenu()
         {
@@ -861,7 +852,7 @@ namespace ZScreenGUI
             if (Engine.MultipleInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
-                niTray.BalloonTipClicked +=new EventHandler(niTray2_BalloonTipClicked);
+                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0}ms", Engine.StartTimer.ElapsedMilliseconds);
@@ -2032,7 +2023,7 @@ namespace ZScreenGUI
         {
             if (Engine.conf.AutoSaveSettings)
             {
-                WriteSettings();
+                Engine.WriteSettings();
             }
         }
 
@@ -2541,14 +2532,6 @@ namespace ZScreenGUI
         private void cbFreehandCropShowRectangleBorder_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
-        }
-
-        private void ZScreen_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.WindowsShutDown)
-            {
-                WriteSettings();
-            }
         }
 
         private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)

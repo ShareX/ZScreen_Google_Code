@@ -43,39 +43,51 @@ namespace ZScreenLib
 {
     public static class Engine
     {
-        // App Info
-        private static string mProductName = Application.ProductName;
-        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-
-        public static Logger MyLogger { get; private set; }
-        public static Stopwatch StartTimer { get; private set; }
-
-        public const string ZScreenCLI = "ZScreenCLI.exe";
-        public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
-        public static bool MultipleInstance { get; private set; }
-
         public static IntPtr zHandle = IntPtr.Zero;
 
-        internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mProductName);
-        internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), mProductName);
+        #region Windows 7 Taskbar
+
+        public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
+        private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
+        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
+        public static string[] zTextFileTypes = { "txt", "log" };
+        public static string[] zWebpageFileTypes = { "html", "htm" };
+
+        private static TaskDialog td = null;
+        public static JumpList zJumpList;
+        public static TaskbarManager zWindowsTaskbar;
+
+        #endregion
+
+        public const string ZScreenCLI = "ZScreenCLI.exe";
+        public static Logger MyLogger { get; private set; }
+        public static Stopwatch StartTimer { get; private set; }
+        public static bool MultipleInstance { get; private set; }
+
+        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
+        public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
+       
+        private static string ApplicationName = Application.ProductName;
+        internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
+        private static readonly string HistoryFileName = "UploadersHistory.xml";
+        private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
+        private static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
+        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
+        private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
+
+        internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
+        internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
         internal static readonly string zFilesDir = Path.Combine(zLocalAppDataFolder, "Files");
         internal static readonly string zLogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
-        internal static readonly string zPicturesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), mProductName);
+        internal static readonly string zPicturesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), ApplicationName);
         internal static readonly string zSettingsDir = Path.Combine(zRoamingAppDataFolder, "Settings");
-        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), mProductName);
+        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
         public static AppSettings mAppSettings = AppSettings.Read();
 
-        private static readonly string ApplicationName = Application.ProductName;
-        private static readonly string HistoryFileName = "UploadersHistory.xml";
-        private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
-        private static readonly string LogFileName = ApplicationName + "Log-{0}-{1}.txt";
-        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
-        private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
-
-        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), mProductName);
+        public static string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "ZApps");
         public static string RootAppFolder = zLocalAppDataFolder;
         public static string RootImagesDir = zPicturesDir;
 
@@ -103,22 +115,13 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
-        public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
-        private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
         public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
-
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
         public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
-        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
-        public static string[] zTextFileTypes = { "txt", "log" };
-        public static string[] zWebpageFileTypes = { "html", "htm" };
 
         public static ClipboardHook zClipboardHook = null;
         public static string zClipboardText = string.Empty;
 
-        private static TaskDialog td = null;
-        public static JumpList zJumpList;
-        public static TaskbarManager zWindowsTaskbar;
         private static bool RunConfig = false;
 
         public static XMLSettings conf;
@@ -141,6 +144,8 @@ namespace ZScreenLib
             public bool KeyboardHook { get; set; }
             public bool ShowConfigWizard { get; set; }
         }
+
+        #region Engine Turn On/Off
 
         public static void WriteSettings(bool isAsync = true)
         {
@@ -202,7 +207,7 @@ namespace ZScreenLib
             {
                 mAppSettings.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
-                mProductName += " Portable";
+                ApplicationName += " Portable";
             }
             else
             {
@@ -262,48 +267,100 @@ namespace ZScreenLib
                 if (!bGrantedOwnership)
                 {
                     MultipleInstance = true;
-                    mProductName += "*";
+                    ApplicationName += "*";
                 }
             }
 
             return configResult == DialogResult.OK;
         }
 
+        public static void InitializeDefaultFolderPaths()
+        {
+            if (mAppSettings.PreferSystemFolders)
+            {
+                CacheDir = zCacheDir;
+                FilesDir = zFilesDir;
+                LogsDir = zLogsDir;
+                SettingsDir = zSettingsDir;
+                RootImagesDir = zPicturesDir;
+                TextDir = zTextDir;
+                TempDir = zTempDir;
+            }
+            else
+            {
+                CacheDir = Path.Combine(RootAppFolder, "Cache");
+                FilesDir = Path.Combine(RootAppFolder, "Files");
+                LogsDir = Path.Combine(RootAppFolder, "Logs");
+                RootImagesDir = Path.Combine(RootAppFolder, "Images");
+                SettingsDir = Path.Combine(RootAppFolder, "Settings");
+                TextDir = Path.Combine(RootAppFolder, "Text");
+                TempDir = Path.Combine(RootAppFolder, "Temp");
+            }
+
+            AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
+
+            foreach (string dp in AppDirs)
+            {
+                if (!string.IsNullOrEmpty(dp) && !Directory.Exists(dp))
+                {
+                    Directory.CreateDirectory(dp);
+                }
+            }
+
+            string latestSettingsFile = Path.Combine(SettingsDir, SettingsFileName);
+            if (File.Exists(latestSettingsFile))
+            {
+                Engine.mAppSettings.XMLSettingsFile = latestSettingsFile;
+            }
+        }
+
+        public static void InitializeFiles()
+        {
+            string cssIndexer = Path.Combine(SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
+            if (!File.Exists(cssIndexer))
+            {
+                ZSS.IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
+                conf.IndexerConfig.CssFilePath = cssIndexer;
+            }
+        }
+
+        public static void TurnOff()
+        {
+            if (!Portable)
+            {
+                mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+            }
+            if (null != ZScreenKeyboardHook)
+            {
+                ZScreenKeyboardHook.Dispose();
+                Engine.MyLogger.WriteLine("Keyboard Hook terminated");
+            }
+            FileSystem.WriteDebugFile();
+            Engine.WriteSettings();
+        }
+
+        #endregion
+
+        #region Settings Load/Save Methods
+
+        public static void WriteSettings()
+        {
+            if (Engine.MyGTConfig != null)
+            {
+                Engine.MyGTConfig.Write(GTConfigPath);
+            }
+            if (Engine.MyUploadersConfig != null)
+            {
+                Engine.MyUploadersConfig.Save(UploaderConfigPath);
+            }
+            if (Engine.conf != null)
+            {
+                Engine.conf.Write();           }
+        }
+
         public static void LoadSettings()
         {
             LoadSettings(null);
-        }
-
-        public static void LoadSettingsLatest()
-        {
-            string fp = GetLatestSettingsFile();
-            XMLSettings.SettingsFileName = Path.GetFileName(fp);
-            LoadSettings(fp);
-        }
-
-        public static string GetLatestSettingsFile()
-        {
-            return GetLatestSettingsFile(Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile));
-        }
-
-        public static string GetLatestSettingsFile(string settingsDir)
-        {
-            string fp = string.Empty;
-            if (!string.IsNullOrEmpty(settingsDir))
-            {
-                List<ImageFile> imgFiles = new List<ImageFile>();
-                string[] files = Directory.GetFiles(settingsDir, Application.ProductName + "-*-Settings.xml");
-                if (files.Length > 0)
-                {
-                    foreach (string f in files)
-                    {
-                        imgFiles.Add(new ImageFile(f));
-                    }
-                    imgFiles.Sort();
-                    fp = imgFiles[imgFiles.Count - 1].LocalFilePath;
-                }
-            }
-            return fp;
         }
 
         public static void LoadSettings(string fp)
@@ -356,30 +413,43 @@ namespace ZScreenLib
             }
         }
 
-        public static void TurnOff()
+        public static void LoadSettingsLatest()
         {
-            if (!Portable)
-            {
-                mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
-            }
-            if (null != ZScreenKeyboardHook)
-            {
-                ZScreenKeyboardHook.Dispose();
-                Engine.MyLogger.WriteLine("Keyboard Hook terminated");
-            }
-            FileSystem.WriteDebugFile();
-            Engine.WriteSettings();
+            LoadSettings(GetLatestSettingsFile());
         }
 
-        public static void SetRootFolder(string dp)
+        public static string GetLatestSettingsFile()
         {
-            mAppSettings.RootDir = dp;
-            RootAppFolder = dp;
+            return GetLatestSettingsFile(Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile));
         }
+
+        public static string GetLatestSettingsFile(string settingsDir)
+        {
+            string fp = string.Empty;
+            if (!string.IsNullOrEmpty(settingsDir))
+            {
+                List<ImageFile> imgFiles = new List<ImageFile>();
+                string[] files = Directory.GetFiles(settingsDir, Application.ProductName + "-*-Settings.xml");
+                if (files.Length > 0)
+                {
+                    foreach (string f in files)
+                    {
+                        imgFiles.Add(new ImageFile(f));
+                    }
+                    imgFiles.Sort();
+                    fp = imgFiles[imgFiles.Count - 1].LocalFilePath;
+                }
+            }
+            return fp;
+        }
+
+        #endregion
+
+        #region Helper Methods
 
         public static string GetProductName()
         {
-            return string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
+            return string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
         }
 
         private static string GetDefaultImagesDir()
@@ -397,57 +467,58 @@ namespace ZScreenLib
             return Path.Combine(imagesDir, saveFolderPath);
         }
 
-        /// <summary>
-        /// Function to update Default Folder Paths based on Root folder
-        /// </summary>
-        public static void InitializeDefaultFolderPaths()
+        public static void SetRootFolder(string dp)
         {
-            if (mAppSettings.PreferSystemFolders)
-            {
-                CacheDir = zCacheDir;
-                FilesDir = zFilesDir;
-                LogsDir = zLogsDir;
-                SettingsDir = zSettingsDir;
-                RootImagesDir = zPicturesDir;
-                TextDir = zTextDir;
-                TempDir = zTempDir;
-            }
-            else
-            {
-                CacheDir = Path.Combine(RootAppFolder, "Cache");
-                FilesDir = Path.Combine(RootAppFolder, "Files");
-                LogsDir = Path.Combine(RootAppFolder, "Logs");
-                RootImagesDir = Path.Combine(RootAppFolder, "Images");
-                SettingsDir = Path.Combine(RootAppFolder, "Settings");
-                TextDir = Path.Combine(RootAppFolder, "Text");
-                TempDir = Path.Combine(RootAppFolder, "Temp");
-            }
+            mAppSettings.RootDir = dp;
+            RootAppFolder = dp;
+        }
 
-            AppDirs = new[] { CacheDir, FilesDir, RootImagesDir, LogsDir, SettingsDir, TempDir, TextDir };
+        #endregion
 
-            foreach (string dp in AppDirs)
-            {
-                if (!string.IsNullOrEmpty(dp) && !Directory.Exists(dp))
-                {
-                    Directory.CreateDirectory(dp);
-                }
-            }
+        #region Windows 7 Taskbar Methods
 
-            string latestSettingsFile = Path.Combine(SettingsDir, XMLSettings.SettingsFileName);
-            if (File.Exists(latestSettingsFile))
+        /// <summary>
+        /// Method to return if Windows Vista or Windows 7 or above
+        /// </summary>
+        /// <returns></returns>
+        public static bool HasAero
+        {
+            get
             {
-                Engine.mAppSettings.XMLSettingsFile = latestSettingsFile;
+                return Environment.OSVersion.Version.Major >= 6;
             }
         }
 
-        public static void InitializeFiles()
+        public static bool HasWindows7
         {
-            string cssIndexer = Path.Combine(SettingsDir, ZSS.IndexersLib.IndexerConfig.DefaultCssFileName);
-            if (!File.Exists(cssIndexer))
+            get
             {
-                ZSS.IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
-                conf.IndexerConfig.CssFilePath = cssIndexer;
+                return HasAero && Environment.OSVersion.Version.Minor >= 1;
             }
+        }
+
+        private static string GetExtensionsToRegister()
+        {
+            StringBuilder sbExt = new StringBuilder();
+            foreach (string ext in zImageFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            foreach (string ext in zTextFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            foreach (string ext in zWebpageFileTypes)
+            {
+                sbExt.Append(".");
+                sbExt.Append(ext);
+                sbExt.Append(" ");
+            }
+            return sbExt.ToString().Trim();
         }
 
         /// <summary>
@@ -498,49 +569,9 @@ namespace ZScreenLib
             td.Close();
         }
 
-        /// <summary>
-        /// Method to return if Windows Vista or Windows 7 or above
-        /// </summary>
-        /// <returns></returns>
-        public static bool HasAero
-        {
-            get
-            {
-                return Environment.OSVersion.Version.Major >= 6;
-            }
-        }
+        #endregion
 
-        public static bool HasWindows7
-        {
-            get
-            {
-                return HasAero && Environment.OSVersion.Version.Minor >= 1;
-            }
-        }
-
-        private static string GetExtensionsToRegister()
-        {
-            StringBuilder sbExt = new StringBuilder();
-            foreach (string ext in zImageFileTypes)
-            {
-                sbExt.Append(".");
-                sbExt.Append(ext);
-                sbExt.Append(" ");
-            }
-            foreach (string ext in zTextFileTypes)
-            {
-                sbExt.Append(".");
-                sbExt.Append(ext);
-                sbExt.Append(" ");
-            }
-            foreach (string ext in zWebpageFileTypes)
-            {
-                sbExt.Append(".");
-                sbExt.Append(ext);
-                sbExt.Append(" ");
-            }
-            return sbExt.ToString().Trim();
-        }
+        #region Paths
 
         public static string XMLSettingsFile
         {
@@ -567,6 +598,7 @@ namespace ZScreenLib
         {
             get
             {
+                // TODO: UploaderConfigPath in AppSettings.xml and support opening UploadersConfigGUI from DestOptions without error
                 return Path.Combine(SettingsDir, UploadersConfigFileName);
             }
         }
@@ -576,7 +608,7 @@ namespace ZScreenLib
             get
             {
                 DateTime now = FastDateTime.Now;
-                return Path.Combine(LogsDir, string.Format(LogFileName, now.Year, now.Month));
+                return Path.Combine(LogsDir, string.Format(LogFileName, now.ToString("yyyy-MM")));
             }
         }
 
@@ -587,6 +619,10 @@ namespace ZScreenLib
                 return Path.Combine(SettingsDir, GoogleTranslateConfigFileName);
             }
         }
+
+        #endregion
+
+        #region Clipboard Methods
 
         public static void ClipboardHook()
         {
@@ -609,6 +645,8 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteLine("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
             }
         }
+
+        #endregion
 
         public static void SetImageFormat(ref ImageFileFormat ziff, ImageFileFormatType imgFormat)
         {
