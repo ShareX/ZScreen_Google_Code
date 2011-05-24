@@ -57,7 +57,8 @@ namespace ZScreenGUI
     {
         #region Variables
 
-        private bool mGuiIsReady, mClose;
+        public bool IsFormReady, IsClose;
+
         private int mHadFocusAt;
         private TextBox mHadFocus;
         private ContextMenuStrip codesMenu = new ContextMenuStrip();
@@ -265,27 +266,30 @@ namespace ZScreenGUI
 
         private void MyLogger_MessageAdded(string message)
         {
-            if (!IsDisposed && !rtbDebugLog.IsDisposed)
+            if (!IsClose && !this.IsDisposed)
             {
-                MethodInvoker method = delegate
+                if (this.InvokeRequired)
                 {
-                    rtbDebugLog.AppendText(message + Environment.NewLine);
-                };
-
-                if (InvokeRequired && !IsDisposed)
-                {
-                    Invoke(method);
+                    this.Invoke(new Action(() => DebugAppendText(message)));
                 }
                 else
                 {
-                    method();
+                    DebugAppendText(message);
                 }
+            }
+        }
+
+        private void DebugAppendText(string message)
+        {
+            if (!rtbDebugLog.IsDisposed)
+            {
+                rtbDebugLog.AppendText(message + Environment.NewLine);
             }
         }
 
         protected override void WndProc(ref Message m)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 switch (m.Msg)
                 {
@@ -337,7 +341,7 @@ namespace ZScreenGUI
                             switch (Engine.conf.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.CloseApplication:
-                                    mClose = true;
+                                    IsClose = true;
                                     this.Close();
                                     break;
                                 case WindowButtonAction.MinimizeToTaskbar:
@@ -408,7 +412,7 @@ namespace ZScreenGUI
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mClose = true;
+            IsClose = true;
             Close();
         }
 
@@ -439,7 +443,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Resize(object sender, EventArgs e)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 Engine.conf.WindowState = this.WindowState;
 
@@ -467,12 +471,13 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.WindowsShutDown)
+            // Only save when minimizing to tray
+            if (e.CloseReason != CloseReason.WindowsShutDown && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray && !IsClose)
             {
                 Engine.WriteSettings();
             }
 
-            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !mClose)
+            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !IsClose)
             {
                 e.Cancel = true;
 
@@ -594,7 +599,7 @@ namespace ZScreenGUI
 
         private void UpdateGuiEditors(object sender)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 if (sender.GetType() == lbSoftware.GetType())
                 {
@@ -800,7 +805,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Shown(object sender, EventArgs e)
         {
-            mGuiIsReady = true;
+            IsFormReady = true;
             Engine.zHandle = this.Handle;
             Engine.ClipboardHook();
 
@@ -1258,7 +1263,7 @@ namespace ZScreenGUI
                 }
             }
 
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 if (Engine.conf.SaveFormSizePosition)
                 {
@@ -1561,7 +1566,7 @@ namespace ZScreenGUI
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShowInTaskbar = chkShowTaskbar.Checked;
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 if (!chkShowTaskbar.Checked)
                 {
@@ -2268,7 +2273,7 @@ namespace ZScreenGUI
 
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 if (chkWindows7TaskbarIntegration.Checked)
                 {
@@ -2312,7 +2317,7 @@ namespace ZScreenGUI
 
         private void chkHotkeys_CheckedChanged(object sender, EventArgs e)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 if (chkHotkeys.Checked)
                 {
@@ -2495,7 +2500,7 @@ namespace ZScreenGUI
 
         private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
         {
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 Engine.conf.PreferSystemFolders = chkPreferSystemFolders.Checked;
                 ZScreen_ConfigGUI();
@@ -2537,7 +2542,7 @@ namespace ZScreenGUI
         private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }

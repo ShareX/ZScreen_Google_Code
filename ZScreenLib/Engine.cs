@@ -57,7 +57,7 @@ namespace ZScreenLib
         public static JumpList zJumpList;
         public static TaskbarManager zWindowsTaskbar;
 
-        #endregion
+        #endregion Windows 7 Taskbar
 
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static Logger MyLogger { get; private set; }
@@ -66,7 +66,7 @@ namespace ZScreenLib
 
         private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
-       
+
         private static string ApplicationName = Application.ProductName;
         internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         private static readonly string HistoryFileName = "UploadersHistory.xml";
@@ -146,46 +146,6 @@ namespace ZScreenLib
         }
 
         #region Engine Turn On/Off
-
-        public static void WriteSettings(bool isAsync = true)
-        {
-            Thread settingsThread = new Thread(() =>
-            {
-                if (Engine.conf != null)
-                {
-                    Engine.conf.Write();
-                }
-            });
-
-            Thread uploadersConfigThread = new Thread(() =>
-            {
-                if (Engine.MyUploadersConfig != null)
-                {
-                    Engine.MyUploadersConfig.Save(UploaderConfigPath);
-                }
-            });
-
-            Thread googleTranslateThread = new Thread(() =>
-            {
-                if (Engine.MyGTConfig != null)
-                {
-                    Engine.MyGTConfig.Write(GTConfigPath);
-                }
-            });
-
-            settingsThread.Start();
-            uploadersConfigThread.Start();
-            googleTranslateThread.Start();
-
-            // TODO: Make closing not async
-
-            if (!isAsync)
-            {
-                settingsThread.Join();
-                uploadersConfigThread.Join();
-                googleTranslateThread.Join();
-            }
-        }
 
         public static void TurnOn()
         {
@@ -335,35 +295,57 @@ namespace ZScreenLib
                 ZScreenKeyboardHook.Dispose();
                 Engine.MyLogger.WriteLine("Keyboard Hook terminated");
             }
+
+            WriteSettings(false);
+
             FileSystem.WriteDebugFile();
-            Engine.WriteSettings();
         }
 
-        #endregion
+        #endregion Engine Turn On/Off
 
         #region Settings Load/Save Methods
 
-        public static void WriteSettings()
+        public static void WriteSettings(bool isAsync = true)
         {
-            if (Engine.MyGTConfig != null)
+            Thread settingsThread = new Thread(() =>
             {
-                Engine.MyGTConfig.Write(GTConfigPath);
+                if (Engine.conf != null)
+                {
+                    Engine.conf.Write();
+                }
+            });
+
+            Thread uploadersConfigThread = new Thread(() =>
+            {
+                if (Engine.MyUploadersConfig != null)
+                {
+                    Engine.MyUploadersConfig.Save(UploaderConfigPath);
+                }
+            });
+
+            Thread googleTranslateThread = new Thread(() =>
+            {
+                if (Engine.MyGTConfig != null)
+                {
+                    Engine.MyGTConfig.Write(GTConfigPath);
+                }
+            });
+
+            settingsThread.Start();
+            uploadersConfigThread.Start();
+            googleTranslateThread.Start();
+
+            // TODO: When ZScreen closing make it not async
+
+            if (!isAsync)
+            {
+                settingsThread.Join();
+                uploadersConfigThread.Join();
+                googleTranslateThread.Join();
             }
-            if (Engine.MyUploadersConfig != null)
-            {
-                Engine.MyUploadersConfig.Save(UploaderConfigPath);
-            }
-            if (Engine.conf != null)
-            {
-                Engine.conf.Write();           }
         }
 
-        public static void LoadSettings()
-        {
-            LoadSettings(null);
-        }
-
-        public static void LoadSettings(string fp)
+        public static void LoadSettings(string fp = null)
         {
             Thread settingsThread = new Thread(() =>
             {
@@ -443,7 +425,7 @@ namespace ZScreenLib
             return fp;
         }
 
-        #endregion
+        #endregion Settings Load/Save Methods
 
         #region Helper Methods
 
@@ -473,7 +455,7 @@ namespace ZScreenLib
             RootAppFolder = dp;
         }
 
-        #endregion
+        #endregion Helper Methods
 
         #region Windows 7 Taskbar Methods
 
@@ -569,7 +551,7 @@ namespace ZScreenLib
             td.Close();
         }
 
-        #endregion
+        #endregion Windows 7 Taskbar Methods
 
         #region Paths
 
@@ -620,7 +602,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Paths
 
         #region Clipboard Methods
 
@@ -646,7 +628,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Clipboard Methods
 
         public static void SetImageFormat(ref ImageFileFormat ziff, ImageFileFormatType imgFormat)
         {
