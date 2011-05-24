@@ -107,7 +107,17 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    return GetDefaultImagesDir();
+                    string imagesDir = RootImagesDir;
+                    string saveFolderPath = string.Empty;
+                    if (Engine.conf != null)
+                    {
+                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
+                        if (!Portable && Engine.conf.PreferSystemFolders)
+                        {
+                            imagesDir = zPicturesDir;
+                        }
+                    }
+                    return Path.Combine(imagesDir, saveFolderPath);
                 }
             }
             set { ; }
@@ -115,7 +125,7 @@ namespace ZScreenLib
 
         private static string[] AppDirs;
 
-        public const string ZSCREEN_IMAGE_EDITOR = "Image Editor";
+        public const string zImageAnnotator = "Image Annotator";
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
         public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
 
@@ -327,7 +337,7 @@ namespace ZScreenLib
             {
                 if (Engine.MyGTConfig != null)
                 {
-                    Engine.MyGTConfig.Write(GTConfigPath);
+                    Engine.MyGTConfig.Write(GoogleTranslateConfigPath);
                 }
             });
 
@@ -366,7 +376,7 @@ namespace ZScreenLib
 
             Thread googleTranslateThread = new Thread(() =>
             {
-                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GTConfigPath);
+                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
             });
 
             settingsThread.Start();
@@ -432,21 +442,6 @@ namespace ZScreenLib
         public static string GetProductName()
         {
             return string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
-        }
-
-        private static string GetDefaultImagesDir()
-        {
-            string imagesDir = RootImagesDir;
-            string saveFolderPath = string.Empty;
-            if (Engine.conf != null)
-            {
-                saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
-                if (!Portable && Engine.conf.PreferSystemFolders)
-                {
-                    imagesDir = zPicturesDir;
-                }
-            }
-            return Path.Combine(imagesDir, saveFolderPath);
         }
 
         public static void SetRootFolder(string dp)
@@ -568,6 +563,14 @@ namespace ZScreenLib
             }
         }
 
+        public static string SettingsFilePath
+        {
+            get
+            {
+                return Path.Combine(Engine.SettingsDir, Engine.SettingsFileName);
+            }
+        }
+
         public static string HistoryPath
         {
             get
@@ -580,7 +583,6 @@ namespace ZScreenLib
         {
             get
             {
-                // TODO: UploaderConfigPath in AppSettings.xml and support opening UploadersConfigGUI from DestOptions without error
                 return Path.Combine(SettingsDir, UploadersConfigFileName);
             }
         }
@@ -594,7 +596,7 @@ namespace ZScreenLib
             }
         }
 
-        public static string GTConfigPath
+        public static string GoogleTranslateConfigPath
         {
             get
             {

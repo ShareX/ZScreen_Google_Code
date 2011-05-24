@@ -77,10 +77,10 @@ namespace ZScreenGUI
             chkPerformActions.Checked = Engine.conf.PerformActions;
             tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            Software editor = new Software(Engine.ZSCREEN_IMAGE_EDITOR, string.Empty, false) { TriggerForFiles = false, TriggerForText = false };
-            if (Software.Exist(Engine.ZSCREEN_IMAGE_EDITOR))
+            Software editor = new Software(Engine.zImageAnnotator, string.Empty, false) { TriggerForFiles = false, TriggerForText = false };
+            if (Software.Exist(Engine.zImageAnnotator))
             {
-                editor = Software.GetByName(Engine.ZSCREEN_IMAGE_EDITOR);
+                editor = Software.GetByName(Engine.zImageAnnotator);
             }
 
             string mspaint = "Paint";
@@ -90,7 +90,7 @@ namespace ZScreenGUI
                 paint = Software.GetByName(mspaint);
             }
 
-            Engine.conf.ActionsList.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.ZSCREEN_IMAGE_EDITOR || x.Name == mspaint || !File.Exists(x.Path));
+            Engine.conf.ActionsList.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.zImageAnnotator || x.Name == mspaint || !File.Exists(x.Path));
 
             Engine.conf.ActionsList.Insert(0, editor);
             if (File.Exists(paint.Path))

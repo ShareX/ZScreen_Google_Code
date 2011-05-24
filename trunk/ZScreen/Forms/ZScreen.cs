@@ -1037,7 +1037,7 @@ namespace ZScreenGUI
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnRemoveImageEditor.Enabled = !app.Protected;
-                    gbImageEditorSettings.Visible = app.Name == Engine.ZSCREEN_IMAGE_EDITOR;
+                    gbImageEditorSettings.Visible = app.Name == Engine.zImageAnnotator;
 
                     SetActiveImageSoftware();
                 }
