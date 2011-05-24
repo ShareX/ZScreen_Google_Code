@@ -197,11 +197,11 @@ namespace ZScreenLib
 
         public static void WriteDebugFile()
         {
-            if (Engine.conf.WriteDebugFile)
+            if (Engine.conf != null && Engine.conf.WriteDebugFile)
             {
                 string dir = Engine.LogsDir;
 
-                if (Engine.conf != null && !string.IsNullOrEmpty(dir))
+                if (!string.IsNullOrEmpty(dir))
                 {
                     DateTime now = FastDateTime.Now;
                     string path = Engine.LogFilePath;

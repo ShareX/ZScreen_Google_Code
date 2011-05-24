@@ -141,10 +141,9 @@
             // 
             // ucDestOptions
             // 
-            this.ucDestOptions.Location = new System.Drawing.Point(8, 112);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Location = new System.Drawing.Point(8, 104);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Size = new System.Drawing.Size(608, 152);
             this.ucDestOptions.TabIndex = 123;
             // 
             // ConfigWizard
