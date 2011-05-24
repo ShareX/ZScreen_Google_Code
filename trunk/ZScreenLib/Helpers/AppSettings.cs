@@ -86,7 +86,10 @@ namespace ZScreenLib
 
         public void Write()
         {
-            new Thread(SaveThread).Start(AppSettingsFile);
+            if (!Engine.Portable) // DONT UPDATE FOR PORTABLE MODE
+            {
+                new Thread(SaveThread).Start(AppSettingsFile);
+            }
         }
 
         public void Write(string filePath)

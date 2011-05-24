@@ -171,7 +171,7 @@ namespace ZScreenLib
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
-            DialogResult configResult = DialogResult.OK;
+            DialogResult startEngine = DialogResult.OK;
 
             if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
             {
@@ -184,34 +184,38 @@ namespace ZScreenLib
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.mAppSettings.RootDir))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
-                    configResult = cw.ShowDialog();
-                    Engine.mAppSettings.RootDir = cw.RootFolder;
-                    Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
-                    Engine.mAppSettings.ImageUploader = (int)cw.ImageDestinationType;
-                    Engine.mAppSettings.FileUploader = (int)cw.FileUploaderType;
-                    Engine.mAppSettings.TextUploader = (int)cw.MyTextUploaderType;
-                    Engine.mAppSettings.UrlShortener = (int)cw.MyUrlShortenerType;
-                    if (!Portable)
+                    startEngine = cw.ShowDialog();
+                    if (startEngine == DialogResult.OK)
                     {
-                        mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+                        Engine.mAppSettings.RootDir = cw.RootFolder;
+                        Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
+                        Engine.mAppSettings.ImageUploader = (int)cw.ImageDestinationType;
+                        Engine.mAppSettings.FileUploader = (int)cw.FileUploaderType;
+                        Engine.mAppSettings.TextUploader = (int)cw.MyTextUploaderType;
+                        Engine.mAppSettings.UrlShortener = (int)cw.MyUrlShortenerType;
+
+                        MyUploadersConfig.Save(UploaderConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
+                        mAppSettings.Write(); 
+
+                        if (Engine.mAppSettings.PreferSystemFolders)
+                        {
+                            RootAppFolder = zLocalAppDataFolder;
+                        }
+                        else if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
+                        {
+                            RootAppFolder = Engine.mAppSettings.RootDir;
+                        }
+                        else
+                        {
+                            RootAppFolder = DefaultRootAppFolder;
+                        }
+
+                        RunConfig = true;
                     }
-                    RunConfig = true;
-                }
-                if (Engine.mAppSettings.PreferSystemFolders)
-                {
-                    RootAppFolder = zLocalAppDataFolder;
-                }
-                else if (!string.IsNullOrEmpty(Engine.mAppSettings.RootDir) && Directory.Exists(Engine.mAppSettings.RootDir))
-                {
-                    RootAppFolder = Engine.mAppSettings.RootDir;
-                }
-                else
-                {
-                    RootAppFolder = DefaultRootAppFolder;
                 }
             }
 
-            if (configResult == DialogResult.OK)
+            if (startEngine == DialogResult.OK)
             {
                 Engine.MyLogger.WriteLine("Config file: " + AppSettings.AppSettingsFile);
                 Engine.MyLogger.WriteLine(string.Format("Root Folder: {0}", mAppSettings.PreferSystemFolders ? zLocalAppDataFolder : RootAppFolder));
@@ -241,7 +245,7 @@ namespace ZScreenLib
                 }
             }
 
-            return configResult == DialogResult.OK;
+            return startEngine == DialogResult.OK;
         }
 
         public static void InitializeDefaultFolderPaths()
