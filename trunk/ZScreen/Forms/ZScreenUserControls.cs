@@ -36,7 +36,7 @@ namespace ZScreenGUI
                 Engine.conf.ProxyActive = acc;
                 Engine.conf.ProxySelected = ucProxyAccounts.AccountsList.SelectedIndex;
             }
-            if (mGuiIsReady)
+            if (IsFormReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }
