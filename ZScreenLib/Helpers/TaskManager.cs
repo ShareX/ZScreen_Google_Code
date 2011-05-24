@@ -259,7 +259,7 @@ namespace ZScreenLib
                 {
                     if (app.Enabled)
                     {
-                        if (app.Name == Engine.ZSCREEN_IMAGE_EDITOR)
+                        if (app.Name == Engine.zImageAnnotator)
                         {
                             try
                             {

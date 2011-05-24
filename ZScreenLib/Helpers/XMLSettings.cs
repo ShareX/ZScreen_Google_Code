@@ -606,7 +606,7 @@ namespace ZScreenLib
 
         public bool Write()
         {
-            return Write(Engine.mAppSettings.GetSettingsFilePath());
+            return Write(Engine.SettingsFilePath);
         }
 
         public bool Write(string filePath)
@@ -616,7 +616,7 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            string settingsFile = Engine.Portable ? Engine.GetLatestSettingsFile(Engine.SettingsDir) : Engine.mAppSettings.GetSettingsFilePath();
+            string settingsFile = Engine.Portable ? Engine.GetLatestSettingsFile(Engine.SettingsDir) : Engine.SettingsFilePath;
             if (!File.Exists(settingsFile))
             {
                 if (File.Exists(Engine.mAppSettings.XMLSettingsFile))
@@ -632,13 +632,13 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteLine("Using " + settingsFile);
             }
 
-            if (File.Exists(settingsFile) && settingsFile != Engine.mAppSettings.GetSettingsFilePath())
+            if (File.Exists(settingsFile) && settingsFile != Engine.SettingsFilePath)
             {
                 // Update AppSettings.xml
-                File.Copy(settingsFile, Engine.mAppSettings.GetSettingsFilePath());
+                File.Copy(settingsFile, Engine.SettingsFilePath);
             }
 
-            Engine.mAppSettings.XMLSettingsFile = Engine.mAppSettings.GetSettingsFilePath();
+            Engine.mAppSettings.XMLSettingsFile = Engine.SettingsFilePath;
 
             return Read(Engine.mAppSettings.XMLSettingsFile);
         }

@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using System.Xml.Serialization;
 using UploadersLib;
+using System.Windows.Forms.Design;
+using System.Drawing.Design;
 
 namespace ZScreenLib
 {
@@ -12,7 +14,7 @@ namespace ZScreenLib
         public readonly static string AppSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
-        public string XMLSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, Engine.SettingsFileName);
+        public string XMLSettingsFile = Path.Combine(Engine.zSettingsDir, Engine.SettingsFileName);
 
         public int ImageUploader; // default value is from ConfigWizard
         public int FileUploader; // default value is from ConfigWizard
@@ -21,6 +23,14 @@ namespace ZScreenLib
 
         [Category("Options / General"), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
+
+        [Category("Options / Paths"), Description("Directory where custom history file will be saved.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        public string CustomHistoryDir { get; set; }
+
+        [Category("Options / Paths"), Description("Directory where custom uploaders config file will be saved.")]
+        [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
+        public string CustomUploadersConfigDir { get; set; }
 
         public static void ApplyDefaultValues(object self)
         {
@@ -40,11 +50,6 @@ namespace ZScreenLib
         public static AppSettings Read()
         {
             return Read(AppSettingsFile);
-        }
-
-        public string GetSettingsFilePath()
-        {
-            return Path.Combine(Engine.SettingsDir, Engine.SettingsFileName);
         }
 
         public static AppSettings Read(string filePath)
@@ -71,17 +76,17 @@ namespace ZScreenLib
             return new AppSettings();
         }
 
-        public void Write()
-        {
-            new Thread(SaveThread).Start(AppSettingsFile);
-        }
-
         public void SaveThread(object filePath)
         {
             lock (this)
             {
                 Write((string)filePath);
             }
+        }
+
+        public void Write()
+        {
+            new Thread(SaveThread).Start(AppSettingsFile);
         }
 
         public void Write(string filePath)
