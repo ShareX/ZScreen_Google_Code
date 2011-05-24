@@ -855,7 +855,7 @@ namespace ZScreenGUI
                 niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
             }
 
-            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0}ms", Engine.StartTimer.ElapsedMilliseconds);
+            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
         }
 
         private void niTray2_BalloonTipClicked(object sender, EventArgs e)

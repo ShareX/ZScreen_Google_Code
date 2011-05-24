@@ -39,6 +39,9 @@
             this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tpUpload = new System.Windows.Forms.TabPage();
+            this.btnBrowseCustomUploadersConfigPath = new System.Windows.Forms.Button();
+            this.txtCustomUploadersConfigPath = new System.Windows.Forms.TextBox();
+            this.cbUseCustomUploadersConfigPath = new System.Windows.Forms.CheckBox();
             this.lblUploadLimitHint = new System.Windows.Forms.Label();
             this.nudUploadLimit = new System.Windows.Forms.NumericUpDown();
             this.lblUploadLimit = new System.Windows.Forms.Label();
@@ -76,9 +79,6 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.btnBrowseCustomUploadersConfigPath = new System.Windows.Forms.Button();
-            this.txtCustomUploadersConfigPath = new System.Windows.Forms.TextBox();
-            this.cbUseCustomUploadersConfigPath = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -230,6 +230,35 @@
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
             // 
+            // btnBrowseCustomUploadersConfigPath
+            // 
+            this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(392, 38);
+            this.btnBrowseCustomUploadersConfigPath.Name = "btnBrowseCustomUploadersConfigPath";
+            this.btnBrowseCustomUploadersConfigPath.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseCustomUploadersConfigPath.TabIndex = 12;
+            this.btnBrowseCustomUploadersConfigPath.Text = "Browse...";
+            this.btnBrowseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
+            this.btnBrowseCustomUploadersConfigPath.Click += new System.EventHandler(this.btnBrowseCustomUploadersConfigPath_Click);
+            // 
+            // txtCustomUploadersConfigPath
+            // 
+            this.txtCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 40);
+            this.txtCustomUploadersConfigPath.Name = "txtCustomUploadersConfigPath";
+            this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(368, 20);
+            this.txtCustomUploadersConfigPath.TabIndex = 11;
+            this.txtCustomUploadersConfigPath.TextChanged += new System.EventHandler(this.txtCustomUploadersConfigPath_TextChanged);
+            // 
+            // cbUseCustomUploadersConfigPath
+            // 
+            this.cbUseCustomUploadersConfigPath.AutoSize = true;
+            this.cbUseCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 16);
+            this.cbUseCustomUploadersConfigPath.Name = "cbUseCustomUploadersConfigPath";
+            this.cbUseCustomUploadersConfigPath.Size = new System.Drawing.Size(201, 17);
+            this.cbUseCustomUploadersConfigPath.TabIndex = 10;
+            this.cbUseCustomUploadersConfigPath.Text = "Use custom uploader config file path:";
+            this.cbUseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
+            this.cbUseCustomUploadersConfigPath.CheckedChanged += new System.EventHandler(this.cbUseCustomUploadersConfigPath_CheckedChanged);
+            // 
             // lblUploadLimitHint
             // 
             this.lblUploadLimitHint.AutoSize = true;
@@ -329,7 +358,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
+                "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -501,7 +530,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-    "ce accordingly.";
+                "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -675,35 +704,6 @@
             this.txtDebugLog.Size = new System.Drawing.Size(517, 253);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
-            // 
-            // btnBrowseCustomUploadersConfigPath
-            // 
-            this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(392, 38);
-            this.btnBrowseCustomUploadersConfigPath.Name = "btnBrowseCustomUploadersConfigPath";
-            this.btnBrowseCustomUploadersConfigPath.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowseCustomUploadersConfigPath.TabIndex = 12;
-            this.btnBrowseCustomUploadersConfigPath.Text = "Browse...";
-            this.btnBrowseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
-            this.btnBrowseCustomUploadersConfigPath.Click += new System.EventHandler(this.btnBrowseCustomUploadersConfigPath_Click);
-            // 
-            // txtCustomUploadersConfigPath
-            // 
-            this.txtCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 40);
-            this.txtCustomUploadersConfigPath.Name = "txtCustomUploadersConfigPath";
-            this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(368, 20);
-            this.txtCustomUploadersConfigPath.TabIndex = 11;
-            this.txtCustomUploadersConfigPath.TextChanged += new System.EventHandler(this.txtCustomUploadersConfigPath_TextChanged);
-            // 
-            // cbUseCustomUploadersConfigPath
-            // 
-            this.cbUseCustomUploadersConfigPath.AutoSize = true;
-            this.cbUseCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 16);
-            this.cbUseCustomUploadersConfigPath.Name = "cbUseCustomUploadersConfigPath";
-            this.cbUseCustomUploadersConfigPath.Size = new System.Drawing.Size(158, 17);
-            this.cbUseCustomUploadersConfigPath.TabIndex = 10;
-            this.cbUseCustomUploadersConfigPath.Text = "Use custom history file path:";
-            this.cbUseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
-            this.cbUseCustomUploadersConfigPath.CheckedChanged += new System.EventHandler(this.cbUseCustomUploadersConfigPath_CheckedChanged);
             // 
             // SettingsForm
             // 
