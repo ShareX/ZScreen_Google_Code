@@ -31,7 +31,6 @@ using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
@@ -606,9 +605,9 @@ namespace ZScreenLib
 
         #region I/O Methods
 
-        public void WriteAsync()
+        public bool Write()
         {
-            ThreadPool.QueueUserWorkItem(state => Write(Engine.mAppSettings.GetSettingsFilePath()));
+            return Write(Engine.mAppSettings.GetSettingsFilePath());
         }
 
         public bool Write(string filePath)
