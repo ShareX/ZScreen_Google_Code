@@ -542,7 +542,6 @@ namespace ZScreenLib
 
         private void Crop_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Engine.conf.WriteAsync();
             DisposeImages();
         }
 

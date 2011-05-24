@@ -278,7 +278,7 @@ namespace ZScreenGUI
                 }
                 else
                 {
-                    method.Invoke();
+                    method();
                 }
             }
         }
@@ -551,7 +551,6 @@ namespace ZScreenGUI
 
             Engine.conf.WindowState = this.WindowState;
             Engine.WriteSettings();
-            Engine.MyLogger.WriteLine("Settings written to file: " + Engine.mAppSettings.GetSettingsFilePath());
         }
 
         private void RewriteImageEditorsRightClickMenu()

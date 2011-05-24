@@ -142,19 +142,43 @@ namespace ZScreenLib
             public bool ShowConfigWizard { get; set; }
         }
 
-        public static void WriteSettings()
+        public static void WriteSettings(bool isAsync = true)
         {
-            if (Engine.MyGTConfig != null)
+            Thread settingsThread = new Thread(() =>
             {
-                Engine.MyGTConfig.Write(GTConfigPath);
-            }
-            if (Engine.MyUploadersConfig != null)
+                if (Engine.conf != null)
+                {
+                    Engine.conf.Write();
+                }
+            });
+
+            Thread uploadersConfigThread = new Thread(() =>
             {
-                Engine.MyUploadersConfig.Save(UploaderConfigPath);
-            }
-            if (Engine.conf != null)
+                if (Engine.MyUploadersConfig != null)
+                {
+                    Engine.MyUploadersConfig.Save(UploaderConfigPath);
+                }
+            });
+
+            Thread googleTranslateThread = new Thread(() =>
             {
-                Engine.conf.WriteAsync();
+                if (Engine.MyGTConfig != null)
+                {
+                    Engine.MyGTConfig.Write(GTConfigPath);
+                }
+            });
+
+            settingsThread.Start();
+            uploadersConfigThread.Start();
+            googleTranslateThread.Start();
+
+            // TODO: Make closing not async
+
+            if (!isAsync)
+            {
+                settingsThread.Join();
+                uploadersConfigThread.Join();
+                googleTranslateThread.Join();
             }
         }
 
