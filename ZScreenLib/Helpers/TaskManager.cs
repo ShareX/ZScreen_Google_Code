@@ -186,7 +186,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    mTask.RetryPending = true;
+                    mTask.Status = WorkerTask.TaskStatus.RetryPending;
                 }
             }
 

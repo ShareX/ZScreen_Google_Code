@@ -52,6 +52,14 @@ namespace ZScreenLib
     {
         #region Enums
 
+        public enum TaskStatus
+        {
+            RetryPending,
+            Started,
+            CancellationPending,
+            Finished
+        }
+
         public enum JobLevel2
         {
             [Description("Entire Screen")]
@@ -139,7 +147,7 @@ namespace ZScreenLib
             get { return Errors != null && Errors.Count > 0; }
         }
 
-        public bool RetryPending { get; set; }
+        public TaskStatus Status { get; set; }
         public DateTime StartTime { get; set; }
         private DateTime mEndTime;
         public DateTime EndTime
@@ -230,6 +238,7 @@ namespace ZScreenLib
         private WorkerTask()
         {
             this.Errors = new List<string>();
+            this.Status = TaskStatus.Started;
         }
 
         public WorkerTask(JobLevel2 job)

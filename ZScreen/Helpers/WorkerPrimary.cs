@@ -255,14 +255,14 @@ namespace ZScreenGUI
 
                 WorkerTask checkTask = RetryUpload(task);
 
-                if (checkTask.RetryPending)
+                if (checkTask.Status == WorkerTask.TaskStatus.RetryPending)
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
                     mZScreen.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
-
                 else
                 {
+                    task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
                     if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
