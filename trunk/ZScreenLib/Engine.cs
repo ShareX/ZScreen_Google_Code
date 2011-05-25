@@ -313,9 +313,6 @@ namespace ZScreenLib
                 ZScreenKeyboardHook.Dispose();
                 Engine.MyLogger.WriteLine("Keyboard Hook terminated");
             }
-
-            WriteSettings(false);
-
             FileSystem.WriteDebugFile();
         }
 
@@ -352,8 +349,6 @@ namespace ZScreenLib
             settingsThread.Start();
             uploadersConfigThread.Start();
             googleTranslateThread.Start();
-
-            // TODO: When ZScreen closing make it not async
 
             if (!isAsync)
             {

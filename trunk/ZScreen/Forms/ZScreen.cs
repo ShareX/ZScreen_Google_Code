@@ -450,11 +450,8 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Only save when minimizing to tray
-            if (e.CloseReason != CloseReason.WindowsShutDown && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray && !IsClose)
-            {
-                Engine.WriteSettings();
-            }
+            Engine.MyLogger.WriteLine("ZScreen is closing due to " + e.CloseReason.GetDescription());
+            Engine.WriteSettings(); // Writing settings async will be faster actually
 
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !IsClose)
             {
@@ -467,9 +464,8 @@ namespace ZScreenGUI
                 else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
                 {
                     this.Hide();
+                    DelayedTrimMemoryUse();
                 }
-
-                DelayedTrimMemoryUse();
             }
         }
 
