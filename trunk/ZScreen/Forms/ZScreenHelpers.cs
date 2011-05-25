@@ -3,11 +3,22 @@ using UploadersLib.HelperClasses;
 using ZScreenLib;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UploadersLib;
+using UploadersAPILib;
 
 namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
+        public GoogleTranslateGUI GetGTGUI()
+        {
+            if (Loader.MyGTGUI == null)
+            {
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            }
+            return Loader.MyGTGUI;
+        }
+
         public static void OpenHistory()
         {
             // if Engine.conf is null then open use default amount

@@ -10,38 +10,6 @@ namespace UploadersLib
 {
     public partial class GoogleTranslateGUI : Form
     {
-        public void TranslateFromTextBox()
-        {
-            StartBW_LanguageTranslator(new GoogleTranslateInfo
-            {
-                Text = txtTranslateText.Text,
-                SourceLanguage = Config.GoogleAutoDetectSource ? null : Config.GoogleSourceLanguage,
-                TargetLanguage = Config.GoogleTargetLanguage
-            });
-        }
-
-        public void TranslateTo1()
-        {
-            if (Config.GoogleTargetLanguage2 == "?")
-            {
-                lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
-                MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", this.Text,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblToLanguage.BorderStyle = BorderStyle.None;
-            }
-            else
-            {
-                TranslateFromTextBox();
-            }
-        }
-
-        public void StartBW_LanguageTranslator(GoogleTranslateInfo gti)
-        {
-            btnTranslate.Enabled = false;
-            btnTranslateTo1.Enabled = false;
-            CreateWorker().RunWorkerAsync(gti);
-        }
-
         public BackgroundWorker CreateWorker()
         {
             BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
@@ -66,13 +34,13 @@ namespace UploadersLib
         private void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             GoogleTranslateInfo gti = e.Result as GoogleTranslateInfo;
-            FillGoogleTranslateInfo(gti);
+            UpdateGoogleTranslateGUI(gti);
         }
 
-        private void FillGoogleTranslateInfo(GoogleTranslateInfo info)
+        private void UpdateGoogleTranslateGUI(GoogleTranslateInfo info)
         {
             btnTranslate.Enabled = true;
-            btnTranslateTo1.Enabled = true;
+            btnTranslateTo.Enabled = true;
 
             txtTranslateText.Text = info.Text;
             txtLanguages.Text = info.SourceLanguage + " -> " + info.TargetLanguage;

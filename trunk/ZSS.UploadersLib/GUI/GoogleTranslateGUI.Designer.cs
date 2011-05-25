@@ -31,7 +31,7 @@
             this.cbLanguageAutoDetect = new System.Windows.Forms.CheckBox();
             this.txtAutoTranslate = new System.Windows.Forms.TextBox();
             this.cbAutoTranslate = new System.Windows.Forms.CheckBox();
-            this.btnTranslateTo1 = new System.Windows.Forms.Button();
+            this.btnTranslateTo = new System.Windows.Forms.Button();
             this.txtTranslateResult = new System.Windows.Forms.TextBox();
             this.txtLanguages = new System.Windows.Forms.TextBox();
             this.btnTranslate = new System.Windows.Forms.Button();
@@ -75,18 +75,18 @@
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
             this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
             // 
-            // btnTranslateTo1
+            // btnTranslateTo
             // 
-            this.btnTranslateTo1.AllowDrop = true;
-            this.btnTranslateTo1.Location = new System.Drawing.Point(216, 208);
-            this.btnTranslateTo1.Name = "btnTranslateTo1";
-            this.btnTranslateTo1.Size = new System.Drawing.Size(136, 24);
-            this.btnTranslateTo1.TabIndex = 22;
-            this.btnTranslateTo1.Text = "???";
-            this.btnTranslateTo1.UseVisualStyleBackColor = true;
-            this.btnTranslateTo1.Click += new System.EventHandler(this.btnTranslateTo1_Click);
-            this.btnTranslateTo1.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
-            this.btnTranslateTo1.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragEnter);
+            this.btnTranslateTo.AllowDrop = true;
+            this.btnTranslateTo.Location = new System.Drawing.Point(216, 208);
+            this.btnTranslateTo.Name = "btnTranslateTo";
+            this.btnTranslateTo.Size = new System.Drawing.Size(136, 24);
+            this.btnTranslateTo.TabIndex = 22;
+            this.btnTranslateTo.Text = "???";
+            this.btnTranslateTo.UseVisualStyleBackColor = true;
+            this.btnTranslateTo.Click += new System.EventHandler(this.btnTranslateTo_Click);
+            this.btnTranslateTo.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo1_DragDrop);
+            this.btnTranslateTo.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnTranslateTo_DragEnter);
             // 
             // txtTranslateResult
             // 
@@ -117,7 +117,6 @@
             this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
             this.btnTranslate.UseVisualStyleBackColor = true;
             this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
-            this.btnTranslate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnTranslate_KeyDown);
             // 
             // txtTranslateText
             // 
@@ -182,7 +181,7 @@
             this.Controls.Add(this.cbLanguageAutoDetect);
             this.Controls.Add(this.txtAutoTranslate);
             this.Controls.Add(this.cbAutoTranslate);
-            this.Controls.Add(this.btnTranslateTo1);
+            this.Controls.Add(this.btnTranslateTo);
             this.Controls.Add(this.txtTranslateResult);
             this.Controls.Add(this.txtLanguages);
             this.Controls.Add(this.btnTranslate);
@@ -192,8 +191,9 @@
             this.Controls.Add(this.cbToLanguage);
             this.Controls.Add(this.cbFromLanguage);
             this.Name = "GoogleTranslateGUI";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Google Translate GUI";
+            this.Load += new System.EventHandler(this.GoogleTranslateGUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,7 +204,7 @@
         private System.Windows.Forms.CheckBox cbLanguageAutoDetect;
         public System.Windows.Forms.TextBox txtAutoTranslate;
         public System.Windows.Forms.CheckBox cbAutoTranslate;
-        public System.Windows.Forms.Button btnTranslateTo1;
+        public System.Windows.Forms.Button btnTranslateTo;
         public System.Windows.Forms.TextBox txtTranslateResult;
         public System.Windows.Forms.TextBox txtLanguages;
         public System.Windows.Forms.Button btnTranslate;

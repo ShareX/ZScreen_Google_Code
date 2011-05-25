@@ -2748,8 +2748,7 @@ namespace ZScreenGUI
 
         private void tsbLanguageTranslate_Click(object sender, EventArgs e)
         {
-            Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
-            Loader.MyGTGUI.Show();
+            GetGTGUI().Show();
         }
 
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)
