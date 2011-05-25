@@ -2,32 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ZScreen"     
-
-#define SimpleVersion(str S);; \
-	Local[0] = Pos (".0.0.", S),;; \
-	/* (4) and (5) */;; \
-	(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-	(;; \
-		Local[0] = Pos (".0.0", S),;; \
-		/* (3) */;; \
-		(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-		(;; \
-			Local[0] = Pos (".0", S),;; \
-			/* (2) */;; \
-			(Local[0] > 5) ? Copy (S, 1, Local[0] - 1) :;; \
-			(;; \
-				Local[0] = Pos (".0.", S),;; \
-				/* (6) */;; \
-				(Local[0] > 0) ? Copy (S, 1, 3) :;; \
-				(;; \
-					Copy (S, 1, 5);; \
-				);; \
-			);; \
-		);; \
-	);
-
 #define ExePath "ZScreen\bin\Release\ZScreen.exe"
-#define MyAppVersion GetFileVersion(ExePath)
+#define DllPath "ZScreen\bin\Release\ZScreenLib.dll"
+#define MyAppVersion GetStringFileInfo(DllPath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
 #define MyAppMyAppName "ZScreen.exe"
