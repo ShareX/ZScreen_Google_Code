@@ -86,8 +86,6 @@ namespace ZScreenGUI
                 catch (Exception ex)
                 {
                     Engine.MyLogger.WriteException(ex, "Running ZScreen");
-                    Engine.WriteSettings();
-                    throw ex;
                 }
                 finally
                 {
