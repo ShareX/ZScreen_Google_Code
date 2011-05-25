@@ -282,7 +282,7 @@ namespace ZScreenGUI
                                 FillGoogleTranslateInfo(task.TranslationInfo);
 
                                 Loader.MyGTGUI.btnTranslate.Enabled = true;
-                                Loader.MyGTGUI.btnTranslateTo1.Enabled = true;
+                                Loader.MyGTGUI.btnTranslateTo.Enabled = true;
                             }
                             break;
                         case JobLevel1.Image:
@@ -396,12 +396,12 @@ namespace ZScreenGUI
             {
                 case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
-                    task.TranslationInfo = new GoogleTranslateInfo()
+                    task.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
                         SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
                         TargetLanguage = Engine.MyGTConfig.GoogleTargetLanguage
-                    };
+                    });
 
                     break;
             }
@@ -475,7 +475,7 @@ namespace ZScreenGUI
 
         public void LanguageTranslator(WorkerTask task)
         {
-            task.TranslationInfo = new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo);
+            task.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo));
             task.SetText(task.TranslationInfo.Result);
         }
 
@@ -664,9 +664,13 @@ namespace ZScreenGUI
         public void StartBW_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
             WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
+            if (Loader.MyGTGUI == null)
+            {
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys());
+            }
             Loader.MyGTGUI.btnTranslate.Enabled = false;
-            Loader.MyGTGUI.btnTranslateTo1.Enabled = false;
-            t.TranslationInfo = translationInfo;
+            Loader.MyGTGUI.btnTranslateTo.Enabled = false;
+            t.SetTranslationInfo(translationInfo);
             t.MyWorker.RunWorkerAsync(t);
         }
 

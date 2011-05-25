@@ -93,46 +93,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\GoogleTranslateGUI.cs">
+    <Compile Include="GUI\GoogleTranslateGUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\GoogleTranslateGUI.Designer.cs">
+    <Compile Include="GUI\GoogleTranslateGUI.Designer.cs">
       <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\UploadersConfigFormGUI.cs">
+    <Compile Include="GUI\UploadersConfigFormGUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\UploadersConfigFormHelper.cs">
+    <Compile Include="GUI\UploadersConfigFormHelper.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Config\UploadersAPIKeys.cs" />
-    <Compile Include="Config\UploadersConfigForm.cs">
+    <Compile Include="GUI\UploadersConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\UploadersConfigForm.Designer.cs">
+    <Compile Include="GUI\UploadersConfigForm.Designer.cs">
       <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\UploadersConfig.cs" />
-    <Compile Include="Config\UserPassBox.cs">
+    <Compile Include="GUI\UserPassBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config\UserPassBox.Designer.cs">
+    <Compile Include="GUI\UserPassBox.Designer.cs">
       <DependentUpon>UserPassBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AccountsControl.cs">
+    <Compile Include="GUI\AccountsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\AccountsControl.Designer.cs">
+    <Compile Include="GUI\AccountsControl.Designer.cs">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\GoogleTranslatorConfig.cs" />
-    <Compile Include="Forms\DropboxFilesForm.cs">
+    <Compile Include="GUI\DropboxFilesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DropboxFilesForm.Designer.cs">
+    <Compile Include="GUI\DropboxFilesForm.Designer.cs">
       <DependentUpon>DropboxFilesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\GoogleTranslateWorker.cs">
+    <Compile Include="GUI\GoogleTranslateGUIWorker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\GoogleTranslateGUIHelper.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HelperClasses\AsyncHelper.cs" />
@@ -167,10 +170,10 @@
     <Compile Include="HelperClasses\UploadHelper\StringMimePart.cs" />
     <Compile Include="HelperClasses\UploadHelper\UploadFile.cs" />
     <Compile Include="HelperClasses\UploadResult.cs" />
-    <Compile Include="Forms\TwitterMsg.cs">
+    <Compile Include="GUI\TwitterMsg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\TwitterMsg.Designer.cs">
+    <Compile Include="GUI\TwitterMsg.Designer.cs">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums.cs" />
@@ -226,23 +229,23 @@
     <Compile Include="URLShorteners\TurlURLShortener.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\GoogleTranslateGUI.resx">
+    <EmbeddedResource Include="GUI\GoogleTranslateGUI.resx">
       <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\UploadersConfigForm.resx">
+    <EmbeddedResource Include="GUI\UploadersConfigForm.resx">
       <DependentUpon>UploadersConfigForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\UserPassBox.resx">
+    <EmbeddedResource Include="GUI\UserPassBox.resx">
       <DependentUpon>UserPassBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\AccountsControl.resx">
+    <EmbeddedResource Include="GUI\AccountsControl.resx">
       <DependentUpon>AccountsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DropboxFilesForm.resx">
+    <EmbeddedResource Include="GUI\DropboxFilesForm.resx">
       <DependentUpon>DropboxFilesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TwitterMsg.resx">
+    <EmbeddedResource Include="GUI\TwitterMsg.resx">
       <DependentUpon>TwitterMsg.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

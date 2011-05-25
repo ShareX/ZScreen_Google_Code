@@ -213,7 +213,7 @@ namespace ZScreenLib
 
         public string MyText { get; private set; }
 
-        public GoogleTranslateInfo TranslationInfo { get; set; }
+        public GoogleTranslateInfo TranslationInfo { get; private set; }
 
         public TextUploaderType MyTextUploader { get; set; }
         public UrlShortenerType MyUrlShortener { get; set; }
@@ -263,18 +263,24 @@ namespace ZScreenLib
                 MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
             }
 
-            if (MyImageUploader == ImageUploaderType.FileUploader)
-            {
-                this.Job1 = JobLevel1.File;
-            }
-            else if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
+            if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
             {
                 this.Job1 = JobLevel1.Text;
+            }
+            else if (MyImageUploader == ImageUploaderType.FileUploader)
+            {
+                this.Job1 = JobLevel1.File;
             }
             else
             {
                 this.Job1 = JobLevel1.Image;
             }
+        }
+
+        public void SetTranslationInfo(GoogleTranslateInfo gti)
+        {
+            this.Job1 = JobLevel1.Text;
+            this.TranslationInfo = gti;
         }
 
         public void SetImage(Image img)
