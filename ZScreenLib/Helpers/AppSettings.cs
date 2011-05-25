@@ -14,7 +14,7 @@ namespace ZScreenLib
         public readonly static string AppSettingsFile = Path.Combine(Engine.zLocalAppDataFolder, "AppSettings.xml");
 
         public string RootDir { get; set; }
-        public string XMLSettingsFile = Path.Combine(Engine.zSettingsDir, Engine.SettingsFileName);
+        public string XMLSettingsFile { get; set; }
 
         public int ImageUploader; // default value is from ConfigWizard
         public int FileUploader; // default value is from ConfigWizard
