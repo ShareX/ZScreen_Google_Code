@@ -474,12 +474,12 @@ namespace ZScreenLib
             if (task.LinkManager != null && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
             {
                 if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && task.MyImageUploader != ImageUploaderType.FILE &&
-                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && !task.RetryPending && File.Exists(task.LocalFilePath))
+                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
-                    task2.RetryPending = true; // we do not retry again
+                    task2.Status = WorkerTask.TaskStatus.Finished; // we do not retry again
 
                     if (task.Job1 == JobLevel1.Image)
                     {
@@ -510,7 +510,7 @@ namespace ZScreenLib
                     return task2;
                 }
             }
-            task.RetryPending = false;
+            task.Status = WorkerTask.TaskStatus.Finished;
             return task;
         }
     }
