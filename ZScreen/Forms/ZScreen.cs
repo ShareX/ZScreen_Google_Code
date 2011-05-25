@@ -450,8 +450,8 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Engine.MyLogger.WriteLine("ZScreen is closing due to " + e.CloseReason.GetDescription());
-            Engine.WriteSettings(); // Writing settings async will be faster actually
+            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", Engine.conf.WindowButtonActionClose.GetDescription(), e.CloseReason.GetDescription()));
+            Engine.WriteSettings(false); // Application terminates async threads prematurally so isAync is set to false
 
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !IsClose)
             {
@@ -1111,7 +1111,6 @@ namespace ZScreenGUI
             Engine.conf = new XMLSettings();
             ZScreen_ConfigGUI();
             Engine.conf.FirstRun = false;
-            Engine.WriteSettings();
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -2003,7 +2002,7 @@ namespace ZScreenGUI
         {
             if (Engine.conf.AutoSaveSettings)
             {
-                Engine.WriteSettings();
+                Engine.WriteSettings(isAsync: true);
             }
         }
 
