@@ -56,9 +56,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZUploader\bin\Release\*.dll; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
