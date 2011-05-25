@@ -117,6 +117,7 @@
             this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
             this.btnTranslate.UseVisualStyleBackColor = true;
             this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
+            this.btnTranslate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnTranslate_KeyDown);
             // 
             // txtTranslateText
             // 
@@ -172,7 +173,6 @@
             this.cbFromLanguage.Size = new System.Drawing.Size(144, 21);
             this.cbFromLanguage.TabIndex = 14;
             this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
-            this.cbFromLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbFromLanguage_MouseDown);
             // 
             // GoogleTranslateGUI
             // 
@@ -192,7 +192,8 @@
             this.Controls.Add(this.cbToLanguage);
             this.Controls.Add(this.cbFromLanguage);
             this.Name = "GoogleTranslateGUI";
-            this.Text = "GoogleTranslateGUI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Google Translate GUI";
             this.ResumeLayout(false);
             this.PerformLayout();
 

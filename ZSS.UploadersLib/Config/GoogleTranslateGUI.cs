@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Windows.Forms;
 using UploadersLib.OtherServices;
+using System.ComponentModel;
 
 namespace UploadersLib
 {
     public partial class GoogleTranslateGUI : Form
     {
         public GoogleTranslatorConfig Config { get; private set; }
+        public UploadersAPIKeys APIKeys { get; private set; }
 
-        public GoogleTranslateGUI(GoogleTranslatorConfig config)
+        public GoogleTranslateGUI(GoogleTranslatorConfig config, UploadersAPIKeys uploadersAPIKeys)
         {
             InitializeComponent();
             this.Config = config;
+            this.APIKeys = uploadersAPIKeys;
             LoadSettings(config);
         }
 
@@ -91,7 +94,12 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(txtTranslateText.Text))
             {
-                // TODO: Loader.Worker.Translate();
+                StartBW_LanguageTranslator(new GoogleTranslateInfo()
+                {
+                    Text = txtTranslateText.Text,
+                    SourceLanguage = Config.GoogleSourceLanguage,
+                    TargetLanguage = Config.GoogleTargetLanguage
+                });
             }
         }
 
@@ -123,13 +131,9 @@ namespace UploadersLib
 
                 if (!string.IsNullOrEmpty(txtTranslateText.Text))
                 {
-                    // TODO: Loader.Worker.Translate();
+                    TranslateFromTextBox();
                 }
             }
-        }
-
-        private void cbFromLanguage_MouseDown(object sender, MouseEventArgs e)
-        {
         }
 
         private void lblToLanguage_MouseDown(object sender, MouseEventArgs e)
@@ -149,49 +153,15 @@ namespace UploadersLib
             }
         }
 
-        public void Translate()
-        {
-            /*
-            StartBW_LanguageTranslator(new GoogleTranslateInfo
-            {
-                Text = txtTranslateText.Text,
-                SourceLanguage = Config.GoogleAutoDetectSource ? null : Config.GoogleSourceLanguage,
-                TargetLanguage = Config.GoogleTargetLanguage
-            });
-             * */
-        }
-
-        public void TranslateTo1()
-        {
-            if (Config.GoogleTargetLanguage2 == "?")
-            {
-                lblToLanguage.BorderStyle = BorderStyle.FixedSingle;
-                MessageBox.Show("Drag n drop 'To:' label to this button for be able to set button language.", this.Text,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblToLanguage.BorderStyle = BorderStyle.None;
-            }
-            else
-            {
-                /*
-                StartBW_LanguageTranslator(new GoogleTranslateInfo()
-                {
-                    Text = txtTranslateText.Text,
-                    SourceLanguage = Config.GoogleAutoDetectSource ? null : Config.GoogleSourceLanguage,
-                    TargetLanguage = Config.GoogleTargetLanguage2
-                });
-                 * */
-            }
-        }
-
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
             Config.GoogleTargetLanguage2 = e.Data.GetData(DataFormats.Text).ToString();
-            // btnTranslateTo1.Text = "To " + Loader.Worker2.GetLanguageName(Config.GoogleTargetLanguage2);
+            btnTranslateTo1.Text = "To " + GetLanguageName(Config.GoogleTargetLanguage2);
         }
 
         private void btnTranslateTo1_Click(object sender, EventArgs e)
         {
-            // Loader.Worker.TranslateTo1();
+            TranslateTo1();
         }
 
         private void btnTranslateTo1_DragEnter(object sender, DragEventArgs e)
@@ -200,6 +170,11 @@ namespace UploadersLib
             {
                 e.Effect = DragDropEffects.Move;
             }
+        }
+
+        private void btnTranslate_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }

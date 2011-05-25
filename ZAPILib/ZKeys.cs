@@ -83,7 +83,8 @@ namespace UploadersAPILib
                 SendSpaceKey = SendSpaceKey,
                 PastebinKey = PastebinKey,
                 TwitterConsumerKey = TwitterConsumerKey,
-                TwitterConsumerSecret = TwitterConsumerSecret
+                TwitterConsumerSecret = TwitterConsumerSecret,
+                GoogleTranslateKey = GoogleTranslateKey
             };
         }
     }

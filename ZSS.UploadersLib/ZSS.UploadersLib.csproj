@@ -132,6 +132,9 @@
     <Compile Include="Forms\DropboxFilesForm.Designer.cs">
       <DependentUpon>DropboxFilesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Config\GoogleTranslateWorker.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HelperClasses\AsyncHelper.cs" />
     <Compile Include="HelperClasses\ImageListManager.cs" />
     <Compile Include="FileUploader.cs" />

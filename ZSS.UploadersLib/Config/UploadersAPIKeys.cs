@@ -46,5 +46,6 @@ namespace UploadersLib
         // Other Services
         public string TwitterConsumerKey { get; set; }
         public string TwitterConsumerSecret { get; set; }
+        public string GoogleTranslateKey { get; set; }
     }
 }
