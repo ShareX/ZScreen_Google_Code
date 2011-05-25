@@ -616,7 +616,7 @@ namespace ZScreenLib
 
         public static XMLSettings Read()
         {
-            string settingsFile = Engine.Portable ? Engine.GetLatestSettingsFile(Engine.SettingsDir) : Engine.SettingsFilePath;
+            string settingsFile = Engine.Portable ? Engine.GetPreviousSettingsFile(Engine.SettingsDir) : Engine.SettingsFilePath;
             if (!File.Exists(settingsFile))
             {
                 if (File.Exists(Engine.mAppSettings.XMLSettingsFile))
@@ -627,15 +627,14 @@ namespace ZScreenLib
                 else
                 {
                     // Step 3 - Attempt to read conventional Settings file
-                    settingsFile = Engine.XMLSettingsFile;
+                    settingsFile = Engine.SettingsFilePath;
                 }
                 Engine.MyLogger.WriteLine("Using " + settingsFile);
             }
 
             if (File.Exists(settingsFile) && settingsFile != Engine.SettingsFilePath)
             {
-                // Update AppSettings.xml
-                File.Copy(settingsFile, Engine.SettingsFilePath);
+                File.Copy(settingsFile, Engine.SettingsFilePath);                 // Update AppSettings.xml
             }
 
             Engine.mAppSettings.XMLSettingsFile = Engine.SettingsFilePath;

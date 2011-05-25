@@ -389,27 +389,6 @@ namespace ZScreenGUI
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)tsmi.Tag;
         }
 
-        private void UpdateGuiControlsPaths()
-        {
-            Engine.InitializeDefaultFolderPaths();
-            txtImagesDir.Text = Engine.ImagesDir;
-            txtTextDir.Text = Engine.LogsDir;
-            if (Engine.conf.PreferSystemFolders)
-            {
-                txtRootFolder.Text = Engine.SettingsDir;
-                gbRoot.Text = "Settings";
-            }
-            else
-            {
-                txtRootFolder.Text = Engine.RootAppFolder;
-                gbRoot.Text = "Root";
-            }
-            gbRoot.Enabled = !Engine.Portable;
-            gbImages.Enabled = !Engine.Portable;
-            gbLogs.Enabled = !Engine.Portable;
-            chkPreferSystemFolders.Enabled = !Engine.Portable;
-        }
-
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IsClose = true;

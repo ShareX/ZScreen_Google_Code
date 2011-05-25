@@ -82,6 +82,11 @@ namespace HelpersLib
             {
                 if (!string.IsNullOrEmpty(filepath) && Messages.Length > 0)
                 {
+                    string dir = Path.GetDirectoryName(filepath);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
                     File.AppendAllText(filepath, Messages.ToString(), Encoding.UTF8);
                     Messages = new StringBuilder(1024);
                 }

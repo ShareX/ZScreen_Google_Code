@@ -152,11 +152,33 @@ namespace ZScreenGUI
             cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
         }
 
+        private void UpdateGuiControlsPaths()
+        {
+            Engine.InitializeDefaultFolderPaths(dirCreation: false);
+            txtImagesDir.Text = Engine.ImagesDir;
+            txtLogsDir.Text = Engine.LogsDir;
+
+            if (Engine.conf.PreferSystemFolders)
+            {
+                txtRootFolder.Text = Engine.SettingsDir;
+                gbRoot.Text = "Settings";
+            }
+            else
+            {
+                txtRootFolder.Text = Engine.DefaultRootAppFolder;
+                gbRoot.Text = "Root";
+            }
+
+            gbRoot.Enabled = !Engine.Portable;
+            gbImages.Enabled = !Engine.Portable;
+            gbLogs.Enabled = !Engine.Portable;
+            chkPreferSystemFolders.Enabled = !Engine.Portable;
+        }
+
         private void ZScreen_ConfigGUI_Options()
         {
             Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
             chkPreferSystemFolders.Checked = Engine.conf.PreferSystemFolders;
-            txtRootFolder.Text = Engine.RootAppFolder;
             UpdateGuiControlsPaths();
 
             // General
