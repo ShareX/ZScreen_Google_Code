@@ -1,5 +1,7 @@
-﻿Version 3.12 - 2011-05-09
+﻿Version 3.12 - 2011-05-28
 
+3.12 Plugin system to perform Crop Shot and Entire Screen capture
+3.11 New Uploaders Configuration window to setup user accounts
 3.10 Added Clipboard Content Viewer to confirm uploading using Clipboard
 3.09 Added URL Shortener support
 
