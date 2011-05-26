@@ -121,27 +121,15 @@ namespace ZScreenLib
 
         #endregion Enums
 
-        #region Common Properties for All Categories
+        #region Properties
 
         public BackgroundWorker MyWorker { get; set; }
         public bool WasToTakeScreenshot { get; set; }
-        /// <summary>
-        /// Image, File, Text
-        /// </summary>
-        public JobLevel1 Job1 { get; private set; }
-        /// <summary>
-        /// Entire Screen, Active Window, Selected Window, Crop Shot, etc.
-        /// </summary>
-        public JobLevel2 Job2 { get; private set; }
-        /// <summary>
-        /// Shorten URL, Upload Text, Index Folder, etc.
-        /// </summary>
-        public JobLevel3 Job3 { get; private set; }
-        /// <summary>
-        /// List of Errors the Worker had during its operation
-        /// </summary>
-        public List<string> Errors { get; set; }
+        public JobLevel1 Job1 { get; private set; }  // Image, File, Text
+        public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
+        public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
 
+        public List<string> Errors { get; set; }
         public bool IsError
         {
             get { return Errors != null && Errors.Count > 0; }
@@ -166,25 +154,13 @@ namespace ZScreenLib
         public bool IsImage { get; set; }
         public int UniqueNumber { get; set; }
 
-        #endregion Common Properties for All Categories
-
-        #region Properties for Categories: Pictures and Screenshots
-
-        /// <summary>
-        /// Image object: Screenshot captured using User32 or Picture by User
-        /// </summary>
         public Image MyImage { get; private set; }
-        /// <summary>
-        /// Name of the Image
-        /// </summary>
+        public string MyText { get; private set; }
+        public byte[] MyFile { get; set; }
+        public GoogleTranslateInfo TranslationInfo { get; private set; }
+
         public string FileName { get; set; }
-        /// <summary>
-        /// Local file path of the Image: Picture or Screenshot or Text file
-        /// </summary>
         public string LocalFilePath { get; private set; }
-        /// <summary>
-        /// URL of the Image: Picture or Screenshot, or Text file
-        /// </summary>
         public string RemoteFilePath
         {
             get
@@ -202,38 +178,17 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// FTP Account Name, TinyPic, ImageShack
-        /// </summary>
         private string DestinationName = string.Empty;
-        /// <summary>
-        /// Clipboard, Custom Uploader, File, FTP, ImageShack, TinyPic
-        /// </summary>
+
         public ImageUploaderType MyImageUploader { get; set; }
-        /// <summary>
-        /// Pictures List to access Local file path, URL
-        /// </summary>
         public ImageFileManager LinkManager { get; set; }
-
-        #endregion Properties for Categories: Pictures and Screenshots
-
-        #region Properties for Category: Text
-
-        public string MyText { get; private set; }
-
-        public GoogleTranslateInfo TranslationInfo { get; private set; }
-
         public TextUploaderType MyTextUploader { get; set; }
         public UrlShortenerType MyUrlShortener { get; set; }
-
-        #endregion Properties for Category: Text
-
-        #region Properties for Category: Binary
-
         public FileUploaderType MyFileUploader { get; set; }
-        public byte[] MyFile { get; set; }
 
-        #endregion Properties for Category: Binary
+        #endregion Properties 
+
+        #region Constructors
 
         private WorkerTask()
         {
@@ -286,11 +241,9 @@ namespace ZScreenLib
             }
         }
 
-        public void SetTranslationInfo(GoogleTranslateInfo gti)
-        {
-            this.Job1 = JobLevel1.Text;
-            this.TranslationInfo = gti;
-        }
+        #endregion Constructors
+
+        #region Populating Task
 
         public void SetImage(Image img)
         {
@@ -415,65 +368,9 @@ namespace ZScreenLib
             }
         }
 
-        public HistoryItem GenerateHistoryItem()
-        {
-            HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
-            hi.DateTimeUtc = this.EndTime;
-            if (this.LinkManager != null)
-            {
-                hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
-                hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
-                hi.ShortenedURL = this.LinkManager.UploadResult.ShortenedURL;
-                hi.URL = this.LinkManager.UploadResult.URL;
-            }
-            hi.Filename = this.FileName;
-            hi.Filepath = this.LocalFilePath;
-            hi.Host = this.GetDestinationName();
-            hi.Type = this.Job1.GetDescription();
+        #endregion Populating Task
 
-            return hi;
-        }
-
-        public string GetDestinationName()
-        {
-            string destName = this.DestinationName;
-            if (string.IsNullOrEmpty(destName))
-            {
-                switch (Job1)
-                {
-                    case JobLevel1.Image:
-                        destName = this.MyImageUploader.GetDescription();
-                        break;
-                    case JobLevel1.Text:
-                        switch (this.Job3)
-                        {
-                            case WorkerTask.JobLevel3.ShortenURL:
-                                destName = this.MyUrlShortener.GetDescription();
-                                break;
-                            default:
-                                destName = this.MyTextUploader.GetDescription();
-                                break;
-                        }
-                        break;
-                    case JobLevel1.File:
-                        destName = this.MyFileUploader.GetDescription();
-                        break;
-                }
-            }
-            return destName;
-        }
-
-        public string GetDescription()
-        {
-            if (this.Job2 == JobLevel2.UploadFromClipboard && this.Job3 != JobLevel3.None)
-            {
-                return string.Format("{0}: {1} ({2})", this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
-            }
-            else
-            {
-                return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
-            }
-        }
+        #region Capture
 
         /// <summary>
         /// Function to Capture Active Window
@@ -497,71 +394,19 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// Runs BwApp_DoWork
-        /// </summary>
-        public void RunWorker()
+        #endregion Capture
+
+        #region Google Translate
+
+        public void SetTranslationInfo(GoogleTranslateInfo gti)
         {
-            this.MyWorker.RunWorkerAsync(this);
+            this.Job1 = JobLevel1.Text;
+            this.TranslationInfo = gti;
         }
 
-        public override string ToString()
-        {
-            StringBuilder sbDebug = new StringBuilder();
-            sbDebug.AppendLine(string.Format("Image Uploader: {0}", MyImageUploader));
-            // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
-            sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
-            return sbDebug.ToString();
-        }
+        #endregion Google Translate
 
-        public bool JobIsImageToClipboard()
-        {
-            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD && this.MyImage != null;
-        }
-
-        private bool CreateThumbnail()
-        {
-            return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.MyImage != null &&
-                ((ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
-                (!Engine.MyUploadersConfig.FTPThumbnailCheckSize || (Engine.MyUploadersConfig.FTPThumbnailCheckSize &&
-                (this.MyImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
-        }
-
-        /// <summary>
-        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        public void PublishData()
-        {
-            if (Job1 == JobLevel1.File)
-            {
-                UploadFile();
-            }
-            else
-            {
-                PublishImage();
-            }
-        }
-
-        public void PublishImage()
-        {
-            if (MyImage != null && Adapter.ImageSoftwareEnabled() && Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
-            {
-                PerformActions();
-            }
-
-            if (MyImageUploader == ImageUploaderType.FileUploader)
-            {
-                UploadFile();
-            }
-            else
-            {
-                UploadImage();
-            }
-        }
+        #region Actions
 
         /// <summary>
         /// Perform Actions after capturing image/text/file objects
@@ -602,6 +447,79 @@ namespace ZScreenLib
                         }
                     }
                 }
+            }
+        }
+
+        #endregion Actions
+
+        #region Publish Data
+
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage()
+        {
+            if (!Engine.conf.MemoryMode && this.MyImage != null)
+            {
+                NameParserType type;
+                string pattern = string.Empty;
+                if (this.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                {
+                    type = NameParserType.ActiveWindow;
+                    pattern = Engine.conf.ActiveWindowPattern;
+                }
+                else
+                {
+                    type = NameParserType.EntireScreen;
+                    pattern = Engine.conf.EntireScreenPattern;
+                }
+
+                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
+                {
+                    if (this.SetFilePathFromPattern(parser.Convert(pattern)))
+                    {
+                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+                        FileSystem.WriteImage(this);
+                        if (!File.Exists(this.LocalFilePath))
+                        {
+                            this.Errors.Add(string.Format("{0} does not exist", this.LocalFilePath));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        public void PublishData()
+        {
+            if (Job1 == JobLevel1.File)
+            {
+                UploadFile();
+            }
+            else
+            {
+                PublishImage();
+            }
+        }
+
+        public void PublishImage()
+        {
+            if (MyImage != null && Adapter.ImageSoftwareEnabled() && Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
+            {
+                PerformActions();
+            }
+
+            if (MyImageUploader == ImageUploaderType.FileUploader)
+            {
+                UploadFile();
+            }
+            else
+            {
+                UploadImage();
             }
         }
 
@@ -1055,6 +973,10 @@ namespace ZScreenLib
             }
         }
 
+        #endregion Publish Data
+
+        #region Checks
+
         public bool JobIsImageToFile()
         {
             return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
@@ -1130,46 +1052,112 @@ namespace ZScreenLib
             return false;
         }
 
+        public bool JobIsImageToClipboard()
+        {
+            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD && this.MyImage != null;
+        }
+
+        private bool CreateThumbnail()
+        {
+            return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.MyImage != null &&
+                ((ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
+                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
+                (!Engine.MyUploadersConfig.FTPThumbnailCheckSize || (Engine.MyUploadersConfig.FTPThumbnailCheckSize &&
+                (this.MyImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
+        }
+
+        #endregion Checks
+
+        #region Descriptions
+
+        public string GetDestinationName()
+        {
+            string destName = this.DestinationName;
+            if (string.IsNullOrEmpty(destName))
+            {
+                switch (Job1)
+                {
+                    case JobLevel1.Image:
+                        destName = this.MyImageUploader.GetDescription();
+                        break;
+                    case JobLevel1.Text:
+                        switch (this.Job3)
+                        {
+                            case WorkerTask.JobLevel3.ShortenURL:
+                                destName = this.MyUrlShortener.GetDescription();
+                                break;
+                            default:
+                                destName = this.MyTextUploader.GetDescription();
+                                break;
+                        }
+                        break;
+                    case JobLevel1.File:
+                        destName = this.MyFileUploader.GetDescription();
+                        break;
+                }
+            }
+            return destName;
+        }
+
+        public string GetDescription()
+        {
+            if (this.Job2 == JobLevel2.UploadFromClipboard && this.Job3 != JobLevel3.None)
+            {
+                return string.Format("{0}: {1} ({2})", this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
+            }
+            else
+            {
+                return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
+            }
+        }
+
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
         }
 
-        /// <summary>
-        /// Writes MyImage object in a WorkerTask into a file
-        /// </summary>
-        /// <param name="t">WorkerTask</param>
-        public void WriteImage()
+        public override string ToString()
         {
-            if (!Engine.conf.MemoryMode && this.MyImage != null)
-            {
-                NameParserType type;
-                string pattern = string.Empty;
-                if (this.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
-                {
-                    type = NameParserType.ActiveWindow;
-                    pattern = Engine.conf.ActiveWindowPattern;
-                }
-                else
-                {
-                    type = NameParserType.EntireScreen;
-                    pattern = Engine.conf.EntireScreenPattern;
-                }
-
-                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
-                {
-                    if (this.SetFilePathFromPattern(parser.Convert(pattern)))
-                    {
-                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
-                        FileSystem.WriteImage(this);
-                        if (!File.Exists(this.LocalFilePath))
-                        {
-                            this.Errors.Add(string.Format("{0} does not exist", this.LocalFilePath));
-                        }
-                    }
-                }
-            }
+            StringBuilder sbDebug = new StringBuilder();
+            sbDebug.AppendLine(string.Format("Image Uploader: {0}", MyImageUploader));
+            // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
+            sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
+            return sbDebug.ToString();
         }
 
+        #endregion Descriptions
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Runs BwApp_DoWork
+        /// </summary>
+        public void RunWorker()
+        {
+            this.MyWorker.RunWorkerAsync(this);
+        }
+
+        public HistoryItem GenerateHistoryItem()
+        {
+            HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
+            hi.DateTimeUtc = this.EndTime;
+            if (this.LinkManager != null)
+            {
+                hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
+                hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
+                hi.ShortenedURL = this.LinkManager.UploadResult.ShortenedURL;
+                hi.URL = this.LinkManager.UploadResult.URL;
+            }
+            hi.Filename = this.FileName;
+            hi.Filepath = this.LocalFilePath;
+            hi.Host = this.GetDestinationName();
+            hi.Type = this.Job1.GetDescription();
+
+            return hi;
+        }
+
+        #endregion Helper Methods
     }
 }
