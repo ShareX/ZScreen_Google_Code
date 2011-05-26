@@ -70,7 +70,7 @@ namespace ZScreenGUI
         {
             List<string> files = new List<string>();
             files.AddRange(filePaths);
-            Loader.Worker.UploadUsingFileSystem(files);
+            UploadUsingFileSystem(files);
         }
     }
 }

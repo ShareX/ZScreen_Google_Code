@@ -91,7 +91,7 @@ namespace ZScreenLib
                             break;
                         case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
-                            new TaskManager(task).PublishData();
+                            task.PublishData();
                             break;
                     }
 
@@ -227,15 +227,14 @@ namespace ZScreenLib
         /// <returns></returns>
         public virtual WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
-            WorkerTask t = CreateTask(job);
-            // t.MakeTinyURL = Program.MakeTinyURL();
-            t.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+            WorkerTask task = CreateTask(job);
+            task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
             if (!string.IsNullOrEmpty(localFilePath))
             {
-                t.UpdateLocalFilePath(localFilePath);
+                task.UpdateLocalFilePath(localFilePath);
             }
 
-            return t;
+            return task;
         }
 
         #endregion Create Tasks

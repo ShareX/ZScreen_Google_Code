@@ -530,6 +530,81 @@ namespace ZScreenLib
                 (this.MyImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
         }
 
+        /// <summary>
+        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
+        /// </summary>
+        /// <param name="task"></param>
+        public void PublishData()
+        {
+            if (Job1 == JobLevel1.File)
+            {
+                UploadFile();
+            }
+            else
+            {
+                PublishImage();
+            }
+        }
+
+        public void PublishImage()
+        {
+            if (MyImage != null && Adapter.ImageSoftwareEnabled() && Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
+            {
+                PerformActions();
+            }
+
+            if (MyImageUploader == ImageUploaderType.FileUploader)
+            {
+                UploadFile();
+            }
+            else
+            {
+                UploadImage();
+            }
+        }
+
+        /// <summary>
+        /// Perform Actions after capturing image/text/file objects
+        /// </summary>
+        public void PerformActions()
+        {
+            if (File.Exists(LocalFilePath))
+            {
+                foreach (Software app in Engine.conf.ActionsList)
+                {
+                    if (app.Enabled)
+                    {
+                        if (app.Name == Engine.zImageAnnotator)
+                        {
+                            try
+                            {
+                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
+                                editor.MyWorker = MyWorker;
+                                editor.SetImage(MyImage);
+                                editor.SetImagePath(LocalFilePath);
+                                editor.ShowDialog();
+                            }
+                            catch (Exception ex)
+                            {
+                                Engine.MyLogger.WriteException(ex, "ImageEdit");
+                            }
+                        }
+                        else if (File.Exists(app.Path))
+                        {
+                            if (Job1 == JobLevel1.File && app.TriggerForFiles ||
+                                Job1 == JobLevel1.Image && app.TriggerForImages ||
+                                Job1 == JobLevel1.Text && app.TriggerForText)
+                            {
+                                app.OpenFile(LocalFilePath);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public void UploadImage()
         {
             this.StartTime = DateTime.Now;
@@ -900,7 +975,7 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
                 this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
-                // mTask.RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(mTask.LocalFilePath));
+                // RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(LocalFilePath));
 
                 return true;
             }
@@ -938,7 +1013,7 @@ namespace ZScreenLib
                     Engine.MyLogger.WriteLine(string.Format("Uploading {0} to Mindtouch: {1}", this.FileName, acc.Url));
 
                     DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
-                    // mTask.RemoteFilePath = acc.getUriPath(Path.GetFileName(mTask.LocalFilePath)); todo: check same output as getUriPath is possible else where
+                    // RemoteFilePath = acc.getUriPath(Path.GetFileName(LocalFilePath)); todo: check same output as getUriPath is possible else where
                     this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
 
                     DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
@@ -1095,5 +1170,6 @@ namespace ZScreenLib
                 }
             }
         }
+
     }
 }

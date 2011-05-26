@@ -74,8 +74,7 @@ namespace ZScreenGUI
 
             ZScreen_SetFormSettings();
 
-            Loader.Worker = new WorkerPrimary(this);
-            Loader.Worker.mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
+            mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
 
             ZScreen_ConfigGUI();
 
@@ -281,7 +280,7 @@ namespace ZScreenGUI
                             {
                                 if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
                                 {
-                                    Loader.Worker.UploadUsingClipboard();
+                                    UploadUsingClipboard();
                                 }
                             }
                         }
@@ -824,12 +823,12 @@ namespace ZScreenGUI
 
         private void clipboardUpload_Click(object sender, EventArgs e)
         {
-            Loader.Worker.UploadUsingClipboard();
+            UploadUsingClipboard();
         }
 
         private void selWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBw_SelectedWindow();
+            RunWorkerAsync_SelectedWindow();
         }
 
         private void tsmAboutMain_Click(object sender, EventArgs e)
@@ -1102,7 +1101,7 @@ namespace ZScreenGUI
 
         private void cropShot_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartBw_CropShot();
+            RunWorkerAsync_CropShot();
         }
 
         private void ShowMainWindow()
@@ -1173,27 +1172,27 @@ namespace ZScreenGUI
                 return;
             }
 
-            Loader.Worker.mSetHotkeys = true;
+            mSetHotkeys = true;
             HotkeyMgr.mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
 
-            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = Loader.Worker.GetSelectedHotkeySpecialString() + " <Set Keys>";
+            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = GetSelectedHotkeySpecialString() + " <Set Keys>";
         }
 
         private void dgvHotkeys_Leave(object sender, EventArgs e)
         {
-            Loader.Worker.QuitSettingHotkeys();
+            QuitSettingHotkeys();
         }
 
         private void ZScreen_Leave(object sender, EventArgs e)
         {
-            Loader.Worker.QuitSettingHotkeys();
+            QuitSettingHotkeys();
         }
 
         private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
         {
-            Loader.Worker.QuitSettingHotkeys();
+            QuitSettingHotkeys();
         }
 
         private void CheckFormSettings()
@@ -1364,36 +1363,36 @@ namespace ZScreenGUI
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBW_EntireScreen();
+            RunWorkerAsync_EntireScreen();
         }
 
         private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBw_SelectedWindow();
+            RunWorkerAsync_SelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBw_CropShot();
+            RunWorkerAsync_CropShot();
         }
 
         private void lastRectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBW_LastCropShot();
+            RunWorkerAsync_LastCropShot();
         }
 
         private void tsmFreehandCropShot_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            Loader.Worker.StartBw_FreehandCropShot();
+            RunWorkerAsync_FreehandCropShot();
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ShowAutoCapture();
+            ShowAutoCapture();
         }
 
         private void tsmFileUpload_Click(object sender, EventArgs e)
@@ -1408,17 +1407,17 @@ namespace ZScreenGUI
 
         private void tsmDropWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ShowDropWindow();
+            ShowDropWindow();
         }
 
         private void languageTranslatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.Worker.StartWorkerTranslator();
+            StartWorkerTranslator();
         }
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ScreenColorPicker();
+            ScreenColorPicker();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
@@ -1991,7 +1990,7 @@ namespace ZScreenGUI
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Loader.Worker.mSetHotkeys)
+            if (mSetHotkeys)
             {
                 if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
                 {
@@ -2214,7 +2213,7 @@ namespace ZScreenGUI
             if (pbWebPageImage.Image != null)
             {
                 Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                Loader.Worker.StartWorkerPictures(WorkerTask.JobLevel2.UPLOAD_IMAGE, bmp);
+                RunWorkerAsync_Pictures(WorkerTask.JobLevel2.UPLOAD_IMAGE, bmp);
             }
         }
 
@@ -2274,7 +2273,7 @@ namespace ZScreenGUI
                 if (chkHotkeys.Checked)
                 {
                     Engine.ZScreenKeyboardHook = new KeyboardHook();
-                    Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+                    Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(CheckHotkeys);
                 }
                 else
                 {
@@ -2461,7 +2460,7 @@ namespace ZScreenGUI
 
         private void btnResetHotkeys_Click(object sender, EventArgs e)
         {
-            Loader.Worker.mHotkeyMgr.ResetHotkeys();
+            mHotkeyMgr.ResetHotkeys();
         }
 
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2545,7 +2544,7 @@ namespace ZScreenGUI
                 {
                     if (ccv.ShowDialog() == DialogResult.OK && !ccv.IsClipboardEmpty)
                     {
-                        Loader.Worker.UploadUsingClipboard();
+                        UploadUsingClipboard();
                     }
 
                     Engine.conf.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
@@ -2553,7 +2552,7 @@ namespace ZScreenGUI
             }
             else
             {
-                Loader.Worker.UploadUsingClipboard();
+                UploadUsingClipboard();
             }
         }
 
@@ -2650,37 +2649,37 @@ namespace ZScreenGUI
 
         private void tsbFullscreenCapture_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_EntireScreen());
+            HideFormTemporary(() => RunWorkerAsync_EntireScreen());
         }
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            ExecuteTimer(() => Loader.Worker.StartBW_ActiveWindow(), tsbActiveWindow);
+            ExecuteTimer(() => RunWorkerAsync_ActiveWindow(), tsbActiveWindow);
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_SelectedWindow());
+            HideFormTemporary(() => RunWorkerAsync_SelectedWindow());
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_CropShot());
+            HideFormTemporary(() => RunWorkerAsync_CropShot());
         }
 
         private void tsbLastCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBW_LastCropShot());
+            HideFormTemporary(() => RunWorkerAsync_LastCropShot());
         }
 
         private void tsbFreehandCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => Loader.Worker.StartBw_FreehandCropShot());
+            HideFormTemporary(() => RunWorkerAsync_FreehandCropShot());
         }
 
         private void tsbAutoCapture_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ShowAutoCapture();
+            ShowAutoCapture();
         }
 
         private void tsbFileUpload_Click(object sender, EventArgs e)
@@ -2695,7 +2694,7 @@ namespace ZScreenGUI
 
         private void tsbDragDropWindow_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ShowDropWindow();
+            ShowDropWindow();
         }
 
         private void tsbLanguageTranslate_Click(object sender, EventArgs e)
@@ -2705,7 +2704,7 @@ namespace ZScreenGUI
 
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)
         {
-            Loader.Worker.ScreenColorPicker();
+            ScreenColorPicker();
         }
 
         private void tsbOpenHistory_Click(object sender, EventArgs e)

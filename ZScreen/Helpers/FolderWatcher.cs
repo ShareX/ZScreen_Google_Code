@@ -54,7 +54,7 @@ namespace ZScreenGUI
                         // check if the file is complete
                     }
                     Engine.MyLogger.WriteLine(string.Format("Created {0}", filePath));
-                    Loader.Worker.UploadUsingFileSystem(new List<string>() { filePath });
+                    Loader.MyApp.UploadUsingFileSystem(new List<string>() { filePath });
                     break;
                 }
                 catch
