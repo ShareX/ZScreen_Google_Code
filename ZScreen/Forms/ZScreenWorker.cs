@@ -170,7 +170,6 @@ namespace ZScreenGUI
 
         private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
                 case (WorkerTask.ProgressType)101:
@@ -225,6 +224,8 @@ namespace ZScreenGUI
                     Adapter.SetNotifyIconBalloonTip(this.niTray, this.Text, e.UserState as string, ToolTipIcon.Warning);
                     break;
             }
+
+            rtbDebugLog.Text = Engine.MyLogger.ToString();
         }
 
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -376,6 +377,8 @@ namespace ZScreenGUI
                     Adapter.TaskbarSetProgressState(this, TaskbarProgressBarState.NoProgress);
                 }
             }
+
+            rtbDebugLog.Text = Engine.MyLogger.ToString();
         }
 
         #endregion Worker Events

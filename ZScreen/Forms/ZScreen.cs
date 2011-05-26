@@ -2733,7 +2733,7 @@ namespace ZScreenGUI
         {
             if (e.TabPage == tpDebugLog)
             {
-                rtbDebugLog.Text = Engine.MyLogger.Messages.ToString().Trim();
+                rtbDebugLog.Text = Engine.MyLogger.ToString();
             }
         }
     }
