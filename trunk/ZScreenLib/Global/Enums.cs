@@ -137,7 +137,7 @@ namespace ZScreenLib
         [Description("Minimize to Taskbar")]
         MinimizeToTaskbar,
         [Description("Exit Application")]
-        CloseApplication,
+        ExitApplication,
         [Description("Do Nothing")]
         Nothing
     }

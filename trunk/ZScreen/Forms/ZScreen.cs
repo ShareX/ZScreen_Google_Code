@@ -340,7 +340,7 @@ namespace ZScreenGUI
                         {
                             switch (Engine.conf.WindowButtonActionMinimize)
                             {
-                                case WindowButtonAction.CloseApplication:
+                                case WindowButtonAction.ExitApplication:
                                     IsClose = true;
                                     this.Close();
                                     break;
@@ -450,10 +450,15 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", Engine.conf.WindowButtonActionClose.GetDescription(), e.CloseReason.GetDescription()));
-            Engine.WriteSettings(false); // Application terminates async threads prematurally so isAync is set to false
+            if (Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
+            {
+                IsClose = true;
+            }
+            string action = IsClose ? "exit" : Engine.conf.WindowButtonActionClose.GetDescription();
+            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", action, e.CloseReason.GetDescription()));
+            Engine.WriteSettings(isAsync: !IsClose); // exiting application terminates async threads prematurally so isAync is set to false
 
-            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.CloseApplication && !IsClose)
+            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication && !IsClose)
             {
                 e.Cancel = true;
 
