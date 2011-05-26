@@ -399,23 +399,14 @@ namespace ZScreenGUI
         {
             if (IsFormReady)
             {
-                Engine.conf.WindowState = this.WindowState;
+                Engine.conf.WindowState = WindowState;
 
-                if (WindowState == FormWindowState.Minimized)
+                if (WindowState == FormWindowState.Normal)
                 {
-                    if (!Engine.conf.ShowInTaskbar)
-                    {
-                        Hide();
-                    }
-                }
-                else if (this.WindowState == FormWindowState.Normal)
-                {
-                    ShowInTaskbar = Engine.conf.ShowInTaskbar;
-
                     if (Engine.conf.SaveFormSizePosition)
                     {
-                        Engine.conf.WindowLocation = this.Location;
-                        Engine.conf.WindowSize = this.Size;
+                        Engine.conf.WindowLocation = Location;
+                        Engine.conf.WindowSize = Size;
                     }
                 }
 
@@ -2726,6 +2717,14 @@ namespace ZScreenGUI
         private void pbDonate_Click(object sender, EventArgs e)
         {
             Process.Start(ZLinks.URL_DONATE);
+        }
+
+        private void tcMain_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage == tpAdvanced && tcAdvanced.SelectedTab == tpDebugLog)
+            {
+                rtbDebugLog.Text = Engine.MyLogger.ToString();
+            }
         }
 
         private void tcAdvanced_Selected(object sender, TabControlEventArgs e)
