@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Threading;
-using System.Xml.Serialization;
-using UploadersLib;
-using System.Windows.Forms.Design;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
+using System.IO;
+using System.Windows.Forms.Design;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -54,61 +51,17 @@ namespace ZScreenLib
 
         public static AppSettings Read(string filePath)
         {
-            if (!Engine.Portable && !Directory.Exists(Path.GetDirectoryName(filePath)))
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(AppSettings));
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open))
-                    {
-                        return xs.Deserialize(fs) as AppSettings;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Error while reading appSettings");
-                }
-            }
-
-            return new AppSettings();
+            return SettingsHelper.Load<AppSettings>(filePath, SerializationType.Xml);
         }
 
-        public void SaveThread(object filePath)
+        public bool Write()
         {
-            lock (this)
-            {
-                Write((string)filePath);
-            }
+            return Write(AppSettingsFile);
         }
 
-        public void Write()
+        public bool Write(string filePath)
         {
-            if (!Engine.Portable) // DONT UPDATE FOR PORTABLE MODE
-            {
-                new Thread(SaveThread).Start(AppSettingsFile);
-            }
-        }
-
-        public void Write(string filePath)
-        {
-            try
-            {
-                if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                XmlSerializer xs = new XmlSerializer(typeof(AppSettings));
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                {
-                    xs.Serialize(fs, this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while writing appSettings");
-            }
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
     }
 }
