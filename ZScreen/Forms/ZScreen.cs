@@ -57,7 +57,7 @@ namespace ZScreenGUI
     {
         #region Variables
 
-        public bool IsFormReady, IsClose;
+        public bool IsFormReady, IsExit;
 
         private int mHadFocusAt;
         private TextBox mHadFocus;
@@ -266,7 +266,7 @@ namespace ZScreenGUI
 
         private void MyLogger_MessageAdded(string message)
         {
-            if (!IsClose && !this.IsDisposed)
+            if (!IsExit && !this.IsDisposed)
             {
                 if (this.InvokeRequired)
                 {
@@ -341,7 +341,7 @@ namespace ZScreenGUI
                             switch (Engine.conf.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.ExitApplication:
-                                    IsClose = true;
+                                    IsExit = true;
                                     this.Close();
                                     break;
                                 case WindowButtonAction.MinimizeToTaskbar:
@@ -391,7 +391,7 @@ namespace ZScreenGUI
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsClose = true;
+            IsExit = true;
             Close();
         }
 
@@ -450,15 +450,11 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
-            {
-                IsClose = true;
-            }
-            string action = IsClose ? "exit" : Engine.conf.WindowButtonActionClose.GetDescription();
-            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", action, e.CloseReason.GetDescription()));
-            Engine.WriteSettings(isAsync: !IsClose); // exiting application terminates async threads prematurally so isAync is set to false
+            string strAction = IsExit || Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication ? "exit" : Engine.conf.WindowButtonActionClose.GetDescription();
+            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", strAction, e.CloseReason.GetDescription()));
+            Engine.WriteSettings(isAsync: !IsExit || Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication); // exiting application terminates async threads prematurally so isAync is set to false
 
-            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication && !IsClose)
+            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication && !IsExit)
             {
                 e.Cancel = true;
 
