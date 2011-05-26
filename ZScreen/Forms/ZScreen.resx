@@ -431,6 +431,11 @@
   <metadata name="DefaultKeys.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="cbAutoSaveSettings.ToolTip" xml:space="preserve">
+    <value>ZScreen normally saving settings when ZScreen closing.
+But if error happen and ZScreen can't close properly then settings can't be saved.
+So if you use this setting ZScreen will save before close too.</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>52</value>
   </metadata>

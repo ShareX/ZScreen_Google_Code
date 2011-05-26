@@ -32,6 +32,14 @@ namespace ZScreenLib
         Milliseconds, Seconds, Minutes, Hours
     }
 
+    public enum CloseMethod
+    {
+        None,
+        TrayButton,
+        MinimizeButton,
+        CloseButton
+    }
+
     /// <summary>
     /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created
     /// </summary>

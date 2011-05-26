@@ -330,7 +330,12 @@ namespace ZScreenLib
 
         #region Settings Load/Save Methods
 
-        public static void WriteSettings(bool isAsync = true)
+        public static void WriteSettingsAsync()
+        {
+            WriteSettings(true);
+        }
+
+        public static void WriteSettings(bool isAsync = false)
         {
             Engine.MyLogger.WriteLine("WriteSettings is async: " + isAsync);
 
