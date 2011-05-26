@@ -57,7 +57,8 @@ namespace ZScreenGUI
     {
         #region Variables
 
-        public bool IsFormReady, IsExit;
+        public bool IsFormReady;
+        public CloseMethod CloseMethod;
 
         private int mHadFocusAt;
         private TextBox mHadFocus;
@@ -315,14 +316,14 @@ namespace ZScreenGUI
                             switch (Engine.conf.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.ExitApplication:
-                                    IsExit = true;
-                                    this.Close();
+                                    CloseMethod = CloseMethod.MinimizeButton;
+                                    Close();
                                     break;
                                 case WindowButtonAction.MinimizeToTaskbar:
-                                    this.WindowState = FormWindowState.Minimized;
+                                    WindowState = FormWindowState.Minimized;
                                     break;
                                 case WindowButtonAction.MinimizeToTray:
-                                    this.Hide();
+                                    Hide();
                                     break;
                             }
                         }
@@ -365,7 +366,7 @@ namespace ZScreenGUI
 
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsExit = true;
+            CloseMethod = CloseMethod.TrayButton;
             Close();
         }
 
@@ -424,25 +425,32 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string strAction = IsExit || Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication ? "exit" : Engine.conf.WindowButtonActionClose.GetDescription();
-            Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", strAction, e.CloseReason.GetDescription()));
-
-            bool isAsync = !IsExit && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication;
-            Engine.WriteSettings(isAsync); // exiting application terminates async threads prematurally so isAync is set to false
-
-            if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication && !IsExit)
+            // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
+            if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
             {
-                e.Cancel = true;
-
-                if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                if (Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
                 {
-                    this.WindowState = FormWindowState.Minimized;
+                    CloseMethod = CloseMethod.CloseButton;
+                }
+                else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                {
+                    WindowState = FormWindowState.Minimized;
+                    e.Cancel = true;
                 }
                 else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
                 {
-                    this.Hide();
+                    Hide();
                     DelayedTrimMemoryUse();
+                    if (Engine.conf.AutoSaveSettings) Engine.WriteSettingsAsync();
+                    e.Cancel = true;
                 }
+            }
+
+            // If really ZScreen is closing
+            if (!e.Cancel)
+            {
+                Engine.MyLogger.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
+                Engine.WriteSettings();
             }
         }
 
@@ -462,7 +470,6 @@ namespace ZScreenGUI
                 {
                     lock (trimMemoryLock)
                     {
-                        //System.Console.WriteLine("DelayedTrimMemoryUse");
                         if (timerTrimMemory == null)
                         {
                             timerTrimMemory = new System.Timers.Timer();
@@ -1973,14 +1980,6 @@ namespace ZScreenGUI
         private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
-        }
-
-        private void tcApp_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Engine.conf.AutoSaveSettings)
-            {
-                Engine.WriteSettings(isAsync: true);
-            }
         }
 
         private void tsmFTPClient_Click(object sender, EventArgs e)

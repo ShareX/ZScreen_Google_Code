@@ -58,7 +58,7 @@ namespace ZScreenLib
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
         public bool Windows7TaskbarIntegration = true;
-        
+
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
         //~~~~~~~~~~~~~~~~~~~~~
@@ -317,7 +317,7 @@ namespace ZScreenLib
         public bool SaveFormSizePosition { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
-        public bool AutoSaveSettings = false;
+        public bool AutoSaveSettings = true;
         public WindowButtonAction WindowButtonActionClose = WindowButtonAction.MinimizeToTray;
         public WindowButtonAction WindowButtonActionMinimize = WindowButtonAction.MinimizeToTaskbar;
 
