@@ -34,7 +34,7 @@ namespace ZScreenGUI
 {
     public static class Loader
     {
-        public static WorkerPrimary Worker;
+        public static ZScreen MyApp = null;
         public static WorkerTask zLastTask;
         public static UploadersLib.GoogleTranslateGUI MyGTGUI;
         public static List<string> LibNames = new List<string>();
@@ -80,7 +80,7 @@ namespace ZScreenGUI
                     if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
                     {
                         Engine.LoadSettings();
-                        Application.Run(new ZScreen());
+                        Application.Run(MyApp = new ZScreen());
                     }
                 }
                 catch (Exception ex)
@@ -129,7 +129,7 @@ namespace ZScreenGUI
             }
 
             Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(Loader.Worker.CheckHotkeys);
+            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(MyApp.CheckHotkeys);
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)

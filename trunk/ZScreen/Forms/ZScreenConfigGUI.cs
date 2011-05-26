@@ -139,7 +139,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Hotkeys()
         {
-            Loader.Worker.mHotkeyMgr.UpdateHotkeysDGV();
+            mHotkeyMgr.UpdateHotkeysDGV();
         }
 
         private void ZScreen_ConfigGUI_ImageHosting()

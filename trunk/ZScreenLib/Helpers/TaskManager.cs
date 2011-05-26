@@ -55,7 +55,7 @@ namespace ZScreenLib
             {
                 mTask.CaptureActiveWindow();
                 mTask.WriteImage();
-                PublishData();
+                mTask.PublishData();
             }
             catch (ArgumentOutOfRangeException aor)
             {
@@ -145,7 +145,7 @@ namespace ZScreenLib
                     }
 
                     mTask.WriteImage();
-                    PublishData();
+                    mTask.PublishData();
                 }
             }
             catch (Exception ex)
@@ -170,7 +170,7 @@ namespace ZScreenLib
         {
             mTask.CaptureScreen();
             mTask.WriteImage();
-            PublishData();
+            mTask.PublishData();
         }
 
         public void CaptureFreehandCrop()
@@ -193,44 +193,15 @@ namespace ZScreenLib
             if (mTask.MyImage != null)
             {
                 mTask.WriteImage();
-                PublishData();
+                mTask.PublishData();
             }
         }
 
-        /// <summary>
-        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
-        /// </summary>
-        /// <param name="task"></param>
-        public void PublishData()
-        {
-            if (mTask.Job1 == JobLevel1.File)
-            {
-                mTask.UploadFile();
-            }
-            else
-            {
-                PublishImage();
-            }
-        }
+
 
         #endregion Image Tasks Manager
 
-        public void PublishImage()
-        {
-            if (mTask.MyImage != null && Adapter.ImageSoftwareEnabled() && mTask.Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
-            {
-                PerformActions(mTask);
-            }
 
-            if (mTask.MyImageUploader == ImageUploaderType.FileUploader)
-            {
-                mTask.UploadFile();
-            }
-            else
-            {
-                mTask.UploadImage();
-            }
-        }
 
         public void TextEdit()
         {
@@ -248,47 +219,7 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// Perform Actions after capturing image/text/file objects
-        /// </summary>
-        public void PerformActions(WorkerTask task)
-        {
-            if (File.Exists(task.LocalFilePath))
-            {
-                foreach (Software app in Engine.conf.ActionsList)
-                {
-                    if (app.Enabled)
-                    {
-                        if (app.Name == Engine.zImageAnnotator)
-                        {
-                            try
-                            {
-                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                                editor.MyWorker = task.MyWorker;
-                                editor.SetImage(task.MyImage);
-                                editor.SetImagePath(task.LocalFilePath);
-                                editor.ShowDialog();
-                            }
-                            catch (Exception ex)
-                            {
-                                Engine.MyLogger.WriteException(ex, "ImageEdit");
-                            }
-                        }
-                        else if (File.Exists(app.Path))
-                        {
-                            if (task.Job1 == JobLevel1.File && app.TriggerForFiles ||
-                                task.Job1 == JobLevel1.Image && app.TriggerForImages ||
-                                task.Job1 == JobLevel1.Text && app.TriggerForText)
-                            {
-                                app.OpenFile(task.LocalFilePath);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
 
         public override string ToString()
         {
