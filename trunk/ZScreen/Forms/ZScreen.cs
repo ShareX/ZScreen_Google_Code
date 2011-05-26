@@ -427,7 +427,6 @@ namespace ZScreenGUI
         {
             string strAction = IsExit || Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication ? "exit" : Engine.conf.WindowButtonActionClose.GetDescription();
             Engine.MyLogger.WriteLine(string.Format("ZScreen did {0} due to {1}", strAction, e.CloseReason.GetDescription()));
-            Engine.WriteSettings(isAsync: !IsExit || Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication); // exiting application terminates async threads prematurally so isAync is set to false
 
             if (e.CloseReason == CloseReason.UserClosing && Engine.conf.WindowButtonActionClose != WindowButtonAction.ExitApplication && !IsExit)
             {
@@ -443,6 +442,12 @@ namespace ZScreenGUI
                     DelayedTrimMemoryUse();
                 }
             }
+        }
+
+        private void ZScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bool isAsync = !IsExit && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray;
+            Engine.WriteSettings(isAsync); // exiting application terminates async threads prematurally so isAync is set to false
         }
 
         #region Trim memory

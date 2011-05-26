@@ -307,14 +307,23 @@ namespace ZScreenLib
         {
             if (!Portable)
             {
-                mAppSettings.Write(); // DONT UPDATE FOR PORTABLE MODE
+                mAppSettings.Write();
             }
-            if (null != ZScreenKeyboardHook)
+
+            if (ZScreenKeyboardHook != null)
             {
                 ZScreenKeyboardHook.Dispose();
-                Engine.MyLogger.WriteLine("Keyboard Hook terminated");
+                Engine.MyLogger.WriteLine("Keyboard hook terminated");
             }
-            FileSystem.WriteDebugFile();
+
+            Engine.MyLogger.WriteLine("ZScreen closing");
+
+            if (Engine.conf != null && Engine.conf.WriteDebugFile)
+            {
+                string path = Engine.LogFilePath;
+                Engine.MyLogger.WriteLine("Writing debug file: " + path);
+                Engine.MyLogger.SaveLog(path);
+            }
         }
 
         #endregion Engine Turn On/Off
@@ -323,6 +332,8 @@ namespace ZScreenLib
 
         public static void WriteSettings(bool isAsync = true)
         {
+            Engine.MyLogger.WriteLine("WriteSettings is async: " + isAsync);
+
             Thread settingsThread = new Thread(() =>
             {
                 if (Engine.conf != null)

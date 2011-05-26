@@ -195,24 +195,6 @@ namespace ZScreenLib
             return succ;
         }
 
-        public static void WriteDebugFile()
-        {
-            if (Engine.conf != null && Engine.conf.WriteDebugFile)
-            {
-                string dir = Engine.LogsDir;
-
-                if (!string.IsNullOrEmpty(dir))
-                {
-                    DateTime now = FastDateTime.Now;
-                    string path = Engine.LogFilePath;
-
-                    Engine.MyLogger.WriteLine("Writing debug file: " + path);
-
-                    Engine.MyLogger.SaveLog(path);
-                }
-            }
-        }
-
         public static bool ExportText(string name, string filePath)
         {
             bool succ = true;
