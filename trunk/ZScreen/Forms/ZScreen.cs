@@ -259,32 +259,7 @@ namespace ZScreenGUI
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbDebugInfo, true);
 
-            rtbDebugLog.Text = Engine.MyLogger.Messages.ToString();
-            Engine.MyLogger.MessageAdded += new Logger.MessageAddedEventHandler(MyLogger_MessageAdded);
             Engine.MyLogger.WriteLine("ZScreen_Load");
-        }
-
-        private void MyLogger_MessageAdded(string message)
-        {
-            if (!IsExit && !this.IsDisposed)
-            {
-                if (this.InvokeRequired)
-                {
-                    this.Invoke(new Action(() => DebugAppendText(message)));
-                }
-                else
-                {
-                    DebugAppendText(message);
-                }
-            }
-        }
-
-        private void DebugAppendText(string message)
-        {
-            if (!rtbDebugLog.IsDisposed)
-            {
-                rtbDebugLog.AppendText(message + Environment.NewLine);
-            }
         }
 
         protected override void WndProc(ref Message m)
@@ -2751,6 +2726,14 @@ namespace ZScreenGUI
         private void pbDonate_Click(object sender, EventArgs e)
         {
             Process.Start(ZLinks.URL_DONATE);
+        }
+
+        private void tcAdvanced_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == tpDebugLog)
+            {
+                rtbDebugLog.Text = Engine.MyLogger.Messages.ToString().Trim();
+            }
         }
     }
 }

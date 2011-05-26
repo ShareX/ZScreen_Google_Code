@@ -168,6 +168,7 @@ namespace ZScreenLib
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
+            MyLogger.WriteLine("--------------------------------------------------------------------------------");
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
@@ -360,6 +361,8 @@ namespace ZScreenLib
 
         public static void LoadSettings(string fp = null)
         {
+            LoggerTimer timer = MyLogger.StartTimer("LoadSettings started");
+
             Thread settingsThread = new Thread(() =>
             {
                 if (string.IsNullOrEmpty(fp))
@@ -388,6 +391,8 @@ namespace ZScreenLib
             settingsThread.Join();
             uploadersConfigThread.Join();
             googleTranslateThread.Join();
+
+            timer.WriteLineTime("LoadSettings finished");
 
             Engine.InitializeFiles();
 
