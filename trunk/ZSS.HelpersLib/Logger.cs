@@ -131,6 +131,11 @@ namespace HelpersLib
                 MessageAdded(message);
             }
         }
+
+        public override string ToString()
+        {
+            return Messages.ToString().Trim();
+        }
     }
 
     public class LoggerTimer
@@ -150,5 +155,5 @@ namespace HelpersLib
         {
             logger.WriteLine(format, message, timer.ElapsedMilliseconds);
         }
-    }
+    }   
 }
