@@ -811,6 +811,7 @@ namespace ZScreenGUI
             this.tcMain.SelectedIndex = 0;
             this.tcMain.Size = new System.Drawing.Size(821, 466);
             this.tcMain.TabIndex = 74;
+            this.tcMain.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcMain_Selecting);
             // 
             // tpMain
             // 
