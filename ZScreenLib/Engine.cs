@@ -184,9 +184,9 @@ namespace ZScreenLib
 
         private static bool RunConfig = false;
 
-        public static XMLSettings conf;
-        public static UploadersConfig MyUploadersConfig;
-        public static GoogleTranslatorConfig MyGTConfig;
+        public static XMLSettings conf { get; set; }
+        public static UploadersConfig MyUploadersConfig { get; set; }
+        public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";

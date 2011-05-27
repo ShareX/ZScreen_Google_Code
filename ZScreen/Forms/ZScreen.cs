@@ -2727,7 +2727,12 @@ namespace ZScreenGUI
         {
             if (IsFormReady)
             {
-                ZScreen_ConfigGUI();
+                UpdateGuiControlsPaths();
+
+                if (!string.IsNullOrEmpty(Engine.AppConf.UploadersConfigCustomPath))
+                {
+                    Engine.MyUploadersConfig = UploadersConfig.Load(Engine.AppConf.UploadersConfigCustomPath);
+                }
             }
         }
     }
