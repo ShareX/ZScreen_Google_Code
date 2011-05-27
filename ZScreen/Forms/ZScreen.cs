@@ -801,7 +801,7 @@ namespace ZScreenGUI
             Loader.KeyboardHook();
             Engine.conf.FirstRun = false;
 
-            if (Engine.MultipleInstance)
+            if (Engine.IsMultipleInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
                 niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);

@@ -169,10 +169,10 @@ namespace ZScreenGUI
                 gbRoot.Text = "Root";
             }
 
-            gbRoot.Enabled = !Engine.Portable;
-            gbImages.Enabled = !Engine.Portable;
-            gbLogs.Enabled = !Engine.Portable;
-            chkPreferSystemFolders.Enabled = !Engine.Portable;
+            gbRoot.Enabled = !Engine.IsPortable;
+            gbImages.Enabled = !Engine.IsPortable;
+            gbLogs.Enabled = !Engine.IsPortable;
+            chkPreferSystemFolders.Enabled = !Engine.IsPortable;
         }
 
         private void ZScreen_ConfigGUI_Options()

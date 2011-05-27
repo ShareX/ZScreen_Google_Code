@@ -357,7 +357,7 @@ namespace ZScreenLib
             this.LinkManager = new ImageFileManager(fp);
             this.UpdateRemoteFilePath(new UploadResult()
             {
-                URL = this.LinkManager.GetLocalFilePathAsUri(Engine.Portable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath)
+                URL = this.LinkManager.GetLocalFilePathAsUri(Engine.IsPortable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath)
             });
             this.IsImage = GraphicsMgr.IsValidImage(fp);
             this.FileName = Path.GetFileName(fp);
@@ -550,7 +550,7 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.FILE:
                     string fp = this.LocalFilePath;
-                    if (Engine.Portable)
+                    if (Engine.IsPortable)
                     {
                         fp = Path.Combine(Application.StartupPath, fp);
                         this.UpdateLocalFilePath(fp);

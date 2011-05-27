@@ -45,31 +45,17 @@ namespace ZScreenLib
     {
         public static IntPtr zHandle = IntPtr.Zero;
 
-        #region Windows 7 Taskbar
-
-        public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
-        private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
-        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
-        public static string[] zTextFileTypes = { "txt", "log" };
-        public static string[] zWebpageFileTypes = { "html", "htm" };
-
-        private static TaskDialog td = null;
-        public static JumpList zJumpList;
-        public static TaskbarManager zWindowsTaskbar;
-
-        #endregion Windows 7 Taskbar
-
         public const string ZScreenCLI = "ZScreenCLI.exe";
         public static Logger MyLogger { get; private set; }
         public static Stopwatch StartTimer { get; private set; }
-        public static bool MultipleInstance { get; private set; }
+        public static bool IsPortable { get; private set; }
+        public static bool IsMultipleInstance { get; private set; }
 
         private static readonly string ApplicationName = Application.ProductName;
 
         private static readonly string PortableRootFolder = ApplicationName; // using relative paths
         public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
         public static string RootAppFolder = DefaultRootAppFolder;
-        public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
 
         internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         private static readonly string HistoryFileName = "UploadersHistory.xml";
@@ -162,7 +148,7 @@ namespace ZScreenLib
                     if (Engine.conf != null)
                     {
                         saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
-                        if (!Portable && Engine.conf.PreferSystemFolders)
+                        if (!IsPortable && Engine.conf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
                         }
@@ -195,6 +181,20 @@ namespace ZScreenLib
         public static Rectangle LastRegion = Rectangle.Empty;
         public static Rectangle LastCapture = Rectangle.Empty;
 
+        #region Windows 7 Taskbar
+
+        public static readonly string appId = Application.ProductName;  // need for Windows 7 Taskbar
+        private static readonly string progId = Application.ProductName; // need for Windows 7 Taskbar
+        public static string[] zImageFileTypes = { "png", "jpg", "gif", "bmp", "tif" };
+        public static string[] zTextFileTypes = { "txt", "log" };
+        public static string[] zWebpageFileTypes = { "html", "htm" };
+
+        private static TaskDialog td = null;
+        public static JumpList zJumpList;
+        public static TaskbarManager zWindowsTaskbar;
+
+        #endregion Windows 7 Taskbar
+
         public static Mutex mAppMutex;
 
         public static KeyboardHook ZScreenKeyboardHook;
@@ -218,17 +218,18 @@ namespace ZScreenLib
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine("--------------------------------------------------------------------------------");
+            MyLogger.WriteLine("--------------------------------------------------------------------------------"); // TODO: Add empty line
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             DialogResult startEngine = DialogResult.OK;
 
-            if (Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder)))
+            IsPortable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
+
+            if (IsPortable)
             {
                 mAppSettings.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
-                ApplicationName += " Portable";
             }
             else
             {
@@ -293,8 +294,7 @@ namespace ZScreenLib
 
                 if (!bGrantedOwnership)
                 {
-                    MultipleInstance = true;
-                    ApplicationName += "*";
+                    IsMultipleInstance = true;
                 }
             }
 
@@ -355,7 +355,7 @@ namespace ZScreenLib
 
         public static void TurnOff()
         {
-            if (!Portable)
+            if (!IsPortable)
             {
                 mAppSettings.Write();
             }
@@ -473,7 +473,7 @@ namespace ZScreenLib
             }
 
             // Portable then we don't need PreferSystemFolders to be true
-            if (Portable)
+            if (IsPortable)
             {
                 Engine.conf.PreferSystemFolders = false;
             }
@@ -515,7 +515,11 @@ namespace ZScreenLib
 
         public static string GetProductName()
         {
-            return string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
+            string title = ApplicationName;
+            if (IsMultipleInstance) title += "*";
+            title += " " + Application.ProductVersion;
+            if (IsPortable) title += " Portable";
+            return title;
         }
 
         public static void SetRootFolder(string dp)
