@@ -155,5 +155,5 @@ namespace HelpersLib
         {
             logger.WriteLine(format, message, timer.ElapsedMilliseconds);
         }
-    }   
+    }
 }

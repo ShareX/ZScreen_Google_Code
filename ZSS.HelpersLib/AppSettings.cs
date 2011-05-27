@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms.Design;
-using HelpersLib;
-using System;
 
 namespace HelpersLib
 {

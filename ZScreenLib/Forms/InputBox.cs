@@ -102,9 +102,9 @@ namespace ZScreenLib
             this.txtInputText = new System.Windows.Forms.TextBox();
             this.lblInputLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // btnOK
-            // 
+            //
             this.btnOK.BackColor = System.Drawing.Color.White;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOK.Location = new System.Drawing.Point(208, 64);
@@ -114,9 +114,9 @@ namespace ZScreenLib
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.BackColor = System.Drawing.Color.White;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Location = new System.Drawing.Point(288, 64);
@@ -126,17 +126,17 @@ namespace ZScreenLib
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // txtInputText
-            // 
+            //
             this.txtInputText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtInputText.Location = new System.Drawing.Point(8, 32);
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.Size = new System.Drawing.Size(352, 20);
             this.txtInputText.TabIndex = 0;
-            // 
+            //
             // lblInputLabel
-            // 
+            //
             this.lblInputLabel.AutoSize = true;
             this.lblInputLabel.BackColor = System.Drawing.Color.Transparent;
             this.lblInputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -146,9 +146,9 @@ namespace ZScreenLib
             this.lblInputLabel.Size = new System.Drawing.Size(36, 16);
             this.lblInputLabel.TabIndex = 3;
             this.lblInputLabel.Text = "Input";
-            // 
+            //
             // InputBox
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -168,7 +168,6 @@ namespace ZScreenLib
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.InputBox_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private Label lblInputLabel;

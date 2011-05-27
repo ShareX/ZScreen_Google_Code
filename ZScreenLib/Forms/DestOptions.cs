@@ -54,14 +54,13 @@ namespace ZScreenLib
                 ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
                 ucDestOptions.cboFileUploaders.SelectedIndex = (int)Task.MyFileUploader;
             }
-            
+
             // Image Uploaders
             if (ucDestOptions.cboImageUploaders.Items.Count == 0)
             {
                 ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
                 ucDestOptions.cboImageUploaders.SelectedIndex = (int)Task.MyImageUploader;
             }
-            
 
             // Text Uploaders
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
@@ -69,7 +68,6 @@ namespace ZScreenLib
                 ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
                 ucDestOptions.cboTextUploaders.SelectedIndex = (int)Task.MyTextUploader;
             }
-            
 
             // URL Shorteners
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
@@ -77,7 +75,7 @@ namespace ZScreenLib
                 ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
                 ucDestOptions.cboURLShorteners.SelectedIndex = (int)Task.MyUrlShortener;
             }
-            
+
             // Dest Selector Events
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);

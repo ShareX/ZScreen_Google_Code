@@ -24,12 +24,14 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
+using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -40,10 +42,8 @@ using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
-using ZUploader.HelperClasses;
-using System.Collections.Generic;
-using GraphicsMgrLib;
 using ZSS.IndexersLib;
+using ZUploader.HelperClasses;
 
 namespace ZScreenGUI
 {
@@ -425,7 +425,7 @@ namespace ZScreenGUI
             return task;
         }
 
-        #endregion
+        #endregion Create Worker
 
         #region Hotkeys
 
@@ -701,7 +701,7 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion RunWorkerAsync Job 1
 
         #region RunWorkerAsync Job 2
 
@@ -791,7 +791,6 @@ namespace ZScreenGUI
             {
                 UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
             }
-
         }
 
         public void UploadUsingDragDrop(string fp)
@@ -864,7 +863,7 @@ namespace ZScreenGUI
             return succ;
         }
 
-        #endregion RunWorkerAsync Job2
+        #endregion RunWorkerAsync Job 2
 
         #region Webpage Capture
 
@@ -1075,6 +1074,5 @@ namespace ZScreenGUI
         }
 
         #endregion History
-
     }
 }

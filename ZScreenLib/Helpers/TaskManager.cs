@@ -31,8 +31,6 @@ using System.Text;
 using System.Windows.Forms;
 using Crop;
 using GraphicsMgrLib;
-using UploadersLib;
-using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
 
 namespace ZScreenLib
@@ -197,11 +195,7 @@ namespace ZScreenLib
             }
         }
 
-
-
         #endregion Image Tasks Manager
-
-
 
         public void TextEdit()
         {
@@ -218,8 +212,6 @@ namespace ZScreenLib
                 p.WaitForExit();
             }
         }
-
-
 
         public override string ToString()
         {
