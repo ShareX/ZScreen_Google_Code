@@ -231,6 +231,8 @@ namespace ZUploader
         private void btnBrowseCustomUploadersConfigPath_Click(object sender, EventArgs e)
         {
             ChooseFolder("ZUploader - Choose uploaders config file path", txtCustomUploadersConfigPath);
+            Program.Settings.CustomUploadersConfigPath = txtCustomUploadersConfigPath.Text;
+            Program.LoadUploadersConfig();
         }
 
         private void btnLoadUploadersConfig_Click(object sender, EventArgs e)

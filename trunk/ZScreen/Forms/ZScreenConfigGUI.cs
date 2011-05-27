@@ -159,6 +159,7 @@ namespace ZScreenGUI
         private void UpdateGuiControlsPaths()
         {
             Engine.InitializeDefaultFolderPaths(dirCreation: false);
+
             txtImagesDir.Text = Engine.ImagesDir;
             txtLogsDir.Text = Engine.LogsDir;
 
