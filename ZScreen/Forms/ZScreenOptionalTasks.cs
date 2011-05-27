@@ -97,6 +97,8 @@ namespace ZScreenGUI
 
         #endregion Cache Cleaner Methods
 
+        #region Online Tasks
+
         public void PerformOnlineTasks()
         {
             BackgroundWorker bwOnlineWorker = new BackgroundWorker();
@@ -129,14 +131,7 @@ namespace ZScreenGUI
             }
         }
 
-        public int GetLanguageIndex(string language)
-        {
-            for (int i = 0; i < Engine.MyGTConfig.GoogleLanguages.Count; i++)
-            {
-                if (Engine.MyGTConfig.GoogleLanguages[i].Language == language) return i;
-            }
+        #endregion Online Tasks
 
-            return -1;
-        }
     }
 }

@@ -74,9 +74,6 @@ namespace ZScreenGUI
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
             ZScreen_SetFormSettings();
-
-            mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
-
             ZScreen_ConfigGUI();
 
             PerformOnlineTasks();
@@ -169,6 +166,8 @@ namespace ZScreenGUI
                     Engine.MyLogger.WriteException(ex, "Error while configuring Windows 7 Taskbar");
                 }
             }
+
+            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
         private void ZScreen_SetFormSettings()
@@ -192,6 +191,7 @@ namespace ZScreenGUI
                 }
             }
 
+            // Tab Image List
             tabImageList.ColorDepth = ColorDepth.Depth32Bit;
             tabImageList.Images.Add("application_form", Resources.application_form);
             tabImageList.Images.Add("server", Resources.server);
@@ -229,6 +229,10 @@ namespace ZScreenGUI
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
+
+            mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
+
+            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -259,7 +263,7 @@ namespace ZScreenGUI
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbDebugInfo, true);
 
-            Engine.MyLogger.WriteLine("ZScreen_Load");
+            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
         protected override void WndProc(ref Message m)
