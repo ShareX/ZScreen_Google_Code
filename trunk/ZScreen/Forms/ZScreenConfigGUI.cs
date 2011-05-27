@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -9,7 +8,6 @@ using HelpersLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using UploadersLib.ImageUploaders;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
 
@@ -17,13 +15,12 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
-
         private void ZScreen_ConfigGUI()
         {
             Engine.MyLogger.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
             pgAppSettings.SelectedObject = Engine.AppConf;
-            pgAppConfig.SelectedObject = Engine.conf;           
+            pgAppConfig.SelectedObject = Engine.conf;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
             ZScreen_ConfigGUI_Main();

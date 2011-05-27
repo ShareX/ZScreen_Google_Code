@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.Design; // Listed as System.Design under Project > Add Reference
+using System.Windows.Forms.Design;
 
 namespace HelpersLib
 {
