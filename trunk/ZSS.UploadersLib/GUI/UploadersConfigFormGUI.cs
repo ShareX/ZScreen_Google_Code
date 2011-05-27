@@ -96,12 +96,14 @@ namespace UploadersLib
 
             // ImageShack
 
+            atcImageShackAccountType.SelectedAccountType = Config.ImageShackAccountType;
             txtImageShackRegistrationCode.Text = Config.ImageShackRegistrationCode;
             txtImageShackUsername.Text = Config.ImageShackUsername;
             cbImageShackIsPublic.Checked = Config.ImageShackShowImagesInPublic;
 
             // TinyPic
 
+            atcTinyPicAccountType.SelectedAccountType = Config.TinyPicAccountType;
             txtTinyPicUsername.Text = Config.TinyPicUsername;
             txtTinyPicPassword.Text = Config.TinyPicPassword;
             cbTinyPicRememberUsernamePassword.Checked = Config.TinyPicRememberUserPass;
@@ -109,7 +111,7 @@ namespace UploadersLib
 
             // Imgur
 
-            cbImgurUseUserAccount.Checked = Config.ImgurAccountType == AccountType.User;
+            atcImgurAccountType.SelectedAccountType = Config.ImgurAccountType;
 
             if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
             {
@@ -203,12 +205,7 @@ namespace UploadersLib
 
             // SendSpace
 
-            if (cboSendSpaceAcctType.Items.Count == 0)
-            {
-                cboSendSpaceAcctType.Items.AddRange(typeof(AccountType).GetEnumDescriptions());
-            }
-
-            cboSendSpaceAcctType.SelectedIndex = (int)Config.SendSpaceAccountType;
+            atcSendSpaceAccountType.SelectedAccountType = Config.SendSpaceAccountType;
             txtSendSpacePassword.Text = Config.SendSpacePassword;
             txtSendSpaceUserName.Text = Config.SendSpaceUsername;
 
