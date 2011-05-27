@@ -57,6 +57,11 @@ namespace UploadersLib
 
         #region ImageShack
 
+        private void atcImageShackAccountType_AccountTypeChanged(object sender, EventArgs e)
+        {
+            Config.ImageShackAccountType = atcImageShackAccountType.SelectedAccountType;
+        }
+
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
         {
             Config.ImageShackRegistrationCode = txtImageShackRegistrationCode.Text;
@@ -93,6 +98,11 @@ namespace UploadersLib
 
         #region TinyPic
 
+        private void atcTinyPicAccountType_AccountTypeChanged(object sender, EventArgs e)
+        {
+            Config.TinyPicAccountType = atcTinyPicAccountType.SelectedAccountType;
+        }
+
         private void txtTinyPicUsername_TextChanged(object sender, EventArgs e)
         {
             if (Config.TinyPicRememberUserPass)
@@ -118,7 +128,7 @@ namespace UploadersLib
             {
                 try
                 {
-                    TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey, txtTinyPicRegistrationCode.Text);
+                    TinyPicUploader tpu = new TinyPicUploader(APIKeys.TinyPicID, APIKeys.TinyPicKey);
                     string registrationCode = tpu.UserAuth(username, password);
 
                     if (!string.IsNullOrEmpty(registrationCode))
@@ -159,16 +169,9 @@ namespace UploadersLib
 
         #region Imgur
 
-        private void cbImgurUseUserAccount_CheckedChanged(object sender, EventArgs e)
+        private void atcImgurAccountType_AccountTypeChanged(object sender, EventArgs e)
         {
-            if (cbImgurUseUserAccount.Checked)
-            {
-                Config.ImgurAccountType = AccountType.User;
-            }
-            else
-            {
-                Config.ImgurAccountType = AccountType.Anonymous;
-            }
+            Config.ImgurAccountType = atcImgurAccountType.SelectedAccountType;
         }
 
         private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
@@ -361,6 +364,11 @@ namespace UploadersLib
 
         #region SendSpace
 
+        private void atcSendSpaceAccountType_AccountTypeChanged(object sender, EventArgs e)
+        {
+            Config.SendSpaceAccountType = atcSendSpaceAccountType.SelectedAccountType;
+        }
+
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)
         {
             using (UserPassBox upb = SendSpaceRegister())
@@ -369,16 +377,9 @@ namespace UploadersLib
                 {
                     txtSendSpaceUserName.Text = upb.UserName;
                     txtSendSpacePassword.Text = upb.Password;
-                    cboSendSpaceAcctType.SelectedIndex = (int)AccountType.User;
+                    atcSendSpaceAccountType.SelectedAccountType = AccountType.User;
                 }
             }
-        }
-
-        private void cboSendSpaceAcctType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Config.SendSpaceAccountType = (AccountType)cboSendSpaceAcctType.SelectedIndex;
-            txtSendSpacePassword.Enabled = Config.SendSpaceAccountType == AccountType.User;
-            txtSendSpaceUserName.Enabled = Config.SendSpaceAccountType == AccountType.User;
         }
 
         private void txtSendSpaceUserName_TextChanged(object sender, EventArgs e)

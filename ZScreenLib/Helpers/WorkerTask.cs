@@ -554,13 +554,15 @@ namespace ZScreenLib
                     }
                     break;
                 case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackRegistrationCode)
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
+                        Engine.MyUploadersConfig.ImageShackRegistrationCode)
                     {
-                        Public = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
+                        IsPublic = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
                     };
                     break;
                 case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicRegistrationCode);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicAccountType,
+                        Engine.MyUploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageUploaderType.IMGUR:
                     imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);

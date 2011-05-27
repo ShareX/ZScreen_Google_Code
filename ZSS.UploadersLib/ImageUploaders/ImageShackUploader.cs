@@ -32,17 +32,16 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class ImageShackUploader : ImageUploader
     {
+        public AccountType AccountType { get; private set; }
+        public bool IsPublic { get; set; }
+
         private string DeveloperKey { get; set; }
         private string RegistrationCode { get; set; }
 
-        /// <summary>
-        /// Public/private marker of your video/picture. True means public, false means private.
-        /// </summary>
-        public bool Public { get; set; }
-
-        public ImageShackUploader(string developerKey, string registrationCode)
+        public ImageShackUploader(string developerKey, AccountType accountType = AccountType.Anonymous, string registrationCode = null)
         {
             DeveloperKey = developerKey;
+            AccountType = accountType;
             RegistrationCode = registrationCode;
         }
 
@@ -52,8 +51,12 @@ namespace UploadersLib.ImageUploaders
 
             Dictionary<string, string> arguments = new Dictionary<string, string>();
             arguments.Add("key", DeveloperKey);
-            arguments.Add("public", Public ? "yes" : "no");
-            if (!string.IsNullOrEmpty(RegistrationCode)) arguments.Add("cookie", RegistrationCode);
+            arguments.Add("public", IsPublic ? "yes" : "no");
+
+            if (AccountType == AccountType.User && !string.IsNullOrEmpty(RegistrationCode))
+            {
+                arguments.Add("cookie", RegistrationCode);
+            }
 
             ur.Source = UploadData(stream, "http://www.imageshack.us/upload_api.php", fileName, "fileupload", arguments);
 

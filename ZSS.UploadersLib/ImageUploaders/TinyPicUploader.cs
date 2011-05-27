@@ -34,20 +34,20 @@ namespace UploadersLib.ImageUploaders
 {
     public sealed class TinyPicUploader : ImageUploader
     {
+        public AccountType AccountType { get; private set; }
         public string TinyPicID { get; set; }
         public string TinyPicKey { get; set; }
         public string Shuk { get; set; }
 
         private const string URLAPI = "http://api.tinypic.com/api.php";
 
-        public TinyPicUploader(string id, string key, string shuk)
+        public TinyPicUploader(string id, string key, AccountType accountType = AccountType.Anonymous, string shuk = null)
         {
             TinyPicID = id;
             TinyPicKey = key;
+            AccountType = accountType;
             Shuk = shuk;
         }
-
-        public TinyPicUploader(string id, string key) : this(id, key, string.Empty) { }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
@@ -60,14 +60,14 @@ namespace UploadersLib.ImageUploaders
             {
                 Dictionary<string, string> arguments = new Dictionary<string, string>();
 
-                if (string.IsNullOrEmpty(Shuk))
-                {
-                    action = "upload";
-                }
-                else
+                if (AccountType == AccountType.User && !string.IsNullOrEmpty(Shuk))
                 {
                     action = "userupload";
                     arguments.Add("shuk", Shuk);
+                }
+                else
+                {
+                    action = "upload";
                 }
 
                 arguments.Add("action", action);

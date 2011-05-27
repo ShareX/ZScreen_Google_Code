@@ -238,13 +238,15 @@ namespace ZUploader
             switch (UploadManager.ImageUploader)
             {
                 case ImageDestination.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.UploadersConfig.ImageShackRegistrationCode)
+                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.UploadersConfig.ImageShackAccountType,
+                        Program.UploadersConfig.ImageShackRegistrationCode)
                     {
-                        Public = Program.UploadersConfig.ImageShackShowImagesInPublic
+                        IsPublic = Program.UploadersConfig.ImageShackShowImagesInPublic
                     };
                     break;
                 case ImageDestination.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.UploadersConfig.TinyPicRegistrationCode);
+                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.UploadersConfig.TinyPicAccountType,
+                        Program.UploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageDestination.IMGUR:
                     imageUploader = new Imgur(Program.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.UploadersConfig.ImgurOAuthInfo);

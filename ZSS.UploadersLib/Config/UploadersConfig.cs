@@ -38,12 +38,14 @@ namespace UploadersLib
 
         // ImageShack
 
+        public AccountType ImageShackAccountType = AccountType.Anonymous;
         public string ImageShackRegistrationCode = string.Empty;
         public string ImageShackUsername = string.Empty;
         public bool ImageShackShowImagesInPublic = false;
 
         // TinyPic
 
+        public AccountType TinyPicAccountType = AccountType.Anonymous;
         public string TinyPicRegistrationCode = string.Empty;
         public string TinyPicUsername = string.Empty;
         public string TinyPicPassword = string.Empty;
@@ -51,8 +53,8 @@ namespace UploadersLib
 
         // Imgur
 
-        public OAuthInfo ImgurOAuthInfo = null;
         public AccountType ImgurAccountType = AccountType.Anonymous;
+        public OAuthInfo ImgurOAuthInfo = null;
 
         // Flickr
 

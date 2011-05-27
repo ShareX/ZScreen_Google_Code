@@ -58,7 +58,6 @@
             this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
             this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
             this.lblImgurAccountStatus = new System.Windows.Forms.Label();
-            this.cbImgurUseUserAccount = new System.Windows.Forms.CheckBox();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -82,7 +81,6 @@
             this.txtYFrogPassword = new System.Windows.Forms.TextBox();
             this.txtYFrogUsername = new System.Windows.Forms.TextBox();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
@@ -101,7 +99,6 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -127,10 +124,7 @@
             this.lblSendSpaceUsername = new System.Windows.Forms.Label();
             this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
-            this.cboSendSpaceAcctType = new System.Windows.Forms.ComboBox();
-            this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -179,7 +173,14 @@
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcSendSpaceAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -261,6 +262,7 @@
             // 
             // tpImageShack
             // 
+            this.tpImageShack.Controls.Add(this.atcImageShackAccountType);
             this.tpImageShack.Controls.Add(this.btnImageShackOpenPublicProfile);
             this.tpImageShack.Controls.Add(this.cbImageShackIsPublic);
             this.tpImageShack.Controls.Add(this.btnImageShackOpenMyImages);
@@ -280,7 +282,7 @@
             // btnImageShackOpenPublicProfile
             // 
             this.btnImageShackOpenPublicProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenPublicProfile.Location = new System.Drawing.Point(16, 208);
+            this.btnImageShackOpenPublicProfile.Location = new System.Drawing.Point(16, 248);
             this.btnImageShackOpenPublicProfile.Name = "btnImageShackOpenPublicProfile";
             this.btnImageShackOpenPublicProfile.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenPublicProfile.TabIndex = 6;
@@ -291,7 +293,7 @@
             // cbImageShackIsPublic
             // 
             this.cbImageShackIsPublic.AutoSize = true;
-            this.cbImageShackIsPublic.Location = new System.Drawing.Point(16, 136);
+            this.cbImageShackIsPublic.Location = new System.Drawing.Point(16, 176);
             this.cbImageShackIsPublic.Name = "cbImageShackIsPublic";
             this.cbImageShackIsPublic.Size = new System.Drawing.Size(307, 17);
             this.cbImageShackIsPublic.TabIndex = 3;
@@ -301,7 +303,7 @@
             // btnImageShackOpenMyImages
             // 
             this.btnImageShackOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenMyImages.Location = new System.Drawing.Point(16, 240);
+            this.btnImageShackOpenMyImages.Location = new System.Drawing.Point(16, 280);
             this.btnImageShackOpenMyImages.Name = "btnImageShackOpenMyImages";
             this.btnImageShackOpenMyImages.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenMyImages.TabIndex = 3;
@@ -312,7 +314,7 @@
             // lblImageShackUsername
             // 
             this.lblImageShackUsername.AutoSize = true;
-            this.lblImageShackUsername.Location = new System.Drawing.Point(16, 72);
+            this.lblImageShackUsername.Location = new System.Drawing.Point(16, 112);
             this.lblImageShackUsername.Name = "lblImageShackUsername";
             this.lblImageShackUsername.Size = new System.Drawing.Size(246, 13);
             this.lblImageShackUsername.TabIndex = 5;
@@ -321,7 +323,7 @@
             // btnImageShackOpenRegistrationCode
             // 
             this.btnImageShackOpenRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnImageShackOpenRegistrationCode.Location = new System.Drawing.Point(16, 176);
+            this.btnImageShackOpenRegistrationCode.Location = new System.Drawing.Point(16, 216);
             this.btnImageShackOpenRegistrationCode.Name = "btnImageShackOpenRegistrationCode";
             this.btnImageShackOpenRegistrationCode.Size = new System.Drawing.Size(200, 23);
             this.btnImageShackOpenRegistrationCode.TabIndex = 2;
@@ -331,7 +333,7 @@
             // 
             // txtImageShackUsername
             // 
-            this.txtImageShackUsername.Location = new System.Drawing.Point(16, 96);
+            this.txtImageShackUsername.Location = new System.Drawing.Point(16, 136);
             this.txtImageShackUsername.Name = "txtImageShackUsername";
             this.txtImageShackUsername.Size = new System.Drawing.Size(360, 20);
             this.txtImageShackUsername.TabIndex = 4;
@@ -341,7 +343,7 @@
             // 
             this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 40);
+            this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
@@ -350,7 +352,7 @@
             // lblImageShackRegistrationCode
             // 
             this.lblImageShackRegistrationCode.AutoSize = true;
-            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 16);
+            this.lblImageShackRegistrationCode.Location = new System.Drawing.Point(16, 56);
             this.lblImageShackRegistrationCode.Name = "lblImageShackRegistrationCode";
             this.lblImageShackRegistrationCode.Size = new System.Drawing.Size(93, 13);
             this.lblImageShackRegistrationCode.TabIndex = 1;
@@ -358,6 +360,7 @@
             // 
             // tpTinyPic
             // 
+            this.tpTinyPic.Controls.Add(this.atcTinyPicAccountType);
             this.tpTinyPic.Controls.Add(this.btnTinyPicLogin);
             this.tpTinyPic.Controls.Add(this.txtTinyPicPassword);
             this.tpTinyPic.Controls.Add(this.lblTinyPicPassword);
@@ -377,7 +380,7 @@
             // 
             // btnTinyPicLogin
             // 
-            this.btnTinyPicLogin.Location = new System.Drawing.Point(16, 128);
+            this.btnTinyPicLogin.Location = new System.Drawing.Point(16, 168);
             this.btnTinyPicLogin.Name = "btnTinyPicLogin";
             this.btnTinyPicLogin.Size = new System.Drawing.Size(80, 23);
             this.btnTinyPicLogin.TabIndex = 13;
@@ -387,7 +390,7 @@
             // 
             // txtTinyPicPassword
             // 
-            this.txtTinyPicPassword.Location = new System.Drawing.Point(16, 96);
+            this.txtTinyPicPassword.Location = new System.Drawing.Point(16, 136);
             this.txtTinyPicPassword.Name = "txtTinyPicPassword";
             this.txtTinyPicPassword.PasswordChar = '*';
             this.txtTinyPicPassword.Size = new System.Drawing.Size(360, 20);
@@ -397,7 +400,7 @@
             // lblTinyPicPassword
             // 
             this.lblTinyPicPassword.AutoSize = true;
-            this.lblTinyPicPassword.Location = new System.Drawing.Point(16, 72);
+            this.lblTinyPicPassword.Location = new System.Drawing.Point(16, 112);
             this.lblTinyPicPassword.Name = "lblTinyPicPassword";
             this.lblTinyPicPassword.Size = new System.Drawing.Size(56, 13);
             this.lblTinyPicPassword.TabIndex = 11;
@@ -405,7 +408,7 @@
             // 
             // txtTinyPicUsername
             // 
-            this.txtTinyPicUsername.Location = new System.Drawing.Point(16, 40);
+            this.txtTinyPicUsername.Location = new System.Drawing.Point(16, 80);
             this.txtTinyPicUsername.Name = "txtTinyPicUsername";
             this.txtTinyPicUsername.Size = new System.Drawing.Size(360, 20);
             this.txtTinyPicUsername.TabIndex = 10;
@@ -414,7 +417,7 @@
             // lblTinyPicUsername
             // 
             this.lblTinyPicUsername.AutoSize = true;
-            this.lblTinyPicUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblTinyPicUsername.Location = new System.Drawing.Point(16, 56);
             this.lblTinyPicUsername.Name = "lblTinyPicUsername";
             this.lblTinyPicUsername.Size = new System.Drawing.Size(58, 13);
             this.lblTinyPicUsername.TabIndex = 9;
@@ -423,7 +426,7 @@
             // btnTinyPicOpenMyImages
             // 
             this.btnTinyPicOpenMyImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTinyPicOpenMyImages.Location = new System.Drawing.Point(16, 224);
+            this.btnTinyPicOpenMyImages.Location = new System.Drawing.Point(16, 264);
             this.btnTinyPicOpenMyImages.Name = "btnTinyPicOpenMyImages";
             this.btnTinyPicOpenMyImages.Size = new System.Drawing.Size(200, 23);
             this.btnTinyPicOpenMyImages.TabIndex = 8;
@@ -434,7 +437,7 @@
             // cbTinyPicRememberUsernamePassword
             // 
             this.cbTinyPicRememberUsernamePassword.AutoSize = true;
-            this.cbTinyPicRememberUsernamePassword.Location = new System.Drawing.Point(112, 131);
+            this.cbTinyPicRememberUsernamePassword.Location = new System.Drawing.Point(112, 171);
             this.cbTinyPicRememberUsernamePassword.Name = "cbTinyPicRememberUsernamePassword";
             this.cbTinyPicRememberUsernamePassword.Size = new System.Drawing.Size(233, 17);
             this.cbTinyPicRememberUsernamePassword.TabIndex = 8;
@@ -445,7 +448,7 @@
             // lblTinyPicRegistrationCode
             // 
             this.lblTinyPicRegistrationCode.AutoSize = true;
-            this.lblTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 168);
+            this.lblTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 208);
             this.lblTinyPicRegistrationCode.Name = "lblTinyPicRegistrationCode";
             this.lblTinyPicRegistrationCode.Size = new System.Drawing.Size(335, 13);
             this.lblTinyPicRegistrationCode.TabIndex = 4;
@@ -456,7 +459,7 @@
             this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
-            this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 192);
+            this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
             this.txtTinyPicRegistrationCode.ReadOnly = true;
             this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(298, 20);
@@ -464,8 +467,8 @@
             // 
             // tpImgur
             // 
+            this.tpImgur.Controls.Add(this.atcImgurAccountType);
             this.tpImgur.Controls.Add(this.gbImgurUserAccount);
-            this.tpImgur.Controls.Add(this.cbImgurUseUserAccount);
             this.tpImgur.Location = new System.Drawing.Point(4, 22);
             this.tpImgur.Name = "tpImgur";
             this.tpImgur.Padding = new System.Windows.Forms.Padding(3);
@@ -481,7 +484,7 @@
             this.gbImgurUserAccount.Controls.Add(this.btnImgurEnterVerificationCode);
             this.gbImgurUserAccount.Controls.Add(this.txtImgurVerificationCode);
             this.gbImgurUserAccount.Controls.Add(this.lblImgurAccountStatus);
-            this.gbImgurUserAccount.Location = new System.Drawing.Point(16, 48);
+            this.gbImgurUserAccount.Location = new System.Drawing.Point(16, 56);
             this.gbImgurUserAccount.Name = "gbImgurUserAccount";
             this.gbImgurUserAccount.Size = new System.Drawing.Size(392, 192);
             this.gbImgurUserAccount.TabIndex = 6;
@@ -533,17 +536,6 @@
             this.lblImgurAccountStatus.TabIndex = 3;
             this.lblImgurAccountStatus.Text = "Login required.";
             // 
-            // cbImgurUseUserAccount
-            // 
-            this.cbImgurUseUserAccount.AutoSize = true;
-            this.cbImgurUseUserAccount.Location = new System.Drawing.Point(16, 16);
-            this.cbImgurUseUserAccount.Name = "cbImgurUseUserAccount";
-            this.cbImgurUseUserAccount.Size = new System.Drawing.Size(142, 17);
-            this.cbImgurUseUserAccount.TabIndex = 0;
-            this.cbImgurUseUserAccount.Text = "Upload via user account";
-            this.cbImgurUseUserAccount.UseVisualStyleBackColor = true;
-            this.cbImgurUseUserAccount.CheckedChanged += new System.EventHandler(this.cbImgurUseUserAccount_CheckedChanged);
-            // 
             // tpFlickr
             // 
             this.tpFlickr.Controls.Add(this.btnFlickrOpenImages);
@@ -563,7 +555,7 @@
             // btnFlickrOpenImages
             // 
             this.btnFlickrOpenImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrOpenImages.Location = new System.Drawing.Point(584, 213);
+            this.btnFlickrOpenImages.Location = new System.Drawing.Point(592, 213);
             this.btnFlickrOpenImages.Name = "btnFlickrOpenImages";
             this.btnFlickrOpenImages.Size = new System.Drawing.Size(168, 23);
             this.btnFlickrOpenImages.TabIndex = 13;
@@ -576,7 +568,7 @@
             this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
-            this.pgFlickrAuthInfo.Location = new System.Drawing.Point(8, 16);
+            this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
             this.pgFlickrAuthInfo.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.pgFlickrAuthInfo.Size = new System.Drawing.Size(562, 160);
@@ -589,7 +581,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
-            this.pgFlickrSettings.Location = new System.Drawing.Point(8, 184);
+            this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
             this.pgFlickrSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.pgFlickrSettings.Size = new System.Drawing.Size(562, 248);
@@ -599,7 +591,7 @@
             // btnFlickrCheckToken
             // 
             this.btnFlickrCheckToken.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrCheckToken.Location = new System.Drawing.Point(584, 184);
+            this.btnFlickrCheckToken.Location = new System.Drawing.Point(592, 184);
             this.btnFlickrCheckToken.Name = "btnFlickrCheckToken";
             this.btnFlickrCheckToken.Size = new System.Drawing.Size(168, 23);
             this.btnFlickrCheckToken.TabIndex = 10;
@@ -611,7 +603,7 @@
             // 
             this.btnFlickrCompleteAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFlickrCompleteAuth.Enabled = false;
-            this.btnFlickrCompleteAuth.Location = new System.Drawing.Point(584, 47);
+            this.btnFlickrCompleteAuth.Location = new System.Drawing.Point(592, 47);
             this.btnFlickrCompleteAuth.Name = "btnFlickrCompleteAuth";
             this.btnFlickrCompleteAuth.Size = new System.Drawing.Size(168, 24);
             this.btnFlickrCompleteAuth.TabIndex = 9;
@@ -623,7 +615,7 @@
             // btnFlickrOpenAuthorize
             // 
             this.btnFlickrOpenAuthorize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFlickrOpenAuthorize.Location = new System.Drawing.Point(584, 18);
+            this.btnFlickrOpenAuthorize.Location = new System.Drawing.Point(592, 18);
             this.btnFlickrOpenAuthorize.Name = "btnFlickrOpenAuthorize";
             this.btnFlickrOpenAuthorize.Size = new System.Drawing.Size(168, 23);
             this.btnFlickrOpenAuthorize.TabIndex = 8;
@@ -652,7 +644,7 @@
             // lblTwitPicPassword
             // 
             this.lblTwitPicPassword.AutoSize = true;
-            this.lblTwitPicPassword.Location = new System.Drawing.Point(16, 48);
+            this.lblTwitPicPassword.Location = new System.Drawing.Point(24, 56);
             this.lblTwitPicPassword.Name = "lblTwitPicPassword";
             this.lblTwitPicPassword.Size = new System.Drawing.Size(56, 13);
             this.lblTwitPicPassword.TabIndex = 19;
@@ -661,7 +653,7 @@
             // lblTwitPicUsername
             // 
             this.lblTwitPicUsername.AutoSize = true;
-            this.lblTwitPicUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblTwitPicUsername.Location = new System.Drawing.Point(24, 24);
             this.lblTwitPicUsername.Name = "lblTwitPicUsername";
             this.lblTwitPicUsername.Size = new System.Drawing.Size(58, 13);
             this.lblTwitPicUsername.TabIndex = 18;
@@ -669,7 +661,7 @@
             // 
             // txtTwitPicPassword
             // 
-            this.txtTwitPicPassword.Location = new System.Drawing.Point(80, 44);
+            this.txtTwitPicPassword.Location = new System.Drawing.Point(88, 52);
             this.txtTwitPicPassword.Name = "txtTwitPicPassword";
             this.txtTwitPicPassword.PasswordChar = '*';
             this.txtTwitPicPassword.Size = new System.Drawing.Size(160, 20);
@@ -678,7 +670,7 @@
             // 
             // txtTwitPicUsername
             // 
-            this.txtTwitPicUsername.Location = new System.Drawing.Point(80, 12);
+            this.txtTwitPicUsername.Location = new System.Drawing.Point(88, 20);
             this.txtTwitPicUsername.Name = "txtTwitPicUsername";
             this.txtTwitPicUsername.Size = new System.Drawing.Size(160, 20);
             this.txtTwitPicUsername.TabIndex = 16;
@@ -687,7 +679,7 @@
             // chkTwitPicShowFull
             // 
             this.chkTwitPicShowFull.AutoSize = true;
-            this.chkTwitPicShowFull.Location = new System.Drawing.Point(16, 104);
+            this.chkTwitPicShowFull.Location = new System.Drawing.Point(24, 112);
             this.chkTwitPicShowFull.Name = "chkTwitPicShowFull";
             this.chkTwitPicShowFull.Size = new System.Drawing.Size(94, 17);
             this.chkTwitPicShowFull.TabIndex = 13;
@@ -699,7 +691,7 @@
             // 
             this.cboTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTwitPicThumbnailMode.FormattingEnabled = true;
-            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 73);
+            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(120, 81);
             this.cboTwitPicThumbnailMode.Name = "cboTwitPicThumbnailMode";
             this.cboTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
             this.cboTwitPicThumbnailMode.TabIndex = 14;
@@ -708,7 +700,7 @@
             // lblTwitPicThumbnailMode
             // 
             this.lblTwitPicThumbnailMode.AutoSize = true;
-            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 77);
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(24, 85);
             this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
             this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
             this.lblTwitPicThumbnailMode.TabIndex = 15;
@@ -752,7 +744,7 @@
             // lblYFrogPassword
             // 
             this.lblYFrogPassword.AutoSize = true;
-            this.lblYFrogPassword.Location = new System.Drawing.Point(16, 48);
+            this.lblYFrogPassword.Location = new System.Drawing.Point(24, 56);
             this.lblYFrogPassword.Name = "lblYFrogPassword";
             this.lblYFrogPassword.Size = new System.Drawing.Size(56, 13);
             this.lblYFrogPassword.TabIndex = 23;
@@ -761,7 +753,7 @@
             // lblYFrogUsername
             // 
             this.lblYFrogUsername.AutoSize = true;
-            this.lblYFrogUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblYFrogUsername.Location = new System.Drawing.Point(24, 24);
             this.lblYFrogUsername.Name = "lblYFrogUsername";
             this.lblYFrogUsername.Size = new System.Drawing.Size(58, 13);
             this.lblYFrogUsername.TabIndex = 22;
@@ -769,7 +761,7 @@
             // 
             // txtYFrogPassword
             // 
-            this.txtYFrogPassword.Location = new System.Drawing.Point(80, 44);
+            this.txtYFrogPassword.Location = new System.Drawing.Point(88, 52);
             this.txtYFrogPassword.Name = "txtYFrogPassword";
             this.txtYFrogPassword.PasswordChar = '*';
             this.txtYFrogPassword.Size = new System.Drawing.Size(160, 20);
@@ -778,7 +770,7 @@
             // 
             // txtYFrogUsername
             // 
-            this.txtYFrogUsername.Location = new System.Drawing.Point(80, 12);
+            this.txtYFrogUsername.Location = new System.Drawing.Point(88, 20);
             this.txtYFrogUsername.Name = "txtYFrogUsername";
             this.txtYFrogUsername.Size = new System.Drawing.Size(160, 20);
             this.txtYFrogUsername.TabIndex = 20;
@@ -794,18 +786,6 @@
             this.tpMediaWiki.TabIndex = 5;
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
-            // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 432);
-            this.ucMediaWikiAccounts.TabIndex = 1;
             // 
             // tpFileUploaders
             // 
@@ -1017,15 +997,6 @@
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFtpSettings
             // 
             this.gbFtpSettings.Controls.Add(this.label1);
@@ -1153,7 +1124,7 @@
             // lblRapidSharePassword
             // 
             this.lblRapidSharePassword.AutoSize = true;
-            this.lblRapidSharePassword.Location = new System.Drawing.Point(72, 128);
+            this.lblRapidSharePassword.Location = new System.Drawing.Point(24, 120);
             this.lblRapidSharePassword.Name = "lblRapidSharePassword";
             this.lblRapidSharePassword.Size = new System.Drawing.Size(53, 13);
             this.lblRapidSharePassword.TabIndex = 15;
@@ -1162,16 +1133,16 @@
             // lblRapidSharePremiumUsername
             // 
             this.lblRapidSharePremiumUsername.AutoSize = true;
-            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(16, 96);
+            this.lblRapidSharePremiumUsername.Location = new System.Drawing.Point(24, 88);
             this.lblRapidSharePremiumUsername.Name = "lblRapidSharePremiumUsername";
-            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(103, 13);
+            this.lblRapidSharePremiumUsername.Size = new System.Drawing.Size(55, 13);
             this.lblRapidSharePremiumUsername.TabIndex = 14;
-            this.lblRapidSharePremiumUsername.Text = "Premium User Name";
+            this.lblRapidSharePremiumUsername.Text = "Username";
             // 
             // lblRapidShareCollectorsID
             // 
             this.lblRapidShareCollectorsID.AutoSize = true;
-            this.lblRapidShareCollectorsID.Location = new System.Drawing.Point(56, 64);
+            this.lblRapidShareCollectorsID.Location = new System.Drawing.Point(24, 56);
             this.lblRapidShareCollectorsID.Name = "lblRapidShareCollectorsID";
             this.lblRapidShareCollectorsID.Size = new System.Drawing.Size(69, 13);
             this.lblRapidShareCollectorsID.TabIndex = 13;
@@ -1179,7 +1150,7 @@
             // 
             // txtRapidSharePassword
             // 
-            this.txtRapidSharePassword.Location = new System.Drawing.Point(136, 120);
+            this.txtRapidSharePassword.Location = new System.Drawing.Point(88, 116);
             this.txtRapidSharePassword.Name = "txtRapidSharePassword";
             this.txtRapidSharePassword.PasswordChar = '*';
             this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
@@ -1188,7 +1159,7 @@
             // 
             // txtRapidSharePremiumUserName
             // 
-            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(136, 88);
+            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(88, 84);
             this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
             this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
             this.txtRapidSharePremiumUserName.TabIndex = 11;
@@ -1196,7 +1167,7 @@
             // 
             // txtRapidShareCollectorID
             // 
-            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(136, 56);
+            this.txtRapidShareCollectorID.Location = new System.Drawing.Point(104, 52);
             this.txtRapidShareCollectorID.Name = "txtRapidShareCollectorID";
             this.txtRapidShareCollectorID.Size = new System.Drawing.Size(120, 20);
             this.txtRapidShareCollectorID.TabIndex = 10;
@@ -1206,7 +1177,7 @@
             // 
             this.cboRapidShareAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRapidShareAcctType.FormattingEnabled = true;
-            this.cboRapidShareAcctType.Location = new System.Drawing.Point(136, 24);
+            this.cboRapidShareAcctType.Location = new System.Drawing.Point(104, 20);
             this.cboRapidShareAcctType.Name = "cboRapidShareAcctType";
             this.cboRapidShareAcctType.Size = new System.Drawing.Size(121, 21);
             this.cboRapidShareAcctType.TabIndex = 9;
@@ -1215,21 +1186,20 @@
             // lblRapidShareAccountType
             // 
             this.lblRapidShareAccountType.AutoSize = true;
-            this.lblRapidShareAccountType.Location = new System.Drawing.Point(48, 32);
+            this.lblRapidShareAccountType.Location = new System.Drawing.Point(24, 24);
             this.lblRapidShareAccountType.Name = "lblRapidShareAccountType";
-            this.lblRapidShareAccountType.Size = new System.Drawing.Size(74, 13);
+            this.lblRapidShareAccountType.Size = new System.Drawing.Size(70, 13);
             this.lblRapidShareAccountType.TabIndex = 8;
-            this.lblRapidShareAccountType.Text = "Account Type";
+            this.lblRapidShareAccountType.Text = "Account type";
             // 
             // tpSendSpace
             // 
             this.tpSendSpace.Controls.Add(this.btnSendSpaceRegister);
+            this.tpSendSpace.Controls.Add(this.atcSendSpaceAccountType);
             this.tpSendSpace.Controls.Add(this.lblSendSpacePassword);
             this.tpSendSpace.Controls.Add(this.lblSendSpaceUsername);
             this.tpSendSpace.Controls.Add(this.txtSendSpacePassword);
             this.tpSendSpace.Controls.Add(this.txtSendSpaceUserName);
-            this.tpSendSpace.Controls.Add(this.cboSendSpaceAcctType);
-            this.tpSendSpace.Controls.Add(this.lblSendSpaceAccountType);
             this.tpSendSpace.Location = new System.Drawing.Point(4, 22);
             this.tpSendSpace.Name = "tpSendSpace";
             this.tpSendSpace.Padding = new System.Windows.Forms.Padding(3);
@@ -1240,7 +1210,7 @@
             // 
             // btnSendSpaceRegister
             // 
-            this.btnSendSpaceRegister.Location = new System.Drawing.Point(264, 24);
+            this.btnSendSpaceRegister.Location = new System.Drawing.Point(232, 19);
             this.btnSendSpaceRegister.Name = "btnSendSpaceRegister";
             this.btnSendSpaceRegister.Size = new System.Drawing.Size(75, 23);
             this.btnSendSpaceRegister.TabIndex = 23;
@@ -1251,7 +1221,7 @@
             // lblSendSpacePassword
             // 
             this.lblSendSpacePassword.AutoSize = true;
-            this.lblSendSpacePassword.Location = new System.Drawing.Point(72, 96);
+            this.lblSendSpacePassword.Location = new System.Drawing.Point(24, 88);
             this.lblSendSpacePassword.Name = "lblSendSpacePassword";
             this.lblSendSpacePassword.Size = new System.Drawing.Size(53, 13);
             this.lblSendSpacePassword.TabIndex = 22;
@@ -1260,15 +1230,15 @@
             // lblSendSpaceUsername
             // 
             this.lblSendSpaceUsername.AutoSize = true;
-            this.lblSendSpaceUsername.Location = new System.Drawing.Point(64, 64);
+            this.lblSendSpaceUsername.Location = new System.Drawing.Point(24, 56);
             this.lblSendSpaceUsername.Name = "lblSendSpaceUsername";
-            this.lblSendSpaceUsername.Size = new System.Drawing.Size(60, 13);
+            this.lblSendSpaceUsername.Size = new System.Drawing.Size(55, 13);
             this.lblSendSpaceUsername.TabIndex = 21;
-            this.lblSendSpaceUsername.Text = "User Name";
+            this.lblSendSpaceUsername.Text = "Username";
             // 
             // txtSendSpacePassword
             // 
-            this.txtSendSpacePassword.Location = new System.Drawing.Point(136, 88);
+            this.txtSendSpacePassword.Location = new System.Drawing.Point(88, 84);
             this.txtSendSpacePassword.Name = "txtSendSpacePassword";
             this.txtSendSpacePassword.PasswordChar = '*';
             this.txtSendSpacePassword.Size = new System.Drawing.Size(120, 20);
@@ -1277,30 +1247,11 @@
             // 
             // txtSendSpaceUserName
             // 
-            this.txtSendSpaceUserName.Location = new System.Drawing.Point(136, 56);
+            this.txtSendSpaceUserName.Location = new System.Drawing.Point(88, 52);
             this.txtSendSpaceUserName.Name = "txtSendSpaceUserName";
             this.txtSendSpaceUserName.Size = new System.Drawing.Size(120, 20);
             this.txtSendSpaceUserName.TabIndex = 19;
             this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
-            // 
-            // cboSendSpaceAcctType
-            // 
-            this.cboSendSpaceAcctType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSendSpaceAcctType.FormattingEnabled = true;
-            this.cboSendSpaceAcctType.Location = new System.Drawing.Point(136, 24);
-            this.cboSendSpaceAcctType.Name = "cboSendSpaceAcctType";
-            this.cboSendSpaceAcctType.Size = new System.Drawing.Size(121, 21);
-            this.cboSendSpaceAcctType.TabIndex = 18;
-            this.cboSendSpaceAcctType.SelectedIndexChanged += new System.EventHandler(this.cboSendSpaceAcctType_SelectedIndexChanged);
-            // 
-            // lblSendSpaceAccountType
-            // 
-            this.lblSendSpaceAccountType.AutoSize = true;
-            this.lblSendSpaceAccountType.Location = new System.Drawing.Point(48, 32);
-            this.lblSendSpaceAccountType.Name = "lblSendSpaceAccountType";
-            this.lblSendSpaceAccountType.Size = new System.Drawing.Size(74, 13);
-            this.lblSendSpaceAccountType.TabIndex = 17;
-            this.lblSendSpaceAccountType.Text = "Account Type";
             // 
             // tbLocalhost
             // 
@@ -1312,15 +1263,6 @@
             this.tbLocalhost.TabIndex = 5;
             this.tbLocalhost.Text = "Localhost";
             this.tbLocalhost.UseVisualStyleBackColor = true;
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
-            this.ucLocalhostAccounts.TabIndex = 2;
             // 
             // tpCustomUploaders
             // 
@@ -1804,6 +1746,36 @@
             this.btnTwitterLogin.UseVisualStyleBackColor = true;
             this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
             // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 432);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
+            this.ucLocalhostAccounts.TabIndex = 2;
+            // 
             // ucTwitterAccounts
             // 
             this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1811,6 +1783,38 @@
             this.ucTwitterAccounts.Name = "ucTwitterAccounts";
             this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucTwitterAccounts.TabIndex = 24;
+            // 
+            // atcImageShackAccountType
+            // 
+            this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImageShackAccountType.Name = "atcImageShackAccountType";
+            this.atcImageShackAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImageShackAccountType.TabIndex = 7;
+            this.atcImageShackAccountType.AccountTypeChanged += new System.EventHandler(this.atcImageShackAccountType_AccountTypeChanged);
+            // 
+            // atcTinyPicAccountType
+            // 
+            this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
+            this.atcTinyPicAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcTinyPicAccountType.TabIndex = 14;
+            this.atcTinyPicAccountType.AccountTypeChanged += new System.EventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
+            // 
+            // atcImgurAccountType
+            // 
+            this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImgurAccountType.Name = "atcImgurAccountType";
+            this.atcImgurAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImgurAccountType.TabIndex = 7;
+            this.atcImgurAccountType.AccountTypeChanged += new System.EventHandler(this.atcImgurAccountType_AccountTypeChanged);
+            // 
+            // atcSendSpaceAccountType
+            // 
+            this.atcSendSpaceAccountType.Location = new System.Drawing.Point(16, 16);
+            this.atcSendSpaceAccountType.Name = "atcSendSpaceAccountType";
+            this.atcSendSpaceAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcSendSpaceAccountType.TabIndex = 24;
+            this.atcSendSpaceAccountType.AccountTypeChanged += new System.EventHandler(this.atcSendSpaceAccountType_AccountTypeChanged);
             // 
             // UploadersConfigForm
             // 
@@ -1831,7 +1835,6 @@
             this.tpTinyPic.ResumeLayout(false);
             this.tpTinyPic.PerformLayout();
             this.tpImgur.ResumeLayout(false);
-            this.tpImgur.PerformLayout();
             this.gbImgurUserAccount.ResumeLayout(false);
             this.gbImgurUserAccount.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
@@ -1925,7 +1928,6 @@
         private System.Windows.Forms.TextBox txtTinyPicUsername;
         private System.Windows.Forms.Label lblTinyPicUsername;
         private System.Windows.Forms.Button btnTinyPicLogin;
-        private System.Windows.Forms.CheckBox cbImgurUseUserAccount;
         private System.Windows.Forms.Button btnImgurOpenAuthorizePage;
         private System.Windows.Forms.Label lblImgurAccountStatus;
         private System.Windows.Forms.Button btnImgurEnterVerificationCode;
@@ -1968,8 +1970,6 @@
         private System.Windows.Forms.Label lblSendSpaceUsername;
         private System.Windows.Forms.TextBox txtSendSpacePassword;
         private System.Windows.Forms.TextBox txtSendSpaceUserName;
-        private System.Windows.Forms.ComboBox cboSendSpaceAcctType;
-        private System.Windows.Forms.Label lblSendSpaceAccountType;
         private System.Windows.Forms.PropertyGrid pgPastebinSettings;
         private System.Windows.Forms.Button btnPastebinLogin;
         private System.Windows.Forms.TabPage tbLocalhost;
@@ -2031,5 +2031,9 @@
         private System.Windows.Forms.Label lblYFrogUsername;
         private System.Windows.Forms.TextBox txtYFrogPassword;
         private System.Windows.Forms.TextBox txtYFrogUsername;
+        private GUI.AccountTypeControl atcImageShackAccountType;
+        private GUI.AccountTypeControl atcTinyPicAccountType;
+        private GUI.AccountTypeControl atcImgurAccountType;
+        private GUI.AccountTypeControl atcSendSpaceAccountType;
     }
 }
