@@ -11,7 +11,7 @@ namespace ZScreenLib
             InitializeComponent();
             if (Engine.MyUploadersConfig == null)
             {
-                Engine.MyUploadersConfig = UploadersConfig.Load(Engine.UploaderConfigPath);
+                Engine.MyUploadersConfig = UploadersConfig.Load(Engine.UploadersConfigPath);
             }
         }
 

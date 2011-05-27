@@ -185,7 +185,6 @@
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\UploadManager.cs" />
     <Compile Include="Global\NativeMethods.cs" />
-    <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\BalloonTipHelper.cs" />
     <Compile Include="Helpers\ExeFileNameEditor.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />

@@ -261,7 +261,7 @@ namespace ZScreenGUI
             niTray.Visible = true;
 
             new RichTextBoxMenu(rtbDebugLog, true);
-            new RichTextBoxMenu(rtbDebugInfo, true);
+            new RichTextBoxMenu(rtbStats, true);
 
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
@@ -1828,7 +1828,7 @@ namespace ZScreenGUI
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(e);
-                rtbDebugInfo.Text = sb.ToString();
+                rtbStats.Text = sb.ToString();
             }
         }
 
@@ -1876,7 +1876,7 @@ namespace ZScreenGUI
             if (!string.IsNullOrEmpty(dirNew))
             {
                 Engine.SetRootFolder(dirNew);
-                txtRootFolder.Text = Engine.mAppSettings.RootDir;
+                txtRootFolder.Text = Engine.AppConf.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
                 UpdateGuiControlsPaths();
                 Engine.conf = XMLSettings.Read();
@@ -2436,15 +2436,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void chkPreferSystemFolders_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsFormReady)
-            {
-                Engine.conf.PreferSystemFolders = chkPreferSystemFolders.Checked;
-                ZScreen_ConfigGUI();
-            }
-        }
-
         private void btnResetHotkeys_Click(object sender, EventArgs e)
         {
             mHotkeyMgr.ResetHotkeys();
@@ -2729,6 +2720,14 @@ namespace ZScreenGUI
             if (e.TabPage == tpDebugLog)
             {
                 rtbDebugLog.Text = Engine.MyLogger.ToString();
+            }
+        }
+
+        private void pgAppSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (IsFormReady)
+            {
+                ZScreen_ConfigGUI();
             }
         }
     }

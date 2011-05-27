@@ -109,9 +109,9 @@ namespace ZScreenLib
             sb.AppendLine(string.Format("If enabled {0} will create the data folders at the following locations:", Application.ProductName));
             sb.AppendLine();
             sb.AppendLine(string.Format("Settings:\t{0}\\{1}\\Settings", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName));
-            sb.AppendLine(string.Format("Images:\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName));
-            sb.AppendLine(string.Format("Text:\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName));
-            sb.AppendLine(string.Format("Logs:\t{0}\\{1}\\Logs", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName));
+            sb.AppendLine(string.Format("Images:\t\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName));
+            sb.AppendLine(string.Format("Text:\t\t{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName));
+            sb.AppendLine(string.Format("Logs:\t\t{0}\\{1}\\Logs", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName));
             ttApp.SetToolTip(chkPreferSystemFolders, sb.ToString());
         }
 
