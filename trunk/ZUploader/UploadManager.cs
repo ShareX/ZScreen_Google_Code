@@ -165,14 +165,17 @@ namespace ZUploader
 
         private static void StartUpload(Task task)
         {
-            Tasks.Add(task);
-            task.Info.ID = Tasks.Count - 1;
-            task.UploadPreparing += new Task.TaskEventHandler(task_UploadPreparing);
-            task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
-            task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
-            task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
-            CreateListViewItem(task.Info);
-            StartTasks();
+            if (task.IsDestinationValid())
+            {
+                Tasks.Add(task);
+                task.Info.ID = Tasks.Count - 1;
+                task.UploadPreparing += new Task.TaskEventHandler(task_UploadPreparing);
+                task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
+                task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
+                task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
+                CreateListViewItem(task.Info);
+                StartTasks();
+            }
         }
 
         private static void StartTasks()

@@ -64,12 +64,13 @@ namespace ZScreenLib
         public static Stopwatch StartTimer { get; private set; }
         public static bool MultipleInstance { get; private set; }
 
-        private static readonly string PortableRootFolder = Application.ProductName; // using relative paths
-        public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "ZApps");
+        private static readonly string ApplicationName = Application.ProductName;
+
+        private static readonly string PortableRootFolder = ApplicationName; // using relative paths
+        public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
         public static string RootAppFolder = DefaultRootAppFolder;
         public static bool Portable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
 
-        private static string ApplicationName = Application.ProductName;
         internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         private static readonly string HistoryFileName = "UploadersHistory.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
@@ -88,6 +89,55 @@ namespace ZScreenLib
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
         public static AppSettings mAppSettings = AppSettings.Read();
+
+        #region Paths
+
+        public static string SettingsFilePath
+        {
+            get
+            {
+                if (!Directory.Exists(SettingsDir))
+                {
+                    Directory.CreateDirectory(SettingsDir);
+                }
+                return Path.Combine(Engine.SettingsDir, Engine.SettingsFileName);
+            }
+        }
+
+        public static string HistoryPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, HistoryFileName);
+            }
+        }
+
+        public static string UploaderConfigPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, UploadersConfigFileName);
+            }
+        }
+
+        public static string LogFilePath
+        {
+            get
+            {
+                DateTime now = FastDateTime.Now;
+                return Path.Combine(LogsDir, string.Format(LogFileName, now.ToString("yyyy-MM")));
+            }
+        }
+
+        public static string GoogleTranslateConfigPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, GoogleTranslateConfigFileName);
+            }
+        }
+
+        #endregion Paths
 
         public static string RootImagesDir = zPicturesDir;
 
@@ -571,55 +621,6 @@ namespace ZScreenLib
         }
 
         #endregion Windows 7 Taskbar Methods
-
-        #region Paths
-
-        public static string SettingsFilePath
-        {
-            get
-            {
-                if (!Directory.Exists(SettingsDir))
-                {
-                    Directory.CreateDirectory(SettingsDir);
-                }
-                return Path.Combine(Engine.SettingsDir, Engine.SettingsFileName);
-            }
-        }
-
-        public static string HistoryPath
-        {
-            get
-            {
-                return Path.Combine(SettingsDir, HistoryFileName);
-            }
-        }
-
-        public static string UploaderConfigPath
-        {
-            get
-            {
-                return Path.Combine(SettingsDir, UploadersConfigFileName);
-            }
-        }
-
-        public static string LogFilePath
-        {
-            get
-            {
-                DateTime now = FastDateTime.Now;
-                return Path.Combine(LogsDir, string.Format(LogFileName, now.ToString("yyyy-MM")));
-            }
-        }
-
-        public static string GoogleTranslateConfigPath
-        {
-            get
-            {
-                return Path.Combine(SettingsDir, GoogleTranslateConfigFileName);
-            }
-        }
-
-        #endregion Paths
 
         #region Clipboard Methods
 

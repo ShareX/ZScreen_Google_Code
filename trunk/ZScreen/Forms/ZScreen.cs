@@ -313,9 +313,8 @@ namespace ZScreenGUI
                             ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
                         }
                         break;
-                    case ZScreenLib.NativeMethods.WM_SYSCOMMAND:
-                        int command = m.WParam.ToInt32() & 0xfff0;
-                        if (command == NativeMethods.SC_MINIMIZE)
+                    case NativeMethods.WM_SYSCOMMAND:
+                        if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {
                             switch (Engine.conf.WindowButtonActionMinimize)
                             {
@@ -330,21 +329,15 @@ namespace ZScreenGUI
                                     Hide();
                                     break;
                             }
+
+                            m.Result = IntPtr.Zero;
+                            return;
                         }
-                        else
-                        {
-                            base.WndProc(ref m);
-                        }
-                        break;
-                    default:
-                        base.WndProc(ref m);
                         break;
                 }
             }
-            else
-            {
-                base.WndProc(ref m);
-            }
+
+            base.WndProc(ref m);
         }
 
         private void tsmiTab_Click(object sender, EventArgs e)
