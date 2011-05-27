@@ -364,7 +364,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"ZScreenLib.dll" /f /t:"ZScreenLib.XMLSettings" /t:"ZScreenLib.AppSettings" /v
+    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"ZScreenLib.dll" /f /t:"ZScreenLib.XMLSettings" /v
+if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"HelpersLib.dll" /f /t:"ZScreenLib.AppSettings" /v
 if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"UploadersLib.dll" /f /t:"UploadersLib.UploadersConfig" /t:"UploadersLib.GoogleTranslatorConfig" /v</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

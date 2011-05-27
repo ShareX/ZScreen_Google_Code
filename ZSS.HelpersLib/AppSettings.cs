@@ -11,13 +11,13 @@ namespace HelpersLib
     {
         public readonly static string AppSettingsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ZScreen\AppSettings.xml");
 
-        [Browsable(false)]
+        [Browsable(false), EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor)), Description("Relocate Root folder location")]
         public string RootDir { get; set; }
-        
+
         [ReadOnly(true)]
         public string XMLSettingsFile { get; set; }
 
-        [Category("Options / General"), Description("Prefer System Folders for all the data created by ZScreen")]
+        [Category("Options / General"), DefaultValue(true), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
 
         [Category("Options / Paths"), DefaultValue(false), Description("Use a customised History path.")]
@@ -38,6 +38,21 @@ namespace HelpersLib
         public int FileUploader;  // default value is from ConfigWizard
         public int TextUploader;  // default value is from ConfigWizard
         public int UrlShortener;  // default value is from ConfigWizard
+
+        public AppSettings()
+        {
+            ApplyDefaultValues(this);
+        }
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
 
         public static AppSettings Read()
         {

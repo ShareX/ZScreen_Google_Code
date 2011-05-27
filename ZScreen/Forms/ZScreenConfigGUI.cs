@@ -173,6 +173,7 @@ namespace ZScreenGUI
                 gbRoot.Text = "Root";
             }
 
+            btnRelocateRootDir.Enabled = !Engine.AppConf.PreferSystemFolders;
             gbRoot.Enabled = !Engine.IsPortable;
             gbImages.Enabled = !Engine.IsPortable;
             gbLogs.Enabled = !Engine.IsPortable;
