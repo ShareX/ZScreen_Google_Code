@@ -61,19 +61,20 @@ namespace UploadersLib
 
         // TwitPic
 
+        public string TwitPicUsername = string.Empty;
+        public string TwitPicPassword = string.Empty;
         public bool TwitPicShowFull = true;
         public TwitPicThumbnailType TwitPicThumbnailMode = TwitPicThumbnailType.Thumb;
+
+        // YFrog
+
+        public string YFrogUsername = string.Empty;
+        public string YFrogPassword = string.Empty;
 
         // MediaWiki
 
         public List<MediaWikiAccount> MediaWikiAccountList = new List<MediaWikiAccount>();
         public int MediaWikiAccountSelected = 0;
-
-        // DekiWiki
-
-        public List<DekiWikiAccount> DekiWikiAccountList = new List<DekiWikiAccount>();
-        public int DekiWikiSelected = 0;
-        public bool DekiWikiForcePath = false;
 
         #endregion Image uploaders
 

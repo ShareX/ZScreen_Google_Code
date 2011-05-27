@@ -121,6 +121,24 @@ namespace UploadersLib
             pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;
             pgFlickrSettings.SelectedObject = Config.FlickrSettings;
 
+            // TwitPic
+
+            txtTwitPicUsername.Text = Config.TwitPicUsername;
+            txtTwitPicPassword.Text = Config.TwitPicPassword;
+            chkTwitPicShowFull.Checked = Config.TwitPicShowFull;
+
+            if (cboTwitPicThumbnailMode.Items.Count == 0)
+            {
+                cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetEnumDescriptions());
+            }
+
+            cboTwitPicThumbnailMode.SelectedIndex = (int)Config.TwitPicThumbnailMode;
+
+            // YFrog
+
+            txtYFrogUsername.Text = Config.YFrogUsername;
+            txtYFrogPassword.Text = Config.YFrogPassword;
+
             // MediaWiki
 
             if (Config.MediaWikiAccountList == null || Config.MediaWikiAccountList.Count == 0)
@@ -135,16 +153,6 @@ namespace UploadersLib
                     ucMediaWikiAccounts.AccountsList.SelectedIndex = Config.MediaWikiAccountSelected;
                 }
             }
-
-            // TwitPic
-
-            chkTwitPicShowFull.Checked = Config.TwitPicShowFull;
-            if (cboTwitPicThumbnailMode.Items.Count == 0)
-            {
-                cboTwitPicThumbnailMode.Items.AddRange(typeof(TwitPicThumbnailType).GetEnumDescriptions());
-            }
-
-            cboTwitPicThumbnailMode.SelectedIndex = (int)Config.TwitPicThumbnailMode;
 
             #endregion Image uploaders
 
@@ -219,23 +227,6 @@ namespace UploadersLib
                 }
             }
 
-            // MindTouch Accounts
-
-            if (Config.DekiWikiAccountList == null || Config.DekiWikiAccountList.Count == 0)
-            {
-                DekiWikiSetup(new List<DekiWikiAccount>());
-            }
-            else
-            {
-                DekiWikiSetup(Config.DekiWikiAccountList);
-                if (ucMindTouchAccounts.AccountsList.Items.Count > 0)
-                {
-                    ucMindTouchAccounts.AccountsList.SelectedIndex = Config.DekiWikiSelected;
-                }
-            }
-
-            chkDekiWikiForcePath.Checked = Config.DekiWikiForcePath;
-
             // Custom uploaders
 
             lbCustomUploaderList.Items.Clear();
@@ -301,12 +292,6 @@ namespace UploadersLib
             ucFTPAccounts.btnClone.Click += new EventHandler(FTPAccountCloneButton_Click);
             ucFTPAccounts.AccountsList.SelectedIndexChanged += new EventHandler(FTPAccountsList_SelectedIndexChanged);
             ucFTPAccounts.SettingsGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(FtpAccountSettingsGrid_PropertyValueChanged);
-
-            // MindTouch Deki Wiki
-            ucMindTouchAccounts.btnAdd.Click += new EventHandler(MindTouchAccountAddButton_Click);
-            ucMindTouchAccounts.btnRemove.Click += new EventHandler(MindTouchAccountRemoveButton_Click);
-            ucMindTouchAccounts.btnTest.Click += new EventHandler(MindTouchAccountTestButton_Click);
-            ucMindTouchAccounts.AccountsList.SelectedIndexChanged += new EventHandler(MindTouchAccountsList_SelectedIndexChanged);
 
             // Localhost
 
@@ -524,61 +509,6 @@ namespace UploadersLib
         }
 
         #endregion FTP
-
-        #region MindTouch Deki Wiki
-
-        private void DekiWikiSetup(IEnumerable<DekiWikiAccount> accs)
-        {
-            if (accs != null)
-            {
-                ucMindTouchAccounts.AccountsList.Items.Clear();
-                Config.DekiWikiAccountList = new List<DekiWikiAccount>();
-                Config.DekiWikiAccountList.AddRange(accs);
-                foreach (DekiWikiAccount acc in Config.DekiWikiAccountList)
-                {
-                    ucMindTouchAccounts.AccountsList.Items.Add(acc);
-                }
-            }
-        }
-
-        private void MindTouchAccountAddButton_Click(object sender, EventArgs e)
-        {
-            DekiWikiAccount acc = new DekiWikiAccount("New Account");
-            Config.DekiWikiAccountList.Add(acc);
-            ucMindTouchAccounts.AccountsList.Items.Add(acc);
-            ucMindTouchAccounts.AccountsList.SelectedIndex = ucMindTouchAccounts.AccountsList.Items.Count - 1;
-        }
-
-        private void MindTouchAccountRemoveButton_Click(object sender, EventArgs e)
-        {
-            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            if (ucMindTouchAccounts.RemoveItem(sel))
-            {
-                Config.DekiWikiAccountList.RemoveAt(sel);
-            }
-        }
-
-        private void MindTouchAccountTestButton_Click(object sender, EventArgs e)
-        {
-            DekiWikiAccount acc = GetSelectedDekiWiki();
-            if (acc != null)
-            {
-                TestDekiWikiAccount(acc);
-            }
-        }
-
-        private void MindTouchAccountsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int sel = ucMindTouchAccounts.AccountsList.SelectedIndex;
-            Config.DekiWikiSelected = sel;
-            if (Config.DekiWikiAccountList != null && sel != -1 && sel < Config.DekiWikiAccountList.Count && Config.DekiWikiAccountList[sel] != null)
-            {
-                DekiWikiAccount acc = Config.DekiWikiAccountList[sel];
-                ucMindTouchAccounts.SettingsGrid.SelectedObject = acc;
-            }
-        }
-
-        #endregion MindTouch Deki Wiki
 
         #region Twitter
 

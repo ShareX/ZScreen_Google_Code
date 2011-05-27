@@ -502,42 +502,6 @@ namespace UploadersLib
 
         #endregion FTP
 
-        private DekiWikiAccount GetSelectedDekiWiki()
-        {
-            DekiWikiAccount acc = null;
-            if (CheckDekiWikiAccounts())
-            {
-                acc = Config.DekiWikiAccountList[Config.DekiWikiSelected];
-            }
-
-            return acc;
-        }
-
-        public bool CheckDekiWikiAccounts()
-        {
-            return Config.DekiWikiAccountList.CheckSelected(Config.DekiWikiSelected);
-        }
-
-        public void TestDekiWikiAccount(DekiWikiAccount acc)
-        {
-            string msg = "Success!";
-
-            try
-            {
-                DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, Uploader.ProxySettings.GetWebProxy));
-                connector.Login();
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-
-            if (!string.IsNullOrEmpty(msg))
-            {
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         #region SendSpace
 
         public UserPassBox SendSpaceRegister()
