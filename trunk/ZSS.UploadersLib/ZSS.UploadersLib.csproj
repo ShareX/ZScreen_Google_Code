@@ -177,9 +177,6 @@
       <DependentUpon>TwitterMsg.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums.cs" />
-    <Compile Include="HelperClasses\DekiWiki.cs" />
-    <Compile Include="HelperClasses\DekiWikiAccount.cs" />
-    <Compile Include="HelperClasses\DekiWikiHistory.cs" />
     <Compile Include="HelperClasses\ImageFile.cs" />
     <Compile Include="HelperClasses\ImageFileManager.cs" />
     <Compile Include="HelperClasses\CustomUploaderInfo.cs" />
@@ -192,7 +189,6 @@
     <Compile Include="ImageUploader.cs" />
     <Compile Include="FileUploaders\CustomUploader.cs" />
     <Compile Include="ImageUploaders\MediaWikiUploader.cs" />
-    <Compile Include="ImageUploaders\DekiWikiUploader.cs" />
     <Compile Include="ImageUploaders\FlickrUploader.cs" />
     <Compile Include="FileUploaders\FTPUploader.cs" />
     <Compile Include="ImageUploaders\ImageBin.cs" />

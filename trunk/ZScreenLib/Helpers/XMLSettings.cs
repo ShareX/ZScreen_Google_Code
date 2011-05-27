@@ -80,17 +80,14 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // TinyPic
-        [Category("Options / Image Uploaders"), DefaultValue(true), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
+
+        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
         public bool TinyPicSizeCheck { get; set; }
 
         // Twitter
 
-        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
         public bool TwitterEnabled = false;
-        [Category("Destinations / Twitter"), DefaultValue(""), Description("Twitter Username for yfrog etc. services")]
-        public string TwitterUsername { get; set; }
-        [Category("Destinations / Twitter"), PasswordPropertyText(true), DefaultValue(""), Description("Twitter Password for yfrog etc. services")]
-        public string TwitterPassword { get; set; }
+        public TwitterClientSettings TwitterClientConfig = new TwitterClientSettings();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys

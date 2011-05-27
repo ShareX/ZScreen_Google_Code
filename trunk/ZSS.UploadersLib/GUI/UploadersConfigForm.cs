@@ -209,6 +209,16 @@ namespace UploadersLib
 
         #region TwitPic
 
+        private void txtTwitPicUsername_TextChanged(object sender, EventArgs e)
+        {
+            Config.TwitPicUsername = txtTwitPicUsername.Text;
+        }
+
+        private void txtTwitPicPassword_TextChanged(object sender, EventArgs e)
+        {
+            Config.TwitPicPassword = txtTwitPicPassword.Text;
+        }
+
         private void cboTwitPicThumbnailMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             Config.TwitPicThumbnailMode = (TwitPicThumbnailType)cboTwitPicThumbnailMode.SelectedIndex;
@@ -220,6 +230,20 @@ namespace UploadersLib
         }
 
         #endregion TwitPic
+
+        #region YFrog
+
+        private void txtYFrogUsername_TextChanged(object sender, EventArgs e)
+        {
+            Config.YFrogUsername = txtYFrogUsername.Text;
+        }
+
+        private void txtYFrogPassword_TextChanged(object sender, EventArgs e)
+        {
+            Config.YFrogPassword = txtYFrogPassword.Text;
+        }
+
+        #endregion YFrog
 
         #endregion Image uploaders
 
@@ -369,40 +393,7 @@ namespace UploadersLib
 
         #endregion SendSpace
 
-        #region MindTouch Deki Wiki
-
-        private void chkDekiWikiForcePath_CheckedChanged(object sender, EventArgs e)
-        {
-            Config.DekiWikiForcePath = chkDekiWikiForcePath.Checked;
-        }
-
-        #endregion MindTouch Deki Wiki
-
-        #endregion File uploaders
-
-        #region Text uploaders
-
-        #region Pastebin
-
-        private void btnPastebinLogin_Click(object sender, EventArgs e)
-        {
-            PastebinLogin();
-        }
-
-        #endregion Pastebin
-
-        #endregion Text uploaders
-
-        #region Other Services
-
-        private void btnTwitterLogin_Click(object sender, EventArgs e)
-        {
-            TwitterLogin();
-        }
-
-        #endregion Other Services
-
-        #region Custom uploader
+        #region Custom Uploader
 
         private void btnCustomUploaderAdd_Click(object sender, EventArgs e)
         {
@@ -576,6 +567,30 @@ namespace UploadersLib
             Process.Start(e.LinkText);
         }
 
-        #endregion Custom uploader
+        #endregion Custom Uploader
+
+        #endregion File uploaders
+
+        #region Text uploaders
+
+        #region Pastebin
+
+        private void btnPastebinLogin_Click(object sender, EventArgs e)
+        {
+            PastebinLogin();
+        }
+
+        #endregion Pastebin
+
+        #endregion Text uploaders
+
+        #region Other Services
+
+        private void btnTwitterLogin_Click(object sender, EventArgs e)
+        {
+            TwitterLogin();
+        }
+
+        #endregion Other Services
     }
 }

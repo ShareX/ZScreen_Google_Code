@@ -319,38 +319,6 @@ namespace ZScreenLib
             return false;
         }
 
-        public static bool CheckDekiWikiAccounts()
-        {
-            return Engine.MyUploadersConfig.DekiWikiAccountList.CheckSelected(Engine.MyUploadersConfig.DekiWikiSelected);
-        }
-
-        public static bool CheckDekiWikiAccounts(WorkerTask task)
-        {
-            bool result = CheckDekiWikiAccounts();
-            if (!result) task.Errors.Add("A Mindtouch account does not exist or not selected properly.");
-            return result;
-        }
-
-        public static void TestDekiWikiAccount(DekiWikiAccount acc)
-        {
-            string msg = "Success!";
-
-            try
-            {
-                DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, CheckProxySettings().GetWebProxy));
-                connector.Login();
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-
-            if (!string.IsNullOrEmpty(msg))
-            {
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         #region Proxy Methods
 
         public static string GetDefaultWebProxyHost()

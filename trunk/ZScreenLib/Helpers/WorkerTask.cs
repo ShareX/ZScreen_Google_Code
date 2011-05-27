@@ -186,7 +186,7 @@ namespace ZScreenLib
         public UrlShortenerType MyUrlShortener { get; set; }
         public FileUploaderType MyFileUploader { get; set; }
 
-        #endregion Properties 
+        #endregion Properties
 
         #region Constructors
 
@@ -545,9 +545,6 @@ namespace ZScreenLib
 
             switch (this.MyImageUploader)
             {
-                case ImageUploaderType.DEKIWIKI:
-                    UploadDekiWiki();
-                    break;
                 case ImageUploaderType.FILE:
                     string fp = this.LocalFilePath;
                     if (Engine.IsPortable)
@@ -589,11 +586,11 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.TWITPIC:
                     TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.Username = Engine.conf.TwitterUsername;
-                    twitpicOpt.Password = Engine.conf.TwitterPassword;
+                    twitpicOpt.Username = Engine.MyUploadersConfig.TwitPicUsername;
+                    twitpicOpt.Password = Engine.MyUploadersConfig.TwitPicPassword;
                     // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
                     twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull; ;
+                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;
                     imageUploader = new TwitPicUploader(twitpicOpt);
                     break;
                 case ImageUploaderType.TWITSNAPS:
@@ -601,15 +598,13 @@ namespace ZScreenLib
                     break;
                 case ImageUploaderType.YFROG:
                     YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
-                    yfrogOp.Username = Engine.conf.TwitterUsername;
-                    yfrogOp.Password = Engine.conf.TwitterPassword;
+                    yfrogOp.Username = Engine.MyUploadersConfig.YFrogUsername;
+                    yfrogOp.Password = Engine.MyUploadersConfig.YFrogPassword;
                     yfrogOp.Source = Application.ProductName;
                     // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
                     imageUploader = new YfrogUploader(yfrogOp);
                     break;
             }
-
-            //imageUploader.ProgressChanged += new ImageUploader.ProgressEventHandler(UploadProgressChanged);
 
             if (imageUploader != null)
             {
@@ -897,54 +892,6 @@ namespace ZScreenLib
 
                 return true;
             }
-            return false;
-        }
-
-        public bool UploadDekiWiki()
-        {
-            try
-            {
-                string fullFilePath = this.LocalFilePath;
-
-                if (Adapter.CheckDekiWikiAccounts(this) && File.Exists(fullFilePath))
-                {
-                    DekiWikiAccount acc = Engine.MyUploadersConfig.DekiWikiAccountList[Engine.MyUploadersConfig.DekiWikiSelected];
-
-                    System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
-
-                    if (DekiWiki.savePath == null || DekiWiki.savePath.Length == 0 || Engine.MyUploadersConfig.DekiWikiForcePath == true)
-                    {
-                        DekiWikiPath diag = new DekiWikiPath(new DekiWikiOptions(acc, proxy));
-                        diag.history = acc.History;
-                        diag.ShowDialog();
-
-                        if (diag.DialogResult != DialogResult.OK)
-                        {
-                            throw new Exception("User canceled the operation.");
-                        }
-
-                        DekiWiki.savePath = diag.path;
-                    }
-
-                    this.DestinationName = acc.Name;
-
-                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to Mindtouch: {1}", this.FileName, acc.Url));
-
-                    DekiWikiUploader uploader = new DekiWikiUploader(new DekiWikiOptions(acc, proxy));
-                    // RemoteFilePath = acc.getUriPath(Path.GetFileName(LocalFilePath)); todo: check same output as getUriPath is possible else where
-                    this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
-
-                    DekiWiki connector = new DekiWiki(new DekiWikiOptions(acc, proxy));
-                    connector.UpdateHistory();
-
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.Errors.Add("Mindtouch upload failed.\r\n" + ex.Message);
-            }
-
             return false;
         }
 

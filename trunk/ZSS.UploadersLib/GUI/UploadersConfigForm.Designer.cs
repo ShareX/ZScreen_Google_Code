@@ -67,12 +67,20 @@
             this.btnFlickrCompleteAuth = new System.Windows.Forms.Button();
             this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpTwitPic = new System.Windows.Forms.TabPage();
+            this.lblTwitPicPassword = new System.Windows.Forms.Label();
+            this.lblTwitPicUsername = new System.Windows.Forms.Label();
+            this.txtTwitPicPassword = new System.Windows.Forms.TextBox();
+            this.txtTwitPicUsername = new System.Windows.Forms.TextBox();
             this.chkTwitPicShowFull = new System.Windows.Forms.CheckBox();
             this.cboTwitPicThumbnailMode = new System.Windows.Forms.ComboBox();
             this.lblTwitPicThumbnailMode = new System.Windows.Forms.Label();
             this.tpTwitSnaps = new System.Windows.Forms.TabPage();
             this.lblTwitSnapsTip = new System.Windows.Forms.Label();
             this.tpYFrog = new System.Windows.Forms.TabPage();
+            this.lblYFrogPassword = new System.Windows.Forms.Label();
+            this.lblYFrogUsername = new System.Windows.Forms.Label();
+            this.txtYFrogPassword = new System.Windows.Forms.TextBox();
+            this.txtYFrogUsername = new System.Windows.Forms.TextBox();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
             this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
@@ -123,12 +131,6 @@
             this.lblSendSpaceAccountType = new System.Windows.Forms.Label();
             this.tbLocalhost = new System.Windows.Forms.TabPage();
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
-            this.tpDekiWiki = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.gbMindTouchOptions = new System.Windows.Forms.GroupBox();
-            this.chkDekiWikiForcePath = new System.Windows.Forms.CheckBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.ucMindTouchAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -188,6 +190,7 @@
             this.tpFlickr.SuspendLayout();
             this.tpTwitPic.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
+            this.tpYFrog.SuspendLayout();
             this.tpMediaWiki.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
@@ -200,10 +203,6 @@
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
             this.tbLocalhost.SuspendLayout();
-            this.tpDekiWiki.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.gbMindTouchOptions.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.tpCustomUploaders.SuspendLayout();
             this.gbCustomUploaders.SuspendLayout();
             this.gbCustomUploaderRegexp.SuspendLayout();
@@ -635,6 +634,10 @@
             // 
             // tpTwitPic
             // 
+            this.tpTwitPic.Controls.Add(this.lblTwitPicPassword);
+            this.tpTwitPic.Controls.Add(this.lblTwitPicUsername);
+            this.tpTwitPic.Controls.Add(this.txtTwitPicPassword);
+            this.tpTwitPic.Controls.Add(this.txtTwitPicUsername);
             this.tpTwitPic.Controls.Add(this.chkTwitPicShowFull);
             this.tpTwitPic.Controls.Add(this.cboTwitPicThumbnailMode);
             this.tpTwitPic.Controls.Add(this.lblTwitPicThumbnailMode);
@@ -646,10 +649,45 @@
             this.tpTwitPic.Text = "TwitPic";
             this.tpTwitPic.UseVisualStyleBackColor = true;
             // 
+            // lblTwitPicPassword
+            // 
+            this.lblTwitPicPassword.AutoSize = true;
+            this.lblTwitPicPassword.Location = new System.Drawing.Point(16, 48);
+            this.lblTwitPicPassword.Name = "lblTwitPicPassword";
+            this.lblTwitPicPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblTwitPicPassword.TabIndex = 19;
+            this.lblTwitPicPassword.Text = "Password:";
+            // 
+            // lblTwitPicUsername
+            // 
+            this.lblTwitPicUsername.AutoSize = true;
+            this.lblTwitPicUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblTwitPicUsername.Name = "lblTwitPicUsername";
+            this.lblTwitPicUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblTwitPicUsername.TabIndex = 18;
+            this.lblTwitPicUsername.Text = "Username:";
+            // 
+            // txtTwitPicPassword
+            // 
+            this.txtTwitPicPassword.Location = new System.Drawing.Point(80, 44);
+            this.txtTwitPicPassword.Name = "txtTwitPicPassword";
+            this.txtTwitPicPassword.PasswordChar = '*';
+            this.txtTwitPicPassword.Size = new System.Drawing.Size(160, 20);
+            this.txtTwitPicPassword.TabIndex = 17;
+            this.txtTwitPicPassword.TextChanged += new System.EventHandler(this.txtTwitPicPassword_TextChanged);
+            // 
+            // txtTwitPicUsername
+            // 
+            this.txtTwitPicUsername.Location = new System.Drawing.Point(80, 12);
+            this.txtTwitPicUsername.Name = "txtTwitPicUsername";
+            this.txtTwitPicUsername.Size = new System.Drawing.Size(160, 20);
+            this.txtTwitPicUsername.TabIndex = 16;
+            this.txtTwitPicUsername.TextChanged += new System.EventHandler(this.txtTwitPicUsername_TextChanged);
+            // 
             // chkTwitPicShowFull
             // 
             this.chkTwitPicShowFull.AutoSize = true;
-            this.chkTwitPicShowFull.Location = new System.Drawing.Point(16, 48);
+            this.chkTwitPicShowFull.Location = new System.Drawing.Point(16, 104);
             this.chkTwitPicShowFull.Name = "chkTwitPicShowFull";
             this.chkTwitPicShowFull.Size = new System.Drawing.Size(94, 17);
             this.chkTwitPicShowFull.TabIndex = 13;
@@ -661,7 +699,7 @@
             // 
             this.cboTwitPicThumbnailMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTwitPicThumbnailMode.FormattingEnabled = true;
-            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 19);
+            this.cboTwitPicThumbnailMode.Location = new System.Drawing.Point(112, 73);
             this.cboTwitPicThumbnailMode.Name = "cboTwitPicThumbnailMode";
             this.cboTwitPicThumbnailMode.Size = new System.Drawing.Size(144, 21);
             this.cboTwitPicThumbnailMode.TabIndex = 14;
@@ -670,7 +708,7 @@
             // lblTwitPicThumbnailMode
             // 
             this.lblTwitPicThumbnailMode.AutoSize = true;
-            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 24);
+            this.lblTwitPicThumbnailMode.Location = new System.Drawing.Point(16, 77);
             this.lblTwitPicThumbnailMode.Name = "lblTwitPicThumbnailMode";
             this.lblTwitPicThumbnailMode.Size = new System.Drawing.Size(89, 13);
             this.lblTwitPicThumbnailMode.TabIndex = 15;
@@ -699,6 +737,10 @@
             // 
             // tpYFrog
             // 
+            this.tpYFrog.Controls.Add(this.lblYFrogPassword);
+            this.tpYFrog.Controls.Add(this.lblYFrogUsername);
+            this.tpYFrog.Controls.Add(this.txtYFrogPassword);
+            this.tpYFrog.Controls.Add(this.txtYFrogUsername);
             this.tpYFrog.Location = new System.Drawing.Point(4, 22);
             this.tpYFrog.Name = "tpYFrog";
             this.tpYFrog.Padding = new System.Windows.Forms.Padding(3);
@@ -706,6 +748,41 @@
             this.tpYFrog.TabIndex = 8;
             this.tpYFrog.Text = "YFrog";
             this.tpYFrog.UseVisualStyleBackColor = true;
+            // 
+            // lblYFrogPassword
+            // 
+            this.lblYFrogPassword.AutoSize = true;
+            this.lblYFrogPassword.Location = new System.Drawing.Point(16, 48);
+            this.lblYFrogPassword.Name = "lblYFrogPassword";
+            this.lblYFrogPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblYFrogPassword.TabIndex = 23;
+            this.lblYFrogPassword.Text = "Password:";
+            // 
+            // lblYFrogUsername
+            // 
+            this.lblYFrogUsername.AutoSize = true;
+            this.lblYFrogUsername.Location = new System.Drawing.Point(16, 16);
+            this.lblYFrogUsername.Name = "lblYFrogUsername";
+            this.lblYFrogUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblYFrogUsername.TabIndex = 22;
+            this.lblYFrogUsername.Text = "Username:";
+            // 
+            // txtYFrogPassword
+            // 
+            this.txtYFrogPassword.Location = new System.Drawing.Point(80, 44);
+            this.txtYFrogPassword.Name = "txtYFrogPassword";
+            this.txtYFrogPassword.PasswordChar = '*';
+            this.txtYFrogPassword.Size = new System.Drawing.Size(160, 20);
+            this.txtYFrogPassword.TabIndex = 21;
+            this.txtYFrogPassword.TextChanged += new System.EventHandler(this.txtYFrogPassword_TextChanged);
+            // 
+            // txtYFrogUsername
+            // 
+            this.txtYFrogUsername.Location = new System.Drawing.Point(80, 12);
+            this.txtYFrogUsername.Name = "txtYFrogUsername";
+            this.txtYFrogUsername.Size = new System.Drawing.Size(160, 20);
+            this.txtYFrogUsername.TabIndex = 20;
+            this.txtYFrogUsername.TextChanged += new System.EventHandler(this.txtYFrogUsername_TextChanged);
             // 
             // tpMediaWiki
             // 
@@ -727,7 +804,7 @@
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
             this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 428);
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 432);
             this.ucMediaWikiAccounts.TabIndex = 1;
             // 
             // tpFileUploaders
@@ -748,7 +825,6 @@
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
             this.tcFileUploaders.Controls.Add(this.tpSendSpace);
             this.tcFileUploaders.Controls.Add(this.tbLocalhost);
-            this.tcFileUploaders.Controls.Add(this.tpDekiWiki);
             this.tcFileUploaders.Controls.Add(this.tpCustomUploaders);
             this.tcFileUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcFileUploaders.Location = new System.Drawing.Point(3, 3);
@@ -1246,74 +1322,6 @@
             this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucLocalhostAccounts.TabIndex = 2;
             // 
-            // tpDekiWiki
-            // 
-            this.tpDekiWiki.Controls.Add(this.tableLayoutPanel1);
-            this.tpDekiWiki.Location = new System.Drawing.Point(4, 22);
-            this.tpDekiWiki.Name = "tpDekiWiki";
-            this.tpDekiWiki.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDekiWiki.Size = new System.Drawing.Size(772, 448);
-            this.tpDekiWiki.TabIndex = 6;
-            this.tpDekiWiki.Text = "Deki Wiki";
-            this.tpDekiWiki.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.gbMindTouchOptions, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(766, 442);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // gbMindTouchOptions
-            // 
-            this.gbMindTouchOptions.Controls.Add(this.chkDekiWikiForcePath);
-            this.gbMindTouchOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbMindTouchOptions.Location = new System.Drawing.Point(3, 334);
-            this.gbMindTouchOptions.Name = "gbMindTouchOptions";
-            this.gbMindTouchOptions.Size = new System.Drawing.Size(760, 105);
-            this.gbMindTouchOptions.TabIndex = 117;
-            this.gbMindTouchOptions.TabStop = false;
-            this.gbMindTouchOptions.Text = "MindTouch Deki Wiki Settings";
-            // 
-            // chkDekiWikiForcePath
-            // 
-            this.chkDekiWikiForcePath.AutoSize = true;
-            this.chkDekiWikiForcePath.BackColor = System.Drawing.Color.Transparent;
-            this.chkDekiWikiForcePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkDekiWikiForcePath.Location = new System.Drawing.Point(16, 24);
-            this.chkDekiWikiForcePath.Name = "chkDekiWikiForcePath";
-            this.chkDekiWikiForcePath.Size = new System.Drawing.Size(295, 17);
-            this.chkDekiWikiForcePath.TabIndex = 113;
-            this.chkDekiWikiForcePath.Text = "Ask where to save everytime when a screenshot is taken";
-            this.chkDekiWikiForcePath.UseVisualStyleBackColor = false;
-            this.chkDekiWikiForcePath.CheckedChanged += new System.EventHandler(this.chkDekiWikiForcePath_CheckedChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.ucMindTouchAccounts);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(760, 325);
-            this.panel1.TabIndex = 116;
-            // 
-            // ucMindTouchAccounts
-            // 
-            this.ucMindTouchAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucMindTouchAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucMindTouchAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMindTouchAccounts.Name = "ucMindTouchAccounts";
-            this.ucMindTouchAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucMindTouchAccounts.TabIndex = 0;
-            // 
             // tpCustomUploaders
             // 
             this.tpCustomUploaders.Controls.Add(this.txtCustomUploaderLog);
@@ -1334,7 +1342,7 @@
             this.tpCustomUploaders.Padding = new System.Windows.Forms.Padding(3);
             this.tpCustomUploaders.Size = new System.Drawing.Size(772, 448);
             this.tpCustomUploaders.TabIndex = 4;
-            this.tpCustomUploaders.Text = "Custom uploaders";
+            this.tpCustomUploaders.Text = "Custom uploader";
             this.tpCustomUploaders.UseVisualStyleBackColor = true;
             // 
             // txtCustomUploaderLog
@@ -1831,6 +1839,8 @@
             this.tpTwitPic.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
             this.tpTwitSnaps.PerformLayout();
+            this.tpYFrog.ResumeLayout(false);
+            this.tpYFrog.PerformLayout();
             this.tpMediaWiki.ResumeLayout(false);
             this.tpFileUploaders.ResumeLayout(false);
             this.tcFileUploaders.ResumeLayout(false);
@@ -1848,11 +1858,6 @@
             this.tpSendSpace.ResumeLayout(false);
             this.tpSendSpace.PerformLayout();
             this.tbLocalhost.ResumeLayout(false);
-            this.tpDekiWiki.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.gbMindTouchOptions.ResumeLayout(false);
-            this.gbMindTouchOptions.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.tpCustomUploaders.ResumeLayout(false);
             this.tpCustomUploaders.PerformLayout();
             this.gbCustomUploaders.ResumeLayout(false);
@@ -2016,13 +2021,15 @@
         private System.Windows.Forms.CheckBox chkTwitPicShowFull;
         private System.Windows.Forms.ComboBox cboTwitPicThumbnailMode;
         private System.Windows.Forms.Label lblTwitPicThumbnailMode;
-        private System.Windows.Forms.TabPage tpDekiWiki;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
-        private AccountsControl ucMindTouchAccounts;
-        internal System.Windows.Forms.GroupBox gbMindTouchOptions;
-        internal System.Windows.Forms.CheckBox chkDekiWikiForcePath;
         private System.Windows.Forms.Button btnDropboxShowFiles;
         private System.Windows.Forms.Label lblDropboxStatus;
+        private System.Windows.Forms.Label lblTwitPicPassword;
+        private System.Windows.Forms.Label lblTwitPicUsername;
+        private System.Windows.Forms.TextBox txtTwitPicPassword;
+        private System.Windows.Forms.TextBox txtTwitPicUsername;
+        private System.Windows.Forms.Label lblYFrogPassword;
+        private System.Windows.Forms.Label lblYFrogUsername;
+        private System.Windows.Forms.TextBox txtYFrogPassword;
+        private System.Windows.Forms.TextBox txtYFrogUsername;
     }
 }
