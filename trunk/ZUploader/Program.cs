@@ -136,7 +136,7 @@ namespace ZUploader
         {
             get
             {
-                string title = string.Format("{0} {1}", Application.ProductName, Application.ProductVersion);
+                string title = string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
                 if (IsBeta) title += " Beta";
                 if (IsPortable) title += " Portable";
                 return title;
