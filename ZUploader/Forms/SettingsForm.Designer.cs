@@ -79,6 +79,7 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.btnLoadUploadersConfig = new System.Windows.Forms.Button();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -214,6 +215,7 @@
             // 
             // tpUpload
             // 
+            this.tpUpload.Controls.Add(this.btnLoadUploadersConfig);
             this.tpUpload.Controls.Add(this.btnBrowseCustomUploadersConfigPath);
             this.tpUpload.Controls.Add(this.txtCustomUploadersConfigPath);
             this.tpUpload.Controls.Add(this.cbUseCustomUploadersConfigPath);
@@ -232,7 +234,7 @@
             // 
             // btnBrowseCustomUploadersConfigPath
             // 
-            this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(392, 38);
+            this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(352, 38);
             this.btnBrowseCustomUploadersConfigPath.Name = "btnBrowseCustomUploadersConfigPath";
             this.btnBrowseCustomUploadersConfigPath.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseCustomUploadersConfigPath.TabIndex = 12;
@@ -244,7 +246,7 @@
             // 
             this.txtCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 40);
             this.txtCustomUploadersConfigPath.Name = "txtCustomUploadersConfigPath";
-            this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(368, 20);
+            this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(328, 20);
             this.txtCustomUploadersConfigPath.TabIndex = 11;
             this.txtCustomUploadersConfigPath.TextChanged += new System.EventHandler(this.txtCustomUploadersConfigPath_TextChanged);
             // 
@@ -358,7 +360,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-                "added as bitmap.";
+    "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -530,7 +532,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-                "ce accordingly.";
+    "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -705,6 +707,16 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // btnLoadUploadersConfig
+            // 
+            this.btnLoadUploadersConfig.Location = new System.Drawing.Point(432, 38);
+            this.btnLoadUploadersConfig.Name = "btnLoadUploadersConfig";
+            this.btnLoadUploadersConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadUploadersConfig.TabIndex = 13;
+            this.btnLoadUploadersConfig.Text = "Load";
+            this.btnLoadUploadersConfig.UseVisualStyleBackColor = true;
+            this.btnLoadUploadersConfig.Click += new System.EventHandler(this.btnLoadUploadersConfig_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -795,5 +807,6 @@
         private System.Windows.Forms.Button btnBrowseCustomUploadersConfigPath;
         private System.Windows.Forms.TextBox txtCustomUploadersConfigPath;
         private System.Windows.Forms.CheckBox cbUseCustomUploadersConfigPath;
+        private System.Windows.Forms.Button btnLoadUploadersConfig;
     }
 }

@@ -48,6 +48,11 @@ namespace UploadersLib
             APIKeys = uploadersAPIKeys;
         }
 
+        private void UploadersConfigForm_Resize(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
         #region Image uploaders
 
         #region ImageShack

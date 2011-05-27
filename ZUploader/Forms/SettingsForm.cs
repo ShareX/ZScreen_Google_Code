@@ -233,6 +233,11 @@ namespace ZUploader
             ChooseFolder("ZUploader - Choose uploaders config file path", txtCustomUploadersConfigPath);
         }
 
+        private void btnLoadUploadersConfig_Click(object sender, EventArgs e)
+        {
+            Program.LoadUploadersConfig();
+        }
+
         private void nudUploadLimit_ValueChanged(object sender, EventArgs e)
         {
             Program.Settings.UploadLimit = (int)nudUploadLimit.Value;

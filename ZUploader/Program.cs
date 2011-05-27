@@ -41,10 +41,11 @@ namespace ZUploader
         public static Settings Settings { get; private set; }
         public static UploadersConfig UploadersConfig { get; private set; }
 
+        private static readonly string ApplicationName = Application.ProductName;
+
         #region Paths
 
-        private static readonly string ApplicationName = Application.ProductName;
-        private static readonly string DefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ApplicationName);
+        private static readonly string DefaultPersonalPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
         private static readonly string PortablePersonalPath = Path.Combine(Application.StartupPath, ApplicationName);
 
         private static readonly string SettingsFileName = ApplicationName + "Settings.xml";
@@ -164,8 +165,8 @@ namespace ZUploader
 
             Thread settingThread = new Thread(() =>
             {
-                Settings = Settings.Load();
-                UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
+                LoadSettings();
+                LoadUploadersConfig();
             });
             settingThread.Start();
 
@@ -183,9 +184,20 @@ namespace ZUploader
             Application.Run(mainForm);
 
             Settings.Save();
+            UploadersConfig.Save(UploadersConfigFilePath);
 
             MyLogger.WriteLine("ZUploader closing");
             MyLogger.SaveLog(LogFilePath);
+        }
+
+        public static void LoadSettings()
+        {
+            Settings = Settings.Load();
+        }
+
+        public static void LoadUploadersConfig()
+        {
+            UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
         }
 
         private static bool CheckPortable()

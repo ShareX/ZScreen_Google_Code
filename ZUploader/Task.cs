@@ -107,6 +107,21 @@ namespace ZUploader
 
         #endregion Constructors
 
+        public bool IsDestinationValid()
+        {
+            switch (Info.UploaderType)
+            {
+                case EDataType.Image:
+                    return UploadManager.ImageUploader != ImageDestination.NONE;
+                case EDataType.Text:
+                    return UploadManager.TextUploader != TextUploaderType.NONE;
+                case EDataType.File:
+                    return UploadManager.FileUploader != FileUploaderType.NONE;
+            }
+
+            return false;
+        }
+
         public void Start()
         {
             if (Status == TaskStatus.InQueue && !IsStopped)
@@ -179,7 +194,7 @@ namespace ZUploader
             finally
             {
                 if (Info.Result == null) Info.Result = new UploadResult();
-                Info.Result.Errors = uploader.Errors;
+                if (uploader != null) Info.Result.Errors = uploader.Errors;
             }
 
             if (!IsStopped && Info.Result != null)
