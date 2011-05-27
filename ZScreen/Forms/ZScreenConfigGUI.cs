@@ -17,11 +17,15 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : Form
     {
+
         private void ZScreen_ConfigGUI()
         {
             Engine.MyLogger.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
-            pgApp.SelectedObject = Engine.conf;
+
+            pgAppSettings.SelectedObject = Engine.AppConf;
+            pgAppConfig.SelectedObject = Engine.conf;           
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
+
             ZScreen_ConfigGUI_Main();
             ZScreen_ConfigGUI_TrayMenu();
             ZScreen_ConfigGUI_Options();
@@ -158,7 +162,7 @@ namespace ZScreenGUI
             txtImagesDir.Text = Engine.ImagesDir;
             txtLogsDir.Text = Engine.LogsDir;
 
-            if (Engine.conf.PreferSystemFolders)
+            if (Engine.AppConf.PreferSystemFolders)
             {
                 txtRootFolder.Text = Engine.SettingsDir;
                 gbRoot.Text = "Settings";
@@ -172,13 +176,10 @@ namespace ZScreenGUI
             gbRoot.Enabled = !Engine.IsPortable;
             gbImages.Enabled = !Engine.IsPortable;
             gbLogs.Enabled = !Engine.IsPortable;
-            chkPreferSystemFolders.Enabled = !Engine.IsPortable;
         }
 
         private void ZScreen_ConfigGUI_Options()
         {
-            Engine.mAppSettings.PreferSystemFolders = Engine.conf.PreferSystemFolders;
-            chkPreferSystemFolders.Checked = Engine.conf.PreferSystemFolders;
             UpdateGuiControlsPaths();
 
             // General

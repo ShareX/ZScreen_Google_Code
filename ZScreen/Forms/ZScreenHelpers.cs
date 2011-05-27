@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UploadersLib;
 using UploadersAPILib;
+using System.Reflection;
 
 namespace ZScreenGUI
 {

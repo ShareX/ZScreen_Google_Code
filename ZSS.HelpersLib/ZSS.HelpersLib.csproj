@@ -43,6 +43,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -52,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +81,7 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\XMLExtensions.cs" />
+    <Compile Include="XmlFileNameEditor.cs" />
     <EmbeddedResource Include="ClipboardContentViewer.resx">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </EmbeddedResource>

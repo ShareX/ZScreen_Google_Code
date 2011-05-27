@@ -383,8 +383,6 @@ namespace ZScreenLib
 
         // Options / General
 
-        [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
-        public bool PreferSystemFolders { get; set; }
         [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowClipboardModeChooser { get; set; }
         [Category("Options / Interaction"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
@@ -619,10 +617,10 @@ namespace ZScreenLib
             string settingsFile = Engine.IsPortable ? Engine.GetPreviousSettingsFile(Engine.SettingsDir) : Engine.SettingsFilePath;
             if (!File.Exists(settingsFile))
             {
-                if (File.Exists(Engine.mAppSettings.XMLSettingsFile))
+                if (File.Exists(Engine.AppConf.XMLSettingsFile))
                 {
                     // Step 2 - Attempt to read previous Application Version specific Settings file
-                    settingsFile = Engine.mAppSettings.XMLSettingsFile;
+                    settingsFile = Engine.AppConf.XMLSettingsFile;
                 }
                 else
                 {
@@ -637,9 +635,9 @@ namespace ZScreenLib
                 File.Copy(settingsFile, Engine.SettingsFilePath);                 // Update AppSettings.xml
             }
 
-            Engine.mAppSettings.XMLSettingsFile = Engine.SettingsFilePath;
+            Engine.AppConf.XMLSettingsFile = Engine.SettingsFilePath;
 
-            return Read(Engine.mAppSettings.XMLSettingsFile);
+            return Read(Engine.AppConf.XMLSettingsFile);
         }
 
         public static XMLSettings Read(string filePath)

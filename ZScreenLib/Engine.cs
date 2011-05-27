@@ -74,7 +74,7 @@ namespace ZScreenLib
         internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Path.Combine(ApplicationName, "Text"));
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
-        public static AppSettings mAppSettings = AppSettings.Read();
+        public static AppSettings AppConf = AppSettings.Read();
 
         #region Paths
 
@@ -94,15 +94,29 @@ namespace ZScreenLib
         {
             get
             {
-                return Path.Combine(SettingsDir, HistoryFileName);
+                if (conf != null && AppConf.UseHistoryCustomPath && !string.IsNullOrEmpty(AppConf.UploadersHistoryCustomPath))
+                {
+                    return AppConf.UploadersHistoryCustomPath;
+                }
+                else
+                {
+                    return Path.Combine(RootAppFolder, HistoryFileName);
+                }
             }
         }
 
-        public static string UploaderConfigPath
+        public static string UploadersConfigPath
         {
             get
             {
-                return Path.Combine(SettingsDir, UploadersConfigFileName);
+                if (conf != null && AppConf.UseUploadersConfigCustomPath && !string.IsNullOrEmpty(AppConf.UploadersConfigCustomPath))
+                {
+                    return AppConf.UploadersHistoryCustomPath;
+                }
+                else
+                {
+                    return Path.Combine(RootAppFolder, UploadersConfigFileName);
+                }
             }
         }
 
@@ -148,7 +162,7 @@ namespace ZScreenLib
                     if (Engine.conf != null)
                     {
                         saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
-                        if (!IsPortable && Engine.conf.PreferSystemFolders)
+                        if (!IsPortable && Engine.AppConf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
                         }
@@ -228,12 +242,12 @@ namespace ZScreenLib
 
             if (IsPortable)
             {
-                mAppSettings.PreferSystemFolders = false;
+                AppConf.PreferSystemFolders = false;
                 RootAppFolder = PortableRootFolder;
             }
             else
             {
-                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.mAppSettings.XMLSettingsFile))
+                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.AppConf.XMLSettingsFile))
                 {
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     startEngine = cw.ShowDialog();
@@ -241,35 +255,39 @@ namespace ZScreenLib
                     {
                         if (!cw.PreferSystemFolders)
                         {
-                            Engine.mAppSettings.RootDir = cw.RootFolder;
+                            Engine.AppConf.RootDir = cw.RootFolder;
                         }
-                        Engine.mAppSettings.PreferSystemFolders = cw.PreferSystemFolders;
-                        Engine.mAppSettings.ImageUploader = (int)cw.ImageDestinationType;
-                        Engine.mAppSettings.FileUploader = (int)cw.FileUploaderType;
-                        Engine.mAppSettings.TextUploader = (int)cw.MyTextUploaderType;
-                        Engine.mAppSettings.UrlShortener = (int)cw.MyUrlShortenerType;
+                        Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
+                        Engine.AppConf.ImageUploader = (int)cw.ImageDestinationType;
+                        Engine.AppConf.FileUploader = (int)cw.FileUploaderType;
+                        Engine.AppConf.TextUploader = (int)cw.MyTextUploaderType;
+                        Engine.AppConf.UrlShortener = (int)cw.MyUrlShortenerType;
 
-                        MyUploadersConfig.Save(UploaderConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
-                        mAppSettings.Write();
-
-                        if (!cw.PreferSystemFolders && Directory.Exists(Engine.mAppSettings.RootDir))
-                        {
-                            RootAppFolder = Engine.mAppSettings.RootDir;
-                        }
-                        else
-                        {
-                            RootAppFolder = DefaultRootAppFolder;
-                        }
+                        MyUploadersConfig.Save(UploadersConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
+                        AppConf.Write();
 
                         RunConfig = true;
                     }
                 }
             }
 
+            if (!AppConf.PreferSystemFolders && Directory.Exists(Engine.AppConf.RootDir))
+            {
+                RootAppFolder = Engine.AppConf.RootDir;
+            }
+            else if (AppConf.PreferSystemFolders)
+            {
+                RootAppFolder = zRoamingAppDataFolder;
+            }
+            else
+            {
+                RootAppFolder = DefaultRootAppFolder;
+            }
+
             if (startEngine == DialogResult.OK)
             {
                 Engine.MyLogger.WriteLine("Config file: " + AppSettings.AppSettingsFile);
-                if (!mAppSettings.PreferSystemFolders)
+                if (!AppConf.PreferSystemFolders)
                 {
                     Engine.MyLogger.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
                 }
@@ -303,7 +321,7 @@ namespace ZScreenLib
 
         public static void InitializeDefaultFolderPaths(bool dirCreation = true)
         {
-            if (mAppSettings.PreferSystemFolders)
+            if (AppConf.PreferSystemFolders)
             {
                 CacheDir = zCacheDir;
                 FilesDir = zFilesDir;
@@ -339,7 +357,7 @@ namespace ZScreenLib
 
             if (File.Exists(Engine.SettingsFilePath))
             {
-                Engine.mAppSettings.XMLSettingsFile = SettingsFilePath;
+                Engine.AppConf.XMLSettingsFile = SettingsFilePath;
             }
         }
 
@@ -357,7 +375,7 @@ namespace ZScreenLib
         {
             if (!IsPortable)
             {
-                mAppSettings.Write();
+                AppConf.Write();
             }
 
             if (ZScreenKeyboardHook != null)
@@ -401,7 +419,7 @@ namespace ZScreenLib
             {
                 if (Engine.MyUploadersConfig != null)
                 {
-                    Engine.MyUploadersConfig.Save(UploaderConfigPath);
+                    Engine.MyUploadersConfig.Save(UploadersConfigPath);
                 }
             });
 
@@ -443,7 +461,7 @@ namespace ZScreenLib
 
             Thread uploadersConfigThread = new Thread(() =>
             {
-                Engine.MyUploadersConfig = UploadersConfig.Load(UploaderConfigPath);
+                Engine.MyUploadersConfig = UploadersConfig.Load(UploadersConfigPath);
             });
 
             Thread googleTranslateThread = new Thread(() =>
@@ -465,17 +483,16 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.PreferSystemFolders = Engine.mAppSettings.PreferSystemFolders;
-                Engine.conf.MyImageUploader = Engine.mAppSettings.ImageUploader;
-                Engine.conf.MyFileUploader = Engine.mAppSettings.FileUploader;
-                Engine.conf.MyTextUploader = Engine.mAppSettings.TextUploader;
-                Engine.conf.MyURLShortener = Engine.mAppSettings.UrlShortener;
+                Engine.conf.MyImageUploader = Engine.AppConf.ImageUploader;
+                Engine.conf.MyFileUploader = Engine.AppConf.FileUploader;
+                Engine.conf.MyTextUploader = Engine.AppConf.TextUploader;
+                Engine.conf.MyURLShortener = Engine.AppConf.UrlShortener;
             }
 
             // Portable then we don't need PreferSystemFolders to be true
             if (IsPortable)
             {
-                Engine.conf.PreferSystemFolders = false;
+                Engine.AppConf.PreferSystemFolders = false;
             }
         }
 
@@ -486,7 +503,7 @@ namespace ZScreenLib
 
         public static string GetLatestSettingsFile()
         {
-            return GetPreviousSettingsFile(Path.GetDirectoryName(Engine.mAppSettings.XMLSettingsFile));
+            return GetPreviousSettingsFile(Path.GetDirectoryName(Engine.AppConf.XMLSettingsFile));
         }
 
         public static string GetPreviousSettingsFile(string settingsDir)
@@ -524,7 +541,7 @@ namespace ZScreenLib
 
         public static void SetRootFolder(string dp)
         {
-            mAppSettings.RootDir = dp;
+            AppConf.RootDir = dp;
             RootAppFolder = dp;
         }
 
