@@ -148,7 +148,7 @@
     <Compile Include="Forms\ZScreenWorker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ZScreenBackgroundTasks.cs">
+    <Compile Include="Forms\ZScreenOptionalTasks.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Loader.cs" />
