@@ -353,7 +353,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
-            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(298, 20);
+            this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
             this.txtImageShackRegistrationCode.TabIndex = 0;
             this.txtImageShackRegistrationCode.TextChanged += new System.EventHandler(this.txtImageShackRegistrationCode_TextChanged);
             // 
@@ -479,7 +479,7 @@
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
             this.txtTinyPicRegistrationCode.ReadOnly = true;
-            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(298, 20);
+            this.txtTinyPicRegistrationCode.Size = new System.Drawing.Size(360, 20);
             this.txtTinyPicRegistrationCode.TabIndex = 3;
             // 
             // tpImgur
@@ -1197,7 +1197,7 @@
             this.txtRapidSharePassword.Location = new System.Drawing.Point(80, 84);
             this.txtRapidSharePassword.Name = "txtRapidSharePassword";
             this.txtRapidSharePassword.PasswordChar = '*';
-            this.txtRapidSharePassword.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePassword.Size = new System.Drawing.Size(136, 20);
             this.txtRapidSharePassword.TabIndex = 12;
             this.txtRapidSharePassword.TextChanged += new System.EventHandler(this.txtRapidSharePassword_TextChanged);
             // 
@@ -1205,7 +1205,7 @@
             // 
             this.txtRapidShareUsername.Location = new System.Drawing.Point(80, 52);
             this.txtRapidShareUsername.Name = "txtRapidShareUsername";
-            this.txtRapidShareUsername.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidShareUsername.Size = new System.Drawing.Size(136, 20);
             this.txtRapidShareUsername.TabIndex = 11;
             this.txtRapidShareUsername.TextChanged += new System.EventHandler(this.txtRapidShareUsername_TextChanged);
             // 
@@ -1267,7 +1267,7 @@
             this.txtSendSpacePassword.Location = new System.Drawing.Point(80, 84);
             this.txtSendSpacePassword.Name = "txtSendSpacePassword";
             this.txtSendSpacePassword.PasswordChar = '*';
-            this.txtSendSpacePassword.Size = new System.Drawing.Size(120, 20);
+            this.txtSendSpacePassword.Size = new System.Drawing.Size(136, 20);
             this.txtSendSpacePassword.TabIndex = 20;
             this.txtSendSpacePassword.TextChanged += new System.EventHandler(this.txtSendSpacePassword_TextChanged);
             // 
@@ -1275,7 +1275,7 @@
             // 
             this.txtSendSpaceUserName.Location = new System.Drawing.Point(80, 52);
             this.txtSendSpaceUserName.Name = "txtSendSpaceUserName";
-            this.txtSendSpaceUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtSendSpaceUserName.Size = new System.Drawing.Size(136, 20);
             this.txtSendSpaceUserName.TabIndex = 19;
             this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
             // 

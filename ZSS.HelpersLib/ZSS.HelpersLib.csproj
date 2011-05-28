@@ -82,6 +82,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\XMLExtensions.cs" />
     <Compile Include="XmlFileNameEditor.cs" />
+    <Compile Include="XMLSettingsBase.cs" />
     <EmbeddedResource Include="ClipboardContentViewer.resx">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </EmbeddedResource>

@@ -131,7 +131,6 @@ namespace ZScreenGUI
                             case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
                                 new TaskManager(task).CaptureRegionOrWindow();
                                 break;
-                            case WorkerTask.JobLevel2.CustomUploaderTest:
                             case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
                                 new TaskManager(task).CaptureActiveWindow();
                                 break;
@@ -283,11 +282,6 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (task.Job2 == WorkerTask.JobLevel2.CustomUploaderTest && task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.URL))
-                            {
-                                // TODO: What to do?
-                            }
-
                             if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try

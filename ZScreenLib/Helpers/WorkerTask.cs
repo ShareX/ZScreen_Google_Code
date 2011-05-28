@@ -84,8 +84,6 @@ namespace ZScreenLib
             SCREEN_COLOR_PICKER,
             [Description("Upload Image")]
             UPLOAD_IMAGE,
-            [Description("Custom Uploader Test")]
-            CustomUploaderTest,
             [Description("Webpage Capture")]
             WEBPAGE_CAPTURE,
             [Description("Freehand Crop Shot")]
@@ -214,18 +212,10 @@ namespace ZScreenLib
             this.MyWorker = worker;
             this.Job2 = job;
 
-            if (Job2 == WorkerTask.JobLevel2.CustomUploaderTest)
-            {
-                MyImageUploader = ImageUploaderType.FileUploader;
-                MyFileUploader = FileUploaderType.CustomUploader;
-            }
-            else
-            {
-                MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
-                MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
-                MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
-                MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
-            }
+            MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
+            MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+            MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
+            MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
 
             if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
             {

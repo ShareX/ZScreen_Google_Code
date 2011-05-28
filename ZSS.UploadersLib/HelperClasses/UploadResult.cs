@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
 
 namespace UploadersLib.HelperClasses
@@ -39,6 +40,16 @@ namespace UploadersLib.HelperClasses
         public bool IsError
         {
             get { return Errors != null && Errors.Count > 0; }
+        }
+
+        public string ErrorsToString()
+        {
+            if (IsError)
+            {
+                return string.Join(Environment.NewLine, Errors.ToArray());
+            }
+
+            return null;
         }
 
         public UploadResult()

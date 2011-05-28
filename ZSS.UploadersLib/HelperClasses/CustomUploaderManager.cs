@@ -23,10 +23,7 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
 using HelpersLib;
 
 namespace UploadersLib.HelperClasses
@@ -37,45 +34,22 @@ namespace UploadersLib.HelperClasses
 
         public CustomUploaderManager()
         {
-            this.ImageHostingServices = new List<CustomUploaderInfo>();
+            ImageHostingServices = new List<CustomUploaderInfo>();
         }
 
-        public void Save(string filePath)
+        public CustomUploaderManager(List<CustomUploaderInfo> imageHostingServices)
         {
-            try
-            {
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderManager));
-                    xs.Serialize(fs, this);
-                }
-            }
-            catch (Exception e)
-            {
-                StaticHelper.WriteException(e);
-            }
+            ImageHostingServices = imageHostingServices;
         }
 
-        public static CustomUploaderManager Read(string filePath)
+        public bool Save(string filePath)
         {
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(CustomUploaderManager));
-                        CustomUploaderManager set = xs.Deserialize(fs) as CustomUploaderManager;
-                        return set;
-                    }
-                }
-                catch
-                {
-                    // just return blank settings
-                }
-            }
+            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
+        }
 
-            return new CustomUploaderManager();
+        public static CustomUploaderManager Load(string filePath)
+        {
+            return SettingsHelper.Load<CustomUploaderManager>(filePath, SerializationType.Xml);
         }
     }
 }

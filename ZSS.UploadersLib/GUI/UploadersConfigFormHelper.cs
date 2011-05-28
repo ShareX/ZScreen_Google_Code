@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
@@ -37,6 +38,7 @@ using UploadersLib.Forms;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
+using UploadersLib.Properties;
 using UploadersLib.TextUploaders;
 
 namespace UploadersLib
@@ -652,19 +654,66 @@ namespace UploadersLib
             return iUploader;
         }
 
-        private void ImportImageUploaders(string fp)
+        private void ImportCustomUploaders(string fp)
         {
-            CustomUploaderManager tmp = CustomUploaderManager.Read(fp);
+            CustomUploaderManager um = CustomUploaderManager.Load(fp);
 
-            if (tmp != null)
+            if (um != null)
             {
-                Config.CustomUploadersList = new List<CustomUploaderInfo>();
-                Config.CustomUploadersList.AddRange(tmp.ImageHostingServices);
-                foreach (CustomUploaderInfo iHostingService in Config.CustomUploadersList)
+                Config.CustomUploadersList = um.ImageHostingServices;
+
+                foreach (CustomUploaderInfo cui in Config.CustomUploadersList)
                 {
-                    lbCustomUploaderList.Items.Add(iHostingService.Name);
+                    lbCustomUploaderList.Items.Add(cui.Name);
                 }
             }
+        }
+
+        private void ExportCustomUploaders(string fp)
+        {
+            CustomUploaderManager um = new CustomUploaderManager(Config.CustomUploadersList);
+            um.Save(fp);
+        }
+
+        private void TestCustomUploader(CustomUploaderInfo cui)
+        {
+            UploadResult ur = null;
+
+            AsyncHelper.AsyncJob(() =>
+            {
+                try
+                {
+                    using (Stream stream = Resources.ZScreen_256.GetStream())
+                    {
+                        CustomUploader cu = new CustomUploader(cui);
+                        ur = cu.Upload(stream, "Test.png");
+                        ur.Errors = cu.Errors;
+                    }
+                }
+                catch { }
+            },
+            () =>
+            {
+                if (ur != null)
+                {
+                    if (!string.IsNullOrEmpty(ur.URL))
+                    {
+                        txtCustomUploaderLog.AppendText("URL: " + ur.URL + Environment.NewLine);
+                    }
+                    else if (ur.IsError)
+                    {
+                        txtCustomUploaderLog.AppendText("Error: " + ur.ErrorsToString() + Environment.NewLine);
+                    }
+                    else
+                    {
+                        txtCustomUploaderLog.AppendText("Error: Result is empty." + Environment.NewLine);
+                    }
+
+                    txtCustomUploaderLog.ScrollToCaret();
+                }
+
+                btnCustomUploaderTest.Enabled = true;
+            });
         }
 
         #endregion Custom uploader
