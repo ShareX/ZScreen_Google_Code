@@ -232,8 +232,7 @@ namespace ZScreenLib
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine(string.Empty);
-            MyLogger.WriteLine(string.Empty);
+            MyLogger.WriteLine();
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 

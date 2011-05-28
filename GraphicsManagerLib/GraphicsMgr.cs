@@ -628,14 +628,22 @@ namespace GraphicsMgrLib
 
             if (autoScale)
             {
-                if (width < 1)
+                if (width > img.Width || height > img.Height)
                 {
-                    imageWidth = (int)(((double)img.Width / img.Height) * height);
+                    imageWidth = img.Width;
+                    imageHeight = img.Height;
                 }
-
-                if (height < 1)
+                else
                 {
-                    imageHeight = (int)(((double)img.Height / img.Width) * width);
+                    if (width < 1)
+                    {
+                        imageWidth = (int)(((double)img.Width / img.Height) * height);
+                    }
+
+                    if (height < 1)
+                    {
+                        imageHeight = (int)(((double)img.Height / img.Width) * width);
+                    }
                 }
             }
 

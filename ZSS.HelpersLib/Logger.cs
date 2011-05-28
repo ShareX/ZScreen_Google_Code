@@ -58,18 +58,18 @@ namespace HelpersLib
             TimerMessageFormat = "{0} - {1}ms";
         }
 
-        public void WriteLine(string message)
+        public void WriteLine(string message = null)
         {
             lock (thisLock)
             {
-                string msg = message;
                 if (!string.IsNullOrEmpty(message))
                 {
-                    msg = string.Format(MessageFormat, FastDateTime.Now, message);
+                    message = string.Format(MessageFormat, FastDateTime.Now, message);
                 }
-                Messages.AppendLine(msg);
-                Debug.WriteLine(msg);
-                OnMessageAdded(msg);
+
+                Messages.AppendLine(message);
+                Debug.WriteLine(message);
+                OnMessageAdded(message);
             }
         }
 
