@@ -86,8 +86,6 @@ namespace ZScreenGUI
 
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
-            Engine.MyLogger.WriteLine(string.Empty);
-
             WorkerTask task = (WorkerTask)e.Argument;
             if (!CanStartWork(task))
             {
@@ -489,7 +487,6 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
-                    Engine.MyLogger.WriteLine("Crop Shot Hotkey triggered: " + key.ToSpecialString());
                     RunWorkerAsync_CropShot();
                     return true;
                 }

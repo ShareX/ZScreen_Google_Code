@@ -26,6 +26,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace HelpersLib
@@ -83,7 +84,7 @@ namespace HelpersLib
             return false;
         }
 
-        public static T Load<T>(string path, SerializationType type) where T : new()
+        public static T Load<T>(string path, SerializationType type, bool onErrorAskFile = true) where T : new()
         {
             StaticHelper.WriteLine("Settings load started: " + path);
 
@@ -102,10 +103,46 @@ namespace HelpersLib
                         }
                     }
                 }
+                else
+                {
+                    throw new Exception("File not exist: " + path);
+                }
             }
             catch (Exception e)
             {
                 StaticHelper.WriteException(e);
+
+                if (onErrorAskFile)
+                {
+                    string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}\r\n\r\nDo you want to load settings file from your backup?", path, e.ToString());
+
+                    if (MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    {
+                        string filter;
+
+                        switch (type)
+                        {
+                            case SerializationType.Binary:
+                                filter = "Binary Settings(*.bin)|*.bin";
+                                break;
+                            default:
+                            case SerializationType.Xml:
+                                filter = "XML Settings(*.xml)|*.xml";
+                                break;
+                        }
+
+                        using (OpenFileDialog dlg = new OpenFileDialog { Filter =  filter })
+                        {
+                            dlg.Title = "Load settings file from backup: " + Path.GetFileName(path);
+                            dlg.InitialDirectory = Path.GetDirectoryName(path);
+
+                            if (dlg.ShowDialog() == DialogResult.OK) // TODO: Not working in thread
+                            {
+                                return Load<T>(dlg.FileName, type);
+                            }
+                        }
+                    }
+                }
             }
             finally
             {
