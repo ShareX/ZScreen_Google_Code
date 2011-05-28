@@ -62,13 +62,14 @@ namespace HelpersLib
         {
             lock (thisLock)
             {
+                string msg = message;
                 if (!string.IsNullOrEmpty(message))
                 {
-                    string msg = string.Format(MessageFormat, FastDateTime.Now, message);
-                    Messages.AppendLine(msg);
-                    Debug.WriteLine(msg);
-                    OnMessageAdded(msg);
+                    msg = string.Format(MessageFormat, FastDateTime.Now, message);
                 }
+                Messages.AppendLine(msg);
+                Debug.WriteLine(msg);
+                OnMessageAdded(msg);
             }
         }
 

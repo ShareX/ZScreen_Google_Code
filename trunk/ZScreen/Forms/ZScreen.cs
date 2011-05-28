@@ -38,8 +38,6 @@ using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
-using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -71,9 +69,12 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
-            Uploader.ProxySettings = Adapter.CheckProxySettings();
+            ZScreen_Preconfig();
+        }
 
-            ZScreen_SetFormSettings();
+        private void ZScreen_Load(object sender, EventArgs e)
+        {
+            Uploader.ProxySettings = Adapter.CheckProxySettings();
             ZScreen_ConfigGUI();
 
             PerformOnlineTasks();
@@ -81,100 +82,6 @@ namespace ZScreenGUI
             {
                 CheckUpdates();
             }
-
-            Application.Idle += new EventHandler(Application_Idle);
-        }
-
-        internal void ZScreen_Windows7onlyTasks()
-        {
-            if (!Engine.conf.Windows7TaskbarIntegration)
-            {
-                if (Engine.zJumpList != null)
-                {
-                    Engine.zJumpList.ClearAllUserTasks();
-                    Engine.zJumpList.Refresh();
-                }
-            }
-            else if (this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
-            {
-                try
-                {
-                    Engine.CheckFileRegistration();
-
-                    Engine.zWindowsTaskbar = TaskbarManager.Instance;
-                    Engine.zWindowsTaskbar.ApplicationId = Engine.appId;
-
-                    Engine.zJumpList = JumpList.CreateJumpList();
-
-                    // User Tasks
-                    JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
-                    jlCropShot.Arguments = "crop_shot";
-                    jlCropShot.IconReference = new IconReference(Adapter.ResourcePath, 1);
-                    Engine.zJumpList.AddUserTasks(jlCropShot);
-
-                    JumpListLink jlSelectedWindow = new JumpListLink(Adapter.ZScreenCliPath(), "Selected Window");
-                    jlSelectedWindow.Arguments = "selected_window";
-                    jlSelectedWindow.IconReference = new IconReference(Adapter.ResourcePath, 2);
-                    Engine.zJumpList.AddUserTasks(jlSelectedWindow);
-
-                    JumpListLink jlClipboardUpload = new JumpListLink(Adapter.ZScreenCliPath(), "Clipboard Upload");
-                    jlClipboardUpload.Arguments = "clipboard_upload";
-                    jlClipboardUpload.IconReference = new IconReference(Adapter.ResourcePath, 3);
-                    Engine.zJumpList.AddUserTasks(jlClipboardUpload);
-
-                    JumpListLink jlHistory = new JumpListLink(Application.ExecutablePath, "Open History");
-                    jlHistory.Arguments = "history";
-                    jlHistory.IconReference = new IconReference(Adapter.ResourcePath, 4);
-                    Engine.zJumpList.AddUserTasks(jlHistory);
-
-                    // Recent Items
-                    Engine.zJumpList.KnownCategoryToDisplay = JumpListKnownCategoryType.Recent;
-
-                    // Custom Categories
-                    JumpListCustomCategory paths = new JumpListCustomCategory("Paths");
-
-                    JumpListLink imagesJumpListLink = new JumpListLink(FileSystem.GetImagesDir(), "Images");
-                    imagesJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
-
-                    JumpListLink settingsJumpListLink = new JumpListLink(Engine.SettingsDir, "Settings");
-                    settingsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
-
-                    JumpListLink logsJumpListLink = new JumpListLink(Engine.LogsDir, "Logs");
-                    logsJumpListLink.IconReference = new IconReference(Path.Combine("%windir%", "explorer.exe"), 0);
-
-                    paths.AddJumpListItems(imagesJumpListLink, settingsJumpListLink, logsJumpListLink);
-                    Engine.zJumpList.AddCustomCategories(paths);
-
-                    // Taskbar Buttons
-                    ThumbnailToolBarButton cropShot = new ThumbnailToolBarButton(Resources.shape_square_ico, "Crop Shot");
-                    cropShot.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(cropShot_Click);
-
-                    ThumbnailToolBarButton selWindow = new ThumbnailToolBarButton(Resources.application_double_ico, "Selected Window");
-                    selWindow.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(selWindow_Click);
-
-                    ThumbnailToolBarButton clipboardUpload = new ThumbnailToolBarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
-                    clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
-
-                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
-
-                    Engine.zJumpList.Refresh();
-
-                    Engine.MyLogger.WriteLine("Integrated into Windows 7 Taskbar");
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Error while configuring Windows 7 Taskbar");
-                }
-            }
-
-            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
-        }
-
-        private void ZScreen_SetFormSettings()
-        {
-            this.Icon = Resources.zss_main;
-            this.Text = Engine.GetProductName();
-            this.niTray.Text = this.Text;
 
             this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
@@ -189,56 +96,7 @@ namespace ZScreenGUI
                 {
                     Engine.conf.WindowSize = this.Size;
                 }
-            }
 
-            // Tab Image List
-            tabImageList.ColorDepth = ColorDepth.Depth32Bit;
-            tabImageList.Images.Add("application_form", Resources.application_form);
-            tabImageList.Images.Add("server", Resources.server);
-            tabImageList.Images.Add("keyboard", Resources.keyboard);
-            tabImageList.Images.Add("monitor", Resources.monitor);
-            tabImageList.Images.Add("picture_edit", Resources.picture_edit);
-            tabImageList.Images.Add("comments", Resources.comments);
-            tabImageList.Images.Add("application_edit", Resources.application_edit);
-            tabImageList.Images.Add("wrench", Resources.wrench);
-            tabImageList.Images.Add("info", Resources.info);
-            tcMain.ImageList = tabImageList;
-            tpMain.ImageKey = "application_form";
-            tpHotkeys.ImageKey = "keyboard";
-            tpMainInput.ImageKey = "monitor";
-            tpMainActions.ImageKey = "picture_edit";
-            tpOptions.ImageKey = "application_edit";
-            tpAdvanced.ImageKey = "wrench";
-
-            // Options - Proxy
-            ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
-            ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
-            ucProxyAccounts.btnTest.Click += new EventHandler(ProxyAccountTestButton_Click);
-            ucProxyAccounts.AccountsList.SelectedIndexChanged += new EventHandler(ProxyAccountsList_SelectedIndexChanged);
-
-            // Watermark Codes Menu
-            codesMenu.AutoClose = false;
-            codesMenu.Font = new Font("Lucida Console", 8);
-            codesMenu.Opacity = 0.8;
-            codesMenu.ShowImageMargin = false;
-
-            // Dest Selectors
-            ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
-            ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
-            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
-            ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
-
-            niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-
-            mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
-
-            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
-        }
-
-        private void ZScreen_Load(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Normal)
-            {
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
                 if (screenRect.IntersectsWith(new Rectangle(Engine.conf.WindowLocation, Engine.conf.WindowSize)))
@@ -246,10 +104,11 @@ namespace ZScreenGUI
                     this.Size = Engine.conf.WindowSize;
                     this.Location = Engine.conf.WindowLocation;
                 }
+
             }
 
             CleanCache();
-            StartDebug();
+            StartStatistics();
 
             SetToolTip(nudScreenshotDelay);
             FillClipboardMenu();
@@ -262,6 +121,8 @@ namespace ZScreenGUI
 
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
+
+            Application.Idle += new EventHandler(Application_Idle);
 
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
@@ -1190,40 +1051,6 @@ namespace ZScreenGUI
             QuitSettingHotkeys();
         }
 
-        private void CheckFormSettings()
-        {
-            if (Engine.conf.LockFormSize)
-            {
-                if (this.FormBorderStyle != FormBorderStyle.FixedSingle)
-                {
-                    this.FormBorderStyle = FormBorderStyle.FixedSingle;
-                    this.Size = this.MinimumSize;
-                }
-            }
-            else
-            {
-                if (this.FormBorderStyle != FormBorderStyle.Sizable)
-                {
-                    this.FormBorderStyle = FormBorderStyle.Sizable;
-                    this.Size = this.MinimumSize;
-                }
-            }
-
-            if (IsFormReady)
-            {
-                if (Engine.conf.SaveFormSizePosition)
-                {
-                    Engine.conf.WindowLocation = this.Location;
-                    Engine.conf.WindowSize = this.Size;
-                }
-                else
-                {
-                    Engine.conf.WindowLocation = Point.Empty;
-                    Engine.conf.WindowSize = Size.Empty;
-                }
-            }
-        }
-
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
@@ -1816,7 +1643,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void StartDebug()
+        private void StartStatistics()
         {
             mDebug = new DebugHelper();
             mDebug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);

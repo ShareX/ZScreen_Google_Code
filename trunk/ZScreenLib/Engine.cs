@@ -115,7 +115,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    return Path.Combine(RootAppFolder, UploadersConfigFileName);
+                    return Path.Combine(SettingsDir, UploadersConfigFileName);
                 }
             }
         }
@@ -232,7 +232,8 @@ namespace ZScreenLib
 
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine("--------------------------------------------------------------------------------"); // TODO: Add empty line
+            MyLogger.WriteLine(string.Empty);
+            MyLogger.WriteLine(string.Empty);
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 

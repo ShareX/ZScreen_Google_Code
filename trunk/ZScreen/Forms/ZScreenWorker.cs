@@ -86,6 +86,8 @@ namespace ZScreenGUI
 
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
+            Engine.MyLogger.WriteLine(string.Empty);
+
             WorkerTask task = (WorkerTask)e.Argument;
             if (!CanStartWork(task))
             {
