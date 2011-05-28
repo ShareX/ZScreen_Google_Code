@@ -45,19 +45,6 @@ namespace GraphicsMgrLib
 
     public static class GraphicsMgr
     {
-        public static Image ChangeImageSize(Image img, int width, int height)
-        {
-            Image bmp = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.DrawImage(img, new Rectangle(0, 0, bmp.Width, bmp.Height));
-            }
-
-            return bmp;
-        }
-
         public static Image CropImage(Image img, Rectangle rect)
         {
             Image bmp = new Bitmap(rect.Width, rect.Height);
@@ -629,15 +616,30 @@ namespace GraphicsMgrLib
             return rectangle;
         }
 
-        public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize)
+        public static Image ChangeImageSize(Image img, int width, int height, bool preserveSize = false, bool autoScale = false)
         {
+            int imageWidth = width, imageHeight = height;
+
             if (preserveSize)
             {
-                width = Math.Min(img.Width, width);
-                height = Math.Min(img.Height, height);
+                imageWidth = Math.Min(img.Width, width);
+                imageHeight = Math.Min(img.Height, height);
             }
 
-            Image bmp = new Bitmap(width, height);
+            if (autoScale)
+            {
+                if (width < 1)
+                {
+                    imageWidth = (int)(((double)img.Width / img.Height) * height);
+                }
+
+                if (height < 1)
+                {
+                    imageHeight = (int)(((double)img.Height / img.Width) * width);
+                }
+            }
+
+            Image bmp = new Bitmap(imageWidth, imageHeight);
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.CompositingQuality = CompositingQuality.HighQuality;
@@ -649,21 +651,11 @@ namespace GraphicsMgrLib
             return bmp;
         }
 
-        public static Image ChangeImageSize(Image img, Size size, bool preserveSize)
-        {
-            return ChangeImageSize(img, size.Width, size.Height, preserveSize);
-        }
-
-        public static Image ChangeImageSize(Image img, Size size)
-        {
-            return ChangeImageSize(img, size.Width, size.Height, false);
-        }
-
-        public static Image ChangeImageSize(Image img, float percentage)
+        public static Image ChangeImageSize(Image img, float percentage, bool preserveSize = false)
         {
             int width = (int)(percentage / 100 * img.Width);
             int height = (int)(percentage / 100 * img.Height);
-            return ChangeImageSize(img, width, height, false);
+            return ChangeImageSize(img, width, height, preserveSize);
         }
 
         public static Image DrawProgressIcon(int percentage)
