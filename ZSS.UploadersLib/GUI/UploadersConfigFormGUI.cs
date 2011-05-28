@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using HelpersLib;
-using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
@@ -193,15 +192,9 @@ namespace UploadersLib
 
             // RapidShare
 
-            if (cboRapidShareAcctType.Items.Count == 0)
-            {
-                cboRapidShareAcctType.Items.AddRange(typeof(RapidShareAcctType).GetEnumDescriptions());
-            }
-
-            cboRapidShareAcctType.SelectedIndex = (int)Config.RapidShareAccountType;
-            txtRapidShareCollectorID.Text = Config.RapidShareCollectorsID;
+            atcRapidShareAccountType.SelectedAccountType = Config.RapidShareAccountType;
+            txtRapidShareUsername.Text = Config.RapidShareUsername;
             txtRapidSharePassword.Text = Config.RapidSharePassword;
-            txtRapidSharePremiumUserName.Text = Config.RapidSharePremiumUserName;
 
             // SendSpace
 
