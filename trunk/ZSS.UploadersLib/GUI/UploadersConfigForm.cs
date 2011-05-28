@@ -509,7 +509,7 @@ namespace UploadersLib
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    ImportImageUploaders(dlg.FileName);
+                    ImportCustomUploaders(dlg.FileName);
                 }
             }
         }
@@ -526,12 +526,7 @@ namespace UploadersLib
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        CustomUploaderManager ihsm = new CustomUploaderManager
-                        {
-                            ImageHostingServices = Config.CustomUploadersList
-                        };
-
-                        ihsm.Save(dlg.FileName);
+                        ExportCustomUploaders(dlg.FileName);
                     }
                 }
             }
@@ -550,7 +545,7 @@ namespace UploadersLib
             {
                 btnCustomUploaderTest.Enabled = false;
 
-                // TODO: Loader.Worker.StartWorkerScreenshots(WorkerTask.JobLevel2.CustomUploaderTest);
+                TestCustomUploader(Config.CustomUploadersList[lbCustomUploaderList.SelectedIndex]);
             }
         }
 

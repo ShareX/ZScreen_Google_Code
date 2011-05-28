@@ -16,7 +16,7 @@ namespace HelpersLib
         [ReadOnly(true)]
         public string XMLSettingsFile { get; set; }
 
-        [Category("Options / General"), DefaultValue(true), Description("Prefer System Folders for all the data created by ZScreen")]
+        [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
 
         [Category("Options / Paths"), DefaultValue(false), Description("Use a customised History path.")]

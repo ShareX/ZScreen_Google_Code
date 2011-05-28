@@ -374,5 +374,12 @@ namespace UploadersLib.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap ZScreen_256 {
+            get {
+                object obj = ResourceManager.GetObject("ZScreen_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

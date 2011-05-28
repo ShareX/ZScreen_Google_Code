@@ -114,6 +114,13 @@ namespace HelpersLib
             }
         }
 
+        public static Stream GetStream(this Image img)
+        {
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, img.RawFormat);
+            return ms;
+        }
+
         public static ImageCodecInfo GetCodecInfo(this ImageFormat format)
         {
             foreach (ImageCodecInfo info in ImageCodecInfo.GetImageEncoders())
