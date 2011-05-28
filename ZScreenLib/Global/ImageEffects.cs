@@ -415,7 +415,7 @@ namespace ZScreenLib
             switch (Engine.conf.ImageSizeType)
             {
                 case ImageSizeType.FIXED:
-                    img = GraphicsMgr.ChangeImageSize(img, Engine.conf.ImageSizeFixedWidth, Engine.conf.ImageSizeFixedHeight);
+                    img = GraphicsMgr.ChangeImageSize(img, Engine.conf.ImageSizeFixedWidth, Engine.conf.ImageSizeFixedHeight, true, true);
                     break;
                 case ImageSizeType.RATIO:
                     img = GraphicsMgr.ChangeImageSize(img, Engine.conf.ImageSizeRatioPercentage);
