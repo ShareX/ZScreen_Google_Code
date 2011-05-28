@@ -762,13 +762,8 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.RapidShare:
-                    fileHost = new RapidShare(new RapidShareOptions()
-                    {
-                        AccountType = Engine.MyUploadersConfig.RapidShareAccountType,
-                        PremiumUsername = Engine.MyUploadersConfig.RapidSharePremiumUserName,
-                        Password = Engine.MyUploadersConfig.RapidSharePassword,
-                        CollectorsID = Engine.MyUploadersConfig.RapidShareCollectorsID
-                    });
+                    fileHost = new RapidShare(Engine.MyUploadersConfig.RapidShareAccountType, Engine.MyUploadersConfig.RapidShareUsername,
+                        Engine.MyUploadersConfig.RapidSharePassword);
                     break;
                 case FileUploaderType.ShareCX:
                     fileHost = new ShareCX();

@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using HelpersLib;
-using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 
@@ -57,9 +56,9 @@ namespace UploadersLib
 
         #region ImageShack
 
-        private void atcImageShackAccountType_AccountTypeChanged(object sender, EventArgs e)
+        private void atcImageShackAccountType_AccountTypeChanged(AccountType accountType)
         {
-            Config.ImageShackAccountType = atcImageShackAccountType.SelectedAccountType;
+            Config.ImageShackAccountType = accountType;
         }
 
         private void txtImageShackRegistrationCode_TextChanged(object sender, EventArgs e)
@@ -98,9 +97,9 @@ namespace UploadersLib
 
         #region TinyPic
 
-        private void atcTinyPicAccountType_AccountTypeChanged(object sender, EventArgs e)
+        private void atcTinyPicAccountType_AccountTypeChanged(AccountType accountType)
         {
-            Config.TinyPicAccountType = atcTinyPicAccountType.SelectedAccountType;
+            Config.TinyPicAccountType = accountType;
         }
 
         private void txtTinyPicUsername_TextChanged(object sender, EventArgs e)
@@ -169,9 +168,9 @@ namespace UploadersLib
 
         #region Imgur
 
-        private void atcImgurAccountType_AccountTypeChanged(object sender, EventArgs e)
+        private void atcImgurAccountType_AccountTypeChanged(AccountType accountType)
         {
-            Config.ImgurAccountType = atcImgurAccountType.SelectedAccountType;
+            Config.ImgurAccountType = accountType;
         }
 
         private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
@@ -337,22 +336,14 @@ namespace UploadersLib
 
         #region RapidShare
 
-        private void cboRapidShareAcctType_SelectedIndexChanged(object sender, EventArgs e)
+        private void atcRapidShareAccountType_AccountTypeChanged(AccountType accountType)
         {
-            Config.RapidShareAccountType = (RapidShareAcctType)cboRapidShareAcctType.SelectedIndex;
-            txtRapidSharePremiumUserName.Enabled = Config.RapidShareAccountType == RapidShareAcctType.Premium;
-            txtRapidShareCollectorID.Enabled = Config.RapidShareAccountType != RapidShareAcctType.Free && !txtRapidSharePremiumUserName.Enabled;
-            txtRapidSharePassword.Enabled = Config.RapidShareAccountType != RapidShareAcctType.Free;
+            Config.RapidShareAccountType = accountType;
         }
 
-        private void txtRapidShareCollectorID_TextChanged(object sender, EventArgs e)
+        private void txtRapidShareUsername_TextChanged(object sender, EventArgs e)
         {
-            Config.RapidShareCollectorsID = txtRapidShareCollectorID.Text;
-        }
-
-        private void txtRapidSharePremiumUserName_TextChanged(object sender, EventArgs e)
-        {
-            Config.RapidSharePremiumUserName = txtRapidSharePremiumUserName.Text;
+            Config.RapidShareUsername = txtRapidShareUsername.Text;
         }
 
         private void txtRapidSharePassword_TextChanged(object sender, EventArgs e)
@@ -364,9 +355,9 @@ namespace UploadersLib
 
         #region SendSpace
 
-        private void atcSendSpaceAccountType_AccountTypeChanged(object sender, EventArgs e)
+        private void atcSendSpaceAccountType_AccountTypeChanged(AccountType accountType)
         {
-            Config.SendSpaceAccountType = atcSendSpaceAccountType.SelectedAccountType;
+            Config.SendSpaceAccountType = accountType;
         }
 
         private void btnSendSpaceRegister_Click(object sender, EventArgs e)

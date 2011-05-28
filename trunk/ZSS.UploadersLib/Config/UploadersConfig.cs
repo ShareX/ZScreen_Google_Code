@@ -100,10 +100,9 @@ namespace UploadersLib
 
         // RapidShare
 
-        public string RapidSharePremiumUserName = string.Empty;
-        public string RapidShareCollectorsID = string.Empty;
+        public AccountType RapidShareAccountType = AccountType.Anonymous;
+        public string RapidShareUsername = string.Empty;
         public string RapidSharePassword = string.Empty;
-        public RapidShareAcctType RapidShareAccountType = RapidShareAcctType.Free;
 
         // SendSpace
 
