@@ -127,7 +127,7 @@
             this.lblSendSpaceUsername = new System.Windows.Forms.Label();
             this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
-            this.tbLocalhost = new System.Windows.Forms.TabPage();
+            this.tpSharedFolders = new System.Windows.Forms.TabPage();
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
@@ -202,7 +202,7 @@
             this.gbFtpSettings.SuspendLayout();
             this.tpRapidShare.SuspendLayout();
             this.tpSendSpace.SuspendLayout();
-            this.tbLocalhost.SuspendLayout();
+            this.tpSharedFolders.SuspendLayout();
             this.tpCustomUploaders.SuspendLayout();
             this.gbCustomUploaders.SuspendLayout();
             this.gbCustomUploaderRegexp.SuspendLayout();
@@ -349,8 +349,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
@@ -473,8 +473,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -591,8 +591,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -603,9 +603,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -815,9 +815,9 @@
             // 
             // ucMediaWikiAccounts
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
@@ -842,7 +842,7 @@
             this.tcFileUploaders.Controls.Add(this.tpFTP);
             this.tcFileUploaders.Controls.Add(this.tpRapidShare);
             this.tcFileUploaders.Controls.Add(this.tpSendSpace);
-            this.tcFileUploaders.Controls.Add(this.tbLocalhost);
+            this.tcFileUploaders.Controls.Add(this.tpSharedFolders);
             this.tcFileUploaders.Controls.Add(this.tpCustomUploaders);
             this.tcFileUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcFileUploaders.Location = new System.Drawing.Point(3, 3);
@@ -1279,16 +1279,16 @@
             this.txtSendSpaceUserName.TabIndex = 19;
             this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
             // 
-            // tbLocalhost
+            // tpSharedFolders
             // 
-            this.tbLocalhost.Controls.Add(this.ucLocalhostAccounts);
-            this.tbLocalhost.Location = new System.Drawing.Point(4, 22);
-            this.tbLocalhost.Name = "tbLocalhost";
-            this.tbLocalhost.Padding = new System.Windows.Forms.Padding(3);
-            this.tbLocalhost.Size = new System.Drawing.Size(772, 448);
-            this.tbLocalhost.TabIndex = 5;
-            this.tbLocalhost.Text = "Localhost";
-            this.tbLocalhost.UseVisualStyleBackColor = true;
+            this.tpSharedFolders.Controls.Add(this.ucLocalhostAccounts);
+            this.tpSharedFolders.Location = new System.Drawing.Point(4, 22);
+            this.tpSharedFolders.Name = "tpSharedFolders";
+            this.tpSharedFolders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSharedFolders.Size = new System.Drawing.Size(772, 448);
+            this.tpSharedFolders.TabIndex = 5;
+            this.tpSharedFolders.Text = "Shared Folders";
+            this.tpSharedFolders.UseVisualStyleBackColor = true;
             // 
             // ucLocalhostAccounts
             // 
@@ -1848,7 +1848,7 @@
             this.tpRapidShare.PerformLayout();
             this.tpSendSpace.ResumeLayout(false);
             this.tpSendSpace.PerformLayout();
-            this.tbLocalhost.ResumeLayout(false);
+            this.tpSharedFolders.ResumeLayout(false);
             this.tpCustomUploaders.ResumeLayout(false);
             this.tpCustomUploaders.PerformLayout();
             this.gbCustomUploaders.ResumeLayout(false);
@@ -1956,7 +1956,7 @@
         private System.Windows.Forms.TextBox txtSendSpaceUserName;
         private System.Windows.Forms.PropertyGrid pgPastebinSettings;
         private System.Windows.Forms.Button btnPastebinLogin;
-        private System.Windows.Forms.TabPage tbLocalhost;
+        private System.Windows.Forms.TabPage tpSharedFolders;
         internal AccountsControl ucLocalhostAccounts;
         private System.Windows.Forms.Button btnFlickrOpenImages;
         private System.Windows.Forms.PropertyGrid pgFlickrAuthInfo;
