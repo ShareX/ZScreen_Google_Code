@@ -140,7 +140,6 @@ namespace ZScreenLib
         #endregion Paths
 
         public static string RootImagesDir = zPicturesDir;
-
         public static string CacheDir = zCacheDir;
         public static string FilesDir = zFilesDir;
         public static string LogsDir = zLogsDir;
@@ -153,7 +152,7 @@ namespace ZScreenLib
             {
                 if (conf != null && conf.UseCustomImagesDir && !String.IsNullOrEmpty(conf.CustomImagesDir))
                 {
-                    return Engine.ImagesDir = conf.CustomImagesDir;
+                    return conf.CustomImagesDir;
                 }
                 else
                 {
@@ -170,7 +169,6 @@ namespace ZScreenLib
                     return Path.Combine(imagesDir, saveFolderPath);
                 }
             }
-            set { ; }
         }
 
         private static string[] AppDirs;
