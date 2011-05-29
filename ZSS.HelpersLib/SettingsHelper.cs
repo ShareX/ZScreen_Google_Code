@@ -112,6 +112,9 @@ namespace HelpersLib
             {
                 StaticHelper.WriteException(e);
 
+                // TODO: This causes MessageBox to fire in Designer for some reason. 
+
+                /*
                 if (onErrorAskFile)
                 {
                     string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}\r\n\r\nDo you want to load settings file from your backup?", path, e.ToString());
@@ -143,6 +146,7 @@ namespace HelpersLib
                         }
                     }
                 }
+                 * */
             }
             finally
             {

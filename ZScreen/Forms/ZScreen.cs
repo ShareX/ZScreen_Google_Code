@@ -883,11 +883,6 @@ namespace ZScreenGUI
             CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
         }
 
-        private void txtFileDirectory_TextChanged(object sender, EventArgs e)
-        {
-            Engine.ImagesDir = txtImagesDir.Text;
-        }
-
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.DeleteLocal = chkDeleteLocal.Checked;

@@ -3071,7 +3071,6 @@ namespace ZScreenGUI
             this.txtImagesDir.ReadOnly = true;
             this.txtImagesDir.Size = new System.Drawing.Size(539, 20);
             this.txtImagesDir.TabIndex = 1;
-            this.txtImagesDir.TextChanged += new System.EventHandler(this.txtFileDirectory_TextChanged);
             // 
             // gbLogs
             // 
