@@ -409,28 +409,29 @@ namespace ZScreenLib
                 {
                     if (app.Enabled)
                     {
-                        if (app.Name == Engine.zImageAnnotator)
+                        if (Job1 == JobLevel1.File && app.TriggerForFiles ||
+                            Job1 == JobLevel1.Image && app.TriggerForImages && !this.WasToTakeScreenshot ||
+                            Job1 == JobLevel1.Image && app.TriggerForScreenshots && this.WasToTakeScreenshot ||
+                            Job1 == JobLevel1.Text && app.TriggerForText)
                         {
-                            try
+                            if (app.Name == Engine.zImageAnnotator)
                             {
-                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                                editor.MyWorker = MyWorker;
-                                editor.SetImage(MyImage);
-                                editor.SetImagePath(LocalFilePath);
-                                editor.ShowDialog();
+                                try
+                                {
+                                    Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
+                                    Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                                    editor.AutoSave = Engine.conf.ImageEditorAutoSave;
+                                    editor.MyWorker = MyWorker;
+                                    editor.SetImage(MyImage);
+                                    editor.SetImagePath(LocalFilePath);
+                                    editor.ShowDialog();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Engine.MyLogger.WriteException(ex, "ImageEdit");
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                Engine.MyLogger.WriteException(ex, "ImageEdit");
-                            }
-                        }
-                        else if (File.Exists(app.Path))
-                        {
-                            if (Job1 == JobLevel1.File && app.TriggerForFiles ||
-                                Job1 == JobLevel1.Image && app.TriggerForImages ||
-                                Job1 == JobLevel1.Text && app.TriggerForText)
+                            else if (File.Exists(app.Path))
                             {
                                 app.OpenFile(LocalFilePath);
                             }

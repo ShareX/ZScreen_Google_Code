@@ -1088,9 +1088,9 @@ namespace ZScreenGUI
             this.chkPerformActions.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPerformActions.Location = new System.Drawing.Point(16, 136);
             this.chkPerformActions.Name = "chkPerformActions";
-            this.chkPerformActions.Size = new System.Drawing.Size(203, 17);
+            this.chkPerformActions.Size = new System.Drawing.Size(231, 17);
             this.chkPerformActions.TabIndex = 68;
-            this.chkPerformActions.Text = "Perform &Actions after capturing Image";
+            this.chkPerformActions.Text = "Perform &Actions before reaching destination";
             this.chkPerformActions.UseVisualStyleBackColor = true;
             this.chkPerformActions.CheckedChanged += new System.EventHandler(this.ChkEditorsEnableCheckedChanged);
             // 
