@@ -49,12 +49,6 @@ namespace HelpersLib
     {
         [Description("ASCII or Unicode plaintext")]
         txt,
-        [Description("Rich Text document")]
-        rtf,
-        [Description("Microsoft Word document")]
-        doc,
-        [Description("Office Open XML Text document")]
-        docx,
         [Description("ASCII or extended ASCII text file")]
         nfo,
         [Description("C source")]

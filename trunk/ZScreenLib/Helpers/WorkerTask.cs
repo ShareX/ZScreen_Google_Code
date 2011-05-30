@@ -149,7 +149,7 @@ namespace ZScreenLib
             }
         }
         public int UploadDuration { get; set; }
-        public bool IsImage { get; set; }
+        public bool IsImage { get; private set; }
         public int UniqueNumber { get; set; }
 
         public Image MyImage { get; private set; }
@@ -220,14 +220,6 @@ namespace ZScreenLib
             if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
             {
                 this.Job1 = JobLevel1.Text;
-            }
-            else if (MyImageUploader == ImageUploaderType.FileUploader)
-            {
-                this.Job1 = JobLevel1.File;
-            }
-            else
-            {
-                this.Job1 = JobLevel1.Image;
             }
         }
 
@@ -343,19 +335,32 @@ namespace ZScreenLib
 
         public void UpdateLocalFilePath(string fp)
         {
+            this.FileName = Path.GetFileName(fp);
             this.LocalFilePath = fp;
+
+            if (ZAppHelper.IsTextFile(fp))
+            {
+                this.Job1 = JobLevel1.Text;
+            }
+            else if (ZAppHelper.IsImageFile(fp))
+            {
+                this.Job1 = JobLevel1.Image;
+                this.IsImage = true;
+                if (GraphicsMgr.IsValidImage(fp) && this.MyImage == null)
+                {
+                    this.MyImage = FileSystem.ImageFromFile(fp);
+                }
+            }
+            else
+            {
+                this.Job1 = JobLevel1.File;
+            }
+
             this.LinkManager = new ImageFileManager(fp);
             this.UpdateRemoteFilePath(new UploadResult()
             {
                 URL = this.LinkManager.GetLocalFilePathAsUri(Engine.IsPortable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath)
-            });
-            this.IsImage = GraphicsMgr.IsValidImage(fp);
-            this.FileName = Path.GetFileName(fp);
-
-            if (GraphicsMgr.IsValidImage(fp) && this.MyImage == null)
-            {
-                this.MyImage = FileSystem.ImageFromFile(fp);
-            }
+            });        
         }
 
         #endregion Populating Task
