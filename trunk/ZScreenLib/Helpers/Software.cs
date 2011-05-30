@@ -73,11 +73,13 @@ namespace ZScreenLib
             this.Protected = bProtected;
         }
 
-        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images.")]
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images copied from Explorer or copied to clipboard.")]
         public bool TriggerForImages { get; set; }
-        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for text.")]
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for screenshots captured using hotkeys such as Print Screen.")]
+        public bool TriggerForScreenshots { get; set; }
+        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for text.")]
         public bool TriggerForText { get; set; }
-        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for files.")]
+        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for files.")]
         public bool TriggerForFiles { get; set; }
 
         public Software(string sName, string sPath, bool bProtected, bool bEnabled)

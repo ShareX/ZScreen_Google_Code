@@ -124,7 +124,7 @@ namespace Greenshot
             this.lastSaveFullPath = fullpath;
             if (fullpath == null) return;
             updateStatusLabel("Image saved to %storagelocation%.".Replace("%storagelocation%", fullpath), fileSavedStatusContextMenu);
-            this.Text = "Image Editor" + " - " + Path.GetFileName(fullpath);
+            this.Text = "Image Annotator" + " - " + Path.GetFileName(fullpath);
             this.saveToolStripMenuItem.Enabled = true;
         }
 
