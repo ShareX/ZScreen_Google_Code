@@ -9,10 +9,6 @@ namespace ZScreenLib
         public DestSelector()
         {
             InitializeComponent();
-            if (Engine.MyUploadersConfig == null)
-            {
-                Engine.MyUploadersConfig = UploadersConfig.Load(Engine.UploadersConfigPath);
-            }
         }
 
         private void btnOpenUploadersConfig_Click(object sender, System.EventArgs e)
