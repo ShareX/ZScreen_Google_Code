@@ -247,6 +247,10 @@ namespace ZScreenLib
             {
                 if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.AppConf.XMLSettingsFile))
                 {
+                    if (MyUploadersConfig == null)
+                    {
+                        MyUploadersConfig = UploadersConfig.Load(Engine.UploadersConfigPath);
+                    }
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     startEngine = cw.ShowDialog();
                     if (startEngine == DialogResult.OK)
