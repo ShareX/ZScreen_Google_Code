@@ -84,7 +84,7 @@ namespace HelpersLib
             return false;
         }
 
-        public static T Load<T>(string path, SerializationType type, bool onErrorAskFile = true) where T : new()
+        public static T Load<T>(string path, SerializationType type, bool onErrorShowWarning = true) where T : new()
         {
             StaticHelper.WriteLine("Settings load started: " + path);
 
@@ -112,13 +112,13 @@ namespace HelpersLib
             {
                 StaticHelper.WriteException(e);
 
-                // TODO: This causes MessageBox to fire in Designer for some reason. 
-
-                /*
-                if (onErrorAskFile)
+                if (onErrorShowWarning)
                 {
-                    string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}\r\n\r\nDo you want to load settings file from your backup?", path, e.ToString());
+                    string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}", path, e.ToString());
 
+                    MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    /*
                     if (MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                     {
                         string filter;
@@ -144,9 +144,8 @@ namespace HelpersLib
                                 return Load<T>(dlg.FileName, type);
                             }
                         }
-                    }
+                    }*/
                 }
-                 * */
             }
             finally
             {

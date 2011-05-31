@@ -328,7 +328,7 @@ namespace ZUploader
                     }
                     break;
                 case FileUploaderType.RapidShare:
-                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareAccountType, Program.UploadersConfig.RapidShareUsername,
+                    fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUserAccountType, Program.UploadersConfig.RapidShareUsername,
                         Program.UploadersConfig.RapidSharePassword);
                     break;
                 case FileUploaderType.ShareCX:

@@ -192,7 +192,7 @@ namespace UploadersLib
 
             // RapidShare
 
-            atcRapidShareAccountType.SelectedAccountType = Config.RapidShareAccountType;
+            atcRapidShareAccountType.SelectedAccountType = Config.RapidShareUserAccountType;
             txtRapidShareUsername.Text = Config.RapidShareUsername;
             txtRapidSharePassword.Text = Config.RapidSharePassword;
 

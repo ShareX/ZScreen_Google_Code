@@ -100,7 +100,7 @@ namespace UploadersLib
 
         // RapidShare
 
-        public AccountType RapidShareAccountType = AccountType.Anonymous;
+        public AccountType RapidShareUserAccountType = AccountType.Anonymous;
         public string RapidShareUsername = string.Empty;
         public string RapidSharePassword = string.Empty;
 
