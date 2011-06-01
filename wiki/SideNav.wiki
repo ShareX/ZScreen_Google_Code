@@ -1,7 +1,7 @@
 #summary Side Navigation
 #labels Phase-Design
 
- * [FAQ Frequently Asked Questions]
+ * [FAQ FAQ]
  * General
   * [Features Feature list]
   * [Screenshots Screenshots]
@@ -30,9 +30,10 @@
       * [Watermark Watermark]
       * [NamingConventions Naming conventions]
       * [DirectoryIndexer Directory indexer]
-      * [Statistics Statistics]
+    * [Advanced Advanced]
+      * [AdvancedOptions Settings]
       * [Debug Debug]
-    * [AdvancedOptions Advanced Options]
+      * [Statistics Statistics]
   * [Destinations Uploaders Configuration]
       * [FTP FTP]
       * [Dropbox Dropbox]
