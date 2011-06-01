@@ -74,9 +74,10 @@ namespace Greenshot.Forms
             this.checkbox_dontaskagain.Checked = false;
         }
 
-        private void Button_okClick(object sender, EventArgs e)
+        private void button_ok_Click(object sender, EventArgs e)
         {
-            this.AllowPrintCenter = this.checkboxAllowCenter.Checked;
+
+                 this.AllowPrintCenter = this.checkboxAllowCenter.Checked;
             this.AllowPrintEnlarge = this.checkboxAllowEnlarge.Checked;
             this.AllowPrintRotate = this.checkboxAllowRotate.Checked;
             this.AllowPrintShrink = this.checkboxAllowShrink.Checked;
@@ -88,7 +89,6 @@ namespace Greenshot.Forms
                 conf.Output_Print_AllowShrink = (bool?)this.AllowPrintShrink;
                 conf.Output_Print_PromptOptions = false;
                 conf.Save();
-            }
-        }
+            }   }
     }
 }

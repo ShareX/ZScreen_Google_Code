@@ -86,8 +86,10 @@ namespace ZScreenLib
         private void GetImageForPrint(object sender, PrintPageEventArgs e)
         {
             PrintOptionsDialog pod = new PrintOptionsDialog();
-            pod.ShowDialog();
-
+            if ((bool)Greenshot.Configuration.AppConfig.GetInstance().Output_Print_PromptOptions)
+            {
+                pod.ShowDialog();
+            }
             ContentAlignment alignment = pod.AllowPrintCenter ? ContentAlignment.MiddleCenter : ContentAlignment.TopLeft;
 
             RectangleF pageRect = e.PageSettings.PrintableArea;
