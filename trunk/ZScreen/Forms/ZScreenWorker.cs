@@ -158,7 +158,7 @@ namespace ZScreenGUI
                         break;
                 }
 
-                if (task.LinkManager != null && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
+                if (task.UploadResults.Count > 0 && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
                 {
                     task.ShortenURL(task.RemoteFilePath);
                 }
@@ -309,7 +309,7 @@ namespace ZScreenGUI
                         Adapter.TwitterMsg(task);
                     }
 
-                    bool bLastSourceButtonsEnabled = task.LinkManager != null && !string.IsNullOrEmpty(task.LinkManager.UploadResult.Source);
+                    bool bLastSourceButtonsEnabled = task.UploadResults.Count > 0 && !string.IsNullOrEmpty(task.UploadResults[task.UploadResults.Count - 1].Source);
                     this.btnOpenSourceText.Enabled = bLastSourceButtonsEnabled;
                     this.btnOpenSourceBrowser.Enabled = bLastSourceButtonsEnabled;
                     this.btnOpenSourceString.Enabled = bLastSourceButtonsEnabled;
@@ -324,7 +324,7 @@ namespace ZScreenGUI
                         this.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.LinkManager != null && !string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                    if (task.UploadResults.Count > 0 && !string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                     {
                         if (Engine.conf.CompleteSound)
                         {
@@ -1003,7 +1003,6 @@ namespace ZScreenGUI
             task.Errors.Clear();
             task.MyWorker = CreateWorker();
             task.LinkManager = new ImageFileManager(task.LocalFilePath);
-            task.UpdateRemoteFilePath(new UploadResult());
             task.PublishData();
         }
 
@@ -1060,7 +1059,10 @@ namespace ZScreenGUI
         {
             if (Engine.conf.HistorySave)
             {
-                HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem());
+                foreach (UploadResult ur in task.UploadResults)
+                {
+                    HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem(ur));
+                }
             }
 
             Adapter.AddRecentItem(task.LocalFilePath);

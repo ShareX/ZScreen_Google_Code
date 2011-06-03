@@ -163,16 +163,16 @@ namespace ZScreenLib
         {
             get
             {
-                if (LinkManager != null)
+                if (UploadResults.Count > 0)
                 {
-                    if (!string.IsNullOrEmpty(LinkManager.UploadResult.ShortenedURL))
+                    if (!string.IsNullOrEmpty(UploadResults[UploadResults.Count - 1].ShortenedURL))
                     {
-                        return LinkManager.UploadResult.ShortenedURL;
+                        return UploadResults[UploadResults.Count - 1].ShortenedURL;
                     }
 
-                    return LinkManager.UploadResult.URL;
+                    return UploadResults[UploadResults.Count - 1].URL;
                 }
-                throw new Exception("Attempted to access RemoteFilePath when LinkManager is null. Check for task.LinkManager != null before accessing RemoteFilePath.");
+                throw new Exception("Attempted to prematurally access RemoteFilePath when UploadResults was zero. Check for task.UploadResults count before accessing RemoteFilePath.");
             }
         }
 
@@ -184,12 +184,15 @@ namespace ZScreenLib
         public UrlShortenerType MyUrlShortener { get; set; }
         public FileUploaderType MyFileUploader { get; set; }
 
+        public List<UploadResult> UploadResults { get; private set; }
+
         #endregion Properties
 
         #region Constructors
 
         private WorkerTask()
         {
+            this.UploadResults = new List<UploadResult>();
             this.Errors = new List<string>();
             this.Status = TaskStatus.Started;
         }
@@ -324,13 +327,12 @@ namespace ZScreenLib
             return true;
         }
 
-        public void UpdateRemoteFilePath(UploadResult ur)
+        public void AddUploadResult(UploadResult ur)
         {
-            if (this.LinkManager == null)
+            if (ur != null)
             {
-                this.LinkManager = new ImageFileManager(ur.Source);
+                this.UploadResults.Add(ur);
             }
-            this.LinkManager.SetUploadResult(ur);
         }
 
         public void UpdateLocalFilePath(string fp)
@@ -357,10 +359,6 @@ namespace ZScreenLib
             }
 
             this.LinkManager = new ImageFileManager(fp);
-            this.UpdateRemoteFilePath(new UploadResult()
-            {
-                URL = this.LinkManager.GetLocalFilePathAsUri(Engine.IsPortable ? Path.Combine(Application.StartupPath, this.LocalFilePath) : this.LocalFilePath)
-            });        
         }
 
         #endregion Populating Task
@@ -548,6 +546,10 @@ namespace ZScreenLib
                         fp = Path.Combine(Application.StartupPath, fp);
                         this.UpdateLocalFilePath(fp);
                     }
+                    this.AddUploadResult(new UploadResult()
+                    {
+                        URL = this.LinkManager.GetLocalFilePathAsUri(fp)
+                    });
                     break;
                 case ImageUploaderType.IMAGESHACK:
                     imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
@@ -616,16 +618,16 @@ namespace ZScreenLib
                     {
                         if (File.Exists(fullFilePath))
                         {
-                            this.UpdateRemoteFilePath(imageUploader.Upload(fullFilePath));
+                            this.AddUploadResult(imageUploader.Upload(fullFilePath));
                         }
                         else if (this.MyImage != null && this.FileName != null)
                         {
-                            this.UpdateRemoteFilePath(imageUploader.Upload(this.MyImage, this.FileName.ToString()));
+                            this.AddUploadResult(imageUploader.Upload(this.MyImage, this.FileName.ToString()));
                         }
 
                         this.Errors = imageUploader.Errors;
 
-                        if (string.IsNullOrEmpty(this.LinkManager.UploadResult.URL))
+                        if (string.IsNullOrEmpty(this.UploadResults[UploadResults.Count - 1].URL))
                         {
                             this.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", this.MyImageUploader.GetDescription(), i));
                         }
@@ -710,7 +712,7 @@ namespace ZScreenLib
                             url = textUploader.UploadTextFile(this.LocalFilePath);
                         }
 
-                        this.UpdateRemoteFilePath(new UploadResult() { URL = url });
+                        this.AddUploadResult(new UploadResult() { URL = url });
                         this.Errors = textUploader.Errors;
                     }
                 }
@@ -777,11 +779,7 @@ namespace ZScreenLib
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 this.DestinationName = this.MyFileUploader.GetDescription();
                 fileHost.ProgressChanged += UploadProgressChanged;
-                UploadResult ur = fileHost.Upload(this.LocalFilePath);
-                if (ur != null)
-                {
-                    this.UpdateRemoteFilePath(ur);
-                }
+                this.AddUploadResult(fileHost.Upload(this.LocalFilePath));
                 this.Errors = fileHost.Errors;
             }
 
@@ -792,8 +790,10 @@ namespace ZScreenLib
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public bool UploadFTP(int FtpAccountId)
+        public UploadResult UploadFTP(int FtpAccountId)
         {
+            UploadResult ur = null;
+
             try
             {
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
@@ -813,7 +813,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        this.UpdateRemoteFilePath(new UploadResult() { URL = url });
+                        this.AddUploadResult(new UploadResult() { URL = url });
 
                         if (CreateThumbnail())
                         {
@@ -832,13 +832,14 @@ namespace ZScreenLib
 
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
-                                        this.LinkManager.UploadResult.ThumbnailURL = thumb;
+                                        ur = new UploadResult();
+                                        ur.ThumbnailURL = thumb;
+                                        this.UploadResults.Add(ur);
                                     }
                                 }
                             }
                         }
 
-                        return true;
                     }
                 }
             }
@@ -848,7 +849,7 @@ namespace ZScreenLib
                 this.Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
-            return false;
+            return ur;
         }
 
         public void UploadLocalhost()
@@ -865,7 +866,7 @@ namespace ZScreenLib
                 }
                 File.Move(this.LocalFilePath, destFile);
                 this.UpdateLocalFilePath(destFile);
-                this.LinkManager.UploadResult.URL = acc.GetUriPath(fn);
+                this.UploadResults.Add(new UploadResult() { URL = acc.GetUriPath(fn) });
             }
         }
 
@@ -880,8 +881,7 @@ namespace ZScreenLib
                 this.DestinationName = acc.Name;
                 Engine.MyLogger.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", this.FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
-                this.UpdateRemoteFilePath(uploader.UploadImage(this.LocalFilePath));
-                // RemoteFilePath = acc.Url + "/index.php?title=File:" + (Path.GetFileName(LocalFilePath));
+                this.AddUploadResult(uploader.UploadImage(this.LocalFilePath));
 
                 return true;
             }
@@ -983,7 +983,7 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
                         Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
-                        UpdateRemoteFilePath(new UploadResult() { URL = fullUrl, ShortenedURL = shortenUrl });
+                        AddUploadResult(new UploadResult() { URL = fullUrl, ShortenedURL = shortenUrl });
                         return true;
                     }
                 }
@@ -1079,21 +1079,20 @@ namespace ZScreenLib
             this.MyWorker.RunWorkerAsync(this);
         }
 
-        public HistoryItem GenerateHistoryItem()
+        public HistoryItem GenerateHistoryItem(UploadResult UploadResult)
         {
             HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
-            hi.DateTimeUtc = this.EndTime;
-            if (this.LinkManager != null)
-            {
-                hi.DeletionURL = this.LinkManager.UploadResult.DeletionURL;
-                hi.ThumbnailURL = this.LinkManager.UploadResult.ThumbnailURL;
-                hi.ShortenedURL = this.LinkManager.UploadResult.ShortenedURL;
-                hi.URL = this.LinkManager.UploadResult.URL;
-            }
-            hi.Filename = this.FileName;
-            hi.Filepath = this.LocalFilePath;
-            hi.Host = this.GetDestinationName();
-            hi.Type = this.Job1.GetDescription();
+            hi.DateTimeUtc = EndTime;
+
+            hi.DeletionURL = UploadResult.DeletionURL;
+            hi.ThumbnailURL = UploadResult.ThumbnailURL;
+            hi.ShortenedURL = UploadResult.ShortenedURL;
+            hi.URL = UploadResult.URL;
+
+            hi.Filename = FileName;
+            hi.Filepath = LocalFilePath;
+            hi.Host = GetDestinationName();
+            hi.Type = Job1.GetDescription();
 
             return hi;
         }
