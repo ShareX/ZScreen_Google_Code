@@ -35,23 +35,16 @@ namespace UploadersLib.HelperClasses
         /// Local File Path of the Image if exists
         /// </summary>
         public string LocalFilePath { get; set; }
-
-        public UploadResult UploadResult { get; private set; }
+        private UploadResult UploadResult;
 
         private ImageFileManager()
         {
-            UploadResult = new UploadResult();
+      
         }
 
         public ImageFileManager(string fp)
-            : this()
-        {
+              {
             this.LocalFilePath = fp;
-        }
-
-        public void SetUploadResult(UploadResult ur)
-        {
-            UploadResult = ur;
         }
 
         /// <summary>
