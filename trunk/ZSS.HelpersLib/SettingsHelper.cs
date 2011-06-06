@@ -103,10 +103,6 @@ namespace HelpersLib
                         }
                     }
                 }
-                else
-                {
-                    throw new Exception("File not exist: " + path);
-                }
             }
             catch (Exception e)
             {
