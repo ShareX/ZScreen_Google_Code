@@ -256,7 +256,7 @@ namespace ZScreenGUI
             }
             else
             {
-                txtRootFolder.Text = Engine.DefaultRootAppFolder;
+                txtRootFolder.Text = Engine.AppConf.RootDir;
                 gbRoot.Text = "Root";
             }
 
