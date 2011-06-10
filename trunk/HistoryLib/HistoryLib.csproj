@@ -97,7 +97,7 @@
     <Content Include="History.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>
     </ProjectReference>

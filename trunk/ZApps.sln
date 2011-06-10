@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersAPILib", "ZAPI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderScreenshotPlugin", "ZUploaderScreenshotPlugin\ZUploaderScreenshotPlugin.csproj", "{A269F11C-43AC-4210-B716-BD621C915B43}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ZScreenWindowsInstaller", "ZScreenWindowsInstaller\ZScreenWindowsInstaller.vdproj", "{D7C01FB0-C769-4A48-A088-4E195362742D}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -321,6 +323,12 @@ Global
 		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A269F11C-43AC-4210-B716-BD621C915B43}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Debug|Any CPU.ActiveCfg = Debug
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Debug|x86.ActiveCfg = Debug
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Release|Any CPU.ActiveCfg = Release
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Release|Mixed Platforms.ActiveCfg = Release
+		{D7C01FB0-C769-4A48-A088-4E195362742D}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

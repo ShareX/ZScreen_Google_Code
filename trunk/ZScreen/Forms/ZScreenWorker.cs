@@ -343,8 +343,7 @@ namespace ZScreenGUI
                         {
                             Engine.MyLogger.WriteLine(error);
                         }
-
-                        MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        niTray.ShowBalloonTip(5000, Application.ProductName, niTray.BalloonTipText + Environment.NewLine + task.Errors[task.Errors.Count - 1], ToolTipIcon.Error);
                     }
                 }
 
