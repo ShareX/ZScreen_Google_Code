@@ -46,7 +46,7 @@ namespace ZScreenLib
     public static class UploadManager
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
-        public static ImageFileManager LinkManagerLast { get; set; }
+        public static UploadResult UploadResultLast { get; set; }
 
         private static int UniqueNumber = 0;
 
@@ -159,9 +159,9 @@ namespace ZScreenLib
             else
             {
                 // From this point onwards app needs to respect all other Clipboard URL modes for Images
-                if (task.LinkManager != null && task.Job1 == JobLevel1.Image)
+                if (task.UploadResults.Count > 0 && task.Job1 == JobLevel1.Image)
                 {
-                    clipboardText.Append(task.LinkManager.GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim());
+                    clipboardText.Append(task.UploadResults[0].GetUrlByType((ClipboardUriType)Engine.conf.MyClipboardUriMode).ToString().Trim());
                 }
                 // Text and File catagories are still left to process. Exception for Google Translate
                 else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
@@ -172,12 +172,12 @@ namespace ZScreenLib
                     }
                 }
                 // Text and File catagories are still left to process. If shortened URL exists, preference is given to that
-                else if (task.LinkManager != null && task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
+                else if (task.UploadResults.Count > 0 && task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
                 {
                     clipboardText.Append(task.UploadResults[0].ShortenedURL);
                 }
                 // Otherwise full URL for Text or File is used
-                else if (task.LinkManager != null)
+                else if (task.UploadResults.Count > 0)
                 {
                     clipboardText.Append(FileSystem.GetBrowserFriendlyUrl(task.RemoteFilePath));
                 }
