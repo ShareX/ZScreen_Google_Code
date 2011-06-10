@@ -179,7 +179,6 @@ namespace ZScreenLib
         private string DestinationName = string.Empty;
 
         public ImageUploaderType MyImageUploader { get; set; }
-        public ImageFileManager LinkManager { get; set; }
         public TextUploaderType MyTextUploader { get; set; }
         public UrlShortenerType MyUrlShortener { get; set; }
         public FileUploaderType MyFileUploader { get; set; }
@@ -358,7 +357,6 @@ namespace ZScreenLib
                 this.Job1 = JobLevel1.File;
             }
 
-            this.LinkManager = new ImageFileManager(fp);
         }
 
         #endregion Populating Task
@@ -548,7 +546,7 @@ namespace ZScreenLib
                     }
                     this.AddUploadResult(new UploadResult()
                     {
-                        URL = this.LinkManager.GetLocalFilePathAsUri(fp)
+                        LocalFilePath = fp
                     });
                     break;
                 case ImageUploaderType.IMAGESHACK:
@@ -654,7 +652,7 @@ namespace ZScreenLib
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
             }
 
-            if (this.LinkManager != null)
+            if (this.UploadResults.Count > 0)
             {
                 FlashIcon(this);
             }

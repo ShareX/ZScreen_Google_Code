@@ -30,25 +30,25 @@ namespace ZScreenGUI
             new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
 
-        private void OpenLastSource(ImageFileManager.SourceType sType)
+        private void OpenLastSource(UploadResult.SourceType sType)
         {
-            OpenSource(UploadManager.LinkManagerLast, sType);
+            OpenSource(UploadManager.UploadResultLast, sType);
         }
 
-        private bool OpenSource(ImageFileManager ifm, ImageFileManager.SourceType sType)
+        private bool OpenSource(UploadResult ifm, UploadResult.SourceType sType)
         {
             if (ifm != null)
             {
                 string path = ifm.GetSource(Engine.TempDir, sType);
                 if (!string.IsNullOrEmpty(path))
                 {
-                    if (sType == ImageFileManager.SourceType.TEXT || sType == ImageFileManager.SourceType.HTML)
+                    if (sType == UploadResult.SourceType.TEXT || sType == UploadResult.SourceType.HTML)
                     {
                         Process.Start(path);
                         return true;
                     }
 
-                    if (sType == ImageFileManager.SourceType.STRING)
+                    if (sType == UploadResult.SourceType.STRING)
                     {
                         Clipboard.SetText(path); // ok
                         return true;
