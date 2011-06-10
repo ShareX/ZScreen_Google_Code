@@ -121,7 +121,7 @@ namespace UploadersLib
         CLIPBOARD,
         [Description("File - Copy local file path")]
         FILE,
-        [Description("Localhost")]
+        [Description("Shared Folder")]
         Localhost,
         [Description("Printer")]
         PRINTER,

@@ -300,7 +300,7 @@ namespace HistoryLib
         {
             pbThumbnail.Reset();
 
-            if (him.IsImageURL)
+            if (him.IsImageURL || File.Exists(him.HistoryItem.Filepath))
             {
                 pbThumbnail.LoadImage(him.HistoryItem.Filepath, him.HistoryItem.URL);
             }
