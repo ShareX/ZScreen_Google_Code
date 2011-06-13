@@ -38,36 +38,31 @@ namespace HelpersLib
 
     public static class SettingsHelper
     {
-        public static bool Save<T>(T obj, string path, SerializationType type)
+        public static bool Save<T>(T obj, string filePath, SerializationType type)
         {
-            StaticHelper.WriteLine("Settings save started: " + path);
+            StaticHelper.WriteLine("Settings save started: " + filePath);
+
+            bool isSuccess = false;
 
             try
             {
                 lock (obj)
                 {
-                    if (!string.IsNullOrEmpty(path))
+                    if (!string.IsNullOrEmpty(filePath))
                     {
-                        string directoryName = Path.GetDirectoryName(path);
-
-                        if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
-                        {
-                            Directory.CreateDirectory(directoryName);
-                        }
-
-                        using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read))
+                        using (MemoryStream ms = new MemoryStream())
                         {
                             switch (type)
                             {
                                 case SerializationType.Binary:
-                                    new BinaryFormatter().Serialize(fs, obj);
+                                    new BinaryFormatter().Serialize(ms, obj);
                                     break;
                                 case SerializationType.Xml:
-                                    new XmlSerializer(typeof(T)).Serialize(fs, obj);
+                                    new XmlSerializer(typeof(T)).Serialize(ms, obj);
                                     break;
                             }
 
-                            return true;
+                            isSuccess = ms.WriteToFile(filePath);
                         }
                     }
                 }
@@ -78,10 +73,21 @@ namespace HelpersLib
             }
             finally
             {
-                StaticHelper.WriteLine("Settings save finished: " + path);
+                string message;
+
+                if (isSuccess)
+                {
+                    message = "Settings save successful";
+                }
+                else
+                {
+                    message = "Settings save failed";
+                }
+
+                StaticHelper.WriteLine(string.Format("{0}: {1}", message, filePath));
             }
 
-            return false;
+            return isSuccess;
         }
 
         public static T Load<T>(string path, SerializationType type, bool onErrorShowWarning = true) where T : new()
@@ -114,8 +120,7 @@ namespace HelpersLib
 
                     MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    /*
-                    if (MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    /*if (MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                     {
                         string filter;
 

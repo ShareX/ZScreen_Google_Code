@@ -129,11 +129,8 @@ namespace ZScreenLib
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     }
 
-                    using (FileStream fi = File.Create(filePath))
-                    {
-                        Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-                        ms.WriteTo(fi);
-                    }
+                    Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
+                    ms.WriteToFile(filePath);
                 }
                 catch (Exception ex)
                 {
