@@ -34,7 +34,7 @@ namespace HelpersLib
 {
     public partial class ErrorForm : Form
     {
-        public string ProductName { get; private set; }
+        public string ApplicationName { get; private set; }
         public Exception Error { get; private set; }
         public Logger Logger { get; private set; }
         public string LogPath { get; private set; }
@@ -44,15 +44,14 @@ namespace HelpersLib
         {
             InitializeComponent();
 
-            ProductName = productName;
+            ApplicationName = productName;
             Error = error;
             Logger = logger;
-            LogPath = LogPath;
+            LogPath = logPath;
             BugReportPath = bugReportPath;
 
-            Text = string.Format("{0} - Error", ProductName);
+            Text = string.Format("{0} - Error", ApplicationName);
             Logger.WriteException(Error, "Unhandled exception");
-            lblExceptionMessage.Text = Error.Message;
             txtException.Text = Error.ToString();
             btnOpenLogFile.Visible = !string.IsNullOrEmpty(LogPath) && File.Exists(LogPath);
             btnSendBugReport.Visible = !string.IsNullOrEmpty(BugReportPath);
@@ -111,6 +110,7 @@ namespace HelpersLib
                 brush.SetSigmaBellShape(0.25f);
                 g.FillRectangle(brush, rect);
             }
+            g.DrawString(Error.Message, new Font(FontFamily.GenericSansSerif, 9.5f, FontStyle.Regular), Brushes.White, new Point(15, 11));
         }
 
         public static void ThrowExceptionForTest()
