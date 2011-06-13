@@ -75,20 +75,10 @@ namespace ZScreenGUI
             }
             else
             {
-                try
+                if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
                 {
-                    if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
-                    {
-                        Engine.LoadSettings();
-                        Application.Run(MyApp = new ZScreen());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Running ZScreen");
-                }
-                finally
-                {
+                    Engine.LoadSettings();
+                    Application.Run(MyApp = new ZScreen());
                     Engine.TurnOff();
                 }
             }

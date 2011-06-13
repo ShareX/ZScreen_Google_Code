@@ -36,6 +36,7 @@ using HelpersLib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 
@@ -234,6 +235,9 @@ namespace ZScreenLib
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
+            Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
             DialogResult startEngine = DialogResult.OK;
 
             IsPortable = Directory.Exists(Path.Combine(Application.StartupPath, PortableRootFolder));
@@ -319,6 +323,25 @@ namespace ZScreenLib
             }
 
             return startEngine == DialogResult.OK;
+        }
+
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            OnError(e.Exception);
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            OnError((Exception)e.ExceptionObject);
+        }
+
+        private static void OnError(Exception e)
+        {
+            MyLogger.WriteException(e, "Unhandled exception");
+            MyLogger.WriteLine("ZScreen closing. Reason: Unhandled exception");
+            MyLogger.SaveLog(LogFilePath);
+            new ErrorForm("ZScreen - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
+            Application.Exit();
         }
 
         public static void InitializeDefaultFolderPaths(bool dirCreation = true)
