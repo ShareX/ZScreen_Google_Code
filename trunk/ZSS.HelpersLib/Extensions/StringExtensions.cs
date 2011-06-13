@@ -123,5 +123,24 @@ namespace HelpersLib
             }
             return bytes;
         }
+
+        public static string ParseQuoteString(this string str)
+        {
+            int firstQuote = str.IndexOf('"');
+
+            if (firstQuote >= 0)
+            {
+                str = str.Substring(firstQuote + 1);
+
+                int secondQuote = str.IndexOf('"');
+
+                if (secondQuote >= 0)
+                {
+                    str = str.Remove(secondQuote);
+                }
+            }
+
+            return str;
+        }
     }
 }

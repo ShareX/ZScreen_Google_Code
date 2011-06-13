@@ -104,7 +104,6 @@ namespace ZScreenGUI
                     this.Size = Engine.conf.WindowSize;
                     this.Location = Engine.conf.WindowLocation;
                 }
-
             }
 
             CleanCache();
@@ -694,7 +693,7 @@ namespace ZScreenGUI
 
         public void cbStartWin_CheckedChanged(object sender, EventArgs e)
         {
-            RegistryMgr.SetStartWithWindows(chkStartWin.Checked);
+            RegistryHelper.SetStartWithWindows(chkStartWin.Checked);
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -2067,11 +2066,11 @@ namespace ZScreenGUI
         {
             if (chkShellExt.Checked)
             {
-                RegistryMgr.ShellExtRegister();
+                RegistryHelper.RegisterShellContextMenu();
             }
             else
             {
-                RegistryMgr.ShellExtUnregister();
+                RegistryHelper.UnregisterShellContextMenu();
             }
         }
 

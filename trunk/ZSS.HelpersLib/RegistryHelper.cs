@@ -26,10 +26,11 @@
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace ZUploader
+namespace HelpersLib
 {
-    public static class ShellContextMenu
+    public static class RegistryHelper
     {
+        private static string WindowsStartupRun = @"Software\Microsoft\Windows\CurrentVersion\Run";
         private static string ShellExtMenuFiles = @"Software\Classes\*\shell\" + Application.ProductName;
         private static string ShellExtMenuFilesCmd = ShellExtMenuFiles + @"\command";
         private static string ShellExtMenuFolders = @"Software\Classes\Folder\shell\" + Application.ProductName;
@@ -37,7 +38,35 @@ namespace ZUploader
         private static string ShellExtDesc = "Upload using " + Application.ProductName;
         private static string ShellExtPath = string.Format("\"{0}\" \"%1\"", Application.ExecutablePath);
 
-        public static void Register()
+        public static bool CheckStartWithWindows()
+        {
+            return CheckRegistry(WindowsStartupRun, Application.ProductName);
+        }
+
+        public static void SetStartWithWindows(bool startWithWindows)
+        {
+            using (RegistryKey regkey = Registry.CurrentUser.OpenSubKey(WindowsStartupRun, true))
+            {
+                if (regkey != null)
+                {
+                    if (startWithWindows)
+                    {
+                        regkey.SetValue(Application.ProductName, Application.ExecutablePath, RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        regkey.DeleteValue(Application.ProductName, false);
+                    }
+                }
+            }
+        }
+
+        public static bool CheckShellContextMenu()
+        {
+            return CheckRegistry(ShellExtMenuFilesCmd) && CheckRegistry(ShellExtMenuFoldersCmd);
+        }
+
+        public static void RegisterShellContextMenu()
         {
             CreateRegistryKey(ShellExtMenuFiles, ShellExtDesc);
             CreateRegistryKey(ShellExtMenuFilesCmd, ShellExtPath);
@@ -45,7 +74,7 @@ namespace ZUploader
             CreateRegistryKey(ShellExtMenuFoldersCmd, ShellExtPath);
         }
 
-        public static void Unregister()
+        public static void UnregisterShellContextMenu()
         {
             RemoveRegistryKey(ShellExtMenuFilesCmd);
             RemoveRegistryKey(ShellExtMenuFiles);
@@ -53,18 +82,13 @@ namespace ZUploader
             RemoveRegistryKey(ShellExtMenuFolders);
         }
 
-        public static bool Check()
-        {
-            return CheckRegistry(ShellExtMenuFilesCmd) && CheckRegistry(ShellExtMenuFoldersCmd);
-        }
-
-        private static void CreateRegistryKey(string path, string value)
+        private static void CreateRegistryKey(string path, string value, string name = null)
         {
             using (RegistryKey rk = Registry.CurrentUser.CreateSubKey(path))
             {
                 if (rk != null)
                 {
-                    rk.SetValue(string.Empty, value);
+                    rk.SetValue(name, value);
                 }
             }
         }
@@ -80,17 +104,12 @@ namespace ZUploader
             }
         }
 
-        private static bool CheckRegistry(string path)
+        private static bool CheckRegistry(string path, string name = null)
         {
             using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(path))
             {
-                if (rk != null && (string)rk.GetValue(string.Empty, "null") != "null")
-                {
-                    return true;
-                }
+                return rk != null && rk.GetValue(name, null) as string != null;
             }
-
-            return false;
         }
     }
 }

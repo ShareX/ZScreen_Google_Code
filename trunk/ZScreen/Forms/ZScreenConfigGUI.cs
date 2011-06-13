@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
+using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using System.Drawing;
-using ZScreenGUI.Properties;
-using Microsoft.WindowsAPICodePack.Shell;
 
 namespace ZScreenGUI
 {
@@ -167,28 +167,18 @@ namespace ZScreenGUI
             chkPerformActions.Checked = Engine.conf.PerformActions;
             tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            Software editor = new Software(Engine.zImageAnnotator, string.Empty, false) { TriggerForFiles = false, TriggerForText = false };
+            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true);
+
             if (Software.Exist(Engine.zImageAnnotator))
             {
                 editor = Software.GetByName(Engine.zImageAnnotator);
             }
 
-            string mspaint = "Paint";
-            Software paint = new Software(mspaint, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "mspaint.exe"), false) { TriggerForFiles = false, TriggerForText = false };
-            if (Software.Exist(mspaint))
-            {
-                paint = Software.GetByName(mspaint);
-            }
-
-            Engine.conf.ActionsList.RemoveAll(x => x.Path == string.Empty || x.Name == Engine.zImageAnnotator || x.Name == mspaint || !File.Exists(x.Path));
+            Engine.conf.ActionsList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path) || x.Name == Engine.zImageAnnotator);
 
             Engine.conf.ActionsList.Insert(0, editor);
-            if (File.Exists(paint.Path))
-            {
-                Engine.conf.ActionsList.Insert(1, paint);
-            }
 
-            RegistryMgr.FindImageEditors();
+            ImageEditorHelper.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
@@ -199,6 +189,7 @@ namespace ZScreenGUI
                     lbSoftware.Items.Add(app.Name, app.Enabled);
                 }
             }
+
             RewriteImageEditorsRightClickMenu();
 
             int i;
@@ -269,8 +260,8 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_Options()
         {
             // General
-            chkStartWin.Checked = RegistryMgr.CheckStartWithWindows();
-            chkShellExt.Checked = RegistryMgr.CheckShellExt();
+            chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
+            chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
             chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
             chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;

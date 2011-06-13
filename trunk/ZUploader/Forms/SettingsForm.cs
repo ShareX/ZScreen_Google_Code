@@ -53,7 +53,7 @@ namespace ZUploader
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
-            cbShellContextMenu.Checked = ShellContextMenu.Check();
+            cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
 
             // Upload
             cbUseCustomUploadersConfigPath.Checked = Program.Settings.UseCustomUploadersConfigPath;
@@ -197,11 +197,11 @@ namespace ZUploader
             {
                 if (cbShellContextMenu.Checked)
                 {
-                    ShellContextMenu.Register();
+                    RegistryHelper.RegisterShellContextMenu();
                 }
                 else
                 {
-                    ShellContextMenu.Unregister();
+                    RegistryHelper.UnregisterShellContextMenu();
                 }
             }
         }
