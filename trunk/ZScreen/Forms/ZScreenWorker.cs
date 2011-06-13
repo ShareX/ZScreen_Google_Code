@@ -233,7 +233,10 @@ namespace ZScreenGUI
             if (task == null) return;
 
             this.Text = Engine.GetProductName();
-            UploadManager.UploadResultLast = task.UploadResults[task.UploadResults.Count-1];
+            if (task.UploadResults.Count > 0)
+            {
+                UploadManager.UploadResultLast = task.UploadResults[task.UploadResults.Count - 1];
+            }
 
             try
             {
