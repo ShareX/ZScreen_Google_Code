@@ -337,11 +337,7 @@ namespace ZScreenLib
 
         private static void OnError(Exception e)
         {
-            MyLogger.WriteException(e, "Unhandled exception");
-            MyLogger.WriteLine("ZScreen closing. Reason: Unhandled exception");
-            MyLogger.SaveLog(LogFilePath);
-            new ErrorForm("ZScreen - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
-            Application.Exit();
+            new ErrorForm(Application.ProductName, e, MyLogger, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
         }
 
         public static void InitializeDefaultFolderPaths(bool dirCreation = true)
