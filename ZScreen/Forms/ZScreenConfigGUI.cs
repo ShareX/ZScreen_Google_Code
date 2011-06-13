@@ -167,15 +167,9 @@ namespace ZScreenGUI
             chkPerformActions.Checked = Engine.conf.PerformActions;
             tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true);
-
-            if (Software.Exist(Engine.zImageAnnotator))
-            {
-                editor = Software.GetByName(Engine.zImageAnnotator);
-            }
-
             Engine.conf.ActionsList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path) || x.Name == Engine.zImageAnnotator);
 
+            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true);
             Engine.conf.ActionsList.Insert(0, editor);
 
             ImageEditorHelper.FindImageEditors();
