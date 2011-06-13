@@ -60,6 +60,12 @@
     <Compile Include="ClipboardContentViewer.Designer.cs">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="StaticHelper.cs" />
@@ -86,6 +92,9 @@
     <Compile Include="XMLSettingsBase.cs" />
     <EmbeddedResource Include="ClipboardContentViewer.resx">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

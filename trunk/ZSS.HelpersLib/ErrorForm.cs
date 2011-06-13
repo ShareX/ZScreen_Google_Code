@@ -29,9 +29,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
-using HelpersLib;
 
-namespace ZUploader
+namespace HelpersLib
 {
     public partial class ErrorForm : Form
     {
