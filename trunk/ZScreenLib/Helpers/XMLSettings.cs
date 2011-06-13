@@ -258,8 +258,8 @@ namespace ZScreenLib
 
         public List<Software> ActionsList = new List<Software>();
         public Software ImageEditor = null;
-        public Software TextEditorActive;
         public List<Software> TextEditors = new List<Software>();
+        public Software TextEditorActive;
         public bool PerformActions = false;
         public bool TextEditorEnabled = false;
         public bool ImageEditorAutoSave = true;
