@@ -112,7 +112,6 @@ namespace ZScreenLib
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
             UpdateCropMode,
-            CHANGE_UPLOAD_DESTINATION,
             CHANGE_TRAY_ICON_PROGRESS,
             ShowTrayWarning
         }
@@ -178,6 +177,7 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
+        public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public ImageUploaderType MyImageUploader { get; set; }
         public TextUploaderType MyTextUploader { get; set; }
         public UrlShortenerType MyUrlShortener { get; set; }
@@ -214,7 +214,6 @@ namespace ZScreenLib
             this.MyWorker = worker;
             this.Job2 = job;
 
-            MyImageUploader = (ImageUploaderType)Engine.conf.MyImageUploader;
             MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
             MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
             MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
@@ -505,105 +504,155 @@ namespace ZScreenLib
                 PerformActions();
             }
 
-            if (MyImageUploader == ImageUploaderType.FileUploader)
-            {
-                UploadFile();
-            }
-            else
-            {
-                UploadImage();
-            }
+            UploadImage();
+
         }
 
         public void UploadImage()
         {
             this.StartTime = DateTime.Now;
-            if (this.MyImageUploader != ImageUploaderType.CLIPBOARD)
+            if (!this.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
             {
                 Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
             }
 
             ImageUploader imageUploader = null;
 
-            if (Engine.conf.TinyPicSizeCheck && this.MyImageUploader == ImageUploaderType.TINYPIC && File.Exists(this.LocalFilePath))
+            if (Engine.conf.TinyPicSizeCheck && this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(this.LocalFilePath))
             {
                 SizeF size = Image.FromFile(this.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
                 {
                     Engine.MyLogger.WriteLine("Changing from TinyPic to ImageShack due to large image size");
-                    this.MyImageUploader = ImageUploaderType.IMAGESHACK;
+                    if (!this.MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                    {
+                        this.MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                        this.MyImageUploaders.Remove(ImageUploaderType.TINYPIC);
+                    }
                 }
             }
 
-            switch (this.MyImageUploader)
+            if (MyImageUploaders.Contains(ImageUploaderType.FILE))
             {
-                case ImageUploaderType.FILE:
-                    string fp = this.LocalFilePath;
-                    if (Engine.IsPortable)
-                    {
-                        fp = Path.Combine(Application.StartupPath, fp);
-                        this.UpdateLocalFilePath(fp);
-                    }
-                    this.AddUploadResult(new UploadResult()
-                    {
-                        LocalFilePath = fp
-                    });
-                    break;
-                case ImageUploaderType.IMAGESHACK:
-                    imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
-                        Engine.MyUploadersConfig.ImageShackRegistrationCode)
-                    {
-                        IsPublic = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
-                    };
-                    break;
-                case ImageUploaderType.TINYPIC:
-                    imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicAccountType,
-                        Engine.MyUploadersConfig.TinyPicRegistrationCode);
-                    break;
-                case ImageUploaderType.IMGUR:
-                    imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);
-                    break;
-                case ImageUploaderType.FLICKR:
-                    imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
-                        Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
-                    break;
-                case ImageUploaderType.UPLOADSCREENSHOT:
-                    imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
-                    break;
-                case ImageUploaderType.Localhost:
-                    UploadLocalhost();
-                    break;
-                case ImageUploaderType.MEDIAWIKI:
-                    UploadMediaWiki();
-                    break;
-                case ImageUploaderType.PRINTER:
-                    if (this.MyImage != null)
-                    {
-                        this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
-                    }
-                    break;
-                case ImageUploaderType.TWITPIC:
-                    TwitPicOptions twitpicOpt = new TwitPicOptions();
-                    twitpicOpt.Username = Engine.MyUploadersConfig.TwitPicUsername;
-                    twitpicOpt.Password = Engine.MyUploadersConfig.TwitPicPassword;
-                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
-                    twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
-                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;
-                    imageUploader = new TwitPicUploader(twitpicOpt);
-                    break;
-                case ImageUploaderType.TWITSNAPS:
-                    imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
-                    break;
-                case ImageUploaderType.YFROG:
-                    YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
-                    yfrogOp.Username = Engine.MyUploadersConfig.YFrogUsername;
-                    yfrogOp.Password = Engine.MyUploadersConfig.YFrogPassword;
-                    yfrogOp.Source = Application.ProductName;
-                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
-                    imageUploader = new YfrogUploader(yfrogOp);
-                    break;
+                string fp = this.LocalFilePath;
+                if (Engine.IsPortable)
+                {
+                    fp = Path.Combine(Application.StartupPath, fp);
+                    this.UpdateLocalFilePath(fp);
+                }
+                this.AddUploadResult(new UploadResult()
+                {
+                    LocalFilePath = fp
+                });
             }
 
+            if (MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+            {
+                imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
+                    Engine.MyUploadersConfig.ImageShackRegistrationCode)
+                {
+                    IsPublic = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
+                };
+                UploadImage(imageUploader);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+            {
+                imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicAccountType,
+                    Engine.MyUploadersConfig.TinyPicRegistrationCode);
+                UploadImage(imageUploader);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.IMGUR))
+            {
+                imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);
+                UploadImage(imageUploader);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.FLICKR))
+            {
+                imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
+                    Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
+                UploadImage(imageUploader);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.UPLOADSCREENSHOT))
+            {
+                imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
+                UploadImage(imageUploader);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.Localhost))
+            {
+                UploadToSharedFolder();
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.MEDIAWIKI))
+            {
+                UploadToMediaWiki();
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.TWITPIC))
+            {
+                TwitPicOptions twitpicOpt = new TwitPicOptions();
+                twitpicOpt.Username = Engine.MyUploadersConfig.TwitPicUsername;
+                twitpicOpt.Password = Engine.MyUploadersConfig.TwitPicPassword;
+                // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
+                twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;
+                UploadImage(new TwitPicUploader(twitpicOpt));
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.YFROG))
+            {
+                YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
+                yfrogOp.Username = Engine.MyUploadersConfig.YFrogUsername;
+                yfrogOp.Password = Engine.MyUploadersConfig.YFrogPassword;
+                yfrogOp.Source = Application.ProductName;
+                // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                UploadImage(new YfrogUploader(yfrogOp));
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.TWITSNAPS))
+            {
+                UploadImage(new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount()));
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.FileUploader))
+            {
+                UploadFile();
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.PRINTER))
+            {
+                if (this.MyImage != null)
+                {
+                    this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
+                }
+            }
+
+            this.EndTime = DateTime.Now;
+
+            if (Engine.conf.ImageUploadRetryOnTimeout && this.UploadDuration > (int)Engine.conf.UploadDurationLimit)
+            {
+                if (!this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                {
+                    this.MyImageUploaders.Add(ImageUploaderType.TINYPIC);
+                }
+                else if (!this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                {
+                    this.MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                }
+            }
+
+            if (this.UploadResults.Count > 0)
+            {
+                FlashIcon(this);
+            }
+        }
+
+        private void UploadImage(ImageUploader imageUploader)
+        {
             if (imageUploader != null)
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
@@ -620,7 +669,7 @@ namespace ZScreenLib
                         }
                         else if (this.MyImage != null && this.FileName != null)
                         {
-                            this.AddUploadResult(imageUploader.Upload(this.MyImage, this.FileName.ToString()));
+                            this.AddUploadResult(imageUploader.Upload(this.MyImage, this.FileName));
                         }
 
                         this.Errors = imageUploader.Errors;
@@ -635,26 +684,6 @@ namespace ZScreenLib
                         }
                     }
                 }
-            }
-
-            this.EndTime = DateTime.Now;
-
-            if (Engine.conf.ImageUploadRetryOnTimeout && this.UploadDuration > (int)Engine.conf.UploadDurationLimit)
-            {
-                if (this.MyImageUploader == ImageUploaderType.IMAGESHACK)
-                {
-                    Engine.conf.MyImageUploader = (int)ImageUploaderType.TINYPIC;
-                }
-                else if (this.MyImageUploader == ImageUploaderType.TINYPIC)
-                {
-                    Engine.conf.MyImageUploader = (int)ImageUploaderType.IMAGESHACK;
-                }
-                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION);
-            }
-
-            if (this.UploadResults.Count > 0)
-            {
-                FlashIcon(this);
             }
         }
 
@@ -730,13 +759,13 @@ namespace ZScreenLib
                     switch (this.Job1)
                     {
                         case JobLevel1.Text:
-                            UploadFTP(Engine.MyUploadersConfig.FTPSelectedText);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
                             break;
                         case JobLevel1.Image:
-                            UploadFTP(Engine.MyUploadersConfig.FTPSelectedImage);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
                             break;
                         default:
-                            UploadFTP(Engine.MyUploadersConfig.FTPSelectedFile);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
                             break;
                     }
                     break;
@@ -788,7 +817,7 @@ namespace ZScreenLib
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public UploadResult UploadFTP(int FtpAccountId)
+        public UploadResult UploadToFTP(int FtpAccountId)
         {
             UploadResult ur = null;
 
@@ -850,7 +879,7 @@ namespace ZScreenLib
             return ur;
         }
 
-        public void UploadLocalhost()
+        public void UploadToSharedFolder()
         {
             if (Engine.MyUploadersConfig.LocalhostAccountList.CheckSelected(Engine.MyUploadersConfig.LocalhostSelected) && File.Exists(this.LocalFilePath))
             {
@@ -868,7 +897,7 @@ namespace ZScreenLib
             }
         }
 
-        public bool UploadMediaWiki()
+        public bool UploadToMediaWiki()
         {
             string fullFilePath = this.LocalFilePath;
 
@@ -992,7 +1021,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.CLIPBOARD && this.MyImage != null;
+            return Job1 == JobLevel1.Image && MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) && this.MyImage != null;
         }
 
         private bool CreateThumbnail()

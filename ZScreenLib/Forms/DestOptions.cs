@@ -56,10 +56,14 @@ namespace ZScreenLib
             }
 
             // Image Uploaders
-            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
+            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
             {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
-                ucDestOptions.cboImageUploaders.SelectedIndex = (int)Task.MyImageUploader;
+                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                }
             }
 
             // Text Uploaders
@@ -78,11 +82,17 @@ namespace ZScreenLib
 
             // Dest Selector Events
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
-            ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
+           // todo ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
+        }
+
+        void tsmiDestImages_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            tsmi.Checked = !tsmi.Checked;
         }
 
         private void txtInputText_KeyDown(object sender, KeyEventArgs e)
@@ -107,12 +117,6 @@ namespace ZScreenLib
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Task.MyFileUploader = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-        }
-
-        private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ImageUploaderType sdt = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Task.MyImageUploader = sdt;
         }
 
         private void InputBox_Shown(object sender, EventArgs e)

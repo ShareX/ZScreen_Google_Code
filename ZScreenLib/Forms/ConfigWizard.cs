@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -36,7 +37,7 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
-        public ImageUploaderType ImageDestinationType { get; private set; }
+        public List<int> ImageDestinationTypes = new List<int>();
         public FileUploaderType FileUploaderType { get; private set; }
         public TextUploaderType MyTextUploaderType { get; private set; }
         public UrlShortenerType MyUrlShortenerType { get; private set; }
@@ -50,8 +51,15 @@ namespace ZScreenLib
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
 
-            ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)ImageUploaderType.CLIPBOARD;
+            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
+            {
+                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    ucDestOptions.tsddDestImages.DropDownItems.Add(tsmi);
+                }
+            }
 
             ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
@@ -69,7 +77,14 @@ namespace ZScreenLib
             RootFolder = txtRootFolder.Text;
 
             FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-            ImageDestinationType = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
+
+            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestImages.DropDownItems)
+            {
+                if (tsmi.Checked)
+                {
+                    ImageDestinationTypes.Add((int)tsmi.Tag);
+                }
+            }
             MyTextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
             MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
 
