@@ -31,65 +31,85 @@ namespace HelpersLib
 {
     public static class StreamExtensions
     {
-        private const int BufferLength = 4096;
+        private const int DefaultBufferSize = 4096;
 
-        public static void CopyStream(this Stream fromStream, Stream toStream)
+        public static void CopyStreamTo(this Stream fromStream, Stream toStream, int bufferSize = DefaultBufferSize)
         {
             fromStream.Position = 0;
 
-            byte[] buffer = new byte[BufferLength];
+            byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
-            while ((bytesRead = fromStream.Read(buffer, 0, BufferLength)) > 0)
+            while ((bytesRead = fromStream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 toStream.Write(buffer, 0, bytesRead);
             }
         }
 
-        public static void CopyStream(this Stream fromStream, Stream toStream, int offset, int length)
+        public static int CopyStreamTo(this Stream fromStream, Stream toStream, int offset, int length, int bufferSize = DefaultBufferSize)
         {
             fromStream.Position = offset;
 
-            byte[] buffer = new byte[BufferLength];
-            int bytesRead, readLength = BufferLength, currentLength = 0;
+            byte[] buffer = new byte[bufferSize];
+            int bytesRead;
 
-            while (readLength == BufferLength)
+            int totalBytesRead = 0;
+            int positionLimit = length - bufferSize;
+            int readLength = bufferSize;
+
+            do
             {
-                if ((currentLength + BufferLength) > length)
+                if (totalBytesRead > positionLimit)
                 {
-                    readLength = length - currentLength;
+                    readLength = length - totalBytesRead;
                 }
 
                 bytesRead = fromStream.Read(buffer, 0, readLength);
-                currentLength += bytesRead;
                 toStream.Write(buffer, 0, bytesRead);
+                totalBytesRead += bytesRead;
             }
+            while (bytesRead > 0 && totalBytesRead < length);
+
+            return totalBytesRead;
+        }
+
+        public static bool WriteToFile(this Stream stream, string filePath)
+        {
+            if (stream.Length > 0 && !string.IsNullOrEmpty(filePath))
+            {
+                string directoryName = Path.GetDirectoryName(filePath);
+
+                if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
+                {
+                    stream.CopyStreamTo(fileStream);
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         public static byte[] GetBytes(this Stream stream)
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                stream.CopyStream(ms);
+                stream.CopyStreamTo(ms);
                 return ms.ToArray();
             }
         }
 
-        public static void WriteFile(this Stream stream, string filePath)
+        public static byte[] GetBytes(this Stream stream, int offset, int length)
         {
-            if (!string.IsNullOrEmpty(filePath))
+            using (MemoryStream ms = new MemoryStream())
             {
-                string directoryPath = Path.GetDirectoryName(filePath);
-
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
-                {
-                    stream.CopyStream(fileStream);
-                }
+                stream.CopyStreamTo(ms, offset, length);
+                return ms.ToArray();
             }
         }
 
