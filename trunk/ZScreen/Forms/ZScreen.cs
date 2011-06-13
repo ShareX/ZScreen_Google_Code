@@ -70,6 +70,7 @@ namespace ZScreenGUI
         {
             InitializeComponent();
             ZScreen_Preconfig();
+            this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -82,8 +83,6 @@ namespace ZScreenGUI
             {
                 CheckUpdates();
             }
-
-            this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
             if (this.WindowState == FormWindowState.Normal)
             {
@@ -209,12 +208,6 @@ namespace ZScreenGUI
             tcMain.Focus();
         }
 
-        private void tsmiDestImages_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            ucDestOptions.cboImageUploaders.SelectedIndex = (int)tsmi.Tag;
-        }
-
         private void tsmiDestFiles_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
@@ -273,6 +266,16 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Save Destinations
+            Engine.conf.MyImageUploaders.Clear();
+            foreach (var tsmi in ucDestOptions.tsddDestImages.DropDownItems)
+            {
+                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
+                {
+                    Engine.conf.MyImageUploaders.Add((int)((ToolStripMenuItem)tsmi).Tag);
+                }
+            }
+
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
             {
@@ -459,7 +462,6 @@ namespace ZScreenGUI
                 for (int i = 0; i < lUploaders.Count; i++)
                 {
                     tsm = new ToolStripMenuItem { CheckOnClick = true, Tag = i, Text = lUploaders[i].Name };
-                    // tsm.Click += rightClickIHS_Click;
                     tsmDestCustomHTTP.DropDownItems.Add(tsm);
                 }
 
@@ -787,15 +789,6 @@ namespace ZScreenGUI
             return null;
         }
 
-        private void cboImageUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ImageUploaderType uploader = (ImageUploaderType)ucDestOptions.cboImageUploaders.SelectedIndex;
-            Engine.conf.MyImageUploader = (int)uploader;
-            cboURLFormat.Enabled = uploader != ImageUploaderType.CLIPBOARD;
-
-            CheckToolStripMenuItem(tsmiDestinations, GetImageDestMenuItem(uploader));
-        }
-
         private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.MyTextUploader = ucDestOptions.cboTextUploaders.SelectedIndex;
@@ -823,9 +816,6 @@ namespace ZScreenGUI
             {
                 tsmi.Checked = tsmi == item;
             }
-
-            tsmCopytoClipboardMode.Enabled = ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageUploaderType.CLIPBOARD &&
-                ucDestOptions.cboImageUploaders.SelectedIndex != (int)ImageUploaderType.FILE;
         }
 
         private void SetActiveImageSoftware()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.IO;
@@ -33,7 +34,7 @@ namespace HelpersLib
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string UploadersConfigCustomPath { get; set; }
 
-        public int ImageUploader; // default value is from ConfigWizard
+        public List<int> ImageUploaders = new List<int>(); // default value is from ConfigWizard
         public int FileUploader;  // default value is from ConfigWizard
         public int TextUploader;  // default value is from ConfigWizard
         public int UrlShortener;  // default value is from ConfigWizard

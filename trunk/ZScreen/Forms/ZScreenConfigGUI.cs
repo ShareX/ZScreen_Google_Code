@@ -13,6 +13,7 @@ using UploadersLib.HelperClasses;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
+using System.Text;
 
 namespace ZScreenGUI
 {
@@ -114,7 +115,6 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             // Dest Selectors
-            ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
             ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
@@ -128,10 +128,21 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Main()
         {
-            if (ucDestOptions.cboImageUploaders.Items.Count == 0)
+            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
             {
-                ucDestOptions.cboImageUploaders.Items.AddRange(typeof(ImageUploaderType).GetDescriptions());
-                ucDestOptions.cboImageUploaders.SelectedIndex = Engine.conf.MyImageUploader.BetweenOrDefault(0, ucDestOptions.cboImageUploaders.Items.Count - 1);
+                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                    tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDestImages_Click);
+                    ucDestOptions.tsddDestImages.DropDownItems.Add(tsmi);
+                    if (t == ImageUploaderType.PRINTER)
+                    {
+                        ucDestOptions.tsddDestImages.DropDownItems.Add(new ToolStripSeparator());
+                    }
+                }
             }
 
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
@@ -160,6 +171,42 @@ namespace ZScreenGUI
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
+        }
+
+        void tsmiDestImages_Click(object sender, EventArgs e)
+        {
+            // remove if necessory 
+
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            StringBuilder menuDescr = new StringBuilder();
+            menuDescr.Append("Send images to ");
+
+            int count = 0;
+            foreach (var obj in ucDestOptions.tsddDestImages.DropDownItems)
+            {
+                if (obj.GetType() == typeof(ToolStripMenuItem))
+                {
+                    ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
+                    if (tsmi.Text != gtsmi.Text && gtsmi.Checked)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            if (count > 0)
+            {
+                if (tsmi.Checked)
+                {
+                    menuDescr.Append(string.Format("{0} and {1} other destinations", tsmi.Text, count.ToString()));
+                }
+                else
+                {
+                    menuDescr.Append(string.Format("{0} destinations", count.ToString()));
+                }
+            }
+
+            ucDestOptions.tsddDestImages.Text = menuDescr.ToString();
         }
 
         private void ZScreen_ConfigGUI_Editors()
@@ -517,15 +564,19 @@ namespace ZScreenGUI
 
             if (tsmiDestinations.DropDownItems.Count == 0)
             {
-                foreach (ImageUploaderType idt in Enum.GetValues(typeof(ImageUploaderType)))
+                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
                 {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(idt.GetDescription());
-                    tsmi.Click += new EventHandler(tsmiDestImages_Click);
-                    tsmi.Tag = idt;
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.CheckOnClick = true;
+                    tsmi.Tag = t;
+                    tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
                     tsmiDestinations.DropDownItems.Add(tsmi);
+                    if (t == ImageUploaderType.PRINTER)
+                    {
+                        tsmiDestinations.DropDownItems.Add(new ToolStripSeparator());
+                    }
                 }
             }
-            CheckToolStripMenuItem(tsmiDestinations, GetImageDestMenuItem((ImageUploaderType)Engine.conf.MyImageUploader));
 
             if (tsmFileDest.DropDownItems.Count == 0)
             {

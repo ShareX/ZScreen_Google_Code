@@ -56,13 +56,13 @@ namespace ZScreenGUI
 
         private bool CanStartWork(WorkerTask task)
         {
-            bool can = task.WasToTakeScreenshot;
+            bool can = task.WasToTakeScreenshot && task.MyImageUploaders.Count > 0;
             if (!task.WasToTakeScreenshot)
             {
                 switch (task.Job1)
                 {
                     case JobLevel1.Image:
-                        can = task.MyImageUploader != ImageUploaderType.NONE || task.MyImageUploader == ImageUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
+                        can = task.MyImageUploaders.Count > 0;
                         break;
                     case JobLevel1.Text:
                         can = task.MyTextUploader != TextUploaderType.NONE || task.MyTextUploader == TextUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
@@ -87,6 +87,17 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
+            foreach (var obj in ucDestOptions.tsddDestImages.DropDownItems)
+            {
+                if (obj.GetType() == typeof(ToolStripMenuItem))
+                {
+                    ToolStripMenuItem tsmi = obj as ToolStripMenuItem;
+                    if (tsmi.Checked)
+                    {
+                        task.MyImageUploaders.Add((ImageUploaderType)tsmi.Tag);
+                    }
+                }
+            }
             if (!CanStartWork(task))
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
@@ -202,10 +213,6 @@ namespace ZScreenGUI
                     break;
                 case WorkerTask.ProgressType.UpdateCropMode:
                     this.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
-                    break;
-                case WorkerTask.ProgressType.CHANGE_UPLOAD_DESTINATION:
-                    this.ucDestOptions.cboImageUploaders.SelectedIndex = (int)Engine.conf.MyImageUploader;
-                    Adapter.SetNotifyIconBalloonTip(this.niTray, this.Text, string.Format("Images Destination was updated to {0}", ((ImageUploaderType)Engine.conf.MyImageUploader).GetDescription()), ToolTipIcon.Warning);
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     int progress = (int)((ProgressManager)e.UserState).Percentage;
@@ -1029,17 +1036,20 @@ namespace ZScreenGUI
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }
-                            task2.MyImageUploader = (ImageUploaderType)r;
+                            if (!task.MyImageUploaders.Contains((ImageUploaderType)r))
+                            {
+                                task.MyImageUploaders.Add((ImageUploaderType)r);
+                            }
                         }
                         else
                         {
-                            if (task.MyImageUploader == ImageUploaderType.IMAGESHACK)
+                            if (!task.MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
                             {
-                                task2.MyImageUploader = ImageUploaderType.TINYPIC;
+                                task.MyImageUploaders.Add((ImageUploaderType.TINYPIC));
                             }
-                            else
+                            else if (!task.MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
                             {
-                                task2.MyImageUploader = ImageUploaderType.IMAGESHACK;
+                                task.MyImageUploaders.Add((ImageUploaderType.IMAGESHACK));
                             }
                         }
                     }
