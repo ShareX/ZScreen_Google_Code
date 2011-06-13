@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblExceptionMessage = new System.Windows.Forms.Label();
             this.txtException = new System.Windows.Forms.TextBox();
             this.btnCopyAll = new System.Windows.Forms.Button();
             this.btnSendBugReport = new System.Windows.Forms.Button();
@@ -38,17 +37,6 @@
             this.btnContinue = new System.Windows.Forms.Button();
             this.flpMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblExceptionMessage
-            // 
-            this.lblExceptionMessage.AutoSize = true;
-            this.lblExceptionMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblExceptionMessage.ForeColor = System.Drawing.Color.White;
-            this.lblExceptionMessage.Location = new System.Drawing.Point(14, 10);
-            this.lblExceptionMessage.Name = "lblExceptionMessage";
-            this.lblExceptionMessage.Size = new System.Drawing.Size(37, 32);
-            this.lblExceptionMessage.TabIndex = 0;
-            this.lblExceptionMessage.Text = "Error\r\nError";
             // 
             // txtException
             // 
@@ -136,7 +124,6 @@
             this.ClientSize = new System.Drawing.Size(492, 318);
             this.Controls.Add(this.flpMenu);
             this.Controls.Add(this.txtException);
-            this.Controls.Add(this.lblExceptionMessage);
             this.Name = "ErrorForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -151,7 +138,6 @@
 
         #endregion Windows Form Designer generated code
 
-        private System.Windows.Forms.Label lblExceptionMessage;
         private System.Windows.Forms.TextBox txtException;
         private System.Windows.Forms.Button btnCopyAll;
         private System.Windows.Forms.Button btnSendBugReport;
