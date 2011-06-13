@@ -217,11 +217,7 @@ namespace ZUploader
 
         private static void OnError(Exception e)
         {
-            MyLogger.WriteException(e, "Unhandled exception");
-            MyLogger.WriteLine("ZUploader closing. Reason: Unhandled exception");
-            MyLogger.SaveLog(LogFilePath);
-            new ErrorForm("ZUploader - Error", e, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
-            Application.Exit();
+            new ErrorForm(Application.ProductName, e, MyLogger, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
         }
 
         private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)

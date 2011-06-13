@@ -34,21 +34,26 @@ namespace HelpersLib
 {
     public partial class ErrorForm : Form
     {
+        public string ProductName { get; private set; }
+        public Exception Error { get; private set; }
+        public Logger Logger { get; private set; }
         public string LogPath { get; private set; }
         public string BugReportPath { get; private set; }
 
-        public ErrorForm(string title, Exception e, string logPath, string bugReportPath)
-            : this(title, e.Message, e.ToString(), logPath, bugReportPath) { }
-
-        public ErrorForm(string title, string message, string errorText, string logPath, string bugReportPath)
+        public ErrorForm(string productName, Exception error, Logger logger, string logPath, string bugReportPath)
         {
             InitializeComponent();
-            Text = title;
-            LogPath = logPath;
+
+            ProductName = productName;
+            Error = error;
+            Logger = logger;
+            LogPath = LogPath;
             BugReportPath = bugReportPath;
 
-            lblExceptionMessage.Text = message;
-            txtException.Text = errorText;
+            Text = string.Format("{0} - Error", ProductName);
+            Logger.WriteException(Error, "Unhandled exception");
+            lblExceptionMessage.Text = Error.Message;
+            txtException.Text = Error.ToString();
             btnOpenLogFile.Visible = !string.IsNullOrEmpty(LogPath) && File.Exists(LogPath);
             btnSendBugReport.Visible = !string.IsNullOrEmpty(BugReportPath);
         }
@@ -79,26 +84,38 @@ namespace HelpersLib
             }
         }
 
+        private void btnContinue_Click(object sender, EventArgs e)
+        {
+            Logger.WriteLine("{0} continue.", ProductName);
+            Close();
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Logger.WriteLine("{0} closing. Reason: Unhandled exception", ProductName);
+            Application.Exit();
         }
 
         private void ErrorForm_Shown(object sender, EventArgs e)
         {
-            this.BringToFront();
-            this.Activate();
+            Activate();
+            BringToFront();
         }
 
         private void ErrorForm_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Rectangle rect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical))
+            Rectangle rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical))
             {
                 brush.SetSigmaBellShape(0.25f);
                 g.FillRectangle(brush, rect);
             }
+        }
+
+        public static void ThrowExceptionForTest()
+        {
+            throw new Exception("Error line one!\r\nError line two!");
         }
     }
 }

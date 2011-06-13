@@ -316,7 +316,8 @@ namespace ZUploader
 
             if (!string.IsNullOrEmpty(errors))
             {
-                new ErrorForm("ZUploader - Errors", "Upload errors:", errors, Program.LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
+                Exception e = new Exception("Upload errors: " + errors);
+                new ErrorForm(Application.ProductName, e, Program.MyLogger, Program.LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
             }
         }
 
