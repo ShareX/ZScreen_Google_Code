@@ -40,10 +40,33 @@ namespace ZScreenLib
         public string Args { get; set; }
         [Browsable(false)]
         public bool Enabled { get; set; }
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images copied from Explorer or copied to clipboard.")]
+        public bool TriggerForImages { get; set; }
+        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for screenshots captured using hotkeys such as Print Screen.")]
+        public bool TriggerForScreenshots { get; set; }
+        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for text.")]
+        public bool TriggerForText { get; set; }
+        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for files.")]
+        public bool TriggerForFiles { get; set; }
+
         /// <summary>
         /// Built-in software are protected from being deleted
         /// </summary>
         public bool Protected;
+
+        public Software()
+        {
+            ApplyDefaultValues(this);
+        }
+
+        public Software(string name, string path, bool isProtected = false, bool enabled = false)
+            : this()
+        {
+            Name = name;
+            Path = path;
+            Protected = isProtected;
+            Enabled = enabled;
+        }
 
         public static void ApplyDefaultValues(object self)
         {
@@ -55,69 +78,38 @@ namespace ZScreenLib
             }
         }
 
-        public Software()
+        public override string ToString()
         {
-            ApplyDefaultValues(this);
+            return Name;
         }
 
-        public Software(string sName, string sPath)
-            : this()
-        {
-            this.Name = sName;
-            this.Path = sPath;
-        }
-
-        public Software(string sName, string sPath, bool bProtected)
-            : this(sName, sPath)
-        {
-            this.Protected = bProtected;
-        }
-
-        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images copied from Explorer or copied to clipboard.")]
-        public bool TriggerForImages { get; set; }
-        [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for screenshots captured using hotkeys such as Print Screen.")]
-        public bool TriggerForScreenshots { get; set; }
-        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for text.")]
-        public bool TriggerForText { get; set; }
-        [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for files.")]
-        public bool TriggerForFiles { get; set; }
-
-        public Software(string sName, string sPath, bool bProtected, bool bEnabled)
-            : this(sName, sPath, bProtected)
-        {
-            this.Enabled = bEnabled;
-        }
-
-        public static Software GetByName(string sName)
+        public static Software GetByName(string name)
         {
             foreach (Software software in Engine.conf.ActionsList)
             {
-                if (software.Name == sName) return software;
+                if (software.Name == name) return software;
             }
+
             return null;
         }
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
-
-        public static bool Exist(string sName)
+        public static bool Exist(string name)
         {
             foreach (Software software in Engine.conf.ActionsList)
             {
-                if (software.Name == sName) return true;
+                if (software.Name == name) return true;
             }
+
             return false;
         }
 
-        public static bool Remove(string sName)
+        public static bool Remove(string name)
         {
-            if (Exist(sName))
+            if (Exist(name))
             {
                 foreach (Software software in Engine.conf.ActionsList)
                 {
-                    if (software.Name == sName)
+                    if (software.Name == name)
                     {
                         Engine.conf.ActionsList.Remove(software);
                         return true;
@@ -128,34 +120,34 @@ namespace ZScreenLib
         }
 
         /// <summary>
+        /// Method to open a file using the Software
+        /// </summary>
+        /// <param name="fp">File path to be opened</param>
+        public void OpenFile(string fp)
+        {
+            RunWithArgs(string.Format("\"{0}\"", fp));
+        }
+
+        /// <summary>
         /// Method to run the Software with Arguments
         /// </summary>
         /// <param name="args">Arguments to be passed to the sofware</param>
         private void RunWithArgs(string fp)
         {
             Process p = new Process();
-            ProcessStartInfo psi = new ProcessStartInfo(this.Path);
-            if (string.IsNullOrEmpty(this.Args))
+            ProcessStartInfo psi = new ProcessStartInfo(Path);
+            if (string.IsNullOrEmpty(Args))
             {
                 psi.Arguments = fp;
             }
             else
             {
-                psi.Arguments = this.Args.Replace(SyntaxParser.FilePath, fp);
+                psi.Arguments = Args.Replace(SyntaxParser.FilePath, fp);
                 Engine.MyLogger.WriteLine(string.Format("Running {0} with Arguments: {1}", Path, psi.Arguments));
             }
             p.StartInfo = psi;
             p.Start();
             p.WaitForExit();
-        }
-
-        /// <summary>
-        /// Method to open a file using the Software
-        /// </summary>
-        /// <param name="fp">File path to be opened</param>
-        public void OpenFile(string fp)
-        {
-            RunWithArgs(string.Format("{0}{1}{0}", "\"", fp));
         }
     }
 }
