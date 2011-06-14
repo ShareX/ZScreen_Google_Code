@@ -661,15 +661,18 @@ namespace ZScreenLib
                 {
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
                     {
+                        UploadResult ur = new UploadResult();
                         if (File.Exists(fullFilePath))
                         {
-                            this.AddUploadResult(uploader.Upload(fullFilePath));
+                            ur = uploader.Upload(fullFilePath);
                         }
                         else if (this.MyImage != null && this.FileName != null)
                         {
-                            this.AddUploadResult(uploader.Upload(this.MyImage, this.FileName));
+                            ur = uploader.Upload(this.MyImage, this.FileName);
                         }
 
+                        ur.Host = ut.GetDescription();
+                        this.AddUploadResult(ur);
                         this.Errors = uploader.Errors;
 
                         if (string.IsNullOrEmpty(this.UploadResults[UploadResults.Count - 1].URL))
