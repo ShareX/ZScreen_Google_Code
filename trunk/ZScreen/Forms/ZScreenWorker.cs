@@ -84,20 +84,29 @@ namespace ZScreenGUI
             return bwApp;
         }
 
-        public void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        public void AddDestinations<T>(ToolStripDropDownButton tssdb, List<T> list)
         {
-            WorkerTask task = (WorkerTask)e.Argument;
-            foreach (var obj in ucDestOptions.tsddDestImage.DropDownItems)
+            foreach (var obj in tssdb.DropDownItems)
             {
                 if (obj.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsmi = obj as ToolStripMenuItem;
                     if (tsmi.Checked)
                     {
-                        task.MyImageUploaders.Add((ImageUploaderType)tsmi.Tag);
+                        list.Add((T)tsmi.Tag);
                     }
                 }
             }
+        }
+
+        public void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        {
+            WorkerTask task = (WorkerTask)e.Argument;
+
+            // Add destinations
+            AddDestinations<ImageUploaderType>(ucDestOptions.tsddDestImage, task.MyImageUploaders);
+            AddDestinations<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
+            
             if (!CanStartWork(task))
             {
                 e.Result = null; // Pass a null object because there is nothing else to do

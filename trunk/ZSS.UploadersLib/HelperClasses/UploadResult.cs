@@ -31,6 +31,7 @@ namespace UploadersLib.HelperClasses
 {
     public class UploadResult
     {
+        public string Host { get; set; }
         public string LocalFilePath { get; set; }
         public string URL { get; set; }
         public string ThumbnailURL { get; set; }
