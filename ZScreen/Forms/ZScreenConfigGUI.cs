@@ -127,7 +127,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Main()
         {
-            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
+            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
             {
                 foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
                 {
@@ -135,14 +135,14 @@ namespace ZScreenGUI
                     tsmi.Tag = t;
                     tsmi.CheckOnClick = true;
                     tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDest_Click);
-                    ucDestOptions.tsddDestImages.DropDownItems.Add(tsmi);
+                    tsmi.Click += new EventHandler(tsmiDestImage_Click);
+                    ucDestOptions.tsddDestImage.DropDownItems.Add(tsmi);
                     if (t == ImageUploaderType.PRINTER)
                     {
-                        ucDestOptions.tsddDestImages.DropDownItems.Add(new ToolStripSeparator());
+                        ucDestOptions.tsddDestImage.DropDownItems.Add(new ToolStripSeparator());
                     }
                 }
-                UpdateToolStripDest();
+                UpdateToolStripDestImage();
             }
 
             if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
@@ -153,10 +153,10 @@ namespace ZScreenGUI
                     tsmi.Tag = t;
                     tsmi.CheckOnClick = true;
                     tsmi.Checked = Engine.conf.MyTextUploaders.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDest_Click);
+                    tsmi.Click += new EventHandler(tsmiDestText_Click);
                     ucDestOptions.tsddDestText.DropDownItems.Add(tsmi);
                 }
-                UpdateToolStripDest();
+                UpdateToolStripDestText();
             }
 
             if (ucDestOptions.cboFileUploaders.Items.Count == 0)
@@ -181,17 +181,22 @@ namespace ZScreenGUI
             chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
-        void tsmiDest_Click(object sender, EventArgs e)
+        void tsmiDestImage_Click(object sender, EventArgs e)
         {
-            UpdateToolStripDest();
+            UpdateToolStripDestImage();
         }
 
-        void UpdateToolStripDest()
+        void tsmiDestText_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripDestText();
+        }
+
+        void UpdateToolStripDestImage()
         {
             string dest = string.Empty;
             int count = 0;
 
-            foreach (var obj in ucDestOptions.tsddDestImages.DropDownItems)
+            foreach (var obj in ucDestOptions.tsddDestImage.DropDownItems)
             {
                 if (obj.GetType() == typeof(ToolStripMenuItem))
                 {
@@ -206,13 +211,40 @@ namespace ZScreenGUI
 
             if (count == 1)
             {
-                ucDestOptions.tsddDestImages.Text = "Image output: " + dest;
+                ucDestOptions.tsddDestImage.Text = "Image output: " + dest;
             }
             else if (count > 1)
             {
-                ucDestOptions.tsddDestImages.Text = string.Format("Image output: {0} and {1} other destination(s)", dest, count - 1);
+                ucDestOptions.tsddDestImage.Text = string.Format("Image output: {0} and {1} other destination(s)", dest, count - 1);
+            }
+        }
+
+        void UpdateToolStripDestText()
+        {
+            string dest = string.Empty;
+            int count = 0;
+
+            foreach (var obj in ucDestOptions.tsddDestText.DropDownItems)
+            {
+                if (obj.GetType() == typeof(ToolStripMenuItem))
+                {
+                    ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
+                    if (gtsmi.Checked)
+                    {
+                        count++;
+                        dest = ((TextUploaderType)gtsmi.Tag).GetDescription();
+                    }
+                }
             }
 
+            if (count == 1)
+            {
+                ucDestOptions.tsddDestText.Text = "Text output: " + dest;
+            }
+            else if (count > 1)
+            {
+                ucDestOptions.tsddDestText.Text = string.Format("Text output: {0} and {1} other destination(s)", dest, count - 1);
+            }
         }
 
         private void ZScreen_ConfigGUI_Editors()

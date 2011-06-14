@@ -87,7 +87,7 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
-            foreach (var obj in ucDestOptions.tsddDestImages.DropDownItems)
+            foreach (var obj in ucDestOptions.tsddDestImage.DropDownItems)
             {
                 if (obj.GetType() == typeof(ToolStripMenuItem))
                 {

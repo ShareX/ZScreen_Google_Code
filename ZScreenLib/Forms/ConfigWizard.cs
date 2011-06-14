@@ -51,13 +51,13 @@ namespace ZScreenLib
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
 
-            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
+            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
             {
                 foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                     tsmi.Tag = t;
-                    ucDestOptions.tsddDestImages.DropDownItems.Add(tsmi);
+                    ucDestOptions.tsddDestImage.DropDownItems.Add(tsmi);
                 }
             }
 
@@ -85,7 +85,7 @@ namespace ZScreenLib
 
             FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
 
-            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestImages.DropDownItems)
+            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestImage.DropDownItems)
             {
                 if (tsmi.Checked)
                 {
