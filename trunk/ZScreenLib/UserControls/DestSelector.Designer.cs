@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestSelector));
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
+            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
+            this.cboURLShorteners = new System.Windows.Forms.ComboBox();
             this.tsDest = new System.Windows.Forms.ToolStrip();
             this.tsddDestImages = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFiles = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddLinkShorteners = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
-            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
-            this.cboURLShorteners = new System.Windows.Forms.ComboBox();
-            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
             this.gbMainOptions.SuspendLayout();
             this.tsDest.SuspendLayout();
             this.SuspendLayout();
@@ -59,75 +59,14 @@
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Active Destinations";
             // 
-            // tsDest
+            // cboTextUploaders
             // 
-            this.tsDest.BackColor = System.Drawing.Color.White;
-            this.tsDest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsddDestImages,
-            this.tsddDestText,
-            this.tsddDestFiles,
-            this.tsddLinkShorteners,
-            this.toolStripSeparator1,
-            this.tsbDestConfig});
-            this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.tsDest.Location = new System.Drawing.Point(3, 16);
-            this.tsDest.Name = "tsDest";
-            this.tsDest.Size = new System.Drawing.Size(346, 125);
-            this.tsDest.TabIndex = 128;
-            this.tsDest.Text = "Destinations";
-            // 
-            // tsddDestImages
-            // 
-            this.tsddDestImages.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImages.Image")));
-            this.tsddDestImages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestImages.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestImages.Name = "tsddDestImages";
-            this.tsddDestImages.Size = new System.Drawing.Size(344, 20);
-            this.tsddDestImages.Text = "Image output";
-            // 
-            // tsddDestText
-            // 
-            this.tsddDestText.Image = global::ZScreenLib.Properties.Resources.pencil_go;
-            this.tsddDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestText.Name = "tsddDestText";
-            this.tsddDestText.Size = new System.Drawing.Size(344, 20);
-            this.tsddDestText.Text = "Send text to";
-            // 
-            // tsddDestFiles
-            // 
-            this.tsddDestFiles.Image = global::ZScreenLib.Properties.Resources.page_go;
-            this.tsddDestFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestFiles.Name = "tsddDestFiles";
-            this.tsddDestFiles.Size = new System.Drawing.Size(344, 20);
-            this.tsddDestFiles.Text = "Send files to";
-            // 
-            // tsddLinkShorteners
-            // 
-            this.tsddLinkShorteners.Image = global::ZScreenLib.Properties.Resources.link_go;
-            this.tsddLinkShorteners.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddLinkShorteners.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddLinkShorteners.Name = "tsddLinkShorteners";
-            this.tsddLinkShorteners.Size = new System.Drawing.Size(344, 20);
-            this.tsddLinkShorteners.Text = "URL Shorteners";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(344, 6);
-            // 
-            // tsbDestConfig
-            // 
-            this.tsbDestConfig.Image = global::ZScreenLib.Properties.Resources.server_edit;
-            this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDestConfig.Name = "tsbDestConfig";
-            this.tsbDestConfig.Size = new System.Drawing.Size(344, 20);
-            this.tsbDestConfig.Text = "Open destinations configuration..";
-            this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
+            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTextUploaders.FormattingEnabled = true;
+            this.cboTextUploaders.Location = new System.Drawing.Point(128, 40);
+            this.cboTextUploaders.Name = "cboTextUploaders";
+            this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
+            this.cboTextUploaders.TabIndex = 121;
             // 
             // cboFileUploaders
             // 
@@ -147,14 +86,82 @@
             this.cboURLShorteners.Size = new System.Drawing.Size(208, 21);
             this.cboURLShorteners.TabIndex = 124;
             // 
-            // cboTextUploaders
+            // tsDest
             // 
-            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(128, 40);
-            this.cboTextUploaders.Name = "cboTextUploaders";
-            this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
-            this.cboTextUploaders.TabIndex = 121;
+            this.tsDest.AutoSize = false;
+            this.tsDest.BackColor = System.Drawing.Color.White;
+            this.tsDest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tsDest.CanOverflow = false;
+            this.tsDest.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddDestImages,
+            this.tsddDestFiles,
+            this.tsddDestText,
+            this.tsddLinkShorteners,
+            this.toolStripSeparator1,
+            this.tsbDestConfig});
+            this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+            this.tsDest.Location = new System.Drawing.Point(8, 16);
+            this.tsDest.Name = "tsDest";
+            this.tsDest.Size = new System.Drawing.Size(336, 120);
+            this.tsDest.TabIndex = 128;
+            this.tsDest.Text = "Destinations";
+            // 
+            // tsddDestImages
+            // 
+            this.tsddDestImages.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImages.Image")));
+            this.tsddDestImages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestImages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestImages.Name = "tsddDestImages";
+            this.tsddDestImages.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestImages.Size = new System.Drawing.Size(334, 20);
+            this.tsddDestImages.Text = "Image output:";
+            // 
+            // tsddDestFiles
+            // 
+            this.tsddDestFiles.Image = global::ZScreenLib.Properties.Resources.page_go;
+            this.tsddDestFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestFiles.Name = "tsddDestFiles";
+            this.tsddDestFiles.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestFiles.Size = new System.Drawing.Size(334, 20);
+            this.tsddDestFiles.Text = "Send files to";
+            // 
+            // tsddDestText
+            // 
+            this.tsddDestText.Image = global::ZScreenLib.Properties.Resources.pencil_go;
+            this.tsddDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestText.Name = "tsddDestText";
+            this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestText.Size = new System.Drawing.Size(334, 20);
+            this.tsddDestText.Text = "Send text to";
+            // 
+            // tsddLinkShorteners
+            // 
+            this.tsddLinkShorteners.Image = global::ZScreenLib.Properties.Resources.link_go;
+            this.tsddLinkShorteners.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddLinkShorteners.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddLinkShorteners.Name = "tsddLinkShorteners";
+            this.tsddLinkShorteners.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddLinkShorteners.Size = new System.Drawing.Size(334, 20);
+            this.tsddLinkShorteners.Text = "URL Shorteners";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(334, 6);
+            // 
+            // tsbDestConfig
+            // 
+            this.tsbDestConfig.Image = global::ZScreenLib.Properties.Resources.server_edit;
+            this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDestConfig.Name = "tsbDestConfig";
+            this.tsbDestConfig.Size = new System.Drawing.Size(334, 20);
+            this.tsbDestConfig.Text = "Open destinations configuration..";
+            this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
             // DestSelector
             // 
@@ -164,7 +171,6 @@
             this.Name = "DestSelector";
             this.Size = new System.Drawing.Size(352, 144);
             this.gbMainOptions.ResumeLayout(false);
-            this.gbMainOptions.PerformLayout();
             this.tsDest.ResumeLayout(false);
             this.tsDest.PerformLayout();
             this.ResumeLayout(false);

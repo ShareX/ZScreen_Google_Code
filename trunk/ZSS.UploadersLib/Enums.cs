@@ -143,7 +143,7 @@ namespace UploadersLib
         DEKIWIKI,
         [Description("MediaWiki")]
         MEDIAWIKI,
-        [Description("Use File Uploader")]
+        [Description("File Uploader")]
         FileUploader
     }
 
@@ -159,7 +159,7 @@ namespace UploadersLib
         PASTE2,
         [Description("Slexy 2.0 - slexy.org")]
         SLEXY,
-        [Description("Use File Uploader")]
+        [Description("File Uploader")]
         FileUploader
     }
 

@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -61,6 +62,8 @@ namespace ZScreenLib
             }
             else
             {
+                sbMsg.AppendLine("Name: " + task.FileName);
+
                 switch (task.Job1)
                 {
                     case JobLevel1.Text:
@@ -77,55 +80,33 @@ namespace ZScreenLib
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
                     case JobLevel1.Image:
-                        sbMsg.AppendLine(string.Format("Destination: {0}", task.MyImageUploader.GetDescription()));
+                          sbMsg.AppendLine("Destination(s):");
+                        sbMsg.AppendLine(task.GetActiveImageUploadersDescription());
+                        foreach (UploadResult ur in task.UploadResults)
+                        {
+                            if (!string.IsNullOrEmpty(ur.URL))
+                            {
+                                sbMsg.AppendLine(ur.URL);
+                            }
+                            if (!string.IsNullOrEmpty(ur.LocalFilePath))
+                            {
+                                sbMsg.AppendLine(ur.LocalFilePath);
+                            }
+                        }
+                        
                         break;
                 }
 
-                string fileOrUrl = "";
+                sbMsg.AppendLine();
 
-                if (task.MyImageUploader == ImageUploaderType.CLIPBOARD || task.MyImageUploader == ImageUploaderType.FILE)
+                if (string.IsNullOrEmpty(task.RemoteFilePath) && task.IsError)
                 {
-                    // just local file
-                    if (!string.IsNullOrEmpty(task.FileName.ToString()))
+                    tti = ToolTipIcon.Warning;
+                    sbMsg.AppendLine("Warnings: ");
+                    foreach (string err in task.Errors)
                     {
-                        sbMsg.AppendLine("Name: " + task.FileName);
+                        sbMsg.AppendLine(err);
                     }
-                    fileOrUrl = string.Format("{0}: {1}", task.MyImageUploader.GetDescription(), task.LocalFilePath);
-                }
-                else
-                {
-                    // remote file
-                    if (!string.IsNullOrEmpty(task.RemoteFilePath))
-                    {
-                        if (task.Job2 != WorkerTask.JobLevel2.UploadFromClipboard && task.FileName != null && !string.IsNullOrEmpty(task.FileName.ToString()))
-                        {
-                            sbMsg.AppendLine("Name: " + task.FileName);
-                        }
-                        fileOrUrl = string.Format("URL: {0}", task.RemoteFilePath);
-
-                        if (string.IsNullOrEmpty(task.RemoteFilePath) && task.IsError)
-                        {
-                            tti = ToolTipIcon.Warning;
-                            sbMsg.AppendLine("Warnings: ");
-                            foreach (string err in task.Errors)
-                            {
-                                sbMsg.AppendLine(err);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (task.IsError)
-                        {
-                            tti = ToolTipIcon.Error;
-                            fileOrUrl = "Warning: " + task.Errors[task.Errors.Count - 1];
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(fileOrUrl))
-                {
-                    sbMsg.AppendLine(fileOrUrl);
                 }
 
                 if (Engine.conf.ShowUploadDuration && task.UploadDuration > 0)
@@ -160,23 +141,12 @@ namespace ZScreenLib
                         }
                         break;
                     default:
-                        switch (task.MyImageUploader)
+                        foreach (UploadResult ur in task.UploadResults)
                         {
-                            case ImageUploaderType.FILE:
-                            case ImageUploaderType.CLIPBOARD:
-                                cbString = task.LocalFilePath;
-                                if (!string.IsNullOrEmpty(cbString))
-                                {
-                                    Process.Start(cbString);
-                                }
-                                break;
-                            default:
-                                cbString = task.RemoteFilePath;
-                                if (!string.IsNullOrEmpty(cbString))
-                                {
-                                    Process.Start(cbString);
-                                }
-                                break;
+                            if (!string.IsNullOrEmpty(ur.URL))
+                            {
+                                Process.Start(ur.URL);
+                            }
                         }
                         break;
                 }

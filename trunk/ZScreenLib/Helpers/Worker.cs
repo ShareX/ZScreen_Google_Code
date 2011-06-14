@@ -135,11 +135,10 @@ namespace ZScreenLib
             try
             {
                 Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
-                WorkerTask checkTask = RetryUpload(task);
 
                 if (task.WasToTakeScreenshot)
                 {
-                    if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                    if (!task.MyImageUploaders.Contains(ImageUploaderType.FILE) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                     {
                         try
                         {
@@ -467,49 +466,5 @@ namespace ZScreenLib
 
         #endregion User Tasks
 
-        public WorkerTask RetryUpload(WorkerTask task)
-        {
-            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
-            {
-                if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && task.MyImageUploader != ImageUploaderType.FILE &&
-                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
-                {
-                    WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
-                    task2.SetImage(task.LocalFilePath);
-                    task2.UpdateLocalFilePath(task.LocalFilePath);
-                    task2.Status = WorkerTask.TaskStatus.Finished; // we do not retry again
-
-                    if (task.Job1 == JobLevel1.Image)
-                    {
-                        if (Engine.conf.ImageUploadRandomRetryOnFail)
-                        {
-                            List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
-                            int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while ((ImageUploaderType)r == task2.MyImageUploader || (ImageUploaderType)r == ImageUploaderType.FILE || (ImageUploaderType)r == ImageUploaderType.CLIPBOARD)
-                            {
-                                r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            }
-                            task2.MyImageUploader = (ImageUploaderType)r;
-                        }
-                        else
-                        {
-                            if (task.MyImageUploader == ImageUploaderType.IMAGESHACK)
-                            {
-                                task2.MyImageUploader = ImageUploaderType.TINYPIC;
-                            }
-                            else
-                            {
-                                task2.MyImageUploader = ImageUploaderType.IMAGESHACK;
-                            }
-                        }
-                    }
-
-                    task2.MyWorker.RunWorkerAsync(task2);
-                    return task2;
-                }
-            }
-            task.Status = WorkerTask.TaskStatus.Finished;
-            return task;
-        }
     }
 }

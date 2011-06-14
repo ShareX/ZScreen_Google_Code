@@ -120,7 +120,7 @@ namespace ZScreenLib
                 switch (task.Job1)
                 {
                     case JobLevel1.Image:
-                        sbMsg.Append(task.MyImageUploader.GetDescription());
+                        sbMsg.Append(task.GetActiveImageUploadersDescription());
                         break;
                     case JobLevel1.Text:
                         if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)

@@ -216,7 +216,7 @@ namespace ZScreenLib
         public override string ToString()
         {
             StringBuilder sbDebug = new StringBuilder();
-            sbDebug.AppendLine(string.Format("Image Uploader: {0", mTask.MyImageUploader));
+            sbDebug.AppendLine(string.Format("Image Uploader: {0", mTask.GetActiveImageUploadersDescription()));
             return sbDebug.ToString();
         }
     }
