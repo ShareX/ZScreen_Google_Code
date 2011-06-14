@@ -96,7 +96,7 @@ namespace ZScreenLib
         {
             string clipboardText = string.Empty;
 
-            if (task.JobIsImageToClipboard())
+            if (task.JobIsImageToClipboardOnly())
             {
                 MemoryStream ms = new MemoryStream();
                 MemoryStream ms2 = new MemoryStream();
@@ -109,10 +109,6 @@ namespace ZScreenLib
                 dataObject.SetData(DataFormats.Bitmap, bmp);
                 dataObject.SetData(DataFormats.Dib, ms2);
                 Clipboard.SetDataObject(dataObject, true, 3, 1000);
-            }
-            else if (task.JobIsImageToFile())
-            {
-                clipboardText = task.LocalFilePath;
             }
             else if (Engine.conf.ShowClipboardModeChooser || showDialog)
             {
@@ -143,6 +139,17 @@ namespace ZScreenLib
                         {
                             clipboardText = FileSystem.GetBrowserFriendlyUrl(ur.URL);
                             break;
+                        }
+                    }
+                    if (string.IsNullOrEmpty(clipboardText) && task.MyImageUploaders.Contains(ImageUploaderType.FILE))
+                    {
+                        foreach (UploadResult ur in task.UploadResults)
+                        {
+                            if (!string.IsNullOrEmpty(ur.LocalFilePath))
+                            {
+                                clipboardText = ur.LocalFilePath;
+                                break;
+                            }
                         }
                     }
                 }
