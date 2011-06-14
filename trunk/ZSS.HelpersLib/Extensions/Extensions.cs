@@ -43,6 +43,14 @@ namespace HelpersLib
             return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
         }
 
+        public static string GetDescription<T>(this Enum value)
+        {
+            FieldInfo fi = typeof(T).GetType().GetField(value.ToString());
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+        }
+
+
         public static string[] GetEnumDescriptions(this Type type)
         {
             return Enum.GetValues(type).OfType<Enum>().Select(x => x.GetDescription()).ToArray();

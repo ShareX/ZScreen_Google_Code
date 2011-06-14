@@ -181,6 +181,16 @@ namespace ZScreenGUI
             chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
+        void UpdateToolStripDestImage()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddDestImage, "Image output");
+        }
+
+        void UpdateToolStripDestText()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
+        }
+
         void tsmiDestImage_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestImage();
@@ -191,12 +201,12 @@ namespace ZScreenGUI
             UpdateToolStripDestText();
         }
 
-        void UpdateToolStripDestImage()
+        void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
         {
             string dest = string.Empty;
             int count = 0;
 
-            foreach (var obj in ucDestOptions.tsddDestImage.DropDownItems)
+            foreach (var obj in tsdd.DropDownItems)
             {
                 if (obj.GetType() == typeof(ToolStripMenuItem))
                 {
@@ -204,46 +214,18 @@ namespace ZScreenGUI
                     if (gtsmi.Checked)
                     {
                         count++;
-                        dest = ((ImageUploaderType)gtsmi.Tag).GetDescription();
+                        dest = ((Enum)gtsmi.Tag).GetDescription();
                     }
                 }
             }
 
             if (count == 1)
             {
-                ucDestOptions.tsddDestImage.Text = "Image output: " + dest;
+                tsdd.Text = descr + ": " + dest;
             }
             else if (count > 1)
             {
-                ucDestOptions.tsddDestImage.Text = string.Format("Image output: {0} and {1} other destination(s)", dest, count - 1);
-            }
-        }
-
-        void UpdateToolStripDestText()
-        {
-            string dest = string.Empty;
-            int count = 0;
-
-            foreach (var obj in ucDestOptions.tsddDestText.DropDownItems)
-            {
-                if (obj.GetType() == typeof(ToolStripMenuItem))
-                {
-                    ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
-                    if (gtsmi.Checked)
-                    {
-                        count++;
-                        dest = ((TextUploaderType)gtsmi.Tag).GetDescription();
-                    }
-                }
-            }
-
-            if (count == 1)
-            {
-                ucDestOptions.tsddDestText.Text = "Text output: " + dest;
-            }
-            else if (count > 1)
-            {
-                ucDestOptions.tsddDestText.Text = string.Format("Text output: {0} and {1} other destination(s)", dest, count - 1);
+                tsdd.Text = string.Format("{0}: {1} and {2} other destination(s)", descr, dest, count - 1);
             }
         }
 
