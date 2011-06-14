@@ -268,11 +268,20 @@ namespace ZScreenGUI
         {
             // Save Destinations
             Engine.conf.MyImageUploaders.Clear();
-            foreach (var tsmi in ucDestOptions.tsddDestImages.DropDownItems)
+            foreach (var tsmi in ucDestOptions.tsddDestImage.DropDownItems)
             {
                 if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
                 {
                     Engine.conf.MyImageUploaders.Add((int)((ToolStripMenuItem)tsmi).Tag);
+                }
+            }
+
+            Engine.conf.MyTextUploaders.Clear();
+            foreach (var tsmi in ucDestOptions.tsddDestText.DropDownItems)
+            {
+                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
+                {
+                    Engine.conf.MyTextUploaders.Add((int)((ToolStripMenuItem)tsmi).Tag);
                 }
             }
 

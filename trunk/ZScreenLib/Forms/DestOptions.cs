@@ -56,7 +56,7 @@ namespace ZScreenLib
             }
 
             // Image Uploaders
-            if (ucDestOptions.tsddDestImages.DropDownItems.Count == 0)
+            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
             {
                 foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
                 {

@@ -32,7 +32,7 @@
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
             this.tsDest = new System.Windows.Forms.ToolStrip();
-            this.tsddDestImages = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddDestImage = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFiles = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddLinkShorteners = new System.Windows.Forms.ToolStripDropDownButton();
@@ -75,7 +75,7 @@
             this.tsDest.Dock = System.Windows.Forms.DockStyle.None;
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsddDestImages,
+            this.tsddDestImage,
             this.tsddDestText,
             this.tsddDestFiles,
             this.tsddLinkShorteners,
@@ -90,13 +90,13 @@
             // 
             // tsddDestImages
             // 
-            this.tsddDestImages.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImages.Image")));
-            this.tsddDestImages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestImages.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestImages.Name = "tsddDestImages";
-            this.tsddDestImages.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestImages.Size = new System.Drawing.Size(334, 20);
-            this.tsddDestImages.Text = "Image output:";
+            this.tsddDestImage.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImages.Image")));
+            this.tsddDestImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestImage.Name = "tsddDestImages";
+            this.tsddDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestImage.Size = new System.Drawing.Size(334, 20);
+            this.tsddDestImage.Text = "Image output:";
             // 
             // tsddDestFiles
             // 
@@ -170,7 +170,7 @@
 
         internal System.Windows.Forms.GroupBox gbMainOptions;
         public System.Windows.Forms.ComboBox cboURLShorteners;
-        public System.Windows.Forms.ToolStripDropDownButton tsddDestImages;
+        public System.Windows.Forms.ToolStripDropDownButton tsddDestImage;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFiles;
         private System.Windows.Forms.ToolStrip tsDest;
