@@ -88,6 +88,13 @@ namespace ZScreenLib.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap link_go {
+            get {
+                object obj = ResourceManager.GetObject("link_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap main {
             get {
                 object obj = ResourceManager.GetObject("main", resourceCulture);
@@ -119,6 +126,13 @@ namespace ZScreenLib.Properties {
         internal static System.Drawing.Bitmap pencil_go {
             get {
                 object obj = ResourceManager.GetObject("pencil_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap server_edit {
+            get {
+                object obj = ResourceManager.GetObject("server_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

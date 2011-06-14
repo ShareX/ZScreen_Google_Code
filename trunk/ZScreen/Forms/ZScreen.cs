@@ -763,19 +763,6 @@ namespace ZScreenGUI
             RewriteImageEditorsRightClickMenu();
         }
 
-        private ToolStripMenuItem GetImageDestMenuItem(ImageUploaderType idt)
-        {
-            foreach (ToolStripMenuItem tsmi in tsmiDestinations.DropDownItems)
-            {
-                if ((ImageUploaderType)tsmi.Tag == idt)
-                {
-                    return tsmi;
-                }
-            }
-
-            return null;
-        }
-
         private ToolStripMenuItem GetFileDestMenuItem(FileUploaderType fut)
         {
             foreach (ToolStripMenuItem tsmi in tsmFileDest.DropDownItems)
