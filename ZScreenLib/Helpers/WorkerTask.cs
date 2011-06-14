@@ -611,7 +611,8 @@ namespace ZScreenLib
                 }
                 this.AddUploadResult(new UploadResult()
                 {
-                    LocalFilePath = fp
+                    LocalFilePath = fp,
+                    Host = ImageUploaderType.FILE.GetDescription()
                 });
             }
 
@@ -738,7 +739,7 @@ namespace ZScreenLib
                     url = textUploader.UploadTextFile(this.LocalFilePath);
                 }
 
-                this.AddUploadResult(new UploadResult() { URL = url });
+                this.AddUploadResult(new UploadResult() { Host = ut.GetDescription(), URL = url });
                 this.Errors = textUploader.Errors;
             }
         }
@@ -802,7 +803,10 @@ namespace ZScreenLib
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 this.DestinationName = this.MyFileUploader.GetDescription();
                 fileHost.ProgressChanged += UploadProgressChanged;
-                this.AddUploadResult(fileHost.Upload(this.LocalFilePath));
+                UploadResult ur = new UploadResult();
+                ur = fileHost.Upload(this.LocalFilePath);
+                ur.Host = MyFileUploader.GetDescription();
+                this.AddUploadResult(ur);
                 this.Errors = fileHost.Errors;
             }
 
@@ -836,7 +840,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        this.AddUploadResult(new UploadResult() { URL = url });
+                        this.AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
 
                         if (CreateThumbnail())
                         {
@@ -856,6 +860,7 @@ namespace ZScreenLib
                                     if (!string.IsNullOrEmpty(thumb))
                                     {
                                         ur = new UploadResult();
+                                        ur.Host = FileUploaderType.FTP.GetDescription();
                                         ur.ThumbnailURL = thumb;
                                         this.UploadResults.Add(ur);
                                     }
@@ -889,7 +894,7 @@ namespace ZScreenLib
                 }
                 File.Move(this.LocalFilePath, destFile);
                 this.UpdateLocalFilePath(destFile);
-                this.UploadResults.Add(new UploadResult() { URL = acc.GetUriPath(fn) });
+                this.UploadResults.Add(new UploadResult() { Host = ImageUploaderType.Localhost.GetDescription(), URL = acc.GetUriPath(fn) });
             }
         }
 
@@ -1129,19 +1134,19 @@ namespace ZScreenLib
             this.MyWorker.RunWorkerAsync(this);
         }
 
-        public HistoryItem GenerateHistoryItem(UploadResult UploadResult)
+        public HistoryItem GenerateHistoryItem(UploadResult ur)
         {
             HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
             hi.DateTimeUtc = EndTime;
 
-            hi.DeletionURL = UploadResult.DeletionURL;
-            hi.ThumbnailURL = UploadResult.ThumbnailURL;
-            hi.ShortenedURL = UploadResult.ShortenedURL;
-            hi.URL = UploadResult.URL;
+            hi.DeletionURL = ur.DeletionURL;
+            hi.ThumbnailURL = ur.ThumbnailURL;
+            hi.ShortenedURL = ur.ShortenedURL;
+            hi.URL = ur.URL;
 
             hi.Filename = FileName;
             hi.Filepath = LocalFilePath;
-            hi.Host = GetDestinationName();
+            hi.Host = ur.Host;
             hi.Type = Job1.GetDescription();
 
             return hi;
