@@ -944,11 +944,6 @@ namespace ZScreenLib
 
         #region Checks
 
-        public bool JobIsImageToFile()
-        {
-            return Job1 == JobLevel1.Image && MyImageUploader == ImageUploaderType.FILE;
-        }
-
         /// <summary>
         /// Function to test if the URL should or could shorten
         /// </summary>
@@ -1019,7 +1014,7 @@ namespace ZScreenLib
             return false;
         }
 
-        public bool JobIsImageToClipboard()
+        public bool JobIsImageToClipboardOnly()
         {
             return Job1 == JobLevel1.Image && MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) && this.MyImage != null;
         }
