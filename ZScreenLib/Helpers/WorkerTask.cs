@@ -178,7 +178,7 @@ namespace ZScreenLib
         private string DestinationName = string.Empty;
 
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
-        public TextUploaderType MyTextUploader { get; set; }
+        public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
         public UrlShortenerType MyUrlShortener { get; set; }
         public FileUploaderType MyFileUploader { get; set; }
 
@@ -213,7 +213,6 @@ namespace ZScreenLib
             this.MyWorker = worker;
             this.Job2 = job;
 
-            MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
             MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
             MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
 
@@ -697,52 +696,51 @@ namespace ZScreenLib
             }
             else
             {
-                if (this.MyTextUploader == TextUploaderType.FileUploader)
+                if (MyTextUploaders.Contains(TextUploaderType.PASTEBIN))
+                {
+                    UploadText(TextUploaderType.PASTEBIN, new PastebinUploader(ZKeys.PastebinKey, Engine.MyUploadersConfig.PastebinSettings));
+                }
+                if (MyTextUploaders.Contains(TextUploaderType.PASTEBIN_CA))
+                {
+                    UploadText(TextUploaderType.PASTEBIN_CA, new PastebinCaUploader(ZKeys.PastebinCaKey));
+                }
+                if (MyTextUploaders.Contains(TextUploaderType.PASTE2))
+                {
+                    UploadText(TextUploaderType.PASTE2, new Paste2Uploader());
+                }
+                if (MyTextUploaders.Contains(TextUploaderType.SLEXY))
+                {
+                    UploadText(TextUploaderType.SLEXY, new SlexyUploader());
+                }
+                if (MyTextUploaders.Contains(TextUploaderType.FileUploader))
                 {
                     UploadFile();
                 }
-                else
-                {
-                    TextUploader textUploader = null;
-
-                    switch (this.MyTextUploader)
-                    {
-                        case TextUploaderType.PASTEBIN:
-                            textUploader = new PastebinUploader(ZKeys.PastebinKey, Engine.MyUploadersConfig.PastebinSettings);
-                            break;
-                        case TextUploaderType.PASTEBIN_CA:
-                            textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
-                            break;
-                        case TextUploaderType.PASTE2:
-                            textUploader = new Paste2Uploader();
-                            break;
-                        case TextUploaderType.SLEXY:
-                            textUploader = new SlexyUploader();
-                            break;
-                    }
-
-                    if (textUploader != null)
-                    {
-                        this.DestinationName = this.MyTextUploader.GetDescription();
-                        Engine.MyLogger.WriteLine("Uploading to " + this.DestinationName);
-
-                        string url = string.Empty;
-
-                        if (!string.IsNullOrEmpty(this.MyText))
-                        {
-                            url = textUploader.UploadText(this.MyText);
-                        }
-                        else
-                        {
-                            url = textUploader.UploadTextFile(this.LocalFilePath);
-                        }
-
-                        this.AddUploadResult(new UploadResult() { URL = url });
-                        this.Errors = textUploader.Errors;
-                    }
-                }
             }
             this.EndTime = DateTime.Now;
+        }
+
+        private void UploadText(TextUploaderType ut, TextUploader textUploader)
+        {
+            if (textUploader != null)
+            {
+                this.DestinationName = ut.GetDescription();
+                Engine.MyLogger.WriteLine("Uploading to " + this.DestinationName);
+
+                string url = string.Empty;
+
+                if (!string.IsNullOrEmpty(this.MyText))
+                {
+                    url = textUploader.UploadText(this.MyText);
+                }
+                else
+                {
+                    url = textUploader.UploadTextFile(this.LocalFilePath);
+                }
+
+                this.AddUploadResult(new UploadResult() { URL = url });
+                this.Errors = textUploader.Errors;
+            }
         }
 
         public void UploadFile()
@@ -969,7 +967,7 @@ namespace ZScreenLib
             UploadResult ur = new UploadResult();
             bool success = this.ShortenURL(ur, fullUrl);
             this.AddUploadResult(ur);
-            return success;            
+            return success;
         }
 
         public bool ShortenURL(UploadResult ur, string fullUrl)
@@ -1057,7 +1055,7 @@ namespace ZScreenLib
                                 destName = this.MyUrlShortener.GetDescription();
                                 break;
                             default:
-                                destName = this.MyTextUploader.GetDescription();
+                                destName = this.GetActiveTextUploadersDescription();
                                 break;
                         }
                         break;
@@ -1085,6 +1083,18 @@ namespace ZScreenLib
         {
             StringBuilder sb = new StringBuilder();
             foreach (ImageUploaderType ut in this.MyImageUploaders)
+            {
+                sb.Append(ut.GetDescription());
+                sb.Append(", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
+        }
+
+        public string GetActiveTextUploadersDescription()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (TextUploaderType ut in this.MyTextUploaders)
             {
                 sb.Append(ut.GetDescription());
                 sb.Append(", ");

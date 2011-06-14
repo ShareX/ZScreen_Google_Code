@@ -226,7 +226,10 @@ namespace ZScreenLib
         public virtual WorkerTask GetWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask task = CreateTask(job);
-            task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+            foreach (int i in Engine.conf.MyTextUploaders)
+            {
+                task.MyTextUploaders.Add((TextUploaderType)i);
+            }
             if (!string.IsNullOrEmpty(localFilePath))
             {
                 task.UpdateLocalFilePath(localFilePath);
@@ -418,7 +421,7 @@ namespace ZScreenLib
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = ".log";
-                    if (task.MyTextUploader == TextUploaderType.FileUploader)
+                    if (task.MyTextUploaders.Contains(TextUploaderType.FileUploader))
                     {
                         ext = ".html";
                     }

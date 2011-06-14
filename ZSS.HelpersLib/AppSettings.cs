@@ -36,7 +36,7 @@ namespace HelpersLib
 
         public List<int> ImageUploaders = new List<int>(); // default value is from ConfigWizard
         public int FileUploader;  // default value is from ConfigWizard
-        public int TextUploader;  // default value is from ConfigWizard
+        public List<int> TextUploaders = new List<int>();  // default value is from ConfigWizard
         public int UrlShortener;  // default value is from ConfigWizard
 
         public AppSettings()

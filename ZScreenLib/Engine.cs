@@ -264,9 +264,9 @@ namespace ZScreenLib
                             Engine.AppConf.RootDir = cw.RootFolder;
                         }
                         Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
-                        Engine.AppConf.ImageUploaders = cw.ImageDestinationTypes;
+                        Engine.AppConf.ImageUploaders = cw.MyImageDestinationTypes;
                         Engine.AppConf.FileUploader = (int)cw.FileUploaderType;
-                        Engine.AppConf.TextUploader = (int)cw.MyTextUploaderType;
+                        Engine.AppConf.TextUploaders = cw.MyTextDestinationTypes;
                         Engine.AppConf.UrlShortener = (int)cw.MyUrlShortenerType;
 
                         MyUploadersConfig.Save(UploadersConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
@@ -505,7 +505,6 @@ namespace ZScreenLib
             if (RunConfig)
             {
                 Engine.conf.MyFileUploader = Engine.AppConf.FileUploader;
-                Engine.conf.MyTextUploader = Engine.AppConf.TextUploader;
                 Engine.conf.MyURLShortener = Engine.AppConf.UrlShortener;
             }
 

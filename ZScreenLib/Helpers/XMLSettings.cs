@@ -65,7 +65,7 @@ namespace ZScreenLib
 
         public List<int> MyImageUploaders = new List<int>();
         public int MyFileUploader = (int)FileUploaderType.SendSpace;
-        public int MyTextUploader = (int)TextUploaderType.PASTEBIN;
+        public List<int> MyTextUploaders = new List<int>();
         public int MyURLShortener = (int)UrlShortenerType.Google;
         public int MyClipboardUriMode = (int)ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;

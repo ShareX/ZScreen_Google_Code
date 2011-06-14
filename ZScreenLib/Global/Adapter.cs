@@ -129,7 +129,7 @@ namespace ZScreenLib
                         }
                         else
                         {
-                            sbMsg.Append(task.MyTextUploader.GetDescription());
+                            sbMsg.Append(task.GetActiveTextUploadersDescription());
                         }
                         break;
                     case JobLevel1.File:
