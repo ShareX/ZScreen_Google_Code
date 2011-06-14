@@ -34,10 +34,11 @@
             this.tsddDestImages = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFiles = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOpenUploadersConfig = new System.Windows.Forms.Button();
+            this.tsddLinkShorteners = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
             this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
-            this.lblURLShortener = new System.Windows.Forms.Label();
             this.cboTextUploaders = new System.Windows.Forms.ComboBox();
             this.gbMainOptions.SuspendLayout();
             this.tsDest.SuspendLayout();
@@ -46,16 +47,14 @@
             // gbMainOptions
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.tsDest);
-            this.gbMainOptions.Controls.Add(this.btnOpenUploadersConfig);
+            this.gbMainOptions.Controls.Add(this.cboTextUploaders);
             this.gbMainOptions.Controls.Add(this.cboFileUploaders);
             this.gbMainOptions.Controls.Add(this.cboURLShorteners);
-            this.gbMainOptions.Controls.Add(this.lblURLShortener);
-            this.gbMainOptions.Controls.Add(this.cboTextUploaders);
+            this.gbMainOptions.Controls.Add(this.tsDest);
             this.gbMainOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbMainOptions.Location = new System.Drawing.Point(0, 0);
             this.gbMainOptions.Name = "gbMainOptions";
-            this.gbMainOptions.Size = new System.Drawing.Size(347, 153);
+            this.gbMainOptions.Size = new System.Drawing.Size(352, 144);
             this.gbMainOptions.TabIndex = 80;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Active Destinations";
@@ -63,16 +62,19 @@
             // tsDest
             // 
             this.tsDest.BackColor = System.Drawing.Color.White;
-            this.tsDest.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsDest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddDestImages,
             this.tsddDestText,
-            this.tsddDestFiles});
+            this.tsddDestFiles,
+            this.tsddLinkShorteners,
+            this.toolStripSeparator1,
+            this.tsbDestConfig});
             this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.tsDest.Location = new System.Drawing.Point(8, 24);
+            this.tsDest.Location = new System.Drawing.Point(3, 16);
             this.tsDest.Name = "tsDest";
-            this.tsDest.Size = new System.Drawing.Size(109, 90);
+            this.tsDest.Size = new System.Drawing.Size(346, 125);
             this.tsDest.TabIndex = 128;
             this.tsDest.Text = "Destinations";
             // 
@@ -82,7 +84,7 @@
             this.tsddDestImages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestImages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestImages.Name = "tsddDestImages";
-            this.tsddDestImages.Size = new System.Drawing.Size(107, 20);
+            this.tsddDestImages.Size = new System.Drawing.Size(344, 20);
             this.tsddDestImages.Text = "Image output";
             // 
             // tsddDestText
@@ -91,7 +93,7 @@
             this.tsddDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestText.Name = "tsddDestText";
-            this.tsddDestText.Size = new System.Drawing.Size(107, 20);
+            this.tsddDestText.Size = new System.Drawing.Size(344, 20);
             this.tsddDestText.Text = "Send text to";
             // 
             // tsddDestFiles
@@ -100,24 +102,38 @@
             this.tsddDestFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestFiles.Name = "tsddDestFiles";
-            this.tsddDestFiles.Size = new System.Drawing.Size(107, 20);
+            this.tsddDestFiles.Size = new System.Drawing.Size(344, 20);
             this.tsddDestFiles.Text = "Send files to";
             // 
-            // btnOpenUploadersConfig
+            // tsddLinkShorteners
             // 
-            this.btnOpenUploadersConfig.Location = new System.Drawing.Point(128, 120);
-            this.btnOpenUploadersConfig.Name = "btnOpenUploadersConfig";
-            this.btnOpenUploadersConfig.Size = new System.Drawing.Size(208, 23);
-            this.btnOpenUploadersConfig.TabIndex = 127;
-            this.btnOpenUploadersConfig.Text = "Open destinations configuration...";
-            this.btnOpenUploadersConfig.UseVisualStyleBackColor = true;
-            this.btnOpenUploadersConfig.Click += new System.EventHandler(this.btnOpenUploadersConfig_Click);
+            this.tsddLinkShorteners.Image = global::ZScreenLib.Properties.Resources.link_go;
+            this.tsddLinkShorteners.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddLinkShorteners.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddLinkShorteners.Name = "tsddLinkShorteners";
+            this.tsddLinkShorteners.Size = new System.Drawing.Size(344, 20);
+            this.tsddLinkShorteners.Text = "URL Shorteners";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(344, 6);
+            // 
+            // tsbDestConfig
+            // 
+            this.tsbDestConfig.Image = global::ZScreenLib.Properties.Resources.server_edit;
+            this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDestConfig.Name = "tsbDestConfig";
+            this.tsbDestConfig.Size = new System.Drawing.Size(344, 20);
+            this.tsbDestConfig.Text = "Open destinations configuration..";
+            this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
             // cboFileUploaders
             // 
             this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(128, 72);
+            this.cboFileUploaders.Location = new System.Drawing.Point(128, 64);
             this.cboFileUploaders.Name = "cboFileUploaders";
             this.cboFileUploaders.Size = new System.Drawing.Size(208, 21);
             this.cboFileUploaders.TabIndex = 126;
@@ -126,25 +142,16 @@
             // 
             this.cboURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboURLShorteners.FormattingEnabled = true;
-            this.cboURLShorteners.Location = new System.Drawing.Point(128, 96);
+            this.cboURLShorteners.Location = new System.Drawing.Point(128, 88);
             this.cboURLShorteners.Name = "cboURLShorteners";
             this.cboURLShorteners.Size = new System.Drawing.Size(208, 21);
             this.cboURLShorteners.TabIndex = 124;
-            // 
-            // lblURLShortener
-            // 
-            this.lblURLShortener.Location = new System.Drawing.Point(16, 96);
-            this.lblURLShortener.Name = "lblURLShortener";
-            this.lblURLShortener.Size = new System.Drawing.Size(96, 21);
-            this.lblURLShortener.TabIndex = 123;
-            this.lblURLShortener.Text = "URL Shortener:";
-            this.lblURLShortener.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboTextUploaders
             // 
             this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(128, 48);
+            this.cboTextUploaders.Location = new System.Drawing.Point(128, 40);
             this.cboTextUploaders.Name = "cboTextUploaders";
             this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
             this.cboTextUploaders.TabIndex = 121;
@@ -155,7 +162,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gbMainOptions);
             this.Name = "DestSelector";
-            this.Size = new System.Drawing.Size(347, 153);
+            this.Size = new System.Drawing.Size(352, 144);
             this.gbMainOptions.ResumeLayout(false);
             this.gbMainOptions.PerformLayout();
             this.tsDest.ResumeLayout(false);
@@ -169,12 +176,13 @@
         internal System.Windows.Forms.GroupBox gbMainOptions;
         public System.Windows.Forms.ComboBox cboFileUploaders;
         public System.Windows.Forms.ComboBox cboURLShorteners;
-        private System.Windows.Forms.Label lblURLShortener;
         public System.Windows.Forms.ComboBox cboTextUploaders;
-        private System.Windows.Forms.Button btnOpenUploadersConfig;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestImages;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFiles;
         private System.Windows.Forms.ToolStrip tsDest;
+        private System.Windows.Forms.ToolStripDropDownButton tsddLinkShorteners;
+        private System.Windows.Forms.ToolStripButton tsbDestConfig;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

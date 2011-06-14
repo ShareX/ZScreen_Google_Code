@@ -11,7 +11,7 @@ namespace ZScreenLib
             InitializeComponent();
         }
 
-        private void btnOpenUploadersConfig_Click(object sender, System.EventArgs e)
+        private void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
             new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys()).Show();
         }

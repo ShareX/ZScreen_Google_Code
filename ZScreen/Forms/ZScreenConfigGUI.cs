@@ -562,22 +562,6 @@ namespace ZScreenGUI
                 }
             }
 
-            if (tsmiDestinations.DropDownItems.Count == 0)
-            {
-                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.CheckOnClick = true;
-                    tsmi.Tag = t;
-                    tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
-                    tsmiDestinations.DropDownItems.Add(tsmi);
-                    if (t == ImageUploaderType.PRINTER)
-                    {
-                        tsmiDestinations.DropDownItems.Add(new ToolStripSeparator());
-                    }
-                }
-            }
-
             if (tsmFileDest.DropDownItems.Count == 0)
             {
                 foreach (FileUploaderType fileUploader in Enum.GetValues(typeof(FileUploaderType)))
