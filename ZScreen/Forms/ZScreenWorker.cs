@@ -107,11 +107,11 @@ namespace ZScreenGUI
                 task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
                 task.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && task.MyImageUploader != ImageUploaderType.CLIPBOARD &
-                    task.MyImageUploader != ImageUploaderType.FILE &&
+                if (Engine.conf.PromptForUpload && !task.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) &&
+                    !task.MyImageUploaders.Contains(ImageUploaderType.FILE) &&
                     (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
                     task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
-                    MessageBox.Show("Do you really want to upload to " + task.MyImageUploader.GetDescription() + "?",
+                    MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     e.Result = task;
@@ -169,9 +169,16 @@ namespace ZScreenGUI
                         break;
                 }
 
-                if (task.UploadResults.Count > 0 && task.MyImageUploader != ImageUploaderType.FILE && task.ShouldShortenURL(task.RemoteFilePath))
+                if (task.UploadResults.Count > 0)
                 {
-                    task.ShortenURL(task.RemoteFilePath);
+                    foreach (UploadResult ur in task.UploadResults)
+                    {
+                        if (task.ShouldShortenURL(ur.URL))
+                        {
+                            task.ShortenURL(ur, ur.URL);
+                        }
+                    }
+
                 }
 
                 e.Result = task;
@@ -263,7 +270,7 @@ namespace ZScreenGUI
 
                 if (checkTask.Status == WorkerTask.TaskStatus.RetryPending)
                 {
-                    string message = string.Format("{0}\r\n\r\nAutomatically starting upload with {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.MyImageUploader.GetDescription());
+                    string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
                     this.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
@@ -271,7 +278,7 @@ namespace ZScreenGUI
                     task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.MyImageUploader == ImageUploaderType.FILE && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.MyImageUploaders.Contains(ImageUploaderType.FILE) && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.MyImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -292,7 +299,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (task.MyImageUploader != ImageUploaderType.FILE && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.MyImageUploaders.Contains(ImageUploaderType.FILE) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -1016,9 +1023,9 @@ namespace ZScreenGUI
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && task.MyImageUploader != ImageUploaderType.PRINTER)
+            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && !task.MyImageUploaders.Contains(ImageUploaderType.PRINTER))
             {
-                if (task.MyImageUploader != ImageUploaderType.CLIPBOARD && task.MyImageUploader != ImageUploaderType.FILE &&
+                if (!task.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) && !task.MyImageUploaders.Contains(ImageUploaderType.FILE) &&
                     string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
@@ -1032,7 +1039,7 @@ namespace ZScreenGUI
                         {
                             List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while ((ImageUploaderType)r == task2.MyImageUploader || (ImageUploaderType)r == ImageUploaderType.FILE || (ImageUploaderType)r == ImageUploaderType.CLIPBOARD)
+                            while (task.MyImageUploaders.Contains((ImageUploaderType)r) || (ImageUploaderType)r == ImageUploaderType.FILE || (ImageUploaderType)r == ImageUploaderType.CLIPBOARD)
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }

@@ -143,6 +143,7 @@ namespace ZScreenGUI
                         ucDestOptions.tsddDestImages.DropDownItems.Add(new ToolStripSeparator());
                     }
                 }
+                UpdateToolStripDest();
             }
 
             if (ucDestOptions.cboTextUploaders.Items.Count == 0)
@@ -175,38 +176,37 @@ namespace ZScreenGUI
 
         void tsmiDestImages_Click(object sender, EventArgs e)
         {
-            // remove if necessory 
+            UpdateToolStripDest();
+        }
 
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            StringBuilder menuDescr = new StringBuilder();
-            menuDescr.Append("Send images to ");
-
+        void UpdateToolStripDest()
+        {
+            string dest = string.Empty;
             int count = 0;
+
             foreach (var obj in ucDestOptions.tsddDestImages.DropDownItems)
             {
                 if (obj.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
-                    if (tsmi.Text != gtsmi.Text && gtsmi.Checked)
+                    if (gtsmi.Checked)
                     {
                         count++;
+                        dest = ((ImageUploaderType)gtsmi.Tag).GetDescription();
+                        break;
                     }
                 }
             }
 
-            if (count > 0)
+            if (count == 1)
             {
-                if (tsmi.Checked)
-                {
-                    menuDescr.Append(string.Format("{0} and {1} other destinations", tsmi.Text, count.ToString()));
-                }
-                else
-                {
-                    menuDescr.Append(string.Format("{0} destinations", count.ToString()));
-                }
+                ucDestOptions.tsddDestImages.Text = "Image output: " + dest;
+            }
+            else if (count > 1)
+            {
+                ucDestOptions.tsddDestImages.Text = "Image output: " + count + " destinations";
             }
 
-            ucDestOptions.tsddDestImages.Text = menuDescr.ToString();
         }
 
         private void ZScreen_ConfigGUI_Editors()

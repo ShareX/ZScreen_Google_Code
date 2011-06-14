@@ -948,41 +948,7 @@ namespace ZScreenGUI
                 try
                 {
                     NotifyIcon ni = (NotifyIcon)sender;
-                    if (ni.Tag != null)
-                    {
-                        WorkerTask t = (WorkerTask)niTray.Tag;
-                        string cbString;
-                        switch (t.Job2)
-                        {
-                            case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                cbString = t.TranslationInfo.Result;
-                                if (!string.IsNullOrEmpty(cbString))
-                                {
-                                    Clipboard.SetText(cbString); // ok
-                                }
-                                break;
-                            default:
-                                switch (t.MyImageUploader)
-                                {
-                                    case ImageUploaderType.FILE:
-                                    case ImageUploaderType.CLIPBOARD:
-                                        cbString = t.LocalFilePath;
-                                        if (File.Exists(cbString))
-                                        {
-                                            Process.Start(cbString);
-                                        }
-                                        break;
-                                    default:
-                                        cbString = t.RemoteFilePath;
-                                        if (!string.IsNullOrEmpty(cbString)) // Cannot use File.Exists
-                                        {
-                                            Process.Start(cbString);
-                                        }
-                                        break;
-                                }
-                                break;
-                        }
-                    }
+                    new BalloonTipHelper(ni).ClickBalloonTip();
                 }
                 catch (Exception ex)
                 {

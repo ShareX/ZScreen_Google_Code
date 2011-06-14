@@ -238,9 +238,9 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (task.MyImageUploader != ImageUploaderType.CLIPBOARD)
+                            if (!task.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
                             {
-                                task.MyImageUploader = uploader.ImageUploader;
+                                task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
                                 task.UploadImage();
                             }
