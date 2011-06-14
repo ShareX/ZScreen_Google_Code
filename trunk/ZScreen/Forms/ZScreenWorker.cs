@@ -65,7 +65,7 @@ namespace ZScreenGUI
                         can = task.MyImageUploaders.Count > 0;
                         break;
                     case JobLevel1.Text:
-                        can = task.MyTextUploader != TextUploaderType.NONE || task.MyTextUploader == TextUploaderType.FileUploader && task.MyFileUploader != FileUploaderType.NONE;
+                        can = task.MyTextUploaders.Count > 0;
                         break;
                     case JobLevel1.File:
                         can = task.MyFileUploader != FileUploaderType.NONE;
@@ -412,7 +412,10 @@ namespace ZScreenGUI
         public WorkerTask CreateWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask task = CreateTask(job);
-            task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
+            foreach (TextUploaderType ut in Engine.conf.MyTextUploaders)
+            {
+                task.MyTextUploaders.Add((TextUploaderType)ut);
+            }
             if (!string.IsNullOrEmpty(localFilePath))
             {
                 task.UpdateLocalFilePath(localFilePath);
@@ -676,7 +679,7 @@ namespace ZScreenGUI
                     settings.LoadConfig(Engine.conf.IndexerConfig);
                     Engine.conf.IndexerConfig.FolderList.Clear();
                     string ext = ".log";
-                    if (task.MyTextUploader == TextUploaderType.FileUploader)
+                    if (task.MyTextUploaders.Contains(TextUploaderType.FileUploader))
                     {
                         ext = ".html";
                     }

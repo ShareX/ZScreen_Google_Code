@@ -37,9 +37,9 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
-        public List<int> ImageDestinationTypes = new List<int>();
+        public List<int> MyImageDestinationTypes = new List<int>();
         public FileUploaderType FileUploaderType { get; private set; }
-        public TextUploaderType MyTextUploaderType { get; private set; }
+        public List<int> MyTextDestinationTypes = new List<int>();
         public UrlShortenerType MyUrlShortenerType { get; private set; }
         private string DefaultRootFolder;
 
@@ -64,8 +64,15 @@ namespace ZScreenLib
             ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
             ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
 
-            ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-            ucDestOptions.cboTextUploaders.SelectedIndex = (int)TextUploaderType.PASTE2;
+            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
+            {
+                foreach (TextUploaderType t in Enum.GetValues(typeof(TextUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    ucDestOptions.tsddDestText.DropDownItems.Add(tsmi);
+                }
+            }
 
             ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
             ucDestOptions.cboURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
@@ -82,10 +89,18 @@ namespace ZScreenLib
             {
                 if (tsmi.Checked)
                 {
-                    ImageDestinationTypes.Add((int)tsmi.Tag);
+                    MyImageDestinationTypes.Add((int)tsmi.Tag);
                 }
             }
-            MyTextUploaderType = (TextUploaderType)ucDestOptions.cboTextUploaders.SelectedIndex;
+
+            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestText.DropDownItems)
+            {
+                if (tsmi.Checked)
+                {
+                    MyTextDestinationTypes.Add((int)tsmi.Tag);
+                }
+            }
+
             MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
 
             this.DialogResult = DialogResult.OK;

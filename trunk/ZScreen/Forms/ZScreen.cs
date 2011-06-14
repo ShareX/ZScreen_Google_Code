@@ -776,13 +776,6 @@ namespace ZScreenGUI
             return null;
         }
 
-        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.MyTextUploader = ucDestOptions.cboTextUploaders.SelectedIndex;
-
-            // TODO: CheckToolStripMenuItem(tsmTextDest?, GetFileDestMenuItem(uploader));
-        }
-
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.MyFileUploader = ucDestOptions.cboFileUploaders.SelectedIndex;

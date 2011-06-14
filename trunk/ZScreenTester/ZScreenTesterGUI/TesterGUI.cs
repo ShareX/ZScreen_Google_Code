@@ -251,7 +251,7 @@ namespace ZScreenTesterGUI
                             task.UploadFile();
                             break;
                         case UploaderType.TextUploader:
-                            task.MyTextUploader = uploader.TextUploader;
+                            task.MyTextUploaders.Add(uploader.TextUploader);
                             task.SetText(TestText);
                             task.UploadText();
                             break;

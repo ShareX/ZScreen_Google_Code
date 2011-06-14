@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestSelector));
             this.gbMainOptions = new System.Windows.Forms.GroupBox();
-            this.cboTextUploaders = new System.Windows.Forms.ComboBox();
-            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
             this.tsDest = new System.Windows.Forms.ToolStrip();
             this.tsddDestImages = new System.Windows.Forms.ToolStripDropDownButton();
@@ -40,6 +38,7 @@
             this.tsddLinkShorteners = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
+            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.gbMainOptions.SuspendLayout();
             this.tsDest.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +46,6 @@
             // gbMainOptions
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.cboTextUploaders);
             this.gbMainOptions.Controls.Add(this.cboFileUploaders);
             this.gbMainOptions.Controls.Add(this.cboURLShorteners);
             this.gbMainOptions.Controls.Add(this.tsDest);
@@ -58,24 +56,6 @@
             this.gbMainOptions.TabIndex = 80;
             this.gbMainOptions.TabStop = false;
             this.gbMainOptions.Text = "Active Destinations";
-            // 
-            // cboTextUploaders
-            // 
-            this.cboTextUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTextUploaders.FormattingEnabled = true;
-            this.cboTextUploaders.Location = new System.Drawing.Point(128, 40);
-            this.cboTextUploaders.Name = "cboTextUploaders";
-            this.cboTextUploaders.Size = new System.Drawing.Size(208, 21);
-            this.cboTextUploaders.TabIndex = 121;
-            // 
-            // cboFileUploaders
-            // 
-            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(128, 64);
-            this.cboFileUploaders.Name = "cboFileUploaders";
-            this.cboFileUploaders.Size = new System.Drawing.Size(208, 21);
-            this.cboFileUploaders.TabIndex = 126;
             // 
             // cboURLShorteners
             // 
@@ -96,8 +76,8 @@
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddDestImages,
-            this.tsddDestFiles,
             this.tsddDestText,
+            this.tsddDestFiles,
             this.tsddLinkShorteners,
             this.toolStripSeparator1,
             this.tsbDestConfig});
@@ -136,7 +116,7 @@
             this.tsddDestText.Name = "tsddDestText";
             this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestText.Size = new System.Drawing.Size(334, 20);
-            this.tsddDestText.Text = "Send text to";
+            this.tsddDestText.Text = "Text output:";
             // 
             // tsddLinkShorteners
             // 
@@ -163,6 +143,15 @@
             this.tsbDestConfig.Text = "Open destinations configuration..";
             this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
+            // cboFileUploaders
+            // 
+            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFileUploaders.FormattingEnabled = true;
+            this.cboFileUploaders.Location = new System.Drawing.Point(128, 64);
+            this.cboFileUploaders.Name = "cboFileUploaders";
+            this.cboFileUploaders.Size = new System.Drawing.Size(208, 21);
+            this.cboFileUploaders.TabIndex = 126;
+            // 
             // DestSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,9 +169,7 @@
         #endregion Component Designer generated code
 
         internal System.Windows.Forms.GroupBox gbMainOptions;
-        public System.Windows.Forms.ComboBox cboFileUploaders;
         public System.Windows.Forms.ComboBox cboURLShorteners;
-        public System.Windows.Forms.ComboBox cboTextUploaders;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestImages;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFiles;
@@ -190,5 +177,6 @@
         private System.Windows.Forms.ToolStripDropDownButton tsddLinkShorteners;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        public System.Windows.Forms.ComboBox cboFileUploaders;
     }
 }

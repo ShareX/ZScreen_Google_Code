@@ -149,8 +149,6 @@ namespace UploadersLib
 
     public enum TextUploaderType
     {
-        [Description("None")]
-        NONE,
         [Description("Pastebin - pastebin.com")]
         PASTEBIN,
         [Description("Pastebin - pastebin.ca")]

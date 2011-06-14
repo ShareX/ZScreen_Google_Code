@@ -67,10 +67,14 @@ namespace ZScreenLib
             }
 
             // Text Uploaders
-            if (ucDestOptions.cboTextUploaders.Items.Count == 0)
+            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
             {
-                ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-                ucDestOptions.cboTextUploaders.SelectedIndex = (int)Task.MyTextUploader;
+                foreach (TextUploaderType t in Enum.GetValues(typeof(TextUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                }
             }
 
             // URL Shorteners
@@ -82,8 +86,6 @@ namespace ZScreenLib
 
             // Dest Selector Events
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
-           // todo ucDestOptions.cboImageUploaders.SelectedIndexChanged += new EventHandler(cboImageUploaders_SelectedIndexChanged);
-            ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
@@ -107,11 +109,6 @@ namespace ZScreenLib
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
             Task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
-        }
-
-        private void cboTextUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Task.MyTextUploader = (TextUploaderType)Engine.conf.MyTextUploader;
         }
 
         private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)

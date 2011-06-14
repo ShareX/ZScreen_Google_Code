@@ -115,7 +115,6 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             // Dest Selectors
-            ucDestOptions.cboTextUploaders.SelectedIndexChanged += new EventHandler(cboTextUploaders_SelectedIndexChanged);
             ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
@@ -136,7 +135,7 @@ namespace ZScreenGUI
                     tsmi.Tag = t;
                     tsmi.CheckOnClick = true;
                     tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDestImages_Click);
+                    tsmi.Click += new EventHandler(tsmiDest_Click);
                     ucDestOptions.tsddDestImages.DropDownItems.Add(tsmi);
                     if (t == ImageUploaderType.PRINTER)
                     {
@@ -146,10 +145,18 @@ namespace ZScreenGUI
                 UpdateToolStripDest();
             }
 
-            if (ucDestOptions.cboTextUploaders.Items.Count == 0)
+            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
             {
-                ucDestOptions.cboTextUploaders.Items.AddRange(typeof(TextUploaderType).GetDescriptions());
-                ucDestOptions.cboTextUploaders.SelectedIndex = Engine.conf.MyTextUploader.BetweenOrDefault(0, ucDestOptions.cboTextUploaders.Items.Count - 1);
+                foreach (TextUploaderType t in Enum.GetValues(typeof(TextUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                    tsmi.Checked = Engine.conf.MyTextUploaders.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDest_Click);
+                    ucDestOptions.tsddDestText.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripDest();
             }
 
             if (ucDestOptions.cboFileUploaders.Items.Count == 0)
@@ -174,7 +181,7 @@ namespace ZScreenGUI
             chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
-        void tsmiDestImages_Click(object sender, EventArgs e)
+        void tsmiDest_Click(object sender, EventArgs e)
         {
             UpdateToolStripDest();
         }
@@ -193,7 +200,6 @@ namespace ZScreenGUI
                     {
                         count++;
                         dest = ((ImageUploaderType)gtsmi.Tag).GetDescription();
-                        break;
                     }
                 }
             }
@@ -204,7 +210,7 @@ namespace ZScreenGUI
             }
             else if (count > 1)
             {
-                ucDestOptions.tsddDestImages.Text = "Image output: " + count + " destinations";
+                ucDestOptions.tsddDestImages.Text = string.Format("Image output: {0} and {1} other destination(s)", dest, count - 1);
             }
 
         }

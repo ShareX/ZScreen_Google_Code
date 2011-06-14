@@ -74,7 +74,7 @@ namespace ZScreenLib
                                 dest = task.MyUrlShortener.GetDescription();
                                 break;
                             default:
-                                dest = task.MyTextUploader.GetDescription();
+                                dest = task.GetActiveTextUploadersDescription();
                                 break;
                         }
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
