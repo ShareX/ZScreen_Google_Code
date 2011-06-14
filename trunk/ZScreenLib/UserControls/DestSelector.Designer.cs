@@ -72,7 +72,7 @@
             this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.tsDest.Location = new System.Drawing.Point(8, 24);
             this.tsDest.Name = "tsDest";
-            this.tsDest.Size = new System.Drawing.Size(118, 90);
+            this.tsDest.Size = new System.Drawing.Size(109, 90);
             this.tsDest.TabIndex = 128;
             this.tsDest.Text = "Destinations";
             // 
@@ -82,8 +82,8 @@
             this.tsddDestImages.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestImages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestImages.Name = "tsddDestImages";
-            this.tsddDestImages.Size = new System.Drawing.Size(116, 20);
-            this.tsddDestImages.Text = "Send images to";
+            this.tsddDestImages.Size = new System.Drawing.Size(107, 20);
+            this.tsddDestImages.Text = "Image output";
             // 
             // tsddDestText
             // 
@@ -91,7 +91,7 @@
             this.tsddDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestText.Name = "tsddDestText";
-            this.tsddDestText.Size = new System.Drawing.Size(116, 20);
+            this.tsddDestText.Size = new System.Drawing.Size(107, 20);
             this.tsddDestText.Text = "Send text to";
             // 
             // tsddDestFiles
@@ -100,7 +100,7 @@
             this.tsddDestFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestFiles.Name = "tsddDestFiles";
-            this.tsddDestFiles.Size = new System.Drawing.Size(116, 20);
+            this.tsddDestFiles.Size = new System.Drawing.Size(107, 20);
             this.tsddDestFiles.Text = "Send files to";
             // 
             // btnOpenUploadersConfig

@@ -511,10 +511,6 @@ namespace ZScreenLib
         public void UploadImage()
         {
             this.StartTime = DateTime.Now;
-            if (!this.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
-            {
-                Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
-            }
 
             ImageUploader imageUploader = null;
 
@@ -530,20 +526,6 @@ namespace ZScreenLib
                         this.MyImageUploaders.Remove(ImageUploaderType.TINYPIC);
                     }
                 }
-            }
-
-            if (MyImageUploaders.Contains(ImageUploaderType.FILE))
-            {
-                string fp = this.LocalFilePath;
-                if (Engine.IsPortable)
-                {
-                    fp = Path.Combine(Application.StartupPath, fp);
-                    this.UpdateLocalFilePath(fp);
-                }
-                this.AddUploadResult(new UploadResult()
-                {
-                    LocalFilePath = fp
-                });
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
@@ -582,11 +564,6 @@ namespace ZScreenLib
                 UploadImage(imageUploader);
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.Localhost))
-            {
-                UploadToSharedFolder();
-            }
-
             if (MyImageUploaders.Contains(ImageUploaderType.MEDIAWIKI))
             {
                 UploadToMediaWiki();
@@ -621,6 +598,30 @@ namespace ZScreenLib
             if (MyImageUploaders.Contains(ImageUploaderType.FileUploader))
             {
                 UploadFile();
+            }
+
+            if (!this.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
+            {
+                Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.FILE))
+            {
+                string fp = this.LocalFilePath;
+                if (Engine.IsPortable)
+                {
+                    fp = Path.Combine(Application.StartupPath, fp);
+                    this.UpdateLocalFilePath(fp);
+                }
+                this.AddUploadResult(new UploadResult()
+                {
+                    LocalFilePath = fp
+                });
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.Localhost))
+            {
+                UploadToSharedFolder();
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.PRINTER))
