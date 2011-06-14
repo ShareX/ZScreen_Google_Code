@@ -181,26 +181,6 @@ namespace ZScreenGUI
             chkShowCursor.Checked = Engine.conf.ShowCursor;
         }
 
-        void UpdateToolStripDestImage()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestImage, "Image output");
-        }
-
-        void UpdateToolStripDestText()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
-        }
-
-        void tsmiDestImage_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestImage();
-        }
-
-        void tsmiDestText_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestText();
-        }
-
         void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
         {
             string dest = string.Empty;
@@ -228,6 +208,28 @@ namespace ZScreenGUI
                 tsdd.Text = string.Format("{0}: {1} and {2} other destination(s)", descr, dest, count - 1);
             }
         }
+
+        void UpdateToolStripDestImage()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddDestImage, "Image output");
+        }
+
+        void UpdateToolStripDestText()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
+        }
+
+        void tsmiDestImage_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripDestImage();
+        }
+
+        void tsmiDestText_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripDestText();
+        }
+
+
 
         private void ZScreen_ConfigGUI_Editors()
         {
