@@ -133,7 +133,7 @@ namespace ZScreenLib
                         }
                         break;
                     case JobLevel1.File:
-                        sbMsg.Append(task.MyFileUploader.GetDescription());
+                        sbMsg.Append(task.GetActiveUploadersDescription<FileUploaderType>(task.MyFileUploaders));
                         break;
                 }
                 ni.Text = sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));

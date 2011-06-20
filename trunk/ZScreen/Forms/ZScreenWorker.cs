@@ -68,7 +68,7 @@ namespace ZScreenGUI
                         can = task.MyTextUploaders.Count > 0;
                         break;
                     case JobLevel1.File:
-                        can = task.MyFileUploader != FileUploaderType.NONE;
+                        can = task.MyFileUploaders.Count > 0;
                         break;
                 }
             }
@@ -106,7 +106,8 @@ namespace ZScreenGUI
             // Add destinations
             AddDestinations<ImageUploaderType>(ucDestOptions.tsddDestImage, task.MyImageUploaders);
             AddDestinations<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
-            
+            AddDestinations<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
+
             if (!CanStartWork(task))
             {
                 e.Result = null; // Pass a null object because there is nothing else to do

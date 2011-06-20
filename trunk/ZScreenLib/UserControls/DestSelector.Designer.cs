@@ -33,12 +33,11 @@
             this.cboURLShorteners = new System.Windows.Forms.ComboBox();
             this.tsDest = new System.Windows.Forms.ToolStrip();
             this.tsddDestImage = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddDestFiles = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddDestFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddLinkShorteners = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
-            this.cboFileUploaders = new System.Windows.Forms.ComboBox();
             this.gbMainOptions.SuspendLayout();
             this.tsDest.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +45,6 @@
             // gbMainOptions
             // 
             this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.cboFileUploaders);
             this.gbMainOptions.Controls.Add(this.cboURLShorteners);
             this.gbMainOptions.Controls.Add(this.tsDest);
             this.gbMainOptions.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -77,7 +75,7 @@
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddDestImage,
             this.tsddDestText,
-            this.tsddDestFiles,
+            this.tsddDestFile,
             this.tsddLinkShorteners,
             this.toolStripSeparator1,
             this.tsbDestConfig});
@@ -88,25 +86,15 @@
             this.tsDest.TabIndex = 128;
             this.tsDest.Text = "Destinations";
             // 
-            // tsddDestImages
+            // tsddDestImage
             // 
-            this.tsddDestImage.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImages.Image")));
+            this.tsddDestImage.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImage.Image")));
             this.tsddDestImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddDestImage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestImage.Name = "tsddDestImages";
+            this.tsddDestImage.Name = "tsddDestImage";
             this.tsddDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestImage.Size = new System.Drawing.Size(334, 20);
             this.tsddDestImage.Text = "Image output:";
-            // 
-            // tsddDestFiles
-            // 
-            this.tsddDestFiles.Image = global::ZScreenLib.Properties.Resources.page_go;
-            this.tsddDestFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestFiles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestFiles.Name = "tsddDestFiles";
-            this.tsddDestFiles.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestFiles.Size = new System.Drawing.Size(334, 20);
-            this.tsddDestFiles.Text = "Send files to";
             // 
             // tsddDestText
             // 
@@ -117,6 +105,16 @@
             this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestText.Size = new System.Drawing.Size(334, 20);
             this.tsddDestText.Text = "Text output:";
+            // 
+            // tsddDestFiles
+            // 
+            this.tsddDestFile.Image = global::ZScreenLib.Properties.Resources.page_go;
+            this.tsddDestFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestFile.Name = "tsddDestFiles";
+            this.tsddDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestFile.Size = new System.Drawing.Size(334, 20);
+            this.tsddDestFile.Text = "File output:";
             // 
             // tsddLinkShorteners
             // 
@@ -143,15 +141,6 @@
             this.tsbDestConfig.Text = "Open destinations configuration..";
             this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
-            // cboFileUploaders
-            // 
-            this.cboFileUploaders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFileUploaders.FormattingEnabled = true;
-            this.cboFileUploaders.Location = new System.Drawing.Point(128, 64);
-            this.cboFileUploaders.Name = "cboFileUploaders";
-            this.cboFileUploaders.Size = new System.Drawing.Size(208, 21);
-            this.cboFileUploaders.TabIndex = 126;
-            // 
             // DestSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,11 +161,10 @@
         public System.Windows.Forms.ComboBox cboURLShorteners;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestImage;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
-        public System.Windows.Forms.ToolStripDropDownButton tsddDestFiles;
+        public System.Windows.Forms.ToolStripDropDownButton tsddDestFile;
         private System.Windows.Forms.ToolStrip tsDest;
         private System.Windows.Forms.ToolStripDropDownButton tsddLinkShorteners;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        public System.Windows.Forms.ComboBox cboFileUploaders;
     }
 }

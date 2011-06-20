@@ -163,8 +163,6 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("None")]
-        NONE,
         [Description("RapidShare - rapidshare.com")]
         RapidShare,
         [Description("SendSpace - sendspace.com")]
