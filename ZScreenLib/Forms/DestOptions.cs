@@ -43,39 +43,27 @@ namespace ZScreenLib
             this.Task = task;
         }
 
-        private void InputBox_Load(object sender, EventArgs e)
+        private void LoadDest<T>(ToolStripDropDownButton tsddb)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (Enum t in Enum.GetValues(typeof(T)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                }
+            }
+        }
+
+        private void DestOptions_Load(object sender, EventArgs e)
         {
             this.Text = Title;
             txtInputText.Text = InputText;
 
-            // File Uploaders
-            if (ucDestOptions.cboFileUploaders.Items.Count == 0)
-            {
-                ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
-                ucDestOptions.cboFileUploaders.SelectedIndex = (int)Task.MyFileUploader;
-            }
-
-            // Image Uploaders
-            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
-            {
-                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                }
-            }
-
-            // Text Uploaders
-            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
-            {
-                foreach (TextUploaderType t in Enum.GetValues(typeof(TextUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                }
-            }
+            LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
+            LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
+            LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
 
             // URL Shorteners
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
@@ -85,7 +73,6 @@ namespace ZScreenLib
             }
 
             // Dest Selector Events
-            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
@@ -109,11 +96,6 @@ namespace ZScreenLib
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
             Task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
-        }
-
-        private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Task.MyFileUploader = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
         }
 
         private void InputBox_Shown(object sender, EventArgs e)
@@ -227,7 +209,7 @@ namespace ZScreenLib
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Destination Options";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.InputBox_Load);
+            this.Load += new System.EventHandler(this.DestOptions_Load);
             this.Shown += new System.EventHandler(this.InputBox_Shown);
             this.gbFileName.ResumeLayout(false);
             this.gbFileName.PerformLayout();

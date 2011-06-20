@@ -115,7 +115,6 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             // Dest Selectors
-            ucDestOptions.cboFileUploaders.SelectedIndexChanged += new EventHandler(cboFileUploaders_SelectedIndexChanged);
             ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
@@ -159,10 +158,18 @@ namespace ZScreenGUI
                 UpdateToolStripDestText();
             }
 
-            if (ucDestOptions.cboFileUploaders.Items.Count == 0)
+            if (ucDestOptions.tsddDestFile.DropDownItems.Count == 0)
             {
-                ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
-                ucDestOptions.cboFileUploaders.SelectedIndex = Engine.conf.MyFileUploader.BetweenOrDefault(0, ucDestOptions.cboFileUploaders.Items.Count - 1);
+                foreach (FileUploaderType t in Enum.GetValues(typeof(FileUploaderType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                    tsmi.Checked = Engine.conf.MyFileUploaders.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDestFiles_Click);
+                    ucDestOptions.tsddDestFile.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripDestFile();
             }
 
             if (ucDestOptions.cboURLShorteners.Items.Count == 0)
@@ -219,6 +226,11 @@ namespace ZScreenGUI
             UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
         }
 
+        void UpdateToolStripDestFile()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddDestFile, "File output");
+        }
+
         void tsmiDestImage_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestImage();
@@ -229,7 +241,11 @@ namespace ZScreenGUI
             UpdateToolStripDestText();
         }
 
-
+        void tsmiDestFiles_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripDestFile();
+        }
+ 
 
         private void ZScreen_ConfigGUI_Editors()
         {
@@ -583,18 +599,6 @@ namespace ZScreenGUI
                     tsmiTabs.DropDownItems.Add(tsmi);
                 }
             }
-
-            if (tsmFileDest.DropDownItems.Count == 0)
-            {
-                foreach (FileUploaderType fileUploader in Enum.GetValues(typeof(FileUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(fileUploader.GetDescription());
-                    tsmi.Click += new EventHandler(tsmiDestFiles_Click);
-                    tsmi.Tag = fileUploader;
-                    tsmFileDest.DropDownItems.Add(tsmi);
-                }
-            }
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem((FileUploaderType)Engine.conf.MyFileUploader));
         }
 
         internal void ZScreen_Windows7onlyTasks()

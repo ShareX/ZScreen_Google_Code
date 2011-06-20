@@ -38,7 +38,7 @@ namespace ZScreenLib
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
         public List<int> MyImageDestinationTypes = new List<int>();
-        public FileUploaderType FileUploaderType { get; private set; }
+        public List<int> MyFileUploaderTypes = new List<int>();
         public List<int> MyTextDestinationTypes = new List<int>();
         public UrlShortenerType MyUrlShortenerType { get; private set; }
         private string DefaultRootFolder;
@@ -51,31 +51,36 @@ namespace ZScreenLib
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
 
-            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
-            {
-                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    ucDestOptions.tsddDestImage.DropDownItems.Add(tsmi);
-                }
-            }
-
-            ucDestOptions.cboFileUploaders.Items.AddRange(typeof(FileUploaderType).GetDescriptions());
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)FileUploaderType.SendSpace;
-
-            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
-            {
-                foreach (TextUploaderType t in Enum.GetValues(typeof(TextUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    ucDestOptions.tsddDestText.DropDownItems.Add(tsmi);
-                }
-            }
+            LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
+            LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
+            LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
 
             ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
             ucDestOptions.cboURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
+        }
+
+        private void LoadDest<T>(ToolStripDropDownButton tsddb)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (Enum t in Enum.GetValues(typeof(T)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                }
+            }
+        }
+
+        private void LoadDestOptions(ToolStripDropDownButton tsddb, List<int> list)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if (tsmi.Checked)
+                {
+                    list.Add((int)tsmi.Tag);
+                }
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -83,23 +88,9 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
-            FileUploaderType = (FileUploaderType)ucDestOptions.cboFileUploaders.SelectedIndex;
-
-            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestImage.DropDownItems)
-            {
-                if (tsmi.Checked)
-                {
-                    MyImageDestinationTypes.Add((int)tsmi.Tag);
-                }
-            }
-
-            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddDestText.DropDownItems)
-            {
-                if (tsmi.Checked)
-                {
-                    MyTextDestinationTypes.Add((int)tsmi.Tag);
-                }
-            }
+            LoadDestOptions(ucDestOptions.tsddDestFile, MyFileUploaderTypes);
+            LoadDestOptions(ucDestOptions.tsddDestImage, MyImageDestinationTypes);
+            LoadDestOptions(ucDestOptions.tsddDestText, MyTextDestinationTypes);
 
             MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
 

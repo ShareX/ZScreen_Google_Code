@@ -208,12 +208,6 @@ namespace ZScreenGUI
             tcMain.Focus();
         }
 
-        private void tsmiDestFiles_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            ucDestOptions.cboFileUploaders.SelectedIndex = (int)tsmi.Tag;
-        }
-
         private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CloseMethod = CloseMethod.TrayButton;
@@ -264,26 +258,24 @@ namespace ZScreenGUI
             }
         }
 
+        private void SaveDestinations(ToolStripDropDownButton tsddb, List<int> list)
+        {
+            list.Clear();
+            foreach (var tsmi in tsddb.DropDownItems)
+            {
+                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
+                {
+                    list.Add((int)((ToolStripMenuItem)tsmi).Tag);
+                }
+            }
+        }
+
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-            Engine.conf.MyImageUploaders.Clear();
-            foreach (var tsmi in ucDestOptions.tsddDestImage.DropDownItems)
-            {
-                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
-                {
-                    Engine.conf.MyImageUploaders.Add((int)((ToolStripMenuItem)tsmi).Tag);
-                }
-            }
-
-            Engine.conf.MyTextUploaders.Clear();
-            foreach (var tsmi in ucDestOptions.tsddDestText.DropDownItems)
-            {
-                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
-                {
-                    Engine.conf.MyTextUploaders.Add((int)((ToolStripMenuItem)tsmi).Tag);
-                }
-            }
+            SaveDestinations(ucDestOptions.tsddDestImage, Engine.conf.MyImageUploaders);
+            SaveDestinations(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+            SaveDestinations(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
@@ -454,36 +446,6 @@ namespace ZScreenGUI
                 tsmEditinImageSoftware.DropDown.AutoClose = false;
                 lbSoftware.SelectedItem = tsm.Text;
                 UpdateGuiEditors(sender);
-            }
-        }
-
-        private void RewriteCustomUploaderRightClickMenu()
-        {
-            if (Engine.MyUploadersConfig.CustomUploadersList != null)
-            {
-                List<CustomUploaderInfo> lUploaders = Engine.MyUploadersConfig.CustomUploadersList;
-
-                ToolStripMenuItem tsmDestCustomHTTP = GetFileDestMenuItem(FileUploaderType.CustomUploader);
-                tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
-                tsmDestCustomHTTP.DropDownItems.Clear();
-
-                ToolStripMenuItem tsm;
-                for (int i = 0; i < lUploaders.Count; i++)
-                {
-                    tsm = new ToolStripMenuItem { CheckOnClick = true, Tag = i, Text = lUploaders[i].Name };
-                    tsmDestCustomHTTP.DropDownItems.Add(tsm);
-                }
-
-                CheckCorrectMenuItemClicked(ref tsmDestCustomHTTP, Engine.MyUploadersConfig.CustomUploaderSelected);
-
-                tsmDestCustomHTTP.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                //show drop down menu in the correct place if menu is selected
-                if (tsmDestCustomHTTP.Selected)
-                {
-                    tsmDestCustomHTTP.DropDown.Hide();
-                    tsmDestCustomHTTP.DropDown.Show();
-                }
             }
         }
 
@@ -770,26 +732,6 @@ namespace ZScreenGUI
             }
 
             RewriteImageEditorsRightClickMenu();
-        }
-
-        private ToolStripMenuItem GetFileDestMenuItem(FileUploaderType fut)
-        {
-            foreach (ToolStripMenuItem tsmi in tsmFileDest.DropDownItems)
-            {
-                if ((FileUploaderType)tsmi.Tag == fut)
-                {
-                    return tsmi;
-                }
-            }
-
-            return null;
-        }
-
-        private void cboFileUploaders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.MyFileUploader = ucDestOptions.cboFileUploaders.SelectedIndex;
-
-            CheckToolStripMenuItem(tsmFileDest, GetFileDestMenuItem((FileUploaderType)Engine.conf.MyFileUploader));
         }
 
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)

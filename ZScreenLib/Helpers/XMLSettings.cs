@@ -64,7 +64,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public List<int> MyImageUploaders = new List<int>();
-        public int MyFileUploader = (int)FileUploaderType.SendSpace;
+        public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
         public int MyURLShortener = (int)UrlShortenerType.Google;
         public int MyClipboardUriMode = (int)ClipboardUriType.FULL;

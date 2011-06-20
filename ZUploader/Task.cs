@@ -113,8 +113,6 @@ namespace ZUploader
             {
                 case EDataType.Image:
                     return UploadManager.ImageUploader != ImageDestination.NONE;
-                case EDataType.File:
-                    return UploadManager.FileUploader != FileUploaderType.NONE;
             }
 
             return false;

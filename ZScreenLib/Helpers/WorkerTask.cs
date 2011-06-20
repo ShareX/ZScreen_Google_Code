@@ -180,7 +180,7 @@ namespace ZScreenLib
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
         public UrlShortenerType MyUrlShortener { get; set; }
-        public FileUploaderType MyFileUploader { get; set; }
+        public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
 
         public List<UploadResult> UploadResults { get; private set; }
 
@@ -213,7 +213,6 @@ namespace ZScreenLib
             this.MyWorker = worker;
             this.Job2 = job;
 
-            MyFileUploader = (FileUploaderType)Engine.conf.MyFileUploader;
             MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
 
             if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
@@ -752,68 +751,77 @@ namespace ZScreenLib
             this.StartTime = DateTime.Now;
             Engine.MyLogger.WriteLine("Uploading File: " + this.LocalFilePath);
 
-            FileUploader fileHost = null;
-            switch (this.MyFileUploader)
+            if (this.MyFileUploaders.Contains(FileUploaderType.FTP))
             {
-                case FileUploaderType.FTP:
-                    switch (this.Job1)
-                    {
-                        case JobLevel1.Text:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
-                            break;
-                        case JobLevel1.Image:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
-                            break;
-                        default:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
-                            break;
-                    }
-                    break;
-                case FileUploaderType.Dropbox:
-                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
-                    fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
-                    break;
-                case FileUploaderType.SendSpace:
-                    fileHost = new SendSpace(ZKeys.SendSpaceKey);
-                    switch (Engine.MyUploadersConfig.SendSpaceAccountType)
-                    {
-                        case AccountType.Anonymous:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
-                            break;
-                        case AccountType.User:
-                            SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.MyUploadersConfig.SendSpaceUsername,
-                                Engine.MyUploadersConfig.SendSpacePassword);
-                            break;
-                    }
-                    break;
-                case FileUploaderType.RapidShare:
-                    fileHost = new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
-                        Engine.MyUploadersConfig.RapidSharePassword);
-                    break;
-                case FileUploaderType.ShareCX:
-                    fileHost = new ShareCX();
-                    break;
-                case FileUploaderType.CustomUploader:
-                    if (Engine.MyUploadersConfig.CustomUploadersList.CheckSelected(Engine.MyUploadersConfig.CustomUploaderSelected))
-                    {
-                        fileHost = new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]);
-                    }
-                    break;
+                switch (this.Job1)
+                {
+                    case JobLevel1.Text:
+                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
+                        break;
+                    case JobLevel1.Image:
+                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
+                        break;
+                    default:
+                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
+                        break;
+                }
             }
 
-            if (fileHost != null)
+            if (MyFileUploaders.Contains(FileUploaderType.Dropbox))
             {
-                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
-                this.DestinationName = this.MyFileUploader.GetDescription();
-                fileHost.ProgressChanged += UploadProgressChanged;
-                UploadResult ur = new UploadResult();
-                ur = fileHost.Upload(this.LocalFilePath);
-                ur.Host = MyFileUploader.GetDescription();
-                this.AddUploadResult(ur);
-                this.Errors = fileHost.Errors;
+                string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
+                FileUploader fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
+                UploadFile(FileUploaderType.Dropbox, fileHost);
+            }
+
+            if (MyFileUploaders.Contains(FileUploaderType.SendSpace))
+            {
+                FileUploader fileHost = new SendSpace(ZKeys.SendSpaceKey);
+                switch (Engine.MyUploadersConfig.SendSpaceAccountType)
+                {
+                    case AccountType.Anonymous:
+                        SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
+                        break;
+                    case AccountType.User:
+                        SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.MyUploadersConfig.SendSpaceUsername,
+                            Engine.MyUploadersConfig.SendSpacePassword);
+                        break;
+                }
+                UploadFile(FileUploaderType.SendSpace, fileHost);
+            }
+
+            if (MyFileUploaders.Contains(FileUploaderType.RapidShare))
+            {
+                UploadFile(FileUploaderType.RapidShare, new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
+                      Engine.MyUploadersConfig.RapidSharePassword));
+            }
+
+            if (MyFileUploaders.Contains(FileUploaderType.ShareCX))
+            {
+                UploadFile(FileUploaderType.ShareCX, new ShareCX());
+            }
+
+            if (MyFileUploaders.Contains(FileUploaderType.CustomUploader))
+            {
+                UploadFile(FileUploaderType.CustomUploader, new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]));
             }
 
             this.EndTime = DateTime.Now;
+        }
+
+        private void UploadFile(FileUploaderType ut, FileUploader fileHost)
+        {
+            if (fileHost != null)
+            {
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                this.DestinationName = ut.GetDescription();
+                fileHost.ProgressChanged += UploadProgressChanged;
+                UploadResult ur = new UploadResult();
+                ur = fileHost.Upload(this.LocalFilePath);
+                ur.Host = ut.GetDescription();
+                this.AddUploadResult(ur);
+                this.Errors = fileHost.Errors;
+            }
         }
 
         /// <summary>
@@ -1068,7 +1076,7 @@ namespace ZScreenLib
                         }
                         break;
                     case JobLevel1.File:
-                        destName = this.MyFileUploader.GetDescription();
+                        destName = this.GetActiveUploadersDescription<FileUploaderType>(this.MyFileUploaders);
                         break;
                 }
             }
@@ -1101,10 +1109,16 @@ namespace ZScreenLib
 
         public string GetActiveTextUploadersDescription()
         {
+            return GetActiveUploadersDescription<TextUploaderType>(MyTextUploaders);
+        }
+
+        public string GetActiveUploadersDescription<T>(List<T> list)
+        {
             StringBuilder sb = new StringBuilder();
-            foreach (TextUploaderType ut in this.MyTextUploaders)
+            foreach (T ut in list)
             {
-                sb.Append(ut.GetDescription());
+                Enum en = (Enum)Convert.ChangeType(ut, typeof(Enum));
+                sb.Append(en.GetDescription());
                 sb.Append(", ");
             }
             sb.Remove(sb.Length - 2, 2);
@@ -1120,8 +1134,7 @@ namespace ZScreenLib
         {
             StringBuilder sbDebug = new StringBuilder();
             sbDebug.AppendLine(string.Format("Image Uploaders: {0}", GetActiveImageUploadersDescription()));
-            // sbDebug.AppendLine(string.Format(" Text Uploader: {0}", MyTextUploader));
-            sbDebug.AppendLine(string.Format(" File Uploader: {0}", MyFileUploader.GetDescription()));
+            sbDebug.AppendLine(string.Format(" File Uploader: {0}", GetActiveUploadersDescription<FileUploaderType>(MyFileUploaders)));
             return sbDebug.ToString();
         }
 

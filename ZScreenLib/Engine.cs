@@ -265,7 +265,7 @@ namespace ZScreenLib
                         }
                         Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
                         Engine.AppConf.ImageUploaders = cw.MyImageDestinationTypes;
-                        Engine.AppConf.FileUploader = (int)cw.FileUploaderType;
+                        Engine.AppConf.FileUploaders = cw.MyFileUploaderTypes;
                         Engine.AppConf.TextUploaders = cw.MyTextDestinationTypes;
                         Engine.AppConf.UrlShortener = (int)cw.MyUrlShortenerType;
 
@@ -504,7 +504,6 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.MyFileUploader = Engine.AppConf.FileUploader;
                 Engine.conf.MyURLShortener = Engine.AppConf.UrlShortener;
             }
 
