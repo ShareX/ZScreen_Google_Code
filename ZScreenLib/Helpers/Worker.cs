@@ -161,7 +161,7 @@ namespace ZScreenLib
                     this.GUI.niTray.Icon = Resources.zss_tray;
                 }
 
-                if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || !string.IsNullOrEmpty(task.RemoteFilePath))
+                if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR || File.Exists(task.LocalFilePath) || task.UploadResults.Count > 0)
                 {
                     if (Engine.conf.CompleteSound)
                     {
