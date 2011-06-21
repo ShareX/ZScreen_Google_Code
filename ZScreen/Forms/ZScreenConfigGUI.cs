@@ -199,7 +199,6 @@ namespace ZScreenGUI
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;
-                    tsmi.CheckOnClick = true;
                     tsmi.Checked = Engine.conf.MyURLShorteners.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestLinks_Click);
                     ucDestOptions.tsddDestLink.DropDownItems.Add(tsmi);

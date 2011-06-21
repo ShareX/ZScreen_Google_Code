@@ -69,12 +69,6 @@ namespace ZScreenLib
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
 
-        void tsmiDestImages_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            tsmi.Checked = !tsmi.Checked;
-        }
-
         private void txtInputText_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
