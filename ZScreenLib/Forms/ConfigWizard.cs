@@ -37,10 +37,10 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
-        public List<int> MyImageDestinationTypes = new List<int>();
-        public List<int> MyFileUploaderTypes = new List<int>();
-        public List<int> MyTextDestinationTypes = new List<int>();
-        public List<int> MyUrlShortenerType = new List<int>();
+        public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
+        public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
+        public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
+        public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
         private string DefaultRootFolder;
 
         public ConfigWizard(string rootDir)
@@ -50,17 +50,11 @@ namespace ZScreenLib
             DefaultRootFolder = rootDir;
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
-        }
 
-        private void LoadDestOptions(ToolStripDropDownButton tsddb, List<int> list)
-        {
-            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
-            {
-                if (tsmi.Checked)
-                {
-                    list.Add((int)tsmi.Tag);
-                }
-            }
+            Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
+            Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
+            Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, MyLinkUploaders);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -68,13 +62,24 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
-            LoadDestOptions(ucDestOptions.tsddDestFile, MyFileUploaderTypes);
-            LoadDestOptions(ucDestOptions.tsddDestImage, MyImageDestinationTypes);
-            LoadDestOptions(ucDestOptions.tsddDestText, MyTextDestinationTypes);
-            LoadDestOptions(ucDestOptions.tsddDestLink, MyUrlShortenerType);
+            SaveDestOptions(ucDestOptions.tsddDestFile, MyFileUploaders);
+            SaveDestOptions(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            SaveDestOptions(ucDestOptions.tsddDestText, MyTextUploaders);
+            SaveDestOptions(ucDestOptions.tsddDestLink, MyLinkUploaders);
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void SaveDestOptions<T>(ToolStripDropDownButton tsddb, List<T> list)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if (tsmi.Checked)
+                {
+                    list.Add((T)tsmi.Tag);
+                }
+            }
         }
 
         private void btnBrowseRootDir_Click(object sender, EventArgs e)

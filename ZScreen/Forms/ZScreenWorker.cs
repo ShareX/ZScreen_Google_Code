@@ -84,30 +84,15 @@ namespace ZScreenGUI
             return bwApp;
         }
 
-        public void AddDestinations<T>(ToolStripDropDownButton tssdb, List<T> list)
-        {
-            foreach (var obj in tssdb.DropDownItems)
-            {
-                if (obj.GetType() == typeof(ToolStripMenuItem))
-                {
-                    ToolStripMenuItem tsmi = obj as ToolStripMenuItem;
-                    if (tsmi.Checked)
-                    {
-                        list.Add((T)tsmi.Tag);
-                    }
-                }
-            }
-        }
-
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
 
             // Add destinations
-            AddDestinations<ImageUploaderType>(ucDestOptions.tsddDestImage, task.MyImageUploaders);
-            AddDestinations<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
-            AddDestinations<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
-            AddDestinations<UrlShortenerType>(ucDestOptions.tsddDestLink, task.MyUrlShorteners);
+            Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
+            Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
+            Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
+            Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, task.MyUrlShorteners);
 
             if (!CanStartWork(task))
             {

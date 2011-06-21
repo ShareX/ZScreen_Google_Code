@@ -35,12 +35,13 @@ namespace ZScreenLib
         public string InputText { get; set; }
         public WorkerTask Task { get; set; }
 
-        public DestOptions() { }
-
         public DestOptions(WorkerTask task)
         {
             InitializeComponent();
             this.Task = task;
+
+            DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
+            dsh.LoadDestAll();
         }
 
         private void DestOptions_Load(object sender, EventArgs e)
@@ -72,6 +73,16 @@ namespace ZScreenLib
             {
                 InputText = txtInputText.Text;
                 this.DialogResult = DialogResult.OK;
+
+                Task.MyImageUploaders.Clear();
+                Task.MyTextUploaders.Clear();
+                Task.MyFileUploaders.Clear();
+                Task.MyUrlShorteners.Clear();
+                Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
+                Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
+                Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
+                Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, Task.MyUrlShorteners);
+
                 this.Hide();
             }
         }
