@@ -74,7 +74,6 @@ namespace ZScreenTesterGUI
                     case ImageUploaderType.FILE:
                     case ImageUploaderType.Localhost:
                     case ImageUploaderType.PRINTER:
-                    case ImageUploaderType.DEKIWIKI:
                     case ImageUploaderType.MEDIAWIKI:
                     case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
                     case ImageUploaderType.FileUploader: // We are going to test this in File Uploader tests

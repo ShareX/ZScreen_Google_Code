@@ -115,7 +115,7 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             // Dest Selectors
-            ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+            ucDestOptions.tscbURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
@@ -172,10 +172,10 @@ namespace ZScreenGUI
                 UpdateToolStripDestFile();
             }
 
-            if (ucDestOptions.cboURLShorteners.Items.Count == 0)
+            if (ucDestOptions.tscbURLShorteners.Items.Count == 0)
             {
-                ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-                ucDestOptions.cboURLShorteners.SelectedIndex = Engine.conf.MyURLShortener.BetweenOrDefault(0, ucDestOptions.cboURLShorteners.Items.Count - 1);
+                ucDestOptions.tscbURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+                ucDestOptions.tscbURLShorteners.SelectedIndex = Engine.conf.MyURLShortener.BetweenOrDefault(0, ucDestOptions.tscbURLShorteners.Items.Count - 1);
             }
 
             if (cboURLFormat.Items.Count == 0)
@@ -206,7 +206,11 @@ namespace ZScreenGUI
                 }
             }
 
-            if (count == 1)
+            if (count == 0)
+            {
+                tsdd.Text = descr + ": None";
+            }
+            else if (count == 1)
             {
                 tsdd.Text = descr + ": " + dest;
             }

@@ -736,7 +736,7 @@ namespace ZScreenGUI
 
         private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.MyURLShortener = ucDestOptions.cboURLShorteners.SelectedIndex;
+            Engine.conf.MyURLShortener = ucDestOptions.tscbURLShorteners.SelectedIndex;
 
             // TODO: CheckToolStripMenuItem(tsmURLShortenerDest?, GetFileDestMenuItem(Engine.conf.TextUploaderType));
         }

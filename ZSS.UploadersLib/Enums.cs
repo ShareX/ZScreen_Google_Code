@@ -123,24 +123,22 @@ namespace UploadersLib
         Localhost,
         [Description("Printer")]
         PRINTER,
-        [Description("ImageShack - imageshack.us")]
+        [Description("imageshack.us")]
         IMAGESHACK,
-        [Description("TinyPic - tinypic.com")]
+        [Description("tinypic.com")]
         TINYPIC,
-        [Description("Imgur - imgur.com")]
+        [Description("imgur.com")]
         IMGUR,
-        [Description("Flickr - flickr.com")]
+        [Description("flickr.com")]
         FLICKR,
-        [Description("Uploadscreenshot - uploadscreenshot.com")]
+        [Description("uploadscreenshot.com")]
         UPLOADSCREENSHOT,
-        [Description("TwitPic - twitpic.com")]
+        [Description("twitpic.com")]
         TWITPIC,
-        [Description("TwitSnaps - twitsnaps.com")]
+        [Description("twitsnaps.com")]
         TWITSNAPS,
-        [Description("yfrog - yfrog.com")]
+        [Description("yfrog.com")]
         YFROG,
-        [Description("MindTouch Deki Wiki")]
-        DEKIWIKI,
         [Description("MediaWiki")]
         MEDIAWIKI,
         [Description("File Uploader")]
@@ -149,13 +147,13 @@ namespace UploadersLib
 
     public enum TextUploaderType
     {
-        [Description("Pastebin - pastebin.com")]
+        [Description("pastebin.com")]
         PASTEBIN,
-        [Description("Pastebin - pastebin.ca")]
+        [Description("pastebin.ca")]
         PASTEBIN_CA,
-        [Description("Paste2 - paste2.org")]
+        [Description("paste2.org")]
         PASTE2,
-        [Description("Slexy 2.0 - slexy.org")]
+        [Description("slexy.org")]
         SLEXY,
         [Description("File Uploader")]
         FileUploader
@@ -163,15 +161,15 @@ namespace UploadersLib
 
     public enum FileUploaderType
     {
-        [Description("RapidShare - rapidshare.com")]
+        [Description("rapidshare.com")]
         RapidShare,
-        [Description("SendSpace - sendspace.com")]
+        [Description("sendspace.com")]
         SendSpace,
-        [Description("Dropbox - dropbox.com")]
+        [Description("dropbox.com")]
         Dropbox,
-        [Description("ShareCX - share.cx")]
+        [Description("share.cx")]
         ShareCX,
-        [Description("Use Custom Uploader")]
+        [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
         FTP
@@ -181,19 +179,19 @@ namespace UploadersLib
     {
         [Description("None")]
         NONE,
-        [Description("Google - www.goo.gl")]
+        [Description("goo.gl")]
         Google,
-        [Description("bit.ly - www.bit.ly")]
+        [Description("bit.ly")]
         BITLY,
         //[Description("Threely - www.3.ly")]
         //THREELY,
-        [Description("j.mp - www.j.mp")]
+        [Description("j.mp")]
         Jmp,
-        [Description("is.gd - www.is.gd")]
+        [Description("is.gd")]
         ISGD,
-        [Description("TinyURL - www.tinyurl.com")]
+        [Description("tinyurl.com")]
         TINYURL,
-        [Description("TURL - www.turl.ca")]
+        [Description("turl.ca")]
         TURL
     }
 }

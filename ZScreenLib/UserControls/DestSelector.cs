@@ -15,5 +15,10 @@ namespace ZScreenLib
         {
             new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys()).Show();
         }
+
+        private void tscbURLShortener_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            tsddLinkShortener.Text = "URL Shortner: " + tscbURLShorteners.Text;
+        }
     }
 }
