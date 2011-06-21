@@ -94,6 +94,13 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void SetClipboard(IntPtr handle, WorkerTask task, bool showDialog)
         {
+            if (Engine.conf.ShowUploadResultsWindow || showDialog)
+            {
+                ClipboardOptions cmp = new ClipboardOptions(task);
+                cmp.Icon = Resources.zss_main;
+                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+            }
+
             string clipboardText = string.Empty;
 
             if (task.JobIsImageToClipboardOnly())
@@ -110,12 +117,7 @@ namespace ZScreenLib
                 dataObject.SetData(DataFormats.Dib, ms2);
                 Clipboard.SetDataObject(dataObject, true, 3, 1000);
             }
-            else if (Engine.conf.ShowClipboardModeChooser || showDialog)
-            {
-                ClipboardOptions cmp = new ClipboardOptions(task);
-                cmp.Icon = Resources.zss_main;
-                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
-            }
+
             // If the user requests for the full image URL, preference is given for the Shortened URL is exists
             else if (task.Job1 == JobLevel1.Image && Engine.conf.MyClipboardUriMode == (int)ClipboardUriType.FULL)
             {
