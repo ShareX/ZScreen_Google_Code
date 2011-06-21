@@ -273,7 +273,7 @@ namespace ZScreenGUI
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-            SaveDestinations(ucDestOptions.tsddDestImage, Engine.conf.MyImageUploaders);
+            SaveDestinations(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
             SaveDestinations(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
             SaveDestinations(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
             SaveDestinations(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);

@@ -121,90 +121,10 @@ namespace ZScreenGUI
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
-        /*
-        private void LoadDest<T>(ToolStripDropDownButton tsddb, MethodInvoker method)
-        {
-            if (tsddb.DropDownItems.Count == 0)
-            {
-                foreach (T t in Enum.GetValues(typeof(T)))
-                {
-                    Enum en = (Enum)Convert.ChangeType(t, typeof(Enum));
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(en.GetDescription());
-                    tsmi.Tag = en;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)en);
-                    tsmi.Click += new EventHandler(tsmiDestImage_Click);
-                    ucDestOptions.tsddDestImage.DropDownItems.Add(tsmi);
-                    if (t == ImageUploaderType.PRINTER)
-                    {
-                        ucDestOptions.tsddDestImage.DropDownItems.Add(new ToolStripSeparator());
-                    }
-                }
-                UpdateToolStripDestImage();
-            }
-        }
-        */
-
         private void ZScreen_ConfigGUI_Main()
         {
-            if (ucDestOptions.tsddDestImage.DropDownItems.Count == 0)
-            {
-                foreach (ImageUploaderType t in Enum.GetValues(typeof(ImageUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = Engine.conf.MyImageUploaders.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDestImage_Click);
-                    ucDestOptions.tsddDestImage.DropDownItems.Add(tsmi);
-                    if (t == ImageUploaderType.PRINTER)
-                    {
-                        ucDestOptions.tsddDestImage.DropDownItems.Add(new ToolStripSeparator());
-                    }
-                }
-                UpdateToolStripDestImage();
-            }
-
-            if (ucDestOptions.tsddDestText.DropDownItems.Count == 0)
-            {
-                foreach (TextUploaderType ut in Enum.GetValues(typeof(TextUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
-                    tsmi.Tag = ut;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = Engine.conf.MyTextUploaders.Contains((int)ut);
-                    tsmi.Click += new EventHandler(tsmiDestText_Click);
-                    ucDestOptions.tsddDestText.DropDownItems.Add(tsmi);
-                }
-                UpdateToolStripDestText();
-            }
-
-            if (ucDestOptions.tsddDestFile.DropDownItems.Count == 0)
-            {
-                foreach (FileUploaderType ut in Enum.GetValues(typeof(FileUploaderType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
-                    tsmi.Tag = ut;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = Engine.conf.MyFileUploaders.Contains((int)ut);
-                    tsmi.Click += new EventHandler(tsmiDestFiles_Click);
-                    ucDestOptions.tsddDestFile.DropDownItems.Add(tsmi);
-                }
-                UpdateToolStripDestFile();
-            }
-
-            if (ucDestOptions.tsddDestLink.DropDownItems.Count == 0)
-            {
-                foreach (UrlShortenerType ut in Enum.GetValues(typeof(UrlShortenerType)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
-                    tsmi.Tag = ut;
-                    tsmi.Checked = Engine.conf.MyURLShorteners.Contains((int)ut);
-                    tsmi.Click += new EventHandler(tsmiDestLinks_Click);
-                    ucDestOptions.tsddDestLink.DropDownItems.Add(tsmi);
-                }
-                UpdateToolStripDestLink();
-            }
+            DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
+            dsh.LoadDestAll();
 
             if (cboURLFormat.Items.Count == 0)
             {
@@ -215,79 +135,6 @@ namespace ZScreenGUI
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
-        }
-
-
-        void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
-        {
-            string dest = string.Empty;
-            int count = 0;
-
-            foreach (var obj in tsdd.DropDownItems)
-            {
-                if (obj.GetType() == typeof(ToolStripMenuItem))
-                {
-                    ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
-                    if (gtsmi.Checked)
-                    {
-                        count++;
-                        dest = ((Enum)gtsmi.Tag).GetDescription();
-                    }
-                }
-            }
-
-            if (count == 0)
-            {
-                tsdd.Text = descr + ": None";
-            }
-            else if (count == 1)
-            {
-                tsdd.Text = descr + ": " + dest;
-            }
-            else if (count > 1)
-            {
-                tsdd.Text = string.Format("{0}: {1} and {2} other destination(s)", descr, dest, count - 1);
-            }
-        }
-
-        void UpdateToolStripDestImage()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestImage, "Image output");
-        }
-
-        void UpdateToolStripDestText()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
-        }
-
-        void UpdateToolStripDestFile()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestFile, "File output");
-        }
-
-        void UpdateToolStripDestLink()
-        {
-            UpdateToolStripDest(ucDestOptions.tsddDestLink, "URL Shortener");
-        }
-
-        void tsmiDestImage_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestImage();
-        }
-
-        void tsmiDestText_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestText();
-        }
-
-        void tsmiDestFiles_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestFile();
-        }
-
-        void tsmiDestLinks_Click(object sender, EventArgs e)
-        {
-            UpdateToolStripDestLink();
         }
 
         private void ZScreen_ConfigGUI_Editors()
