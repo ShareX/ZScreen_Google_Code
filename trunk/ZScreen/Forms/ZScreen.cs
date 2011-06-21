@@ -2443,5 +2443,10 @@ namespace ZScreenGUI
                 }
             }
         }
+
+        private void chkShowUploadResults_CheckedChanged(object sender, EventArgs e)
+        {
+            Engine.conf.ShowClipboardModeChooser = chkShowUploadResults.Checked;
+        }
     }
 }

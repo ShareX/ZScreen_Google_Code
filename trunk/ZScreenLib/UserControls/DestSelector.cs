@@ -18,7 +18,7 @@ namespace ZScreenLib
 
         private void tscbURLShortener_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            tsddLinkShortener.Text = "URL Shortner: " + tscbURLShorteners.Text;
+            tsddLinkShortener.Text = "URL Shortener: " + tscbURLShorteners.Text;
         }
     }
 }
