@@ -55,8 +55,8 @@ namespace ZScreenLib
             LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
             LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
 
-            ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-            ucDestOptions.cboURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
+            ucDestOptions.tscbURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+            ucDestOptions.tscbURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
         }
 
         private void LoadDest<T>(ToolStripDropDownButton tsddb)
@@ -92,7 +92,7 @@ namespace ZScreenLib
             LoadDestOptions(ucDestOptions.tsddDestImage, MyImageDestinationTypes);
             LoadDestOptions(ucDestOptions.tsddDestText, MyTextDestinationTypes);
 
-            MyUrlShortenerType = (UrlShortenerType)ucDestOptions.cboURLShorteners.SelectedIndex;
+            MyUrlShortenerType = (UrlShortenerType)ucDestOptions.tscbURLShorteners.SelectedIndex;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

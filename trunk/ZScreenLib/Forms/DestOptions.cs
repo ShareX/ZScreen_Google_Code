@@ -66,14 +66,14 @@ namespace ZScreenLib
             LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
 
             // URL Shorteners
-            if (ucDestOptions.cboURLShorteners.Items.Count == 0)
+            if (ucDestOptions.tscbURLShorteners.Items.Count == 0)
             {
-                ucDestOptions.cboURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-                ucDestOptions.cboURLShorteners.SelectedIndex = (int)Task.MyUrlShortener;
+                ucDestOptions.tscbURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
+                ucDestOptions.tscbURLShorteners.SelectedIndex = (int)Task.MyUrlShortener;
             }
 
             // Dest Selector Events
-            ucDestOptions.cboURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+            ucDestOptions.tscbURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
 
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
