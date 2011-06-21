@@ -64,16 +64,7 @@ namespace ZScreenLib
             LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
             LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
             LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
-
-            // URL Shorteners
-            if (ucDestOptions.tscbURLShorteners.Items.Count == 0)
-            {
-                ucDestOptions.tscbURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-                ucDestOptions.tscbURLShorteners.SelectedIndex = (int)Task.MyUrlShortener;
-            }
-
-            // Dest Selector Events
-            ucDestOptions.tscbURLShorteners.SelectedIndexChanged += new EventHandler(cboURLShorteners_SelectedIndexChanged);
+            LoadDest<UrlShortenerType>(ucDestOptions.tsddDestLink);
 
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
@@ -91,11 +82,6 @@ namespace ZScreenLib
                 // cancel with Escape
                 this.Close();
             }
-        }
-
-        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Task.MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
         }
 
         private void InputBox_Shown(object sender, EventArgs e)

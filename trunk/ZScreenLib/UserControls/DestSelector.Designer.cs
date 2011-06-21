@@ -34,8 +34,7 @@
             this.tsddDestImage = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFile = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddLinkShortener = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tscbURLShorteners = new System.Windows.Forms.ToolStripComboBox();
+            this.tsddDestLink = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
             this.gbMainOptions.SuspendLayout();
             this.tsDest.SuspendLayout();
@@ -65,7 +64,7 @@
             this.tsddDestImage,
             this.tsddDestText,
             this.tsddDestFile,
-            this.tsddLinkShortener,
+            this.tsddDestLink,
             this.tsbDestConfig});
             this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
             this.tsDest.Location = new System.Drawing.Point(8, 16);
@@ -104,24 +103,16 @@
             this.tsddDestFile.Size = new System.Drawing.Size(91, 20);
             this.tsddDestFile.Text = "File output:";
             // 
-            // tsddLinkShortener
+            // tsddDestLinks
             // 
-            this.tsddLinkShortener.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tscbURLShorteners});
-            this.tsddLinkShortener.Image = global::ZScreenLib.Properties.Resources.link_go;
-            this.tsddLinkShortener.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddLinkShortener.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddLinkShortener.Name = "tsddLinkShortener";
-            this.tsddLinkShortener.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddLinkShortener.Size = new System.Drawing.Size(106, 20);
-            this.tsddLinkShortener.Text = "URL Shortener";
-            // 
-            // tscbURLShorteners
-            // 
-            this.tscbURLShorteners.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.tscbURLShorteners.Name = "tscbURLShorteners";
-            this.tscbURLShorteners.Size = new System.Drawing.Size(121, 21);
-            this.tscbURLShorteners.SelectedIndexChanged += new System.EventHandler(this.tscbURLShortener_SelectedIndexChanged);
+            this.tsddDestLink.Image = global::ZScreenLib.Properties.Resources.link_go;
+            this.tsddDestLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddDestLink.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddDestLink.Name = "tsddDestLinks";
+            this.tsddDestLink.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddDestLink.Size = new System.Drawing.Size(106, 20);
+            this.tsddDestLink.Text = "URL Shortener";
+            this.tsddDestLink.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddDestLinks_DropDownItemClicked);
             // 
             // tsbDestConfig
             // 
@@ -155,8 +146,7 @@
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFile;
         private System.Windows.Forms.ToolStrip tsDest;
-        private System.Windows.Forms.ToolStripDropDownButton tsddLinkShortener;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
-        public System.Windows.Forms.ToolStripComboBox tscbURLShorteners;
+        public System.Windows.Forms.ToolStripDropDownButton tsddDestLink;
     }
 }

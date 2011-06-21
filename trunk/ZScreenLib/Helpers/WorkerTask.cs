@@ -163,7 +163,7 @@ namespace ZScreenLib
 
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
-        public UrlShortenerType MyUrlShortener { get; set; }
+        public List<UrlShortenerType> MyUrlShorteners = new List<UrlShortenerType>();
         public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
 
         public List<UploadResult> UploadResults { get; private set; }
@@ -196,8 +196,6 @@ namespace ZScreenLib
         {
             this.MyWorker = worker;
             this.Job2 = job;
-
-            MyUrlShortener = (UrlShortenerType)Engine.conf.MyURLShortener;
 
             if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
             {
@@ -960,7 +958,7 @@ namespace ZScreenLib
         /// <returns>true/false whether URL should or could shorten</returns>
         public bool ShouldShortenURL(string url)
         {
-            if (FileSystem.IsValidLink(url) && this.MyUrlShortener != UrlShortenerType.NONE)
+            if (FileSystem.IsValidLink(url) && this.MyUrlShorteners.Count > 0)
             {
                 if (Engine.conf.ShortenUrlAfterUpload)
                 {
@@ -990,29 +988,29 @@ namespace ZScreenLib
                 this.Job3 = WorkerTask.JobLevel3.ShortenURL;
                 URLShortener us = null;
 
-                switch (MyUrlShortener)
+                if (MyUrlShorteners.Contains(UrlShortenerType.BITLY))
                 {
-                    case UrlShortenerType.BITLY:
-                        us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                        break;
-                    case UrlShortenerType.Google:
-                        us = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
-                        break;
-                    case UrlShortenerType.ISGD:
-                        us = new IsgdURLShortener();
-                        break;
-                    case UrlShortenerType.Jmp:
-                        us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                        break;
-                    /*case UrlShortenerType.THREELY:
-                        us = new ThreelyURLShortener(Engine.ThreelyKey);
-                        break;*/
-                    case UrlShortenerType.TINYURL:
-                        us = new TinyURLShortener();
-                        break;
-                    case UrlShortenerType.TURL:
-                        us = new TurlURLShortener();
-                        break;
+                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                else if (MyUrlShorteners.Contains(UrlShortenerType.Google))
+                {
+                    us = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
+                }
+                else if (MyUrlShorteners.Contains(UrlShortenerType.ISGD))
+                {
+                    us = new IsgdURLShortener();
+                }
+                else if (MyUrlShorteners.Contains(UrlShortenerType.Jmp))
+                {
+                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                else if (MyUrlShorteners.Contains(UrlShortenerType.TINYURL))
+                {
+                    us = new TinyURLShortener();
+                }
+                else if (MyUrlShorteners.Contains(UrlShortenerType.TURL))
+                {
+                    us = new TurlURLShortener();
                 }
 
                 if (us != null)
@@ -1065,7 +1063,7 @@ namespace ZScreenLib
                         switch (this.Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
-                                destName = this.MyUrlShortener.GetDescription();
+                                destName = this.GetActiveLinkUploadersDescription();
                                 break;
                             default:
                                 destName = this.GetActiveTextUploadersDescription();
@@ -1107,6 +1105,11 @@ namespace ZScreenLib
         public string GetActiveTextUploadersDescription()
         {
             return GetActiveUploadersDescription<TextUploaderType>(MyTextUploaders);
+        }
+
+        public string GetActiveLinkUploadersDescription()
+        {
+            return GetActiveUploadersDescription<UrlShortenerType>(MyUrlShorteners);
         }
 
         public string GetActiveUploadersDescription<T>(List<T> list)

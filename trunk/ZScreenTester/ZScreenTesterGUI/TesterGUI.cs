@@ -255,7 +255,7 @@ namespace ZScreenTesterGUI
                             task.UploadText();
                             break;
                         case UploaderType.UrlShortener:
-                            task.MyUrlShortener = uploader.UrlShortener;
+                            task.MyUrlShorteners.Add(uploader.UrlShortener);
                             task.ShortenURL(TestURL);
                             break;
                         default:

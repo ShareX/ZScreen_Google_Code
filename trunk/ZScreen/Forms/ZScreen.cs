@@ -276,6 +276,7 @@ namespace ZScreenGUI
             SaveDestinations(ucDestOptions.tsddDestImage, Engine.conf.MyImageUploaders);
             SaveDestinations(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
             SaveDestinations(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+            SaveDestinations(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
@@ -732,21 +733,6 @@ namespace ZScreenGUI
             }
 
             RewriteImageEditorsRightClickMenu();
-        }
-
-        private void cboURLShorteners_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.MyURLShortener = ucDestOptions.tscbURLShorteners.SelectedIndex;
-
-            // TODO: CheckToolStripMenuItem(tsmURLShortenerDest?, GetFileDestMenuItem(Engine.conf.TextUploaderType));
-        }
-
-        private void CheckToolStripMenuItem(ToolStripDropDownItem parent, ToolStripMenuItem item)
-        {
-            foreach (ToolStripMenuItem tsmi in parent.DropDownItems)
-            {
-                tsmi.Checked = tsmi == item;
-            }
         }
 
         private void SetActiveImageSoftware()
