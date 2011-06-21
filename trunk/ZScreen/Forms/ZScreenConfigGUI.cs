@@ -186,7 +186,7 @@ namespace ZScreenGUI
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
-            chkShowUploadResults.Checked = Engine.conf.ShowClipboardModeChooser;
+            chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 
         void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
