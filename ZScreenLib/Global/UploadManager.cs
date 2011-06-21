@@ -94,11 +94,14 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void SetClipboard(IntPtr handle, WorkerTask task, bool showDialog)
         {
-            if (Engine.conf.ShowUploadResultsWindow || showDialog)
+            if (task.UploadResults.Count > 0)
             {
-                ClipboardOptions cmp = new ClipboardOptions(task);
-                cmp.Icon = Resources.zss_main;
-                if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                if (Engine.conf.ShowUploadResultsWindow || showDialog)
+                {
+                    ClipboardOptions cmp = new ClipboardOptions(task);
+                    cmp.Icon = Resources.zss_main;
+                    if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                }
             }
 
             string clipboardText = string.Empty;
