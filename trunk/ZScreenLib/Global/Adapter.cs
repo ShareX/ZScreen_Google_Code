@@ -398,9 +398,14 @@ namespace ZScreenLib
 
         public static void TwitterMsg(WorkerTask task)
         {
-            if (!string.IsNullOrEmpty(task.RemoteFilePath))
+            StringBuilder sb = new StringBuilder();
+            foreach (UploadResult ur in task.UploadResults)
             {
-                TwitterMsg(task.RemoteFilePath);
+                sb.AppendLine(ur.URL);
+            }
+            if (sb.Length > 0)
+            {
+                TwitterMsg(sb.ToString());
             }
         }
 

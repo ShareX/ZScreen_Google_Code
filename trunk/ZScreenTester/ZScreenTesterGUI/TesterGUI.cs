@@ -280,7 +280,7 @@ namespace ZScreenTesterGUI
             {
                 UploaderInfo uploader = e.UserState as UploaderInfo;
 
-                if (uploader != null)
+                if (uploader != null && uploader.Task.UploadResults.Count > 0)
                 {
                     lvUploaders.Items[uploader.Index].Tag = uploader;
 
@@ -292,10 +292,10 @@ namespace ZScreenTesterGUI
                             lvUploaders.Items[uploader.Index].SubItems[2].Text = string.Empty;
                             break;
                         case UploadStatus.Uploaded:
-                            if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+                            if (uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
                             {
                                 lvUploaders.Items[uploader.Index].BackColor = Color.LightGreen;
-                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.RemoteFilePath;
+                                lvUploaders.Items[uploader.Index].SubItems[1].Text = "Success: " + uploader.Task.UploadResults[0].URL;
                             }
                             else
                             {
@@ -317,9 +317,9 @@ namespace ZScreenTesterGUI
             {
                 UploaderInfo uploader = lvUploaders.SelectedItems[0].Tag as UploaderInfo;
 
-                if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+                if (uploader != null && uploader.Task != null && uploader.Task.UploadResults.Count > 0 && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
                 {
-                    Process.Start(uploader.Task.RemoteFilePath);
+                    Process.Start(uploader.Task.UploadResults[0].URL);
                 }
             }
         }
@@ -334,9 +334,9 @@ namespace ZScreenTesterGUI
                 foreach (ListViewItem lvi in lvUploaders.SelectedItems)
                 {
                     uploader = lvi.Tag as UploaderInfo;
-                    if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.RemoteFilePath))
+                    if (uploader != null && uploader.Task != null && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
                     {
-                        urls.Add(string.Format("{0}: {1}", lvi.Text, uploader.Task.RemoteFilePath));
+                        urls.Add(string.Format("{0}: {1}", lvi.Text, uploader.Task.UploadResults[0].URL));
                     }
                 }
 

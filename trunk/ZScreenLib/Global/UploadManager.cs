@@ -192,7 +192,7 @@ namespace ZScreenLib
                 // Otherwise full URL for Text or File is used
                 else if (task.UploadResults.Count > 0)
                 {
-                    clipboardText = FileSystem.GetBrowserFriendlyUrl(task.RemoteFilePath);
+                    clipboardText = FileSystem.GetBrowserFriendlyUrl(task.UploadResults[0].URL);
                 }
             }
 

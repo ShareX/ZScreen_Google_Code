@@ -351,7 +351,7 @@ namespace ZScreenGUI
                         this.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.UploadResults.Count > 0 && !string.IsNullOrEmpty(task.RemoteFilePath) || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                    if (task.UploadResults.Count > 0 || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
                     {
                         if (Engine.conf.CompleteSound)
                         {
@@ -1039,7 +1039,7 @@ namespace ZScreenGUI
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && !task.MyImageUploaders.Contains(ImageUploaderType.PRINTER))
             {
                 if (!task.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) && !task.MyImageUploaders.Contains(ImageUploaderType.FILE) &&
-                    string.IsNullOrEmpty(task.RemoteFilePath) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
+                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
                     task2.SetImage(task.LocalFilePath);

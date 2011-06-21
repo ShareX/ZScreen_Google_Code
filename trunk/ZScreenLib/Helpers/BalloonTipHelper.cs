@@ -80,7 +80,7 @@ namespace ZScreenLib
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
                     case JobLevel1.Image:
-                          sbMsg.AppendLine("Destination(s):");
+                        sbMsg.AppendLine("Destination(s):");
                         sbMsg.AppendLine(task.GetActiveImageUploadersDescription());
                         foreach (UploadResult ur in task.UploadResults)
                         {
@@ -93,13 +93,13 @@ namespace ZScreenLib
                                 sbMsg.AppendLine(ur.LocalFilePath);
                             }
                         }
-                        
+
                         break;
                 }
 
                 sbMsg.AppendLine();
 
-                if (string.IsNullOrEmpty(task.RemoteFilePath) && task.IsError)
+                if (task.UploadResults.Count == 0 && task.IsError)
                 {
                     tti = ToolTipIcon.Warning;
                     sbMsg.AppendLine("Warnings: ");

@@ -158,22 +158,6 @@ namespace ZScreenLib
 
         public string FileName { get; set; }
         public string LocalFilePath { get; private set; }
-        public string RemoteFilePath
-        {
-            get
-            {
-                if (UploadResults.Count > 0)
-                {
-                    if (!string.IsNullOrEmpty(UploadResults[UploadResults.Count - 1].ShortenedURL))
-                    {
-                        return UploadResults[UploadResults.Count - 1].ShortenedURL;
-                    }
-
-                    return UploadResults[UploadResults.Count - 1].URL;
-                }
-                throw new Exception("Attempted to prematurally access RemoteFilePath when UploadResults was zero. Check for task.UploadResults count before accessing RemoteFilePath.");
-            }
-        }
 
         private string DestinationName = string.Empty;
 
