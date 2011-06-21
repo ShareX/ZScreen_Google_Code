@@ -33,9 +33,9 @@ namespace ZScreenLib
                         string url = ur.GetUrlByType(type);
                         if (!string.IsNullOrEmpty(url))
                         {
-                            TreeNode cut = new TreeNode(type.GetDescription());
-                            cut.Nodes.Add(url);
-                            tnUploadResult.Nodes.Add(cut);
+                            TreeNode tnLink = new TreeNode(type.GetDescription());
+                            tnLink.Nodes.Add(url);
+                            tnUploadResult.Nodes.Add(tnLink);
 
                             count++;
                         }
@@ -178,6 +178,10 @@ namespace ZScreenLib
             if (FileSystem.IsValidLink(e.Node.Text))
             {
                 Process.Start(e.Node.Text);
+            }
+            else
+            {
+                btnCopyLink_Click(sender, e);
             }
         }
     }
