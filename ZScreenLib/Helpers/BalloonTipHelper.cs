@@ -71,7 +71,7 @@ namespace ZScreenLib
                         switch (task.Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
-                                dest = task.MyUrlShortener.GetDescription();
+                                dest = task.GetActiveLinkUploadersDescription();
                                 break;
                             default:
                                 dest = task.GetActiveTextUploadersDescription();

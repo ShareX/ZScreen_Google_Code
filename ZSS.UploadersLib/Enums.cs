@@ -177,8 +177,6 @@ namespace UploadersLib
 
     public enum UrlShortenerType
     {
-        [Description("None")]
-        NONE,
         [Description("goo.gl")]
         Google,
         [Description("bit.ly")]

@@ -107,6 +107,7 @@ namespace ZScreenGUI
             AddDestinations<ImageUploaderType>(ucDestOptions.tsddDestImage, task.MyImageUploaders);
             AddDestinations<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
             AddDestinations<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
+            AddDestinations<UrlShortenerType>(ucDestOptions.tsddDestLink, task.MyUrlShorteners);
 
             if (!CanStartWork(task))
             {

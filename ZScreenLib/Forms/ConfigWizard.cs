@@ -40,7 +40,7 @@ namespace ZScreenLib
         public List<int> MyImageDestinationTypes = new List<int>();
         public List<int> MyFileUploaderTypes = new List<int>();
         public List<int> MyTextDestinationTypes = new List<int>();
-        public UrlShortenerType MyUrlShortenerType { get; private set; }
+        public List<int> MyUrlShortenerType = new List<int>();
         private string DefaultRootFolder;
 
         public ConfigWizard(string rootDir)
@@ -54,9 +54,7 @@ namespace ZScreenLib
             LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
             LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
             LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
-
-            ucDestOptions.tscbURLShorteners.Items.AddRange(typeof(UrlShortenerType).GetDescriptions());
-            ucDestOptions.tscbURLShorteners.SelectedIndex = (int)UrlShortenerType.Google;
+            LoadDest<UrlShortenerType>(ucDestOptions.tsddDestLink);
         }
 
         private void LoadDest<T>(ToolStripDropDownButton tsddb)
@@ -91,8 +89,7 @@ namespace ZScreenLib
             LoadDestOptions(ucDestOptions.tsddDestFile, MyFileUploaderTypes);
             LoadDestOptions(ucDestOptions.tsddDestImage, MyImageDestinationTypes);
             LoadDestOptions(ucDestOptions.tsddDestText, MyTextDestinationTypes);
-
-            MyUrlShortenerType = (UrlShortenerType)ucDestOptions.tscbURLShorteners.SelectedIndex;
+            LoadDestOptions(ucDestOptions.tsddDestLink, MyUrlShortenerType);
 
             this.DialogResult = DialogResult.OK;
             this.Close();
