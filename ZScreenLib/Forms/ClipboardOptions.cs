@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using UploadersLib;
+using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
 {
@@ -19,107 +20,77 @@ namespace ZScreenLib
             if (task != null && task.UploadResults.Count > 0)
             {
                 this.mTask = task;
-                this.Text = task.FileName.ToString() + " - " + task.GetDescription();
+                this.Text = task.FileName.ToString(); // +" - " + task.GetDescription();
                 this.pbPreview.LoadAsync(task.LocalFilePath);
 
-                int xGap = 10;
-                int yOffset = 20;
-                int yGap = 25;
-                int yMargin = pbPreview.Height + yOffset;
-
                 int count = 0;
-                foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
+                foreach (UploadResult ur in task.UploadResults)
                 {
-                    string url = task.UploadResults[0].GetUrlByType(type);
-                    if (!string.IsNullOrEmpty(url))
+                    TreeNode tnUploadResult = new TreeNode(ur.Host);
+
+                    foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
                     {
-                        // URL Label
-                        Label lbl = new Label();
-                        lbl.Location = new Point(20, count * yGap + yMargin + yOffset);
-                        lbl.AutoSize = true;
-                        lbl.Text = type.GetDescription();
-                        this.Controls.Add(lbl);
-                        // URL TextBox
-                        TextBox txtUrl = new TextBox();
-                        txtUrl.Location = new Point(170, count * yGap + yMargin + yOffset);
-                        txtUrl.Size = new Size(320, 20);
-                        txtUrl.Text = url;
-                        txtUrl.ReadOnly = true;
-                        this.Controls.Add(txtUrl);
-                        // Copy Button
-                        Button btnCopy = new Button();
-                        btnCopy.Text = "Copy";
-                        btnCopy.Tag = txtUrl;
-                        btnCopy.AutoSize = true;
-                        btnCopy.Location = new Point(txtUrl.Size.Width + 180, count * yGap + yMargin + yOffset);
-                        btnCopy.Click += new EventHandler(btnCopy_Click);
-                        this.Controls.Add(btnCopy);
-                        // Offset
-                        count++;
+                        string url = ur.GetUrlByType(type);
+                        if (!string.IsNullOrEmpty(url))
+                        {
+                            TreeNode cut = new TreeNode(type.GetDescription());
+                            cut.Nodes.Add(url);
+                            tnUploadResult.Nodes.Add(cut);
+
+                            count++;
+                        }
                     }
+
+                    tvLinks.Nodes.Add(tnUploadResult);
                 }
 
-                int yBottomControl = yMargin + count * yGap + yOffset * 2;
+                Button btnCopyLink = new Button();
+                btnCopyLink.Text = "Copy &Link";
+                btnCopyLink.AutoSize = true;
+                btnCopyLink.Click += new EventHandler(btnCopyLink_Click);
+                flpButtons.Controls.Add(btnCopyLink);
 
                 Button btnCopyImage = new Button();
                 btnCopyImage.Text = "Copy &Image";
-                btnCopyImage.Location = new Point(20, yBottomControl);
                 btnCopyImage.AutoSize = true;
                 btnCopyImage.Click += new EventHandler(btnCopyImage_Click);
-                this.Controls.Add(btnCopyImage);
+                flpButtons.Controls.Add(btnCopyImage);
 
-                this.Height = yBottomControl + btnCopyImage.Size.Height + yOffset * 2 + 10;
                 this.MinimumSize = new Size(this.Width, this.Height);
 
                 Button btnOpenLocal = new Button();
                 btnOpenLocal.Text = "Open &Local file";
-                btnOpenLocal.Location = new Point(btnCopyImage.Location.X + btnCopyImage.Width + xGap, yBottomControl);
                 btnOpenLocal.AutoSize = true;
                 btnOpenLocal.Click += new EventHandler(btnOpenLocal_Click);
-                this.Controls.Add(btnOpenLocal);
+                flpButtons.Controls.Add(btnOpenLocal);
 
                 Button btnOpenRemote = new Button();
                 btnOpenRemote.Text = "Open &Remote file";
-                btnOpenRemote.Location = new Point(btnOpenLocal.Location.X + btnOpenLocal.Width + xGap, yBottomControl);
                 btnOpenRemote.AutoSize = true;
                 btnOpenRemote.Click += new EventHandler(btnOpenRemote_Click);
-                this.Controls.Add(btnOpenRemote);
+                flpButtons.Controls.Add(btnOpenRemote);
 
                 Button btnDeleteClose = new Button();
                 btnDeleteClose.Text = "&Delete Local file and Close";
-                btnDeleteClose.Location = new Point(btnOpenRemote.Location.X + btnOpenRemote.Width + xGap, yBottomControl);
                 btnDeleteClose.AutoSize = true;
                 btnDeleteClose.Click += new EventHandler(btnDeleteClose_Click);
-                this.Controls.Add(btnDeleteClose);
+                flpButtons.Controls.Add(btnDeleteClose);
 
                 Button btnClose = new Button();
                 btnClose.Text = "&Close";
-                btnClose.Location = new Point(btnDeleteClose.Location.X + btnDeleteClose.Width + xGap, yBottomControl);
                 btnClose.AutoSize = true;
                 btnClose.Click += new EventHandler(btnClose_Click);
-                this.Controls.Add(btnClose);
+                flpButtons.Controls.Add(btnClose);
 
-                this.pbPreview.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-
-                Adapter.AddToClipboardByDoubleClick(this);
                 this.AddResetTimerToButtons();
 
-                foreach (Control ctl in this.Controls)
-                {
-                    if (ctl.GetType() == typeof(Button))
-                    {
-                        ctl.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                    }
-                    if (ctl.GetType() == typeof(Label))
-                    {
-                        ctl.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                    }
-                    if (ctl.GetType() == typeof(TextBox))
-                    {
-                        ctl.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                    }
-                }
             }
+        }
+
+
+        private void btnCopyLink_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(tvLinks.SelectedNode.Text);
         }
 
         private void btnCopyImage_Click(object sender, EventArgs e)
@@ -132,9 +103,10 @@ namespace ZScreenLib
 
         private void btnOpenRemote_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(mTask.RemoteFilePath))
+            string url = tvLinks.SelectedNode.Text;
+            if (FileSystem.IsValidLink(url))
             {
-                Process.Start(mTask.RemoteFilePath);
+                Process.Start(url);
             }
         }
 
@@ -199,6 +171,14 @@ namespace ZScreenLib
         {
             tmrClose.Stop();
             tmrClose.Start();
+        }
+
+        private void tvLinks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (FileSystem.IsValidLink(e.Node.Text))
+            {
+                Process.Start(e.Node.Text);
+            }
         }
     }
 }

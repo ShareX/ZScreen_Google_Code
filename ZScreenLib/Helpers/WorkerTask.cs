@@ -324,10 +324,23 @@ namespace ZScreenLib
 
         public void AddUploadResult(UploadResult ur)
         {
-            if (ur != null)
+            if (ur != null && !ExistsUploadResult(ur))
             {
                 this.UploadResults.Add(ur);
             }
+        }
+
+        private bool ExistsUploadResult(UploadResult ur2)
+        {
+            foreach (UploadResult ur1 in this.UploadResults)
+            {
+                if (ur2.Host == ur1.Host)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void UpdateLocalFilePath(string fp)

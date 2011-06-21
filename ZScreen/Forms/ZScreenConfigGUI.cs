@@ -186,6 +186,7 @@ namespace ZScreenGUI
 
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
+            chkShowUploadResults.Checked = Engine.conf.ShowClipboardModeChooser;
         }
 
         void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
@@ -249,7 +250,7 @@ namespace ZScreenGUI
         {
             UpdateToolStripDestFile();
         }
- 
+
 
         private void ZScreen_ConfigGUI_Editors()
         {
