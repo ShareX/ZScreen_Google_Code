@@ -43,29 +43,10 @@ namespace ZScreenLib
             this.Task = task;
         }
 
-        private void LoadDest<T>(ToolStripDropDownButton tsddb)
-        {
-            if (tsddb.DropDownItems.Count == 0)
-            {
-                foreach (Enum t in Enum.GetValues(typeof(T)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                }
-            }
-        }
-
         private void DestOptions_Load(object sender, EventArgs e)
         {
             this.Text = Title;
             txtInputText.Text = InputText;
-
-            LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
-            LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
-            LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
-            LoadDest<UrlShortenerType>(ucDestOptions.tsddDestLink);
-
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
 
@@ -126,9 +107,9 @@ namespace ZScreenLib
             this.gbFileName = new System.Windows.Forms.GroupBox();
             this.gbFileName.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // btnOK
-            //
+            // 
             this.btnOK.Location = new System.Drawing.Point(224, 240);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(73, 23);
@@ -136,9 +117,9 @@ namespace ZScreenLib
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            //
+            // 
             // btnCancel
-            //
+            // 
             this.btnCancel.Location = new System.Drawing.Point(304, 240);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 23);
@@ -146,24 +127,25 @@ namespace ZScreenLib
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            //
+            // 
             // txtInputText
-            //
+            // 
             this.txtInputText.Location = new System.Drawing.Point(16, 24);
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.Size = new System.Drawing.Size(328, 20);
             this.txtInputText.TabIndex = 2;
-            //
+            // 
             // ucDestOptions
-            //
+            // 
+            this.ucDestOptions.BackColor = System.Drawing.Color.White;
             this.ucDestOptions.Location = new System.Drawing.Point(8, 80);
             this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
             this.ucDestOptions.Name = "ucDestOptions";
             this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
             this.ucDestOptions.TabIndex = 3;
-            //
+            // 
             // gbFileName
-            //
+            // 
             this.gbFileName.Controls.Add(this.txtInputText);
             this.gbFileName.Location = new System.Drawing.Point(16, 16);
             this.gbFileName.Name = "gbFileName";
@@ -171,12 +153,13 @@ namespace ZScreenLib
             this.gbFileName.TabIndex = 4;
             this.gbFileName.TabStop = false;
             this.gbFileName.Text = "Specify File Name";
-            //
+            // 
             // DestOptions
-            //
+            // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(401, 279);
             this.Controls.Add(this.gbFileName);
             this.Controls.Add(this.ucDestOptions);
@@ -194,6 +177,7 @@ namespace ZScreenLib
             this.gbFileName.ResumeLayout(false);
             this.gbFileName.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.Button btnOK;

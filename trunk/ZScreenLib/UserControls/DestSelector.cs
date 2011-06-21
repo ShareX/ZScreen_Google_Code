@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
+using System;
 
 namespace ZScreenLib
 {
@@ -9,6 +10,18 @@ namespace ZScreenLib
         public DestSelector()
         {
             InitializeComponent();
+        }
+
+        private void LoadDest<T>(ToolStripDropDownButton tsddb)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (Enum t in Enum.GetValues(typeof(T)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
+                    tsmi.Tag = t;
+                }
+            }
         }
 
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
@@ -21,8 +34,7 @@ namespace ZScreenLib
             for (int i = 0; i < tsddDestLink.DropDownItems.Count; i++)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddDestLink.DropDownItems[i];
-                tsmi.Checked = tsmi == e.ClickedItem;
-                System.Console.WriteLine(tsmi.Checked);
+                tsmi.Checked = tsmi == e.ClickedItem && !((ToolStripMenuItem)e.ClickedItem).Checked;
             }
         }
     }

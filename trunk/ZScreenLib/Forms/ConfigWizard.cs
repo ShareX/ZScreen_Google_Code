@@ -50,24 +50,6 @@ namespace ZScreenLib
             DefaultRootFolder = rootDir;
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
-
-            LoadDest<FileUploaderType>(ucDestOptions.tsddDestFile);
-            LoadDest<ImageUploaderType>(ucDestOptions.tsddDestImage);
-            LoadDest<TextUploaderType>(ucDestOptions.tsddDestText);
-            LoadDest<UrlShortenerType>(ucDestOptions.tsddDestLink);
-        }
-
-        private void LoadDest<T>(ToolStripDropDownButton tsddb)
-        {
-            if (tsddb.DropDownItems.Count == 0)
-            {
-                foreach (Enum t in Enum.GetValues(typeof(T)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                }
-            }
         }
 
         private void LoadDestOptions(ToolStripDropDownButton tsddb, List<int> list)

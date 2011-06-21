@@ -276,9 +276,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Favicons\Dropbox.ico" />
     <Content Include="Favicons\Flickr.ico" />
     <Content Include="Favicons\ImageShack.ico" />
