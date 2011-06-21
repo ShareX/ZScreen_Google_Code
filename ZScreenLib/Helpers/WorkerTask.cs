@@ -310,6 +310,13 @@ namespace ZScreenLib
         {
             if (ur != null && !ExistsUploadResult(ur))
             {
+                string fp = this.LocalFilePath;
+                if (Engine.IsPortable)
+                {
+                    fp = Path.Combine(Application.StartupPath, fp);
+                    this.UpdateLocalFilePath(fp);
+                }
+                ur.LocalFilePath = fp;
                 this.UploadResults.Add(ur);
             }
         }
@@ -599,15 +606,8 @@ namespace ZScreenLib
 
             if (MyImageUploaders.Contains(ImageUploaderType.FILE))
             {
-                string fp = this.LocalFilePath;
-                if (Engine.IsPortable)
-                {
-                    fp = Path.Combine(Application.StartupPath, fp);
-                    this.UpdateLocalFilePath(fp);
-                }
                 this.AddUploadResult(new UploadResult()
                 {
-                    LocalFilePath = fp,
                     Host = ImageUploaderType.FILE.GetDescription()
                 });
             }
