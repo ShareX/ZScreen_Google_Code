@@ -33,7 +33,7 @@ namespace ZScreenLib
 
         private void tsddbOutputType_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // RestrictToOneCheck(tsddbClipboardContent, e);
+            RestrictToOneCheck(tsddbOutputType, e);
             EnableDisableDestControls();
         }
 
@@ -47,7 +47,7 @@ namespace ZScreenLib
                     OutputTypeEnum cct = (OutputTypeEnum)tsmi.Tag;
 
                     // tsddbDestImage.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
-                    // tsddbLinkFormat.Enabled = cct == OutputTypeEnum.RemoteFilePath;
+                    tsddbLinkFormat.Enabled = cct != OutputTypeEnum.Bitmap;
                     // tsddDestFile.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddDestText.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddbDestLink.Enabled = cct == ClipboardContentEnum.RemoteFilePath;

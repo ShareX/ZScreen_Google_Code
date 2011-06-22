@@ -69,28 +69,28 @@ namespace UploadersLib.HelperClasses
 
         #region Links
 
-        public string GetUrlByType(LinkFormatEnum type)
+        public string GetUrlByType(LinkFormatEnum type, string fullUrl)
         {
             switch (type)
             {
                 case LinkFormatEnum.FULL:
-                    return GetFullImageUrl();
+                    return fullUrl;
                 case LinkFormatEnum.FULL_TINYURL:
                     return this.ShortenedURL;
                 case LinkFormatEnum.FULL_IMAGE_FORUMS:
-                    return GetFullImageForumsUrl();
+                    return GetFullImageForumsUrl(fullUrl);
                 case LinkFormatEnum.FULL_IMAGE_HTML:
-                    return GetFullImageHTML();
+                    return GetFullImageHTML(fullUrl);
                 case LinkFormatEnum.FULL_IMAGE_WIKI:
-                    return GetFullImageWiki();
+                    return GetFullImageWiki(fullUrl);
                 case LinkFormatEnum.FULL_IMAGE_MEDIAWIKI:
-                    return GetFullImageMediaWikiInnerLink();
+                    return GetFullImageMediaWikiInnerLink(fullUrl);
                 case LinkFormatEnum.LINKED_THUMBNAIL:
-                    return GetLinkedThumbnailForumUrl();
+                    return GetLinkedThumbnailForumUrl(fullUrl);
                 case LinkFormatEnum.LinkedThumbnailHtml:
-                    return GetLinkedThumbnailHtmlUrl();
+                    return GetLinkedThumbnailHtmlUrl(fullUrl);
                 case LinkFormatEnum.LINKED_THUMBNAIL_WIKI:
-                    return GetLinkedThumbnailWikiUrl();
+                    return GetLinkedThumbnailWikiUrl(fullUrl);
                 case LinkFormatEnum.THUMBNAIL:
                     return this.ThumbnailURL;
                 case LinkFormatEnum.LocalFilePath:
@@ -107,9 +107,8 @@ namespace UploadersLib.HelperClasses
             return this.URL;
         }
 
-        public string GetFullImageForumsUrl()
+        public string GetFullImageForumsUrl(string url)
         {
-            string url = this.GetFullImageUrl();
             if (!string.IsNullOrEmpty(url))
             {
                 return string.Format("[IMG]{0}[/IMG]", url);
@@ -117,29 +116,26 @@ namespace UploadersLib.HelperClasses
             return GetFullImageUrl();
         }
 
-        public string GetFullImageHTML()
+        public string GetFullImageHTML(string url)
         {
-            string url = GetFullImageUrl();
             if (!string.IsNullOrEmpty(url))
             {
                 return string.Format("<img src=\"{0}\"/>", url);
             }
-            return GetFullImageUrl();
+            return string.Empty;
         }
 
-        public string GetFullImageWiki()
+        public string GetFullImageWiki(string url)
         {
-            string url = this.GetFullImageUrl();
             if (!string.IsNullOrEmpty(url))
             {
                 return string.Format("[{0}]", url);
             }
-            return GetFullImageUrl();
+            return string.Empty;
         }
 
-        public string GetFullImageMediaWikiInnerLink()
+        public string GetFullImageMediaWikiInnerLink(string url)
         {
-            string url = this.GetFullImageUrl();
             if (string.IsNullOrEmpty(url))
                 return string.Empty;
             int index = url.IndexOf("Image:");
@@ -154,38 +150,35 @@ namespace UploadersLib.HelperClasses
             return this.ThumbnailURL;
         }
 
-        public string GetLinkedThumbnailForumUrl()
+        public string GetLinkedThumbnailForumUrl(string full)
         {
-            string full = GetFullImageUrl();
             string thumb = GetThumbnailUrl();
             if (!string.IsNullOrEmpty(full) && !string.IsNullOrEmpty(thumb))
             {
                 return string.Format("[URL={0}][IMG]{1}[/IMG][/URL]", full, thumb);
             }
-            return GetFullImageForumsUrl();
+            return string.Empty;
         }
 
-        private string GetLinkedThumbnailHtmlUrl()
+        private string GetLinkedThumbnailHtmlUrl(string url)
         {
-            string url = GetFullImageUrl();
             string th = GetThumbnailUrl();
             if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(th))
             {
                 return string.Format("<a target='_blank' href=\"{0}\"><img src=\"{1}\" border='0'/></a>", url, th);
             }
-            return GetFullImageHTML();
+            return string.Empty;
         }
 
-        public string GetLinkedThumbnailWikiUrl()
+        public string GetLinkedThumbnailWikiUrl(string full)
         {
             // e.g. [http://code.google.com http://code.google.com/images/code_sm.png]
-            string full = GetFullImageUrl();
             string thumb = GetThumbnailUrl();
             if (!string.IsNullOrEmpty(full) && !string.IsNullOrEmpty(thumb))
             {
                 return string.Format("[{0} {1}]", full, thumb);
             }
-            return GetFullImageWiki();
+            return string.Empty;
         }
 
         public string GetLocalFilePathAsUri(string fp)

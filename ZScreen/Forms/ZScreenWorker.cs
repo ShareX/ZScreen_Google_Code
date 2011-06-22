@@ -89,6 +89,7 @@ namespace ZScreenGUI
             WorkerTask task = (WorkerTask)e.Argument;
 
             Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, task.MyOutputs);
+            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, task.MyLinkFormat);
             Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
             Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
             Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
@@ -104,7 +105,7 @@ namespace ZScreenGUI
                 task.UniqueNumber = UploadManager.Queue();
 
                 if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Bitmap) &&
-                    !task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) &&
+                    !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
                     (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
                     task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
                     MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
@@ -274,9 +275,9 @@ namespace ZScreenGUI
                     task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
                     {
-                        string fp = Adapter.SaveImage(task.MyImage);
+                        string fp = Adapter.SaveImage(task.TempImage);
                         if (!string.IsNullOrEmpty(fp))
                         {
                             task.UpdateLocalFilePath(fp);
@@ -295,7 +296,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -360,9 +361,9 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (task.MyImage != null)
+                if (task.TempImage != null)
                 {
-                    task.MyImage.Dispose(); // For fix memory leak
+                    task.TempImage.Dispose(); // For fix memory leak
                 }
 
                 if (!task.IsError)
@@ -669,7 +670,7 @@ namespace ZScreenGUI
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (Directory.Exists(task.MyText))
+                if (Directory.Exists(task.TempText))
                 {
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
@@ -679,9 +680,9 @@ namespace ZScreenGUI
                     {
                         ext = ".html";
                     }
-                    string fileName = Path.GetFileName(task.MyText) + ext;
+                    string fileName = Path.GetFileName(task.TempText) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
-                    settings.GetConfig().FolderList.Add(task.MyText);
+                    settings.GetConfig().FolderList.Add(task.TempText);
 
                     Indexer indexer = null;
                     switch (settings.GetConfig().IndexingEngineType)
@@ -877,7 +878,7 @@ namespace ZScreenGUI
 
         public void CaptureWebpage(WorkerTask task)
         {
-            if (task != null && FileSystem.IsValidLink(task.MyText))
+            if (task != null && FileSystem.IsValidLink(task.TempText))
             {
                 WebPageCapture webPageCapture;
                 if (Engine.conf.WebPageUseCustomSize)
@@ -890,7 +891,7 @@ namespace ZScreenGUI
                 }
 
                 webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
-                webPageCapture.DownloadPage(task.MyText);
+                webPageCapture.DownloadPage(task.TempText);
             }
         }
 
@@ -1024,7 +1025,7 @@ namespace ZScreenGUI
         {
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
-                if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap) && !task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) &&
+                if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap) && !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);

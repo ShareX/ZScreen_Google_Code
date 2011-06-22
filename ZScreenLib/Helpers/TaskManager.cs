@@ -129,17 +129,17 @@ namespace ZScreenLib
 
                 mTakingScreenShot = false;
 
-                if (mTask.MyImage != null)
+                if (mTask.TempImage != null)
                 {
                     bool roundedShadowCorners = false;
                     if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
                     {
-                        mTask.SetImage(GraphicsMgr.RemoveCorners(mTask.MyImage, null));
+                        mTask.SetImage(GraphicsMgr.RemoveCorners(mTask.TempImage, null));
                         roundedShadowCorners = true;
                     }
                     if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
                     {
-                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.MyImage, roundedShadowCorners));
+                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.TempImage, roundedShadowCorners));
                     }
 
                     mTask.WriteImage();
@@ -188,7 +188,7 @@ namespace ZScreenLib
                 }
             }
 
-            if (mTask.MyImage != null)
+            if (mTask.TempImage != null)
             {
                 mTask.WriteImage();
                 mTask.PublishData();

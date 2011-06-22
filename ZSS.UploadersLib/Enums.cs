@@ -90,11 +90,9 @@ namespace UploadersLib
         [Description("Capture")]
         Bitmap,
         [Description("Local file path")]
-        LocalFilePath,
-        [Description("Remote file path")]
-        RemoteFilePath,
-        [Description("Printer")]
-        PRINTER
+        Local,
+        [Description("Uploaded URL")]
+        Remote,
     }
 
     public enum LinkFormatEnum
@@ -119,10 +117,10 @@ namespace UploadersLib
         LINKED_THUMBNAIL_WIKI,
         [Description("Thumbnail")]
         THUMBNAIL,
-        [Description("Local File as URI")]
+        [Description("Local File path")]
+        LocalFilePath,
+        [Description("Local File path as URI")]
         LocalFilePathUri,
-        [Description("Local File")]
-        LocalFilePath
     }
 
     public enum ImageUploaderType
@@ -149,6 +147,8 @@ namespace UploadersLib
         MEDIAWIKI,
         [Description("File Uploader")]
         FileUploader,
+        [Description("Printer")]
+        Printer
     }
 
     public enum TextUploaderType
@@ -162,7 +162,7 @@ namespace UploadersLib
         [Description("slexy.org")]
         SLEXY,
         [Description("File Uploader")]
-        FileUploader
+        FileUploader,
     }
 
     public enum FileUploaderType

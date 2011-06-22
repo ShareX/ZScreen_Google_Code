@@ -32,10 +32,9 @@
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsDest = new System.Windows.Forms.ToolStrip();
             this.tsddbOutputType = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbLinkFormat = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsddbDestImage = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddbLinkFormat = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbDestLink = new System.Windows.Forms.ToolStripDropDownButton();
@@ -68,10 +67,9 @@
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsddbOutputType,
+            this.tsddbLinkFormat,
             this.toolStripSeparator3,
             this.tsddbDestImage,
-            this.tsddbLinkFormat,
-            this.toolStripSeparator1,
             this.tsddDestText,
             this.tsddDestFile,
             this.tsddbDestLink,
@@ -94,6 +92,16 @@
             this.tsddbOutputType.Text = "Output type:";
             this.tsddbOutputType.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbOutputType_DropDownItemClicked);
             // 
+            // tsddbLinkFormat
+            // 
+            this.tsddbLinkFormat.Image = ((System.Drawing.Image)(resources.GetObject("tsddbLinkFormat.Image")));
+            this.tsddbLinkFormat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddbLinkFormat.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbLinkFormat.Name = "tsddbLinkFormat";
+            this.tsddbLinkFormat.Size = new System.Drawing.Size(350, 20);
+            this.tsddbLinkFormat.Text = "URL format:";
+            this.tsddbLinkFormat.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbLinkFormat_DropDownItemClicked);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -108,21 +116,6 @@
             this.tsddbDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestImage.Text = "Image output:";
-            // 
-            // tsddbLinkFormat
-            // 
-            this.tsddbLinkFormat.Image = ((System.Drawing.Image)(resources.GetObject("tsddbLinkFormat.Image")));
-            this.tsddbLinkFormat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddbLinkFormat.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddbLinkFormat.Name = "tsddbLinkFormat";
-            this.tsddbLinkFormat.Size = new System.Drawing.Size(350, 20);
-            this.tsddbLinkFormat.Text = "URL format:";
-            this.tsddbLinkFormat.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbLinkFormat_DropDownItemClicked);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(350, 6);
             // 
             // tsddDestText
             // 
@@ -194,7 +187,6 @@
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFile;
         public System.Windows.Forms.ToolStripDropDownButton tsddbDestLink;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         public System.Windows.Forms.ToolStripDropDownButton tsddbLinkFormat;

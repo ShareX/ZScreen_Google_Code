@@ -92,7 +92,7 @@ namespace ZScreenLib
         /// <returns>Returns the file path to a screenshot</returns>
         public static string WriteImage(WorkerTask task)
         {
-            Image img = task.MyImage;
+            Image img = task.TempImage;
             string filePath = task.LocalFilePath;
 
             if (!Engine.conf.MemoryMode && !string.IsNullOrEmpty(filePath))

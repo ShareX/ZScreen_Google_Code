@@ -34,7 +34,7 @@ namespace ZScreenLib
 
                     foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
-                        string url = ur.GetUrlByType(type);
+                        string url = ur.GetUrlByType(type, ur.URL);
                         if (!string.IsNullOrEmpty(url))
                         {
                             TreeNode tnLink = new TreeNode(type.GetDescription());
@@ -183,10 +183,8 @@ namespace ZScreenLib
             {
                 Process.Start(e.Node.Text);
             }
-            else
-            {
-                btnCopyLink_Click(sender, e);
-            }
+
+            btnCopyLink_Click(sender, e);
         }
     }
 }

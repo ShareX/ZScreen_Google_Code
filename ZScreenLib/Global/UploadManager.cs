@@ -110,7 +110,7 @@ namespace ZScreenLib
             {
                 MemoryStream ms = new MemoryStream();
                 MemoryStream ms2 = new MemoryStream();
-                Bitmap bmp = new Bitmap(task.MyImage);
+                Bitmap bmp = new Bitmap(task.TempImage);
                 bmp.Save(ms, ImageFormat.Bmp);
                 byte[] b = ms.GetBuffer();
                 ms2.Write(b, 14, (int)ms.Length - 14);
@@ -120,8 +120,23 @@ namespace ZScreenLib
                 dataObject.SetData(DataFormats.Dib, ms2);
                 Clipboard.SetDataObject(dataObject, true, 3, 1000);
             }
+            else if (task.MyOutputs.Contains(OutputTypeEnum.Local))
+            {
+                foreach (UploadResult ur in task.UploadResults)
+                {
+                    if (Engine.conf.ConfLinkFormat.Count > 0)
+                    {
+                        clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath);
+                    }
 
-            // If the user requests for the full image URL, preference is given for the Shortened URL is exists
+                    if (!string.IsNullOrEmpty(clipboardText))
+                    {
+                        break;
+                    }
+                }
+            }
+
+        // If the user requests for the full image URL, preference is given for the Shortened URL is exists
             else if (task.Job1 == JobLevel1.Image && Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL))
             {
                 if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
@@ -146,7 +161,7 @@ namespace ZScreenLib
                             break;
                         }
                     }
-                    if (string.IsNullOrEmpty(clipboardText) && task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath))
+                    if (string.IsNullOrEmpty(clipboardText) && task.MyOutputs.Contains(OutputTypeEnum.Local))
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {
@@ -169,7 +184,7 @@ namespace ZScreenLib
                     {
                         if (Engine.conf.ConfLinkFormat.Count > 0)
                         {
-                            clipboardText = ur.GetUrlByType((LinkFormatEnum)Engine.conf.ConfLinkFormat[0]);
+                            clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL);
                         }
 
                         if (!string.IsNullOrEmpty(clipboardText))
