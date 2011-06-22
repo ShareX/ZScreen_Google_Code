@@ -26,6 +26,7 @@
 using System;
 using System.Windows.Forms;
 using UploadersLib;
+using System.Linq;
 
 namespace ZScreenLib
 {
@@ -41,10 +42,11 @@ namespace ZScreenLib
             this.Task = task;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.ConvertAll(new Converter<ImageUploaderType, int>(ImageUploaderTypeToInt)));
-            dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.ConvertAll(new Converter<TextUploaderType, int>(TextUploaderTypeToInt)));
-            dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.MyFileUploaders.ConvertAll(new Converter<FileUploaderType, int>(FileUploaderTypeToInt)));
-            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.ConvertAll(new Converter<UrlShortenerType, int>(LinkUploaderTypeToInt)));
+            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.MyClipboardContent.Cast<int>().ToList());
+            dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
+            dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.Cast<int>().ToList());
+            dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.MyFileUploaders.Cast<int>().ToList());
+            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.Cast<int>().ToList());
         }
 
         private static int ImageUploaderTypeToInt(ImageUploaderType ut)
@@ -173,9 +175,8 @@ namespace ZScreenLib
             // 
             this.ucDestOptions.BackColor = System.Drawing.Color.White;
             this.ucDestOptions.Location = new System.Drawing.Point(8, 80);
-            this.ucDestOptions.MaximumSize = new System.Drawing.Size(378, 145);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 145);
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 152);
             this.ucDestOptions.TabIndex = 3;
             // 
             // gbFileName

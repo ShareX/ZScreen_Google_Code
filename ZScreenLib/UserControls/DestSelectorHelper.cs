@@ -31,6 +31,11 @@ namespace ZScreenLib
             ucDestOptions.EnableDisableDestControls();
         }
 
+        public void AddEnumClipboardContentWithRuntimeSettings(List<int> cctList)
+        {
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, cctList);
+        }
+
         public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
         {
             if (tsddb.DropDownItems.Count == 0)
