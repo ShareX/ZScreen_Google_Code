@@ -64,7 +64,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(text))
             {
-                new PrintHelper(text, new Font("Times New Roman", 12, FontStyle.Regular)).Print();
+                new PrintTextForm(text, Engine.conf.PrintSettings).Show();
             }
         }
 

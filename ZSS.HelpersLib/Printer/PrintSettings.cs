@@ -1,4 +1,6 @@
-﻿namespace HelpersLib
+﻿using System.Drawing;
+
+namespace HelpersLib
 {
     public class PrintSettings
     {
@@ -7,6 +9,7 @@
         public bool AutoScaleImage { get; set; }
         public bool AllowEnlargeImage { get; set; }
         public bool CenterImage { get; set; }
+        public XmlFont TextFont { get; set; }
 
         public PrintSettings()
         {
@@ -15,6 +18,7 @@
             AutoScaleImage = true;
             AllowEnlargeImage = false;
             CenterImage = false;
+            TextFont = new Font("Arial", 10);
         }
     }
 }

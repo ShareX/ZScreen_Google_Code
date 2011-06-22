@@ -37,12 +37,11 @@ namespace HelpersLib
         public PrintType PrintType { get; private set; }
         public Image Image { get; private set; }
         public string Text { get; private set; }
-        public Font TextFont { get; private set; }
         public PrintSettings Settings { get; set; }
 
         public bool Printable
         {
-            get { return (PrintType == PrintType.Image && Image != null) || (PrintType == PrintType.Text && !string.IsNullOrEmpty(Text) && TextFont != null); }
+            get { return (PrintType == PrintType.Image && Image != null) || (PrintType == PrintType.Text && !string.IsNullOrEmpty(Text) && Settings.TextFont != null); }
         }
 
         private PrintDocument printDocument;
@@ -57,14 +56,12 @@ namespace HelpersLib
             InitPrint();
         }
 
-        public PrintHelper(string text, Font textFont)
+        public PrintHelper(string text)
         {
             PrintType = PrintType.Text;
             Text = text;
-            TextFont = textFont;
             printTextHelper = new PrintTextHelper();
             printTextHelper.Text = Text;
-            printTextHelper.Font = TextFont;
             InitPrint();
         }
 
@@ -92,6 +89,11 @@ namespace HelpersLib
         {
             if (Printable && printDialog.ShowDialog() == DialogResult.OK)
             {
+                if (PrintType == PrintType.Text)
+                {
+                    printTextHelper.Font = Settings.TextFont;
+                }
+
                 printDocument.Print();
                 return true;
             }
@@ -115,6 +117,7 @@ namespace HelpersLib
             }
             else if (PrintType == PrintType.Text)
             {
+                printTextHelper.Font = Settings.TextFont;
                 printTextHelper.PrintPage(e);
             }
         }
