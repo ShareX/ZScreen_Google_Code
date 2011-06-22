@@ -179,13 +179,6 @@ namespace ZScreenLib
             this.Status = TaskStatus.Started;
         }
 
-        public WorkerTask(JobLevel2 job)
-            : this()
-        {
-            this.MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
-            this.Job2 = job;
-        }
-
         /// <summary>
         /// Constructor taking Worker and Job
         /// </summary>
@@ -197,9 +190,18 @@ namespace ZScreenLib
             this.MyWorker = worker;
             this.Job2 = job;
 
-            if (this.Job2 == JobLevel2.LANGUAGE_TRANSLATOR)
+            switch (job)
             {
-                this.Job1 = JobLevel1.Text;
+                case JobLevel2.PROCESS_DRAG_N_DROP:
+                case JobLevel2.UploadFromClipboard:
+                    Job1 = JobLevel1.File;
+                    break;
+                case JobLevel2.LANGUAGE_TRANSLATOR:
+                    this.Job1 = JobLevel1.Text;
+                    break;
+                default:
+                    Job1 = JobLevel1.Image;
+                    break;
             }
         }
 
@@ -597,7 +599,7 @@ namespace ZScreenLib
                 UploadFile();
             }
 
-            if (!this.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
+            if (!this.MyImageUploaders.Contains(ImageUploaderType.Bitmap))
             {
                 Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
             }
@@ -1031,7 +1033,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboardOnly()
         {
-            return Job1 == JobLevel1.Image && MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD) && this.MyImage != null;
+            return Job1 == JobLevel1.Image && MyImageUploaders.Contains(ImageUploaderType.Bitmap) && this.MyImage != null;
         }
 
         private bool CreateThumbnail()
@@ -1121,7 +1123,10 @@ namespace ZScreenLib
                 sb.Append(en.GetDescription());
                 sb.Append(", ");
             }
-            sb.Remove(sb.Length - 2, 2);
+            if (sb.Length > 2)
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
             return sb.ToString();
         }
 

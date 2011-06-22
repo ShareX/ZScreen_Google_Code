@@ -115,9 +115,9 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("Bitmap")]
-        CLIPBOARD,
-        [Description("Local disk")]
+        [Description("Bitmap image")]
+        Bitmap,
+        [Description("Local file path")]
         FILE,
         [Description("Shared folder")]
         Localhost,

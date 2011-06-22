@@ -53,7 +53,7 @@ namespace ZScreenLib
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
 
-            MyImageUploaders.Add((int)ImageUploaderType.CLIPBOARD);
+            MyImageUploaders.Add((int)ImageUploaderType.Bitmap);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
