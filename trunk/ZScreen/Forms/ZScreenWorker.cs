@@ -104,7 +104,7 @@ namespace ZScreenGUI
                 task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
                 task.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Bitmap) &&
+                if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Data) &&
                     !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
                     (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
                     task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
@@ -188,6 +188,9 @@ namespace ZScreenGUI
             {
                 case (WorkerTask.ProgressType)101:
                     Adapter.PrintImage(e.UserState as Image);
+                    break;
+                case WorkerTask.ProgressType.PrintText:
+                    Adapter.PrintText(e.UserState as string);
                     break;
                 case (WorkerTask.ProgressType)102:
                     Adapter.CopyImageToClipboard(e.UserState as Image);
@@ -1025,7 +1028,7 @@ namespace ZScreenGUI
         {
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
-                if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap) && !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
+                if (!task.MyOutputs.Contains(OutputTypeEnum.Data) && !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);

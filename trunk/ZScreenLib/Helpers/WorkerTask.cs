@@ -113,7 +113,9 @@ namespace ZScreenLib
             UPDATE_TRAY_TITLE,
             UpdateCropMode,
             CHANGE_TRAY_ICON_PROGRESS,
-            ShowTrayWarning
+            ShowTrayWarning,
+            PrintText,
+            PrintImage,
         }
 
         #endregion Enums
@@ -672,7 +674,7 @@ namespace ZScreenLib
                         {
                             ur = uploader.Upload(this.TempImage, this.FileName);
                         }
-
+                        ur.LocalFilePath = this.LocalFilePath;
                         ur.Host = ut.GetDescription();
                         this.AddUploadResult(ur);
                         this.Errors = uploader.Errors;
@@ -721,6 +723,13 @@ namespace ZScreenLib
                 if (MyTextUploaders.Contains(TextUploaderType.FileUploader))
                 {
                     UploadFile();
+                }
+                if (MyTextUploaders.Contains(TextUploaderType.Printer))
+                {
+                    if (!string.IsNullOrEmpty(TempText))
+                    {
+                        MyWorker.ReportProgress((int)ProgressType.PrintText, TempText);
+                    }
                 }
             }
             this.EndTime = DateTime.Now;
@@ -1045,7 +1054,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyOutputs.Contains(OutputTypeEnum.Bitmap) && this.TempImage != null;
+            return Job1 == JobLevel1.Image && MyOutputs.Contains(OutputTypeEnum.Data) && this.TempImage != null;
         }
 
         private bool CreateThumbnail()

@@ -60,6 +60,14 @@ namespace ZScreenLib
             }
         }
 
+        public static void PrintText(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                new PrintHelper(text, new Font("Times New Roman", 12, FontStyle.Regular)).Print();
+            }
+        }
+
         public static void CopyDataToClipboard(object data)
         {
             Clipboard.SetDataObject(data, true);

@@ -62,6 +62,7 @@
             this.tvLinks.Size = new System.Drawing.Size(594, 204);
             this.tvLinks.TabIndex = 1;
             this.tvLinks.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvLinks_NodeMouseDoubleClick);
+            this.tvLinks.Click += new System.EventHandler(this.tvLinks_Click);
             // 
             // tlpMain
             // 

@@ -87,8 +87,8 @@ namespace UploadersLib
 
     public enum OutputTypeEnum
     {
-        [Description("Capture")]
-        Bitmap,
+        [Description("Image or Text")]
+        Data,
         [Description("Local file path")]
         Local,
         [Description("Uploaded URL")]
@@ -163,6 +163,8 @@ namespace UploadersLib
         SLEXY,
         [Description("File Uploader")]
         FileUploader,
+        [Description("Printer")]
+        Printer
     }
 
     public enum FileUploaderType
