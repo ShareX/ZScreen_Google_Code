@@ -16,25 +16,25 @@ namespace ZScreenLib
             ucDestOptions = ds;
         }
 
-        public void LoadDestAll()
+        public void AddEnumDestToMenuWithConfigSettings()
         {
-            LoadDestImage();
-            LoadDestText();
-            LoadDestFile();
-            LoadDestLink();
+            AddEnumDestImageToMenuWithConfigSettings();
+            AddEnumDestTextToMenuWithConfigSettings();
+            AddEnumDestFileToMenuWithConfigSettings();
+            AddEnumDestLinkToMenuWithConfigSettings();
         }
 
-        public void LoadDestImage()
+        public void AddEnumDestImageToMenuWithConfigSettings()
         {
-            LoadDestImage(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+            AddEnumDestImageToMenuWithSettings(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
         }
 
-        public void LoadDestImage(List<int> MyImageUploaders)
+        public void AddEnumDestImageToMenuWithRuntimeSettings(List<int> MyImageUploaders)
         {
-            LoadDestImage(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            AddEnumDestImageToMenuWithSettings(ucDestOptions.tsddbDestImage, MyImageUploaders);
         }
 
-        private void LoadDestImage(ToolStripDropDownButton tsddb, List<int> MyImageUploaders)
+        private void AddEnumDestImageToMenuWithSettings(ToolStripDropDownButton tsddb, List<int> MyImageUploaders)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -55,17 +55,17 @@ namespace ZScreenLib
             }
         }
 
-        public void LoadDestText()
+        public void AddEnumDestTextToMenuWithConfigSettings()
         {
-            LoadDestText(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
         }
 
-        public void LoadDestText(List<int> MyTextUploaders)
+        public void AddEnumDestTextToMenuWithRuntimeSettings(List<int> MyTextUploaders)
         {
-            LoadDestText(ucDestOptions.tsddDestText, MyTextUploaders);
+            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddDestText, MyTextUploaders);
         }
 
-        private void LoadDestText(ToolStripDropDownButton tsddb, List<int> MyTextUploaders)
+        private void AddEnumDestTextToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyTextUploaders)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -82,17 +82,17 @@ namespace ZScreenLib
             }
         }
 
-        public void LoadDestFile()
+        public void AddEnumDestFileToMenuWithConfigSettings()
         {
-            LoadDestFile(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
         }
 
-        public void LoadDestFile(List<int> MyFileUploaders)
+        public void AddEnumDestFileToMenuWithRuntimeSettings(List<int> MyFileUploaders)
         {
-            LoadDestFile(ucDestOptions.tsddDestFile, MyFileUploaders);
+            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddDestFile, MyFileUploaders);
         }
 
-        private void LoadDestFile(ToolStripDropDownButton tsddb, List<int> MyFileUploaders)
+        private void AddEnumDestFileToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyFileUploaders)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -109,17 +109,17 @@ namespace ZScreenLib
             }
         }
 
-        public void LoadDestLink()
+        public void AddEnumDestLinkToMenuWithConfigSettings()
         {
-            LoadDestLink(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
+            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
         }
 
-        public void LoadDestLink(List<int> MyLinkUploaders)
+        public void AddEnumDestLinkToMenuWithRuntimeSettings(List<int> MyLinkUploaders)
         {
-            LoadDestLink(ucDestOptions.tsddDestLink, MyLinkUploaders);
+            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddDestLink, MyLinkUploaders);
         }
 
-        private void LoadDestLink(ToolStripDropDownButton tsddb, List<int> MyLinkUploaders)
+        private void AddEnumDestLinkToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyLinkUploaders)
         {
             if (tsddb.DropDownItems.Count == 0)
             {

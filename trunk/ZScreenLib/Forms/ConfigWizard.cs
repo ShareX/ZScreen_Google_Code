@@ -37,10 +37,10 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
-        public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
-        public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
-        public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
-        public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
+        public List<int> MyImageUploaders = new List<int>();
+        public List<int> MyFileUploaders = new List<int>();
+        public List<int> MyTextUploaders = new List<int>();
+        public List<int> MyLinkUploaders = new List<int>();
         private string DefaultRootFolder;
 
         public ConfigWizard(string rootDir)
@@ -51,10 +51,17 @@ namespace ZScreenLib
             txtRootFolder.Text = chkPreferSystemFolders.Checked ? Engine.zRoamingAppDataFolder : rootDir;
             this.RootFolder = rootDir;
 
-            Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
-            Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
-            Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
-            Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, MyLinkUploaders);
+            DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
+
+            MyImageUploaders.Add((int)ImageUploaderType.CLIPBOARD);
+            MyTextUploaders.Add((int)TextUploaderType.PASTE2);
+            MyFileUploaders.Add((int)FileUploaderType.SendSpace);
+            MyLinkUploaders.Add((int)UrlShortenerType.Google);
+
+            dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
+            dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
+            dsh.AddEnumDestFileToMenuWithRuntimeSettings(MyFileUploaders);
+            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(MyLinkUploaders);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -62,24 +69,13 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
-            SaveDestOptions(ucDestOptions.tsddDestFile, MyFileUploaders);
-            SaveDestOptions(ucDestOptions.tsddbDestImage, MyImageUploaders);
-            SaveDestOptions(ucDestOptions.tsddDestText, MyTextUploaders);
-            SaveDestOptions(ucDestOptions.tsddDestLink, MyLinkUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, MyTextUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestLink, MyLinkUploaders);
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-        }
-
-        private void SaveDestOptions<T>(ToolStripDropDownButton tsddb, List<T> list)
-        {
-            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
-            {
-                if (tsmi.Checked)
-                {
-                    list.Add((T)tsmi.Tag);
-                }
-            }
         }
 
         private void btnBrowseRootDir_Click(object sender, EventArgs e)

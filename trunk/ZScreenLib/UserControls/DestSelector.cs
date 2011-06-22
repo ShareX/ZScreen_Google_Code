@@ -12,18 +12,6 @@ namespace ZScreenLib
             InitializeComponent();
         }
 
-        private void LoadDest<T>(ToolStripDropDownButton tsddb)
-        {
-            if (tsddb.DropDownItems.Count == 0)
-            {
-                foreach (Enum t in Enum.GetValues(typeof(T)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(((Enum)t).GetDescription());
-                    tsmi.Tag = t;
-                }
-            }
-        }
-
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
             new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys()).Show();
