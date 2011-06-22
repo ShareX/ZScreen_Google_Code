@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -57,8 +56,8 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                PrintHelper ph = new PrintHelper(img);
-                PrinterSettings ps = ph.PrintWithDialog();
+                PrintHelper printHelper = new PrintHelper(img);
+                printHelper.Print();
             }
         }
 
