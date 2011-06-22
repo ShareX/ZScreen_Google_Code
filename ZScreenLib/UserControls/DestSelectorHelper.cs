@@ -30,7 +30,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.ConfLinkFormat.Count == 0)
             {
-                Engine.conf.ConfLinkFormat.Add((int)OutputTypeEnum.Bitmap);
+                Engine.conf.ConfLinkFormat.Add((int)OutputTypeEnum.Data);
             }
             AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
         }
@@ -60,7 +60,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.ConfOutputType.Count == 0)
             {
-                Engine.conf.ConfOutputType.Add((int)OutputTypeEnum.Bitmap);
+                Engine.conf.ConfOutputType.Add((int)OutputTypeEnum.Data);
             }
             AddEnumOutputTypeWithRuntimeSettings(ucDestOptions.tsddbOutputType, Engine.conf.ConfOutputType);
             ucDestOptions.EnableDisableDestControls();

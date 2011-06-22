@@ -31,7 +31,6 @@ namespace ZScreenLib
                 foreach (UploadResult ur in task.UploadResults)
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
-
                     foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
                         string url = ur.GetUrlByType(type, ur.URL);
@@ -44,9 +43,10 @@ namespace ZScreenLib
                             count++;
                         }
                     }
-
                     tvLinks.Nodes.Add(tnUploadResult);
                 }
+
+                tvLinks.ExpandAll();
 
                 Button btnCopyLink = new Button();
                 btnCopyLink.Text = "Copy &Link";
@@ -185,6 +185,11 @@ namespace ZScreenLib
             }
 
             btnCopyLink_Click(sender, e);
+        }
+
+        private void tvLinks_Click(object sender, EventArgs e)
+        {
+            ResetTimer();
         }
     }
 }

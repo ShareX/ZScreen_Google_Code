@@ -55,7 +55,7 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            MyClipboardContent.Add((int)OutputTypeEnum.Bitmap);
+            MyClipboardContent.Add((int)OutputTypeEnum.Data);
             MyLinkFormat.Add((int)LinkFormatEnum.FULL);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);

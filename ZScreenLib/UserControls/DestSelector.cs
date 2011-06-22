@@ -47,7 +47,7 @@ namespace ZScreenLib
                     OutputTypeEnum cct = (OutputTypeEnum)tsmi.Tag;
 
                     // tsddbDestImage.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
-                    tsddbLinkFormat.Enabled = cct != OutputTypeEnum.Bitmap;
+                    tsddbLinkFormat.Enabled = cct != OutputTypeEnum.Data;
                     // tsddDestFile.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddDestText.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddbDestLink.Enabled = cct == ClipboardContentEnum.RemoteFilePath;

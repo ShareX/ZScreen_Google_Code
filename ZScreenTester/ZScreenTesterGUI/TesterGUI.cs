@@ -233,7 +233,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap))
+                            if (!task.MyOutputs.Contains(OutputTypeEnum.Data))
                             {
                                 task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
