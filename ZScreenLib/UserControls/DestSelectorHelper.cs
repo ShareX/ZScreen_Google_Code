@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using UploadersLib;
 
@@ -191,10 +189,9 @@ namespace ZScreenLib
             }
         }
 
-        void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
+        private void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
         {
-            string dest = string.Empty;
-            int count = 0;
+            List<string> dest = new List<string>();
 
             foreach (var obj in tsdd.DropDownItems)
             {
@@ -203,85 +200,87 @@ namespace ZScreenLib
                     ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
                     if (gtsmi.Checked)
                     {
-                        count++;
-                        dest = ((Enum)gtsmi.Tag).GetDescription();
+                        dest.Add(((Enum)gtsmi.Tag).GetDescription());
                     }
                 }
             }
 
-            if (count == 0)
+            if (dest.Count == 0)
             {
                 tsdd.Text = descr + ": None";
             }
-            else if (count == 1)
+            else if (dest.Count == 1)
             {
-                tsdd.Text = descr + ": " + dest;
+                tsdd.Text = descr + ": " + dest[0];
             }
-            else if (count > 1)
+            else if (dest.Count == 2)
             {
-                tsdd.Text = string.Format("{0}: {1} and {2} other destination(s)", descr, dest, count - 1);
+                tsdd.Text = descr + ": " + dest[0] + " and " + dest[1];
+            }
+            else if (dest.Count > 2)
+            {
+                tsdd.Text = string.Format("{0}: {1}, {2} and {3} more", descr, dest[0], dest[1], dest.Count - 2);
             }
         }
 
-        void UpdateToolStripDestImage()
+        private void UpdateToolStripDestImage()
         {
             UpdateToolStripDest(ucDestOptions.tsddbDestImage, "Image output");
         }
 
-        void UpdateToolStripDestText()
+        private void UpdateToolStripDestText()
         {
             UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
         }
 
-        void UpdateToolStripDestFile()
+        private void UpdateToolStripDestFile()
         {
             UpdateToolStripDest(ucDestOptions.tsddDestFile, "File output");
         }
 
-        void UpdateToolStripDestLink()
+        private void UpdateToolStripDestLink()
         {
             UpdateToolStripDest(ucDestOptions.tsddbDestLink, "URL shortener");
         }
 
-        void UpdateToolStripClipboardContent()
+        private void UpdateToolStripClipboardContent()
         {
             UpdateToolStripDest(ucDestOptions.tsddbOutputType, "Clipboard content");
         }
 
-        void UpdateToolStripLinkFormat()
+        private void UpdateToolStripLinkFormat()
         {
             UpdateToolStripDest(ucDestOptions.tsddbLinkFormat, "URL format");
         }
 
-        void tsmiDestImage_Click(object sender, EventArgs e)
+        private void tsmiDestImage_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestImage();
         }
 
-        void tsmiDestText_Click(object sender, EventArgs e)
+        private void tsmiDestText_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestText();
         }
 
-        void tsmiDestFiles_Click(object sender, EventArgs e)
+        private void tsmiDestFiles_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestFile();
         }
 
-        void tsmiDestLinks_Click(object sender, EventArgs e)
+        private void tsmiDestLinks_Click(object sender, EventArgs e)
         {
             UpdateToolStripDestLink();
         }
 
-        void tsmiDestClipboardContent_Click(object sender, EventArgs e)
+        private void tsmiDestClipboardContent_Click(object sender, EventArgs e)
         {
             UpdateToolStripClipboardContent();
         }
 
-        void tsmiDestLinkFormat_Click(object sender, EventArgs e)
+        private void tsmiDestLinkFormat_Click(object sender, EventArgs e)
         {
             UpdateToolStripLinkFormat();
         }
-
     }
 }

@@ -125,8 +125,6 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("Shared folder")]
-        SharedFolder,
         [Description("imageshack.us")]
         IMAGESHACK,
         [Description("tinypic.com")]
@@ -147,6 +145,8 @@ namespace UploadersLib
         MEDIAWIKI,
         [Description("File Uploader")]
         FileUploader,
+        [Description("Shared folder")]
+        SharedFolder,
         [Description("Printer")]
         Printer
     }
