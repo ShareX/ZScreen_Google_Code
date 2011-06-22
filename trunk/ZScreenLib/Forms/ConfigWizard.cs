@@ -39,6 +39,7 @@ namespace ZScreenLib
         public string RootFolder { get; private set; }
 
         public List<int> MyClipboardContent = new List<int>();
+        public List<int> MyLinkFormat = new List<int>();
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
@@ -54,13 +55,15 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            MyClipboardContent.Add((int)ClipboardContentType.Bitmap);
+            MyClipboardContent.Add((int)OutputTypeEnum.Bitmap);
+            MyLinkFormat.Add((int)LinkFormatEnum.FULL);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
 
-            dsh.AddEnumClipboardContentWithRuntimeSettings(MyClipboardContent);
+            dsh.AddEnumOutputTypeWithRuntimeSettings(MyClipboardContent);
+            dsh.AddEnumLinkFormatWithRuntimeSettings(MyLinkFormat);
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
             dsh.AddEnumDestFileToMenuWithRuntimeSettings(MyFileUploaders);
@@ -72,6 +75,8 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputType, MyClipboardContent);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, MyTextUploaders);

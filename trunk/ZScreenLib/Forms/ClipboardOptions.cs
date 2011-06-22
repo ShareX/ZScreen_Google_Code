@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using GraphicsMgrLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -21,14 +22,17 @@ namespace ZScreenLib
             {
                 this.mTask = task;
                 this.Text = task.FileName.ToString(); // +" - " + task.GetDescription();
-                this.pbPreview.LoadAsync(task.LocalFilePath);
+                if (ZAppHelper.IsImageFile(task.LocalFilePath))
+                {
+                    this.pbPreview.LoadAsync(task.LocalFilePath);
+                }
 
                 int count = 0;
                 foreach (UploadResult ur in task.UploadResults)
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
 
-                    foreach (ClipboardUriType type in Enum.GetValues(typeof(ClipboardUriType)))
+                    foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
                         string url = ur.GetUrlByType(type);
                         if (!string.IsNullOrEmpty(url))

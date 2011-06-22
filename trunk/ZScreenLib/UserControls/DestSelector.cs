@@ -9,7 +9,7 @@ namespace ZScreenLib
     {
         public DestSelector()
         {
-            InitializeComponent();    
+            InitializeComponent();
         }
 
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
@@ -31,26 +31,33 @@ namespace ZScreenLib
             RestrictToOneCheck(tsddbDestLink, e);
         }
 
-        private void tsddbClipboardContent_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void tsddbOutputType_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            RestrictToOneCheck(tsddbClipboardContent, e);
+            // RestrictToOneCheck(tsddbClipboardContent, e);
             EnableDisableDestControls();
         }
 
-        public void EnableDisableDestControls()
+        public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
         {
-            for (int i = 0; i < tsddbClipboardContent.DropDownItems.Count; i++)
+            for (int i = 0; i < tsddbOutputType.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbClipboardContent.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbOutputType.DropDownItems[i];
                 if (tsmi.Checked)
                 {
-                    ClipboardContentType cct = (ClipboardContentType)tsmi.Tag;
-                    tsddbDestImage.Enabled = cct == ClipboardContentType.RemoteFilePath;
-                    tsddDestFile.Enabled = cct == ClipboardContentType.RemoteFilePath;
-                    tsddDestText.Enabled = cct == ClipboardContentType.RemoteFilePath;
-                    tsddbDestLink.Enabled = cct == ClipboardContentType.RemoteFilePath;
+                    OutputTypeEnum cct = (OutputTypeEnum)tsmi.Tag;
+
+                    // tsddbDestImage.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
+                    // tsddbLinkFormat.Enabled = cct == OutputTypeEnum.RemoteFilePath;
+                    // tsddDestFile.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
+                    // tsddDestText.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
+                    // tsddbDestLink.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                 }
             }
+        }
+
+        private void tsddbLinkFormat_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            RestrictToOneCheck(tsddbLinkFormat, e);
         }
     }
 }

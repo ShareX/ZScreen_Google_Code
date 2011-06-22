@@ -42,7 +42,8 @@ namespace ZScreenLib
             this.Task = task;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.MyClipboardContent.Cast<int>().ToList());
+            dsh.AddEnumOutputTypeWithRuntimeSettings(Task.MyOutputs.Cast<int>().ToList());
+            dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.Cast<int>().ToList());
             dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.MyFileUploaders.Cast<int>().ToList());

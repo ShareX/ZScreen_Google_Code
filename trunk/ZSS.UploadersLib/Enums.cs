@@ -85,17 +85,19 @@ namespace UploadersLib
         User
     }
 
-    public enum ClipboardContentType
+    public enum OutputTypeEnum
     {
-        [Description("Bitmap image")]
+        [Description("Capture")]
         Bitmap,
         [Description("Local file path")]
         LocalFilePath,
         [Description("Remote file path")]
         RemoteFilePath,
+        [Description("Printer")]
+        PRINTER
     }
 
-    public enum ClipboardUriType
+    public enum LinkFormatEnum
     {
         [Description("Full Image")]
         FULL,
@@ -147,8 +149,6 @@ namespace UploadersLib
         MEDIAWIKI,
         [Description("File Uploader")]
         FileUploader,
-        [Description("Printer")]
-        PRINTER
     }
 
     public enum TextUploaderType

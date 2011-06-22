@@ -161,7 +161,8 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
-        public List<ClipboardContentType> MyClipboardContent = new List<ClipboardContentType>();
+        public List<OutputTypeEnum> MyOutputs = new List<OutputTypeEnum>();
+        public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
         public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
@@ -598,35 +599,36 @@ namespace ZScreenLib
                 UploadFile();
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.PRINTER))
+            if (MyImageUploaders.Contains(ImageUploaderType.SharedFolder))
             {
-                if (this.MyImage != null)
-                {
-                    this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
-                }
+                UploadToSharedFolder();
             }
+
         }
 
         public void UploadImage()
         {
             this.StartTime = DateTime.Now;
 
-            if (MyClipboardContent.Contains(ClipboardContentType.RemoteFilePath))
+            if (MyOutputs.Contains(OutputTypeEnum.RemoteFilePath))
             {
                 UploadImageRemote();
             }
-
-            else if (MyClipboardContent.Contains(ClipboardContentType.LocalFilePath))
+            
+            if (MyOutputs.Contains(OutputTypeEnum.LocalFilePath))
             {
                 this.AddUploadResult(new UploadResult()
                 {
-                    Host = ClipboardContentType.LocalFilePath.GetDescription()
+                    Host = OutputTypeEnum.LocalFilePath.GetDescription()
                 });
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.SharedFolder))
+            if (MyOutputs.Contains(OutputTypeEnum.PRINTER))
             {
-                UploadToSharedFolder();
+                if (this.MyImage != null)
+                {
+                    this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
+                }
             }
 
             this.EndTime = DateTime.Now;
@@ -906,7 +908,13 @@ namespace ZScreenLib
                 }
                 File.Move(this.LocalFilePath, destFile);
                 this.UpdateLocalFilePath(destFile);
-                this.UploadResults.Add(new UploadResult() { Host = ImageUploaderType.SharedFolder.GetDescription(), URL = acc.GetUriPath(fn) });
+                UploadResult ur = new UploadResult()
+                {
+                    Host = ImageUploaderType.SharedFolder.GetDescription(),
+                    URL = acc.GetUriPath(fn),
+                    LocalFilePath = this.LocalFilePath
+                };
+                this.UploadResults.Add(ur);
             }
         }
 
@@ -973,7 +981,7 @@ namespace ZScreenLib
                 return Engine.conf.TwitterEnabled ||
                     Engine.conf.ShortenUrlUsingClipboardUpload && this.Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(MyText) ||
                     Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
-                    Engine.conf.MyClipboardUriMode == (int)ClipboardUriType.FULL_TINYURL;
+                    Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);
             }
 
             return false;
@@ -1037,16 +1045,16 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyClipboardContent.Contains(ClipboardContentType.Bitmap) && this.MyImage != null;
+            return Job1 == JobLevel1.Image && MyOutputs.Contains(OutputTypeEnum.Bitmap) && this.MyImage != null;
         }
 
         private bool CreateThumbnail()
         {
             return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.MyImage != null &&
-                ((ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LINKED_THUMBNAIL_WIKI ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.LinkedThumbnailHtml ||
-                 (ClipboardUriType)Engine.conf.MyClipboardUriMode == ClipboardUriType.THUMBNAIL) &&
+                ( Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
+                  Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL_WIKI) ||
+                  Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LinkedThumbnailHtml) ||
+                  Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.THUMBNAIL) ) &&
                 (!Engine.MyUploadersConfig.FTPThumbnailCheckSize || (Engine.MyUploadersConfig.FTPThumbnailCheckSize &&
                 (this.MyImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
         }

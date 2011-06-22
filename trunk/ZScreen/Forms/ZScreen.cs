@@ -109,8 +109,7 @@ namespace ZScreenGUI
             StartStatistics();
 
             SetToolTip(nudScreenshotDelay);
-            FillClipboardMenu();
-
+            
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
@@ -261,8 +260,9 @@ namespace ZScreenGUI
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-            
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.MyClipboardContent);
+
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputType, Engine.conf.ConfOutputType);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
@@ -437,51 +437,6 @@ namespace ZScreenGUI
                 tsmEditinImageSoftware.DropDown.AutoClose = false;
                 lbSoftware.SelectedItem = tsm.Text;
                 UpdateGuiEditors(sender);
-            }
-        }
-
-        private void FillClipboardMenu()
-        {
-            tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
-            tsmCopytoClipboardMode.DropDownItems.Clear();
-
-            ToolStripMenuItem tsm;
-            int x = 0;
-            foreach (ClipboardUriType cui in Enum.GetValues(typeof(ClipboardUriType)))
-            {
-                tsm = new ToolStripMenuItem { Tag = x++, CheckOnClick = true, Text = cui.GetDescription() };
-                tsm.Click += new EventHandler(ClipboardModeClick);
-                tsmCopytoClipboardMode.DropDownItems.Add(tsm);
-            }
-
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
-            tsmCopytoClipboardMode.DropDownDirection = ToolStripDropDownDirection.Right;
-        }
-
-        private void ClipboardModeClick(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-            Engine.conf.MyClipboardUriMode = (int)tsm.Tag;
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
-            cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode;
-        }
-
-        private void CheckCorrectMenuItemClicked(ref ToolStripMenuItem mi, int index)
-        {
-            ToolStripMenuItem tsm;
-
-            for (int x = 0; x < mi.DropDownItems.Count; x++)
-            {
-                tsm = (ToolStripMenuItem)mi.DropDownItems[x];
-
-                if (index == x)
-                {
-                    tsm.CheckState = CheckState.Checked;
-                }
-                else
-                {
-                    tsm.CheckState = CheckState.Unchecked;
-                }
             }
         }
 
@@ -761,22 +716,6 @@ namespace ZScreenGUI
         private void lbSoftware_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowImageEditorsSettings();
-        }
-
-        private void cboClipboardTextMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.conf.MyClipboardUriMode = cboURLFormat.SelectedIndex;
-            UpdateClipboardTextTrayMenu();
-        }
-
-        private void UpdateClipboardTextTrayMenu()
-        {
-            foreach (ToolStripMenuItem tsmi in tsmCopytoClipboardMode.DropDownItems)
-            {
-                tsmi.Checked = false;
-            }
-
-            CheckCorrectMenuItemClicked(ref tsmCopytoClipboardMode, Engine.conf.MyClipboardUriMode);
         }
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
