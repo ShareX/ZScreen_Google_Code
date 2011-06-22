@@ -73,19 +73,15 @@ namespace ZScreenLib
 
         public void AddEnumOutputTypeWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
         {
-            if (tsddb.DropDownItems.Count == 0)
+            foreach (OutputTypeEnum t in Enum.GetValues(typeof(OutputTypeEnum)))
             {
-                foreach (OutputTypeEnum t in Enum.GetValues(typeof(OutputTypeEnum)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.CheckOnClick = true; // need to multi-checks
-                    tsmi.Checked = ClipboardContentType.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
-                    tsddb.DropDownItems.Add(tsmi);
-                }
-                UpdateToolStripClipboardContent();
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                tsmi.Tag = t;
+                tsmi.Checked = ClipboardContentType.Contains((int)t);
+                tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
+                tsddb.DropDownItems.Add(tsmi);
             }
+            UpdateToolStripClipboardContent();
         }
 
         public void AddEnumDestImageToMenuWithConfigSettings()
@@ -249,7 +245,7 @@ namespace ZScreenLib
 
         void UpdateToolStripClipboardContent()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbOutputType, "Output type");
+            UpdateToolStripDest(ucDestOptions.tsddbOutputType, "Clipboard content");
         }
 
         void UpdateToolStripLinkFormat()

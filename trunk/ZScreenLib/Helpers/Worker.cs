@@ -138,7 +138,7 @@ namespace ZScreenLib
 
                 if (task.WasToTakeScreenshot)
                 {
-                    if (!task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                    if (!task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                     {
                         try
                         {
@@ -189,9 +189,9 @@ namespace ZScreenLib
                     MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (task.MyImage != null)
+                if (task.TempImage != null)
                 {
-                    task.MyImage.Dispose(); // For fix memory leak
+                    task.TempImage.Dispose(); // For fix memory leak
                 }
             }
             catch (Exception ex)
@@ -415,7 +415,7 @@ namespace ZScreenLib
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (Directory.Exists(task.MyText))
+                if (Directory.Exists(task.TempText))
                 {
                     IndexerAdapter settings = new IndexerAdapter();
                     settings.LoadConfig(Engine.conf.IndexerConfig);
@@ -425,9 +425,9 @@ namespace ZScreenLib
                     {
                         ext = ".html";
                     }
-                    string fileName = Path.GetFileName(task.MyText) + ext;
+                    string fileName = Path.GetFileName(task.TempText) + ext;
                     settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
-                    settings.GetConfig().FolderList.Add(task.MyText);
+                    settings.GetConfig().FolderList.Add(task.TempText);
 
                     Indexer indexer = null;
                     switch (settings.GetConfig().IndexingEngineType)
