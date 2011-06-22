@@ -18,23 +18,46 @@ namespace ZScreenLib
 
         public void AddEnumDestToMenuWithConfigSettings()
         {
+            AddEnumClipboardContentWithConfigSettings();
             AddEnumDestImageToMenuWithConfigSettings();
             AddEnumDestTextToMenuWithConfigSettings();
             AddEnumDestFileToMenuWithConfigSettings();
             AddEnumDestLinkToMenuWithConfigSettings();
         }
 
+        public void AddEnumClipboardContentWithConfigSettings()
+        {
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.MyClipboardContent);
+            ucDestOptions.EnableDisableDestControls();
+        }
+
+        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, int ClipboardContentType)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (ClipboardContentType t in Enum.GetValues(typeof(ClipboardContentType)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.Checked = (int)t == ClipboardContentType;
+                    tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
+                    tsddb.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripClipboardContent();
+            }
+        }
+
         public void AddEnumDestImageToMenuWithConfigSettings()
         {
-            AddEnumDestImageToMenuWithSettings(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+            AddEnumDestImageToMenuWithRuntimeSettings(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
         }
 
         public void AddEnumDestImageToMenuWithRuntimeSettings(List<int> MyImageUploaders)
         {
-            AddEnumDestImageToMenuWithSettings(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            AddEnumDestImageToMenuWithRuntimeSettings(ucDestOptions.tsddbDestImage, MyImageUploaders);
         }
 
-        private void AddEnumDestImageToMenuWithSettings(ToolStripDropDownButton tsddb, List<int> MyImageUploaders)
+        private void AddEnumDestImageToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyImageUploaders)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -111,12 +134,12 @@ namespace ZScreenLib
 
         public void AddEnumDestLinkToMenuWithConfigSettings()
         {
-            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
+            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
         }
 
         public void AddEnumDestLinkToMenuWithRuntimeSettings(List<int> MyLinkUploaders)
         {
-            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddDestLink, MyLinkUploaders);
+            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddbDestLink, MyLinkUploaders);
         }
 
         private void AddEnumDestLinkToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyLinkUploaders)
@@ -184,7 +207,12 @@ namespace ZScreenLib
 
         void UpdateToolStripDestLink()
         {
-            UpdateToolStripDest(ucDestOptions.tsddDestLink, "URL Shortener");
+            UpdateToolStripDest(ucDestOptions.tsddbDestLink, "URL Shortener");
+        }
+
+        void UpdateToolStripClipboardContent()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddbClipboardContent, "Clipboard Content");
         }
 
         void tsmiDestImage_Click(object sender, EventArgs e)
@@ -207,5 +235,9 @@ namespace ZScreenLib
             UpdateToolStripDestLink();
         }
 
+        void tsmiDestClipboardContent_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripClipboardContent();
+        }
     }
 }

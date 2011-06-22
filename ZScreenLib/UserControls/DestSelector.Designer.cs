@@ -29,28 +29,32 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestSelector));
-            this.gbMainOptions = new System.Windows.Forms.GroupBox();
+            this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsDest = new System.Windows.Forms.ToolStrip();
+            this.tsddbClipboardContent = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbDestImage = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddDestFile = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddDestLink = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbDestLink = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
-            this.gbMainOptions.SuspendLayout();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsDest.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gbMainOptions
+            // miniToolStrip
             // 
-            this.gbMainOptions.BackColor = System.Drawing.Color.Transparent;
-            this.gbMainOptions.Controls.Add(this.tsDest);
-            this.gbMainOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbMainOptions.Location = new System.Drawing.Point(0, 0);
-            this.gbMainOptions.Name = "gbMainOptions";
-            this.gbMainOptions.Size = new System.Drawing.Size(352, 144);
-            this.gbMainOptions.TabIndex = 80;
-            this.gbMainOptions.TabStop = false;
-            this.gbMainOptions.Text = "Active Destinations";
+            this.miniToolStrip.AutoSize = false;
+            this.miniToolStrip.BackColor = System.Drawing.Color.White;
+            this.miniToolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.miniToolStrip.CanOverflow = false;
+            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.miniToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
+            this.miniToolStrip.Location = new System.Drawing.Point(0, 138);
+            this.miniToolStrip.Name = "miniToolStrip";
+            this.miniToolStrip.Size = new System.Drawing.Size(346, 149);
+            this.miniToolStrip.TabIndex = 128;
             // 
             // tsDest
             // 
@@ -58,29 +62,42 @@
             this.tsDest.BackColor = System.Drawing.Color.White;
             this.tsDest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsDest.CanOverflow = false;
-            this.tsDest.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsDest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddbClipboardContent,
+            this.toolStripSeparator1,
             this.tsddbDestImage,
             this.tsddDestText,
             this.tsddDestFile,
-            this.tsddDestLink,
+            this.tsddbDestLink,
+            this.toolStripSeparator2,
             this.tsbDestConfig});
-            this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
-            this.tsDest.Location = new System.Drawing.Point(8, 16);
+            this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+            this.tsDest.Location = new System.Drawing.Point(0, 0);
             this.tsDest.Name = "tsDest";
-            this.tsDest.Size = new System.Drawing.Size(336, 120);
+            this.tsDest.Size = new System.Drawing.Size(352, 168);
             this.tsDest.TabIndex = 128;
             this.tsDest.Text = "Destinations";
             // 
-            // tsddDestImage
+            // tsddbClipboardContent
             // 
-            this.tsddbDestImage.Image = ((System.Drawing.Image)(resources.GetObject("tsddDestImage.Image")));
+            this.tsddbClipboardContent.Image = ((System.Drawing.Image)(resources.GetObject("tsddbClipboardContent.Image")));
+            this.tsddbClipboardContent.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddbClipboardContent.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbClipboardContent.Name = "tsddbClipboardContent";
+            this.tsddbClipboardContent.Size = new System.Drawing.Size(350, 20);
+            this.tsddbClipboardContent.Text = "Clipboard Content:";
+            this.tsddbClipboardContent.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbClipboardContent_DropDownItemClicked);
+            // 
+            // tsddbDestImage
+            // 
+            this.tsddbDestImage.Image = ((System.Drawing.Image)(resources.GetObject("tsddbDestImage.Image")));
             this.tsddbDestImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddbDestImage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddbDestImage.Name = "tsddDestImage";
+            this.tsddbDestImage.Name = "tsddbDestImage";
             this.tsddbDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddbDestImage.Size = new System.Drawing.Size(105, 20);
+            this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestImage.Text = "Image output:";
             // 
             // tsddDestText
@@ -90,7 +107,7 @@
             this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestText.Name = "tsddDestText";
             this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestText.Size = new System.Drawing.Size(97, 20);
+            this.tsddDestText.Size = new System.Drawing.Size(350, 20);
             this.tsddDestText.Text = "Text output:";
             // 
             // tsddDestFile
@@ -100,19 +117,19 @@
             this.tsddDestFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddDestFile.Name = "tsddDestFile";
             this.tsddDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestFile.Size = new System.Drawing.Size(91, 20);
+            this.tsddDestFile.Size = new System.Drawing.Size(350, 20);
             this.tsddDestFile.Text = "File output:";
             // 
-            // tsddDestLinks
+            // tsddbDestLink
             // 
-            this.tsddDestLink.Image = global::ZScreenLib.Properties.Resources.link_go;
-            this.tsddDestLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestLink.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestLink.Name = "tsddDestLinks";
-            this.tsddDestLink.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestLink.Size = new System.Drawing.Size(106, 20);
-            this.tsddDestLink.Text = "URL Shortener";
-            this.tsddDestLink.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddDestLinks_DropDownItemClicked);
+            this.tsddbDestLink.Image = global::ZScreenLib.Properties.Resources.link_go;
+            this.tsddbDestLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddbDestLink.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbDestLink.Name = "tsddbDestLink";
+            this.tsddbDestLink.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddbDestLink.Size = new System.Drawing.Size(350, 20);
+            this.tsddbDestLink.Text = "URL Shortener";
+            this.tsddbDestLink.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddDestLinks_DropDownItemClicked);
             // 
             // tsbDestConfig
             // 
@@ -120,19 +137,28 @@
             this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDestConfig.Name = "tsbDestConfig";
-            this.tsbDestConfig.Size = new System.Drawing.Size(188, 20);
+            this.tsbDestConfig.Size = new System.Drawing.Size(350, 20);
             this.tsbDestConfig.Text = "Open destinations configuration..";
             this.tsbDestConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(350, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(350, 6);
             // 
             // DestSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gbMainOptions);
+            this.Controls.Add(this.tsDest);
             this.Name = "DestSelector";
-            this.Size = new System.Drawing.Size(352, 144);
-            this.gbMainOptions.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(352, 168);
             this.tsDest.ResumeLayout(false);
             this.tsDest.PerformLayout();
             this.ResumeLayout(false);
@@ -141,12 +167,16 @@
 
         #endregion Component Designer generated code
 
-        internal System.Windows.Forms.GroupBox gbMainOptions;
+        private System.Windows.Forms.ToolStrip miniToolStrip;
+        private System.Windows.Forms.ToolStrip tsDest;
+        public System.Windows.Forms.ToolStripDropDownButton tsddbClipboardContent;
         public System.Windows.Forms.ToolStripDropDownButton tsddbDestImage;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
         public System.Windows.Forms.ToolStripDropDownButton tsddDestFile;
-        private System.Windows.Forms.ToolStrip tsDest;
+        public System.Windows.Forms.ToolStripDropDownButton tsddbDestLink;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
-        public System.Windows.Forms.ToolStripDropDownButton tsddDestLink;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+
     }
 }

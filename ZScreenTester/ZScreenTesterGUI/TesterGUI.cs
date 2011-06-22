@@ -70,7 +70,6 @@ namespace ZScreenTesterGUI
             {
                 switch (uploader)
                 {
-                    case ImageUploaderType.Bitmap:
                     case ImageUploaderType.FILE:
                     case ImageUploaderType.Localhost:
                     case ImageUploaderType.PRINTER:
@@ -237,7 +236,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.MyImageUploaders.Contains(ImageUploaderType.Bitmap))
+                            if (!task.MyClipboardContent.Contains(ClipboardContentType.Bitmap))
                             {
                                 task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);

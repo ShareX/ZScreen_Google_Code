@@ -85,6 +85,18 @@ namespace UploadersLib
         User
     }
 
+    public enum ClipboardContentType
+    {
+        [Description("Bitmap image")]
+        Bitmap,
+        [Description("Local file path")]
+        FILE,
+        [Description("Shared folder")]
+        Localhost,
+        [Description("Remote file path")]
+        RemoteFilePath,
+    }
+
     public enum ClipboardUriType
     {
         [Description("Full Image")]
@@ -115,8 +127,6 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("Bitmap image")]
-        Bitmap,
         [Description("Local file path")]
         FILE,
         [Description("Shared folder")]

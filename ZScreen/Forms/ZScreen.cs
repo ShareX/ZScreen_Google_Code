@@ -261,10 +261,11 @@ namespace ZScreenGUI
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
+            
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
