@@ -43,6 +43,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -66,8 +67,15 @@
     <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrintHelper.cs" />
-    <Compile Include="PrintTextHelper.cs" />
+    <Compile Include="Printer\PrintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\PrintForm.Designer.cs">
+      <DependentUpon>PrintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\PrintHelper.cs" />
+    <Compile Include="Printer\PrintSettings.cs" />
+    <Compile Include="Printer\PrintTextHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="StaticHelper.cs" />
@@ -97,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\PrintForm.resx">
+      <DependentUpon>PrintForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
