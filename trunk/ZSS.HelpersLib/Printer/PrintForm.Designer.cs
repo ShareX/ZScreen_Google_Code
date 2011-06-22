@@ -156,7 +156,8 @@
             this.Controls.Add(this.cbAutoScale);
             this.Controls.Add(this.nudMargin);
             this.Controls.Add(this.cbAutoRotate);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "PrintForm";
             this.Text = " Print options";
             ((System.ComponentModel.ISupportInitialize)(this.nudMargin)).EndInit();

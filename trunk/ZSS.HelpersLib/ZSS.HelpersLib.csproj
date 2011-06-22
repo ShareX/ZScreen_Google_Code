@@ -75,6 +75,12 @@
     </Compile>
     <Compile Include="Printer\PrintHelper.cs" />
     <Compile Include="Printer\PrintSettings.cs" />
+    <Compile Include="Printer\PrintTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\PrintTextForm.Designer.cs">
+      <DependentUpon>PrintTextForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Printer\PrintTextHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\PrintForm.resx">
       <DependentUpon>PrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\PrintTextForm.resx">
+      <DependentUpon>PrintTextForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
