@@ -104,6 +104,8 @@ namespace ZScreenLib
                 Task.MyTextUploaders.Clear();
                 Task.MyFileUploaders.Clear();
                 Task.MyLinkUploaders.Clear();
+
+                Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, Task.MyOutputs);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
@@ -147,7 +149,7 @@ namespace ZScreenLib
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(224, 240);
+            this.btnOK.Location = new System.Drawing.Point(224, 264);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(73, 23);
             this.btnOK.TabIndex = 0;
@@ -157,7 +159,7 @@ namespace ZScreenLib
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(304, 240);
+            this.btnCancel.Location = new System.Drawing.Point(304, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 23);
             this.btnCancel.TabIndex = 1;
@@ -177,7 +179,7 @@ namespace ZScreenLib
             this.ucDestOptions.BackColor = System.Drawing.Color.White;
             this.ucDestOptions.Location = new System.Drawing.Point(8, 80);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 152);
+            this.ucDestOptions.Size = new System.Drawing.Size(378, 176);
             this.ucDestOptions.TabIndex = 3;
             // 
             // gbFileName
@@ -196,7 +198,7 @@ namespace ZScreenLib
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(401, 279);
+            this.ClientSize = new System.Drawing.Size(401, 293);
             this.Controls.Add(this.gbFileName);
             this.Controls.Add(this.ucDestOptions);
             this.Controls.Add(this.btnCancel);

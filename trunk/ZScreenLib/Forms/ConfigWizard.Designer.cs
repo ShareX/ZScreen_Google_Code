@@ -99,7 +99,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOK.Location = new System.Drawing.Point(543, 283);
+            this.btnOK.Location = new System.Drawing.Point(543, 290);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 28);
             this.btnOK.TabIndex = 117;
@@ -130,7 +130,7 @@
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExit.Location = new System.Drawing.Point(462, 283);
+            this.btnExit.Location = new System.Drawing.Point(462, 290);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 28);
             this.btnExit.TabIndex = 122;
@@ -143,7 +143,7 @@
             // 
             this.ucDestOptions.Location = new System.Drawing.Point(8, 104);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(608, 152);
+            this.ucDestOptions.Size = new System.Drawing.Size(608, 176);
             this.ucDestOptions.TabIndex = 123;
             // 
             // ConfigWizard
@@ -151,7 +151,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(625, 318);
+            this.ClientSize = new System.Drawing.Size(625, 325);
             this.Controls.Add(this.ucDestOptions);
             this.Controls.Add(this.chkPreferSystemFolders);
             this.Controls.Add(this.gbRoot);
