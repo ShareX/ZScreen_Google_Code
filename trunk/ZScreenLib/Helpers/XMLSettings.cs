@@ -80,6 +80,10 @@ namespace ZScreenLib
         //  Destinations
         //~~~~~~~~~~~~~~~~~~~~~
 
+        // Printer
+
+        public PrintSettings PrintSettings = new PrintSettings();
+
         // TinyPic
 
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]

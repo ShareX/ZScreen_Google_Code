@@ -56,8 +56,7 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                PrintHelper printHelper = new PrintHelper(img);
-                printHelper.Print();
+                new PrintForm(img, Engine.conf.PrintSettings).Show();
             }
         }
 

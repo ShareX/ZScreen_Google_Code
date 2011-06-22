@@ -704,7 +704,8 @@ namespace GraphicsMgrLib
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
                 g.DrawImage(img, newX, newY, newWidth, newHeight);
             }
 

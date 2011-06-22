@@ -35,16 +35,10 @@ namespace HelpersLib
     public class PrintHelper
     {
         public PrintType PrintType { get; private set; }
-
         public Image Image { get; private set; }
-        public int Margin { get; set; }
-        public bool AutoRotateImage { get; set; }
-        public bool AutoScaleImage { get; set; }
-        public bool AllowEnlargeImage { get; set; }
-        public bool CenterImage { get; set; }
-
         public string Text { get; private set; }
         public Font TextFont { get; private set; }
+        public PrintSettings Settings { get; set; }
 
         public bool Printable
         {
@@ -56,17 +50,7 @@ namespace HelpersLib
         private PrintPreviewDialog printPreviewDialog;
         private PrintTextHelper printTextHelper;
 
-        public PrintHelper()
-        {
-            Margin = 10;
-            AutoRotateImage = true;
-            AutoScaleImage = true;
-            AllowEnlargeImage = false;
-            CenterImage = false;
-        }
-
         public PrintHelper(Image image)
-            : this()
         {
             PrintType = PrintType.Image;
             Image = image;
@@ -74,7 +58,6 @@ namespace HelpersLib
         }
 
         public PrintHelper(string text, Font textFont)
-            : this()
         {
             PrintType = PrintType.Text;
             Text = text;
@@ -105,12 +88,15 @@ namespace HelpersLib
             }
         }
 
-        public void Print()
+        public bool Print()
         {
             if (Printable && printDialog.ShowDialog() == DialogResult.OK)
             {
                 printDocument.Print();
+                return true;
             }
+
+            return false;
         }
 
         private void printDocument_BeginPrint(object sender, PrintEventArgs e)
@@ -136,21 +122,28 @@ namespace HelpersLib
         private void PrintImage(PrintPageEventArgs e)
         {
             Rectangle rect = e.PageBounds;
-            rect.Inflate(-Margin, -Margin);
+            rect.Inflate(-Settings.Margin, -Settings.Margin);
 
-            if (AutoRotateImage && ((rect.Width > rect.Height && Image.Width < Image.Height) ||
+            Image img;
+
+            if (Settings.AutoRotateImage && ((rect.Width > rect.Height && Image.Width < Image.Height) ||
                 (rect.Width < rect.Height && Image.Width > Image.Height)))
             {
-                Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            }
-
-            if (AutoScaleImage)
-            {
-                DrawAutoScaledImage(e.Graphics, Image, rect, AllowEnlargeImage, CenterImage);
+                img = (Image)Image.Clone();
+                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             }
             else
             {
-                e.Graphics.DrawImage(Image, rect, new Rectangle(0, 0, rect.Width, rect.Height), GraphicsUnit.Pixel);
+                img = Image;
+            }
+
+            if (Settings.AutoScaleImage)
+            {
+                DrawAutoScaledImage(e.Graphics, img, rect, Settings.AllowEnlargeImage, Settings.CenterImage);
+            }
+            else
+            {
+                e.Graphics.DrawImage(img, rect, new Rectangle(0, 0, rect.Width, rect.Height), GraphicsUnit.Pixel);
             }
         }
 
