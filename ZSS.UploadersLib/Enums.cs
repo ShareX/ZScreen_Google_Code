@@ -90,9 +90,7 @@ namespace UploadersLib
         [Description("Bitmap image")]
         Bitmap,
         [Description("Local file path")]
-        FILE,
-        [Description("Shared folder")]
-        Localhost,
+        LocalFilePath,
         [Description("Remote file path")]
         RemoteFilePath,
     }
@@ -127,12 +125,8 @@ namespace UploadersLib
 
     public enum ImageUploaderType
     {
-        [Description("Local file path")]
-        FILE,
         [Description("Shared folder")]
-        Localhost,
-        [Description("Printer")]
-        PRINTER,
+        SharedFolder,
         [Description("imageshack.us")]
         IMAGESHACK,
         [Description("tinypic.com")]
@@ -152,7 +146,9 @@ namespace UploadersLib
         [Description("MediaWiki")]
         MEDIAWIKI,
         [Description("File Uploader")]
-        FileUploader
+        FileUploader,
+        [Description("Printer")]
+        PRINTER
     }
 
     public enum TextUploaderType

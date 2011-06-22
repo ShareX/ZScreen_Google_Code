@@ -31,7 +31,7 @@ namespace ZScreenLib
             ucDestOptions.EnableDisableDestControls();
         }
 
-        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, int ClipboardContentType)
+        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -39,7 +39,7 @@ namespace ZScreenLib
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                     tsmi.Tag = t;
-                    tsmi.Checked = (int)t == ClipboardContentType;
+                    tsmi.Checked = ClipboardContentType.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
                     tsddb.DropDownItems.Add(tsmi);
                 }
@@ -69,10 +69,6 @@ namespace ZScreenLib
                     tsmi.Checked = MyImageUploaders.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestImage_Click);
                     tsddb.DropDownItems.Add(tsmi);
-                    if (t == ImageUploaderType.PRINTER)
-                    {
-                        tsddb.DropDownItems.Add(new ToolStripSeparator());
-                    }
                 }
                 UpdateToolStripDestImage();
             }

@@ -70,8 +70,6 @@ namespace ZScreenTesterGUI
             {
                 switch (uploader)
                 {
-                    case ImageUploaderType.FILE:
-                    case ImageUploaderType.Localhost:
                     case ImageUploaderType.PRINTER:
                     case ImageUploaderType.MEDIAWIKI:
                     case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
