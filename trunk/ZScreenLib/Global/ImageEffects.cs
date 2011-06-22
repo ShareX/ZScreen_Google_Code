@@ -125,7 +125,7 @@ namespace ZScreenLib
                 try
                 {
                     int offset = (int)Engine.conf.WatermarkOffset;
-                    Font font = XMLSettings.DeserializeFont(Engine.conf.WatermarkFont);
+                    Font font = Engine.conf.WatermarkFont;
                     Size textSize = TextRenderer.MeasureText(drawText, font);
                     Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
                     Point labelPosition = FindPosition(Engine.conf.WatermarkPositionMode, offset, img.Size,
@@ -141,7 +141,7 @@ namespace ZScreenLib
 
                     int backTrans = (int)Engine.conf.WatermarkBackTrans;
                     int fontTrans = (int)Engine.conf.WatermarkFontTrans;
-                    Color fontColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+                    Color fontColor = Engine.conf.WatermarkFontArgb;
                     Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
                     Graphics g = Graphics.FromImage(bmp);
                     g.SmoothingMode = SmoothingMode.HighQuality;
@@ -153,11 +153,11 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        brush = new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1)),
-                            Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2)), Engine.conf.WatermarkGradientType);
+                        brush = new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, Engine.conf.WatermarkGradient1Argb),
+                            Color.FromArgb(backTrans, Engine.conf.WatermarkGradient2Argb), Engine.conf.WatermarkGradientType);
                     }
                     g.FillPath(brush, gPath);
-                    g.DrawPath(new Pen(Color.FromArgb(backTrans, XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor))), gPath);
+                    g.DrawPath(new Pen(Color.FromArgb(backTrans, Engine.conf.WatermarkBorderArgb)), gPath);
                     StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
                     g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
                     Graphics gImg = Graphics.FromImage(img);

@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -140,7 +139,7 @@ namespace ZScreenLib
         public int CropStep = 1;
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;
-        public string CropCrosshairColor = SerializeColor(Color.Black);
+        public XmlColor CropCrosshairArgb = Color.Black;
         public bool CropShowBigCross = true;
         public bool CropShowMagnifyingGlass = true;
 
@@ -149,7 +148,7 @@ namespace ZScreenLib
         public decimal CropRegionInterval = 75;
         public decimal CropRegionStep = 5;
         public decimal CropHueRange = 50;
-        public string CropBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
+        public XmlColor CropBorderArgb = Color.FromArgb(255, 0, 255);
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
         [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Make the corners rounded")]
@@ -165,7 +164,7 @@ namespace ZScreenLib
         public RegionStyles SelectedWindowRegionStyles = RegionStyles.REGION_BRIGHTNESS;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;
-        public string SelectedWindowBorderColor = SerializeColor(Color.FromArgb(255, 0, 255));
+        public XmlColor SelectedWindowBorderArgb = Color.FromArgb(255, 0, 255);
         public decimal SelectedWindowBorderSize = 2;
         public bool SelectedWindowDynamicBorderColor = true;
         public decimal SelectedWindowRegionInterval = 75;
@@ -242,13 +241,13 @@ namespace ZScreenLib
         public bool WatermarkExcludeClipboardUpload { get; set; }
 
         public string WatermarkText = "%h:%mi";
-        public XmlFont WatermarkFont = new XmlFont();
-        public string WatermarkFontColor = SerializeColor(Color.White);
+        public XmlFont WatermarkFont = new Font("Arial", 8);
+        public XmlColor WatermarkFontArgb = Color.White;
         public decimal WatermarkFontTrans = 255;
         public decimal WatermarkCornerRadius = 4;
-        public string WatermarkGradient1 = SerializeColor(Color.FromArgb(85, 85, 85));
-        public string WatermarkGradient2 = SerializeColor(Color.Black);
-        public string WatermarkBorderColor = SerializeColor(Color.Black);
+        public XmlColor WatermarkGradient1Argb = Color.FromArgb(85, 85, 85);
+        public XmlColor WatermarkGradient2Argb = Color.Black;
+        public XmlColor WatermarkBorderArgb = Color.Black;
         public decimal WatermarkBackTrans = 225;
         public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
         public bool WatermarkUseCustomGradient = false;
@@ -369,14 +368,6 @@ namespace ZScreenLib
         public XMLSettings()
         {
             ApplyDefaultValues(this);
-            try
-            {
-                this.WatermarkFont = new XmlFont(new Font("Arial", 8));
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex);
-            }
         }
 
         // Destinations / FTP
@@ -453,31 +444,29 @@ namespace ZScreenLib
         [XmlIgnore(), Category("Screenshots / Clipboard"), Description("Background color of images captured to clipboard.")]
         public Color ClipboardBackgroundColor { get; set; }
 
-        //XmlSerializer can't handle Colors so we do it
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
-        public string pseudo_BorderEffectColor
+        public XmlColor BorderEffectArgb
         {
             get
             {
-                return SerializeColor(this.BorderEffectColor);
+                return BorderEffectColor;
             }
             set
             {
-                this.BorderEffectColor = DeserializeColor(value);
+                BorderEffectColor = value;
             }
         }
 
-        //XmlSerializer can't handle Colors so we do it
         [XmlElement("ClipboardBackgroundColor"), BrowsableAttribute(false)]
-        public string pseudo_ClipboardBackgroundColor
+        public XmlColor ClipboardBackgroundArgb
         {
             get
             {
-                return SerializeColor(this.ClipboardBackgroundColor);
+                return ClipboardBackgroundColor;
             }
             set
             {
-                this.ClipboardBackgroundColor = DeserializeColor(value);
+                ClipboardBackgroundColor = value;
             }
         }
 
@@ -522,86 +511,6 @@ namespace ZScreenLib
         #endregion Properties for PropertyGrid
 
         #endregion Settings
-
-        #region Serialization Helpers
-
-        public enum ColorFormat
-        {
-            NamedColor,
-            ARGBColor
-        }
-
-        public static string SerializeColor(Color color)
-        {
-            if (color.IsNamedColor)
-            {
-                return string.Format("{0}:{1}", ColorFormat.NamedColor, color.Name);
-            }
-            return string.Format("{0}:{1}:{2}:{3}:{4}", ColorFormat.ARGBColor, color.A, color.R, color.G, color.B);
-        }
-
-        public static Color DeserializeColor(string color)
-        {
-            if (!color.Contains(":")) //For old method
-            {
-                return Color.Black;
-            }
-
-            byte a, r, g, b;
-
-            string[] pieces = color.Split(new[] { ':' });
-
-            ColorFormat colorType = (ColorFormat)Enum.Parse(typeof(ColorFormat), pieces[0], true);
-
-            switch (colorType)
-            {
-                case ColorFormat.NamedColor:
-                    return Color.FromName(pieces[1]);
-
-                case ColorFormat.ARGBColor:
-                    a = byte.Parse(pieces[1]);
-                    r = byte.Parse(pieces[2]);
-                    g = byte.Parse(pieces[3]);
-                    b = byte.Parse(pieces[4]);
-
-                    return Color.FromArgb(a, r, g, b);
-            }
-
-            return Color.Empty;
-        }
-
-        public static XmlFont SerializeFont(Font font)
-        {
-            return new XmlFont(font);
-        }
-
-        public static Font DeserializeFont(XmlFont font)
-        {
-            return font.ToFont();
-        }
-
-        public struct XmlFont
-        {
-            public string FontFamily;
-            public GraphicsUnit GraphicsUnit;
-            public float Size;
-            public FontStyle Style;
-
-            public XmlFont(Font f)
-            {
-                FontFamily = f.FontFamily.Name;
-                GraphicsUnit = f.Unit;
-                Size = f.Size;
-                Style = f.Style;
-            }
-
-            public Font ToFont()
-            {
-                return new Font(FontFamily, Size, Style, GraphicsUnit);
-            }
-        }
-
-        #endregion Serialization Helpers
 
         #region I/O Methods
 
