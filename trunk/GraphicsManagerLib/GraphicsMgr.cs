@@ -666,6 +666,51 @@ namespace GraphicsMgrLib
             return ChangeImageSize(img, width, height, preserveSize);
         }
 
+        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge = false, bool centerImage = true)
+        {
+            return ResizeImage(img, new Rectangle(0, 0, width, height), allowEnlarge, centerImage);
+        }
+
+        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge = false, bool centerImage = true)
+        {
+            double ratio;
+            int newWidth, newHeight, newX, newY;
+
+            if (!allowEnlarge && img.Width <= rect.Width && img.Height <= rect.Height)
+            {
+                ratio = 1.0;
+                newWidth = img.Width;
+                newHeight = img.Height;
+            }
+            else
+            {
+                double ratioX = (double)rect.Width / (double)img.Width;
+                double ratioY = (double)rect.Height / (double)img.Height;
+                ratio = ratioX < ratioY ? ratioX : ratioY;
+                newWidth = (int)(img.Width * ratio);
+                newHeight = (int)(img.Height * ratio);
+            }
+
+            newX = rect.X;
+            newY = rect.Y;
+
+            if (centerImage)
+            {
+                newX += (int)((rect.Width - (img.Width * ratio)) / 2);
+                newY += (int)((rect.Height - (img.Height * ratio)) / 2);
+            }
+
+            Bitmap bmp = new Bitmap(rect.Width, rect.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.DrawImage(img, newX, newY, newWidth, newHeight);
+            }
+
+            return bmp;
+        }
+
         public static Image DrawProgressIcon(int percentage)
         {
             if (percentage > 99) percentage = 99;

@@ -189,7 +189,6 @@
     <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
-    <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\RoundedRectangle.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\ThumbnailCacher.cs" />
