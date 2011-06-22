@@ -124,7 +124,7 @@ namespace ZScreenGUI
         private void ZScreen_ConfigGUI_Main()
         {
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.LoadDestAll();
+            dsh.AddEnumDestToMenuWithConfigSettings();
 
             if (cboURLFormat.Items.Count == 0)
             {

@@ -41,7 +41,30 @@ namespace ZScreenLib
             this.Task = task;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.LoadDestAll();
+            dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.ConvertAll(new Converter<ImageUploaderType, int>(ImageUploaderTypeToInt)));
+            dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.ConvertAll(new Converter<TextUploaderType, int>(TextUploaderTypeToInt)));
+            dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.MyFileUploaders.ConvertAll(new Converter<FileUploaderType, int>(FileUploaderTypeToInt)));
+            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.ConvertAll(new Converter<UrlShortenerType, int>(LinkUploaderTypeToInt)));
+        }
+
+        private static int ImageUploaderTypeToInt(ImageUploaderType ut)
+        {
+            return (int)ut;
+        }
+
+        public static int FileUploaderTypeToInt(FileUploaderType ut)
+        {
+            return (int)ut;
+        }
+
+        public static int TextUploaderTypeToInt(TextUploaderType ut)
+        {
+            return (int)ut;
+        }
+
+        public static int LinkUploaderTypeToInt(UrlShortenerType ut)
+        {
+            return (int)ut;
         }
 
         private void DestOptions_Load(object sender, EventArgs e)
@@ -77,11 +100,11 @@ namespace ZScreenLib
                 Task.MyImageUploaders.Clear();
                 Task.MyTextUploaders.Clear();
                 Task.MyFileUploaders.Clear();
-                Task.MyUrlShorteners.Clear();
-                Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
-                Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
-                Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
-                Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, Task.MyUrlShorteners);
+                Task.MyLinkUploaders.Clear();
+                Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
+                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
+                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
+                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddDestLink, Task.MyLinkUploaders);
 
                 this.Hide();
             }

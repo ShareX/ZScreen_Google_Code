@@ -89,10 +89,10 @@ namespace ZScreenGUI
             WorkerTask task = (WorkerTask)e.Argument;
 
             // Add destinations
-            Adapter.AddToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
-            Adapter.AddToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
-            Adapter.AddToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
-            Adapter.AddToList<UrlShortenerType>(ucDestOptions.tsddDestLink, task.MyUrlShorteners);
+            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
+            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
+            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
+            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddDestLink, task.MyLinkUploaders);
 
             if (!CanStartWork(task))
             {

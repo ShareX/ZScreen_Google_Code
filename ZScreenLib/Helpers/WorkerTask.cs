@@ -163,7 +163,7 @@ namespace ZScreenLib
 
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
-        public List<UrlShortenerType> MyUrlShorteners = new List<UrlShortenerType>();
+        public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
         public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
 
         public List<UploadResult> UploadResults { get; private set; }
@@ -958,7 +958,7 @@ namespace ZScreenLib
         /// <returns>true/false whether URL should or could shorten</returns>
         public bool ShouldShortenURL(string url)
         {
-            if (FileSystem.IsValidLink(url) && this.MyUrlShorteners.Count > 0)
+            if (FileSystem.IsValidLink(url) && this.MyLinkUploaders.Count > 0)
             {
                 if (Engine.conf.ShortenUrlAfterUpload)
                 {
@@ -988,27 +988,27 @@ namespace ZScreenLib
                 this.Job3 = WorkerTask.JobLevel3.ShortenURL;
                 URLShortener us = null;
 
-                if (MyUrlShorteners.Contains(UrlShortenerType.BITLY))
+                if (MyLinkUploaders.Contains(UrlShortenerType.BITLY))
                 {
                     us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
-                else if (MyUrlShorteners.Contains(UrlShortenerType.Google))
+                else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
                 {
                     us = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
                 }
-                else if (MyUrlShorteners.Contains(UrlShortenerType.ISGD))
+                else if (MyLinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
                     us = new IsgdURLShortener();
                 }
-                else if (MyUrlShorteners.Contains(UrlShortenerType.Jmp))
+                else if (MyLinkUploaders.Contains(UrlShortenerType.Jmp))
                 {
                     us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
-                else if (MyUrlShorteners.Contains(UrlShortenerType.TINYURL))
+                else if (MyLinkUploaders.Contains(UrlShortenerType.TINYURL))
                 {
                     us = new TinyURLShortener();
                 }
-                else if (MyUrlShorteners.Contains(UrlShortenerType.TURL))
+                else if (MyLinkUploaders.Contains(UrlShortenerType.TURL))
                 {
                     us = new TurlURLShortener();
                 }
@@ -1109,7 +1109,7 @@ namespace ZScreenLib
 
         public string GetActiveLinkUploadersDescription()
         {
-            return GetActiveUploadersDescription<UrlShortenerType>(MyUrlShorteners);
+            return GetActiveUploadersDescription<UrlShortenerType>(MyLinkUploaders);
         }
 
         public string GetActiveUploadersDescription<T>(List<T> list)

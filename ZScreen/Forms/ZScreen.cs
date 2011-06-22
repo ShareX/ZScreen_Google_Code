@@ -258,25 +258,13 @@ namespace ZScreenGUI
             }
         }
 
-        private void SaveDestinations(ToolStripDropDownButton tsddb, List<int> list)
-        {
-            list.Clear();
-            foreach (var tsmi in tsddb.DropDownItems)
-            {
-                if (tsmi.GetType() == typeof(ToolStripMenuItem) && ((ToolStripMenuItem)tsmi).Checked)
-                {
-                    list.Add((int)((ToolStripMenuItem)tsmi).Tag);
-                }
-            }
-        }
-
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-            SaveDestinations(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
-            SaveDestinations(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
-            SaveDestinations(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
-            SaveDestinations(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestLink, Engine.conf.MyURLShorteners);
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
@@ -595,14 +583,6 @@ namespace ZScreenGUI
                 Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
-            if (Engine.conf.FirstRun)
-            {
-                this.Show();
-                this.WindowState = FormWindowState.Normal;
-                this.Activate();
-                this.BringToFront();
-            }
-
             if (Engine.conf.BackupFTPSettings)
             {
                 FileSystem.BackupFTPSettings();
@@ -639,6 +619,14 @@ namespace ZScreenGUI
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
                 niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
+            }
+
+            if (Engine.conf.FirstRun)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.Activate();
+                this.BringToFront();
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);

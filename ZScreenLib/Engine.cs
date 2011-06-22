@@ -267,7 +267,7 @@ namespace ZScreenLib
                         Engine.AppConf.ImageUploaders = cw.MyImageUploaders;
                         Engine.AppConf.FileUploaders = cw.MyFileUploaders;
                         Engine.AppConf.TextUploaders = cw.MyTextUploaders;
-                        Engine.AppConf.UrlShortener = cw.MyLinkUploaders;
+                        Engine.AppConf.LinkUploaders = cw.MyLinkUploaders;
 
                         MyUploadersConfig.Save(UploadersConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
                         AppConf.Write();
@@ -504,7 +504,10 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.MyURLShorteners = Engine.AppConf.UrlShortener;
+                Engine.conf.MyImageUploaders = Engine.AppConf.ImageUploaders;
+                Engine.conf.MyTextUploaders = Engine.AppConf.TextUploaders;
+                Engine.conf.MyFileUploaders = Engine.AppConf.FileUploaders;
+                Engine.conf.MyURLShorteners = Engine.AppConf.LinkUploaders;
             }
 
             // Portable then we don't need PreferSystemFolders to be true
