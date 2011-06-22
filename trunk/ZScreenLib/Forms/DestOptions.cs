@@ -104,7 +104,7 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
-                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddDestLink, Task.MyLinkUploaders);
+                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, Task.MyLinkUploaders);
 
                 this.Hide();
             }

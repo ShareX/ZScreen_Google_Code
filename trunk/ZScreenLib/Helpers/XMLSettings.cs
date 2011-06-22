@@ -67,6 +67,7 @@ namespace ZScreenLib
         public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
         public List<int> MyURLShorteners = new List<int>();
+        public int MyClipboardContent = (int)ClipboardContentType.Bitmap;
         public int MyClipboardUriMode = (int)ClipboardUriType.FULL;
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;

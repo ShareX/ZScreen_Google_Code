@@ -37,6 +37,8 @@ namespace ZScreenLib
     {
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
+
+        public int MyClipboardContent = (int)ClipboardContentType.Bitmap;
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
@@ -52,8 +54,7 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-
-            MyImageUploaders.Add((int)ImageUploaderType.Bitmap);
+            MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
@@ -72,7 +73,7 @@ namespace ZScreenLib
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, MyTextUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestLink, MyLinkUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

@@ -161,6 +161,7 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
+        public List<ClipboardContentType> MyClipboardContent = new List<ClipboardContentType>();
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
         public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
@@ -599,11 +600,6 @@ namespace ZScreenLib
                 UploadFile();
             }
 
-            if (!this.MyImageUploaders.Contains(ImageUploaderType.Bitmap))
-            {
-                Engine.MyLogger.WriteLine("Uploading Image: " + this.LocalFilePath);
-            }
-
             if (MyImageUploaders.Contains(ImageUploaderType.FILE))
             {
                 this.AddUploadResult(new UploadResult()
@@ -1033,7 +1029,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboardOnly()
         {
-            return Job1 == JobLevel1.Image && MyImageUploaders.Contains(ImageUploaderType.Bitmap) && this.MyImage != null;
+            return Job1 == JobLevel1.Image && MyClipboardContent.Contains(ClipboardContentType.Bitmap) && this.MyImage != null;
         }
 
         private bool CreateThumbnail()

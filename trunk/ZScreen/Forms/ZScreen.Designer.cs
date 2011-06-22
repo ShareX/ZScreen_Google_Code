@@ -34,7 +34,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +90,7 @@ namespace ZScreenGUI
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblFileSystemNote = new System.Windows.Forms.Label();
             this.gbImageSettings = new System.Windows.Forms.GroupBox();
+            this.chkShowUploadResults = new System.Windows.Forms.CheckBox();
             this.chkShortenURL = new System.Windows.Forms.CheckBox();
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
@@ -416,7 +417,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkShowUploadResults = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -1060,12 +1060,23 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.cboURLFormat);
             this.gbImageSettings.Controls.Add(this.chkShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(16, 168);
+            this.gbImageSettings.Location = new System.Drawing.Point(16, 192);
             this.gbImageSettings.Name = "gbImageSettings";
             this.gbImageSettings.Size = new System.Drawing.Size(352, 216);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Quick Settings";
+            // 
+            // chkShowUploadResults
+            // 
+            this.chkShowUploadResults.AutoSize = true;
+            this.chkShowUploadResults.Location = new System.Drawing.Point(16, 184);
+            this.chkShowUploadResults.Name = "chkShowUploadResults";
+            this.chkShowUploadResults.Size = new System.Drawing.Size(245, 17);
+            this.chkShowUploadResults.TabIndex = 123;
+            this.chkShowUploadResults.Text = "Show Upload Results window after completion";
+            this.chkShowUploadResults.UseVisualStyleBackColor = true;
+            this.chkShowUploadResults.CheckedChanged += new System.EventHandler(this.chkShowUploadResults_CheckedChanged);
             // 
             // chkShortenURL
             // 
@@ -1209,7 +1220,7 @@ namespace ZScreenGUI
             this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
             this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(352, 144);
+            this.ucDestOptions.Size = new System.Drawing.Size(352, 168);
             this.ucDestOptions.TabIndex = 124;
             this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
@@ -1294,7 +1305,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -4896,17 +4907,6 @@ namespace ZScreenGUI
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
-            // 
-            // chkShowUploadResults
-            // 
-            this.chkShowUploadResults.AutoSize = true;
-            this.chkShowUploadResults.Location = new System.Drawing.Point(16, 184);
-            this.chkShowUploadResults.Name = "chkShowUploadResults";
-            this.chkShowUploadResults.Size = new System.Drawing.Size(245, 17);
-            this.chkShowUploadResults.TabIndex = 123;
-            this.chkShowUploadResults.Text = "Show Upload Results window after completion";
-            this.chkShowUploadResults.UseVisualStyleBackColor = true;
-            this.chkShowUploadResults.CheckedChanged += new System.EventHandler(this.chkShowUploadResults_CheckedChanged);
             // 
             // ZScreen
             // 
