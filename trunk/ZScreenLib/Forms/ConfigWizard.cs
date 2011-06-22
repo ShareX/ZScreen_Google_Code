@@ -38,7 +38,7 @@ namespace ZScreenLib
         public bool PreferSystemFolders { get; private set; }
         public string RootFolder { get; private set; }
 
-        public int MyClipboardContent = (int)ClipboardContentType.Bitmap;
+        public List<int> MyClipboardContent = new List<int>();
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
@@ -54,11 +54,13 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
+            MyClipboardContent.Add((int)ClipboardContentType.Bitmap);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
 
+            dsh.AddEnumClipboardContentWithRuntimeSettings(MyClipboardContent);
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
             dsh.AddEnumDestFileToMenuWithRuntimeSettings(MyFileUploaders);
