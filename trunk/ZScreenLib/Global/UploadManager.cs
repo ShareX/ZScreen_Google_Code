@@ -106,7 +106,7 @@ namespace ZScreenLib
 
             string clipboardText = string.Empty;
 
-            if (task.JobIsImageToClipboardOnly())
+            if (task.JobIsImageToClipboard())
             {
                 MemoryStream ms = new MemoryStream();
                 MemoryStream ms2 = new MemoryStream();
@@ -146,7 +146,7 @@ namespace ZScreenLib
                             break;
                         }
                     }
-                    if (string.IsNullOrEmpty(clipboardText) && task.MyImageUploaders.Contains(ImageUploaderType.FILE))
+                    if (string.IsNullOrEmpty(clipboardText) && task.MyClipboardContent.Contains(ClipboardContentType.LocalFilePath))
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {

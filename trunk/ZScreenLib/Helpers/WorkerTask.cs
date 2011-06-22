@@ -510,10 +510,8 @@ namespace ZScreenLib
 
         }
 
-        public void UploadImage()
+        public void UploadImageRemote()
         {
-            this.StartTime = DateTime.Now;
-
             if (Engine.conf.TinyPicSizeCheck && this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(this.LocalFilePath))
             {
                 SizeF size = Image.FromFile(this.LocalFilePath).PhysicalDimension;
@@ -600,25 +598,35 @@ namespace ZScreenLib
                 UploadFile();
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.FILE))
-            {
-                this.AddUploadResult(new UploadResult()
-                {
-                    Host = ImageUploaderType.FILE.GetDescription()
-                });
-            }
-
-            if (MyImageUploaders.Contains(ImageUploaderType.Localhost))
-            {
-                UploadToSharedFolder();
-            }
-
             if (MyImageUploaders.Contains(ImageUploaderType.PRINTER))
             {
                 if (this.MyImage != null)
                 {
                     this.MyWorker.ReportProgress(101, (Image)this.MyImage.Clone());
                 }
+            }
+        }
+
+        public void UploadImage()
+        {
+            this.StartTime = DateTime.Now;
+
+            if (MyClipboardContent.Contains(ClipboardContentType.RemoteFilePath))
+            {
+                UploadImageRemote();
+            }
+
+            else if (MyClipboardContent.Contains(ClipboardContentType.LocalFilePath))
+            {
+                this.AddUploadResult(new UploadResult()
+                {
+                    Host = ClipboardContentType.LocalFilePath.GetDescription()
+                });
+            }
+
+            if (MyImageUploaders.Contains(ImageUploaderType.SharedFolder))
+            {
+                UploadToSharedFolder();
             }
 
             this.EndTime = DateTime.Now;
@@ -898,7 +906,7 @@ namespace ZScreenLib
                 }
                 File.Move(this.LocalFilePath, destFile);
                 this.UpdateLocalFilePath(destFile);
-                this.UploadResults.Add(new UploadResult() { Host = ImageUploaderType.Localhost.GetDescription(), URL = acc.GetUriPath(fn) });
+                this.UploadResults.Add(new UploadResult() { Host = ImageUploaderType.SharedFolder.GetDescription(), URL = acc.GetUriPath(fn) });
             }
         }
 
@@ -1027,7 +1035,7 @@ namespace ZScreenLib
             return false;
         }
 
-        public bool JobIsImageToClipboardOnly()
+        public bool JobIsImageToClipboard()
         {
             return Job1 == JobLevel1.Image && MyClipboardContent.Contains(ClipboardContentType.Bitmap) && this.MyImage != null;
         }
