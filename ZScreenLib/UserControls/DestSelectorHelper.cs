@@ -18,32 +18,68 @@ namespace ZScreenLib
 
         public void AddEnumDestToMenuWithConfigSettings()
         {
-            AddEnumClipboardContentWithConfigSettings();
+            AddEnumOutputTypeWithConfigSettings();
+            AddEnumLinkFormatWithConfigSettings();
             AddEnumDestImageToMenuWithConfigSettings();
             AddEnumDestTextToMenuWithConfigSettings();
             AddEnumDestFileToMenuWithConfigSettings();
             AddEnumDestLinkToMenuWithConfigSettings();
         }
 
-        public void AddEnumClipboardContentWithConfigSettings()
+        public void AddEnumLinkFormatWithConfigSettings()
         {
-            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.MyClipboardContent);
-            ucDestOptions.EnableDisableDestControls();
+            if (Engine.conf.ConfLinkFormat.Count == 0)
+            {
+                Engine.conf.ConfLinkFormat.Add((int)OutputTypeEnum.Bitmap);
+            }
+            AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
         }
 
-        public void AddEnumClipboardContentWithRuntimeSettings(List<int> cctList)
+        public void AddEnumLinkFormatWithRuntimeSettings(List<int> list)
         {
-            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, cctList);
+            AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, list);
         }
 
-        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
+        public void AddEnumLinkFormatWithConfigSettings(ToolStripDropDownButton tsddb, List<int> list)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
-                foreach (ClipboardContentType t in Enum.GetValues(typeof(ClipboardContentType)))
+                foreach (LinkFormatEnum t in Enum.GetValues(typeof(LinkFormatEnum)))
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                     tsmi.Tag = t;
+                    tsmi.Checked = list.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDestLinkFormat_Click);
+                    tsddb.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripLinkFormat();
+            }
+        }
+
+        public void AddEnumOutputTypeWithConfigSettings()
+        {
+            if (Engine.conf.ConfOutputType.Count == 0)
+            {
+                Engine.conf.ConfOutputType.Add((int)OutputTypeEnum.Bitmap);
+            }
+            AddEnumOutputTypeWithRuntimeSettings(ucDestOptions.tsddbOutputType, Engine.conf.ConfOutputType);
+            ucDestOptions.EnableDisableDestControls();
+        }
+
+        public void AddEnumOutputTypeWithRuntimeSettings(List<int> cctList)
+        {
+            AddEnumOutputTypeWithRuntimeSettings(ucDestOptions.tsddbOutputType, cctList);
+        }
+
+        public void AddEnumOutputTypeWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (OutputTypeEnum t in Enum.GetValues(typeof(OutputTypeEnum)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true; // need to multi-checks
                     tsmi.Checked = ClipboardContentType.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
                     tsddb.DropDownItems.Add(tsmi);
@@ -208,12 +244,17 @@ namespace ZScreenLib
 
         void UpdateToolStripDestLink()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbDestLink, "URL Shortener");
+            UpdateToolStripDest(ucDestOptions.tsddbDestLink, "URL shortener");
         }
 
         void UpdateToolStripClipboardContent()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbClipboardContent, "Clipboard Content");
+            UpdateToolStripDest(ucDestOptions.tsddbOutputType, "Output type");
+        }
+
+        void UpdateToolStripLinkFormat()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddbLinkFormat, "URL format");
         }
 
         void tsmiDestImage_Click(object sender, EventArgs e)
@@ -240,5 +281,11 @@ namespace ZScreenLib
         {
             UpdateToolStripClipboardContent();
         }
+
+        void tsmiDestLinkFormat_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripLinkFormat();
+        }
+
     }
 }

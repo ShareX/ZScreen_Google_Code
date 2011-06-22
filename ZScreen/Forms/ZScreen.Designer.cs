@@ -34,13 +34,12 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,8 +94,6 @@ namespace ZScreenGUI
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.lblCopytoClipboard = new System.Windows.Forms.Label();
-            this.cboURLFormat = new System.Windows.Forms.ComboBox();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
@@ -417,6 +414,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tsmCopytoClipboardMode = new System.Windows.Forms.ToolStripMenuItem();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -549,48 +547,41 @@ namespace ZScreenGUI
             this.tsmHelp,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(206, 242);
+            this.cmTray.Size = new System.Drawing.Size(201, 242);
             // 
             // tsmiTabs
             // 
             this.tsmiTabs.DoubleClickEnabled = true;
             this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
             this.tsmiTabs.Name = "tsmiTabs";
-            this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
+            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
             this.tsmiTabs.Text = "View Settings Menu...";
             this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmEditinImageSoftware
             // 
             this.tsmEditinImageSoftware.CheckOnClick = true;
             this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
             this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(205, 22);
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
             this.tsmEditinImageSoftware.Text = "Perform Custom Actions";
             this.tsmEditinImageSoftware.CheckedChanged += new System.EventHandler(this.tsmEditinImageSoftware_CheckedChanged);
-            // 
-            // tsmCopytoClipboardMode
-            // 
-            this.tsmCopytoClipboardMode.Image = global::ZScreenGUI.Properties.Resources.page_copy;
-            this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
-            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(205, 22);
-            this.tsmCopytoClipboardMode.Text = "URL Format";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
             // 
             // historyToolStripMenuItem
             // 
             this.historyToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.pictures;
             this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            this.historyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.historyToolStripMenuItem.Text = "&History...";
             this.historyToolStripMenuItem.Click += new System.EventHandler(this.historyToolStripMenuItem_Click);
             // 
@@ -598,7 +589,7 @@ namespace ZScreenGUI
             // 
             this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
             this.tsmFTPClient.Name = "tsmFTPClient";
-            this.tsmFTPClient.Size = new System.Drawing.Size(205, 22);
+            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
             this.tsmFTPClient.Text = "FTP &Client...";
             this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
             // 
@@ -606,14 +597,14 @@ namespace ZScreenGUI
             // 
             this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
             this.tsmViewLocalDirectory.Name = "tsmViewLocalDirectory";
-            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(205, 22);
+            this.tsmViewLocalDirectory.Size = new System.Drawing.Size(200, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmActions
             // 
@@ -632,7 +623,7 @@ namespace ZScreenGUI
             this.tsmScreenColorPicker});
             this.tsmActions.Image = global::ZScreenGUI.Properties.Resources.lightning;
             this.tsmActions.Name = "tsmActions";
-            this.tsmActions.Size = new System.Drawing.Size(205, 22);
+            this.tsmActions.Size = new System.Drawing.Size(200, 22);
             this.tsmActions.Text = "Quick &Actions";
             // 
             // tsmEntireScreen
@@ -736,7 +727,7 @@ namespace ZScreenGUI
             this.tsmAbout});
             this.tsmHelp.Image = global::ZScreenGUI.Properties.Resources.help;
             this.tsmHelp.Name = "tsmHelp";
-            this.tsmHelp.Size = new System.Drawing.Size(205, 22);
+            this.tsmHelp.Size = new System.Drawing.Size(200, 22);
             this.tsmHelp.Text = "&Help";
             // 
             // tsmLicense
@@ -767,7 +758,7 @@ namespace ZScreenGUI
             // 
             this.tsmExitZScreen.Image = global::ZScreenGUI.Properties.Resources.cross;
             this.tsmExitZScreen.Name = "tsmExitZScreen";
-            this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
+            this.tsmExitZScreen.Size = new System.Drawing.Size(200, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
             this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
             // 
@@ -1056,13 +1047,11 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.chkPerformActions);
             this.gbImageSettings.Controls.Add(this.lblScreenshotDelay);
             this.gbImageSettings.Controls.Add(this.nudScreenshotDelay);
-            this.gbImageSettings.Controls.Add(this.lblCopytoClipboard);
-            this.gbImageSettings.Controls.Add(this.cboURLFormat);
             this.gbImageSettings.Controls.Add(this.chkShowCursor);
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
-            this.gbImageSettings.Location = new System.Drawing.Point(16, 192);
+            this.gbImageSettings.Location = new System.Drawing.Point(16, 208);
             this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(352, 216);
+            this.gbImageSettings.Size = new System.Drawing.Size(352, 184);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Quick Settings";
@@ -1070,7 +1059,7 @@ namespace ZScreenGUI
             // chkShowUploadResults
             // 
             this.chkShowUploadResults.AutoSize = true;
-            this.chkShowUploadResults.Location = new System.Drawing.Point(16, 184);
+            this.chkShowUploadResults.Location = new System.Drawing.Point(16, 152);
             this.chkShowUploadResults.Name = "chkShowUploadResults";
             this.chkShowUploadResults.Size = new System.Drawing.Size(245, 17);
             this.chkShowUploadResults.TabIndex = 123;
@@ -1081,7 +1070,7 @@ namespace ZScreenGUI
             // chkShortenURL
             // 
             this.chkShortenURL.AutoSize = true;
-            this.chkShortenURL.Location = new System.Drawing.Point(16, 160);
+            this.chkShortenURL.Location = new System.Drawing.Point(16, 128);
             this.chkShortenURL.Name = "chkShortenURL";
             this.chkShortenURL.Size = new System.Drawing.Size(190, 17);
             this.chkShortenURL.TabIndex = 11;
@@ -1094,7 +1083,7 @@ namespace ZScreenGUI
             this.chkPerformActions.AutoSize = true;
             this.chkPerformActions.Checked = true;
             this.chkPerformActions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPerformActions.Location = new System.Drawing.Point(16, 136);
+            this.chkPerformActions.Location = new System.Drawing.Point(16, 104);
             this.chkPerformActions.Name = "chkPerformActions";
             this.chkPerformActions.Size = new System.Drawing.Size(231, 17);
             this.chkPerformActions.TabIndex = 68;
@@ -1127,31 +1116,10 @@ namespace ZScreenGUI
             this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
             this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
             // 
-            // lblCopytoClipboard
-            // 
-            this.lblCopytoClipboard.AutoSize = true;
-            this.lblCopytoClipboard.Location = new System.Drawing.Point(43, 52);
-            this.lblCopytoClipboard.Name = "lblCopytoClipboard";
-            this.lblCopytoClipboard.Size = new System.Drawing.Size(67, 13);
-            this.lblCopytoClipboard.TabIndex = 117;
-            this.lblCopytoClipboard.Text = "URL Format:";
-            // 
-            // cboURLFormat
-            // 
-            this.cboURLFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboURLFormat.FormattingEnabled = true;
-            this.cboURLFormat.Location = new System.Drawing.Point(120, 48);
-            this.cboURLFormat.Name = "cboURLFormat";
-            this.cboURLFormat.Size = new System.Drawing.Size(208, 21);
-            this.cboURLFormat.TabIndex = 116;
-            this.ttZScreen.SetToolTip(this.cboURLFormat, "Specify the way in which screenshot links\r\nshould be added to your clipboard.\r\nDe" +
-                    "fault: Full Image.");
-            this.cboURLFormat.SelectedIndexChanged += new System.EventHandler(this.cboClipboardTextMode_SelectedIndexChanged);
-            // 
             // chkShowCursor
             // 
             this.chkShowCursor.AutoSize = true;
-            this.chkShowCursor.Location = new System.Drawing.Point(16, 88);
+            this.chkShowCursor.Location = new System.Drawing.Point(16, 56);
             this.chkShowCursor.Name = "chkShowCursor";
             this.chkShowCursor.Size = new System.Drawing.Size(159, 17);
             this.chkShowCursor.TabIndex = 8;
@@ -1165,7 +1133,7 @@ namespace ZScreenGUI
             // 
             this.chkManualNaming.AutoSize = true;
             this.chkManualNaming.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkManualNaming.Location = new System.Drawing.Point(16, 112);
+            this.chkManualNaming.Location = new System.Drawing.Point(16, 80);
             this.chkManualNaming.Name = "chkManualNaming";
             this.chkManualNaming.Size = new System.Drawing.Size(206, 17);
             this.chkManualNaming.TabIndex = 112;
@@ -1220,7 +1188,7 @@ namespace ZScreenGUI
             this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
             this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(352, 168);
+            this.ucDestOptions.Size = new System.Drawing.Size(352, 184);
             this.ucDestOptions.TabIndex = 124;
             this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
@@ -1305,7 +1273,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -4908,6 +4876,13 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // tsmCopytoClipboardMode
+            // 
+            this.tsmCopytoClipboardMode.Image = global::ZScreenGUI.Properties.Resources.page_copy;
+            this.tsmCopytoClipboardMode.Name = "tsmCopytoClipboardMode";
+            this.tsmCopytoClipboardMode.Size = new System.Drawing.Size(200, 22);
+            this.tsmCopytoClipboardMode.Text = "URL Format";
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5098,7 +5073,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         internal System.Windows.Forms.ToolStripMenuItem tsmViewLocalDirectory;
-        internal System.Windows.Forms.ToolStripMenuItem tsmCopytoClipboardMode;
         internal System.Windows.Forms.ToolStripMenuItem tsmActions;
         internal System.Windows.Forms.ToolStripMenuItem tsmCropShot;
         internal System.Windows.Forms.ToolStripMenuItem tsmClipboardUpload;
@@ -5129,8 +5103,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.LinkLabel llWebsite;
         internal System.Windows.Forms.LinkLabel llblBugReports;
         internal NumericUpDownTimer nudScreenshotDelay;
-        internal System.Windows.Forms.Label lblCopytoClipboard;
-        internal System.Windows.Forms.ComboBox cboURLFormat;
         internal System.Windows.Forms.CheckBox chkManualNaming;
         internal System.Windows.Forms.CheckBox chkShowCursor;
         internal System.Windows.Forms.PictureBox pbLogo;
@@ -5466,5 +5438,6 @@ namespace ZScreenGUI
         internal DestSelector ucDestOptions;
         private Label lblImageSizeFixedAutoScale;
         private CheckBox chkShowUploadResults;
+        internal ToolStripMenuItem tsmCopytoClipboardMode;
     }
 }

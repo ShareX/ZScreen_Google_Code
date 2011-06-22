@@ -126,12 +126,6 @@ namespace ZScreenGUI
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumDestToMenuWithConfigSettings();
 
-            if (cboURLFormat.Items.Count == 0)
-            {
-                cboURLFormat.Items.AddRange(typeof(ClipboardUriType).GetDescriptions());
-                cboURLFormat.SelectedIndex = Engine.conf.MyClipboardUriMode.BetweenOrDefault(0, cboURLFormat.Items.Count - 1);
-            }
-
             chkManualNaming.Checked = Engine.conf.ManualNaming;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;

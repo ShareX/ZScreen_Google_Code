@@ -70,7 +70,6 @@ namespace ZScreenTesterGUI
             {
                 switch (uploader)
                 {
-                    case ImageUploaderType.PRINTER:
                     case ImageUploaderType.MEDIAWIKI:
                     case ImageUploaderType.TWITSNAPS: // Not possible to upload without post Twitter
                     case ImageUploaderType.FileUploader: // We are going to test this in File Uploader tests
@@ -234,7 +233,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.MyClipboardContent.Contains(ClipboardContentType.Bitmap))
+                            if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap))
                             {
                                 task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);

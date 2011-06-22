@@ -88,7 +88,7 @@ namespace ZScreenGUI
         {
             WorkerTask task = (WorkerTask)e.Argument;
 
-            Adapter.SaveMenuConfigToList<ClipboardContentType>(ucDestOptions.tsddbClipboardContent, task.MyClipboardContent);
+            Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, task.MyOutputs);
             Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
             Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
             Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
@@ -103,8 +103,8 @@ namespace ZScreenGUI
                 task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
                 task.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && !task.MyClipboardContent.Contains(ClipboardContentType.Bitmap) &&
-                    !task.MyClipboardContent.Contains(ClipboardContentType.LocalFilePath) &&
+                if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Bitmap) &&
+                    !task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) &&
                     (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
                     task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
                     MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
@@ -274,7 +274,7 @@ namespace ZScreenGUI
                     task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.MyClipboardContent.Contains(ClipboardContentType.LocalFilePath) && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.MyImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -295,7 +295,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.MyClipboardContent.Contains(ClipboardContentType.LocalFilePath) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -1022,9 +1022,9 @@ namespace ZScreenGUI
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR && !task.MyImageUploaders.Contains(ImageUploaderType.PRINTER))
+            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
-                if (!task.MyClipboardContent.Contains(ClipboardContentType.Bitmap) && !task.MyClipboardContent.Contains(ClipboardContentType.LocalFilePath) &&
+                if (!task.MyOutputs.Contains(OutputTypeEnum.Bitmap) && !task.MyOutputs.Contains(OutputTypeEnum.LocalFilePath) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);

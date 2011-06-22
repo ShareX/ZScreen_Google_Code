@@ -69,33 +69,33 @@ namespace UploadersLib.HelperClasses
 
         #region Links
 
-        public string GetUrlByType(ClipboardUriType type)
+        public string GetUrlByType(LinkFormatEnum type)
         {
             switch (type)
             {
-                case ClipboardUriType.FULL:
+                case LinkFormatEnum.FULL:
                     return GetFullImageUrl();
-                case ClipboardUriType.FULL_TINYURL:
+                case LinkFormatEnum.FULL_TINYURL:
                     return this.ShortenedURL;
-                case ClipboardUriType.FULL_IMAGE_FORUMS:
+                case LinkFormatEnum.FULL_IMAGE_FORUMS:
                     return GetFullImageForumsUrl();
-                case ClipboardUriType.FULL_IMAGE_HTML:
+                case LinkFormatEnum.FULL_IMAGE_HTML:
                     return GetFullImageHTML();
-                case ClipboardUriType.FULL_IMAGE_WIKI:
+                case LinkFormatEnum.FULL_IMAGE_WIKI:
                     return GetFullImageWiki();
-                case ClipboardUriType.FULL_IMAGE_MEDIAWIKI:
+                case LinkFormatEnum.FULL_IMAGE_MEDIAWIKI:
                     return GetFullImageMediaWikiInnerLink();
-                case ClipboardUriType.LINKED_THUMBNAIL:
+                case LinkFormatEnum.LINKED_THUMBNAIL:
                     return GetLinkedThumbnailForumUrl();
-                case ClipboardUriType.LinkedThumbnailHtml:
+                case LinkFormatEnum.LinkedThumbnailHtml:
                     return GetLinkedThumbnailHtmlUrl();
-                case ClipboardUriType.LINKED_THUMBNAIL_WIKI:
+                case LinkFormatEnum.LINKED_THUMBNAIL_WIKI:
                     return GetLinkedThumbnailWikiUrl();
-                case ClipboardUriType.THUMBNAIL:
+                case LinkFormatEnum.THUMBNAIL:
                     return this.ThumbnailURL;
-                case ClipboardUriType.LocalFilePath:
+                case LinkFormatEnum.LocalFilePath:
                     return this.LocalFilePath;
-                case ClipboardUriType.LocalFilePathUri:
+                case LinkFormatEnum.LocalFilePathUri:
                     return GetLocalFilePathAsUri();
             }
 
