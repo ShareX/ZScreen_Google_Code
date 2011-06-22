@@ -70,7 +70,7 @@ namespace ZScreenTesterGUI
             {
                 switch (uploader)
                 {
-                    case ImageUploaderType.CLIPBOARD:
+                    case ImageUploaderType.Bitmap:
                     case ImageUploaderType.FILE:
                     case ImageUploaderType.Localhost:
                     case ImageUploaderType.PRINTER:
@@ -225,7 +225,7 @@ namespace ZScreenTesterGUI
                     break;
                 }
 
-                WorkerTask task = new WorkerTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, WorkerTask.JobLevel2.UploadFromClipboard);
 
                 uploader.Timer = new Stopwatch();
                 uploader.Timer.Start();
@@ -237,7 +237,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.MyImageUploaders.Contains(ImageUploaderType.CLIPBOARD))
+                            if (!task.MyImageUploaders.Contains(ImageUploaderType.Bitmap))
                             {
                                 task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
