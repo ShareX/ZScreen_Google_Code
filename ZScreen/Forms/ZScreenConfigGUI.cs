@@ -8,12 +8,10 @@ using GraphicsMgrLib;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using System.Text;
 
 namespace ZScreenGUI
 {
@@ -310,7 +308,7 @@ namespace ZScreenGUI
             cbSelectedWindowStyle.SelectedIndex = (int)Engine.conf.SelectedWindowRegionStyles;
             cbSelectedWindowRectangleInfo.Checked = Engine.conf.SelectedWindowRectangleInfo;
             cbSelectedWindowRuler.Checked = Engine.conf.SelectedWindowRuler;
-            pbSelectedWindowBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.SelectedWindowBorderColor);
+            pbSelectedWindowBorderColor.BackColor = Engine.conf.SelectedWindowBorderArgb;
             nudSelectedWindowBorderSize.Value = Engine.conf.SelectedWindowBorderSize;
             cbSelectedWindowDynamicBorderColor.Checked = Engine.conf.SelectedWindowDynamicBorderColor;
             nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
@@ -360,7 +358,7 @@ namespace ZScreenGUI
             nudCropCrosshairStep.Value = Engine.conf.CropStep;
             nudCrosshairLineCount.Value = Engine.conf.CrosshairLineCount;
             nudCrosshairLineSize.Value = Engine.conf.CrosshairLineSize;
-            pbCropCrosshairColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor);
+            pbCropCrosshairColor.BackColor = Engine.conf.CropCrosshairArgb;
             chkCropShowBigCross.Checked = Engine.conf.CropShowBigCross;
             chkCropShowMagnifyingGlass.Checked = Engine.conf.CropShowMagnifyingGlass;
 
@@ -370,7 +368,7 @@ namespace ZScreenGUI
             nudCropRegionInterval.Value = Engine.conf.CropRegionInterval;
             nudCropRegionStep.Value = Engine.conf.CropRegionStep;
             nudCropHueRange.Value = Engine.conf.CropHueRange;
-            pbCropBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.CropBorderColor);
+            pbCropBorderColor.BackColor = Engine.conf.CropBorderArgb;
             nudCropBorderSize.Value = Engine.conf.CropBorderSize;
             cbCropShowGrids.Checked = Engine.conf.CropShowGrids;
 
@@ -436,14 +434,14 @@ namespace ZScreenGUI
             cbWatermarkAutoHide.Checked = Engine.conf.WatermarkAutoHide;
 
             txtWatermarkText.Text = Engine.conf.WatermarkText;
-            pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+            pbWatermarkFontColor.BackColor = Engine.conf.WatermarkFontArgb;
             lblWatermarkFont.Text = FontToString();
             nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
             trackWatermarkFontTrans.Value = (int)Engine.conf.WatermarkFontTrans;
             nudWatermarkCornerRadius.Value = Engine.conf.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient1);
-            pbWatermarkGradient2.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkGradient2);
-            pbWatermarkBorderColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkBorderColor);
+            pbWatermarkGradient1.BackColor = Engine.conf.WatermarkGradient1Argb;
+            pbWatermarkGradient2.BackColor = Engine.conf.WatermarkGradient2Argb;
+            pbWatermarkBorderColor.BackColor = Engine.conf.WatermarkBorderArgb;
             nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
             trackWatermarkBackgroundTrans.Value = (int)Engine.conf.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)

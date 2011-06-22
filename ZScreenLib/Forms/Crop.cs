@@ -46,7 +46,7 @@ namespace ZScreenLib
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
         private Pen labelBorderPen = new Pen(Color.Black);
-        private Pen crosshairPen = new Pen(XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor));
+        private Pen crosshairPen = new Pen(Engine.conf.CropCrosshairArgb);
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
         private string strMouseUp = "Mouse Left Down: Create crop region" +
             "\nMouse Right Down & Escape: Cancel screenshot\nSpace: Capture entire screen\nTab: Toggle crop grid mode";
@@ -650,7 +650,7 @@ namespace ZScreenLib
         {
             if (ct == CaptureType.CROP)
             {
-                color = XMLSettings.DeserializeColor(Engine.conf.CropBorderColor);
+                color = (Color)Engine.conf.CropBorderArgb;
                 size = (float)Engine.conf.CropBorderSize;
                 ruler = Engine.conf.CropShowRuler;
                 changeColor = Engine.conf.CropDynamicBorderColor;
@@ -660,7 +660,7 @@ namespace ZScreenLib
             }
             else if (ct == CaptureType.SELECTED_WINDOW)
             {
-                color = XMLSettings.DeserializeColor(Engine.conf.SelectedWindowBorderColor);
+                color = (Color)Engine.conf.SelectedWindowBorderArgb;
                 size = (float)Engine.conf.SelectedWindowBorderSize;
                 ruler = Engine.conf.SelectedWindowRuler;
                 changeColor = Engine.conf.SelectedWindowDynamicBorderColor;
@@ -745,7 +745,7 @@ namespace ZScreenLib
         private int normalSize;
         private int lineCount = Engine.conf.CrosshairLineCount;
         private int lineSize = Engine.conf.CrosshairLineSize;
-        private Color crosshairColor = XMLSettings.DeserializeColor(Engine.conf.CropCrosshairColor);
+        private Color crosshairColor = Engine.conf.CropCrosshairArgb;
 
         public DynamicCrosshair()
         {

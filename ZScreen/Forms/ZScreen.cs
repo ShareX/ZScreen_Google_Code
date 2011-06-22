@@ -109,7 +109,7 @@ namespace ZScreenGUI
             StartStatistics();
 
             SetToolTip(nudScreenshotDelay);
-            
+
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
@@ -854,7 +854,7 @@ namespace ZScreenGUI
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.CropBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.CropBorderArgb);
         }
 
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
@@ -948,7 +948,7 @@ namespace ZScreenGUI
             DialogResult result = Adapter.ShowFontDialog();
             if (result == DialogResult.OK)
             {
-                pbWatermarkFontColor.BackColor = XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor);
+                pbWatermarkFontColor.BackColor = Engine.conf.WatermarkFontArgb;
                 lblWatermarkFont.Text = FontToString();
                 TestWatermark();
             }
@@ -956,8 +956,7 @@ namespace ZScreenGUI
 
         private string FontToString()
         {
-            return FontToString(XMLSettings.DeserializeFont(Engine.conf.WatermarkFont),
-                 XMLSettings.DeserializeColor(Engine.conf.WatermarkFontColor));
+            return FontToString(Engine.conf.WatermarkFont, Engine.conf.WatermarkFontArgb);
         }
 
         private string FontToString(Font font, Color color)
@@ -1040,19 +1039,19 @@ namespace ZScreenGUI
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient1);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient1Argb);
             TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient2);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient2Argb);
             TestWatermark();
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkBorderArgb);
             TestWatermark();
         }
 
@@ -1078,18 +1077,18 @@ namespace ZScreenGUI
 
         private void pbWatermarkFontColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkFontColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkFontArgb);
             lblWatermarkFont.Text = FontToString();
             TestWatermark();
         }
 
-        private void SelectColor(Control pb, ref string setting)
+        private void SelectColor(Control pb, ref XmlColor color)
         {
             DialogColor dColor = new DialogColor(pb.BackColor);
             if (dColor.ShowDialog() == DialogResult.OK)
             {
                 pb.BackColor = dColor.Color;
-                setting = XMLSettings.SerializeColor(dColor.Color);
+                color = dColor.Color;
             }
         }
 
@@ -1239,7 +1238,7 @@ namespace ZScreenGUI
 
         private void pbSelectedWindowBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.SelectedWindowBorderColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.SelectedWindowBorderArgb);
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
@@ -1320,7 +1319,7 @@ namespace ZScreenGUI
 
         private void pbCropCrosshairColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.CropCrosshairColor);
+            SelectColor((PictureBox)sender, ref Engine.conf.CropCrosshairArgb);
         }
 
         private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
