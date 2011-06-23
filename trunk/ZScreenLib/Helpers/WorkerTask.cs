@@ -689,81 +689,123 @@ namespace ZScreenLib
                 }
             }
 
+            List<Thread> uploaderThreads = new List<Thread>();
+
             if (MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
             {
-                ImageShackUploader imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
-                    Engine.MyUploadersConfig.ImageShackRegistrationCode)
-                {
-                    IsPublic = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
-                };
-                UploadImage(ImageUploaderType.IMAGESHACK, imageUploader);
+                uploaderThreads.Add(new Thread(() =>
+               {
+                   ImageShackUploader imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Engine.MyUploadersConfig.ImageShackAccountType,
+                       Engine.MyUploadersConfig.ImageShackRegistrationCode)
+                   {
+                       IsPublic = Engine.MyUploadersConfig.ImageShackShowImagesInPublic
+                   };
+                   UploadImage(ImageUploaderType.IMAGESHACK, imageUploader);
+               }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
             {
-                TinyPicUploader imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicAccountType,
-                    Engine.MyUploadersConfig.TinyPicRegistrationCode);
-                UploadImage(ImageUploaderType.TINYPIC, imageUploader);
+                uploaderThreads.Add(new Thread(() =>
+               {
+                   TinyPicUploader imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Engine.MyUploadersConfig.TinyPicAccountType,
+                       Engine.MyUploadersConfig.TinyPicRegistrationCode);
+                   UploadImage(ImageUploaderType.TINYPIC, imageUploader);
+               }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.IMGUR))
             {
-                Imgur imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);
-                UploadImage(ImageUploaderType.IMGUR, imageUploader);
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    Imgur imageUploader = new Imgur(Engine.MyUploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Engine.MyUploadersConfig.ImgurOAuthInfo);
+                    UploadImage(ImageUploaderType.IMGUR, imageUploader);
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.FLICKR))
             {
-                FlickrUploader imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
-                    Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
-                UploadImage(ImageUploaderType.FLICKR, imageUploader);
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    FlickrUploader imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
+                        Engine.MyUploadersConfig.FlickrAuthInfo, Engine.MyUploadersConfig.FlickrSettings);
+                    UploadImage(ImageUploaderType.FLICKR, imageUploader);
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.UPLOADSCREENSHOT))
             {
-                UploadScreenshot imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
-                UploadImage(ImageUploaderType.UPLOADSCREENSHOT, imageUploader);
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadScreenshot imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
+                    UploadImage(ImageUploaderType.UPLOADSCREENSHOT, imageUploader);
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.MEDIAWIKI))
             {
-                UploadToMediaWiki();
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadToMediaWiki();
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.TWITPIC))
             {
-                TwitPicOptions twitpicOpt = new TwitPicOptions();
-                twitpicOpt.Username = Engine.MyUploadersConfig.TwitPicUsername;
-                twitpicOpt.Password = Engine.MyUploadersConfig.TwitPicPassword;
-                // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
-                twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
-                twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;
-                UploadImage(ImageUploaderType.TWITPIC, new TwitPicUploader(twitpicOpt));
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    TwitPicOptions twitpicOpt = new TwitPicOptions();
+                    twitpicOpt.Username = Engine.MyUploadersConfig.TwitPicUsername;
+                    twitpicOpt.Password = Engine.MyUploadersConfig.TwitPicPassword;
+                    // twitpicOpt.TwitPicUploadType = Engine.conf.TwitPicUploadMode;
+                    twitpicOpt.TwitPicThumbnailMode = Engine.MyUploadersConfig.TwitPicThumbnailMode;
+                    twitpicOpt.ShowFull = Engine.MyUploadersConfig.TwitPicShowFull;
+                    UploadImage(ImageUploaderType.TWITPIC, new TwitPicUploader(twitpicOpt));
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.YFROG))
             {
-                YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
-                yfrogOp.Username = Engine.MyUploadersConfig.YFrogUsername;
-                yfrogOp.Password = Engine.MyUploadersConfig.YFrogPassword;
-                yfrogOp.Source = Application.ProductName;
-                // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
-                UploadImage(ImageUploaderType.YFROG, new YfrogUploader(yfrogOp));
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    YfrogOptions yfrogOp = new YfrogOptions(ZKeys.ImageShackKey);
+                    yfrogOp.Username = Engine.MyUploadersConfig.YFrogUsername;
+                    yfrogOp.Password = Engine.MyUploadersConfig.YFrogPassword;
+                    yfrogOp.Source = Application.ProductName;
+                    // yfrogOp.UploadType = Engine.conf.YfrogUploadMode;
+                    UploadImage(ImageUploaderType.YFROG, new YfrogUploader(yfrogOp));
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.TWITSNAPS))
             {
-                UploadImage(ImageUploaderType.TWITSNAPS, new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount()));
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadImage(ImageUploaderType.TWITSNAPS, new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount()));
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.FileUploader))
             {
-                UploadFile();
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadFile();
+                }));
             }
 
             if (MyImageUploaders.Contains(ImageUploaderType.SharedFolder))
             {
                 UploadToSharedFolder();
+            }
+
+            foreach (Thread t in uploaderThreads)
+            {
+                t.Start();
+            }
+
+            foreach (Thread t in uploaderThreads)
+            {
+                t.Join();
             }
         }
 
@@ -922,59 +964,91 @@ namespace ZScreenLib
             this.StartTime = DateTime.Now;
             Engine.MyLogger.WriteLine("Uploading File: " + this.LocalFilePath);
 
+            List<Thread> uploaderThreads = new List<Thread>();
+
             if (this.MyFileUploaders.Contains(FileUploaderType.FTP))
             {
-                switch (this.Job1)
+                uploaderThreads.Add(new Thread(() =>
                 {
-                    case JobLevel1.Text:
-                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
-                        break;
-                    case JobLevel1.Image:
-                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
-                        break;
-                    default:
-                        UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
-                        break;
-                }
+                    switch (this.Job1)
+                    {
+                        case JobLevel1.Text:
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
+                            break;
+                        case JobLevel1.Image:
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
+                            break;
+                        default:
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
+                            break;
+                    }
+                }));
             }
 
             if (MyFileUploaders.Contains(FileUploaderType.Dropbox))
             {
-                string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
-                FileUploader fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
-                UploadFile(FileUploaderType.Dropbox, fileHost);
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyUploadersConfig.DropboxUploadPath));
+                    FileUploader fileHost = new Dropbox(Engine.MyUploadersConfig.DropboxOAuthInfo, uploadPath, Engine.MyUploadersConfig.DropboxAccountInfo);
+                    UploadFile(FileUploaderType.Dropbox, fileHost);
+                }));
             }
 
             if (MyFileUploaders.Contains(FileUploaderType.SendSpace))
             {
-                FileUploader fileHost = new SendSpace(ZKeys.SendSpaceKey);
-                switch (Engine.MyUploadersConfig.SendSpaceAccountType)
-                {
-                    case AccountType.Anonymous:
-                        SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
-                        break;
-                    case AccountType.User:
-                        SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.MyUploadersConfig.SendSpaceUsername,
-                            Engine.MyUploadersConfig.SendSpacePassword);
-                        break;
-                }
-                UploadFile(FileUploaderType.SendSpace, fileHost);
+                uploaderThreads.Add(new Thread(() =>
+                 {
+                     FileUploader fileHost = new SendSpace(ZKeys.SendSpaceKey);
+                     switch (Engine.MyUploadersConfig.SendSpaceAccountType)
+                     {
+                         case AccountType.Anonymous:
+                             SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey);
+                             break;
+                         case AccountType.User:
+                             SendSpaceManager.PrepareUploadInfo(ZKeys.SendSpaceKey, Engine.MyUploadersConfig.SendSpaceUsername,
+                                 Engine.MyUploadersConfig.SendSpacePassword);
+                             break;
+                     }
+                     UploadFile(FileUploaderType.SendSpace, fileHost);
+                 }));
             }
 
             if (MyFileUploaders.Contains(FileUploaderType.RapidShare))
             {
-                UploadFile(FileUploaderType.RapidShare, new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
-                      Engine.MyUploadersConfig.RapidSharePassword));
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadFile(FileUploaderType.RapidShare,
+                        new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
+                          Engine.MyUploadersConfig.RapidSharePassword));
+                }));
             }
 
             if (MyFileUploaders.Contains(FileUploaderType.ShareCX))
             {
-                UploadFile(FileUploaderType.ShareCX, new ShareCX());
+                uploaderThreads.Add(new Thread(() =>
+                {
+                    UploadFile(FileUploaderType.ShareCX, new ShareCX());
+                }));
             }
 
             if (MyFileUploaders.Contains(FileUploaderType.CustomUploader))
             {
-                UploadFile(FileUploaderType.CustomUploader, new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]));
+                uploaderThreads.Add(new Thread(() =>
+                 {
+                     UploadFile(FileUploaderType.CustomUploader,
+                         new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]));
+                 }));
+            }
+
+            foreach (Thread t in uploaderThreads)
+            {
+                t.Start();
+            }
+
+            foreach (Thread t in uploaderThreads)
+            {
+                t.Join();
             }
 
             this.EndTime = DateTime.Now;

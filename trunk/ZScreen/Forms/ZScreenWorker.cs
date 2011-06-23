@@ -205,10 +205,11 @@ namespace ZScreenGUI
                     this.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
-                    int progress = (int)((ProgressManager)e.UserState).Percentage;
-                    Adapter.UpdateNotifyIconProgress(this.niTray, progress);
-                    Adapter.TaskbarSetProgressValue(this, progress);
-                    this.Text = string.Format("{0}% - {1}", UploadManager.GetAverageProgress(), Engine.GetProductName());
+                    UploadManager.SetCumulativePercentatge((int)((ProgressManager)e.UserState).Percentage);
+                    Adapter.UpdateNotifyIconProgress(this.niTray, UploadManager.CumulativePercentage);
+                    Adapter.TaskbarSetProgressValue(this, UploadManager.CumulativePercentage);
+                    Console.WriteLine(UploadManager.GetAverageProgress() + " vs " + UploadManager.CumulativePercentage);
+                    this.Text = string.Format("{0}% - {1}", UploadManager.CumulativePercentage, Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
