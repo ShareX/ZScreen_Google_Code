@@ -1,7 +1,8 @@
+4.00.4 Support for multiple outputs such as Clipboard, File and Printer {McoreD}
 4.00.3 Option to show Upload Results {McoreD}
-4.00.2 Support for multiple image/file/text destinations {McoreD}
+4.00.2 Support for uploading to multiple image/file/text destinations {McoreD}
 4.00.1 Application wide improvements to the logging system {Jaex}
-4.00.0 Core change to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
+4.00.0 Core changes to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
 3.38.1 Renamed and rearranged main tabs to simplify user interface {Jaex/McoreD}
 3.38.0 Easier access to all the main functions using a new toolstrip in the main tab {Jaex}
 
