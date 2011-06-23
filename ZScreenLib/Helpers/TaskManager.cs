@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -39,38 +38,6 @@ namespace ZScreenLib
         {
             mTask = task;
         }
-
-        #region Image Tasks Manager
-
-        public void PublishActiveWindow()
-        {
-            try
-            {
-                mTask.PublishData();
-            }
-            catch (ArgumentOutOfRangeException aor)
-            {
-                mTask.Errors.Add("Invalid FTP Account Selection");
-                Engine.MyLogger.WriteLine(aor.ToString());
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while capturing active window");
-                if (Engine.conf.CaptureEntireScreenOnError)
-                {
-                    mTask.CaptureRegionOrWindow();
-                    mTask.PublishData();
-                }
-            }
-        }
-
-        public void PublishEntireScreen()
-        {
-            mTask.CaptureScreen();
-            mTask.PublishData();
-        }
-
-        #endregion Image Tasks Manager
 
         public void TextEdit()
         {

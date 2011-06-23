@@ -76,29 +76,31 @@ namespace ZScreenGUI
 
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
-            WorkerTask task = (WorkerTask)e.Argument;
-            PrepareTask(task);
-            if (!task.CanStartWork())
+            WorkerTask bwTask = (WorkerTask)e.Argument;
+            bwTask.Status = WorkerTask.TaskStatus.ThreadMode;
+            PrepareTask(bwTask);
+
+            if (!bwTask.CanStartWork())
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
             }
             else
             {
-                task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
-                task.UniqueNumber = UploadManager.Queue();
+                bwTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, bwTask);
+                bwTask.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && !task.MyClipboardContent.Contains(ClipboardContentEnum.Data) &&
-                    !task.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                    (task.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
-                    task.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
-                    MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
+                if (Engine.conf.PromptForUpload && !bwTask.MyClipboardContent.Contains(ClipboardContentEnum.Data) &&
+                    !bwTask.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
+                    (bwTask.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
+                    bwTask.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
+                    MessageBox.Show("Do you really want to upload to " + bwTask.GetActiveImageUploadersDescription() + "?",
                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
-                    e.Result = task;
+                    e.Result = bwTask;
                     return;
                 }
 
-                if (task.WasToTakeScreenshot)
+                if (bwTask.WasToTakeScreenshot)
                 {
                     if (Engine.conf.ScreenshotDelayTime > 0)
                     {
@@ -106,61 +108,51 @@ namespace ZScreenGUI
                     }
                 }
 
-                Engine.MyLogger.WriteLine(string.Format("Job started: {0}", task.Job2));
+                Engine.MyLogger.WriteLine(string.Format("Job started: {0}", bwTask.Job2));
 
-                switch (task.Job1)
+                switch (bwTask.Job1)
                 {
                     case JobLevel1.Image:
                     case JobLevel1.File:
-                        switch (task.Job2)
+                        switch (bwTask.Job2)
                         {
-                            case WorkerTask.JobLevel2.CaptureEntireScreen:
-                                new TaskManager(task).PublishEntireScreen();
-                                break;
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
-                            case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                                task.PublishData();
+                                bwTask.CaptureRegionOrWindow();
+                                bwTask.WriteImage();
+                                bwTask.PublishData();
                                 break;
-                            case WorkerTask.JobLevel2.CaptureActiveWindow:
-                                new TaskManager(task).PublishActiveWindow();
-                                break;
-                            case WorkerTask.JobLevel2.CaptureFreeHandRegion:
-                                task.CaptureFreehandCrop();
-                                break;
-                            case WorkerTask.JobLevel2.UPLOAD_IMAGE:
-                            case WorkerTask.JobLevel2.UploadFromClipboard:
-                            case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
-                                task.PublishData();
+                            default:
+                                bwTask.PublishData();
                                 break;
                         }
                         break;
                     case JobLevel1.Text:
-                        switch (task.Job2)
+                        switch (bwTask.Job2)
                         {
                             case WorkerTask.JobLevel2.UploadFromClipboard:
-                                task.UploadText();
+                                bwTask.UploadText();
                                 break;
                             case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                task.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo));
-                                task.SetText(task.TranslationInfo.Result);
+                                bwTask.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(bwTask.TranslationInfo));
+                                bwTask.SetText(bwTask.TranslationInfo.Result);
                                 break;
                         }
                         break;
                 }
 
-                if (task.UploadResults.Count > 0)
+                if (bwTask.UploadResults.Count > 0)
                 {
-                    foreach (UploadResult ur in task.UploadResults)
+                    foreach (UploadResult ur in bwTask.UploadResults)
                     {
-                        if (task.ShouldShortenURL(ur.URL))
+                        if (bwTask.ShouldShortenURL(ur.URL))
                         {
-                            task.ShortenURL(ur, ur.URL);
+                            bwTask.ShortenURL(ur, ur.URL);
                         }
                     }
                 }
 
-                e.Result = task;
+                e.Result = bwTask;
             }
         }
 
@@ -233,6 +225,7 @@ namespace ZScreenGUI
             if (task.UploadResults.Count > 0)
             {
                 UploadManager.UploadResultLast = task.UploadResults[task.UploadResults.Count - 1];
+                UploadManager.ResetCumulativePercentage();
             }
 
             try
@@ -502,8 +495,6 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
-                    hkTask.CaptureRegionOrWindow();
-                    hkTask.WriteImage();
                     RunWorkerAsync_CropShot(hkTask);
                     return true;
                 }
@@ -520,7 +511,7 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-                    hkTask.CaptureRegionOrWindow();
+                    hkTask.CaptureFreehandCrop();
                     hkTask.WriteImage();
                     RunWorkerAsync_FreehandCropShot(hkTask);
                     return true;
