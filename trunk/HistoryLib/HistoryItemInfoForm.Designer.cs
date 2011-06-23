@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.olvMain = new HistoryLib.Custom_Controls.ObjectListView();
+            this.olvMain = new HistoryLib.CustomControls.ObjectListView();
             this.SuspendLayout();
             //
             // olvMain
@@ -40,7 +40,7 @@
             this.olvMain.Location = new System.Drawing.Point(0, 0);
             this.olvMain.MultiSelect = false;
             this.olvMain.Name = "olvMain";
-            this.olvMain.SetObjectType = HistoryLib.Custom_Controls.ObjectListView.ObjectType.Properties;
+            this.olvMain.SetObjectType = HistoryLib.CustomControls.ObjectListView.ObjectType.Properties;
             this.olvMain.Size = new System.Drawing.Size(454, 411);
             this.olvMain.TabIndex = 0;
             this.olvMain.UseCompatibleStateImageBehavior = false;
@@ -62,6 +62,6 @@
 
         #endregion Windows Form Designer generated code
 
-        private Custom_Controls.ObjectListView olvMain;
+        private CustomControls.ObjectListView olvMain;
     }
 }

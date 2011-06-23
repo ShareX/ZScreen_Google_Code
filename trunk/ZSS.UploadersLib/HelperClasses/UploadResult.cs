@@ -32,12 +32,19 @@ namespace UploadersLib.HelperClasses
     public class UploadResult
     {
         public string Host { get; set; }
+
         public string LocalFilePath { get; set; }
+
         public string URL { get; set; }
+
         public string ThumbnailURL { get; set; }
+
         public string DeletionURL { get; set; }
+
         public string ShortenedURL { get; set; }
+
         public string Source { get; set; }
+
         public List<string> Errors { get; set; }
 
         public bool IsError
@@ -183,7 +190,11 @@ namespace UploadersLib.HelperClasses
 
         public string GetLocalFilePathAsUri(string fp)
         {
-            return new Uri(fp).AbsoluteUri;
+            if (!string.IsNullOrEmpty(fp))
+            {
+                return new Uri(fp).AbsoluteUri;
+            }
+            return string.Empty;
         }
 
         /// <summary>

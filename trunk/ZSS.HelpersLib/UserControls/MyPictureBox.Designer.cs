@@ -1,4 +1,4 @@
-﻿namespace HistoryLib.Custom_Controls
+﻿namespace HelpersLib
 {
     partial class MyPictureBox
     {

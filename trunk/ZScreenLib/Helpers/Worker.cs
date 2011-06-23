@@ -190,9 +190,9 @@ namespace ZScreenLib
                     MessageBox.Show(task.Errors[task.Errors.Count - 1], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                if (task.TempImage != null)
+                if (task.tempImage != null)
                 {
-                    task.TempImage.Dispose(); // For fix memory leak
+                    task.tempImage.Dispose(); // For fix memory leak
                 }
             }
             catch (Exception ex)

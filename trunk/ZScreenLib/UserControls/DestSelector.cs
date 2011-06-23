@@ -60,18 +60,5 @@ namespace ZScreenLib
         {
             RestrictToOneCheck(tsddbLinkFormat, e);
         }
-
-        private void tsddbOutputs_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-        }
-
-        private void tsmiFile_Click(object sender, System.EventArgs e)
-        {
-            tsmiFile.Checked = true;
-        }
-
-        private void tsmiClipboard_Click(object sender, System.EventArgs e)
-        {
-        }
     }
 }

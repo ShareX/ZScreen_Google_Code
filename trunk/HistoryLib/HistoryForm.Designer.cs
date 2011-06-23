@@ -100,7 +100,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tlpMainTop = new System.Windows.Forms.TableLayoutPanel();
-            this.pbThumbnail = new HistoryLib.Custom_Controls.MyPictureBox();
+            this.pbThumbnail = new HelpersLib.MyPictureBox();
             this.flpLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.cmsHistory.SuspendLayout();
             this.ssMain.SuspendLayout();
@@ -828,7 +828,7 @@
         private System.Windows.Forms.ComboBox cbFilenameFilterCulture;
         private System.Windows.Forms.CheckBox cbFilenameFilter;
         private System.Windows.Forms.CheckBox cbFilenameFilterCase;
-        private Custom_Controls.MyPictureBox pbThumbnail;
+        private HelpersLib.MyPictureBox pbThumbnail;
         private System.Windows.Forms.StatusStrip ssMain;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.GroupBox gbFilters;

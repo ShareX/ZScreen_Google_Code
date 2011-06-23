@@ -92,10 +92,10 @@ namespace ZScreenLib
         /// <returns>Returns the file path to a screenshot</returns>
         public static string WriteImage(WorkerTask task)
         {
-            Image img = task.TempImage;
+            Image img = task.tempImage;
             string filePath = task.LocalFilePath;
 
-            if (!Engine.conf.MemoryMode && !string.IsNullOrEmpty(filePath))
+            if (task.MyOutputs.Contains(OutputEnum.File) && !string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
                 img = ImageEffects.ApplyScreenshotEffects(img);
@@ -177,17 +177,14 @@ namespace ZScreenLib
         public static bool WriteText(string fp, string myText)
         {
             bool succ = false;
-            if (!Engine.conf.MemoryMode)
+            try
             {
-                try
-                {
-                    File.WriteAllText(fp, myText);
-                    succ = true;
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "WriteText");
-                }
+                File.WriteAllText(fp, myText);
+                succ = true;
+            }
+            catch (Exception ex)
+            {
+                Engine.MyLogger.WriteException(ex, "WriteText");
             }
             return succ;
         }

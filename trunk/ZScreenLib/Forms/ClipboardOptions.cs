@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using GraphicsMgrLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using HelpersLib;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -22,9 +22,14 @@ namespace ZScreenLib
             {
                 this.mTask = task;
                 this.Text = task.FileName.ToString(); // +" - " + task.GetDescription();
-                if (ZAppHelper.IsImageFile(task.LocalFilePath))
+                this.pbPreview.LoadingImage = Resources.Loading;
+                foreach (UploadResult ur in task.UploadResults)
                 {
-                    this.pbPreview.LoadAsync(task.LocalFilePath);
+                    if (!string.IsNullOrEmpty(ur.URL))
+                    {
+                        this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
+                        break;
+                    }
                 }
 
                 int count = 0;
@@ -87,10 +92,8 @@ namespace ZScreenLib
                 flpButtons.Controls.Add(btnClose);
 
                 this.AddResetTimerToButtons();
-
             }
         }
-
 
         private void btnCopyLink_Click(object sender, EventArgs e)
         {

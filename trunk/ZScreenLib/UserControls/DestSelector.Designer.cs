@@ -99,7 +99,6 @@
             this.tsddbOutputs.Name = "tsddbOutputs";
             this.tsddbOutputs.Size = new System.Drawing.Size(350, 20);
             this.tsddbOutputs.Text = "Outputs:";
-            this.tsddbOutputs.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbOutputs_DropDownItemClicked);
             // 
             // tsmiClipboard
             // 
@@ -108,7 +107,6 @@
             this.tsmiClipboard.Name = "tsmiClipboard";
             this.tsmiClipboard.Size = new System.Drawing.Size(152, 22);
             this.tsmiClipboard.Text = "Clipboard";
-            this.tsmiClipboard.Click += new System.EventHandler(this.tsmiClipboard_Click);
             // 
             // tsmiFile
             // 
@@ -119,7 +117,6 @@
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(152, 22);
             this.tsmiFile.Text = "File";
-            this.tsmiFile.Click += new System.EventHandler(this.tsmiFile_Click);
             // 
             // tsmiPrinter
             // 
