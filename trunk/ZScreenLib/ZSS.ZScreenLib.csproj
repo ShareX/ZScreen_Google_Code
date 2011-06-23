@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Worker.cs" />
     <Compile Include="UserControls\DestSelectorHelper.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
@@ -194,7 +195,6 @@
     <Compile Include="Helpers\ThumbnailCacher.cs" />
     <Compile Include="Helpers\WebPageCapture.cs" />
     <Compile Include="Helpers\WindowRectangle.cs" />
-    <Compile Include="Helpers\Worker.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Engine.cs" />

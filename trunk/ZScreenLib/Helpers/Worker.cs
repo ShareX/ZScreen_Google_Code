@@ -41,6 +41,7 @@ namespace ZScreenLib
     public class Worker
     {
         private GenericMainWindow GUI = null;
+
         public bool IsBusy { get; private set; }
 
         public Worker() { }
@@ -74,19 +75,19 @@ namespace ZScreenLib
                 case JobLevel1.File:
                     switch (task.Job2)
                     {
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                            new TaskManager(task).CaptureScreen();
+                        case WorkerTask.JobLevel2.CaptureEntireScreen:
+                            task.CaptureScreen();
                             break;
-                        case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
-                        case WorkerTask.JobLevel2.TakeScreenshotCropped:
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                            new TaskManager(task).CaptureRegionOrWindow();
+                        case WorkerTask.JobLevel2.CaptureSelectedWindow:
+                        case WorkerTask.JobLevel2.CaptureRectRegion:
+                        case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
+                            task.CaptureRegionOrWindow();
                             break;
-                        case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                            new TaskManager(task).CaptureActiveWindow();
+                        case WorkerTask.JobLevel2.CaptureActiveWindow:
+                            task.CaptureActiveWindow();
                             break;
-                        case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
-                            new TaskManager(task).CaptureFreehandCrop();
+                        case WorkerTask.JobLevel2.CaptureFreeHandRegion:
+                            task.CaptureFreehandCrop();
                             break;
                         case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
@@ -244,34 +245,22 @@ namespace ZScreenLib
 
         public void StartBw_EntireScreen()
         {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN);
-            }
+            StartWorkerScreenshots(WorkerTask.JobLevel2.CaptureEntireScreen);
         }
 
         public void StartBw_SelectedWindow()
         {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.JobLevel2.TakeScreenshotWindowSelected);
-            }
+            StartWorkerScreenshots(WorkerTask.JobLevel2.CaptureSelectedWindow);
         }
 
         public void StartBw_CropShot()
         {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.JobLevel2.TakeScreenshotCropped);
-            }
+            StartWorkerScreenshots(WorkerTask.JobLevel2.CaptureRectRegion);
         }
 
         public void StartBw_FreehandCropShot()
         {
-            if (!TaskManager.mTakingScreenShot)
-            {
-                StartWorkerScreenshots(WorkerTask.JobLevel2.FREEHAND_CROP_SHOT);
-            }
+            StartWorkerScreenshots(WorkerTask.JobLevel2.CaptureFreeHandRegion);
         }
 
         public void StartBw_ClipboardUpload()
@@ -404,10 +393,9 @@ namespace ZScreenLib
         public void StartWorkerPictures(WorkerTask.JobLevel2 job, Image img)
         {
             Engine.ClipboardUnhook();
-            WorkerTask t = CreateTask(job);
-            t.SetImage(img);
-            t.WriteImage();
-            t.MyWorker.RunWorkerAsync(t);
+            WorkerTask task = CreateTask(job);
+            task.SetImage(img);
+            task.MyWorker.RunWorkerAsync(task);
         }
 
         protected void StartTextWorkers(List<WorkerTask> textWorkers)
@@ -468,6 +456,5 @@ namespace ZScreenLib
         }
 
         #endregion User Tasks
-
     }
 }
