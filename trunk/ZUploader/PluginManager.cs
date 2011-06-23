@@ -1,5 +1,5 @@
 ﻿using ExtensionManager;
-using ZUploaderPlugin;
+using ZUploaderPluginBase;
 
 namespace ZUploader
 {
@@ -7,17 +7,17 @@ namespace ZUploader
     {
         public string PluginFolderPath { get; private set; }
 
-        private ExtensionManager<IPlugin, IPluginHost> manager;
+        private ExtensionManager<ZUploaderPlugin, IPluginHost> manager;
         private IPluginHost host;
 
         public PluginManager(string pluginFolderPath, IPluginHost pluginHost)
         {
             PluginFolderPath = pluginFolderPath;
-            manager = new ExtensionManager<IPlugin, IPluginHost>();
+            manager = new ExtensionManager<ZUploaderPlugin, IPluginHost>();
             manager.LoadDefaultFileExtensions();
-            manager.AssemblyFailedLoading += new ExtensionManager<IPlugin, IPluginHost>.AssemblyFailedLoadingEventHandler(manager_AssemblyFailedLoading);
-            manager.AssemblyLoading += new ExtensionManager<IPlugin, IPluginHost>.AssemblyLoadingEventHandler(manager_AssemblyLoading);
-            manager.AssemblyLoaded += new ExtensionManager<IPlugin, IPluginHost>.AssemblyLoadedEventHandler(manager_AssemblyLoaded);
+            manager.AssemblyFailedLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyFailedLoadingEventHandler(manager_AssemblyFailedLoading);
+            manager.AssemblyLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadingEventHandler(manager_AssemblyLoading);
+            manager.AssemblyLoaded += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadedEventHandler(manager_AssemblyLoaded);
             host = pluginHost;
         }
 
@@ -40,12 +40,23 @@ namespace ZUploader
         {
             manager.LoadExtensions(PluginFolderPath);
 
-            foreach (Extension<IPlugin> extension in manager.Extensions)
+            foreach (Extension<ZUploaderPlugin> extension in manager.Extensions)
             {
-                IPlugin plugin = extension.Instance;
+                ZUploaderPlugin plugin = extension.Instance;
                 plugin.Host = host;
-                plugin.Init();
+                plugin.Initialize();
             }
+        }
+
+        public void UnloadPlugins()
+        {
+            foreach (Extension<ZUploaderPlugin> extension in manager.Extensions)
+            {
+                ZUploaderPlugin plugin = extension.Instance;
+                plugin.DeInitialize();
+            }
+
+            manager.Extensions.Clear();
         }
     }
 }

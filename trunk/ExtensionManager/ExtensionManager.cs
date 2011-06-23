@@ -222,11 +222,8 @@ namespace ExtensionManager
                 // Instead of a 1 interface per file relationship
                 foreach (Type t in res.CompiledAssembly.GetTypes())
                 {
-                    // Get the string name of the ClientInterface interface
-                    string typeName = typeof(ClientInterface).ToString();
-
                     // Try getting the clientinterface from the type
-                    if (t.GetInterface(typeName, true) != null)
+                    if (t.BaseType == typeof(ClientInterface))
                     {
                         try
                         {
@@ -291,11 +288,8 @@ namespace ExtensionManager
                 // Go through the types we need to find our clientinterface
                 foreach (Type t in compiledAssembly.GetTypes())
                 {
-                    // Just the string name of our ClientInterface since it's unknown at compile time
-                    string typeName = typeof(ClientInterface).ToString();
-
                     // Try getting the interface from the current type
-                    if (t.GetInterface(typeName, true) != null)
+                    if (t.BaseType == typeof(ClientInterface))
                     {
                         try
                         {

@@ -3,36 +3,34 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using ZUploaderPlugin;
+using ZUploaderPluginBase;
 using ZUploaderScreenshotPlugin.Properties;
 
 namespace ZUploaderScreenshotPlugin
 {
-    public class CropPlugin : IPlugin
+    public class ScreenshotPlugin : ZUploaderPlugin
     {
-        public IPluginHost Host { get; set; }
-
-        public string Name
+        public override string Name
         {
             get { return "Screenshot capture"; }
         }
 
-        public string Description
+        public override Version Version
         {
-            get { return "Fullscreen capture, Crop capture"; }
+            get { return new Version(1, 0); }
         }
 
-        public string Author
+        public override string Author
         {
             get { return "Jaex"; }
         }
 
-        public string Version
+        public override string Description
         {
-            get { return "1.0.0.0"; }
+            get { return "Fullscreen capture, Crop capture"; }
         }
 
-        public void Init()
+        public override void Initialize()
         {
             ToolStripMenuItem tsmiFullscreen = new ToolStripMenuItem();
             tsmiFullscreen.Text = "Fullscreen capture";

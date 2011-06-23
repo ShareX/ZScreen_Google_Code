@@ -8,7 +8,7 @@
     <ProjectGuid>{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZUploaderPlugin</RootNamespace>
+    <RootNamespace>ZUploaderPluginBase</RootNamespace>
     <AssemblyName>ZUploaderPlugin</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPlugin.cs" />
+    <Compile Include="ZUploaderPlugin.cs" />
     <Compile Include="IPluginHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -246,6 +246,5 @@ namespace UploadersLib.HelperClasses
         }
 
         #endregion Source Methods
-
     }
 }

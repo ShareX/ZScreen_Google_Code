@@ -33,7 +33,7 @@ using HistoryLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using ZUploaderPlugin;
+using ZUploaderPluginBase;
 
 namespace ZUploader
 {
