@@ -31,6 +31,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Crop;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
@@ -44,6 +45,7 @@ using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
+using ZScreenLib.Shapes;
 using ZUploader.HelperClasses;
 
 namespace ZScreenLib
@@ -63,15 +65,15 @@ namespace ZScreenLib
         public enum JobLevel2
         {
             [Description("Entire Screen")]
-            TAKE_SCREENSHOT_SCREEN,
+            CaptureEntireScreen,
             [Description("Active Window")]
-            TAKE_SCREENSHOT_WINDOW_ACTIVE,
+            CaptureActiveWindow,
             [Description("Selected Window")]
-            TakeScreenshotWindowSelected,
+            CaptureSelectedWindow,
             [Description("Crop Shot")]
-            TakeScreenshotCropped,
+            CaptureRectRegion,
             [Description("Last Crop Shot")]
-            TAKE_SCREENSHOT_LAST_CROPPED,
+            CaptureLastCroppedWindow,
             [Description("Auto Capture")]
             AUTO_CAPTURE,
             [Description("Clipboard Upload")]
@@ -87,7 +89,7 @@ namespace ZScreenLib
             [Description("Webpage Capture")]
             WEBPAGE_CAPTURE,
             [Description("Freehand Crop Shot")]
-            FREEHAND_CROP_SHOT
+            CaptureFreeHandRegion
         }
 
         public enum JobLevel3
@@ -123,20 +125,28 @@ namespace ZScreenLib
         #region Properties
 
         public BackgroundWorker MyWorker { get; set; }
+
         public bool WasToTakeScreenshot { get; set; }
+
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
+
         public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
+
         public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
 
         public List<string> Errors { get; set; }
+
         public bool IsError
         {
             get { return Errors != null && Errors.Count > 0; }
         }
 
         public TaskStatus Status { get; set; }
+
         public DateTime StartTime { get; set; }
+
         private DateTime mEndTime;
+
         public DateTime EndTime
         {
             get
@@ -149,16 +159,23 @@ namespace ZScreenLib
                 UploadDuration = (int)Math.Round((mEndTime - StartTime).TotalMilliseconds);
             }
         }
+
         public int UploadDuration { get; set; }
+
         public bool IsImage { get; private set; }
+
         public int UniqueNumber { get; set; }
 
         public Image TempImage { get; private set; }
+
         public string TempText { get; private set; }
+
         public byte[] TempFile { get; set; }
+
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
         public string FileName { get; set; }
+
         public string LocalFilePath { get; private set; }
 
         private string DestinationName = string.Empty;
@@ -173,6 +190,8 @@ namespace ZScreenLib
         public List<UploadResult> UploadResults { get; private set; }
 
         #endregion Properties
+
+        public bool IsTakingScreenShot;
 
         #region Constructors
 
@@ -210,6 +229,27 @@ namespace ZScreenLib
         }
 
         #endregion Constructors
+
+        public bool CanStartWork()
+        {
+            bool can = this.WasToTakeScreenshot && this.MyImageUploaders.Count > 0;
+            if (!this.WasToTakeScreenshot)
+            {
+                switch (this.Job1)
+                {
+                    case JobLevel1.Image:
+                        can = MyImageUploaders.Count > 0;
+                        break;
+                    case JobLevel1.Text:
+                        can = MyTextUploaders.Count > 0;
+                        break;
+                    case JobLevel1.File:
+                        can = MyFileUploaders.Count > 0;
+                        break;
+                }
+            }
+            return can;
+        }
 
         #region Populating Task
 
@@ -262,11 +302,11 @@ namespace ZScreenLib
                 // in the main thread because the file name has to be determined outside of the main thread so the main thrad is
                 // ready for multiple requests
 
-                //SaveFileDialog dlg = new SaveFileDialog();
-                //if (dlg.ShowDialog() == DialogResult.OK)
-                //{
-                //    filePath = dlg.FileName;
-                //}
+                SaveFileDialog dlg = new SaveFileDialog();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = dlg.FileName;
+                }
 
                 DestOptions dialog = new DestOptions(this)
                 {
@@ -360,12 +400,126 @@ namespace ZScreenLib
             {
                 this.Job1 = JobLevel1.File;
             }
-
         }
 
         #endregion Populating Task
 
         #region Capture
+
+        public string CaptureRegionOrWindow()
+        {
+            IsTakingScreenShot = true;
+            string filePath = string.Empty;
+
+            bool windowMode = this.Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
+
+            try
+            {
+                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
+                {
+                    if (this.Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.LastRegion.IsEmpty)
+                    {
+                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
+                    }
+                    else
+                    {
+                        if (Engine.conf.UseCropBeta && !windowMode)
+                        {
+                            using (Crop2 crop = new Crop2(imgSS))
+                            {
+                                if (crop.ShowDialog() == DialogResult.OK)
+                                {
+                                    this.SetImage(crop.GetCroppedScreenshot());
+                                }
+                            }
+                        }
+                        else if (Engine.conf.UseCropLight && !windowMode)
+                        {
+                            using (CropLight crop = new CropLight(imgSS))
+                            {
+                                if (crop.ShowDialog() == DialogResult.OK)
+                                {
+                                    this.SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using (Crop c = new Crop(imgSS, windowMode))
+                            {
+                                if (c.ShowDialog() == DialogResult.OK)
+                                {
+                                    if (this.Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.LastRegion.IsEmpty)
+                                    {
+                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
+                                    }
+                                    else if (windowMode && !Engine.LastCapture.IsEmpty)
+                                    {
+                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                IsTakingScreenShot = false;
+
+                if (this.TempImage != null)
+                {
+                    bool roundedShadowCorners = false;
+                    if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
+                    {
+                        this.SetImage(GraphicsMgr.RemoveCorners(this.TempImage, null));
+                        roundedShadowCorners = true;
+                    }
+                    if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
+                    {
+                        this.SetImage(GraphicsMgr.AddBorderShadow(this.TempImage, roundedShadowCorners));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Engine.MyLogger.WriteException(ex, "Error while capturing region");
+                this.Errors.Add(ex.Message);
+                if (Engine.conf.CaptureEntireScreenOnError)
+                {
+                    CaptureScreen();
+                }
+            }
+            finally
+            {
+                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
+                IsTakingScreenShot = false;
+            }
+
+            return filePath;
+        }
+
+        public void CaptureFreehandCrop()
+        {
+            using (FreehandCapture crop = new FreehandCapture())
+            {
+                if (crop.ShowDialog() == DialogResult.OK)
+                {
+                    using (Image ss = Capture.CaptureScreen(false))
+                    {
+                        SetImage(crop.GetScreenshot(ss));
+                    }
+                }
+                else
+                {
+                    Status = WorkerTask.TaskStatus.RetryPending;
+                }
+            }
+
+            if (TempImage != null)
+            {
+                WriteImage();
+                PublishData();
+            }
+        }
 
         /// <summary>
         /// Function to Capture Active Window
@@ -460,7 +614,7 @@ namespace ZScreenLib
             {
                 NameParserType type;
                 string pattern = string.Empty;
-                if (this.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE)
+                if (this.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow)
                 {
                     type = NameParserType.ActiveWindow;
                     pattern = Engine.conf.ActiveWindowPattern;
@@ -510,7 +664,6 @@ namespace ZScreenLib
             }
 
             UploadImage();
-
         }
 
         public void UploadImageRemote()
@@ -605,7 +758,6 @@ namespace ZScreenLib
             {
                 UploadToSharedFolder();
             }
-
         }
 
         public void UploadImage()
@@ -616,7 +768,7 @@ namespace ZScreenLib
             {
                 UploadImageRemote();
             }
-            
+
             if (MyOutputs.Contains(OutputTypeEnum.Local))
             {
                 this.AddUploadResult(new UploadResult()
@@ -890,7 +1042,6 @@ namespace ZScreenLib
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -1060,10 +1211,10 @@ namespace ZScreenLib
         private bool CreateThumbnail()
         {
             return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.TempImage != null &&
-                ( Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
+                (Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL_WIKI) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LinkedThumbnailHtml) ||
-                  Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.THUMBNAIL) ) &&
+                  Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.THUMBNAIL)) &&
                 (!Engine.MyUploadersConfig.FTPThumbnailCheckSize || (Engine.MyUploadersConfig.FTPThumbnailCheckSize &&
                 (this.TempImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
         }

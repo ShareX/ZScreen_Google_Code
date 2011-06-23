@@ -25,19 +25,14 @@
 
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
-using Crop;
-using GraphicsMgrLib;
-using ZScreenLib.Shapes;
 
 namespace ZScreenLib
 {
     public class TaskManager
     {
-        public static bool mSetHotkeys, mTakingScreenShot, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
+        public static bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened, bQuickActionsOpened, bQuickOptionsOpened;
         private WorkerTask mTask;
 
         public TaskManager(WorkerTask task)
@@ -47,12 +42,10 @@ namespace ZScreenLib
 
         #region Image Tasks Manager
 
-        public void CaptureActiveWindow()
+        public void PublishActiveWindow()
         {
             try
             {
-                mTask.CaptureActiveWindow();
-                mTask.WriteImage();
                 mTask.PublishData();
             }
             catch (ArgumentOutOfRangeException aor)
@@ -65,134 +58,16 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteException(ex, "Error while capturing active window");
                 if (Engine.conf.CaptureEntireScreenOnError)
                 {
-                    CaptureRegionOrWindow();
-                }
-            }
-        }
-
-        public string CaptureRegionOrWindow()
-        {
-            mTakingScreenShot = true;
-            string filePath = string.Empty;
-
-            bool windowMode = mTask.Job2 == WorkerTask.JobLevel2.TakeScreenshotWindowSelected;
-
-            try
-            {
-                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
-                {
-                    if (mTask.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED && !Engine.LastRegion.IsEmpty)
-                    {
-                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
-                    }
-                    else
-                    {
-                        if (Engine.conf.UseCropBeta && !windowMode)
-                        {
-                            using (Crop2 crop = new Crop2(imgSS))
-                            {
-                                if (crop.ShowDialog() == DialogResult.OK)
-                                {
-                                    mTask.SetImage(crop.GetCroppedScreenshot());
-                                }
-                            }
-                        }
-                        else if (Engine.conf.UseCropLight && !windowMode)
-                        {
-                            using (CropLight crop = new CropLight(imgSS))
-                            {
-                                if (crop.ShowDialog() == DialogResult.OK)
-                                {
-                                    mTask.SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            using (Crop c = new Crop(imgSS, windowMode))
-                            {
-                                if (c.ShowDialog() == DialogResult.OK)
-                                {
-                                    if (mTask.Job2 == WorkerTask.JobLevel2.TakeScreenshotCropped && !Engine.LastRegion.IsEmpty)
-                                    {
-                                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
-                                    }
-                                    else if (windowMode && !Engine.LastCapture.IsEmpty)
-                                    {
-                                        mTask.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                mTakingScreenShot = false;
-
-                if (mTask.TempImage != null)
-                {
-                    bool roundedShadowCorners = false;
-                    if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
-                    {
-                        mTask.SetImage(GraphicsMgr.RemoveCorners(mTask.TempImage, null));
-                        roundedShadowCorners = true;
-                    }
-                    if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
-                    {
-                        mTask.SetImage(GraphicsMgr.AddBorderShadow(mTask.TempImage, roundedShadowCorners));
-                    }
-
-                    mTask.WriteImage();
+                    mTask.CaptureRegionOrWindow();
                     mTask.PublishData();
                 }
             }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while capturing region");
-                mTask.Errors.Add(ex.Message);
-                if (Engine.conf.CaptureEntireScreenOnError)
-                {
-                    CaptureScreen();
-                }
-            }
-            finally
-            {
-                mTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
-                mTakingScreenShot = false;
-            }
-
-            return filePath;
         }
 
-        public void CaptureScreen()
+        public void PublishEntireScreen()
         {
             mTask.CaptureScreen();
-            mTask.WriteImage();
             mTask.PublishData();
-        }
-
-        public void CaptureFreehandCrop()
-        {
-            using (FreehandCapture crop = new FreehandCapture())
-            {
-                if (crop.ShowDialog() == DialogResult.OK)
-                {
-                    using (Image ss = Capture.CaptureScreen(false))
-                    {
-                        mTask.SetImage(crop.GetScreenshot(ss));
-                    }
-                }
-                else
-                {
-                    mTask.Status = WorkerTask.TaskStatus.RetryPending;
-                }
-            }
-
-            if (mTask.TempImage != null)
-            {
-                mTask.WriteImage();
-                mTask.PublishData();
-            }
         }
 
         #endregion Image Tasks Manager

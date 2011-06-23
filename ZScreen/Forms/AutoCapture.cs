@@ -99,13 +99,13 @@ namespace ZScreenGUI
                 switch (Engine.conf.AutoCaptureScreenshotTypes)
                 {
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_SCREEN:
-                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN;
+                        mJob = WorkerTask.JobLevel2.CaptureEntireScreen;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE;
+                        mJob = WorkerTask.JobLevel2.CaptureActiveWindow;
                         break;
                     case AutoScreenshotterJobs.TAKE_SCREENSHOT_LAST_CROPPED:
-                        mJob = WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED;
+                        mJob = WorkerTask.JobLevel2.CaptureLastCroppedWindow;
                         break;
                 }
 

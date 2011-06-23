@@ -54,25 +54,14 @@ namespace ZScreenGUI
 
         #region Worker Events
 
-        private bool CanStartWork(WorkerTask task)
+        public void PrepareTask(WorkerTask task)
         {
-            bool can = task.WasToTakeScreenshot && task.MyImageUploaders.Count > 0;
-            if (!task.WasToTakeScreenshot)
-            {
-                switch (task.Job1)
-                {
-                    case JobLevel1.Image:
-                        can = task.MyImageUploaders.Count > 0;
-                        break;
-                    case JobLevel1.Text:
-                        can = task.MyTextUploaders.Count > 0;
-                        break;
-                    case JobLevel1.File:
-                        can = task.MyFileUploaders.Count > 0;
-                        break;
-                }
-            }
-            return can;
+            Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, task.MyOutputs);
+            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, task.MyLinkFormat);
+            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
+            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
+            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
+            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, task.MyLinkUploaders);
         }
 
         public BackgroundWorker CreateWorker()
@@ -87,15 +76,9 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
+            PrepareTask(task);
 
-            Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, task.MyOutputs);
-            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, task.MyLinkFormat);
-            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
-            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
-            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
-            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, task.MyLinkUploaders);
-
-            if (!CanStartWork(task))
+            if (!task.CanStartWork())
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
             }
@@ -106,8 +89,8 @@ namespace ZScreenGUI
 
                 if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Data) &&
                     !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
-                    (task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN ||
-                    task.Job2 == WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE) &&
+                    (task.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
+                    task.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
                     MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
@@ -131,19 +114,20 @@ namespace ZScreenGUI
                     case JobLevel1.File:
                         switch (task.Job2)
                         {
-                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                                new TaskManager(task).CaptureScreen();
+                            case WorkerTask.JobLevel2.CaptureEntireScreen:
+                                new TaskManager(task).PublishEntireScreen();
                                 break;
-                            case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
-                            case WorkerTask.JobLevel2.TakeScreenshotCropped:
-                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                                new TaskManager(task).CaptureRegionOrWindow();
+                            case WorkerTask.JobLevel2.CaptureSelectedWindow:
+                            case WorkerTask.JobLevel2.CaptureRectRegion:
+                            case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
+                                task.CaptureRegionOrWindow();
+                                task.PublishData();
                                 break;
-                            case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                                new TaskManager(task).CaptureActiveWindow();
+                            case WorkerTask.JobLevel2.CaptureActiveWindow:
+                                new TaskManager(task).PublishActiveWindow();
                                 break;
-                            case WorkerTask.JobLevel2.FREEHAND_CROP_SHOT:
-                                new TaskManager(task).CaptureFreehandCrop();
+                            case WorkerTask.JobLevel2.CaptureFreeHandRegion:
+                                task.CaptureFreehandCrop();
                                 break;
                             case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                             case WorkerTask.JobLevel2.UploadFromClipboard:
@@ -151,7 +135,6 @@ namespace ZScreenGUI
                                 task.PublishData();
                                 break;
                         }
-
                         break;
                     case JobLevel1.Text:
                         switch (task.Job2)
@@ -160,7 +143,8 @@ namespace ZScreenGUI
                                 task.UploadText();
                                 break;
                             case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
-                                LanguageTranslator(task);
+                                task.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo));
+                                task.SetText(task.TranslationInfo.Result);
                                 break;
                         }
                         break;
@@ -175,7 +159,6 @@ namespace ZScreenGUI
                             task.ShortenURL(ur, ur.URL);
                         }
                     }
-
                 }
 
                 e.Result = task;
@@ -486,39 +469,58 @@ namespace ZScreenGUI
             // Fix for Issue 23 - Media Center was triggering Keys.None
             if (key != Keys.None)
             {
+                WorkerTask hkTask = null;
                 if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
                 {
-                    RunWorkerAsync_EntireScreen();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen);
+                    hkTask.CaptureScreen();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_EntireScreen(hkTask);
                     return true;
                 }
 
                 if (Engine.conf.HotkeyActiveWindow == key) // Active Window
                 {
-                    RunWorkerAsync_ActiveWindow();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow);
+                    hkTask.CaptureActiveWindow();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_ActiveWindow(hkTask);
                     return true;
                 }
 
                 if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
                 {
-                    RunWorkerAsync_SelectedWindow();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow);
+                    hkTask.CaptureRegionOrWindow();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_SelectedWindow(hkTask);
                     return true;
                 }
 
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
-                    RunWorkerAsync_CropShot();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
+                    hkTask.CaptureRegionOrWindow();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_CropShot(hkTask);
                     return true;
                 }
 
                 if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
                 {
-                    RunWorkerAsync_LastCropShot();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
+                    hkTask.CaptureRegionOrWindow();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_LastCropShot(hkTask);
                     return true;
                 }
 
                 if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
                 {
-                    RunWorkerAsync_FreehandCropShot();
+                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
+                    hkTask.CaptureRegionOrWindow();
+                    hkTask.WriteImage();
+                    RunWorkerAsync_FreehandCropShot(hkTask);
                     return true;
                 }
 
@@ -582,12 +584,6 @@ namespace ZScreenGUI
 
         #region Google Translate
 
-        public void LanguageTranslator(WorkerTask task)
-        {
-            task.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(task.TranslationInfo));
-            task.SetText(task.TranslationInfo.Result);
-        }
-
         public void StartWorkerTranslator()
         {
             if (Clipboard.ContainsText())
@@ -616,10 +612,9 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync_Screenshots(WorkerTask.JobLevel2 job)
+        public void RunWorkerAsync_Screenshots(WorkerTask task)
         {
             Engine.ClipboardUnhook();
-            WorkerTask task = CreateTask(job);
             task.WasToTakeScreenshot = true;
             task.MyWorker.RunWorkerAsync(task);
         }
@@ -640,10 +635,9 @@ namespace ZScreenGUI
         public void RunWorkerAsync_Pictures(WorkerTask.JobLevel2 job, Image img)
         {
             Engine.ClipboardUnhook();
-            WorkerTask t = CreateTask(job);
-            t.SetImage(img);
-            t.WriteImage();
-            t.MyWorker.RunWorkerAsync(t);
+            WorkerTask task = CreateTask(job);
+            task.SetImage(img);
+            task.MyWorker.RunWorkerAsync(task);
         }
 
         /// <summary>
@@ -730,42 +724,42 @@ namespace ZScreenGUI
             t.MyWorker.RunWorkerAsync(t);
         }
 
-        public void RunWorkerAsync_EntireScreen()
+        public void RunWorkerAsync_EntireScreen(WorkerTask task)
         {
-            RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN);
+            RunWorkerAsync_Screenshots(task);
         }
 
-        public void RunWorkerAsync_ActiveWindow()
+        public void RunWorkerAsync_ActiveWindow(WorkerTask task)
         {
-            RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE);
+            RunWorkerAsync_Screenshots(task);
         }
 
-        public void RunWorkerAsync_SelectedWindow()
+        public void RunWorkerAsync_SelectedWindow(WorkerTask task)
         {
-            if (!TaskManager.mTakingScreenShot)
+            if (!task.IsTakingScreenShot)
             {
-                RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.TakeScreenshotWindowSelected);
+                RunWorkerAsync_Screenshots(task);
             }
         }
 
-        public void RunWorkerAsync_LastCropShot()
+        public void RunWorkerAsync_LastCropShot(WorkerTask task)
         {
-            RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED);
+            RunWorkerAsync_Screenshots(task);
         }
 
-        public void RunWorkerAsync_CropShot()
+        public void RunWorkerAsync_CropShot(WorkerTask task)
         {
-            if (!TaskManager.mTakingScreenShot)
+            if (!task.IsTakingScreenShot)
             {
-                RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.TakeScreenshotCropped);
+                RunWorkerAsync_Screenshots(task);
             }
         }
 
-        public void RunWorkerAsync_FreehandCropShot()
+        public void RunWorkerAsync_FreehandCropShot(WorkerTask task)
         {
-            if (!TaskManager.mTakingScreenShot)
+            if (!task.IsTakingScreenShot)
             {
-                RunWorkerAsync_Screenshots(WorkerTask.JobLevel2.FREEHAND_CROP_SHOT);
+                RunWorkerAsync_Screenshots(task);
             }
         }
 
@@ -927,24 +921,25 @@ namespace ZScreenGUI
             bAutoScreenshotsOpened = false;
         }
 
-        internal void EventJobs(object sender, WorkerTask.JobLevel2 jobs)
+        internal void EventJobs(object sender, WorkerTask.JobLevel2 job)
         {
-            switch (jobs)
+            WorkerTask task = new WorkerTask(CreateWorker(), job);
+            switch (job)
             {
-                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_SCREEN:
-                    RunWorkerAsync_EntireScreen();
+                case WorkerTask.JobLevel2.CaptureEntireScreen:
+                    RunWorkerAsync_EntireScreen(task);
                     break;
-                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_WINDOW_ACTIVE:
-                    RunWorkerAsync_ActiveWindow();
+                case WorkerTask.JobLevel2.CaptureActiveWindow:
+                    RunWorkerAsync_ActiveWindow(task);
                     break;
-                case WorkerTask.JobLevel2.TakeScreenshotWindowSelected:
-                    RunWorkerAsync_SelectedWindow();
+                case WorkerTask.JobLevel2.CaptureSelectedWindow:
+                    RunWorkerAsync_SelectedWindow(task);
                     break;
-                case WorkerTask.JobLevel2.TakeScreenshotCropped:
-                    RunWorkerAsync_CropShot();
+                case WorkerTask.JobLevel2.CaptureRectRegion:
+                    RunWorkerAsync_CropShot(task);
                     break;
-                case WorkerTask.JobLevel2.TAKE_SCREENSHOT_LAST_CROPPED:
-                    RunWorkerAsync_LastCropShot();
+                case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
+                    RunWorkerAsync_LastCropShot(task);
                     break;
                 case WorkerTask.JobLevel2.AUTO_CAPTURE:
                     ShowAutoCapture();
