@@ -24,8 +24,8 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -36,8 +36,10 @@ namespace ZScreenLib
     public partial class ConfigWizard : DavuxLib.Controls.GlassForm
     {
         public bool PreferSystemFolders { get; private set; }
+
         public string RootFolder { get; private set; }
 
+        public List<OutputEnum> MyOutputs = new List<OutputEnum>();
         public List<int> MyClipboardContent = new List<int>();
         public List<int> MyLinkFormat = new List<int>();
         public List<int> MyImageUploaders = new List<int>();
@@ -55,6 +57,7 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
+            MyOutputs.Add(OutputEnum.Clipboard);
             MyClipboardContent.Add((int)ClipboardContentEnum.Data);
             MyLinkFormat.Add((int)LinkFormatEnum.FULL);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
@@ -62,6 +65,7 @@ namespace ZScreenLib
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
 
+            dsh.AddEnumOutputsWithConfigSettings(MyOutputs);
             dsh.AddEnumClipboardContentWithRuntimeSettings(MyClipboardContent);
             dsh.AddEnumLinkFormatWithRuntimeSettings(MyLinkFormat);
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
