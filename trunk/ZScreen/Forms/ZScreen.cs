@@ -2358,5 +2358,10 @@ namespace ZScreenGUI
         {
             Engine.conf.ShowUploadResultsWindow = chkShowUploadResults.Checked;
         }
+
+        private void tsbDonate_Click(object sender, EventArgs e)
+        {
+            Process.Start(ZLinks.URL_DONATE);
+        }
     }
 }

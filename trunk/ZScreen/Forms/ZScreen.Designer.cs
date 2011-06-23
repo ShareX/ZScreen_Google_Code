@@ -67,7 +67,6 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
-            this.pbDonate = new System.Windows.Forms.PictureBox();
             this.tsMainTab = new System.Windows.Forms.ToolStrip();
             this.tsbFullscreenCapture = new System.Windows.Forms.ToolStripButton();
             this.tsbActiveWindow = new System.Windows.Forms.ToolStripButton();
@@ -93,7 +92,6 @@ namespace ZScreenGUI
             this.chkShortenURL = new System.Windows.Forms.CheckBox();
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
@@ -413,10 +411,12 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tsbDonate = new System.Windows.Forms.ToolStripLabel();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).BeginInit();
             this.tsMainTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.gbImageSettings.SuspendLayout();
@@ -791,7 +791,6 @@ namespace ZScreenGUI
             // 
             this.tpMain.AllowDrop = true;
             this.tpMain.BackColor = System.Drawing.Color.White;
-            this.tpMain.Controls.Add(this.pbDonate);
             this.tpMain.Controls.Add(this.tsMainTab);
             this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.Controls.Add(this.lblFileSystemNote);
@@ -809,19 +808,6 @@ namespace ZScreenGUI
             this.tpMain.Text = "Main";
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
-            // 
-            // pbDonate
-            // 
-            this.pbDonate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDonate.Image = ((System.Drawing.Image)(resources.GetObject("pbDonate.Image")));
-            this.pbDonate.Location = new System.Drawing.Point(464, 296);
-            this.pbDonate.Name = "pbDonate";
-            this.pbDonate.Size = new System.Drawing.Size(92, 26);
-            this.pbDonate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbDonate.TabIndex = 75;
-            this.pbDonate.TabStop = false;
-            this.ttZScreen.SetToolTip(this.pbDonate, "Thank you :)");
-            this.pbDonate.Click += new System.EventHandler(this.pbDonate_Click);
             // 
             // tsMainTab
             // 
@@ -845,7 +831,9 @@ namespace ZScreenGUI
             this.toolStripSeparator8,
             this.tsbOpenHistory,
             this.tsbImageDirectory,
-            this.tsbAbout});
+            this.tsbAbout,
+            this.toolStripSeparator2,
+            this.tsbDonate});
             this.tsMainTab.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.tsMainTab.Location = new System.Drawing.Point(659, 3);
             this.tsMainTab.Name = "tsMainTab";
@@ -1096,22 +1084,6 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
-            // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
             // 
             // chkShowCursor
             // 
@@ -4863,6 +4835,39 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // tsbDonate
+            // 
+            this.tsbDonate.AutoSize = false;
+            this.tsbDonate.BackgroundImage = global::ZScreenGUI.Properties.Resources.btn_donate_LG_1_;
+            this.tsbDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
+            this.tsbDonate.Image = global::ZScreenGUI.Properties.Resources.btn_donate_LG_1_;
+            this.tsbDonate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDonate.Name = "tsbDonate";
+            this.tsbDonate.Size = new System.Drawing.Size(92, 26);
+            this.tsbDonate.Text = "Donate";
+            this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
+            // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(148, 6);
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4887,7 +4892,6 @@ namespace ZScreenGUI
             this.tcMain.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDonate)).EndInit();
             this.tsMainTab.ResumeLayout(false);
             this.tsMainTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
@@ -5409,7 +5413,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripButton tsbActiveWindow;
         private ToolStripButton tsbAbout;
         private ToolStripButton tsbImageDirectory;
-        private PictureBox pbDonate;
         private TabControl tcAdvanced;
         private TabPage tpSettings;
         private TabPage tpBackupRestore;
@@ -5417,5 +5420,7 @@ namespace ZScreenGUI
         internal DestSelector ucDestOptions;
         private Label lblImageSizeFixedAutoScale;
         private CheckBox chkShowUploadResults;
+        private ToolStripLabel tsbDonate;
+        private ToolStripSeparator toolStripSeparator2;
     }
 }
