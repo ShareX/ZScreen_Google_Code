@@ -48,15 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserControls\ImageViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserControls\MyPictureBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\MyPictureBox.Designer.cs">
-      <DependentUpon>MyPictureBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\ObjectListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -80,9 +71,6 @@
     <Compile Include="XMLManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UserControls\MyPictureBox.resx">
-      <DependentUpon>MyPictureBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="HistoryForm.resx">
       <DependentUpon>HistoryForm.cs</DependentUpon>
     </EmbeddedResource>

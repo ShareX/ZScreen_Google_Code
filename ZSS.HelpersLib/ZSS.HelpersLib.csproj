@@ -85,6 +85,9 @@
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="StaticHelper.cs" />
+    <Compile Include="UserControls\ImageViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UserControls\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -104,6 +107,12 @@
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\XMLExtensions.cs" />
+    <Compile Include="UserControls\MyPictureBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyPictureBox.Designer.cs">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="XmlFileNameEditor.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="XMLSettingsBase.cs" />
@@ -129,6 +138,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControls\MyPictureBox.resx">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

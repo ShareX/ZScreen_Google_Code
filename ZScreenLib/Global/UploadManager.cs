@@ -30,12 +30,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
-
-// Last working class that supports multiple screenshots histories:
-// http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
 
 namespace ZScreenLib
 {
@@ -51,6 +49,15 @@ namespace ZScreenLib
         public static int CumulativePercentage { get; private set; }
 
         private static int UniqueNumber = 0;
+
+        public static MyListView ListViewControl { get; set; }
+
+        public static List<WorkerTask> Tasks { get; private set; }
+
+        static UploadManager()
+        {
+            Tasks = new List<WorkerTask>();
+        }
 
         /// <summary>
         /// Function to be called when a new Worker thread starts
@@ -117,7 +124,7 @@ namespace ZScreenLib
             {
                 MemoryStream ms = new MemoryStream();
                 MemoryStream ms2 = new MemoryStream();
-                Bitmap bmp = new Bitmap(task.TempImage);
+                Bitmap bmp = new Bitmap(task.tempImage);
                 bmp.Save(ms, ImageFormat.Bmp);
                 byte[] b = ms.GetBuffer();
                 ms2.Write(b, 14, (int)ms.Length - 14);

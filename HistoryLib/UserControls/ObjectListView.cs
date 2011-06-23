@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using HelpersLib;
 
-namespace HistoryLib.Custom_Controls
+namespace HistoryLib.CustomControls
 {
     public class ObjectListView : MyListView
     {

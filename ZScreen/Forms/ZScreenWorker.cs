@@ -108,6 +108,18 @@ namespace ZScreenGUI
                     case JobLevel1.File:
                         switch (bwTask.Job2)
                         {
+                            case WorkerTask.JobLevel2.CaptureEntireScreen:
+                                if (bwTask.tempImage == null)
+                                {
+                                    bwTask.CaptureScreen();
+                                }
+                                break;
+                            case WorkerTask.JobLevel2.CaptureActiveWindow:
+                                if (bwTask.tempImage == null)
+                                {
+                                    bwTask.CaptureActiveWindow();
+                                }
+                                break;
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
                                 bwTask.BwCaptureRegionOrWindow();
@@ -249,7 +261,7 @@ namespace ZScreenGUI
 
                     if (task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
                     {
-                        string fp = Adapter.SaveImage(task.TempImage);
+                        string fp = Adapter.SaveImage(task.tempImage);
                         if (!string.IsNullOrEmpty(fp))
                         {
                             task.UpdateLocalFilePath(fp);
@@ -333,9 +345,9 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (task.TempImage != null)
+                if (task.tempImage != null)
                 {
-                    task.TempImage.Dispose(); // For fix memory leak
+                    task.tempImage.Dispose(); // For fix memory leak
                 }
 
                 if (!task.IsError)
