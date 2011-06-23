@@ -54,17 +54,6 @@ namespace ZScreenGUI
 
         #region Worker Events
 
-        public void PrepareTask(WorkerTask task)
-        {
-            Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, task.MyOutputs);
-            Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, task.MyClipboardContent);
-            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, task.MyLinkFormat);
-            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
-            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
-            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, task.MyFileUploaders);
-            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, task.MyLinkUploaders);
-        }
-
         public BackgroundWorker CreateWorker()
         {
             BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
@@ -77,8 +66,11 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = (WorkerTask)e.Argument;
+            if (bwTask.Status != WorkerTask.TaskStatus.Prepared)
+            {
+                bwTask.PrepareTask(ucDestOptions);
+            }
             bwTask.Status = WorkerTask.TaskStatus.ThreadMode;
-            PrepareTask(bwTask);
 
             if (!bwTask.CanStartWork())
             {
@@ -118,14 +110,15 @@ namespace ZScreenGUI
                         {
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
-                                bwTask.CaptureRegionOrWindow();
+                                bwTask.BwCaptureRegionOrWindow();
                                 bwTask.WriteImage();
-                                bwTask.PublishData();
                                 break;
-                            default:
-                                bwTask.PublishData();
+                            case WorkerTask.JobLevel2.CaptureFreeHandRegion:
+                                bwTask.BwCaptureFreehandCrop();
+                                bwTask.WriteImage();
                                 break;
                         }
+                        bwTask.PublishData();
                         break;
                     case JobLevel1.Text:
                         switch (bwTask.Job2)
@@ -486,8 +479,6 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureSelectedWindow);
-                    hkTask.CaptureRegionOrWindow();
-                    hkTask.WriteImage();
                     RunWorkerAsync_SelectedWindow(hkTask);
                     return true;
                 }
@@ -502,8 +493,6 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-                    hkTask.CaptureRegionOrWindow();
-                    hkTask.WriteImage();
                     RunWorkerAsync_LastCropShot(hkTask);
                     return true;
                 }
@@ -511,8 +500,6 @@ namespace ZScreenGUI
                 if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-                    hkTask.CaptureFreehandCrop();
-                    hkTask.WriteImage();
                     RunWorkerAsync_FreehandCropShot(hkTask);
                     return true;
                 }

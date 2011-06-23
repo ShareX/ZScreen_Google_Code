@@ -56,8 +56,10 @@ namespace ZScreenLib
 
         public enum TaskStatus
         {
-            RetryPending,
+            Created,
+            Prepared,
             Started,
+            RetryPending,
             ThreadMode,
             CancellationPending,
             Finished
@@ -201,7 +203,7 @@ namespace ZScreenLib
         {
             this.UploadResults = new List<UploadResult>();
             this.Errors = new List<string>();
-            this.Status = TaskStatus.Started;
+            this.Status = TaskStatus.Created;
             this.MyWorker = worker;
         }
 
@@ -237,13 +239,17 @@ namespace ZScreenLib
 
         public void PrepareTask(DestSelector ucDestOptions)
         {
-            Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyOutputs);
-            Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
-            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
-            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
-            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
-            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
-            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
+            if (this.Status != TaskStatus.Prepared)
+            {
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyOutputs);
+                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
+                Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
+                Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
+                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
+                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
+                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
+                this.Status = TaskStatus.Prepared;
+            }
         }
 
         #endregion Constructors
@@ -417,7 +423,7 @@ namespace ZScreenLib
 
         #region Capture
 
-        public string CaptureRegionOrWindow()
+        public string BwCaptureRegionOrWindow()
         {
             IsTakingScreenShot = true;
             string filePath = string.Empty;
@@ -508,7 +514,7 @@ namespace ZScreenLib
             return filePath;
         }
 
-        public void CaptureFreehandCrop()
+        public void BwCaptureFreehandCrop()
         {
             using (FreehandCapture crop = new FreehandCapture())
             {
