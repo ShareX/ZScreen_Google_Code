@@ -107,17 +107,6 @@ namespace ZUploader
 
         #endregion Constructors
 
-        public bool IsDestinationValid()
-        {
-            switch (Info.UploaderType)
-            {
-                case EDataType.Image:
-                    return UploadManager.ImageUploader != ImageDestination.NONE;
-            }
-
-            return false;
-        }
-
         public void Start()
         {
             if (Status == TaskStatus.InQueue && !IsStopped)
@@ -233,24 +222,24 @@ namespace ZUploader
 
             switch (UploadManager.ImageUploader)
             {
-                case ImageDestination.IMAGESHACK:
+                case ImageDestination.ImageShack:
                     imageUploader = new ImageShackUploader(ZKeys.ImageShackKey, Program.UploadersConfig.ImageShackAccountType,
                         Program.UploadersConfig.ImageShackRegistrationCode)
                     {
                         IsPublic = Program.UploadersConfig.ImageShackShowImagesInPublic
                     };
                     break;
-                case ImageDestination.TINYPIC:
+                case ImageDestination.TinyPic:
                     imageUploader = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, Program.UploadersConfig.TinyPicAccountType,
                         Program.UploadersConfig.TinyPicRegistrationCode);
                     break;
-                case ImageDestination.IMGUR:
+                case ImageDestination.Imgur:
                     imageUploader = new Imgur(Program.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.UploadersConfig.ImgurOAuthInfo);
                     break;
-                case ImageDestination.FLICKR:
+                case ImageDestination.Flickr:
                     imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Program.UploadersConfig.FlickrAuthInfo, Program.UploadersConfig.FlickrSettings);
                     break;
-                case ImageDestination.UPLOADSCREENSHOT:
+                case ImageDestination.UploadScreenshot:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
                     break;
             }
@@ -270,16 +259,16 @@ namespace ZUploader
 
             switch (UploadManager.TextUploader)
             {
-                case TextUploaderType.PASTEBIN:
+                case TextDestination.Pastebin:
                     textUploader = new PastebinUploader(ZKeys.PastebinKey, Program.UploadersConfig.PastebinSettings);
                     break;
-                case TextUploaderType.PASTEBIN_CA:
+                case TextDestination.PastebinCA:
                     textUploader = new PastebinCaUploader(ZKeys.PastebinCaKey);
                     break;
-                case TextUploaderType.PASTE2:
+                case TextDestination.Paste2:
                     textUploader = new Paste2Uploader();
                     break;
-                case TextUploaderType.SLEXY:
+                case TextDestination.Slexy:
                     textUploader = new SlexyUploader();
                     break;
             }
@@ -300,18 +289,18 @@ namespace ZUploader
 
             switch (UploadManager.FileUploader)
             {
-                case FileUploaderType.FTP:
+                case FileDestination.FTP:
                     if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
                     {
                         fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
                     }
                     break;
-                case FileUploaderType.Dropbox:
+                case FileDestination.Dropbox:
                     NameParser parser = new NameParser { IsFolderPath = true };
                     string uploadPath = parser.Convert(Dropbox.TidyUploadPath(Program.UploadersConfig.DropboxUploadPath));
                     fileUploader = new Dropbox(Program.UploadersConfig.DropboxOAuthInfo, uploadPath, Program.UploadersConfig.DropboxAccountInfo);
                     break;
-                case FileUploaderType.SendSpace:
+                case FileDestination.SendSpace:
                     fileUploader = new SendSpace(ZKeys.SendSpaceKey);
                     switch (Program.UploadersConfig.SendSpaceAccountType)
                     {
@@ -323,14 +312,14 @@ namespace ZUploader
                             break;
                     }
                     break;
-                case FileUploaderType.RapidShare:
+                case FileDestination.RapidShare:
                     fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUserAccountType, Program.UploadersConfig.RapidShareUsername,
                         Program.UploadersConfig.RapidSharePassword);
                     break;
-                case FileUploaderType.ShareCX:
+                case FileDestination.ShareCX:
                     fileUploader = new ShareCX();
                     break;
-                case FileUploaderType.CustomUploader:
+                case FileDestination.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
                     {
                         fileUploader = new CustomUploader(Program.UploadersConfig.CustomUploadersList[Program.UploadersConfig.CustomUploaderSelected]);

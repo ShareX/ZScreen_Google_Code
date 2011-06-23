@@ -29,20 +29,48 @@ namespace ZUploader
 {
     public enum ImageDestination
     {
-        [Description("None")]
-        NONE,
-        [Description("ImageShack - imageshack.us")]
-        IMAGESHACK,
-        [Description("TinyPic - tinypic.com")]
-        TINYPIC,
-        [Description("Imgur - imgur.com")]
-        IMGUR,
-        [Description("Flickr - flickr.com")]
-        FLICKR,
-        [Description("Uploadscreenshot - uploadscreenshot.com")]
-        UPLOADSCREENSHOT,
-        [Description("Use File Uploader")]
-        FILE
+        [Description("imageshack.us")]
+        ImageShack,
+        [Description("tinypic.com")]
+        TinyPic,
+        [Description("imgur.com")]
+        Imgur,
+        [Description("flickr.com")]
+        Flickr,
+        [Description("uploadscreenshot.com")]
+        UploadScreenshot,
+        [Description("File Uploader")]
+        FileUploader
+    }
+
+    public enum TextDestination
+    {
+        [Description("pastebin.com")]
+        Pastebin,
+        [Description("pastebin.ca")]
+        PastebinCA,
+        [Description("paste2.org")]
+        Paste2,
+        [Description("slexy.org")]
+        Slexy,
+        [Description("File Uploader")]
+        FileUploader
+    }
+
+    public enum FileDestination
+    {
+        [Description("rapidshare.com")]
+        RapidShare,
+        [Description("sendspace.com")]
+        SendSpace,
+        [Description("dropbox.com")]
+        Dropbox,
+        [Description("share.cx")]
+        ShareCX,
+        [Description("Custom Uploader")]
+        CustomUploader,
+        [Description("FTP Server")]
+        FTP
     }
 
     public enum EDataType

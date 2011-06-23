@@ -73,13 +73,13 @@ namespace ZUploader
             }
             tsmiImageUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbImageUploaders_DropDownItemClicked);
 
-            foreach (string fileUploader in ZAppHelper.GetEnumDescriptions<FileUploaderType>())
+            foreach (string fileUploader in ZAppHelper.GetEnumDescriptions<FileDestination>())
             {
                 tsmiFileUploaders.DropDownItems.Add(new ToolStripMenuItem(fileUploader));
             }
             tsmiFileUploaders.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddbFileUploaders_DropDownItemClicked);
 
-            foreach (string textUploader in ZAppHelper.GetEnumDescriptions<TextUploaderType>())
+            foreach (string textUploader in ZAppHelper.GetEnumDescriptions<TextDestination>())
             {
                 tsmiTextUploaders.DropDownItems.Add(new ToolStripMenuItem(textUploader));
             }
@@ -113,21 +113,21 @@ namespace ZUploader
             ((ToolStripMenuItem)tsmiImageUploaders.DropDownItems[Program.Settings.SelectedImageUploaderDestination]).Checked = true;
             UploadManager.ImageUploader = (ImageDestination)Program.Settings.SelectedImageUploaderDestination;
 
-            if (ZAppHelper.GetEnumLength<FileUploaderType>() <= Program.Settings.SelectedFileUploaderDestination)
+            if (ZAppHelper.GetEnumLength<FileDestination>() <= Program.Settings.SelectedFileUploaderDestination)
             {
                 Program.Settings.SelectedFileUploaderDestination = 0;
             }
 
             ((ToolStripMenuItem)tsmiFileUploaders.DropDownItems[Program.Settings.SelectedFileUploaderDestination]).Checked = true;
-            UploadManager.FileUploader = (FileUploaderType)Program.Settings.SelectedFileUploaderDestination;
+            UploadManager.FileUploader = (FileDestination)Program.Settings.SelectedFileUploaderDestination;
 
-            if (ZAppHelper.GetEnumLength<TextUploaderType>() <= Program.Settings.SelectedTextUploaderDestination)
+            if (ZAppHelper.GetEnumLength<TextDestination>() <= Program.Settings.SelectedTextUploaderDestination)
             {
                 Program.Settings.SelectedTextUploaderDestination = 0;
             }
 
             ((ToolStripMenuItem)tsmiTextUploaders.DropDownItems[Program.Settings.SelectedTextUploaderDestination]).Checked = true;
-            UploadManager.TextUploader = (TextUploaderType)Program.Settings.SelectedTextUploaderDestination;
+            UploadManager.TextUploader = (TextDestination)Program.Settings.SelectedTextUploaderDestination;
 
             if (ZAppHelper.GetEnumLength<UrlShortenerType>() <= Program.Settings.SelectedURLShortenerDestination)
             {
@@ -531,7 +531,7 @@ namespace ZUploader
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedFileUploaderDestination = i;
-                    UploadManager.FileUploader = (FileUploaderType)i;
+                    UploadManager.FileUploader = (FileDestination)i;
                 }
             }
         }
@@ -544,7 +544,7 @@ namespace ZUploader
                 if (tsmi.Checked = tsmi == e.ClickedItem)
                 {
                     Program.Settings.SelectedTextUploaderDestination = i;
-                    UploadManager.TextUploader = (TextUploaderType)i;
+                    UploadManager.TextUploader = (TextDestination)i;
                 }
             }
         }

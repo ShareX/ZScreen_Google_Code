@@ -39,8 +39,8 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestination ImageUploader { get; set; }
-        public static TextUploaderType TextUploader { get; set; }
-        public static FileUploaderType FileUploader { get; set; }
+        public static TextDestination TextUploader { get; set; }
+        public static FileDestination FileUploader { get; set; }
         public static UrlShortenerType URLShortener { get; set; }
         public static MyListView ListViewControl { get; set; }
         public static List<Task> Tasks { get; private set; }
@@ -58,11 +58,11 @@ namespace ZUploader
                 {
                     EDataType type;
 
-                    if (ImageUploader != ImageDestination.FILE && ZAppHelper.IsImageFile(path))
+                    if (ImageUploader != ImageDestination.FileUploader && ZAppHelper.IsImageFile(path))
                     {
                         type = EDataType.Image;
                     }
-                    else if (TextUploader != TextUploaderType.FileUploader && ZAppHelper.IsTextFile(path))
+                    else if (TextUploader != TextDestination.FileUploader && ZAppHelper.IsTextFile(path))
                     {
                         type = EDataType.Text;
                     }
@@ -147,7 +147,7 @@ namespace ZUploader
         {
             if (img != null)
             {
-                EDataType type = ImageUploader == ImageDestination.FILE ? EDataType.File : EDataType.Image;
+                EDataType type = ImageUploader == ImageDestination.FileUploader ? EDataType.File : EDataType.Image;
                 Task task = Task.CreateImageUploaderTask(type, img);
                 StartUpload(task);
             }
@@ -157,7 +157,7 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                EDataType type = TextUploader == TextUploaderType.FileUploader ? EDataType.File : EDataType.Text;
+                EDataType type = TextUploader == TextDestination.FileUploader ? EDataType.File : EDataType.Text;
                 Task task = Task.CreateTextUploaderTask(type, text);
                 StartUpload(task);
             }
@@ -165,17 +165,14 @@ namespace ZUploader
 
         private static void StartUpload(Task task)
         {
-            if (task.IsDestinationValid())
-            {
-                Tasks.Add(task);
-                task.Info.ID = Tasks.Count - 1;
-                task.UploadPreparing += new Task.TaskEventHandler(task_UploadPreparing);
-                task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
-                task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
-                task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
-                CreateListViewItem(task.Info);
-                StartTasks();
-            }
+            Tasks.Add(task);
+            task.Info.ID = Tasks.Count - 1;
+            task.UploadPreparing += new Task.TaskEventHandler(task_UploadPreparing);
+            task.UploadStarted += new Task.TaskEventHandler(task_UploadStarted);
+            task.UploadProgressChanged += new Task.TaskEventHandler(task_UploadProgressChanged);
+            task.UploadCompleted += new Task.TaskEventHandler(task_UploadCompleted);
+            CreateListViewItem(task.Info);
+            StartTasks();
         }
 
         private static void StartTasks()
