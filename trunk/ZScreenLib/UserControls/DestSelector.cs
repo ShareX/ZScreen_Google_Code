@@ -49,9 +49,9 @@ namespace ZScreenLib
 
                     tsddbDestImage.Enabled = cct == ClipboardContentEnum.Remote;
                     tsddbLinkFormat.Enabled = cct != ClipboardContentEnum.Data;
-                    // tsddDestFile.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
-                    // tsddDestText.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
-                    // tsddbDestLink.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
+                    tsddDestFile.Enabled = cct == ClipboardContentEnum.Remote;
+                    tsddDestText.Enabled = cct == ClipboardContentEnum.Remote;
+                    tsddbDestLink.Enabled = cct == ClipboardContentEnum.Remote;
                 }
             }
         }
@@ -63,7 +63,15 @@ namespace ZScreenLib
 
         private void tsddbOutputs_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            EnableDisableDestControls(e);
+        }
+
+        private void tsmiFile_Click(object sender, System.EventArgs e)
+        {
+            tsmiFile.Checked = true;
+        }
+
+        private void tsmiClipboard_Click(object sender, System.EventArgs e)
+        {
         }
     }
 }

@@ -77,7 +77,7 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
-            // PrepareTask(task);
+            PrepareTask(task);
             if (!task.CanStartWork())
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
