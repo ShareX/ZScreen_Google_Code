@@ -105,7 +105,9 @@
             this.tsmiClipboard.CheckOnClick = true;
             this.tsmiClipboard.Image = ((System.Drawing.Image)(resources.GetObject("tsmiClipboard.Image")));
             this.tsmiClipboard.Name = "tsmiClipboard";
-            this.tsmiClipboard.Size = new System.Drawing.Size(152, 22);
+            this.tsmiClipboard.ShortcutKeyDisplayString = "";
+            this.tsmiClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmiClipboard.Size = new System.Drawing.Size(168, 22);
             this.tsmiClipboard.Text = "Clipboard";
             // 
             // tsmiFile
@@ -115,7 +117,8 @@
             this.tsmiFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tsmiFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFile.Image")));
             this.tsmiFile.Name = "tsmiFile";
-            this.tsmiFile.Size = new System.Drawing.Size(152, 22);
+            this.tsmiFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmiFile.Size = new System.Drawing.Size(168, 22);
             this.tsmiFile.Text = "File";
             // 
             // tsmiPrinter
@@ -123,7 +126,8 @@
             this.tsmiPrinter.CheckOnClick = true;
             this.tsmiPrinter.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPrinter.Image")));
             this.tsmiPrinter.Name = "tsmiPrinter";
-            this.tsmiPrinter.Size = new System.Drawing.Size(152, 22);
+            this.tsmiPrinter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.tsmiPrinter.Size = new System.Drawing.Size(168, 22);
             this.tsmiPrinter.Text = "Printer";
             // 
             // tsddbClipboardContent

@@ -876,7 +876,9 @@ namespace ZScreenLib
                         else if (this.tempImage != null)
                         {
                             FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
-                            ur = uploader.Upload(this.tempImage, this.FileName);
+                            MemoryStream ms = new MemoryStream();
+                            this.tempImage.Save(ms, ImageFormat.Png);
+                            ur = uploader.Upload(ms, this.FileName);
                         }
                         ur.Host = ut.GetDescription();
                         this.AddUploadResult(ur);
