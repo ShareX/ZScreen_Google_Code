@@ -368,7 +368,10 @@ namespace ZScreenLib
                     this.UpdateLocalFilePath(fp);
                 }
                 ur.LocalFilePath = fp;
-                this.UploadResults.Add(ur);
+                if (!string.IsNullOrEmpty(fp))
+                {
+                    this.UploadResults.Add(ur);
+                }
             }
         }
 
@@ -875,12 +878,11 @@ namespace ZScreenLib
                         {
                             ur = uploader.Upload(this.TempImage, this.FileName);
                         }
-                        ur.LocalFilePath = this.LocalFilePath;
                         ur.Host = ut.GetDescription();
                         this.AddUploadResult(ur);
                         this.Errors = uploader.Errors;
 
-                        if (string.IsNullOrEmpty(this.UploadResults[UploadResults.Count - 1].URL))
+                        if (this.UploadResults.Count > 0 && string.IsNullOrEmpty(this.UploadResults[UploadResults.Count - 1].URL))
                         {
                             this.MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning, string.Format("Retrying... Attempt {1}", ut.GetDescription(), i));
                         }
