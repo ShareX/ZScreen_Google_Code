@@ -92,7 +92,7 @@ namespace UploadersLib
         [Description("Local file path")]
         Local,
         [Description("Uploaded URL")]
-        Remote,
+        Remote
     }
 
     public enum LinkFormatEnum
