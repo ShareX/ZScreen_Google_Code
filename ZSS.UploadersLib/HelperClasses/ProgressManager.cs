@@ -33,10 +33,15 @@ namespace ZUploader.HelperClasses
     public class ProgressManager
     {
         public long Length { get; private set; }
+
         public long Position { get; private set; }
+
         public double Percentage { get; private set; }
+
         public double Speed { get; private set; }
+
         public TimeSpan Elapsed { get; private set; }
+
         public TimeSpan Remaining { get; private set; }
 
         private Stopwatch startTimer = new Stopwatch();

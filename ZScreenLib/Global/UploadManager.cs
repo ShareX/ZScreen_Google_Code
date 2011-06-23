@@ -33,7 +33,6 @@ using System.Windows.Forms;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
-using System.Text;
 
 // Last working class that supports multiple screenshots histories:
 // http://code.google.com/p/zscreen/source/browse/trunk/ZScreen/Global/ClipboardManager.cs?spec=svn550&r=550
@@ -46,7 +45,10 @@ namespace ZScreenLib
     public static class UploadManager
     {
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
+
         public static UploadResult UploadResultLast { get; set; }
+
+        public static int CumulativePercentage { get; private set; }
 
         private static int UniqueNumber = 0;
 
@@ -58,6 +60,11 @@ namespace ZScreenLib
             int number = UniqueNumber++;
             UploadInfoList.Add(new UploadInfo(number));
             return number;
+        }
+
+        public static void SetCumulativePercentatge(int perc)
+        {
+            CumulativePercentage = Math.Max(CumulativePercentage, perc);
         }
 
         public static void Clear()
