@@ -47,9 +47,13 @@ namespace ZScreenLib
         public static IntPtr zHandle = IntPtr.Zero;
 
         public const string ZScreenCLI = "ZScreenCLI.exe";
+
         public static Logger MyLogger { get; private set; }
+
         public static Stopwatch StartTimer { get; private set; }
+
         public static bool IsPortable { get; private set; }
+
         public static bool IsMultipleInstance { get; private set; }
 
         private static readonly string ApplicationName = Application.ProductName;
@@ -147,6 +151,7 @@ namespace ZScreenLib
         public static string SettingsDir = zSettingsDir;
         public static string TextDir = zTextDir;
         public static string TempDir = zTempDir;
+
         public static string ImagesDir
         {
             get
@@ -184,7 +189,9 @@ namespace ZScreenLib
         private static bool RunConfig = false;
 
         public static XMLSettings conf { get; set; }
+
         public static UploadersConfig MyUploadersConfig { get; set; }
+
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
@@ -215,6 +222,7 @@ namespace ZScreenLib
         public class EngineOptions
         {
             public bool KeyboardHook { get; set; }
+
             public bool ShowConfigWizard { get; set; }
         }
 
@@ -504,6 +512,8 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
+                Engine.conf.ConfOutputs = Engine.AppConf.Outputs;
+                Engine.conf.ConfClipboardContent = Engine.AppConf.ClipboardContent;
                 Engine.conf.MyImageUploaders = Engine.AppConf.ImageUploaders;
                 Engine.conf.MyTextUploaders = Engine.AppConf.TextUploaders;
                 Engine.conf.MyFileUploaders = Engine.AppConf.FileUploaders;

@@ -34,6 +34,8 @@ namespace HelpersLib
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string UploadersConfigCustomPath { get; set; }
 
+        public List<int> Outputs = new List<int>();
+        public List<int> ClipboardContent = new List<int>();
         public List<int> ImageUploaders = new List<int>(); // default value is from ConfigWizard
         public List<int> FileUploaders = new List<int>();  // default value is from ConfigWizard
         public List<int> TextUploaders = new List<int>();  // default value is from ConfigWizard

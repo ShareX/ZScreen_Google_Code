@@ -67,7 +67,7 @@ namespace ZScreenLib
         public List<int> MyTextUploaders = new List<int>();
         public List<int> MyURLShorteners = new List<int>();
         public List<int> ConfClipboardContent = new List<int>();
-        public List<OutputEnum> ConfOutputs = new List<OutputEnum>();
+        public List<int> ConfOutputs = new List<int>();
         public List<int> ConfLinkFormat = new List<int>();
 
         public long ScreenshotDelayTime = 0;
