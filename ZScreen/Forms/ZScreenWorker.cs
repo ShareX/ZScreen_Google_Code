@@ -120,7 +120,6 @@ namespace ZScreenGUI
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
                             case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                                task.CaptureRegionOrWindow();
                                 task.PublishData();
                                 break;
                             case WorkerTask.JobLevel2.CaptureActiveWindow:
