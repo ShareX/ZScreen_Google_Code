@@ -56,7 +56,8 @@ namespace ZScreenGUI
 
         public void PrepareTask(WorkerTask task)
         {
-            Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, task.MyOutputs);
+            Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, task.MyOutputs);
+            Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, task.MyClipboardContent);
             Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, task.MyLinkFormat);
             Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, task.MyImageUploaders);
             Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, task.MyTextUploaders);
@@ -76,8 +77,7 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Argument;
-            PrepareTask(task);
-
+            // PrepareTask(task);
             if (!task.CanStartWork())
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
@@ -87,8 +87,8 @@ namespace ZScreenGUI
                 task.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, task);
                 task.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && !task.MyOutputs.Contains(OutputTypeEnum.Data) &&
-                    !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
+                if (Engine.conf.PromptForUpload && !task.MyClipboardContent.Contains(ClipboardContentEnum.Data) &&
+                    !task.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     (task.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
                     task.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
                     MessageBox.Show("Do you really want to upload to " + task.GetActiveImageUploadersDescription() + "?",
@@ -261,7 +261,7 @@ namespace ZScreenGUI
                     task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.TempImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -282,7 +282,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -469,10 +469,12 @@ namespace ZScreenGUI
             // Fix for Issue 23 - Media Center was triggering Keys.None
             if (key != Keys.None)
             {
-                WorkerTask hkTask = null;
+                WorkerTask hkTask = new WorkerTask(CreateWorker());
+                hkTask.PrepareTask(ucDestOptions);
+
                 if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
                     hkTask.CaptureScreen();
                     hkTask.WriteImage();
                     RunWorkerAsync_EntireScreen(hkTask);
@@ -481,7 +483,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyActiveWindow == key) // Active Window
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureActiveWindow);
                     hkTask.CaptureActiveWindow();
                     hkTask.WriteImage();
                     RunWorkerAsync_ActiveWindow(hkTask);
@@ -490,7 +492,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureSelectedWindow);
                     hkTask.CaptureRegionOrWindow();
                     hkTask.WriteImage();
                     RunWorkerAsync_SelectedWindow(hkTask);
@@ -499,7 +501,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyCropShot == key) // Crop Shot
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
                     hkTask.CaptureRegionOrWindow();
                     hkTask.WriteImage();
                     RunWorkerAsync_CropShot(hkTask);
@@ -508,7 +510,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
                     hkTask.CaptureRegionOrWindow();
                     hkTask.WriteImage();
                     RunWorkerAsync_LastCropShot(hkTask);
@@ -517,7 +519,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
                 {
-                    hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
+                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureFreeHandRegion);
                     hkTask.CaptureRegionOrWindow();
                     hkTask.WriteImage();
                     RunWorkerAsync_FreehandCropShot(hkTask);
@@ -1023,7 +1025,7 @@ namespace ZScreenGUI
         {
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
-                if (!task.MyOutputs.Contains(OutputTypeEnum.Data) && !task.MyOutputs.Contains(OutputTypeEnum.Local) &&
+                if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Data) && !task.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);

@@ -66,13 +66,15 @@ namespace ZScreenLib
         public List<int> MyFileUploaders = new List<int>();
         public List<int> MyTextUploaders = new List<int>();
         public List<int> MyURLShorteners = new List<int>();
-        public List<int> ConfOutputType = new List<int>();
+        public List<int> ConfClipboardContent = new List<int>();
+        public List<OutputEnum> ConfOutputs = new List<OutputEnum>();
         public List<int> ConfLinkFormat = new List<int>();
 
         public long ScreenshotDelayTime = 0;
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool ManualNaming = false;
         public bool ShowCursor = false;
+
         [Category("Options / Clipboard Upload"), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
         public bool ShowClipboardContentViewer { get; set; }
 
@@ -151,8 +153,10 @@ namespace ZScreenLib
         public XmlColor CropBorderArgb = Color.FromArgb(255, 0, 255);
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
+
         [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Make the corners rounded")]
         public bool CropShotRoundedCorners { get; set; }
+
         [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
         public bool CropShotShadow { get; set; }
 
@@ -171,8 +175,10 @@ namespace ZScreenLib
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
         public bool SelectedWindowCaptureObjects = true;
+
         [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Make the corners rounded")]
         public bool SelectedWindowRoundedCorners { get; set; }
+
         [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
         public bool SelectedWindowShadow { get; set; }
 
@@ -211,6 +217,7 @@ namespace ZScreenLib
         public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
+
         [Category("Screenshots / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
         public bool ShowSaveFileDialogImages { get; set; }
 
@@ -237,6 +244,7 @@ namespace ZScreenLib
         public decimal WatermarkOffset = 5;
         public bool WatermarkAddReflection = false;
         public bool WatermarkAutoHide = true;
+
         [Category("Options / Clipboard Upload"), DefaultValue(false), Description("Do not apply watermark during Clipboard Upload")]
         public bool WatermarkExcludeClipboardUpload { get; set; }
 
@@ -276,14 +284,19 @@ namespace ZScreenLib
         // Image Uploaders
         [Category("Options / Image Uploaders"), DefaultValue(true), Description("Automatically switch to File Uploader if a user copies (Clipboard Upload) or drags a non-Image.")]
         public bool AutoSwitchFileUploader { get; set; }
+
         [Category("Options / Image Uploaders"), DefaultValue(2), Description("Number of Retries if image uploading fails.")]
         public int ErrorRetryCount { get; set; }
+
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with between TinyPic and ImageShack if the TinyPic or ImageShack fails the first attempt.")]
         public bool ImageUploadRetryOnFail { get; set; }
+
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Randomly select a valid destination when instead of retrying between ImageShack and TinyPic.")]
         public bool ImageUploadRandomRetryOnFail { get; set; }
+
         [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
         public bool ImageUploadRetryOnTimeout { get; set; }
+
         [Category("Options / Image Uploaders"), DefaultValue(30000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
         public int UploadDurationLimit { get; set; }
 
@@ -317,8 +330,10 @@ namespace ZScreenLib
 
         [Category("Options / General"), DefaultValue(true), Description("Remember Main Window size and position.")]
         public bool SaveFormSizePosition { get; set; }
+
         [Category("Options / General"), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
+
         public bool AutoSaveSettings = true;
         public WindowButtonAction WindowButtonActionClose = WindowButtonAction.MinimizeToTray;
         public WindowButtonAction WindowButtonActionMinimize = WindowButtonAction.MinimizeToTaskbar;
@@ -350,6 +365,7 @@ namespace ZScreenLib
         //~~~~~~~~~
 
         public bool DeleteLocal = false;
+
         [Category("Destinations / FTP Server"), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
         public int ScreenshotCacheSize { get; set; }
 
@@ -379,12 +395,16 @@ namespace ZScreenLib
 
         [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowUploadResultsWindow { get; set; }
+
         [Category("Options / Interaction"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
+
         [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
+
         [Category("Options / General"), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
         public bool EnableAutoMemoryTrim { get; set; }
+
         [Category("Options / General"), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
         public bool EnableKeyboardHookTimer { get; set; }
 
@@ -393,14 +413,17 @@ namespace ZScreenLib
         [Category("Options / URL Shorteners"), DefaultValue(true),
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
+
         [Category("Options / URL Shorteners"), DefaultValue(80),
         Description("ShortenUrlAfterUpload will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int ShortenUrlAfterUploadAfter { get; set; }
+
         [Category("Options / URL Shorteners"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
 
         [Category("Options / Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
+
         [Category("Options / Clipboard"), DefaultValue(false), Description("Do not store any data in the hard disk when destination is set to Clipboard.")]
         public bool MemoryMode { get; set; }
 
@@ -408,9 +431,11 @@ namespace ZScreenLib
 
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
+
         [Category("Options / Paths"), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string CustomImagesDir { get; set; }
+
         [Category("Options / Paths"), DefaultValue(false), Description("Use Custom Images directory.")]
         public bool UseCustomImagesDir { get; set; }
 
@@ -418,6 +443,7 @@ namespace ZScreenLib
 
         [Category("Options / Watch Folder"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
         public bool FolderMonitoring { get; set; }
+
         [Category("Options / Watch Folder"), Description("Folder monitor path where files automatically get uploaded.")]
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string FolderMonitorPath { get; set; }
@@ -426,8 +452,10 @@ namespace ZScreenLib
 
         [Category("Screenshots / Bevel"), DefaultValue(false), Description("Add bevel effect to screenshots.")]
         public bool BevelEffect { get; set; }
+
         [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
         public int BevelEffectOffset { get; set; }
+
         [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
         public FilterType BevelFilterType { get; set; }
 
@@ -435,6 +463,7 @@ namespace ZScreenLib
 
         [Category("Screenshots / Border"), DefaultValue(false), Description("Add border to screenshots.")]
         public bool BorderEffect { get; set; }
+
         [Category("Screenshots / Border"), DefaultValue(1), Description("Border size in px.")]
         public int BorderEffectSize { get; set; }
 
@@ -474,22 +503,31 @@ namespace ZScreenLib
 
         [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
         public bool CopyImageUntilURL { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window.")]
         public bool PromptForUpload { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(false), Description("Use crop beta.")]
         public bool UseCropBeta { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(false), Description("Use crop light. Simple crop for slow computers.")]
         public bool UseCropLight { get; set; }
+
         [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
 
@@ -497,14 +535,19 @@ namespace ZScreenLib
 
         [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
         public bool DrawReflection { get; set; }
+
         [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will start: Screenshot height + Offset")]
         public int ReflectionOffset { get; set; }
+
         [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
         public int ReflectionPercentage { get; set; }
+
         [Category("Screenshots / Reflection"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
         public bool ReflectionSkew { get; set; }
+
         [Category("Screenshots / Reflection"), DefaultValue(25), Description("How much pixel skew left to right.")]
         public int ReflectionSkewSize { get; set; }
+
         [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
 

@@ -16,7 +16,8 @@ namespace ZScreenLib
 
         public void AddEnumDestToMenuWithConfigSettings()
         {
-            AddEnumOutputTypeWithConfigSettings();
+            AddEnumOutputsWithConfigSettings();
+            AddEnumClipboardContentWithConfigSettings();
             AddEnumLinkFormatWithConfigSettings();
             AddEnumDestImageToMenuWithConfigSettings();
             AddEnumDestTextToMenuWithConfigSettings();
@@ -24,11 +25,40 @@ namespace ZScreenLib
             AddEnumDestLinkToMenuWithConfigSettings();
         }
 
+        public void AddEnumOutputsWithConfigSettings()
+        {
+            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
+        }
+
+        public void AddEnumOutputsWithConfigSettings(List<OutputEnum> list)
+        {
+            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, list);
+        }
+
+        private void SetupOutputsWithRuntimeSettings(ToolStripDropDownButton tsddb, List<OutputEnum> list)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                tsmi.Click += new EventHandler(tsmiOutputs_Click);
+            }
+
+            ucDestOptions.tsmiClipboard.Tag = OutputEnum.Clipboard;
+            ucDestOptions.tsmiClipboard.Checked = list.Contains(OutputEnum.Clipboard);
+
+            ucDestOptions.tsmiFile.Tag = OutputEnum.File;
+            ucDestOptions.tsmiFile.Checked = list.Contains(OutputEnum.File);
+
+            ucDestOptions.tsmiPrinter.Tag = OutputEnum.Printer;
+            ucDestOptions.tsmiPrinter.Checked = list.Contains(OutputEnum.Printer);
+
+            UpdateToolStripOutputs();
+        }
+
         public void AddEnumLinkFormatWithConfigSettings()
         {
             if (Engine.conf.ConfLinkFormat.Count == 0)
             {
-                Engine.conf.ConfLinkFormat.Add((int)OutputTypeEnum.Data);
+                Engine.conf.ConfLinkFormat.Add((int)ClipboardContentEnum.Data);
             }
             AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
         }
@@ -54,24 +84,24 @@ namespace ZScreenLib
             }
         }
 
-        public void AddEnumOutputTypeWithConfigSettings()
+        public void AddEnumClipboardContentWithConfigSettings()
         {
-            if (Engine.conf.ConfOutputType.Count == 0)
+            if (Engine.conf.ConfClipboardContent.Count == 0)
             {
-                Engine.conf.ConfOutputType.Add((int)OutputTypeEnum.Data);
+                Engine.conf.ConfClipboardContent.Add((int)ClipboardContentEnum.Data);
             }
-            AddEnumOutputTypeWithRuntimeSettings(ucDestOptions.tsddbOutputType, Engine.conf.ConfOutputType);
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
             ucDestOptions.EnableDisableDestControls();
         }
 
-        public void AddEnumOutputTypeWithRuntimeSettings(List<int> cctList)
+        public void AddEnumClipboardContentWithRuntimeSettings(List<int> cctList)
         {
-            AddEnumOutputTypeWithRuntimeSettings(ucDestOptions.tsddbOutputType, cctList);
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, cctList);
         }
 
-        public void AddEnumOutputTypeWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
+        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
         {
-            foreach (OutputTypeEnum t in Enum.GetValues(typeof(OutputTypeEnum)))
+            foreach (ClipboardContentEnum t in Enum.GetValues(typeof(ClipboardContentEnum)))
             {
                 ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                 tsmi.Tag = t;
@@ -217,7 +247,11 @@ namespace ZScreenLib
             {
                 tsdd.Text = descr + ": " + dest[0] + " and " + dest[1];
             }
-            else if (dest.Count > 2)
+            else if (dest.Count == 3)
+            {
+                tsdd.Text = string.Format("{0}: {1}, {2} and {3}", descr, dest[0], dest[1], dest[2]);
+            }
+            else if (dest.Count > 3)
             {
                 tsdd.Text = string.Format("{0}: {1}, {2} and {3} more", descr, dest[0], dest[1], dest.Count - 2);
             }
@@ -245,12 +279,17 @@ namespace ZScreenLib
 
         private void UpdateToolStripClipboardContent()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbOutputType, "Clipboard content");
+            UpdateToolStripDest(ucDestOptions.tsddbClipboardContent, "Clipboard content");
         }
 
         private void UpdateToolStripLinkFormat()
         {
             UpdateToolStripDest(ucDestOptions.tsddbLinkFormat, "URL format");
+        }
+
+        private void UpdateToolStripOutputs()
+        {
+            UpdateToolStripDest(ucDestOptions.tsddbOutputs, "Outputs");
         }
 
         private void tsmiDestImage_Click(object sender, EventArgs e)
@@ -281,6 +320,11 @@ namespace ZScreenLib
         private void tsmiDestLinkFormat_Click(object sender, EventArgs e)
         {
             UpdateToolStripLinkFormat();
+        }
+
+        private void tsmiOutputs_Click(object sender, EventArgs e)
+        {
+            UpdateToolStripOutputs();
         }
     }
 }

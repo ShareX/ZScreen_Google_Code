@@ -85,7 +85,17 @@ namespace UploadersLib
         User
     }
 
-    public enum OutputTypeEnum
+    public enum OutputEnum
+    {
+        [Description("Clipboard")]
+        Clipboard,
+        [Description("File")]
+        File,
+        [Description("Printer")]
+        Printer,
+    }
+
+    public enum ClipboardContentEnum
     {
         [Description("Image or Text")]
         Data,
@@ -147,8 +157,6 @@ namespace UploadersLib
         FileUploader,
         [Description("Shared folder")]
         SharedFolder,
-        [Description("Printer")]
-        Printer
     }
 
     public enum TextUploaderType
@@ -163,8 +171,6 @@ namespace UploadersLib
         SLEXY,
         [Description("File Uploader")]
         FileUploader,
-        [Description("Printer")]
-        Printer
     }
 
     public enum FileUploaderType

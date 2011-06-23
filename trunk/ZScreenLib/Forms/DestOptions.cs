@@ -24,16 +24,18 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
-using System.Linq;
 
 namespace ZScreenLib
 {
     public partial class DestOptions : Form
     {
         public string Title { get; set; }
-        public string InputText { get; set; }
+
+        public string FilePath { get; set; }
+
         public WorkerTask Task { get; set; }
 
         public DestOptions(WorkerTask task)
@@ -42,7 +44,8 @@ namespace ZScreenLib
             this.Task = task;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.AddEnumOutputTypeWithRuntimeSettings(Task.MyOutputs.Cast<int>().ToList());
+            dsh.AddEnumOutputsWithConfigSettings(Task.MyOutputs);
+            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.MyClipboardContent.Cast<int>().ToList());
             dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.Cast<int>().ToList());
@@ -50,30 +53,10 @@ namespace ZScreenLib
             dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.Cast<int>().ToList());
         }
 
-        private static int ImageUploaderTypeToInt(ImageUploaderType ut)
-        {
-            return (int)ut;
-        }
-
-        public static int FileUploaderTypeToInt(FileUploaderType ut)
-        {
-            return (int)ut;
-        }
-
-        public static int TextUploaderTypeToInt(TextUploaderType ut)
-        {
-            return (int)ut;
-        }
-
-        public static int LinkUploaderTypeToInt(UrlShortenerType ut)
-        {
-            return (int)ut;
-        }
-
         private void DestOptions_Load(object sender, EventArgs e)
         {
             this.Text = Title;
-            txtInputText.Text = InputText;
+            txtInputText.Text = FilePath;
             txtInputText.KeyDown += new KeyEventHandler(txtInputText_KeyDown);
         }
 
@@ -97,7 +80,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(txtInputText.Text))
             {
-                InputText = txtInputText.Text;
+                FilePath = txtInputText.Text;
                 this.DialogResult = DialogResult.OK;
 
                 Task.MyImageUploaders.Clear();
@@ -105,7 +88,7 @@ namespace ZScreenLib
                 Task.MyFileUploaders.Clear();
                 Task.MyLinkUploaders.Clear();
 
-                Adapter.SaveMenuConfigToList<OutputTypeEnum>(ucDestOptions.tsddbOutputType, Task.MyOutputs);
+                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.MyClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
@@ -122,7 +105,7 @@ namespace ZScreenLib
         }
 
         public DestSelector ucDestOptions;
-        private GroupBox gbFileName;
+        private Button btnBrowse;
 
         #region Windows Form Designer generated code
 
@@ -142,14 +125,13 @@ namespace ZScreenLib
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtInputText = new System.Windows.Forms.TextBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.ucDestOptions = new ZScreenLib.DestSelector();
-            this.gbFileName = new System.Windows.Forms.GroupBox();
-            this.gbFileName.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(224, 264);
+            this.btnOK.Location = new System.Drawing.Point(280, 264);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(73, 23);
             this.btnOK.TabIndex = 0;
@@ -159,7 +141,7 @@ namespace ZScreenLib
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(304, 264);
+            this.btnCancel.Location = new System.Drawing.Point(360, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 23);
             this.btnCancel.TabIndex = 1;
@@ -169,28 +151,31 @@ namespace ZScreenLib
             // 
             // txtInputText
             // 
-            this.txtInputText.Location = new System.Drawing.Point(16, 24);
+            this.txtInputText.Location = new System.Drawing.Point(16, 16);
             this.txtInputText.Name = "txtInputText";
-            this.txtInputText.Size = new System.Drawing.Size(328, 20);
+            this.txtInputText.ReadOnly = true;
+            this.txtInputText.Size = new System.Drawing.Size(408, 20);
             this.txtInputText.TabIndex = 2;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.AutoSize = true;
+            this.btnBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnBrowse.Location = new System.Drawing.Point(432, 16);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(26, 23);
+            this.btnBrowse.TabIndex = 3;
+            this.btnBrowse.Text = "...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // ucDestOptions
             // 
             this.ucDestOptions.BackColor = System.Drawing.Color.White;
-            this.ucDestOptions.Location = new System.Drawing.Point(8, 80);
+            this.ucDestOptions.Location = new System.Drawing.Point(16, 48);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(378, 176);
+            this.ucDestOptions.Size = new System.Drawing.Size(440, 200);
             this.ucDestOptions.TabIndex = 3;
-            // 
-            // gbFileName
-            // 
-            this.gbFileName.Controls.Add(this.txtInputText);
-            this.gbFileName.Location = new System.Drawing.Point(16, 16);
-            this.gbFileName.Name = "gbFileName";
-            this.gbFileName.Size = new System.Drawing.Size(360, 56);
-            this.gbFileName.TabIndex = 4;
-            this.gbFileName.TabStop = false;
-            this.gbFileName.Text = "Specify File Name";
             // 
             // DestOptions
             // 
@@ -198,8 +183,9 @@ namespace ZScreenLib
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(401, 293);
-            this.Controls.Add(this.gbFileName);
+            this.ClientSize = new System.Drawing.Size(472, 300);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.txtInputText);
             this.Controls.Add(this.ucDestOptions);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -212,9 +198,8 @@ namespace ZScreenLib
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DestOptions_Load);
             this.Shown += new System.EventHandler(this.InputBox_Shown);
-            this.gbFileName.ResumeLayout(false);
-            this.gbFileName.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -223,5 +208,17 @@ namespace ZScreenLib
         private System.Windows.Forms.TextBox txtInputText;
 
         #endregion Windows Form Designer generated code
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = FilePath;
+            dlg.Filter = "All files (*.*)|*.*";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                txtInputText.Text = dlg.FileName;
+                FilePath = dlg.FileName;
+            }
+        }
     }
 }

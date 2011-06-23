@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
-using System;
 
 namespace ZScreenLib
 {
@@ -31,23 +30,25 @@ namespace ZScreenLib
             RestrictToOneCheck(tsddbDestLink, e);
         }
 
-        private void tsddbOutputType_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void tsddbClipboardContent_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            RestrictToOneCheck(tsddbOutputType, e);
+            RestrictToOneCheck(tsddbClipboardContent, e);
             EnableDisableDestControls();
         }
 
         public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
         {
-            for (int i = 0; i < tsddbOutputType.DropDownItems.Count; i++)
+            tsddbClipboardContent.Enabled = tsmiClipboard.Checked;
+
+            for (int i = 0; i < tsddbClipboardContent.DropDownItems.Count; i++)
             {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbOutputType.DropDownItems[i];
+                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbClipboardContent.DropDownItems[i];
                 if (tsmi.Checked)
                 {
-                    OutputTypeEnum cct = (OutputTypeEnum)tsmi.Tag;
+                    ClipboardContentEnum cct = (ClipboardContentEnum)tsmi.Tag;
 
-                    // tsddbDestImage.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
-                    tsddbLinkFormat.Enabled = cct != OutputTypeEnum.Data;
+                    tsddbDestImage.Enabled = cct == ClipboardContentEnum.Remote;
+                    tsddbLinkFormat.Enabled = cct != ClipboardContentEnum.Data;
                     // tsddDestFile.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddDestText.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
                     // tsddbDestLink.Enabled = cct == ClipboardContentEnum.RemoteFilePath;
@@ -58,6 +59,11 @@ namespace ZScreenLib
         private void tsddbLinkFormat_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             RestrictToOneCheck(tsddbLinkFormat, e);
+        }
+
+        private void tsddbOutputs_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            EnableDisableDestControls(e);
         }
     }
 }
