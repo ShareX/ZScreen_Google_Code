@@ -201,7 +201,6 @@ namespace ZScreenLib
 
         // Interaction
 
-        public bool CopyClipboardAfterTask = true;
         public bool CompleteSound = true;
         public bool ShowBalloonTip = true;
         public bool BalloonTipOpenLink = true;
