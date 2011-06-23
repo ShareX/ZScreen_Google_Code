@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
 
@@ -29,9 +30,10 @@ namespace ZScreenLib
         {
             if (Engine.conf.ConfOutputs.Count == 0)
             {
-                Engine.conf.ConfOutputs.Add(OutputEnum.Clipboard);
+                Engine.conf.ConfOutputs.Add((int)OutputEnum.Clipboard);
+                Engine.conf.ConfOutputs.Add((int)OutputEnum.File);
             }
-            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
+            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs.Cast<OutputEnum>().ToList());
         }
 
         public void AddEnumOutputsWithConfigSettings(List<OutputEnum> list)
@@ -95,7 +97,6 @@ namespace ZScreenLib
                 Engine.conf.ConfClipboardContent.Add((int)ClipboardContentEnum.Data);
             }
             AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
-            ucDestOptions.EnableDisableDestControls();
         }
 
         public void AddEnumClipboardContentWithRuntimeSettings(List<int> cctList)
@@ -114,6 +115,7 @@ namespace ZScreenLib
                 tsddb.DropDownItems.Add(tsmi);
             }
             UpdateToolStripClipboardContent();
+            ucDestOptions.EnableDisableDestControls();
         }
 
         public void AddEnumDestImageToMenuWithConfigSettings()
