@@ -294,12 +294,9 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    if (Engine.conf.CopyClipboardAfterTask)
+                    if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
                     {
-                        if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
-                        {
-                            UploadManager.SetClipboard(this.Handle, task, false);
-                        }
+                        UploadManager.ShowUploadResults(this.Handle, task, false);
                     }
 
                     if (Engine.conf.TwitterEnabled)

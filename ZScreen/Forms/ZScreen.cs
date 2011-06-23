@@ -868,11 +868,6 @@ namespace ZScreenGUI
             Process.Start(ZLinks.URL_ISSUES);
         }
 
-        private void cbCopyClipboardAfterTask_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.CopyClipboardAfterTask = cbCopyClipboardAfterTask.Checked;
-        }
-
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CompleteSound = cbCompleteSound.Checked;

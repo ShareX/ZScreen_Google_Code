@@ -93,11 +93,13 @@ namespace ZScreenGUI
             this.chkShortenURL = new System.Windows.Forms.CheckBox();
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
@@ -229,7 +231,6 @@ namespace ZScreenGUI
             this.gbDropBox = new System.Windows.Forms.GroupBox();
             this.cbCloseDropBox = new System.Windows.Forms.CheckBox();
             this.gbAppearance = new System.Windows.Forms.GroupBox();
-            this.cbCopyClipboardAfterTask = new System.Windows.Forms.CheckBox();
             this.chkTwitterEnable = new System.Windows.Forms.CheckBox();
             this.cbCompleteSound = new System.Windows.Forms.CheckBox();
             this.chkCaptureFallback = new System.Windows.Forms.CheckBox();
@@ -412,8 +413,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -1098,6 +1097,22 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
             // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
+            // 
             // chkShowCursor
             // 
             this.chkShowCursor.AutoSize = true;
@@ -1164,6 +1179,15 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\r\nCome visit our website and create an i" +
                     "ssue.");
             this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
+            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(352, 200);
+            this.ucDestOptions.TabIndex = 124;
+            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
             // tpHotkeys
             // 
@@ -2642,7 +2666,7 @@ namespace ZScreenGUI
             this.btnOptionsBalloonTip.Controls.Add(this.cbShowPopup);
             this.btnOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
             this.btnOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
-            this.btnOptionsBalloonTip.Location = new System.Drawing.Point(8, 112);
+            this.btnOptionsBalloonTip.Location = new System.Drawing.Point(8, 144);
             this.btnOptionsBalloonTip.Name = "btnOptionsBalloonTip";
             this.btnOptionsBalloonTip.Size = new System.Drawing.Size(752, 104);
             this.btnOptionsBalloonTip.TabIndex = 8;
@@ -2685,7 +2709,7 @@ namespace ZScreenGUI
             // gbDropBox
             // 
             this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 224);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 256);
             this.gbDropBox.Name = "gbDropBox";
             this.gbDropBox.Size = new System.Drawing.Size(752, 56);
             this.gbDropBox.TabIndex = 6;
@@ -2706,7 +2730,6 @@ namespace ZScreenGUI
             // gbAppearance
             // 
             this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.gbAppearance.Controls.Add(this.cbCopyClipboardAfterTask);
             this.gbAppearance.Controls.Add(this.chkTwitterEnable);
             this.gbAppearance.Controls.Add(this.cbCompleteSound);
             this.gbAppearance.Controls.Add(this.chkCaptureFallback);
@@ -2714,26 +2737,15 @@ namespace ZScreenGUI
             this.gbAppearance.Controls.Add(this.nudFlashIconCount);
             this.gbAppearance.Location = new System.Drawing.Point(8, 8);
             this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(752, 96);
+            this.gbAppearance.Size = new System.Drawing.Size(752, 128);
             this.gbAppearance.TabIndex = 5;
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
             // 
-            // cbCopyClipboardAfterTask
-            // 
-            this.cbCopyClipboardAfterTask.AutoSize = true;
-            this.cbCopyClipboardAfterTask.Location = new System.Drawing.Point(16, 24);
-            this.cbCopyClipboardAfterTask.Name = "cbCopyClipboardAfterTask";
-            this.cbCopyClipboardAfterTask.Size = new System.Drawing.Size(279, 17);
-            this.cbCopyClipboardAfterTask.TabIndex = 10;
-            this.cbCopyClipboardAfterTask.Text = "Copy URL to clipboard after upload/task is completed";
-            this.cbCopyClipboardAfterTask.UseVisualStyleBackColor = true;
-            this.cbCopyClipboardAfterTask.CheckedChanged += new System.EventHandler(this.cbCopyClipboardAfterTask_CheckedChanged);
-            // 
             // chkTwitterEnable
             // 
             this.chkTwitterEnable.AutoSize = true;
-            this.chkTwitterEnable.Location = new System.Drawing.Point(352, 48);
+            this.chkTwitterEnable.Location = new System.Drawing.Point(16, 72);
             this.chkTwitterEnable.Name = "chkTwitterEnable";
             this.chkTwitterEnable.Size = new System.Drawing.Size(202, 17);
             this.chkTwitterEnable.TabIndex = 9;
@@ -2744,7 +2756,7 @@ namespace ZScreenGUI
             // cbCompleteSound
             // 
             this.cbCompleteSound.AutoSize = true;
-            this.cbCompleteSound.Location = new System.Drawing.Point(16, 48);
+            this.cbCompleteSound.Location = new System.Drawing.Point(16, 24);
             this.cbCompleteSound.Name = "cbCompleteSound";
             this.cbCompleteSound.Size = new System.Drawing.Size(224, 17);
             this.cbCompleteSound.TabIndex = 5;
@@ -2755,7 +2767,7 @@ namespace ZScreenGUI
             // chkCaptureFallback
             // 
             this.chkCaptureFallback.AutoSize = true;
-            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 72);
+            this.chkCaptureFallback.Location = new System.Drawing.Point(16, 48);
             this.chkCaptureFallback.Name = "chkCaptureFallback";
             this.chkCaptureFallback.Size = new System.Drawing.Size(206, 17);
             this.chkCaptureFallback.TabIndex = 7;
@@ -2767,7 +2779,7 @@ namespace ZScreenGUI
             // 
             this.lblTrayFlash.AutoSize = true;
             this.lblTrayFlash.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTrayFlash.Location = new System.Drawing.Point(350, 24);
+            this.lblTrayFlash.Location = new System.Drawing.Point(16, 96);
             this.lblTrayFlash.Name = "lblTrayFlash";
             this.lblTrayFlash.Size = new System.Drawing.Size(315, 13);
             this.lblTrayFlash.TabIndex = 3;
@@ -2775,7 +2787,7 @@ namespace ZScreenGUI
             // 
             // nudFlashIconCount
             // 
-            this.nudFlashIconCount.Location = new System.Drawing.Point(672, 20);
+            this.nudFlashIconCount.Location = new System.Drawing.Point(333, 95);
             this.nudFlashIconCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -4851,31 +4863,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
-            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(352, 200);
-            this.ucDestOptions.TabIndex = 124;
-            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5386,7 +5373,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox cbFreehandCropAutoUpload;
         private System.Windows.Forms.CheckBox cbFreehandCropAutoClose;
         private System.Windows.Forms.CheckBox cbFreehandCropShowRectangleBorder;
-        private System.Windows.Forms.CheckBox cbCopyClipboardAfterTask;
         internal AccountsControl ucProxyAccounts;
         internal System.Windows.Forms.ComboBox cboProxyConfig;
         internal System.Windows.Forms.CheckBox cbHistorySave;

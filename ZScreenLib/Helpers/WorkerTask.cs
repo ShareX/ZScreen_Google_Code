@@ -1298,7 +1298,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyClipboardContent.Contains(ClipboardContentEnum.Data) && this.tempImage != null;
+            return MyOutputs.Contains(OutputEnum.Clipboard) && MyClipboardContent.Contains(ClipboardContentEnum.Data) && this.tempImage != null;
         }
 
         private bool CreateThumbnail()

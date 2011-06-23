@@ -239,7 +239,6 @@ namespace ZScreenGUI
             cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
             chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
-            cbCopyClipboardAfterTask.Checked = Engine.conf.CopyClipboardAfterTask;
             cbCompleteSound.Checked = Engine.conf.CompleteSound;
             cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
 

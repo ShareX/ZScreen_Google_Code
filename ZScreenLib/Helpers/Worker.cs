@@ -175,10 +175,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (Engine.conf.CopyClipboardAfterTask)
-                {
-                    UploadManager.SetClipboard(IntPtr.Zero, task, false);
-                }
+                UploadManager.ShowUploadResults(IntPtr.Zero, task, false);
 
                 if (task.IsError)
                 {
