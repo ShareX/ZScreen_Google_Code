@@ -81,13 +81,13 @@ namespace ZScreenLib
                         case WorkerTask.JobLevel2.CaptureSelectedWindow:
                         case WorkerTask.JobLevel2.CaptureRectRegion:
                         case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                            task.CaptureRegionOrWindow();
+                            task.BwCaptureRegionOrWindow();
                             break;
                         case WorkerTask.JobLevel2.CaptureActiveWindow:
                             task.CaptureActiveWindow();
                             break;
                         case WorkerTask.JobLevel2.CaptureFreeHandRegion:
-                            task.CaptureFreehandCrop();
+                            task.BwCaptureFreehandCrop();
                             break;
                         case WorkerTask.JobLevel2.UPLOAD_IMAGE:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
