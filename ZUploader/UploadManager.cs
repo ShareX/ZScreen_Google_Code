@@ -39,10 +39,15 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestination ImageUploader { get; set; }
+
         public static TextDestination TextUploader { get; set; }
+
         public static FileDestination FileUploader { get; set; }
+
         public static UrlShortenerType URLShortener { get; set; }
+
         public static MyListView ListViewControl { get; set; }
+
         public static List<Task> Tasks { get; private set; }
 
         static UploadManager()
@@ -264,8 +269,8 @@ namespace ZUploader
             if (ListViewControl != null)
             {
                 ListViewItem lvi = ListViewControl.Items[info.ID];
-                lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} kB / {2:N0} kB", info.Progress.Percentage,
-                    info.Progress.Position / 1000, info.Progress.Length / 1000);
+                lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
+                    info.Progress.Position / 1024, info.Progress.Length / 1024);
                 lvi.SubItems[3].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
                 lvi.SubItems[4].Text = string.Format("{0:00}:{1:00}", info.Progress.Elapsed.Minutes, info.Progress.Elapsed.Seconds);
                 lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.Remaining.Minutes, info.Progress.Remaining.Seconds);
