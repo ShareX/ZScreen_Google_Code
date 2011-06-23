@@ -27,6 +27,10 @@ namespace ZScreenLib
 
         public void AddEnumOutputsWithConfigSettings()
         {
+            if (Engine.conf.ConfOutputs.Count == 0)
+            {
+                Engine.conf.ConfOutputs.Add(OutputEnum.Clipboard);
+            }
             SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
         }
 
