@@ -55,14 +55,14 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            MyClipboardContent.Add((int)OutputTypeEnum.Data);
+            MyClipboardContent.Add((int)ClipboardContentEnum.Data);
             MyLinkFormat.Add((int)LinkFormatEnum.FULL);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
 
-            dsh.AddEnumOutputTypeWithRuntimeSettings(MyClipboardContent);
+            dsh.AddEnumClipboardContentWithRuntimeSettings(MyClipboardContent);
             dsh.AddEnumLinkFormatWithRuntimeSettings(MyLinkFormat);
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
@@ -75,7 +75,7 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputType, MyClipboardContent);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);

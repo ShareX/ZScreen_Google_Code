@@ -261,8 +261,9 @@ namespace ZScreenGUI
         {
             // Save Destinations
 
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputType, Engine.conf.ConfOutputType);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);

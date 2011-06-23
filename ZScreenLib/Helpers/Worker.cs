@@ -139,7 +139,7 @@ namespace ZScreenLib
 
                 if (task.WasToTakeScreenshot)
                 {
-                    if (!task.MyOutputs.Contains(OutputTypeEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                    if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                     {
                         try
                         {

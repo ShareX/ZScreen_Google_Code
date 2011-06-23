@@ -96,7 +96,7 @@ namespace ZScreenLib
         {
             if (task.UploadResults.Count > 0)
             {
-                if (task.MyOutputs.Count > 1 || Engine.conf.ShowUploadResultsWindow || showDialog)
+                if (task.MyClipboardContent.Count > 1 || Engine.conf.ShowUploadResultsWindow || showDialog)
                 {
                     ClipboardOptions cmp = new ClipboardOptions(task);
                     cmp.Icon = Resources.zss_main;
@@ -120,7 +120,7 @@ namespace ZScreenLib
                 dataObject.SetData(DataFormats.Dib, ms2);
                 Clipboard.SetDataObject(dataObject, true, 3, 1000);
             }
-            else if (task.MyOutputs.Contains(OutputTypeEnum.Local))
+            else if (task.MyClipboardContent.Contains(ClipboardContentEnum.Local))
             {
                 foreach (UploadResult ur in task.UploadResults)
                 {
@@ -161,7 +161,7 @@ namespace ZScreenLib
                             break;
                         }
                     }
-                    if (string.IsNullOrEmpty(clipboardText) && task.MyOutputs.Contains(OutputTypeEnum.Local))
+                    if (string.IsNullOrEmpty(clipboardText) && task.MyClipboardContent.Contains(ClipboardContentEnum.Local))
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {

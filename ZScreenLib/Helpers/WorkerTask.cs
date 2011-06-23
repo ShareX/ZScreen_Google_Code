@@ -180,7 +180,8 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
-        public List<OutputTypeEnum> MyOutputs = new List<OutputTypeEnum>();
+        public List<OutputEnum> MyOutputs = new List<OutputEnum>();
+        public List<ClipboardContentEnum> MyClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
@@ -195,22 +196,16 @@ namespace ZScreenLib
 
         #region Constructors
 
-        private WorkerTask()
+        public WorkerTask(BackgroundWorker worker)
         {
             this.UploadResults = new List<UploadResult>();
             this.Errors = new List<string>();
             this.Status = TaskStatus.Started;
+            this.MyWorker = worker;
         }
 
-        /// <summary>
-        /// Constructor taking Worker and Job
-        /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="job"></param>
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
-            : this()
+        public void AssignJob(JobLevel2 job)
         {
-            this.MyWorker = worker;
             this.Job2 = job;
 
             switch (job)
@@ -226,6 +221,28 @@ namespace ZScreenLib
                     Job1 = JobLevel1.Image;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Constructor taking Worker and Job
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="job"></param>
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
+            : this(worker)
+        {
+            this.AssignJob(job);
+        }
+
+        public void PrepareTask(DestSelector ucDestOptions)
+        {
+            Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyOutputs);
+            Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
+            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
+            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
+            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
+            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
+            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
         }
 
         #endregion Constructors
@@ -298,29 +315,19 @@ namespace ZScreenLib
 
             if (Engine.conf.ManualNaming)
             {
-                // NOTE: we cannot use SaveFileDialog because we are not in the main thread, and we cant also use SaveFileDialog
-                // in the main thread because the file name has to be determined outside of the main thread so the main thrad is
-                // ready for multiple requests
-
-                SaveFileDialog dlg = new SaveFileDialog();
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    filePath = dlg.FileName;
-                }
-
                 DestOptions dialog = new DestOptions(this)
                 {
-                    Title = "Specify a Screenshot Name...",
-                    InputText = fileName,
+                    Title = "Browse for a file path...",
+                    FilePath = filePath,
                     Icon = Resources.zss_main
                 };
                 NativeMethods.SetForegroundWindow(dialog.Handle);
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
-                    if (string.IsNullOrEmpty(this.FileName) || !this.FileName.Equals(dialog.InputText))
+                    if (string.IsNullOrEmpty(this.FileName) || !this.LocalFilePath.Equals(dialog.FilePath))
                     {
-                        this.FileName = HelpersLib.ZAppHelper.NormalizeString(dialog.InputText);
+                        this.UpdateLocalFilePath(dialog.FilePath);
                     }
                 }
                 else
@@ -764,20 +771,20 @@ namespace ZScreenLib
         {
             this.StartTime = DateTime.Now;
 
-            if (MyOutputs.Contains(OutputTypeEnum.Remote))
+            if (MyClipboardContent.Contains(ClipboardContentEnum.Remote))
             {
                 UploadImageRemote();
             }
 
-            if (MyOutputs.Contains(OutputTypeEnum.Local))
+            if (MyClipboardContent.Contains(ClipboardContentEnum.Local))
             {
                 this.AddUploadResult(new UploadResult()
                 {
-                    Host = OutputTypeEnum.Local.GetDescription()
+                    Host = ClipboardContentEnum.Local.GetDescription()
                 });
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.Printer))
+            if (MyOutputs.Contains(OutputEnum.Printer))
             {
                 if (this.TempImage != null)
                 {
@@ -876,7 +883,7 @@ namespace ZScreenLib
                 {
                     UploadFile();
                 }
-                if (MyTextUploaders.Contains(TextUploaderType.Printer))
+                if (MyOutputs.Contains(OutputEnum.Printer))
                 {
                     if (!string.IsNullOrEmpty(TempText))
                     {
@@ -975,7 +982,7 @@ namespace ZScreenLib
 
         private void UploadFile(FileUploaderType ut, FileUploader fileHost)
         {
-            if (fileHost != null)
+            if (fileHost != null && File.Exists(this.LocalFilePath))
             {
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 this.DestinationName = ut.GetDescription();
@@ -1205,7 +1212,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Job1 == JobLevel1.Image && MyOutputs.Contains(OutputTypeEnum.Data) && this.TempImage != null;
+            return Job1 == JobLevel1.Image && MyClipboardContent.Contains(ClipboardContentEnum.Data) && this.TempImage != null;
         }
 
         private bool CreateThumbnail()
