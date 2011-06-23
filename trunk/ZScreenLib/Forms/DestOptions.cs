@@ -42,7 +42,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
             this.Task = task;
-
+            btnBrowse.Enabled = task.Status != WorkerTask.TaskStatus.ThreadMode;
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumOutputsWithConfigSettings(Task.MyOutputs);
             dsh.AddEnumClipboardContentWithRuntimeSettings(Task.MyClipboardContent.Cast<int>().ToList());
@@ -128,9 +128,9 @@ namespace ZScreenLib
             this.btnBrowse = new System.Windows.Forms.Button();
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.SuspendLayout();
-            // 
+            //
             // btnOK
-            // 
+            //
             this.btnOK.Location = new System.Drawing.Point(280, 264);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(73, 23);
@@ -138,9 +138,9 @@ namespace ZScreenLib
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.Location = new System.Drawing.Point(360, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 23);
@@ -148,17 +148,17 @@ namespace ZScreenLib
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // txtInputText
-            // 
+            //
             this.txtInputText.Location = new System.Drawing.Point(16, 16);
             this.txtInputText.Name = "txtInputText";
             this.txtInputText.ReadOnly = true;
             this.txtInputText.Size = new System.Drawing.Size(408, 20);
             this.txtInputText.TabIndex = 2;
-            // 
+            //
             // btnBrowse
-            // 
+            //
             this.btnBrowse.AutoSize = true;
             this.btnBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowse.Location = new System.Drawing.Point(432, 16);
@@ -168,17 +168,17 @@ namespace ZScreenLib
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
+            //
             // ucDestOptions
-            // 
+            //
             this.ucDestOptions.BackColor = System.Drawing.Color.White;
             this.ucDestOptions.Location = new System.Drawing.Point(16, 48);
             this.ucDestOptions.Name = "ucDestOptions";
             this.ucDestOptions.Size = new System.Drawing.Size(440, 200);
             this.ucDestOptions.TabIndex = 3;
-            // 
+            //
             // DestOptions
-            // 
+            //
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -200,7 +200,6 @@ namespace ZScreenLib
             this.Shown += new System.EventHandler(this.InputBox_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.Button btnOK;

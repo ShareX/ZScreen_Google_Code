@@ -58,6 +58,7 @@ namespace ZScreenLib
         {
             RetryPending,
             Started,
+            ThreadMode,
             CancellationPending,
             Finished
         }
@@ -522,12 +523,6 @@ namespace ZScreenLib
                 {
                     Status = WorkerTask.TaskStatus.RetryPending;
                 }
-            }
-
-            if (TempImage != null)
-            {
-                WriteImage();
-                PublishData();
             }
         }
 

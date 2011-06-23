@@ -249,5 +249,10 @@ namespace ZScreenLib
                 Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
             }
         }
+
+        public static void ResetCumulativePercentage()
+        {
+            CumulativePercentage = 0;
+        }
     }
 }
