@@ -324,6 +324,7 @@ namespace ZScreenLib
 
         private void tsmiOutputs_Click(object sender, EventArgs e)
         {
+            ucDestOptions.EnableDisableDestControls();
             UpdateToolStripOutputs();
         }
     }
