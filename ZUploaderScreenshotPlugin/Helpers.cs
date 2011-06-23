@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace ZUploaderScreenshotPlugin
 {
-    public static class Helpers
+    internal static class Helpers
     {
         public static Rectangle FixRectangle(int x, int y, int width, int height)
         {
@@ -41,8 +41,8 @@ namespace ZUploaderScreenshotPlugin
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CompositingQuality = CompositingQuality.HighQuality;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
                 g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
             }
 

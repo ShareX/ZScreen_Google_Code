@@ -44,7 +44,7 @@ namespace HistoryLib
             try
             {
                 if (historyItem != null && !string.IsNullOrEmpty(historyItem.Filename) &&
-                historyItem.DateTimeUtc != DateTime.MinValue && 
+                historyItem.DateTimeUtc != DateTime.MinValue &&
                 (!string.IsNullOrEmpty(historyItem.URL) || !string.IsNullOrEmpty(historyItem.Filepath)))
                 {
                     return xml.AddHistoryItem(historyItem);
