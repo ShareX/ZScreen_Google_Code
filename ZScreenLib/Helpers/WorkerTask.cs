@@ -574,38 +574,36 @@ namespace ZScreenLib
         /// </summary>
         public void PerformActions()
         {
-            if (File.Exists(LocalFilePath))
+            foreach (Software app in Engine.conf.ActionsList)
             {
-                foreach (Software app in Engine.conf.ActionsList)
+                if (app.Enabled)
                 {
-                    if (app.Enabled)
+                    if (Job1 == JobLevel1.File && app.TriggerForFiles ||
+                        Job1 == JobLevel1.Image && app.TriggerForImages && !this.WasToTakeScreenshot ||
+                        Job1 == JobLevel1.Image && app.TriggerForScreenshots && this.WasToTakeScreenshot ||
+                        Job1 == JobLevel1.Text && app.TriggerForText)
                     {
-                        if (Job1 == JobLevel1.File && app.TriggerForFiles ||
-                            Job1 == JobLevel1.Image && app.TriggerForImages && !this.WasToTakeScreenshot ||
-                            Job1 == JobLevel1.Image && app.TriggerForScreenshots && this.WasToTakeScreenshot ||
-                            Job1 == JobLevel1.Text && app.TriggerForText)
+                        if (app.Name == Engine.zImageAnnotator)
                         {
-                            if (app.Name == Engine.zImageAnnotator)
+                            try
                             {
-                                try
-                                {
-                                    Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
-                                    Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                                    editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                                    editor.MyWorker = MyWorker;
-                                    editor.SetImage(tempImage);
-                                    editor.SetImagePath(LocalFilePath);
-                                    editor.ShowDialog();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Engine.MyLogger.WriteException(ex, "ImageEdit");
-                                }
+                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
+                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
+                                editor.MyWorker = MyWorker;
+                                editor.SetImage(tempImage);
+                                editor.SetImagePath(LocalFilePath);
+                                editor.ShowDialog();
+                                this.SetImage(editor.GetImage());
                             }
-                            else if (File.Exists(app.Path))
+                            catch (Exception ex)
                             {
-                                app.OpenFile(LocalFilePath);
+                                Engine.MyLogger.WriteException(ex, "ImageEdit");
                             }
+                        }
+                        else if (File.Exists(app.Path))
+                        {
+                            app.OpenFile(LocalFilePath);
                         }
                     }
                 }

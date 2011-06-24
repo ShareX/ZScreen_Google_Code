@@ -26,7 +26,6 @@
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
-using UploadersLib;
 using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
@@ -96,8 +95,6 @@ namespace ZScreenLib
 
                         break;
                 }
-
-                sbMsg.AppendLine();
 
                 if (task.UploadResults.Count == 0 && task.IsError)
                 {

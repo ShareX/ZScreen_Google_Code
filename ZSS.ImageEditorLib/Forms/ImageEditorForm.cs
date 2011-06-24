@@ -59,6 +59,7 @@ namespace Greenshot
     public partial class ImageEditorForm : Form
     {
         public BackgroundWorker MyWorker { get; set; }
+
         public bool AutoSave = true;
 
         private ColorDialog colorDialog = ColorDialog.GetInstance();
@@ -102,6 +103,11 @@ namespace Greenshot
             cbThickness.Text = conf.Editor_Thickness.ToString();
 
             btnArrowHeads.Image = DrawArrowHeadsButton(surface.ArrowHead, btnArrowHeads.ContentRectangle);
+        }
+
+        public Image GetImage()
+        {
+            return surface.Image;
         }
 
         public void SetImage(Image img)

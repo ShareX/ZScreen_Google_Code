@@ -26,6 +26,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Design;
+using System.IO;
 
 namespace ZScreenLib
 {
@@ -33,19 +34,26 @@ namespace ZScreenLib
     {
         [Category("Software"), DefaultValue(""), Description("Descriptive Name of the Software")]
         public string Name { get; set; }
+
         [EditorAttribute(typeof(ExeFileNameEditor), typeof(UITypeEditor))]
         [Category("Software"), DefaultValue(""), Description("Location of the Software")]
         public string Path { get; set; }
+
         [Category("Software"), DefaultValue(SyntaxParser.FilePath), Description("Arguments passed to the application. Use " + SyntaxParser.FilePath + " syntax to specify the file path of the image that is going to be processed.")]
         public string Args { get; set; }
+
         [Browsable(false)]
         public bool Enabled { get; set; }
+
         [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for images copied from Explorer or copied to clipboard.")]
         public bool TriggerForImages { get; set; }
+
         [Category("Software"), DefaultValue(true), Description("Toggle the behaviour of launching this application for screenshots captured using hotkeys such as Print Screen.")]
         public bool TriggerForScreenshots { get; set; }
+
         [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for text.")]
         public bool TriggerForText { get; set; }
+
         [Category("Software"), DefaultValue(false), Description("Toggle the behaviour of launching this application for files.")]
         public bool TriggerForFiles { get; set; }
 
@@ -125,7 +133,10 @@ namespace ZScreenLib
         /// <param name="fp">File path to be opened</param>
         public void OpenFile(string fp)
         {
-            RunWithArgs(string.Format("\"{0}\"", fp));
+            if (File.Exists(fp))
+            {
+                RunWithArgs(string.Format("\"{0}\"", fp));
+            }
         }
 
         /// <summary>

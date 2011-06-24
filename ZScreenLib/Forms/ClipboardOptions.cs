@@ -12,7 +12,7 @@ namespace ZScreenLib
 {
     public partial class ClipboardOptions : Form
     {
-        private WorkerTask mTask = null;
+        private WorkerTask urTask = null;
 
         public ClipboardOptions(WorkerTask task)
         {
@@ -20,7 +20,7 @@ namespace ZScreenLib
 
             if (task != null && task.UploadResults.Count > 0)
             {
-                this.mTask = task;
+                this.urTask = task;
                 this.Text = task.FileName.ToString(); // +" - " + task.GetDescription();
                 this.pbPreview.LoadingImage = Resources.Loading;
                 foreach (UploadResult ur in task.UploadResults)
@@ -102,16 +102,16 @@ namespace ZScreenLib
 
         private void btnCopyImage_Click(object sender, EventArgs e)
         {
-            if (File.Exists(mTask.LocalFilePath))
+            if (File.Exists(urTask.LocalFilePath))
             {
-                using (Image img = GraphicsMgr.GetImageSafely(mTask.LocalFilePath))
+                using (Image img = GraphicsMgr.GetImageSafely(urTask.LocalFilePath))
                 {
                     Adapter.CopyImageToClipboard(img);
                 }
             }
-            else if (mTask.tempImage != null)
+            else if (urTask.tempImage != null)
             {
-                Adapter.CopyImageToClipboard(mTask.tempImage);
+                Adapter.CopyImageToClipboard(urTask.tempImage);
             }
         }
 
@@ -131,26 +131,19 @@ namespace ZScreenLib
 
         private void btnDeleteClose_Click(object sender, EventArgs e)
         {
-            if (mTask != null && File.Exists(mTask.LocalFilePath))
+            if (urTask != null && File.Exists(urTask.LocalFilePath))
             {
-                File.Delete(mTask.LocalFilePath);
+                File.Delete(urTask.LocalFilePath);
             }
             btnClose_Click(sender, e);
         }
 
         private void btnOpenLocal_Click(object sender, EventArgs e)
         {
-            if (mTask != null && !string.IsNullOrEmpty(mTask.LocalFilePath))
+            if (urTask != null && !string.IsNullOrEmpty(urTask.LocalFilePath))
             {
-                Process.Start(mTask.LocalFilePath);
+                Process.Start(urTask.LocalFilePath);
             }
-        }
-
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-            TextBox txtUrl = btn.Tag as TextBox;
-            Clipboard.SetText(txtUrl.Text); // ok
         }
 
         private void tmrClose_Tick(object sender, EventArgs e)
