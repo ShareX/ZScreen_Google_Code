@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -77,19 +78,17 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                using (Image img2 = ImageEffects.FillBackground(img, Engine.conf.ClipboardBackgroundColor))
-                {
-                    try
-                    {
-                        Clipboard.SetImage(img2);
-                        //ImageOutput.PrepareClipboardObject();
-                        //ImageOutput.CopyToClipboard(img2);
-                    }
-                    catch (Exception ex)
-                    {
-                        Engine.MyLogger.WriteException(ex, "Error while copying image to clipboard");
-                    }
-                }
+                MemoryStream ms = new MemoryStream();
+                MemoryStream ms2 = new MemoryStream();
+                Bitmap bmp = new Bitmap(img);
+                bmp.Save(ms, ImageFormat.Bmp);
+                byte[] b = ms.GetBuffer();
+                ms2.Write(b, 14, (int)ms.Length - 14);
+                ms.Position = 0;
+                DataObject dataObject = new DataObject();
+                dataObject.SetData(DataFormats.Bitmap, bmp);
+                dataObject.SetData(DataFormats.Dib, ms2);
+                Clipboard.SetDataObject(dataObject, true, 3, 1000);
             }
         }
 
@@ -383,7 +382,7 @@ namespace ZScreenLib
 
         #endregion Proxy Methods
 
-        public static bool ImageSoftwareEnabled()
+        public static bool ActionsEnabled()
         {
             if (Engine.conf.ImageEditor == null)
             {

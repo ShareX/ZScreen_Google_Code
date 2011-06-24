@@ -25,9 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
@@ -124,17 +121,7 @@ namespace ZScreenLib
 
                 if (task.JobIsImageToClipboard())
                 {
-                    MemoryStream ms = new MemoryStream();
-                    MemoryStream ms2 = new MemoryStream();
-                    Bitmap bmp = new Bitmap(task.tempImage);
-                    bmp.Save(ms, ImageFormat.Bmp);
-                    byte[] b = ms.GetBuffer();
-                    ms2.Write(b, 14, (int)ms.Length - 14);
-                    ms.Position = 0;
-                    DataObject dataObject = new DataObject();
-                    dataObject.SetData(DataFormats.Bitmap, bmp);
-                    dataObject.SetData(DataFormats.Dib, ms2);
-                    Clipboard.SetDataObject(dataObject, true, 3, 1000);
+                    Adapter.CopyImageToClipboard(task.tempImage);
                 }
                 else if (task.MyClipboardContent.Contains(ClipboardContentEnum.Local))
                 {

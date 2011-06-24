@@ -83,13 +83,13 @@ namespace ZScreenLib
             [Description("Clipboard Upload")]
             UploadFromClipboard,
             [Description("Drag & Drop Window")]
-            PROCESS_DRAG_N_DROP,
+            UploadFromDragDrop,
             [Description("Language Translator")]
             LANGUAGE_TRANSLATOR,
             [Description("Screen Color Picker")]
             SCREEN_COLOR_PICKER,
             [Description("Upload Image")]
-            UPLOAD_IMAGE,
+            UploadImage,
             [Description("Webpage Capture")]
             WEBPAGE_CAPTURE,
             [Description("Freehand Crop Shot")]
@@ -214,7 +214,7 @@ namespace ZScreenLib
 
             switch (job)
             {
-                case JobLevel2.PROCESS_DRAG_N_DROP:
+                case JobLevel2.UploadFromDragDrop:
                 case JobLevel2.UploadFromClipboard:
                     Job1 = JobLevel1.File;
                     break;
@@ -280,13 +280,16 @@ namespace ZScreenLib
 
         public void SetImage(Image img)
         {
-            Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
-            this.tempImage = img;
-            this.Job1 = JobLevel1.Image;
-            if (Engine.conf.CopyImageUntilURL)
+            if (img != null)
             {
-                // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
-                this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
+                Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+                this.tempImage = img;
+                this.Job1 = JobLevel1.Image;
+                if (Engine.conf.CopyImageUntilURL)
+                {
+                    // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
+                    this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
+                }
             }
         }
 
@@ -667,7 +670,7 @@ namespace ZScreenLib
 
         public void PublishImage()
         {
-            if (tempImage != null && Adapter.ImageSoftwareEnabled() && Job2 != WorkerTask.JobLevel2.UPLOAD_IMAGE)
+            if (tempImage != null && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
             {
                 PerformActions();
             }
