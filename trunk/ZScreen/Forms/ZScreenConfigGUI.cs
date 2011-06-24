@@ -136,7 +136,7 @@ namespace ZScreenGUI
 
             Engine.conf.ActionsList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path) || x.Name == Engine.zImageAnnotator);
 
-            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true);
+            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true, true);
             Engine.conf.ActionsList.Insert(0, editor);
 
             ImageEditorHelper.FindImageEditors();
