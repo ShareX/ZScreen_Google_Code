@@ -1817,8 +1817,10 @@ namespace ZScreenGUI
         {
             if (pbWebPageImage.Image != null)
             {
+                WorkerTask wpTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadImage);
                 Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                RunWorkerAsync_Pictures(WorkerTask.JobLevel2.UPLOAD_IMAGE, bmp);
+                wpTask.SetImage(bmp);
+                RunWorkerAsync_Pictures(wpTask);
             }
         }
 

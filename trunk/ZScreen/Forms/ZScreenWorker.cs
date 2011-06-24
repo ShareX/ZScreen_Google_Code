@@ -613,19 +613,11 @@ namespace ZScreenGUI
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the image</param>
-        public void RunWorkerAsync_Pictures(WorkerTask task, string localFilePath)
+        public void RunWorkerAsync_Pictures(WorkerTask task)
         {
             Engine.ClipboardUnhook();
-            task.UpdateLocalFilePath(localFilePath);
-            task.SetImage(localFilePath);
-            task.MyWorker.RunWorkerAsync(task);
-        }
-
-        public void RunWorkerAsync_Pictures(WorkerTask.JobLevel2 job, Image img)
-        {
-            Engine.ClipboardUnhook();
-            WorkerTask task = CreateTask(job);
-            task.SetImage(img);
+            task.UpdateLocalFilePath(task.LocalFilePath);
+            task.SetImage(task.LocalFilePath);
             task.MyWorker.RunWorkerAsync(task);
         }
 
@@ -767,16 +759,16 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboard()
         {
-            WorkerTask task = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+            WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
 
             if (Clipboard.ContainsImage())
             {
-                task.SetImage(Clipboard.GetImage());
-                if (task.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
+                cbTask.SetImage(Clipboard.GetImage());
+                if (cbTask.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
                 {
-                    FileSystem.WriteImage(task);
-                    RunWorkerAsync_Pictures(task, task.LocalFilePath);
+                    FileSystem.WriteImage(cbTask);
                 }
+                RunWorkerAsync_Pictures(cbTask);
             }
             else if (Clipboard.ContainsText())
             {
@@ -790,7 +782,9 @@ namespace ZScreenGUI
 
         public void UploadUsingDragDrop(string fp)
         {
-            RunWorkerAsync_Pictures(CreateTask(WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP), fp);
+            WorkerTask ddTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromDragDrop);
+            ddTask.UpdateLocalFilePath(fp);
+            RunWorkerAsync_Pictures(ddTask);
         }
 
         public void UploadUsingDragDrop(string[] paths)
@@ -838,7 +832,9 @@ namespace ZScreenGUI
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    RunWorkerAsync_Pictures(CreateTask(WorkerTask.JobLevel2.UploadFromClipboard), fp);
+                    WorkerTask cbTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
+                    cbTask.UpdateLocalFilePath(fp);
+                    RunWorkerAsync_Pictures(cbTask);
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
@@ -936,7 +932,7 @@ namespace ZScreenGUI
                 case WorkerTask.JobLevel2.UploadFromClipboard:
                     UploadUsingClipboardOrGoogleTranslate();
                     break;
-                case WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP:
+                case WorkerTask.JobLevel2.UploadFromDragDrop:
                     ShowDropWindow();
                     break;
                 case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
@@ -1015,7 +1011,7 @@ namespace ZScreenGUI
                 if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Data) && !task.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
-                    WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UPLOAD_IMAGE);
+                    WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.Status = WorkerTask.TaskStatus.Finished; // we do not retry again

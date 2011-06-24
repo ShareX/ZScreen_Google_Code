@@ -225,8 +225,9 @@ namespace ZScreenLib
             }
         }
 
-        private void UpdateToolStripDest(ToolStripDropDownButton tsdd, string descr)
+        public static void UpdateToolStripDest(ToolStripDropDownButton tsdd)
         {
+            string descr = tsdd.Tag as string;
             List<string> dest = new List<string>();
 
             foreach (var obj in tsdd.DropDownItems)
@@ -265,37 +266,37 @@ namespace ZScreenLib
 
         private void UpdateToolStripDestImage()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbDestImage, "Image output");
+            UpdateToolStripDest(ucDestOptions.tsddbDestImage);
         }
 
         private void UpdateToolStripDestText()
         {
-            UpdateToolStripDest(ucDestOptions.tsddDestText, "Text output");
+            UpdateToolStripDest(ucDestOptions.tsddDestText);
         }
 
         private void UpdateToolStripDestFile()
         {
-            UpdateToolStripDest(ucDestOptions.tsddDestFile, "File output");
+            UpdateToolStripDest(ucDestOptions.tsddDestFile);
         }
 
         private void UpdateToolStripDestLink()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbDestLink, "URL shortener");
+            UpdateToolStripDest(ucDestOptions.tsddbDestLink);
         }
 
         private void UpdateToolStripClipboardContent()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbClipboardContent, "Clipboard content");
+            UpdateToolStripDest(ucDestOptions.tsddbClipboardContent);
         }
 
         private void UpdateToolStripLinkFormat()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbLinkFormat, "URL format");
+            UpdateToolStripDest(ucDestOptions.tsddbLinkFormat);
         }
 
         private void UpdateToolStripOutputs()
         {
-            UpdateToolStripDest(ucDestOptions.tsddbOutputs, "Outputs");
+            UpdateToolStripDest(ucDestOptions.tsddbOutputs);
         }
 
         private void tsmiDestImage_Click(object sender, EventArgs e)

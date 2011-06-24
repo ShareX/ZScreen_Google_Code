@@ -43,10 +43,17 @@ namespace ZScreenLib
             for (int i = 0; i < tsddbClipboardContent.DropDownItems.Count; i++)
             {
                 ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbClipboardContent.DropDownItems[i];
+                ClipboardContentEnum cct = (ClipboardContentEnum)tsmi.Tag;
+                if (cct == ClipboardContentEnum.Local)
+                {
+                    tsmi.Enabled = tsmiFile.Checked;
+                    if (!tsmi.Enabled)
+                    {
+                        tsmi.Checked = false;
+                    }
+                }
                 if (tsmi.Checked)
                 {
-                    ClipboardContentEnum cct = (ClipboardContentEnum)tsmi.Tag;
-
                     tsddbDestImage.Enabled = cct == ClipboardContentEnum.Remote;
                     tsddbLinkFormat.Enabled = cct != ClipboardContentEnum.Data;
                     tsddDestFile.Enabled = cct == ClipboardContentEnum.Remote;
@@ -54,6 +61,8 @@ namespace ZScreenLib
                     tsddbDestLink.Enabled = cct == ClipboardContentEnum.Remote;
                 }
             }
+
+            DestSelectorHelper.UpdateToolStripDest(tsddbClipboardContent);
         }
 
         private void tsddbLinkFormat_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)

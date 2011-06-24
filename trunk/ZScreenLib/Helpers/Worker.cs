@@ -89,7 +89,7 @@ namespace ZScreenLib
                         case WorkerTask.JobLevel2.CaptureFreeHandRegion:
                             task.BwCaptureFreehandCrop();
                             break;
-                        case WorkerTask.JobLevel2.UPLOAD_IMAGE:
+                        case WorkerTask.JobLevel2.UploadImage:
                         case WorkerTask.JobLevel2.UploadFromClipboard:
                             task.PublishData();
                             break;
@@ -295,7 +295,7 @@ namespace ZScreenLib
 
         protected void UploadUsingDragDrop(string fp)
         {
-            StartWorkerPictures(CreateTask(WorkerTask.JobLevel2.PROCESS_DRAG_N_DROP), fp);
+            StartWorkerPictures(CreateTask(WorkerTask.JobLevel2.UploadFromDragDrop), fp);
         }
 
         protected void UploadUsingDragDrop(string[] paths)
