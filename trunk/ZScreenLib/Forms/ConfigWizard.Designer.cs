@@ -84,8 +84,8 @@
             // 
             // txtRootFolder
             // 
-            this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRootFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRootFolder.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtRootFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtRootFolder.Location = new System.Drawing.Point(16, 26);
@@ -94,12 +94,12 @@
             this.txtRootFolder.Size = new System.Drawing.Size(376, 20);
             this.txtRootFolder.TabIndex = 114;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
-                "";
+    "";
             // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOK.Location = new System.Drawing.Point(543, 290);
+            this.btnOK.Location = new System.Drawing.Point(543, 310);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 28);
             this.btnOK.TabIndex = 117;
@@ -130,7 +130,7 @@
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExit.Location = new System.Drawing.Point(462, 290);
+            this.btnExit.Location = new System.Drawing.Point(462, 310);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 28);
             this.btnExit.TabIndex = 122;
@@ -143,7 +143,7 @@
             // 
             this.ucDestOptions.Location = new System.Drawing.Point(8, 104);
             this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(608, 176);
+            this.ucDestOptions.Size = new System.Drawing.Size(608, 200);
             this.ucDestOptions.TabIndex = 123;
             // 
             // ConfigWizard
@@ -151,14 +151,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(625, 325);
+            this.ClientSize = new System.Drawing.Size(625, 345);
             this.Controls.Add(this.ucDestOptions);
             this.Controls.Add(this.chkPreferSystemFolders);
             this.Controls.Add(this.gbRoot);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.GlassArea = new System.Windows.Forms.Padding(0, 0, 0, 45);
+            this.GlassArea = new System.Windows.Forms.Padding(0, 0, 0, 40);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ConfigWizard";

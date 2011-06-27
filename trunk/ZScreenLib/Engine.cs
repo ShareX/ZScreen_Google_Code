@@ -261,7 +261,7 @@ namespace ZScreenLib
             }
             else
             {
-                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.AppConf.XMLSettingsFile))
+                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.AppConf.XMLSettingsPath))
                 {
                     if (MyUploadersConfig == null)
                     {
@@ -386,7 +386,7 @@ namespace ZScreenLib
 
             if (File.Exists(Engine.SettingsFilePath))
             {
-                Engine.AppConf.XMLSettingsFile = SettingsFilePath;
+                Engine.AppConf.XMLSettingsPath = SettingsFilePath;
             }
         }
 
@@ -404,6 +404,7 @@ namespace ZScreenLib
         {
             if (!IsPortable)
             {
+                AppConf.UploadersConfigPath = Engine.UploadersConfigPath;
                 AppConf.Write();
             }
 
@@ -534,7 +535,7 @@ namespace ZScreenLib
 
         public static string GetLatestSettingsFile()
         {
-            return GetPreviousSettingsFile(Path.GetDirectoryName(Engine.AppConf.XMLSettingsFile));
+            return GetPreviousSettingsFile(Path.GetDirectoryName(Engine.AppConf.XMLSettingsPath));
         }
 
         public static string GetPreviousSettingsFile(string settingsDir)

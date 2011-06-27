@@ -568,10 +568,10 @@ namespace ZScreenLib
             string settingsFile = Engine.IsPortable ? Engine.GetPreviousSettingsFile(Engine.SettingsDir) : Engine.SettingsFilePath;
             if (!File.Exists(settingsFile))
             {
-                if (File.Exists(Engine.AppConf.XMLSettingsFile))
+                if (File.Exists(Engine.AppConf.XMLSettingsPath))
                 {
                     // Step 2 - Attempt to read previous Application Version specific Settings file
-                    settingsFile = Engine.AppConf.XMLSettingsFile;
+                    settingsFile = Engine.AppConf.XMLSettingsPath;
                 }
                 else
                 {
@@ -586,9 +586,9 @@ namespace ZScreenLib
                 File.Copy(settingsFile, Engine.SettingsFilePath);                 // Update AppSettings.xml
             }
 
-            Engine.AppConf.XMLSettingsFile = Engine.SettingsFilePath;
+            Engine.AppConf.XMLSettingsPath = Engine.SettingsFilePath;
 
-            return Read(Engine.AppConf.XMLSettingsFile);
+            return Read(Engine.AppConf.XMLSettingsPath);
         }
 
         public static XMLSettings Read(string filePath)
