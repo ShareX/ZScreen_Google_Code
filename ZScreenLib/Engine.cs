@@ -60,7 +60,6 @@ namespace ZScreenLib
 
         private static readonly string PortableRootFolder = ApplicationName; // using relative paths
         public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
-        public static string RootAppFolder = DefaultRootAppFolder;
 
         internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         private static readonly string HistoryFileName = "UploadersHistory.xml";
@@ -80,6 +79,7 @@ namespace ZScreenLib
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
         public static AppSettings AppConf = AppSettings.Read();
+        public static string RootAppFolder = AppConf.PreferSystemFolders ? zRoamingAppDataFolder : DefaultRootAppFolder;
 
         #region Paths
 
@@ -288,10 +288,6 @@ namespace ZScreenLib
             if (!AppConf.PreferSystemFolders && Directory.Exists(Engine.AppConf.RootDir))
             {
                 RootAppFolder = Engine.AppConf.RootDir;
-            }
-            else if (AppConf.PreferSystemFolders)
-            {
-                RootAppFolder = zRoamingAppDataFolder;
             }
             else
             {
@@ -633,10 +629,10 @@ namespace ZScreenLib
 
             try
             {
-                RegistryKey openWithKey = Registry.ClassesRoot.OpenSubKey(Path.Combine(".png", "OpenWithProgIds"));
-                string value = openWithKey.GetValue(progId, null) as string;
+                RegistryKey appCommand = Registry.ClassesRoot.OpenSubKey(Path.Combine(Application.ProductName, @"shell\Open\Command"));
+                string value = appCommand.GetValue("", null) as string;
 
-                if (value == null)
+                if (!value.Contains(Application.ExecutablePath))
                     registered = false;
                 else
                     registered = true;
@@ -653,20 +649,20 @@ namespace ZScreenLib
                     td.Icon = TaskDialogStandardIcon.Information;
                     td.Cancelable = true;
 
-                    TaskDialogCommandLink button1 = new TaskDialogCommandLink("registerButton", "Register file type for this application",
+                    TaskDialogCommandLink tdclRegister = new TaskDialogCommandLink("registerButton", "Register file type for this application",
                         "Register image/text files with this application to run ZScreen correctly.");
-                    button1.Click += new EventHandler(button1_Click);
+                    tdclRegister.Click += new EventHandler(btnRegisterWin7_Click);
                     // Show UAC shield as this task requires elevation
-                    button1.UseElevationIcon = true;
+                    tdclRegister.UseElevationIcon = true;
 
-                    td.Controls.Add(button1);
+                    td.Controls.Add(tdclRegister);
 
                     TaskDialogResult tdr = td.Show();
                 }
             }
         }
 
-        private static void button1_Click(object sender, EventArgs e)
+        private static void btnRegisterWin7_Click(object sender, EventArgs e)
         {
             RegistrationHelper.RegisterFileAssociations(progId, false, appId, Application.ExecutablePath + " /doc %1", GetExtensionsToRegister());
             td.Close();

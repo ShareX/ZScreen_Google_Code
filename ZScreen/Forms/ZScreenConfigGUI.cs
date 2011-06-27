@@ -492,7 +492,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
+            else if (Engine.conf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
             {
                 try
                 {
@@ -552,7 +552,10 @@ namespace ZScreenGUI
                     ThumbnailToolBarButton clipboardUpload = new ThumbnailToolBarButton(Resources.clipboard_upload_ico, "Clipboard Upload");
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
-                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload);
+                    ThumbnailToolBarButton openHistory = new ThumbnailToolBarButton(Resources.pictures_ico, "History");
+                    openHistory.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(tsbOpenHistory_Click);
+
+                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload, openHistory);
 
                     Engine.zJumpList.Refresh();
 

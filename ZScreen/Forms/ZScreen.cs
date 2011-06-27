@@ -1838,7 +1838,6 @@ namespace ZScreenGUI
                     chkShowTaskbar.Checked = true; // Application requires to be shown in Taskbar for Windows 7 Integration
                 }
                 Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
-                // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration;
                 ZScreen_Windows7onlyTasks();
             }
         }
