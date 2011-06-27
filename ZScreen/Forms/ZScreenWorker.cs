@@ -329,6 +329,11 @@ namespace ZScreenGUI
                         {
                             new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
                         }
+
+                        if (task.UploadResults.Count > 0)
+                        {
+                            task.FlashIcon();
+                        }
                     }
 
                     if (task.IsError)
@@ -384,10 +389,7 @@ namespace ZScreenGUI
         public WorkerTask CreateTaskText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask task = CreateTask(job);
-            foreach (TextUploaderType ut in Engine.conf.MyTextUploaders)
-            {
-                task.MyTextUploaders.Add((TextUploaderType)ut);
-            }
+
             if (!string.IsNullOrEmpty(localFilePath))
             {
                 task.UpdateLocalFilePath(localFilePath);
@@ -603,28 +605,13 @@ namespace ZScreenGUI
         }
 
         /// <summary>
-        /// Worker for Images: Drag n Drop, Image from Clipboard, Custom Uploader
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the image</param>
-        public void RunWorkerAsync_Pictures(WorkerTask task)
-        {
-            Engine.ClipboardUnhook();
-            task.UpdateLocalFilePath(task.LocalFilePath);
-            task.SetImage(task.LocalFilePath);
-            task.MyWorker.RunWorkerAsync(task);
-        }
-
-        /// <summary>
         /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
         /// </summary>
         /// <param name="job">Job Type</param>
         /// <param name="localFilePath">Local file path of the file</param>
-        public void RunWorkerAsync_Files(WorkerTask.JobLevel2 job, string localFilePath)
+        public void RunWorkerAsync_Files(WorkerTask task)
         {
-            WorkerTask t = CreateTask(job);
-            t.UpdateLocalFilePath(localFilePath);
-            t.MyWorker.RunWorkerAsync(t);
+            task.RunWorker();
         }
 
         public void RunWorkerAsync_Text(WorkerTask.JobLevel2 job, string text)
@@ -762,7 +749,7 @@ namespace ZScreenGUI
                 {
                     FileSystem.WriteImage(cbTask);
                 }
-                RunWorkerAsync_Pictures(cbTask);
+                RunWorkerAsync_Files(cbTask);
             }
             else if (Clipboard.ContainsText())
             {
@@ -778,7 +765,7 @@ namespace ZScreenGUI
         {
             WorkerTask ddTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromDragDrop);
             ddTask.UpdateLocalFilePath(fp);
-            RunWorkerAsync_Pictures(ddTask);
+            RunWorkerAsync_Files(ddTask);
         }
 
         public void UploadUsingDragDrop(string[] paths)
@@ -827,18 +814,21 @@ namespace ZScreenGUI
                 if (GraphicsMgr.IsValidImage(fp))
                 {
                     WorkerTask cbTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
+                    cbTask.SetImage(fp);
                     cbTask.UpdateLocalFilePath(fp);
-                    RunWorkerAsync_Pictures(cbTask);
+                    RunWorkerAsync_Files(cbTask);
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask temp = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
-                    temp.SetText(File.ReadAllText(fp));
-                    textWorkers.Add(temp);
+                    WorkerTask tfTask = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                    tfTask.SetText(File.ReadAllText(fp));
+                    textWorkers.Add(tfTask);
                 }
                 else
                 {
-                    RunWorkerAsync_Files(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                    WorkerTask fuTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
+                    fuTask.UpdateLocalFilePath(fp);
+                    RunWorkerAsync_Files(fuTask);
                 }
             }
 
