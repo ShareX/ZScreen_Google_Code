@@ -1,40 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using ZScreenLib;
-
-namespace ZScreenCLI
+﻿namespace ZScreenCLI
 {
-    internal static class Program
+    public class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-#if Release
-            try
-            {
-#endif
-            Engine.TurnOn(new ZScreenLib.Engine.EngineOptions { KeyboardHook = false, ShowConfigWizard = false });
-            Engine.LoadSettingsLatest();
-            Application.Run(new MainWindow());
-#if Release
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteLine(ex);
-            }
-            finally
-            {
-#endif
-            Engine.TurnOff();
-            Application.Exit();
-#if Release
-            }
-#endif
         }
     }
 }

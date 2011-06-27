@@ -100,7 +100,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Worker.cs" />
     <Compile Include="UserControls\DestSelectorHelper.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
