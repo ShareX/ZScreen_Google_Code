@@ -309,7 +309,8 @@
     <None Include="Resources\small_logo.png" />
     <None Include="Resources\ZScreen_256.png" />
     <None Include="Resources\shape_square_edit.png" />
-    <None Include="Resources\btn_donate_LG[1].gif" />
+    <None Include="Resources\paypal.gif" />
+    <None Include="Resources\pictures.ico" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

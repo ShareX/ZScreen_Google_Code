@@ -4838,9 +4838,9 @@ namespace ZScreenGUI
             // tsbDonate
             // 
             this.tsbDonate.AutoSize = false;
-            this.tsbDonate.BackgroundImage = global::ZScreenGUI.Properties.Resources.btn_donate_LG_1_;
+            this.tsbDonate.BackgroundImage = global::ZScreenGUI.Properties.Resources.paypal;
             this.tsbDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.tsbDonate.Image = global::ZScreenGUI.Properties.Resources.btn_donate_LG_1_;
+            this.tsbDonate.Image = global::ZScreenGUI.Properties.Resources.paypal;
             this.tsbDonate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDonate.Name = "tsbDonate";
             this.tsbDonate.Size = new System.Drawing.Size(92, 26);

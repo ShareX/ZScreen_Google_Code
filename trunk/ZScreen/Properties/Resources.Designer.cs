@@ -109,13 +109,6 @@ namespace ZScreenGUI.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap btn_donate_LG_1_ {
-            get {
-                object obj = ResourceManager.GetObject("btn_donate_LG[1]", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap camera {
             get {
                 object obj = ResourceManager.GetObject("camera", resourceCulture);
@@ -298,6 +291,13 @@ namespace ZScreenGUI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap paypal {
+            get {
+                object obj = ResourceManager.GetObject("paypal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap photos {
             get {
                 object obj = ResourceManager.GetObject("photos", resourceCulture);
@@ -323,6 +323,13 @@ namespace ZScreenGUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("pictures", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon pictures_ico {
+            get {
+                object obj = ResourceManager.GetObject("pictures_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

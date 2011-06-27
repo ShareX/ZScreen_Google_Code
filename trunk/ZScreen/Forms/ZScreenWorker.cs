@@ -204,7 +204,6 @@ namespace ZScreenGUI
                     UploadManager.SetCumulativePercentatge((int)((ProgressManager)e.UserState).Percentage);
                     Adapter.UpdateNotifyIconProgress(this.niTray, UploadManager.CumulativePercentage);
                     Adapter.TaskbarSetProgressValue(this, UploadManager.CumulativePercentage);
-                    Console.WriteLine(UploadManager.GetAverageProgress() + " vs " + UploadManager.CumulativePercentage);
                     this.Text = string.Format("{0}% - {1}", UploadManager.CumulativePercentage, Engine.GetProductName());
                     break;
                 case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
@@ -378,16 +377,11 @@ namespace ZScreenGUI
             return new WorkerTask(CreateWorker(), job);
         }
 
-        public WorkerTask CreateWorkerText(WorkerTask.JobLevel2 job)
-        {
-            return CreateWorkerText(job, string.Empty);
-        }
-
         /// <summary>
         /// Worker for Text: Paste2, Pastebin
         /// </summary>
         /// <returns></returns>
-        public WorkerTask CreateWorkerText(WorkerTask.JobLevel2 job, string localFilePath)
+        public WorkerTask CreateTaskText(WorkerTask.JobLevel2 job, string localFilePath)
         {
             WorkerTask task = CreateTask(job);
             foreach (TextUploaderType ut in Engine.conf.MyTextUploaders)
@@ -635,7 +629,7 @@ namespace ZScreenGUI
 
         public void RunWorkerAsync_Text(WorkerTask.JobLevel2 job, string text)
         {
-            WorkerTask temp = CreateWorkerText(job);
+            WorkerTask temp = CreateTaskText(job, string.Empty);
             string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
             FileSystem.WriteText(fp, text);
             temp.UpdateLocalFilePath(fp);
@@ -838,8 +832,7 @@ namespace ZScreenGUI
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask temp = CreateWorkerText(WorkerTask.JobLevel2.UploadFromClipboard);
-                    temp.UpdateLocalFilePath(fp);
+                    WorkerTask temp = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
                     temp.SetText(File.ReadAllText(fp));
                     textWorkers.Add(temp);
                 }
