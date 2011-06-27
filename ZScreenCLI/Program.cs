@@ -9,49 +9,49 @@ using ZScreenLib;
 
 namespace ZScreenCLI
 {
-    public class Program
+    public static class Program
     {
+        private static bool bVerbose = false;
+        private static bool bShowHelp = false;
+        private static bool bFileUpload = false;
+        private static bool bClipboardUpload = false;
+        private static bool bCropShot = false;
+        private static bool bSelectedWindow = false;
+        private static bool bScreen = false;
+
+        private static List<int> listOutputTypes = new List<int>();
+        private static int clipboardContent = (int)ClipboardContentEnum.Remote;
+        private static List<int> listImageHosts = new List<int>();
+        private static List<int> listTextHosts = new List<int>();
+        private static List<int> listFileHosts = new List<int>();
+        private static List<string> listPaths = new List<string>();
+
         [STAThread]
         private static void Main(string[] args)
         {
-            bool bVerbose = false;
-            bool bShowHelp = false;
-            bool bFileUpload = false;
-            bool bClipboardUpload = false;
-            bool bCropShot = false;
-            bool bSelectedWindow = false;
-            bool bScreen = false;
-
-            List<int> listOutputTypes = new List<int>();
-            int clipboardContent = (int)ClipboardContentEnum.Remote;
-            List<int> listImageHosts = new List<int>();
-            List<int> listTextHosts = new List<int>();
-            List<int> listFileHosts = new List<int>();
-            List<string> listPaths = new List<string>();
-
             var p = new OptionSet()
             {
                 { "h|help",  "show this message and exit",
                    v => bShowHelp = v != null },
-                    { "v|verbose",  "show this message and exit",
+                    { "v|verbose",  "debug output",
                    v => bVerbose = v != null },
-                { "o|outputs=", "Outputs\n" + "this must be an integer.",
+                { "o|outputs=", "Outputs. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
-                { "ih|image_host=", "Image uploader type.\n" + "this must be an integer.",
+                { "i|image=", "Image uploader type. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
-                { "th|text_host", "Text uploader type",
+                { "t|text_host=", "Text uploader type" + "\nthis must be an integer.",
                     (int v) => listTextHosts.Add(v) },
-                { "fh|file_host", "File uploader type",
+                { "f|file_host=", "File uploader type" + "\nthis must be an integer.",
                     (int v) => listFileHosts.Add(v) },
-                { "cu|clipboard_upload",  "Upload clipboard content",
-                    v => bClipboardUpload = v != null },
                 { "sw|selected_window",  "Capture selected window",
                     v => bSelectedWindow = v != null },
                 { "cs|crop_shot",  "Capture rectangular region",
                     v => bCropShot = v != null },
                 { "s|screen",  "Capture entire screen",
                     v => bScreen = v != null },
-                { "u|upload=", "File path of the file to upload.",
+                { "cu|clipboard_upload",  "Upload clipboard content" + "\nthis must be an integer.",
+                    v => bClipboardUpload = v != null },
+                { "fu|upload=", "File path of the file to upload.",
                     v => {
                             if (File.Exists(v)) listPaths.Add (v);
                             else if (Directory.Exists(v)) listPaths.Add(v);
@@ -90,50 +90,7 @@ namespace ZScreenCLI
 
             if (bFileUpload && listPaths.Count > 0)
             {
-                List<string> listFiles = new List<string>();
-                foreach (string fdp in listPaths)
-                {
-                    if (File.Exists(fdp))
-                    {
-                        listFiles.Add(fdp);
-                    }
-                    else if (Directory.Exists(fdp))
-                    {
-                        listFiles.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
-                    }
-                }
-                foreach (string fp in listFiles)
-                {
-                    WorkerTask fuTask = new WorkerTask();
-                    fuTask.MyOutputs.Add(OutputEnum.Clipboard);
-                    fuTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
-                    foreach (int ut in listImageHosts)
-                    {
-                        if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
-                        fuTask.MyImageUploaders.Add((ImageUploaderType)ut);
-                    }
-                    fuTask.AssignJob(WorkerTask.JobLevel2.UploadFromClipboard);
-                    fuTask.UpdateLocalFilePath(fp);
-                    fuTask.PublishData();
-                    string url = string.Empty;
-                    foreach (UploadResult ur in fuTask.UploadResults)
-                    {
-                        Console.WriteLine(ur.URL);
-                        if (!string.IsNullOrEmpty(ur.URL))
-                        {
-                            url = ur.URL;
-                        }
-                    }
-                    if (fuTask.UploadResults.Count > 0)
-                    {
-                        UploadManager.ShowUploadResults(fuTask, true);
-                    }
-                    ConsoleKeyInfo cki = Console.ReadKey();
-                    if (cki.Key == ConsoleKey.Enter)
-                    {
-                        return;
-                    }
-                }
+                FileUpload();
             }
 
             string message;
@@ -153,17 +110,76 @@ namespace ZScreenCLI
             }
         }
 
+        private static void FileUpload()
+        {
+            List<string> listFiles = new List<string>();
+            foreach (string fdp in listPaths)
+            {
+                if (File.Exists(fdp))
+                {
+                    listFiles.Add(fdp);
+                }
+                else if (Directory.Exists(fdp))
+                {
+                    listFiles.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
+                }
+            }
+            foreach (string fp in listFiles)
+            {
+                WorkerTask fuTask = new WorkerTask();
+                fuTask.MyOutputs.Add(OutputEnum.Clipboard);
+                fuTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+                foreach (int ut in listImageHosts)
+                {
+                    if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
+                    fuTask.MyImageUploaders.Add((ImageUploaderType)ut);
+                }
+                fuTask.AssignJob(WorkerTask.JobLevel2.UploadFromClipboard);
+                fuTask.UpdateLocalFilePath(fp);
+                fuTask.PublishData();
+                string url = string.Empty;
+                foreach (UploadResult ur in fuTask.UploadResults)
+                {
+                    Console.WriteLine(ur.URL);
+                    if (!string.IsNullOrEmpty(ur.URL))
+                    {
+                        url = ur.URL;
+                    }
+                }
+                if (fuTask.UploadResults.Count > 0)
+                {
+                    UploadManager.ShowUploadResults(fuTask, true);
+                }
+                ConsoleKeyInfo cki = Console.ReadKey();
+                if (cki.Key == ConsoleKey.Enter)
+                {
+                    return;
+                }
+            }
+        }
+
         private static void ShowHelp(OptionSet p)
         {
-            Console.WriteLine("Usage: greet [OPTIONS]+ message");
-            Console.WriteLine("Greet a list of individuals with an optional message.");
-            Console.WriteLine("If no message is specified, a generic greeting is used.");
+            Console.WriteLine("Usage: zscreencli.exe [OPTIONS]+ message");
+            Console.WriteLine("Upload screenshots, text or files.");
             Console.WriteLine();
             Console.WriteLine("Options:");
             p.WriteOptionDescriptions(Console.Out);
             Console.WriteLine();
             Console.WriteLine("Image hosts:\n");
             foreach (ImageUploaderType ut in Enum.GetValues(typeof(ImageUploaderType)))
+            {
+                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+            }
+            Console.WriteLine();
+            Console.WriteLine("Text hosts:\n");
+            foreach (TextUploaderType ut in Enum.GetValues(typeof(TextUploaderType)))
+            {
+                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+            }
+            Console.WriteLine();
+            Console.WriteLine("File hosts:\n");
+            foreach (FileUploaderType ut in Enum.GetValues(typeof(FileUploaderType)))
             {
                 Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
