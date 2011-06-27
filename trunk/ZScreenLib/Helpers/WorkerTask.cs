@@ -200,11 +200,16 @@ namespace ZScreenLib
 
         #region Constructors
 
-        public WorkerTask(BackgroundWorker worker)
+        public WorkerTask()
         {
             this.UploadResults = new List<UploadResult>();
             this.Errors = new List<string>();
             this.Status = TaskStatus.Created;
+        }
+
+        public WorkerTask(BackgroundWorker worker)
+            : this()
+        {
             this.MyWorker = worker;
         }
 
@@ -678,7 +683,7 @@ namespace ZScreenLib
 
         public void UploadImageRemote()
         {
-            if (Engine.conf.TinyPicSizeCheck && this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(this.LocalFilePath))
+            if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(this.LocalFilePath))
             {
                 SizeF size = Image.FromFile(this.LocalFilePath).PhysicalDimension;
                 if (size.Width > 1600 || size.Height > 1600)
@@ -839,7 +844,7 @@ namespace ZScreenLib
 
             this.EndTime = DateTime.Now;
 
-            if (Engine.conf.ImageUploadRetryOnTimeout && this.UploadDuration > (int)Engine.conf.UploadDurationLimit)
+            if (Engine.conf != null && Engine.conf.ImageUploadRetryOnTimeout && this.UploadDuration > (int)Engine.conf.UploadDurationLimit)
             {
                 if (!this.MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
                 {
@@ -849,11 +854,6 @@ namespace ZScreenLib
                 {
                     this.MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
                 }
-            }
-
-            if (this.UploadResults.Count > 0)
-            {
-                FlashIcon(this);
             }
         }
 
@@ -867,6 +867,10 @@ namespace ZScreenLib
                 string fullFilePath = this.LocalFilePath;
                 if (File.Exists(fullFilePath) || this.tempImage != null)
                 {
+                    if (Engine.conf == null)
+                    {
+                        Engine.conf = new XMLSettings();
+                    }
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
                     {
                         UploadResult ur = new UploadResult();
@@ -1192,16 +1196,16 @@ namespace ZScreenLib
             return false;
         }
 
-        private void FlashIcon(WorkerTask t)
+        public void FlashIcon()
         {
             for (int i = 0; i < (int)Engine.conf.FlashTrayCount; i++)
             {
-                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
+                MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_uploaded);
                 Thread.Sleep(250);
-                t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_green);
+                MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_green);
                 Thread.Sleep(250);
             }
-            t.MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_tray);
+            MyWorker.ReportProgress((int)WorkerTask.ProgressType.FLASH_ICON, Resources.zss_tray);
         }
 
         private void UploadProgressChanged(ProgressManager progress)

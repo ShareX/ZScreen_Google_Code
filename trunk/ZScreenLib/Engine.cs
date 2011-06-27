@@ -81,6 +81,11 @@ namespace ZScreenLib
         public static AppSettings AppConf = AppSettings.Read();
         public static string RootAppFolder = AppConf.PreferSystemFolders ? zRoamingAppDataFolder : DefaultRootAppFolder;
 
+        static Engine()
+        {
+            MyLogger = new Logger();
+        }
+
         #region Paths
 
         public static string SettingsFilePath
@@ -237,7 +242,6 @@ namespace ZScreenLib
         {
             StartTimer = Stopwatch.StartNew();
 
-            MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine();
             MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));

@@ -384,12 +384,12 @@ namespace ZScreenLib
 
         public static bool ActionsEnabled()
         {
-            if (Engine.conf.ImageEditor == null)
+            if (Engine.conf != null && Engine.conf.ImageEditor == null)
             {
                 return false;
             }
 
-            return Engine.conf.PerformActions;
+            return Engine.conf != null && Engine.conf.PerformActions;
         }
 
         public static void DeleteFile(string fp)
