@@ -295,7 +295,7 @@ namespace ZScreenGUI
 
                     if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
                     {
-                        UploadManager.ShowUploadResults(this.Handle, task, false);
+                        UploadManager.ShowUploadResults(task, false);
                     }
 
                     if (Engine.conf.TwitterEnabled)

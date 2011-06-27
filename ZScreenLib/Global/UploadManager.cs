@@ -103,7 +103,7 @@ namespace ZScreenLib
         /// Sets Clipboard text and returns the content
         /// </summary>
         /// <returns></returns>
-        public static void ShowUploadResults(IntPtr handle, WorkerTask task, bool showDialog)
+        public static void ShowUploadResults(WorkerTask task, bool showDialog)
         {
             if (task.UploadResults.Count > 0)
             {

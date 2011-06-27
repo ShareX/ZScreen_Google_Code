@@ -11,8 +11,10 @@ namespace ZScreenCLI
 {
     public class Program
     {
+        [STAThread]
         private static void Main(string[] args)
         {
+            bool bVerbose = false;
             bool bShowHelp = false;
             bool bFileUpload = false;
             bool bClipboardUpload = false;
@@ -27,10 +29,12 @@ namespace ZScreenCLI
             List<int> listFileHosts = new List<int>();
             List<string> listPaths = new List<string>();
 
-            Engine.MyUploadersConfig = UploadersConfig.Load(@"C:\Users\Mike\AppData\Roaming\ZScreen\Settings\UploadersConfig.xml");
-
             var p = new OptionSet()
             {
+                { "h|help",  "show this message and exit",
+                   v => bShowHelp = v != null },
+                    { "v|verbose",  "show this message and exit",
+                   v => bVerbose = v != null },
                 { "o|outputs=", "Outputs\n" + "this must be an integer.",
                     (int v) => listImageHosts.Add(v) },
                 { "ih|image_host=", "Image uploader type.\n" + "this must be an integer.",
@@ -39,8 +43,6 @@ namespace ZScreenCLI
                     (int v) => listTextHosts.Add(v) },
                 { "fh|file_host", "File uploader type",
                     (int v) => listFileHosts.Add(v) },
-                { "h|help",  "show this message and exit",
-                    v => bShowHelp = v != null },
                 { "cu|clipboard_upload",  "Upload clipboard content",
                     v => bClipboardUpload = v != null },
                 { "sw|selected_window",  "Capture selected window",
@@ -70,6 +72,9 @@ namespace ZScreenCLI
                 Console.WriteLine("Try 'zscreencli.exe --help' for more information.");
                 return;
             }
+
+            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.UploadersConfigPath));
+            Engine.MyUploadersConfig = UploadersConfig.Load(Engine.AppConf.UploadersConfigPath);
 
             if (listOutputTypes.Count == 0)
             {
@@ -102,15 +107,32 @@ namespace ZScreenCLI
                     WorkerTask fuTask = new WorkerTask();
                     fuTask.MyOutputs.Add(OutputEnum.Clipboard);
                     fuTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
-                    fuTask.MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                    foreach (int ut in listImageHosts)
+                    {
+                        if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
+                        fuTask.MyImageUploaders.Add((ImageUploaderType)ut);
+                    }
                     fuTask.AssignJob(WorkerTask.JobLevel2.UploadFromClipboard);
                     fuTask.UpdateLocalFilePath(fp);
                     fuTask.PublishData();
+                    string url = string.Empty;
                     foreach (UploadResult ur in fuTask.UploadResults)
                     {
                         Console.WriteLine(ur.URL);
+                        if (!string.IsNullOrEmpty(ur.URL))
+                        {
+                            url = ur.URL;
+                        }
                     }
-                    Console.ReadLine();
+                    if (fuTask.UploadResults.Count > 0)
+                    {
+                        UploadManager.ShowUploadResults(fuTask, true);
+                    }
+                    ConsoleKeyInfo cki = Console.ReadKey();
+                    if (cki.Key == ConsoleKey.Enter)
+                    {
+                        return;
+                    }
                 }
             }
 

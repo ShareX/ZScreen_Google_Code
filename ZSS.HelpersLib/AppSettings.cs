@@ -15,7 +15,10 @@ namespace HelpersLib
         public string RootDir { get; set; }
 
         [ReadOnly(true)]
-        public string XMLSettingsFile { get; set; }
+        public string XMLSettingsPath { get; set; }
+
+        [ReadOnly(true), Browsable(false)]
+        public string UploadersConfigPath { get; set; }
 
         [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
