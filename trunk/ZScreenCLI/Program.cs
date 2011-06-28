@@ -37,21 +37,21 @@ namespace ZScreenCLI
                    v => bVerbose = v != null },
                 { "o|outputs=", "Outputs. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
-                { "i|image=", "Image uploader type. This must be an integer.",
+                { "i|hi=", "Image uploader type. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
-                { "t|text_host=", "Text uploader type" + "\nthis must be an integer.",
+                { "t|ht=", "Text uploader type. This must be an integer.",
                     (int v) => listTextHosts.Add(v) },
-                { "f|file_host=", "File uploader type" + "\nthis must be an integer.",
+                { "f|hf=", "File uploader type. This must be an integer.",
                     (int v) => listFileHosts.Add(v) },
-                { "sw|selected_window",  "Capture selected window",
+                { "s|ws",  "Capture selected window",
                     v => bSelectedWindow = v != null },
-                { "cs|crop_shot",  "Capture rectangular region",
+                { "r|wc",  "Capture rectangular region",
                     v => bCropShot = v != null },
-                { "s|screen",  "Capture entire screen",
+                { "d|wf",  "Capture entire screen",
                     v => bScreen = v != null },
-                { "cu|clipboard_upload",  "Upload clipboard content" + "\nthis must be an integer.",
+                { "c|uc",  "Upload clipboard content.",
                     v => bClipboardUpload = v != null },
-                { "fu|upload=", "File path of the file to upload.",
+                { "u|uf=", "File path to upload.",
                     v => {
                             if (File.Exists(v)) listPaths.Add (v);
                             else if (Directory.Exists(v)) listPaths.Add(v);
@@ -59,6 +59,11 @@ namespace ZScreenCLI
                          }
                 },
             };
+
+            if (args.Length == 0)
+            {
+                ShowHelp(p);
+            }
 
             List<string> extra;
             try
@@ -93,21 +98,49 @@ namespace ZScreenCLI
                 FileUpload();
             }
 
-            string message;
-            if (extra.Count > 0)
+            if (bClipboardUpload)
             {
-                message = string.Join(" ", extra.ToArray());
-            }
-            else
-            {
-                message = "Hello {0}!";
+                ClipboardUpload();
             }
 
-            foreach (string name in listPaths)
+            if (bCropShot)
             {
-                for (int i = 0; i < listImageHosts.Count; ++i)
-                    Console.WriteLine(message, name);
+                WorkerTask csTask = DefaultWorkerTask();
+                csTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
+                if (csTask.BwCaptureRegionOrWindow())
+                {
+                    if (bVerbose) Console.WriteLine(csTask.tempImage.Width);
+                    csTask.PublishData();
+                }
+                Console.WriteLine(csTask.ToErrorString());
             }
+        }
+
+        private static WorkerTask DefaultWorkerTask()
+        {
+            WorkerTask tempTask = new WorkerTask();
+            tempTask.MyOutputs.Add(OutputEnum.Clipboard);
+            tempTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+            foreach (int ut in listImageHosts)
+            {
+                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
+                tempTask.MyImageUploaders.Add((ImageUploaderType)ut);
+            }
+            foreach (int ut in listFileHosts)
+            {
+                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((FileUploaderType)ut).GetDescription()));
+                tempTask.MyFileUploaders.Add((FileUploaderType)ut);
+            }
+            return tempTask;
+        }
+
+        private static void ClipboardUpload()
+        {
+            WorkerTask cbTask = DefaultWorkerTask();
+            cbTask.LoadClipboardContent();
+            cbTask.PublishData();
+
+            PostPublishTask(cbTask);
         }
 
         private static void FileUpload()
@@ -126,35 +159,24 @@ namespace ZScreenCLI
             }
             foreach (string fp in listFiles)
             {
-                WorkerTask fuTask = new WorkerTask();
-                fuTask.MyOutputs.Add(OutputEnum.Clipboard);
-                fuTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
-                foreach (int ut in listImageHosts)
-                {
-                    if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
-                    fuTask.MyImageUploaders.Add((ImageUploaderType)ut);
-                }
+                WorkerTask fuTask = DefaultWorkerTask();
                 fuTask.AssignJob(WorkerTask.JobLevel2.UploadFromClipboard);
                 fuTask.UpdateLocalFilePath(fp);
                 fuTask.PublishData();
-                string url = string.Empty;
-                foreach (UploadResult ur in fuTask.UploadResults)
+
+                PostPublishTask(fuTask);
+            }
+        }
+
+        private static void PostPublishTask(WorkerTask task)
+        {
+            if (task.UploadResults.Count > 0)
+            {
+                foreach (UploadResult ur in task.UploadResults)
                 {
                     Console.WriteLine(ur.URL);
-                    if (!string.IsNullOrEmpty(ur.URL))
-                    {
-                        url = ur.URL;
-                    }
                 }
-                if (fuTask.UploadResults.Count > 0)
-                {
-                    UploadManager.ShowUploadResults(fuTask, true);
-                }
-                ConsoleKeyInfo cki = Console.ReadKey();
-                if (cki.Key == ConsoleKey.Enter)
-                {
-                    return;
-                }
+                UploadManager.ShowUploadResults(task, true);
             }
         }
 
