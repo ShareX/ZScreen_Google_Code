@@ -205,6 +205,7 @@ namespace ZScreenLib
             this.UploadResults = new List<UploadResult>();
             this.Errors = new List<string>();
             this.Status = TaskStatus.Created;
+            this.MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
         public WorkerTask(BackgroundWorker worker)
@@ -429,12 +430,13 @@ namespace ZScreenLib
 
         #region Capture
 
-        public string BwCaptureRegionOrWindow()
+        public bool BwCaptureRegionOrWindow()
         {
             IsTakingScreenShot = true;
-            string filePath = string.Empty;
-
+            bool success = false;
             bool windowMode = this.Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
+
+            if (Engine.conf == null) Engine.conf = new XMLSettings();
 
             try
             {
@@ -501,6 +503,7 @@ namespace ZScreenLib
                         this.SetImage(GraphicsMgr.AddBorderShadow(this.tempImage, roundedShadowCorners));
                     }
                 }
+                success = true;
             }
             catch (Exception ex)
             {
@@ -516,8 +519,7 @@ namespace ZScreenLib
                 this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
                 IsTakingScreenShot = false;
             }
-
-            return filePath;
+            return success;
         }
 
         public void BwCaptureFreehandCrop()
@@ -1222,6 +1224,31 @@ namespace ZScreenLib
         }
 
         #endregion Publish Data
+
+        #region Upload Methods
+
+        public void LoadClipboardContent()
+        {
+            if (Clipboard.ContainsImage())
+            {
+                SetImage(Clipboard.GetImage());
+            }
+            else if (Clipboard.ContainsText())
+            {
+                SetText(Clipboard.GetText());
+            }
+            else if (Clipboard.ContainsFileDropList())
+            {
+                List<string> listFiles = new List<string>();
+                listFiles = FileSystem.GetExplorerFileList(Clipboard.GetFileDropList());
+                if (listFiles.Count > 0)
+                {
+                    UpdateLocalFilePath(listFiles[0]);
+                }
+            }
+        }
+
+        #endregion Upload Methods
 
         #region Checks
 
