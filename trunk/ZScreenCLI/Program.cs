@@ -105,14 +105,17 @@ namespace ZScreenCLI
 
             if (bCropShot)
             {
-                WorkerTask csTask = DefaultWorkerTask();
-                csTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
-                if (csTask.BwCaptureRegionOrWindow())
-                {
-                    if (bVerbose) Console.WriteLine(csTask.tempImage.Width);
-                    csTask.PublishData();
-                }
-                Console.WriteLine(csTask.ToErrorString());
+                CaptureRectRegion(WorkerTask.JobLevel2.CaptureRectRegion);
+            }
+
+            if (bSelectedWindow)
+            {
+                CaptureRectRegion(WorkerTask.JobLevel2.CaptureSelectedWindow);
+            }
+
+            if (bScreen)
+            {
+                CaptureScreen();
             }
         }
 
@@ -132,6 +135,32 @@ namespace ZScreenCLI
                 tempTask.MyFileUploaders.Add((FileUploaderType)ut);
             }
             return tempTask;
+        }
+
+        private static void CaptureScreen()
+        {
+            WorkerTask esTask = DefaultWorkerTask();
+            esTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
+            Console.WriteLine();
+            Console.WriteLine("Capturing entire screen in 3 seconds.");
+            Console.WriteLine("If you would like to minimize this window, then do it now.");
+            Console.WriteLine();
+            System.Threading.Thread.Sleep(3000);
+            esTask.CaptureScreen();
+            esTask.PublishData();
+            PostPublishTask(esTask);
+        }
+
+        private static void CaptureRectRegion(WorkerTask.JobLevel2 job2)
+        {
+            WorkerTask csTask = DefaultWorkerTask();
+            csTask.AssignJob(job2);
+            if (csTask.BwCaptureRegionOrWindow())
+            {
+                csTask.PublishData();
+            }
+            Console.WriteLine(csTask.ToErrorString());
+            PostPublishTask(csTask);
         }
 
         private static void ClipboardUpload()
