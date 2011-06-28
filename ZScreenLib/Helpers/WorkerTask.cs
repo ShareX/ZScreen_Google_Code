@@ -291,7 +291,7 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
                 this.tempImage = img;
                 this.Job1 = JobLevel1.Image;
-                if (Engine.conf.CopyImageUntilURL)
+                if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
                 {
                     // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
                     this.MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
@@ -558,7 +558,7 @@ namespace ZScreenLib
         {
             if (this.tempImage == null)
             {
-                this.SetImage(Capture.CaptureScreen(Engine.conf.ShowCursor));
+                this.SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.conf.ShowCursor));
             }
         }
 
