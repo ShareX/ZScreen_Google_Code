@@ -2364,5 +2364,15 @@ namespace ZScreenGUI
         {
             Process.Start(ZLinks.URL_DONATE);
         }
+
+        private void tsbDonate_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+        }
+
+        private void tsbDonate_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Arrow;
+        }
     }
 }

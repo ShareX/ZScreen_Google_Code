@@ -34,18 +34,17 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSelectedWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmCropShot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLastCropShot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFreehandCropShot = new System.Windows.Forms.ToolStripMenuItem();
             this.autoScreenshotsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmEditinImageSoftware = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmFileUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmClipboardUpload = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,14 +52,15 @@ namespace ZScreenGUI
             this.tsmLanguageTranslator = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmScreenColorPicker = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiTabs = new System.Windows.Forms.ToolStripMenuItem();
             this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmViewLocalDirectory = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmFTPClient = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmExitZScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmActions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -555,30 +555,7 @@ namespace ZScreenGUI
             this.toolStripSeparator3,
             this.tsmExitZScreen});
             this.cmTray.Name = "cmTray";
-            this.cmTray.Size = new System.Drawing.Size(201, 446);
-            // 
-            // tsmiTabs
-            // 
-            this.tsmiTabs.DoubleClickEnabled = true;
-            this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
-            this.tsmiTabs.Name = "tsmiTabs";
-            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
-            this.tsmiTabs.Text = "View Settings Menu...";
-            this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
-            // 
-            // tsmEditinImageSoftware
-            // 
-            this.tsmEditinImageSoftware.CheckOnClick = true;
-            this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
-            this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
-            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
-            this.tsmEditinImageSoftware.Text = "Perform Custom Actions";
-            this.tsmEditinImageSoftware.CheckedChanged += new System.EventHandler(this.tsmEditinImageSoftware_CheckedChanged);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
+            this.cmTray.Size = new System.Drawing.Size(201, 424);
             // 
             // tsmEntireScreen
             // 
@@ -627,6 +604,20 @@ namespace ZScreenGUI
             this.autoScreenshotsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.autoScreenshotsToolStripMenuItem.Text = "Auto Capture...";
             this.autoScreenshotsToolStripMenuItem.Click += new System.EventHandler(this.autoScreenshotsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+            // 
+            // tsmEditinImageSoftware
+            // 
+            this.tsmEditinImageSoftware.CheckOnClick = true;
+            this.tsmEditinImageSoftware.Image = global::ZScreenGUI.Properties.Resources.picture_edit;
+            this.tsmEditinImageSoftware.Name = "tsmEditinImageSoftware";
+            this.tsmEditinImageSoftware.Size = new System.Drawing.Size(200, 22);
+            this.tsmEditinImageSoftware.Text = "Perform Custom Actions";
+            this.tsmEditinImageSoftware.CheckedChanged += new System.EventHandler(this.tsmEditinImageSoftware_CheckedChanged);
             // 
             // toolStripSeparator6
             // 
@@ -678,6 +669,15 @@ namespace ZScreenGUI
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(197, 6);
             // 
+            // tsmiTabs
+            // 
+            this.tsmiTabs.DoubleClickEnabled = true;
+            this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
+            this.tsmiTabs.Name = "tsmiTabs";
+            this.tsmiTabs.Size = new System.Drawing.Size(200, 22);
+            this.tsmiTabs.Text = "View Settings Menu...";
+            this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
+            // 
             // historyToolStripMenuItem
             // 
             this.historyToolStripMenuItem.Image = global::ZScreenGUI.Properties.Resources.pictures;
@@ -686,14 +686,6 @@ namespace ZScreenGUI
             this.historyToolStripMenuItem.Text = "&History...";
             this.historyToolStripMenuItem.Click += new System.EventHandler(this.historyToolStripMenuItem_Click);
             // 
-            // tsmFTPClient
-            // 
-            this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
-            this.tsmFTPClient.Name = "tsmFTPClient";
-            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
-            this.tsmFTPClient.Text = "FTP &Client...";
-            this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
-            // 
             // tsmViewLocalDirectory
             // 
             this.tsmViewLocalDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
@@ -701,6 +693,14 @@ namespace ZScreenGUI
             this.tsmViewLocalDirectory.Size = new System.Drawing.Size(200, 22);
             this.tsmViewLocalDirectory.Text = "Images Directory...";
             this.tsmViewLocalDirectory.Click += new System.EventHandler(this.tsmViewDirectory_Click);
+            // 
+            // tsmFTPClient
+            // 
+            this.tsmFTPClient.Image = global::ZScreenGUI.Properties.Resources.server_edit;
+            this.tsmFTPClient.Name = "tsmFTPClient";
+            this.tsmFTPClient.Size = new System.Drawing.Size(200, 22);
+            this.tsmFTPClient.Text = "FTP &Client...";
+            this.tsmFTPClient.Click += new System.EventHandler(this.tsmFTPClient_Click);
             // 
             // tsmHelp
             // 
@@ -737,10 +737,10 @@ namespace ZScreenGUI
             this.tsmAbout.Text = "About...";
             this.tsmAbout.Click += new System.EventHandler(this.tsmAboutMain_Click);
             // 
-            // toolStripSeparator1
+            // toolStripSeparator3
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
             // 
             // tsmExitZScreen
             // 
@@ -1013,6 +1013,8 @@ namespace ZScreenGUI
             this.tsbDonate.Size = new System.Drawing.Size(92, 26);
             this.tsbDonate.Text = "Donate";
             this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
+            this.tsbDonate.MouseEnter += new System.EventHandler(this.tsbDonate_MouseEnter);
+            this.tsbDonate.MouseLeave += new System.EventHandler(this.tsbDonate_MouseLeave);
             // 
             // pbLogo
             // 
@@ -1049,7 +1051,7 @@ namespace ZScreenGUI
             this.gbImageSettings.Controls.Add(this.chkManualNaming);
             this.gbImageSettings.Location = new System.Drawing.Point(16, 224);
             this.gbImageSettings.Name = "gbImageSettings";
-            this.gbImageSettings.Size = new System.Drawing.Size(352, 184);
+            this.gbImageSettings.Size = new System.Drawing.Size(352, 176);
             this.gbImageSettings.TabIndex = 123;
             this.gbImageSettings.TabStop = false;
             this.gbImageSettings.Text = "Quick Settings";
@@ -1255,7 +1257,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
