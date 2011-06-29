@@ -385,7 +385,10 @@ namespace ZScreenLib
                     this.UpdateLocalFilePath(fp);
                 }
                 ur.LocalFilePath = fp;
-                this.UploadResults.Add(ur);
+                if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL) || TempImage != null)
+                {
+                    this.UploadResults.Add(ur);
+                }
             }
         }
 
@@ -1386,14 +1389,15 @@ namespace ZScreenLib
 
         public string GetDescription()
         {
-            if (this.Job2 == JobLevel2.UploadFromClipboard && this.Job3 != JobLevel3.None)
+            if (!string.IsNullOrEmpty(FileName))
             {
-                return string.Format("{0}: {1} ({2})", this.Job2.GetDescription(), this.Job3.GetDescription(), this.GetDestinationName());
+                return FileName;
             }
-            else
+            else if (TempImage != null)
             {
-                return string.Format("{0} ({1})", this.Job2.GetDescription(), this.GetDestinationName());
+                return string.Format("Image ({0}x{1})", TempImage.Width, TempImage.Height);
             }
+            return Application.ProductName;
         }
 
         public string GetActiveImageUploadersDescription()
