@@ -36,9 +36,25 @@ namespace ZScreenLib
             EnableDisableDestControls();
         }
 
+        private ToolStripMenuItem GetOutputTsmi(ToolStripDropDownButton tsddb, OutputEnum o)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if ((OutputEnum)tsmi.Tag == o)
+                {
+                    return tsmi;
+                }
+            }
+            return new ToolStripMenuItem();
+        }
+
         public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
         {
-            tsddbClipboardContent.Enabled = tsmiClipboard.Checked;
+            ToolStripMenuItem tsmiOClipboard = GetOutputTsmi(tsddbOutputs, OutputEnum.Clipboard);
+            ToolStripMenuItem tsmiOLocalDisk = GetOutputTsmi(tsddbOutputs, OutputEnum.LocalDisk);
+            ToolStripMenuItem tsmiORemote = GetOutputTsmi(tsddbOutputs, OutputEnum.RemoteHost);
+
+            tsddbClipboardContent.Enabled = tsmiOClipboard.Checked;
 
             for (int i = 0; i < tsddbClipboardContent.DropDownItems.Count; i++)
             {
@@ -46,7 +62,17 @@ namespace ZScreenLib
                 ClipboardContentEnum cct = (ClipboardContentEnum)tsmi.Tag;
                 if (cct == ClipboardContentEnum.Local)
                 {
-                    tsmi.Enabled = tsmiFile.Checked;
+                    // if data is not stored in Local Disk then nothing file path related can be stored in Clipboard
+                    tsmi.Enabled = tsmiOLocalDisk.Checked;
+                    if (!tsmi.Enabled)
+                    {
+                        tsmi.Checked = false;
+                    }
+                }
+                if (cct == ClipboardContentEnum.Remote)
+                {
+                    // if data is not stored in Remote Host then nothing URL related can be stored in Clipboard
+                    tsmi.Enabled = tsmiORemote.Checked;
                     if (!tsmi.Enabled)
                     {
                         tsmi.Checked = false;
@@ -54,11 +80,11 @@ namespace ZScreenLib
                 }
                 if (tsmi.Checked)
                 {
-                    tsddbDestImage.Enabled = cct == ClipboardContentEnum.Remote;
-                    tsddbLinkFormat.Enabled = cct != ClipboardContentEnum.Data;
-                    tsddDestFile.Enabled = cct == ClipboardContentEnum.Remote;
-                    tsddDestText.Enabled = cct == ClipboardContentEnum.Remote;
-                    tsddbDestLink.Enabled = cct == ClipboardContentEnum.Remote;
+                    tsddbDestImage.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
+                    tsddbLinkFormat.Enabled = tsmiORemote.Checked && cct != ClipboardContentEnum.Data;
+                    tsddDestFile.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
+                    tsddDestText.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
+                    tsddbDestLink.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
                 }
             }
 

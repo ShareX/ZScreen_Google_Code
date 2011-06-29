@@ -81,8 +81,8 @@ namespace ZScreenGUI
                 bwTask.MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, bwTask);
                 bwTask.UniqueNumber = UploadManager.Queue();
 
-                if (Engine.conf.PromptForUpload && !bwTask.MyClipboardContent.Contains(ClipboardContentEnum.Data) &&
-                    !bwTask.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
+                if (Engine.conf.PromptForUpload && !bwTask.TaskClipboardContent.Contains(ClipboardContentEnum.Data) &&
+                    !bwTask.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     (bwTask.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
                     bwTask.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
                     MessageBox.Show("Do you really want to upload to " + bwTask.GetActiveImageUploadersDescription() + "?",
@@ -109,13 +109,13 @@ namespace ZScreenGUI
                         switch (bwTask.Job2)
                         {
                             case WorkerTask.JobLevel2.CaptureEntireScreen:
-                                if (bwTask.tempImage == null)
+                                if (bwTask.TempImage == null)
                                 {
                                     bwTask.CaptureScreen();
                                 }
                                 break;
                             case WorkerTask.JobLevel2.CaptureActiveWindow:
-                                if (bwTask.tempImage == null)
+                                if (bwTask.TempImage == null)
                                 {
                                     bwTask.CaptureActiveWindow();
                                 }
@@ -258,9 +258,9 @@ namespace ZScreenGUI
                     task.Status = WorkerTask.TaskStatus.Finished;
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
                     {
-                        string fp = Adapter.SaveImage(task.tempImage);
+                        string fp = Adapter.SaveImage(task.TempImage);
                         if (!string.IsNullOrEmpty(fp))
                         {
                             task.UpdateLocalFilePath(fp);
@@ -279,7 +279,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
                             {
                                 try
                                 {
@@ -329,11 +329,6 @@ namespace ZScreenGUI
                         {
                             new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
                         }
-
-                        if (task.UploadResults.Count > 0)
-                        {
-                            task.FlashIcon();
-                        }
                     }
 
                     if (task.IsError)
@@ -346,9 +341,9 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (task.tempImage != null)
+                if (task.TempImage != null)
                 {
-                    task.tempImage.Dispose(); // For fix memory leak
+                    task.TempImage.Dispose(); // For fix memory leak
                 }
 
                 if (!task.IsError)
@@ -991,7 +986,7 @@ namespace ZScreenGUI
         {
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
-                if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Data) && !task.MyClipboardContent.Contains(ClipboardContentEnum.Local) &&
+                if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);

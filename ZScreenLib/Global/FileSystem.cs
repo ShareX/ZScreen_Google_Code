@@ -92,10 +92,10 @@ namespace ZScreenLib
         /// <returns>Returns the file path to a screenshot</returns>
         public static string WriteImage(WorkerTask task)
         {
-            Image img = task.tempImage;
+            Image img = task.TempImage;
             string filePath = task.LocalFilePath;
 
-            if (task.MyOutputs.Contains(OutputEnum.File) && !string.IsNullOrEmpty(filePath))
+            if (task.TaskOutputs.Contains(OutputEnum.LocalDisk) && !string.IsNullOrEmpty(filePath))
             {
                 img = ImageEffects.ApplySizeChanges(img);
                 img = ImageEffects.ApplyScreenshotEffects(img);

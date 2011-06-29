@@ -122,8 +122,8 @@ namespace ZScreenCLI
         private static WorkerTask DefaultWorkerTask()
         {
             WorkerTask tempTask = new WorkerTask();
-            tempTask.MyOutputs.Add(OutputEnum.Clipboard);
-            tempTask.MyClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+            tempTask.TaskOutputs.Add(OutputEnum.Clipboard);
+            tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             foreach (int ut in listImageHosts)
             {
                 if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));

@@ -233,7 +233,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.MyClipboardContent.Contains(ClipboardContentEnum.Data))
+                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
                             {
                                 task.MyImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);

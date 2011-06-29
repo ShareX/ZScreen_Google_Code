@@ -32,9 +32,6 @@
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsDest = new System.Windows.Forms.ToolStrip();
             this.tsddbOutputs = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsmiClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiPrinter = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbClipboardContent = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbLinkFormat = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -89,10 +86,6 @@
             // 
             // tsddbOutputs
             // 
-            this.tsddbOutputs.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiClipboard,
-            this.tsmiFile,
-            this.tsmiPrinter});
             this.tsddbOutputs.Image = ((System.Drawing.Image)(resources.GetObject("tsddbOutputs.Image")));
             this.tsddbOutputs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddbOutputs.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -100,36 +93,6 @@
             this.tsddbOutputs.Size = new System.Drawing.Size(350, 20);
             this.tsddbOutputs.Tag = "Outputs";
             this.tsddbOutputs.Text = "Outputs:";
-            // 
-            // tsmiClipboard
-            // 
-            this.tsmiClipboard.CheckOnClick = true;
-            this.tsmiClipboard.Image = ((System.Drawing.Image)(resources.GetObject("tsmiClipboard.Image")));
-            this.tsmiClipboard.Name = "tsmiClipboard";
-            this.tsmiClipboard.ShortcutKeyDisplayString = "";
-            this.tsmiClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.tsmiClipboard.Size = new System.Drawing.Size(168, 22);
-            this.tsmiClipboard.Text = "Clipboard";
-            // 
-            // tsmiFile
-            // 
-            this.tsmiFile.Checked = true;
-            this.tsmiFile.CheckOnClick = true;
-            this.tsmiFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.tsmiFile.Image = ((System.Drawing.Image)(resources.GetObject("tsmiFile.Image")));
-            this.tsmiFile.Name = "tsmiFile";
-            this.tsmiFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmiFile.Size = new System.Drawing.Size(168, 22);
-            this.tsmiFile.Text = "File";
-            // 
-            // tsmiPrinter
-            // 
-            this.tsmiPrinter.CheckOnClick = true;
-            this.tsmiPrinter.Image = ((System.Drawing.Image)(resources.GetObject("tsmiPrinter.Image")));
-            this.tsmiPrinter.Name = "tsmiPrinter";
-            this.tsmiPrinter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.tsmiPrinter.Size = new System.Drawing.Size(168, 22);
-            this.tsmiPrinter.Text = "Printer";
             // 
             // tsddbClipboardContent
             // 
@@ -243,9 +206,6 @@
         public System.Windows.Forms.ToolStripDropDownButton tsddbDestLink;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
         public System.Windows.Forms.ToolStripDropDownButton tsddbLinkFormat;
-        public System.Windows.Forms.ToolStripMenuItem tsmiClipboard;
-        public System.Windows.Forms.ToolStripMenuItem tsmiFile;
-        public System.Windows.Forms.ToolStripMenuItem tsmiPrinter;
         public System.Windows.Forms.ToolStripDropDownButton tsddbOutputs;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
