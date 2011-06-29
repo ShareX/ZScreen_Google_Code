@@ -1400,6 +1400,18 @@ namespace ZScreenLib
             return Application.ProductName;
         }
 
+        public string GetOutputsDescription()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (OutputEnum ut in this.TaskOutputs)
+            {
+                sb.Append(ut.GetDescription());
+                sb.Append(", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
+        }
+
         public string GetActiveImageUploadersDescription()
         {
             StringBuilder sb = new StringBuilder();

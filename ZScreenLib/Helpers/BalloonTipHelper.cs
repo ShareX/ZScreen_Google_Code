@@ -61,7 +61,7 @@ namespace ZScreenLib
             }
             else
             {
-                sbMsg.AppendLine("Name: " + task.FileName);
+                sbMsg.AppendLine("Name: " + task.GetDescription());
 
                 switch (task.Job1)
                 {
@@ -78,21 +78,9 @@ namespace ZScreenLib
                         }
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
-                    case JobLevel1.Image:
-                        sbMsg.AppendLine("Destination(s):");
-                        sbMsg.AppendLine(task.GetActiveImageUploadersDescription());
-                        foreach (UploadResult ur in task.UploadResults)
-                        {
-                            if (!string.IsNullOrEmpty(ur.URL))
-                            {
-                                sbMsg.AppendLine(ur.URL);
-                            }
-                            if (!string.IsNullOrEmpty(ur.LocalFilePath))
-                            {
-                                sbMsg.AppendLine(ur.LocalFilePath);
-                            }
-                        }
-
+                    default:
+                        sbMsg.AppendLine("Outputs(s):");
+                        sbMsg.AppendLine(task.GetOutputsDescription());
                         break;
                 }
 
