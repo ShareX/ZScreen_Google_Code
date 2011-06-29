@@ -21,7 +21,7 @@ namespace ZScreenLib
             if (task != null && task.UploadResults.Count > 0)
             {
                 this.urTask = task;
-                this.Text = task.FileName.ToString(); // +" - " + task.GetDescription();
+                this.Text = task.GetDescription();
                 this.pbPreview.LoadingImage = Resources.Loading;
                 foreach (UploadResult ur in task.UploadResults)
                 {
