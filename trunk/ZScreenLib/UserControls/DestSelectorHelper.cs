@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -31,7 +32,7 @@ namespace ZScreenLib
             if (Engine.conf.ConfOutputs.Count == 0)
             {
                 Engine.conf.ConfOutputs.Add((int)OutputEnum.Clipboard);
-                Engine.conf.ConfOutputs.Add((int)OutputEnum.File);
+                Engine.conf.ConfOutputs.Add((int)OutputEnum.LocalDisk);
             }
             SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs.Cast<OutputEnum>().ToList());
         }
@@ -43,21 +44,45 @@ namespace ZScreenLib
 
         private void SetupOutputsWithRuntimeSettings(ToolStripDropDownButton tsddb, List<OutputEnum> list)
         {
-            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            if (tsddb.DropDownItems.Count == 0)
             {
-                tsmi.Click += new EventHandler(tsmiOutputs_Click);
+                foreach (OutputEnum t in Enum.GetValues(typeof(OutputEnum)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+
+                    switch (t)
+                    {
+                        case OutputEnum.Clipboard:
+                            tsmi.Image = Resources.clipboard;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+                            break;
+                        case OutputEnum.LocalDisk:
+                            tsmi.Image = Resources.drive;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+                            break;
+                        case OutputEnum.Printer:
+                            tsmi.Image = Resources.printer;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+                            break;
+                        case OutputEnum.SharedFolder:
+                            tsmi.Image = Resources.drive_network;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+                            break;
+                        case OutputEnum.RemoteHost:
+                            tsmi.Image = Resources.server;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+                            break;
+                    }
+
+                    tsmi.Tag = t;
+                    tsmi.CheckOnClick = true;
+                    tsmi.Checked = list.Contains(t);
+                    tsmi.Click += new EventHandler(tsmiOutputs_Click);
+                    tsddb.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripOutputs();
+                ucDestOptions.EnableDisableDestControls();
             }
-
-            ucDestOptions.tsmiClipboard.Tag = OutputEnum.Clipboard;
-            ucDestOptions.tsmiClipboard.Checked = list.Contains(OutputEnum.Clipboard);
-
-            ucDestOptions.tsmiFile.Tag = OutputEnum.File;
-            ucDestOptions.tsmiFile.Checked = list.Contains(OutputEnum.File);
-
-            ucDestOptions.tsmiPrinter.Tag = OutputEnum.Printer;
-            ucDestOptions.tsmiPrinter.Checked = list.Contains(OutputEnum.Printer);
-
-            UpdateToolStripOutputs();
         }
 
         public void AddEnumLinkFormatWithConfigSettings()

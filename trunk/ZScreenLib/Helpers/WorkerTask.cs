@@ -170,7 +170,7 @@ namespace ZScreenLib
 
         public int UniqueNumber { get; set; }
 
-        public Image tempImage { get; private set; }
+        public Image TempImage { get; private set; }
 
         public string TempText { get; private set; }
 
@@ -184,8 +184,8 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
-        public List<OutputEnum> MyOutputs = new List<OutputEnum>();
-        public List<ClipboardContentEnum> MyClipboardContent = new List<ClipboardContentEnum>();
+        public List<OutputEnum> TaskOutputs = new List<OutputEnum>();
+        public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
@@ -248,8 +248,8 @@ namespace ZScreenLib
         {
             if (this.Status != TaskStatus.Prepared)
             {
-                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyOutputs);
-                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, TaskOutputs);
+                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
@@ -289,7 +289,7 @@ namespace ZScreenLib
             if (img != null)
             {
                 Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
-                this.tempImage = img;
+                this.TempImage = img;
                 this.Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
                 {
@@ -415,9 +415,9 @@ namespace ZScreenLib
             {
                 this.Job1 = JobLevel1.Image;
                 this.IsImage = true;
-                if (GraphicsMgr.IsValidImage(fp) && this.tempImage == null)
+                if (GraphicsMgr.IsValidImage(fp) && this.TempImage == null)
                 {
-                    this.tempImage = FileSystem.ImageFromFile(fp);
+                    this.TempImage = FileSystem.ImageFromFile(fp);
                 }
             }
             else
@@ -490,17 +490,17 @@ namespace ZScreenLib
 
                 IsTakingScreenShot = false;
 
-                if (this.tempImage != null)
+                if (this.TempImage != null)
                 {
                     bool roundedShadowCorners = false;
                     if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
                     {
-                        this.SetImage(GraphicsMgr.RemoveCorners(this.tempImage, null));
+                        this.SetImage(GraphicsMgr.RemoveCorners(this.TempImage, null));
                         roundedShadowCorners = true;
                     }
                     if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
                     {
-                        this.SetImage(GraphicsMgr.AddBorderShadow(this.tempImage, roundedShadowCorners));
+                        this.SetImage(GraphicsMgr.AddBorderShadow(this.TempImage, roundedShadowCorners));
                     }
                 }
                 success = true;
@@ -545,7 +545,7 @@ namespace ZScreenLib
         /// </summary>
         public void CaptureActiveWindow()
         {
-            if (this.tempImage == null)
+            if (this.TempImage == null)
             {
                 this.SetImage(Capture.CaptureActiveWindow());
             }
@@ -556,7 +556,7 @@ namespace ZScreenLib
         /// </summary>
         public void CaptureScreen()
         {
-            if (this.tempImage == null)
+            if (this.TempImage == null)
             {
                 this.SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.conf.ShowCursor));
             }
@@ -598,7 +598,7 @@ namespace ZScreenLib
                                 Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
                                 editor.AutoSave = Engine.conf.ImageEditorAutoSave;
                                 editor.MyWorker = MyWorker;
-                                editor.SetImage(tempImage);
+                                editor.SetImage(TempImage);
                                 editor.SetImagePath(LocalFilePath);
                                 editor.ShowDialog();
                                 this.SetImage(editor.GetImage());
@@ -627,7 +627,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (this.MyOutputs.Contains(OutputEnum.File) && this.tempImage != null)
+            if (this.TaskOutputs.Contains(OutputEnum.LocalDisk) && this.TempImage != null)
             {
                 NameParserType type;
                 string pattern = string.Empty;
@@ -671,11 +671,21 @@ namespace ZScreenLib
             {
                 PublishImage();
             }
+
+            if (TaskOutputs.Contains(OutputEnum.SharedFolder))
+            {
+                UploadToSharedFolder();
+            }
+
+            if (this.UploadResults.Count > 0)
+            {
+                FlashIcon();
+            }
         }
 
         public void PublishImage()
         {
-            if (tempImage != null && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+            if (TempImage != null && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
             {
                 PerformActions();
             }
@@ -803,11 +813,6 @@ namespace ZScreenLib
                 }));
             }
 
-            if (MyImageUploaders.Contains(ImageUploaderType.SharedFolder))
-            {
-                UploadToSharedFolder();
-            }
-
             foreach (Thread t in uploaderThreads)
             {
                 t.Start();
@@ -823,12 +828,12 @@ namespace ZScreenLib
         {
             this.StartTime = DateTime.Now;
 
-            if (MyClipboardContent.Contains(ClipboardContentEnum.Remote))
+            if (TaskOutputs.Contains(OutputEnum.RemoteHost))
             {
                 UploadImageRemote();
             }
 
-            if (MyClipboardContent.Contains(ClipboardContentEnum.Local))
+            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
             {
                 this.AddUploadResult(new UploadResult()
                 {
@@ -836,11 +841,11 @@ namespace ZScreenLib
                 });
             }
 
-            if (MyOutputs.Contains(OutputEnum.Printer))
+            if (TaskOutputs.Contains(OutputEnum.Printer))
             {
-                if (this.tempImage != null)
+                if (this.TempImage != null)
                 {
-                    this.MyWorker.ReportProgress(101, (Image)this.tempImage.Clone());
+                    this.MyWorker.ReportProgress(101, (Image)this.TempImage.Clone());
                 }
             }
 
@@ -867,7 +872,7 @@ namespace ZScreenLib
                 this.DestinationName = this.GetActiveImageUploadersDescription();
                 Engine.MyLogger.WriteLine("Initialized " + this.DestinationName);
                 string fullFilePath = this.LocalFilePath;
-                if (File.Exists(fullFilePath) || this.tempImage != null)
+                if (File.Exists(fullFilePath) || this.TempImage != null)
                 {
                     if (Engine.conf == null)
                     {
@@ -880,11 +885,11 @@ namespace ZScreenLib
                         {
                             ur = uploader.Upload(fullFilePath);
                         }
-                        else if (this.tempImage != null)
+                        else if (this.TempImage != null)
                         {
                             FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
                             MemoryStream ms = new MemoryStream();
-                            this.tempImage.Save(ms, ImageFormat.Png);
+                            this.TempImage.Save(ms, ImageFormat.Png);
                             ur = uploader.Upload(ms, this.FileName);
                         }
                         ur.Host = ut.GetDescription();
@@ -936,7 +941,7 @@ namespace ZScreenLib
                 {
                     UploadFile();
                 }
-                if (MyOutputs.Contains(OutputEnum.Printer))
+                if (TaskOutputs.Contains(OutputEnum.Printer))
                 {
                     if (!string.IsNullOrEmpty(TempText))
                     {
@@ -1077,10 +1082,10 @@ namespace ZScreenLib
                 {
                     ur = fileHost.Upload(this.LocalFilePath);
                 }
-                else if (this.tempImage != null)
+                else if (this.TempImage != null)
                 {
                     MemoryStream ms = new MemoryStream();
-                    tempImage.Save(ms, ImageFormat.Png);
+                    TempImage.Save(ms, ImageFormat.Png);
                     FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
                     ur = fileHost.Upload(ms, FileName);
                 }
@@ -1121,9 +1126,9 @@ namespace ZScreenLib
 
                         if (CreateThumbnail())
                         {
-                            double thar = (double)Engine.MyUploadersConfig.FTPThumbnailWidthLimit / (double)this.tempImage.Width;
-                            using (Image img = GraphicsMgr.ChangeImageSize(this.tempImage, Engine.MyUploadersConfig.FTPThumbnailWidthLimit,
-                                (int)(thar * this.tempImage.Height)))
+                            double thar = (double)Engine.MyUploadersConfig.FTPThumbnailWidthLimit / (double)this.TempImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(this.TempImage, Engine.MyUploadersConfig.FTPThumbnailWidthLimit,
+                                (int)(thar * this.TempImage.Height)))
                             {
                                 StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(this.LocalFilePath));
                                 sb.Append(".th");
@@ -1172,7 +1177,7 @@ namespace ZScreenLib
                 this.UpdateLocalFilePath(destFile);
                 UploadResult ur = new UploadResult()
                 {
-                    Host = ImageUploaderType.SharedFolder.GetDescription(),
+                    Host = OutputEnum.SharedFolder.GetDescription(),
                     URL = acc.GetUriPath(fn),
                     LocalFilePath = this.LocalFilePath
                 };
@@ -1198,7 +1203,7 @@ namespace ZScreenLib
             return false;
         }
 
-        public void FlashIcon()
+        private void FlashIcon()
         {
             for (int i = 0; i < (int)Engine.conf.FlashTrayCount; i++)
             {
@@ -1332,18 +1337,18 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return MyOutputs.Contains(OutputEnum.Clipboard) && MyClipboardContent.Contains(ClipboardContentEnum.Data) && this.tempImage != null;
+            return TaskOutputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && this.TempImage != null;
         }
 
         private bool CreateThumbnail()
         {
-            return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.tempImage != null &&
+            return GraphicsMgr.IsValidImage(this.LocalFilePath) && this.TempImage != null &&
                 (Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL_WIKI) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LinkedThumbnailHtml) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.THUMBNAIL)) &&
                 (!Engine.MyUploadersConfig.FTPThumbnailCheckSize || (Engine.MyUploadersConfig.FTPThumbnailCheckSize &&
-                (this.tempImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
+                (this.TempImage.Width > Engine.MyUploadersConfig.FTPThumbnailWidthLimit)));
         }
 
         #endregion Checks

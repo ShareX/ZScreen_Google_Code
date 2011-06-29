@@ -89,8 +89,12 @@ namespace UploadersLib
     {
         [Description("Clipboard")]
         Clipboard,
-        [Description("File")]
-        File,
+        [Description("Local Disk")]
+        LocalDisk,
+        [Description("Shared folder")]
+        SharedFolder,
+        [Description("Remote Host")]
+        RemoteHost,
         [Description("Printer")]
         Printer,
     }
@@ -102,7 +106,7 @@ namespace UploadersLib
         [Description("Local file path")]
         Local,
         [Description("Uploaded URL")]
-        Remote
+        Remote,
     }
 
     public enum LinkFormatEnum
@@ -155,8 +159,6 @@ namespace UploadersLib
         MEDIAWIKI,
         [Description("File Uploader")]
         FileUploader,
-        [Description("Shared folder")]
-        SharedFolder,
     }
 
     public enum TextUploaderType

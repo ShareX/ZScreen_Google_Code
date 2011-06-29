@@ -109,9 +109,9 @@ namespace ZScreenLib
                     Adapter.CopyImageToClipboard(img);
                 }
             }
-            else if (urTask.tempImage != null)
+            else if (urTask.TempImage != null)
             {
-                Adapter.CopyImageToClipboard(urTask.tempImage);
+                Adapter.CopyImageToClipboard(urTask.TempImage);
             }
         }
 

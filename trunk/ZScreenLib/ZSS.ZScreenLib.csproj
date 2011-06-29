@@ -328,6 +328,11 @@
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
     <Content Include="Documents\Workflow.txt" />
+    <None Include="Resources\server.png" />
+    <None Include="Resources\clipboard.png" />
+    <None Include="Resources\printer.png" />
+    <None Include="Resources\drive.png" />
+    <None Include="Resources\drive-network.png" />
     <None Include="Resources\Loading.gif" />
     <None Include="Resources\link_go.png" />
     <None Include="Resources\server_edit.png" />
