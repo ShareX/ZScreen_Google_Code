@@ -91,10 +91,10 @@ namespace UploadersLib
         Clipboard,
         [Description("Local Disk")]
         LocalDisk,
-        [Description("Shared folder")]
-        SharedFolder,
         [Description("Remote Host")]
         RemoteHost,
+        [Description("Shared folder")]
+        SharedFolder,
         [Description("Printer")]
         Printer,
     }
