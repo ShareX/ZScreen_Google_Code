@@ -558,7 +558,14 @@ namespace ZScreenGUI
 
             if (Engine.conf.ShowMainWindow)
             {
-                this.WindowState = Engine.conf.WindowState;
+                if (Engine.conf.WindowState == FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
                 ShowInTaskbar = Engine.conf.ShowInTaskbar;
             }
             else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)

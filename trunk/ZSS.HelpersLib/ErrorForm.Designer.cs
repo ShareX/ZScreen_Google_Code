@@ -40,9 +40,9 @@
             // 
             // txtException
             // 
-            this.txtException.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtException.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtException.Location = new System.Drawing.Point(16, 48);
             this.txtException.Multiline = true;
             this.txtException.Name = "txtException";
@@ -52,7 +52,7 @@
             // 
             // btnCopyAll
             // 
-            this.btnCopyAll.Location = new System.Drawing.Point(0, 3);
+            this.btnCopyAll.Location = new System.Drawing.Point(95, 3);
             this.btnCopyAll.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.btnCopyAll.Name = "btnCopyAll";
             this.btnCopyAll.Size = new System.Drawing.Size(72, 24);
@@ -63,7 +63,7 @@
             // 
             // btnSendBugReport
             // 
-            this.btnSendBugReport.Location = new System.Drawing.Point(173, 3);
+            this.btnSendBugReport.Location = new System.Drawing.Point(268, 3);
             this.btnSendBugReport.Name = "btnSendBugReport";
             this.btnSendBugReport.Size = new System.Drawing.Size(104, 24);
             this.btnSendBugReport.TabIndex = 2;
@@ -73,17 +73,19 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(361, 3);
+            this.btnClose.AutoSize = true;
+            this.btnClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnClose.Location = new System.Drawing.Point(3, 3);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(72, 24);
+            this.btnClose.Size = new System.Drawing.Size(89, 23);
             this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "Close";
+            this.btnClose.Text = "Exit Application";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnOpenLogFile
             // 
-            this.btnOpenLogFile.Location = new System.Drawing.Point(78, 3);
+            this.btnOpenLogFile.Location = new System.Drawing.Point(173, 3);
             this.btnOpenLogFile.Name = "btnOpenLogFile";
             this.btnOpenLogFile.Size = new System.Drawing.Size(89, 24);
             this.btnOpenLogFile.TabIndex = 1;
@@ -93,13 +95,13 @@
             // 
             // flpMenu
             // 
-            this.flpMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpMenu.Controls.Add(this.btnClose);
             this.flpMenu.Controls.Add(this.btnCopyAll);
             this.flpMenu.Controls.Add(this.btnOpenLogFile);
             this.flpMenu.Controls.Add(this.btnSendBugReport);
             this.flpMenu.Controls.Add(this.btnContinue);
-            this.flpMenu.Controls.Add(this.btnClose);
             this.flpMenu.Location = new System.Drawing.Point(16, 278);
             this.flpMenu.Name = "flpMenu";
             this.flpMenu.Size = new System.Drawing.Size(464, 32);
@@ -107,11 +109,11 @@
             // 
             // btnContinue
             // 
-            this.btnContinue.Location = new System.Drawing.Point(283, 3);
+            this.btnContinue.Location = new System.Drawing.Point(378, 3);
             this.btnContinue.Name = "btnContinue";
             this.btnContinue.Size = new System.Drawing.Size(72, 24);
             this.btnContinue.TabIndex = 4;
-            this.btnContinue.Text = "Continue";
+            this.btnContinue.Text = "&OK";
             this.btnContinue.UseVisualStyleBackColor = true;
             this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
@@ -131,6 +133,7 @@
             this.Shown += new System.EventHandler(this.ErrorForm_Shown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ErrorForm_Paint);
             this.flpMenu.ResumeLayout(false);
+            this.flpMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
