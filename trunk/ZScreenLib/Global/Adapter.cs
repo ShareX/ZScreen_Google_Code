@@ -185,9 +185,9 @@ namespace ZScreenLib
             list.Clear();
             foreach (var obj in tsddb.DropDownItems)
             {
-                if (obj.GetType() == typeof(ToolStripMenuItem))
+                if (obj is ToolStripMenuItem)
                 {
-                    ToolStripMenuItem tsmi = obj as ToolStripMenuItem;
+                    ToolStripMenuItem tsmi = (ToolStripMenuItem)obj;
                     if (tsmi.Checked)
                     {
                         list.Add((T)tsmi.Tag);

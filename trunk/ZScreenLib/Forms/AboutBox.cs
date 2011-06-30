@@ -57,7 +57,6 @@ namespace ZScreenLib
             this.lblRev.Location = new Point(this.labelVersion.Left + this.labelVersion.Width + 10, this.labelVersion.Top);
             this.lblRev.Text = string.Format("Rev. {0}", Adapter.AppRevision);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.lblCompanyName.Text = AssemblyCompany;
             lblDevelopers.Text = string.Format("{0} is developed by:", AssemblyTitle);
             Timer timer = new Timer { Interval = 100 };
             timer.Tick += new EventHandler(timer_Tick);
