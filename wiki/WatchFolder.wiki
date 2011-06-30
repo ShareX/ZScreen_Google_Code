@@ -8,13 +8,13 @@
 
 Set up ZScreen Options as follows: 
 
-[http://img269.imageshack.us/img269/9159/ss20090801171141.png]
+[http://dl.dropbox.com/u/25501373/ZScreen/2011-06/Screenshot-2011-06-30_10.12.38.png]
 
 = Using Mozilla Firefox addon =
 
 In Mozilla Firefox, click the Grab icon in the bottom right corner: 
 
-[http://img37.imageshack.us/img37/2574/ss20090801171500.png]
+[http://dl.dropbox.com/u/25501373/ZScreen/2011-06/Screenshot-2011-06-30_10.12.23.png]
 
  * Save > Complete Page/Frame...
 
