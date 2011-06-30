@@ -68,16 +68,13 @@ public class ToolStripRadioButtonMenuItem : ToolStripMenuItem
     {
         base.OnCheckedChanged(e);
 
-        // If this item is no longer in the checked state, do nothing.
-        if (!Checked) return;
-
-        if (Parent != null)
+        if (Checked && Parent != null)
         {
             // Clear the checked state for all siblings.
             foreach (ToolStripItem item in Parent.Items)
             {
-                ToolStripRadioButtonMenuItem radioItem =
-                item as ToolStripRadioButtonMenuItem;
+                ToolStripRadioButtonMenuItem radioItem = item as ToolStripRadioButtonMenuItem;
+
                 if (radioItem != null && radioItem != this && radioItem.Checked)
                 {
                     radioItem.Checked = false;

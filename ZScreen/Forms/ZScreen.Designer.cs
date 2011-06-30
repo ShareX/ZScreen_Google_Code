@@ -410,9 +410,9 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.ucProxyAccounts = new UploadersLib.AccountsControl();
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.ucDestOptions = new ZScreenLib.DestSelector();
+            this.ucProxyAccounts = new UploadersLib.AccountsControl();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -1000,13 +1000,15 @@ namespace ZScreenGUI
             // 
             this.tsbDonate.AutoSize = false;
             this.tsbDonate.BackgroundImage = global::ZScreenGUI.Properties.Resources.paypal;
+            this.tsbDonate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.tsbDonate.Image = global::ZScreenGUI.Properties.Resources.paypal;
-            this.tsbDonate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDonate.Margin = new System.Windows.Forms.Padding(0, 10, 0, 2);
+            this.tsbDonate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbDonate.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.tsbDonate.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.tsbDonate.Name = "tsbDonate";
-            this.tsbDonate.Size = new System.Drawing.Size(92, 26);
+            this.tsbDonate.Size = new System.Drawing.Size(100, 35);
             this.tsbDonate.Text = "Donate";
+            this.tsbDonate.ToolTipText = "Thanks!";
             this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
             this.tsbDonate.MouseEnter += new System.EventHandler(this.tsbDonate_MouseEnter);
             this.tsbDonate.MouseLeave += new System.EventHandler(this.tsbDonate_MouseLeave);
@@ -4825,17 +4827,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // ucProxyAccounts
-            // 
-            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(787, 314);
-            this.ucProxyAccounts.TabIndex = 0;
-            // 
             // nudScreenshotDelay
             // 
             this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
@@ -4860,6 +4851,17 @@ namespace ZScreenGUI
             this.ucDestOptions.Size = new System.Drawing.Size(352, 200);
             this.ucDestOptions.TabIndex = 124;
             this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
+            // 
+            // ucProxyAccounts
+            // 
+            this.ucProxyAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucProxyAccounts.Name = "ucProxyAccounts";
+            this.ucProxyAccounts.Size = new System.Drawing.Size(787, 314);
+            this.ucProxyAccounts.TabIndex = 0;
             // 
             // ZScreen
             // 

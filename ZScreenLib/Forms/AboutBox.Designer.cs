@@ -38,7 +38,6 @@
             this.lblBrandon = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lblDevelopers = new System.Windows.Forms.Label();
-            this.lblCompanyName = new System.Windows.Forms.Label();
             this.lblRev = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.RichTextBox();
@@ -47,9 +46,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbFlagUS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // labelProductName
-            //
+            // 
             this.labelProductName.AutoSize = true;
             this.labelProductName.BackColor = System.Drawing.Color.Transparent;
             this.labelProductName.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -63,9 +62,9 @@
             this.labelProductName.Text = "Product Name";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelProductName.Click += new System.EventHandler(this.labelProductName_Click);
-            //
+            // 
             // labelCopyright
-            //
+            // 
             this.labelCopyright.AutoSize = true;
             this.labelCopyright.BackColor = System.Drawing.Color.Transparent;
             this.labelCopyright.ForeColor = System.Drawing.Color.White;
@@ -76,9 +75,9 @@
             this.labelCopyright.TabIndex = 21;
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // labelVersion
-            //
+            // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.BackColor = System.Drawing.Color.Transparent;
             this.labelVersion.ForeColor = System.Drawing.Color.White;
@@ -89,9 +88,9 @@
             this.labelVersion.TabIndex = 83;
             this.labelVersion.Text = "Version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // pbFlagTR
-            //
+            // 
             this.pbFlagTR.BackColor = System.Drawing.Color.Transparent;
             this.pbFlagTR.Image = global::ZScreenLib.Properties.Resources.tr;
             this.pbFlagTR.Location = new System.Drawing.Point(29, 248);
@@ -100,9 +99,9 @@
             this.pbFlagTR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbFlagTR.TabIndex = 85;
             this.pbFlagTR.TabStop = false;
-            //
+            // 
             // lblBerk
-            //
+            // 
             this.lblBerk.AutoSize = true;
             this.lblBerk.BackColor = System.Drawing.Color.Transparent;
             this.lblBerk.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -114,9 +113,9 @@
             this.lblBerk.TabIndex = 86;
             this.lblBerk.Text = "Jaex ( Berk )";
             this.lblBerk.Click += new System.EventHandler(this.lblBerk_Click);
-            //
+            // 
             // pbFlagAU
-            //
+            // 
             this.pbFlagAU.BackColor = System.Drawing.Color.Transparent;
             this.pbFlagAU.Image = global::ZScreenLib.Properties.Resources.au;
             this.pbFlagAU.Location = new System.Drawing.Point(29, 224);
@@ -125,9 +124,9 @@
             this.pbFlagAU.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbFlagAU.TabIndex = 87;
             this.pbFlagAU.TabStop = false;
-            //
+            // 
             // lblMike
-            //
+            // 
             this.lblMike.AutoSize = true;
             this.lblMike.BackColor = System.Drawing.Color.Transparent;
             this.lblMike.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -139,9 +138,9 @@
             this.lblMike.TabIndex = 88;
             this.lblMike.Text = "McoreD ( Mike Delpach )";
             this.lblMike.Click += new System.EventHandler(this.lblMike_Click);
-            //
+            // 
             // pbFlagUS
-            //
+            // 
             this.pbFlagUS.BackColor = System.Drawing.Color.Transparent;
             this.pbFlagUS.Image = global::ZScreenLib.Properties.Resources.us;
             this.pbFlagUS.Location = new System.Drawing.Point(29, 200);
@@ -150,9 +149,9 @@
             this.pbFlagUS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbFlagUS.TabIndex = 89;
             this.pbFlagUS.TabStop = false;
-            //
+            // 
             // lblBrandon
-            //
+            // 
             this.lblBrandon.AutoSize = true;
             this.lblBrandon.BackColor = System.Drawing.Color.Transparent;
             this.lblBrandon.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -164,9 +163,9 @@
             this.lblBrandon.TabIndex = 90;
             this.lblBrandon.Text = "inf1ni ( Brandon Zimmerman )";
             this.lblBrandon.Click += new System.EventHandler(this.lblBrandon_Click);
-            //
+            // 
             // pbLogo
-            //
+            // 
             this.pbLogo.BackColor = System.Drawing.Color.Transparent;
             this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbLogo.Image = global::ZScreenLib.Properties.Resources.main;
@@ -177,9 +176,9 @@
             this.pbLogo.TabIndex = 91;
             this.pbLogo.TabStop = false;
             this.pbLogo.Click += new System.EventHandler(this.pbLogo_Click);
-            //
+            // 
             // lblDevelopers
-            //
+            // 
             this.lblDevelopers.AutoSize = true;
             this.lblDevelopers.BackColor = System.Drawing.Color.Transparent;
             this.lblDevelopers.ForeColor = System.Drawing.Color.White;
@@ -188,23 +187,9 @@
             this.lblDevelopers.Size = new System.Drawing.Size(61, 13);
             this.lblDevelopers.TabIndex = 92;
             this.lblDevelopers.Text = "Developers";
-            //
-            // lblCompanyName
-            //
-            this.lblCompanyName.AutoSize = true;
-            this.lblCompanyName.BackColor = System.Drawing.Color.Transparent;
-            this.lblCompanyName.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblCompanyName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompanyName.ForeColor = System.Drawing.Color.White;
-            this.lblCompanyName.Location = new System.Drawing.Point(224, 120);
-            this.lblCompanyName.Name = "lblCompanyName";
-            this.lblCompanyName.Size = new System.Drawing.Size(80, 13);
-            this.lblCompanyName.TabIndex = 93;
-            this.lblCompanyName.Text = "Company name";
-            this.lblCompanyName.Click += new System.EventHandler(this.lblCompanyName_Click);
-            //
+            // 
             // lblRev
-            //
+            // 
             this.lblRev.AutoSize = true;
             this.lblRev.BackColor = System.Drawing.Color.Transparent;
             this.lblRev.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -216,9 +201,9 @@
             this.lblRev.TabIndex = 94;
             this.lblRev.Text = "Rev.";
             this.lblRev.Click += new System.EventHandler(this.lblRev_Click_1);
-            //
+            // 
             // btnOK
-            //
+            // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.BackColor = System.Drawing.SystemColors.Control;
             this.btnOK.Location = new System.Drawing.Point(424, 280);
@@ -228,21 +213,21 @@
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            //
+            // 
             // textBoxDescription
-            //
-            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.Location = new System.Drawing.Point(224, 160);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(272, 112);
             this.textBoxDescription.TabIndex = 96;
             this.textBoxDescription.Text = "Description";
             this.textBoxDescription.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBoxDescription_LinkClicked);
-            //
+            // 
             // AboutBox
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -250,7 +235,6 @@
             this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblRev);
-            this.Controls.Add(this.lblCompanyName);
             this.Controls.Add(this.lblDevelopers);
             this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.lblBrandon);
@@ -278,6 +262,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion Windows Form Designer generated code
@@ -293,7 +278,6 @@
         private System.Windows.Forms.Label lblBrandon;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Label lblDevelopers;
-        private System.Windows.Forms.Label lblCompanyName;
         private System.Windows.Forms.Label lblRev;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.RichTextBox textBoxDescription;

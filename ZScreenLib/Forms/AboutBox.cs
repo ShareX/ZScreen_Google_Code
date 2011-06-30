@@ -160,11 +160,6 @@ namespace ZScreenLib
             Process.Start("http://code.google.com/p/zscreen");
         }
 
-        private void lblCompanyName_Click(object sender, EventArgs e)
-        {
-            Process.Start("http://www.brandonz.net");
-        }
-
         private void lblRev_Click_1(object sender, EventArgs e)
         {
             Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
@@ -202,19 +197,22 @@ namespace ZScreenLib
             sbDesc.AppendLine();
             sbDesc.AppendLine("Starksoft FTP Component, Starksoft SOCKS and HTTP Proxy Component by Benton Stark: http://www.starksoft.com");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Silk icon set 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
+            sbDesc.AppendLine("Silk Icons 1.3 by Mark James: http://www.famfamfam.com/lab/icons/silk");
+            sbDesc.AppendLine();
+            sbDesc.AppendLine("Fugue Icons 3.1 by Yusuke Kamiyamane: http://p.yusukekamiyamane.com");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009: https://sourceforge.net/projects/greenshot");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("GIF file creation uses Image Quantizer Example Project by Brendan Tompkins: http://codebetter.com/media/p/164230.aspx");
+            sbDesc.AppendLine("GIF file creation uses Image Quantizer example project by Brendan Tompkins: http://codebetter.com/media/p/164230.aspx");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Running from:");
             sbDesc.AppendLine(Application.ExecutablePath);
             sbDesc.AppendLine();
             sbDesc.AppendLine("Settings file:");
             sbDesc.AppendLine(Engine.SettingsFilePath);
+
             if (Assemblies != null)
             {
                 sbDesc.AppendLine();
@@ -224,7 +222,8 @@ namespace ZScreenLib
                     sbDesc.AppendLine(dll);
                 }
             }
-            this.textBoxDescription.Text = sbDesc.ToString();
+
+            textBoxDescription.Text = sbDesc.ToString();
         }
 
         private void textBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
