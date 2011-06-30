@@ -131,13 +131,16 @@ namespace ZScreenLib
 
         public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
         {
-            foreach (ClipboardContentEnum t in Enum.GetValues(typeof(ClipboardContentEnum)))
+            if (tsddb.DropDownItems.Count == 0)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                tsmi.Tag = t;
-                tsmi.Checked = ClipboardContentType.Contains((int)t);
-                tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
-                tsddb.DropDownItems.Add(tsmi);
+                foreach (ClipboardContentEnum t in Enum.GetValues(typeof(ClipboardContentEnum)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.Checked = ClipboardContentType.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
+                    tsddb.DropDownItems.Add(tsmi);
+                }
             }
             UpdateToolStripClipboardContent();
             ucDestOptions.EnableDisableDestControls();
