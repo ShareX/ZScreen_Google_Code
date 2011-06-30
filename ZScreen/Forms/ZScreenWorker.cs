@@ -742,7 +742,7 @@ namespace ZScreenGUI
                 cbTask.SetImage(Clipboard.GetImage());
                 if (cbTask.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
                 {
-                    FileSystem.WriteImage(cbTask);
+                    cbTask.WriteImage();
                 }
                 RunWorkerAsync_Files(cbTask);
             }

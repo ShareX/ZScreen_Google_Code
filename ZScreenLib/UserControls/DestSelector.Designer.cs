@@ -129,8 +129,7 @@
             this.tsddbDestImage.Name = "tsddbDestImage";
             this.tsddbDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
-            this.tsddbDestImage.Tag = "Image output";
-            this.tsddbDestImage.Text = "Image output:";
+            this.tsddbDestImage.Tag = "Upload image to";
             // 
             // tsddDestText
             // 
@@ -140,8 +139,7 @@
             this.tsddDestText.Name = "tsddDestText";
             this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestText.Size = new System.Drawing.Size(350, 20);
-            this.tsddDestText.Tag = "Text output";
-            this.tsddDestText.Text = "Text output:";
+            this.tsddDestText.Tag = "Upload text to";
             // 
             // tsddDestFile
             // 
@@ -151,8 +149,7 @@
             this.tsddDestFile.Name = "tsddDestFile";
             this.tsddDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestFile.Size = new System.Drawing.Size(350, 20);
-            this.tsddDestFile.Tag = "File output";
-            this.tsddDestFile.Text = "File output:";
+            this.tsddDestFile.Tag = "Upload file to";
             // 
             // tsddbDestLink
             // 
