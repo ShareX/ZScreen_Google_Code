@@ -85,6 +85,9 @@
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="StaticHelper.cs" />
+    <Compile Include="ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>

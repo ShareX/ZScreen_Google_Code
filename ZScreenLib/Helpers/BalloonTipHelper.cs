@@ -79,7 +79,7 @@ namespace ZScreenLib
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
                     default:
-                        sbMsg.AppendLine("Outputs(s):");
+                        sbMsg.AppendLine("Outputs:");
                         sbMsg.AppendLine(task.GetOutputsDescription());
                         break;
                 }
