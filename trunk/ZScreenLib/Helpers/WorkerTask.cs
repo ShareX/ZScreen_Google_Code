@@ -630,7 +630,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (this.TaskOutputs.Contains(OutputEnum.LocalDisk) && this.TempImage != null)
+            if (this.TaskOutputs.Contains(OutputEnum.LocalDisk) && File.Exists(this.LocalFilePath) && this.TempImage != null)
             {
                 NameParserType type;
                 string pattern = string.Empty;
@@ -650,7 +650,21 @@ namespace ZScreenLib
                     if (this.SetFilePathFromPattern(parser.Convert(pattern)))
                     {
                         Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
-                        FileSystem.WriteImage(this);
+
+                        Image img = TempImage;
+                        string fp = LocalFilePath;
+
+                        img = ImageEffects.ApplySizeChanges(img);
+                        img = ImageEffects.ApplyScreenshotEffects(img);
+                        if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
+                        {
+                            img = ImageEffects.ApplyWatermark(img);
+                        }
+
+                        FileSystem.WriteImage(fp, img);
+
+                        UpdateLocalFilePath(fp);
+
                         if (!File.Exists(this.LocalFilePath))
                         {
                             this.Errors.Add(string.Format("{0} does not exist", this.LocalFilePath));
@@ -1166,18 +1180,35 @@ namespace ZScreenLib
 
         public void UploadToSharedFolder()
         {
-            if (Engine.MyUploadersConfig.LocalhostAccountList.CheckSelected(Engine.MyUploadersConfig.LocalhostSelected) && File.Exists(this.LocalFilePath))
+            if (Engine.MyUploadersConfig.LocalhostAccountList.CheckSelected(Engine.MyUploadersConfig.LocalhostSelected))
             {
                 LocalhostAccount acc = Engine.MyUploadersConfig.LocalhostAccountList[Engine.MyUploadersConfig.LocalhostSelected];
-                string fn = Path.GetFileName(this.LocalFilePath);
-                string destFile = acc.GetLocalhostPath(fn);
-                string destDir = Path.GetDirectoryName(destFile);
-                if (!Directory.Exists(destDir))
+                string fn = string.Empty;
+                if (File.Exists(this.LocalFilePath))
                 {
-                    Directory.CreateDirectory(destDir);
+                    fn = Path.GetFileName(this.LocalFilePath);
+                    string destFile = acc.GetLocalhostPath(fn);
+                    string destDir = Path.GetDirectoryName(destFile);
+                    if (!Directory.Exists(destDir))
+                    {
+                        Directory.CreateDirectory(destDir);
+                    }
+                    File.Copy(this.LocalFilePath, destFile);
+                    this.UpdateLocalFilePath(destFile);
                 }
-                File.Move(this.LocalFilePath, destFile);
-                this.UpdateLocalFilePath(destFile);
+                else if (TempImage != null)
+                {
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
+                    string fp = acc.GetLocalhostPath(fn);
+                    FileSystem.WriteImage(fp, TempImage);
+                }
+                else if (!string.IsNullOrEmpty(TempText))
+                {
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".txt";
+                    string destFile = acc.GetLocalhostPath(fn);
+                    FileSystem.WriteText(destFile, TempText);
+                }
+
                 UploadResult ur = new UploadResult()
                 {
                     Host = OutputEnum.SharedFolder.GetDescription(),

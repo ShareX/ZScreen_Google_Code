@@ -39,11 +39,23 @@ namespace ZScreenLib
             EnableDisableDestControls();
         }
 
-        private ToolStripMenuItem GetOutputTsmi(ToolStripDropDownButton tsddb, OutputEnum o)
+        private ToolStripMenuItem GetOutputTsmi(ToolStripDropDownButton tsddb, OutputEnum et)
         {
             foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
             {
-                if ((OutputEnum)tsmi.Tag == o)
+                if ((OutputEnum)tsmi.Tag == et)
+                {
+                    return tsmi;
+                }
+            }
+            return new ToolStripMenuItem();
+        }
+
+        private ToolStripMenuItem GetClipboardContentTsmi(ToolStripDropDownButton tsddb, ClipboardContentEnum et)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if ((ClipboardContentEnum)tsmi.Tag == et)
                 {
                     return tsmi;
                 }
@@ -55,41 +67,32 @@ namespace ZScreenLib
         {
             ToolStripMenuItem tsmiOClipboard = GetOutputTsmi(tsddbOutputs, OutputEnum.Clipboard);
             ToolStripMenuItem tsmiOLocalDisk = GetOutputTsmi(tsddbOutputs, OutputEnum.LocalDisk);
-            ToolStripMenuItem tsmiORemote = GetOutputTsmi(tsddbOutputs, OutputEnum.RemoteHost);
+            ToolStripMenuItem tsmiORemoteHost = GetOutputTsmi(tsddbOutputs, OutputEnum.RemoteHost);
+
+            ToolStripMenuItem tsmiCCLocal = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Local);
+            ToolStripMenuItem tsmiCCRemote = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Remote);
+
+            tsmiCCLocal.Enabled = tsmiOLocalDisk.Checked;
+            if (!tsmiCCLocal.Enabled)
+            {
+                // if data is not stored in Local Disk then nothing file path related can be stored in Clipboard
+                tsmiCCLocal.Checked = false;
+            }
+
+            tsmiCCRemote.Enabled = tsmiORemoteHost.Checked;
+            if (!tsmiCCRemote.Enabled)
+            {
+                // if data is not stored in Remote Host then nothing URL related can be stored in Clipboard
+                tsmiCCRemote.Checked = false;
+            }
+
+            tsddbDestImage.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
+            tsddbLinkFormat.Enabled = tsmiORemoteHost.Checked;
+            tsddDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
+            tsddDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
+            tsddbDestLink.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
 
             tsddbClipboardContent.Enabled = tsmiOClipboard.Checked;
-
-            for (int i = 0; i < tsddbClipboardContent.DropDownItems.Count; i++)
-            {
-                ToolStripMenuItem tsmi = (ToolStripMenuItem)tsddbClipboardContent.DropDownItems[i];
-                ClipboardContentEnum cct = (ClipboardContentEnum)tsmi.Tag;
-                if (cct == ClipboardContentEnum.Local)
-                {
-                    // if data is not stored in Local Disk then nothing file path related can be stored in Clipboard
-                    tsmi.Enabled = tsmiOLocalDisk.Checked;
-                    if (!tsmi.Enabled)
-                    {
-                        tsmi.Checked = false;
-                    }
-                }
-                if (cct == ClipboardContentEnum.Remote)
-                {
-                    // if data is not stored in Remote Host then nothing URL related can be stored in Clipboard
-                    tsmi.Enabled = tsmiORemote.Checked;
-                    if (!tsmi.Enabled)
-                    {
-                        tsmi.Checked = false;
-                    }
-                }
-                if (tsmi.Checked)
-                {
-                    tsddbDestImage.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
-                    tsddbLinkFormat.Enabled = tsmiORemote.Checked && cct != ClipboardContentEnum.Data;
-                    tsddDestFile.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
-                    tsddDestText.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
-                    tsddbDestLink.Enabled = tsmiORemote.Checked && cct == ClipboardContentEnum.Remote;
-                }
-            }
 
             DestSelectorHelper.UpdateToolStripDest(tsddbClipboardContent);
         }

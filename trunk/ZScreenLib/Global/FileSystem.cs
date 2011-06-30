@@ -83,67 +83,49 @@ namespace ZScreenLib
             return files;
         }
 
-        /// <summary>
-        /// Function to save and return the file path of a captured image. ImageFormat is based on length of the image.
-        /// If the image exists it is overwritten.
-        /// </summary>
-        /// <param name="img">The actual image</param>
-        /// <param name="filePath">The path to where the image will be saved</param>
-        /// <returns>Returns the file path to a screenshot</returns>
-        public static string WriteImage(WorkerTask task)
+        public static void WriteImage(string fp, Image img)
         {
-            Image img = task.TempImage;
-            string filePath = task.LocalFilePath;
-
-            if (task.TaskOutputs.Contains(OutputEnum.LocalDisk) && !string.IsNullOrEmpty(filePath))
+            string destDir = Path.GetDirectoryName(fp);
+            if (!Directory.Exists(destDir))
             {
-                img = ImageEffects.ApplySizeChanges(img);
-                img = ImageEffects.ApplyScreenshotEffects(img);
-                if (task.Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
-                {
-                    img = ImageEffects.ApplyWatermark(img);
-                }
-
-                long size = (long)Engine.conf.SwitchAfter * 1024;
-
-                MemoryStream ms = null;
-
-                GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img, Engine.zImageFileFormat);
-                opt.GIFQuality = Engine.conf.GIFQuality;
-                opt.JpgQuality = Engine.conf.JpgQuality;
-                opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
-
-                try
-                {
-                    ms = GraphicsMgr.SaveImageToMemoryStream(opt);
-
-                    if (ms.Length > size && size != 0)
-                    {
-                        opt.MyImageFileFormat = Engine.zImageFileFormatSwitch;
-                        ms = GraphicsMgr.SaveImageToMemoryStream(opt);
-                        filePath = Path.ChangeExtension(filePath, Engine.zImageFileFormatSwitch.Extension);
-                    }
-
-                    if (!Directory.Exists(Path.GetDirectoryName(filePath)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-                    }
-
-                    Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, filePath));
-                    ms.WriteToFile(filePath);
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Error while saving image");
-                }
-                finally
-                {
-                    if (ms != null) ms.Dispose();
-                }
+                Directory.CreateDirectory(destDir);
             }
 
-            task.UpdateLocalFilePath(filePath);
-            return filePath;
+            long size = (long)Engine.conf.SwitchAfter * 1024;
+            MemoryStream ms = null;
+
+            GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img, Engine.zImageFileFormat);
+            opt.GIFQuality = Engine.conf.GIFQuality;
+            opt.JpgQuality = Engine.conf.JpgQuality;
+            opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
+
+            try
+            {
+                ms = GraphicsMgr.SaveImageToMemoryStream(opt);
+
+                if (ms.Length > size && size != 0)
+                {
+                    opt.MyImageFileFormat = Engine.zImageFileFormatSwitch;
+                    ms = GraphicsMgr.SaveImageToMemoryStream(opt);
+                    fp = Path.ChangeExtension(fp, Engine.zImageFileFormatSwitch.Extension);
+                }
+
+                if (!Directory.Exists(Path.GetDirectoryName(fp)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(fp));
+                }
+
+                Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, fp));
+                ms.WriteToFile(fp);
+            }
+            catch (Exception ex)
+            {
+                Engine.MyLogger.WriteException(ex, "Error while saving image");
+            }
+            finally
+            {
+                if (ms != null) ms.Dispose();
+            }
         }
 
         public static string GetTextFromFile(string filePath)
