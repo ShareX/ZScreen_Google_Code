@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -13,7 +14,9 @@ namespace ZScreenLib
 
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
-            new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys()).Show();
+            UploadersConfigForm form = new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys());
+            form.Icon = Resources.zss_main;
+            form.Show();
         }
 
         private void RestrictToOneCheck(ToolStripDropDownButton tsddb, ToolStripItemClickedEventArgs e)

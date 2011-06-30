@@ -135,7 +135,7 @@ namespace ZScreenLib
             {
                 foreach (ClipboardContentEnum t in Enum.GetValues(typeof(ClipboardContentEnum)))
                 {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    ToolStripRadioButtonMenuItem tsmi = new ToolStripRadioButtonMenuItem(t.GetDescription());
                     tsmi.Tag = t;
                     tsmi.Checked = ClipboardContentType.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
@@ -260,9 +260,10 @@ namespace ZScreenLib
 
             foreach (var obj in tsdd.DropDownItems)
             {
-                if (obj.GetType() == typeof(ToolStripMenuItem))
+                if (obj is ToolStripMenuItem)
                 {
-                    ToolStripMenuItem gtsmi = obj as ToolStripMenuItem;
+                    ToolStripMenuItem gtsmi = (ToolStripMenuItem)obj;
+
                     if (gtsmi.Checked)
                     {
                         dest.Add(((Enum)gtsmi.Tag).GetDescription());
