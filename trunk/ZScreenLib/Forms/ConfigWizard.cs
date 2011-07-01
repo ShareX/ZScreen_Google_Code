@@ -39,8 +39,8 @@ namespace ZScreenLib
 
         public string RootFolder { get; private set; }
 
-        public List<OutputEnum> MyOutputs = new List<OutputEnum>();
-        public List<int> MyClipboardContent = new List<int>();
+        public List<OutputEnum> cwOutputs = new List<OutputEnum>();
+        public List<ClipboardContentEnum> cwClipboardContent = new List<ClipboardContentEnum>();
         public List<int> MyLinkFormat = new List<int>();
         public List<int> MyImageUploaders = new List<int>();
         public List<int> MyFileUploaders = new List<int>();
@@ -57,16 +57,16 @@ namespace ZScreenLib
             this.RootFolder = rootDir;
 
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            MyOutputs.Add(OutputEnum.Clipboard);
-            MyClipboardContent.Add((int)ClipboardContentEnum.Data);
+            cwOutputs.Add(OutputEnum.Clipboard);
+            cwClipboardContent.Add((int)ClipboardContentEnum.Data);
             MyLinkFormat.Add((int)LinkFormatEnum.FULL);
             MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
             MyTextUploaders.Add((int)TextUploaderType.PASTE2);
             MyFileUploaders.Add((int)FileUploaderType.SendSpace);
             MyLinkUploaders.Add((int)UrlShortenerType.Google);
 
-            dsh.AddEnumOutputsWithConfigSettings(MyOutputs);
-            dsh.AddEnumClipboardContentWithRuntimeSettings(MyClipboardContent);
+            dsh.AddEnumOutputsWithConfigSettings(cwOutputs);
+            dsh.AddEnumClipboardContentWithRuntimeSettings(cwClipboardContent);
             dsh.AddEnumLinkFormatWithRuntimeSettings(MyLinkFormat);
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
@@ -79,7 +79,7 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, MyClipboardContent);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, cwClipboardContent);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);
@@ -137,10 +137,6 @@ namespace ZScreenLib
         private void ConfigWizard_Shown(object sender, EventArgs e)
         {
             chkPreferSystemFolders.Checked = true;
-        }
-
-        private void ucDestOptions_Load(object sender, EventArgs e)
-        {
         }
     }
 }

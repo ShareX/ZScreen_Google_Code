@@ -39,6 +39,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using System.Linq;
 
 namespace ZScreenLib
 {
@@ -276,6 +277,8 @@ namespace ZScreenLib
                             Engine.AppConf.RootDir = cw.RootFolder;
                         }
                         Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
+                        Engine.AppConf.Outputs = cw.cwOutputs.Cast<int>().ToList();
+                        Engine.AppConf.ClipboardContent = cw.cwClipboardContent.Cast<int>().ToList();
                         Engine.AppConf.ImageUploaders = cw.MyImageUploaders;
                         Engine.AppConf.FileUploaders = cw.MyFileUploaders;
                         Engine.AppConf.TextUploaders = cw.MyTextUploaders;
