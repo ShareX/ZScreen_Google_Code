@@ -45,7 +45,7 @@ namespace ZScreenLib
             btnBrowse.Enabled = task.Status != WorkerTask.TaskStatus.ThreadMode;
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumOutputsWithConfigSettings(Task.TaskOutputs);
-            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.TaskClipboardContent.Cast<int>().ToList());
+            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.TaskClipboardContent);
             dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.Cast<int>().ToList());

@@ -121,15 +121,15 @@ namespace ZScreenLib
             {
                 Engine.conf.ConfClipboardContent.Add((int)ClipboardContentEnum.Data);
             }
-            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent.Cast<ClipboardContentEnum>().ToList());
         }
 
-        public void AddEnumClipboardContentWithRuntimeSettings(List<int> cctList)
+        public void AddEnumClipboardContentWithRuntimeSettings(List<ClipboardContentEnum> cctList)
         {
             AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, cctList);
         }
 
-        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> ClipboardContentType)
+        public void AddEnumClipboardContentWithRuntimeSettings(ToolStripDropDownButton tsddb, List<ClipboardContentEnum> ClipboardContentType)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -137,7 +137,7 @@ namespace ZScreenLib
                 {
                     ToolStripRadioButtonMenuItem tsmi = new ToolStripRadioButtonMenuItem(t.GetDescription());
                     tsmi.Tag = t;
-                    tsmi.Checked = ClipboardContentType.Contains((int)t);
+                    tsmi.Checked = ClipboardContentType.Contains(t);
                     tsmi.Click += new EventHandler(tsmiDestClipboardContent_Click);
                     tsddb.DropDownItems.Add(tsmi);
                 }
