@@ -86,11 +86,11 @@ namespace ZScreenLib
                 tsmiCCRemote.Checked = false;
             }
 
-            tsddbDestImage.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
-            tsddbLinkFormat.Enabled = tsmiORemoteHost.Checked;
-            tsddDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
-            tsddDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
-            tsddbDestLink.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Checked;
+            tsddbDestImage.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
+            tsddDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
+            tsddDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
+            tsddbLinkFormat.Enabled = tsmiORemoteHost.Checked && tsddbClipboardContent.Enabled;
+            tsddbDestLink.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
 
             tsddbClipboardContent.Enabled = tsmiOClipboard.Checked;
 
