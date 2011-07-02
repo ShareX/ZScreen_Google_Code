@@ -121,6 +121,8 @@ namespace ZScreenGUI
 
             Application.Idle += new EventHandler(Application_Idle);
 
+           // this.Show();
+
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
@@ -203,7 +205,7 @@ namespace ZScreenGUI
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             tcMain.SelectedTab = tcMain.TabPages[(string)tsmi.Tag];
 
-            BringUpMenu();
+            ShowWindow();
             tcMain.Focus();
         }
 
@@ -466,7 +468,7 @@ namespace ZScreenGUI
 
         private void tsmSettings_Click(object sender, EventArgs e)
         {
-            BringUpMenu();
+            ShowWindow();
         }
 
         private void tsmViewDirectory_Click(object sender, EventArgs e)
@@ -512,10 +514,10 @@ namespace ZScreenGUI
             }
         }
 
-        private void BringUpMenu()
+        private void ShowWindow()
         {
-            Show();
-            WindowState = FormWindowState.Normal;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
             this.Activate();
             this.BringToFront();
         }
@@ -588,10 +590,7 @@ namespace ZScreenGUI
 
             if (Engine.conf.FirstRun)
             {
-                this.Show();
-                this.WindowState = FormWindowState.Normal;
-                this.Activate();
-                this.BringToFront();
+                ShowWindow();
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
@@ -1473,7 +1472,7 @@ namespace ZScreenGUI
 
         private void tsmMain_Click(object sender, EventArgs e)
         {
-            BringUpMenu();
+            ShowWindow();
         }
 
         private void btnGalleryTinyPic_Click(object sender, EventArgs e)

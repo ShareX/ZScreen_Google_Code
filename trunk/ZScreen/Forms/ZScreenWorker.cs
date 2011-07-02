@@ -72,7 +72,7 @@ namespace ZScreenGUI
             }
             bwTask.Status = WorkerTask.TaskStatus.ThreadMode;
 
-            if (!bwTask.CanStartWork())
+            if (bwTask.TaskOutputs.Count == 0)
             {
                 e.Result = null; // Pass a null object because there is nothing else to do
             }

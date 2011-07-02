@@ -261,27 +261,6 @@ namespace ZScreenLib
 
         #endregion Constructors
 
-        public bool CanStartWork()
-        {
-            bool can = this.WasToTakeScreenshot && this.MyImageUploaders.Count > 0;
-            if (!this.WasToTakeScreenshot)
-            {
-                switch (this.Job1)
-                {
-                    case JobLevel1.Image:
-                        can = MyImageUploaders.Count > 0;
-                        break;
-                    case JobLevel1.Text:
-                        can = MyTextUploaders.Count > 0;
-                        break;
-                    case JobLevel1.File:
-                        can = MyFileUploaders.Count > 0;
-                        break;
-                }
-            }
-            return can;
-        }
-
         #region Populating Task
 
         public void SetImage(Image img)
@@ -1450,6 +1429,14 @@ namespace ZScreenLib
             {
                 sb.Append(ut.GetDescription());
                 sb.Append(", ");
+            }
+            if (sb.Length < 3)
+            {
+                foreach (OutputEnum ut in TaskOutputs)
+                {
+                    sb.Append(ut.GetDescription());
+                    sb.Append(", ");
+                }
             }
             sb.Remove(sb.Length - 2, 2);
             return sb.ToString();
