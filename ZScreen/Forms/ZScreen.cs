@@ -1084,7 +1084,7 @@ namespace ZScreenGUI
             TestWatermark();
         }
 
-        private void SelectColor(Control pb, ref XmlColor color)
+        private void SelectColor(Control pb, ref XColor color)
         {
             DialogColor dColor = new DialogColor(pb.BackColor);
             if (dColor.ShowDialog() == DialogResult.OK)

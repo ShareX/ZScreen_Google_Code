@@ -119,7 +119,6 @@
     <Compile Include="Quantizer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ThumbnailGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

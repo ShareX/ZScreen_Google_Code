@@ -107,7 +107,7 @@ namespace ZUploader
         {
             codesMenu = new ContextMenuStrip
             {
-                Font = new Font("Lucida Console", 8),
+                Font = new XFont("Lucida Console", 8),
                 Opacity = 0.8,
                 ShowImageMargin = false
             };
