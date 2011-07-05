@@ -108,7 +108,7 @@ namespace ZScreenGUI
 
             // Watermark Codes Menu
             codesMenu.AutoClose = false;
-            codesMenu.Font = new Font("Lucida Console", 8);
+            codesMenu.Font = new XFont("Lucida Console", 8);
             codesMenu.Opacity = 0.8;
             codesMenu.ShowImageMargin = false;
 

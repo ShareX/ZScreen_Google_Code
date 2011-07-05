@@ -27,6 +27,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZScreenLib.Shapes
 {
@@ -111,7 +112,7 @@ namespace ZScreenLib.Shapes
                 g.CompositingMode = CompositingMode.SourceOver;
                 g.SmoothingMode = SmoothingMode.HighSpeed;
 
-                using (Font helpTextFont = new Font("Arial", 10))
+                using (Font helpTextFont = new XFont("Arial", 10))
                 {
                     Size textSize = Size.Round(g.MeasureString(helpText, helpTextFont, 500, StringFormat.GenericTypographic));
                     Point textPos = PointToClient(new Point(this.Left + (this.Width / 2) - ((textSize.Width + 10) / 2), this.Top + 30));

@@ -32,6 +32,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
+using HelpersLib;
 using ImageQuantization;
 
 namespace GraphicsMgrLib
@@ -728,7 +729,7 @@ namespace GraphicsMgrLib
                     g.FillRectangle(brush, 0, 0, width, 16);
                 }
                 StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-                g.DrawString(percentage.ToString(), new Font("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
+                g.DrawString(percentage.ToString(), new XFont("Arial", 7, FontStyle.Bold), Brushes.White, bmp.Width / 2, bmp.Height / 2, sf);
                 g.DrawRectangle(Pens.White, 0, 0, 15, 15);
             }
             return bmp;

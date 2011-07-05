@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using HelpersLib;
 
 namespace Crop
 {
@@ -34,7 +35,7 @@ namespace Crop
         {
             RectangleBrush = new SolidBrush(Color.FromArgb(100, Color.CornflowerBlue));
             RectanglePen = new Pen(Color.Black, 1);
-            TextFont = new Font("Arial", 14);
+            TextFont = new XFont("Arial", 14);
             TextBrush = new SolidBrush(Color.White);
             TextShadowBrush = new SolidBrush(Color.Black);
             TextOffset = 5;

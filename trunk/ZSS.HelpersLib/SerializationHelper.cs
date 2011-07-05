@@ -2,18 +2,27 @@
 
 namespace HelpersLib
 {
-    public class XmlFont
+    public class XFont
     {
         public string FontFamily { get; set; }
-        public GraphicsUnit GraphicsUnit { get; set; }
         public float Size { get; set; }
         public FontStyle Style { get; set; }
+        public GraphicsUnit GraphicsUnit { get; set; }
 
-        public XmlFont()
+        public XFont() { }
+
+        public XFont(Font font)
         {
+            Init(font);
         }
 
-        public XmlFont(Font font)
+        public XFont(string fontName, float fontSize, FontStyle fontStyle = FontStyle.Regular)
+        {
+            Font font = CreateFont(fontName, fontSize, fontStyle);
+            Init(font);
+        }
+
+        private void Init(Font font)
         {
             FontFamily = font.FontFamily.Name;
             GraphicsUnit = font.Unit;
@@ -21,38 +30,53 @@ namespace HelpersLib
             Style = font.Style;
         }
 
-        public static implicit operator Font(XmlFont font)
+        private Font CreateFont(string fontName, float fontSize, FontStyle fontStyle)
+        {
+            try
+            {
+                return new Font(fontName, fontSize, fontStyle);
+            }
+            catch
+            {
+                return new Font(SystemFonts.DefaultFont.FontFamily, fontSize, fontStyle);
+            }
+        }
+
+        public static implicit operator Font(XFont font)
         {
             return new Font(font.FontFamily, font.Size, font.Style, font.GraphicsUnit);
         }
 
-        public static implicit operator XmlFont(Font font)
+        public static implicit operator XFont(Font font)
         {
-            return new XmlFont(font);
+            return new XFont(font);
         }
     }
 
-    public class XmlColor
+    public class XColor
     {
         public int Argb { get; set; }
 
-        public XmlColor()
-        {
-        }
+        public XColor() { }
 
-        public XmlColor(Color color)
+        public XColor(Color color)
         {
             Argb = color.ToArgb();
         }
 
-        public static implicit operator Color(XmlColor color)
+        public XColor(byte a, byte r, byte g, byte b)
+        {
+            Argb = (a << 24) | (r << 16) | (g << 8) | b;
+        }
+
+        public static implicit operator Color(XColor color)
         {
             return Color.FromArgb(color.Argb);
         }
 
-        public static implicit operator XmlColor(Color color)
+        public static implicit operator XColor(Color color)
         {
-            return new XmlColor(color);
+            return new XColor(color);
         }
     }
 }

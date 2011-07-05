@@ -141,7 +141,7 @@ namespace ZScreenLib
         public int CropStep = 1;
         public int CrosshairLineCount = 2;
         public int CrosshairLineSize = 25;
-        public XmlColor CropCrosshairArgb = Color.Black;
+        public XColor CropCrosshairArgb = Color.Black;
         public bool CropShowBigCross = true;
         public bool CropShowMagnifyingGlass = true;
 
@@ -150,7 +150,7 @@ namespace ZScreenLib
         public decimal CropRegionInterval = 75;
         public decimal CropRegionStep = 5;
         public decimal CropHueRange = 50;
-        public XmlColor CropBorderArgb = Color.FromArgb(255, 0, 255);
+        public XColor CropBorderArgb = Color.FromArgb(255, 0, 255);
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
 
@@ -171,7 +171,7 @@ namespace ZScreenLib
         public RegionStyles SelectedWindowRegionStyles = RegionStyles.REGION_BRIGHTNESS;
         public bool SelectedWindowRectangleInfo = true;
         public bool SelectedWindowRuler = true;
-        public XmlColor SelectedWindowBorderArgb = Color.FromArgb(255, 0, 255);
+        public XColor SelectedWindowBorderArgb = Color.FromArgb(255, 0, 255);
         public decimal SelectedWindowBorderSize = 2;
         public bool SelectedWindowDynamicBorderColor = true;
         public decimal SelectedWindowRegionInterval = 75;
@@ -251,13 +251,13 @@ namespace ZScreenLib
         public bool WatermarkExcludeClipboardUpload { get; set; }
 
         public string WatermarkText = "%h:%mi";
-        public XmlFont WatermarkFont = new Font("Arial", 8);
-        public XmlColor WatermarkFontArgb = Color.White;
+        public XFont WatermarkFont = new XFont("Arial", 8);
+        public XColor WatermarkFontArgb = Color.White;
         public decimal WatermarkFontTrans = 255;
         public decimal WatermarkCornerRadius = 4;
-        public XmlColor WatermarkGradient1Argb = Color.FromArgb(85, 85, 85);
-        public XmlColor WatermarkGradient2Argb = Color.Black;
-        public XmlColor WatermarkBorderArgb = Color.Black;
+        public XColor WatermarkGradient1Argb = Color.FromArgb(85, 85, 85);
+        public XColor WatermarkGradient2Argb = Color.Black;
+        public XColor WatermarkBorderArgb = Color.Black;
         public decimal WatermarkBackTrans = 225;
         public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
         public bool WatermarkUseCustomGradient = false;
@@ -473,7 +473,7 @@ namespace ZScreenLib
         public Color ClipboardBackgroundColor { get; set; }
 
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
-        public XmlColor BorderEffectArgb
+        public XColor BorderEffectArgb
         {
             get
             {
@@ -486,7 +486,7 @@ namespace ZScreenLib
         }
 
         [XmlElement("ClipboardBackgroundColor"), BrowsableAttribute(false)]
-        public XmlColor ClipboardBackgroundArgb
+        public XColor ClipboardBackgroundArgb
         {
             get
             {
