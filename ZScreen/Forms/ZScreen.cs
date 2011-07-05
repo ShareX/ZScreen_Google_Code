@@ -121,7 +121,7 @@ namespace ZScreenGUI
 
             Application.Idle += new EventHandler(Application_Idle);
 
-           // this.Show();
+            // this.Show();
 
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
@@ -2379,6 +2379,12 @@ namespace ZScreenGUI
         private void tsbDonate_MouseLeave(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Arrow;
+        }
+
+        private void btnLastCropShotReset_Click(object sender, EventArgs e)
+        {
+            Engine.conf.LastCapture = Rectangle.Empty;
+            Engine.conf.LastRegion = Rectangle.Empty;
         }
     }
 }

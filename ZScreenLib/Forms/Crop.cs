@@ -511,16 +511,16 @@ namespace ZScreenLib
             {
                 if (dragging)
                 {
-                    Engine.LastCapture = rectRegion;
+                    Engine.conf.LastCapture = rectRegion;
                 }
                 else
                 {
-                    Engine.LastCapture = CropRegion;
+                    Engine.conf.LastCapture = CropRegion;
                 }
             }
             else
             {
-                Engine.LastRegion = rectRegion;
+                Engine.conf.LastRegion = rectRegion;
             }
             DialogResult = DialogResult.OK;
             Close();
