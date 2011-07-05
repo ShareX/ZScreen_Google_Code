@@ -26,8 +26,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -39,7 +39,6 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using System.Linq;
 
 namespace ZScreenLib
 {
@@ -203,9 +202,6 @@ namespace ZScreenLib
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
         public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
-
-        public static Rectangle LastRegion = Rectangle.Empty;
-        public static Rectangle LastCapture = Rectangle.Empty;
 
         #region Windows 7 Taskbar
 

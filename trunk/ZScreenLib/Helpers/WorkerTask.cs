@@ -424,9 +424,9 @@ namespace ZScreenLib
             {
                 using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
                 {
-                    if (this.Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.LastRegion.IsEmpty)
+                    if (this.Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                     {
-                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
+                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
                     }
                     else
                     {
@@ -456,13 +456,13 @@ namespace ZScreenLib
                             {
                                 if (c.ShowDialog() == DialogResult.OK)
                                 {
-                                    if (this.Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.LastRegion.IsEmpty)
+                                    if (this.Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
                                     {
-                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastRegion));
+                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
                                     }
-                                    else if (windowMode && !Engine.LastCapture.IsEmpty)
+                                    else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
                                     {
-                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.LastCapture));
+                                        this.SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
                                     }
                                 }
                             }

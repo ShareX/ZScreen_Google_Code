@@ -122,6 +122,7 @@ namespace ZScreenGUI
                                 break;
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
+                            case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
                                 bwTask.BwCaptureRegionOrWindow();
                                 bwTask.WriteImage();
                                 break;

@@ -154,6 +154,9 @@ namespace ZScreenLib
         public decimal CropBorderSize = 1;
         public bool CropShowGrids = false;
 
+        public Rectangle LastRegion = Rectangle.Empty;
+        public Rectangle LastCapture = Rectangle.Empty;
+
         [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Make the corners rounded")]
         public bool CropShotRoundedCorners { get; set; }
 
