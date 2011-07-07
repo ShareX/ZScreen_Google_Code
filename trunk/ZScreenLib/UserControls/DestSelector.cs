@@ -63,12 +63,25 @@ namespace ZScreenLib
             return new ToolStripMenuItem();
         }
 
+        private bool NoSelectionMenu(ToolStripDropDownButton tsddb)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if (tsmi.Checked)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
         {
             ToolStripMenuItem tsmiOClipboard = GetOutputTsmi(tsddbOutputs, OutputEnum.Clipboard);
             ToolStripMenuItem tsmiOLocalDisk = GetOutputTsmi(tsddbOutputs, OutputEnum.LocalDisk);
             ToolStripMenuItem tsmiORemoteHost = GetOutputTsmi(tsddbOutputs, OutputEnum.RemoteHost);
 
+            ToolStripMenuItem tsmiCCData = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Data);
             ToolStripMenuItem tsmiCCLocal = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Local);
             ToolStripMenuItem tsmiCCRemote = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Remote);
 

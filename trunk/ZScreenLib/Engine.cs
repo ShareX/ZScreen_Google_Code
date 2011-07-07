@@ -46,8 +46,6 @@ namespace ZScreenLib
     {
         public static IntPtr zHandle = IntPtr.Zero;
 
-        public const string ZScreenCLI = "ZScreenCLI.exe";
-
         public static Logger MyLogger { get; private set; }
 
         public static Stopwatch StartTimer { get; private set; }

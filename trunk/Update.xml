@@ -8,14 +8,14 @@
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Stable>
 		<Beta>
-			<Version>3.36.17.1</Version>
-			<URL>http://zscreen.googlecode.com/files/ZScreen-3.36.17.1-setup.exe</URL>
+			<Version>4.0.5</Version>
+			<URL>http://zscreen.googlecode.com/files/ZScreen-4.0.5.2314-setup.exe</URL>
 			<Date>2011-05-14</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Beta>
 		<Dev>
-			<Version>4.0.1</Version>
-			<URL>http://zscreen.googlecode.com/files/ZScreen-4.0.1.2218-setup.exe</URL>
+			<Version>4.0.5</Version>
+			<URL>http://zscreen.googlecode.com/files/ZScreen-4.0.5.2314-setup.exe</URL>
 			<Date>2011-05-31</Date>
 			<Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
 		</Dev>
