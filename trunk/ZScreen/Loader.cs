@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
 using NDesk.Options;
@@ -58,6 +59,8 @@ namespace ZScreenGUI
         private static List<int> listFileHosts = new List<int>();
         private static List<string> listPaths = new List<string>();
 
+        private static StringBuilder sbConsole = new StringBuilder();
+
         [STAThread]
         private static void Main(string[] args)
         {
@@ -74,22 +77,26 @@ namespace ZScreenGUI
                     Process.Start(filePath);
                 }
             }
-            else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
+
+                // move the commented lines to ProcessArgs
+            /*
+        else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
+        {
+            string arg1 = args[1].ToLower();
+            if (File.Exists(arg1))
             {
-                string arg1 = args[1].ToLower();
-                if (File.Exists(arg1))
-                {
-                    Process p = new Process();
-                    ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath);
-                    psi.Arguments = "upload " + arg1;
-                    p.StartInfo = psi;
-                    p.Start();
-                }
-                else if (arg1 == "history")
-                {
-                    Application.Run(new HistoryLib.HistoryForm(Engine.HistoryPath, 100, string.Format("{0} - History", Engine.GetProductName())));
-                }
+                Process p = new Process();
+                ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath);
+                psi.Arguments = "upload " + arg1;
+                p.StartInfo = psi;
+                p.Start();
             }
+            else if (arg1 == "history")
+            {
+                Application.Run(new HistoryLib.HistoryForm(Engine.HistoryPath, 100, string.Format("{0} - History", Engine.GetProductName())));
+            }
+        }
+             * */
             else if (args.Length > 0)
             {
                 ProcessArgs(args);
@@ -159,7 +166,7 @@ namespace ZScreenGUI
                     { "v|verbose",  "debug output",
                    v => bVerbose = v != null },
                 { "o|outputs=", "Outputs. This must be an integer.",
-                    (int v) => listImageHosts.Add(v) },
+                    (int v) => listOutputTypes.Add(v) },
                 { "i|hi=", "Image uploader type. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
                 { "t|ht=", "Text uploader type. This must be an integer.",
@@ -195,13 +202,14 @@ namespace ZScreenGUI
             }
             catch (OptionException e)
             {
-                Console.Write(string.Format("{0}: ", "ZScreenCLI"));
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Try 'zscreencli.exe --help' for more information.");
+                Console.Write(string.Format("{0}: ", Application.ProductName));
+                sbConsole.AppendLine(e.Message);
+                sbConsole.AppendLine("Try 'zscreen.exe --help' for more information.");
+                MessageBox.Show(sbConsole.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.UploadersConfigPath));
+            if (bVerbose) sbConsole.AppendLine(string.Format("Loading {0}", Engine.AppConf.UploadersConfigPath));
             Engine.MyUploadersConfig = UploadersConfig.Load(Engine.AppConf.UploadersConfigPath);
 
             if (listOutputTypes.Count == 0)
@@ -240,41 +248,51 @@ namespace ZScreenGUI
             {
                 CaptureScreen();
             }
+
+            MessageBox.Show(sbConsole.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static WorkerTask DefaultWorkerTask()
         {
             WorkerTask tempTask = new WorkerTask();
-            tempTask.TaskOutputs.Add(OutputEnum.Clipboard);
+            foreach (int o in listOutputTypes)
+            {
+                tempTask.TaskOutputs.Add((OutputEnum)o);
+            }
+            if (tempTask.TaskOutputs.Count == 0)
+            {
+                tempTask.TaskOutputs.Add(OutputEnum.RemoteHost);
+            }
             tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             foreach (int ut in listImageHosts)
             {
-                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
+                if (bVerbose) sbConsole.AppendLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
                 tempTask.MyImageUploaders.Add((ImageUploaderType)ut);
             }
             foreach (int ut in listFileHosts)
             {
-                if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((FileUploaderType)ut).GetDescription()));
+                if (bVerbose) sbConsole.AppendLine(string.Format("Added {0}", ((FileUploaderType)ut).GetDescription()));
                 tempTask.MyFileUploaders.Add((FileUploaderType)ut);
             }
             return tempTask;
         }
 
-        private static void CaptureScreen()
+        private static StringBuilder CaptureScreen()
         {
             WorkerTask esTask = DefaultWorkerTask();
             esTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
-            Console.WriteLine();
-            Console.WriteLine("Capturing entire screen in 3 seconds.");
-            Console.WriteLine("If you would like to minimize this window, then do it now.");
-            Console.WriteLine();
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("Capturing entire screen in 3 seconds.");
+            sbConsole.AppendLine("If you would like to minimize this window, then do it now.");
+            sbConsole.AppendLine();
             System.Threading.Thread.Sleep(3000);
             esTask.CaptureScreen();
             esTask.PublishData();
             PostPublishTask(esTask);
+            return sbConsole;
         }
 
-        private static void CaptureRectRegion(WorkerTask.JobLevel2 job2)
+        private static StringBuilder CaptureRectRegion(WorkerTask.JobLevel2 job2)
         {
             WorkerTask csTask = DefaultWorkerTask();
             csTask.AssignJob(job2);
@@ -282,8 +300,9 @@ namespace ZScreenGUI
             {
                 csTask.PublishData();
             }
-            Console.WriteLine(csTask.ToErrorString());
+            sbConsole.AppendLine(csTask.ToErrorString());
             PostPublishTask(csTask);
+            return sbConsole;
         }
 
         private static void ClipboardUpload()
@@ -326,7 +345,7 @@ namespace ZScreenGUI
             {
                 foreach (UploadResult ur in task.UploadResults)
                 {
-                    Console.WriteLine(ur.URL);
+                    sbConsole.AppendLine(ur.URL);
                 }
                 UploadManager.ShowUploadResults(task, true);
             }
@@ -334,29 +353,36 @@ namespace ZScreenGUI
 
         private static void ShowHelp(OptionSet p)
         {
-            Console.WriteLine("Usage: zscreencli.exe [OPTIONS]+ message");
-            Console.WriteLine("Upload screenshots, text or files.");
-            Console.WriteLine();
-            Console.WriteLine("Options:");
-            p.WriteOptionDescriptions(Console.Out);
-            Console.WriteLine();
-            Console.WriteLine("Image hosts:\n");
+            sbConsole.AppendLine("Usage: zscreen.exe [OPTIONS]+ message");
+            sbConsole.AppendLine("Upload screenshots, text or files.");
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("Options:");
+            p.WriteOptionDescriptions(sbConsole);
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("Outputs:\n");
+            foreach (OutputEnum ut in Enum.GetValues(typeof(OutputEnum)))
+            {
+                sbConsole.AppendLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+            }
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("Image hosts:\n");
             foreach (ImageUploaderType ut in Enum.GetValues(typeof(ImageUploaderType)))
             {
-                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+                sbConsole.AppendLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
-            Console.WriteLine();
-            Console.WriteLine("Text hosts:\n");
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("Text hosts:\n");
             foreach (TextUploaderType ut in Enum.GetValues(typeof(TextUploaderType)))
             {
-                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+                sbConsole.AppendLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
-            Console.WriteLine();
-            Console.WriteLine("File hosts:\n");
+            sbConsole.AppendLine();
+            sbConsole.AppendLine("File hosts:\n");
             foreach (FileUploaderType ut in Enum.GetValues(typeof(FileUploaderType)))
             {
-                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+                sbConsole.AppendLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
+            MessageBox.Show(sbConsole.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion CLI
