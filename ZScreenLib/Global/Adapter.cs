@@ -461,7 +461,7 @@ namespace ZScreenLib
 
         public static string ZScreenCliPath()
         {
-            return Path.Combine(Application.StartupPath, Engine.ZScreenCLI);
+            return Application.ExecutablePath;
         }
 
         public static string AssemblyDescription
