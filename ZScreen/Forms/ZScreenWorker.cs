@@ -783,6 +783,11 @@ namespace ZScreenGUI
                         string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
                         if (fp != cbFilePath)
                         {
+                            string dir = Path.GetDirectoryName(cbFilePath);
+                            if (!Directory.Exists(dir))
+                            {
+                                Directory.CreateDirectory(dir);
+                            }
                             File.Copy(fp, cbFilePath, true);
                         }
                         if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
