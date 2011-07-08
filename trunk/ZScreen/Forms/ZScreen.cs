@@ -136,10 +136,10 @@ namespace ZScreenGUI
                 {
                     new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
-                    new Command("fs|fullscreen", () => UploadUsingClipboard()),
-                    new Command("crop", () => UploadUsingClipboard()),
-                    new Command("sw|selectedwindow", () => UploadUsingClipboard()),
-                    new Command("h|history", () => UploadUsingClipboard())
+                    new Command("fs|fullscreen", () => CaptureEntireScreen()),
+                    new Command("crop", () => CaptureRectRegion()),
+                    new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
+                    new Command("h|history", () => OpenHistory())
                 };
 
                 cli.FilePathAction = filePath => UploadUsingFileSystem(filePath);

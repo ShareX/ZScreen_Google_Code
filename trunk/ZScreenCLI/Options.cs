@@ -974,8 +974,9 @@ namespace NDesk.Options
 
         private const int OptionWidth = 29;
 
-        public void WriteOptionDescriptions(StringBuilder o)
+        public StringBuilder WriteOptionDescriptions()
         {
+            StringBuilder o = new StringBuilder();
             foreach (Option p in this)
             {
                 int written = 0;
@@ -999,6 +1000,7 @@ namespace NDesk.Options
                     o.AppendLine(lines[i]);
                 }
             }
+            return o;
         }
 
         private bool WriteOptionPrototype(StringBuilder o, Option p, ref int written)
