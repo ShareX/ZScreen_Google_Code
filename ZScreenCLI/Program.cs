@@ -11,6 +11,8 @@ namespace ZScreenCLI
 {
     public static class Program
     {
+        private static string ApplicationName = "zscreencli.exe";
+
         private static bool bVerbose = false;
         private static bool bShowHelp = false;
         private static bool bFileUpload = false;
@@ -29,6 +31,13 @@ namespace ZScreenCLI
         [STAThread]
         private static void Main(string[] args)
         {
+            ProcessArgs(args);
+        }
+
+        #region CLI
+
+        private static void ProcessArgs(string[] args)
+        {
             var p = new OptionSet()
             {
                 { "h|help",  "show this message and exit",
@@ -36,7 +45,7 @@ namespace ZScreenCLI
                     { "v|verbose",  "debug output",
                    v => bVerbose = v != null },
                 { "o|outputs=", "Outputs. This must be an integer.",
-                    (int v) => listImageHosts.Add(v) },
+                    (int v) => listOutputTypes.Add(v) },
                 { "i|hi=", "Image uploader type. This must be an integer.",
                     (int v) => listImageHosts.Add(v) },
                 { "t|ht=", "Text uploader type. This must be an integer.",
@@ -72,9 +81,9 @@ namespace ZScreenCLI
             }
             catch (OptionException e)
             {
-                Console.Write(string.Format("{0}: ", "ZScreenCLI"));
+                Console.Write(string.Format("{0}: ", ApplicationName));
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try 'zscreencli.exe --help' for more information.");
+                Console.WriteLine("Try 'zscreen.exe --help' for more information.");
                 return;
             }
 
@@ -122,7 +131,14 @@ namespace ZScreenCLI
         private static WorkerTask DefaultWorkerTask()
         {
             WorkerTask tempTask = new WorkerTask();
-            tempTask.TaskOutputs.Add(OutputEnum.Clipboard);
+            foreach (int o in listOutputTypes)
+            {
+                tempTask.TaskOutputs.Add((OutputEnum)o);
+            }
+            if (tempTask.TaskOutputs.Count == 0)
+            {
+                tempTask.TaskOutputs.Add(OutputEnum.RemoteHost);
+            }
             tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             foreach (int ut in listImageHosts)
             {
@@ -211,11 +227,17 @@ namespace ZScreenCLI
 
         private static void ShowHelp(OptionSet p)
         {
-            Console.WriteLine("Usage: zscreencli.exe [OPTIONS]+ message");
+            Console.WriteLine("Usage: zscreen.exe [OPTIONS]+ message");
             Console.WriteLine("Upload screenshots, text or files.");
             Console.WriteLine();
             Console.WriteLine("Options:");
-            p.WriteOptionDescriptions(Console.Out);
+            Console.Write(p.WriteOptionDescriptions().ToString());
+            Console.WriteLine();
+            Console.WriteLine("Outputs:\n");
+            foreach (OutputEnum ut in Enum.GetValues(typeof(OutputEnum)))
+            {
+                Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
+            }
             Console.WriteLine();
             Console.WriteLine("Image hosts:\n");
             foreach (ImageUploaderType ut in Enum.GetValues(typeof(ImageUploaderType)))
@@ -235,5 +257,7 @@ namespace ZScreenCLI
                 Console.WriteLine(string.Format("{0}: {1}", (int)ut, ut.GetDescription()));
             }
         }
+
+        #endregion CLI
     }
 }

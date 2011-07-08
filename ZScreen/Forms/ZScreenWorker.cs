@@ -764,6 +764,21 @@ namespace ZScreenGUI
             RunWorkerAsync_Files(ddTask);
         }
 
+        public void CaptureEntireScreen()
+        {
+            RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen));
+        }
+
+        public void CaptureSelectedWindow()
+        {
+            RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow));
+        }
+
+        public void CaptureRectRegion()
+        {
+            RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion));
+        }
+
         public bool UploadUsingFileSystem(params string[] fileList)
         {
             List<string> strListFilePath = new List<string>();
