@@ -102,7 +102,7 @@ namespace ZScreenLib
             tsddbDestImage.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
             tsddDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
             tsddDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
-            tsddbLinkFormat.Enabled = tsmiORemoteHost.Checked && tsddbClipboardContent.Enabled;
+            tsddbLinkFormat.Enabled = tsmiOClipboard.Checked && !tsmiCCData.Checked;
             tsddbDestLink.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
 
             tsddbClipboardContent.Enabled = tsmiOClipboard.Checked;
