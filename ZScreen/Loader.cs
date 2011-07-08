@@ -27,22 +27,28 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using NDesk.Options;
+using SingleInstanceApplication;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib;
+using Timer = System.Windows.Forms.Timer;
 
 namespace ZScreenGUI
 {
     public static class Loader
     {
-        public static ZScreen MyApp = null;
+        public static ZScreen mainForm = null;
         public static WorkerTask zLastTask;
-        public static UploadersLib.GoogleTranslateGUI MyGTGUI;
+        public static GoogleTranslateGUI MyGTGUI;
         public static List<string> LibNames = new List<string>();
+
+        public static string CommandLineArg { get; private set; }
 
         private static bool bVerbose = false;
         private static bool bShowHelp = false;
@@ -64,52 +70,60 @@ namespace ZScreenGUI
         [STAThread]
         private static void Main(string[] args)
         {
+            string name = Assembly.GetExecutingAssembly().GetName().Name;
+            if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
+
+            if (args != null && args.Length > 0) CommandLineArg = args[0];
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
 
-            if (args.Length > 2 && args[1] == "/doc")
+            if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
             {
-                string filePath = string.Join(" ", args, 2, args.Length - 2);
-                if (File.Exists(filePath))
-                {
-                    Process.Start(filePath);
-                }
-            }
-
-                // move the commented lines to ProcessArgs
-            /*
-        else if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
-        {
-            string arg1 = args[1].ToLower();
-            if (File.Exists(arg1))
-            {
-                Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath);
-                psi.Arguments = "upload " + arg1;
-                p.StartInfo = psi;
-                p.Start();
-            }
-            else if (arg1 == "history")
-            {
-                Application.Run(new HistoryLib.HistoryForm(Engine.HistoryPath, 100, string.Format("{0} - History", Engine.GetProductName())));
+                Engine.LoadSettings();
+                Application.Run(mainForm = new ZScreen());
+                Engine.TurnOff();
             }
         }
-             * */
-            else if (args.Length > 0)
+
+        private static void SingleInstanceCallback(object sender, InstanceCallbackEventArgs args)
+        {
+            if (WaitFormLoad(5000))
             {
-                ProcessArgs(args);
-            }
-            else
-            {
-                if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
+                Action d = () =>
                 {
-                    Engine.LoadSettings();
-                    Application.Run(MyApp = new ZScreen());
-                    Engine.TurnOff();
-                }
+                    if (mainForm.WindowState == FormWindowState.Minimized)
+                    {
+                        mainForm.WindowState = FormWindowState.Normal;
+                    }
+
+                    mainForm.BringToFront();
+                    mainForm.Activate();
+
+                    if (args != null && args.CommandLineArgs.Length > 1)
+                    {
+                        mainForm.UseCommandLineArg(args.CommandLineArgs[1]);
+                    }
+                };
+
+                mainForm.Invoke(d);
             }
+        }
+
+        private static bool WaitFormLoad(int wait)
+        {
+            Stopwatch timer = Stopwatch.StartNew();
+
+            while (timer.ElapsedMilliseconds < wait)
+            {
+                if (mainForm != null && mainForm.IsReady) return true;
+
+                Thread.Sleep(10);
+            }
+
+            return false;
         }
 
         public static void KeyboardHook()
@@ -147,7 +161,7 @@ namespace ZScreenGUI
             }
 
             Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(MyApp.CheckHotkeys);
+            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(mainForm.CheckHotkeys);
         }
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)

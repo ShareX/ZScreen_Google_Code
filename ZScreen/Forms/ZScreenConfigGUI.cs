@@ -60,7 +60,7 @@ namespace ZScreenGUI
                 }
             }
 
-            if (IsFormReady)
+            if (IsReady)
             {
                 if (Engine.conf.SaveFormSizePosition)
                 {

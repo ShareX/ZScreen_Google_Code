@@ -61,7 +61,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -136,8 +135,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
-    <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskEnums.cs" />
     <Compile Include="UploadManager.cs" />
