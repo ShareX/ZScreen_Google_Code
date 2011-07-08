@@ -609,7 +609,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (this.TaskOutputs.Contains(OutputEnum.LocalDisk) && File.Exists(this.LocalFilePath) && this.TempImage != null)
+            if (this.TaskOutputs.Contains(OutputEnum.LocalDisk) && this.TempImage != null)
             {
                 NameParserType type;
                 string pattern = string.Empty;
