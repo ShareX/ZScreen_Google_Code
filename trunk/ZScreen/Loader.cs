@@ -46,6 +46,7 @@ namespace ZScreenGUI
         [STAThread]
         private static void Main(string[] args)
         {
+            // Check for multi instance
             if (args != null && args.Length > 0)
             {
                 CommandLineArg = args[0];
@@ -62,6 +63,11 @@ namespace ZScreenGUI
                 if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
             }
 
+            RunZScreen();
+        }
+
+        private static void RunZScreen()
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -79,14 +85,6 @@ namespace ZScreenGUI
             {
                 Action d = () =>
                 {
-                    if (MainForm.WindowState == FormWindowState.Minimized)
-                    {
-                        MainForm.WindowState = FormWindowState.Normal;
-                    }
-
-                    MainForm.BringToFront();
-                    MainForm.Activate();
-
                     if (args != null && args.CommandLineArgs.Length > 1)
                     {
                         MainForm.UseCommandLineArg(args.CommandLineArgs[1]);

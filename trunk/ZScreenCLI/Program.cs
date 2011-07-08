@@ -40,10 +40,10 @@ namespace ZScreenCLI
         {
             var p = new OptionSet()
             {
-                { "h|help",  "show this message and exit",
+                { "h|help", "Show this message and exit",
                    v => bShowHelp = v != null },
-                    { "v|verbose",  "debug output",
-                   v => bVerbose = v != null },
+                { "v|verbose", "Debug output",
+                    v => bVerbose = v != null },
                 { "o|outputs=", "Outputs. This must be an integer.",
                     (int v) => listOutputTypes.Add(v) },
                 { "i|hi=", "Image uploader type. This must be an integer.",
@@ -52,20 +52,21 @@ namespace ZScreenCLI
                     (int v) => listTextHosts.Add(v) },
                 { "f|hf=", "File uploader type. This must be an integer.",
                     (int v) => listFileHosts.Add(v) },
-                { "s|ws",  "Capture selected window",
+                { "s|ws", "Capture selected window.",
                     v => bSelectedWindow = v != null },
-                { "r|wc",  "Capture rectangular region",
+                { "r|wc", "Capture rectangular region.",
                     v => bCropShot = v != null },
-                { "d|wf",  "Capture entire screen",
+                { "d|wf", "Capture entire screen.",
                     v => bScreen = v != null },
-                { "c|uc",  "Upload clipboard content.",
+                { "c|uc", "Upload clipboard content.",
                     v => bClipboardUpload = v != null },
                 { "u|uf=", "File path to upload.",
-                    v => {
-                            if (File.Exists(v)) listPaths.Add (v);
-                            else if (Directory.Exists(v)) listPaths.Add(v);
-                            if (listPaths.Count>0) bFileUpload = true;
-                         }
+                    v =>
+                    {
+                        if (File.Exists(v)) listPaths.Add (v);
+                        else if (Directory.Exists(v)) listPaths.Add(v);
+                        if (listPaths.Count>0) bFileUpload = true;
+                    }
                 },
             };
 
@@ -83,7 +84,7 @@ namespace ZScreenCLI
             {
                 Console.Write(string.Format("{0}: ", ApplicationName));
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try 'zscreen.exe --help' for more information.");
+                Console.WriteLine("Try 'ZScreen.exe -help' for more information.");
                 return;
             }
 
