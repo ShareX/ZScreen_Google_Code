@@ -134,7 +134,7 @@ namespace ZScreenGUI
 
                 cli.Commands = new List<Command>()
                 {
-                    new Command("fu|fileupload", (string filePath) => UploadUsingFileSystem(filePath)),
+                    new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
                     new Command("fs|fullscreen", () => UploadUsingClipboard()),
                     new Command("crop", () => UploadUsingClipboard()),
@@ -142,11 +142,9 @@ namespace ZScreenGUI
                     new Command("h|history", () => UploadUsingClipboard())
                 };
 
-                if (!cli.Parse(arg))
-                {
-                    // Only file path
-                    UploadUsingFileSystem(arg);
-                }
+                cli.FilePathAction = filePath => UploadUsingFileSystem(filePath);
+
+                cli.Parse(arg);
             }
         }
 
