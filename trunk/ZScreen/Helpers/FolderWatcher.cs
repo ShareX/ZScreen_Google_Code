@@ -53,7 +53,7 @@ namespace ZScreenGUI
                         // check if the file is complete
                     }
                     Engine.MyLogger.WriteLine(string.Format("Created {0}", filePath));
-                    Loader.mainForm.UploadUsingFileSystem(filePath);
+                    Loader.MainForm.UploadUsingFileSystem(filePath);
                     break;
                 }
                 catch

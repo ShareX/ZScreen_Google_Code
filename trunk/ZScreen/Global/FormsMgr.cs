@@ -68,7 +68,7 @@ namespace ZScreenGUI
         {
             if (AboutWindow == null || AboutWindow.IsDisposed)
             {
-                AboutWindow = new AboutBox() { Assemblies = Loader.LibNames };
+                AboutWindow = new AboutBox();
             }
 
             AboutWindow.Activate();

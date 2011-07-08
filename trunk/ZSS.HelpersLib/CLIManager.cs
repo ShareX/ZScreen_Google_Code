@@ -10,12 +10,16 @@ namespace HelpersLib
     {
         public List<Command> Commands { get; set; }
 
-        public void Parse(string text)
+        public bool Parse(string text)
         {
+            text = text.Trim();
+
             foreach (Command command in Commands)
             {
-                if (command.Parse(text)) break;
+                if (command.Parse(text)) return true;
             }
+
+            return false;
         }
     }
 
@@ -103,7 +107,7 @@ namespace HelpersLib
             string inputPattern = @"(?<Input>\w+|\x22.+?\x22)";
             string pattern = string.Format(@"-+(?:{0})(?:\s+{1}|\s*=+\s*{1}|\s+|\z)", Commands, inputPattern);
 
-            Match match = Regex.Match(text, pattern);
+            Match match = Regex.Match(text, pattern, RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
             if (match.Success)
             {

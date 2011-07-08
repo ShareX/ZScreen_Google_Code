@@ -130,14 +130,21 @@ namespace ZScreenGUI
         {
             if (!string.IsNullOrEmpty(arg))
             {
-                arg = arg.Trim();
+                CLIManager cli = new CLIManager();
 
-                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                cli.Commands = new List<Command>()
                 {
-                    UploadUsingClipboard();
-                }
-                else
+                    new Command("fu|fileupload", (string filePath) => UploadUsingFileSystem(filePath)),
+                    new Command("cu|clipboardupload", () => UploadUsingClipboard()),
+                    new Command("fs|fullscreen", () => UploadUsingClipboard()),
+                    new Command("crop", () => UploadUsingClipboard()),
+                    new Command("sw|selectedwindow", () => UploadUsingClipboard()),
+                    new Command("h|history", () => UploadUsingClipboard())
+                };
+
+                if (!cli.Parse(arg))
                 {
+                    // Only file path
                     UploadUsingFileSystem(arg);
                 }
             }

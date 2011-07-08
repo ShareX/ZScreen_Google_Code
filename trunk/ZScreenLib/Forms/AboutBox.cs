@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -40,7 +39,6 @@ namespace ZScreenLib
         private int saturation = 200;
         private int step = 10;
         private int multiply = 1;
-        public List<string> Assemblies { get; set; }
 
         public AboutBox()
         {
@@ -211,16 +209,6 @@ namespace ZScreenLib
             sbDesc.AppendLine();
             sbDesc.AppendLine("Settings file:");
             sbDesc.AppendLine(Engine.SettingsFilePath);
-
-            if (Assemblies != null)
-            {
-                sbDesc.AppendLine();
-                sbDesc.AppendLine("Referenced assemblies:");
-                foreach (string dll in Assemblies)
-                {
-                    sbDesc.AppendLine(dll);
-                }
-            }
 
             textBoxDescription.Text = sbDesc.ToString();
         }
