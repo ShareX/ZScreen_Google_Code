@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace HelpersLib
@@ -9,14 +10,23 @@ namespace HelpersLib
     public class CLIManager
     {
         public List<Command> Commands { get; set; }
+        public Action<string> FilePathAction { get; set; }
 
         public bool Parse(string text)
         {
-            text = text.Trim();
-
-            foreach (Command command in Commands)
+            if (!string.IsNullOrEmpty(text))
             {
-                if (command.Parse(text)) return true;
+                text = text.Trim();
+
+                foreach (Command command in Commands)
+                {
+                    if (command.Parse(text)) return true;
+                }
+
+                if (FilePathAction != null && File.Exists(text))
+                {
+                    FilePathAction(text);
+                }
             }
 
             return false;
