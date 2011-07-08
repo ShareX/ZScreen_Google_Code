@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -54,7 +53,7 @@ namespace ZScreenGUI
                         // check if the file is complete
                     }
                     Engine.MyLogger.WriteLine(string.Format("Created {0}", filePath));
-                    Loader.MyApp.UploadUsingFileSystem(new List<string>() { filePath });
+                    Loader.mainForm.UploadUsingFileSystem(filePath);
                     break;
                 }
                 catch

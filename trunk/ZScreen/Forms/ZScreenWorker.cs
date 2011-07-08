@@ -753,7 +753,7 @@ namespace ZScreenGUI
             }
             else if (Clipboard.ContainsFileDropList())
             {
-                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()));
+                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()).ToArray());
             }
         }
 
@@ -764,13 +764,7 @@ namespace ZScreenGUI
             RunWorkerAsync_Files(ddTask);
         }
 
-        public void UploadUsingDragDrop(string[] paths)
-        {
-            List<string> pathsList = new List<string>(paths);
-            UploadUsingFileSystem(pathsList);
-        }
-
-        public bool UploadUsingFileSystem(List<string> fileList)
+        public bool UploadUsingFileSystem(params string[] fileList)
         {
             List<string> strListFilePath = new List<string>();
             bool succ = true;
@@ -778,27 +772,30 @@ namespace ZScreenGUI
             {
                 try
                 {
-                    if (GraphicsMgr.IsValidImage(fp))
+                    if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
                     {
-                        string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
-                        if (fp != cbFilePath)
+                        if (GraphicsMgr.IsValidImage(fp))
                         {
-                            string dir = Path.GetDirectoryName(cbFilePath);
-                            if (!Directory.Exists(dir))
+                            string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
+                            if (fp != cbFilePath)
                             {
-                                Directory.CreateDirectory(dir);
+                                string dir = Path.GetDirectoryName(cbFilePath);
+                                if (!Directory.Exists(dir))
+                                {
+                                    Directory.CreateDirectory(dir);
+                                }
+                                File.Copy(fp, cbFilePath, true);
                             }
-                            File.Copy(fp, cbFilePath, true);
+                            if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
+                            {
+                                File.Delete(fp);
+                            }
+                            strListFilePath.Add(cbFilePath);
                         }
-                        if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
+                        else
                         {
-                            File.Delete(fp);
+                            strListFilePath.Add(fp); // yes we use the orignal file path
                         }
-                        strListFilePath.Add(cbFilePath);
-                    }
-                    else
-                    {
-                        strListFilePath.Add(fp); // yes we use the orignal file path
                     }
                 }
                 catch (Exception ex)
@@ -958,7 +955,7 @@ namespace ZScreenGUI
         {
             if (strings != null)
             {
-                UploadUsingDragDrop(strings);
+                UploadUsingFileSystem(strings);
             }
         }
 

@@ -55,7 +55,7 @@ namespace ZScreenGUI
     {
         #region Variables
 
-        public bool IsFormReady;
+        public bool IsReady;
         public CloseMethod CloseMethod;
 
         private int mHadFocusAt;
@@ -126,9 +126,26 @@ namespace ZScreenGUI
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
+        public void UseCommandLineArg(string arg)
+        {
+            if (!string.IsNullOrEmpty(arg))
+            {
+                arg = arg.Trim();
+
+                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    UploadUsingClipboard();
+                }
+                else
+                {
+                    UploadUsingFileSystem(arg);
+                }
+            }
+        }
+
         protected override void WndProc(ref Message m)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 switch (m.Msg)
                 {
@@ -242,7 +259,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Resize(object sender, EventArgs e)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 Engine.conf.WindowState = WindowState;
 
@@ -404,7 +421,7 @@ namespace ZScreenGUI
 
         private void UpdateGuiEditors(object sender)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 if (sender.GetType() == lbSoftware.GetType())
                 {
@@ -534,7 +551,6 @@ namespace ZScreenGUI
 
         private void ZScreen_Shown(object sender, EventArgs e)
         {
-            IsFormReady = true;
             Engine.zHandle = this.Handle;
             Engine.ClipboardHook();
 
@@ -594,6 +610,9 @@ namespace ZScreenGUI
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
+
+            UseCommandLineArg(Loader.CommandLineArg);
+            IsReady = true;
         }
 
         private void niTray2_BalloonTipClicked(object sender, EventArgs e)
@@ -1136,7 +1155,7 @@ namespace ZScreenGUI
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShowInTaskbar = chkShowTaskbar.Checked;
-            if (IsFormReady)
+            if (IsReady)
             {
                 if (!chkShowTaskbar.Checked)
                 {
@@ -1837,7 +1856,7 @@ namespace ZScreenGUI
 
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 if (chkWindows7TaskbarIntegration.Checked)
                 {
@@ -1880,7 +1899,7 @@ namespace ZScreenGUI
 
         private void chkHotkeys_CheckedChanged(object sender, EventArgs e)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 if (chkHotkeys.Checked)
                 {
@@ -2096,7 +2115,7 @@ namespace ZScreenGUI
         private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
-            if (IsFormReady)
+            if (IsReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
             }
@@ -2110,7 +2129,7 @@ namespace ZScreenGUI
         private void tpSourceFileSystem_DragDrop(object sender, DragEventArgs e)
         {
             string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            UploadFiles(filePaths);
+            UploadUsingFileSystem(filePaths);
         }
 
         private void tpSourceFileSystem_DragEnter(object sender, DragEventArgs e)
@@ -2134,7 +2153,7 @@ namespace ZScreenGUI
                 ofd.Filter = "All Files (*.*)|*.*";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    UploadFiles(ofd.FileNames);
+                    UploadUsingFileSystem(ofd.FileNames);
                 }
             }
         }
@@ -2186,7 +2205,7 @@ namespace ZScreenGUI
                     files.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
                 }
             }
-            UploadFiles(files.ToArray());
+            UploadUsingFileSystem(files.ToArray());
         }
 
         private void chkShortenURL_CheckedChanged(object sender, EventArgs e)
@@ -2350,7 +2369,7 @@ namespace ZScreenGUI
 
         private void pgAppSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            if (IsFormReady)
+            if (IsReady)
             {
                 UpdateGuiControlsPaths();
 
