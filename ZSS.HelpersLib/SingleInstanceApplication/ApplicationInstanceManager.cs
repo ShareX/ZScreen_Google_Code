@@ -18,6 +18,7 @@ namespace SingleInstanceApplication
         /// <param name="name">The name.</param>
         /// <param name="callback">The callback.</param>
         /// <returns></returns>
+        [DebuggerStepThrough()]
         public static bool CreateSingleInstance(string name, EventHandler<InstanceCallbackEventArgs> callback)
         {
             string eventName = string.Format("{0}-{1}", Environment.MachineName, name);

@@ -121,12 +121,10 @@ namespace ZScreenGUI
 
             Application.Idle += new EventHandler(Application_Idle);
 
-            // this.Show();
-
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
-        public void UseCommandLineArg(string arg)
+        public bool UseCommandLineArg(string arg)
         {
             if (!string.IsNullOrEmpty(arg))
             {
@@ -137,15 +135,17 @@ namespace ZScreenGUI
                     new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
                     new Command("fs|fullscreen", () => CaptureEntireScreen()),
-                    new Command("crop", () => CaptureRectRegion()),
+                    new Command("cc|crop", () => CaptureRectRegion()),
                     new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
-                    new Command("h|history", () => OpenHistory())
+                    new Command("hi|history", () => OpenHistory())
                 };
 
                 cli.FilePathAction = filePath => UploadUsingFileSystem(filePath);
 
-                cli.Parse(arg);
+                return cli.Parse(arg);
             }
+
+            return false;
         }
 
         protected override void WndProc(ref Message m)

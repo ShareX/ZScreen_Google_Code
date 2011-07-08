@@ -505,7 +505,7 @@ namespace ZScreenGUI
 
                     // User Tasks
                     JumpListLink jlCropShot = new JumpListLink(Adapter.ZScreenCliPath(), "Crop Shot");
-                    jlCropShot.Arguments = "-crop";
+                    jlCropShot.Arguments = "-cc";
                     jlCropShot.IconReference = new IconReference(Adapter.ResourcePath, 1);
                     Engine.zJumpList.AddUserTasks(jlCropShot);
 
@@ -520,7 +520,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.AddUserTasks(jlClipboardUpload);
 
                     JumpListLink jlHistory = new JumpListLink(Application.ExecutablePath, "Open History");
-                    jlHistory.Arguments = "-h";
+                    jlHistory.Arguments = "-hi";
                     jlHistory.IconReference = new IconReference(Adapter.ResourcePath, 4);
                     Engine.zJumpList.AddUserTasks(jlHistory);
 
