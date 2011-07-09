@@ -632,12 +632,19 @@ namespace ZScreenLib
             try
             {
                 RegistryKey appCommand = Registry.ClassesRoot.OpenSubKey(Path.Combine(Application.ProductName, @"shell\Open\Command"));
-                string value = appCommand.GetValue("", null) as string;
+                if (appCommand != null)
+                {
+                    string value = appCommand.GetValue("", null) as string;
 
-                if (!value.Contains(Application.ExecutablePath))
-                    registered = false;
-                else
-                    registered = true;
+                    if (!value.Contains(Application.ExecutablePath))
+                        registered = false;
+                    else
+                        registered = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MyLogger.WriteException(ex);
             }
             finally
             {
