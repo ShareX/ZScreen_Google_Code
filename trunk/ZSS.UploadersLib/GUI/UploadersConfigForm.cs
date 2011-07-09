@@ -334,6 +334,45 @@ namespace UploadersLib
 
         #endregion FTP
 
+        #region Email
+
+        private void txtSmtpServer_TextChanged(object sender, EventArgs e)
+        {
+            Config.EmailSmtpServer = txtEmailSmtpServer.Text;
+        }
+
+        private void nudSmtpPort_ValueChanged(object sender, EventArgs e)
+        {
+            Config.EmailSmtpPort = (int)nudEmailSmtpPort.Value;
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            Config.EmailFrom = txtEmailFrom.Text;
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            Config.EmailPassword = txtEmailPassword.Text;
+        }
+
+        private void cbRememberLastToEmail_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.EmailRememberLastTo = cbEmailRememberLastTo.Checked;
+        }
+
+        private void txtDefaultSubject_TextChanged(object sender, EventArgs e)
+        {
+            Config.EmailDefaultSubject = txtEmailDefaultSubject.Text;
+        }
+
+        private void txtDefaultBody_TextChanged(object sender, EventArgs e)
+        {
+            Config.EmailDefaultBody = txtEmailDefaultBody.Text;
+        }
+
+        #endregion Email
+
         #region RapidShare
 
         private void atcRapidShareAccountType_AccountTypeChanged(AccountType accountType)

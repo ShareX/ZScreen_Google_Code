@@ -92,6 +92,17 @@ namespace UploadersLib
         // If image size smaller than thumbnail size then not make thumbnail
         public bool FTPThumbnailCheckSize = true;
 
+        // Email
+
+        public string EmailSmtpServer = "smtp.gmail.com";
+        public int EmailSmtpPort = 587;
+        public string EmailFrom = "...@gmail.com";
+        public string EmailPassword = string.Empty;
+        public bool EmailRememberLastTo = true;
+        public string EmailLastTo = string.Empty;
+        public string EmailDefaultSubject = "Sending Email from ZScreen";
+        public string EmailDefaultBody = string.Empty;
+
         // Dropbox
 
         public OAuthInfo DropboxOAuthInfo = null;

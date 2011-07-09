@@ -28,10 +28,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.GUI;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
@@ -293,6 +295,28 @@ namespace ZUploader
                     if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
                     {
                         fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
+                    }
+                    break;
+                case FileDestination.Email:
+                    EmailForm emailForm = new EmailForm(Program.UploadersConfig.EmailRememberLastTo ? Program.UploadersConfig.EmailLastTo : string.Empty,
+                        Program.UploadersConfig.EmailDefaultSubject, Program.UploadersConfig.EmailDefaultBody);
+
+                    if (emailForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (Program.UploadersConfig.EmailRememberLastTo)
+                        {
+                            Program.UploadersConfig.EmailLastTo = emailForm.ToEmail;
+                        }
+
+                        Email email = new Email
+                        {
+                            SmtpServer = Program.UploadersConfig.EmailSmtpServer,
+                            SmtpPort = Program.UploadersConfig.EmailSmtpPort,
+                            FromEmail = Program.UploadersConfig.EmailFrom,
+                            Password = Program.UploadersConfig.EmailPassword
+                        };
+
+                        email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, stream, fileName);
                     }
                     break;
                 case FileDestination.Dropbox:

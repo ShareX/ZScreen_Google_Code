@@ -34,6 +34,7 @@ namespace ZUploader.HelperClasses
         public static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
         {
             MemoryStream stream = img.SaveImage(Program.Settings.ImageFormat);
+
             int sizeLimit = Program.Settings.ImageSizeLimit * 1000;
             if (Program.Settings.ImageFormat != Program.Settings.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
             {
@@ -44,6 +45,8 @@ namespace ZUploader.HelperClasses
             {
                 imageFormat = Program.Settings.ImageFormat;
             }
+
+            stream.Position = 0;
 
             return stream;
         }
@@ -72,6 +75,7 @@ namespace ZUploader.HelperClasses
             }
 
             NameParser parser = new NameParser { Picture = img };
+
             return string.Format("{0}.{1}", parser.Convert(Program.Settings.NameFormatPattern), ext);
         }
     }
