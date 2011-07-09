@@ -323,6 +323,7 @@ namespace ZScreenLib
                 {
                     if (string.IsNullOrEmpty(this.FileName) || !this.LocalFilePath.Equals(dialog.FilePath))
                     {
+                        filePath = dialog.FilePath;
                         this.UpdateLocalFilePath(dialog.FilePath);
                     }
                 }
