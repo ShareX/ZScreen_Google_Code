@@ -212,7 +212,7 @@ namespace ZScreenLib
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = FilePath;
-            dlg.Filter = "All files (*.*)|*.*";
+            dlg.Filter = "Png files (*.png)|*.png";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 txtInputText.Text = dlg.FileName;
