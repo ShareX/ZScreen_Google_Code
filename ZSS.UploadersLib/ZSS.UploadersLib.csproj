@@ -93,11 +93,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileUploaders\Email.cs" />
     <Compile Include="GUI\AccountTypeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\AccountTypeControl.Designer.cs">
       <DependentUpon>AccountTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EmailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\EmailForm.Designer.cs">
+      <DependentUpon>EmailForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\GoogleTranslateGUI.cs">
       <SubType>Form</SubType>
@@ -232,6 +239,9 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\AccountTypeControl.resx">
       <DependentUpon>AccountTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\EmailForm.resx">
+      <DependentUpon>EmailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\GoogleTranslateGUI.resx">
       <DependentUpon>GoogleTranslateGUI.cs</DependentUpon>

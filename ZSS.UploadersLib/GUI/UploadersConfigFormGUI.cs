@@ -190,6 +190,16 @@ namespace UploadersLib
             txtFTPThumbWidth.Text = Config.FTPThumbnailWidthLimit.ToString();
             chkFTPThumbnailCheckSize.Checked = Config.FTPThumbnailCheckSize;
 
+            // Email
+
+            txtEmailSmtpServer.Text = Config.EmailSmtpServer;
+            nudEmailSmtpPort.Value = Config.EmailSmtpPort;
+            txtEmailFrom.Text = Config.EmailFrom;
+            txtEmailPassword.Text = Config.EmailPassword;
+            cbEmailRememberLastTo.Checked = Config.EmailRememberLastTo;
+            txtEmailDefaultSubject.Text = Config.EmailDefaultSubject;
+            txtEmailDefaultBody.Text = Config.EmailDefaultBody;
+
             // RapidShare
 
             atcRapidShareAccountType.SelectedAccountType = Config.RapidShareUserAccountType;
