@@ -366,6 +366,23 @@ namespace ZScreenLib
         {
             ucDestOptions.EnableDisableDestControls();
             UpdateToolStripOutputs();
+            if (NoRemoteOutput())
+            {
+                ucDestOptions.GetClipboardContentTsmi(ucDestOptions.tsddbClipboardContent, ClipboardContentEnum.Data).Checked = true;
+            }
+            UpdateToolStripClipboardContent();
+        }
+
+        private bool NoRemoteOutput()
+        {
+            foreach (ToolStripMenuItem tsmi in ucDestOptions.tsddbOutputs.DropDownItems)
+            {
+                if ((OutputEnum)tsmi.Tag == OutputEnum.RemoteHost && tsmi.Checked)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

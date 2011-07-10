@@ -39,7 +39,7 @@ namespace ZScreenLib
             EnableDisableDestControls();
         }
 
-        private ToolStripMenuItem GetOutputTsmi(ToolStripDropDownButton tsddb, OutputEnum et)
+        public ToolStripMenuItem GetOutputTsmi(ToolStripDropDownButton tsddb, OutputEnum et)
         {
             foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
             {
@@ -51,7 +51,7 @@ namespace ZScreenLib
             return new ToolStripMenuItem();
         }
 
-        private ToolStripMenuItem GetClipboardContentTsmi(ToolStripDropDownButton tsddb, ClipboardContentEnum et)
+        public ToolStripMenuItem GetClipboardContentTsmi(ToolStripDropDownButton tsddb, ClipboardContentEnum et)
         {
             foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
             {
@@ -61,18 +61,6 @@ namespace ZScreenLib
                 }
             }
             return new ToolStripMenuItem();
-        }
-
-        private bool NoSelectionMenu(ToolStripDropDownButton tsddb)
-        {
-            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
-            {
-                if (tsmi.Checked)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
