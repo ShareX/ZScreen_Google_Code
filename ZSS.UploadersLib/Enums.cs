@@ -89,16 +89,16 @@ namespace UploadersLib
     {
         [Description("Clipboard")]
         Clipboard,
-        [Description("Local Disk")]
+        [Description("File")]
         LocalDisk,
-        [Description("Remote Host")]
+        [Description("Upload")]
         RemoteHost,
-        [Description("Shared folder")]
-        SharedFolder,
-        [Description("Email")]
+        [Description("E-mail")]
         Email,
         [Description("Printer")]
         Printer,
+        [Description("Shared folder")]
+        SharedFolder
     }
 
     public enum ClipboardContentEnum
@@ -108,7 +108,7 @@ namespace UploadersLib
         [Description("Local file path")]
         Local,
         [Description("Uploaded URL")]
-        Remote,
+        Remote
     }
 
     public enum LinkFormatEnum
@@ -136,7 +136,7 @@ namespace UploadersLib
         [Description("Local File path")]
         LocalFilePath,
         [Description("Local File path as URI")]
-        LocalFilePathUri,
+        LocalFilePathUri
     }
 
     public enum ImageUploaderType
@@ -160,7 +160,7 @@ namespace UploadersLib
         [Description("MediaWiki")]
         MEDIAWIKI,
         [Description("File Uploader")]
-        FileUploader,
+        FileUploader
     }
 
     public enum TextUploaderType
@@ -174,7 +174,7 @@ namespace UploadersLib
         [Description("slexy.org")]
         SLEXY,
         [Description("File Uploader")]
-        FileUploader,
+        FileUploader
     }
 
     public enum FileUploaderType

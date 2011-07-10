@@ -1167,7 +1167,7 @@ namespace ZScreenLib
         public void SendEmail()
         {
             EmailForm emailForm = new EmailForm(Engine.MyUploadersConfig.EmailRememberLastTo ? Engine.MyUploadersConfig.EmailLastTo : string.Empty,
-    Engine.MyUploadersConfig.EmailDefaultSubject, Engine.MyUploadersConfig.EmailDefaultBody);
+                Engine.MyUploadersConfig.EmailDefaultSubject, Engine.MyUploadersConfig.EmailDefaultBody);
 
             if (emailForm.ShowDialog() == DialogResult.OK)
             {
@@ -1184,22 +1184,34 @@ namespace ZScreenLib
                     Password = Engine.MyUploadersConfig.EmailPassword
                 };
 
-                if (TempImage != null)
+                Stream stream = null;
+
+                try
                 {
-                    MemoryStream ms = new MemoryStream();
-                    Bitmap bmp = new Bitmap(TempImage);
-                    bmp.Save(ms, ImageFormat.Bmp);
-                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, ms, FileName);
+                    if (TempImage != null)
+                    {
+                        stream = new MemoryStream();
+                        // TODO: Use image format settings from ZScreen
+                        TempImage.Save(stream, ImageFormat.Png);
+                    }
+                    else if (!string.IsNullOrEmpty(TempText))
+                    {
+                        byte[] byteArray = Encoding.UTF8.GetBytes(TempText);
+                        stream = new MemoryStream(byteArray);
+                    }
+                    else if (!string.IsNullOrEmpty(LocalFilePath) && File.Exists(LocalFilePath))
+                    {
+                        stream = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    }
+
+                    if (stream != null && stream.Length > 0)
+                    {
+                        email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, stream, FileName);
+                    }
                 }
-                else if (string.IsNullOrEmpty(TempText))
+                finally
                 {
-                    MemoryStream ms = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(TempText));
-                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, ms, FileName);
-                }
-                else if (File.Exists(LocalFilePath))
-                {
-                    FileStream fs = new FileStream(LocalFilePath, FileMode.Open);
-                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, fs, FileName);
+                    if (stream != null) stream.Dispose();
                 }
             }
         }
