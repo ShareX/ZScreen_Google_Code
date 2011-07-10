@@ -70,9 +70,7 @@ namespace ZUploader
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
-        FTP,
-        [Description("Email")]
-        Email
+        FTP
     }
 
     public enum EDataType
