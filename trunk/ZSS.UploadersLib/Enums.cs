@@ -95,6 +95,8 @@ namespace UploadersLib
         RemoteHost,
         [Description("Shared folder")]
         SharedFolder,
+        [Description("Email")]
+        Email,
         [Description("Printer")]
         Printer,
     }
