@@ -175,7 +175,7 @@
             this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDestConfig.Name = "tsbDestConfig";
             this.tsbDestConfig.Size = new System.Drawing.Size(350, 20);
-            this.tsbDestConfig.Text = "Open destinations configuration...";
+            this.tsbDestConfig.Text = "Open outputs configuration...";
             this.tsbDestConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 

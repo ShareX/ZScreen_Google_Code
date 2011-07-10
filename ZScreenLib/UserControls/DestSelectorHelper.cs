@@ -68,6 +68,10 @@ namespace ZScreenLib
                             tsmi.Image = Resources.drive_network;
                             tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
                             break;
+                        case OutputEnum.Email:
+                            tsmi.Image = Resources.mail;
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+                            break;
                         case OutputEnum.RemoteHost:
                             tsmi.Image = Resources.server;
                             tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));

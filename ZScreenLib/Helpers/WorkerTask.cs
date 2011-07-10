@@ -40,6 +40,7 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
+using UploadersLib.GUI;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
@@ -674,6 +675,11 @@ namespace ZScreenLib
                 UploadToSharedFolder();
             }
 
+            if (TaskOutputs.Contains(OutputEnum.Email))
+            {
+                SendEmail();
+            }
+
             if (this.UploadResults.Count > 0)
             {
                 FlashIcon();
@@ -1156,6 +1162,46 @@ namespace ZScreenLib
             }
 
             return ur;
+        }
+
+        public void SendEmail()
+        {
+            EmailForm emailForm = new EmailForm(Engine.MyUploadersConfig.EmailRememberLastTo ? Engine.MyUploadersConfig.EmailLastTo : string.Empty,
+    Engine.MyUploadersConfig.EmailDefaultSubject, Engine.MyUploadersConfig.EmailDefaultBody);
+
+            if (emailForm.ShowDialog() == DialogResult.OK)
+            {
+                if (Engine.MyUploadersConfig.EmailRememberLastTo)
+                {
+                    Engine.MyUploadersConfig.EmailLastTo = emailForm.ToEmail;
+                }
+
+                Email email = new Email
+                {
+                    SmtpServer = Engine.MyUploadersConfig.EmailSmtpServer,
+                    SmtpPort = Engine.MyUploadersConfig.EmailSmtpPort,
+                    FromEmail = Engine.MyUploadersConfig.EmailFrom,
+                    Password = Engine.MyUploadersConfig.EmailPassword
+                };
+
+                if (TempImage != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    Bitmap bmp = new Bitmap(TempImage);
+                    bmp.Save(ms, ImageFormat.Bmp);
+                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, ms, FileName);
+                }
+                else if (string.IsNullOrEmpty(TempText))
+                {
+                    MemoryStream ms = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(TempText));
+                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, ms, FileName);
+                }
+                else if (File.Exists(LocalFilePath))
+                {
+                    FileStream fs = new FileStream(LocalFilePath, FileMode.Open);
+                    email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, fs, FileName);
+                }
+            }
         }
 
         public void UploadToSharedFolder()
