@@ -124,13 +124,13 @@ namespace ZScreenGUI
                             case WorkerTask.JobLevel2.CaptureRectRegion:
                             case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
                                 bwTask.BwCaptureRegionOrWindow();
-                                bwTask.WriteImage();
                                 break;
                             case WorkerTask.JobLevel2.CaptureFreeHandRegion:
                                 bwTask.BwCaptureFreehandCrop();
-                                bwTask.WriteImage();
+
                                 break;
                         }
+                        bwTask.WriteImage();
                         bwTask.PublishData();
                         break;
                     case JobLevel1.Text:
