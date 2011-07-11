@@ -58,7 +58,7 @@ namespace ZScreenLib
 
     public enum RegionStyles
     {
-        [Description("No Transparency")]
+        [Description("No Change")]
         NO_TRANSPARENCY,
         [Description("Region Transparent")]
         REGION_TRANSPARENT,
