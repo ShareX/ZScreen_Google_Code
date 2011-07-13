@@ -319,6 +319,14 @@ namespace ZUploader
                 case FileDestination.ShareCX:
                     fileUploader = new ShareCX();
                     break;
+                case FileDestination.Minus:
+                    Minus minus = new Minus();
+                    if (minus.SignIn("", "").Success) // TODO: Testing Minus
+                    {
+                        minus.CreateGallery();
+                        fileUploader = minus;
+                    }
+                    break;
                 case FileDestination.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
                     {

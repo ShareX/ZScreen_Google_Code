@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUploaders\Email.cs" />
+    <Compile Include="FileUploaders\Minus.cs" />
     <Compile Include="GUI\AccountTypeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

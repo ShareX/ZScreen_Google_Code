@@ -67,6 +67,8 @@ namespace ZUploader
         Dropbox,
         [Description("share.cx")]
         ShareCX,
+        [Description("min.us")]
+        Minus,
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]

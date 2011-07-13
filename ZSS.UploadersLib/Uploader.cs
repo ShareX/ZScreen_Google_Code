@@ -49,6 +49,7 @@ namespace UploadersLib
         public bool IsUploading { get; private set; }
         public int BufferSize { get; set; }
         public string UserAgent { get; set; }
+        public CookieCollection LastResponseCookies { get; private set; }
 
         private bool stopUpload;
 
@@ -100,9 +101,10 @@ namespace UploadersLib
 
         #region Post methods
 
-        protected string SendPostRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
+        protected string SendPostRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text,
+            CookieCollection cookies = null)
         {
-            using (HttpWebResponse response = PostResponseMultiPart(url, arguments))
+            using (HttpWebResponse response = PostResponseMultiPart(url, arguments, cookies))
             {
                 return ResponseToString(response, responseType);
             }
@@ -132,7 +134,7 @@ namespace UploadersLib
             }
         }
 
-        private HttpWebResponse PostResponseMultiPart(string url, Dictionary<string, string> arguments)
+        private HttpWebResponse PostResponseMultiPart(string url, Dictionary<string, string> arguments, CookieCollection cookies = null)
         {
             string boundary = CreateBoundary();
             byte[] data = MakeInputContent(boundary, arguments);
@@ -140,7 +142,7 @@ namespace UploadersLib
             using (MemoryStream stream = new MemoryStream())
             {
                 stream.Write(data, 0, data.Length);
-                return GetResponseUsingPost(url, stream, boundary, "multipart/form-data");
+                return GetResponseUsingPost(url, stream, boundary, "multipart/form-data", cookies);
             }
         }
 
@@ -171,14 +173,14 @@ namespace UploadersLib
             }
         }
 
-        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary, string contentType)
+        private HttpWebResponse GetResponseUsingPost(string url, Stream dataStream, string boundary, string contentType, CookieCollection cookies = null)
         {
             IsUploading = true;
             stopUpload = false;
 
             try
             {
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length, contentType);
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, dataStream.Length, contentType, cookies);
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -199,7 +201,8 @@ namespace UploadersLib
             return null;
         }
 
-        protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null)
+        protected string UploadData(Stream dataStream, string url, string fileName, string fileFormName = "file", Dictionary<string, string> arguments = null,
+            CookieCollection cookies = null)
         {
             IsUploading = true;
             stopUpload = false;
@@ -213,7 +216,7 @@ namespace UploadersLib
                 byte[] bytesDataClose = MakeFileInputContentClose(boundary);
 
                 long contentLength = bytesArguments.Length + bytesDataOpen.Length + dataStream.Length + bytesDataClose.Length;
-                HttpWebRequest request = PreparePostWebRequest(url, boundary, contentLength, "multipart/form-data");
+                HttpWebRequest request = PreparePostWebRequest(url, boundary, contentLength, "multipart/form-data", cookies);
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -275,7 +278,7 @@ namespace UploadersLib
 
         #region Helper methods
 
-        private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length, string contentType)
+        private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length, string contentType, CookieCollection cookies = null)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AllowWriteStreamBuffering = ProxySettings.ProxyConfig != ProxyConfigType.NoProxy;
@@ -283,6 +286,8 @@ namespace UploadersLib
             request.ContentLength = length;
             if (!string.IsNullOrEmpty(boundary)) contentType += "; boundary=" + boundary;
             request.ContentType = contentType;
+            request.CookieContainer = new CookieContainer();
+            if (cookies != null) request.CookieContainer.Add(cookies);
             request.KeepAlive = false;
             request.Method = "POST";
             request.Pipelined = false;
@@ -393,6 +398,15 @@ namespace UploadersLib
             {
                 using (response)
                 {
+                    if (response is HttpWebResponse)
+                    {
+                        LastResponseCookies = ((HttpWebResponse)response).Cookies;
+                    }
+                    else
+                    {
+                        LastResponseCookies = null;
+                    }
+
                     switch (responseType)
                     {
                         case ResponseType.Text:

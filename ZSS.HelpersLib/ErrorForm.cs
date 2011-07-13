@@ -110,7 +110,7 @@ namespace HelpersLib
                 brush.SetSigmaBellShape(0.25f);
                 g.FillRectangle(brush, rect);
             }
-            g.DrawString(Error.Message, new Font(FontFamily.GenericSansSerif, 9.5f, FontStyle.Regular), Brushes.White, new Point(15, 11));
+            g.DrawString(Error.Message, new Font(FontFamily.GenericSansSerif, 9.5f, FontStyle.Regular), Brushes.White, new Rectangle(15, 11, Width - 30, 35));
         }
 
         public static void ThrowExceptionForTest()
