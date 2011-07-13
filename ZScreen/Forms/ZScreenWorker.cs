@@ -166,7 +166,7 @@ namespace ZScreenGUI
         {
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
-                case (WorkerTask.ProgressType)101:
+                case WorkerTask.ProgressType.PrintImage:
                     Adapter.PrintImage(e.UserState as Image);
                     break;
                 case WorkerTask.ProgressType.PrintText:
