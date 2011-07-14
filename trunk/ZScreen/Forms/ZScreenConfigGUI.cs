@@ -388,7 +388,7 @@ namespace ZScreenGUI
 
             cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFileFormat;
             nudImageQuality.Value = Engine.conf.JpgQuality;
-            cbGIFQuality.SelectedIndex = (int)Engine.conf.GIFQuality;
+            cbGIFQuality.SelectedIndex = (int)Engine.conf.ImageGIFQuality;
             nudSwitchAfter.Value = Engine.conf.SwitchAfter;
             if (cboSwitchFormat.Items.Count == 0)
             {

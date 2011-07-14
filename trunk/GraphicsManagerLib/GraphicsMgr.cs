@@ -194,9 +194,13 @@ namespace GraphicsMgrLib
         public class SaveImageToMemoryStreamOptions
         {
             public Image MyImage { get; set; }
+
             public ImageFileFormat MyImageFileFormat { get; set; }
+
             public bool MakeJPGBackgroundWhite { get; set; }
+
             public GIFQuality GIFQuality { get; set; }
+
             public decimal JpgQuality { get; set; }
 
             public SaveImageToMemoryStreamOptions(Image img, ImageFileFormat iff)

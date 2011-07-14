@@ -95,7 +95,7 @@ namespace ZScreenLib
             MemoryStream ms = null;
 
             GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions(img, Engine.zImageFileFormat);
-            opt.GIFQuality = Engine.conf.GIFQuality;
+            opt.GIFQuality = Engine.conf.ImageGIFQuality;
             opt.JpgQuality = Engine.conf.JpgQuality;
             opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
 

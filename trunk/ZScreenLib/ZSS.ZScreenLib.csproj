@@ -100,6 +100,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="UserControls\DestSelectorHelper.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
@@ -209,6 +210,7 @@
     <Compile Include="UserControls\DestSelector.Designer.cs">
       <DependentUpon>DestSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WorkerTaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crop2\Crop2\Crop2.csproj">
@@ -226,6 +228,10 @@
     <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
+      <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
+      <Name>ImageQuantization</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
