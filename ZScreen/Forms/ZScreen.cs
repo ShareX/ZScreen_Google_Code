@@ -2032,7 +2032,7 @@ namespace ZScreenGUI
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.GIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+            Engine.conf.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)

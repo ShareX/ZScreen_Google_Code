@@ -175,7 +175,7 @@ namespace ZScreenLib
 
         public string TempText { get; private set; }
 
-        public byte[] TempFile { get; set; }
+        public Stream Data { get; set; }
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 

@@ -4,9 +4,7 @@ namespace GraphicsMgrLib
 {
     public enum GIFQuality
     {
-        Grayscale,
-        Bit4,
-        Bit8
+        Default, Bit8, Bit4, Grayscale
     }
 
     public enum ImageFileFormatType

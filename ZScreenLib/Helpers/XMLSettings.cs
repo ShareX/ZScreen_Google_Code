@@ -224,13 +224,19 @@ namespace ZScreenLib
         public bool ShowSaveFileDialogImages { get; set; }
 
         // Image Settings
-
+        // TODO Remove obselete settings
         public ImageFileFormatType ImageFileFormat = ImageFileFormatType.Png;
         public decimal JpgQuality = 90;
-        public GIFQuality GIFQuality = GIFQuality.Bit8;
         public decimal SwitchAfter = 512;
         public ImageFileFormatType ImageFormatSwitch = ImageFileFormatType.Jpg;
         public bool MakeJPGBackgroundWhite = true;
+
+        // Image
+        public EImageFormat ImageFormat = EImageFormat.PNG;
+        public int ImageJPEGQuality = 90;
+        public GIFQuality ImageGIFQuality = GIFQuality.Default;
+        public int ImageSizeLimit = 512;
+        public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
         public ImageSizeType ImageSizeType = ImageSizeType.DEFAULT;
         public int ImageSizeFixedWidth = 500;
