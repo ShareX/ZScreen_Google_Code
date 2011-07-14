@@ -660,28 +660,49 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
-            if (Job1 == JobLevel1.File)
+            List<Thread> outputThreads = new List<Thread>();
+
+            foreach (OutputEnum oe in TaskOutputs)
             {
-                UploadFile();
-            }
-            else
-            {
-                PublishImage();
+                Thread thread = new Thread(() => PublishData(oe));
+                outputThreads.Add(thread);
+                thread.Start();
             }
 
-            if (TaskOutputs.Contains(OutputEnum.SharedFolder))
+            foreach (Thread thread in outputThreads)
             {
-                UploadToSharedFolder();
-            }
-
-            if (TaskOutputs.Contains(OutputEnum.Email))
-            {
-                SendEmail();
+                thread.Join();
             }
 
             if (UploadResults.Count > 0)
             {
                 FlashIcon();
+            }
+        }
+
+        private void PublishData(OutputEnum oe)
+        {
+            switch (oe)
+            {
+                case OutputEnum.Printer:
+                    Print();
+                    break;
+                case OutputEnum.RemoteHost:
+                    if (Job1 == JobLevel1.File)
+                    {
+                        UploadFile();
+                    }
+                    else
+                    {
+                        PublishImage();
+                    }
+                    break;
+                case OutputEnum.Email:
+                    SendEmail();
+                    break;
+                case OutputEnum.SharedFolder:
+                    UploadToSharedFolder();
+                    break;
             }
         }
 
@@ -736,14 +757,6 @@ namespace ZScreenLib
                 {
                     Host = ClipboardContentEnum.Local.GetDescription()
                 });
-            }
-
-            if (TaskOutputs.Contains(OutputEnum.Printer))
-            {
-                if (TempImage != null)
-                {
-                    MyWorker.ReportProgress((int)ProgressType.PrintImage, (Image)TempImage.Clone());
-                }
             }
 
             EndTime = DateTime.Now;
@@ -888,14 +901,6 @@ namespace ZScreenLib
                     foreach (Thread thread in uploaderThreads)
                     {
                         thread.Join();
-                    }
-                }
-
-                if (TaskOutputs.Contains(OutputEnum.Printer))
-                {
-                    if (!string.IsNullOrEmpty(TempText))
-                    {
-                        MyWorker.ReportProgress((int)ProgressType.PrintText, TempText);
                     }
                 }
             }
@@ -1107,6 +1112,21 @@ namespace ZScreenLib
             }
 
             return ur;
+        }
+
+        public void Print()
+        {
+            if (TaskOutputs.Contains(OutputEnum.Printer))
+            {
+                if (TempImage != null)
+                {
+                    MyWorker.ReportProgress((int)ProgressType.PrintImage, (Image)TempImage.Clone());
+                }
+                else if (!string.IsNullOrEmpty(TempText))
+                {
+                    MyWorker.ReportProgress((int)ProgressType.PrintText, TempText);
+                }
+            }
         }
 
         public void SendEmail()
