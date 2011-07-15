@@ -1,0 +1,1 @@
+#summary Repeat a crop-shot with the settings of the last crop shot.
