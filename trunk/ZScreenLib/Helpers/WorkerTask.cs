@@ -742,7 +742,7 @@ namespace ZScreenLib
 
                 foreach (ImageUploaderType imageUploaderType in MyImageUploaders)
                 {
-                    Thread thread = new Thread(() => UploadImage(imageUploaderType));
+                    Thread thread = new Thread(() => UploadImage(imageUploaderType, PrepareData()));
                     uploaderThreads.Add(thread);
                     thread.Start();
                 }
@@ -776,7 +776,25 @@ namespace ZScreenLib
             }
         }
 
-        private void UploadImage(ImageUploaderType imageUploaderType)
+        private Stream PrepareData()
+        {
+            Stream data = null;
+            if (File.Exists(LocalFilePath))
+            {
+                data = new FileStream(LocalFilePath, FileMode.Open);
+            }
+            else if (TempImage != null)
+            {
+                data = TempImage.SaveImage(Engine.conf.ImageFormat);
+            }
+            else if (!string.IsNullOrEmpty(TempText))
+            {
+                data = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(TempText));
+            }
+            return data;
+        }
+
+        private void UploadImage(ImageUploaderType imageUploaderType, Stream data)
         {
             ImageUploader imageUploader = null;
 
@@ -836,8 +854,8 @@ namespace ZScreenLib
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
                 DestinationName = GetActiveImageUploadersDescription();
                 Engine.MyLogger.WriteLine("Initialized " + DestinationName);
-                string fullFilePath = LocalFilePath;
-                if (File.Exists(fullFilePath) || TempImage != null)
+
+                if (data != null)
                 {
                     if (Engine.conf == null)
                     {
@@ -847,17 +865,7 @@ namespace ZScreenLib
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
                     {
                         UploadResult ur = new UploadResult();
-                        if (File.Exists(fullFilePath))
-                        {
-                            ur = imageUploader.Upload(fullFilePath);
-                        }
-                        else if (TempImage != null)
-                        {
-                            FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
-                            MemoryStream ms = new MemoryStream();
-                            TempImage.Save(ms, ImageFormat.Png);
-                            ur = imageUploader.Upload(ms, FileName);
-                        }
+                        ur = imageUploader.Upload(data, FileName);
                         ur.Host = imageUploaderType.GetDescription();
                         AddUploadResult(ur);
                         Errors = imageUploader.Errors;

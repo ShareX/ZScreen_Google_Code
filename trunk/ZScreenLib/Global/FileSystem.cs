@@ -91,12 +91,12 @@ namespace ZScreenLib
                 Directory.CreateDirectory(destDir);
             }
 
-            long size = (long)Engine.conf.SwitchAfter * 1024;
+            long size = (long)Engine.conf.ImageSizeLimit * 1024;
             MemoryStream ms = null;
 
             GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions((Image)img.Clone(), Engine.zImageFileFormat);
             opt.GIFQuality = Engine.conf.ImageGIFQuality;
-            opt.JpgQuality = Engine.conf.JpgQuality;
+            opt.JpgQuality = Engine.conf.ImageJPEGQuality;
             opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
 
             try

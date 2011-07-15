@@ -88,4 +88,14 @@ namespace HelpersLib
         [Description("Visual Studio solution")]
         sln
     }
+
+    public enum EDataType
+    {
+        File, Image, Text
+    }
+
+    public enum EImageFormat
+    {
+        PNG, JPEG, GIF, BMP, TIFF
+    }
 }

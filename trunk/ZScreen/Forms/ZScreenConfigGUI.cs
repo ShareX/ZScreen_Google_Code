@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
-using GraphicsMgrLib;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -383,18 +382,18 @@ namespace ZScreenGUI
         {
             if (cboFileFormat.Items.Count == 0)
             {
-                cboFileFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
+                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
 
-            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFileFormat;
-            nudImageQuality.Value = Engine.conf.JpgQuality;
+            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFormat;
+            nudImageQuality.Value = Engine.conf.ImageJPEGQuality;
             cbGIFQuality.SelectedIndex = (int)Engine.conf.ImageGIFQuality;
-            nudSwitchAfter.Value = Engine.conf.SwitchAfter;
+            nudSwitchAfter.Value = Engine.conf.ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)
             {
-                cboSwitchFormat.Items.AddRange(typeof(ImageFileFormatType).GetDescriptions());
+                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
-            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormatSwitch;
+            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormat2;
 
             switch (Engine.conf.ImageSizeType)
             {
