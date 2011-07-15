@@ -33,7 +33,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
 using HelpersLib;
-using ImageQuantization;
 
 namespace GraphicsMgrLib
 {
@@ -208,62 +207,6 @@ namespace GraphicsMgrLib
                 this.MyImage = img;
                 this.MyImageFileFormat = iff;
             }
-        }
-
-        public static MemoryStream SaveImageToMemoryStream(SaveImageToMemoryStreamOptions options)
-        {
-            MemoryStream ms = new MemoryStream();
-
-            if (options.MakeJPGBackgroundWhite && options.MyImageFileFormat.FormatType != EImageFormat.PNG)
-            {
-                options.MyImage = GraphicsMgrImageEffects.FillBackground(options.MyImage, Color.White);
-            }
-
-            try
-            {
-                if (options.MyImageFileFormat.FormatType == EImageFormat.JPEG)
-                {
-                    EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)options.JpgQuality);
-                    ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
-
-                    EncoderParameters encoderParams = new EncoderParameters(1);
-                    encoderParams.Param[0] = quality;
-
-                    options.MyImage.Save(ms, codec, encoderParams);
-                }
-                else if (options.MyImageFileFormat.FormatType == EImageFormat.GIF)
-                {
-                    Quantizer quantizer;
-                    switch (options.GIFQuality)
-                    {
-                        case GIFQuality.Grayscale:
-                            quantizer = new GrayscaleQuantizer();
-                            break;
-                        case GIFQuality.Bit4:
-                            quantizer = new OctreeQuantizer(15, 4);
-                            break;
-                        case GIFQuality.Bit8:
-                        default:
-                            quantizer = new OctreeQuantizer(255, 4);
-                            break;
-                    }
-
-                    using (Bitmap quantized = quantizer.Quantize(options.MyImage))
-                    {
-                        quantized.Save(ms, ImageFormat.Gif);
-                    }
-                }
-                else
-                {
-                    options.MyImage.Save(ms, options.MyImageFileFormat.Format);
-                }
-            }
-            catch (Exception)
-            {
-                // Engine.MyLogger.WriteException("Error at SaveImageToMemoryStream", ex);
-            }
-
-            return ms;
         }
 
         private static ImageCodecInfo GetEncoderInfo(string mimeType)

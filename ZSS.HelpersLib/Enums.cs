@@ -94,6 +94,11 @@ namespace HelpersLib
         File, Image, Text
     }
 
+    public enum GIFQuality
+    {
+        Default, Bit8, Bit4, Grayscale
+    }
+
     public enum EImageFormat
     {
         PNG, JPEG, GIF, BMP, TIFF

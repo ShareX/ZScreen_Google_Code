@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -176,7 +175,7 @@ namespace ZScreenLib
 
         public string TempText { get; private set; }
 
-        public Stream Data { get; set; }
+        public List<Stream> TaskData = new List<Stream>();
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
@@ -664,6 +663,11 @@ namespace ZScreenLib
         {
             List<Thread> outputThreads = new List<Thread>();
 
+            foreach (ImageUploaderType uploader in MyImageUploaders)
+            {
+                TaskData.Add(PrepareData());
+            }
+
             foreach (OutputEnum oe in TaskOutputs)
             {
                 Thread thread = new Thread(() => PublishData(oe));
@@ -740,9 +744,9 @@ namespace ZScreenLib
 
                 List<Thread> uploaderThreads = new List<Thread>();
 
-                foreach (ImageUploaderType imageUploaderType in MyImageUploaders)
+                for (int i = 0; i < MyImageUploaders.Count; i++)
                 {
-                    Thread thread = new Thread(() => UploadImage(imageUploaderType, PrepareData()));
+                    Thread thread = new Thread(() => UploadImage(MyImageUploaders[i], TaskData[i]));
                     uploaderThreads.Add(thread);
                     thread.Start();
                 }
@@ -845,7 +849,10 @@ namespace ZScreenLib
                     imageUploader = new TwitSnapsUploader(ZKeys.TwitsnapsKey, Adapter.TwitterGetActiveAccount());
                     break;
                 case ImageUploaderType.FileUploader:
-                    UploadFile();
+                    foreach (FileUploaderType ft in MyFileUploaders)
+                    {
+                        UploadFile(ft, data);
+                    }
                     break;
             }
 
@@ -972,7 +979,7 @@ namespace ZScreenLib
 
             foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
-                Thread thread = new Thread(() => UploadFile(fileUploaderType));
+                Thread thread = new Thread(() => UploadFile(fileUploaderType, PrepareData()));
                 uploaderThreads.Add(thread);
                 thread.Start();
             }
@@ -985,7 +992,7 @@ namespace ZScreenLib
             EndTime = DateTime.Now;
         }
 
-        private void UploadFile(FileUploaderType fileUploaderType)
+        private void UploadFile(FileUploaderType fileUploaderType, Stream data)
         {
             FileUploader fileUploader = null;
 
@@ -1041,17 +1048,7 @@ namespace ZScreenLib
                 DestinationName = fileUploaderType.GetDescription();
                 fileUploader.ProgressChanged += UploadProgressChanged;
                 UploadResult ur = new UploadResult();
-                if (File.Exists(LocalFilePath))
-                {
-                    ur = fileUploader.Upload(LocalFilePath);
-                }
-                else if (TempImage != null)
-                {
-                    MemoryStream ms = new MemoryStream();
-                    ((Image)TempImage.Clone()).Save(ms, ImageFormat.Png);
-                    FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
-                    ur = fileUploader.Upload(ms, FileName);
-                }
+                ur = fileUploader.Upload(data, FileName);
                 ur.Host = fileUploaderType.GetDescription();
                 AddUploadResult(ur);
                 Errors = fileUploader.Errors;
@@ -1159,34 +1156,19 @@ namespace ZScreenLib
                     Password = Engine.MyUploadersConfig.EmailPassword
                 };
 
-                Stream stream = null;
-
+                Stream emailData = null;
                 try
                 {
-                    if (TempImage != null)
-                    {
-                        stream = new MemoryStream();
-                        // TODO: Use image format settings from ZScreen
-                        TempImage.Save(stream, ImageFormat.Png);
-                    }
-                    else if (!string.IsNullOrEmpty(TempText))
-                    {
-                        byte[] byteArray = Encoding.UTF8.GetBytes(TempText);
-                        stream = new MemoryStream(byteArray);
-                    }
-                    else if (!string.IsNullOrEmpty(LocalFilePath) && File.Exists(LocalFilePath))
-                    {
-                        stream = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    }
+                    emailData = PrepareData();
 
-                    if (stream != null && stream.Length > 0)
+                    if (emailData != null && emailData.Length > 0)
                     {
-                        email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, stream, FileName);
+                        email.Send(emailForm.ToEmail, emailForm.Subject, emailForm.Body, emailData, FileName);
                     }
                 }
                 finally
                 {
-                    if (stream != null) stream.Dispose();
+                    if (emailData != null) emailData.Dispose();
                 }
             }
         }

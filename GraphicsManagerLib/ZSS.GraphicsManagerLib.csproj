@@ -73,7 +73,6 @@
     <Compile Include="BitmapCache.cs" />
     <Compile Include="ColorBgra.cs" />
     <Compile Include="ColorMatrixMgr.cs" />
-    <Compile Include="Enums.cs" />
     <Compile Include="GDI.cs" />
     <Compile Include="GraphicsMgr.cs" />
     <Compile Include="Extensions.cs" />

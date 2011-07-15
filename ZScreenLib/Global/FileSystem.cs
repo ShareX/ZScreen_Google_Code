@@ -92,39 +92,30 @@ namespace ZScreenLib
             }
 
             long size = (long)Engine.conf.ImageSizeLimit * 1024;
-            MemoryStream ms = null;
 
-            GraphicsMgr.SaveImageToMemoryStreamOptions opt = new GraphicsMgr.SaveImageToMemoryStreamOptions((Image)img.Clone(), Engine.zImageFileFormat);
-            opt.GIFQuality = Engine.conf.ImageGIFQuality;
-            opt.JpgQuality = Engine.conf.ImageJPEGQuality;
-            opt.MakeJPGBackgroundWhite = Engine.conf.MakeJPGBackgroundWhite;
-
-            try
+            EImageFormat imageFormat;
+            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(img, out imageFormat))
             {
-                ms = GraphicsMgr.SaveImageToMemoryStream(opt);
-
-                if (ms.Length > size && size != 0)
+                try
                 {
-                    opt.MyImageFileFormat = Engine.zImageFileFormatSwitch;
-                    ms = GraphicsMgr.SaveImageToMemoryStream(opt);
-                    fp = Path.ChangeExtension(fp, Engine.zImageFileFormatSwitch.Extension);
-                }
+                    string dir = Path.GetDirectoryName(fp);
+                    string fn = Path.GetFileName(fp);
 
-                if (!Directory.Exists(Path.GetDirectoryName(fp)))
+                    fn = WorkerTaskHelper.PrepareFilename(imageFormat, img);
+
+                    fp = Path.Combine(dir, fn);
+
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+                    Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, fp));
+                    ms.WriteToFile(fp);
+                }
+                catch (Exception ex)
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(fp));
+                    Engine.MyLogger.WriteException(ex, "Error while saving image");
                 }
-
-                Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, fp));
-                ms.WriteToFile(fp);
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while saving image");
-            }
-            finally
-            {
-                if (ms != null) ms.Dispose();
             }
         }
 
