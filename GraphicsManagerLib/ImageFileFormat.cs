@@ -1,14 +1,19 @@
 ﻿using System.Drawing.Imaging;
+using HelpersLib;
 
 namespace GraphicsMgrLib
 {
     public abstract class ImageFileFormat
     {
         public abstract string Name { get; }
+
         public abstract string Description { get; }
+
         public abstract string Extension { get; }
+
         public abstract ImageFormat Format { get; }
-        public abstract ImageFileFormatType FormatType { get; }
+
+        public abstract EImageFormat FormatType { get; }
     }
 
     public sealed class ImageFileFormatPng : ImageFileFormat
@@ -33,9 +38,9 @@ namespace GraphicsMgrLib
             get { return ImageFormat.Png; }
         }
 
-        public override ImageFileFormatType FormatType
+        public override EImageFormat FormatType
         {
-            get { return ImageFileFormatType.Png; }
+            get { return EImageFormat.PNG; }
         }
     }
 
@@ -61,9 +66,9 @@ namespace GraphicsMgrLib
             get { return ImageFormat.Jpeg; }
         }
 
-        public override ImageFileFormatType FormatType
+        public override EImageFormat FormatType
         {
-            get { return ImageFileFormatType.Jpg; }
+            get { return EImageFormat.JPEG; }
         }
     }
 
@@ -89,9 +94,9 @@ namespace GraphicsMgrLib
             get { return ImageFormat.Gif; }
         }
 
-        public override ImageFileFormatType FormatType
+        public override EImageFormat FormatType
         {
-            get { return ImageFileFormatType.Gif; }
+            get { return EImageFormat.GIF; }
         }
     }
 
@@ -117,9 +122,9 @@ namespace GraphicsMgrLib
             get { return ImageFormat.Bmp; }
         }
 
-        public override ImageFileFormatType FormatType
+        public override EImageFormat FormatType
         {
-            get { return ImageFileFormatType.Bmp; }
+            get { return EImageFormat.BMP; }
         }
     }
 
@@ -145,9 +150,9 @@ namespace GraphicsMgrLib
             get { return ImageFormat.Tiff; }
         }
 
-        public override ImageFileFormatType FormatType
+        public override EImageFormat FormatType
         {
-            get { return ImageFileFormatType.Tif; }
+            get { return EImageFormat.TIFF; }
         }
     }
 }

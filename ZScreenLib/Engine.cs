@@ -705,23 +705,23 @@ namespace ZScreenLib
 
         #endregion Clipboard Methods
 
-        public static void SetImageFormat(ref ImageFileFormat ziff, ImageFileFormatType imgFormat)
+        public static void SetImageFormat(ref ImageFileFormat ziff, EImageFormat imgFormat)
         {
             switch (imgFormat)
             {
-                case ImageFileFormatType.Bmp:
+                case EImageFormat.BMP:
                     ziff = new ImageFileFormatBmp();
                     break;
-                case ImageFileFormatType.Gif:
+                case EImageFormat.GIF:
                     ziff = new ImageFileFormatGif();
                     break;
-                case ImageFileFormatType.Jpg:
+                case EImageFormat.JPEG:
                     ziff = new ImageFileFormatJpg();
                     break;
-                case ImageFileFormatType.Png:
+                case EImageFormat.PNG:
                     ziff = new ImageFileFormatPng();
                     break;
-                case ImageFileFormatType.Tif:
+                case EImageFormat.TIFF:
                     ziff = new ImageFileFormatTif();
                     break;
             }

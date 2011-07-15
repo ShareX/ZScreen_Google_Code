@@ -149,14 +149,4 @@ namespace ZScreenLib
         [Description("Do Nothing")]
         Nothing
     }
-
-    public enum EDataType
-    {
-        File, Image, Text
-    }
-
-    public enum EImageFormat
-    {
-        PNG, JPEG, GIF, BMP, TIFF
-    }
 }

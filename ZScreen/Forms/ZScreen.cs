@@ -780,19 +780,19 @@ namespace ZScreenGUI
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageFileFormat = (ImageFileFormatType)cboFileFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.conf.ImageFileFormat);
+            Engine.conf.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.conf.ImageFormat);
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.JpgQuality = nudImageQuality.Value;
+            Engine.conf.ImageJPEGQuality = (int)nudImageQuality.Value;
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageFormatSwitch = (ImageFileFormatType)cboSwitchFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.conf.ImageFormatSwitch);
+            Engine.conf.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.conf.ImageFormat2);
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -1355,7 +1355,7 @@ namespace ZScreenGUI
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.SwitchAfter = nudSwitchAfter.Value;
+            Engine.conf.ImageSizeLimit = (int)nudSwitchAfter.Value;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)

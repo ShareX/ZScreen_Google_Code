@@ -214,14 +214,14 @@ namespace GraphicsMgrLib
         {
             MemoryStream ms = new MemoryStream();
 
-            if (options.MakeJPGBackgroundWhite && options.MyImageFileFormat.FormatType != ImageFileFormatType.Png)
+            if (options.MakeJPGBackgroundWhite && options.MyImageFileFormat.FormatType != EImageFormat.PNG)
             {
                 options.MyImage = GraphicsMgrImageEffects.FillBackground(options.MyImage, Color.White);
             }
 
             try
             {
-                if (options.MyImageFileFormat.FormatType == ImageFileFormatType.Jpg)
+                if (options.MyImageFileFormat.FormatType == EImageFormat.JPEG)
                 {
                     EncoderParameter quality = new EncoderParameter(Encoder.Quality, (int)options.JpgQuality);
                     ImageCodecInfo codec = GetEncoderInfo("image/jpeg");
@@ -231,7 +231,7 @@ namespace GraphicsMgrLib
 
                     options.MyImage.Save(ms, codec, encoderParams);
                 }
-                else if (options.MyImageFileFormat.FormatType == ImageFileFormatType.Gif)
+                else if (options.MyImageFileFormat.FormatType == EImageFormat.GIF)
                 {
                     Quantizer quantizer;
                     switch (options.GIFQuality)
