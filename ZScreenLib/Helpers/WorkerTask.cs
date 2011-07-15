@@ -63,6 +63,7 @@ namespace ZScreenLib
             Started,
             RetryPending,
             ThreadMode,
+            ImageWritten,
             CancellationPending,
             Finished
         }
@@ -146,7 +147,7 @@ namespace ZScreenLib
             get { return Errors != null && Errors.Count > 0; }
         }
 
-        public TaskStatus Status { get; set; }
+        public List<TaskStatus> Status = new List<TaskStatus>();
 
         public DateTime StartTime { get; set; }
 
@@ -205,7 +206,7 @@ namespace ZScreenLib
         {
             UploadResults = new List<UploadResult>();
             Errors = new List<string>();
-            Status = TaskStatus.Created;
+            Status.Add(TaskStatus.Created);
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
@@ -247,7 +248,7 @@ namespace ZScreenLib
 
         public void PrepareTask(DestSelector ucDestOptions)
         {
-            if (Status != TaskStatus.Prepared)
+            if (!Status.Contains(TaskStatus.Prepared))
             {
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, TaskOutputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
@@ -256,7 +257,7 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
-                Status = TaskStatus.Prepared;
+                Status.Add(TaskStatus.Prepared);
             }
         }
 
@@ -519,7 +520,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    Status = WorkerTask.TaskStatus.RetryPending;
+                    Status.Add(WorkerTask.TaskStatus.RetryPending);
                 }
             }
         }
@@ -611,7 +612,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null)
+            if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
                 NameParserType type;
                 string pattern = string.Empty;
@@ -643,6 +644,7 @@ namespace ZScreenLib
                         }
 
                         FileSystem.WriteImage(fp, img);
+                        Status.Add(TaskStatus.ImageWritten);
 
                         UpdateLocalFilePath(fp);
 
@@ -1038,7 +1040,7 @@ namespace ZScreenLib
                 else if (TempImage != null)
                 {
                     MemoryStream ms = new MemoryStream();
-                    TempImage.Save(ms, ImageFormat.Png);
+                    ((Image)TempImage.Clone()).Save(ms, ImageFormat.Png);
                     FileName = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
                     ur = fileUploader.Upload(ms, FileName);
                 }
