@@ -42,7 +42,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
             this.Task = task;
-            btnBrowse.Enabled = task.Status != WorkerTask.TaskStatus.ThreadMode;
+            btnBrowse.Enabled = !task.Status.Contains(WorkerTask.TaskStatus.ThreadMode);
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumOutputsWithConfigSettings(Task.TaskOutputs);
             dsh.AddEnumClipboardContentWithRuntimeSettings(Task.TaskClipboardContent);

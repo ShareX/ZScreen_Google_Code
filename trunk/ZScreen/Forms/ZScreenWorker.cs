@@ -66,11 +66,11 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = (WorkerTask)e.Argument;
-            if (bwTask.Status != WorkerTask.TaskStatus.Prepared)
+            if (!bwTask.Status.Contains(WorkerTask.TaskStatus.Prepared))
             {
                 bwTask.PrepareTask(ucDestOptions);
             }
-            bwTask.Status = WorkerTask.TaskStatus.ThreadMode;
+            bwTask.Status.Add(WorkerTask.TaskStatus.ThreadMode);
 
             if (bwTask.TaskOutputs.Count == 0)
             {
@@ -249,14 +249,14 @@ namespace ZScreenGUI
 
                 WorkerTask checkTask = RetryUpload(task);
 
-                if (checkTask.Status == WorkerTask.TaskStatus.RetryPending)
+                if (checkTask.Status.Contains(WorkerTask.TaskStatus.RetryPending))
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
                     this.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
                 {
-                    task.Status = WorkerTask.TaskStatus.Finished;
+                    task.Status.Add(WorkerTask.TaskStatus.Finished);
                     Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
                     if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
@@ -367,6 +367,10 @@ namespace ZScreenGUI
             }
 
             rtbDebugLog.Text = Engine.MyLogger.ToString();
+            foreach (WorkerTask.TaskStatus ts in task.Status)
+            {
+                Console.WriteLine(ts.ToString());
+            }
         }
 
         #endregion Worker Events
@@ -1005,12 +1009,12 @@ namespace ZScreenGUI
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
             {
                 if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status == WorkerTask.TaskStatus.RetryPending && File.Exists(task.LocalFilePath))
+                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status.Contains(WorkerTask.TaskStatus.RetryPending) && File.Exists(task.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
                     task2.SetImage(task.LocalFilePath);
                     task2.UpdateLocalFilePath(task.LocalFilePath);
-                    task2.Status = WorkerTask.TaskStatus.Finished; // we do not retry again
+                    task2.Status.Add(WorkerTask.TaskStatus.Finished); // we do not retry again
 
                     if (task.Job1 == JobLevel1.Image)
                     {
@@ -1044,7 +1048,7 @@ namespace ZScreenGUI
                     return task2;
                 }
             }
-            task.Status = WorkerTask.TaskStatus.Finished;
+            task.Status.Add(WorkerTask.TaskStatus.Finished);
             return task;
         }
 
