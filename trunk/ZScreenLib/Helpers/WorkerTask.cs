@@ -175,8 +175,6 @@ namespace ZScreenLib
 
         public string TempText { get; private set; }
 
-        public List<Stream> TaskData = new List<Stream>();
-
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
         public string FileName { get; set; }
@@ -663,16 +661,14 @@ namespace ZScreenLib
         {
             List<Thread> outputThreads = new List<Thread>();
 
-            foreach (ImageUploaderType uploader in MyImageUploaders)
-            {
-                TaskData.Add(PrepareData());
-            }
-
             foreach (OutputEnum oe in TaskOutputs)
             {
+                PublishData(oe);
+                /*
                 Thread thread = new Thread(() => PublishData(oe));
                 outputThreads.Add(thread);
                 thread.Start();
+                */
             }
 
             foreach (Thread thread in outputThreads)
@@ -746,9 +742,12 @@ namespace ZScreenLib
 
                 for (int i = 0; i < MyImageUploaders.Count; i++)
                 {
+                    UploadImage(MyImageUploaders[i], PrepareData());
+                    /*
                     Thread thread = new Thread(() => UploadImage(MyImageUploaders[i], TaskData[i]));
                     uploaderThreads.Add(thread);
                     thread.Start();
+                     */
                 }
 
                 foreach (Thread thread in uploaderThreads)
