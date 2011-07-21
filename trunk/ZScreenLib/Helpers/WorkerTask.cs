@@ -267,7 +267,12 @@ namespace ZScreenLib
             if (img != null)
             {
                 Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+
                 TempImage = img;
+                EImageFormat imageFormat;
+                WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
+                FileName = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage);
+
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
                 {
@@ -1001,14 +1006,14 @@ namespace ZScreenLib
                     switch (Job1)
                     {
                         case JobLevel1.Text:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedText, data);
                             break;
                         case JobLevel1.Image:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedImage, data);
                             break;
                         default:
                         case JobLevel1.File:
-                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile);
+                            UploadToFTP(Engine.MyUploadersConfig.FTPSelectedFile, data);
                             break;
                     }
                     break;
@@ -1058,7 +1063,7 @@ namespace ZScreenLib
         /// Funtion to FTP the Screenshot
         /// </summary>
         /// <returns>Retuns a List of Screenshots</returns>
-        public UploadResult UploadToFTP(int FtpAccountId)
+        public UploadResult UploadToFTP(int FtpAccountId, Stream data)
         {
             UploadResult ur = null;
 
@@ -1066,7 +1071,7 @@ namespace ZScreenLib
             {
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-                if (Adapter.CheckFTPAccounts(this) && File.Exists(LocalFilePath))
+                if (Adapter.CheckFTPAccounts(this))
                 {
                     FTPAccount acc = Engine.MyUploadersConfig.FTPAccountList[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
@@ -1077,7 +1082,7 @@ namespace ZScreenLib
 
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
 
-                    string url = fu.Upload(LocalFilePath).URL;
+                    string url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
 
                     if (!string.IsNullOrEmpty(url))
                     {
@@ -1192,7 +1197,9 @@ namespace ZScreenLib
                 }
                 else if (TempImage != null)
                 {
-                    fn = new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern) + ".png";
+                    EImageFormat imageFormat;
+                    WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
+                    fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage);
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, TempImage);
                 }
