@@ -1038,9 +1038,9 @@ namespace ZScreenLib
                     fileUploader = new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
                         Engine.MyUploadersConfig.RapidSharePassword);
                     break;
-                case FileUploaderType.ShareCX:
-                    fileUploader = new ShareCX();
-                    break;
+                //case FileUploaderType.ShareCX:
+                //    fileUploader = new ShareCX();
+                //    break;
                 case FileUploaderType.CustomUploader:
                     fileUploader = new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]);
                     break;
