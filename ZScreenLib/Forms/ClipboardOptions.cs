@@ -18,6 +18,11 @@ namespace ZScreenLib
         {
             InitializeComponent();
 
+            //if (task.TempImage != null)
+            //{
+            //    this.pbPreview.BackgroundImage = task.TempImage;
+            //}
+
             if (task != null && task.UploadResults.Count > 0)
             {
                 this.urTask = task;

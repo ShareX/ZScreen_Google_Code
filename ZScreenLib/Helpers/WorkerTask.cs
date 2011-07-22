@@ -1060,7 +1060,7 @@ namespace ZScreenLib
                                         ur = new UploadResult();
                                         ur.Host = FileUploaderType.FTP.GetDescription();
                                         ur.ThumbnailURL = thumb;
-                                        UploadResults.Add(ur);
+                                        AddUploadResult(ur);
                                     }
                                 }
                             }
