@@ -140,7 +140,7 @@ namespace ZScreenLib
                 }
 
             // If the user requests for the full image URL, preference is given for the Shortened URL is exists
-                else if (task.Job1 == JobLevel1.Image && Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL))
+                else if (task.Job1 == JobLevel1.Image && task.MyLinkFormat.Contains((int)LinkFormatEnum.FULL))
                 {
                     if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
                     {
@@ -185,7 +185,7 @@ namespace ZScreenLib
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {
-                            if (Engine.conf.ConfLinkFormat.Count > 0)
+                            if (task.MyLinkFormat.Count > 0)
                             {
                                 clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL);
                             }

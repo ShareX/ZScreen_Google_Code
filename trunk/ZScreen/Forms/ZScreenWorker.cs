@@ -42,7 +42,6 @@ using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
-using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
 
 namespace ZScreenGUI
@@ -604,65 +603,11 @@ namespace ZScreenGUI
             task.MyWorker.RunWorkerAsync(task);
         }
 
-        /// <summary>
-        /// Worker for Binary: Drag n Drop, Clipboard Upload files from Explorer
-        /// </summary>
-        /// <param name="job">Job Type</param>
-        /// <param name="localFilePath">Local file path of the file</param>
-        public void RunWorkerAsync_Files(WorkerTask task)
-        {
-            task.RunWorker();
-        }
-
-        public void RunWorkerAsync_Text(WorkerTask.JobLevel2 job, string text)
-        {
-            WorkerTask temp = CreateTaskText(job, string.Empty);
-            string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
-            FileSystem.WriteText(fp, text);
-            temp.UpdateLocalFilePath(fp);
-            temp.SetText(text);
-            temp.RunWorker();
-        }
-
         public void RunWorkerAsync_Text_Batch(List<WorkerTask> textWorkers)
         {
             Engine.ClipboardUnhook();
             foreach (WorkerTask task in textWorkers)
             {
-                if (Directory.Exists(task.TempText))
-                {
-                    IndexerAdapter settings = new IndexerAdapter();
-                    settings.LoadConfig(Engine.conf.IndexerConfig);
-                    Engine.conf.IndexerConfig.FolderList.Clear();
-                    string ext = ".log";
-                    if (task.MyTextUploaders.Contains(TextUploaderType.FileUploader))
-                    {
-                        ext = ".html";
-                    }
-                    string fileName = Path.GetFileName(task.TempText) + ext;
-                    settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, fileName));
-                    settings.GetConfig().FolderList.Add(task.TempText);
-
-                    Indexer indexer = null;
-                    switch (settings.GetConfig().IndexingEngineType)
-                    {
-                        case IndexingEngine.TreeLib:
-                            indexer = new TreeWalkIndexer(settings);
-                            break;
-                        case IndexingEngine.TreeNetLib:
-                            indexer = new TreeNetIndexer(settings);
-                            break;
-                    }
-
-                    if (indexer != null)
-                    {
-                        indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
-                        task.SetText(null); // force to upload from file
-                        task.UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
-                        task.RunWorker();
-                    }
-                }
-                else
                 {
                     task.RunWorker();
                 }
@@ -741,6 +686,7 @@ namespace ZScreenGUI
         public void UploadUsingClipboard()
         {
             WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+            cbTask.PrepareTask(ucDestOptions);
 
             if (Clipboard.ContainsImage())
             {
@@ -749,11 +695,19 @@ namespace ZScreenGUI
                 {
                     cbTask.WriteImage();
                 }
-                RunWorkerAsync_Files(cbTask);
+                cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())
             {
-                RunWorkerAsync_Text(WorkerTask.JobLevel2.UploadFromClipboard, Clipboard.GetText());
+                string text = Clipboard.GetText();
+                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                if (cbTask.TaskOutputs.Contains(OutputEnum.LocalDisk))
+                {
+                    FileSystem.WriteText(fp, text);
+                }
+                cbTask.UpdateLocalFilePath(fp);
+                cbTask.SetText(text);
+                cbTask.RunWorker();
             }
             else if (Clipboard.ContainsFileDropList())
             {
@@ -765,7 +719,7 @@ namespace ZScreenGUI
         {
             WorkerTask ddTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromDragDrop);
             ddTask.UpdateLocalFilePath(fp);
-            RunWorkerAsync_Files(ddTask);
+            ddTask.RunWorker();
         }
 
         public void CaptureEntireScreen()
@@ -833,7 +787,7 @@ namespace ZScreenGUI
                     WorkerTask cbTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
                     cbTask.SetImage(fp);
                     cbTask.UpdateLocalFilePath(fp);
-                    RunWorkerAsync_Files(cbTask);
+                    cbTask.RunWorker();
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
@@ -845,7 +799,7 @@ namespace ZScreenGUI
                 {
                     WorkerTask fuTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
                     fuTask.UpdateLocalFilePath(fp);
-                    RunWorkerAsync_Files(fuTask);
+                    fuTask.RunWorker();
                 }
             }
 
