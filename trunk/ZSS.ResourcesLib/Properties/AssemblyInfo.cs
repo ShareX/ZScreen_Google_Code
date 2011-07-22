@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ZScreen")]
 [assembly: AssemblyDescription("Advanced image/text/file uploading utility")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BrandonZ.net")]
+[assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("ZScreen")]
-[assembly: AssemblyCopyright("Copyright © ZScreen Developers 2006-2010")]
+[assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

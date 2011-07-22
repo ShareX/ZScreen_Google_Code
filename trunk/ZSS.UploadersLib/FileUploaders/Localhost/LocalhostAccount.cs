@@ -57,7 +57,7 @@ namespace UploadersLib
         [Category("Localhost"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(Protocol.File)]
         public Protocol RemoteProtocol { get; set; }
 
-        [Category("Localhost"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
+        [Category("Localhost"), Description("HTTP Home Path, %host = Host e.g. zscreen.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
         [Category("Localhost"), Description("file://Host:Port"), Browsable(false)]

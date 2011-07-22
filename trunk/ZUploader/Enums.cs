@@ -65,10 +65,8 @@ namespace ZUploader
         SendSpace,
         [Description("dropbox.com")]
         Dropbox,
-        [Description("share.cx")]
-        ShareCX,
-        [Description("min.us")]
-        Minus,
+        //[Description("min.us")]
+        //Minus,
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]

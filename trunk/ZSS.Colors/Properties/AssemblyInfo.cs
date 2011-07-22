@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ZSS.ColorsLib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BrandonZ.net")]
+[assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("ZSS.ImageEditorLib")]
 [assembly: AssemblyCopyright("Copyright © GPL 2009")]
 [assembly: AssemblyTrademark("")]

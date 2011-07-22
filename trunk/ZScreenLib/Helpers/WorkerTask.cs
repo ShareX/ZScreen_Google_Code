@@ -402,7 +402,7 @@ namespace ZScreenLib
             {
                 Job1 = JobLevel1.Image;
                 IsImage = true;
-                if (GraphicsMgr.IsValidImage(fp) && TempImage == null)
+                if (TempImage == null && GraphicsMgr.IsValidImage(fp))
                 {
                     TempImage = FileSystem.ImageFromFile(fp);
                 }
@@ -645,7 +645,7 @@ namespace ZScreenLib
                             img = ImageEffects.ApplyWatermark(img);
                         }
 
-                        FileSystem.WriteImage(fp, img);
+                        fp = FileSystem.WriteImage(fp, img);
                         Status.Add(TaskStatus.ImageWritten);
 
                         UpdateLocalFilePath(fp);
@@ -664,21 +664,9 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
-            List<Thread> outputThreads = new List<Thread>();
-
             foreach (OutputEnum oe in TaskOutputs)
             {
                 PublishData(oe);
-                /*
-                Thread thread = new Thread(() => PublishData(oe));
-                outputThreads.Add(thread);
-                thread.Start();
-                */
-            }
-
-            foreach (Thread thread in outputThreads)
-            {
-                thread.Join();
             }
 
             if (UploadResults.Count > 0)
@@ -743,21 +731,9 @@ namespace ZScreenLib
                     }
                 }
 
-                List<Thread> uploaderThreads = new List<Thread>();
-
                 for (int i = 0; i < MyImageUploaders.Count; i++)
                 {
                     UploadImage(MyImageUploaders[i], PrepareData());
-                    /*
-                    Thread thread = new Thread(() => UploadImage(MyImageUploaders[i], TaskData[i]));
-                    uploaderThreads.Add(thread);
-                    thread.Start();
-                     */
-                }
-
-                foreach (Thread thread in uploaderThreads)
-                {
-                    thread.Join();
                 }
             }
 
@@ -787,9 +763,10 @@ namespace ZScreenLib
         private Stream PrepareData()
         {
             Stream data = null;
+
             if (File.Exists(LocalFilePath))
             {
-                data = new FileStream(LocalFilePath, FileMode.Open);
+                data = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             else if (TempImage != null)
             {
@@ -797,8 +774,9 @@ namespace ZScreenLib
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
-                data = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(TempText));
+                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
             }
+
             return data;
         }
 
@@ -910,18 +888,9 @@ namespace ZScreenLib
             {
                 if (TaskOutputs.Contains(OutputEnum.RemoteHost))
                 {
-                    List<Thread> uploaderThreads = new List<Thread>();
-
                     foreach (TextUploaderType textUploaderType in MyTextUploaders)
                     {
-                        Thread thread = new Thread(() => UploadText(textUploaderType));
-                        uploaderThreads.Add(thread);
-                        thread.Start();
-                    }
-
-                    foreach (Thread thread in uploaderThreads)
-                    {
-                        thread.Join();
+                        UploadText(textUploaderType);
                     }
                 }
             }
@@ -968,7 +937,7 @@ namespace ZScreenLib
                     url = textUploader.UploadTextFile(LocalFilePath);
                 }
 
-                AddUploadResult(new UploadResult() { Host = textUploaderType.GetDescription(), URL = url });
+                AddUploadResult(new UploadResult { Host = textUploaderType.GetDescription(), URL = url });
                 Errors = textUploader.Errors;
             }
         }
@@ -979,18 +948,9 @@ namespace ZScreenLib
 
             Engine.MyLogger.WriteLine("Uploading File: " + LocalFilePath);
 
-            List<Thread> uploaderThreads = new List<Thread>();
-
             foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
-                Thread thread = new Thread(() => UploadFile(fileUploaderType, PrepareData()));
-                uploaderThreads.Add(thread);
-                thread.Start();
-            }
-
-            foreach (Thread thread in uploaderThreads)
-            {
-                thread.Join();
+                UploadFile(fileUploaderType, PrepareData());
             }
 
             EndTime = DateTime.Now;
@@ -1038,9 +998,6 @@ namespace ZScreenLib
                     fileUploader = new RapidShare(Engine.MyUploadersConfig.RapidShareUserAccountType, Engine.MyUploadersConfig.RapidShareUsername,
                         Engine.MyUploadersConfig.RapidSharePassword);
                     break;
-                //case FileUploaderType.ShareCX:
-                //    fileUploader = new ShareCX();
-                //    break;
                 case FileUploaderType.CustomUploader:
                     fileUploader = new CustomUploader(Engine.MyUploadersConfig.CustomUploadersList[Engine.MyUploadersConfig.CustomUploaderSelected]);
                     break;

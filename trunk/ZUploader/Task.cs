@@ -316,17 +316,14 @@ namespace ZUploader
                     fileUploader = new RapidShare(Program.UploadersConfig.RapidShareUserAccountType, Program.UploadersConfig.RapidShareUsername,
                         Program.UploadersConfig.RapidSharePassword);
                     break;
-                case FileDestination.ShareCX:
-                    fileUploader = new ShareCX();
-                    break;
-                case FileDestination.Minus:
+                /*case FileDestination.Minus:
                     Minus minus = new Minus();
                     if (minus.SignIn("", "").Success) // TODO: Testing Minus
                     {
                         minus.CreateGallery();
                         fileUploader = minus;
                     }
-                    break;
+                    break;*/
                 case FileDestination.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
                     {
