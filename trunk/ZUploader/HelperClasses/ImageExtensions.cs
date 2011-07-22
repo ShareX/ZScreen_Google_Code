@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using HelpersLib;
@@ -43,7 +44,7 @@ namespace ZUploader
                     img.Save(stream, ImageFormat.Png);
                     break;
                 case EImageFormat.JPEG:
-                    img.SaveJPG(stream, Program.Settings.ImageJPEGQuality);
+                    img.SaveJPG(stream, Program.Settings.ImageJPEGQuality, true);
                     break;
                 case EImageFormat.GIF:
                     img.SaveGIF(stream, Program.Settings.ImageGIFQuality);
@@ -59,13 +60,34 @@ namespace ZUploader
             return stream;
         }
 
-        public static void SaveJPG(this Image img, Stream stream, int quality)
+        public static void SaveJPG(this Image img, Stream stream, int quality, bool fillBackground)
         {
             using (EncoderParameters encoderParameters = new EncoderParameters(1))
             {
+                if (fillBackground)
+                {
+                    img = FillImageBackground(img, Color.White);
+                }
+
                 encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
                 img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
             }
+        }
+
+        public static Image FillImageBackground(Image img, Color color)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(color);
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.DrawImageUnscaled(img, 0, 0);
+            }
+
+            return bmp;
         }
 
         public static void SaveGIF(this Image img, Stream stream, GIFQuality quality)
