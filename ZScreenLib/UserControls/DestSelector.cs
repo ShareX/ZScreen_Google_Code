@@ -68,6 +68,7 @@ namespace ZScreenLib
             ToolStripMenuItem tsmiOClipboard = GetOutputTsmi(tsddbOutputs, OutputEnum.Clipboard);
             ToolStripMenuItem tsmiOLocalDisk = GetOutputTsmi(tsddbOutputs, OutputEnum.LocalDisk);
             ToolStripMenuItem tsmiORemoteHost = GetOutputTsmi(tsddbOutputs, OutputEnum.RemoteHost);
+            ToolStripMenuItem tsmiOSharedFolder = GetOutputTsmi(tsddbOutputs, OutputEnum.SharedFolder);
 
             ToolStripMenuItem tsmiCCData = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Data);
             ToolStripMenuItem tsmiCCLocal = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Local);
@@ -80,7 +81,7 @@ namespace ZScreenLib
                 tsmiCCLocal.Checked = false;
             }
 
-            tsmiCCRemote.Enabled = tsmiORemoteHost.Checked;
+            tsmiCCRemote.Enabled = tsmiORemoteHost.Checked || tsmiOSharedFolder.Checked;
             if (!tsmiCCRemote.Enabled)
             {
                 // if data is not stored in Remote Host then nothing URL related can be stored in Clipboard
