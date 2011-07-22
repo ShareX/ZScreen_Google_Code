@@ -1,4 +1,5 @@
-4.01.0 Support for Single Instance {Jaex}
+4.02.0 Added support for Email as an output {Jaex}
+4.01.0 Support for Single Instance. Multiple instances can be launched with -m parameter. {Jaex}
 4.00.6 Last Crop Shot rectangle is saved with an option to reset {McoreD}
 4.00.5 Output to Printer setting is now shared between Image and Text {Jaex/McoreD}
 4.00.4 Support for multiple outputs such as Clipboard, File and Printer {McoreD}

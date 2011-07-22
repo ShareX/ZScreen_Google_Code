@@ -81,15 +81,16 @@ namespace ZScreenLib
                     default:
                         sbMsg.Append("Outputs: ");
                         sbMsg.AppendLine(task.GetOutputsDescription());
-                        foreach (UploadResult ur in task.UploadResults)
-                        {
-                            if (!string.IsNullOrEmpty(ur.URL))
-                            {
-                                sbMsg.AppendLine(ur.URL);
-                                break;
-                            }
-                        }
                         break;
+                }
+
+                foreach (UploadResult ur in task.UploadResults)
+                {
+                    if (!string.IsNullOrEmpty(ur.URL))
+                    {
+                        sbMsg.AppendLine(ur.URL);
+                        break;
+                    }
                 }
 
                 if (task.UploadResults.Count == 0 && task.IsError)
