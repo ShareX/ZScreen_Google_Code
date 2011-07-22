@@ -11,7 +11,7 @@ namespace ZScreenGUI
     {
         public GoogleTranslateGUI GetGTGUI()
         {
-            if (Loader.MyGTGUI == null)
+            if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)
             {
                 Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             }
