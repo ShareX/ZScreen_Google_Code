@@ -34,7 +34,7 @@ namespace UploadersLib
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
 
-        [Category("FTP"), Description("Host, e.g. brandonz.net")]
+        [Category("FTP"), Description("Host, e.g. zscreen.net")]
         public string Host { get; set; }
 
         [Category("FTP"), Description("Port Number"), DefaultValue(21)]
@@ -52,7 +52,7 @@ namespace UploadersLib
         [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(Protocol.Http)]
         public Protocol RemoteProtocol { get; set; }
 
-        [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. brandonz.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
+        [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. zscreen.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]

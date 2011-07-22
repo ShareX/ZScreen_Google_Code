@@ -83,7 +83,7 @@ namespace ZScreenLib
             return files;
         }
 
-        public static void WriteImage(string fp, Image img)
+        public static string WriteImage(string fp, Image img)
         {
             string destDir = Path.GetDirectoryName(fp);
             if (!Directory.Exists(destDir))
@@ -117,6 +117,8 @@ namespace ZScreenLib
                     Engine.MyLogger.WriteException(ex, "Error while saving image");
                 }
             }
+
+            return fp;
         }
 
         public static string GetTextFromFile(string filePath)
