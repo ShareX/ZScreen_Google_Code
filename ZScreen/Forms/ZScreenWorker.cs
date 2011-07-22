@@ -745,7 +745,7 @@ namespace ZScreenGUI
             if (Clipboard.ContainsImage())
             {
                 cbTask.SetImage(Clipboard.GetImage());
-                if (cbTask.SetFilePathFromPattern(new NameParser(NameParserType.EntireScreen).Convert(Engine.conf.EntireScreenPattern)))
+                if (cbTask.SetFilePathFromPattern())
                 {
                     cbTask.WriteImage();
                 }

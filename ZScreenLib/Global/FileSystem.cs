@@ -91,19 +91,12 @@ namespace ZScreenLib
                 Directory.CreateDirectory(destDir);
             }
 
-            long size = (long)Engine.conf.ImageSizeLimit * 1024;
-
             EImageFormat imageFormat;
             using (MemoryStream ms = WorkerTaskHelper.PrepareImage(img, out imageFormat))
             {
                 try
                 {
                     string dir = Path.GetDirectoryName(fp);
-                    string fn = Path.GetFileName(fp);
-
-                    fn = WorkerTaskHelper.PrepareFilename(imageFormat, img);
-
-                    fp = Path.Combine(dir, fn);
 
                     if (!Directory.Exists(dir))
                     {

@@ -177,7 +177,7 @@ namespace ZScreenLib
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
-        public string FileName { get; set; }
+        public string FileName { get; private set; }
 
         public string LocalFilePath { get; private set; }
 
@@ -271,7 +271,7 @@ namespace ZScreenLib
                 TempImage = img;
                 EImageFormat imageFormat;
                 WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
-                FileName = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage);
+                FileName = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
 
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
@@ -306,12 +306,12 @@ namespace ZScreenLib
         /// Sets the file to save the image to.
         /// If the user activated the "prompt for filename" option, then opens a dialog box.
         /// </summary>
-        /// <param name="fileName">the base name</param>
+        /// <param name="pattern">the base name</param>
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
-        public bool SetFilePathFromPattern(string fileName)
+        public bool SetFilePathFromPattern()
         {
             string dir = Engine.ImagesDir;
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, fileName + "." + Engine.zImageFileFormat.Extension));
+            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, FileName));
 
             if (Engine.conf.ManualNaming)
             {
@@ -338,13 +338,9 @@ namespace ZScreenLib
             }
 
             StringBuilder sbPath = new StringBuilder();
-            if (string.IsNullOrEmpty(FileName))
-            {
-                FileName = Path.GetFileNameWithoutExtension(filePath);
-            }
 
             sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), FileName));
-            sbPath.Append(Path.GetExtension(filePath));
+
             filePath = sbPath.ToString();
             // make sure this length is less than 256 char
             if (filePath.Length > 256)
@@ -391,7 +387,6 @@ namespace ZScreenLib
 
         public void UpdateLocalFilePath(string fp)
         {
-            FileName = Path.GetFileName(fp);
             LocalFilePath = fp;
 
             if (ZAppHelper.IsTextFile(fp))
@@ -631,7 +626,7 @@ namespace ZScreenLib
 
                 using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
                 {
-                    if (SetFilePathFromPattern(parser.Convert(pattern)))
+                    if (SetFilePathFromPattern())
                     {
                         Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
 
@@ -1156,7 +1151,7 @@ namespace ZScreenLib
                 {
                     EImageFormat imageFormat;
                     WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
-                    fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage);
+                    fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, TempImage);
                 }
@@ -1346,6 +1341,18 @@ namespace ZScreenLib
         #endregion Checks
 
         #region Descriptions
+
+        public NameParserType GetPatternType()
+        {
+            if (Job2 == JobLevel2.CaptureActiveWindow)
+            {
+                return NameParserType.ActiveWindow;
+            }
+            else
+            {
+                return NameParserType.EntireScreen;
+            }
+        }
 
         public string GetDestinationName()
         {

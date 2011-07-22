@@ -26,7 +26,7 @@ namespace ZScreenLib
             return stream;
         }
 
-        public static string PrepareFilename(EImageFormat imageFormat, Image img)
+        public static string PrepareFilename(EImageFormat imageFormat, Image img, NameParserType patternType)
         {
             string ext = "png";
 
@@ -49,9 +49,18 @@ namespace ZScreenLib
                     break;
             }
 
-            NameParser parser = new NameParser { Picture = img };
-
-            return string.Format("{0}.{1}", parser.Convert(Engine.conf.EntireScreenPattern), ext);
+            NameParser parser = new NameParser { Type = patternType, Picture = img };
+            string pattern = Engine.conf.EntireScreenPattern;
+            switch (patternType)
+            {
+                case NameParserType.ActiveWindow:
+                    pattern = Engine.conf.ActiveWindowPattern;
+                    break;
+                default:
+                    pattern = Engine.conf.EntireScreenPattern;
+                    break;
+            }
+            return string.Format("{0}.{1}", parser.Convert(pattern), ext);
         }
     }
 }
