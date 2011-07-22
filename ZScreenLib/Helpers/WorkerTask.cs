@@ -47,6 +47,7 @@ using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZScreenLib.Shapes;
+using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
 
 namespace ZScreenLib
@@ -295,6 +296,35 @@ namespace ZScreenLib
             if (Directory.Exists(text))
             {
                 Job3 = WorkerTask.JobLevel3.IndexFolder;
+
+                IndexerAdapter settings = new IndexerAdapter();
+                settings.LoadConfig(Engine.conf.IndexerConfig);
+                Engine.conf.IndexerConfig.FolderList.Clear();
+                string ext = ".log";
+                if (MyTextUploaders.Contains(TextUploaderType.FileUploader))
+                {
+                    ext = ".html";
+                }
+                FileName = Path.GetFileName(TempText) + ext;
+                settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, FileName));
+                settings.GetConfig().FolderList.Add(TempText);
+
+                Indexer indexer = null;
+                switch (settings.GetConfig().IndexingEngineType)
+                {
+                    case IndexingEngine.TreeLib:
+                        indexer = new TreeWalkIndexer(settings);
+                        break;
+                    case IndexingEngine.TreeNetLib:
+                        indexer = new TreeNetIndexer(settings);
+                        break;
+                }
+
+                if (indexer != null)
+                {
+                    indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
+                    UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
+                }
             }
             else
             {
@@ -325,7 +355,7 @@ namespace ZScreenLib
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
-                    if (string.IsNullOrEmpty(FileName) || !LocalFilePath.Equals(dialog.FilePath))
+                    if (string.IsNullOrEmpty(FileName))
                     {
                         filePath = dialog.FilePath;
                         UpdateLocalFilePath(dialog.FilePath);
@@ -879,14 +909,11 @@ namespace ZScreenLib
                 // Need this for shortening URL using Clipboard Upload
                 ShortenURL(TempText);
             }
-            else
+            else if (TaskOutputs.Contains(OutputEnum.RemoteHost))
             {
-                if (TaskOutputs.Contains(OutputEnum.RemoteHost))
+                foreach (TextUploaderType textUploaderType in MyTextUploaders)
                 {
-                    foreach (TextUploaderType textUploaderType in MyTextUploaders)
-                    {
-                        UploadText(textUploaderType);
-                    }
+                    UploadText(textUploaderType);
                 }
             }
 
