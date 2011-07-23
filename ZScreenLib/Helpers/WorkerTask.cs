@@ -397,7 +397,7 @@ namespace ZScreenLib
                     UpdateLocalFilePath(fp);
                 }
                 ur.LocalFilePath = fp;
-                if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL) || TempImage != null)
+                if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL))
                 {
                     UploadResults.Add(ur);
                 }
