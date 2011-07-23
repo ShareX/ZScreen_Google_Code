@@ -135,6 +135,12 @@ namespace ZScreenGUI
                             case WorkerTask.JobLevel2.CaptureFreeHandRegion:
                                 success = bwTask.BwCaptureFreehandCrop();
                                 break;
+                            default:
+                                if (bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
+                                {
+                                    success = true;
+                                }
+                                break;
                         }
                         if (success)
                         {
