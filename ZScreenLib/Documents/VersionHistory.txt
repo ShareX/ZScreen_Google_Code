@@ -1,3 +1,4 @@
+4.02.1 Advanced option to show FTP Settings prior to uploading [Issue 182] {McoreD}
 4.02.0 Added support for Email as an output {Jaex}
 4.01.0 Support for Single Instance. Multiple instances can be launched with -m parameter. {Jaex}
 4.00.6 Last Crop Shot rectangle is saved with an option to reset {McoreD}
