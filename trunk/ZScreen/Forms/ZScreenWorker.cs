@@ -100,7 +100,7 @@ namespace ZScreenGUI
                 }
 
                 Engine.MyLogger.WriteLine(string.Format("Job started: {0}", bwTask.Job2));
-
+                bool success = false;
                 switch (bwTask.Job1)
                 {
                     case JobLevel1.Image:
@@ -110,27 +110,29 @@ namespace ZScreenGUI
                             case WorkerTask.JobLevel2.CaptureEntireScreen:
                                 if (bwTask.TempImage == null)
                                 {
-                                    bwTask.CaptureScreen();
+                                    success = bwTask.CaptureScreen();
                                 }
                                 break;
                             case WorkerTask.JobLevel2.CaptureActiveWindow:
                                 if (bwTask.TempImage == null)
                                 {
-                                    bwTask.CaptureActiveWindow();
+                                    success = bwTask.CaptureActiveWindow();
                                 }
                                 break;
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
                             case WorkerTask.JobLevel2.CaptureRectRegion:
                             case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                                bwTask.BwCaptureRegionOrWindow();
+                                success = bwTask.BwCaptureRegionOrWindow();
                                 break;
                             case WorkerTask.JobLevel2.CaptureFreeHandRegion:
-                                bwTask.BwCaptureFreehandCrop();
-
+                                success = bwTask.BwCaptureFreehandCrop();
                                 break;
                         }
-                        bwTask.WriteImage();
-                        bwTask.PublishData();
+                        if (success)
+                        {
+                            bwTask.WriteImage();
+                            bwTask.PublishData();
+                        }
                         break;
                     case JobLevel1.Text:
                         switch (bwTask.Job2)

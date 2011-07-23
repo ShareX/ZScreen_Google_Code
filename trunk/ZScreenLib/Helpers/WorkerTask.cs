@@ -263,7 +263,7 @@ namespace ZScreenLib
 
         #region Populating Task
 
-        public void SetImage(Image img)
+        public bool SetImage(Image img)
         {
             if (img != null)
             {
@@ -281,6 +281,8 @@ namespace ZScreenLib
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
                 }
             }
+
+            return TempImage != null;
         }
 
         public void SetImage(string fp)
@@ -445,7 +447,7 @@ namespace ZScreenLib
         public bool BwCaptureRegionOrWindow()
         {
             IsTakingScreenShot = true;
-            bool success = false;
+
             bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
 
             if (Engine.conf == null) Engine.conf = new XMLSettings();
@@ -515,7 +517,6 @@ namespace ZScreenLib
                         SetImage(GraphicsMgr.AddBorderShadow(TempImage, roundedShadowCorners));
                     }
                 }
-                success = true;
             }
             catch (Exception ex)
             {
@@ -531,10 +532,10 @@ namespace ZScreenLib
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
                 IsTakingScreenShot = false;
             }
-            return success;
+            return TempImage != null;
         }
 
-        public void BwCaptureFreehandCrop()
+        public bool BwCaptureFreehandCrop()
         {
             using (FreehandCapture crop = new FreehandCapture())
             {
@@ -550,28 +551,33 @@ namespace ZScreenLib
                     Status.Add(WorkerTask.TaskStatus.RetryPending);
                 }
             }
+
+            return TempImage != null;
         }
 
         /// <summary>
         /// Function to Capture Active Window
         /// </summary>
-        public void CaptureActiveWindow()
+        public bool CaptureActiveWindow()
         {
             if (TempImage == null)
             {
                 SetImage(Capture.CaptureActiveWindow());
             }
+            return TempImage != null;
         }
 
         /// <summary>
         /// Function to Capture Entire Screen
         /// </summary>
-        public void CaptureScreen()
+        public bool CaptureScreen()
         {
             if (TempImage == null)
             {
                 SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.conf.ShowCursor));
             }
+
+            return TempImage != null;
         }
 
         #endregion Capture
@@ -985,6 +991,14 @@ namespace ZScreenLib
             switch (fileUploaderType)
             {
                 case FileUploaderType.FTP:
+                    if (Engine.conf.ShowFTPSettingsBeforeUploading)
+                    {
+                        UploadersConfigForm ucf = new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys());
+                        ucf.Icon = Resources.zss_main;
+                        ucf.tcUploaders.SelectedTab = ucf.tpFileUploaders;
+                        ucf.tcFileUploaders.SelectedTab = ucf.tpFTP;
+                        ucf.ShowDialog();
+                    }
                     switch (Job1)
                     {
                         case JobLevel1.Text:

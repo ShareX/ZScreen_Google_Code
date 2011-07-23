@@ -368,9 +368,6 @@ namespace ZScreenLib
 
         public bool DeleteLocal = false;
 
-        [Category("Destinations / FTP Server"), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
-        public int ScreenshotCacheSize { get; set; }
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  Auto Capture
         //~~~~~~~~~~~~~~~~~~~~~
@@ -390,8 +387,14 @@ namespace ZScreenLib
 
         // Destinations / FTP
 
-        [Category("Destinations / FTP Server"), DefaultValue(true), Description("Periodically backup FTP settings.")]
+        [Category("Destinations / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
+
+        [Category("Destinations / FTP"), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
+        public int ScreenshotCacheSize { get; set; }
+
+        [Category("Destinations / FTP"), DefaultValue(false), Description("Allows you to choose the FTP account before uploading.")]
+        public bool ShowFTPSettingsBeforeUploading { get; set; }
 
         // Options / General
 
