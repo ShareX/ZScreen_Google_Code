@@ -112,11 +112,19 @@ namespace ZScreenGUI
                                 {
                                     success = bwTask.CaptureScreen();
                                 }
+                                else
+                                {
+                                    success = true;
+                                }
                                 break;
                             case WorkerTask.JobLevel2.CaptureActiveWindow:
                                 if (bwTask.TempImage == null)
                                 {
                                     success = bwTask.CaptureActiveWindow();
+                                }
+                                else
+                                {
+                                    success = true;
                                 }
                                 break;
                             case WorkerTask.JobLevel2.CaptureSelectedWindow:
