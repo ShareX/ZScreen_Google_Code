@@ -214,6 +214,16 @@ namespace ZScreenLib
             MyWorker = worker;
         }
 
+        /// Constructor taking Worker and Job
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="job"></param>
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
+            : this(worker)
+        {
+            AssignJob(job);
+        }
+
         public void AssignJob(JobLevel2 job)
         {
             Job2 = job;
@@ -233,18 +243,7 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// Constructor taking Worker and Job
-        /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="job"></param>
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
-            : this(worker)
-        {
-            AssignJob(job);
-        }
-
-        public void PrepareTask(DestSelector ucDestOptions)
+        private void PrepareOutputs(DestSelector ucDestOptions)
         {
             if (!Status.Contains(TaskStatus.Prepared))
             {
@@ -255,6 +254,12 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
+
+                if (Engine.conf.PromptForOutputs)
+                {
+                    SetManualOutputs();
+                }
+
                 Status.Add(TaskStatus.Prepared);
             }
         }
@@ -340,16 +345,16 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="pattern">the base name</param>
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
-        public bool SetFilePathFromPattern()
+        public void SetManualOutputs()
         {
             string dir = Engine.ImagesDir;
             string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, FileName));
 
-            if (Engine.conf.ManualNaming)
+            if (Engine.conf.PromptForOutputs)
             {
                 DestOptions dialog = new DestOptions(this)
                 {
-                    Title = "Browse for a file path...",
+                    Title = "Configure Outputs...",
                     FilePath = filePath,
                     Icon = Resources.zss_main
                 };
@@ -362,10 +367,6 @@ namespace ZScreenLib
                         filePath = dialog.FilePath;
                         UpdateLocalFilePath(dialog.FilePath);
                     }
-                }
-                else
-                {
-                    return false;
                 }
             }
 
@@ -383,7 +384,6 @@ namespace ZScreenLib
                 filePath = Path.Combine(dir, fnn) + Path.GetExtension(filePath);
             }
             UpdateLocalFilePath(filePath);
-            return true;
         }
 
         public void AddUploadResult(UploadResult ur)
@@ -647,8 +647,13 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        public void WriteImage()
+        public void WriteImage(DestSelector ucDestOptions)
         {
+            if (!Status.Contains(WorkerTask.TaskStatus.Prepared))
+            {
+                PrepareOutputs(ucDestOptions);
+            }
+
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
                 NameParserType type;
@@ -666,29 +671,26 @@ namespace ZScreenLib
 
                 using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
                 {
-                    if (SetFilePathFromPattern())
+                    Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+
+                    Image img = TempImage;
+                    string fp = LocalFilePath;
+
+                    img = ImageEffects.ApplySizeChanges(img);
+                    img = ImageEffects.ApplyScreenshotEffects(img);
+                    if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
                     {
-                        Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+                        img = ImageEffects.ApplyWatermark(img);
+                    }
 
-                        Image img = TempImage;
-                        string fp = LocalFilePath;
+                    fp = FileSystem.WriteImage(fp, img);
+                    Status.Add(TaskStatus.ImageWritten);
 
-                        img = ImageEffects.ApplySizeChanges(img);
-                        img = ImageEffects.ApplyScreenshotEffects(img);
-                        if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
-                        {
-                            img = ImageEffects.ApplyWatermark(img);
-                        }
+                    UpdateLocalFilePath(fp);
 
-                        fp = FileSystem.WriteImage(fp, img);
-                        Status.Add(TaskStatus.ImageWritten);
-
-                        UpdateLocalFilePath(fp);
-
-                        if (!File.Exists(LocalFilePath))
-                        {
-                            Errors.Add(string.Format("{0} does not exist", LocalFilePath));
-                        }
+                    if (!File.Exists(LocalFilePath))
+                    {
+                        Errors.Add(string.Format("{0} does not exist", LocalFilePath));
                     }
                 }
             }

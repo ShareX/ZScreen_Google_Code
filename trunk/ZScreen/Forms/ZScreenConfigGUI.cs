@@ -123,7 +123,7 @@ namespace ZScreenGUI
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumDestToMenuWithConfigSettings();
 
-            chkManualNaming.Checked = Engine.conf.ManualNaming;
+            chkManualNaming.Checked = Engine.conf.PromptForOutputs;
             chkShowCursor.Checked = Engine.conf.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }

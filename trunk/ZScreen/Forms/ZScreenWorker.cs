@@ -65,10 +65,6 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = (WorkerTask)e.Argument;
-            if (!bwTask.Status.Contains(WorkerTask.TaskStatus.Prepared))
-            {
-                bwTask.PrepareTask(ucDestOptions);
-            }
             bwTask.Status.Add(WorkerTask.TaskStatus.ThreadMode);
 
             if (bwTask.TaskOutputs.Count == 0)
@@ -144,7 +140,7 @@ namespace ZScreenGUI
                         }
                         if (success)
                         {
-                            bwTask.WriteImage();
+                            bwTask.WriteImage(ucDestOptions);
                             bwTask.PublishData();
                         }
                         break;
@@ -476,13 +472,12 @@ namespace ZScreenGUI
             if (key != Keys.None)
             {
                 WorkerTask hkTask = new WorkerTask(CreateWorker());
-                hkTask.PrepareTask(ucDestOptions);
 
                 if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
                     hkTask.CaptureScreen();
-                    hkTask.WriteImage();
+                    hkTask.WriteImage(ucDestOptions);
                     RunWorkerAsync_EntireScreen(hkTask);
                     return true;
                 }
@@ -491,7 +486,7 @@ namespace ZScreenGUI
                 {
                     hkTask.AssignJob(WorkerTask.JobLevel2.CaptureActiveWindow);
                     hkTask.CaptureActiveWindow();
-                    hkTask.WriteImage();
+                    hkTask.WriteImage(ucDestOptions);
                     RunWorkerAsync_ActiveWindow(hkTask);
                     return true;
                 }
@@ -702,15 +697,11 @@ namespace ZScreenGUI
         public void UploadUsingClipboard()
         {
             WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-            cbTask.PrepareTask(ucDestOptions);
 
             if (Clipboard.ContainsImage())
             {
                 cbTask.SetImage(Clipboard.GetImage());
-                if (cbTask.SetFilePathFromPattern())
-                {
-                    cbTask.WriteImage();
-                }
+                cbTask.WriteImage(ucDestOptions);
                 cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())
