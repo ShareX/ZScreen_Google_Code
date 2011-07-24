@@ -255,6 +255,8 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
+                MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
+
                 if (Engine.conf.PromptForOutputs)
                 {
                     SetManualOutputs();
@@ -649,10 +651,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage(DestSelector ucDestOptions)
         {
-            if (!Status.Contains(WorkerTask.TaskStatus.Prepared))
-            {
-                PrepareOutputs(ucDestOptions);
-            }
+            PrepareOutputs(ucDestOptions);
 
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
