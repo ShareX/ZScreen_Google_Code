@@ -136,7 +136,7 @@ namespace ZScreenGUI
                                 success = bwTask.BwCaptureFreehandCrop();
                                 break;
                             default:
-                                if (bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
+                                if (File.Exists(bwTask.LocalFilePath) || bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
                                 {
                                     success = true;
                                 }

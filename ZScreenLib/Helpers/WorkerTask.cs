@@ -419,24 +419,28 @@ namespace ZScreenLib
 
         public void UpdateLocalFilePath(string fp)
         {
-            LocalFilePath = fp;
+            if (!string.IsNullOrEmpty(fp))
+            {
+                LocalFilePath = fp;
+                FileName = Path.GetFileName(fp);
 
-            if (ZAppHelper.IsTextFile(fp))
-            {
-                Job1 = JobLevel1.Text;
-            }
-            else if (ZAppHelper.IsImageFile(fp))
-            {
-                Job1 = JobLevel1.Image;
-                IsImage = true;
-                if (TempImage == null && GraphicsMgr.IsValidImage(fp))
+                if (ZAppHelper.IsTextFile(fp))
                 {
-                    TempImage = FileSystem.ImageFromFile(fp);
+                    Job1 = JobLevel1.Text;
                 }
-            }
-            else
-            {
-                Job1 = JobLevel1.File;
+                else if (ZAppHelper.IsImageFile(fp))
+                {
+                    Job1 = JobLevel1.Image;
+                    IsImage = true;
+                    if (TempImage == null && GraphicsMgr.IsValidImage(fp))
+                    {
+                        TempImage = FileSystem.ImageFromFile(fp);
+                    }
+                }
+                else
+                {
+                    Job1 = JobLevel1.File;
+                }
             }
         }
 

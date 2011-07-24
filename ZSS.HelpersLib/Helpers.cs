@@ -303,13 +303,15 @@ namespace HelpersLib
 
         public static string GetMimeType(string fileName)
         {
-            string ext = Path.GetExtension(fileName).ToLower();
-            RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
+            if (!string.IsNullOrEmpty(fileName))
             {
-                return regKey.GetValue("Content Type").ToString();
+                string ext = Path.GetExtension(fileName).ToLower();
+                RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(ext);
+                if (regKey != null && regKey.GetValue("Content Type") != null)
+                {
+                    return regKey.GetValue("Content Type").ToString();
+                }
             }
-
             return "application/octet-stream";
         }
 
@@ -361,15 +363,18 @@ namespace HelpersLib
         {
             StringBuilder result = new StringBuilder();
 
-            foreach (char symbol in text)
+            if (!string.IsNullOrEmpty(text))
             {
-                if (UnreservedCharacters.Contains(symbol))
+                foreach (char symbol in text)
                 {
-                    result.Append(symbol);
-                }
-                else
-                {
-                    result.AppendFormat("%{0:X2}", (int)symbol);
+                    if (UnreservedCharacters.Contains(symbol))
+                    {
+                        result.Append(symbol);
+                    }
+                    else
+                    {
+                        result.AppendFormat("%{0:X2}", (int)symbol);
+                    }
                 }
             }
 

@@ -428,7 +428,10 @@ namespace ZScreenLib
 
         public static string GetBrowserFriendlyUrl(string url)
         {
-            url = Regex.Replace(url, " ", "%20");
+            if (!string.IsNullOrEmpty(url))
+            {
+                url = Regex.Replace(url, " ", "%20");
+            }
             return url;
         }
     }
