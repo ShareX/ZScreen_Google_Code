@@ -551,7 +551,7 @@ namespace ZScreenGUI
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ManualNaming = chkManualNaming.Checked;
+            Engine.conf.PromptForOutputs = chkManualNaming.Checked;
         }
 
         private void ZScreen_Shown(object sender, EventArgs e)
