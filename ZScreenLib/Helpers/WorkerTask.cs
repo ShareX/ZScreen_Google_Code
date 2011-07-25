@@ -257,9 +257,27 @@ namespace ZScreenLib
 
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
 
+                string dir = Engine.ImagesDir;
+                string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, FileName));
+
+                StringBuilder sbPath = new StringBuilder();
+
+                sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), FileName));
+
+                filePath = sbPath.ToString();
+                // make sure this length is less than 256 char
+                if (filePath.Length > 256)
+                {
+                    int extraChar = filePath.Length - 256;
+                    string fn = Path.GetFileNameWithoutExtension(filePath);
+                    string fnn = fn.Substring(0, fn.Length - extraChar);
+                    filePath = Path.Combine(dir, fnn) + Path.GetExtension(filePath);
+                }
+                UpdateLocalFilePath(filePath);
+
                 if (Engine.conf.PromptForOutputs)
                 {
-                    SetManualOutputs();
+                    SetManualOutputs(filePath);
                 }
 
                 Status.Add(TaskStatus.Prepared);
@@ -347,11 +365,8 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="pattern">the base name</param>
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
-        public void SetManualOutputs()
+        public void SetManualOutputs(string filePath)
         {
-            string dir = Engine.ImagesDir;
-            string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, FileName));
-
             if (Engine.conf.PromptForOutputs)
             {
                 DestOptions dialog = new DestOptions(this)
@@ -371,21 +386,6 @@ namespace ZScreenLib
                     }
                 }
             }
-
-            StringBuilder sbPath = new StringBuilder();
-
-            sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), FileName));
-
-            filePath = sbPath.ToString();
-            // make sure this length is less than 256 char
-            if (filePath.Length > 256)
-            {
-                int extraChar = filePath.Length - 256;
-                string fn = Path.GetFileNameWithoutExtension(filePath);
-                string fnn = fn.Substring(0, fn.Length - extraChar);
-                filePath = Path.Combine(dir, fnn) + Path.GetExtension(filePath);
-            }
-            UpdateLocalFilePath(filePath);
         }
 
         public void AddUploadResult(UploadResult ur)

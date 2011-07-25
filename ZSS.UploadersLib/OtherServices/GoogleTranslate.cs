@@ -112,14 +112,18 @@ namespace UploadersLib.OtherServices
     public class GoogleTranslateInfo
     {
         public string Text { get; set; }
+
         public string SourceLanguage { get; set; }
+
         public string TargetLanguage { get; set; }
+
         public string Result { get; set; }
     }
 
     public class GoogleLanguage
     {
         public string Language { get; set; }
+
         public string Name { get; set; }
 
         public GoogleLanguage() { }
