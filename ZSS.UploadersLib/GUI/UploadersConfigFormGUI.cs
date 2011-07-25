@@ -112,6 +112,13 @@ namespace UploadersLib
 
             atcImgurAccountType.SelectedAccountType = Config.ImgurAccountType;
 
+            if (cbImgurThumbnailType.Items.Count == 0)
+            {
+                cbImgurThumbnailType.Items.AddRange(typeof(ImgurThumbnailType).GetEnumDescriptions());
+            }
+
+            cbImgurThumbnailType.SelectedIndex = (int)Config.ImgurThumbnailType;
+
             if (OAuthInfo.CheckOAuth(Config.ImgurOAuthInfo))
             {
                 lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;

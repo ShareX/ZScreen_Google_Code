@@ -173,6 +173,11 @@ namespace UploadersLib
             Config.ImgurAccountType = accountType;
         }
 
+        private void cbImgurThumbnailType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.ImgurThumbnailType = (ImgurThumbnailType)cbImgurThumbnailType.SelectedIndex;
+        }
+
         private void btnImgurOpenAuthorizePage_Click(object sender, EventArgs e)
         {
             ImgurAuthOpen();
