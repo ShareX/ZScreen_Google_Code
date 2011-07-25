@@ -54,6 +54,7 @@ namespace UploadersLib
         // Imgur
 
         public AccountType ImgurAccountType = AccountType.Anonymous;
+        public ImgurThumbnailType ImgurThumbnailType = ImgurThumbnailType.Large_Thumbnail;
         public OAuthInfo ImgurOAuthInfo = null;
 
         // Flickr

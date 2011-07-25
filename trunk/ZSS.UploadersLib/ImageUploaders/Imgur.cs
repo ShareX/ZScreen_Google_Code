@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml.Linq;
 using HelpersLib;
@@ -32,6 +33,14 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
+    public enum ImgurThumbnailType
+    {
+        [Description("Small Square")]
+        Small_Square,
+        [Description("Large Thumbnail")]
+        Large_Thumbnail
+    }
+
     public sealed class Imgur : ImageUploader, IOAuth
     {
         private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
@@ -54,6 +63,8 @@ namespace UploadersLib.ImageUploaders
         /// Required for User upload (OAuth)
         /// </summary>
         public OAuthInfo AuthInfo { get; set; }
+
+        public ImgurThumbnailType ThumbnailType { get; set; }
 
         public Imgur(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {
@@ -138,8 +149,16 @@ namespace UploadersLib.ImageUploaders
                 if ((xe = xd.GetNode("upload|images/links")) != null)
                 {
                     ur.URL = xe.GetElementValue("original");
-                    ur.ThumbnailURL = xe.GetElementValue("large_thumbnail");
-                    //ifm.Add(xele.ElementValue("small_square"), LinkType.THUMBNAIL);
+
+                    if (ThumbnailType == ImgurThumbnailType.Large_Thumbnail)
+                    {
+                        ur.ThumbnailURL = xe.GetElementValue("large_thumbnail");
+                    }
+                    else
+                    {
+                        ur.ThumbnailURL = xe.GetElementValue("small_square");
+                    }
+
                     ur.DeletionURL = xe.GetElementValue("delete_page");
                 }
                 else if ((xe = xd.GetElement("error")) != null)

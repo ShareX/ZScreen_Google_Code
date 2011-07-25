@@ -234,7 +234,10 @@ namespace ZUploader
                         Program.UploadersConfig.TinyPicRegistrationCode);
                     break;
                 case ImageDestination.Imgur:
-                    imageUploader = new Imgur(Program.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.UploadersConfig.ImgurOAuthInfo);
+                    imageUploader = new Imgur(Program.UploadersConfig.ImgurAccountType, ZKeys.ImgurAnonymousKey, Program.UploadersConfig.ImgurOAuthInfo)
+                    {
+                        ThumbnailType = Program.UploadersConfig.ImgurThumbnailType
+                    };
                     break;
                 case ImageDestination.Flickr:
                     imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Program.UploadersConfig.FlickrAuthInfo, Program.UploadersConfig.FlickrSettings);
