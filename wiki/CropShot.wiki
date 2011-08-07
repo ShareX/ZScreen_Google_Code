@@ -14,7 +14,7 @@ Show crop region coordinates and size Show crop region hotkey instructions
 
 Crosshair Settings
 Show second crosshair (Big cross)    
-Line count:   2 
+Line count
 Line size
 Color
 
