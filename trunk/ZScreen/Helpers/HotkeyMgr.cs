@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using HelpersLib;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -8,6 +9,7 @@ namespace ZScreenGUI
         public static int mHKSelectedRow = -1;
 
         public DataGridView dgvHotkeys { get; set; }
+
         public Label lblHotkeyStatus { get; set; }
 
         public string[] HotkeyNames = new string[]
@@ -69,6 +71,15 @@ namespace ZScreenGUI
                 object userHotKey = Engine.conf.GetFieldValue("Hotkey" + descr.Replace(" ", string.Empty));
                 if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
                 {
+                    Keys hotkey = (Keys)userHotKey;
+                    Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
+
+                    Native.Modifiers modifiers = Native.Modifiers.None;
+
+                    if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= Native.Modifiers.Alt;
+                    if ((hotkey & Keys.Control) == Keys.Control) modifiers |= Native.Modifiers.Control;
+                    if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= Native.Modifiers.Shift;
+
                     dgvHotkeys.Rows.Add(descr, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
                 }
             }
