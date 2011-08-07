@@ -344,10 +344,6 @@
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj">
-      <Project>{8DB88F86-C03B-45DF-ADAF-C068A407E36A}</Project>
-      <Name>ZSS.ImageEditorLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
       <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
       <Name>ZSS.IndexersLib</Name>

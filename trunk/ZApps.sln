@@ -15,8 +15,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-3588-4A1D-926E-22C8692D345F}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
+		Lib\Greenshot.dll = Lib\Greenshot.dll
+		Lib\GreenshotPlugin.dll = Lib\GreenshotPlugin.dll
 		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
 		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
+		Lib\log4net.dll = Lib\log4net.dll
 		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
 		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
 		Lib\SHDocVw.dll = Lib\SHDocVw.dll
@@ -28,8 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UpdateCheckerLib", "ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj", "{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ImageEditorLib", "ZSS.ImageEditorLib\ZSS.ImageEditorLib.csproj", "{8DB88F86-C03B-45DF-ADAF-C068A407E36A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
 EndProject
@@ -119,16 +120,6 @@ Global
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}.Release|x86.ActiveCfg = Release|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8DB88F86-C03B-45DF-ADAF-C068A407E36A}.Release|x86.ActiveCfg = Release|Any CPU
 		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

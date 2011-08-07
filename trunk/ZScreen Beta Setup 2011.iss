@@ -55,8 +55,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+
 Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
 Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
 Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 

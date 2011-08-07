@@ -33,6 +33,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Crop;
 using GraphicsMgrLib;
+using Greenshot.Drawing;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
@@ -253,27 +254,15 @@ namespace ZScreenLib
 
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
 
-                string dir = Engine.ImagesDir;
-                string filePath = FileSystem.GetUniqueFilePath(Path.Combine(dir, FileName));
-
-                StringBuilder sbPath = new StringBuilder();
-
-                sbPath.Append(Path.Combine(Path.GetDirectoryName(filePath), FileName));
-
-                filePath = sbPath.ToString();
-                // make sure this length is less than 256 char
-                if (filePath.Length > 256)
+                if (string.IsNullOrEmpty(LocalFilePath))
                 {
-                    int extraChar = filePath.Length - 256;
-                    string fn = Path.GetFileNameWithoutExtension(filePath);
-                    string fnn = fn.Substring(0, fn.Length - extraChar);
-                    filePath = Path.Combine(dir, fnn) + Path.GetExtension(filePath);
+                    string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, FileName));
+                    UpdateLocalFilePath(filePath);
                 }
-                UpdateLocalFilePath(filePath);
 
                 if (Engine.conf.PromptForOutputs)
                 {
-                    SetManualOutputs(filePath);
+                    SetManualOutputs(LocalFilePath);
                 }
 
                 Status.Add(TaskStatus.Prepared);
@@ -293,7 +282,10 @@ namespace ZScreenLib
                 TempImage = img;
                 EImageFormat imageFormat;
                 WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
-                FileName = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
+
+                string fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
+                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fn));
+                UpdateLocalFilePath(fp);
 
                 if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                 {
@@ -620,14 +612,12 @@ namespace ZScreenLib
                         {
                             try
                             {
-                                Greenshot.Configuration.AppConfig.ConfigPath = Path.Combine(Engine.SettingsDir, "ImageEditor.bin");
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm { Icon = Resources.zss_main };
-                                editor.AutoSave = Engine.conf.ImageEditorAutoSave;
-                                editor.MyWorker = MyWorker;
-                                editor.SetImage(TempImage);
+                                Surface surface = new Surface(TempImage);
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, TaskOutputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                                 editor.SetImagePath(LocalFilePath);
+                                editor.Visible = false;
                                 editor.ShowDialog();
-                                SetImage(editor.GetImage());
+                                SetImage(editor.GetImageForExport());
                             }
                             catch (Exception ex)
                             {
