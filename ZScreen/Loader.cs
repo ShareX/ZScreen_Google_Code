@@ -31,7 +31,6 @@ using System.Windows.Forms;
 using SingleInstanceApplication;
 using UploadersLib;
 using ZScreenLib;
-using Timer = System.Windows.Forms.Timer;
 
 namespace ZScreenGUI
 {
@@ -111,44 +110,6 @@ namespace ZScreenGUI
             }
 
             return false;
-        }
-
-        public static void KeyboardHook()
-        {
-            InitKeyboardHook();
-
-            Engine.MyLogger.WriteLine("Keyboard Hook initiated");
-
-            if (Engine.conf.EnableKeyboardHookTimer)
-            {
-                Timer keyboardTimer = new Timer() { Interval = 5000 };
-                keyboardTimer.Tick += new EventHandler(keyboardTimer_Tick);
-                keyboardTimer.Start();
-            }
-        }
-
-        private static void keyboardTimer_Tick(object sender, EventArgs e)
-        {
-            if (Engine.conf.EnableKeyboardHookTimer)
-            {
-                InitKeyboardHook();
-            }
-            else
-            {
-                Timer timer = sender as Timer;
-                if (timer != null) timer.Stop();
-            }
-        }
-
-        private static void InitKeyboardHook()
-        {
-            if (Engine.ZScreenKeyboardHook != null)
-            {
-                Engine.ZScreenKeyboardHook.Dispose();
-            }
-
-            Engine.ZScreenKeyboardHook = new KeyboardHook();
-            Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(MainForm.CheckHotkeys);
         }
     }
 }

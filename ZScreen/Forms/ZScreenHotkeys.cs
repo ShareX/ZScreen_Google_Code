@@ -7,6 +7,8 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
+        private static KeyboardHook ZScreenKeyboardHook;
+
         public static int mHKSelectedRow = -1;
 
         private void UpdateHotkeys(bool resetKeys = false)
@@ -147,7 +149,7 @@ namespace ZScreenGUI
             int index = 0;
             foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + hk.ToString().Replace(" ", string.Empty));
+                object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + hk.ToString());
                 SetHotkey(index++, (Keys)dfltHotkey);
             }
             UpdateHotkeysDGV(true);
@@ -196,6 +198,13 @@ namespace ZScreenGUI
         #endregion Hotkeys DataGridView Events
 
         #region Hotkey Helpers
+
+        private void InitKeyboardHook()
+        {
+            Engine.MyLogger.WriteLine("Keyboard Hook initiated");
+            ZScreenKeyboardHook = new KeyboardHook();
+            ZScreenKeyboardHook.KeyDown += new KeyEventHandler(CheckHotkeys);
+        }
 
         public void CheckHotkeys(object sender, KeyEventArgs e)
         {

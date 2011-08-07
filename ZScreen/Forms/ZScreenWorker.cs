@@ -100,19 +100,11 @@ namespace ZScreenGUI
                             {
                                 success = bwTask.CaptureScreen();
                             }
-                            else
-                            {
-                                success = true;
-                            }
                             break;
                         case WorkerTask.JobLevel2.CaptureActiveWindow:
                             if (bwTask.TempImage == null)
                             {
                                 success = bwTask.CaptureActiveWindow();
-                            }
-                            else
-                            {
-                                success = true;
                             }
                             break;
                         case WorkerTask.JobLevel2.CaptureSelectedWindow:
@@ -574,17 +566,14 @@ namespace ZScreenGUI
             ddTask.RunWorker();
         }
 
+        #region Capture in Main Thread
+
         public void CaptureActiveWindow()
         {
             WorkerTask hkawTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow);
             hkawTask.CaptureActiveWindow();
             hkawTask.WriteImage(ucDestOptions);
             RunWorkerAsync_EntireScreen(hkawTask);
-        }
-
-        public void CaptureEntireScreenBw()
-        {
-            RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen));
         }
 
         public void CaptureEntireScreen()
@@ -597,6 +586,47 @@ namespace ZScreenGUI
 
         public void CaptureSelectedWindow()
         {
+            WorkerTask hkswTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow);
+            hkswTask.BwCaptureRegionOrWindow();
+            hkswTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_EntireScreen(hkswTask);
+        }
+
+        public void CaptureRectRegion()
+        {
+            WorkerTask hkrcTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
+            hkrcTask.BwCaptureRegionOrWindow();
+            hkrcTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_CropShot(hkrcTask);
+        }
+
+        public void CaptureRectRegionLast()
+        {
+            WorkerTask hkrclTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
+            hkrclTask.BwCaptureRegionOrWindow();
+            hkrclTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_LastCropShot(hkrclTask);
+        }
+
+        public void CaptureFreeHandRegion()
+        {
+            WorkerTask hkfhrTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
+            hkfhrTask.BwCaptureFreehandCrop();
+            hkfhrTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_FreehandCropShot(hkfhrTask);
+        }
+
+        #endregion Capture in Main Thread
+
+        #region Capture in Background Thread
+
+        public void CaptureEntireScreenBw()
+        {
+            RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen));
+        }
+
+        public void CaptureSelectedWindowBw()
+        {
             RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow));
         }
 
@@ -605,29 +635,7 @@ namespace ZScreenGUI
             RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion));
         }
 
-        public void CaptureRectRegion()
-        {
-            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
-            hkTask.BwCaptureRegionOrWindow();
-            hkTask.WriteImage(ucDestOptions);
-            RunWorkerAsync_CropShot(hkTask);
-        }
-
-        public void CaptureRectRegionLast()
-        {
-            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-            hkTask.BwCaptureRegionOrWindow();
-            hkTask.WriteImage(ucDestOptions);
-            RunWorkerAsync_LastCropShot(hkTask);
-        }
-
-        public void CaptureFreeHandRegion()
-        {
-            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
-            hkTask.BwCaptureFreehandCrop();
-            hkTask.WriteImage(ucDestOptions);
-            RunWorkerAsync_FreehandCropShot(hkTask);
-        }
+        #endregion Capture in Background Thread
 
         public bool UploadUsingFileSystem(params string[] fileList)
         {

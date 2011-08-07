@@ -217,8 +217,6 @@ namespace ZScreenLib
 
         public static Mutex mAppMutex;
 
-        public static KeyboardHook ZScreenKeyboardHook;
-
         public class EngineOptions
         {
             public bool KeyboardHook { get; set; }
@@ -403,12 +401,6 @@ namespace ZScreenLib
             {
                 AppConf.UploadersConfigPath = Engine.UploadersConfigPath;
                 AppConf.Write();
-            }
-
-            if (ZScreenKeyboardHook != null)
-            {
-                ZScreenKeyboardHook.Dispose();
-                Engine.MyLogger.WriteLine("Keyboard hook terminated");
             }
 
             Engine.MyLogger.WriteLine("ZScreen closing");

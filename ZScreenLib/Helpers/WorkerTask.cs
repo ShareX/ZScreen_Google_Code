@@ -612,7 +612,12 @@ namespace ZScreenLib
                         {
                             try
                             {
-                                Surface surface = new Surface(TempImage);
+                                Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(TempImage);
+                                capture.CaptureDetails.Filename = LocalFilePath;
+                                capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
+                                capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
+                                capture.CaptureDetails.AddMetaData("source", "file");
+                                Surface surface = new Surface(capture);
                                 Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, TaskOutputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                                 editor.SetImagePath(LocalFilePath);
                                 editor.Visible = false;
@@ -643,7 +648,10 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage(DestSelector ucDestOptions)
         {
-            PrepareOutputs(ucDestOptions);
+            if (TempImage != null)
+            {
+                PrepareOutputs(ucDestOptions);
+            }
 
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
