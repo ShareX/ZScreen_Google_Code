@@ -134,9 +134,9 @@ namespace ZScreenGUI
                 {
                     new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
-                    new Command("fs|fullscreen", () => CaptureEntireScreenBw()),
-                    new Command("cc|crop", () => CaptureRectRegionBw()),
-                    new Command("sw|selectedwindow", () => CaptureSelectedWindowBw()),
+                    new Command("fs|fullscreen", () => CaptureEntireScreen()),
+                    new Command("cc|crop", () => CaptureRectRegion()),
+                    new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
                     new Command("hi|history", () => OpenHistory())
                 };
 
@@ -635,7 +635,7 @@ namespace ZScreenGUI
 
         private void selWindow_Click(object sender, EventArgs e)
         {
-            RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow));
+            CaptureSelectedWindow();
         }
 
         private void tsmAboutMain_Click(object sender, EventArgs e)
@@ -820,7 +820,7 @@ namespace ZScreenGUI
 
         private void cropShot_Click(object sender, EventArgs e)
         {
-            RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion));
+            CaptureRectRegion();
         }
 
         private void ShowMainWindow()
@@ -982,31 +982,31 @@ namespace ZScreenGUI
         private void entireScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen));
+            CaptureEntireScreen();
         }
 
         private void selectedWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow));
+            CaptureSelectedWindow();
         }
 
         private void rectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion));
+            CaptureRectRegion();
         }
 
         private void lastRectangularRegionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            RunWorkerAsync_LastCropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow));
+            CaptureRectRegionLast();
         }
 
         private void tsmFreehandCropShot_Click(object sender, EventArgs e)
         {
             Thread.Sleep(300);
-            RunWorkerAsync_FreehandCropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion));
+            CaptureFreeHandRegion();
         }
 
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2240,32 +2240,32 @@ namespace ZScreenGUI
 
         private void tsbFullscreenCapture_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen)));
+            HideFormTemporary(() => CaptureEntireScreen());
         }
 
         private void tsbActiveWindow_Click(object sender, EventArgs e)
         {
-            ExecuteTimer(() => RunWorkerAsync_ActiveWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow)), tsbActiveWindow);
+            ExecuteTimer(() => CaptureActiveWindow(), tsbActiveWindow);
         }
 
         private void tsbSelectedWindow_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow)));
+            HideFormTemporary(() => CaptureSelectedWindow());
         }
 
         private void tsbCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion)));
+            HideFormTemporary(() => CaptureRectRegion());
         }
 
         private void tsbLastCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => RunWorkerAsync_LastCropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow)));
+            HideFormTemporary(() => CaptureRectRegionLast());
         }
 
         private void tsbFreehandCropShot_Click(object sender, EventArgs e)
         {
-            HideFormTemporary(() => RunWorkerAsync_FreehandCropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion)));
+            HideFormTemporary(() => CaptureFreeHandRegion());
         }
 
         private void tsbAutoCapture_Click(object sender, EventArgs e)
