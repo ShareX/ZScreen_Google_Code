@@ -136,7 +136,7 @@ namespace ZScreenGUI
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
                     new Command("fs|fullscreen", () => CaptureEntireScreenBw()),
                     new Command("cc|crop", () => CaptureRectRegionBw()),
-                    new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
+                    new Command("sw|selectedwindow", () => CaptureSelectedWindowBw()),
                     new Command("hi|history", () => OpenHistory())
                 };
 
@@ -601,7 +601,8 @@ namespace ZScreenGUI
             }
 
             UpdateHotkeys(false);
-            Loader.KeyboardHook();
+            InitKeyboardHook();
+
             Engine.conf.FirstRun = false;
 
             if (Engine.IsMultipleInstance)
