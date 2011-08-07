@@ -1,5 +1,12 @@
 #summary Capturing the selected window (or its parts).
 ||Selected window region style|| ||
+||No Change|| ||
+||Region Transparent|| ||
+||Region Brightness|| ||
+||Background Region Transparent|| ||
+||Background Region GrayScale|| ||
+
+
 ||Region Brightness||   ||
 ||Show selected window region coordinates and size ||   ||
 ||Show ruler ||   ||
