@@ -107,7 +107,7 @@ namespace Greenshot
 
         public Image GetImage()
         {
-            return surface.Image;
+            return surface.GetImageForExport();
         }
 
         public void SetImage(Image img)
