@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Windows.Forms;
 
 namespace HelpersLib
@@ -31,11 +32,13 @@ namespace HelpersLib
     {
         public ushort ID { get; private set; }
         public Keys Key { get; private set; }
+        public Action HotkeyPress { get; set; }
 
-        public HotkeyInfo(ushort id, Keys key)
+        public HotkeyInfo(ushort id, Keys key, Action hotkeyPress = null)
         {
             ID = id;
             Key = key;
+            HotkeyPress = hotkeyPress;
         }
     }
 }
