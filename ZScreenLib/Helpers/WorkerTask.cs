@@ -297,8 +297,8 @@ namespace ZScreenLib
                 if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                 {
                     Status.Add(TaskStatus.ImageEdited);
+                    ProcessImage(img);
                     PerformActions();
-                    ProcessImage();
                 }
             }
 
@@ -581,22 +581,51 @@ namespace ZScreenLib
 
         #region Edit Image
 
-        public void ProcessImage()
+        public void ProcessImage(Image img)
         {
             bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
 
-            if (TempImage != null)
+            if (img != null)
             {
+                // Rounded corners
                 bool roundedShadowCorners = false;
                 if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
                 {
-                    SetImage(GraphicsMgr.RemoveCorners(TempImage, null));
+                    img = GraphicsMgr.RemoveCorners(img, null);
                     roundedShadowCorners = true;
                 }
                 if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
                 {
-                    SetImage(GraphicsMgr.AddBorderShadow(TempImage, roundedShadowCorners));
+                    img = GraphicsMgr.AddBorderShadow(img, roundedShadowCorners);
                 }
+
+                // Watermark
+                NameParserType type;
+                string pattern = string.Empty;
+                if (Job2 == WorkerTask.JobLevel2.CaptureActiveWindow)
+                {
+                    type = NameParserType.ActiveWindow;
+                    pattern = Engine.conf.ActiveWindowPattern;
+                }
+                else
+                {
+                    type = NameParserType.EntireScreen;
+                    pattern = Engine.conf.EntireScreenPattern;
+                }
+
+                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
+                {
+                    Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+
+                    img = ImageEffects.ApplySizeChanges(img);
+                    img = ImageEffects.ApplyScreenshotEffects(img);
+                    if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
+                    {
+                        img = ImageEffects.ApplyWatermark(img);
+                    }
+                }
+
+                TempImage = img;
             }
         }
 
@@ -661,42 +690,16 @@ namespace ZScreenLib
 
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
-                NameParserType type;
-                string pattern = string.Empty;
-                if (Job2 == WorkerTask.JobLevel2.CaptureActiveWindow)
+                string fp = LocalFilePath;
+                Image img = TempImage;
+                fp = FileSystem.WriteImage(fp, img);
+                Status.Add(TaskStatus.ImageWritten);
+
+                UpdateLocalFilePath(fp);
+
+                if (!File.Exists(LocalFilePath))
                 {
-                    type = NameParserType.ActiveWindow;
-                    pattern = Engine.conf.ActiveWindowPattern;
-                }
-                else
-                {
-                    type = NameParserType.EntireScreen;
-                    pattern = Engine.conf.EntireScreenPattern;
-                }
-
-                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
-                {
-                    Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
-
-                    Image img = TempImage;
-                    string fp = LocalFilePath;
-
-                    img = ImageEffects.ApplySizeChanges(img);
-                    img = ImageEffects.ApplyScreenshotEffects(img);
-                    if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
-                    {
-                        img = ImageEffects.ApplyWatermark(img);
-                    }
-
-                    fp = FileSystem.WriteImage(fp, img);
-                    Status.Add(TaskStatus.ImageWritten);
-
-                    UpdateLocalFilePath(fp);
-
-                    if (!File.Exists(LocalFilePath))
-                    {
-                        Errors.Add(string.Format("{0} does not exist", LocalFilePath));
-                    }
+                    Errors.Add(string.Format("{0} does not exist", LocalFilePath));
                 }
             }
         }
