@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -7,7 +8,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         public GoogleTranslateGUI GetGTGUI()
         {

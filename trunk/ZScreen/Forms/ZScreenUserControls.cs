@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         private void ProxyAccountTestButton_Click(object sender, EventArgs e)
         {

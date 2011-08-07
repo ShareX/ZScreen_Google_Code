@@ -46,7 +46,7 @@ using ZUploader.HelperClasses;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened;
         internal HotkeyMgr mHotkeyMgr = null;

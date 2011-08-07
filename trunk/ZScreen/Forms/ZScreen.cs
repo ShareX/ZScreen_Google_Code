@@ -37,7 +37,6 @@ using System.Threading;
 using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
-using Greenshot.Helpers;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -52,7 +51,7 @@ using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         #region Variables
 
@@ -153,7 +152,6 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                HotkeyHelper.HandleMessages(ref m);
                 switch (m.Msg)
                 {
                     case 992: // nfi but this is the only way it works for XP
