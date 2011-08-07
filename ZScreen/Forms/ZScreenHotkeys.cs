@@ -23,11 +23,11 @@ namespace ZScreenGUI
 
             if (resetKeys)
             {
-                userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString().Replace(" ", string.Empty));
+                userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
             }
             else
             {
-                userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString().Replace(" ", string.Empty));
+                userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
             }
 
             if (userHotKey != null && userHotKey is Keys)
@@ -105,19 +105,17 @@ namespace ZScreenGUI
 
         private void AddHotkey(HotkeyTask hotkeyEnum, bool resetKeys)
         {
-            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
+            object userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
 
             if (!resetKeys)
             {
-                object userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
-                if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
-                {
-                    dgvHotkeys.Rows.Add(hotkeyEnum.GetDescription(), ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
-                }
+                userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
             }
-            else
+
+            if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
             {
-                dgvHotkeys.Rows.Add(hotkeyEnum, ((Keys)dfltHotkey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
+                dgvHotkeys.Rows.Add(hotkeyEnum.GetDescription(), ((Keys)userHotKey).ToSpecialString(), ((Keys)userHotKey).ToSpecialString());
+                dgvHotkeys.Rows[dgvHotkeys.Rows.Count - 1].Tag = hotkeyEnum;
             }
         }
 

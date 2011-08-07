@@ -445,7 +445,7 @@ namespace ZScreenGUI
 
         public string GetSelectedHotkeyName()
         {
-            return dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString();
+            return dgvHotkeys.Rows[mHKSelectedRow].Tag.ToString();
         }
 
         public string GetSelectedHotkeySpecialString()
@@ -468,7 +468,7 @@ namespace ZScreenGUI
                 if (mHKSelectedRow > -1)
                 {
                     this.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
-                    //reset hotkey text from <set keys> back to normal
+                    //reset hotkey text from <set keys> back to
                     this.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
                 }
                 mHKSelectedRow = -1;
