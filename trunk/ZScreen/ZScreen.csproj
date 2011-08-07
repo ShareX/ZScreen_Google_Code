@@ -144,7 +144,6 @@
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Global\ImageEditorHelper.cs" />
-    <Compile Include="Helpers\HotkeyMgr.cs" />
     <Compile Include="Forms\ZScreenWorker.cs">
       <SubType>Form</SubType>
     </Compile>

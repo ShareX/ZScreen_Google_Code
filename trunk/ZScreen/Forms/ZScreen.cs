@@ -848,33 +848,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Ignore clicks
-            if (e.RowIndex < 0 || e.ColumnIndex != dgvHotkeys.Columns[1].Index)
-            {
-                return;
-            }
-
-            mSetHotkeys = true;
-            HotkeyMgr.mHKSelectedRow = e.RowIndex;
-
-            lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
-
-            dgvHotkeys.Rows[e.RowIndex].Cells[1].Value = GetSelectedHotkeySpecialString() + " <Set Keys>";
-        }
-
-        private void dgvHotkeys_Leave(object sender, EventArgs e)
-        {
-            QuitSettingHotkeys();
-        }
-
         private void ZScreen_Leave(object sender, EventArgs e)
-        {
-            QuitSettingHotkeys();
-        }
-
-        private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
         {
             QuitSettingHotkeys();
         }
@@ -1624,18 +1598,6 @@ namespace ZScreenGUI
             OpenFTPClient();
         }
 
-        private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (mSetHotkeys)
-            {
-                if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
-                {
-                    e.SuppressKeyPress = true;
-                    e.Handled = true;
-                }
-            }
-        }
-
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.SelectedWindowCaptureObjects = chkSelectedWindowCaptureObjects.Checked;
@@ -2088,7 +2050,7 @@ namespace ZScreenGUI
         private void btnResetHotkeys_Click(object sender, EventArgs e)
         {
             UnregisterAllHotkeys();
-            mHotkeyMgr.ResetHotkeys();
+            ResetHotkeys();
         }
 
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)

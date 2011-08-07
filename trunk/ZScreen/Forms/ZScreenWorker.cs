@@ -49,7 +49,6 @@ namespace ZScreenGUI
     public partial class ZScreen : HotkeyForm
     {
         internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened;
-        internal HotkeyMgr mHotkeyMgr = null;
 
         #region Worker Events
 
@@ -435,18 +434,18 @@ namespace ZScreenGUI
                 }
                 else if (e.KeyData == Keys.Escape)
                 {
-                    mHotkeyMgr.SetHotkey(Keys.None);
+                    SetHotkey(Keys.None);
                 }
                 else
                 {
-                    mHotkeyMgr.SetHotkey(e.KeyData);
+                    SetHotkey(e.KeyData);
                 }
             }
         }
 
         public string GetSelectedHotkeyName()
         {
-            return this.dgvHotkeys.Rows[HotkeyMgr.mHKSelectedRow].Cells[0].Value.ToString();
+            return dgvHotkeys.Rows[mHKSelectedRow].Cells[0].Value.ToString();
         }
 
         public string GetSelectedHotkeySpecialString()
@@ -466,13 +465,13 @@ namespace ZScreenGUI
             {
                 mSetHotkeys = false;
 
-                if (HotkeyMgr.mHKSelectedRow > -1)
+                if (mHKSelectedRow > -1)
                 {
                     this.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
                     //reset hotkey text from <set keys> back to normal
-                    this.dgvHotkeys.Rows[HotkeyMgr.mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
+                    this.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
                 }
-                HotkeyMgr.mHKSelectedRow = -1;
+                mHKSelectedRow = -1;
             }
         }
 
