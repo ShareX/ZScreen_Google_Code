@@ -1,1 +1,5 @@
 #summary Capturing a random area on screen (drawn freehand).
+
+Show help text
+Automatically upload after region is drawn
+Use right click to cancel upload instead of cleaning drawn regions Show rectangle border and size information
