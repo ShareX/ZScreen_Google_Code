@@ -208,19 +208,13 @@ namespace ZScreenLib
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
-        public WorkerTask(BackgroundWorker worker)
-            : this()
-        {
-            MyWorker = worker;
-        }
-
         /// Constructor taking Worker and Job
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
         public WorkerTask(BackgroundWorker worker, JobLevel2 job)
-            : this(worker)
         {
+            MyWorker = worker;
             AssignJob(job);
         }
 

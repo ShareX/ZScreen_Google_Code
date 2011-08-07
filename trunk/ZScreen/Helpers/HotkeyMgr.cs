@@ -30,7 +30,7 @@ namespace ZScreenGUI
 
             foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                AddHotkey(hk.ToString(), resetKeys);
+                AddHotkey(hk, resetKeys);
             }
 
             dgvHotkeys.Refresh();
@@ -47,30 +47,21 @@ namespace ZScreenGUI
             UpdateHotkeysDGV(true);
         }
 
-        private void AddHotkey(string descr, bool resetKeys)
+        private void AddHotkey(HotkeyTask hotkeyEnum, bool resetKeys)
         {
-            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + descr.Replace(" ", string.Empty));
+            object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
 
             if (!resetKeys)
             {
-                object userHotKey = Engine.conf.GetFieldValue("Hotkey" + descr.Replace(" ", string.Empty));
+                object userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
                 if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
                 {
-                    Keys hotkey = (Keys)userHotKey;
-                    Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
-
-                    Native.Modifiers modifiers = Native.Modifiers.None;
-
-                    if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= Native.Modifiers.Alt;
-                    if ((hotkey & Keys.Control) == Keys.Control) modifiers |= Native.Modifiers.Control;
-                    if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= Native.Modifiers.Shift;
-
-                    dgvHotkeys.Rows.Add(descr, ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
+                    dgvHotkeys.Rows.Add(hotkeyEnum.GetDescription(), ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
                 }
             }
             else
             {
-                dgvHotkeys.Rows.Add(descr, ((Keys)dfltHotkey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
+                dgvHotkeys.Rows.Add(hotkeyEnum, ((Keys)dfltHotkey).ToSpecialString(), ((Keys)dfltHotkey).ToSpecialString());
             }
         }
 
@@ -85,7 +76,9 @@ namespace ZScreenGUI
 
         public void SetHotkey(int row, Keys key)
         {
+            // TODO: Unregister old hotkey
             dgvHotkeys.Rows[row].Cells[1].Value = key.ToSpecialString();
+            // TODO: Register new key
             lblHotkeyStatus.Text = dgvHotkeys.Rows[row].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() + ". Press enter when done setting all desired Hotkeys.";
             SaveHotkey(dgvHotkeys.Rows[row].Cells[0].Value.ToString(), key);
         }

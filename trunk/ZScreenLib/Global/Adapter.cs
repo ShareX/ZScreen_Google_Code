@@ -430,6 +430,11 @@ namespace ZScreenLib
             }
         }
 
+        public static void ShowTwitterClient()
+        {
+            TwitterMsg(string.Empty);
+        }
+
         public static void TwitterMsg(string url)
         {
             OAuthInfo acc = TwitterGetActiveAccount();

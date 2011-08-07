@@ -58,28 +58,28 @@ namespace ZScreenLib
 
     public enum HotkeyTask
     {
-        [Description("Entire Screen")]
+        [Description("Capture Entire Screen")]
         EntireScreen,
-        [Description("Active Window")]
+        [Description("Capture Active Window")]
         ActiveWindow,
-        [Description("Crop Shot")]
+        [Description("Capture Rectangular Region")]
         CropShot,
-        [Description("Selected Window")]
+        [Description("Capture Rectangular Region (repeat)")]
+        LastCropShot,
+        [Description("Capture Selected Window")]
         SelectedWindow,
-        [Description("Freehand Crop Shot")]
+        [Description("Capture Freehand Region")]
         FreehandCropShot,
         [Description("Clipboard Upload")]
         ClipboardUpload,
-        [Description("Last Crop Shot")]
-        LastCropShot,
         [Description("Auto Capture")]
         AutoCapture,
         [Description("Drop Window")]
         DropWindow,
         LanguageTranslator,
-        [Description("No Change")]
+        [Description("Translate")]
         ScreenColorPicker,
-        [Description("No Change")]
+        [Description("Twitter Client")]
         TwitterClient
     }
 

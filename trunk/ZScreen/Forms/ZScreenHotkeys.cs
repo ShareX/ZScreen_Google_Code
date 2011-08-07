@@ -30,7 +30,40 @@ namespace ZScreenGUI
                 switch (hotkeyEnum)
                 {
                     case HotkeyTask.ActiveWindow:
-                        RegisterHotkey(hotkey);
+                        RegisterHotkey(hotkey, CaptureActiveWindow);
+                        break;
+                    case HotkeyTask.CropShot:
+                        RegisterHotkey(hotkey, CaptureRectRegion);
+                        break;
+                    case HotkeyTask.EntireScreen:
+                        RegisterHotkey(hotkey, CaptureEntireScreen);
+                        break;
+                    case HotkeyTask.ClipboardUpload:
+                        RegisterHotkey(hotkey, UploadUsingClipboardOrGoogleTranslate);
+                        break;
+                    case HotkeyTask.SelectedWindow:
+                        RegisterHotkey(hotkey, CaptureSelectedWindow);
+                        break;
+                    case HotkeyTask.LastCropShot:
+                        RegisterHotkey(hotkey, CaptureRectRegionLast);
+                        break;
+                    case HotkeyTask.AutoCapture:
+                        RegisterHotkey(hotkey, ShowAutoCapture);
+                        break;
+                    case HotkeyTask.DropWindow:
+                        RegisterHotkey(hotkey, ShowDropWindow);
+                        break;
+                    case HotkeyTask.FreehandCropShot:
+                        RegisterHotkey(hotkey, CaptureFreeHandRegion);
+                        break;
+                    case HotkeyTask.LanguageTranslator:
+                        RegisterHotkey(hotkey, StartWorkerTranslator);
+                        break;
+                    case HotkeyTask.ScreenColorPicker:
+                        RegisterHotkey(hotkey, ScreenColorPicker);
+                        break;
+                    case HotkeyTask.TwitterClient:
+                        RegisterHotkey(hotkey, Adapter.ShowTwitterClient);
                         break;
                 }
             }
