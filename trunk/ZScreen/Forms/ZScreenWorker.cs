@@ -422,61 +422,6 @@ namespace ZScreenGUI
 
         #endregion Create Worker
 
-        #region Hotkeys
-
-        public void CheckHotkeys(object sender, KeyEventArgs e)
-        {
-            if (mSetHotkeys)
-            {
-                if (e.KeyData == Keys.Enter)
-                {
-                    QuitSettingHotkeys();
-                }
-                else if (e.KeyData == Keys.Escape)
-                {
-                    SetHotkey(Keys.None);
-                }
-                else
-                {
-                    SetHotkey(e.KeyData);
-                }
-            }
-        }
-
-        public string GetSelectedHotkeyName()
-        {
-            return dgvHotkeys.Rows[mHKSelectedRow].Tag.ToString();
-        }
-
-        public string GetSelectedHotkeySpecialString()
-        {
-            object obj = Engine.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", string.Empty));
-            if (obj != null && obj.GetType() == typeof(Keys))
-            {
-                return ((Keys)obj).ToSpecialString();
-            }
-
-            return "Error getting hotkey";
-        }
-
-        public void QuitSettingHotkeys()
-        {
-            if (mSetHotkeys)
-            {
-                mSetHotkeys = false;
-
-                if (mHKSelectedRow > -1)
-                {
-                    this.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
-                    //reset hotkey text from <set keys> back to
-                    this.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
-                }
-                mHKSelectedRow = -1;
-            }
-        }
-
-        #endregion Hotkeys
-
         #region Google Translate
 
         public void StartWorkerTranslator()

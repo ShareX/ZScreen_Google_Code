@@ -9,15 +9,15 @@ namespace ZScreenGUI
     {
         public static int mHKSelectedRow = -1;
 
-        private void RegisterHotkeys(bool resetKeys = false)
+        private void UpdateHotkeys(bool resetKeys = false)
         {
             foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                RegisterHotkey(hk, resetKeys);
+                UpdateHotkey(hk, resetKeys);
             }
         }
 
-        private void RegisterHotkey(HotkeyTask hotkeyEnum, bool resetKeys = false)
+        private void UpdateHotkey(HotkeyTask hotkeyEnum, bool resetKeys = false)
         {
             object userHotKey;
 
@@ -132,12 +132,14 @@ namespace ZScreenGUI
         {
             dgvHotkeys.Rows[row].Cells[1].Value = key.ToSpecialString();
             lblHotkeyStatus.Text = dgvHotkeys.Rows[row].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() + ". Press enter when done setting all desired Hotkeys.";
-            SaveHotkey(dgvHotkeys.Rows[row].Cells[0].Value.ToString(), key);
+            HotkeyTask hk = (HotkeyTask)dgvHotkeys.Rows[row].Tag;
+            SaveHotkey(hk, key);
+            UpdateHotkey(hk);
         }
 
-        public static bool SaveHotkey(string name, Keys key)
+        public static bool SaveHotkey(HotkeyTask hk, Keys key)
         {
-            return Engine.conf.SetFieldValue("Hotkey" + name.Replace(" ", string.Empty), key);
+            return Engine.conf.SetFieldValue("Hotkey" + hk.ToString(), key);
         }
 
         public void ResetHotkeys()
@@ -192,5 +194,60 @@ namespace ZScreenGUI
         }
 
         #endregion Hotkeys DataGridView Events
+
+        #region Hotkey Helpers
+
+        public void CheckHotkeys(object sender, KeyEventArgs e)
+        {
+            if (mSetHotkeys)
+            {
+                if (e.KeyData == Keys.Enter)
+                {
+                    QuitSettingHotkeys();
+                }
+                else if (e.KeyData == Keys.Escape)
+                {
+                    SetHotkey(Keys.None);
+                }
+                else
+                {
+                    SetHotkey(e.KeyData);
+                }
+            }
+        }
+
+        public string GetSelectedHotkeyName()
+        {
+            return dgvHotkeys.Rows[mHKSelectedRow].Tag.ToString();
+        }
+
+        public string GetSelectedHotkeySpecialString()
+        {
+            object obj = Engine.conf.GetFieldValue("Hotkey" + GetSelectedHotkeyName().Replace(" ", string.Empty));
+            if (obj != null && obj.GetType() == typeof(Keys))
+            {
+                return ((Keys)obj).ToSpecialString();
+            }
+
+            return "Error getting hotkey";
+        }
+
+        public void QuitSettingHotkeys()
+        {
+            if (mSetHotkeys)
+            {
+                mSetHotkeys = false;
+
+                if (mHKSelectedRow > -1)
+                {
+                    this.lblHotkeyStatus.Text = GetSelectedHotkeyName() + " Hotkey Updated.";
+                    //reset hotkey text from <set keys> back to
+                    this.dgvHotkeys.Rows[mHKSelectedRow].Cells[1].Value = GetSelectedHotkeySpecialString();
+                }
+                mHKSelectedRow = -1;
+            }
+        }
+
+        #endregion Hotkey Helpers
     }
 }
