@@ -287,17 +287,18 @@ namespace ZScreenLib
                 string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fn));
                 UpdateLocalFilePath(fp);
 
-                if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
-                {
-                    Status.Add(TaskStatus.ImageEdited);
-                    PerformActions();
-                }
-
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
                 {
                     // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
+                }
+
+                if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+                {
+                    Status.Add(TaskStatus.ImageEdited);
+                    PerformActions();
+                    ProcessImage();
                 }
             }
 
@@ -373,7 +374,7 @@ namespace ZScreenLib
                 dialog.ShowDialog();
                 if (dialog.DialogResult == DialogResult.OK)
                 {
-                    if (string.IsNullOrEmpty(FileName))
+                    if (!string.IsNullOrEmpty(FileName))
                     {
                         filePath = dialog.FilePath;
                         UpdateLocalFilePath(dialog.FilePath);
@@ -503,20 +504,6 @@ namespace ZScreenLib
                 }
 
                 IsTakingScreenShot = false;
-
-                if (TempImage != null)
-                {
-                    bool roundedShadowCorners = false;
-                    if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
-                    {
-                        SetImage(GraphicsMgr.RemoveCorners(TempImage, null));
-                        roundedShadowCorners = true;
-                    }
-                    if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
-                    {
-                        SetImage(GraphicsMgr.AddBorderShadow(TempImage, roundedShadowCorners));
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -592,7 +579,26 @@ namespace ZScreenLib
 
         #endregion Google Translate
 
-        #region Actions
+        #region Edit Image
+
+        public void ProcessImage()
+        {
+            bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
+
+            if (TempImage != null)
+            {
+                bool roundedShadowCorners = false;
+                if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
+                {
+                    SetImage(GraphicsMgr.RemoveCorners(TempImage, null));
+                    roundedShadowCorners = true;
+                }
+                if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
+                {
+                    SetImage(GraphicsMgr.AddBorderShadow(TempImage, roundedShadowCorners));
+                }
+            }
+        }
 
         /// <summary>
         /// Perform Actions after capturing image/text/file objects
@@ -638,7 +644,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion Actions
+        #endregion Edit Image
 
         #region Publish Data
 
