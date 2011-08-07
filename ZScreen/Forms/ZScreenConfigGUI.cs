@@ -113,8 +113,6 @@ namespace ZScreenGUI
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
-            mHotkeyMgr = new HotkeyMgr(ref dgvHotkeys, ref lblHotkeyStatus);
-
             Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
         }
 
@@ -180,7 +178,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Hotkeys()
         {
-            mHotkeyMgr.UpdateHotkeysDGV();
+            UpdateHotkeysDGV();
         }
 
         private void ZScreen_ConfigGUI_ImageHosting()
