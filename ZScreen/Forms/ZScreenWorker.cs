@@ -442,10 +442,6 @@ namespace ZScreenGUI
                     mHotkeyMgr.SetHotkey(e.KeyData);
                 }
             }
-            //else
-            //{
-            //    e.Handled = UploadUsingHotkeys(e.KeyData);
-            //}
         }
 
         public string GetSelectedHotkeyName()
@@ -462,99 +458,6 @@ namespace ZScreenGUI
             }
 
             return "Error getting hotkey";
-        }
-
-        private bool UploadUsingHotkeys(Keys key)
-        {
-            // Fix for Issue 23 - Media Center was triggering Keys.None
-            if (key != Keys.None)
-            {
-                WorkerTask hkTask = new WorkerTask(CreateWorker());
-
-                if (Engine.conf.HotkeyEntireScreen == key) // Entire Screen
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
-                    hkTask.CaptureScreen();
-                    hkTask.WriteImage(ucDestOptions);
-                    RunWorkerAsync_EntireScreen(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyActiveWindow == key) // Active Window
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureActiveWindow);
-                    hkTask.CaptureActiveWindow();
-                    hkTask.WriteImage(ucDestOptions);
-                    RunWorkerAsync_ActiveWindow(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeySelectedWindow == key) // Selected Window
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureSelectedWindow);
-                    RunWorkerAsync_SelectedWindow(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyCropShot == key) // Crop Shot
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
-                    RunWorkerAsync_CropShot(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyLastCropShot == key) // Last Crop Shot
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-                    RunWorkerAsync_LastCropShot(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyFreehandCropShot == key) // Freehand Crop Shot
-                {
-                    hkTask.AssignJob(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-                    RunWorkerAsync_FreehandCropShot(hkTask);
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyAutoCapture == key) // Auto Capture
-                {
-                    ShowAutoCapture();
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyClipboardUpload == key) // Clipboard Upload
-                {
-                    UploadUsingClipboardOrGoogleTranslate();
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyDropWindow == key) // Drag & Drop Window
-                {
-                    ShowDropWindow();
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyLanguageTranslator == key) // Language Translator
-                {
-                    StartWorkerTranslator();
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyScreenColorPicker == key) // Screen Color Picker
-                {
-                    ScreenColorPicker();
-                    return true;
-                }
-
-                if (Engine.conf.HotkeyTwitterClient == key)
-                {
-                    Adapter.TwitterMsg("");
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public void QuitSettingHotkeys()
@@ -742,8 +645,7 @@ namespace ZScreenGUI
 
         public void CaptureEntireScreen()
         {
-            WorkerTask hkesTask = new WorkerTask(CreateWorker());
-            hkesTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
+            WorkerTask hkesTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen);
             hkesTask.CaptureScreen();
             hkesTask.WriteImage(ucDestOptions);
             RunWorkerAsync_EntireScreen(hkesTask);
@@ -761,11 +663,26 @@ namespace ZScreenGUI
 
         public void CaptureRectRegion()
         {
-            WorkerTask hkTask = new WorkerTask(CreateWorker());
-            hkTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
+            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
             hkTask.BwCaptureRegionOrWindow();
             hkTask.WriteImage(ucDestOptions);
             RunWorkerAsync_CropShot(hkTask);
+        }
+
+        public void CaptureRectRegionLast()
+        {
+            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
+            hkTask.BwCaptureRegionOrWindow();
+            hkTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_LastCropShot(hkTask);
+        }
+
+        public void CaptureFreeHandRegion()
+        {
+            WorkerTask hkTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
+            hkTask.BwCaptureFreehandCrop();
+            hkTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_FreehandCropShot(hkTask);
         }
 
         public bool UploadUsingFileSystem(params string[] fileList)

@@ -1909,12 +1909,11 @@ namespace ZScreenGUI
             {
                 if (chkHotkeys.Checked)
                 {
-                    Engine.ZScreenKeyboardHook = new KeyboardHook();
-                    Engine.ZScreenKeyboardHook.KeyDown += new KeyEventHandler(CheckHotkeys);
+                    RegisterHotkeys(false);
                 }
                 else
                 {
-                    Engine.ZScreenKeyboardHook.Dispose();
+                    UnregisterAllHotkeys();
                 }
             }
         }
@@ -2088,6 +2087,7 @@ namespace ZScreenGUI
 
         private void btnResetHotkeys_Click(object sender, EventArgs e)
         {
+            UnregisterAllHotkeys();
             mHotkeyMgr.ResetHotkeys();
         }
 
