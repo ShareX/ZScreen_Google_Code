@@ -33,6 +33,7 @@ namespace HelpersLib
         public ushort ID { get; private set; }
         public Keys Key { get; private set; }
         public Action HotkeyPress { get; set; }
+        public object Tag { get; set; }
 
         public HotkeyInfo(ushort id, Keys key, Action hotkeyPress = null)
         {

@@ -9,7 +9,7 @@ namespace ZScreenGUI
     {
         public static int mHKSelectedRow = -1;
 
-        private void RegisterHotkeys(bool resetKeys)
+        private void RegisterHotkeys(bool resetKeys = false)
         {
             foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
@@ -17,56 +17,71 @@ namespace ZScreenGUI
             }
         }
 
-        private void RegisterHotkey(HotkeyTask hotkeyEnum, bool resetKeys)
+        private void RegisterHotkey(HotkeyTask hotkeyEnum, bool resetKeys = false)
         {
-            object userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString().Replace(" ", string.Empty));
+            object userHotKey;
 
-            if (!resetKeys)
+            if (resetKeys)
+            {
+                userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString().Replace(" ", string.Empty));
+            }
+            else
             {
                 userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString().Replace(" ", string.Empty));
             }
 
-            if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
+            if (userHotKey != null && userHotKey is Keys)
             {
                 Keys hotkey = (Keys)userHotKey;
+
+                HotkeyInfo oldHotkeyInfo = GetHotkeyInfoFromTag(hotkeyEnum);
+                UnregisterHotkey(oldHotkeyInfo);
+
+                HotkeyInfo newHotkeyInfo = null;
+
                 switch (hotkeyEnum)
                 {
                     case HotkeyTask.ActiveWindow:
-                        RegisterHotkey(hotkey, CaptureActiveWindow);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureActiveWindow);
                         break;
                     case HotkeyTask.CropShot:
-                        RegisterHotkey(hotkey, CaptureRectRegion);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureRectRegion);
                         break;
                     case HotkeyTask.EntireScreen:
-                        RegisterHotkey(hotkey, CaptureEntireScreen);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureEntireScreen);
                         break;
                     case HotkeyTask.ClipboardUpload:
-                        RegisterHotkey(hotkey, UploadUsingClipboardOrGoogleTranslate);
+                        newHotkeyInfo = RegisterHotkey(hotkey, UploadUsingClipboardOrGoogleTranslate);
                         break;
                     case HotkeyTask.SelectedWindow:
-                        RegisterHotkey(hotkey, CaptureSelectedWindow);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureSelectedWindow);
                         break;
                     case HotkeyTask.LastCropShot:
-                        RegisterHotkey(hotkey, CaptureRectRegionLast);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureRectRegionLast);
                         break;
                     case HotkeyTask.AutoCapture:
-                        RegisterHotkey(hotkey, ShowAutoCapture);
+                        newHotkeyInfo = RegisterHotkey(hotkey, ShowAutoCapture);
                         break;
                     case HotkeyTask.DropWindow:
-                        RegisterHotkey(hotkey, ShowDropWindow);
+                        newHotkeyInfo = RegisterHotkey(hotkey, ShowDropWindow);
                         break;
                     case HotkeyTask.FreehandCropShot:
-                        RegisterHotkey(hotkey, CaptureFreeHandRegion);
+                        newHotkeyInfo = RegisterHotkey(hotkey, CaptureFreeHandRegion);
                         break;
                     case HotkeyTask.LanguageTranslator:
-                        RegisterHotkey(hotkey, StartWorkerTranslator);
+                        newHotkeyInfo = RegisterHotkey(hotkey, StartWorkerTranslator);
                         break;
                     case HotkeyTask.ScreenColorPicker:
-                        RegisterHotkey(hotkey, ScreenColorPicker);
+                        newHotkeyInfo = RegisterHotkey(hotkey, ScreenColorPicker);
                         break;
                     case HotkeyTask.TwitterClient:
-                        RegisterHotkey(hotkey, Adapter.ShowTwitterClient);
+                        newHotkeyInfo = RegisterHotkey(hotkey, Adapter.ShowTwitterClient);
                         break;
+                }
+
+                if (newHotkeyInfo != null)
+                {
+                    newHotkeyInfo.Tag = hotkeyEnum;
                 }
             }
         }
@@ -117,9 +132,7 @@ namespace ZScreenGUI
 
         public void SetHotkey(int row, Keys key)
         {
-            // TODO: Unregister old hotkey
             dgvHotkeys.Rows[row].Cells[1].Value = key.ToSpecialString();
-            // TODO: Register new key
             lblHotkeyStatus.Text = dgvHotkeys.Rows[row].Cells[0].Value + " Hotkey set to: " + key.ToSpecialString() + ". Press enter when done setting all desired Hotkeys.";
             SaveHotkey(dgvHotkeys.Rows[row].Cells[0].Value.ToString(), key);
         }

@@ -45,9 +45,9 @@ namespace HelpersLib
             HotkeyList = new List<HotkeyInfo>();
         }
 
-        public bool RegisterHotkey(Keys hotkey, Action hotkeyPress = null)
+        public HotkeyInfo RegisterHotkey(Keys hotkey, Action hotkeyPress = null)
         {
-            if (IsHotkeyExist(hotkey)) return false;
+            if (IsHotkeyExist(hotkey)) return null;
 
             Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
 
@@ -75,9 +75,11 @@ namespace HelpersLib
                     throw new Exception("Unable to register hotkey. Error: " + Marshal.GetLastWin32Error().ToString());
                 }
 
-                HotkeyList.Add(new HotkeyInfo(id, hotkey, hotkeyPress));
+                HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress);
 
-                return true;
+                HotkeyList.Add(hotkeyInfo);
+
+                return hotkeyInfo;
             }
             catch (Exception e)
             {
@@ -85,19 +87,7 @@ namespace HelpersLib
                 StaticHelper.WriteException(e);
             }
 
-            return false;
-        }
-
-        public bool UnregisterHotkey(Keys key)
-        {
-            HotkeyInfo hotkey = GetHotkeyInfoFromKey(key);
-
-            if (hotkey != null)
-            {
-                return UnregisterHotkey(hotkey.ID);
-            }
-
-            return false;
+            return null;
         }
 
         public bool UnregisterHotkey(ushort id)
@@ -113,11 +103,28 @@ namespace HelpersLib
             return result;
         }
 
+        public bool UnregisterHotkey(HotkeyInfo hotkeyInfo)
+        {
+            if (hotkeyInfo != null)
+            {
+                return UnregisterHotkey(hotkeyInfo.ID);
+            }
+
+            return false;
+        }
+
+        public bool UnregisterHotkey(Keys key)
+        {
+            HotkeyInfo hotkeyInfo = GetHotkeyInfoFromKey(key);
+
+            return UnregisterHotkey(hotkeyInfo);
+        }
+
         public void UnregisterAllHotkeys()
         {
             for (int i = 0; i < HotkeyList.Count; i++)
             {
-                UnregisterHotkey(HotkeyList[i].ID);
+                UnregisterHotkey(HotkeyList[i]);
                 HotkeyList.RemoveAt(i);
             }
         }
@@ -130,6 +137,11 @@ namespace HelpersLib
         public HotkeyInfo GetHotkeyInfoFromKey(Keys key)
         {
             return HotkeyList.FirstOrDefault(x => x.Key == key);
+        }
+
+        public HotkeyInfo GetHotkeyInfoFromTag(object tag)
+        {
+            return HotkeyList.FirstOrDefault(x => x.Tag == tag);
         }
 
         public HotkeyInfo GetHotkeyInfoFromID(ushort id)
