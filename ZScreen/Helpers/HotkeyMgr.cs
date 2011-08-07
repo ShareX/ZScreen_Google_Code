@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using HelpersLib;
 using ZScreenLib;
 
@@ -11,22 +12,6 @@ namespace ZScreenGUI
         public DataGridView dgvHotkeys { get; set; }
 
         public Label lblHotkeyStatus { get; set; }
-
-        public string[] HotkeyNames = new string[]
-        {
-            "Entire Screen",
-            "Active Window",
-            "Crop Shot",
-            "Selected Window",
-            "Freehand Crop Shot",
-            "Clipboard Upload",
-            "Last Crop Shot",
-            "Auto Capture",
-            "Drop Window",
-            "Language Translator",
-            "Screen Color Picker",
-            "Twitter Client"
-        };
 
         public HotkeyMgr(ref DataGridView dgv, ref Label info)
         {
@@ -43,9 +28,9 @@ namespace ZScreenGUI
         {
             dgvHotkeys.Rows.Clear();
 
-            foreach (string name in HotkeyNames)
+            foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                AddHotkey(name, resetKeys);
+                AddHotkey(hk.ToString(), resetKeys);
             }
 
             dgvHotkeys.Refresh();
@@ -54,9 +39,9 @@ namespace ZScreenGUI
         public void ResetHotkeys()
         {
             int index = 0;
-            foreach (string descr in HotkeyNames)
+            foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + descr.Replace(" ", string.Empty));
+                object dfltHotkey = Engine.conf.GetFieldValue("DefaultHotkey" + hk.ToString().Replace(" ", string.Empty));
                 SetHotkey(index++, (Keys)dfltHotkey);
             }
             UpdateHotkeysDGV(true);

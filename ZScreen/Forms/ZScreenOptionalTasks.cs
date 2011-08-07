@@ -26,6 +26,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.OtherServices;
@@ -38,7 +39,7 @@ namespace ZScreenGUI
     /// <summary>
     /// Class responsible for all other tasks except for Image Uploading
     /// </summary>
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         #region Check Updates
 

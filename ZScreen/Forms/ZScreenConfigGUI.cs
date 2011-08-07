@@ -14,7 +14,7 @@ using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : Form
+    public partial class ZScreen : HotkeyForm
     {
         private void ZScreen_ConfigGUI()
         {
