@@ -600,7 +600,7 @@ namespace ZScreenGUI
                 Hide();
             }
 
-            RegisterHotkeys(false);
+            UpdateHotkeys(false);
             Loader.KeyboardHook();
             Engine.conf.FirstRun = false;
 
@@ -1871,7 +1871,7 @@ namespace ZScreenGUI
             {
                 if (chkHotkeys.Checked)
                 {
-                    RegisterHotkeys(false);
+                    UpdateHotkeys(false);
                 }
                 else
                 {
