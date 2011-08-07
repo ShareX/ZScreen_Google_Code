@@ -63,6 +63,7 @@ namespace ZScreenLib
             Started,
             RetryPending,
             ThreadMode,
+            ImageEdited,
             ImageWritten,
             CancellationPending,
             Finished
@@ -213,6 +214,7 @@ namespace ZScreenLib
         /// <param name="worker"></param>
         /// <param name="job"></param>
         public WorkerTask(BackgroundWorker worker, JobLevel2 job)
+            : this()
         {
             MyWorker = worker;
             AssignJob(job);
@@ -292,6 +294,12 @@ namespace ZScreenLib
                 EImageFormat imageFormat;
                 WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
                 FileName = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
+
+                if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+                {
+                    Status.Add(TaskStatus.ImageEdited);
+                    PerformActions();
+                }
 
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
@@ -719,7 +727,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        PublishImage();
+                        UploadImage();
                     }
                     break;
                 case OutputEnum.Email:
@@ -729,16 +737,6 @@ namespace ZScreenLib
                     UploadToSharedFolder();
                     break;
             }
-        }
-
-        public void PublishImage()
-        {
-            if (TempImage != null && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
-            {
-                PerformActions();
-            }
-
-            UploadImage();
         }
 
         public void UploadImage()
