@@ -37,6 +37,7 @@ using System.Threading;
 using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
+using Greenshot.Helpers;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -134,8 +135,8 @@ namespace ZScreenGUI
                 {
                     new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
                     new Command("cu|clipboardupload", () => UploadUsingClipboard()),
-                    new Command("fs|fullscreen", () => CaptureEntireScreen()),
-                    new Command("cc|crop", () => CaptureRectRegion()),
+                    new Command("fs|fullscreen", () => CaptureEntireScreenBw()),
+                    new Command("cc|crop", () => CaptureRectRegionBw()),
                     new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
                     new Command("hi|history", () => OpenHistory())
                 };
@@ -152,6 +153,7 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
+                HotkeyHelper.HandleMessages(ref m);
                 switch (m.Msg)
                 {
                     case 992: // nfi but this is the only way it works for XP
@@ -600,6 +602,7 @@ namespace ZScreenGUI
                 Hide();
             }
 
+            RegisterHotkeys(false);
             Loader.KeyboardHook();
             Engine.conf.FirstRun = false;
 

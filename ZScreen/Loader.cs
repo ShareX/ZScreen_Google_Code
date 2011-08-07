@@ -38,9 +38,13 @@ namespace ZScreenGUI
     public static class Loader
     {
         public static bool IsMultiInstance { get; private set; }
+
         public static string CommandLineArg { get; private set; }
+
         public static ZScreen MainForm { get; private set; }
+
         public static WorkerTask LastWorkerTask { get; set; }
+
         public static GoogleTranslateGUI MyGTGUI { get; set; }
 
         [STAThread]

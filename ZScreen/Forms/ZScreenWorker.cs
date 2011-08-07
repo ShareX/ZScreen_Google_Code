@@ -119,17 +119,23 @@ namespace ZScreenGUI
                         case WorkerTask.JobLevel2.CaptureSelectedWindow:
                         case WorkerTask.JobLevel2.CaptureRectRegion:
                         case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                            success = bwTask.BwCaptureRegionOrWindow();
-                            break;
-                        case WorkerTask.JobLevel2.CaptureFreeHandRegion:
-                            success = bwTask.BwCaptureFreehandCrop();
-                            break;
-                        default:
-                            if (File.Exists(bwTask.LocalFilePath) || bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
+                            if (bwTask.TempImage == null)
                             {
-                                success = true;
+                                success = bwTask.BwCaptureRegionOrWindow();
                             }
                             break;
+                        case WorkerTask.JobLevel2.CaptureFreeHandRegion:
+                            if (bwTask.TempImage == null)
+                            {
+                                success = bwTask.BwCaptureFreehandCrop();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    if (File.Exists(bwTask.LocalFilePath) || bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
+                    {
+                        success = true;
                     }
                     if (success)
                     {
@@ -436,10 +442,10 @@ namespace ZScreenGUI
                     mHotkeyMgr.SetHotkey(e.KeyData);
                 }
             }
-            else
-            {
-                e.Handled = UploadUsingHotkeys(e.KeyData);
-            }
+            //else
+            //{
+            //    e.Handled = UploadUsingHotkeys(e.KeyData);
+            //}
         }
 
         public string GetSelectedHotkeyName()
@@ -721,9 +727,26 @@ namespace ZScreenGUI
             ddTask.RunWorker();
         }
 
-        public void CaptureEntireScreen()
+        public void CaptureActiveWindow()
+        {
+            WorkerTask hkawTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow);
+            hkawTask.CaptureActiveWindow();
+            hkawTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_EntireScreen(hkawTask);
+        }
+
+        public void CaptureEntireScreenBw()
         {
             RunWorkerAsync_EntireScreen(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen));
+        }
+
+        public void CaptureEntireScreen()
+        {
+            WorkerTask hkesTask = new WorkerTask(CreateWorker());
+            hkesTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
+            hkesTask.CaptureScreen();
+            hkesTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_EntireScreen(hkesTask);
         }
 
         public void CaptureSelectedWindow()
@@ -731,9 +754,18 @@ namespace ZScreenGUI
             RunWorkerAsync_SelectedWindow(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow));
         }
 
-        public void CaptureRectRegion()
+        public void CaptureRectRegionBw()
         {
             RunWorkerAsync_CropShot(new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion));
+        }
+
+        public void CaptureRectRegion()
+        {
+            WorkerTask hkTask = new WorkerTask(CreateWorker());
+            hkTask.AssignJob(WorkerTask.JobLevel2.CaptureRectRegion);
+            hkTask.BwCaptureRegionOrWindow();
+            hkTask.WriteImage(ucDestOptions);
+            RunWorkerAsync_CropShot(hkTask);
         }
 
         public bool UploadUsingFileSystem(params string[] fileList)

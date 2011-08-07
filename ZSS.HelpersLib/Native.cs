@@ -40,5 +40,6 @@ namespace HelpersLib
         }
 
         public const int WM_HOTKEY = 0x312;
+        public const uint VK_SNAPSHOT = 0x2C;
     }
 }
