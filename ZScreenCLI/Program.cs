@@ -172,7 +172,7 @@ namespace ZScreenCLI
         {
             WorkerTask csTask = DefaultWorkerTask();
             csTask.AssignJob(job2);
-            if (csTask.BwCaptureRegionOrWindow())
+            if (csTask.CaptureRegionOrWindow())
             {
                 csTask.PublishData();
             }

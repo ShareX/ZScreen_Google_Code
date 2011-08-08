@@ -444,7 +444,7 @@ namespace ZScreenGUI
         public void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
-            hkswTask.BwCaptureRegionOrWindow();
+            hkswTask.CaptureRegionOrWindow();
             hkswTask.WriteImage();
             RunWorkerAsync_Screenshots(hkswTask);
         }
@@ -452,7 +452,7 @@ namespace ZScreenGUI
         public void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
-            hkrcTask.BwCaptureRegionOrWindow();
+            hkrcTask.CaptureRegionOrWindow();
             hkrcTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrcTask);
         }
@@ -460,7 +460,7 @@ namespace ZScreenGUI
         public void CaptureRectRegionLast()
         {
             WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-            hkrclTask.BwCaptureRegionOrWindow();
+            hkrclTask.CaptureRegionOrWindow();
             hkrclTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrclTask);
         }
@@ -468,7 +468,7 @@ namespace ZScreenGUI
         public void CaptureFreeHandRegion()
         {
             WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-            hkfhrTask.BwCaptureFreehandCrop();
+            hkfhrTask.CaptureFreehandCrop();
             hkfhrTask.WriteImage();
             RunWorkerAsync_Screenshots(hkfhrTask);
         }

@@ -277,7 +277,6 @@ namespace ZScreenLib
         public Software TextEditorActive;
         public bool PerformActions = false;
         public bool TextEditorEnabled = false;
-        public bool ImageEditorAutoSave = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
