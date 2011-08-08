@@ -557,7 +557,7 @@ namespace ZScreenGUI
             else if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt"));
+                string fp = FileSystem.GetUniqueFilePath(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
                 if (cbTask.TaskOutputs.Contains(OutputEnum.LocalDisk))
                 {
                     FileSystem.WriteText(fp, text);
@@ -591,7 +591,7 @@ namespace ZScreenGUI
                     {
                         if (GraphicsMgr.IsValidImage(fp))
                         {
-                            string cbFilePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, Path.GetFileName(fp)));
+                            string cbFilePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
                             if (fp != cbFilePath)
                             {
                                 string dir = Path.GetDirectoryName(cbFilePath);

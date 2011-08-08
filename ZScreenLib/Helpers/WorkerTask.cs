@@ -256,7 +256,7 @@ namespace ZScreenLib
 
                 if (string.IsNullOrEmpty(LocalFilePath))
                 {
-                    string filePath = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, FileName));
+                    string filePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, FileName);
                     UpdateLocalFilePath(filePath);
                 }
 
@@ -284,7 +284,7 @@ namespace ZScreenLib
                 WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
 
                 string fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
-                string fp = FileSystem.GetUniqueFilePath(Path.Combine(Engine.ImagesDir, fn));
+                string fp = FileSystem.GetUniqueFilePath(Engine.ImagesDir, fn);
                 UpdateLocalFilePath(fp);
 
                 Job1 = JobLevel1.Image;
