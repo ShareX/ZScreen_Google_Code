@@ -197,7 +197,7 @@ namespace ZScreenLib
                         }
                     }
                     // Text and File catagories are still left to process. Exception for Google Translate
-                    else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                    else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
                         if (task.TranslationInfo != null)
                         {

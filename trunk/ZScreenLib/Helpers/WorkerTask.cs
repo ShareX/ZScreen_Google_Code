@@ -89,7 +89,7 @@ namespace ZScreenLib
             [Description("Drag & Drop Window")]
             UploadFromDragDrop,
             [Description("Language Translator")]
-            LANGUAGE_TRANSLATOR,
+            Translate,
             [Description("Screen Color Picker")]
             SCREEN_COLOR_PICKER,
             [Description("Upload Image")]
@@ -237,7 +237,7 @@ namespace ZScreenLib
                 case JobLevel2.UploadFromClipboard:
                     Job1 = JobLevel1.File;
                     break;
-                case JobLevel2.LANGUAGE_TRANSLATOR:
+                case JobLevel2.Translate:
                     Job1 = JobLevel1.Text;
                     break;
                 default:

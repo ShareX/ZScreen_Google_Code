@@ -53,7 +53,7 @@ namespace ZScreenLib
 
             niTray.Tag = task;
 
-            if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+            if (task.Job2 == WorkerTask.JobLevel2.Translate)
             {
                 sbMsg.AppendLine(task.TranslationInfo.SourceLanguage + " -> " + task.TranslationInfo.TargetLanguage);
                 sbMsg.AppendLine("Text: " + task.TranslationInfo.Text);
@@ -127,7 +127,7 @@ namespace ZScreenLib
                 string cbString;
                 switch (task.Job2)
                 {
-                    case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                    case WorkerTask.JobLevel2.Translate:
                         cbString = task.TranslationInfo.Result;
                         if (!string.IsNullOrEmpty(cbString))
                         {
