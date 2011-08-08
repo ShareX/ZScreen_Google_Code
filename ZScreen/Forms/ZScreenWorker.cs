@@ -88,51 +88,12 @@ namespace ZScreenGUI
             }
 
             Engine.MyLogger.WriteLine(string.Format("Job started: {0}", bwTask.Job2));
-            bool success = false;
+
             switch (bwTask.Job1)
             {
                 case JobLevel1.Image:
                 case JobLevel1.File:
-                    switch (bwTask.Job2)
-                    {
-                        case WorkerTask.JobLevel2.CaptureEntireScreen:
-                            if (bwTask.TempImage == null)
-                            {
-                                success = bwTask.CaptureScreen();
-                            }
-                            break;
-                        case WorkerTask.JobLevel2.CaptureActiveWindow:
-                            if (bwTask.TempImage == null)
-                            {
-                                success = bwTask.CaptureActiveWindow();
-                            }
-                            break;
-                        case WorkerTask.JobLevel2.CaptureSelectedWindow:
-                        case WorkerTask.JobLevel2.CaptureRectRegion:
-                        case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
-                            if (bwTask.TempImage == null)
-                            {
-                                success = bwTask.BwCaptureRegionOrWindow();
-                            }
-                            break;
-                        case WorkerTask.JobLevel2.CaptureFreeHandRegion:
-                            if (bwTask.TempImage == null)
-                            {
-                                success = bwTask.BwCaptureFreehandCrop();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    if (File.Exists(bwTask.LocalFilePath) || bwTask.TempImage != null || !string.IsNullOrEmpty(bwTask.TempText))
-                    {
-                        success = true;
-                    }
-                    if (success)
-                    {
-                        bwTask.WriteImage();
-                        bwTask.PublishData();
-                    }
+                    bwTask.PublishData();
                     break;
                 case JobLevel1.Text:
                     switch (bwTask.Job2)
@@ -140,7 +101,7 @@ namespace ZScreenGUI
                         case WorkerTask.JobLevel2.UploadFromClipboard:
                             bwTask.UploadText();
                             break;
-                        case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                        case WorkerTask.JobLevel2.Translate:
                             bwTask.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(bwTask.TranslationInfo));
                             bwTask.SetText(bwTask.TranslationInfo.Result);
                             break;
@@ -271,7 +232,7 @@ namespace ZScreenGUI
                     switch (task.Job1)
                     {
                         case JobLevel1.Text:
-                            if (task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                            if (task.Job2 == WorkerTask.JobLevel2.Translate)
                             {
                                 UpdateGoogleTranslateGUI(task.TranslationInfo);
 
@@ -319,7 +280,7 @@ namespace ZScreenGUI
                         this.niTray.Icon = Resources.zss_tray;
                     }
 
-                    if (task.UploadResults.Count > 0 || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+                    if (task.UploadResults.Count > 0 || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
                         if (Engine.conf.CompleteSound)
                         {
@@ -397,7 +358,7 @@ namespace ZScreenGUI
 
             switch (job)
             {
-                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                case WorkerTask.JobLevel2.Translate:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
                     task.SetTranslationInfo(new GoogleTranslateInfo()
                     {
@@ -520,7 +481,7 @@ namespace ZScreenGUI
 
         public void RunWorkerAsync_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
-            WorkerTask t = CreateTask(WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR);
+            WorkerTask t = CreateTask(WorkerTask.JobLevel2.Translate);
             if (Loader.MyGTGUI == null)
             {
                 Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys());
@@ -731,7 +692,7 @@ namespace ZScreenGUI
                 case WorkerTask.JobLevel2.UploadFromDragDrop:
                     ShowDropWindow();
                     break;
-                case WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR:
+                case WorkerTask.JobLevel2.Translate:
                     StartWorkerTranslator();
                     break;
                 case WorkerTask.JobLevel2.SCREEN_COLOR_PICKER:
@@ -802,7 +763,7 @@ namespace ZScreenGUI
 
         public WorkerTask RetryUpload(WorkerTask task)
         {
-            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.LANGUAGE_TRANSLATOR)
+            if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.Translate)
             {
                 if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
                     string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.Status.Contains(WorkerTask.TaskStatus.RetryPending) && File.Exists(task.LocalFilePath))
