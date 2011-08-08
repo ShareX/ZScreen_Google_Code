@@ -48,8 +48,11 @@ namespace ZScreenTesterGUI
         }
 
         public string TestImageFilePath { get; set; }
+
         public string TestFilePath { get; set; }
+
         public string TestText { get; set; }
+
         public string TestURL { get; set; }
 
         private bool isTesting = false;
@@ -221,7 +224,7 @@ namespace ZScreenTesterGUI
                     break;
                 }
 
-                WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, WorkerTask.JobLevel2.UploadFromClipboard);
+                WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, WorkerTask.JobLevel2.UploadFromClipboard, new DestSelector());
 
                 uploader.Timer = new Stopwatch();
                 uploader.Timer.Start();

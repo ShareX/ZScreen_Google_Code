@@ -130,7 +130,7 @@ namespace ZScreenGUI
                     }
                     if (success)
                     {
-                        bwTask.WriteImage(ucDestOptions);
+                        bwTask.WriteImage();
                         bwTask.PublishData();
                     }
                     break;
@@ -379,7 +379,7 @@ namespace ZScreenGUI
 
         public WorkerTask CreateTask(WorkerTask.JobLevel2 job)
         {
-            return new WorkerTask(CreateWorker(), job);
+            return new WorkerTask(CreateWorker(), job, ucDestOptions);
         }
 
         /// <summary>
@@ -466,49 +466,49 @@ namespace ZScreenGUI
 
         public void CaptureActiveWindow()
         {
-            WorkerTask hkawTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureActiveWindow);
+            WorkerTask hkawTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveWindow);
             hkawTask.CaptureActiveWindow();
-            hkawTask.WriteImage(ucDestOptions);
+            hkawTask.WriteImage();
             RunWorkerAsync_Screenshots(hkawTask);
         }
 
         public void CaptureEntireScreen()
         {
-            WorkerTask hkesTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureEntireScreen);
+            WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureEntireScreen);
             hkesTask.CaptureScreen();
-            hkesTask.WriteImage(ucDestOptions);
+            hkesTask.WriteImage();
             RunWorkerAsync_Screenshots(hkesTask);
         }
 
         public void CaptureSelectedWindow()
         {
-            WorkerTask hkswTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureSelectedWindow);
+            WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
             hkswTask.BwCaptureRegionOrWindow();
-            hkswTask.WriteImage(ucDestOptions);
+            hkswTask.WriteImage();
             RunWorkerAsync_Screenshots(hkswTask);
         }
 
         public void CaptureRectRegion()
         {
-            WorkerTask hkrcTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureRectRegion);
+            WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
             hkrcTask.BwCaptureRegionOrWindow();
-            hkrcTask.WriteImage(ucDestOptions);
+            hkrcTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrcTask);
         }
 
         public void CaptureRectRegionLast()
         {
-            WorkerTask hkrclTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureLastCroppedWindow);
+            WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
             hkrclTask.BwCaptureRegionOrWindow();
-            hkrclTask.WriteImage(ucDestOptions);
+            hkrclTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrclTask);
         }
 
         public void CaptureFreeHandRegion()
         {
-            WorkerTask hkfhrTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.CaptureFreeHandRegion);
+            WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
             hkfhrTask.BwCaptureFreehandCrop();
-            hkfhrTask.WriteImage(ucDestOptions);
+            hkfhrTask.WriteImage();
             RunWorkerAsync_Screenshots(hkfhrTask);
         }
 
@@ -551,7 +551,7 @@ namespace ZScreenGUI
             if (Clipboard.ContainsImage())
             {
                 cbTask.SetImage(Clipboard.GetImage());
-                cbTask.WriteImage(ucDestOptions);
+                cbTask.WriteImage();
                 cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())
@@ -574,7 +574,7 @@ namespace ZScreenGUI
 
         public void UploadUsingDragDrop(string fp)
         {
-            WorkerTask ddTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromDragDrop);
+            WorkerTask ddTask = CreateTask(WorkerTask.JobLevel2.UploadFromDragDrop);
             ddTask.UpdateLocalFilePath(fp);
             ddTask.RunWorker();
         }
@@ -626,7 +626,7 @@ namespace ZScreenGUI
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    WorkerTask cbTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
+                    WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
                     cbTask.SetImage(fp);
                     cbTask.UpdateLocalFilePath(fp);
                     cbTask.RunWorker();
@@ -639,7 +639,7 @@ namespace ZScreenGUI
                 }
                 else
                 {
-                    WorkerTask fuTask = new WorkerTask(CreateWorker(), WorkerTask.JobLevel2.UploadFromClipboard);
+                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
                     fuTask.UpdateLocalFilePath(fp);
                     fuTask.RunWorker();
                 }
@@ -704,7 +704,7 @@ namespace ZScreenGUI
 
         internal void EventJobs(object sender, WorkerTask.JobLevel2 job)
         {
-            WorkerTask task = new WorkerTask(CreateWorker(), job);
+            WorkerTask task = CreateTask(job);
             switch (job)
             {
                 case WorkerTask.JobLevel2.CaptureEntireScreen:
