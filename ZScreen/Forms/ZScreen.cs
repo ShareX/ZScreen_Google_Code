@@ -612,6 +612,10 @@ namespace ZScreenGUI
 
             if (Engine.conf.FirstRun)
             {
+                if (Engine.HasAero)
+                {
+                    chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
+                }
                 ShowWindow();
             }
 
