@@ -451,7 +451,7 @@ namespace ZScreenLib
 
         #region Capture
 
-        public bool BwCaptureRegionOrWindow()
+        public bool CaptureRegionOrWindow()
         {
             IsTakingScreenShot = true;
 
@@ -528,7 +528,7 @@ namespace ZScreenLib
             return TempImage != null;
         }
 
-        public bool BwCaptureFreehandCrop()
+        public bool CaptureFreehandCrop()
         {
             using (FreehandCapture crop = new FreehandCapture())
             {
@@ -663,7 +663,10 @@ namespace ZScreenLib
                                 editor.SetImagePath(LocalFilePath);
                                 editor.Visible = false;
                                 editor.ShowDialog();
-                                SetImage(editor.GetImageForExport());
+                                if (!editor.surface.Modified)
+                                {
+                                    SetImage(editor.GetImageForExport());
+                                }
                             }
                             catch (Exception ex)
                             {

@@ -160,8 +160,6 @@ namespace ZScreenGUI
                 lbSoftware.SelectedIndex = 0;
             }
 
-            chkImageEditorAutoSave.Checked = Engine.conf.ImageEditorAutoSave;
-
             // Text Editors
 
             if (Engine.conf.TextEditors.Count == 0)

@@ -44,7 +44,6 @@ using UploadersLib.HelperClasses;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
-using ZScreenTesterGUI;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
@@ -729,7 +728,6 @@ namespace ZScreenGUI
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnRemoveImageEditor.Enabled = !app.Protected;
-                    gbImageEditorSettings.Visible = app.Name == Engine.zImageAnnotator;
 
                     SetActiveImageSoftware();
                 }
@@ -1589,11 +1587,6 @@ namespace ZScreenGUI
             ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
         }
 
-        private void chkImageEditorAutoSave_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ImageEditorAutoSave = chkImageEditorAutoSave.Checked;
-        }
-
         private void tsmFTPClient_Click(object sender, EventArgs e)
         {
             OpenFTPClient();
@@ -1893,7 +1886,7 @@ namespace ZScreenGUI
 
         private void btnOpenZScreenTester_Click(object sender, EventArgs e)
         {
-            new TesterGUI().ShowDialog();
+            new ZScreenTesterGUI.TesterGUI().ShowDialog();
         }
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
