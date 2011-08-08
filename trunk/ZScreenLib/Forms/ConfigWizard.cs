@@ -41,11 +41,11 @@ namespace ZScreenLib
 
         public List<OutputEnum> cwOutputs = new List<OutputEnum>();
         public List<ClipboardContentEnum> cwClipboardContent = new List<ClipboardContentEnum>();
-        public List<int> MyLinkFormat = new List<int>();
-        public List<int> MyImageUploaders = new List<int>();
-        public List<int> MyFileUploaders = new List<int>();
-        public List<int> MyTextUploaders = new List<int>();
-        public List<int> MyLinkUploaders = new List<int>();
+        public List<int> cwLinkFormat = new List<int>();
+        public List<int> cwImageUploaders = new List<int>();
+        public List<int> cwFileUploaders = new List<int>();
+        public List<int> cwTextUploaders = new List<int>();
+        public List<int> cwLinkUploaders = new List<int>();
         private string DefaultRootFolder;
 
         public ConfigWizard(string rootDir)
@@ -59,19 +59,19 @@ namespace ZScreenLib
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             cwOutputs.Add(OutputEnum.Clipboard);
             cwClipboardContent.Add((int)ClipboardContentEnum.Data);
-            MyLinkFormat.Add((int)LinkFormatEnum.FULL);
-            MyImageUploaders.Add((int)ImageUploaderType.IMGUR);
-            MyTextUploaders.Add((int)TextUploaderType.PASTE2);
-            MyFileUploaders.Add((int)FileUploaderType.SendSpace);
-            MyLinkUploaders.Add((int)UrlShortenerType.Google);
+            cwLinkFormat.Add((int)LinkFormatEnum.FULL);
+            cwImageUploaders.Add((int)ImageUploaderType.IMGUR);
+            cwTextUploaders.Add((int)TextUploaderType.PASTE2);
+            cwFileUploaders.Add((int)FileUploaderType.SendSpace);
+            cwLinkUploaders.Add((int)UrlShortenerType.Google);
 
             dsh.AddEnumOutputsWithConfigSettings(cwOutputs);
             dsh.AddEnumClipboardContentWithRuntimeSettings(cwClipboardContent);
-            dsh.AddEnumLinkFormatWithRuntimeSettings(MyLinkFormat);
-            dsh.AddEnumDestImageToMenuWithRuntimeSettings(MyImageUploaders);
-            dsh.AddEnumDestTextToMenuWithRuntimeSettings(MyTextUploaders);
-            dsh.AddEnumDestFileToMenuWithRuntimeSettings(MyFileUploaders);
-            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(MyLinkUploaders);
+            dsh.AddEnumLinkFormatWithRuntimeSettings(cwLinkFormat);
+            dsh.AddEnumDestImageToMenuWithRuntimeSettings(cwImageUploaders);
+            dsh.AddEnumDestTextToMenuWithRuntimeSettings(cwTextUploaders);
+            dsh.AddEnumDestFileToMenuWithRuntimeSettings(cwFileUploaders);
+            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(cwLinkUploaders);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -79,12 +79,13 @@ namespace ZScreenLib
             PreferSystemFolders = chkPreferSystemFolders.Checked;
             RootFolder = txtRootFolder.Text;
 
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, cwOutputs);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, cwClipboardContent);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, MyFileUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, MyImageUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, MyTextUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, MyLinkUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, cwLinkFormat);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, cwFileUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, cwImageUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, cwTextUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, cwLinkUploaders);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

@@ -271,10 +271,10 @@ namespace ZScreenLib
                         Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
                         Engine.AppConf.Outputs = cw.cwOutputs.Cast<int>().ToList();
                         Engine.AppConf.ClipboardContent = cw.cwClipboardContent.Cast<int>().ToList();
-                        Engine.AppConf.ImageUploaders = cw.MyImageUploaders;
-                        Engine.AppConf.FileUploaders = cw.MyFileUploaders;
-                        Engine.AppConf.TextUploaders = cw.MyTextUploaders;
-                        Engine.AppConf.LinkUploaders = cw.MyLinkUploaders;
+                        Engine.AppConf.ImageUploaders = cw.cwImageUploaders;
+                        Engine.AppConf.FileUploaders = cw.cwFileUploaders;
+                        Engine.AppConf.TextUploaders = cw.cwTextUploaders;
+                        Engine.AppConf.LinkUploaders = cw.cwLinkUploaders;
 
                         MyUploadersConfig.Save(UploadersConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
                         AppConf.Write();
