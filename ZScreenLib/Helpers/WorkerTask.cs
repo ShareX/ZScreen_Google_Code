@@ -214,11 +214,17 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="worker"></param>
         /// <param name="job"></param>
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job)
+        private WorkerTask(BackgroundWorker worker, JobLevel2 job)
             : this()
         {
             MyWorker = worker;
             AssignJob(job);
+        }
+
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions)
+            : this(worker, job)
+        {
+            PrepareOutputs(ucDestOptions);
         }
 
         public void AssignJob(JobLevel2 job)
@@ -254,7 +260,7 @@ namespace ZScreenLib
 
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
 
-                if (string.IsNullOrEmpty(LocalFilePath))
+                if (!string.IsNullOrEmpty(FileName) && string.IsNullOrEmpty(LocalFilePath))
                 {
                     string filePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, FileName);
                     UpdateLocalFilePath(filePath);
@@ -681,13 +687,8 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        public void WriteImage(DestSelector ucDestOptions)
+        public void WriteImage()
         {
-            if (TempImage != null)
-            {
-                PrepareOutputs(ucDestOptions);
-            }
-
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
                 string fp = LocalFilePath;
