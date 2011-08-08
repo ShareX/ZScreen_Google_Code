@@ -1472,7 +1472,10 @@ namespace ZScreenLib
                     sb.Append(", ");
                 }
             }
-            sb.Remove(sb.Length - 2, 2);
+            if (sb.Length > 2)
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
             return sb.ToString();
         }
 
