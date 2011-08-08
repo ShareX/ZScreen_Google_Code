@@ -83,11 +83,7 @@ namespace ZScreenLib
                 FilePath = txtInputText.Text;
                 this.DialogResult = DialogResult.OK;
 
-                Task.MyImageUploaders.Clear();
-                Task.MyTextUploaders.Clear();
-                Task.MyFileUploaders.Clear();
-                Task.MyLinkUploaders.Clear();
-
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Task.TaskOutputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);

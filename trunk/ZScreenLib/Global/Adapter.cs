@@ -180,17 +180,17 @@ namespace ZScreenLib
 
         public static string ResourcePath = Path.Combine(Application.StartupPath, "ZSS.ResourcesLib.dll");
 
-        public static void SaveMenuConfigToList<T>(ToolStripDropDownButton tsddb, List<T> list)
+        public static void SaveMenuConfigToList<T>(ToolStripDropDownButton src_tsddb, List<T> dest_list)
         {
-            list.Clear();
-            foreach (var obj in tsddb.DropDownItems)
+            dest_list.Clear();
+            foreach (var obj in src_tsddb.DropDownItems)
             {
                 if (obj is ToolStripMenuItem)
                 {
                     ToolStripMenuItem tsmi = (ToolStripMenuItem)obj;
                     if (tsmi.Checked)
                     {
-                        list.Add((T)tsmi.Tag);
+                        dest_list.Add((T)tsmi.Tag);
                     }
                 }
             }
