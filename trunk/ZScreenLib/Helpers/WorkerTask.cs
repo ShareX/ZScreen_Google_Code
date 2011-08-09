@@ -196,8 +196,6 @@ namespace ZScreenLib
 
         public List<UploadResult> UploadResults { get; private set; }
 
-        public bool IsTakingScreenShot { get; private set; }
-
         #endregion Properties
 
         #region Constructors
@@ -453,78 +451,80 @@ namespace ZScreenLib
 
         public bool CaptureRegionOrWindow()
         {
-            IsTakingScreenShot = true;
-
-            bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
-
-            if (Engine.conf == null) Engine.conf = new XMLSettings();
-
-            try
+            if (!Engine.IsTakingScreenShot)
             {
-                using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
+                Engine.IsTakingScreenShot = true;
+
+                bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
+
+                if (Engine.conf == null) Engine.conf = new XMLSettings();
+
+                try
                 {
-                    if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
+                    using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
                     {
-                        SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
-                    }
-                    else
-                    {
-                        if (Engine.conf.UseCropBeta && !windowMode)
+                        if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
-                            using (Crop2 crop = new Crop2(imgSS))
-                            {
-                                if (crop.ShowDialog() == DialogResult.OK)
-                                {
-                                    SetImage(crop.GetCroppedScreenshot());
-                                }
-                            }
-                        }
-                        else if (Engine.conf.UseCropLight && !windowMode)
-                        {
-                            using (CropLight crop = new CropLight(imgSS))
-                            {
-                                if (crop.ShowDialog() == DialogResult.OK)
-                                {
-                                    SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
-                                }
-                            }
+                            SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
                         }
                         else
                         {
-                            using (Crop c = new Crop(imgSS, windowMode))
+                            if (Engine.conf.UseCropBeta && !windowMode)
                             {
-                                if (c.ShowDialog() == DialogResult.OK)
+                                using (Crop2 crop = new Crop2(imgSS))
                                 {
-                                    if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
+                                    if (crop.ShowDialog() == DialogResult.OK)
                                     {
-                                        SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
+                                        SetImage(crop.GetCroppedScreenshot());
                                     }
-                                    else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
+                                }
+                            }
+                            else if (Engine.conf.UseCropLight && !windowMode)
+                            {
+                                using (CropLight crop = new CropLight(imgSS))
+                                {
+                                    if (crop.ShowDialog() == DialogResult.OK)
                                     {
-                                        SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
+                                        SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                using (Crop c = new Crop(imgSS, windowMode))
+                                {
+                                    if (c.ShowDialog() == DialogResult.OK)
+                                    {
+                                        if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
+                                        {
+                                            SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
+                                        }
+                                        else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
+                                        {
+                                            SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-
-                IsTakingScreenShot = false;
-            }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while capturing region");
-                Errors.Add(ex.Message);
-                if (Engine.conf.CaptureEntireScreenOnError)
+                catch (Exception ex)
                 {
-                    CaptureScreen();
+                    Engine.MyLogger.WriteException(ex, "Error while capturing region");
+                    Errors.Add(ex.Message);
+                    if (Engine.conf.CaptureEntireScreenOnError)
+                    {
+                        CaptureScreen();
+                    }
+                }
+                finally
+                {
+                    MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
+                    Engine.IsTakingScreenShot = false;
                 }
             }
-            finally
-            {
-                MyWorker.ReportProgress((int)WorkerTask.ProgressType.UpdateCropMode);
-                IsTakingScreenShot = false;
-            }
+
             return TempImage != null;
         }
 
@@ -713,14 +713,17 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
-            foreach (OutputEnum oe in TaskOutputs)
+            if (File.Exists(LocalFilePath) || TempImage != null || !string.IsNullOrEmpty(TempText))
             {
-                PublishData(oe);
-            }
+                foreach (OutputEnum oe in TaskOutputs)
+                {
+                    PublishData(oe);
+                }
 
-            if (UploadResults.Count > 0)
-            {
-                FlashIcon();
+                if (UploadResults.Count > 0)
+                {
+                    FlashIcon();
+                }
             }
         }
 

@@ -50,6 +50,8 @@ namespace ZScreenLib
 
         public static Stopwatch StartTimer { get; private set; }
 
+        public static bool IsTakingScreenShot { get; set; }
+
         public static bool IsPortable { get; private set; }
 
         public static bool IsMultipleInstance { get; private set; }
