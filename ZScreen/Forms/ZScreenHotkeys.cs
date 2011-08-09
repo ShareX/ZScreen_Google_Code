@@ -84,6 +84,7 @@ namespace ZScreenGUI
                 if (newHotkeyInfo != null)
                 {
                     newHotkeyInfo.Tag = hotkeyEnum;
+                    Engine.MyLogger.WriteLine("Registered Hotkey for " + hotkeyEnum.GetDescription());
                 }
             }
         }
@@ -107,16 +108,17 @@ namespace ZScreenGUI
 
         private void AddHotkey(HotkeyTask hotkeyEnum, bool resetKeys)
         {
-            object userHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
+            object dfltHotKey = Engine.conf.GetFieldValue("DefaultHotkey" + hotkeyEnum.ToString());
+            object userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
 
-            if (!resetKeys)
+            if (resetKeys)
             {
-                userHotKey = Engine.conf.GetFieldValue("Hotkey" + hotkeyEnum.ToString());
+                userHotKey = dfltHotKey;
             }
 
             if (userHotKey != null && userHotKey.GetType() == typeof(Keys))
             {
-                dgvHotkeys.Rows.Add(hotkeyEnum.GetDescription(), ((Keys)userHotKey).ToSpecialString(), ((Keys)userHotKey).ToSpecialString());
+                dgvHotkeys.Rows.Add(hotkeyEnum.GetDescription(), ((Keys)userHotKey).ToSpecialString(), ((Keys)dfltHotKey).ToSpecialString());
                 dgvHotkeys.Rows[dgvHotkeys.Rows.Count - 1].Tag = hotkeyEnum;
             }
         }
@@ -165,7 +167,7 @@ namespace ZScreenGUI
                 return;
             }
 
-            mSetHotkeys = true;
+            IsReconfiguringHotkeys = true;
             mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
@@ -175,7 +177,7 @@ namespace ZScreenGUI
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
         {
-            if (mSetHotkeys)
+            if (IsReconfiguringHotkeys)
             {
                 if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
                 {
@@ -208,7 +210,7 @@ namespace ZScreenGUI
 
         public void CheckHotkeys(object sender, KeyEventArgs e)
         {
-            if (mSetHotkeys)
+            if (IsReconfiguringHotkeys)
             {
                 if (e.KeyData == Keys.Enter)
                 {
@@ -243,9 +245,9 @@ namespace ZScreenGUI
 
         public void QuitSettingHotkeys()
         {
-            if (mSetHotkeys)
+            if (IsReconfiguringHotkeys)
             {
-                mSetHotkeys = false;
+                IsReconfiguringHotkeys = false;
 
                 if (mHKSelectedRow > -1)
                 {
