@@ -40,6 +40,8 @@ namespace HelpersLib
 
         public event HotkeyEventHandler HotkeyPress;
 
+        protected bool IsReconfiguringHotkeys = false;
+
         public HotkeyForm()
         {
             HotkeyList = new List<HotkeyInfo>();
@@ -151,7 +153,7 @@ namespace HelpersLib
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == Native.WM_HOTKEY)
+            if (m.Msg == Native.WM_HOTKEY && !IsReconfiguringHotkeys)
             {
                 HotkeyInfo hotkey = GetHotkeyInfoFromID((ushort)m.WParam);
 

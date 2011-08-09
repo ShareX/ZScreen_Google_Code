@@ -48,7 +48,7 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
-        internal bool mSetHotkeys, bAutoScreenshotsOpened, bDropWindowOpened;
+        internal bool bAutoScreenshotsOpened, bDropWindowOpened;
 
         #region Worker Events
 
