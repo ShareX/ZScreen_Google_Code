@@ -1,3 +1,4 @@
+4.02.4 Adding rounded corners and shadow is now possible to all images {McoreD}
 4.02.3 Integration of Greenshot Image Editor supporting Blue [Issue 232] and other features {McoreD}
 4.02.2 New keyboard hook method to avoid main thread being locked {Jaex/McoreD}
 4.02.1 Advanced option to show FTP Settings prior to uploading [Issue 182] {McoreD}

@@ -157,11 +157,11 @@ namespace ZScreenLib
         public Rectangle LastRegion = Rectangle.Empty;
         public Rectangle LastCapture = Rectangle.Empty;
 
-        [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Make the corners rounded")]
-        public bool CropShotRoundedCorners { get; set; }
+        [Category("Screenshots"), DefaultValue(false), Description("Make the corners rounded")]
+        public bool ImageAddRoundedCorners { get; set; }
 
-        [Category("Screenshots / Crop Shot"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
-        public bool CropShotShadow { get; set; }
+        [Category("Screenshots"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
+        public bool ImageAddShadow { get; set; }
 
         public bool CropGridToggle = false;
         public Size CropGridSize = new Size(100, 100);
