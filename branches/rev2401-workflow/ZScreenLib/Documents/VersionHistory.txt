@@ -1,0 +1,466 @@
+4.02.4 Adding rounded corners and shadow is now possible to all images {McoreD}
+4.02.3 Integration of Greenshot Image Editor supporting Blue [Issue 232] and other features {McoreD}
+4.02.2 New keyboard hook method to avoid main thread being locked {Jaex/McoreD}
+4.02.1 Advanced option to show FTP Settings prior to uploading [Issue 182] {McoreD}
+4.02.0 Added support for Email as an output {Jaex}
+4.01.0 Support for Single Instance. Multiple instances can be launched with -m parameter. {Jaex}
+4.00.6 Last Crop Shot rectangle is saved with an option to reset {McoreD}
+4.00.5 Output to Printer setting is now shared between Image and Text {Jaex/McoreD}
+4.00.4 Support for multiple outputs such as Clipboard, File and Printer {McoreD}
+4.00.3 Option to show Upload Results {McoreD}
+4.00.2 Support for uploading to multiple image/file/text destinations {McoreD}
+4.00.1 Application wide improvements to the logging system {Jaex}
+4.00.0 Core changes to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
+3.38.1 Renamed and rearranged main tabs to simplify user interface {Jaex/McoreD}
+3.38.0 Easier access to all the main functions using a new toolstrip in the main tab {Jaex}
+
+Version 3.37 - 20110514
+
+3.37.00.1 Fixed issue 275 Metafiles on Clipboard Are Not Visible to All Applications {McoreD}
+3.37.00.0 New toolbar in the main tab to easily access quick actions {Jaex}
+3.36.17.1 Fixed issues with Windows 7 Taskbar integration {McoreD}
+3.36.17.0 Much more reliable Google Translator engine powered by the API {Jaex}
+3.36.16.0 Provision for checking updates for Dev channel releases {McoreD}
+3.36.15.0 Advanced setting to prevent overwriting Clipboard content [Issue 364] {McoreD}
+3.36.14.0 Advanced setting to prevent writing image to file system when destination is set to Clipboard [Issue 390] {McoreD}
+3.36.13.0 Ability to enable/disable destinations by setting the destination to None [Issue 388] {McoreD}
+3.36.12.0 Improved Crop Shot to allow user to nudge the cropshot points with keyboard [Issue 86] {Jaex}
+3.36.11.0 Greatly improved ZScreen startup time using precompiled serialization assemblies {Jaex/McoreD}
+3.36.10.0 Buttons for Clipboard Upload and File Upload in the Main Window {McoreD}
+3.36.09.1 Fixed Issue 372 Main window always shows on load {McoreD}
+3.36.09.0 Improved Pastebin.com implementation with user accounts support {Jaex}
+3.36.08.0 Image Editors are now called Actions to support post-actions after capturing images/text/files {McoreD}
+3.36.07.0 TwitSnaps is now using Twitter Open Authorisation {Jaex}
+3.36.06.0 Improved performance in Crop Shot at least by 150% {Jaex}
+3.36.05.0 Revamped History Viewer for permanent storage can be accessed from Tray Menu {Jaex}
+3.36.04.0 Advanced tab Option to enable Crop Lite for slower computers{Jaex}
+3.36.03.0 ZScreen will prompt for Proxy Settings if upload fails within a proxy environment and retry the task {McoreD}
+3.36.02.2 Fixes for tweeting unicode charactors {Jaex}
+3.36.02.1 Fixed Unable to replace image with same filename using upload [Issue 406] {simonw1485}
+3.36.02.0 Ability to use File Destination to upload Text and Images {Jaex}
+3.36.01.0 Copying URL to Clipboard after task is complete is now optional {Jaex}
+3.36.00.0 Freehand Crop Shot support {Jaex}
+3.35.01.0 Added Support for Imgur User Accounts using Open Authorization {Jaex}
+3.35.00.0 Added Dropbox file uploader support {Jaex}
+3.34.01.0 Changes to Update Checker {Jaex}
+3.34.00.1 Fixed configuration always launching at startup [Issue 277] {McoreD}
+3.34.00.0 Added MediaWiki Image Uploader support [Issue 213] {theone256}
+3.33.01.0 New syntax support for file naming to support UserName, UserDomainName and MachineName {Jaex}
+3.33.00.0 Added Google URL Shortener support [Issue 331] {Jaex}
+3.32.00.1 Explorer context menu for uploading did not work [Issue 331] {rgrthat}
+3.32.00.0 Added filez.muffinz.eu File Uploader support {semas123}	
+3.31.00.0 Advanced option to enable Crop Shot with multiple regions selection {Jaex} 
+3.30.00.0 Added share.cx File Uploader support {Jaex}
+3.29.00.0 Added UploadScreenshot Image Uploader support {Jaex}
+3.28.03.2 Uploading did not work in portable mode [Issue 268] {McoreD}
+3.28.03.1 Fixes related to Progress percentage with support for simultaneous uploads {Jaex}
+3.28.03.0 More descriptive text in the NotifyIcon text {McoreD}
+3.28.02.1 Fixes to upload using Drag n Drop window [Issue 264] {McoreD}
+3.28.02.0 File upload enhancements to support uploading large files without significant memory usage {Jaex}
+3.28.01.0 Active FTP Accounts can be chosen seperately for Images, Text and Files [Issue 259] {McoreD}
+3.28.00.0 Added Drop.IO file uploader support [Issue 248] {Jaex}
+3.27.05.0 Progress percentage now works for all image uploaders {Jaex}
+3.27.04.2 Setting image destination to Printer automatically sends image to ImageShack even though it is not checked [Issue 237] {McoreD}
+3.27.04.1 Watermark was not displayed due to the recent addition to exclude Watermark during Clipboard Upload [Issue 256] {Jaex}
+3.27.04.0 Deletion links of uploaded images (if available) will appear in the Debug log {McoreD}
+
+Version 3.27 - 20100315
+
+3.27.3.1 Fixed pastebin.com upload errors due to API changes [Issue 190] {Jaex}
+3.27.3.0 Remote path protocols are now user confirgurable for FTP and Localhost {McoreD}
+3.27.2.0 PropertyGrid option to exclude Watermark during Clipboard Upload {McoreD}
+3.27.1.2 Sending image to Printer also sent the image to other image uploaders [Issue 237] {McoreD}
+3.27.1.1 Thumbnail size uploaded to FTP did not follow the original image aspect ratio [Issue 236] {McoreD}
+3.27.1.0 Added new Clipboard URL Type: Linked Thumbnail as HTML [Issue 236] {McoreD}
+3.27.0.1 Some of the Windows 7 Taskbar integration behavior was activated for Windows XP {McoreD}
+3.27.0.0 Support for localhost image hosting [Issue 219] {McoreD}
+3.26.1.0 Added new Clipboard URL Types: Local File Path, Local File Path as URI {McoreD}
+3.26.0.2 History List length in tab label didn't update upon entry removal [Issue 223] {Jaex}
+3.26.0.1 Canceling Windows deletion confirmation will not remove entry from History List [Issue 222] {Jaex}
+3.26.0.0 Added Img1 Image Uploader support {Jaex}
+3.26.0.6 Syntax %host was not replaced by host in FTP Account settings {McoreD}
+3.26.0.5 Uploading images from the browser did not work sometimes [Issue 206] {Jaex}
+3.25.0.4 Auto incrementing file names did not work as expected {Jaex}
+3.25.0.3 Portable mode did not read settings from previous version settings [Issue 198] {McoreD}
+
+Version 3.25 - 20100110
+
+3.25.0.2 Error while relocating Root folder in Config Wizard under Windows XP [Issue 199] {McoreD}
+3.25.0.1 Portable mode will not create a temp folder in %localappdata% anymore [Issue 198] {McoreD}
+3.25.0.0 Support for Rounded Corners and Shadow in Crop Shot and Selected Window {theone256}
+3.24.0.2 Fixed lack of transparency in screenshots when destination was set to Clipboard [Issue 186] {theone256}
+3.24.0.1 History items were sometimes not read at startup [Issue 183] {Jaex}
+3.24.0.0 Added imgur Image Uploader support {Jaex}
+3.23.0.0 Edit in Piknik support for items in History tab {Jaex}
+3.22.1.0 FTP sub-folder path can now accept syntax such as %y-%mo {McoreD}
+3.22.0.0 PropertyGrid option to show prompt to save the image in a different location [Issue 175] {McoreD}
+3.21.1.2 Cursor was not captured on a multi-monitor configuration [Issue 145] {McoreD}
+3.21.1.1 Crash when scrolling in Options window [Issue 170] {McoreD}
+3.21.1.0 Ability to restore hotkeys to their defaults [Issue 141] {McoreD}
+3.21.0.2 Fixed high CPU usage after opening About Window [Issue 162] {Jaex}
+3.21.0.1 Relocating Images Directory will now setup custom Images Directory [Issue 169] {McoreD}
+3.21.0.0 Window button behavior settings in Options - Interaction tab {Jaex}
+3.20.6.1 Application did not have a setting to exit on close [Issue 168] {McoreD}
+3.20.6.0 Debug information in the Debug tab are now text selectable {Jaex}
+3.20.5.3 Images larger than the limit did not convert to a lossy file format {Jaex}
+
+Version 3.20 - 20091120
+
+3.20.5.2 Opening files with Media Center and Multimedia Keyboards triggered ZScreen Hotkeys [Issue 23] {McoreD}
+3.20.5.1 Filename during FTP upload are URL Encoded for a wider FTP Server compatibility {McoreD}
+3.20.5.0 Improvements to Google Translator incoporating latest changes {Jaex}
+3.20.4.0 Enhanced detection of maximized window position/size for more accurate Active Window capture {Jaex}
+3.20.3.0 Improved Updater to automatically download and install a newer version of the application {Jaex}
+3.20.2.0 Optimize memory usage by trimming the working memory set when idle {theone256}
+3.20.1.0 Enhancements to create better GIF images with options to change GIF Quality [Issue 74] {Jaex}
+3.20.0.0 Ability to run external tools e.g. OptiPNG with arguments prior to uploading images [kode54] {McoreD}
+3.19.1.0 Option to prefer System Folders for Settings and Data in Config Wizard [Issue 101] {McoreD}
+3.19.0.0 Ability to take screenshots of games and video by freezing the window during capture {Jaex}
+3.18.0.0 Ability to capture menus, tooltips and other interactive effects in Active Window that applications may produce {Jaex}
+3.17.2.0 Clicking Cancel button or pressing Escape in Destination Options dialog will prevent ZScreen from uploading {theone256}
+3.17.1.0 Extended ability to add shadow effect even if Aero is disabled (including Windows XP) {theone256}
+3.17.0.0 Option to monitor clipboard and automatically upload Images, Text, Files and shorten URLs [Issue 154] {McoreD}
+3.16.0.0 Option to show checkerboard pattern as part of cleaning the window background {Jaex}
+3.15.0.0 Option to include shadow effect as part of cleaning the window background {Jaex}
+3.14.2.0 Cleaning the window background captures transparency {theone256}
+3.14.1.0 Extended support to capture layered windows {Jaex}
+3.14.0.0 Option to capture rounded corners under Windows XP/Vista/7 [Issue 156] {theone256}
+3.13.0.0 Option to Clean Aero background under Vista/7 under Image Settings tab [Issue 157] {theone256}
+3.12.7.0 Images in History tab will cache thumbnails to preview faster {Jaex}
+3.12.6.0 Users can drag n drop files to the History list   box to upload {McoreD}
+3.12.5.0 Share on Twitter... in History tab will automatically shorten the URL {McoreD}
+3.12.4.0 Randomly selecting a valid Image Uploader destination is now an option {McoreD}
+3.12.3.2 Dragging anything to the dropbox to uploading it to FTP did not work [Issue 151] {Jaex}
+3.12.3.1 Google Translator language options were not loaded under proxy {McoreD}
+
+Version 3.12 - 20091002
+
+3.12.3.0 ZScreen shows a Splash Screen to improve perceived startup time {McoreD}
+3.12.2.0 Twitter Client can update multiple Twitter accounts simultaneously {McoreD}
+3.12.1.1 URL from FTP Server was not replacing spaces by %20 at all times {McoreD}
+3.12.1.0 Copy Link : Full Image for Twitter will automatically generate shortened URLs on the fly if not present already {McoreD}
+3.12.0.0 Added j.mp URL Shortener support {McoreD}
+3.11.1.0 Resizable Update Notification dialog [Issue 140] {McoreD}
+3.11.0.2 Choosing watermark font color crashed ZScreen {Jaex}
+3.11.0.1 File Upload using RapidShare Premium account was not working {Jaex}
+3.11.0.0 Update Twitter Status using a Hotkey {McoreD}
+3.10.0.0 Support for configuring advanced gradient settings in Watermarks using a Gradient Maker {Jaex}
+3.09.0.0 Added filebin.ca File Uploader support {Jaex}
+3.08.0.0 Added pastebin.ca Text Uploader support {Jaex}
+3.07.0.0 Added imagebin.ca Image Uploader support {Jaex}
+3.06.0.0 Added turl.ca URL Shortener support {Jaex} 
+3.05.6.0 Added Maximum Name Length setting to limit file name length {Jaex}
+3.05.5.0 PreferFtpServerForIndex setting to automatically choose the active FTP Server for indexing a folder to HTML instead of text {McoreD}
+
+Version 3.05 - 20090912
+
+3.05.4.0 Support for multiple Twitter accounts {McoreD}
+3.05.3.0 PropertyGrid options for adding border effects to images {Hades32}
+3.05.2.1 Fixed handling of FTP/HTTP path when using the "@" [Issue 136] {Hades32}
+3.05.2.0 Share on Twitter... right click menu item in History tab {McoreD}
+3.05.1.0 Changes in FTP Accounts require reconfiguring settings {McoreD/Jaex}
+3.05.0.0 Application wide support to update Twitter status upon completion of an upload {McoreD}
+3.04.5.2 Large images no longer upload when enabling "change to JPG after X KiB" [Issue 130] {McoreD}
+3.04.5.1 Windows 7 hotkeys sometimes did not trigger the action [Issue 100] {McoreD}
+3.04.5.0 FTP Server destination was removed from both Images/Text in favor of File Uploader {Jaex}
+3.04.4.0 FTP Client supports uploading multiple files/folders via Drag n Drop {Jaex}
+3.04.3.0 FTP Client can download/upload multiple files/folders {Jaex}
+3.04.2.0 Extended FTP support for SOCKS4, SOCKS4a and SOCKS5 proxy types [Issue 32] {Jaex} 
+3.04.1.0 FTP Uploader uses Starksoft Ftp Component for .NET {Jaex}
+3.04.0.0 Added support for Shell Extension "Upload using ZScreen" {McoreD}
+3.03.3.0 ZScreen Command Line Interface supports "clipboard_upload" argument {McoreD}
+3.03.2.0 Much faster FTP Client performance using Starksoft Ftp Component for .NET / Mono {Jaex}
+3.03.1.0 PropertyGrid option to use the "Cross" Cursor instead of the crosshair to boost the perceived speed of the application {Hades32}
+3.03.0.0 Added Flickr Image Uploader support {Jaex}
+3.02.1.0 PropertyGrid options to prefer active File Uploader for uploading images/text {McoreD}
+3.02.0.0 ZScreen Command Line Interface supporting "crop_shot" and "selected_window" {McoreD}
+3.01.0.1 Bug fixes to run Portable mode better {McoreD}
+3.01.0.0 Added SendSpace File Uploader support {Jaex}
+3.00.0.0 Established foundation for File Hosting Services starting with RapidShare {Jaex}
+2.31.0.0 Added ImageBam Image Uploader support {Jaex}
+
+Version 2.30 - 20090815
+
+2.30.1.0 Application Version specific Settings Read/Write mechanism to avoid settings resets {McoreD}
+2.30.0.0 Added capability to Print images {McoreD}
+2.29.0.0 Added yFrog Image Uploader support {McoreD}
+2.28.0.0 Added TwitSnaps Image Uploader support {McoreD}
+2.27.0.0 Clipboard Copy chooser [Issue 106] activated from PropertyGrid Options {McoreD}
+2.26.0.0 Ability to capture Webpages [Issue 46] using Image Hosting : Webpage Uploader tab {Jaex}
+2.25.1.2 Workarounds for errors on some Windows 7 systems during ZScreen [Issue 107] {McoreD}
+
+Version 2.25 - 20090803
+
+2.25.01.1 Fixed TinyPic upload issues due to recent API changes {Jaex}
+2.25.01.0 Tray icon will notify the user if upload destination is automatically changed due to errors or timeouts {Jaex}
+2.25.00.2 Fixed problem where ZScreen hangs on Windows Shutdown {McoreD}
+2.25.00.1 Fixed application crash when image uploading fails {Jaex}
+2.25.00.0 Ability to resize images before uploading {Jaex}
+2.24.03.0 Images will be saved in customizable sub-folders such as Images\2009-08 {Jaex}
+2.24.02.0 Windows 7 only: Recently uploaded items will be shown in Taskbar http://twitpic.com/cfk1z/full {McoreD}
+2.24.01.0 Webpage screenshot upload via Firefox: http://code.google.com/p/zscreen/wiki/WatchFolder [Issue 46] {inf1ni}
+2.24.00.0 Upload images from a Watch Folder (useful for Webpage Screenshots) {McoreD}
+2.23.05.0 PropertyGrid option to minimize ZScreen on Close (useful in conjunction with Taskbar Buttons) {McoreD}
+2.23.04.0 PropertyGrid options to prefer Browser View when navigating uploaded Images and Text in History tab {McoreD}
+2.23.03.0 Selected Window can perform Crop Shot if required {Jaex}
+2.23.02.0 Windows 7 only: ZScreen taskbar icon shows progress when uploading {McoreD}
+2.23.01.0 Selected Window can capture objects within each active window {Jaex}
+2.23.00.0 Ability to Clipboard Upload folder contents using TreeGUI indexer engines {McoreD}
+2.22.02.0 Screenshots of irregular windows forms or rounded corner windows with transparent background are now supported {Jaex}
+2.22.01.0 URL Shorteners are now accessible from the main tab {Jaex}
+2.22.00.0 FTP Client (Beta) that is accessible from the system tray menu {Jaex}
+2.21.02.2 Fixed problem with arrow keys changing selected item during hotkey selection {inf1ni}
+2.21.02.1 Fixed multiple selection bug (shift click bug) in listbox of History tab {inf1ni}
+2.21.02.0 More efficient image uploading mechanism {Jaex}
+2.21.01.2 Relative paths were not supported in ZScreen Portable mode {McoreD}
+2.21.01.1 Crashed when trying to open a deleted file from the History list [Issue 90] {Jaex}
+2.21.01.0 ZScreen tray icon changes to a Progress Bar tracking progress of uploading a file to FTP {Jaex}
+2.21.00.0 Added HTTP Proxy support for image/text uploaders (except FTP) {McoreD}
+2.20.06.2 ZScreen will not save settings to file everytime the tab button is pressed while in Crop {McoreD}
+2.20.06.1 Fixed a few more exceptions during FTP Upload {Jaex}
+2.20.06.0 Added arrow movement support for crop shot (Shift + arrow for movement by 5 pixels) [Issue 86] {Jaex}
+2.20.05.0 FTP account settings now have the ability to auto create folders {Jaex}
+2.20.04.0 PropertyGrid settings to add bevel visual effect to Screenshots {Jaex}
+2.20.03.0 Watermark text supports %width and %height syntax to show Image dimensions {Jaex}
+2.20.02.0 Text Uploaders that are based on pastebin.com can be renamed to uniquely identify them e.g. kopyala.org {McoreD}
+2.20.01.1 MakeTinyURL PropertyGrid Setting will not override Clipboard Copy mode anymore {McoreD}
+2.20.01.0 Added new Clipboard URL Type: Full Image (TinyURL) {McoreD}
+2.20.00.0 Support for uploading images to MindTouch Deki Wiki [http://techsurance.com/Screen_Capture] {McoreD}
+2.19.01.0 Changes in Keyboard Hook mechanism require reassigning the Hotkeys {Jaex}
+2.19.00.0 Added bit.ly URL Shortener support {Jaex}
+2.18.00.2 Prevented Image Editor from opening again when the first retry for image upload fails {Jaex}
+2.18.00.1 Selecting "File" as destination did not overrride "Delete file after capture" option [Issue 88] {McoreD}
+2.18.00.0 Added TwitPic Image Uploader support {Jaex}
+2.17.00.0 Added is.gd URL Shortener support {McoreD}
+2.16.00.0 Added kl.am URL Shortener support {McoreD}
+
+Version 2.15 - 20090701
+
+2.15.01.2 Removing an Image Editor caused a crash [Issue 83]
+2.15.01.1 Hotkeys tab was not displayed propery for DPI set at 120% [Issue 82]
+2.15.01.0 Option to publish ImageShack images to the user's public profile
+2.15.00.0 Integrated Image Editor based on Greenshot Image Editor 0.7.009 [Issue 81]
+2.14.01.0 PropertyGrid Setting to automatically shorten the URL after image upload is completed
+2.14.00.0 Added support for URL Shortener: 3.ly
+2.13.00.0 Added support for URL Shorteners starting with TinyURL
+2.13.02.0 Removed Active Help and introduced Tooltips
+2.13.01.1 Prevent automatically loading Default Settings when an error is occured
+2.13.01.0 Rearranged Main Tabs to follow a more logical sense
+2.13.00.1 Fixed Magnifier off the top [Issue 71]
+2.13.00.0 Added support for Text Uploader: slexy.org
+2.12.00.0 Added support for Text Uploader: pastebin.com
+2.11.00.0 Added support for Text Uploading via Clipboard starting with paste2.org
+2.10.10.1 URLs will only be appended in the History tab
+2.10.10.0 Actions Toolbar Mode to automatically open Toolbar on ZScreen startup
+2.10.09.0 Online Tasks such as updating TinyPic Registration Code will automatically happen every 6 hours
+
+Version 2.10.8 - 20090520
+
+2.10.08.1 Preview in History did not update if the file extensions were in CAPS
+2.10.08.0 Added more Crop Region Styles: Greyscale and adjustable Transparency and Brightness via PropertyGrid Settings
+2.10.07.0 PropertyGrid Setting to hide Active Help from the GUI
+2.10.06.1 Clearing the screen history did not reset history list count [Issue 63]
+2.10.06.0 Added new Clipboard URL Type: Linked Thumbnail for Wiki
+2.10.05.1 Fixed possibile uploading errors if Copy Image to Clipboard is turned on
+2.10.05.0 FTP Viewer can now preview text files
+2.10.04.0 Upload File to FTP will use the original file path instead of copying to Files folder
+2.10.03.1 Upload File to FTP could have failed if Enable Thumbnail was turned on for FTP
+2.10.03.0 Imaged directory location is now confirgurable via PropertyGrid Settings [Issue 62]
+
+Version 2.10.2 - 20090424
+
+2.10.02.1 Setting HTTP Upload mode to Anonymous made it impossible to auto switch destination
+2.10.02.0 Added new Clipboard URL Type: Full Image as HTML [Issue 57]
+2.10.01.0 PropertyGrid Setting to periodically backup Application Settings
+2.10.00.2 Application will load default settings without crashing if Settings.xml was invalid [ravensorb]
+2.10.00.1 Closing Config Wizard without pressing OK, crashed ZScreen
+2.10.00.0 Added Auto Capture to Quick Actions in the Tray Menu [Issue 18]
+2.09.00.1 Reactivated missing Debug facilities; Now logged to ZScreen\Logs
+2.09.00.0 Magnifying Glass feature for Crop Shot
+2.08.01.0 Copy Image to Clipboard until URL is retrieved using XML Settings
+2.08.00.0 Configuration Wizard to initialize settings on First Run
+2.07.02.1 Fixed possible crash when Images folder was moved and ZScreen tries to load History.xml
+2.07.02.0 The Root folder is now relocatable to a different folder
+2.07.01.0 PropertyGrid Setting to periodically backup FTP Settings
+2.07.00.1 More accurate error reporting via BalloonTip
+2.07.00.0 PropertyGrid in Options : Advanced tab exposes XML Settings that are not visible in GUI
+2.06.16.0 Option to set Timeout in milliseconds to retry other Image Uploaders
+2.06.15.0 Prompt for Upload [Issue 51]
+2.06.14.0 Option to automatically switch from TinyPic to ImageShack if the image dimensions are greater than 1600x1600
+2.06.13.0 ZScreen Window is now resizable to increase viewing area in History
+2.06.12.0 Extended Watermark support to use Images with Reflection and Add Border support
+2.06.11.0 Delay for Entire Screen and Active Window Screenshot is now set in milliseconds
+2.06.10.0 Crop Shot and Selected Window can optionally display a Dynamic Region Border
+2.06.09.1 Fixed possible crash when using syntax for Watermarks [Issue 49]
+2.06.09.0 Added new Clipboard URL Type: Full Image for Wiki
+2.06.08.1 Adding new Image Editors did not work as expected [Issue 47]
+2.06.08.0 Crop Shot and Selected Window can optionally display a Ruler
+
+Version 2.6.7 - 20090401
+
+2.6.7.1 Proper support for multiple monitors {inugroho}
+2.6.7.0 Extended History viewer to support Text previews
+2.6.6.2 Fixed crash when attempted to View Directory after Folder Browse Dialog was cancelled [HotRod]
+2.6.6.1 ZScreen did not show main window properly for new installs until it was loaded again
+2.6.6.0 Crop Shot Crosshair color is now customizable
+2.6.5.0 Drag n Drop Window is now movable and the location is remembered
+2.6.4.0 Added History Settings tab to customize History List under History tab
+
+Version 2.6.3 - 20090329
+
+2.6.3.0 Option to reset Auto-increment number in File Naming conventions [Issue 43]
+2.6.2.0 TinyPic RegCode is now automatically updated if TinyPic UserName and Password are set to remember [Issue 44]
+2.6.1.0 Taking multiple screenshots within a second is now possible via automatic file renaming
+2.6.0.0 New Quick Actions toolbar that can be activated from Tray menu
+2.5.0.3 Fixed instabilities in FTP Remote Viewer
+2.5.0.2 Drop Window while opened will not interfere with the application events anymore
+2.5.0.1 Fixed a bug related to copying multiple image URLs in History tab
+2.5.0.0 History items are now retrievable from Settings\History.xml
+2.4.1.0 Revamped Update Checker system
+2.4.0.1 Pre-set capture regions were 1px larger in Width and Height
+
+Version 2.4 - 20090321
+
+2.4.0.0 Ability to take screenshots of pre-set sizes of the Screen using a Grid System
+2.3.1.0 Adding failed tasks to History tab is now optional
+2.3.0.0 ZScreen supports running multiple instances. Other instances will include * sign in the application title
+2.2.0.0 Screen Color Picker in Tray menu > Actions
+2.1.1.0 Colors are chosen using an enhanced ColorDialog box
+2.1.0.2 Remote Viewer is not restricted to images anymore
+2.1.0.1 Fixed Issue 24: Requested Clipboard operation did not succeed
+2.1.0.0 Ability to capture Selected Window by enumerating all visible windows
+2.0.5.1 Fixed Issue 20: Dialog borders were cropped off under Windows Aero
+
+Version 2.0 - 20090228
+
+2.00.05.0 Option to automatically retry other HTTP Image Uploaders if the intial HTTP Image Uploader failed
+2.00.04.0 ZScreen will automatically attempt uploading non-images to FTP for Drag n Drop and Upload from Clipboard actions
+2.00.03.0 Reconfigured Advanced tab and added Debug facilities
+2.00.02.2 Could not fullscreen preview files uploaded to FTP
+2.00.02.1 Fixed FTP so that it uses ports once again
+2.00.02.0 Capturing Entire Screen if Active Window Capture or Crop fails is now an option
+2.00.01.1 Fixed Issue 15: High memory usage after a certain period of time of usage
+2.00.01.0 Active Help can now support multiple languages
+2.00.00.0 Established foundation for Text Services starting with Google Translate via Language Translator
+1.11.05.0 Clicking Images Preview in History tab will open Image in Full Screen
+1.11.04.0 Added Option to Retry failed Uploads for Images in History tab
+1.11.03.0 Added Context Menu item in History tab to open Source information in HTML or Text
+1.11.02.0 Extended ability to upload images by dragging n dropping multiple files and folders
+1.11.01.0 Extended ability to upload images by copying multiple files and folders to clipboard using Windows Explorer
+1.11.00.0 Added Ability to upload images as either User or Anonymous
+1.10.02.0 Customer Uploaders tab is now under HTTP tab as Custom Image Uploaders
+1.10.01.2 Fixed hotkey system so that single hotkeys are detected by themselves and without mods (such as shift)
+1.10.01.1 Screenshots is now again called History tab supporting images from Clipboard or File
+1.10.01.0 Opening URL/File on Balloon Tip Click is now optional
+1.10.00.5 Fixed Issue 12: "New version" dialog not clear enough
+1.10.00.4 Uploading Image from Clipboard and Drag n Drop File did not work
+
+Version 1.10 Beta - 20090217
+
+1.10.00.3 Prevented possible Index out of Bounds error when FTP uploads timeout
+1.10.00.2 Clipboard Mode was not possible to change in Main Window
+1.10.00.1 Crop will always be on top of all other windows
+1.10.00.0 Added watermark support in File Settings
+1.09.01.0 Using Silk icon set 1.3 by Mark James
+1.09.00.0 Multi-monitor support for Full Screen, Crop and Active Window
+1.08.03.0 Previews of Screenshots are now accessible in Screenshots tab
+1.08.02.0 Added more Clipboard text modes: Full Image for Forums, Thumbnail
+1.08.01.0 Context Menu in Screenshots listBox to access copy URLs and Image
+1.08.00.1 Prevented adding Screenshots with empty URL to Screenshots tab
+1.08.00.0 Option to redo Last Crop Shot (Rectangular Area)
+1.07.05.0 Added ability to automatically check for updates
+1.07.04.0 Crop region or Background region can now optionally be transparent
+1.07.03.0 Extended support for user accounts in TinyPic
+1.07.02.0 Added option to display Active Help
+1.07.01.0 Revamped HotKey Settings tab to supporting a more efficient way of setting HotKeys
+1.07.00.0 Added Image Uploaders section to add custom Image Hosting Services
+1.06.10.0 Added setting for error retry count
+1.06.09.0 Displaying crop dimensions and mouse x:y position are now optional [zathman]
+1.06.08.0 Added ability to set Quick Options: Change Destination and Clipboard URL Mode
+1.06.07.0 Added timer for fullscreen and active screenshots
+1.06.06.0 Added label for crop screenshot showing rectangle information
+1.06.05.0 Added hotkey support and setting for Image Upload from clipboard
+1.06.04.3 Only draw gradient background if Windows theme is not Classic
+1.06.04.2 Reverted to taking Full Screen capture when Crop window was Escaped after assigning a Crop Region
+1.06.04.1 Balloon Tip was showing even after Crop was cancelled
+1.06.04.0 Added gradient color for all tab background and changed layout
+1.06.03.0 Added "Delete Settings" button for delete settings
+1.06.02.0 Added Adobe Photoshop, Irfan View and Paint.NET for Image Software
+1.06.01.0 Added setting for show balloon tip after upload completed
+1.06.00.0 Added support for upload image from Clipboard
+1.05.02.0 Enhanced crop method to support inverse selection
+1.05.00.0 Ability to Drag n Drop existing pictures using a Drop Window
+1.04.00.0 Added TinyPic uploading support via ImageUploader
+1.03.06.0 Support for Imageshack accounts via registration code
+1.03.05.2 Use "Settings.xml" when present in launch directory
+1.03.05.1 Manual file naming will no longer append date/time stamp
+1.03.05.0 Removed multiple language support
+1.03.04.0 Using new ZScreen icons thanks to Zachary Hudock
+1.03.03.1 Default screenshot destination is no longer ImageShack for security issues
+
+Version 1.3 Beta - 20080614
+
+1.3.03.0 Copy to Clipboard URL Mode is now in the Right Click tray menu
+1.3.02.2 Performance of Crop Shot has been increased
+1.3.02.1 Fixed bug in "Switch After" where Crop Shots would revert to full screen
+1.3.02.0 Redesigned Hotkeys tab adding support PrintScreen key and others
+1.3.01.0 Added support for multiple image software
+1.3.00.0 Support for uploading screenshots to ImageShack
+1.2.12.0 Added Thumbnail creation support for FTP with options to copy Thumbmail/Full Image/All URL to Clipboard
+1.2.11.0 Ability to import/export Settings from/to file via Advanced tab
+1.2.10.0 Changed from built-in settings to custom XML settings (old settings will no longer work)
+1.2.09.0 Ability to import/export FTP Accounts from/to file via FTP Settings tab
+1.2.08.7 Cache Cleaner now cleans all supported file types
+1.2.08.6 Cancelling during a cropshot will now turn the busy tray icon off
+1.2.08.5 Cancelling Prompt for File Name window resulted in an error uploading file
+1.2.08.4 Default JPEG Quality is now set to 90%
+1.2.08.3 Inputbox for manual file naming now shows above everything
+1.2.08.2 Fixed small error in View Remote Desktop where downloaded progress reports higher than maximum
+1.2.08.1 View Remote Desktop won't give a "forcibly closed" error anymore
+1.2.08.0 Double clicking a file in Screenshots listBox will attempt to open the file in default browser
+1.2.07.0 Taking multiple screenshots during a short time period will preserve all the URLs in the clipboard
+1.2.06.0 Added activity logging to file for debugging purposes. Accessed via Advanced : Advanced tab
+1.2.05.0 System Tray icon will now flash when the screenshot upload is completed
+1.2.04.0 Option to manually specify screenshot file name prior to taking the screenshot
+1.2.03.0 Screenshots fetched in Remote Directory Viewer are cached according to settings in Advanced tab
+1.2.02.0 Added context menu to access License, Documentation, Version History and About information
+1.2.01.1 History tab is now called Screenshots
+1.2.01.0 Fetching files from FTP in Remote Directory Viewer is now performed in a background thread to increase GUI responsiveness
+1.2.00.3 Documentation file did not open if Windows was installed in a hard drive partition other than C:\ drive
+1.2.00.2 ZScreen startup path in Registry will not be fixed to C:\Program Files\ZScreen anymore
+1.2.00.1 Start with Windows registry entry was saved in HKLM instead of HKCU
+1.2.00.0 Added multilanguage support initially supporting Dutch and Russian
+
+Version 1.1 - 20071016
+
+1.1.8.0 Added new Paint.NET option for Image Software
+1.1.7.0 Ability to set only one hotkey
+1.1.6.1 After exiting out of a crop shot with image software external program will no longer run.
+1.1.6.0 View screenshots directory in explorer via right click menu
+1.1.5.0 Option to not save files locally after FTPing
+1.1.4.1 Support for FTP not using port 21
+1.1.4.0 Rearranged the GUI sections so that they are all seperate
+1.1.3.0 Added multiple file format support
+1.1.2.0 Custom setting to allow users to switch from one file format to another at whichever file size they want (or turn it off).
+1.1.1.0 View and delete screenshots previously uploaded via FTP with new fullscreen GUI accessible by the right-click menu. (multiple-select delete also)
+1.1.0.0 New automatic insertion for naming conventions which allows you to simply click on buttons instead of type in the custom variables yourself.
+1.0.8.0 Support for customizable image quality (JPEG only)
+1.0.7.0 First run prompts to set hot keys and ftp settings
+1.0.6.0 Test Connection displays "Testing..." to indicate what it is doing
+1.0.5.3 Now trims all additional slashes off ftp settings
+1.0.5.2 Fixed single click bug with crop
+1.0.5.1 Fixed a random bug with Image Software
+1.0.5.0 "Save Image To Clipboard" right click menu setting
+1.0.4.0 Crop now uses much less CPU cycles and is smooth
+1.0.3.1 Renamed "Enable FTP" to "Save Image to FTP"
+1.0.3.0 Added Entire Screen hotkey
+1.0.2.0 Hotkeys can be cleared by blanking the textbox and hitting update
+1.0.1.0 View Remote Directory allows users to View, Save, Delete, Copy To Clipboard (URL) multiple remote files at one time.
+
+Version 1.0 - 20070822
+
+1.0.0.0 Initial Release
+
+inf1ni = http://code.google.com/u/rgrthat
+McoreD = http://code.google.com/u/mcored
+Jaex = http://code.google.com/u/flexy123

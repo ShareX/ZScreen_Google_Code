@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HelpersLib</RootNamespace>
+    <AssemblyName>HelpersLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="CLIManager.cs" />
+    <Compile Include="ClipboardContentViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClipboardContentViewer.Designer.cs">
+      <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\PrintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\PrintForm.Designer.cs">
+      <DependentUpon>PrintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\PrintHelper.cs" />
+    <Compile Include="Printer\PrintSettings.cs" />
+    <Compile Include="Printer\PrintTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\PrintTextForm.Designer.cs">
+      <DependentUpon>PrintTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\PrintTextHelper.cs" />
+    <Compile Include="RegistryHelper.cs" />
+    <Compile Include="SettingsHelper.cs" />
+    <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
+    <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
+    <Compile Include="StaticHelper.cs" />
+    <Compile Include="UserControls\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ImageViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="FastDateTime.cs" />
+    <Compile Include="HotkeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers.cs" />
+    <Compile Include="HotkeyInfo.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="NameParser.cs" />
+    <Compile Include="Native.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XMLExtensions.cs" />
+    <Compile Include="UserControls\MyPictureBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyPictureBox.Designer.cs">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XmlFileNameEditor.cs" />
+    <Compile Include="SerializationHelper.cs" />
+    <Compile Include="XMLSettingsBase.cs" />
+    <EmbeddedResource Include="ClipboardContentViewer.resx">
+      <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\PrintForm.resx">
+      <DependentUpon>PrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\PrintTextForm.resx">
+      <DependentUpon>PrintTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="UserControls\MyPictureBox.resx">
+      <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
+      <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
+      <Name>ImageQuantization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

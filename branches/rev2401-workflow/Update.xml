@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Update>
+  <ZScreen>
+    <Stable>
+      <Version>3.27.3.1</Version>
+      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.27.3.1-setup.exe</URL>
+      <Date>2011-03-15</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+    </Stable>
+    <Beta>
+      <Version>4.0.1</Version>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.0.1.2232-setup.exe</URL>
+      <Date>2011-07-13</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+    </Beta>
+    <Dev>
+      <Version>4.2.3</Version>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.3.2400-setup.exe</URL>
+      <Date>2011-08-09</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+    </Dev>
+  </ZScreen>
+  <ZUploader>
+    <Stable>
+      <Version>3.8.0.0</Version>
+      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZUploader-3.8-Beta.zip</URL>
+      <Date>2011-01-02</Date>
+      <Summary>http://zscreen.googlecode.com/svn/branches/ZUploader/ZUploader/Docs/VersionHistory.txt</Summary>
+    </Stable>
+  </ZUploader>
+</Update>
