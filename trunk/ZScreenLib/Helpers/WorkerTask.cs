@@ -595,12 +595,12 @@ namespace ZScreenLib
             {
                 // Rounded corners
                 bool roundedShadowCorners = false;
-                if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.CropShotRoundedCorners)
+                if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.ImageAddRoundedCorners)
                 {
                     img = GraphicsMgr.RemoveCorners(img, null);
                     roundedShadowCorners = true;
                 }
-                if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.CropShotShadow)
+                if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.ImageAddShadow)
                 {
                     img = GraphicsMgr.AddBorderShadow(img, roundedShadowCorners);
                 }
