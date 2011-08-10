@@ -428,48 +428,36 @@ namespace ZScreenGUI
         public void CaptureActiveWindow()
         {
             WorkerTask hkawTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveWindow);
-            hkawTask.CaptureActiveWindow();
-            hkawTask.WriteImage();
             RunWorkerAsync_Screenshots(hkawTask);
         }
 
         public void CaptureEntireScreen()
         {
             WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureEntireScreen);
-            hkesTask.CaptureScreen();
-            hkesTask.WriteImage();
             RunWorkerAsync_Screenshots(hkesTask);
         }
 
         public void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
-            hkswTask.CaptureRegionOrWindow();
-            hkswTask.WriteImage();
             RunWorkerAsync_Screenshots(hkswTask);
         }
 
         public void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
-            hkrcTask.CaptureRegionOrWindow();
-            hkrcTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrcTask);
         }
 
         public void CaptureRectRegionLast()
         {
             WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-            hkrclTask.CaptureRegionOrWindow();
-            hkrclTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrclTask);
         }
 
         public void CaptureFreeHandRegion()
         {
             WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-            hkfhrTask.CaptureFreehandCrop();
-            hkfhrTask.WriteImage();
             RunWorkerAsync_Screenshots(hkfhrTask);
         }
 
@@ -511,8 +499,6 @@ namespace ZScreenGUI
 
             if (Clipboard.ContainsImage())
             {
-                cbTask.SetImage(Clipboard.GetImage());
-                cbTask.WriteImage();
                 cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())

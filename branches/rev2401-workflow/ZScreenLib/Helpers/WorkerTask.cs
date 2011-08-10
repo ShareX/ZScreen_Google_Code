@@ -217,6 +217,26 @@ namespace ZScreenLib
         {
             MyWorker = worker;
             AssignJob(job);
+            switch (job)
+            {
+                case JobLevel2.CaptureActiveWindow:
+                    CaptureActiveWindow();
+                    break;
+                case JobLevel2.CaptureEntireScreen:
+                    CaptureScreen();
+                    break;
+                case JobLevel2.CaptureSelectedWindow:
+                case JobLevel2.CaptureRectRegion:
+                case JobLevel2.CaptureLastCroppedWindow:
+                    CaptureRegionOrWindow();
+                    break;
+                case JobLevel2.CaptureFreeHandRegion:
+                    CaptureFreehandCrop();
+                    break;
+                case JobLevel2.UploadFromClipboard:
+                    SetImage(Clipboard.GetImage());
+                    break;
+            }
         }
 
         public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions)
@@ -258,12 +278,6 @@ namespace ZScreenLib
 
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
 
-                if (!string.IsNullOrEmpty(FileName) && string.IsNullOrEmpty(LocalFilePath))
-                {
-                    string filePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, FileName);
-                    UpdateLocalFilePath(filePath);
-                }
-
                 if (Engine.conf.PromptForOutputs)
                 {
                     SetManualOutputs(LocalFilePath);
@@ -271,6 +285,8 @@ namespace ZScreenLib
 
                 Status.Add(TaskStatus.Prepared);
             }
+
+            WriteImage();
         }
 
         #endregion Constructors
@@ -672,7 +688,7 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        public void WriteImage()
+        private void WriteImage()
         {
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
