@@ -198,7 +198,7 @@ namespace ZScreenLib
             sbDesc.AppendLine();
             sbDesc.AppendLine("Fugue Icons 3.1 by Yusuke Kamiyamane: http://p.yusukekamiyamane.com");
             sbDesc.AppendLine();
-            sbDesc.AppendLine("Image Editor is based on a modified version of Greenshot Image Editor 0.7.009: https://sourceforge.net/projects/greenshot");
+            sbDesc.AppendLine("Image Annotator uses Greenshot Image Editor: https://sourceforge.net/projects/greenshot");
             sbDesc.AppendLine();
             sbDesc.AppendLine("Webpage Capture includes modified code from IECapt by Björn Höhrmann: http://iecapt.sourceforge.net");
             sbDesc.AppendLine();
