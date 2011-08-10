@@ -56,33 +56,6 @@ namespace ZScreenLib
         SELECTED_WINDOW
     }
 
-    public enum HotkeyTask
-    {
-        [Description("Capture Entire Screen")]
-        EntireScreen,
-        [Description("Capture Active Window")]
-        ActiveWindow,
-        [Description("Capture Rectangular Region")]
-        CropShot,
-        [Description("Capture Rectangular Region (repeat)")]
-        LastCropShot,
-        [Description("Capture Selected Window")]
-        SelectedWindow,
-        [Description("Capture Freehand Region")]
-        FreehandCropShot,
-        [Description("Clipboard Upload")]
-        ClipboardUpload,
-        [Description("Auto Capture")]
-        AutoCapture,
-        [Description("Drop Window")]
-        DropWindow,
-        LanguageTranslator,
-        [Description("Translate")]
-        ScreenColorPicker,
-        [Description("Twitter Client")]
-        TwitterClient
-    }
-
     public enum RegionStyles
     {
         [Description("No Change")]
