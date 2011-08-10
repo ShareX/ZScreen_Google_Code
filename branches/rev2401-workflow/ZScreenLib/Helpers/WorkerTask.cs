@@ -233,9 +233,6 @@ namespace ZScreenLib
                 case JobLevel2.CaptureFreeHandRegion:
                     CaptureFreehandCrop();
                     break;
-                case JobLevel2.UploadFromClipboard:
-                    SetImage(Clipboard.GetImage());
-                    break;
             }
         }
 
@@ -603,7 +600,7 @@ namespace ZScreenLib
 
         #region Edit Image
 
-        public void ProcessImage(Image img)
+        private void ProcessImage(Image img)
         {
             bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
 
@@ -688,7 +685,7 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        private void WriteImage()
+        public void WriteImage()
         {
             if (TaskOutputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {

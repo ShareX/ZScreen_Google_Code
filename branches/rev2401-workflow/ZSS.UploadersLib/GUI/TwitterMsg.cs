@@ -34,8 +34,11 @@ namespace UploadersLib
     public partial class TwitterMsg : Form
     {
         public string ActiveAccountName { get; set; }
+
         public string Message { get; set; }
+
         public OAuthInfo AuthInfo { get; set; }
+
         public TwitterClientSettings Config { get; set; }
 
         public TwitterMsg(OAuthInfo oauth, string title)

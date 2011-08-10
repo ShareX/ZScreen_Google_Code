@@ -349,18 +349,18 @@ namespace ZScreenGUI
         /// <returns></returns>
         public WorkerTask CreateTaskText(WorkerTask.JobLevel2 job, string localFilePath)
         {
-            WorkerTask task = CreateTask(job);
+            WorkerTask textTask = CreateTask(job);
 
             if (!string.IsNullOrEmpty(localFilePath))
             {
-                task.UpdateLocalFilePath(localFilePath);
+                textTask.UpdateLocalFilePath(localFilePath);
             }
 
             switch (job)
             {
                 case WorkerTask.JobLevel2.Translate:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
-                    task.SetTranslationInfo(new GoogleTranslateInfo()
+                    textTask.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
                         SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
@@ -370,7 +370,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            return task;
+            return textTask;
         }
 
         #endregion Create Worker
@@ -405,22 +405,17 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync_Screenshots(WorkerTask task)
+        public void RunWorkerAsync_Screenshots(WorkerTask ssTask)
         {
             Engine.ClipboardUnhook();
-            task.WasToTakeScreenshot = true;
-            task.MyWorker.RunWorkerAsync(task);
+            ssTask.WasToTakeScreenshot = true;
+            ssTask.RunWorker();
         }
 
-        public void RunWorkerAsync_Text_Batch(List<WorkerTask> textWorkers)
+        public void RunWorkerAsync_Text(WorkerTask task)
         {
             Engine.ClipboardUnhook();
-            foreach (WorkerTask task in textWorkers)
-            {
-                {
-                    task.RunWorker();
-                }
-            }
+            task.RunWorker();
         }
 
         #region Screenshots
@@ -469,15 +464,15 @@ namespace ZScreenGUI
 
         public void RunWorkerAsync_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
-            WorkerTask t = CreateTask(WorkerTask.JobLevel2.Translate);
+            WorkerTask gtTask = CreateTask(WorkerTask.JobLevel2.Translate);
             if (Loader.MyGTGUI == null)
             {
                 Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys());
             }
             Loader.MyGTGUI.btnTranslate.Enabled = false;
             Loader.MyGTGUI.btnTranslateTo.Enabled = false;
-            t.SetTranslationInfo(translationInfo);
-            t.MyWorker.RunWorkerAsync(t);
+            gtTask.SetTranslationInfo(translationInfo);
+            gtTask.RunWorker();
         }
 
         public void UploadUsingClipboardOrGoogleTranslate()
@@ -499,6 +494,8 @@ namespace ZScreenGUI
 
             if (Clipboard.ContainsImage())
             {
+                cbTask.SetImage(Clipboard.GetImage());
+                cbTask.WriteImage();
                 cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())
@@ -567,8 +564,6 @@ namespace ZScreenGUI
                 }
             }
 
-            List<WorkerTask> textWorkers = new List<WorkerTask>();
-
             foreach (string fp in strListFilePath)
             {
                 if (GraphicsMgr.IsValidImage(fp))
@@ -582,7 +577,7 @@ namespace ZScreenGUI
                 {
                     WorkerTask tfTask = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
                     tfTask.SetText(File.ReadAllText(fp));
-                    textWorkers.Add(tfTask);
+                    tfTask.RunWorker();
                 }
                 else
                 {
@@ -591,8 +586,6 @@ namespace ZScreenGUI
                     fuTask.RunWorker();
                 }
             }
-
-            RunWorkerAsync_Text_Batch(textWorkers);
 
             return succ;
         }
