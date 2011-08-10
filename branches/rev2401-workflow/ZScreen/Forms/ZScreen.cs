@@ -602,8 +602,6 @@ namespace ZScreenGUI
             UpdateHotkeys(false);
             InitKeyboardHook();
 
-            Engine.conf.FirstRun = false;
-
             if (Engine.IsMultipleInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
@@ -616,7 +614,10 @@ namespace ZScreenGUI
                 {
                     chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
                 }
+
                 ShowWindow();
+
+                Engine.conf.FirstRun = false;
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);

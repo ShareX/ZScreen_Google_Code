@@ -106,13 +106,21 @@ namespace HelpersLib
     public class NameParser : IDisposable
     {
         public NameParserType Type { get; set; }
+
         public int AutoIncrementNumber { get; set; }
+
         public bool IsFolderPath { get; set; }
+
         public bool IsPreview { get; set; }
+
         public string Host { get; set; }
+
         public Image Picture { get; set; }
+
         public DateTime CustomDate { get; set; }
+
         public string CustomProductName { get; set; }
+
         public int MaxNameLength { get; set; }
 
         public NameParser()

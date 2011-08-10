@@ -518,12 +518,12 @@ namespace ZScreenGUI
             else if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                string fp = FileSystem.GetUniqueFilePath(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                string cufp = FileSystem.GetUniqueFilePath(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
                 if (cbTask.TaskOutputs.Contains(OutputEnum.LocalDisk))
                 {
-                    FileSystem.WriteText(fp, text);
+                    FileSystem.WriteText(cufp, text);
                 }
-                cbTask.UpdateLocalFilePath(fp);
+                cbTask.UpdateLocalFilePath(cufp);
                 cbTask.SetText(text);
                 cbTask.RunWorker();
             }
@@ -552,21 +552,21 @@ namespace ZScreenGUI
                     {
                         if (GraphicsMgr.IsValidImage(fp))
                         {
-                            string cbFilePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
-                            if (fp != cbFilePath)
+                            string fsfp = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
+                            if (fp != fsfp)
                             {
-                                string dir = Path.GetDirectoryName(cbFilePath);
+                                string dir = Path.GetDirectoryName(fsfp);
                                 if (!Directory.Exists(dir))
                                 {
                                     Directory.CreateDirectory(dir);
                                 }
-                                File.Copy(fp, cbFilePath, true);
+                                File.Copy(fp, fsfp, true);
                             }
                             if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
                             {
                                 File.Delete(fp);
                             }
-                            strListFilePath.Add(cbFilePath);
+                            strListFilePath.Add(fsfp);
                         }
                         else
                         {

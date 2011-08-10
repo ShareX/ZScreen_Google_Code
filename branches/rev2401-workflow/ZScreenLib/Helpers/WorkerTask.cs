@@ -288,8 +288,8 @@ namespace ZScreenLib
                 WorkerTaskHelper.PrepareImage(TempImage, out imageFormat);
 
                 string fn = WorkerTaskHelper.PrepareFilename(imageFormat, TempImage, GetPatternType());
-                string fp = FileSystem.GetUniqueFilePath(Engine.ImagesDir, fn);
-                UpdateLocalFilePath(fp);
+                string imgfp = FileSystem.GetUniqueFilePath(Engine.ImagesDir, fn);
+                UpdateLocalFilePath(imgfp);
 
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
@@ -606,29 +606,11 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                NameParserType type;
-                string pattern = string.Empty;
-                if (Job2 == WorkerTask.JobLevel2.CaptureActiveWindow)
+                img = ImageEffects.ApplySizeChanges(img);
+                img = ImageEffects.ApplyScreenshotEffects(img);
+                if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
                 {
-                    type = NameParserType.ActiveWindow;
-                    pattern = Engine.conf.ActiveWindowPattern;
-                }
-                else
-                {
-                    type = NameParserType.EntireScreen;
-                    pattern = Engine.conf.EntireScreenPattern;
-                }
-
-                using (NameParser parser = new NameParser(type) { AutoIncrementNumber = Engine.conf.AutoIncrement })
-                {
-                    Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
-
-                    img = ImageEffects.ApplySizeChanges(img);
-                    img = ImageEffects.ApplyScreenshotEffects(img);
-                    if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
-                    {
-                        img = ImageEffects.ApplyWatermark(img);
-                    }
+                    img = ImageEffects.ApplyWatermark(img);
                 }
 
                 TempImage = img;
@@ -665,7 +647,7 @@ namespace ZScreenLib
                                 editor.ShowDialog();
                                 if (!editor.surface.Modified)
                                 {
-                                    SetImage(editor.GetImageForExport());
+                                    TempImage = editor.GetImageForExport();
                                 }
                             }
                             catch (Exception ex)
