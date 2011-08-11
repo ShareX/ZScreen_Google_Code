@@ -125,13 +125,9 @@ namespace ZScreenLib
                 }
                 else if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                 {
-                    foreach (UploadResult ur in task.UploadResults)
+                    foreach (LinkFormatEnum linkFormat in task.MyLinkFormat)
                     {
-                        if (Engine.conf.ConfLinkFormat.Count > 0)
-                        {
-                            clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath);
-                        }
-
+                        clipboardText = new UploadResult().GetUrlByType(linkFormat, task.LocalFilePath);
                         if (!string.IsNullOrEmpty(clipboardText))
                         {
                             break;
