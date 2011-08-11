@@ -209,19 +209,6 @@ namespace ZScreenLib
             return GraphicsMgr.GetImageSafely(fp);
         }
 
-        public static bool IsValidImageFile(string fp)
-        {
-            if (!string.IsNullOrEmpty(fp))
-            {
-                foreach (string s in Engine.zImageFileTypes)
-                {
-                    if (Path.GetExtension(fp).ToLower().EndsWith(s)) return true;
-                }
-            }
-
-            return false;
-        }
-
         /// <summary>
         /// Function to check if file is a valid Text file by checking its extension
         /// </summary>
