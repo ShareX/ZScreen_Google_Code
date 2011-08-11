@@ -289,7 +289,7 @@ namespace ZScreenGUI
 
                         if (Engine.conf.ShowBalloonTip)
                         {
-                            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+                            ShowBalloonTip(task);
                         }
                     }
 

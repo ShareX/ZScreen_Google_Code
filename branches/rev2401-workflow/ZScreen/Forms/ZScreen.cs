@@ -556,6 +556,12 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             Engine.zHandle = this.Handle;
+
+            if (Engine.conf.ReleaseChannel == ReleaseChannelType.Dev)
+            {
+                this.Text = Engine.GetProductName() + " rev " + Adapter.AppRevision;
+            }
+
             Engine.ClipboardHook();
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)
@@ -833,22 +839,6 @@ namespace ZScreenGUI
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
                 NativeMethods.ActivateWindow(this.Handle);
-            }
-        }
-
-        private void niTray_BalloonTipClicked(object sender, EventArgs e)
-        {
-            if (Engine.conf.BalloonTipOpenLink)
-            {
-                try
-                {
-                    NotifyIcon ni = (NotifyIcon)sender;
-                    new BalloonTipHelper(ni).ClickBalloonTip();
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Error while clicking Balloon Tip");
-                }
             }
         }
 
