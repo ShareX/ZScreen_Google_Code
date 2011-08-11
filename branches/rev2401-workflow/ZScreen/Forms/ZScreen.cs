@@ -557,11 +557,6 @@ namespace ZScreenGUI
         {
             Engine.zHandle = this.Handle;
 
-            if (Engine.conf.ReleaseChannel == ReleaseChannelType.Dev)
-            {
-                this.Text = Engine.GetProductName() + " rev " + Adapter.AppRevision;
-            }
-
             Engine.ClipboardHook();
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)

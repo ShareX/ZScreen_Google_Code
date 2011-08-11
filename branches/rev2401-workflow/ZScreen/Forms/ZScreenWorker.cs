@@ -213,7 +213,8 @@ namespace ZScreenGUI
                 if (checkTask.Status.Contains(WorkerTask.TaskStatus.RetryPending))
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
-                    this.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
+                    niTray.Tag = task;
+                    niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
                 {
