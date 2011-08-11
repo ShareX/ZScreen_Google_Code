@@ -602,20 +602,25 @@ namespace ZScreenLib
 
         private void ProcessImage(Image img)
         {
-            bool windowMode = Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow;
+            bool window = Job2 == JobLevel2.CaptureActiveWindow || Job2 == JobLevel2.CaptureSelectedWindow || Job2 == JobLevel2.CaptureEntireScreen;
 
             if (img != null)
             {
-                // Rounded corners
-                bool roundedShadowCorners = false;
-                if (windowMode && Engine.conf.SelectedWindowRoundedCorners || !windowMode && Engine.conf.ImageAddRoundedCorners)
+                if (!window)
                 {
-                    img = GraphicsMgr.RemoveCorners(img, null);
-                    roundedShadowCorners = true;
-                }
-                if (windowMode && Engine.conf.SelectedWindowShadow || !windowMode && Engine.conf.ImageAddShadow)
-                {
-                    img = GraphicsMgr.AddBorderShadow(img, roundedShadowCorners);
+                    // Add Rounded corners
+                    bool roundedShadowCorners = false;
+                    if (Engine.conf.ImageAddRoundedCorners)
+                    {
+                        img = GraphicsMgr.RemoveCorners(img, null);
+                        roundedShadowCorners = true;
+                    }
+
+                    // Add shadows
+                    if (Engine.conf.ImageAddShadow)
+                    {
+                        img = GraphicsMgr.AddBorderShadow(img, roundedShadowCorners);
+                    }
                 }
 
                 // Watermark
