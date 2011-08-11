@@ -550,7 +550,7 @@ namespace ZScreenGUI
                 {
                     if (!string.IsNullOrEmpty(fp) && File.Exists(fp))
                     {
-                        if (GraphicsMgr.IsValidImage(fp))
+                        if (ZAppHelper.IsImageFile(fp))
                         {
                             string cbFilePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
                             if (fp != cbFilePath)
