@@ -76,34 +76,34 @@ namespace UploadersLib.HelperClasses
 
         #region Links
 
-        public string GetUrlByType(LinkFormatEnum type, string fullUrl)
+        public string GetUrlByType(LinkFormatEnum type, string linkPath)
         {
             switch (type)
             {
                 case LinkFormatEnum.FULL:
-                    return fullUrl;
+                    return linkPath;
                 case LinkFormatEnum.FULL_TINYURL:
                     return this.ShortenedURL;
                 case LinkFormatEnum.FULL_IMAGE_FORUMS:
-                    return GetFullImageForumsUrl(fullUrl);
+                    return GetFullImageForumsUrl(linkPath);
                 case LinkFormatEnum.FULL_IMAGE_HTML:
-                    return GetFullImageHTML(fullUrl);
+                    return GetFullImageHTML(linkPath);
                 case LinkFormatEnum.FULL_IMAGE_WIKI:
-                    return GetFullImageWiki(fullUrl);
+                    return GetFullImageWiki(linkPath);
                 case LinkFormatEnum.FULL_IMAGE_MEDIAWIKI:
-                    return GetFullImageMediaWikiInnerLink(fullUrl);
+                    return GetFullImageMediaWikiInnerLink(linkPath);
                 case LinkFormatEnum.LINKED_THUMBNAIL:
-                    return GetLinkedThumbnailForumUrl(fullUrl);
+                    return GetLinkedThumbnailForumUrl(linkPath);
                 case LinkFormatEnum.LinkedThumbnailHtml:
-                    return GetLinkedThumbnailHtmlUrl(fullUrl);
+                    return GetLinkedThumbnailHtmlUrl(linkPath);
                 case LinkFormatEnum.LINKED_THUMBNAIL_WIKI:
-                    return GetLinkedThumbnailWikiUrl(fullUrl);
+                    return GetLinkedThumbnailWikiUrl(linkPath);
                 case LinkFormatEnum.THUMBNAIL:
                     return this.ThumbnailURL;
                 case LinkFormatEnum.LocalFilePath:
                     return this.LocalFilePath;
                 case LinkFormatEnum.LocalFilePathUri:
-                    return GetLocalFilePathAsUri();
+                    return GetLocalFilePathAsUri(linkPath);
             }
 
             return this.URL;
@@ -195,24 +195,6 @@ namespace UploadersLib.HelperClasses
                 return new Uri(fp).AbsoluteUri;
             }
             return string.Empty;
-        }
-
-        /// <summary>
-        /// Attempts to return a local file path URI and if fails (possible due to Portable mode) it will return the local file path
-        /// </summary>
-        /// <returns></returns>
-        public string GetLocalFilePathAsUri()
-        {
-            string lp = string.Empty;
-            try
-            {
-                lp = GetLocalFilePathAsUri(this.LocalFilePath);
-            }
-            catch
-            {
-                lp = this.LocalFilePath;
-            }
-            return lp;
         }
 
         #endregion Links
