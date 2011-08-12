@@ -49,7 +49,7 @@ namespace ZScreenLib
                     break;
             }
 
-            NameParser parser = new NameParser { Type = patternType, Picture = img };
+            NameParser parser = new NameParser { Type = patternType, Picture = img, AutoIncrementNumber = Engine.conf.AutoIncrement };
             string pattern = Engine.conf.EntireScreenPattern;
             switch (patternType)
             {
@@ -60,7 +60,9 @@ namespace ZScreenLib
                     pattern = Engine.conf.EntireScreenPattern;
                     break;
             }
-            return string.Format("{0}.{1}", parser.Convert(pattern), ext);
+            string fn = parser.Convert(pattern);
+            Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+            return string.Format("{0}.{1}", fn, ext);
         }
     }
 }

@@ -179,12 +179,6 @@ namespace ZScreenLib
         public decimal SelectedWindowHueRange = 50;
         public bool SelectedWindowCaptureObjects = true;
 
-        [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Make the corners rounded")]
-        public bool SelectedWindowRoundedCorners { get; set; }
-
-        [Category("Screenshots / Selected Window"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
-        public bool SelectedWindowShadow { get; set; }
-
         // Active Window
 
         public bool ActiveWindowClearBackground = true;

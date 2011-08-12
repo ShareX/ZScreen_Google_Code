@@ -1,57 +1,67 @@
-#region License Information (GPL v2)
-
-/*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2011 ZScreen Developers
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
-*/
-
-#endregion License Information (GPL v2)
-
+﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib.HelperClasses;
+using ZScreenLib;
 
-namespace ZScreenLib
+namespace ZScreenGUI
 {
-    public class BalloonTipHelper
+    public partial class ZScreen : HotkeyForm
     {
-        private WorkerTask task;
-        private NotifyIcon niTray;
-
-        public BalloonTipHelper(NotifyIcon notifyIcon)
+        private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            this.niTray = notifyIcon;
+            if (Engine.conf.BalloonTipOpenLink)
+            {
+                try
+                {
+                    NotifyIcon ni = (NotifyIcon)sender;
+                    ClickBalloonTip(ni.Tag as WorkerTask);
+                }
+                catch (Exception ex)
+                {
+                    Engine.MyLogger.WriteException(ex, "Error while clicking Balloon Tip");
+                }
+            }
         }
 
-        public BalloonTipHelper(NotifyIcon notifyIcon, WorkerTask task)
-            : this(notifyIcon)
+        public void ClickBalloonTip(WorkerTask task)
         {
-            this.task = task;
+            string cbString;
+            switch (task.Job2)
+            {
+                case WorkerTask.JobLevel2.Translate:
+                    cbString = task.TranslationInfo.Result;
+                    if (!string.IsNullOrEmpty(cbString))
+                    {
+                        Clipboard.SetText(cbString); // ok
+                    }
+                    break;
+                default:
+                    if (task.UploadResults.Count > 0)
+                    {
+                        foreach (UploadResult ur in task.UploadResults)
+                        {
+                            if (!string.IsNullOrEmpty(ur.URL))
+                            {
+                                Process.Start(ur.URL);
+                            }
+                        }
+                    }
+                    else if (File.Exists(task.LocalFilePath))
+                    {
+                        Process.Start(task.LocalFilePath);
+                    }
+                    break;
+            }
         }
 
-        public string ShowBalloonTip()
+        public string ShowBalloonTip(WorkerTask task)
         {
             StringBuilder sbMsg = new StringBuilder();
             ToolTipIcon tti = ToolTipIcon.Info;
-
-            niTray.Tag = task;
 
             if (task.Job2 == WorkerTask.JobLevel2.Translate)
             {
@@ -117,34 +127,6 @@ namespace ZScreenLib
             }
 
             return message;
-        }
-
-        public void ClickBalloonTip()
-        {
-            if (niTray.Tag != null)
-            {
-                WorkerTask task = (WorkerTask)niTray.Tag;
-                string cbString;
-                switch (task.Job2)
-                {
-                    case WorkerTask.JobLevel2.Translate:
-                        cbString = task.TranslationInfo.Result;
-                        if (!string.IsNullOrEmpty(cbString))
-                        {
-                            Clipboard.SetText(cbString); // ok
-                        }
-                        break;
-                    default:
-                        foreach (UploadResult ur in task.UploadResults)
-                        {
-                            if (!string.IsNullOrEmpty(ur.URL))
-                            {
-                                Process.Start(ur.URL);
-                            }
-                        }
-                        break;
-                }
-            }
         }
     }
 }

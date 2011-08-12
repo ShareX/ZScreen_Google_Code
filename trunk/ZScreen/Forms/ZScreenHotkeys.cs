@@ -19,9 +19,10 @@ namespace ZScreenGUI
             }
         }
 
-        private void UpdateHotkey(HotkeyTask hotkeyEnum, bool resetKeys = false)
+        private HotkeyInfo UpdateHotkey(HotkeyTask hotkeyEnum, bool resetKeys = false)
         {
             object userHotKey;
+            HotkeyInfo newHotkeyInfo = null;
 
             if (resetKeys)
             {
@@ -38,8 +39,6 @@ namespace ZScreenGUI
 
                 HotkeyInfo oldHotkeyInfo = GetHotkeyInfoFromTag(hotkeyEnum);
                 UnregisterHotkey(oldHotkeyInfo);
-
-                HotkeyInfo newHotkeyInfo = null;
 
                 switch (hotkeyEnum)
                 {
@@ -87,6 +86,8 @@ namespace ZScreenGUI
                     Engine.MyLogger.WriteLine("Registered Hotkey for " + hotkeyEnum.GetDescription());
                 }
             }
+
+            return newHotkeyInfo;
         }
 
         public void UpdateHotkeysDGV()
