@@ -556,6 +556,7 @@ namespace ZScreenGUI
         private void ZScreen_Shown(object sender, EventArgs e)
         {
             Engine.zHandle = this.Handle;
+
             Engine.ClipboardHook();
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)
@@ -602,8 +603,6 @@ namespace ZScreenGUI
             UpdateHotkeys(false);
             InitKeyboardHook();
 
-            Engine.conf.FirstRun = false;
-
             if (Engine.IsMultipleInstance)
             {
                 niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
@@ -616,7 +615,10 @@ namespace ZScreenGUI
                 {
                     chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
                 }
+
                 ShowWindow();
+
+                Engine.conf.FirstRun = false;
             }
 
             Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
@@ -832,22 +834,6 @@ namespace ZScreenGUI
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
                 NativeMethods.ActivateWindow(this.Handle);
-            }
-        }
-
-        private void niTray_BalloonTipClicked(object sender, EventArgs e)
-        {
-            if (Engine.conf.BalloonTipOpenLink)
-            {
-                try
-                {
-                    NotifyIcon ni = (NotifyIcon)sender;
-                    new BalloonTipHelper(ni).ClickBalloonTip();
-                }
-                catch (Exception ex)
-                {
-                    Engine.MyLogger.WriteException(ex, "Error while clicking Balloon Tip");
-                }
             }
         }
 

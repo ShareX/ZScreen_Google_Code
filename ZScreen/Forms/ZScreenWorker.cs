@@ -213,7 +213,8 @@ namespace ZScreenGUI
                 if (checkTask.Status.Contains(WorkerTask.TaskStatus.RetryPending))
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
-                    this.niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
+                    niTray.Tag = task;
+                    niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
                 {
@@ -289,7 +290,7 @@ namespace ZScreenGUI
 
                         if (Engine.conf.ShowBalloonTip)
                         {
-                            new BalloonTipHelper(this.niTray, task).ShowBalloonTip();
+                            ShowBalloonTip(task);
                         }
                     }
 
@@ -349,18 +350,18 @@ namespace ZScreenGUI
         /// <returns></returns>
         public WorkerTask CreateTaskText(WorkerTask.JobLevel2 job, string localFilePath)
         {
-            WorkerTask task = CreateTask(job);
+            WorkerTask textTask = CreateTask(job);
 
             if (!string.IsNullOrEmpty(localFilePath))
             {
-                task.UpdateLocalFilePath(localFilePath);
+                textTask.UpdateLocalFilePath(localFilePath);
             }
 
             switch (job)
             {
                 case WorkerTask.JobLevel2.Translate:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
-                    task.SetTranslationInfo(new GoogleTranslateInfo()
+                    textTask.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
                         SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
@@ -370,7 +371,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            return task;
+            return textTask;
         }
 
         #endregion Create Worker
@@ -405,22 +406,17 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync_Screenshots(WorkerTask task)
+        public void RunWorkerAsync_Screenshots(WorkerTask ssTask)
         {
             Engine.ClipboardUnhook();
-            task.WasToTakeScreenshot = true;
-            task.MyWorker.RunWorkerAsync(task);
+            ssTask.WasToTakeScreenshot = true;
+            ssTask.RunWorker();
         }
 
-        public void RunWorkerAsync_Text_Batch(List<WorkerTask> textWorkers)
+        public void RunWorkerAsync_Text(WorkerTask task)
         {
             Engine.ClipboardUnhook();
-            foreach (WorkerTask task in textWorkers)
-            {
-                {
-                    task.RunWorker();
-                }
-            }
+            task.RunWorker();
         }
 
         #region Screenshots
@@ -428,48 +424,36 @@ namespace ZScreenGUI
         public void CaptureActiveWindow()
         {
             WorkerTask hkawTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveWindow);
-            hkawTask.CaptureActiveWindow();
-            hkawTask.WriteImage();
             RunWorkerAsync_Screenshots(hkawTask);
         }
 
         public void CaptureEntireScreen()
         {
             WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureEntireScreen);
-            hkesTask.CaptureScreen();
-            hkesTask.WriteImage();
             RunWorkerAsync_Screenshots(hkesTask);
         }
 
         public void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
-            hkswTask.CaptureRegionOrWindow();
-            hkswTask.WriteImage();
             RunWorkerAsync_Screenshots(hkswTask);
         }
 
         public void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
-            hkrcTask.CaptureRegionOrWindow();
-            hkrcTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrcTask);
         }
 
         public void CaptureRectRegionLast()
         {
             WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-            hkrclTask.CaptureRegionOrWindow();
-            hkrclTask.WriteImage();
             RunWorkerAsync_Screenshots(hkrclTask);
         }
 
         public void CaptureFreeHandRegion()
         {
             WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-            hkfhrTask.CaptureFreehandCrop();
-            hkfhrTask.WriteImage();
             RunWorkerAsync_Screenshots(hkfhrTask);
         }
 
@@ -481,15 +465,15 @@ namespace ZScreenGUI
 
         public void RunWorkerAsync_LanguageTranslator(GoogleTranslateInfo translationInfo)
         {
-            WorkerTask t = CreateTask(WorkerTask.JobLevel2.Translate);
+            WorkerTask gtTask = CreateTask(WorkerTask.JobLevel2.Translate);
             if (Loader.MyGTGUI == null)
             {
                 Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys());
             }
             Loader.MyGTGUI.btnTranslate.Enabled = false;
             Loader.MyGTGUI.btnTranslateTo.Enabled = false;
-            t.SetTranslationInfo(translationInfo);
-            t.MyWorker.RunWorkerAsync(t);
+            gtTask.SetTranslationInfo(translationInfo);
+            gtTask.RunWorker();
         }
 
         public void UploadUsingClipboardOrGoogleTranslate()
@@ -518,12 +502,12 @@ namespace ZScreenGUI
             else if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                string fp = FileSystem.GetUniqueFilePath(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                string cufp = FileSystem.GetUniqueFilePath(Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
                 if (cbTask.TaskOutputs.Contains(OutputEnum.LocalDisk))
                 {
-                    FileSystem.WriteText(fp, text);
+                    FileSystem.WriteText(cufp, text);
                 }
-                cbTask.UpdateLocalFilePath(fp);
+                cbTask.UpdateLocalFilePath(cufp);
                 cbTask.SetText(text);
                 cbTask.RunWorker();
             }
@@ -552,21 +536,21 @@ namespace ZScreenGUI
                     {
                         if (ZAppHelper.IsImageFile(fp))
                         {
-                            string cbFilePath = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
-                            if (fp != cbFilePath)
+                            string fsfp = FileSystem.GetUniqueFilePath(Engine.ImagesDir, Path.GetFileName(fp));
+                            if (fp != fsfp)
                             {
-                                string dir = Path.GetDirectoryName(cbFilePath);
+                                string dir = Path.GetDirectoryName(fsfp);
                                 if (!Directory.Exists(dir))
                                 {
                                     Directory.CreateDirectory(dir);
                                 }
-                                File.Copy(fp, cbFilePath, true);
+                                File.Copy(fp, fsfp, true);
                             }
                             if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
                             {
                                 File.Delete(fp);
                             }
-                            strListFilePath.Add(cbFilePath);
+                            strListFilePath.Add(fsfp);
                         }
                         else
                         {
@@ -581,8 +565,6 @@ namespace ZScreenGUI
                 }
             }
 
-            List<WorkerTask> textWorkers = new List<WorkerTask>();
-
             foreach (string fp in strListFilePath)
             {
                 if (GraphicsMgr.IsValidImage(fp))
@@ -596,7 +578,7 @@ namespace ZScreenGUI
                 {
                     WorkerTask tfTask = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
                     tfTask.SetText(File.ReadAllText(fp));
-                    textWorkers.Add(tfTask);
+                    tfTask.RunWorker();
                 }
                 else
                 {
@@ -605,8 +587,6 @@ namespace ZScreenGUI
                     fuTask.RunWorker();
                 }
             }
-
-            RunWorkerAsync_Text_Batch(textWorkers);
 
             return succ;
         }

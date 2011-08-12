@@ -558,6 +558,7 @@ namespace ZScreenLib
             string title = ApplicationName;
             if (IsMultipleInstance) title += "*";
             title += " " + Application.ProductVersion;
+            if (conf != null && conf.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " rev " + Adapter.AppRevision;
             if (IsPortable) title += " Portable";
             return title;
         }

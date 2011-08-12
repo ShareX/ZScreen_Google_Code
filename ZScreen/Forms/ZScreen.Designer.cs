@@ -93,11 +93,13 @@ namespace ZScreenGUI
             this.chkShortenURL = new System.Windows.Forms.CheckBox();
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.lblScreenshotDelay = new System.Windows.Forms.Label();
+            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
             this.llProjectPage = new System.Windows.Forms.LinkLabel();
             this.llWebsite = new System.Windows.Forms.LinkLabel();
             this.llblBugReports = new System.Windows.Forms.LinkLabel();
+            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
             this.lblHotkeyStatus = new System.Windows.Forms.Label();
@@ -411,8 +413,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
-            this.ucDestOptions = new ZScreenLib.DestSelector();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -1080,7 +1080,7 @@ namespace ZScreenGUI
             this.chkPerformActions.AutoSize = true;
             this.chkPerformActions.Checked = true;
             this.chkPerformActions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPerformActions.Location = new System.Drawing.Point(16, 104);
+            this.chkPerformActions.Location = new System.Drawing.Point(16, 80);
             this.chkPerformActions.Name = "chkPerformActions";
             this.chkPerformActions.Size = new System.Drawing.Size(231, 17);
             this.chkPerformActions.TabIndex = 68;
@@ -1096,6 +1096,22 @@ namespace ZScreenGUI
             this.lblScreenshotDelay.Size = new System.Drawing.Size(94, 13);
             this.lblScreenshotDelay.TabIndex = 122;
             this.lblScreenshotDelay.Text = "Screenshot Delay:";
+            // 
+            // nudScreenshotDelay
+            // 
+            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
+            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
+            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
+            this.nudScreenshotDelay.RealValue = ((long)(0));
+            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
+            this.nudScreenshotDelay.TabIndex = 121;
+            this.nudScreenshotDelay.Tag = "Test";
+            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
+            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
+            this.nudScreenshotDelay.Value = ((long)(0));
+            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
+            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
+            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
             // 
             // chkShowCursor
             // 
@@ -1114,7 +1130,7 @@ namespace ZScreenGUI
             // 
             this.chkManualNaming.AutoSize = true;
             this.chkManualNaming.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chkManualNaming.Location = new System.Drawing.Point(16, 80);
+            this.chkManualNaming.Location = new System.Drawing.Point(16, 104);
             this.chkManualNaming.Name = "chkManualNaming";
             this.chkManualNaming.Size = new System.Drawing.Size(206, 17);
             this.chkManualNaming.TabIndex = 112;
@@ -1163,6 +1179,15 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\r\nCome visit our website and create an i" +
         "ssue.");
             this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
+            // 
+            // ucDestOptions
+            // 
+            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
+            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
+            this.ucDestOptions.Name = "ucDestOptions";
+            this.ucDestOptions.Size = new System.Drawing.Size(352, 200);
+            this.ucDestOptions.TabIndex = 124;
+            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
             // tpHotkeys
             // 
@@ -4836,31 +4861,6 @@ namespace ZScreenGUI
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
-            // 
-            // nudScreenshotDelay
-            // 
-            this.nudScreenshotDelay.Location = new System.Drawing.Point(120, 18);
-            this.nudScreenshotDelay.Margin = new System.Windows.Forms.Padding(4);
-            this.nudScreenshotDelay.Name = "nudScreenshotDelay";
-            this.nudScreenshotDelay.RealValue = ((long)(0));
-            this.nudScreenshotDelay.Size = new System.Drawing.Size(208, 24);
-            this.nudScreenshotDelay.TabIndex = 121;
-            this.nudScreenshotDelay.Tag = "Test";
-            this.nudScreenshotDelay.Time = ZScreenLib.Times.Milliseconds;
-            this.ttZScreen.SetToolTip(this.nudScreenshotDelay, "Specify the amount of time to wait before taking a screenshot.");
-            this.nudScreenshotDelay.Value = ((long)(0));
-            this.nudScreenshotDelay.ValueChanged += new System.EventHandler(this.numericUpDownTimer1_ValueChanged);
-            this.nudScreenshotDelay.SelectedIndexChanged += new System.EventHandler(this.nudtScreenshotDelay_SelectedIndexChanged);
-            this.nudScreenshotDelay.MouseHover += new System.EventHandler(this.nudtScreenshotDelay_MouseHover);
-            // 
-            // ucDestOptions
-            // 
-            this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
-            this.ucDestOptions.Margin = new System.Windows.Forms.Padding(4);
-            this.ucDestOptions.Name = "ucDestOptions";
-            this.ucDestOptions.Size = new System.Drawing.Size(352, 200);
-            this.ucDestOptions.TabIndex = 124;
-            this.ttZScreen.SetToolTip(this.ucDestOptions, "To configure destination options go to Destinations tab");
             // 
             // ZScreen
             // 

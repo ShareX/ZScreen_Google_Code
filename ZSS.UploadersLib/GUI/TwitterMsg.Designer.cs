@@ -33,7 +33,6 @@
             this.txtTweet = new System.Windows.Forms.TextBox();
             this.lblCount = new System.Windows.Forms.Label();
             this.lbUsers = new System.Windows.Forms.ListBox();
-            this.clbAccounts = new System.Windows.Forms.CheckedListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -64,10 +63,10 @@
             // 
             this.txtTweet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtTweet.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtTweet.Location = new System.Drawing.Point(223, 3);
+            this.txtTweet.Location = new System.Drawing.Point(114, 3);
             this.txtTweet.Multiline = true;
             this.txtTweet.Name = "txtTweet";
-            this.txtTweet.Size = new System.Drawing.Size(551, 214);
+            this.txtTweet.Size = new System.Drawing.Size(659, 214);
             this.txtTweet.TabIndex = 2;
             this.txtTweet.TextChanged += new System.EventHandler(this.txtTweet_TextChanged);
             // 
@@ -85,7 +84,7 @@
             // 
             this.lbUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbUsers.FormattingEnabled = true;
-            this.lbUsers.Location = new System.Drawing.Point(113, 3);
+            this.lbUsers.Location = new System.Drawing.Point(4, 3);
             this.lbUsers.Name = "lbUsers";
             this.lbUsers.Size = new System.Drawing.Size(104, 214);
             this.lbUsers.Sorted = true;
@@ -93,26 +92,16 @@
             this.lbUsers.SelectedIndexChanged += new System.EventHandler(this.lbUsers_SelectedIndexChanged);
             this.lbUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbUsers_KeyDown);
             // 
-            // clbAccounts
-            // 
-            this.clbAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.clbAccounts.FormattingEnabled = true;
-            this.clbAccounts.Location = new System.Drawing.Point(3, 3);
-            this.clbAccounts.Name = "clbAccounts";
-            this.clbAccounts.Size = new System.Drawing.Size(104, 214);
-            this.clbAccounts.TabIndex = 5;
-            // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.lbUsers, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.clbAccounts, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtTweet, 2, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -154,7 +143,6 @@
         public System.Windows.Forms.TextBox txtTweet;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.ListBox lbUsers;
-        private System.Windows.Forms.CheckedListBox clbAccounts;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
