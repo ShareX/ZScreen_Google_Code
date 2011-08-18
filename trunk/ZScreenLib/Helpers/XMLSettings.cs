@@ -505,8 +505,8 @@ namespace ZScreenLib
         [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(false), Description("Copy image to clipboard until URL is retrieved.")]
-        public bool CopyImageUntilURL { get; set; }
+        [Category("Screenshots / General"), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
+        public bool ShowOutputsAsap { get; set; }
 
         [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window.")]
         public bool PromptForUpload { get; set; }

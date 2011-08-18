@@ -172,6 +172,10 @@ namespace ZScreenGUI
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetProgressState(this, tbps);
                     break;
+                case WorkerTask.ProgressType.ShowBalloonTip:
+                    WorkerTask task = e.UserState as WorkerTask;
+                    UploadManager.ShowUploadResults(task, false);
+                    break;
                 case WorkerTask.ProgressType.ShowTrayWarning:
                     Adapter.TaskbarSetProgressValue(this, 33);
                     Adapter.TaskbarSetProgressState(this, TaskbarProgressBarState.Error);
@@ -256,10 +260,7 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
-                    {
-                        UploadManager.ShowUploadResults(task, false);
-                    }
+                    UploadManager.ShowUploadResults(task, false);
 
                     if (Engine.conf.TwitterEnabled)
                     {

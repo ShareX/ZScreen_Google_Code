@@ -123,6 +123,7 @@ namespace ZScreenLib
             UPDATE_TRAY_TITLE,
             UpdateCropMode,
             CHANGE_TRAY_ICON_PROGRESS,
+            ShowBalloonTip,
             ShowTrayWarning,
             PrintText,
             PrintImage
@@ -305,7 +306,7 @@ namespace ZScreenLib
                 UpdateLocalFilePath(imgfp);
 
                 Job1 = JobLevel1.Image;
-                if (Engine.conf != null && Engine.conf.CopyImageUntilURL)
+                if (Engine.conf != null && Engine.conf.ShowOutputsAsap)
                 {
                     // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
@@ -414,6 +415,7 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL))
                 {
                     UploadResults.Add(ur);
+                    MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
                 }
             }
         }
