@@ -30,31 +30,34 @@ namespace ZScreenGUI
         public void ClickBalloonTip(WorkerTask task)
         {
             string cbString;
-            switch (task.Job2)
+            if (task != null)
             {
-                case WorkerTask.JobLevel2.Translate:
-                    cbString = task.TranslationInfo.Result;
-                    if (!string.IsNullOrEmpty(cbString))
-                    {
-                        Clipboard.SetText(cbString); // ok
-                    }
-                    break;
-                default:
-                    if (task.UploadResults.Count > 0)
-                    {
-                        foreach (UploadResult ur in task.UploadResults)
+                switch (task.Job2)
+                {
+                    case WorkerTask.JobLevel2.Translate:
+                        cbString = task.TranslationInfo.Result;
+                        if (!string.IsNullOrEmpty(cbString))
                         {
-                            if (!string.IsNullOrEmpty(ur.URL))
+                            Clipboard.SetText(cbString); // ok
+                        }
+                        break;
+                    default:
+                        if (task.UploadResults.Count > 0)
+                        {
+                            foreach (UploadResult ur in task.UploadResults)
                             {
-                                Process.Start(ur.URL);
+                                if (!string.IsNullOrEmpty(ur.URL))
+                                {
+                                    Process.Start(ur.URL);
+                                }
                             }
                         }
-                    }
-                    else if (File.Exists(task.LocalFilePath))
-                    {
-                        Process.Start(task.LocalFilePath);
-                    }
-                    break;
+                        else if (File.Exists(task.LocalFilePath))
+                        {
+                            Process.Start(task.LocalFilePath);
+                        }
+                        break;
+                }
             }
         }
 

@@ -415,7 +415,10 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL))
                 {
                     UploadResults.Add(ur);
-                    MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
+                    if (Engine.conf.ShowOutputsAsap)
+                    {
+                        MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
+                    }
                 }
             }
         }
