@@ -174,7 +174,10 @@ namespace ZScreenGUI
                     break;
                 case WorkerTask.ProgressType.ShowBalloonTip:
                     WorkerTask task = e.UserState as WorkerTask;
-                    UploadManager.ShowUploadResults(task, false);
+                    if (Engine.conf.ShowBalloonTip)
+                    {
+                        ShowBalloonTip(task);
+                    }
                     break;
                 case WorkerTask.ProgressType.ShowTrayWarning:
                     Adapter.TaskbarSetProgressValue(this, 33);
