@@ -58,7 +58,7 @@
     <Compile Include="RectangleRegionSurface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicsEx.cs" />
+    <Compile Include="GraphicsPathExtensions.cs" />
     <Compile Include="RoundedRectangleRegionSurface.cs">
       <SubType>Form</SubType>
     </Compile>

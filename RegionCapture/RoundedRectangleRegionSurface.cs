@@ -23,29 +23,61 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace RegionCapture
 {
     public class RoundedRectangleRegionSurface : RectangleRegionSurface
     {
+        public float Radius { get; set; }
+
+        private int radiusIncrease = 3;
+
         public RoundedRectangleRegionSurface(Image backgroundImage)
             : base(backgroundImage)
         {
+            Radius = 15;
+
+            MouseWheel += new MouseEventHandler(RoundedRectangleRegionSurface_MouseWheel);
+        }
+
+        private void RoundedRectangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                Radius += radiusIncrease;
+            }
+            else if (e.Delta < 0)
+            {
+                Radius = Math.Max(0, Radius - radiusIncrease);
+            }
         }
 
         protected override void Draw(Graphics g)
         {
             if (Area != null && Area.Width > 0 && Area.Height > 0)
             {
-                GraphicsPath graphicsPath = GraphicsEx.GetRoundedRectangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), 15);
-                Region region = new Region(graphicsPath);
-                g.ExcludeClip(region);
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                g.ResetClip();
-                g.DrawPath(borderPen, graphicsPath);
-                //g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                using (GraphicsPath graphicsPath = new GraphicsPath())
+                {
+                    graphicsPath.AddRoundedRectangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), Radius);
+
+                    using (Region region = new Region(graphicsPath))
+                    {
+                        g.ExcludeClip(region);
+                        g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                        g.ResetClip();
+                    }
+
+                    g.DrawPath(borderPen, graphicsPath);
+                }
+
+                if (Radius >= 30)
+                {
+                    g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                }
             }
             else
             {
