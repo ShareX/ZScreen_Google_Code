@@ -354,10 +354,12 @@ namespace ZScreenLib
                 new Size(TextRenderer.MeasureText(text, font).Width + 10, TextRenderer.MeasureText(text, font).Height + 10));
             if (labelRect.Right > clientBound.Right - 5) labelRect.X = mPos.X - offset.X - labelRect.Width;
             if (labelRect.Bottom > clientBound.Bottom - 5) labelRect.Y = mPos.Y - offset.Y - labelRect.Height;
-            GraphicsPath gPath = RoundedRectangle.Create(labelRect, 6);
-            g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
-                new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.FromArgb(200, Color.Black), Color.FromArgb(100, Color.Black)), gPath);
-            g.DrawPath(labelBorderPen, gPath);
+            using (GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRect, 6))
+            {
+                g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y),
+                    new Point(labelRect.X + labelRect.Width, labelRect.Y), Color.FromArgb(200, Color.Black), Color.FromArgb(100, Color.Black)), gPath);
+                g.DrawPath(labelBorderPen, gPath);
+            }
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
             if ((!selectedWindowMode || (selectedWindowMode && dragging)) && Engine.conf.CropShowMagnifyingGlass)
             {
@@ -398,10 +400,12 @@ namespace ZScreenLib
                 Point textPos = PointToClient(new Point(screenBound.Left +
                     (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
                 Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
-                GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
-                g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
+                using (GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRect, 7))
+                {
+                    g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
                     labelRect.Width, labelRect.Y), Color.White, Color.FromArgb(150, Color.White)), gPath);
-                g.DrawPath(labelBorderPen, gPath);
+                    g.DrawPath(labelBorderPen, gPath);
+                }
                 g.DrawString(drawText, posFont, new SolidBrush(Color.Black), labelRect.X + 5, labelRect.Y + 5);
             }
         }

@@ -117,10 +117,12 @@ namespace ZScreenLib.Shapes
                     Size textSize = Size.Round(g.MeasureString(helpText, helpTextFont, 500, StringFormat.GenericTypographic));
                     Point textPos = PointToClient(new Point(this.Left + (this.Width / 2) - ((textSize.Width + 10) / 2), this.Top + 30));
                     Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 10, textSize.Height + 10));
-                    GraphicsPath gPath = RoundedRectangle.Create(labelRect, 7);
-                    g.FillPath(new SolidBrush(Color.FromArgb(200, Color.White)), gPath);
-                    g.DrawPath(Pens.Black, gPath);
-                    g.DrawString(helpText, helpTextFont, Brushes.Black, new PointF(labelRect.X + 5, labelRect.Y + 5));
+                    using (GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRect, 7))
+                    {
+                        g.FillPath(new SolidBrush(Color.FromArgb(200, Color.White)), gPath);
+                        g.DrawPath(Pens.Black, gPath);
+                        g.DrawString(helpText, helpTextFont, Brushes.Black, new PointF(labelRect.X + 5, labelRect.Y + 5));
+                    }
                 }
             }
         }
