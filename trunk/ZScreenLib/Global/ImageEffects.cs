@@ -137,7 +137,7 @@ namespace ZScreenLib
                         //throw new Exception("Image size smaller than watermark size.");
                     }
                     Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
-                    GraphicsPath gPath = RoundedRectangle.Create(labelRectangle, (int)Engine.conf.WatermarkCornerRadius);
+                    GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRectangle, (int)Engine.conf.WatermarkCornerRadius);
 
                     int backTrans = (int)Engine.conf.WatermarkBackTrans;
                     int fontTrans = (int)Engine.conf.WatermarkFontTrans;
