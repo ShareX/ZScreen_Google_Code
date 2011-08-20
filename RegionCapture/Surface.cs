@@ -35,13 +35,12 @@ namespace RegionCapture
 {
     public class Surface : Form
     {
-        public Rectangle Area { get; set; }
+        public Image SurfaceImage { get; protected set; }
+        public Rectangle Area { get; protected set; }
 
-        public List<DrawableObject> DrawableObjects { get; private set; }
-
-        public Point ClientMousePosition { get { return PointToClient(MousePosition); } }
-
-        public bool AutoCalculateArea { get; protected set; }
+        protected bool AutoCalculateArea { get; set; }
+        protected List<DrawableObject> DrawableObjects { get; set; }
+        protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
 
         public int FPS { get; private set; }
 
@@ -49,6 +48,7 @@ namespace RegionCapture
         private Stopwatch timer;
         private int frameCount;
 
+        protected GraphicsPath regionPath;
         protected Pen borderPen;
         protected Brush shadowBrush, nodeBackgroundBrush;
         protected Font textFont;
@@ -62,6 +62,7 @@ namespace RegionCapture
             DrawableObjects = new List<DrawableObject>();
             AutoCalculateArea = true;
 
+            SurfaceImage = backgroundImage;
             backgroundBrush = new TextureBrush(backgroundImage);
             timer = new Stopwatch();
 
@@ -73,6 +74,18 @@ namespace RegionCapture
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
+        }
+
+        public virtual Image GetRegionImage()
+        {
+            if (regionPath != null)
+            {
+                return Helpers.CropImage(SurfaceImage, regionPath);
+            }
+            else
+            {
+                return Helpers.CropImage(SurfaceImage, Area);
+            }
         }
 
         private void Surface_MouseDown(object sender, MouseEventArgs e)

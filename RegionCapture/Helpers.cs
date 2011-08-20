@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
@@ -70,6 +71,50 @@ namespace RegionCapture
             }
 
             return new Rectangle(x, y, width, height);
+        }
+
+        public static Image CropImage(Image img, Rectangle rect)
+        {
+            if (img != null && rect.Width > 0 && rect.Height > 0)
+            {
+                using (Bitmap bmp = new Bitmap(img))
+                {
+                    return bmp.Clone(rect, bmp.PixelFormat);
+                }
+            }
+
+            return null;
+        }
+
+        public static Image CropImage(Image img, GraphicsPath gp)
+        {
+            if (img != null && gp != null)
+            {
+                RectangleF bounds = gp.GetBounds();
+
+                if (bounds.Width > 0 && bounds.Height > 0)
+                {
+                    Rectangle rect = Rectangle.Round(bounds);
+                    Bitmap bmp = new Bitmap(rect.Width, rect.Height);
+
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+
+                        using (Region region = new Region(gp))
+                        {
+                            g.Clip = region;
+                            g.TranslateClip(-bounds.X, -bounds.Y);
+                            g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
+                        }
+                    }
+
+                    return bmp;
+                }
+            }
+
+            return null;
         }
     }
 }

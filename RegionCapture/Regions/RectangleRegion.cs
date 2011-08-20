@@ -24,69 +24,54 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace RegionCapture
 {
-    public class FreeHandRegionSurface : Surface
+    public class RectangleRegion : Surface
     {
-        private GraphicsPath graphicsPath;
-        private NodeObject lastNode;
+        protected NodeObject firstNode;
+        protected NodeObject secondNode;
 
-        public FreeHandRegionSurface(Image backgroundImage)
+        public RectangleRegion(Image backgroundImage)
             : base(backgroundImage)
         {
-            AutoCalculateArea = false;
+            firstNode = new NodeObject(borderPen, nodeBackgroundBrush);
+            secondNode = new NodeObject(borderPen, nodeBackgroundBrush);
 
-            graphicsPath = new GraphicsPath();
-
-            lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
-            DrawableObjects.Add(lastNode);
-
-            MouseDown += new MouseEventHandler(FreeHandRegionSurface_MouseDown);
-        }
-
-        private void FreeHandRegionSurface_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right && lastNode.IsMouseHover)
-            {
-                lastNode.Visible = false;
-                graphicsPath.Reset();
-            }
+            DrawableObjects.Add(firstNode);
+            DrawableObjects.Add(secondNode);
         }
 
         protected override void Update()
         {
             base.Update();
 
-            if (!lastNode.Visible && isMouseDown)
+            if (isMouseDown && (!firstNode.Visible || !secondNode.Visible))
             {
-                lastNode.Visible = true;
-                lastNode.IsHolding = true;
+                ActivateNode(firstNode);
+                ActivateNode(secondNode);
             }
 
-            if (lastNode.Visible && lastNode.IsHolding)
+            if (firstNode.Visible && secondNode.Visible)
             {
-                graphicsPath.AddLine(oldMousePosition, mousePosition);
-                lastNode.Position = mousePosition;
-            }
-
-            if (graphicsPath.PointCount > 1)
-            {
-                Area = Rectangle.Round(graphicsPath.GetBounds());
+                if (firstNode.IsHolding)
+                {
+                    ActivateNode(firstNode);
+                }
+                else if (secondNode.IsHolding)
+                {
+                    ActivateNode(secondNode);
+                }
             }
         }
 
         protected override void Draw(Graphics g)
         {
-            if (graphicsPath.PointCount > 1)
+            if (Area.Width > 0 && Area.Height > 0)
             {
-                Region region = new Region(graphicsPath);
-                g.ExcludeClip(region);
+                g.ExcludeClip(Area);
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                 g.ResetClip();
-                g.DrawPath(borderPen, graphicsPath);
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else
@@ -94,7 +79,14 @@ namespace RegionCapture
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
 
-            DrawObjects(g);
+            base.Draw(g);
+        }
+
+        private void ActivateNode(NodeObject node)
+        {
+            node.Position = ClientMousePosition;
+            node.Visible = true;
+            node.IsHolding = true;
         }
     }
 }

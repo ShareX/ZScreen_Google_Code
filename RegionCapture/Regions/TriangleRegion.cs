@@ -29,11 +29,11 @@ using System.Windows.Forms;
 
 namespace RegionCapture
 {
-    public class TriangleRegionSurface : RectangleRegionSurface
+    public class TriangleRegion : RectangleRegion
     {
         public TriangleAngle Angle { get; set; }
 
-        public TriangleRegionSurface(Image backgroundImage)
+        public TriangleRegion(Image backgroundImage)
             : base(backgroundImage)
         {
             Angle = TriangleAngle.Up;
@@ -71,19 +71,18 @@ namespace RegionCapture
         {
             if (Area != null && Area.Width > 0 && Area.Height > 0)
             {
-                using (GraphicsPath graphicsPath = new GraphicsPath())
+                regionPath = new GraphicsPath();
+
+                regionPath.AddTriangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), Angle);
+
+                using (Region region = new Region(regionPath))
                 {
-                    graphicsPath.AddTriangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), Angle);
-
-                    using (Region region = new Region(graphicsPath))
-                    {
-                        g.ExcludeClip(region);
-                        g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                        g.ResetClip();
-                    }
-
-                    g.DrawPath(borderPen, graphicsPath);
+                    g.ExcludeClip(region);
+                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    g.ResetClip();
                 }
+
+                g.DrawPath(borderPen, regionPath);
 
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }

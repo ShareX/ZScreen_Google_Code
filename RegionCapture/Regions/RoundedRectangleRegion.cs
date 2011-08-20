@@ -23,45 +23,36 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace RegionCapture
 {
-    public class RectangleRegionSurface : Surface
+    public class RoundedRectangleRegion : RectangleRegion
     {
-        protected NodeObject firstNode;
-        protected NodeObject secondNode;
+        public float Radius { get; set; }
 
-        public RectangleRegionSurface(Image backgroundImage)
+        private int radiusIncrease = 3;
+
+        public RoundedRectangleRegion(Image backgroundImage)
             : base(backgroundImage)
         {
-            firstNode = new NodeObject(borderPen, nodeBackgroundBrush);
-            secondNode = new NodeObject(borderPen, nodeBackgroundBrush);
+            Radius = 15;
 
-            DrawableObjects.Add(firstNode);
-            DrawableObjects.Add(secondNode);
+            MouseWheel += new MouseEventHandler(RoundedRectangleRegionSurface_MouseWheel);
         }
 
-        protected override void Update()
+        private void RoundedRectangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
         {
-            base.Update();
-
-            if (isMouseDown && (!firstNode.Visible || !secondNode.Visible))
+            if (e.Delta > 0)
             {
-                ActivateNode(firstNode);
-                ActivateNode(secondNode);
+                Radius += radiusIncrease;
             }
-
-            if (firstNode.Visible && secondNode.Visible)
+            else if (e.Delta < 0)
             {
-                if (firstNode.IsHolding)
-                {
-                    ActivateNode(firstNode);
-                }
-                else if (secondNode.IsHolding)
-                {
-                    ActivateNode(secondNode);
-                }
+                Radius = Math.Max(0, Radius - radiusIncrease);
             }
         }
 
@@ -69,24 +60,30 @@ namespace RegionCapture
         {
             if (Area.Width > 0 && Area.Height > 0)
             {
-                g.ExcludeClip(Area);
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                g.ResetClip();
-                g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                regionPath = new GraphicsPath();
+
+                regionPath.AddRoundedRectangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), Radius);
+
+                using (Region region = new Region(regionPath))
+                {
+                    g.ExcludeClip(region);
+                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    g.ResetClip();
+                }
+
+                g.DrawPath(borderPen, regionPath);
+
+                if (Radius >= 30)
+                {
+                    g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                }
             }
             else
             {
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
 
-            base.Draw(g);
-        }
-
-        private void ActivateNode(NodeObject node)
-        {
-            node.Position = ClientMousePosition;
-            node.Visible = true;
-            node.IsHolding = true;
+            DrawObjects(g);
         }
     }
 }
