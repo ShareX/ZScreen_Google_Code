@@ -100,12 +100,15 @@ namespace HelpersLib
                 {
                     using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
-                        switch (type)
+                        if (fs.Length > 0)
                         {
-                            case SerializationType.Binary:
-                                return (T)new BinaryFormatter().Deserialize(fs);
-                            case SerializationType.Xml:
-                                return (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                            switch (type)
+                            {
+                                case SerializationType.Binary:
+                                    return (T)new BinaryFormatter().Deserialize(fs);
+                                case SerializationType.Xml:
+                                    return (T)new XmlSerializer(typeof(T)).Deserialize(fs);
+                            }
                         }
                     }
                 }
@@ -119,33 +122,6 @@ namespace HelpersLib
                     string text = string.Format("Settings path:\r\n{0}\r\n\r\nError:\r\n{1}", path, e.ToString());
 
                     MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    /*if (MessageBox.Show(text, "Error when loading settings file", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                    {
-                        string filter;
-
-                        switch (type)
-                        {
-                            case SerializationType.Binary:
-                                filter = "Binary Settings(*.bin)|*.bin";
-                                break;
-                            default:
-                            case SerializationType.Xml:
-                                filter = "XML Settings(*.xml)|*.xml";
-                                break;
-                        }
-
-                        using (OpenFileDialog dlg = new OpenFileDialog { Filter =  filter })
-                        {
-                            dlg.Title = "Load settings file from backup: " + Path.GetFileName(path);
-                            dlg.InitialDirectory = Path.GetDirectoryName(path);
-
-                            if (dlg.ShowDialog() == DialogResult.OK) // TODO: Not working in thread
-                            {
-                                return Load<T>(dlg.FileName, type);
-                            }
-                        }
-                    }*/
                 }
             }
             finally
