@@ -29,6 +29,8 @@ using System.Drawing.Drawing2D;
 
 namespace RegionCapture
 {
+    public enum TriangleAngle { Up, Right, Down, Left }
+
     public static class GraphicsPathExtensions
     {
         public static void AddRoundedRectangle(this GraphicsPath graphicsPath, RectangleF rect, float radius)
@@ -115,12 +117,36 @@ namespace RegionCapture
             graphicsPath.CloseFigure();
         }
 
-        public static void AddTriangle(this GraphicsPath graphicsPath, RectangleF rect)
+        public static void AddTriangle(this GraphicsPath graphicsPath, RectangleF rect, TriangleAngle angle = TriangleAngle.Up)
         {
-            PointF pt1 = new PointF(rect.X + rect.Width / 2, rect.Y);
-            PointF pt2 = new PointF(rect.X, rect.Y + rect.Height);
-            PointF pt3 = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
-            graphicsPath.AddPolygon(new PointF[] { pt1, pt2, pt3 });
+            PointF p1, p2, p3;
+
+            switch (angle)
+            {
+                default:
+                case TriangleAngle.Up:
+                    p1 = new PointF(rect.X + rect.Width / 2, rect.Y);
+                    p2 = new PointF(rect.X, rect.Y + rect.Height);
+                    p3 = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
+                    break;
+                case TriangleAngle.Right:
+                    p1 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2);
+                    p2 = new PointF(rect.X, rect.Y);
+                    p3 = new PointF(rect.X, rect.Y + rect.Height);
+                    break;
+                case TriangleAngle.Down:
+                    p1 = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
+                    p2 = new PointF(rect.X + rect.Width, rect.Y);
+                    p3 = new PointF(rect.X, rect.Y);
+                    break;
+                case TriangleAngle.Left:
+                    p1 = new PointF(rect.X, rect.Y + rect.Height / 2);
+                    p2 = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
+                    p3 = new PointF(rect.X + rect.Width, rect.Y);
+                    break;
+            }
+
+            graphicsPath.AddPolygon(new PointF[] { p1, p2, p3 });
         }
     }
 }

@@ -25,14 +25,46 @@
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace RegionCapture
 {
     public class TriangleRegionSurface : RectangleRegionSurface
     {
+        public TriangleAngle Angle { get; set; }
+
         public TriangleRegionSurface(Image backgroundImage)
             : base(backgroundImage)
         {
+            Angle = TriangleAngle.Up;
+
+            MouseWheel += new MouseEventHandler(TriangleRegionSurface_MouseWheel);
+        }
+
+        private void TriangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                if (Angle == TriangleAngle.Left)
+                {
+                    Angle = TriangleAngle.Up;
+                }
+                else
+                {
+                    Angle++;
+                }
+            }
+            else if (e.Delta < 0)
+            {
+                if (Angle == TriangleAngle.Up)
+                {
+                    Angle = TriangleAngle.Left;
+                }
+                else
+                {
+                    Angle--;
+                }
+            }
         }
 
         protected override void Draw(Graphics g)
@@ -41,7 +73,7 @@ namespace RegionCapture
             {
                 using (GraphicsPath graphicsPath = new GraphicsPath())
                 {
-                    graphicsPath.AddTriangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1));
+                    graphicsPath.AddTriangle(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1), Angle);
 
                     using (Region region = new Region(graphicsPath))
                     {

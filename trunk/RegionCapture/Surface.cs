@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -42,7 +43,11 @@ namespace RegionCapture
 
         public bool AutoCalculateArea { get; protected set; }
 
+        public int FPS { get; private set; }
+
         private TextureBrush backgroundBrush;
+        private Stopwatch timer;
+        private int frameCount;
 
         protected Pen borderPen;
         protected Brush shadowBrush, nodeBackgroundBrush;
@@ -55,10 +60,10 @@ namespace RegionCapture
             InitializeComponent();
 
             DrawableObjects = new List<DrawableObject>();
+            AutoCalculateArea = true;
 
             backgroundBrush = new TextureBrush(backgroundImage);
-
-            AutoCalculateArea = true;
+            timer = new Stopwatch();
 
             borderPen = Pens.CornflowerBlue;
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
@@ -123,13 +128,18 @@ namespace RegionCapture
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!timer.IsRunning) timer.Start();
+
             Update();
             AfterUpdate();
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
             g.FillRectangle(backgroundBrush, Bounds);
+
             Draw(g);
+
+            CheckFPS();
 
             Invalidate();
         }
@@ -147,6 +157,20 @@ namespace RegionCapture
                 {
                     drawObject.Draw(g);
                 }
+            }
+        }
+
+        private void CheckFPS()
+        {
+            frameCount++;
+
+            if (timer.ElapsedMilliseconds >= 1000)
+            {
+                FPS = frameCount;
+                Debug.WriteLine("FPS: " + FPS);
+                frameCount = 0;
+                timer.Reset();
+                timer.Start();
             }
         }
 
