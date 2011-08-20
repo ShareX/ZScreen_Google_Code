@@ -30,11 +30,11 @@ using System.Windows.Forms;
 
 namespace RegionCapture
 {
-    public class PolygonRegionSurface : Surface
+    public class PolygonRegion : Surface
     {
         private List<NodeObject> nodes;
 
-        public PolygonRegionSurface(Image backgroundImage)
+        public PolygonRegion(Image backgroundImage)
             : base(backgroundImage)
         {
             nodes = new List<NodeObject>();
@@ -76,11 +76,11 @@ namespace RegionCapture
         {
             base.Update();
 
-            foreach (NodeObject node in nodes)
+            for (int i = nodes.Count - 1; i >= 0; i--)
             {
-                if (node.Visible && node.IsHolding)
+                if (nodes[i].Visible && nodes[i].IsHolding)
                 {
-                    ActivateNode(node);
+                    ActivateNode(nodes[i]);
                     break;
                 }
             }
@@ -88,25 +88,24 @@ namespace RegionCapture
 
         protected override void Draw(Graphics g)
         {
-            GraphicsPath graphicsPath = new GraphicsPath();
+            regionPath = new GraphicsPath();
 
-            for (int i = 0; i < nodes.Count; i++)
+            for (int i = 0; i < nodes.Count - 1; i++)
             {
-                if (i + 1 < nodes.Count)
-                {
-                    graphicsPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
-                }
+                regionPath.AddLine(nodes[i].Position, nodes[i + 1].Position);
             }
 
             if (nodes.Count > 2)
             {
-                graphicsPath.AddLine(nodes[0].Position, nodes[nodes.Count - 1].Position);
+                regionPath.CloseFigure();
 
-                Region region = new Region(graphicsPath);
+                using (Region region = new Region(regionPath))
+                {
+                    g.ExcludeClip(region);
+                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    g.ResetClip();
+                }
 
-                g.ExcludeClip(region);
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                g.ResetClip();
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else
@@ -114,7 +113,7 @@ namespace RegionCapture
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
 
-            g.DrawPath(borderPen, graphicsPath);
+            g.DrawPath(borderPen, regionPath);
 
             base.Draw(g);
         }

@@ -33,41 +33,73 @@ namespace RegionCaptureTest
     public partial class TestForm : Form
     {
         private Bitmap screenshot;
+        private Surface surface;
 
         public TestForm()
         {
             InitializeComponent();
+            pbResult.BackgroundImage = CreateCheckers(8, Color.LightGray, Color.White);
             screenshot = Helpers.GetScreenshot();
+        }
+
+        private Image CreateCheckers(int size, Color color1, Color color2)
+        {
+            Bitmap bmp = new Bitmap(size * 2, size * 2);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            using (Brush brush1 = new SolidBrush(color1))
+            using (Brush brush2 = new SolidBrush(color2))
+            {
+                g.FillRectangle(brush1, 0, 0, size, size);
+                g.FillRectangle(brush1, size, size, size, size);
+
+                g.FillRectangle(brush2, size, 0, size, size);
+                g.FillRectangle(brush2, 0, size, size, size);
+            }
+
+            return bmp;
         }
 
         private void tsbFreeHand_Click(object sender, EventArgs e)
         {
-            new FreeHandRegionSurface(screenshot).Show();
+            surface = new FreeHandRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
 
         private void tsbEllipse_Click(object sender, EventArgs e)
         {
-            new EllipseRegionSurface(screenshot).Show();
+            surface = new EllipseRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
 
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
-            new RectangleRegionSurface(screenshot).Show();
+            surface = new RectangleRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
 
         private void tsbRoundedRectangle_Click(object sender, EventArgs e)
         {
-            new RoundedRectangleRegionSurface(screenshot).Show();
+            surface = new RoundedRectangleRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
 
         private void tsbTriangle_Click(object sender, EventArgs e)
         {
-            new TriangleRegionSurface(screenshot).Show();
+            surface = new TriangleRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
 
         private void tsbPolygon_Click(object sender, EventArgs e)
         {
-            new PolygonRegionSurface(screenshot).Show();
+            surface = new PolygonRegion(screenshot);
+            surface.ShowDialog();
+            pbResult.Image = surface.GetRegionImage();
         }
     }
 }

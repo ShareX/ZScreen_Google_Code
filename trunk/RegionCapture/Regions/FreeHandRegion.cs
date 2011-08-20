@@ -25,27 +25,67 @@
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace RegionCapture
 {
-    public class EllipseRegionSurface : RectangleRegionSurface
+    public class FreeHandRegion : Surface
     {
-        public EllipseRegionSurface(Image backgroundImage)
+        private NodeObject lastNode;
+
+        public FreeHandRegion(Image backgroundImage)
             : base(backgroundImage)
         {
+            AutoCalculateArea = false;
+
+            regionPath = new GraphicsPath();
+
+            lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
+            DrawableObjects.Add(lastNode);
+
+            MouseDown += new MouseEventHandler(FreeHandRegionSurface_MouseDown);
+        }
+
+        private void FreeHandRegionSurface_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && lastNode.IsMouseHover)
+            {
+                lastNode.Visible = false;
+                regionPath.Reset();
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (!lastNode.Visible && isMouseDown)
+            {
+                lastNode.Visible = true;
+                lastNode.IsHolding = true;
+            }
+
+            if (lastNode.Visible && lastNode.IsHolding)
+            {
+                regionPath.AddLine(oldMousePosition, mousePosition);
+                lastNode.Position = mousePosition;
+            }
+
+            if (regionPath.PointCount > 2)
+            {
+                Area = Rectangle.Round(regionPath.GetBounds());
+            }
         }
 
         protected override void Draw(Graphics g)
         {
-            if (Area != null && Area.Width > 0 && Area.Height > 0)
+            if (regionPath.PointCount > 2)
             {
-                GraphicsPath graphicsPath = new GraphicsPath();
-                graphicsPath.AddEllipse(Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
-                Region region = new Region(graphicsPath);
+                Region region = new Region(regionPath);
                 g.ExcludeClip(region);
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                 g.ResetClip();
-                g.DrawEllipse(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                g.DrawPath(borderPen, regionPath);
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else

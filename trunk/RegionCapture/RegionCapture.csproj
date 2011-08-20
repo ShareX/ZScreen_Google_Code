@@ -43,33 +43,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EllipseRegionSurface.cs">
+    <Compile Include="Regions\EllipseRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FreeHandRegionSurface.cs">
+    <Compile Include="Regions\FreeHandRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PolygonRegionSurface.cs">
+    <Compile Include="Regions\PolygonRegion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawObject.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="NodeObject.cs" />
-    <Compile Include="RectangleRegionSurface.cs">
+    <Compile Include="Regions\RectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GraphicsPathExtensions.cs" />
-    <Compile Include="RoundedRectangleRegionSurface.cs">
+    <Compile Include="Regions\RoundedRectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Surface.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TriangleRegionSurface.cs">
+    <Compile Include="Regions\TriangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
