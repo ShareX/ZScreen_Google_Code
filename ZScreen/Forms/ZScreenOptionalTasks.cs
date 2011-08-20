@@ -123,7 +123,10 @@ namespace ZScreenGUI
 
                 if (Adapter.CheckFTPAccounts())
                 {
-                    Adapter.TestFTPAccount(Adapter.GetFtpAcctActive(), true);
+                    foreach (FTPAccount acc in Engine.MyUploadersConfig.FTPAccountList)
+                    {
+                        Adapter.TestFTPAccount(acc, true);
+                    }
                 }
             }
             catch (Exception ex)
