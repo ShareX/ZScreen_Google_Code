@@ -49,7 +49,6 @@ namespace RegionCapture
         {
             base.Update();
 
-            // If first time click
             if (isMouseDown && !isNodesCreated)
             {
                 for (int i = 0; i < nodes.Length; i++)
@@ -58,33 +57,32 @@ namespace RegionCapture
                     nodes[i].Visible = true;
                 }
 
-                // Right bottom
-                nodes[2].IsHolding = true;
+                nodes[(int)NodePosition.BottomRight].IsHolding = true;
 
                 isNodesCreated = true;
             }
 
             if (isNodesCreated)
             {
-                if (nodes[0].IsHolding) // Left top
+                if (nodes[(int)NodePosition.TopLeft].IsHolding)
                 {
                     nodes[0].Position = ClientMousePosition;
                     nodes[1].Position = new Point(nodes[1].Position.X, nodes[0].Position.Y);
                     nodes[3].Position = new Point(nodes[0].Position.X, nodes[3].Position.Y);
                 }
-                else if (nodes[1].IsHolding) // Right top
+                else if (nodes[(int)NodePosition.TopRight].IsHolding)
                 {
                     nodes[1].Position = ClientMousePosition;
                     nodes[0].Position = new Point(nodes[0].Position.X, nodes[1].Position.Y);
                     nodes[2].Position = new Point(nodes[1].Position.X, nodes[2].Position.Y);
                 }
-                else if (nodes[2].IsHolding) // Right bottom
+                else if (nodes[(int)NodePosition.BottomRight].IsHolding)
                 {
                     nodes[2].Position = ClientMousePosition;
                     nodes[1].Position = new Point(nodes[2].Position.X, nodes[1].Position.Y);
                     nodes[3].Position = new Point(nodes[3].Position.X, nodes[2].Position.Y);
                 }
-                else if (nodes[3].IsHolding) // Left bottom
+                else if (nodes[(int)NodePosition.BottomLeft].IsHolding)
                 {
                     nodes[3].Position = ClientMousePosition;
                     nodes[0].Position = new Point(nodes[3].Position.X, nodes[0].Position.Y);
