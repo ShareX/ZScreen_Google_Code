@@ -52,6 +52,7 @@ namespace RegionCapture
             {
                 lastNode.Visible = false;
                 regionPath.Reset();
+                Area = Rectangle.Empty;
             }
         }
 
@@ -73,7 +74,8 @@ namespace RegionCapture
 
             if (regionPath.PointCount > 2)
             {
-                Area = Rectangle.Round(regionPath.GetBounds());
+                RectangleF rect = regionPath.GetBounds();
+                Area = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 

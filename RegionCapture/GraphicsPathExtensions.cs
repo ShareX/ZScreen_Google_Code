@@ -146,5 +146,15 @@ namespace RegionCapture
 
             graphicsPath.AddPolygon(new PointF[] { p1, p2, p3 });
         }
+
+        public static void AddDiamond(this GraphicsPath graphicsPath, RectangleF rect)
+        {
+            PointF p1 = new PointF(rect.X + rect.Width / 2, rect.Y);
+            PointF p2 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2);
+            PointF p3 = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
+            PointF p4 = new PointF(rect.X, rect.Y + rect.Height / 2);
+
+            graphicsPath.AddPolygon(new PointF[] { p1, p2, p3, p4 });
+        }
     }
 }
