@@ -239,6 +239,7 @@ namespace ZScreenGUI
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropRegionRectangleInfo = chkRegionRectangleInfo.Checked;
+            chkCropShowMagnifyingGlass.Enabled = chkRegionRectangleInfo.Checked;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)

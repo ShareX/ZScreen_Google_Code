@@ -517,11 +517,8 @@ namespace ZScreenLib
         [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(false), Description("Use crop beta.")]
-        public bool UseCropBeta { get; set; }
-
-        [Category("Screenshots / General"), DefaultValue(false), Description("Use crop light. Simple crop for slow computers.")]
-        public bool UseCropLight { get; set; }
+        [Category("Screenshots / General"), DefaultValue(CropEngineType.Cropv1), Description("Choose the method of Crop")]
+        public CropEngineType CropEngineMode { get; set; }
 
         [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
