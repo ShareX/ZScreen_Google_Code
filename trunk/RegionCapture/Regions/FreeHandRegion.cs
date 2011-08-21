@@ -93,7 +93,7 @@ namespace RegionCapture
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
 
-            DrawObjects(g);
+            base.Draw(g);
         }
     }
 }
