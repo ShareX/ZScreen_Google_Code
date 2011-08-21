@@ -111,7 +111,6 @@ namespace ZScreenGUI
             this.tcScreenshots = new System.Windows.Forms.TabControl();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
             this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
-            this.cbActiveWindowGDIFreezeWindow = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
@@ -1315,7 +1314,6 @@ namespace ZScreenGUI
             // tpActivewindow
             // 
             this.tpActivewindow.Controls.Add(this.chkActiveWindowTryCaptureChildren);
-            this.tpActivewindow.Controls.Add(this.cbActiveWindowGDIFreezeWindow);
             this.tpActivewindow.Controls.Add(this.chkSelectedWindowCleanTransparentCorners);
             this.tpActivewindow.Controls.Add(this.chkSelectedWindowShowCheckers);
             this.tpActivewindow.Controls.Add(this.chkSelectedWindowIncludeShadow);
@@ -1333,7 +1331,7 @@ namespace ZScreenGUI
             // chkActiveWindowTryCaptureChildren
             // 
             this.chkActiveWindowTryCaptureChildren.AutoSize = true;
-            this.chkActiveWindowTryCaptureChildren.Location = new System.Drawing.Point(16, 156);
+            this.chkActiveWindowTryCaptureChildren.Location = new System.Drawing.Point(16, 136);
             this.chkActiveWindowTryCaptureChildren.Name = "chkActiveWindowTryCaptureChildren";
             this.chkActiveWindowTryCaptureChildren.Size = new System.Drawing.Size(235, 17);
             this.chkActiveWindowTryCaptureChildren.TabIndex = 48;
@@ -1341,18 +1339,6 @@ namespace ZScreenGUI
             this.ttZScreen.SetToolTip(this.chkActiveWindowTryCaptureChildren, "Only works when DWM is disabled");
             this.chkActiveWindowTryCaptureChildren.UseVisualStyleBackColor = true;
             this.chkActiveWindowTryCaptureChildren.CheckedChanged += new System.EventHandler(this.chkActiveWindowTryCaptureChilds_CheckedChanged);
-            // 
-            // cbActiveWindowGDIFreezeWindow
-            // 
-            this.cbActiveWindowGDIFreezeWindow.AutoSize = true;
-            this.cbActiveWindowGDIFreezeWindow.Location = new System.Drawing.Point(16, 133);
-            this.cbActiveWindowGDIFreezeWindow.Name = "cbActiveWindowGDIFreezeWindow";
-            this.cbActiveWindowGDIFreezeWindow.Size = new System.Drawing.Size(168, 17);
-            this.cbActiveWindowGDIFreezeWindow.TabIndex = 49;
-            this.cbActiveWindowGDIFreezeWindow.Text = "Freeze window during capture";
-            this.ttZScreen.SetToolTip(this.cbActiveWindowGDIFreezeWindow, "Avoids artifacts with moving images");
-            this.cbActiveWindowGDIFreezeWindow.UseVisualStyleBackColor = true;
-            this.cbActiveWindowGDIFreezeWindow.CheckedChanged += new System.EventHandler(this.chkActiveWindowGDIFreezeWindow_CheckedChanged);
             // 
             // chkSelectedWindowCleanTransparentCorners
             // 
@@ -5353,7 +5339,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkActiveWindowTryCaptureChildren;
         private System.Windows.Forms.CheckBox chkActiveWindowPreferDWM;
         private System.Windows.Forms.TabPage tpActivewindow;
-        private System.Windows.Forms.CheckBox cbActiveWindowGDIFreezeWindow;
         private System.Windows.Forms.ComboBox cbGIFQuality;
         private System.Windows.Forms.Label lblGIFQuality;
         private System.Windows.Forms.TabPage tpDebugLog;
