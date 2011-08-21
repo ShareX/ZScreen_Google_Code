@@ -116,5 +116,17 @@ namespace RegionCapture
 
             return null;
         }
+
+        public static void DrawTextWithShadow(Graphics g, string text, PointF position, Font font, Color textColor, Color shadowColor, int shadowOffset = 1)
+        {
+            Brush shadowBrush = new SolidBrush(shadowColor);
+            g.DrawString(text, font, shadowBrush, position.X - shadowOffset, position.Y - shadowOffset);
+            g.DrawString(text, font, shadowBrush, position.X + shadowOffset, position.Y - shadowOffset);
+            g.DrawString(text, font, shadowBrush, position.X + shadowOffset, position.Y + shadowOffset);
+            g.DrawString(text, font, shadowBrush, position.X - shadowOffset, position.Y + shadowOffset);
+
+            Brush textBrush = new SolidBrush(textColor);
+            g.DrawString(text, font, textBrush, position.X, position.Y);
+        }
     }
 }
