@@ -132,7 +132,7 @@ namespace ZScreenLib
 
         // Crop Shot
 
-        public RegionStyles CropRegionStyles = RegionStyles.REGION_BRIGHTNESS;
+        public RegionStyles CropRegionStyles = RegionStyles.BACKGROUND_REGION_BRIGHTNESS;
         public bool CropRegionRectangleInfo = true;
         public bool CropRegionHotkeyInfo = true;
 
