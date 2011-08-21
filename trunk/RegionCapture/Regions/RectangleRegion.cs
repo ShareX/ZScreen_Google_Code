@@ -29,38 +29,66 @@ namespace RegionCapture
 {
     public class RectangleRegion : Surface
     {
-        protected NodeObject firstNode;
-        protected NodeObject secondNode;
+        protected NodeObject[] nodes;
+
+        protected bool isNodesCreated;
 
         public RectangleRegion(Image backgroundImage)
             : base(backgroundImage)
         {
-            firstNode = new NodeObject(borderPen, nodeBackgroundBrush);
-            secondNode = new NodeObject(borderPen, nodeBackgroundBrush);
+            nodes = new NodeObject[4];
 
-            DrawableObjects.Add(firstNode);
-            DrawableObjects.Add(secondNode);
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
+                DrawableObjects.Add(nodes[i]);
+            }
         }
 
         protected override void Update()
         {
             base.Update();
 
-            if (isMouseDown && (!firstNode.Visible || !secondNode.Visible))
+            // If first time click
+            if (isMouseDown && !isNodesCreated)
             {
-                ActivateNode(firstNode);
-                ActivateNode(secondNode);
+                for (int i = 0; i < nodes.Length; i++)
+                {
+                    nodes[i].Position = ClientMousePosition;
+                    nodes[i].Visible = true;
+                }
+
+                // Right bottom
+                nodes[2].IsHolding = true;
+
+                isNodesCreated = true;
             }
 
-            if (firstNode.Visible && secondNode.Visible)
+            if (isNodesCreated)
             {
-                if (firstNode.IsHolding)
+                if (nodes[0].IsHolding) // Left top
                 {
-                    ActivateNode(firstNode);
+                    nodes[0].Position = ClientMousePosition;
+                    nodes[1].Position = new Point(nodes[1].Position.X, nodes[0].Position.Y);
+                    nodes[3].Position = new Point(nodes[0].Position.X, nodes[3].Position.Y);
                 }
-                else if (secondNode.IsHolding)
+                else if (nodes[1].IsHolding) // Right top
                 {
-                    ActivateNode(secondNode);
+                    nodes[1].Position = ClientMousePosition;
+                    nodes[0].Position = new Point(nodes[0].Position.X, nodes[1].Position.Y);
+                    nodes[2].Position = new Point(nodes[1].Position.X, nodes[2].Position.Y);
+                }
+                else if (nodes[2].IsHolding) // Right bottom
+                {
+                    nodes[2].Position = ClientMousePosition;
+                    nodes[1].Position = new Point(nodes[2].Position.X, nodes[1].Position.Y);
+                    nodes[3].Position = new Point(nodes[3].Position.X, nodes[2].Position.Y);
+                }
+                else if (nodes[3].IsHolding) // Left bottom
+                {
+                    nodes[3].Position = ClientMousePosition;
+                    nodes[0].Position = new Point(nodes[3].Position.X, nodes[0].Position.Y);
+                    nodes[2].Position = new Point(nodes[2].Position.X, nodes[3].Position.Y);
                 }
             }
         }
@@ -80,13 +108,6 @@ namespace RegionCapture
             }
 
             base.Draw(g);
-        }
-
-        private void ActivateNode(NodeObject node)
-        {
-            node.Position = ClientMousePosition;
-            node.Visible = true;
-            node.IsHolding = true;
         }
     }
 }
