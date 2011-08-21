@@ -1966,11 +1966,6 @@ namespace ZScreenGUI
             UpdateAeroGlassConfig();
         }
 
-        private void chkActiveWindowGDIFreezeWindow_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.ActiveWindowGDIFreezeWindow = cbActiveWindowGDIFreezeWindow.Checked;
-        }
-
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.PerformActions = chkPerformActions.Checked;

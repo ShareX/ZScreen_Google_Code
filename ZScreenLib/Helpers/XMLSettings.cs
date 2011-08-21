@@ -187,7 +187,9 @@ namespace ZScreenLib
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowTryCaptureChildren = false;
         public bool ActiveWindowPreferDWM = false;
-        public bool ActiveWindowGDIFreezeWindow = false;
+
+        [Category("Screenshots / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
+        public bool ActiveWindowGDIFreezeWindow { get; set; }
 
         // Freehand Crop Shot
 

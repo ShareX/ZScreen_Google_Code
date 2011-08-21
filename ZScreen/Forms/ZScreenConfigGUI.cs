@@ -317,7 +317,6 @@ namespace ZScreenGUI
             chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChildren.Checked = Engine.conf.ActiveWindowTryCaptureChildren;
             chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
-            cbActiveWindowGDIFreezeWindow.Checked = Engine.conf.ActiveWindowGDIFreezeWindow;
 
             // Freehand Crop Shot
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
