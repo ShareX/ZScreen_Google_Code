@@ -49,7 +49,7 @@ namespace RegionCapture
         private Pen borderPen;
         private Brush backgroundBrush;
 
-        public NodeObject(Pen borderPen, Brush backgroundBrush, int x = 0, int y = 0, int size = 5)
+        public NodeObject(Pen borderPen, Brush backgroundBrush, int x = 0, int y = 0, int size = 6)
         {
             this.borderPen = borderPen;
             this.backgroundBrush = backgroundBrush;
@@ -70,6 +70,8 @@ namespace RegionCapture
                 g.FillEllipse(backgroundBrush, Rectangle.X, Rectangle.Y, Rectangle.Width - 1, Rectangle.Height - 1);
             }
 
+            g.DrawLine(borderPen, Rectangle.X + Size - 1, Rectangle.Y + Size, Rectangle.X + Size + 1, Rectangle.Y + Size);
+            g.DrawLine(borderPen, Rectangle.X + Size, Rectangle.Y + Size - 1, Rectangle.X + Size, Rectangle.Y + Size + 1);
             g.DrawEllipse(borderPen, Rectangle.X, Rectangle.Y, Rectangle.Width - 1, Rectangle.Height - 1);
         }
     }

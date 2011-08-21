@@ -36,13 +36,6 @@ namespace RegionCapture
         public RectangleRegion(Image backgroundImage)
             : base(backgroundImage)
         {
-            nodes = new NodeObject[4];
-
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
-                DrawableObjects.Add(nodes[i]);
-            }
         }
 
         protected override void Update()
@@ -51,10 +44,14 @@ namespace RegionCapture
 
             if (isMouseDown && !isNodesCreated)
             {
+                nodes = new NodeObject[4];
+
                 for (int i = 0; i < nodes.Length; i++)
                 {
+                    nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
                     nodes[i].Position = ClientMousePosition;
                     nodes[i].Visible = true;
+                    DrawableObjects.Add(nodes[i]);
                 }
 
                 nodes[(int)NodePosition.BottomRight].IsHolding = true;
@@ -62,7 +59,7 @@ namespace RegionCapture
                 isNodesCreated = true;
             }
 
-            if (isNodesCreated)
+            if (nodes != null && isNodesCreated)
             {
                 if (nodes[(int)NodePosition.TopLeft].IsHolding)
                 {
