@@ -33,12 +33,12 @@ namespace RegionCaptureTest
     public partial class TestForm : Form
     {
         private Bitmap screenshot;
+        private Image result;
         private Surface surface;
 
         public TestForm()
         {
             InitializeComponent();
-            pbResult.BackgroundImage = CreateCheckers(8, Color.LightGray, Color.White);
             screenshot = Helpers.GetScreenshot();
         }
 
@@ -60,46 +60,64 @@ namespace RegionCaptureTest
             return bmp;
         }
 
+        private void CaptureRegion()
+        {
+            pbResult.Image = null;
+
+            if (surface.ShowDialog() == DialogResult.OK)
+            {
+                result = surface.GetRegionImage();
+                pbResult.Image = result;
+                Text = "RegionCapture: " + result.Width + "x" + result.Height;
+            }
+        }
+
         private void tsbFreeHand_Click(object sender, EventArgs e)
         {
             surface = new FreeHandRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
         }
 
         private void tsbEllipse_Click(object sender, EventArgs e)
         {
             surface = new EllipseRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
         }
 
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
             surface = new RectangleRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
         }
 
         private void tsbRoundedRectangle_Click(object sender, EventArgs e)
         {
             surface = new RoundedRectangleRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
         }
 
         private void tsbTriangle_Click(object sender, EventArgs e)
         {
             surface = new TriangleRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
         }
 
         private void tsbPolygon_Click(object sender, EventArgs e)
         {
             surface = new PolygonRegion(screenshot);
-            surface.ShowDialog();
-            pbResult.Image = surface.GetRegionImage();
+            CaptureRegion();
+        }
+
+        private void cbShowChecker_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbShowChecker.Checked)
+            {
+                pbResult.BackgroundImage = CreateCheckers(8, Color.LightGray, Color.White);
+            }
+            else
+            {
+                pbResult.BackgroundImage = null;
+            }
         }
     }
 }

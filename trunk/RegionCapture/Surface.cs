@@ -66,10 +66,10 @@ namespace RegionCapture
             backgroundBrush = new TextureBrush(backgroundImage);
             timer = new Stopwatch();
 
-            borderPen = Pens.CornflowerBlue;
+            borderPen = new Pen(Color.CornflowerBlue);
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
-            nodeBackgroundBrush = Brushes.White;
-            textFont = new Font("Arial", 22, FontStyle.Bold);
+            nodeBackgroundBrush = new SolidBrush(Color.White);
+            textFont = new Font("Arial", 18, FontStyle.Bold);
 
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
@@ -78,14 +78,20 @@ namespace RegionCapture
 
         public virtual Image GetRegionImage()
         {
+            Image img = null;
+
             if (regionPath != null)
             {
-                return Helpers.CropImage(SurfaceImage, regionPath);
+                img = Helpers.CropImage(SurfaceImage, regionPath);
             }
             else
             {
-                return Helpers.CropImage(SurfaceImage, Area);
+                img = Helpers.CropImage(SurfaceImage, Area);
             }
+
+            Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
+
+            return img;
         }
 
         private void Surface_MouseDown(object sender, MouseEventArgs e)
@@ -106,7 +112,26 @@ namespace RegionCapture
 
         private void Surface_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape) Close();
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close(true);
+            }
+            else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
+            {
+                Close(false);
+            }
+        }
+
+        private void Close(bool isCancel = false)
+        {
+            if (isCancel)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
+            else
+            {
+                DialogResult = DialogResult.OK;
+            }
         }
 
         protected virtual new void Update()
@@ -141,7 +166,9 @@ namespace RegionCapture
 
         protected override void OnPaint(PaintEventArgs e)
         {
+#if DEBUG
             if (!timer.IsRunning) timer.Start();
+#endif
 
             Update();
             AfterUpdate();
@@ -152,7 +179,10 @@ namespace RegionCapture
 
             Draw(g);
 
+#if DEBUG
             CheckFPS();
+            DrawDebug(g);
+#endif
 
             Invalidate();
         }
@@ -180,11 +210,17 @@ namespace RegionCapture
             if (timer.ElapsedMilliseconds >= 1000)
             {
                 FPS = frameCount;
-                Debug.WriteLine("FPS: " + FPS);
                 frameCount = 0;
                 timer.Reset();
                 timer.Start();
             }
+        }
+
+        private void DrawDebug(Graphics g)
+        {
+            string text = string.Format("FPS: {0}\nX: {1}, Y: {2}\nWidth: {3}, Height: {4}", FPS, Area.X, Area.Y, Area.Width, Area.Height);
+            SizeF size = g.MeasureString(text, textFont);
+            Helpers.DrawTextWithShadow(g, text, new PointF(Width / 2 - size.Width / 2, 30), textFont, Color.White, Color.Black, 1);
         }
 
         protected Rectangle CalculateAreaFromNodes()
@@ -217,6 +253,11 @@ namespace RegionCapture
             }
 
             if (backgroundBrush != null) backgroundBrush.Dispose();
+            if (regionPath != null) regionPath.Dispose();
+            if (borderPen != null) borderPen.Dispose();
+            if (shadowBrush != null) shadowBrush.Dispose();
+            if (nodeBackgroundBrush != null) nodeBackgroundBrush.Dispose();
+            if (textFont != null) textFont.Dispose();
 
             base.Dispose(disposing);
         }
