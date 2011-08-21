@@ -64,6 +64,11 @@ namespace ZScreenGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = (WorkerTask)e.Argument;
+            if (bwTask.Status.Contains(WorkerTask.TaskStatus.CancellationPending))
+            {
+                return;
+            }
+
             bwTask.Status.Add(WorkerTask.TaskStatus.ThreadMode);
 
             bwTask.UniqueNumber = UploadManager.Queue();
@@ -343,29 +348,14 @@ namespace ZScreenGUI
 
         #region Create Worker
 
-        public WorkerTask CreateTask(WorkerTask.JobLevel2 job)
+        public WorkerTask CreateTask(WorkerTask.JobLevel2 job, string fp = "")
         {
-            return new WorkerTask(CreateWorker(), job, ucDestOptions);
-        }
-
-        /// <summary>
-        /// Worker for Text: Paste2, Pastebin
-        /// </summary>
-        /// <returns></returns>
-        public WorkerTask CreateTaskText(WorkerTask.JobLevel2 job, string localFilePath)
-        {
-            WorkerTask textTask = CreateTask(job);
-
-            if (!string.IsNullOrEmpty(localFilePath))
-            {
-                textTask.UpdateLocalFilePath(localFilePath);
-            }
-
+            WorkerTask tempTask = new WorkerTask(CreateWorker(), job, ucDestOptions, fp);
             switch (job)
             {
                 case WorkerTask.JobLevel2.Translate:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
-                    textTask.SetTranslationInfo(new GoogleTranslateInfo()
+                    tempTask.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
                         SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
@@ -374,8 +364,7 @@ namespace ZScreenGUI
 
                     break;
             }
-
-            return textTask;
+            return tempTask;
         }
 
         #endregion Create Worker
@@ -580,13 +569,13 @@ namespace ZScreenGUI
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask tfTask = CreateTaskText(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                    WorkerTask tfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
                     tfTask.SetText(File.ReadAllText(fp));
                     tfTask.RunWorker();
                 }
                 else
                 {
-                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromDragDrop, fp);
                     fuTask.UpdateLocalFilePath(fp);
                     fuTask.RunWorker();
                 }
