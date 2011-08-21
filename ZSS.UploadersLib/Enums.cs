@@ -185,8 +185,6 @@ namespace UploadersLib
         SendSpace,
         [Description("dropbox.com")]
         Dropbox,
-        //[Description("share.cx")]
-        //ShareCX,
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]

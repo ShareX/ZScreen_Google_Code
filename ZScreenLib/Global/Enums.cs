@@ -149,4 +149,14 @@ namespace ZScreenLib
         [Description("Do Nothing")]
         Nothing
     }
+
+    public enum CropEngineType
+    {
+        [Description("Crop Lite - Simple crop for slow computers.")]
+        CropLite,
+        [Description("Crop v1 - Default crop engine")]
+        Cropv1,
+        [Description("Crop v2 - Advanced crop engine to move cropped region")]
+        Cropv2,
+    }
 }

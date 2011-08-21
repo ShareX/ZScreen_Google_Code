@@ -487,7 +487,7 @@ namespace ZScreenLib
                         }
                         else
                         {
-                            if (Engine.conf.UseCropBeta && !windowMode)
+                            if (Engine.conf.CropEngineMode == CropEngineType.Cropv2 && !windowMode)
                             {
                                 using (Crop2 crop = new Crop2(imgSS))
                                 {
@@ -497,7 +497,7 @@ namespace ZScreenLib
                                     }
                                 }
                             }
-                            else if (Engine.conf.UseCropLight && !windowMode)
+                            else if (Engine.conf.CropEngineMode == CropEngineType.CropLite && !windowMode)
                             {
                                 using (CropLight crop = new CropLight(imgSS))
                                 {
