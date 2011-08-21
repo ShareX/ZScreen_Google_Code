@@ -60,7 +60,7 @@ Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags
 Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
 Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
