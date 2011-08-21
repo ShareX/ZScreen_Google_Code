@@ -29,8 +29,6 @@ using System.Drawing.Drawing2D;
 
 namespace RegionCapture
 {
-    public enum TriangleAngle { Up, Right, Down, Left }
-
     public static class GraphicsPathExtensions
     {
         public static void AddRoundedRectangle(this GraphicsPath graphicsPath, RectangleF rect, float radius)

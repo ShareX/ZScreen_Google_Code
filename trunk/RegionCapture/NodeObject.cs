@@ -65,7 +65,7 @@ namespace RegionCapture
 
         public override void Draw(Graphics g)
         {
-            if (IsMouseHover)
+            if (IsHolding || IsMouseHover)
             {
                 g.FillEllipse(backgroundBrush, Rectangle.X, Rectangle.Y, Rectangle.Width - 1, Rectangle.Height - 1);
             }

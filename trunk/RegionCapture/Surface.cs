@@ -145,6 +145,7 @@ namespace RegionCapture
                 if (drawObject.IsMouseHover && !oldIsMouseDown && isMouseDown)
                 {
                     drawObject.IsHolding = true;
+                    break;
                 }
                 else if (oldIsMouseDown && !isMouseDown)
                 {

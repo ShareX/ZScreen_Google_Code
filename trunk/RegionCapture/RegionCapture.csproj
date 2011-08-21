@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="Regions\EllipseRegion.cs">
       <SubType>Form</SubType>
     </Compile>
