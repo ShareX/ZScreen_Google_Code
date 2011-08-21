@@ -218,22 +218,30 @@ namespace ZScreenLib
         {
             MyWorker = worker;
             AssignJob(job);
+
+            bool success = true;
+
             switch (job)
             {
                 case JobLevel2.CaptureActiveWindow:
-                    CaptureActiveWindow();
+                    success = CaptureActiveWindow();
                     break;
                 case JobLevel2.CaptureEntireScreen:
-                    CaptureScreen();
+                    success = CaptureScreen();
                     break;
                 case JobLevel2.CaptureSelectedWindow:
                 case JobLevel2.CaptureRectRegion:
                 case JobLevel2.CaptureLastCroppedWindow:
-                    CaptureRegionOrWindow();
+                    success = CaptureRegionOrWindow();
                     break;
                 case JobLevel2.CaptureFreeHandRegion:
-                    CaptureFreehandCrop();
+                    success = CaptureFreehandCrop();
                     break;
+            }
+
+            if (!success)
+            {
+                this.Status.Add(TaskStatus.CancellationPending);
             }
         }
 
@@ -273,7 +281,7 @@ namespace ZScreenLib
         {
             DialogResult dlgResult = DialogResult.OK;
 
-            if (!Status.Contains(TaskStatus.Prepared))
+            if (!Status.Contains(TaskStatus.Prepared) && !Status.Contains(TaskStatus.CancellationPending))
             {
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, TaskOutputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
