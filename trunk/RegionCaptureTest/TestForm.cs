@@ -72,18 +72,6 @@ namespace RegionCaptureTest
             }
         }
 
-        private void tsbFreeHand_Click(object sender, EventArgs e)
-        {
-            surface = new FreeHandRegion(screenshot);
-            CaptureRegion();
-        }
-
-        private void tsbEllipse_Click(object sender, EventArgs e)
-        {
-            surface = new EllipseRegion(screenshot);
-            CaptureRegion();
-        }
-
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
             surface = new RectangleRegion(screenshot);
@@ -96,15 +84,33 @@ namespace RegionCaptureTest
             CaptureRegion();
         }
 
+        private void tsbEllipse_Click(object sender, EventArgs e)
+        {
+            surface = new EllipseRegion(screenshot);
+            CaptureRegion();
+        }
+
         private void tsbTriangle_Click(object sender, EventArgs e)
         {
             surface = new TriangleRegion(screenshot);
             CaptureRegion();
         }
 
+        private void tsbDiamond_Click(object sender, EventArgs e)
+        {
+            surface = new DiamondRegion(screenshot);
+            CaptureRegion();
+        }
+
         private void tsbPolygon_Click(object sender, EventArgs e)
         {
             surface = new PolygonRegion(screenshot);
+            CaptureRegion();
+        }
+
+        private void tsbFreeHand_Click(object sender, EventArgs e)
+        {
+            surface = new FreeHandRegion(screenshot);
             CaptureRegion();
         }
 

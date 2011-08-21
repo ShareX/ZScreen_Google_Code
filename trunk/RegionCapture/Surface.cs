@@ -178,6 +178,10 @@ namespace RegionCapture
             g.SmoothingMode = SmoothingMode.HighSpeed;
             g.FillRectangle(backgroundBrush, Bounds);
 
+#if DEBUG
+            g.DrawRectangle(Pens.Yellow, Bounds.X, Bounds.Y, Bounds.Width - 1, Bounds.Height - 1);
+#endif
+
             Draw(g);
 
 #if DEBUG

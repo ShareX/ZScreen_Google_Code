@@ -38,6 +38,7 @@
             this.tsbFreeHand = new System.Windows.Forms.ToolStripButton();
             this.pbResult = new System.Windows.Forms.PictureBox();
             this.cbShowChecker = new System.Windows.Forms.CheckBox();
+            this.tsbDiamond = new System.Windows.Forms.ToolStripButton();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.SuspendLayout();
@@ -51,6 +52,7 @@
             this.tsbRoundedRectangle,
             this.tsbEllipse,
             this.tsbTriangle,
+            this.tsbDiamond,
             this.tsbPolygon,
             this.tsbFreeHand});
             this.tsRegionTools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
@@ -143,6 +145,16 @@
             this.cbShowChecker.UseVisualStyleBackColor = true;
             this.cbShowChecker.CheckedChanged += new System.EventHandler(this.cbShowChecker_CheckedChanged);
             // 
+            // tsbDiamond
+            // 
+            this.tsbDiamond.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbDiamond.Image = ((System.Drawing.Image)(resources.GetObject("tsbDiamond.Image")));
+            this.tsbDiamond.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDiamond.Name = "tsbDiamond";
+            this.tsbDiamond.Size = new System.Drawing.Size(60, 19);
+            this.tsbDiamond.Text = "Diamond";
+            this.tsbDiamond.Click += new System.EventHandler(this.tsbDiamond_Click);
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,5 +185,6 @@
         private System.Windows.Forms.ToolStripButton tsbPolygon;
         private System.Windows.Forms.PictureBox pbResult;
         private System.Windows.Forms.CheckBox cbShowChecker;
+        private System.Windows.Forms.ToolStripButton tsbDiamond;
     }
 }
