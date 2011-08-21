@@ -237,10 +237,17 @@ namespace ZScreenLib
             }
         }
 
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions)
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions, string fp = "")
             : this(worker, job)
         {
-            PrepareOutputs(ucDestOptions);
+            if (!string.IsNullOrEmpty(fp))
+            {
+                UpdateLocalFilePath(fp);
+            }
+            if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
+            {
+                this.Status.Add(TaskStatus.CancellationPending);
+            }
         }
 
         public void AssignJob(JobLevel2 job)
@@ -262,8 +269,10 @@ namespace ZScreenLib
             }
         }
 
-        private void PrepareOutputs(DestSelector ucDestOptions)
+        private DialogResult PrepareOutputs(DestSelector ucDestOptions)
         {
+            DialogResult dlgResult = DialogResult.OK;
+
             if (!Status.Contains(TaskStatus.Prepared))
             {
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, TaskOutputs);
@@ -278,13 +287,17 @@ namespace ZScreenLib
 
                 if (Engine.conf.PromptForOutputs)
                 {
-                    SetManualOutputs(LocalFilePath);
+                    dlgResult = SetManualOutputs(LocalFilePath);
                 }
-
                 Status.Add(TaskStatus.Prepared);
             }
 
-            WriteImage();
+            if (dlgResult == DialogResult.OK)
+            {
+                WriteImage();
+            }
+
+            return dlgResult;
         }
 
         #endregion Constructors
@@ -378,8 +391,9 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="pattern">the base name</param>
         /// <returns>true if the screenshot should be saved, or false if the user canceled</returns>
-        public void SetManualOutputs(string filePath)
+        public DialogResult SetManualOutputs(string filePath)
         {
+            DialogResult dlgResult = DialogResult.OK;
             if (Engine.conf.PromptForOutputs)
             {
                 DestOptions dialog = new DestOptions(this)
@@ -389,8 +403,8 @@ namespace ZScreenLib
                     Icon = Resources.zss_main
                 };
                 NativeMethods.SetForegroundWindow(dialog.Handle);
-                dialog.ShowDialog();
-                if (dialog.DialogResult == DialogResult.OK)
+                dlgResult = dialog.ShowDialog();
+                if (dlgResult == DialogResult.OK)
                 {
                     if (!string.IsNullOrEmpty(FileName))
                     {
@@ -399,6 +413,7 @@ namespace ZScreenLib
                     }
                 }
             }
+            return dlgResult;
         }
 
         public void AddUploadResult(UploadResult ur)
