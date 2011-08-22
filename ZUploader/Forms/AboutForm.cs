@@ -38,6 +38,7 @@ namespace ZUploader
         public AboutForm()
         {
             InitializeComponent();
+            Text = Program.Title;
             lblProductName.Text = Program.Title;
             lblCopyright.Text = AssemblyCopyright;
         }

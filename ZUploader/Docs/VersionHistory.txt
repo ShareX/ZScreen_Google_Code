@@ -1,4 +1,6 @@
-﻿Version 3.12 - 2011-05-28
+﻿4.0.0 Overhauled region capture through plugin system and rebrand as ZScreenLite
+
+Version 3.12 - 2011-05-28
 
 3.12 Plugin system to perform Crop Shot and Entire Screen capture
 3.11 New Uploaders Configuration window to setup user accounts

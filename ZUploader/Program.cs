@@ -39,6 +39,7 @@ namespace ZUploader
     internal static class Program
     {
         public static Settings Settings { get; private set; }
+
         public static UploadersConfig UploadersConfig { get; private set; }
 
         private static readonly string ApplicationName = Application.ProductName;
@@ -127,19 +128,39 @@ namespace ZUploader
         #endregion Paths
 
         public static bool IsBeta { get { return true; } }
+
         public static bool IsPortable { get; private set; }
+
         public static string CommandLineArg { get; private set; }
+
         public static Stopwatch StartTimer { get; private set; }
+
         public static Logger MyLogger { get; private set; }
 
         public static string Title
         {
             get
             {
-                string title = string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
+                string title = string.Format("{0} {1} rev {2}", ApplicationName, Application.ProductVersion, AppRevision);
                 if (IsBeta) title += " Beta";
                 if (IsPortable) title += " Portable";
                 return title;
+            }
+        }
+
+        public static string AppRevision
+        {
+            get
+            {
+                return AssemblyVersion.Split('.')[3];
+            }
+        }
+
+        public static string AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString(); ;
             }
         }
 
