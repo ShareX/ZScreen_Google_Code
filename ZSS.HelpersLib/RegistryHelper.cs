@@ -31,12 +31,16 @@ namespace HelpersLib
     public static class RegistryHelper
     {
         private static string WindowsStartupRun = @"Software\Microsoft\Windows\CurrentVersion\Run";
+        private static string ApplicationPath = string.Format("\"{0}\"", Application.ExecutablePath);
+
         private static string ShellExtMenuFiles = @"Software\Classes\*\shell\" + Application.ProductName;
         private static string ShellExtMenuFilesCmd = ShellExtMenuFiles + @"\command";
+
         private static string ShellExtMenuFolders = @"Software\Classes\Folder\shell\" + Application.ProductName;
         private static string ShellExtMenuFoldersCmd = ShellExtMenuFolders + @"\command";
+
         private static string ShellExtDesc = "Upload using " + Application.ProductName;
-        private static string ShellExtPath = string.Format("\"{0}\" \"%1\"", Application.ExecutablePath);
+        private static string ShellExtPath = string.Format("{0} \"%1\"", ApplicationPath);
 
         public static bool CheckStartWithWindows()
         {
@@ -51,7 +55,7 @@ namespace HelpersLib
                 {
                     if (startWithWindows)
                     {
-                        regkey.SetValue(Application.ProductName, Application.ExecutablePath, RegistryValueKind.String);
+                        regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
                     }
                     else
                     {
