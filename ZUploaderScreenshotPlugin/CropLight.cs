@@ -27,6 +27,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using RegionCapture;
 
 namespace ZUploaderScreenshotPlugin
 {
@@ -67,8 +68,7 @@ namespace ZUploaderScreenshotPlugin
 
                 if (positionCurrent != positionOld)
                 {
-                    SelectionRectangle = Helpers.FixRectangle(positionOnClick.X, positionOnClick.Y,
-                        positionCurrent.X - positionOnClick.X + 1, positionCurrent.Y - positionOnClick.Y + 1);
+                    SelectionRectangle = Helpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, positionCurrent.X, positionCurrent.Y);
                     Refresh();
                 }
             }

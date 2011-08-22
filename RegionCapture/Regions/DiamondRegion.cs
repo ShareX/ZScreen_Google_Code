@@ -30,7 +30,7 @@ namespace RegionCapture
 {
     public class DiamondRegion : RectangleRegion
     {
-        public DiamondRegion(Image backgroundImage)
+        public DiamondRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
         }

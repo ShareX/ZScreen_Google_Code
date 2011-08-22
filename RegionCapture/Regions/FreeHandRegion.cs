@@ -33,7 +33,7 @@ namespace RegionCapture
     {
         private NodeObject lastNode;
 
-        public FreeHandRegion(Image backgroundImage)
+        public FreeHandRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             AutoCalculateArea = false;

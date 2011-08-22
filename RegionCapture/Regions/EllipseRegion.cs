@@ -30,7 +30,7 @@ namespace RegionCapture
 {
     public class EllipseRegion : RectangleRegion
     {
-        public EllipseRegion(Image backgroundImage)
+        public EllipseRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
         }

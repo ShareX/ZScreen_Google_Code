@@ -51,12 +51,10 @@ namespace RegionCapture
             return SystemInformation.VirtualScreen;
         }
 
-        public static Rectangle CreateRectangle(Point pos1, Point pos2)
+        public static Rectangle CreateRectangle(int x, int y, int x2, int y2)
         {
-            int x = pos1.X;
-            int y = pos1.Y;
-            int width = pos2.X - pos1.X + 1;
-            int height = pos2.Y - pos1.Y + 1;
+            int width = x2 - x + 1;
+            int height = y2 - y + 1;
 
             if (width < 0)
             {
@@ -71,6 +69,11 @@ namespace RegionCapture
             }
 
             return new Rectangle(x, y, width, height);
+        }
+
+        public static Rectangle CreateRectangle(Point pos, Point pos2)
+        {
+            return CreateRectangle(pos.X, pos.Y, pos2.X, pos2.Y);
         }
 
         public static Image CropImage(Image img, Rectangle rect)

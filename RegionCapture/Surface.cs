@@ -55,15 +55,18 @@ namespace RegionCapture
         protected Point mousePosition, oldMousePosition;
         protected bool isMouseDown, oldIsMouseDown;
 
-        public Surface(Image backgroundImage)
+        public Surface(Image backgroundImage = null)
         {
             InitializeComponent();
+
+            if (backgroundImage != null)
+            {
+                LoadBackground(backgroundImage);
+            }
 
             DrawableObjects = new List<DrawableObject>();
             AutoCalculateArea = true;
 
-            SurfaceImage = backgroundImage;
-            backgroundBrush = new TextureBrush(backgroundImage);
             timer = new Stopwatch();
 
             borderPen = new Pen(Color.CornflowerBlue);
@@ -74,6 +77,12 @@ namespace RegionCapture
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
+        }
+
+        public void LoadBackground(Image backgroundImage)
+        {
+            SurfaceImage = backgroundImage;
+            backgroundBrush = new TextureBrush(backgroundImage);
         }
 
         public virtual Image GetRegionImage()

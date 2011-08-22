@@ -72,6 +72,11 @@ namespace RegionCaptureTest
             }
         }
 
+        private void tsbFullscreen_Click(object sender, EventArgs e)
+        {
+            pbResult.Image = Helpers.GetScreenshot();
+        }
+
         private void tsbRectangle_Click(object sender, EventArgs e)
         {
             surface = new RectangleRegion(screenshot);
