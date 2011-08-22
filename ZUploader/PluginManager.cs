@@ -1,4 +1,7 @@
-﻿using ExtensionManager;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using ExtensionManager;
 using ZUploaderPluginBase;
 
 namespace ZUploader
@@ -13,12 +16,22 @@ namespace ZUploader
         public PluginManager(string pluginFolderPath, IPluginHost pluginHost)
         {
             PluginFolderPath = pluginFolderPath;
+
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.AssemblyResolve += new ResolveEventHandler(currentDomain_AssemblyResolve);
+
             manager = new ExtensionManager<ZUploaderPlugin, IPluginHost>();
             manager.LoadDefaultFileExtensions();
             manager.AssemblyFailedLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyFailedLoadingEventHandler(manager_AssemblyFailedLoading);
             manager.AssemblyLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadingEventHandler(manager_AssemblyLoading);
             manager.AssemblyLoaded += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadedEventHandler(manager_AssemblyLoaded);
             host = pluginHost;
+        }
+
+        private Assembly currentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            string assemblyPath = Path.Combine(PluginFolderPath, args.Name.Substring(0, args.Name.IndexOf(",")) + ".dll");
+            return Assembly.LoadFrom(assemblyPath);
         }
 
         private void manager_AssemblyFailedLoading(object sender, AssemblyFailedLoadingEventArgs e)
