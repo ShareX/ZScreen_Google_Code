@@ -200,6 +200,8 @@ namespace ZScreenGUI
             if (task == null) return;
 
             this.Text = Engine.GetProductName();
+            niTray.Tag = task;
+
             if (task.UploadResults.Count > 0)
             {
                 UploadManager.UploadResultLast = task.UploadResults[task.UploadResults.Count - 1];
@@ -225,7 +227,6 @@ namespace ZScreenGUI
                 if (checkTask.Status.Contains(WorkerTask.TaskStatus.RetryPending))
                 {
                     string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
-                    niTray.Tag = task;
                     niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
