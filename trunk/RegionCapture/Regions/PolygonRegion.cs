@@ -34,7 +34,7 @@ namespace RegionCapture
     {
         private List<NodeObject> nodes;
 
-        public PolygonRegion(Image backgroundImage)
+        public PolygonRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             nodes = new List<NodeObject>();

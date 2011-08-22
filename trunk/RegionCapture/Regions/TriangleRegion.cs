@@ -33,7 +33,7 @@ namespace RegionCapture
     {
         public TriangleAngle Angle { get; set; }
 
-        public TriangleRegion(Image backgroundImage)
+        public TriangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             Angle = TriangleAngle.Up;

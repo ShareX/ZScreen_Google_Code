@@ -36,7 +36,7 @@ namespace RegionCapture
 
         private int radiusIncrease = 3;
 
-        public RoundedRectangleRegion(Image backgroundImage)
+        public RoundedRectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             Radius = 15;

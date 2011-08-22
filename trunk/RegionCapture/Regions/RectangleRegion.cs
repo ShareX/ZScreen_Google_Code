@@ -33,7 +33,7 @@ namespace RegionCapture
 
         protected bool isNodesCreated;
 
-        public RectangleRegion(Image backgroundImage)
+        public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
         }
