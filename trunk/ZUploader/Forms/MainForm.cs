@@ -600,5 +600,10 @@ namespace ZUploader
         }
 
         #endregion IPluginHost
+
+        private void tsbDonate_Click(object sender, EventArgs e)
+        {
+            Process.Start(ZLinks.URL_DONATE);
+        }
     }
 }
