@@ -84,6 +84,7 @@ namespace RegionCapture
             nodeBackgroundBrush = new SolidBrush(Color.White);
             textFont = new Font("Arial", 18, FontStyle.Bold);
 
+            MouseDoubleClick += new MouseEventHandler(Surface_MouseDoubleClick);
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
@@ -162,6 +163,11 @@ namespace RegionCapture
             Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
 
             return img;
+        }
+
+        private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Close(false);
         }
 
         private void Surface_MouseDown(object sender, MouseEventArgs e)

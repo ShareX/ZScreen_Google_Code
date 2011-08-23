@@ -127,8 +127,6 @@ namespace ZUploader
 
         #endregion Paths
 
-        public static bool IsBeta { get { return true; } }
-
         public static bool IsPortable { get; private set; }
 
         public static string CommandLineArg { get; private set; }
@@ -141,8 +139,7 @@ namespace ZUploader
         {
             get
             {
-                string title = string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
-                if (IsBeta) title += " Beta";
+                string title = string.Format("{0} {1} r{2}", ApplicationName, Application.ProductVersion, AppRevision);
                 if (IsPortable) title += " Portable";
                 return title;
             }
