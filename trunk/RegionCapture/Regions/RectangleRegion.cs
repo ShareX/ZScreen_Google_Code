@@ -24,18 +24,24 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using System.Linq;
 
 namespace RegionCapture
 {
     public class RectangleRegion : Surface
     {
+        protected DrawableObject region;
         protected NodeObject[] nodes;
 
         protected bool isNodesCreated;
 
+        private Point pos, pos2;
+
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
+            region = new DrawableObject();
+            DrawableObjects.Add(region);
         }
 
         protected override void Update()
@@ -44,9 +50,11 @@ namespace RegionCapture
 
             if (isMouseDown && !isNodesCreated)
             {
-                nodes = new NodeObject[4];
+                pos = pos2 = mousePosition;
 
-                for (int i = 0; i < nodes.Length; i++)
+                nodes = new NodeObject[8];
+
+                for (int i = 0; i < 8; i++)
                 {
                     nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
                     nodes[i].Position = ClientMousePosition;
@@ -61,30 +69,47 @@ namespace RegionCapture
 
             if (nodes != null && isNodesCreated)
             {
-                if (nodes[(int)NodePosition.TopLeft].IsHolding)
+                for (int i = 0; i < 8; i++)
                 {
-                    nodes[0].Position = ClientMousePosition;
-                    nodes[1].Position = new Point(nodes[1].Position.X, nodes[0].Position.Y);
-                    nodes[3].Position = new Point(nodes[0].Position.X, nodes[3].Position.Y);
+                    if (nodes[i].IsHolding)
+                    {
+                        if (i <= 2) // Top row
+                        {
+                            pos.Y += mousePosition.Y - oldMousePosition.Y;
+                        }
+                        else if (i >= 4 && i <= 6) // Bottom row
+                        {
+                            pos2.Y += mousePosition.Y - oldMousePosition.Y;
+                        }
+
+                        if (i >= 2 && i <= 4) // Right row
+                        {
+                            pos2.X += mousePosition.X - oldMousePosition.X;
+                        }
+                        else if (i >= 6 || i == 0) // Left row
+                        {
+                            pos.X += mousePosition.X - oldMousePosition.X;
+                        }
+
+                        break;
+                    }
                 }
-                else if (nodes[(int)NodePosition.TopRight].IsHolding)
+
+                if (region.IsHolding && DrawableObjects.OfType<NodeObject>().All(x => !x.IsHolding && !x.IsMouseHover))
                 {
-                    nodes[1].Position = ClientMousePosition;
-                    nodes[0].Position = new Point(nodes[0].Position.X, nodes[1].Position.Y);
-                    nodes[2].Position = new Point(nodes[1].Position.X, nodes[2].Position.Y);
+                    int x = mousePosition.X - oldMousePosition.X;
+                    int y = mousePosition.Y - oldMousePosition.Y;
+
+                    pos.X += x;
+                    pos2.X += x;
+                    pos.Y += y;
+                    pos2.Y += y;
                 }
-                else if (nodes[(int)NodePosition.BottomRight].IsHolding)
-                {
-                    nodes[2].Position = ClientMousePosition;
-                    nodes[1].Position = new Point(nodes[2].Position.X, nodes[1].Position.Y);
-                    nodes[3].Position = new Point(nodes[3].Position.X, nodes[2].Position.Y);
-                }
-                else if (nodes[(int)NodePosition.BottomLeft].IsHolding)
-                {
-                    nodes[3].Position = ClientMousePosition;
-                    nodes[0].Position = new Point(nodes[3].Position.X, nodes[0].Position.Y);
-                    nodes[2].Position = new Point(nodes[2].Position.X, nodes[3].Position.Y);
-                }
+
+                area = Helpers.CreateRectangle(pos, pos2);
+                region.Rectangle = area;
+
+                UpdateNodePositions();
             }
         }
 
@@ -103,6 +128,26 @@ namespace RegionCapture
             }
 
             base.Draw(g);
+        }
+
+        private void UpdateNodePositions()
+        {
+            int xStart = area.X;
+            int xMid = area.X + area.Width / 2;
+            int xEnd = area.X + area.Width;
+
+            int yStart = area.Y;
+            int yMid = area.Y + area.Height / 2;
+            int yEnd = area.Y + area.Height;
+
+            nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
+            nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);
+            nodes[(int)NodePosition.TopRight].Position = new Point(xEnd, yStart);
+            nodes[(int)NodePosition.Right].Position = new Point(xEnd, yMid);
+            nodes[(int)NodePosition.BottomRight].Position = new Point(xEnd, yEnd);
+            nodes[(int)NodePosition.Bottom].Position = new Point(xMid, yEnd);
+            nodes[(int)NodePosition.BottomLeft].Position = new Point(xStart, yEnd);
+            nodes[(int)NodePosition.Left].Position = new Point(xStart, yMid);
         }
     }
 }

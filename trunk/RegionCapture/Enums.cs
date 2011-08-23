@@ -1,6 +1,6 @@
 ﻿namespace RegionCapture
 {
-    public enum NodePosition { TopLeft, TopRight, BottomRight, BottomLeft, Top, Right, Bottom, Left }
+    public enum NodePosition { TopLeft, Top, TopRight, Right, BottomRight, Bottom, BottomLeft, Left }
 
-    public enum TriangleAngle { Up, Right, Down, Left }
+    public enum TriangleAngle { Top, Right, Bottom, Left }
 }
