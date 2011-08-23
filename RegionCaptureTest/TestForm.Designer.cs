@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
             this.tsRegionTools = new System.Windows.Forms.ToolStrip();
+            this.tsbFullscreen = new System.Windows.Forms.ToolStripButton();
             this.tsbRectangle = new System.Windows.Forms.ToolStripButton();
             this.tsbRoundedRectangle = new System.Windows.Forms.ToolStripButton();
             this.tsbEllipse = new System.Windows.Forms.ToolStripButton();
@@ -38,8 +39,8 @@
             this.tsbPolygon = new System.Windows.Forms.ToolStripButton();
             this.tsbFreeHand = new System.Windows.Forms.ToolStripButton();
             this.pbResult = new System.Windows.Forms.PictureBox();
-            this.cbShowChecker = new System.Windows.Forms.CheckBox();
-            this.tsbFullscreen = new System.Windows.Forms.ToolStripButton();
+            this.cbDrawChecker = new System.Windows.Forms.CheckBox();
+            this.cbDrawBorder = new System.Windows.Forms.CheckBox();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.SuspendLayout();
@@ -64,6 +65,15 @@
             this.tsRegionTools.Size = new System.Drawing.Size(168, 649);
             this.tsRegionTools.TabIndex = 0;
             this.tsRegionTools.Text = "toolStrip1";
+            // 
+            // tsbFullscreen
+            // 
+            this.tsbFullscreen.Image = ((System.Drawing.Image)(resources.GetObject("tsbFullscreen.Image")));
+            this.tsbFullscreen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFullscreen.Name = "tsbFullscreen";
+            this.tsbFullscreen.Size = new System.Drawing.Size(80, 20);
+            this.tsbFullscreen.Text = "Fullscreen";
+            this.tsbFullscreen.Click += new System.EventHandler(this.tsbFullscreen_Click);
             // 
             // tsbRectangle
             // 
@@ -138,26 +148,27 @@
             this.pbResult.TabIndex = 1;
             this.pbResult.TabStop = false;
             // 
-            // cbShowChecker
+            // cbDrawChecker
             // 
-            this.cbShowChecker.AutoSize = true;
-            this.cbShowChecker.ForeColor = System.Drawing.Color.White;
-            this.cbShowChecker.Location = new System.Drawing.Point(176, 8);
-            this.cbShowChecker.Name = "cbShowChecker";
-            this.cbShowChecker.Size = new System.Drawing.Size(167, 17);
-            this.cbShowChecker.TabIndex = 2;
-            this.cbShowChecker.Text = "Show checkered background";
-            this.cbShowChecker.UseVisualStyleBackColor = true;
-            this.cbShowChecker.CheckedChanged += new System.EventHandler(this.cbShowChecker_CheckedChanged);
+            this.cbDrawChecker.AutoSize = true;
+            this.cbDrawChecker.ForeColor = System.Drawing.Color.White;
+            this.cbDrawChecker.Location = new System.Drawing.Point(264, 8);
+            this.cbDrawChecker.Name = "cbDrawChecker";
+            this.cbDrawChecker.Size = new System.Drawing.Size(165, 17);
+            this.cbDrawChecker.TabIndex = 2;
+            this.cbDrawChecker.Text = "Draw checkered background";
+            this.cbDrawChecker.UseVisualStyleBackColor = true;
             // 
-            // tsbFullscreen
+            // cbDrawBorder
             // 
-            this.tsbFullscreen.Image = ((System.Drawing.Image)(resources.GetObject("tsbFullscreen.Image")));
-            this.tsbFullscreen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFullscreen.Name = "tsbFullscreen";
-            this.tsbFullscreen.Size = new System.Drawing.Size(80, 20);
-            this.tsbFullscreen.Text = "Fullscreen";
-            this.tsbFullscreen.Click += new System.EventHandler(this.tsbFullscreen_Click);
+            this.cbDrawBorder.AutoSize = true;
+            this.cbDrawBorder.ForeColor = System.Drawing.Color.White;
+            this.cbDrawBorder.Location = new System.Drawing.Point(176, 8);
+            this.cbDrawBorder.Name = "cbDrawBorder";
+            this.cbDrawBorder.Size = new System.Drawing.Size(84, 17);
+            this.cbDrawBorder.TabIndex = 3;
+            this.cbDrawBorder.Text = "Draw border";
+            this.cbDrawBorder.UseVisualStyleBackColor = true;
             // 
             // TestForm
             // 
@@ -165,7 +176,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
-            this.Controls.Add(this.cbShowChecker);
+            this.Controls.Add(this.cbDrawBorder);
+            this.Controls.Add(this.cbDrawChecker);
             this.Controls.Add(this.pbResult);
             this.Controls.Add(this.tsRegionTools);
             this.Name = "TestForm";
@@ -188,8 +200,9 @@
         private System.Windows.Forms.ToolStripButton tsbTriangle;
         private System.Windows.Forms.ToolStripButton tsbPolygon;
         private System.Windows.Forms.PictureBox pbResult;
-        private System.Windows.Forms.CheckBox cbShowChecker;
+        private System.Windows.Forms.CheckBox cbDrawChecker;
         private System.Windows.Forms.ToolStripButton tsbDiamond;
         private System.Windows.Forms.ToolStripButton tsbFullscreen;
+        private System.Windows.Forms.CheckBox cbDrawBorder;
     }
 }

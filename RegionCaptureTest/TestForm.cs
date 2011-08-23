@@ -42,27 +42,12 @@ namespace RegionCaptureTest
             screenshot = Helpers.GetScreenshot();
         }
 
-        private Image CreateCheckers(int size, Color color1, Color color2)
-        {
-            Bitmap bmp = new Bitmap(size * 2, size * 2);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            using (Brush brush1 = new SolidBrush(color1))
-            using (Brush brush2 = new SolidBrush(color2))
-            {
-                g.FillRectangle(brush1, 0, 0, size, size);
-                g.FillRectangle(brush1, size, size, size, size);
-
-                g.FillRectangle(brush2, size, 0, size, size);
-                g.FillRectangle(brush2, 0, size, size, size);
-            }
-
-            return bmp;
-        }
-
         private void CaptureRegion()
         {
             pbResult.Image = null;
+
+            surface.DrawBorder = cbDrawBorder.Checked;
+            surface.DrawChecker = cbDrawChecker.Checked;
 
             if (surface.ShowDialog() == DialogResult.OK)
             {
@@ -117,18 +102,6 @@ namespace RegionCaptureTest
         {
             surface = new FreeHandRegion(screenshot);
             CaptureRegion();
-        }
-
-        private void cbShowChecker_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbShowChecker.Checked)
-            {
-                pbResult.BackgroundImage = CreateCheckers(8, Color.LightGray, Color.White);
-            }
-            else
-            {
-                pbResult.BackgroundImage = null;
-            }
         }
     }
 }
