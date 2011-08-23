@@ -71,6 +71,11 @@ namespace RegionCapture
                     g.ResetClip();
                 }
 
+                if (areaObject.IsDragging || areaObject.IsMouseHover)
+                {
+                    g.FillPath(lightBrush, regionPath);
+                }
+
                 g.DrawPath(borderPen, regionPath);
 
                 if (Radius >= 30)

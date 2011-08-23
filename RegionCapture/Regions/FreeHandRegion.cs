@@ -66,10 +66,10 @@ namespace RegionCapture
             if (!lastNode.Visible && isMouseDown)
             {
                 lastNode.Visible = true;
-                lastNode.IsHolding = true;
+                lastNode.IsDragging = true;
             }
 
-            if (lastNode.Visible && lastNode.IsHolding && mousePosition != oldMousePosition)
+            if (lastNode.Visible && lastNode.IsDragging && mousePosition != oldMousePosition)
             {
                 points.Add(mousePosition);
                 regionPath.AddLine(oldMousePosition, mousePosition);
