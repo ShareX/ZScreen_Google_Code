@@ -36,7 +36,7 @@ namespace RegionCapture
         public TriangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            Angle = TriangleAngle.Up;
+            Angle = TriangleAngle.Top;
 
             MouseWheel += new MouseEventHandler(TriangleRegionSurface_MouseWheel);
         }
@@ -47,7 +47,7 @@ namespace RegionCapture
             {
                 if (Angle == TriangleAngle.Left)
                 {
-                    Angle = TriangleAngle.Up;
+                    Angle = TriangleAngle.Top;
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace RegionCapture
             }
             else if (e.Delta < 0)
             {
-                if (Angle == TriangleAngle.Up)
+                if (Angle == TriangleAngle.Top)
                 {
                     Angle = TriangleAngle.Left;
                 }

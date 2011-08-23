@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -32,12 +33,14 @@ namespace RegionCapture
     public class FreeHandRegion : Surface
     {
         private NodeObject lastNode;
+        private List<Point> points;
 
         public FreeHandRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             AutoCalculateArea = false;
 
+            points = new List<Point>(128);
             regionPath = new GraphicsPath();
 
             lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
@@ -66,13 +69,14 @@ namespace RegionCapture
                 lastNode.IsHolding = true;
             }
 
-            if (lastNode.Visible && lastNode.IsHolding)
+            if (lastNode.Visible && lastNode.IsHolding && mousePosition != oldMousePosition)
             {
+                points.Add(mousePosition);
                 regionPath.AddLine(oldMousePosition, mousePosition);
                 lastNode.Position = mousePosition;
             }
 
-            if (regionPath.PointCount > 2)
+            if (points.Count > 2)
             {
                 RectangleF rect = regionPath.GetBounds();
                 Area = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
@@ -81,7 +85,7 @@ namespace RegionCapture
 
         protected override void Draw(Graphics g)
         {
-            if (regionPath.PointCount > 2)
+            if (points.Count > 2)
             {
                 Region region = new Region(regionPath);
                 g.ExcludeClip(region);

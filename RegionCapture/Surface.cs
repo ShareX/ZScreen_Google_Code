@@ -36,9 +36,15 @@ namespace RegionCapture
     public class Surface : Form
     {
         public Image SurfaceImage { get; protected set; }
-        public Rectangle Area { get; protected set; }
 
-        protected bool AutoCalculateArea { get; set; }
+        protected Rectangle area;
+        public Rectangle Area
+        {
+            get { return area; }
+            protected set { area = value; }
+        }
+
+        protected bool AutoCalculateArea { get; set; } //TODO:?
         protected List<DrawableObject> DrawableObjects { get; set; }
         protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
 
@@ -83,6 +89,33 @@ namespace RegionCapture
         {
             SurfaceImage = backgroundImage;
             backgroundBrush = new TextureBrush(backgroundImage);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+#if DEBUG
+            if (!timer.IsRunning) timer.Start();
+#endif
+
+            Update();
+            AfterUpdate();
+
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.FillRectangle(backgroundBrush, Bounds);
+
+#if DEBUG
+            g.DrawRectangle(Pens.Yellow, Bounds.X, Bounds.Y, Bounds.Width - 1, Bounds.Height - 1);
+#endif
+
+            Draw(g);
+
+#if DEBUG
+            CheckFPS();
+            DrawDebug(g);
+#endif
+
+            Invalidate();
         }
 
         public virtual Image GetRegionImage()
@@ -165,40 +198,8 @@ namespace RegionCapture
 
         protected virtual void AfterUpdate()
         {
-            if (AutoCalculateArea)
-            {
-                Area = CalculateAreaFromNodes();
-            }
-
             oldMousePosition = mousePosition;
             oldIsMouseDown = isMouseDown;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-#if DEBUG
-            if (!timer.IsRunning) timer.Start();
-#endif
-
-            Update();
-            AfterUpdate();
-
-            Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.FillRectangle(backgroundBrush, Bounds);
-
-#if DEBUG
-            g.DrawRectangle(Pens.Yellow, Bounds.X, Bounds.Y, Bounds.Width - 1, Bounds.Height - 1);
-#endif
-
-            Draw(g);
-
-#if DEBUG
-            CheckFPS();
-            DrawDebug(g);
-#endif
-
-            Invalidate();
         }
 
         protected virtual void Draw(Graphics g)
@@ -227,7 +228,12 @@ namespace RegionCapture
                 frameCount = 0;
                 timer.Reset();
                 timer.Start();
+                EverySecond();
             }
+        }
+
+        protected virtual void EverySecond()
+        {
         }
 
         private void DrawDebug(Graphics g)
