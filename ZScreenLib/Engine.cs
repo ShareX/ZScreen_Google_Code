@@ -239,7 +239,7 @@ namespace ZScreenLib
 
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine();
-            MyLogger.WriteLine(string.Format("{0} rev {1} started", GetProductName(), Adapter.AppRevision));
+            MyLogger.WriteLine(string.Format("{0} r{1} started", GetProductName(), Adapter.AppRevision));
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
@@ -558,7 +558,7 @@ namespace ZScreenLib
             string title = ApplicationName;
             if (IsMultipleInstance) title += "*";
             title += " " + Application.ProductVersion;
-            if (conf != null && conf.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " rev " + Adapter.AppRevision;
+            if (conf != null && conf.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " r" + Adapter.AppRevision;
             if (IsPortable) title += " Portable";
             return title;
         }

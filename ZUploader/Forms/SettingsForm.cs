@@ -49,6 +49,8 @@ namespace ZUploader
 
         private void LoadSettings()
         {
+            Text = Program.Title + " - Settings";
+
             // General
             cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
