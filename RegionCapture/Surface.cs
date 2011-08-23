@@ -143,15 +143,20 @@ namespace RegionCapture
                         img = Helpers.DrawBorder(img, gp);
                     }
                 }
+
+                if (DrawChecker)
+                {
+                    img = Helpers.DrawCheckers(img);
+                }
             }
             else
             {
                 img = Helpers.CropImage(img, Area);
-            }
 
-            if (DrawChecker)
-            {
-                img = Helpers.DrawCheckers(img);
+                if (DrawBorder)
+                {
+                    img = Helpers.DrawBorder(img);
+                }
             }
 
             Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
