@@ -98,7 +98,7 @@ namespace RegionCapture
                 if (bounds.Width > 0 && bounds.Height > 0)
                 {
                     Rectangle rect = Rectangle.Round(bounds);
-                    Bitmap bmp = new Bitmap(rect.Width, rect.Height);
+                    Bitmap bmp = new Bitmap(rect.Width + 1, rect.Height + 1);
 
                     using (Graphics g = Graphics.FromImage(bmp))
                     {
@@ -127,6 +127,7 @@ namespace RegionCapture
 
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
                     g.DrawPath(Pens.Black, gp);
                 }
 
@@ -134,6 +135,18 @@ namespace RegionCapture
             }
 
             return null;
+        }
+
+        public static Image DrawBorder(Image img)
+        {
+            Bitmap bmp = new Bitmap(img);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.DrawRectangle(Pens.Black, 0, 0, img.Width - 1, img.Height - 1);
+            }
+
+            return bmp;
         }
 
         public static Image DrawCheckers(Image img)

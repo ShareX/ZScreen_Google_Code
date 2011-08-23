@@ -41,8 +41,10 @@
             this.pbResult = new System.Windows.Forms.PictureBox();
             this.cbDrawChecker = new System.Windows.Forms.CheckBox();
             this.cbDrawBorder = new System.Windows.Forms.CheckBox();
+            this.pImage = new System.Windows.Forms.Panel();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
+            this.pImage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tsRegionTools
@@ -141,7 +143,7 @@
             // pbResult
             // 
             this.pbResult.BackColor = System.Drawing.Color.Gray;
-            this.pbResult.Location = new System.Drawing.Point(176, 32);
+            this.pbResult.Location = new System.Drawing.Point(0, 0);
             this.pbResult.Name = "pbResult";
             this.pbResult.Size = new System.Drawing.Size(928, 608);
             this.pbResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -170,21 +172,32 @@
             this.cbDrawBorder.Text = "Draw border";
             this.cbDrawBorder.UseVisualStyleBackColor = true;
             // 
+            // pImage
+            // 
+            this.pImage.AutoScroll = true;
+            this.pImage.Controls.Add(this.pbResult);
+            this.pImage.Location = new System.Drawing.Point(176, 32);
+            this.pImage.Name = "pImage";
+            this.pImage.Size = new System.Drawing.Size(936, 608);
+            this.pImage.TabIndex = 4;
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
+            this.Controls.Add(this.pImage);
             this.Controls.Add(this.cbDrawBorder);
             this.Controls.Add(this.cbDrawChecker);
-            this.Controls.Add(this.pbResult);
             this.Controls.Add(this.tsRegionTools);
             this.Name = "TestForm";
             this.Text = "RegionCapture Test";
             this.tsRegionTools.ResumeLayout(false);
             this.tsRegionTools.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
+            this.pImage.ResumeLayout(false);
+            this.pImage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +217,6 @@
         private System.Windows.Forms.ToolStripButton tsbDiamond;
         private System.Windows.Forms.ToolStripButton tsbFullscreen;
         private System.Windows.Forms.CheckBox cbDrawBorder;
+        private System.Windows.Forms.Panel pImage;
     }
 }
