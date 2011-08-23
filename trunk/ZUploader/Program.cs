@@ -141,7 +141,7 @@ namespace ZUploader
         {
             get
             {
-                string title = string.Format("{0} {1} rev {2}", ApplicationName, Application.ProductVersion, AppRevision);
+                string title = string.Format("{0} {1}", ApplicationName, Application.ProductVersion);
                 if (IsBeta) title += " Beta";
                 if (IsPortable) title += " Portable";
                 return title;
@@ -175,7 +175,7 @@ namespace ZUploader
             StartTimer = Stopwatch.StartNew();
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine("{0} {1} started", Application.ProductName, Application.ProductVersion);
+            MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             IsPortable = CheckPortable();

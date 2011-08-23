@@ -39,7 +39,7 @@ namespace ZUploader
         {
             InitializeComponent();
             Text = Program.Title;
-            lblProductName.Text = Program.Title;
+            lblProductName.Text = Program.Title + " r" + Program.AppRevision;
             lblCopyright.Text = AssemblyCopyright;
         }
 
