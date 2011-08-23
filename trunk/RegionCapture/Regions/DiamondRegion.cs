@@ -50,6 +50,11 @@ namespace RegionCapture
                     g.ResetClip();
                 }
 
+                if (areaObject.IsDragging || areaObject.IsMouseHover)
+                {
+                    g.FillPath(lightBrush, regionPath);
+                }
+
                 g.DrawPath(borderPen, regionPath);
 
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);

@@ -56,7 +56,7 @@ namespace RegionCapture
 
         protected GraphicsPath regionPath;
         protected Pen borderPen;
-        protected Brush shadowBrush, nodeBackgroundBrush;
+        protected Brush shadowBrush, lightBrush, nodeBackgroundBrush;
         protected Font textFont;
         protected Point mousePosition, oldMousePosition;
         protected bool isMouseDown, oldIsMouseDown;
@@ -77,6 +77,7 @@ namespace RegionCapture
 
             borderPen = new Pen(Color.CornflowerBlue);
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
+            lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);
             textFont = new Font("Arial", 18, FontStyle.Bold);
 
@@ -180,18 +181,42 @@ namespace RegionCapture
         {
             mousePosition = ClientMousePosition;
 
-            foreach (DrawableObject drawObject in DrawableObjects)
-            {
-                drawObject.IsMouseHover = drawObject.Rectangle.Contains(mousePosition);
+            DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
-                if (drawObject.IsMouseHover && !oldIsMouseDown && isMouseDown)
+            if (objects.All(x => !x.IsDragging))
+            {
+                for (int i = 0; i < objects.Count(); i++)
                 {
-                    drawObject.IsHolding = true;
-                    break;
+                    DrawableObject obj = objects[i];
+
+                    if (obj.IsMouseHover = obj.Rectangle.Contains(mousePosition))
+                    {
+                        for (int y = i + 1; y < objects.Count(); y++)
+                        {
+                            objects[y].IsMouseHover = false;
+                        }
+
+                        break;
+                    }
                 }
-                else if (oldIsMouseDown && !isMouseDown)
+
+                foreach (DrawableObject obj in objects)
                 {
-                    drawObject.IsHolding = false;
+                    if (obj.IsMouseHover && !oldIsMouseDown && isMouseDown)
+                    {
+                        obj.IsDragging = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if (oldIsMouseDown && !isMouseDown)
+                {
+                    foreach (DrawableObject obj in objects)
+                    {
+                        obj.IsDragging = false;
+                    }
                 }
             }
         }

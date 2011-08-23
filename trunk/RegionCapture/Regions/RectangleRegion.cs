@@ -30,7 +30,7 @@ namespace RegionCapture
 {
     public class RectangleRegion : Surface
     {
-        protected DrawableObject region;
+        protected DrawableObject areaObject;
         protected NodeObject[] nodes;
 
         protected bool isNodesCreated;
@@ -40,8 +40,8 @@ namespace RegionCapture
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            region = new DrawableObject();
-            DrawableObjects.Add(region);
+            areaObject = new DrawableObject { Order = -10 };
+            DrawableObjects.Add(areaObject);
         }
 
         protected override void Update()
@@ -62,7 +62,8 @@ namespace RegionCapture
                     DrawableObjects.Add(nodes[i]);
                 }
 
-                nodes[(int)NodePosition.BottomRight].IsHolding = true;
+                nodes[(int)NodePosition.BottomRight].Order = 10;
+                nodes[(int)NodePosition.BottomRight].IsDragging = true;
 
                 isNodesCreated = true;
             }
@@ -71,7 +72,7 @@ namespace RegionCapture
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    if (nodes[i].IsHolding)
+                    if (nodes[i].IsDragging)
                     {
                         if (i <= 2) // Top row
                         {
@@ -95,7 +96,7 @@ namespace RegionCapture
                     }
                 }
 
-                if (region.IsHolding && DrawableObjects.OfType<NodeObject>().All(x => !x.IsHolding && !x.IsMouseHover))
+                if (areaObject.IsDragging && DrawableObjects.OfType<NodeObject>().All(x => !x.IsDragging && !x.IsMouseHover))
                 {
                     int x = mousePosition.X - oldMousePosition.X;
                     int y = mousePosition.Y - oldMousePosition.Y;
@@ -107,7 +108,7 @@ namespace RegionCapture
                 }
 
                 area = Helpers.CreateRectangle(pos, pos2);
-                region.Rectangle = area;
+                areaObject.Rectangle = area;
 
                 UpdateNodePositions();
             }
@@ -120,6 +121,12 @@ namespace RegionCapture
                 g.ExcludeClip(Area);
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                 g.ResetClip();
+
+                if (areaObject.IsDragging || areaObject.IsMouseHover)
+                {
+                    g.FillRectangle(lightBrush, Area);
+                }
+
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else

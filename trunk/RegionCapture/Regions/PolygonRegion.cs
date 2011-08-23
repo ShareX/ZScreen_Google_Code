@@ -48,7 +48,7 @@ namespace RegionCapture
             {
                 foreach (NodeObject node in DrawableObjects)
                 {
-                    if (node.IsMouseHover || node.IsHolding) return;
+                    if (node.IsMouseHover || node.IsDragging) return;
                 }
 
                 if (nodes.Count == 0)
@@ -78,7 +78,7 @@ namespace RegionCapture
 
             for (int i = nodes.Count - 1; i >= 0; i--)
             {
-                if (nodes[i].Visible && nodes[i].IsHolding)
+                if (nodes[i].Visible && nodes[i].IsDragging)
                 {
                     ActivateNode(nodes[i]);
                     break;
@@ -131,7 +131,7 @@ namespace RegionCapture
         {
             node.Position = ClientMousePosition;
             node.Visible = true;
-            node.IsHolding = true;
+            node.IsDragging = true;
         }
     }
 }
