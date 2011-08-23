@@ -326,5 +326,22 @@ namespace ZUploader
         }
 
         #endregion History
+
+        private void btnAutofillProxy_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Program.Settings.ProxySettings.UserName))
+            {
+                Program.Settings.ProxySettings.UserName = Environment.UserName;
+            }
+            if (string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+            {
+                Program.Settings.ProxySettings.Host = ZAppHelper.GetDefaultWebProxyHost();
+            }
+            if (Program.Settings.ProxySettings.Port == 0)
+            {
+                Program.Settings.ProxySettings.Port = ZAppHelper.GetDefaultWebProxyPort();
+            }
+            pgProxy.SelectedObject = Program.Settings.ProxySettings;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib.HelperClasses;
 
 namespace ZScreenLib
@@ -11,7 +12,7 @@ namespace ZScreenLib
         public ProxyConfig()
         {
             InitializeComponent();
-            Proxy = new ProxyInfo(Environment.UserName, "", Adapter.GetDefaultWebProxyHost(), Adapter.GetDefaultWebProxyPort());
+            Proxy = new ProxyInfo(Environment.UserName, "", ZAppHelper.GetDefaultWebProxyHost(), ZAppHelper.GetDefaultWebProxyPort());
         }
 
         private void btnOK_Click(object sender, EventArgs e)

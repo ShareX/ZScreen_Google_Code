@@ -30,6 +30,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -384,6 +385,16 @@ namespace HelpersLib
         public static void OpenFolderWithFile(string filePath)
         {
             Process.Start("explorer.exe", string.Format("/select,\"{0}\"", filePath));
+        }
+
+        public static string GetDefaultWebProxyHost()
+        {
+            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Host;
+        }
+
+        public static int GetDefaultWebProxyPort()
+        {
+            return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Port;
         }
     }
 }
