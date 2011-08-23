@@ -39,6 +39,7 @@
             this.lblGeneralInfo = new System.Windows.Forms.Label();
             this.cbShellContextMenu = new System.Windows.Forms.CheckBox();
             this.tpUpload = new System.Windows.Forms.TabPage();
+            this.btnLoadUploadersConfig = new System.Windows.Forms.Button();
             this.btnBrowseCustomUploadersConfigPath = new System.Windows.Forms.Button();
             this.txtCustomUploadersConfigPath = new System.Windows.Forms.TextBox();
             this.cbUseCustomUploadersConfigPath = new System.Windows.Forms.CheckBox();
@@ -79,7 +80,7 @@
             this.tpProxy = new System.Windows.Forms.TabPage();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.btnLoadUploadersConfig = new System.Windows.Forms.Button();
+            this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -232,6 +233,16 @@
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
             // 
+            // btnLoadUploadersConfig
+            // 
+            this.btnLoadUploadersConfig.Location = new System.Drawing.Point(432, 38);
+            this.btnLoadUploadersConfig.Name = "btnLoadUploadersConfig";
+            this.btnLoadUploadersConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadUploadersConfig.TabIndex = 13;
+            this.btnLoadUploadersConfig.Text = "Load";
+            this.btnLoadUploadersConfig.UseVisualStyleBackColor = true;
+            this.btnLoadUploadersConfig.Click += new System.EventHandler(this.btnLoadUploadersConfig_Click);
+            // 
             // btnBrowseCustomUploadersConfigPath
             // 
             this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(352, 38);
@@ -360,7 +371,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
+                "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -532,7 +543,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-    "ce accordingly.";
+                "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -676,6 +687,7 @@
             // 
             // tpProxy
             // 
+            this.tpProxy.Controls.Add(this.btnAutofillProxy);
             this.tpProxy.Controls.Add(this.pgProxy);
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
@@ -707,15 +719,15 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // btnLoadUploadersConfig
+            // btnAutofillProxy
             // 
-            this.btnLoadUploadersConfig.Location = new System.Drawing.Point(432, 38);
-            this.btnLoadUploadersConfig.Name = "btnLoadUploadersConfig";
-            this.btnLoadUploadersConfig.Size = new System.Drawing.Size(75, 23);
-            this.btnLoadUploadersConfig.TabIndex = 13;
-            this.btnLoadUploadersConfig.Text = "Load";
-            this.btnLoadUploadersConfig.UseVisualStyleBackColor = true;
-            this.btnLoadUploadersConfig.Click += new System.EventHandler(this.btnLoadUploadersConfig_Click);
+            this.btnAutofillProxy.Location = new System.Drawing.Point(432, 224);
+            this.btnAutofillProxy.Name = "btnAutofillProxy";
+            this.btnAutofillProxy.Size = new System.Drawing.Size(75, 23);
+            this.btnAutofillProxy.TabIndex = 2;
+            this.btnAutofillProxy.Text = "Autofill";
+            this.btnAutofillProxy.UseVisualStyleBackColor = true;
+            this.btnAutofillProxy.Click += new System.EventHandler(this.btnAutofillProxy_Click);
             // 
             // SettingsForm
             // 
@@ -808,5 +820,6 @@
         private System.Windows.Forms.TextBox txtCustomUploadersConfigPath;
         private System.Windows.Forms.CheckBox cbUseCustomUploadersConfigPath;
         private System.Windows.Forms.Button btnLoadUploadersConfig;
+        private System.Windows.Forms.Button btnAutofillProxy;
     }
 }

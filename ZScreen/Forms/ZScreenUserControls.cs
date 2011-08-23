@@ -44,7 +44,7 @@ namespace ZScreenGUI
 
         private void ProxyAccountsAddButton_Click(object sender, EventArgs e)
         {
-            ProxyAdd(new ProxyInfo(Environment.UserName, "", Adapter.GetDefaultWebProxyHost(), Adapter.GetDefaultWebProxyPort()));
+            ProxyAdd(new ProxyInfo(Environment.UserName, "", ZAppHelper.GetDefaultWebProxyHost(), ZAppHelper.GetDefaultWebProxyPort()));
             cboProxyConfig.SelectedIndex = (int)ProxyConfigType.ManualProxy;
         }
     }
