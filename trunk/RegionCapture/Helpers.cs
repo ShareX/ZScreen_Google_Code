@@ -108,7 +108,6 @@ namespace RegionCapture
                         using (Region region = new Region(gp))
                         {
                             g.Clip = region;
-                            g.TranslateClip(-bounds.X, -bounds.Y);
                             g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
                         }
                     }
@@ -118,6 +117,60 @@ namespace RegionCapture
             }
 
             return null;
+        }
+
+        public static Image DrawBorder(Image img, GraphicsPath gp)
+        {
+            if (img != null && gp != null)
+            {
+                Bitmap bmp = new Bitmap(img);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.DrawPath(Pens.Black, gp);
+                }
+
+                return bmp;
+            }
+
+            return null;
+        }
+
+        public static Image DrawCheckers(Image img)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                Image checker = CreateCheckers(8, Color.LightGray, Color.White);
+                Brush checkerBrush = new TextureBrush(checker, WrapMode.Tile);
+
+                g.FillRectangle(checkerBrush, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                g.DrawImage(img, 0, 0);
+            }
+
+            return bmp;
+        }
+
+        public static Image CreateCheckers(int size, Color color1, Color color2)
+        {
+            Bitmap bmp = new Bitmap(size * 2, size * 2);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            using (Brush brush1 = new SolidBrush(color1))
+            using (Brush brush2 = new SolidBrush(color2))
+            {
+                g.FillRectangle(brush1, 0, 0, size, size);
+                g.FillRectangle(brush1, size, size, size, size);
+
+                g.FillRectangle(brush2, size, 0, size, size);
+                g.FillRectangle(brush2, 0, size, size, size);
+            }
+
+            return bmp;
         }
 
         public static void DrawTextWithShadow(Graphics g, string text, PointF position, Font font, Color textColor, Color shadowColor, int shadowOffset = 1)

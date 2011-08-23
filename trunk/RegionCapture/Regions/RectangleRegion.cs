@@ -141,11 +141,11 @@ namespace RegionCapture
         {
             int xStart = area.X;
             int xMid = area.X + area.Width / 2;
-            int xEnd = area.X + area.Width;
+            int xEnd = area.X + area.Width - 1;
 
             int yStart = area.Y;
             int yMid = area.Y + area.Height / 2;
-            int yEnd = area.Y + area.Height;
+            int yEnd = area.Y + area.Height - 1;
 
             nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
             nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);

@@ -37,6 +37,9 @@ namespace RegionCapture
     {
         public Image SurfaceImage { get; protected set; }
 
+        public bool DrawBorder { get; set; }
+        public bool DrawChecker { get; set; }
+
         protected Rectangle area;
         public Rectangle Area
         {
@@ -121,15 +124,34 @@ namespace RegionCapture
 
         public virtual Image GetRegionImage()
         {
-            Image img = null;
+            Image img = SurfaceImage;
 
             if (regionPath != null)
             {
-                img = Helpers.CropImage(SurfaceImage, regionPath);
+                using (GraphicsPath gp = (GraphicsPath)regionPath.Clone())
+                using (Matrix matrix = new Matrix())
+                {
+                    gp.CloseFigure();
+                    RectangleF bounds = gp.GetBounds();
+                    matrix.Translate(-bounds.X, -bounds.Y);
+                    gp.Transform(matrix);
+
+                    img = Helpers.CropImage(img, gp);
+
+                    if (DrawBorder)
+                    {
+                        img = Helpers.DrawBorder(img, gp);
+                    }
+                }
             }
             else
             {
-                img = Helpers.CropImage(SurfaceImage, Area);
+                img = Helpers.CropImage(img, Area);
+            }
+
+            if (DrawChecker)
+            {
+                img = Helpers.DrawCheckers(img);
             }
 
             Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
