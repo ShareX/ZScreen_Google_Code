@@ -42,9 +42,14 @@
             this.cbDrawChecker = new System.Windows.Forms.CheckBox();
             this.cbDrawBorder = new System.Windows.Forms.CheckBox();
             this.pImage = new System.Windows.Forms.Panel();
+            this.cbIsFixedSize = new System.Windows.Forms.CheckBox();
+            this.nudFixedWidth = new System.Windows.Forms.NumericUpDown();
+            this.nudFixedHeight = new System.Windows.Forms.NumericUpDown();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.pImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFixedWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFixedHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // tsRegionTools
@@ -181,12 +186,65 @@
             this.pImage.Size = new System.Drawing.Size(936, 608);
             this.pImage.TabIndex = 4;
             // 
+            // cbIsFixedSize
+            // 
+            this.cbIsFixedSize.AutoSize = true;
+            this.cbIsFixedSize.ForeColor = System.Drawing.Color.White;
+            this.cbIsFixedSize.Location = new System.Drawing.Point(432, 8);
+            this.cbIsFixedSize.Name = "cbIsFixedSize";
+            this.cbIsFixedSize.Size = new System.Drawing.Size(86, 17);
+            this.cbIsFixedSize.TabIndex = 5;
+            this.cbIsFixedSize.Text = "Is fixed size?";
+            this.cbIsFixedSize.UseVisualStyleBackColor = true;
+            // 
+            // nudFixedWidth
+            // 
+            this.nudFixedWidth.Location = new System.Drawing.Point(520, 6);
+            this.nudFixedWidth.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudFixedWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudFixedWidth.Name = "nudFixedWidth";
+            this.nudFixedWidth.Size = new System.Drawing.Size(56, 20);
+            this.nudFixedWidth.TabIndex = 6;
+            this.nudFixedWidth.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            // 
+            // nudFixedHeight
+            // 
+            this.nudFixedHeight.Location = new System.Drawing.Point(584, 6);
+            this.nudFixedHeight.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudFixedHeight.Name = "nudFixedHeight";
+            this.nudFixedHeight.Size = new System.Drawing.Size(56, 20);
+            this.nudFixedHeight.TabIndex = 7;
+            this.nudFixedHeight.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
+            this.Controls.Add(this.nudFixedHeight);
+            this.Controls.Add(this.nudFixedWidth);
+            this.Controls.Add(this.cbIsFixedSize);
             this.Controls.Add(this.pImage);
             this.Controls.Add(this.cbDrawBorder);
             this.Controls.Add(this.cbDrawChecker);
@@ -198,6 +256,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
             this.pImage.ResumeLayout(false);
             this.pImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFixedWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFixedHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,5 +278,8 @@
         private System.Windows.Forms.ToolStripButton tsbFullscreen;
         private System.Windows.Forms.CheckBox cbDrawBorder;
         private System.Windows.Forms.Panel pImage;
+        private System.Windows.Forms.CheckBox cbIsFixedSize;
+        private System.Windows.Forms.NumericUpDown nudFixedWidth;
+        private System.Windows.Forms.NumericUpDown nudFixedHeight;
     }
 }

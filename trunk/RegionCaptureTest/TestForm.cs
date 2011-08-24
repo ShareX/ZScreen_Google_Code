@@ -49,6 +49,15 @@ namespace RegionCaptureTest
             surface.DrawBorder = cbDrawBorder.Checked;
             surface.DrawChecker = cbDrawChecker.Checked;
 
+            if (surface is RectangleRegion)
+            {
+                RectangleRegion rectangle = (RectangleRegion)surface;
+                if (rectangle.IsFixedSize = cbIsFixedSize.Checked)
+                {
+                    rectangle.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
+                }
+            }
+
             if (surface.ShowDialog() == DialogResult.OK)
             {
                 result = surface.GetRegionImage();
