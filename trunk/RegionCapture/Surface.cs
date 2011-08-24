@@ -175,6 +175,11 @@ namespace RegionCapture
             area.Offset(x, y);
         }
 
+        public void ShrinkArea(int x, int y)
+        {
+            area = new Rectangle(area.Left, area.Top, area.Width + x, area.Height + y);
+        }
+
         private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Close(false);
@@ -212,16 +217,16 @@ namespace RegionCapture
             switch (e.KeyCode)
             {
                 case Keys.Left:
-                    MoveArea(-speed, 0);
+                    if (e.Shift) { MoveArea(-speed, 0); } else { ShrinkArea(-speed, 0); }
                     break;
                 case Keys.Right:
-                    MoveArea(speed, 0);
+                    if (e.Shift) { MoveArea(speed, 0); } else { ShrinkArea(speed, 0); }
                     break;
                 case Keys.Up:
-                    MoveArea(0, -speed);
+                    if (e.Shift) { MoveArea(0, -speed); } else { ShrinkArea(0, -speed); }
                     break;
                 case Keys.Down:
-                    MoveArea(0, speed);
+                    if (e.Shift) { MoveArea(0, speed); } else { ShrinkArea(0, speed); }
                     break;
             }
         }
