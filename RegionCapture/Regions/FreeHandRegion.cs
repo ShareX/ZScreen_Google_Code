@@ -38,8 +38,6 @@ namespace RegionCapture
         public FreeHandRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            AutoCalculateArea = false;
-
             points = new List<Point>(128);
             regionPath = new GraphicsPath();
 

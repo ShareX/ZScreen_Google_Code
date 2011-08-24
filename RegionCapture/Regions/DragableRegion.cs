@@ -22,10 +22,7 @@ namespace RegionCapture
 
             if (areaObject.IsDragging && DrawableObjects.OfType<NodeObject>().All(x => !x.IsDragging && !x.IsMouseHover))
             {
-                int x = mousePosition.X - oldMousePosition.X;
-                int y = mousePosition.Y - oldMousePosition.Y;
-
-                area.Offset(x, y);
+                MoveArea(mousePosition.X - oldMousePosition.X, mousePosition.Y - oldMousePosition.Y);
             }
         }
     }

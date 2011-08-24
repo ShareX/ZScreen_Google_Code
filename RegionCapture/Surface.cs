@@ -40,6 +40,9 @@ namespace RegionCapture
         public bool DrawBorder { get; set; }
         public bool DrawChecker { get; set; }
 
+        public int MinMoveSpeed { get; set; }
+        public int MaxMoveSpeed { get; set; }
+
         protected Rectangle area;
         public Rectangle Area
         {
@@ -47,7 +50,6 @@ namespace RegionCapture
             protected set { area = value; }
         }
 
-        protected bool AutoCalculateArea { get; set; } //TODO:?
         protected List<DrawableObject> DrawableObjects { get; set; }
         protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
 
@@ -73,8 +75,9 @@ namespace RegionCapture
                 LoadBackground(backgroundImage);
             }
 
+            MinMoveSpeed = 1;
+            MaxMoveSpeed = 5;
             DrawableObjects = new List<DrawableObject>();
-            AutoCalculateArea = true;
 
             timer = new Stopwatch();
 
@@ -87,6 +90,7 @@ namespace RegionCapture
             MouseDoubleClick += new MouseEventHandler(Surface_MouseDoubleClick);
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
+            KeyDown += new KeyEventHandler(Surface_KeyDown);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
         }
 
@@ -117,8 +121,9 @@ namespace RegionCapture
 
 #if DEBUG
             CheckFPS();
-            DrawDebug(g);
 #endif
+
+            DrawInfo(g);
 
             Invalidate();
         }
@@ -165,6 +170,11 @@ namespace RegionCapture
             return img;
         }
 
+        public void MoveArea(int x, int y)
+        {
+            area.Offset(x, y);
+        }
+
         private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Close(false);
@@ -183,6 +193,36 @@ namespace RegionCapture
             if (e.Button == MouseButtons.Left)
             {
                 isMouseDown = false;
+            }
+        }
+
+        private void Surface_KeyDown(object sender, KeyEventArgs e)
+        {
+            int speed;
+
+            if (e.Control)
+            {
+                speed = MaxMoveSpeed;
+            }
+            else
+            {
+                speed = MinMoveSpeed;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    MoveArea(-speed, 0);
+                    break;
+                case Keys.Right:
+                    MoveArea(speed, 0);
+                    break;
+                case Keys.Up:
+                    MoveArea(0, -speed);
+                    break;
+                case Keys.Down:
+                    MoveArea(0, speed);
+                    break;
             }
         }
 
@@ -294,9 +334,14 @@ namespace RegionCapture
         {
         }
 
-        private void DrawDebug(Graphics g)
+        private void DrawInfo(Graphics g)
         {
-            string text = string.Format("FPS: {0}\nX: {1}, Y: {2}\nWidth: {3}, Height: {4}", FPS, Area.X, Area.Y, Area.Width, Area.Height);
+            string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", Area.X, Area.Y, Area.Width, Area.Height);
+
+#if DEBUG
+            text = string.Format("FPS: {0}\n{1}", FPS, text);
+#endif
+
             SizeF size = g.MeasureString(text, textFont);
             Helpers.DrawTextWithShadow(g, text, new PointF(Width / 2 - size.Width / 2, 30), textFont, Color.White, Color.Black, 1);
         }
