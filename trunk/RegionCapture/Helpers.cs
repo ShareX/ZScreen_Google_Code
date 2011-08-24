@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -74,6 +75,19 @@ namespace RegionCapture
         public static Rectangle CreateRectangle(Point pos, Point pos2)
         {
             return CreateRectangle(pos.X, pos.Y, pos2.X, pos2.Y);
+        }
+
+        public static Rectangle FixRectangle(int x, int y, int width, int height)
+        {
+            if (width < 0) x += width;
+            if (height < 0) y += height;
+
+            return new Rectangle(x, y, Math.Abs(width), Math.Abs(height));
+        }
+
+        public static Rectangle FixRectangle(Rectangle rect)
+        {
+            return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         public static Image CropImage(Image img, Rectangle rect)

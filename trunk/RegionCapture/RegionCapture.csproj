@@ -47,6 +47,9 @@
     <Compile Include="Regions\DiamondRegion.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Regions\DragableRegion.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Regions\EllipseRegion.cs">
       <SubType>Form</SubType>
     </Compile>
