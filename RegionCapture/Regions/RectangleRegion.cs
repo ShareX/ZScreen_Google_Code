@@ -24,24 +24,21 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
-using System.Linq;
 
 namespace RegionCapture
 {
-    public class RectangleRegion : Surface
+    public class RectangleRegion : DragableRegion
     {
-        protected DrawableObject areaObject;
-        protected NodeObject[] nodes;
+        public bool IsFixedSize { get; set; }
 
+        protected NodeObject[] nodes;
         protected bool isNodesCreated;
 
-        private Point pos, pos2;
+        private Rectangle tempRect;
 
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            areaObject = new DrawableObject { Order = -10 };
-            DrawableObjects.Add(areaObject);
         }
 
         protected override void Update()
@@ -50,7 +47,7 @@ namespace RegionCapture
 
             if (isMouseDown && !isNodesCreated)
             {
-                pos = pos2 = mousePosition;
+                area = new Rectangle(mousePosition, new Size(1, 1));
 
                 nodes = new NodeObject[8];
 
@@ -68,50 +65,45 @@ namespace RegionCapture
                 isNodesCreated = true;
             }
 
-            if (nodes != null && isNodesCreated)
+            if (nodes != null && isNodesCreated && isMouseDown)
             {
                 for (int i = 0; i < 8; i++)
                 {
                     if (nodes[i].IsDragging)
                     {
+                        if (!oldIsMouseDown)
+                        {
+                            tempRect = area;
+                        }
+
                         if (i <= 2) // Top row
                         {
-                            pos.Y += mousePosition.Y - oldMousePosition.Y;
+                            tempRect.Y += mousePosition.Y - oldMousePosition.Y;
+                            tempRect.Height -= mousePosition.Y - oldMousePosition.Y;
                         }
                         else if (i >= 4 && i <= 6) // Bottom row
                         {
-                            pos2.Y += mousePosition.Y - oldMousePosition.Y;
+                            tempRect.Height += mousePosition.Y - oldMousePosition.Y;
                         }
 
                         if (i >= 2 && i <= 4) // Right row
                         {
-                            pos2.X += mousePosition.X - oldMousePosition.X;
+                            tempRect.Width += mousePosition.X - oldMousePosition.X;
                         }
                         else if (i >= 6 || i == 0) // Left row
                         {
-                            pos.X += mousePosition.X - oldMousePosition.X;
+                            tempRect.X += mousePosition.X - oldMousePosition.X;
+                            tempRect.Width -= mousePosition.X - oldMousePosition.X;
                         }
+
+                        area = Helpers.FixRectangle(tempRect);
 
                         break;
                     }
                 }
-
-                if (areaObject.IsDragging && DrawableObjects.OfType<NodeObject>().All(x => !x.IsDragging && !x.IsMouseHover))
-                {
-                    int x = mousePosition.X - oldMousePosition.X;
-                    int y = mousePosition.Y - oldMousePosition.Y;
-
-                    pos.X += x;
-                    pos2.X += x;
-                    pos.Y += y;
-                    pos2.Y += y;
-                }
-
-                area = Helpers.CreateRectangle(pos, pos2);
-                areaObject.Rectangle = area;
-
-                UpdateNodePositions();
             }
+
+            UpdateNodePositions();
         }
 
         protected override void Draw(Graphics g)
@@ -139,22 +131,25 @@ namespace RegionCapture
 
         private void UpdateNodePositions()
         {
-            int xStart = area.X;
-            int xMid = area.X + area.Width / 2;
-            int xEnd = area.X + area.Width - 1;
+            if (isNodesCreated)
+            {
+                int xStart = area.X;
+                int xMid = area.X + area.Width / 2;
+                int xEnd = area.X + area.Width - 1;
 
-            int yStart = area.Y;
-            int yMid = area.Y + area.Height / 2;
-            int yEnd = area.Y + area.Height - 1;
+                int yStart = area.Y;
+                int yMid = area.Y + area.Height / 2;
+                int yEnd = area.Y + area.Height - 1;
 
-            nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
-            nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);
-            nodes[(int)NodePosition.TopRight].Position = new Point(xEnd, yStart);
-            nodes[(int)NodePosition.Right].Position = new Point(xEnd, yMid);
-            nodes[(int)NodePosition.BottomRight].Position = new Point(xEnd, yEnd);
-            nodes[(int)NodePosition.Bottom].Position = new Point(xMid, yEnd);
-            nodes[(int)NodePosition.BottomLeft].Position = new Point(xStart, yEnd);
-            nodes[(int)NodePosition.Left].Position = new Point(xStart, yMid);
+                nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
+                nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);
+                nodes[(int)NodePosition.TopRight].Position = new Point(xEnd, yStart);
+                nodes[(int)NodePosition.Right].Position = new Point(xEnd, yMid);
+                nodes[(int)NodePosition.BottomRight].Position = new Point(xEnd, yEnd);
+                nodes[(int)NodePosition.Bottom].Position = new Point(xMid, yEnd);
+                nodes[(int)NodePosition.BottomLeft].Position = new Point(xStart, yEnd);
+                nodes[(int)NodePosition.Left].Position = new Point(xStart, yMid);
+            }
         }
     }
 }
