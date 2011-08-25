@@ -254,7 +254,7 @@ namespace ZScreenGUI
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
-            Process.Start("http://profile.imageshack.us/prefs");
+            ThreadPool.QueueUserWorkItem(x => Process.Start("http://profile.imageshack.us/prefs"));
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
@@ -871,11 +871,6 @@ namespace ZScreenGUI
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CheckUpdates = chkCheckUpdates.Checked;
-        }
-
-        private void txtActiveHelp_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Process.Start(e.LinkText);
         }
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
