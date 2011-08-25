@@ -66,8 +66,6 @@ namespace RegionCapture
         protected Point mousePosition, oldMousePosition;
         protected bool isMouseDown, oldIsMouseDown;
 
-        private int ptBottom;
-        private int ptRight;
         private bool isBottomRightMoving = true;
 
         public Surface(Image backgroundImage = null)
@@ -187,7 +185,7 @@ namespace RegionCapture
             }
             else
             {
-                area = new Rectangle(area.Left + x, area.Top + y, ptRight - x - area.Left, ptBottom - y - area.Top);
+                area = new Rectangle(area.Left + x, area.Top + y, area.Width - x, area.Height - y);
             }
         }
 
@@ -241,8 +239,6 @@ namespace RegionCapture
                     break;
                 case Keys.Tab:
                     isBottomRightMoving = !isBottomRightMoving;
-                    ptBottom = area.Bottom;
-                    ptRight = area.Right;
                     break;
             }
         }
