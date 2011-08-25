@@ -54,27 +54,27 @@ namespace ZScreenLib
                     {
                         case OutputEnum.Clipboard:
                             tsmi.Image = Resources.clipboard;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | System.Windows.Forms.Keys.C)));
                             break;
                         case OutputEnum.LocalDisk:
                             tsmi.Image = Resources.drive;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | Keys.S)));
                             break;
                         case OutputEnum.Printer:
                             tsmi.Image = Resources.printer;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | System.Windows.Forms.Keys.P)));
                             break;
                         case OutputEnum.SharedFolder:
                             tsmi.Image = Resources.drive_network;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | System.Windows.Forms.Keys.N)));
                             break;
                         case OutputEnum.Email:
                             tsmi.Image = Resources.mail;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | System.Windows.Forms.Keys.E)));
                             break;
                         case OutputEnum.RemoteHost:
                             tsmi.Image = Resources.server;
-                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+                            tsmi.ShortcutKeys = ((System.Windows.Forms.Keys)((Keys.Control | Keys.Shift | System.Windows.Forms.Keys.H)));
                             break;
                     }
 
