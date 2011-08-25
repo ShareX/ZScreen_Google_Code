@@ -33,10 +33,10 @@ using System.Threading;
 using System.Windows.Forms;
 using Crop;
 using GraphicsMgrLib;
-using Greenshot.Drawing;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using RegionCapture;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;
@@ -236,7 +236,7 @@ namespace ZScreenLib
                     success = CaptureRegionOrWindow();
                     break;
                 case JobLevel2.CaptureFreeHandRegion:
-                    success = CaptureFreehandCrop();
+                    success = CaptureRegion();
                     break;
             }
 
@@ -562,6 +562,18 @@ namespace ZScreenLib
             return TempImage != null;
         }
 
+        public bool CaptureRegion()
+        {
+            RegionCapturePreview rcp = new RegionCapturePreview();
+
+            if (rcp.ShowDialog() == DialogResult.OK)
+            {
+                SetImage(rcp.result);
+            }
+
+            return TempImage != null;
+        }
+
         public bool CaptureFreehandCrop()
         {
             using (FreehandCapture crop = new FreehandCapture())
@@ -679,7 +691,7 @@ namespace ZScreenLib
                                 capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
                                 capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
                                 capture.CaptureDetails.AddMetaData("source", "file");
-                                Surface surface = new Surface(capture);
+                                Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
                                 Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, TaskOutputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                                 editor.SetImagePath(LocalFilePath);
                                 editor.Visible = false;

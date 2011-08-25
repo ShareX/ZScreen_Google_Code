@@ -1,3 +1,4 @@
+4.02.5 Capture Shapes supports capturing Rounded Rectangle, Ellipse, Triangle, Diamond, Polygon and Freehand {Jaex}
 4.02.4 Adding rounded corners and shadow is now possible to all images {McoreD}
 4.02.3 Integration of Greenshot Image Editor supporting Blue [Issue 232] and other features {McoreD}
 4.02.2 New keyboard hook method to avoid main thread being locked {Jaex/McoreD}

@@ -116,7 +116,7 @@ namespace HelpersLib
         LastCropShot,
         [Description("Capture Selected Window")]
         SelectedWindow,
-        [Description("Capture Freehand Region")]
+        [Description("Capture Shapes")]
         FreehandCropShot,
         [Description("Clipboard Upload")]
         ClipboardUpload,

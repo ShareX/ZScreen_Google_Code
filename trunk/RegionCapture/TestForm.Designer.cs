@@ -1,6 +1,6 @@
-﻿namespace RegionCaptureTest
+﻿namespace RegionCapture
 {
-    partial class TestForm
+    partial class RegionCapturePreview
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegionCapturePreview));
             this.tsRegionTools = new System.Windows.Forms.ToolStrip();
             this.tsbFullscreen = new System.Windows.Forms.ToolStripButton();
             this.tsbRectangle = new System.Windows.Forms.ToolStripButton();
@@ -78,7 +78,7 @@
             this.tsbFullscreen.Image = ((System.Drawing.Image)(resources.GetObject("tsbFullscreen.Image")));
             this.tsbFullscreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFullscreen.Name = "tsbFullscreen";
-            this.tsbFullscreen.Size = new System.Drawing.Size(80, 20);
+            this.tsbFullscreen.Size = new System.Drawing.Size(75, 20);
             this.tsbFullscreen.Text = "Fullscreen";
             this.tsbFullscreen.Click += new System.EventHandler(this.tsbFullscreen_Click);
             // 
@@ -87,7 +87,7 @@
             this.tsbRectangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbRectangle.Image")));
             this.tsbRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRectangle.Name = "tsbRectangle";
-            this.tsbRectangle.Size = new System.Drawing.Size(79, 20);
+            this.tsbRectangle.Size = new System.Drawing.Size(75, 20);
             this.tsbRectangle.Text = "Rectangle";
             this.tsbRectangle.Click += new System.EventHandler(this.tsbRectangle_Click);
             // 
@@ -96,7 +96,7 @@
             this.tsbRoundedRectangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbRoundedRectangle.Image")));
             this.tsbRoundedRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRoundedRectangle.Name = "tsbRoundedRectangle";
-            this.tsbRoundedRectangle.Size = new System.Drawing.Size(130, 20);
+            this.tsbRoundedRectangle.Size = new System.Drawing.Size(121, 20);
             this.tsbRoundedRectangle.Text = "Rounded Rectangle";
             this.tsbRoundedRectangle.Click += new System.EventHandler(this.tsbRoundedRectangle_Click);
             // 
@@ -105,7 +105,7 @@
             this.tsbEllipse.Image = ((System.Drawing.Image)(resources.GetObject("tsbEllipse.Image")));
             this.tsbEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbEllipse.Name = "tsbEllipse";
-            this.tsbEllipse.Size = new System.Drawing.Size(60, 20);
+            this.tsbEllipse.Size = new System.Drawing.Size(56, 20);
             this.tsbEllipse.Text = "Ellipse";
             this.tsbEllipse.Click += new System.EventHandler(this.tsbEllipse_Click);
             // 
@@ -114,7 +114,7 @@
             this.tsbTriangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbTriangle.Image")));
             this.tsbTriangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTriangle.Name = "tsbTriangle";
-            this.tsbTriangle.Size = new System.Drawing.Size(70, 20);
+            this.tsbTriangle.Size = new System.Drawing.Size(65, 20);
             this.tsbTriangle.Text = "Triangle";
             this.tsbTriangle.Click += new System.EventHandler(this.tsbTriangle_Click);
             // 
@@ -123,7 +123,7 @@
             this.tsbDiamond.Image = ((System.Drawing.Image)(resources.GetObject("tsbDiamond.Image")));
             this.tsbDiamond.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDiamond.Name = "tsbDiamond";
-            this.tsbDiamond.Size = new System.Drawing.Size(76, 20);
+            this.tsbDiamond.Size = new System.Drawing.Size(68, 20);
             this.tsbDiamond.Text = "Diamond";
             this.tsbDiamond.Click += new System.EventHandler(this.tsbDiamond_Click);
             // 
@@ -132,7 +132,7 @@
             this.tsbPolygon.Image = ((System.Drawing.Image)(resources.GetObject("tsbPolygon.Image")));
             this.tsbPolygon.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPolygon.Name = "tsbPolygon";
-            this.tsbPolygon.Size = new System.Drawing.Size(71, 20);
+            this.tsbPolygon.Size = new System.Drawing.Size(65, 20);
             this.tsbPolygon.Text = "Polygon";
             this.tsbPolygon.Click += new System.EventHandler(this.tsbPolygon_Click);
             // 
@@ -141,7 +141,7 @@
             this.tsbFreeHand.Image = ((System.Drawing.Image)(resources.GetObject("tsbFreeHand.Image")));
             this.tsbFreeHand.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFreeHand.Name = "tsbFreeHand";
-            this.tsbFreeHand.Size = new System.Drawing.Size(81, 20);
+            this.tsbFreeHand.Size = new System.Drawing.Size(77, 20);
             this.tsbFreeHand.Text = "Free Hand";
             this.tsbFreeHand.Click += new System.EventHandler(this.tsbFreeHand_Click);
             // 
@@ -236,7 +236,7 @@
             0,
             0});
             // 
-            // TestForm
+            // RegionCapturePreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -249,8 +249,9 @@
             this.Controls.Add(this.cbDrawBorder);
             this.Controls.Add(this.cbDrawChecker);
             this.Controls.Add(this.tsRegionTools);
-            this.Name = "TestForm";
-            this.Text = "RegionCapture Test";
+            this.Name = "RegionCapturePreview";
+            this.Text = "Region Capture";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RegionCapturePreview_FormClosing);
             this.tsRegionTools.ResumeLayout(false);
             this.tsRegionTools.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
