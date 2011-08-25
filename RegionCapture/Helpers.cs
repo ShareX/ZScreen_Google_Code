@@ -103,31 +103,25 @@ namespace RegionCapture
             return null;
         }
 
-        public static Image CropImage(Image img, GraphicsPath gp)
+        public static Image CropImage(Image img, Rectangle rect, GraphicsPath gp)
         {
-            if (img != null && gp != null)
+            if (img != null && rect.Width > 0 && rect.Height > 0 && gp != null)
             {
-                RectangleF bounds = gp.GetBounds();
+                Bitmap bmp = new Bitmap(rect.Width + 1, rect.Height + 1);
 
-                if (bounds.Width > 0 && bounds.Height > 0)
+                using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    Rectangle rect = Rectangle.Round(bounds);
-                    Bitmap bmp = new Bitmap(rect.Width + 1, rect.Height + 1);
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
 
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    using (Region region = new Region(gp))
                     {
-                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        g.SmoothingMode = SmoothingMode.HighQuality;
-
-                        using (Region region = new Region(gp))
-                        {
-                            g.Clip = region;
-                            g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-                        }
+                        g.Clip = region;
+                        g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
                     }
-
-                    return bmp;
                 }
+
+                return bmp;
             }
 
             return null;

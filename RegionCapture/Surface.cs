@@ -144,7 +144,7 @@ namespace RegionCapture
                     matrix.Translate(-bounds.X, -bounds.Y);
                     gp.Transform(matrix);
 
-                    img = Helpers.CropImage(img, gp);
+                    img = Helpers.CropImage(img, Rectangle.Round(bounds), gp);
 
                     if (DrawBorder)
                     {
@@ -191,7 +191,10 @@ namespace RegionCapture
 
         private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Close(false);
+            if (e.Button == MouseButtons.Left)
+            {
+                Close(false);
+            }
         }
 
         private void Surface_MouseDown(object sender, MouseEventArgs e)
@@ -360,7 +363,16 @@ namespace RegionCapture
 #endif
 
             SizeF size = g.MeasureString(text, textFont);
-            Helpers.DrawTextWithShadow(g, text, new PointF(Width / 2 - size.Width / 2, 30), textFont, Color.White, Color.Black, 1);
+
+            int offset = 30;
+            RectangleF rect = new RectangleF(Width / 2 - size.Width / 2, offset - 1, size.Width, size.Height);
+
+            if (rect.Contains(mousePosition))
+            {
+                rect = new RectangleF(Width / 2 - size.Width / 2, Height - size.Height - offset - 1, size.Width, size.Height);
+            }
+
+            Helpers.DrawTextWithShadow(g, text, rect.Location, textFont, Color.White, Color.Black, 1);
         }
 
         protected Rectangle CalculateAreaFromNodes()
