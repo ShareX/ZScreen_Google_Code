@@ -57,6 +57,8 @@ namespace RegionCapture
                 }
 
                 CreateNode();
+
+                IsAreaCreated = true;
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -83,6 +85,12 @@ namespace RegionCapture
                     ActivateNode(nodes[i]);
                     break;
                 }
+            }
+
+            if (nodes.Count > 2)
+            {
+                RectangleF rect = regionPath.GetBounds();
+                Area = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -113,7 +121,10 @@ namespace RegionCapture
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
 
-            g.DrawPath(borderPen, regionPath);
+            if (nodes.Count > 1)
+            {
+                g.DrawPath(borderPen, regionPath);
+            }
 
             base.Draw(g);
         }

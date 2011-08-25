@@ -44,16 +44,19 @@ namespace RegionCapture
         public int MaxMoveSpeed { get; set; }
 
         protected Rectangle area;
+
         public Rectangle Area
         {
             get { return area; }
             protected set { area = value; }
         }
 
+        public int FPS { get; private set; }
+
+        protected bool IsAreaCreated { get; set; }
+
         protected List<DrawableObject> DrawableObjects { get; set; }
         protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
-
-        public int FPS { get; private set; }
 
         private TextureBrush backgroundBrush;
         private Stopwatch timer;
@@ -202,6 +205,19 @@ namespace RegionCapture
             if (e.Button == MouseButtons.Left)
             {
                 isMouseDown = true;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (IsAreaCreated)
+                {
+                    IsAreaCreated = false;
+                    area = Rectangle.Empty;
+                    HideNodes();
+                }
+                else
+                {
+                    Close(true);
+                }
             }
         }
 
@@ -391,6 +407,22 @@ namespace RegionCapture
             }
 
             return Rectangle.Empty;
+        }
+
+        protected void ShowNodes()
+        {
+            foreach (NodeObject node in DrawableObjects.OfType<NodeObject>())
+            {
+                node.Visible = true;
+            }
+        }
+
+        protected void HideNodes()
+        {
+            foreach (NodeObject node in DrawableObjects.OfType<NodeObject>())
+            {
+                node.Visible = false;
+            }
         }
 
         #region Windows Form Designer generated code
