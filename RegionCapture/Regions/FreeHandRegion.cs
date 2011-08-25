@@ -26,7 +26,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace RegionCapture
 {
@@ -43,28 +42,17 @@ namespace RegionCapture
 
             lastNode = new NodeObject(borderPen, nodeBackgroundBrush);
             DrawableObjects.Add(lastNode);
-
-            MouseDown += new MouseEventHandler(FreeHandRegionSurface_MouseDown);
-        }
-
-        private void FreeHandRegionSurface_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right && lastNode.IsMouseHover)
-            {
-                lastNode.Visible = false;
-                regionPath.Reset();
-                Area = Rectangle.Empty;
-            }
         }
 
         protected override void Update()
         {
             base.Update();
 
-            if (!lastNode.Visible && isMouseDown)
+            if (!IsAreaCreated && isMouseDown)
             {
                 lastNode.Visible = true;
                 lastNode.IsDragging = true;
+                IsAreaCreated = true;
             }
 
             if (lastNode.Visible && lastNode.IsDragging && mousePosition != oldMousePosition)
@@ -78,6 +66,22 @@ namespace RegionCapture
             {
                 RectangleF rect = regionPath.GetBounds();
                 Area = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+            }
+        }
+
+        protected override void OnRightClickCancel()
+        {
+            if (IsAreaCreated)
+            {
+                IsAreaCreated = false;
+                area = Rectangle.Empty;
+                regionPath.Reset();
+                HideNodes();
+                points.Clear();
+            }
+            else
+            {
+                Close(true);
             }
         }
 

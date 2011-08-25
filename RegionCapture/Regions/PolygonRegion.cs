@@ -60,7 +60,11 @@ namespace RegionCapture
 
                 IsAreaCreated = true;
             }
-            else if (e.Button == MouseButtons.Right)
+        }
+
+        protected override void OnRightClickCancel()
+        {
+            if (IsAreaCreated)
             {
                 foreach (NodeObject node in nodes)
                 {
@@ -71,6 +75,15 @@ namespace RegionCapture
                         return;
                     }
                 }
+
+                IsAreaCreated = false;
+                area = Rectangle.Empty;
+                nodes.Clear();
+                DrawableObjects.Clear();
+            }
+            else
+            {
+                Close(true);
             }
         }
 
