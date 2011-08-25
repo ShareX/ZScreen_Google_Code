@@ -66,6 +66,10 @@ namespace RegionCapture
         protected Point mousePosition, oldMousePosition;
         protected bool isMouseDown, oldIsMouseDown;
 
+        private int ptBottom;
+        private int ptRight;
+        private bool isBottomRightMoving = true;
+
         public Surface(Image backgroundImage = null)
         {
             InitializeComponent();
@@ -177,7 +181,14 @@ namespace RegionCapture
 
         public void ShrinkArea(int x, int y)
         {
-            area = new Rectangle(area.Left, area.Top, area.Width + x, area.Height + y);
+            if (isBottomRightMoving)
+            {
+                area = new Rectangle(area.Left, area.Top, area.Width + x, area.Height + y);
+            }
+            else
+            {
+                area = new Rectangle(area.Left + x, area.Top + y, ptRight - x - area.Left, ptBottom - y - area.Top);
+            }
         }
 
         private void Surface_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -227,6 +238,11 @@ namespace RegionCapture
                     break;
                 case Keys.Down:
                     if (e.Shift) { MoveArea(0, speed); } else { ShrinkArea(0, speed); }
+                    break;
+                case Keys.Tab:
+                    isBottomRightMoving = !isBottomRightMoving;
+                    ptBottom = area.Bottom;
+                    ptRight = area.Right;
                     break;
             }
         }

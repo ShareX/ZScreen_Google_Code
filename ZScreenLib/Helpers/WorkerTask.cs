@@ -209,13 +209,14 @@ namespace ZScreenLib
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
-        /// Constructor taking Worker and Job
-        /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="job"></param>
-        private WorkerTask(BackgroundWorker worker, JobLevel2 job)
+        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions, string fp = "")
             : this()
         {
+            if (!string.IsNullOrEmpty(fp))
+            {
+                UpdateLocalFilePath(fp);
+            }
+
             MyWorker = worker;
             AssignJob(job);
 
@@ -243,15 +244,7 @@ namespace ZScreenLib
             {
                 this.Status.Add(TaskStatus.CancellationPending);
             }
-        }
 
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions, string fp = "")
-            : this(worker, job)
-        {
-            if (!string.IsNullOrEmpty(fp))
-            {
-                UpdateLocalFilePath(fp);
-            }
             if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
             {
                 this.Status.Add(TaskStatus.CancellationPending);
