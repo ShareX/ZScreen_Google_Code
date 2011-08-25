@@ -79,12 +79,14 @@ namespace HelpersLib
 
                 if (id == 0)
                 {
-                    throw new Exception("Unable to generate unique hotkey ID. Error: " + Marshal.GetLastWin32Error().ToString());
+                    StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error: " + Marshal.GetLastWin32Error().ToString());
+                    return null;
                 }
 
                 if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)modifiers, (uint)vk))
                 {
-                    throw new Exception("Unable to register hotkey. Error: " + Marshal.GetLastWin32Error().ToString());
+                    StaticHelper.WriteLine("Unable to register hotkey. Error: " + Marshal.GetLastWin32Error().ToString());
+                    return null;
                 }
 
                 HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress);
