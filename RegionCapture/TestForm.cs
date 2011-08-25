@@ -26,17 +26,16 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using RegionCapture;
 
-namespace RegionCaptureTest
+namespace RegionCapture
 {
-    public partial class TestForm : Form
+    public partial class RegionCapturePreview : Form
     {
         private Bitmap screenshot;
-        private Image result;
+        public Image result;
         private Surface surface;
 
-        public TestForm()
+        public RegionCapturePreview()
         {
             InitializeComponent();
             screenshot = Helpers.GetScreenshot();
@@ -111,6 +110,18 @@ namespace RegionCaptureTest
         {
             surface = new FreeHandRegion(screenshot);
             CaptureRegion();
+        }
+
+        private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (result != null)
+            {
+                DialogResult = System.Windows.Forms.DialogResult.OK;
+            }
+            else
+            {
+                DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
         }
     }
 }
