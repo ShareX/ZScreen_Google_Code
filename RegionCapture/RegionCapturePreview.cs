@@ -68,7 +68,8 @@ namespace RegionCapture
 
         private void tsbFullscreen_Click(object sender, EventArgs e)
         {
-            pbResult.Image = screenshot;
+            Result = screenshot;
+            pbResult.Image = Result;
         }
 
         private void tsbRectangle_Click(object sender, EventArgs e)
