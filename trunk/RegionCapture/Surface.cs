@@ -208,16 +208,21 @@ namespace RegionCapture
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (IsAreaCreated)
-                {
-                    IsAreaCreated = false;
-                    area = Rectangle.Empty;
-                    HideNodes();
-                }
-                else
-                {
-                    Close(true);
-                }
+                OnRightClickCancel();
+            }
+        }
+
+        protected virtual void OnRightClickCancel()
+        {
+            if (IsAreaCreated)
+            {
+                IsAreaCreated = false;
+                area = Rectangle.Empty;
+                HideNodes();
+            }
+            else
+            {
+                Close(true);
             }
         }
 
