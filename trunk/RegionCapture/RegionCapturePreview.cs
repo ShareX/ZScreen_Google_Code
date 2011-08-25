@@ -31,8 +31,9 @@ namespace RegionCapture
 {
     public partial class RegionCapturePreview : Form
     {
+        public Image Result { get; private set; }
+
         private Bitmap screenshot;
-        public Image result;
         private Surface surface;
 
         public RegionCapturePreview()
@@ -59,15 +60,15 @@ namespace RegionCapture
 
             if (surface.ShowDialog() == DialogResult.OK)
             {
-                result = surface.GetRegionImage();
-                pbResult.Image = result;
-                Text = "RegionCapture: " + result.Width + "x" + result.Height;
+                Result = surface.GetRegionImage();
+                pbResult.Image = Result;
+                Text = "RegionCapture: " + Result.Width + "x" + Result.Height;
             }
         }
 
         private void tsbFullscreen_Click(object sender, EventArgs e)
         {
-            pbResult.Image = Helpers.GetScreenshot();
+            pbResult.Image = screenshot;
         }
 
         private void tsbRectangle_Click(object sender, EventArgs e)
@@ -114,13 +115,13 @@ namespace RegionCapture
 
         private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (result != null)
+            if (Result != null)
             {
-                DialogResult = System.Windows.Forms.DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
             else
             {
-                DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
         }
     }
