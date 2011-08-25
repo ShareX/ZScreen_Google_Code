@@ -78,7 +78,7 @@
             this.tsbFullscreen.Image = ((System.Drawing.Image)(resources.GetObject("tsbFullscreen.Image")));
             this.tsbFullscreen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFullscreen.Name = "tsbFullscreen";
-            this.tsbFullscreen.Size = new System.Drawing.Size(75, 20);
+            this.tsbFullscreen.Size = new System.Drawing.Size(80, 20);
             this.tsbFullscreen.Text = "Fullscreen";
             this.tsbFullscreen.Click += new System.EventHandler(this.tsbFullscreen_Click);
             // 
@@ -87,7 +87,7 @@
             this.tsbRectangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbRectangle.Image")));
             this.tsbRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRectangle.Name = "tsbRectangle";
-            this.tsbRectangle.Size = new System.Drawing.Size(75, 20);
+            this.tsbRectangle.Size = new System.Drawing.Size(79, 20);
             this.tsbRectangle.Text = "Rectangle";
             this.tsbRectangle.Click += new System.EventHandler(this.tsbRectangle_Click);
             // 
@@ -96,7 +96,7 @@
             this.tsbRoundedRectangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbRoundedRectangle.Image")));
             this.tsbRoundedRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRoundedRectangle.Name = "tsbRoundedRectangle";
-            this.tsbRoundedRectangle.Size = new System.Drawing.Size(121, 20);
+            this.tsbRoundedRectangle.Size = new System.Drawing.Size(130, 20);
             this.tsbRoundedRectangle.Text = "Rounded Rectangle";
             this.tsbRoundedRectangle.Click += new System.EventHandler(this.tsbRoundedRectangle_Click);
             // 
@@ -105,7 +105,7 @@
             this.tsbEllipse.Image = ((System.Drawing.Image)(resources.GetObject("tsbEllipse.Image")));
             this.tsbEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbEllipse.Name = "tsbEllipse";
-            this.tsbEllipse.Size = new System.Drawing.Size(56, 20);
+            this.tsbEllipse.Size = new System.Drawing.Size(60, 20);
             this.tsbEllipse.Text = "Ellipse";
             this.tsbEllipse.Click += new System.EventHandler(this.tsbEllipse_Click);
             // 
@@ -114,7 +114,7 @@
             this.tsbTriangle.Image = ((System.Drawing.Image)(resources.GetObject("tsbTriangle.Image")));
             this.tsbTriangle.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTriangle.Name = "tsbTriangle";
-            this.tsbTriangle.Size = new System.Drawing.Size(65, 20);
+            this.tsbTriangle.Size = new System.Drawing.Size(70, 20);
             this.tsbTriangle.Text = "Triangle";
             this.tsbTriangle.Click += new System.EventHandler(this.tsbTriangle_Click);
             // 
@@ -123,7 +123,7 @@
             this.tsbDiamond.Image = ((System.Drawing.Image)(resources.GetObject("tsbDiamond.Image")));
             this.tsbDiamond.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDiamond.Name = "tsbDiamond";
-            this.tsbDiamond.Size = new System.Drawing.Size(68, 20);
+            this.tsbDiamond.Size = new System.Drawing.Size(76, 20);
             this.tsbDiamond.Text = "Diamond";
             this.tsbDiamond.Click += new System.EventHandler(this.tsbDiamond_Click);
             // 
@@ -132,7 +132,7 @@
             this.tsbPolygon.Image = ((System.Drawing.Image)(resources.GetObject("tsbPolygon.Image")));
             this.tsbPolygon.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPolygon.Name = "tsbPolygon";
-            this.tsbPolygon.Size = new System.Drawing.Size(65, 20);
+            this.tsbPolygon.Size = new System.Drawing.Size(71, 20);
             this.tsbPolygon.Text = "Polygon";
             this.tsbPolygon.Click += new System.EventHandler(this.tsbPolygon_Click);
             // 
@@ -141,16 +141,17 @@
             this.tsbFreeHand.Image = ((System.Drawing.Image)(resources.GetObject("tsbFreeHand.Image")));
             this.tsbFreeHand.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFreeHand.Name = "tsbFreeHand";
-            this.tsbFreeHand.Size = new System.Drawing.Size(77, 20);
+            this.tsbFreeHand.Size = new System.Drawing.Size(81, 20);
             this.tsbFreeHand.Text = "Free Hand";
             this.tsbFreeHand.Click += new System.EventHandler(this.tsbFreeHand_Click);
             // 
             // pbResult
             // 
             this.pbResult.BackColor = System.Drawing.Color.Gray;
+            this.pbResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbResult.Location = new System.Drawing.Point(0, 0);
             this.pbResult.Name = "pbResult";
-            this.pbResult.Size = new System.Drawing.Size(928, 608);
+            this.pbResult.Size = new System.Drawing.Size(936, 608);
             this.pbResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbResult.TabIndex = 1;
             this.pbResult.TabStop = false;
@@ -179,6 +180,9 @@
             // 
             // pImage
             // 
+            this.pImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pImage.AutoScroll = true;
             this.pImage.Controls.Add(this.pbResult);
             this.pImage.Location = new System.Drawing.Point(176, 32);

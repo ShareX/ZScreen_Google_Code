@@ -85,11 +85,15 @@ namespace RegionCapture
         {
             if (points.Count > 2)
             {
-                Region region = new Region(regionPath);
-                g.ExcludeClip(region);
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                g.ResetClip();
+                using (Region region = new Region(regionPath))
+                {
+                    g.ExcludeClip(region);
+                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    g.ResetClip();
+                }
+
                 g.DrawPath(borderPen, regionPath);
+
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else

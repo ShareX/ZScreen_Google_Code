@@ -123,22 +123,22 @@ namespace RegionCapture
             {
                 default:
                 case TriangleAngle.Top:
-                    p1 = new PointF(rect.X + rect.Width / 2, rect.Y);
+                    p1 = new PointF(rect.X + rect.Width / 2.0f, rect.Y);
                     p2 = new PointF(rect.X, rect.Y + rect.Height);
                     p3 = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
                     break;
                 case TriangleAngle.Right:
-                    p1 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2);
+                    p1 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2.0f);
                     p2 = new PointF(rect.X, rect.Y);
                     p3 = new PointF(rect.X, rect.Y + rect.Height);
                     break;
                 case TriangleAngle.Bottom:
-                    p1 = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
+                    p1 = new PointF(rect.X + rect.Width / 2.0f, rect.Y + rect.Height);
                     p2 = new PointF(rect.X + rect.Width, rect.Y);
                     p3 = new PointF(rect.X, rect.Y);
                     break;
                 case TriangleAngle.Left:
-                    p1 = new PointF(rect.X, rect.Y + rect.Height / 2);
+                    p1 = new PointF(rect.X, rect.Y + rect.Height / 2.0f);
                     p2 = new PointF(rect.X + rect.Width, rect.Y + rect.Height);
                     p3 = new PointF(rect.X + rect.Width, rect.Y);
                     break;
@@ -149,12 +149,29 @@ namespace RegionCapture
 
         public static void AddDiamond(this GraphicsPath graphicsPath, RectangleF rect)
         {
-            PointF p1 = new PointF(rect.X + rect.Width / 2, rect.Y);
-            PointF p2 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2);
-            PointF p3 = new PointF(rect.X + rect.Width / 2, rect.Y + rect.Height);
-            PointF p4 = new PointF(rect.X, rect.Y + rect.Height / 2);
+            PointF p1 = new PointF(rect.X + rect.Width / 2.0f, rect.Y);
+            PointF p2 = new PointF(rect.X + rect.Width, rect.Y + rect.Height / 2.0f);
+            PointF p3 = new PointF(rect.X + rect.Width / 2.0f, rect.Y + rect.Height);
+            PointF p4 = new PointF(rect.X, rect.Y + rect.Height / 2.0f);
 
             graphicsPath.AddPolygon(new PointF[] { p1, p2, p3, p4 });
+        }
+
+        public static void AddPolygon(this GraphicsPath graphicsPath, RectangleF rect, int sideCount)
+        {
+            PointF[] points = new PointF[sideCount];
+
+            float a = 0;
+
+            for (int i = 0; i < sideCount; i++)
+            {
+                points[i] = new PointF(rect.X + ((rect.Width / 2.0f) * (float)Math.Cos(a)) + rect.Width / 2.0f,
+                    rect.Y + ((rect.Height / 2.0f) * (float)Math.Sin(a)) + rect.Height / 2.0f);
+
+                a += (float)Math.PI * 2.0f / sideCount;
+            }
+
+            graphicsPath.AddPolygon(points);
         }
     }
 }

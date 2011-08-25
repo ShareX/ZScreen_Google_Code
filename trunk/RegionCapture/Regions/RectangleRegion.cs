@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace RegionCapture
 {
@@ -34,7 +33,6 @@ namespace RegionCapture
         public Size FixedSize { get; set; }
 
         protected NodeObject[] nodes;
-        protected bool isRectangleCreated;
 
         private Rectangle tempRect;
 
@@ -50,32 +48,13 @@ namespace RegionCapture
             }
 
             nodes[(int)NodePosition.BottomRight].Order = 10;
-
-            MouseDown += new MouseEventHandler(RectangleRegion_MouseDown);
-        }
-
-        private void RectangleRegion_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                if (isRectangleCreated)
-                {
-                    isRectangleCreated = false;
-                    area = Rectangle.Empty;
-                    HideNodes();
-                }
-                else
-                {
-                    Close(true);
-                }
-            }
         }
 
         protected override void Update()
         {
             base.Update();
 
-            if (isMouseDown && !isRectangleCreated)
+            if (isMouseDown && !IsAreaCreated)
             {
                 if (!IsFixedSize)
                 {
@@ -89,10 +68,10 @@ namespace RegionCapture
                     areaObject.IsDragging = true;
                 }
 
-                isRectangleCreated = true;
+                IsAreaCreated = true;
             }
 
-            if (isRectangleCreated && nodes != null)
+            if (IsAreaCreated && nodes != null)
             {
                 if (isMouseDown)
                 {
@@ -157,22 +136,6 @@ namespace RegionCapture
             }
 
             base.Draw(g);
-        }
-
-        protected void ShowNodes()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                nodes[i].Visible = true;
-            }
-        }
-
-        protected void HideNodes()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                nodes[i].Visible = false;
-            }
         }
 
         private void UpdateNodePositions()
