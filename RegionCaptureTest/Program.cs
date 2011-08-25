@@ -25,6 +25,7 @@
 
 using System;
 using System.Windows.Forms;
+using RegionCapture;
 
 namespace RegionCaptureTest
 {
@@ -35,7 +36,7 @@ namespace RegionCaptureTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestForm());
+            Application.Run(new RegionCapturePreview());
         }
     }
 }

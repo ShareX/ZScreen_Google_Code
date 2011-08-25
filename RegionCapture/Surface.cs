@@ -258,7 +258,7 @@ namespace RegionCapture
             }
         }
 
-        private void Close(bool isCancel = false)
+        protected void Close(bool isCancel = false)
         {
             if (isCancel)
             {

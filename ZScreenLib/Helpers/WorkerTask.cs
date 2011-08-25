@@ -568,7 +568,7 @@ namespace ZScreenLib
 
             if (rcp.ShowDialog() == DialogResult.OK)
             {
-                SetImage(rcp.result);
+                SetImage(rcp.Result);
             }
 
             return TempImage != null;

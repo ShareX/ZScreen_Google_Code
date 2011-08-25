@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace RegionCapture
 {
@@ -40,6 +41,34 @@ namespace RegionCapture
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
+            nodes = new NodeObject[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
+                DrawableObjects.Add(nodes[i]);
+            }
+
+            nodes[(int)NodePosition.BottomRight].Order = 10;
+
+            MouseDown += new MouseEventHandler(RectangleRegion_MouseDown);
+        }
+
+        private void RectangleRegion_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (isRectangleCreated)
+                {
+                    isRectangleCreated = false;
+                    area = Rectangle.Empty;
+                    HideNodes();
+                }
+                else
+                {
+                    Close(true);
+                }
+            }
         }
 
         protected override void Update()
@@ -51,18 +80,7 @@ namespace RegionCapture
                 if (!IsFixedSize)
                 {
                     area = new Rectangle(mousePosition, new Size(1, 1));
-
-                    nodes = new NodeObject[8];
-
-                    for (int i = 0; i < 8; i++)
-                    {
-                        nodes[i] = new NodeObject(borderPen, nodeBackgroundBrush);
-                        nodes[i].Position = ClientMousePosition;
-                        nodes[i].Visible = true;
-                        DrawableObjects.Add(nodes[i]);
-                    }
-
-                    nodes[(int)NodePosition.BottomRight].Order = 10;
+                    ShowNodes();
                     nodes[(int)NodePosition.BottomRight].IsDragging = true;
                 }
                 else
@@ -139,6 +157,22 @@ namespace RegionCapture
             }
 
             base.Draw(g);
+        }
+
+        protected void ShowNodes()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                nodes[i].Visible = true;
+            }
+        }
+
+        protected void HideNodes()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                nodes[i].Visible = false;
+            }
         }
 
         private void UpdateNodePositions()
