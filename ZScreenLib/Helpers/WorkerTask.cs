@@ -182,6 +182,7 @@ namespace ZScreenLib
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
         public string FileName { get; private set; }
+        public string FileSize { get; private set; }
 
         public string LocalFilePath { get; private set; }
 
@@ -729,7 +730,10 @@ namespace ZScreenLib
             {
                 string fp = LocalFilePath;
                 Image img = TempImage;
-                fp = FileSystem.WriteImage(fp, img);
+                FileInfo fi = FileSystem.WriteImage(fp, img);
+                fp = fi.FullName;
+                FileSize = string.Format("{0} KiB", (fi.Length / 1024.0).ToString("0"));
+
                 Status.Add(TaskStatus.ImageWritten);
 
                 UpdateLocalFilePath(fp);

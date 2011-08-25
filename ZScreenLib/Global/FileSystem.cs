@@ -83,8 +83,10 @@ namespace ZScreenLib
             return files;
         }
 
-        public static string WriteImage(string fp, Image img)
+        public static FileInfo WriteImage(string fp, Image img)
         {
+            FileInfo fi = new FileInfo(fp);
+
             string destDir = Path.GetDirectoryName(fp);
             if (!Directory.Exists(destDir))
             {
@@ -111,7 +113,7 @@ namespace ZScreenLib
                 }
             }
 
-            return fp;
+            return fi;
         }
 
         public static string GetTextFromFile(string filePath)
