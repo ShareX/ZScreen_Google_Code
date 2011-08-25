@@ -1,4 +1,4 @@
-﻿4.0.0 Overhauled region capture through plugin system and rebrand as ZScreenLite
+﻿4.0 Overhauled region capture through the plugin system
 
 Version 3.12 - 2011-05-28
 
