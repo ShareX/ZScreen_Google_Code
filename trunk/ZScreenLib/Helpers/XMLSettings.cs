@@ -424,6 +424,9 @@ namespace ZScreenLib
         [Category("Options / Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
 
+        [Category("Options / Clipboard"), DefaultValue(false), Description("Show file size after the URL whenever possible.")]
+        public bool ClipboardShowFileSize { get; set; }
+
         // Options / Paths
 
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]

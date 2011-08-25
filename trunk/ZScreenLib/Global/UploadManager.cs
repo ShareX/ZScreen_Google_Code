@@ -225,6 +225,11 @@ namespace ZScreenLib
                         }
                     }
 
+                    if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.FileSize))
+                    {
+                        clipboardText = clipboardText + " " + task.FileSize;
+                    }
+
                     if (!string.IsNullOrEmpty(clipboardText))
                     {
                         Engine.ClipboardUnhook();
