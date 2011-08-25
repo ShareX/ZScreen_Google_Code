@@ -30,7 +30,7 @@ namespace HelpersLib
 {
     public static class StaticHelper
     {
-        public static Logger MyLogger { get; set; }
+        public static Logger MyLogger { private get; set; }
 
         public static void WriteLine(string message)
         {

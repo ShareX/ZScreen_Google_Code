@@ -40,6 +40,8 @@ namespace ZScreenGUI
                 HotkeyInfo oldHotkeyInfo = GetHotkeyInfoFromTag(hotkeyEnum);
                 UnregisterHotkey(oldHotkeyInfo);
 
+                if (hotkey == Keys.None) return null;
+
                 switch (hotkeyEnum)
                 {
                     case HotkeyTask.ActiveWindow:
@@ -83,7 +85,12 @@ namespace ZScreenGUI
                 if (newHotkeyInfo != null)
                 {
                     newHotkeyInfo.Tag = hotkeyEnum;
-                    Engine.MyLogger.WriteLine("Registered Hotkey for " + hotkeyEnum.GetDescription());
+                    Engine.MyLogger.WriteLine("Registered hotkey for " + hotkeyEnum.GetDescription());
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Unable to register \"{0}\" hotkey.\nPlease select a different hotkey.", hotkeyEnum.GetDescription()),
+                        Application.ProductName + " - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 

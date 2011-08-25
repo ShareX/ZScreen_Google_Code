@@ -112,7 +112,7 @@ namespace HelpersLib
         ActiveWindow,
         [Description("Capture Rectangular Region")]
         CropShot,
-        [Description("Capture Rectangular Region (repeat)")]
+        [Description("Capture Last Rectangular Region")]
         LastCropShot,
         [Description("Capture Selected Window")]
         SelectedWindow,
@@ -124,8 +124,9 @@ namespace HelpersLib
         AutoCapture,
         [Description("Drop Window")]
         DropWindow,
-        LanguageTranslator,
         [Description("Translate")]
+        LanguageTranslator,
+        [Description("Color Picker")]
         ScreenColorPicker,
         [Description("Twitter Client")]
         TwitterClient
