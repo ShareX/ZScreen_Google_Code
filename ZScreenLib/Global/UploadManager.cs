@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
@@ -119,7 +120,7 @@ namespace ZScreenLib
 
                 if (task.TaskOutputs.Contains(OutputEnum.Clipboard))
                 {
-                    string clipboardText = string.Empty;
+                    StringBuilder clipboardText = new StringBuilder();
 
                     if (task.JobIsImageToClipboard())
                     {
@@ -131,10 +132,10 @@ namespace ZScreenLib
                         {
                             if (Engine.conf.ConfLinkFormat.Count > 0)
                             {
-                                clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath);
+                                clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath));
                             }
 
-                            if (!string.IsNullOrEmpty(clipboardText))
+                            if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                             {
                                 break;
                             }
@@ -150,8 +151,11 @@ namespace ZScreenLib
                             {
                                 if (!string.IsNullOrEmpty(ur.ShortenedURL))
                                 {
-                                    clipboardText = ur.ShortenedURL;
-                                    break;
+                                    clipboardText.AppendLine(ur.ShortenedURL);
+                                    if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -162,18 +166,24 @@ namespace ZScreenLib
                             {
                                 if (!string.IsNullOrEmpty(ur.URL))
                                 {
-                                    clipboardText = FileSystem.GetBrowserFriendlyUrl(ur.URL);
-                                    break;
+                                    clipboardText.AppendLine(FileSystem.GetBrowserFriendlyUrl(ur.URL));
+                                    if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
-                            if (string.IsNullOrEmpty(clipboardText) && task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+                            if (clipboardText.Length == 0 && task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                             {
                                 foreach (UploadResult ur in task.UploadResults)
                                 {
                                     if (!string.IsNullOrEmpty(ur.LocalFilePath))
                                     {
-                                        clipboardText = ur.LocalFilePath;
-                                        break;
+                                        clipboardText.AppendLine(ur.LocalFilePath);
+                                        if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                        {
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -189,10 +199,10 @@ namespace ZScreenLib
                             {
                                 if (task.MyLinkFormat.Count > 0)
                                 {
-                                    clipboardText = ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL);
+                                    clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL));
                                 }
 
-                                if (!string.IsNullOrEmpty(clipboardText))
+                                if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                                 {
                                     break;
                                 }
@@ -203,7 +213,7 @@ namespace ZScreenLib
                         {
                             if (task.TranslationInfo != null)
                             {
-                                clipboardText = task.TranslationInfo.Result;
+                                clipboardText.AppendLine(task.TranslationInfo.Result);
                             }
                         }
                         // Text and File catagories are still left to process. If shortened URL exists, preference is given to that
@@ -213,7 +223,7 @@ namespace ZScreenLib
                             {
                                 if (!string.IsNullOrEmpty(ur.ShortenedURL))
                                 {
-                                    clipboardText = ur.ShortenedURL;
+                                    clipboardText.AppendLine(ur.ShortenedURL);
                                     break;
                                 }
                             }
@@ -221,20 +231,23 @@ namespace ZScreenLib
                         // Otherwise full URL for Text or File is used
                         else if (task.UploadResults.Count > 0)
                         {
-                            clipboardText = FileSystem.GetBrowserFriendlyUrl(task.UploadResults[0].URL);
+                            clipboardText.AppendLine(FileSystem.GetBrowserFriendlyUrl(task.UploadResults[0].URL));
                         }
                     }
 
-                    if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.FileSize))
-                    {
-                        clipboardText = clipboardText + " " + task.FileSize;
-                    }
-
-                    if (!string.IsNullOrEmpty(clipboardText))
+                    if (clipboardText.Length > 0)
                     {
                         Engine.ClipboardUnhook();
-                        Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + clipboardText);
-                        Clipboard.SetText(clipboardText.ToString()); // auto
+
+                        string tempText = clipboardText.ToString().Trim();
+
+                        if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.FileSize))
+                        {
+                            tempText += " " + task.FileSize;
+                        }
+
+                        Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + tempText);
+                        Clipboard.SetText(tempText); // auto
                         // optional deletion link
                         if (task.UploadResults != null)
                         {

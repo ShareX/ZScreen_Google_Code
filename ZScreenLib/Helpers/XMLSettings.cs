@@ -427,6 +427,9 @@ namespace ZScreenLib
         [Category("Options / Clipboard"), DefaultValue(false), Description("Show file size after the URL whenever possible.")]
         public bool ClipboardShowFileSize { get; set; }
 
+        [Category("Options / Clipboard"), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
+        public bool ClipboardAppendMultipleLinks { get; set; }
+
         // Options / Paths
 
         [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
@@ -470,7 +473,7 @@ namespace ZScreenLib
         [XmlIgnore(), Category("Screenshots / Border"), Description("Border Color.")]
         public Color BorderEffectColor { get; set; }
 
-        [XmlIgnore(), Category("Screenshots / Clipboard"), Description("Background color of images captured to clipboard.")]
+        [XmlIgnore(), Category("Options / Clipboard"), Description("Background color of images captured to clipboard.")]
         public Color ClipboardBackgroundColor { get; set; }
 
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]

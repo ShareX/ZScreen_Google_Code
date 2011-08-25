@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
@@ -318,7 +319,7 @@ namespace ZScreenTesterGUI
 
                 if (uploader != null && uploader.Task != null && uploader.Task.UploadResults.Count > 0 && !string.IsNullOrEmpty(uploader.Task.UploadResults[0].URL))
                 {
-                    Process.Start(uploader.Task.UploadResults[0].URL);
+                    ThreadPool.QueueUserWorkItem(x => Process.Start(uploader.Task.UploadResults[0].URL));
                 }
             }
         }

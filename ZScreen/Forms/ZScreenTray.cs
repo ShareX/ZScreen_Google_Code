@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
@@ -48,7 +49,7 @@ namespace ZScreenGUI
                             {
                                 if (!string.IsNullOrEmpty(ur.URL))
                                 {
-                                    Process.Start(ur.URL);
+                                    ThreadPool.QueueUserWorkItem(x => Process.Start(ur.URL));
                                 }
                             }
                         }
