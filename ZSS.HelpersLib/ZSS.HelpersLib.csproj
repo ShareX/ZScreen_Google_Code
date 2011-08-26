@@ -69,6 +69,13 @@
     <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotkeyInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HotkeyInputForm.Designer.cs">
+      <DependentUpon>HotkeyInputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyInfo.cs" />
     <Compile Include="Printer\PrintForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HotkeyInputForm.resx">
+      <DependentUpon>HotkeyInputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\PrintForm.resx">
       <DependentUpon>PrintForm.cs</DependentUpon>

@@ -49,17 +49,7 @@ namespace HelpersLib
 
         public HotkeyInfo RegisterHotkey(Keys hotkey, Action hotkeyPress = null)
         {
-            if (IsHotkeyExist(hotkey))
-            {
-                /*
-                if (hotkey != Keys.None)
-                {
-                    MessageBox.Show(string.Format("{0} is already assigned to {1}.", hotkey.GetDescription(),
-                        GetHotkeyInfoFromKey(hotkey).Tag.GetDescription()), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                 */
-                return null;
-            }
+            if (IsHotkeyExist(hotkey)) return null;
 
             Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
 
