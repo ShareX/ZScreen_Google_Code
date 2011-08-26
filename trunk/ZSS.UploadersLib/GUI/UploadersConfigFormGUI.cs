@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
@@ -530,7 +529,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.TwitterOAuthInfoList[Config.TwitterSelectedAccount] = acc;
-                    Process.Start(url);
+                    StaticHelper.LoadBrowser(url);
                     ucTwitterAccounts.SettingsGrid.SelectedObject = acc;
                 }
             }

@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
@@ -73,14 +72,14 @@ namespace UploadersLib
 
         private void btnImageShackOpenRegistrationCode_Click(object sender, EventArgs e)
         {
-            Process.Start("http://profile.imageshack.us/prefs/");
+            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs/");
         }
 
         private void btnImageShackOpenPublicProfile_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Config.ImageShackUsername))
             {
-                Process.Start("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
+                StaticHelper.LoadBrowser("http://profile.imageshack.us/user/" + Config.ImageShackUsername);
             }
             else
             {
@@ -90,7 +89,7 @@ namespace UploadersLib
 
         private void btnImageShackOpenMyImages_Click(object sender, EventArgs e)
         {
-            Process.Start("http://my.imageshack.us/v_images.php");
+            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
         }
 
         #endregion ImageShack
@@ -161,7 +160,7 @@ namespace UploadersLib
 
         private void btnTinyPicOpenMyImages_Click(object sender, EventArgs e)
         {
-            Process.Start("http://tinypic.com/yourstuff.php");
+            StaticHelper.LoadBrowser("http://tinypic.com/yourstuff.php");
         }
 
         #endregion TinyPic
@@ -260,12 +259,12 @@ namespace UploadersLib
 
         private void pbDropboxLogo_Click(object sender, EventArgs e)
         {
-            Process.Start("https://www.dropbox.com");
+            StaticHelper.LoadBrowser("https://www.dropbox.com");
         }
 
         private void btnDropboxRegister_Click(object sender, EventArgs e)
         {
-            Process.Start("https://www.dropbox.com/register");
+            StaticHelper.LoadBrowser("https://www.dropbox.com/register");
         }
 
         private void btnDropboxShowFiles_Click(object sender, EventArgs e)
@@ -310,7 +309,7 @@ namespace UploadersLib
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/wiki/FTPAccounts");
         }
 
         private void btnFTPImport_Click(object sender, EventArgs e)
@@ -595,7 +594,7 @@ namespace UploadersLib
 
         private void txtCustomUploaderLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            StaticHelper.LoadBrowser(e.LinkText);
         }
 
         #endregion Custom Uploader

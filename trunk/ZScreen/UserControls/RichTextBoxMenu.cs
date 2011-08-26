@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZScreenGUI.UserControls
 {
@@ -34,7 +34,7 @@ namespace ZScreenGUI.UserControls
             if (makeURLClickable)
             {
                 rtb.DetectUrls = true;
-                rtb.LinkClicked += (v1, v2) => Process.Start(v2.LinkText);
+                rtb.LinkClicked += (v1, v2) => StaticHelper.LoadBrowser(v2.LinkText);
             }
         }
 

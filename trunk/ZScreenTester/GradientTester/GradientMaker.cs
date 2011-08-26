@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using ZSS.ColorsLib;
 
@@ -211,7 +212,7 @@ namespace GradientTester
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/wiki/Watermark");
+            ThreadPool.QueueUserWorkItem(x => Process.Start("http://code.google.com/p/zscreen/wiki/Watermark"));
         }
 
         private void cboGradientDirection_SelectedIndexChanged(object sender, EventArgs e)

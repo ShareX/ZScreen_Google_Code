@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -98,27 +97,27 @@ namespace HistoryLib
 
         public void OpenURL()
         {
-            if (HistoryItem != null && IsURLExist) Process.Start(HistoryItem.URL);
+            if (HistoryItem != null && IsURLExist) StaticHelper.LoadBrowser(HistoryItem.URL);
         }
 
         public void OpenShortenedURL()
         {
-            if (HistoryItem != null && IsShortenedURLExist) Process.Start(HistoryItem.ShortenedURL);
+            if (HistoryItem != null && IsShortenedURLExist) StaticHelper.LoadBrowser(HistoryItem.ShortenedURL);
         }
 
         public void OpenThumbnailURL()
         {
-            if (HistoryItem != null && IsThumbnailURLExist) Process.Start(HistoryItem.ThumbnailURL);
+            if (HistoryItem != null && IsThumbnailURLExist) StaticHelper.LoadBrowser(HistoryItem.ThumbnailURL);
         }
 
         public void OpenDeletionURL()
         {
-            if (HistoryItem != null && IsDeletionURLExist) Process.Start(HistoryItem.DeletionURL);
+            if (HistoryItem != null && IsDeletionURLExist) StaticHelper.LoadBrowser(HistoryItem.DeletionURL);
         }
 
         public void OpenFile()
         {
-            if (HistoryItem != null && IsFileExist) Process.Start(HistoryItem.Filepath);
+            if (HistoryItem != null && IsFileExist) StaticHelper.LoadBrowser(HistoryItem.Filepath);
         }
 
         public void OpenFolder()
