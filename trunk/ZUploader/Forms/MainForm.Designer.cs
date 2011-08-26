@@ -214,7 +214,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(842, 33);
+            this.tsMain.Size = new System.Drawing.Size(875, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -223,7 +223,7 @@ namespace ZUploader
             this.tsbClipboardUpload.Image = global::ZUploader.Properties.Resources.clipboard__plus;
             this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClipboardUpload.Name = "tsbClipboardUpload";
-            this.tsbClipboardUpload.Size = new System.Drawing.Size(119, 20);
+            this.tsbClipboardUpload.Size = new System.Drawing.Size(128, 20);
             this.tsbClipboardUpload.Text = "Clipboard upload...";
             this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
             // 
@@ -232,7 +232,7 @@ namespace ZUploader
             this.tsbFileUpload.Image = global::ZUploader.Properties.Resources.folder__plus;
             this.tsbFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbFileUpload.Name = "tsbFileUpload";
-            this.tsbFileUpload.Size = new System.Drawing.Size(90, 20);
+            this.tsbFileUpload.Size = new System.Drawing.Size(94, 20);
             this.tsbFileUpload.Text = "File upload...";
             this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
             // 
@@ -247,7 +247,7 @@ namespace ZUploader
             this.tsbCopy.Image = global::ZUploader.Properties.Resources.document_copy;
             this.tsbCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbCopy.Name = "tsbCopy";
-            this.tsbCopy.Size = new System.Drawing.Size(52, 20);
+            this.tsbCopy.Size = new System.Drawing.Size(55, 20);
             this.tsbCopy.Text = "Copy";
             this.tsbCopy.Click += new System.EventHandler(this.tsbCopy_Click);
             // 
@@ -256,7 +256,7 @@ namespace ZUploader
             this.tsbOpen.Image = global::ZUploader.Properties.Resources.document__arrow;
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
-            this.tsbOpen.Size = new System.Drawing.Size(53, 20);
+            this.tsbOpen.Size = new System.Drawing.Size(56, 20);
             this.tsbOpen.Text = "Open";
             this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
@@ -278,47 +278,47 @@ namespace ZUploader
             this.tsddbDestinations.Image = global::ZUploader.Properties.Resources.drive_globe;
             this.tsddbDestinations.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbDestinations.Name = "tsddbDestinations";
-            this.tsddbDestinations.Size = new System.Drawing.Size(95, 20);
+            this.tsddbDestinations.Size = new System.Drawing.Size(101, 20);
             this.tsddbDestinations.Text = "Destinations";
             // 
             // tsmiImageUploaders
             // 
             this.tsmiImageUploaders.Image = global::ZUploader.Properties.Resources.image;
             this.tsmiImageUploaders.Name = "tsmiImageUploaders";
-            this.tsmiImageUploaders.Size = new System.Drawing.Size(165, 22);
+            this.tsmiImageUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsmiImageUploaders.Text = "Image uploaders";
             // 
             // tsmiTextUploaders
             // 
             this.tsmiTextUploaders.Image = global::ZUploader.Properties.Resources.notebook;
             this.tsmiTextUploaders.Name = "tsmiTextUploaders";
-            this.tsmiTextUploaders.Size = new System.Drawing.Size(165, 22);
+            this.tsmiTextUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsmiTextUploaders.Text = "Text uploaders";
             // 
             // tsmiFileUploaders
             // 
             this.tsmiFileUploaders.Image = global::ZUploader.Properties.Resources.application_block;
             this.tsmiFileUploaders.Name = "tsmiFileUploaders";
-            this.tsmiFileUploaders.Size = new System.Drawing.Size(165, 22);
+            this.tsmiFileUploaders.Size = new System.Drawing.Size(162, 22);
             this.tsmiFileUploaders.Text = "File uploaders";
             // 
             // tsmiURLShorteners
             // 
             this.tsmiURLShorteners.Image = global::ZUploader.Properties.Resources.edit_scale;
             this.tsmiURLShorteners.Name = "tsmiURLShorteners";
-            this.tsmiURLShorteners.Size = new System.Drawing.Size(165, 22);
+            this.tsmiURLShorteners.Size = new System.Drawing.Size(162, 22);
             this.tsmiURLShorteners.Text = "URL shorteners";
             // 
             // tssDestinations1
             // 
             this.tssDestinations1.Name = "tssDestinations1";
-            this.tssDestinations1.Size = new System.Drawing.Size(162, 6);
+            this.tssDestinations1.Size = new System.Drawing.Size(159, 6);
             // 
             // tsmiUploadersConfig
             // 
             this.tsmiUploadersConfig.Image = global::ZUploader.Properties.Resources.gear;
             this.tsmiUploadersConfig.Name = "tsmiUploadersConfig";
-            this.tsmiUploadersConfig.Size = new System.Drawing.Size(165, 22);
+            this.tsmiUploadersConfig.Size = new System.Drawing.Size(162, 22);
             this.tsmiUploadersConfig.Text = "Configuration...";
             this.tsmiUploadersConfig.Click += new System.EventHandler(this.tsddbUploadersConfig_Click);
             // 
@@ -327,7 +327,7 @@ namespace ZUploader
             this.tsddbPlugins.Image = global::ZUploader.Properties.Resources.block;
             this.tsddbPlugins.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsddbPlugins.Name = "tsddbPlugins";
-            this.tsddbPlugins.Size = new System.Drawing.Size(69, 20);
+            this.tsddbPlugins.Size = new System.Drawing.Size(75, 20);
             this.tsddbPlugins.Text = "Plugins";
             // 
             // tssMain3
@@ -340,7 +340,7 @@ namespace ZUploader
             this.tsbHistory.Image = global::ZUploader.Properties.Resources.address_book_blue;
             this.tsbHistory.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbHistory.Name = "tsbHistory";
-            this.tsbHistory.Size = new System.Drawing.Size(73, 20);
+            this.tsbHistory.Size = new System.Drawing.Size(74, 20);
             this.tsbHistory.Text = "History...";
             this.tsbHistory.Click += new System.EventHandler(this.tsbHistory_Click);
             // 
@@ -358,7 +358,7 @@ namespace ZUploader
             this.tsbAbout.Image = global::ZUploader.Properties.Resources.diamond;
             this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(68, 20);
+            this.tsbAbout.Size = new System.Drawing.Size(69, 20);
             this.tsbAbout.Text = "About...";
             this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
