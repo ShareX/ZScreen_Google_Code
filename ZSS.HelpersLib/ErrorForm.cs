@@ -79,7 +79,7 @@ namespace HelpersLib
         {
             if (!string.IsNullOrEmpty(BugReportPath))
             {
-                Process.Start(BugReportPath);
+                StaticHelper.LoadBrowser(BugReportPath);
             }
         }
 

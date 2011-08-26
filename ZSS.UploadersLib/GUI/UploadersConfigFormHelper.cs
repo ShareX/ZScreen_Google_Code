@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -58,7 +57,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.ImgurOAuthInfo = oauth;
-                    Process.Start(url);
+                    StaticHelper.LoadBrowser(url);
                 }
             }
             catch (Exception ex)
@@ -109,7 +108,7 @@ namespace UploadersLib
                 string url = flickr.GetAuthLink(FlickrPermission.Write);
                 if (!string.IsNullOrEmpty(url))
                 {
-                    Process.Start(url);
+                    StaticHelper.LoadBrowser(url);
                     btnFlickrCompleteAuth.Enabled = true;
                 }
             }
@@ -172,7 +171,7 @@ namespace UploadersLib
                     string url = flickr.GetPhotosLink(userID);
                     if (!string.IsNullOrEmpty(url))
                     {
-                        Process.Start(url);
+                        StaticHelper.LoadBrowser(url);
                     }
                 }
             }
@@ -273,7 +272,7 @@ namespace UploadersLib
                 if (!string.IsNullOrEmpty(url))
                 {
                     Config.DropboxOAuthInfo = oauth;
-                    Process.Start(url);
+                    StaticHelper.LoadBrowser(url);
                     btnDropboxCompleteAuth.Enabled = true;
                 }
             }

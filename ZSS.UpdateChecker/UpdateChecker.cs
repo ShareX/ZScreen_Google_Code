@@ -25,7 +25,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -140,7 +139,7 @@ namespace ZSS.UpdateCheckerLib
                 {
                     if (ver.ShowDialog() == DialogResult.Yes)
                     {
-                        Process.Start(UpdateInfo.URL);
+                        StaticHelper.LoadBrowser(UpdateInfo.URL);
                         return true;
                     }
                 }

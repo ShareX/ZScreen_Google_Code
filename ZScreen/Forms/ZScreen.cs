@@ -254,12 +254,12 @@ namespace ZScreenGUI
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(x => Process.Start("http://profile.imageshack.us/prefs"));
+            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs");
         }
 
         private void btnGalleryImageShack_Click(object sender, EventArgs e)
         {
-            Process.Start("http://my.imageshack.us/v_images.php");
+            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
         }
 
         private void ZScreen_Resize(object sender, EventArgs e)
@@ -860,7 +860,7 @@ namespace ZScreenGUI
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(ZLinks.URL_ISSUES);
+            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
         }
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
@@ -1132,12 +1132,12 @@ namespace ZScreenGUI
 
         private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(ZLinks.URL_WEBSITE);
+            StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
         }
 
         private void llProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(ZLinks.URL_WIKIPAGES);
+            StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
         }
 
         private void ZScreen_Deactivate(object sender, EventArgs e)
@@ -1461,7 +1461,7 @@ namespace ZScreenGUI
 
         private void btnGalleryTinyPic_Click(object sender, EventArgs e)
         {
-            Process.Start("http://tinypic.com/yourstuff.php");
+            StaticHelper.LoadBrowser("http://tinypic.com/yourstuff.php");
         }
 
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
@@ -1867,7 +1867,7 @@ namespace ZScreenGUI
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/wiki/FTPAccounts");
+            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/wiki/FTPAccounts");
         }
 
         private void btnOpenZScreenTester_Click(object sender, EventArgs e)
@@ -1984,7 +1984,7 @@ namespace ZScreenGUI
 
         private void txtDebugLog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            StaticHelper.LoadBrowser(e.LinkText);
         }
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
@@ -2291,7 +2291,7 @@ namespace ZScreenGUI
 
         private void pbDonate_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
         }
 
         private void tcMain_Selecting(object sender, TabControlCancelEventArgs e)
@@ -2330,7 +2330,7 @@ namespace ZScreenGUI
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
         }
 
         private void tsbDonate_MouseEnter(object sender, EventArgs e)

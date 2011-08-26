@@ -24,10 +24,10 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZSS.UpdateCheckerLib
 {
@@ -71,7 +71,7 @@ namespace ZSS.UpdateCheckerLib
 
         private void TxtVerLinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            StaticHelper.LoadBrowser(e.LinkText);
         }
 
         private void NewVersionWindow_Paint(object sender, PaintEventArgs e)

@@ -24,12 +24,12 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using HelpersLib;
 using ZScreenLib.Properties;
 
 namespace ZScreenLib
@@ -154,12 +154,12 @@ namespace ZScreenLib
 
         private void labelProductName_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen");
+            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen");
         }
 
         private void lblRev_Click_1(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
+            StaticHelper.LoadBrowser("http://code.google.com/p/zscreen/source/detail?r=" + Adapter.AppRevision);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -169,17 +169,17 @@ namespace ZScreenLib
 
         private void lblBrandon_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/u/rgrthat");
+            StaticHelper.LoadBrowser("http://code.google.com/u/rgrthat");
         }
 
         private void lblMike_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/u/mcored");
+            StaticHelper.LoadBrowser("http://code.google.com/u/mcored");
         }
 
         private void lblBerk_Click(object sender, EventArgs e)
         {
-            Process.Start("http://code.google.com/u/flexy123");
+            StaticHelper.LoadBrowser("http://code.google.com/u/flexy123");
         }
 
         private void pbLogo_Click(object sender, EventArgs e)
@@ -215,7 +215,7 @@ namespace ZScreenLib
 
         private void textBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            StaticHelper.LoadBrowser(e.LinkText);
         }
     }
 }

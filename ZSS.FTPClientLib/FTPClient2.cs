@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using IconHelper;
 using Starksoft.Net.Ftp;
@@ -552,7 +553,7 @@ namespace ZSS.FTPClientLib
                 FtpItem file = lvFTPList.SelectedItems[0].Tag as FtpItem;
                 if (file != null && file.ItemType == FtpItemType.File)
                 {
-                    Process.Start(this.Account.GetUriPath(file.FullPath, true));
+                    ThreadPool.QueueUserWorkItem(x => Process.Start(this.Account.GetUriPath(file.FullPath, true)));
                 }
             }
         }

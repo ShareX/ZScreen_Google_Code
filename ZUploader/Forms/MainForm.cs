@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -244,7 +243,7 @@ namespace ZUploader
 
             if (result != null && !string.IsNullOrEmpty(result.URL))
             {
-                Process.Start(result.URL);
+                StaticHelper.LoadBrowser(result.URL);
             }
         }
 
@@ -603,7 +602,7 @@ namespace ZUploader
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
         }
     }
 }

@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HelpersLib
 {
@@ -54,6 +55,11 @@ namespace HelpersLib
             {
                 Debug.WriteLine(e);
             }
+        }
+
+        public static void LoadBrowser(string url)
+        {
+            ThreadPool.QueueUserWorkItem(x => Process.Start(url));
         }
     }
 }

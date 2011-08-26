@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -44,7 +43,7 @@ namespace ZScreenGUI
                 {
                     if (sType == UploadResult.SourceType.TEXT || sType == UploadResult.SourceType.HTML)
                     {
-                        Process.Start(path);
+                        StaticHelper.LoadBrowser(path);
                         return true;
                     }
 

@@ -24,11 +24,11 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersAPILib;
 
 namespace ZUploader
@@ -75,27 +75,27 @@ namespace ZUploader
 
         private void lblZScreen_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_WEBSITE);
+            StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
         }
 
         private void lblBugs_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_ISSUES);
+            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
         }
 
         private void pbBerkURL_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_BERK);
+            StaticHelper.LoadBrowser(ZLinks.URL_BERK);
         }
 
         private void pbMikeURL_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_MIKE);
+            StaticHelper.LoadBrowser(ZLinks.URL_MIKE);
         }
 
         private void pbBrandonURL_Click(object sender, EventArgs e)
         {
-            Process.Start(ZLinks.URL_BRANDON);
+            StaticHelper.LoadBrowser(ZLinks.URL_BRANDON);
         }
 
         private void btnClose_Click(object sender, EventArgs e)

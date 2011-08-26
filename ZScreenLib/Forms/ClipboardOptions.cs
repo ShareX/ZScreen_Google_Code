@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
@@ -148,7 +149,7 @@ namespace ZScreenLib
         {
             if (urTask != null && !string.IsNullOrEmpty(urTask.LocalFilePath))
             {
-                Process.Start(urTask.LocalFilePath);
+                StaticHelper.LoadBrowser(urTask.LocalFilePath);
             }
         }
 
@@ -190,7 +191,7 @@ namespace ZScreenLib
         {
             if (FileSystem.IsValidLink(e.Node.Text))
             {
-                Process.Start(e.Node.Text);
+                StaticHelper.LoadBrowser(e.Node.Text);
             }
 
             btnCopyLink_Click(sender, e);
