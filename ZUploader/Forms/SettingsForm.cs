@@ -56,6 +56,7 @@ namespace ZUploader
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
+            cbLoadPlugins.Checked = Program.Settings.LoadPluginsOnStartup;
 
             // Upload
             cbUseCustomUploadersConfigPath.Checked = Program.Settings.UseCustomUploadersConfigPath;
@@ -208,6 +209,11 @@ namespace ZUploader
             }
         }
 
+        private void cbLoadPlugins_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.LoadPluginsOnStartup = cbLoadPlugins.Checked;
+        }
+
         private void btnOpenZUploaderPath_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Program.PersonalPath) && Directory.Exists(Program.PersonalPath))
@@ -329,6 +335,8 @@ namespace ZUploader
 
         #endregion History
 
+        #region Proxy
+
         private void btnAutofillProxy_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(Program.Settings.ProxySettings.UserName))
@@ -345,5 +353,7 @@ namespace ZUploader
             }
             pgProxy.SelectedObject = Program.Settings.ProxySettings;
         }
+
+        #endregion Proxy
     }
 }

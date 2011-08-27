@@ -78,9 +78,10 @@
             this.cbUseCustomHistoryPath = new System.Windows.Forms.CheckBox();
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.tpProxy = new System.Windows.Forms.TabPage();
+            this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.btnAutofillProxy = new System.Windows.Forms.Button();
+            this.cbLoadPlugins = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -145,6 +146,7 @@
             // 
             // tpGeneral
             // 
+            this.tpGeneral.Controls.Add(this.cbLoadPlugins);
             this.tpGeneral.Controls.Add(this.cbURLShortenAfterUpload);
             this.tpGeneral.Controls.Add(this.label1);
             this.tpGeneral.Controls.Add(this.btnOpenZUploaderPath);
@@ -174,7 +176,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 152);
+            this.label1.Location = new System.Drawing.Point(16, 168);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(264, 13);
             this.label1.TabIndex = 18;
@@ -182,7 +184,7 @@
             // 
             // btnOpenZUploaderPath
             // 
-            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 120);
+            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 136);
             this.btnOpenZUploaderPath.Name = "btnOpenZUploaderPath";
             this.btnOpenZUploaderPath.Size = new System.Drawing.Size(176, 23);
             this.btnOpenZUploaderPath.TabIndex = 17;
@@ -371,7 +373,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-                "added as bitmap.";
+    "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -543,7 +545,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-                "ce accordingly.";
+    "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -697,6 +699,16 @@
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
+            // btnAutofillProxy
+            // 
+            this.btnAutofillProxy.Location = new System.Drawing.Point(432, 224);
+            this.btnAutofillProxy.Name = "btnAutofillProxy";
+            this.btnAutofillProxy.Size = new System.Drawing.Size(75, 23);
+            this.btnAutofillProxy.TabIndex = 2;
+            this.btnAutofillProxy.Text = "Autofill";
+            this.btnAutofillProxy.UseVisualStyleBackColor = true;
+            this.btnAutofillProxy.Click += new System.EventHandler(this.btnAutofillProxy_Click);
+            // 
             // tpDebug
             // 
             this.tpDebug.Controls.Add(this.txtDebugLog);
@@ -719,15 +731,16 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // btnAutofillProxy
+            // cbLoadPlugins
             // 
-            this.btnAutofillProxy.Location = new System.Drawing.Point(432, 224);
-            this.btnAutofillProxy.Name = "btnAutofillProxy";
-            this.btnAutofillProxy.Size = new System.Drawing.Size(75, 23);
-            this.btnAutofillProxy.TabIndex = 2;
-            this.btnAutofillProxy.Text = "Autofill";
-            this.btnAutofillProxy.UseVisualStyleBackColor = true;
-            this.btnAutofillProxy.Click += new System.EventHandler(this.btnAutofillProxy_Click);
+            this.cbLoadPlugins.AutoSize = true;
+            this.cbLoadPlugins.Location = new System.Drawing.Point(16, 112);
+            this.cbLoadPlugins.Name = "cbLoadPlugins";
+            this.cbLoadPlugins.Size = new System.Drawing.Size(136, 17);
+            this.cbLoadPlugins.TabIndex = 20;
+            this.cbLoadPlugins.Text = "Load plugins on startup";
+            this.cbLoadPlugins.UseVisualStyleBackColor = true;
+            this.cbLoadPlugins.CheckedChanged += new System.EventHandler(this.cbLoadPlugins_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -821,5 +834,6 @@
         private System.Windows.Forms.CheckBox cbUseCustomUploadersConfigPath;
         private System.Windows.Forms.Button btnLoadUploadersConfig;
         private System.Windows.Forms.Button btnAutofillProxy;
+        private System.Windows.Forms.CheckBox cbLoadPlugins;
     }
 }

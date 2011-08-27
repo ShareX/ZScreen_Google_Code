@@ -44,6 +44,7 @@ namespace ZUploader
         public bool ClipboardAutoCopy = true;
         public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
+        public bool LoadPluginsOnStartup = true;
 
         // Upload
         public bool UseCustomUploadersConfigPath = false;
