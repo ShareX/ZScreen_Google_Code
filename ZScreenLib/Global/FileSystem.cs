@@ -255,31 +255,34 @@ namespace ZScreenLib
         {
             string filePath = Path.Combine(dir, fileName);
 
-            string fn = Path.GetFileNameWithoutExtension(filePath);
+            if (!Engine.conf.OverwriteFiles)
+            {
+                string fn = Path.GetFileNameWithoutExtension(filePath);
 
-            if (fn.Length > Engine.conf.MaxNameLength)
-            {
-                string nfn = fn.Substring(0, Engine.conf.MaxNameLength);
-                filePath = Regex.Replace(filePath, fn, nfn);
-            }
+                if (fn.Length > Engine.conf.MaxNameLength)
+                {
+                    string nfn = fn.Substring(0, Engine.conf.MaxNameLength);
+                    filePath = Regex.Replace(filePath, fn, nfn);
+                }
 
-            string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
-            int num = 1;
-            GroupCollection groups = Regex.Match(filePath, pattern).Groups;
-            if (string.IsNullOrEmpty(groups[2].Value))
-            {
-                fp = filePath.Substring(0, filePath.LastIndexOf('.')) + "(";
-                fileExt = ")" + filePath.Remove(0, filePath.LastIndexOf('.'));
-            }
-            else
-            {
-                fp = groups[1].Value;
-                fileExt = groups[3].Value;
-                num = Convert.ToInt32(groups[2].Value);
-            }
-            while (File.Exists(filePath))
-            {
-                filePath = fp + ++num + fileExt;
+                string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
+                int num = 1;
+                GroupCollection groups = Regex.Match(filePath, pattern).Groups;
+                if (string.IsNullOrEmpty(groups[2].Value))
+                {
+                    fp = filePath.Substring(0, filePath.LastIndexOf('.')) + "(";
+                    fileExt = ")" + filePath.Remove(0, filePath.LastIndexOf('.'));
+                }
+                else
+                {
+                    fp = groups[1].Value;
+                    fileExt = groups[3].Value;
+                    num = Convert.ToInt32(groups[2].Value);
+                }
+                while (File.Exists(filePath))
+                {
+                    filePath = fp + ++num + fileExt;
+                }
             }
 
             return filePath;
