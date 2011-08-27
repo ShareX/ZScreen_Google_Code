@@ -216,8 +216,11 @@ namespace ZScreenLib
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
 
-        [Category("Screenshots / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
+        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
         public bool ShowSaveFileDialogImages { get; set; }
+
+        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
+        public bool OverwriteFiles { get; set; }
 
         // Image Settings
         public EImageFormat ImageFormat = EImageFormat.PNG;

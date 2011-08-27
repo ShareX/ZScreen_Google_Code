@@ -657,7 +657,7 @@ namespace ZScreenGUI
                 case WorkerTask.JobLevel2.CaptureLastCroppedWindow:
                     CaptureRectRegionLast();
                     break;
-                case WorkerTask.JobLevel2.AUTO_CAPTURE:
+                case WorkerTask.JobLevel2.AutoCapture:
                     ShowAutoCapture();
                     break;
                 case WorkerTask.JobLevel2.UploadFromClipboard:

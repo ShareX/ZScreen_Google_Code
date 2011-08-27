@@ -83,7 +83,7 @@ namespace ZScreenLib
             [Description("Last Crop Shot")]
             CaptureLastCroppedWindow,
             [Description("Auto Capture")]
-            AUTO_CAPTURE,
+            AutoCapture,
             [Description("Clipboard Upload")]
             UploadFromClipboard,
             [Description("Drag & Drop Window")]
