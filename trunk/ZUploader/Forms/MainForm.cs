@@ -139,8 +139,11 @@ namespace ZUploader
 
         private void LoadPlugins()
         {
-            pluginManager = new PluginManager(Program.PluginsFolderPath, this);
-            pluginManager.LoadPlugins();
+            if (Program.Settings.LoadPluginsOnStartup)
+            {
+                pluginManager = new PluginManager(Program.PluginsFolderPath, this);
+                pluginManager.LoadPlugins();
+            }
         }
 
         private void UpdateControls()
@@ -434,6 +437,11 @@ namespace ZUploader
             form.Show();
         }
 
+        private void tsbDonate_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
+        }
+
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateControls();
@@ -574,6 +582,8 @@ namespace ZUploader
         {
             if (tsmi != null)
             {
+                if (!tsddbPlugins.Visible) tsddbPlugins.Visible = true;
+
                 tsddbPlugins.DropDownItems.Add(tsmi);
             }
         }
@@ -599,10 +609,5 @@ namespace ZUploader
         }
 
         #endregion IPluginHost
-
-        private void tsbDonate_Click(object sender, EventArgs e)
-        {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
-        }
     }
 }

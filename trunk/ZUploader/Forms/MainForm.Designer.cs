@@ -214,7 +214,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(875, 33);
+            this.tsMain.Size = new System.Drawing.Size(769, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -329,6 +329,7 @@ namespace ZUploader
             this.tsddbPlugins.Name = "tsddbPlugins";
             this.tsddbPlugins.Size = new System.Drawing.Size(75, 20);
             this.tsddbPlugins.Text = "Plugins";
+            this.tsddbPlugins.Visible = false;
             // 
             // tssMain3
             // 
