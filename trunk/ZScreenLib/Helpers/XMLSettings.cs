@@ -375,6 +375,8 @@ namespace ZScreenLib
         public Times AutoCaptureDelayTimes = Times.Seconds;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
+        [Category("Options / Auto Capture"), DefaultValue(false), Description("Automatically start capturing after loading Auto Capture")]
+        public bool AutoCaptureExecute { get; set; }
 
         #region Properties for PropertyGrid
 

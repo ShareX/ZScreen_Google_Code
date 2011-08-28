@@ -136,7 +136,8 @@ namespace ZScreenGUI
                     new Command("fs|fullscreen", () => CaptureEntireScreen()),
                     new Command("cc|crop", () => CaptureRectRegion()),
                     new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
-                    new Command("hi|history", () => OpenHistory())
+                    new Command("hi|history", () => OpenHistory()),
+                    new Command("ac|autocapture", () => ShowAutoCapture())
                 };
 
                 cli.FilePathAction = filePath => UploadUsingFileSystem(filePath);
