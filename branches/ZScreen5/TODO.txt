@@ -1,4 +1,5 @@
-﻿WorkerTask will support multiple destinations
+﻿Profiles
+WorkerTask will support multiple destinations
 This can be achieved by a List of Enums saved in the WorkerTask which is a minor enhancement to current method which only supports one Enum for each different uploader. 
 
 Shared ZScreen Lite and ZScreen 4 Logger and SettingsHelper
