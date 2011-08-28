@@ -12,7 +12,7 @@
     <AssemblyName>ZScreen</AssemblyName>
     <StartupObject>
     </StartupObject>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>Resources\zss-main.ico</ApplicationIcon>

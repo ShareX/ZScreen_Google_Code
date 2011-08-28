@@ -86,6 +86,11 @@ namespace ZScreenGUI
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
+            Execute();
+        }
+
+        public void Execute()
+        {
             if (IsRunning)
             {
                 IsRunning = false;

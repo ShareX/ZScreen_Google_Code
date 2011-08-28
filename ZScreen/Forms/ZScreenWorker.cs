@@ -629,6 +629,7 @@ namespace ZScreenGUI
                 autoScreenshots.EventJob += new JobsEventHandler(EventJobs);
                 autoScreenshots.FormClosed += new FormClosedEventHandler(autoScreenshots_FormClosed);
                 autoScreenshots.Show();
+                if (Engine.conf.AutoCaptureExecute) autoScreenshots.Execute();
             }
         }
 
