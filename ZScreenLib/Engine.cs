@@ -256,7 +256,7 @@ namespace ZScreenLib
             }
             else
             {
-                if (options.ShowConfigWizard && string.IsNullOrEmpty(Engine.AppConf.XMLSettingsPath))
+                if (options.ShowConfigWizard && !File.Exists(AppSettings.AppSettingsFile))
                 {
                     if (MyUploadersConfig == null)
                     {
