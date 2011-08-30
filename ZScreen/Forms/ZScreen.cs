@@ -561,7 +561,7 @@ namespace ZScreenGUI
 
             Engine.ClipboardHook();
 
-            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy)
+            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
                 Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
