@@ -344,7 +344,7 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            Engine.MyLogger.WriteLine("Proxy Enabled: " + Engine.conf.ProxyConfig.ToString());
+            Engine.MyLogger.WriteLine("Proxy Config: " + Engine.conf.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
             return new ProxySettings { ProxyConfig = Engine.conf.ProxyConfig, ProxyActive = Engine.conf.ProxyActive };
         }
 
