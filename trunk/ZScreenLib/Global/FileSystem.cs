@@ -94,7 +94,7 @@ namespace ZScreenLib
             }
 
             EImageFormat imageFormat;
-            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(img, out imageFormat))
+            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(Engine.ProfileConfig.Profiles[0], img, out imageFormat))
             {
                 try
                 {
@@ -251,17 +251,17 @@ namespace ZScreenLib
         /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
         /// </summary>
         /// <returns></returns>
-        public static string GetUniqueFilePath(string dir, string fileName)
+        public static string GetUniqueFilePath(Profile profile, string dir, string fileName)
         {
             string filePath = Path.Combine(dir, fileName);
 
-            if (!Engine.conf.OverwriteFiles)
+            if (!profile.OverwriteFiles)
             {
                 string fn = Path.GetFileNameWithoutExtension(filePath);
 
-                if (fn.Length > Engine.conf.MaxNameLength)
+                if (fn.Length > profile.MaxNameLength)
                 {
-                    string nfn = fn.Substring(0, Engine.conf.MaxNameLength);
+                    string nfn = fn.Substring(0, profile.MaxNameLength);
                     filePath = Regex.Replace(filePath, fn, nfn);
                 }
 
@@ -409,7 +409,7 @@ namespace ZScreenLib
                         if (File.Exists(image))
                         {
                             time = File.GetCreationTime(image);
-                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.conf.SaveFolderPattern);
+                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.DefaultProfile.SaveFolderPattern);
                             newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))

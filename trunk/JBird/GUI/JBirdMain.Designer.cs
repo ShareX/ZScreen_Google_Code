@@ -1,6 +1,6 @@
-﻿namespace ZScreen5
+﻿namespace JBirdGUI
 {
-    partial class ZScreenMain
+    partial class JBirdMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreenMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JBirdMain));
             this.niApp = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsApp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiDestImages = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,16 +40,15 @@
             this.btnCaptureCropShot = new System.Windows.Forms.Button();
             this.btnCaptureSelectedWindow = new System.Windows.Forms.Button();
             this.btnCaptureScreen = new System.Windows.Forms.Button();
-            this.btnHotkeys = new System.Windows.Forms.Button();
             this.btnUploadClipboard = new System.Windows.Forms.Button();
             this.btnUploadFiles = new System.Windows.Forms.Button();
-            this.btnDestinations = new System.Windows.Forms.Button();
-            this.btnCropShotFreehand = new System.Windows.Forms.Button();
+            this.btnCaptureShape = new System.Windows.Forms.Button();
             this.btnCaptureActiveWindow = new System.Windows.Forms.Button();
             this.btnCropShotLast = new System.Windows.Forms.Button();
             this.btnGoogleTranslateOpen = new System.Windows.Forms.Button();
             this.btnScreenColorPicker = new System.Windows.Forms.Button();
             this.btnAutoCapture = new System.Windows.Forms.Button();
+            this.btnProfiles = new System.Windows.Forms.Button();
             this.cmsApp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,35 +69,35 @@
             this.toolStripSeparator1,
             this.tsmiExit});
             this.cmsApp.Name = "cmsApp";
-            this.cmsApp.Size = new System.Drawing.Size(154, 98);
+            this.cmsApp.Size = new System.Drawing.Size(151, 98);
             // 
             // tsmiDestImages
             // 
             this.tsmiDestImages.Name = "tsmiDestImages";
-            this.tsmiDestImages.Size = new System.Drawing.Size(153, 22);
+            this.tsmiDestImages.Size = new System.Drawing.Size(150, 22);
             this.tsmiDestImages.Text = "Send image to";
             // 
             // tsmiDestFiles
             // 
             this.tsmiDestFiles.Name = "tsmiDestFiles";
-            this.tsmiDestFiles.Size = new System.Drawing.Size(153, 22);
+            this.tsmiDestFiles.Size = new System.Drawing.Size(150, 22);
             this.tsmiDestFiles.Text = "Send file to";
             // 
             // tsmiDestText
             // 
             this.tsmiDestText.Name = "tsmiDestText";
-            this.tsmiDestText.Size = new System.Drawing.Size(153, 22);
+            this.tsmiDestText.Size = new System.Drawing.Size(150, 22);
             this.tsmiDestText.Text = "Send text to";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(150, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(153, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(150, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -112,6 +111,7 @@
             this.btnCaptureCropShot.TabIndex = 1;
             this.btnCaptureCropShot.Text = "Capture &Cropped Area";
             this.btnCaptureCropShot.UseVisualStyleBackColor = true;
+            this.btnCaptureCropShot.Click += new System.EventHandler(this.btnCaptureCropShot_Click);
             // 
             // btnCaptureSelectedWindow
             // 
@@ -121,8 +121,9 @@
             this.btnCaptureSelectedWindow.Name = "btnCaptureSelectedWindow";
             this.btnCaptureSelectedWindow.Size = new System.Drawing.Size(80, 80);
             this.btnCaptureSelectedWindow.TabIndex = 2;
-            this.btnCaptureSelectedWindow.Text = "Capture &Selected Window";
+            this.btnCaptureSelectedWindow.Text = "Capture &Window";
             this.btnCaptureSelectedWindow.UseVisualStyleBackColor = true;
+            this.btnCaptureSelectedWindow.Click += new System.EventHandler(this.btnCaptureSelectedWindow_Click);
             // 
             // btnCaptureScreen
             // 
@@ -136,20 +137,11 @@
             this.btnCaptureScreen.UseVisualStyleBackColor = true;
             this.btnCaptureScreen.Click += new System.EventHandler(this.btnCaptureScreen_Click);
             // 
-            // btnHotkeys
-            // 
-            this.btnHotkeys.Location = new System.Drawing.Point(16, 408);
-            this.btnHotkeys.Name = "btnHotkeys";
-            this.btnHotkeys.Size = new System.Drawing.Size(80, 24);
-            this.btnHotkeys.TabIndex = 4;
-            this.btnHotkeys.Text = "Hotkeys...";
-            this.btnHotkeys.UseVisualStyleBackColor = true;
-            // 
             // btnUploadClipboard
             // 
             this.btnUploadClipboard.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadClipboard.Image")));
             this.btnUploadClipboard.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnUploadClipboard.Location = new System.Drawing.Point(208, 112);
+            this.btnUploadClipboard.Location = new System.Drawing.Point(208, 16);
             this.btnUploadClipboard.Name = "btnUploadClipboard";
             this.btnUploadClipboard.Size = new System.Drawing.Size(80, 80);
             this.btnUploadClipboard.TabIndex = 5;
@@ -160,33 +152,23 @@
             // 
             this.btnUploadFiles.Image = ((System.Drawing.Image)(resources.GetObject("btnUploadFiles.Image")));
             this.btnUploadFiles.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnUploadFiles.Location = new System.Drawing.Point(208, 208);
+            this.btnUploadFiles.Location = new System.Drawing.Point(208, 112);
             this.btnUploadFiles.Name = "btnUploadFiles";
             this.btnUploadFiles.Size = new System.Drawing.Size(80, 80);
             this.btnUploadFiles.TabIndex = 6;
             this.btnUploadFiles.Text = "Upload &Files";
             this.btnUploadFiles.UseVisualStyleBackColor = true;
             // 
-            // btnDestinations
+            // btnCaptureShape
             // 
-            this.btnDestinations.Location = new System.Drawing.Point(112, 408);
-            this.btnDestinations.Name = "btnDestinations";
-            this.btnDestinations.Size = new System.Drawing.Size(80, 24);
-            this.btnDestinations.TabIndex = 7;
-            this.btnDestinations.Text = "Destinations..";
-            this.btnDestinations.UseVisualStyleBackColor = true;
-            this.btnDestinations.Click += new System.EventHandler(this.btnDestinations_Click);
-            // 
-            // btnCropShotFreehand
-            // 
-            this.btnCropShotFreehand.Image = ((System.Drawing.Image)(resources.GetObject("btnCropShotFreehand.Image")));
-            this.btnCropShotFreehand.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCropShotFreehand.Location = new System.Drawing.Point(112, 208);
-            this.btnCropShotFreehand.Name = "btnCropShotFreehand";
-            this.btnCropShotFreehand.Size = new System.Drawing.Size(80, 80);
-            this.btnCropShotFreehand.TabIndex = 8;
-            this.btnCropShotFreehand.Text = "Capture &Freehand";
-            this.btnCropShotFreehand.UseVisualStyleBackColor = true;
+            this.btnCaptureShape.Image = ((System.Drawing.Image)(resources.GetObject("btnCaptureShape.Image")));
+            this.btnCaptureShape.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnCaptureShape.Location = new System.Drawing.Point(112, 208);
+            this.btnCaptureShape.Name = "btnCaptureShape";
+            this.btnCaptureShape.Size = new System.Drawing.Size(80, 80);
+            this.btnCaptureShape.TabIndex = 8;
+            this.btnCaptureShape.Text = "Capture &Shape";
+            this.btnCaptureShape.UseVisualStyleBackColor = true;
             // 
             // btnCaptureActiveWindow
             // 
@@ -198,6 +180,7 @@
             this.btnCaptureActiveWindow.TabIndex = 9;
             this.btnCaptureActiveWindow.Text = "Capture &Active Window";
             this.btnCaptureActiveWindow.UseVisualStyleBackColor = true;
+            this.btnCaptureActiveWindow.Click += new System.EventHandler(this.btnCaptureActiveWindow_Click);
             // 
             // btnCropShotLast
             // 
@@ -236,36 +219,54 @@
             // 
             this.btnAutoCapture.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoCapture.Image")));
             this.btnAutoCapture.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnAutoCapture.Location = new System.Drawing.Point(208, 16);
+            this.btnAutoCapture.Location = new System.Drawing.Point(208, 208);
             this.btnAutoCapture.Name = "btnAutoCapture";
             this.btnAutoCapture.Size = new System.Drawing.Size(80, 80);
             this.btnAutoCapture.TabIndex = 13;
             this.btnAutoCapture.Text = "Auto Capture";
             this.btnAutoCapture.UseVisualStyleBackColor = true;
             // 
-            // ZScreenMain
+            // btnProfiles
             // 
-            this.AcceptButton = this.btnCaptureScreen;
+            this.btnProfiles.Image = global::JBirdGUI.Properties.Resources.wrench;
+            this.btnProfiles.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnProfiles.Location = new System.Drawing.Point(304, 208);
+            this.btnProfiles.Name = "btnProfiles";
+            this.btnProfiles.Size = new System.Drawing.Size(80, 80);
+            this.btnProfiles.TabIndex = 14;
+            this.btnProfiles.Text = "Profiles";
+            this.btnProfiles.UseVisualStyleBackColor = true;
+            this.btnProfiles.Click += new System.EventHandler(this.btnProfiles_Click);
+            // 
+            // JBirdMain
+            // 
+            this.AcceptButton = this.btnProfiles;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 446);
-            this.Controls.Add(this.btnAutoCapture);
+            this.ClientSize = new System.Drawing.Size(400, 306);
+            this.Controls.Add(this.btnProfiles);
             this.Controls.Add(this.btnScreenColorPicker);
             this.Controls.Add(this.btnGoogleTranslateOpen);
+            this.Controls.Add(this.btnAutoCapture);
             this.Controls.Add(this.btnCropShotLast);
             this.Controls.Add(this.btnCaptureActiveWindow);
-            this.Controls.Add(this.btnCropShotFreehand);
-            this.Controls.Add(this.btnDestinations);
+            this.Controls.Add(this.btnCaptureShape);
+            this.Controls.Add(this.btnCaptureScreen);
             this.Controls.Add(this.btnUploadFiles);
             this.Controls.Add(this.btnUploadClipboard);
-            this.Controls.Add(this.btnHotkeys);
-            this.Controls.Add(this.btnCaptureScreen);
             this.Controls.Add(this.btnCaptureSelectedWindow);
             this.Controls.Add(this.btnCaptureCropShot);
-            this.Name = "ZScreenMain";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(416, 344);
+            this.MinimumSize = new System.Drawing.Size(416, 344);
+            this.Name = "JBirdMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ZScreen";
-            this.Load += new System.EventHandler(this.ZScreenMain_Load);
+            this.Text = "JBird";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.JBirdMain_FormClosing);
+            this.Load += new System.EventHandler(this.JBirdMain_Load);
+            this.Shown += new System.EventHandler(this.JBirdMain_Shown);
             this.cmsApp.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -283,16 +284,15 @@
         private System.Windows.Forms.Button btnCaptureCropShot;
         private System.Windows.Forms.Button btnCaptureSelectedWindow;
         private System.Windows.Forms.Button btnCaptureScreen;
-        private System.Windows.Forms.Button btnHotkeys;
         private System.Windows.Forms.Button btnUploadClipboard;
         private System.Windows.Forms.Button btnUploadFiles;
-        private System.Windows.Forms.Button btnDestinations;
-        private System.Windows.Forms.Button btnCropShotFreehand;
+        private System.Windows.Forms.Button btnCaptureShape;
         private System.Windows.Forms.Button btnCaptureActiveWindow;
         private System.Windows.Forms.Button btnCropShotLast;
         private System.Windows.Forms.Button btnGoogleTranslateOpen;
         private System.Windows.Forms.Button btnScreenColorPicker;
         private System.Windows.Forms.Button btnAutoCapture;
+        private System.Windows.Forms.Button btnProfiles;
     }
 }
 

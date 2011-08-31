@@ -108,6 +108,20 @@
   <ItemGroup>
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Helpers\GraphicsEx.cs" />
+    <Compile Include="Helpers\ProfileSettings.cs" />
+    <Compile Include="Profiles\Profile.cs" />
+    <Compile Include="Profiles\ProfileManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profiles\ProfileManager.Designer.cs">
+      <DependentUpon>ProfileManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Profiles\ProfileWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profiles\ProfileWizard.Designer.cs">
+      <DependentUpon>ProfileWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DestSelectorHelper.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
@@ -291,6 +305,12 @@
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profiles\ProfileManager.resx">
+      <DependentUpon>ProfileManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profiles\ProfileWizard.resx">
+      <DependentUpon>ProfileWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

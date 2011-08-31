@@ -6,19 +6,19 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Image img, out EImageFormat imageFormat)
+        public static MemoryStream PrepareImage(Profile profile, Image img, out EImageFormat imageFormat)
         {
-            MemoryStream stream = img.SaveImage(Engine.conf.ImageFormat);
+            MemoryStream stream = img.SaveImage(profile, profile.ImageFormat);
 
-            int sizeLimit = Engine.conf.ImageSizeLimit * 1024;
-            if (Engine.conf.ImageFormat != Engine.conf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
+            int sizeLimit = profile.ImageSizeLimit * 1024;
+            if (profile.ImageFormat != profile.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
             {
-                stream = img.SaveImage(Engine.conf.ImageFormat2);
-                imageFormat = Engine.conf.ImageFormat2;
+                stream = img.SaveImage(profile, profile.ImageFormat2);
+                imageFormat = profile.ImageFormat2;
             }
             else
             {
-                imageFormat = Engine.conf.ImageFormat;
+                imageFormat = profile.ImageFormat;
             }
 
             stream.Position = 0;
@@ -26,9 +26,10 @@ namespace ZScreenLib
             return stream;
         }
 
-        public static string PrepareFilename(EImageFormat imageFormat, Image img, NameParserType patternType)
+        public static string PrepareFilename(Profile profile, Image img, NameParserType patternType)
         {
             string ext = "png";
+            EImageFormat imageFormat = profile.ImageFormat;
 
             switch (imageFormat)
             {
@@ -49,19 +50,19 @@ namespace ZScreenLib
                     break;
             }
 
-            NameParser parser = new NameParser { Type = patternType, Picture = img, AutoIncrementNumber = Engine.conf.AutoIncrement };
-            string pattern = Engine.conf.EntireScreenPattern;
+            NameParser parser = new NameParser { Type = patternType, Picture = img, AutoIncrementNumber = profile.AutoIncrement };
+            string pattern = profile.EntireScreenPattern;
             switch (patternType)
             {
                 case NameParserType.ActiveWindow:
-                    pattern = Engine.conf.ActiveWindowPattern;
+                    pattern = profile.ActiveWindowPattern;
                     break;
                 default:
-                    pattern = Engine.conf.EntireScreenPattern;
+                    pattern = profile.EntireScreenPattern;
                     break;
             }
             string fn = parser.Convert(pattern);
-            Engine.conf.AutoIncrement = parser.AutoIncrementNumber;
+            profile.AutoIncrement = parser.AutoIncrementNumber;
             return string.Format("{0}.{1}", fn, ext);
         }
     }

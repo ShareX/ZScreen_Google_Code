@@ -134,11 +134,11 @@ namespace ZScreenCLI
             WorkerTask tempTask = new WorkerTask();
             foreach (int o in listOutputTypes)
             {
-                tempTask.TaskOutputs.Add((OutputEnum)o);
+                tempTask.Profile.Outputs.Add((OutputEnum)o);
             }
-            if (tempTask.TaskOutputs.Count == 0)
+            if (tempTask.Profile.Outputs.Count == 0)
             {
-                tempTask.TaskOutputs.Add(OutputEnum.RemoteHost);
+                tempTask.Profile.Outputs.Add(OutputEnum.RemoteHost);
             }
             tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             foreach (int ut in listImageHosts)
@@ -157,7 +157,7 @@ namespace ZScreenCLI
         private static void CaptureScreen()
         {
             WorkerTask esTask = DefaultWorkerTask();
-            esTask.AssignJob(WorkerTask.JobLevel2.CaptureEntireScreen);
+            esTask.StartWork(WorkerTask.JobLevel2.CaptureEntireScreen);
             Console.WriteLine();
             Console.WriteLine("Capturing entire screen in 3 seconds.");
             Console.WriteLine("If you would like to minimize this window, then do it now.");
@@ -171,7 +171,7 @@ namespace ZScreenCLI
         private static void CaptureRectRegion(WorkerTask.JobLevel2 job2)
         {
             WorkerTask csTask = DefaultWorkerTask();
-            csTask.AssignJob(job2);
+            csTask.StartWork(job2);
             if (csTask.CaptureRegionOrWindow())
             {
                 csTask.PublishData();
@@ -206,7 +206,7 @@ namespace ZScreenCLI
             foreach (string fp in listFiles)
             {
                 WorkerTask fuTask = DefaultWorkerTask();
-                fuTask.AssignJob(WorkerTask.JobLevel2.UploadFromClipboard);
+                fuTask.StartWork(WorkerTask.JobLevel2.UploadFromClipboard);
                 fuTask.UpdateLocalFilePath(fp);
                 fuTask.PublishData();
 
