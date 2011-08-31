@@ -13,7 +13,7 @@ using UploadersAPILib;
 
 namespace JBirdGUI
 {
-    public partial class JBirdMain : Form
+    public partial class JBirdMain : HotkeyForm
     {
         public JBirdMain()
         {

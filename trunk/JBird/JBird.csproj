@@ -86,7 +86,7 @@
     <Compile Include="GUI\JBirdMainHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="GUI\JBirdMain.resx">
       <DependentUpon>JBirdMain.cs</DependentUpon>
     </EmbeddedResource>
