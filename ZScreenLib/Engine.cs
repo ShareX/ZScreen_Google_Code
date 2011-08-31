@@ -67,6 +67,7 @@ namespace ZScreenLib
         private static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
         private static readonly string PluginsFolderName = ApplicationName + "Plugins";
         private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
+        private static readonly string ProfileConfigFileName = "ProfileConfig.xml";
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
@@ -147,6 +148,14 @@ namespace ZScreenLib
             }
         }
 
+        public static string ProfileConfigPath
+        {
+            get
+            {
+                return Path.Combine(SettingsDir, ProfileConfigFileName);
+            }
+        }
+
         #endregion Paths
 
         public static string RootImagesDir = zPicturesDir;
@@ -171,7 +180,7 @@ namespace ZScreenLib
                     string saveFolderPath = string.Empty;
                     if (Engine.conf != null)
                     {
-                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
+                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.DefaultProfile.SaveFolderPattern);
                         if (!IsPortable && Engine.AppConf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
@@ -194,9 +203,8 @@ namespace ZScreenLib
         private static bool RunConfig = false;
 
         public static XMLSettings conf { get; set; }
-
+        public static ProfileSettings ProfileConfig { get; set; }
         public static UploadersConfig MyUploadersConfig { get; set; }
-
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
@@ -452,15 +460,25 @@ namespace ZScreenLib
                 }
             });
 
+            Thread profileConfigThread = new Thread(() =>
+            {
+                if (Engine.ProfileConfig != null)
+                {
+                    Engine.ProfileConfig.Write(ProfileConfigPath);
+                }
+            });
+
             settingsThread.Start();
             uploadersConfigThread.Start();
             googleTranslateThread.Start();
+            profileConfigThread.Start();
 
             if (!isAsync)
             {
                 settingsThread.Join();
                 uploadersConfigThread.Join();
                 googleTranslateThread.Join();
+                profileConfigThread.Join();
             }
         }
 
@@ -490,12 +508,25 @@ namespace ZScreenLib
                 Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
             });
 
+            Thread profileConfigThread = new Thread(() =>
+            {
+                Engine.ProfileConfig = ProfileSettings.Read(ProfileConfigPath);
+            });
+
             settingsThread.Start();
             uploadersConfigThread.Start();
             googleTranslateThread.Start();
+            profileConfigThread.Start();
+
             settingsThread.Join();
             uploadersConfigThread.Join();
             googleTranslateThread.Join();
+            profileConfigThread.Join();
+
+            if (ProfileConfig.Profiles.Count == 0)
+            {
+                ProfileConfig.Profiles.Add(new Profile("Default")); // add default for compatibility
+            }
 
             timer.WriteLineTime("LoadSettings finished");
 
@@ -519,6 +550,13 @@ namespace ZScreenLib
             }
         }
 
+        public static Profile DefaultProfile
+        {
+            get
+            {
+                return ProfileConfig.Profiles[0];
+            }
+        }
         public static void LoadSettingsLatest()
         {
             LoadSettings(GetLatestSettingsFile());

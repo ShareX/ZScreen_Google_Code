@@ -209,25 +209,8 @@ namespace ZScreenLib
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
 
-        // Naming Conventions
-
-        public string ActiveWindowPattern = "%t-%y-%mo-%d_%h.%mi.%s";
-        public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
-        public string SaveFolderPattern = "%y-%mo";
-        public int MaxNameLength = 100;
-
         [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
         public bool ShowSaveFileDialogImages { get; set; }
-
-        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
-        public bool OverwriteFiles { get; set; }
-
-        // Image Settings
-        public EImageFormat ImageFormat = EImageFormat.PNG;
-        public int ImageJPEGQuality = 90;
-        public GIFQuality ImageGIFQuality = GIFQuality.Default;
-        public int ImageSizeLimit = 512;
-        public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
         public bool MakeJPGBackgroundWhite = true;
 
@@ -426,9 +409,6 @@ namespace ZScreenLib
         [Category("Options / URL Shorteners"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
 
-        [Category("Options / Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
-        public bool ClipboardOverwrite { get; set; }
-
         [Category("Options / Clipboard"), DefaultValue(false), Description("Show file size after the URL whenever possible.")]
         public bool ClipboardShowFileSize { get; set; }
 
@@ -508,9 +488,6 @@ namespace ZScreenLib
         }
 
         // Screenshots / General
-
-        [Category("Screenshots / General"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
-        public int AutoIncrement { get; set; }
 
         [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }

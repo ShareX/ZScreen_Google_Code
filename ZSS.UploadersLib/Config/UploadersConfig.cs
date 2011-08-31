@@ -29,9 +29,11 @@ using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
+using System;
 
 namespace UploadersLib
 {
+      [Serializable]
     public class UploadersConfig
     {
         #region Image uploaders

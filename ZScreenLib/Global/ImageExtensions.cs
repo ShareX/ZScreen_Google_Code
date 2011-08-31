@@ -34,7 +34,7 @@ namespace ZScreenLib
 {
     public static class ImageExtensions
     {
-        public static MemoryStream SaveImage(this Image img, EImageFormat imageFormat)
+        public static MemoryStream SaveImage(this Image img, Profile profile, EImageFormat imageFormat)
         {
             MemoryStream stream = new MemoryStream();
 
@@ -44,10 +44,10 @@ namespace ZScreenLib
                     img.Save(stream, ImageFormat.Png);
                     break;
                 case EImageFormat.JPEG:
-                    img.SaveJPG(stream, Engine.conf.ImageJPEGQuality, true);
+                    img.SaveJPG(stream, profile.ImageJPEGQuality, true);
                     break;
                 case EImageFormat.GIF:
-                    img.SaveGIF(stream, Engine.conf.ImageGIFQuality);
+                    img.SaveGIF(stream, profile.ImageGIFQuality);
                     break;
                 case EImageFormat.BMP:
                     img.Save(stream, ImageFormat.Bmp);

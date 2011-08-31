@@ -764,43 +764,43 @@ namespace ZScreenGUI
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowPattern = txtActiveWindow.Text;
+            Engine.DefaultProfile.ActiveWindowPattern = txtActiveWindow.Text;
             NameParser parser = new NameParser(NameParserType.ActiveWindow)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.conf.MaxNameLength
+                MaxNameLength = Engine.DefaultProfile.MaxNameLength
             };
-            lblActiveWindowPreview.Text = parser.Convert(Engine.conf.ActiveWindowPattern);
+            lblActiveWindowPreview.Text = parser.Convert(Engine.DefaultProfile.ActiveWindowPattern);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Engine.conf.EntireScreenPattern = txtEntireScreen.Text;
+            Engine.DefaultProfile.EntireScreenPattern = txtEntireScreen.Text;
             NameParser parser = new NameParser(NameParserType.EntireScreen)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.conf.MaxNameLength
+                MaxNameLength = Engine.DefaultProfile.MaxNameLength
             };
-            lblEntireScreenPreview.Text = parser.Convert(Engine.conf.EntireScreenPattern);
+            lblEntireScreenPreview.Text = parser.Convert(Engine.DefaultProfile.EntireScreenPattern);
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.conf.ImageFormat);
+            Engine.ProfileConfig.Profiles[0].ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.ProfileConfig.Profiles[0].ImageFormat);
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageJPEGQuality = (int)nudImageQuality.Value;
+            Engine.ProfileConfig.Profiles[0].ImageJPEGQuality = (int)nudImageQuality.Value;
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.conf.ImageFormat2);
+            Engine.ProfileConfig.Profiles[0].ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.ProfileConfig.Profiles[0].ImageFormat2);
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -1296,7 +1296,7 @@ namespace ZScreenGUI
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.conf.AutoIncrement = 0;
+            Engine.ProfileConfig.Profiles[0].AutoIncrement = 0;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
@@ -1316,7 +1316,7 @@ namespace ZScreenGUI
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Engine.ProfileConfig.Profiles[0].ImageSizeLimit = (int)nudSwitchAfter.Value;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
@@ -1636,8 +1636,8 @@ namespace ZScreenGUI
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
-            Engine.conf.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.conf.SaveFolderPattern);
+            Engine.DefaultProfile.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.DefaultProfile.SaveFolderPattern);
             txtImagesDir.Text = Engine.ImagesDir;
         }
 
@@ -1878,7 +1878,7 @@ namespace ZScreenGUI
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.MaxNameLength = (int)nudMaxNameLength.Value;
+            Engine.DefaultProfile.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void SetToolTip(Control original)
@@ -1970,7 +1970,7 @@ namespace ZScreenGUI
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+            Engine.ProfileConfig.Profiles[0].ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)

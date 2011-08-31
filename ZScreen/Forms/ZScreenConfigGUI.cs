@@ -325,10 +325,10 @@ namespace ZScreenGUI
             cbFreehandCropShowRectangleBorder.Checked = Engine.conf.FreehandCropShowRectangleBorder;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.conf.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.conf.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Engine.conf.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.conf.MaxNameLength;
+            txtActiveWindow.Text = Engine.DefaultProfile.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.DefaultProfile.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.DefaultProfile.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.DefaultProfile.MaxNameLength;
 
             ZScreen_ConfigGUI_Screenshots_Watermark();
             ZScreen_ConfigGUI_Screenshots_ImageSettings();
@@ -380,15 +380,15 @@ namespace ZScreenGUI
                 cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
 
-            cboFileFormat.SelectedIndex = (int)Engine.conf.ImageFormat;
-            nudImageQuality.Value = Engine.conf.ImageJPEGQuality;
-            cbGIFQuality.SelectedIndex = (int)Engine.conf.ImageGIFQuality;
-            nudSwitchAfter.Value = Engine.conf.ImageSizeLimit;
+            cboFileFormat.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageFormat;
+            nudImageQuality.Value = Engine.ProfileConfig.Profiles[0].ImageJPEGQuality;
+            cbGIFQuality.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageGIFQuality;
+            nudSwitchAfter.Value = Engine.ProfileConfig.Profiles[0].ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)
             {
                 cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
-            cboSwitchFormat.SelectedIndex = (int)Engine.conf.ImageFormat2;
+            cboSwitchFormat.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageFormat2;
 
             switch (Engine.conf.ImageSizeType)
             {

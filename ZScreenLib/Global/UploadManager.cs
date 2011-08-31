@@ -48,8 +48,6 @@ namespace ZScreenLib
 
         private static int UniqueNumber = 0;
 
-        public static MyListView ListViewControl { get; set; }
-
         public static List<WorkerTask> Tasks { get; private set; }
 
         static UploadManager()
@@ -106,7 +104,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void ShowUploadResults(WorkerTask task, bool showDialog)
         {
-            if (!Engine.conf.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || Engine.conf.ClipboardOverwrite)
+            if (!task.Profile.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || task.Profile.ClipboardOverwrite)
             {
                 if (task.UploadResults.Count > 0)
                 {
@@ -118,7 +116,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (task.TaskOutputs.Contains(OutputEnum.Clipboard))
+                if (task.Profile.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     StringBuilder clipboardText = new StringBuilder();
 
