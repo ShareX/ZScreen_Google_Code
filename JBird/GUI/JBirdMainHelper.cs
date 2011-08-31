@@ -12,7 +12,7 @@ using ZScreenLib;
 
 namespace JBirdGUI
 {
-    public partial class JBirdMain : Form
+    public partial class JBirdMain : HotkeyForm
     {
         public List<Profile> CreateDefaultProfiles()
         {

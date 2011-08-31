@@ -215,6 +215,11 @@ namespace ZScreenLib
         {
             MyWorker = worker;
             Profile = profile;
+            if (profile.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Count == 0)
+            {
+                TaskClipboardContent.Add(ClipboardContentEnum.Data);
+            }
+
             StartWork(profile.Job);
 
             if (profile.Outputs.Contains(OutputEnum.LocalDisk))

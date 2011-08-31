@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZScreenLib;
+using HelpersLib;
 
 namespace JBirdGUI
 {
-    public partial class JBirdMain : Form
+    public partial class JBirdMain : HotkeyForm
     {
 
         public BackgroundWorker CreateWorker()
