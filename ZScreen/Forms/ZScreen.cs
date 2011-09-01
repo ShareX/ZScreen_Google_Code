@@ -74,6 +74,7 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
+            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
             Uploader.ProxySettings = Adapter.CheckProxySettings();
             ZScreen_ConfigGUI();
 
@@ -120,7 +121,118 @@ namespace ZScreenGUI
 
             Application.Idle += new EventHandler(Application_Idle);
 
-            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
+            timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
+        }
+
+        private void ZScreen_Shown(object sender, EventArgs e)
+        {
+            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
+
+            Engine.zHandle = this.Handle;
+
+            Engine.ClipboardHook();
+
+            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
+            {
+                Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
+            }
+
+            if (Engine.conf.BackupFTPSettings)
+            {
+                FileSystem.BackupFTPSettings();
+            }
+
+            if (Engine.conf.BackupApplicationSettings)
+            {
+                FileSystem.BackupAppSettings();
+            }
+
+            if (Engine.conf.Windows7TaskbarIntegration && Engine.HasWindows7)
+            {
+                ZScreen_Windows7onlyTasks();
+            }
+
+            if (Engine.conf.ShowMainWindow)
+            {
+                if (Engine.conf.WindowState == FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+                ShowInTaskbar = Engine.conf.ShowInTaskbar;
+            }
+            else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                Hide();
+            }
+
+            UpdateHotkeys(false);
+            InitKeyboardHook();
+
+            if (Engine.IsMultipleInstance)
+            {
+                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
+            }
+
+            if (Engine.conf.FirstRun)
+            {
+                if (Engine.HasAero)
+                {
+                    chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
+                }
+
+                ShowWindow();
+
+                Engine.conf.FirstRun = false;
+            }
+
+            timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
+            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
+
+            UseCommandLineArg(Loader.CommandLineArg);
+            IsReady = true;
+        }
+
+        private void ZScreen_Resize(object sender, EventArgs e)
+        {
+            if (IsReady)
+            {
+                Engine.conf.WindowState = WindowState;
+
+                if (WindowState == FormWindowState.Normal)
+                {
+                    if (Engine.conf.SaveFormSizePosition)
+                    {
+                        Engine.conf.WindowLocation = Location;
+                        Engine.conf.WindowSize = Size;
+                    }
+                }
+
+                Refresh();
+            }
+        }
+
+        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ShowMainWindow();
+        }
+
+        private void btnRegCodeImageShack_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs");
+        }
+
+        private void btnGalleryImageShack_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
         }
 
         public bool UseCommandLineArg(string arg)
@@ -246,40 +358,6 @@ namespace ZScreenGUI
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropRegionHotkeyInfo = chkRegionHotkeyInfo.Checked;
-        }
-
-        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ShowMainWindow();
-        }
-
-        private void btnRegCodeImageShack_Click(object sender, EventArgs e)
-        {
-            StaticHelper.LoadBrowser("http://profile.imageshack.us/prefs");
-        }
-
-        private void btnGalleryImageShack_Click(object sender, EventArgs e)
-        {
-            StaticHelper.LoadBrowser("http://my.imageshack.us/v_images.php");
-        }
-
-        private void ZScreen_Resize(object sender, EventArgs e)
-        {
-            if (IsReady)
-            {
-                Engine.conf.WindowState = WindowState;
-
-                if (WindowState == FormWindowState.Normal)
-                {
-                    if (Engine.conf.SaveFormSizePosition)
-                    {
-                        Engine.conf.WindowLocation = Location;
-                        Engine.conf.WindowSize = Size;
-                    }
-                }
-
-                Refresh();
-            }
         }
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -553,80 +631,6 @@ namespace ZScreenGUI
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.PromptForOutputs = chkManualNaming.Checked;
-        }
-
-        private void ZScreen_Shown(object sender, EventArgs e)
-        {
-            Engine.zHandle = this.Handle;
-
-            Engine.ClipboardHook();
-
-            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
-            {
-                Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
-            }
-
-            if (Engine.conf.BackupFTPSettings)
-            {
-                FileSystem.BackupFTPSettings();
-            }
-
-            if (Engine.conf.BackupApplicationSettings)
-            {
-                FileSystem.BackupAppSettings();
-            }
-
-            if (Engine.conf.Windows7TaskbarIntegration && Engine.HasWindows7)
-            {
-                ZScreen_Windows7onlyTasks();
-            }
-
-            if (Engine.conf.ShowMainWindow)
-            {
-                if (Engine.conf.WindowState == FormWindowState.Maximized)
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-                else
-                {
-                    this.WindowState = FormWindowState.Normal;
-                }
-                ShowInTaskbar = Engine.conf.ShowInTaskbar;
-            }
-            else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                Hide();
-            }
-
-            UpdateHotkeys(false);
-            InitKeyboardHook();
-
-            if (Engine.IsMultipleInstance)
-            {
-                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
-                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
-            }
-
-            if (Engine.conf.FirstRun)
-            {
-                if (Engine.HasAero)
-                {
-                    chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
-                }
-
-                ShowWindow();
-
-                Engine.conf.FirstRun = false;
-            }
-
-            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
-
-            UseCommandLineArg(Loader.CommandLineArg);
-            IsReady = true;
         }
 
         private void niTray2_BalloonTipClicked(object sender, EventArgs e)
@@ -2352,7 +2356,7 @@ namespace ZScreenGUI
 
         private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
         {
-            chkOverwriteFiles.Checked = Engine.CoreConf.OverwriteFiles;
+            Engine.CoreConf.OverwriteFiles = chkOverwriteFiles.Checked;
         }
     }
 }

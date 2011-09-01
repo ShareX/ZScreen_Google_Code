@@ -43,12 +43,15 @@ namespace JBirdGUI
 
         protected void Load_TrayMenuItems()
         {
-            foreach (Workflow p in Program.ProfilesConfig.Profiles)
+            if (tsmiWorkflows.DropDownItems.Count == 0)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(p.Description);
-                tsmi.Tag = p;
-                tsmi.Click += new System.EventHandler(tsmi_Click);
-                tsmiWorkflows.DropDownItems.Add(tsmi);
+                foreach (Workflow p in Program.ProfilesConfig.Profiles)
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(p.Description);
+                    tsmi.Tag = p;
+                    tsmi.Click += new System.EventHandler(tsmi_Click);
+                    tsmiWorkflows.DropDownItems.Add(tsmi);
+                }
             }
         }
 
@@ -161,7 +164,7 @@ namespace JBirdGUI
             timer2.Tick += (sender, e) =>
             {
                 timer2.Stop();
-                NativeMethods.ShowWindow(Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                NativeMethods.ShowWindow(Handle, (int)NativeMethods.WindowShowStyle.ShowNormal);
             };
 
             Hide();
@@ -195,7 +198,7 @@ namespace JBirdGUI
 
         protected virtual void btnWorkflows_Click(object sender, EventArgs e)
         {
-            ProfileManager pm = new ProfileManager(Program.ProfilesConfig.Profiles) { Icon = this.Icon };
+            WorkflowManager pm = new WorkflowManager(Program.ProfilesConfig.Profiles) { Icon = this.Icon };
             pm.ShowDialog();
         }
 
@@ -206,6 +209,12 @@ namespace JBirdGUI
 
         protected void JBirdCoreUI_Shown(object sender, EventArgs e)
         {
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e)
+        {
+            Close();
+            Application.Exit();
         }
     }
 }

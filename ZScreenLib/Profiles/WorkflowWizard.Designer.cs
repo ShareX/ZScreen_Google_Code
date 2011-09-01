@@ -40,20 +40,21 @@
             this.cbShift = new System.Windows.Forms.CheckBox();
             this.cbControl = new System.Windows.Forms.CheckBox();
             this.chkUseHotkey = new System.Windows.Forms.CheckBox();
+            this.tpCapture = new System.Windows.Forms.TabPage();
             this.tpEditing = new System.Windows.Forms.TabPage();
             this.tpOutputs = new System.Windows.Forms.TabPage();
             this.gbRemoteLocations = new System.Windows.Forms.GroupBox();
             this.chkSendspace = new System.Windows.Forms.CheckBox();
             this.chkUploadFTP = new System.Windows.Forms.CheckBox();
             this.chkUploadDropbox = new System.Windows.Forms.CheckBox();
-            this.gbSaveFolder = new System.Windows.Forms.GroupBox();
+            this.gbSaveToFile = new System.Windows.Forms.GroupBox();
             this.txtSaveFolder = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.chkSaveFile = new System.Windows.Forms.CheckBox();
+            this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.chkPrinter = new System.Windows.Forms.CheckBox();
             this.chkUpload = new System.Windows.Forms.CheckBox();
             this.chkClipboard = new System.Windows.Forms.CheckBox();
-            this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tcMain.SuspendLayout();
@@ -63,18 +64,19 @@
             this.gbHotey.SuspendLayout();
             this.tpOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
-            this.gbSaveFolder.SuspendLayout();
+            this.gbSaveToFile.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
             // 
             this.tcMain.Controls.Add(this.tpAccessibility);
+            this.tcMain.Controls.Add(this.tpCapture);
             this.tcMain.Controls.Add(this.tpEditing);
             this.tcMain.Controls.Add(this.tpOutputs);
             this.tcMain.Location = new System.Drawing.Point(8, 8);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(624, 336);
+            this.tcMain.Size = new System.Drawing.Size(624, 344);
             this.tcMain.TabIndex = 0;
             // 
             // tpAccessibility
@@ -86,9 +88,9 @@
             this.tpAccessibility.Location = new System.Drawing.Point(4, 22);
             this.tpAccessibility.Name = "tpAccessibility";
             this.tpAccessibility.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAccessibility.Size = new System.Drawing.Size(616, 310);
+            this.tpAccessibility.Size = new System.Drawing.Size(616, 318);
             this.tpAccessibility.TabIndex = 0;
-            this.tpAccessibility.Text = "Accessibility";
+            this.tpAccessibility.Text = "Step 1 Job";
             this.tpAccessibility.UseVisualStyleBackColor = true;
             // 
             // gbTask
@@ -187,31 +189,40 @@
             this.chkUseHotkey.Text = "Enable a hotkey to run this profile";
             this.chkUseHotkey.UseVisualStyleBackColor = true;
             // 
+            // tpCapture
+            // 
+            this.tpCapture.Location = new System.Drawing.Point(4, 22);
+            this.tpCapture.Name = "tpCapture";
+            this.tpCapture.Size = new System.Drawing.Size(616, 318);
+            this.tpCapture.TabIndex = 5;
+            this.tpCapture.Text = "Step 2 Capture";
+            this.tpCapture.UseVisualStyleBackColor = true;
+            // 
             // tpEditing
             // 
             this.tpEditing.Location = new System.Drawing.Point(4, 22);
             this.tpEditing.Name = "tpEditing";
             this.tpEditing.Padding = new System.Windows.Forms.Padding(3);
-            this.tpEditing.Size = new System.Drawing.Size(616, 310);
+            this.tpEditing.Size = new System.Drawing.Size(616, 318);
             this.tpEditing.TabIndex = 4;
-            this.tpEditing.Text = "Editing";
+            this.tpEditing.Text = "Step 3 Editing";
             this.tpEditing.UseVisualStyleBackColor = true;
             // 
             // tpOutputs
             // 
             this.tpOutputs.Controls.Add(this.gbRemoteLocations);
-            this.tpOutputs.Controls.Add(this.gbSaveFolder);
+            this.tpOutputs.Controls.Add(this.gbSaveToFile);
             this.tpOutputs.Controls.Add(this.chkSaveFile);
+            this.tpOutputs.Controls.Add(this.btnOutputsConfig);
             this.tpOutputs.Controls.Add(this.chkPrinter);
             this.tpOutputs.Controls.Add(this.chkUpload);
             this.tpOutputs.Controls.Add(this.chkClipboard);
-            this.tpOutputs.Controls.Add(this.btnOutputsConfig);
             this.tpOutputs.Location = new System.Drawing.Point(4, 22);
             this.tpOutputs.Name = "tpOutputs";
             this.tpOutputs.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOutputs.Size = new System.Drawing.Size(616, 310);
+            this.tpOutputs.Size = new System.Drawing.Size(616, 318);
             this.tpOutputs.TabIndex = 2;
-            this.tpOutputs.Text = "Outputs";
+            this.tpOutputs.Text = "Step 4 Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
             // 
             // gbRemoteLocations
@@ -219,16 +230,16 @@
             this.gbRemoteLocations.Controls.Add(this.chkSendspace);
             this.gbRemoteLocations.Controls.Add(this.chkUploadFTP);
             this.gbRemoteLocations.Controls.Add(this.chkUploadDropbox);
-            this.gbRemoteLocations.Location = new System.Drawing.Point(24, 152);
+            this.gbRemoteLocations.Location = new System.Drawing.Point(8, 168);
             this.gbRemoteLocations.Name = "gbRemoteLocations";
-            this.gbRemoteLocations.Size = new System.Drawing.Size(576, 96);
+            this.gbRemoteLocations.Size = new System.Drawing.Size(576, 48);
             this.gbRemoteLocations.TabIndex = 6;
             this.gbRemoteLocations.TabStop = false;
-            this.gbRemoteLocations.Text = "Remote Locations";
+            this.gbRemoteLocations.Text = "Upload to Remote Locations";
             // 
             // chkSendspace
             // 
-            this.chkSendspace.Location = new System.Drawing.Point(16, 64);
+            this.chkSendspace.Location = new System.Drawing.Point(272, 16);
             this.chkSendspace.Name = "chkSendspace";
             this.chkSendspace.Size = new System.Drawing.Size(104, 24);
             this.chkSendspace.TabIndex = 6;
@@ -237,7 +248,7 @@
             // 
             // chkUploadFTP
             // 
-            this.chkUploadFTP.Location = new System.Drawing.Point(16, 40);
+            this.chkUploadFTP.Location = new System.Drawing.Point(144, 16);
             this.chkUploadFTP.Name = "chkUploadFTP";
             this.chkUploadFTP.Size = new System.Drawing.Size(104, 24);
             this.chkUploadFTP.TabIndex = 5;
@@ -253,15 +264,16 @@
             this.chkUploadDropbox.Text = "Dropbox";
             this.chkUploadDropbox.UseVisualStyleBackColor = true;
             // 
-            // gbSaveFolder
+            // gbSaveToFile
             // 
-            this.gbSaveFolder.Controls.Add(this.txtSaveFolder);
-            this.gbSaveFolder.Controls.Add(this.btnBrowse);
-            this.gbSaveFolder.Location = new System.Drawing.Point(24, 56);
-            this.gbSaveFolder.Name = "gbSaveFolder";
-            this.gbSaveFolder.Size = new System.Drawing.Size(576, 64);
-            this.gbSaveFolder.TabIndex = 5;
-            this.gbSaveFolder.TabStop = false;
+            this.gbSaveToFile.Controls.Add(this.txtSaveFolder);
+            this.gbSaveToFile.Controls.Add(this.btnBrowse);
+            this.gbSaveToFile.Location = new System.Drawing.Point(8, 96);
+            this.gbSaveToFile.Name = "gbSaveToFile";
+            this.gbSaveToFile.Size = new System.Drawing.Size(576, 64);
+            this.gbSaveToFile.TabIndex = 5;
+            this.gbSaveToFile.TabStop = false;
+            this.gbSaveToFile.Text = "When taking a screenshot, save the file to a preconfigured location";
             // 
             // txtSaveFolder
             // 
@@ -282,16 +294,27 @@
             // 
             // chkSaveFile
             // 
-            this.chkSaveFile.Location = new System.Drawing.Point(8, 32);
+            this.chkSaveFile.Location = new System.Drawing.Point(8, 64);
             this.chkSaveFile.Name = "chkSaveFile";
             this.chkSaveFile.Size = new System.Drawing.Size(184, 24);
             this.chkSaveFile.TabIndex = 4;
             this.chkSaveFile.Text = "Save to file";
             this.chkSaveFile.UseVisualStyleBackColor = true;
+            this.chkSaveFile.CheckedChanged += new System.EventHandler(this.chkSaveFile_CheckedChanged);
+            // 
+            // btnOutputsConfig
+            // 
+            this.btnOutputsConfig.Location = new System.Drawing.Point(8, 8);
+            this.btnOutputsConfig.Name = "btnOutputsConfig";
+            this.btnOutputsConfig.Size = new System.Drawing.Size(336, 24);
+            this.btnOutputsConfig.TabIndex = 0;
+            this.btnOutputsConfig.Text = "Outputs Configuration... ( Dropbox, FTP, SendSpace etc. )";
+            this.btnOutputsConfig.UseVisualStyleBackColor = true;
+            this.btnOutputsConfig.Click += new System.EventHandler(this.btnOutputsConfig_Click);
             // 
             // chkPrinter
             // 
-            this.chkPrinter.Location = new System.Drawing.Point(8, 248);
+            this.chkPrinter.Location = new System.Drawing.Point(256, 64);
             this.chkPrinter.Name = "chkPrinter";
             this.chkPrinter.Size = new System.Drawing.Size(184, 24);
             this.chkPrinter.TabIndex = 3;
@@ -300,45 +323,35 @@
             // 
             // chkUpload
             // 
-            this.chkUpload.Location = new System.Drawing.Point(8, 128);
+            this.chkUpload.Location = new System.Drawing.Point(256, 40);
             this.chkUpload.Name = "chkUpload";
             this.chkUpload.Size = new System.Drawing.Size(184, 24);
             this.chkUpload.TabIndex = 2;
-            this.chkUpload.Text = "Upload to a Remote Location";
+            this.chkUpload.Text = "Upload to Remote Locations";
             this.chkUpload.UseVisualStyleBackColor = true;
             // 
             // chkClipboard
             // 
-            this.chkClipboard.Location = new System.Drawing.Point(8, 8);
+            this.chkClipboard.Location = new System.Drawing.Point(8, 40);
             this.chkClipboard.Name = "chkClipboard";
             this.chkClipboard.Size = new System.Drawing.Size(184, 24);
             this.chkClipboard.TabIndex = 1;
             this.chkClipboard.Text = "Copy Image or Text to Clipboard";
             this.chkClipboard.UseVisualStyleBackColor = true;
             // 
-            // btnOutputsConfig
-            // 
-            this.btnOutputsConfig.Location = new System.Drawing.Point(8, 280);
-            this.btnOutputsConfig.Name = "btnOutputsConfig";
-            this.btnOutputsConfig.Size = new System.Drawing.Size(144, 24);
-            this.btnOutputsConfig.TabIndex = 0;
-            this.btnOutputsConfig.Text = "Outputs Configuration...";
-            this.btnOutputsConfig.UseVisualStyleBackColor = true;
-            this.btnOutputsConfig.Click += new System.EventHandler(this.btnOutputsConfig_Click);
-            // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(472, 352);
+            this.btnOK.Location = new System.Drawing.Point(440, 360);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(72, 24);
+            this.btnOK.Size = new System.Drawing.Size(104, 24);
             this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "&OK";
+            this.btnOK.Text = "&Save && Close";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(552, 352);
+            this.btnCancel.Location = new System.Drawing.Point(552, 360);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 24);
             this.btnCancel.TabIndex = 1;
@@ -351,7 +364,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 386);
+            this.ClientSize = new System.Drawing.Size(656, 394);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.tcMain);
@@ -359,7 +372,7 @@
             this.Name = "WorkflowWizard";
             this.Text = "ProfileWizard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfileWizard_FormClosing);
-            this.Load += new System.EventHandler(this.ProfileWizard_Load);
+            this.Load += new System.EventHandler(this.WorkflowWizard_Load);
             this.tcMain.ResumeLayout(false);
             this.tpAccessibility.ResumeLayout(false);
             this.tpAccessibility.PerformLayout();
@@ -370,8 +383,8 @@
             this.gbHotey.PerformLayout();
             this.tpOutputs.ResumeLayout(false);
             this.gbRemoteLocations.ResumeLayout(false);
-            this.gbSaveFolder.ResumeLayout(false);
-            this.gbSaveFolder.PerformLayout();
+            this.gbSaveToFile.ResumeLayout(false);
+            this.gbSaveToFile.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -398,7 +411,7 @@
         private System.Windows.Forms.CheckBox chkSaveFile;
         private System.Windows.Forms.GroupBox gbName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.GroupBox gbSaveFolder;
+        private System.Windows.Forms.GroupBox gbSaveToFile;
         private System.Windows.Forms.TextBox txtSaveFolder;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.GroupBox gbTask;
@@ -406,5 +419,6 @@
         private System.Windows.Forms.CheckBox chkSendspace;
         private System.Windows.Forms.CheckBox chkUploadFTP;
         private System.Windows.Forms.CheckBox chkUploadDropbox;
+        private System.Windows.Forms.TabPage tpCapture;
     }
 }

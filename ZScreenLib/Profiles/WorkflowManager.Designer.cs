@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    partial class ProfileManager
+    partial class WorkflowManager
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lvProfiles = new HelpersLib.MyListView();
+            this.lvWorkflows = new HelpersLib.MyListView();
             this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnProfileCreate = new System.Windows.Forms.Button();
             this.btnProfileEdit = new System.Windows.Forms.Button();
             this.btnProfileDelete = new System.Windows.Forms.Button();
-            this.btnProfileEnable = new System.Windows.Forms.Button();
-            this.btnProfileDisable = new System.Windows.Forms.Button();
             this.btnProfileDuplicate = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.flpButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpButtons.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lvProfiles
+            // lvWorkflows
             // 
-            this.lvProfiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvWorkflows.CheckBoxes = true;
+            this.lvWorkflows.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chDescription,
             this.chTask,
-            this.chHotkey,
-            this.chEnabled});
-            this.lvProfiles.FullRowSelect = true;
-            this.lvProfiles.Location = new System.Drawing.Point(8, 8);
-            this.lvProfiles.Name = "lvProfiles";
-            this.lvProfiles.Size = new System.Drawing.Size(560, 320);
-            this.lvProfiles.TabIndex = 0;
-            this.lvProfiles.UseCompatibleStateImageBehavior = false;
-            this.lvProfiles.View = System.Windows.Forms.View.Details;
-            this.lvProfiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvProfiles_MouseDoubleClick);
+            this.chHotkey});
+            this.lvWorkflows.FullRowSelect = true;
+            this.lvWorkflows.GridLines = true;
+            this.lvWorkflows.Location = new System.Drawing.Point(8, 8);
+            this.lvWorkflows.Name = "lvWorkflows";
+            this.lvWorkflows.Size = new System.Drawing.Size(560, 320);
+            this.lvWorkflows.TabIndex = 0;
+            this.lvWorkflows.UseCompatibleStateImageBehavior = false;
+            this.lvWorkflows.View = System.Windows.Forms.View.Details;
+            this.lvWorkflows.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvWorkflows_ItemChecked);
+            this.lvWorkflows.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvProfiles_MouseDoubleClick);
             // 
             // chDescription
             // 
@@ -66,19 +67,16 @@
             // chTask
             // 
             this.chTask.Text = "Task";
+            this.chTask.Width = 224;
             // 
             // chHotkey
             // 
             this.chHotkey.Text = "Hotkey";
-            // 
-            // chEnabled
-            // 
-            this.chEnabled.Text = "Enabled";
-            this.chEnabled.Width = 76;
+            this.chHotkey.Width = 100;
             // 
             // btnProfileCreate
             // 
-            this.btnProfileCreate.Location = new System.Drawing.Point(576, 8);
+            this.btnProfileCreate.Location = new System.Drawing.Point(3, 3);
             this.btnProfileCreate.Name = "btnProfileCreate";
             this.btnProfileCreate.Size = new System.Drawing.Size(112, 24);
             this.btnProfileCreate.TabIndex = 1;
@@ -88,7 +86,7 @@
             // 
             // btnProfileEdit
             // 
-            this.btnProfileEdit.Location = new System.Drawing.Point(576, 40);
+            this.btnProfileEdit.Location = new System.Drawing.Point(3, 33);
             this.btnProfileEdit.Name = "btnProfileEdit";
             this.btnProfileEdit.Size = new System.Drawing.Size(112, 24);
             this.btnProfileEdit.TabIndex = 2;
@@ -98,85 +96,77 @@
             // 
             // btnProfileDelete
             // 
-            this.btnProfileDelete.Location = new System.Drawing.Point(576, 72);
+            this.btnProfileDelete.Location = new System.Drawing.Point(3, 93);
             this.btnProfileDelete.Name = "btnProfileDelete";
             this.btnProfileDelete.Size = new System.Drawing.Size(112, 24);
             this.btnProfileDelete.TabIndex = 3;
             this.btnProfileDelete.Text = "&Delete";
             this.btnProfileDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnProfileEnable
-            // 
-            this.btnProfileEnable.Location = new System.Drawing.Point(576, 104);
-            this.btnProfileEnable.Name = "btnProfileEnable";
-            this.btnProfileEnable.Size = new System.Drawing.Size(112, 24);
-            this.btnProfileEnable.TabIndex = 4;
-            this.btnProfileEnable.Text = "E&nable";
-            this.btnProfileEnable.UseVisualStyleBackColor = true;
-            // 
-            // btnProfileDisable
-            // 
-            this.btnProfileDisable.Location = new System.Drawing.Point(576, 136);
-            this.btnProfileDisable.Name = "btnProfileDisable";
-            this.btnProfileDisable.Size = new System.Drawing.Size(112, 24);
-            this.btnProfileDisable.TabIndex = 5;
-            this.btnProfileDisable.Text = "Di&sable";
-            this.btnProfileDisable.UseVisualStyleBackColor = true;
+            this.btnProfileDelete.Click += new System.EventHandler(this.btnProfileDelete_Click);
             // 
             // btnProfileDuplicate
             // 
-            this.btnProfileDuplicate.Location = new System.Drawing.Point(576, 168);
+            this.btnProfileDuplicate.Location = new System.Drawing.Point(3, 63);
             this.btnProfileDuplicate.Name = "btnProfileDuplicate";
             this.btnProfileDuplicate.Size = new System.Drawing.Size(112, 24);
             this.btnProfileDuplicate.TabIndex = 6;
             this.btnProfileDuplicate.Text = "D&uplicate";
             this.btnProfileDuplicate.UseVisualStyleBackColor = true;
+            this.btnProfileDuplicate.Click += new System.EventHandler(this.btnProfileDuplicate_Click);
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(576, 200);
+            this.btnClose.Location = new System.Drawing.Point(3, 123);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(112, 24);
             this.btnClose.TabIndex = 7;
             this.btnClose.Text = "Cl&ose";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // ProfileManager
+            // flpButtons
+            // 
+            this.flpButtons.Controls.Add(this.btnProfileCreate);
+            this.flpButtons.Controls.Add(this.btnProfileEdit);
+            this.flpButtons.Controls.Add(this.btnProfileDuplicate);
+            this.flpButtons.Controls.Add(this.btnProfileDelete);
+            this.flpButtons.Controls.Add(this.btnClose);
+            this.flpButtons.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpButtons.Location = new System.Drawing.Point(576, 8);
+            this.flpButtons.Name = "flpButtons";
+            this.flpButtons.Size = new System.Drawing.Size(120, 320);
+            this.flpButtons.TabIndex = 8;
+            // 
+            // WorkflowManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 338);
-            this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.btnProfileDuplicate);
-            this.Controls.Add(this.btnProfileDisable);
-            this.Controls.Add(this.btnProfileEnable);
-            this.Controls.Add(this.btnProfileDelete);
-            this.Controls.Add(this.btnProfileEdit);
-            this.Controls.Add(this.btnProfileCreate);
-            this.Controls.Add(this.lvProfiles);
+            this.Controls.Add(this.flpButtons);
+            this.Controls.Add(this.lvWorkflows);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "ProfileManager";
+            this.Name = "WorkflowManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProfileManager";
-            this.Load += new System.EventHandler(this.ProfileManager_Load);
+            this.Load += new System.EventHandler(this.WorkflowManager_Load);
+            this.Shown += new System.EventHandler(this.ProfileManager_Shown);
+            this.flpButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private HelpersLib.MyListView lvProfiles;
+        private HelpersLib.MyListView lvWorkflows;
         private System.Windows.Forms.ColumnHeader chDescription;
         private System.Windows.Forms.ColumnHeader chHotkey;
-        private System.Windows.Forms.ColumnHeader chEnabled;
         private System.Windows.Forms.Button btnProfileCreate;
         private System.Windows.Forms.Button btnProfileEdit;
         private System.Windows.Forms.Button btnProfileDelete;
-        private System.Windows.Forms.Button btnProfileEnable;
-        private System.Windows.Forms.Button btnProfileDisable;
         private System.Windows.Forms.Button btnProfileDuplicate;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ColumnHeader chTask;
+        private System.Windows.Forms.FlowLayoutPanel flpButtons;
     }
 }
