@@ -34,7 +34,7 @@ namespace ZScreenLib
 {
     public static class ImageExtensions
     {
-        public static MemoryStream SaveImage(this Image img, Profile profile, EImageFormat imageFormat)
+        public static MemoryStream SaveImage(this Image img, Workflow profile, EImageFormat imageFormat)
         {
             MemoryStream stream = new MemoryStream();
 

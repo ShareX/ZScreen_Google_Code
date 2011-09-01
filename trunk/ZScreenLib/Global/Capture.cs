@@ -89,19 +89,19 @@ namespace ZScreenLib
             return img;
         }
 
-        public static Image CaptureActiveWindow()
+        public static Image CaptureActiveWindow(Workflow prof)
         {
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
             if (handle.ToInt32() > 0)
             {
-                if (Engine.conf.ActiveWindowPreferDWM && Engine.HasAero)
+                if (prof.ActiveWindowPreferDWM && Engine.HasAero)
                 {
-                    return CaptureWithDWM(handle);
+                    return CaptureWithDWM(prof, handle);
                 }
                 else
                 {
-                    return CaptureWithGDI(handle);
+                    return CaptureWithGDI(prof, handle);
                 }
             }
 
@@ -113,12 +113,12 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
-        public static Image CaptureWithGDI(IntPtr handle)
+        public static Image CaptureWithGDI(Workflow prof, IntPtr handle)
         {
             Engine.MyLogger.WriteLine("Capturing with GDI");
             Rectangle windowRect;
 
-            if (Engine.conf.ActiveWindowTryCaptureChildren)
+            if (prof.ActiveWindowTryCaptureChildren)
             {
                 windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
             }
@@ -133,19 +133,19 @@ namespace ZScreenLib
 
             Image windowImage = null;
 
-            if (Engine.conf.ActiveWindowClearBackground)
+            if (prof.ActiveWindowClearBackground)
             {
-                windowImage = CaptureWindowWithTransparencyGDI(handle, windowRect);
+                windowImage = CaptureWindowWithTransparencyGDI(prof, handle, windowRect);
             }
 
             if (windowImage == null)
             {
-                using (new Freeze(handle))
+                using (new Freeze(prof, handle))
                 {
                     windowImage = CaptureRectangle(windowRect);
                 }
 
-                if (Engine.conf.ActiveWindowCleanTransparentCorners)
+                if (prof.ActiveWindowCleanTransparentCorners)
                 {
                     Image result = RemoveCorners(handle, windowImage, null, windowRect);
                     if (result != null)
@@ -154,13 +154,13 @@ namespace ZScreenLib
                     }
                 }
 
-                if (Engine.conf.ActiveWindowIncludeShadows)
+                if (prof.ActiveWindowIncludeShadows)
                 {
                     // Draw shadow manually to be able to have shadows in every case
                     windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
                 }
 
-                if (Engine.DefaultProfile.ShowCursor)
+                if (prof.ShowCursor)
                 {
                     DrawCursor(windowImage, windowRect.Location);
                 }
@@ -174,21 +174,21 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
-        private static Image CaptureWindowWithTransparencyGDI(IntPtr handle, Rectangle windowRect)
+        private static Image CaptureWindowWithTransparencyGDI(Workflow prof, IntPtr handle, Rectangle windowRect)
         {
             Image windowImage = null;
             Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
 
             try
             {
-                using (new Freeze(handle))
+                using (new Freeze(prof, handle))
                 using (Form form = new Form())
                 {
                     form.BackColor = Color.White;
                     form.FormBorderStyle = FormBorderStyle.None;
                     form.ShowInTaskbar = false;
 
-                    int offset = Engine.conf.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
+                    int offset = prof.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
 
                     windowRect.Inflate(offset, offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
@@ -202,7 +202,7 @@ namespace ZScreenLib
                     Application.DoEvents();
                     blackBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
 
-                    if (!Engine.conf.ActiveWindowGDIFreezeWindow)
+                    if (!prof.ActiveWindowGDIFreezeWindow)
                     {
                         form.BackColor = Color.White;
                         Application.DoEvents();
@@ -210,7 +210,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (Engine.conf.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
+                if (prof.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
                 {
                     windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
                 }
@@ -231,14 +231,14 @@ namespace ZScreenLib
                 Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
                 windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
 
-                if (Engine.DefaultProfile.ShowCursor)
+                if (prof.ShowCursor)
                 {
                     windowRect.X += windowRectCropped.X;
                     windowRect.Y += windowRectCropped.Y;
                     DrawCursor(windowImage, windowRect.Location);
                 }
 
-                if (Engine.conf.ActiveWindowShowCheckers)
+                if (prof.ActiveWindowShowCheckers)
                 {
                     windowImage = ImageEffects.DrawCheckers(windowImage);
                 }
@@ -252,7 +252,7 @@ namespace ZScreenLib
         /// </summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
-        public static Image CaptureWithDWM(IntPtr handle)
+        public static Image CaptureWithDWM(Workflow p, IntPtr handle)
         {
             Engine.MyLogger.WriteLine("Capturing with DWM");
             Image windowImage = null;
@@ -261,9 +261,9 @@ namespace ZScreenLib
             Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
             windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
 
-            if (Engine.HasAero && Engine.conf.ActiveWindowClearBackground)
+            if (Engine.HasAero && p.ActiveWindowClearBackground)
             {
-                windowImage = CaptureWindowWithTransparencyDWM(handle, windowRect, out redBGImage, Engine.conf.ActiveWindowCleanTransparentCorners);
+                windowImage = CaptureWindowWithTransparencyDWM(handle, windowRect, out redBGImage, p.ActiveWindowCleanTransparentCorners);
             }
 
             if (windowImage == null)
@@ -272,7 +272,7 @@ namespace ZScreenLib
                 windowImage = CaptureRectangle(windowRect);
             }
 
-            if (Engine.conf.ActiveWindowCleanTransparentCorners)
+            if (p.ActiveWindowCleanTransparentCorners)
             {
                 Image result = RemoveCorners(handle, windowImage, redBGImage, windowRect);
                 if (result != null)
@@ -283,7 +283,7 @@ namespace ZScreenLib
 
             if (windowImage != null)
             {
-                if (Engine.conf.ActiveWindowIncludeShadows)
+                if (p.ActiveWindowIncludeShadows)
                 {
                     // Draw shadow manually to be able to have shadows in every case
                     windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
@@ -292,12 +292,12 @@ namespace ZScreenLib
                     windowRect.Y -= shadowOffset.Y;
                 }
 
-                if (Engine.conf.ActiveWindowShowCheckers)
+                if (p.ActiveWindowShowCheckers)
                 {
                     windowImage = ImageEffects.DrawCheckers(windowImage);
                 }
 
-                if (Engine.DefaultProfile.ShowCursor)
+                if (p.ShowCursor)
                 {
                     DrawCursor(windowImage, windowRect.Location);
                 }

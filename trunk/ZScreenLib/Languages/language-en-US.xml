@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <language description="English" ietf="en-US" version="0.8.1">
   <resources>
-	<!--    
-	Note to translator: uncomment entry "about_translation" to have 
-	your efforts honored in the "About Greenshot" dialog 
+	<!--
+	Note to translator: uncomment entry "about_translation" to have
+	your efforts honored in the "About Greenshot" dialog
 	-->
 	<resource name="about_translation">
 		<!--English translation by YOUR_NAME-->

@@ -122,7 +122,7 @@ namespace ZScreenGUI
             dsh.AddEnumDestToMenuWithConfigSettings();
 
             chkManualNaming.Checked = Engine.conf.PromptForOutputs;
-            chkShowCursor.Checked = Engine.DefaultProfile.ShowCursor;
+            chkShowCursor.Checked = Engine.CoreConf.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 
@@ -288,7 +288,7 @@ namespace ZScreenGUI
             chkMonFiles.Checked = Engine.conf.MonitorFiles;
             chkMonUrls.Checked = Engine.conf.MonitorUrls;
 
-            Engine.DefaultProfile.OverwriteFiles = chkOverwriteFiles.Checked;
+            Engine.CoreConf.OverwriteFiles = chkOverwriteFiles.Checked;
         }
 
         private void ZScreen_ConfigGUI_Screenshots()
@@ -313,12 +313,12 @@ namespace ZScreenGUI
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
             // Active Window
-            chkActiveWindowPreferDWM.Checked = Engine.conf.ActiveWindowPreferDWM;
-            chkSelectedWindowCleanBackground.Checked = Engine.conf.ActiveWindowClearBackground;
-            chkSelectedWindowCleanTransparentCorners.Checked = Engine.conf.ActiveWindowCleanTransparentCorners;
-            chkSelectedWindowIncludeShadow.Checked = Engine.conf.ActiveWindowIncludeShadows;
-            chkActiveWindowTryCaptureChildren.Checked = Engine.conf.ActiveWindowTryCaptureChildren;
-            chkSelectedWindowShowCheckers.Checked = Engine.conf.ActiveWindowShowCheckers;
+            chkActiveWindowPreferDWM.Checked = Engine.CoreConf.ActiveWindowPreferDWM;
+            chkSelectedWindowCleanBackground.Checked = Engine.CoreConf.ActiveWindowClearBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.CoreConf.ActiveWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.CoreConf.ActiveWindowIncludeShadows;
+            chkActiveWindowTryCaptureChildren.Checked = Engine.CoreConf.ActiveWindowTryCaptureChildren;
+            chkSelectedWindowShowCheckers.Checked = Engine.CoreConf.ActiveWindowShowCheckers;
 
             // Freehand Crop Shot
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
@@ -327,10 +327,10 @@ namespace ZScreenGUI
             cbFreehandCropShowRectangleBorder.Checked = Engine.conf.FreehandCropShowRectangleBorder;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.DefaultProfile.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.DefaultProfile.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Engine.DefaultProfile.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.DefaultProfile.MaxNameLength;
+            txtActiveWindow.Text = Engine.CoreConf.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.CoreConf.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.CoreConf.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.CoreConf.MaxNameLength;
 
             ZScreen_ConfigGUI_Screenshots_Watermark();
             ZScreen_ConfigGUI_Screenshots_ImageSettings();

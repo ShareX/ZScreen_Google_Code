@@ -283,12 +283,12 @@ namespace HistoryLib
 
             tsmiCopyForumLink.Enabled = him.IsURLExist;
             tsmiCopyForumImage.Enabled = him.IsImageURL && him.IsURLExist;
-            tsmiCopyForumLinkedImage.Enabled =  him.IsImageURL && him.IsThumbnailURLExist;
+            tsmiCopyForumLinkedImage.Enabled = him.IsImageURL && him.IsThumbnailURLExist;
 
             tsmiCopyFilePath.Enabled = him.IsFilePathValid;
-            tsmiCopyFileName.Enabled =  him.IsFilePathValid;
+            tsmiCopyFileName.Enabled = him.IsFilePathValid;
             tsmiCopyFileNameWithExtension.Enabled = him.IsFilePathValid;
-            tsmiCopyFolder.Enabled =  him.IsFilePathValid;
+            tsmiCopyFolder.Enabled = him.IsFilePathValid;
 
             // Delete
             tsmiDeleteLocalFile.Enabled = him.IsFileExist;

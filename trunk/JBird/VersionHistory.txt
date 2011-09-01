@@ -1,1 +1,3 @@
-﻿1.0.0 Initial version inspired by SnapShot and based on ZScreen 4
+﻿2011-12-31
+
+1.0.0 Initial version inspired by SnapShot and based on ZScreen 4

@@ -251,7 +251,7 @@ namespace ZScreenLib
         /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
         /// </summary>
         /// <returns></returns>
-        public static string GetUniqueFilePath(Profile profile, string dir, string fileName)
+        public static string GetUniqueFilePath(Workflow profile, string dir, string fileName)
         {
             string filePath = Path.Combine(dir, fileName);
 
@@ -409,7 +409,7 @@ namespace ZScreenLib
                         if (File.Exists(image))
                         {
                             time = File.GetCreationTime(image);
-                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.DefaultProfile.SaveFolderPattern);
+                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.CoreConf.SaveFolderPattern);
                             newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))

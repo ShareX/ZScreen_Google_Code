@@ -7,9 +7,9 @@ namespace ZScreenLib.Helpers
     {
         private uint processId;
 
-        public Freeze(IntPtr windowHandle)
+        public Freeze(Workflow p, IntPtr windowHandle)
         {
-            if (Engine.conf.ActiveWindowGDIFreezeWindow)
+            if (p.ActiveWindowGDIFreezeWindow)
             {
                 NativeMethods.GetWindowThreadProcessId(windowHandle, out processId);
                 FreezeThreads((int)processId);

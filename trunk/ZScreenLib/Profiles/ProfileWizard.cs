@@ -1,83 +1,76 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using UploadersLib;
 using UploadersAPILib;
+using UploadersLib;
 
 namespace ZScreenLib
 {
     public partial class ProfileWizard : Form
     {
-        public Profile Profile = null;
+        public Workflow Workflow = null;
 
-        public ProfileWizard(Profile profile)
+        public ProfileWizard(Workflow profile)
             : this()
         {
-            this.Profile = profile;
+            this.Workflow = profile;
         }
 
         public ProfileWizard()
         {
-            Profile = new Profile("New Profile");
+            Workflow = new Workflow("New Profile");
             InitializeComponent();
         }
 
         private void ConfigGui()
         {
-            this.Text = Application.ProductName + " - " + Profile.Name;
-            txtName.Text = Profile.Name;
+            this.Text = Workflow.Description + " - " + Application.ProductName;
+            txtName.Text = Workflow.Description;
 
             if (cboTask.Items.Count == 0)
             {
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
-            cboTask.SelectedIndex = (int)Profile.Job;
+            cboTask.SelectedIndex = (int)Workflow.Job;
 
-            chkClipboard.Checked = Profile.Outputs.Contains(OutputEnum.Clipboard);
-            chkSaveFile.Checked = Profile.Outputs.Contains(OutputEnum.LocalDisk);
-            chkUpload.Checked = Profile.Outputs.Contains(OutputEnum.RemoteHost);
-            chkPrinter.Checked = Profile.Outputs.Contains(OutputEnum.Printer);
+            chkClipboard.Checked = Workflow.Outputs.Contains(OutputEnum.Clipboard);
+            chkSaveFile.Checked = Workflow.Outputs.Contains(OutputEnum.LocalDisk);
+            chkUpload.Checked = Workflow.Outputs.Contains(OutputEnum.RemoteHost);
+            chkPrinter.Checked = Workflow.Outputs.Contains(OutputEnum.Printer);
         }
 
         private void BeforeClose()
         {
             if (!string.IsNullOrEmpty(txtName.Text))
             {
-                Profile.Name = txtName.Text;
+                Workflow.Description = txtName.Text;
             }
 
-            Profile.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
+            Workflow.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
 
-            Profile.Outputs.Clear();
+            Workflow.Outputs.Clear();
             if (chkClipboard.Checked)
             {
-                Profile.Outputs.Add(OutputEnum.Clipboard);
+                Workflow.Outputs.Add(OutputEnum.Clipboard);
             }
             if (chkSaveFile.Checked)
             {
-                Profile.Outputs.Add(OutputEnum.LocalDisk);
+                Workflow.Outputs.Add(OutputEnum.LocalDisk);
             }
             if (chkUpload.Checked)
             {
-                Profile.Outputs.Add(OutputEnum.RemoteHost);
+                Workflow.Outputs.Add(OutputEnum.RemoteHost);
             }
             if (chkPrinter.Checked)
             {
-                Profile.Outputs.Add(OutputEnum.Printer);
+                Workflow.Outputs.Add(OutputEnum.Printer);
             }
-
         }
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Profile.OutputsConfig, ZKeys.GetAPIKeys());
+            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.OutputsConfig, ZKeys.GetAPIKeys());
             ocf.ShowDialog();
-            Profile.OutputsConfig = ocf.Config;
+            Workflow.OutputsConfig = ocf.Config;
         }
 
         private void ProfileWizard_Load(object sender, EventArgs e)

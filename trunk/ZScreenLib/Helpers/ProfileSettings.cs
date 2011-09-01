@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HelpersLib;
 using System.ComponentModel;
-using ZScreenLib;
 using System.IO;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -14,7 +11,7 @@ namespace ZScreenLib
     public class ProfileSettings
     {
         [Category("Options"), Description("List of Profiles")]
-        public List<Profile> Profiles = new List<Profile>();
+        public List<Workflow> Profiles = new List<Workflow>();
 
         public readonly static string SettingsFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName + @"\Profiles.xml");
 

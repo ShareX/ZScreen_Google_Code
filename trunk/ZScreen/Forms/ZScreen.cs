@@ -764,26 +764,26 @@ namespace ZScreenGUI
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.ActiveWindowPattern = txtActiveWindow.Text;
+            Engine.CoreConf.ActiveWindowPattern = txtActiveWindow.Text;
             NameParser parser = new NameParser(NameParserType.ActiveWindow)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.DefaultProfile.MaxNameLength
+                MaxNameLength = Engine.CoreConf.MaxNameLength
             };
-            lblActiveWindowPreview.Text = parser.Convert(Engine.DefaultProfile.ActiveWindowPattern);
+            lblActiveWindowPreview.Text = parser.Convert(Engine.CoreConf.ActiveWindowPattern);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.EntireScreenPattern = txtEntireScreen.Text;
+            Engine.CoreConf.EntireScreenPattern = txtEntireScreen.Text;
             NameParser parser = new NameParser(NameParserType.EntireScreen)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.DefaultProfile.MaxNameLength
+                MaxNameLength = Engine.CoreConf.MaxNameLength
             };
-            lblEntireScreenPreview.Text = parser.Convert(Engine.DefaultProfile.EntireScreenPattern);
+            lblEntireScreenPreview.Text = parser.Convert(Engine.CoreConf.EntireScreenPattern);
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -927,7 +927,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.ShowCursor = chkShowCursor.Checked;
+            Engine.CoreConf.ShowCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -1296,7 +1296,7 @@ namespace ZScreenGUI
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.AutoIncrement = 0;
+            Engine.CoreConf.AutoIncrement = 0;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
@@ -1586,7 +1586,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
+            Engine.CoreConf.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
             UpdateAeroGlassConfig();
         }
 
@@ -1620,7 +1620,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
+            Engine.CoreConf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
             UpdateAeroGlassConfig();
         }
 
@@ -1636,8 +1636,8 @@ namespace ZScreenGUI
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.DefaultProfile.SaveFolderPattern);
+            Engine.CoreConf.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.CoreConf.SaveFolderPattern);
             txtImagesDir.Text = Engine.ImagesDir;
         }
 
@@ -1878,7 +1878,7 @@ namespace ZScreenGUI
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
-            Engine.DefaultProfile.MaxNameLength = (int)nudMaxNameLength.Value;
+            Engine.CoreConf.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void SetToolTip(Control original)
@@ -1917,13 +1917,13 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
+            Engine.CoreConf.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
+            Engine.CoreConf.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
         }
 
         private void chkMonImages_CheckedChanged(object sender, EventArgs e)
@@ -1952,12 +1952,12 @@ namespace ZScreenGUI
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
+            Engine.CoreConf.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
         }
 
         private void chkActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
+            Engine.CoreConf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
             chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
             UpdateAeroGlassConfig();
         }
@@ -2352,7 +2352,7 @@ namespace ZScreenGUI
 
         private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
         {
-            chkOverwriteFiles.Checked = Engine.DefaultProfile.OverwriteFiles;
+            chkOverwriteFiles.Checked = Engine.CoreConf.OverwriteFiles;
         }
     }
 }

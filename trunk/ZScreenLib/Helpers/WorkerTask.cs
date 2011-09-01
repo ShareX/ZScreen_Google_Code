@@ -46,13 +46,13 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
+using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
-using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
-    public class WorkerTask : IDisposable 
+    public class WorkerTask : IDisposable
     {
         #region Enums
 
@@ -133,7 +133,7 @@ namespace ZScreenLib
         #region Properties
 
         public BackgroundWorker MyWorker { get; set; }
-        public Profile Profile { get; private set; }
+        public Workflow Profile { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
 
@@ -209,7 +209,7 @@ namespace ZScreenLib
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
-        public WorkerTask(BackgroundWorker worker, Profile profile)
+        public WorkerTask(BackgroundWorker worker, Workflow profile)
             : this()
         {
             MyWorker = worker;
@@ -236,7 +236,7 @@ namespace ZScreenLib
             }
 
             MyWorker = worker;
-            Profile = Engine.DefaultProfile;
+            Profile = Engine.CoreConf;
             StartWork(job);
 
             if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
@@ -514,7 +514,7 @@ namespace ZScreenLib
 
                 try
                 {
-                    using (Image imgSS = Capture.CaptureScreen(Engine.DefaultProfile.ShowCursor))
+                    using (Image imgSS = Capture.CaptureScreen(Engine.CoreConf.ShowCursor))
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
@@ -600,7 +600,7 @@ namespace ZScreenLib
         {
             if (TempImage == null)
             {
-                SetImage(Capture.CaptureActiveWindow());
+                SetImage(Capture.CaptureActiveWindow(this.Profile));
             }
             return TempImage != null;
         }
@@ -612,7 +612,7 @@ namespace ZScreenLib
         {
             if (TempImage == null)
             {
-                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.DefaultProfile.ShowCursor));
+                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.CoreConf.ShowCursor));
             }
 
             return TempImage != null;

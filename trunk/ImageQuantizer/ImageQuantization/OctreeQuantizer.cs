@@ -307,8 +307,8 @@ namespace ImageQuantization
                         // Go to the next level down in the tree
                         int shift = 7 - level;
                         int index = ((pixel.Red & mask[level]) >> (shift - 2)) |
-							((pixel.Green & mask[level]) >> (shift - 1)) |
-							((pixel.Blue & mask[level]) >> (shift));
+                            ((pixel.Green & mask[level]) >> (shift - 1)) |
+                            ((pixel.Blue & mask[level]) >> (shift));
 
                         OctreeNode child = _children[index];
 
@@ -408,8 +408,8 @@ namespace ImageQuantization
                     {
                         int shift = 7 - level;
                         int index = ((pixel.Red & mask[level]) >> (shift - 2)) |
-							((pixel.Green & mask[level]) >> (shift - 1)) |
-							((pixel.Blue & mask[level]) >> (shift));
+                            ((pixel.Green & mask[level]) >> (shift - 1)) |
+                            ((pixel.Blue & mask[level]) >> (shift));
 
                         if (null != _children[index])
                             paletteIndex = _children[index].GetPaletteIndex(pixel, level + 1);

@@ -23,17 +23,17 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using UploadersLib.TextUploaders;
-using System;
 
 namespace UploadersLib
 {
-      [Serializable]
+    [Serializable]
     public class UploadersConfig
     {
         #region Image uploaders

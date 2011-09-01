@@ -28,7 +28,7 @@ namespace ImageQuantization
             for (uint i = 0; i < nColors; i++)
             {
                 uint Alpha = 0xFF;                      // Colors are opaque.
-                uint Intensity = Convert.ToUInt32(i*0xFF/(nColors-1));    // Even distribution.
+                uint Intensity = Convert.ToUInt32(i * 0xFF / (nColors - 1));    // Even distribution.
 
                 // The GIF encoder makes the first entry in the palette
                 // that has a ZERO alpha the transparent color in the GIF.
@@ -54,7 +54,7 @@ namespace ImageQuantization
         {
             byte colorIndex = 0;
 
-            double luminance = (pixel.Red *0.299) + (pixel.Green *0.587) + (pixel.Blue  *0.114);
+            double luminance = (pixel.Red * 0.299) + (pixel.Green * 0.587) + (pixel.Blue * 0.114);
 
             // Gray scale is an intensity map from black to white.
             // Compute the index to the grayscale entry that
@@ -62,7 +62,7 @@ namespace ImageQuantization
             // Also, constrain the index choices by the number of
             // colors to do, and then set that pixel's index to the
             // byte value.
-            colorIndex = (byte)(luminance +0.5);
+            colorIndex = (byte)(luminance + 0.5);
 
             return colorIndex;
         }

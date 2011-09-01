@@ -180,7 +180,7 @@ namespace ZScreenLib
                     string saveFolderPath = string.Empty;
                     if (Engine.conf != null)
                     {
-                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.DefaultProfile.SaveFolderPattern);
+                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.CoreConf.SaveFolderPattern);
                         if (!IsPortable && Engine.AppConf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
@@ -525,7 +525,7 @@ namespace ZScreenLib
 
             if (ProfileConfig.Profiles.Count == 0)
             {
-                ProfileConfig.Profiles.Add(new Profile("Default")); // add default for compatibility
+                ProfileConfig.Profiles.Add(new Workflow("Default")); // add default for compatibility
             }
 
             timer.WriteLineTime("LoadSettings finished");
@@ -550,13 +550,14 @@ namespace ZScreenLib
             }
         }
 
-        public static Profile DefaultProfile
+        public static Workflow CoreConf
         {
             get
             {
                 return ProfileConfig.Profiles[0];
             }
         }
+
         public static void LoadSettingsLatest()
         {
             LoadSettings(GetLatestSettingsFile());

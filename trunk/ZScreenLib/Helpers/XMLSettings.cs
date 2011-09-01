@@ -74,7 +74,6 @@ namespace ZScreenLib
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool PromptForOutputs = false;
 
-
         [Category("Options / Clipboard Upload"), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
         public bool ShowClipboardContentViewer { get; set; }
 
@@ -178,18 +177,6 @@ namespace ZScreenLib
         public decimal SelectedWindowRegionStep = 5;
         public decimal SelectedWindowHueRange = 50;
         public bool SelectedWindowCaptureObjects = true;
-
-        // Active Window
-
-        public bool ActiveWindowClearBackground = true;
-        public bool ActiveWindowCleanTransparentCorners = true;
-        public bool ActiveWindowIncludeShadows = true;
-        public bool ActiveWindowShowCheckers = false;
-        public bool ActiveWindowTryCaptureChildren = false;
-        public bool ActiveWindowPreferDWM = false;
-
-        [Category("Screenshots / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
-        public bool ActiveWindowGDIFreezeWindow { get; set; }
 
         // Freehand Crop Shot
 
