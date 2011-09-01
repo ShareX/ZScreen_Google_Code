@@ -46,14 +46,13 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
-using ZScreenLib.Properties;
-using ZScreenLib.Shapes;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
-    public class WorkerTask
+    public class WorkerTask : IDisposable 
     {
         #region Enums
 
@@ -515,7 +514,7 @@ namespace ZScreenLib
 
                 try
                 {
-                    using (Image imgSS = Capture.CaptureScreen(Engine.conf.ShowCursor))
+                    using (Image imgSS = Capture.CaptureScreen(Engine.DefaultProfile.ShowCursor))
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
@@ -594,26 +593,6 @@ namespace ZScreenLib
             return TempImage != null;
         }
 
-        public bool CaptureFreehandCrop()
-        {
-            using (FreehandCapture crop = new FreehandCapture())
-            {
-                if (crop.ShowDialog() == DialogResult.OK)
-                {
-                    using (Image ss = Capture.CaptureScreen(false))
-                    {
-                        SetImage(crop.GetScreenshot(ss));
-                    }
-                }
-                else
-                {
-                    Status.Add(WorkerTask.TaskStatus.RetryPending);
-                }
-            }
-
-            return TempImage != null;
-        }
-
         /// <summary>
         /// Function to Capture Active Window
         /// </summary>
@@ -633,7 +612,7 @@ namespace ZScreenLib
         {
             if (TempImage == null)
             {
-                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.conf.ShowCursor));
+                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.DefaultProfile.ShowCursor));
             }
 
             return TempImage != null;
@@ -1268,7 +1247,7 @@ namespace ZScreenLib
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
-                    fn = new NameParser(NameParserType.EntireScreen).Convert(Engine.DefaultProfile.EntireScreenPattern) + ".txt";
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(Profile.EntireScreenPattern) + ".txt";
                     string destFile = acc.GetLocalhostPath(fn);
                     FileSystem.WriteText(destFile, TempText);
                 }
@@ -1612,6 +1591,12 @@ namespace ZScreenLib
             hi.Type = Job1.GetDescription();
 
             return hi;
+        }
+
+        public void Dispose()
+        {
+            if (TempImage != null) TempImage.Dispose();
+            if (MyWorker != null) MyWorker.Dispose();
         }
 
         #endregion Helper Methods

@@ -46,6 +46,8 @@ namespace ZScreenLib
         public List<OutputEnum> Outputs { get; set; }
         public UploadersConfig OutputsConfig { get; set; }
 
+        public bool ShowCursor = false;
+
         // Image Settings
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public int ImageJPEGQuality = 90;

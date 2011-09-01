@@ -927,7 +927,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowCursor = chkShowCursor.Checked;
+            Engine.DefaultProfile.ShowCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -1296,7 +1296,7 @@ namespace ZScreenGUI
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].AutoIncrement = 0;
+            Engine.DefaultProfile.AutoIncrement = 0;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
@@ -2348,6 +2348,11 @@ namespace ZScreenGUI
         {
             Engine.conf.LastCapture = Rectangle.Empty;
             Engine.conf.LastRegion = Rectangle.Empty;
+        }
+
+        private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            chkOverwriteFiles.Checked = Engine.DefaultProfile.OverwriteFiles;
         }
     }
 }

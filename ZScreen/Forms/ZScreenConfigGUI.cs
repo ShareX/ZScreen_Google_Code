@@ -122,7 +122,7 @@ namespace ZScreenGUI
             dsh.AddEnumDestToMenuWithConfigSettings();
 
             chkManualNaming.Checked = Engine.conf.PromptForOutputs;
-            chkShowCursor.Checked = Engine.conf.ShowCursor;
+            chkShowCursor.Checked = Engine.DefaultProfile.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 
@@ -287,6 +287,8 @@ namespace ZScreenGUI
             chkMonText.Checked = Engine.conf.MonitorText;
             chkMonFiles.Checked = Engine.conf.MonitorFiles;
             chkMonUrls.Checked = Engine.conf.MonitorUrls;
+
+            Engine.DefaultProfile.OverwriteFiles = chkOverwriteFiles.Checked;
         }
 
         private void ZScreen_ConfigGUI_Screenshots()

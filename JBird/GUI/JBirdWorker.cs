@@ -26,8 +26,11 @@ namespace JBirdGUI
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = e.Argument as WorkerTask;
-            
-            // process outputs e.g. upload
+
+            if (bwTask.Profile.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
+            {
+                bwTask.PublishData();
+            }
 
             e.Result = bwTask;
         }
@@ -42,6 +45,7 @@ namespace JBirdGUI
             WorkerTask bwTask = e.Result as WorkerTask;
 
             UploadManager.ShowUploadResults(bwTask, true);
+            bwTask.Dispose();
         }
 
         public WorkerTask CreateTask(Profile profile)

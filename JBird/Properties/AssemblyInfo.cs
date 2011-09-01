@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("JBird")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple image/text/file capture and upload utility")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MAIN ROADS Western Australia")]
+[assembly: AssemblyCompany("ZScreen Group")]
 [assembly: AssemblyProduct("JBird")]
-[assembly: AssemblyCopyright("Copyright © MAIN ROADS Western Australia 2011")]
+[assembly: AssemblyCopyright("Copyright 2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

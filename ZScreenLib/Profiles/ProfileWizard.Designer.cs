@@ -38,10 +38,12 @@
             this.cbShift = new System.Windows.Forms.CheckBox();
             this.cbControl = new System.Windows.Forms.CheckBox();
             this.chkUseHotkey = new System.Windows.Forms.CheckBox();
-            this.tpTask = new System.Windows.Forms.TabPage();
             this.cboTask = new System.Windows.Forms.ComboBox();
             this.tpEditing = new System.Windows.Forms.TabPage();
             this.tpOutputs = new System.Windows.Forms.TabPage();
+            this.gbSaveFolder = new System.Windows.Forms.GroupBox();
+            this.txtSaveFolder = new System.Windows.Forms.TextBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.chkSaveFile = new System.Windows.Forms.CheckBox();
             this.chkPrinter = new System.Windows.Forms.CheckBox();
             this.chkUpload = new System.Windows.Forms.CheckBox();
@@ -49,22 +51,19 @@
             this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.gbSaveFolder = new System.Windows.Forms.GroupBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.txtSaveFolder = new System.Windows.Forms.TextBox();
+            this.gbTask = new System.Windows.Forms.GroupBox();
             this.tcMain.SuspendLayout();
             this.tpAccessibility.SuspendLayout();
             this.gbName.SuspendLayout();
             this.gbHotey.SuspendLayout();
-            this.tpTask.SuspendLayout();
             this.tpOutputs.SuspendLayout();
             this.gbSaveFolder.SuspendLayout();
+            this.gbTask.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
             // 
             this.tcMain.Controls.Add(this.tpAccessibility);
-            this.tcMain.Controls.Add(this.tpTask);
             this.tcMain.Controls.Add(this.tpEditing);
             this.tcMain.Controls.Add(this.tpOutputs);
             this.tcMain.Location = new System.Drawing.Point(8, 8);
@@ -75,6 +74,7 @@
             // 
             // tpAccessibility
             // 
+            this.tpAccessibility.Controls.Add(this.gbTask);
             this.tpAccessibility.Controls.Add(this.gbName);
             this.tpAccessibility.Controls.Add(this.gbHotey);
             this.tpAccessibility.Controls.Add(this.chkUseHotkey);
@@ -109,9 +109,9 @@
             this.gbHotey.Controls.Add(this.cbAlt);
             this.gbHotey.Controls.Add(this.cbShift);
             this.gbHotey.Controls.Add(this.cbControl);
-            this.gbHotey.Location = new System.Drawing.Point(8, 96);
+            this.gbHotey.Location = new System.Drawing.Point(8, 160);
             this.gbHotey.Name = "gbHotey";
-            this.gbHotey.Size = new System.Drawing.Size(296, 64);
+            this.gbHotey.Size = new System.Drawing.Size(288, 56);
             this.gbHotey.TabIndex = 8;
             this.gbHotey.TabStop = false;
             this.gbHotey.Text = "Hotkey Configuration";
@@ -156,29 +156,18 @@
             // chkUseHotkey
             // 
             this.chkUseHotkey.AutoSize = true;
-            this.chkUseHotkey.Location = new System.Drawing.Point(16, 72);
+            this.chkUseHotkey.Location = new System.Drawing.Point(16, 136);
             this.chkUseHotkey.Name = "chkUseHotkey";
             this.chkUseHotkey.Size = new System.Drawing.Size(183, 17);
             this.chkUseHotkey.TabIndex = 7;
             this.chkUseHotkey.Text = "Enable a hotkey to run this profile";
             this.chkUseHotkey.UseVisualStyleBackColor = true;
             // 
-            // tpTask
-            // 
-            this.tpTask.Controls.Add(this.cboTask);
-            this.tpTask.Location = new System.Drawing.Point(4, 22);
-            this.tpTask.Name = "tpTask";
-            this.tpTask.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTask.Size = new System.Drawing.Size(616, 302);
-            this.tpTask.TabIndex = 1;
-            this.tpTask.Text = "Task";
-            this.tpTask.UseVisualStyleBackColor = true;
-            // 
             // cboTask
             // 
             this.cboTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTask.FormattingEnabled = true;
-            this.cboTask.Location = new System.Drawing.Point(16, 16);
+            this.cboTask.Location = new System.Drawing.Point(8, 24);
             this.cboTask.Name = "cboTask";
             this.cboTask.Size = new System.Drawing.Size(360, 21);
             this.cboTask.TabIndex = 0;
@@ -208,6 +197,33 @@
             this.tpOutputs.TabIndex = 2;
             this.tpOutputs.Text = "Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
+            // 
+            // gbSaveFolder
+            // 
+            this.gbSaveFolder.Controls.Add(this.txtSaveFolder);
+            this.gbSaveFolder.Controls.Add(this.btnBrowse);
+            this.gbSaveFolder.Location = new System.Drawing.Point(24, 56);
+            this.gbSaveFolder.Name = "gbSaveFolder";
+            this.gbSaveFolder.Size = new System.Drawing.Size(576, 64);
+            this.gbSaveFolder.TabIndex = 5;
+            this.gbSaveFolder.TabStop = false;
+            // 
+            // txtSaveFolder
+            // 
+            this.txtSaveFolder.Location = new System.Drawing.Point(16, 24);
+            this.txtSaveFolder.Name = "txtSaveFolder";
+            this.txtSaveFolder.Size = new System.Drawing.Size(456, 20);
+            this.txtSaveFolder.TabIndex = 7;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Location = new System.Drawing.Point(480, 20);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(80, 24);
+            this.btnBrowse.TabIndex = 6;
+            this.btnBrowse.Text = "&Browse...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // chkSaveFile
             // 
@@ -275,32 +291,15 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // gbSaveFolder
+            // gbTask
             // 
-            this.gbSaveFolder.Controls.Add(this.txtSaveFolder);
-            this.gbSaveFolder.Controls.Add(this.btnBrowse);
-            this.gbSaveFolder.Location = new System.Drawing.Point(24, 56);
-            this.gbSaveFolder.Name = "gbSaveFolder";
-            this.gbSaveFolder.Size = new System.Drawing.Size(576, 64);
-            this.gbSaveFolder.TabIndex = 5;
-            this.gbSaveFolder.TabStop = false;
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.Location = new System.Drawing.Point(480, 20);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowse.TabIndex = 6;
-            this.btnBrowse.Text = "&Browse...";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // txtSaveFolder
-            // 
-            this.txtSaveFolder.Location = new System.Drawing.Point(16, 24);
-            this.txtSaveFolder.Name = "txtSaveFolder";
-            this.txtSaveFolder.Size = new System.Drawing.Size(456, 20);
-            this.txtSaveFolder.TabIndex = 7;
+            this.gbTask.Controls.Add(this.cboTask);
+            this.gbTask.Location = new System.Drawing.Point(8, 72);
+            this.gbTask.Name = "gbTask";
+            this.gbTask.Size = new System.Drawing.Size(584, 56);
+            this.gbTask.TabIndex = 10;
+            this.gbTask.TabStop = false;
+            this.gbTask.Text = "Task";
             // 
             // ProfileWizard
             // 
@@ -322,10 +321,10 @@
             this.gbName.PerformLayout();
             this.gbHotey.ResumeLayout(false);
             this.gbHotey.PerformLayout();
-            this.tpTask.ResumeLayout(false);
             this.tpOutputs.ResumeLayout(false);
             this.gbSaveFolder.ResumeLayout(false);
             this.gbSaveFolder.PerformLayout();
+            this.gbTask.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -334,7 +333,6 @@
 
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tpAccessibility;
-        private System.Windows.Forms.TabPage tpTask;
         private System.Windows.Forms.ComboBox cboTask;
         private System.Windows.Forms.TabPage tpOutputs;
         private System.Windows.Forms.TabPage tpEditing;
@@ -356,5 +354,6 @@
         private System.Windows.Forms.GroupBox gbSaveFolder;
         private System.Windows.Forms.TextBox txtSaveFolder;
         private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.GroupBox gbTask;
     }
 }
