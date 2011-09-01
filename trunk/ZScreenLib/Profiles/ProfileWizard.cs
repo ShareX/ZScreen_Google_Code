@@ -53,6 +53,7 @@ namespace ZScreenLib
 
             Profile.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
 
+            Profile.Outputs.Clear();
             if (chkClipboard.Checked)
             {
                 Profile.Outputs.Add(OutputEnum.Clipboard);

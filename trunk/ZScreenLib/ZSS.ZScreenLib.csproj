@@ -108,7 +108,19 @@
   <ItemGroup>
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Helpers\GraphicsEx.cs" />
+    <Compile Include="Forms\ProxyConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProxyConfig.Designer.cs">
+      <DependentUpon>ProxyConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CropLight.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Global\ExceptionMessage.cs" />
+    <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Helpers\ProfileSettings.cs" />
+    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Profiles\Profile.cs" />
     <Compile Include="Profiles\ProfileManager.cs">
       <SubType>Form</SubType>
@@ -122,18 +134,6 @@
     <Compile Include="Profiles\ProfileWizard.Designer.cs">
       <DependentUpon>ProfileWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DestSelectorHelper.cs" />
-    <Compile Include="Forms\ProxyConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ProxyConfig.Designer.cs">
-      <DependentUpon>ProxyConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CropLight.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Global\ExceptionMessage.cs" />
-    <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,7 +214,6 @@
     <Compile Include="Helpers\ThumbnailCacher.cs" />
     <Compile Include="Helpers\WebPageCapture.cs" />
     <Compile Include="Helpers\WindowRectangle.cs" />
-    <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\XMLSettings.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,13 +222,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WorkerTaskHelper.cs" />
     <Compile Include="UserControls\DestSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\DestSelector.Designer.cs">
       <DependentUpon>DestSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\WorkerTaskHelper.cs" />
+    <Compile Include="UserControls\DestSelectorHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crop2\Crop2\Crop2.csproj">

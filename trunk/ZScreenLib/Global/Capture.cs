@@ -160,7 +160,7 @@ namespace ZScreenLib
                     windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
                 }
 
-                if (Engine.conf.ShowCursor)
+                if (Engine.DefaultProfile.ShowCursor)
                 {
                     DrawCursor(windowImage, windowRect.Location);
                 }
@@ -231,7 +231,7 @@ namespace ZScreenLib
                 Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
                 windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
 
-                if (Engine.conf.ShowCursor)
+                if (Engine.DefaultProfile.ShowCursor)
                 {
                     windowRect.X += windowRectCropped.X;
                     windowRect.Y += windowRectCropped.Y;
@@ -297,7 +297,7 @@ namespace ZScreenLib
                     windowImage = ImageEffects.DrawCheckers(windowImage);
                 }
 
-                if (Engine.conf.ShowCursor)
+                if (Engine.DefaultProfile.ShowCursor)
                 {
                     DrawCursor(windowImage, windowRect.Location);
                 }
