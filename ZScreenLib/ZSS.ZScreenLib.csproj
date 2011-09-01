@@ -121,18 +121,18 @@
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Helpers\ProfileSettings.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
-    <Compile Include="Profiles\Profile.cs" />
-    <Compile Include="Profiles\ProfileManager.cs">
+    <Compile Include="Profiles\Workflow.cs" />
+    <Compile Include="Profiles\WorkflowManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Profiles\ProfileManager.Designer.cs">
-      <DependentUpon>ProfileManager.cs</DependentUpon>
+    <Compile Include="Profiles\WorkflowManager.Designer.cs">
+      <DependentUpon>WorkflowManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Profiles\ProfileWizard.cs">
+    <Compile Include="Profiles\WorkflowWizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Profiles\ProfileWizard.Designer.cs">
-      <DependentUpon>ProfileWizard.cs</DependentUpon>
+    <Compile Include="Profiles\WorkflowWizard.Designer.cs">
+      <DependentUpon>WorkflowWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
@@ -306,11 +306,11 @@
       <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Profiles\ProfileManager.resx">
-      <DependentUpon>ProfileManager.cs</DependentUpon>
+    <EmbeddedResource Include="Profiles\WorkflowManager.resx">
+      <DependentUpon>WorkflowManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Profiles\ProfileWizard.resx">
-      <DependentUpon>ProfileWizard.cs</DependentUpon>
+    <EmbeddedResource Include="Profiles\WorkflowWizard.resx">
+      <DependentUpon>WorkflowWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

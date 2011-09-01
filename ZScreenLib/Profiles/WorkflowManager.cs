@@ -6,12 +6,12 @@ namespace ZScreenLib
 {
     public partial class ProfileManager : Form
     {
-        private List<Workflow> Profiles = null;
+        private List<Workflow> Workflows = null;
 
         public ProfileManager(List<Workflow> profiles)
         {
             InitializeComponent();
-            Profiles = profiles;
+            Workflows = profiles;
         }
 
         private void ProfileManager_Load(object sender, EventArgs e)
@@ -23,10 +23,11 @@ namespace ZScreenLib
         public void ProfilesGuiRefresh()
         {
             lvProfiles.Items.Clear();
-            foreach (Workflow p in Profiles)
+            foreach (Workflow p in Workflows)
             {
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = p.Description;
+                lvi.SubItems.Add(p.Description);
                 lvi.SubItems.Add(p.Job.GetDescription());
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(p.Enabled.ToString());
@@ -37,10 +38,10 @@ namespace ZScreenLib
 
         private void btnProfileCreate_Click(object sender, EventArgs e)
         {
-            ProfileWizard pw = new ProfileWizard() { Icon = this.Icon };
+            WorkflowWizard pw = new WorkflowWizard("Create") { Icon = this.Icon };
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Profiles.Add(pw.Workflow);
+                Workflows.Add(pw.Workflow);
                 ProfilesGuiRefresh();
             }
         }
@@ -66,7 +67,7 @@ namespace ZScreenLib
         private void ProfileEdit(ListViewItem lvi)
         {
             Workflow p = lvi.Tag as Workflow;
-            ProfileWizard pw = new ProfileWizard(p) { Icon = this.Icon };
+            WorkflowWizard pw = new WorkflowWizard("Edit", p) { Icon = this.Icon };
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 lvi.Tag = pw.Workflow;

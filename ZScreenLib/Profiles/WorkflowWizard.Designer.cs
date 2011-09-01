@@ -1,6 +1,6 @@
 ﻿namespace ZScreenLib
 {
-    partial class ProfileWizard
+    partial class WorkflowWizard
     {
         /// <summary>
         /// Required designer variable.
@@ -346,7 +346,7 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // ProfileWizard
+            // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,7 +356,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.tcMain);
             this.MinimumSize = new System.Drawing.Size(664, 420);
-            this.Name = "ProfileWizard";
+            this.Name = "WorkflowWizard";
             this.Text = "ProfileWizard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfileWizard_FormClosing);
             this.Load += new System.EventHandler(this.ProfileWizard_Load);

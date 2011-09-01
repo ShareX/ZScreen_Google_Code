@@ -32,8 +32,8 @@
             this.niApp = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsApp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiWorkflows = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsApp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,16 +58,16 @@
             this.tsmiWorkflows.Size = new System.Drawing.Size(152, 22);
             this.tsmiWorkflows.Text = "Profiles";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // JBirdCoreUI
             // 
@@ -86,10 +86,10 @@
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon niApp;
-        private System.Windows.Forms.ContextMenuStrip cmsApp;
         private System.Windows.Forms.ToolStripMenuItem tsmiWorkflows;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        protected System.Windows.Forms.NotifyIcon niApp;
+        protected System.Windows.Forms.ContextMenuStrip cmsApp;
     }
 }

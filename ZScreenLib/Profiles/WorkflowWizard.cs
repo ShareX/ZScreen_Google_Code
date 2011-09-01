@@ -5,25 +5,20 @@ using UploadersLib;
 
 namespace ZScreenLib
 {
-    public partial class ProfileWizard : Form
+    public partial class WorkflowWizard : Form
     {
         public Workflow Workflow = null;
 
-        public ProfileWizard(Workflow profile)
-            : this()
+        public WorkflowWizard(string reason = "Create", Workflow profile = null)
         {
-            this.Workflow = profile;
-        }
-
-        public ProfileWizard()
-        {
-            Workflow = new Workflow("New Profile");
             InitializeComponent();
+            if (profile == null) profile = new Workflow("New Workflow");
+            this.Workflow = profile;
+            this.Text = Application.ProductName + " - " + reason + " - " + Workflow.Description;
         }
 
         private void ConfigGui()
         {
-            this.Text = Workflow.Description + " - " + Application.ProductName;
             txtName.Text = Workflow.Description;
 
             if (cboTask.Items.Count == 0)
