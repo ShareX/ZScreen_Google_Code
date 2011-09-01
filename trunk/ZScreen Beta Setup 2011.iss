@@ -6,8 +6,131 @@
 #define MyAppVersion GetStringFileInfo(ExePath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
-#define MyAppMyAppName "ZScreen.exe"
 
+[Code]
+
+////////// Customize the following constants to suit your own program //////////
+
+const
+
+// Name of the application that should be closed and name of its executable
+
+  ProgramName = '{#MyAppName}';
+  ProgramExeName = '{#MyAppName}.exe';
+
+// Messages user will see if the application is running.  
+// (It may be a good idea to give instructions on HOW to close your application,
+// if it's not obvious to the user (e.g., in the case of background applications)
+
+  ProgramRunningOnInstallMessage = ProgramName + ' is currently running. ' + #13 + #13 +
+      'Please close it and then click on ''Retry'' to proceed with the installation.';
+  InstallationCanceledMessage = 'The installation was canceled.';
+
+  ProgramRunningOnUninstallMessage = ProgramName + ' is currently running. ' + #13 + #13 +
+      'Please close it and then click on ''Retry'' to proceed.';
+  UninstallationCanceledMessage = 'The uninstallation process was canceled.';
+
+////////////////////// end of basic-customization section //////////////////////
+
+//------------------------------------------------------------------------------
+
+// IsModuleLoadedI - function to call at install time
+// Also added setuponly flag
+function IsModuleLoadedI(modulename: String ):  Boolean;
+external 'IsModuleLoaded@files:psvince.dll stdcall setuponly';
+
+// IsModuleLoadedU - function to call at uninstall time
+// Also added uninstallonly flag
+function IsModuleLoadedU(modulename: String ):  Boolean;
+external 'IsModuleLoaded@{app}\psvince.dll stdcall uninstallonly' ;
+
+//------------------------------------------------------------------------------
+
+// Calls IsModuleLoadedI or IsModuleLoadedU as appropriate
+
+function IsModuleLoaded( modulename: String; isUninstallation: Boolean ): Boolean;
+begin
+  if isUninstallation then
+    Result := IsModuleLoadedU( modulename )
+  else
+    Result := IsModuleLoadedI( modulename );
+end;
+
+//------------------------------------------------------------------------------
+
+// Prompt the user to close a program that's still running.
+// Finish when the executable is closed or the user cancels the process.
+
+//  -> message : A message to show the user to prompt them to close 
+//  -> isUninstallation : Whether this is an uninstallation (to call the right function.)
+// <-  True if the program was closed (or was not running),
+//     False if the user clicked on the Cancel button and didn't close the program
+
+function PromptUntilProgramClosedOrInstallationCanceled( 
+              message: String; 
+              isUninstallation: Boolean ): Boolean;
+var
+  ButtonPressed : Integer;
+begin
+  ButtonPressed := IDRETRY;
+
+  // Check if the program is running or if the user has pressed the cancel button
+  while IsModuleLoaded( ProgramExeName, isUninstallation ) and ( ButtonPressed <> IDCANCEL ) do
+  begin
+    ButtonPressed := MsgBox( message , mbError, MB_RETRYCANCEL );    
+  end;
+
+  // Has the program been closed?
+  Result := Not IsModuleLoaded( ProgramExeName, isUninstallation );
+end;
+
+//------------------------------------------------------------------------------
+
+function InitializeSetup(): Boolean;
+begin
+  Result := PromptUntilProgramClosedOrInstallationCanceled( ProgramRunningOnInstallMessage, False );
+
+  if Not Result then
+  begin
+    MsgBox( InstallationCanceledMessage, mbInformation, MB_OK );
+  end;
+end;
+
+//------------------------------------------------------------------------------
+
+function InitializeUninstall(): Boolean;
+begin
+  Result := PromptUntilProgramClosedOrInstallationCanceled( ProgramRunningOnUninstallMessage, True );
+
+  // Unload the DLL, otherwise the dll psvince is not deleted
+  UnloadDLL(ExpandConstant('{app}\psvince.dll'));
+
+  if not Result then
+  begin
+    MsgBox( UninstallationCanceledMessage, mbInformation, MB_OK );
+  end;  
+end;
+
+//------------------------------------------------------------------------------
+
+// Copyright (C) 2011 by Andres Cabezas Ulate ( andres.cabezas@domador.net )
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+//------------------------------------------------------------------------------
 
 [Setup]
 AllowNoIcons=true
@@ -55,7 +178,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-
+Source: Lib\psvince.dll; flags: dontcopy
+Source: Lib\psvince.dll; DestDir: {app}
 Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
@@ -63,9 +187,9 @@ Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Fla
 Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"
 Name: "{group}\ZUploader"; Filename: "{app}\ZUploader.exe"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppMyAppName}"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"; Tasks: desktopicon
 
 [Run]
 Filename: {app}\{#MyAppName}.exe.; Description: {cm:LaunchProgram,ZScreen}; Flags: nowait postinstall skipifsilent
