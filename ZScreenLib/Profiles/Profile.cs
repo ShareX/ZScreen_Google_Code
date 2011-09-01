@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UploadersLib;
-using HelpersLib;
 using System.ComponentModel;
+using HelpersLib;
+using UploadersLib;
 
 namespace ZScreenLib
 {
     [Serializable]
-    public class Profile
+    public class Workflow
     {
-        private Profile()
+        private Workflow()
         {
             ApplyDefaultValues(this);
         }
 
-        public Profile(string name)
+        public Workflow(string name)
             : this()
         {
-            this.Name = name;
+            this.Description = name;
             this.Enabled = true;
             this.Outputs = new List<OutputEnum>();
             this.OutputsConfig = new UploadersConfig();
@@ -35,16 +33,25 @@ namespace ZScreenLib
             }
         }
 
-        public string Name { get; set; }
         public string Description { get; set; }
 
         public bool Enabled { get; set; }
 
-        public string FileNamePattern { get; set; }
         public WorkerTask.JobLevel2 Job { get; set; }
 
-        public List<OutputEnum> Outputs { get; set; }
-        public UploadersConfig OutputsConfig { get; set; }
+        #region Active Window
+
+        public bool ActiveWindowPreferDWM = false;
+        public bool ActiveWindowTryCaptureChildren = false;
+        public bool ActiveWindowClearBackground = true;
+        public bool ActiveWindowCleanTransparentCorners = true;
+        public bool ActiveWindowIncludeShadows = true;
+        public bool ActiveWindowShowCheckers = false;
+
+        [Category("Screenshots / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
+        public bool ActiveWindowGDIFreezeWindow { get; set; }
+
+        #endregion Active Window
 
         public bool ShowCursor = false;
 
@@ -55,7 +62,7 @@ namespace ZScreenLib
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 
-        // Naming Conventions
+        #region File Naming
 
         public string ActiveWindowPattern = "%t-%y-%mo-%d_%h.%mi.%s";
         public string EntireScreenPattern = "Screenshot-%y-%mo-%d_%h.%mi.%s";
@@ -68,7 +75,16 @@ namespace ZScreenLib
         [Category("File Naming"), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
         public bool OverwriteFiles { get; set; }
 
+        #endregion File Naming
+
+        #region Outputs
+
         [Category("Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
+
+        public List<OutputEnum> Outputs { get; set; }
+        public UploadersConfig OutputsConfig { get; set; }
+
+        #endregion Outputs
     }
 }

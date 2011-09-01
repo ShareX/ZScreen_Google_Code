@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.lvProfiles = new HelpersLib.MyListView();
-            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chTask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnProfileCreate = new System.Windows.Forms.Button();
@@ -39,13 +40,12 @@
             this.btnProfileDisable = new System.Windows.Forms.Button();
             this.btnProfileDuplicate = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.chTask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvProfiles
             // 
             this.lvProfiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chName,
+            this.chDescription,
             this.chTask,
             this.chHotkey,
             this.chEnabled});
@@ -58,10 +58,14 @@
             this.lvProfiles.View = System.Windows.Forms.View.Details;
             this.lvProfiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvProfiles_MouseDoubleClick);
             // 
-            // chName
+            // chDescription
             // 
-            this.chName.Text = "Name";
-            this.chName.Width = 224;
+            this.chDescription.Text = "Description";
+            this.chDescription.Width = 224;
+            // 
+            // chTask
+            // 
+            this.chTask.Text = "Task";
             // 
             // chHotkey
             // 
@@ -137,10 +141,6 @@
             this.btnClose.Text = "Cl&ose";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
-            // chTask
-            // 
-            this.chTask.Text = "Task";
-            // 
             // ProfileManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,7 +164,7 @@
         #endregion
 
         private HelpersLib.MyListView lvProfiles;
-        private System.Windows.Forms.ColumnHeader chName;
+        private System.Windows.Forms.ColumnHeader chDescription;
         private System.Windows.Forms.ColumnHeader chHotkey;
         private System.Windows.Forms.ColumnHeader chEnabled;
         private System.Windows.Forms.Button btnProfileCreate;

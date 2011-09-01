@@ -6,7 +6,7 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Profile profile, Image img, out EImageFormat imageFormat)
+        public static MemoryStream PrepareImage(Workflow profile, Image img, out EImageFormat imageFormat)
         {
             MemoryStream stream = img.SaveImage(profile, profile.ImageFormat);
 
@@ -26,7 +26,7 @@ namespace ZScreenLib
             return stream;
         }
 
-        public static string PrepareFilename(Profile profile, Image img, NameParserType patternType)
+        public static string PrepareFilename(Workflow profile, Image img, NameParserType patternType)
         {
             string ext = "png";
             EImageFormat imageFormat = profile.ImageFormat;

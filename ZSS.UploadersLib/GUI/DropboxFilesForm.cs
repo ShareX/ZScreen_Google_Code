@@ -57,7 +57,7 @@ namespace UploadersLib.Forms
 
             AsyncHelper.AsyncJob(() =>
             {
-                directory  = dropbox.GetFilesList(path);
+                directory = dropbox.GetFilesList(path);
             },
             () =>
             {

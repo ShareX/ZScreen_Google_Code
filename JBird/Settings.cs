@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HelpersLib;
-using System.Windows.Forms;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
+using System.Windows.Forms;
+using HelpersLib;
 
 namespace JBirdGUI
 {
@@ -41,6 +38,5 @@ namespace JBirdGUI
 
         [Category("Options"), DefaultValue(false), Description("Toggle to backup settings to Documents folder")]
         public bool BackupSettings { get; set; }
-
     }
 }

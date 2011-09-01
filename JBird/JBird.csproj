@@ -78,17 +78,20 @@
     <Compile Include="GUI\JBirdMain.Designer.cs">
       <DependentUpon>JBirdMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\JBirdWorker.cs">
+    <Compile Include="GUI\JBirdCoreUI.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\JBirdCoreUI.Designer.cs">
+      <DependentUpon>JBirdCoreUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI\JBirdMainHelper.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="GUI\JBirdMain.resx">
       <DependentUpon>JBirdMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\JBirdCoreUI.resx">
+      <DependentUpon>JBirdCoreUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,6 +129,9 @@
     <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(ProjectDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -40,7 +40,7 @@ namespace UploadersLib.FileUploaders
         private string APIKey;
 
         private const string APIURL = "http://api.sendspace.com/rest/";
-        private const string APIVersion= "1.0";
+        private const string APIVersion = "1.0";
 
         /// <summary>
         /// Upload speed limit in kilobytes, 0 for unlimited

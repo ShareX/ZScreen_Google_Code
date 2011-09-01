@@ -28,15 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JBirdMain));
-            this.niApp = new System.Windows.Forms.NotifyIcon(this.components);
-            this.cmsApp = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiDestImages = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDestFiles = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDestText = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCaptureCropShot = new System.Windows.Forms.Button();
             this.btnCaptureSelectedWindow = new System.Windows.Forms.Button();
             this.btnCaptureScreen = new System.Windows.Forms.Button();
@@ -48,58 +40,8 @@
             this.btnGoogleTranslateOpen = new System.Windows.Forms.Button();
             this.btnScreenColorPicker = new System.Windows.Forms.Button();
             this.btnAutoCapture = new System.Windows.Forms.Button();
-            this.btnProfiles = new System.Windows.Forms.Button();
-            this.cmsApp.SuspendLayout();
+            this.btnWorkflows = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // niApp
-            // 
-            this.niApp.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.niApp.ContextMenuStrip = this.cmsApp;
-            this.niApp.Icon = ((System.Drawing.Icon)(resources.GetObject("niApp.Icon")));
-            this.niApp.Text = "ZScreen";
-            this.niApp.Visible = true;
-            // 
-            // cmsApp
-            // 
-            this.cmsApp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiDestImages,
-            this.tsmiDestFiles,
-            this.tsmiDestText,
-            this.toolStripSeparator1,
-            this.tsmiExit});
-            this.cmsApp.Name = "cmsApp";
-            this.cmsApp.Size = new System.Drawing.Size(151, 98);
-            // 
-            // tsmiDestImages
-            // 
-            this.tsmiDestImages.Name = "tsmiDestImages";
-            this.tsmiDestImages.Size = new System.Drawing.Size(150, 22);
-            this.tsmiDestImages.Text = "Send image to";
-            // 
-            // tsmiDestFiles
-            // 
-            this.tsmiDestFiles.Name = "tsmiDestFiles";
-            this.tsmiDestFiles.Size = new System.Drawing.Size(150, 22);
-            this.tsmiDestFiles.Text = "Send file to";
-            // 
-            // tsmiDestText
-            // 
-            this.tsmiDestText.Name = "tsmiDestText";
-            this.tsmiDestText.Size = new System.Drawing.Size(150, 22);
-            this.tsmiDestText.Text = "Send text to";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
-            // 
-            // tsmiExit
-            // 
-            this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(150, 22);
-            this.tsmiExit.Text = "E&xit";
-            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
             // btnCaptureCropShot
             // 
@@ -111,7 +53,6 @@
             this.btnCaptureCropShot.TabIndex = 1;
             this.btnCaptureCropShot.Text = "Capture &Cropped Area";
             this.btnCaptureCropShot.UseVisualStyleBackColor = true;
-            this.btnCaptureCropShot.Click += new System.EventHandler(this.btnCaptureCropShot_Click);
             // 
             // btnCaptureSelectedWindow
             // 
@@ -123,7 +64,6 @@
             this.btnCaptureSelectedWindow.TabIndex = 2;
             this.btnCaptureSelectedWindow.Text = "Capture &Window";
             this.btnCaptureSelectedWindow.UseVisualStyleBackColor = true;
-            this.btnCaptureSelectedWindow.Click += new System.EventHandler(this.btnCaptureSelectedWindow_Click);
             // 
             // btnCaptureScreen
             // 
@@ -226,25 +166,25 @@
             this.btnAutoCapture.Text = "Auto Capture";
             this.btnAutoCapture.UseVisualStyleBackColor = true;
             // 
-            // btnProfiles
+            // btnWorkflows
             // 
-            this.btnProfiles.Image = global::JBirdGUI.Properties.Resources.wrench;
-            this.btnProfiles.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnProfiles.Location = new System.Drawing.Point(304, 208);
-            this.btnProfiles.Name = "btnProfiles";
-            this.btnProfiles.Size = new System.Drawing.Size(80, 80);
-            this.btnProfiles.TabIndex = 14;
-            this.btnProfiles.Text = "Profiles";
-            this.btnProfiles.UseVisualStyleBackColor = true;
-            this.btnProfiles.Click += new System.EventHandler(this.btnProfiles_Click);
+            this.btnWorkflows.Image = global::JBirdGUI.Properties.Resources.wrench;
+            this.btnWorkflows.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnWorkflows.Location = new System.Drawing.Point(304, 208);
+            this.btnWorkflows.Name = "btnWorkflows";
+            this.btnWorkflows.Size = new System.Drawing.Size(80, 80);
+            this.btnWorkflows.TabIndex = 14;
+            this.btnWorkflows.Text = "Workflows";
+            this.btnWorkflows.UseVisualStyleBackColor = true;
+            this.btnWorkflows.Click += new System.EventHandler(this.btnWorkflows_Click);
             // 
             // JBirdMain
             // 
-            this.AcceptButton = this.btnProfiles;
+            this.AcceptButton = this.btnWorkflows;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 306);
-            this.Controls.Add(this.btnProfiles);
+            this.ClientSize = new System.Drawing.Size(402, 312);
+            this.Controls.Add(this.btnWorkflows);
             this.Controls.Add(this.btnScreenColorPicker);
             this.Controls.Add(this.btnGoogleTranslateOpen);
             this.Controls.Add(this.btnAutoCapture);
@@ -259,28 +199,20 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(416, 344);
-            this.MinimumSize = new System.Drawing.Size(416, 344);
+            this.MaximumSize = new System.Drawing.Size(408, 344);
+            this.MinimumSize = new System.Drawing.Size(408, 344);
             this.Name = "JBirdMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "JBird";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.JBirdMain_FormClosing);
             this.Load += new System.EventHandler(this.JBirdMain_Load);
             this.Shown += new System.EventHandler(this.JBirdMain_Shown);
-            this.cmsApp.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon niApp;
-        private System.Windows.Forms.ContextMenuStrip cmsApp;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDestImages;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDestFiles;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDestText;
-        private System.Windows.Forms.ToolStripMenuItem tsmiExit;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnCaptureCropShot;
         private System.Windows.Forms.Button btnCaptureSelectedWindow;
         private System.Windows.Forms.Button btnCaptureScreen;
@@ -292,7 +224,7 @@
         private System.Windows.Forms.Button btnGoogleTranslateOpen;
         private System.Windows.Forms.Button btnScreenColorPicker;
         private System.Windows.Forms.Button btnAutoCapture;
-        private System.Windows.Forms.Button btnProfiles;
+        private System.Windows.Forms.Button btnWorkflows;
     }
 }
 

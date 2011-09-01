@@ -72,7 +72,7 @@ namespace SingleInstanceApplication
 
             // get shared object from other process
             var proxy =
-				Activator.GetObject(typeof(InstanceProxy),
+                Activator.GetObject(typeof(InstanceProxy),
                 string.Format("ipc://{0}{1}/{1}", Environment.MachineName, uri)) as InstanceProxy;
 
             // pass current command line args to proxy
