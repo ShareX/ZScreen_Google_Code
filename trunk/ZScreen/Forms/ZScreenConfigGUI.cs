@@ -76,6 +76,8 @@ namespace ZScreenGUI
 
         private void ZScreen_Preconfig()
         {
+            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
+
             this.Icon = Resources.zss_main;
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
@@ -113,7 +115,8 @@ namespace ZScreenGUI
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
-            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
+            timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
+
         }
 
         private void ZScreen_ConfigGUI_Main()
@@ -288,7 +291,7 @@ namespace ZScreenGUI
             chkMonFiles.Checked = Engine.conf.MonitorFiles;
             chkMonUrls.Checked = Engine.conf.MonitorUrls;
 
-            Engine.CoreConf.OverwriteFiles = chkOverwriteFiles.Checked;
+            chkOverwriteFiles.Checked = Engine.CoreConf.OverwriteFiles;
         }
 
         private void ZScreen_ConfigGUI_Screenshots()

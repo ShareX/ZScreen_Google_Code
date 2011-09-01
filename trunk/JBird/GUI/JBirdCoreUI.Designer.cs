@@ -29,17 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JBirdCoreUI));
             this.niApp = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsApp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiWorkflows = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsApp.SuspendLayout();
             this.SuspendLayout();
             // 
             // niApp
             // 
             this.niApp.ContextMenuStrip = this.cmsApp;
+            this.niApp.Icon = ((System.Drawing.Icon)(resources.GetObject("niApp.Icon")));
             this.niApp.Text = "notifyIcon1";
             this.niApp.Visible = true;
             // 
@@ -48,9 +50,9 @@
             this.cmsApp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiWorkflows,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
+            this.tsmiExit});
             this.cmsApp.Name = "cmsApp";
-            this.cmsApp.Size = new System.Drawing.Size(153, 76);
+            this.cmsApp.Size = new System.Drawing.Size(114, 54);
             // 
             // tsmiWorkflows
             // 
@@ -63,17 +65,22 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
-            // exitToolStripMenuItem
+            // tsmiExit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
+            this.tsmiExit.Name = "tsmiExit";
+            this.tsmiExit.Size = new System.Drawing.Size(152, 22);
+            this.tsmiExit.Text = "E&xit";
+            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
             // JBirdCoreUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
+            this.ClientSize = new System.Drawing.Size(64, 64);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(67, 64);
+            this.MinimumSize = new System.Drawing.Size(64, 64);
             this.Name = "JBirdCoreUI";
             this.Text = "JBirdCoreUI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.JBirdCoreUI_FormClosing);
@@ -88,7 +95,7 @@
 
         private System.Windows.Forms.ToolStripMenuItem tsmiWorkflows;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         protected System.Windows.Forms.NotifyIcon niApp;
         protected System.Windows.Forms.ContextMenuStrip cmsApp;
     }

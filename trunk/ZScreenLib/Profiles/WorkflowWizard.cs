@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
+using System.IO;
 
 namespace ZScreenLib
 {
@@ -63,12 +64,12 @@ namespace ZScreenLib
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.OutputsConfig, ZKeys.GetAPIKeys());
+            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.OutputsConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             ocf.ShowDialog();
             Workflow.OutputsConfig = ocf.Config;
         }
 
-        private void ProfileWizard_Load(object sender, EventArgs e)
+        private void WorkflowWizard_Load(object sender, EventArgs e)
         {
             ConfigGui();
         }
@@ -93,6 +94,14 @@ namespace ZScreenLib
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             txtSaveFolder.Text = Adapter.GetDirPathUsingFolderBrowser("Browse for a folder to save files...");
+        }
+
+        private void chkSaveFile_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSaveFile.Checked && string.IsNullOrEmpty(txtSaveFolder.Text))
+            {
+                txtSaveFolder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
+            }
         }
     }
 }

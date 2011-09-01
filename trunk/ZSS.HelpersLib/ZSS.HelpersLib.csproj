@@ -63,6 +63,7 @@
     <Compile Include="ClipboardContentViewer.Designer.cs">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="CloneManager.cs" />
     <Compile Include="ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +76,7 @@
     <Compile Include="HotkeyInputForm.Designer.cs">
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IClone.cs" />
     <Compile Include="KeyInfo.cs" />
     <Compile Include="Printer\PrintForm.cs">
       <SubType>Form</SubType>

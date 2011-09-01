@@ -1,6 +1,7 @@
 using ZScreenLib;
 using UploadersLib;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ZScreenGUI
 {
@@ -334,6 +335,7 @@ namespace ZScreenGUI
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
             this.tpFileNaming = new System.Windows.Forms.TabPage();
+            this.chkOverwriteFiles = new System.Windows.Forms.CheckBox();
             this.lblMaxNameLength = new System.Windows.Forms.Label();
             this.nudMaxNameLength = new System.Windows.Forms.NumericUpDown();
             this.btnResetIncrement = new System.Windows.Forms.Button();
@@ -412,7 +414,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.chkOverwriteFiles = new System.Windows.Forms.CheckBox();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -2389,14 +2390,14 @@ namespace ZScreenGUI
             // tcOptions
             // 
             this.tcOptions.Controls.Add(this.tpOptionsGeneral);
-            this.tcOptions.Controls.Add(this.tpInteraction);
-            this.tcOptions.Controls.Add(this.tpProxy);
-            this.tcOptions.Controls.Add(this.tpPaths);
             this.tcOptions.Controls.Add(this.tpCaptureQuality);
-            this.tcOptions.Controls.Add(this.tpHistoryOptions);
             this.tcOptions.Controls.Add(this.tpWatermark);
+            this.tcOptions.Controls.Add(this.tpPaths);
             this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
+            this.tcOptions.Controls.Add(this.tpInteraction);
+            this.tcOptions.Controls.Add(this.tpProxy);
+            this.tcOptions.Controls.Add(this.tpHistoryOptions);
             this.tcOptions.Controls.Add(this.tpBackupRestore);
             this.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcOptions.Location = new System.Drawing.Point(3, 3);
@@ -3963,8 +3964,19 @@ namespace ZScreenGUI
             this.tpFileNaming.Name = "tpFileNaming";
             this.tpFileNaming.Size = new System.Drawing.Size(799, 408);
             this.tpFileNaming.TabIndex = 3;
-            this.tpFileNaming.Text = "Naming Conventions";
+            this.tpFileNaming.Text = "File Naming";
             this.tpFileNaming.UseVisualStyleBackColor = true;
+            // 
+            // chkOverwriteFiles
+            // 
+            this.chkOverwriteFiles.AutoSize = true;
+            this.chkOverwriteFiles.Location = new System.Drawing.Point(248, 224);
+            this.chkOverwriteFiles.Name = "chkOverwriteFiles";
+            this.chkOverwriteFiles.Size = new System.Drawing.Size(95, 17);
+            this.chkOverwriteFiles.TabIndex = 119;
+            this.chkOverwriteFiles.Text = "Overwrite Files";
+            this.chkOverwriteFiles.UseVisualStyleBackColor = true;
+            this.chkOverwriteFiles.CheckedChanged += new System.EventHandler(this.chkOverwriteFiles_CheckedChanged);
             // 
             // lblMaxNameLength
             // 
@@ -4849,17 +4861,6 @@ namespace ZScreenGUI
             this.ttZScreen.IsBalloon = true;
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
-            // 
-            // chkOverwriteFiles
-            // 
-            this.chkOverwriteFiles.AutoSize = true;
-            this.chkOverwriteFiles.Location = new System.Drawing.Point(248, 224);
-            this.chkOverwriteFiles.Name = "chkOverwriteFiles";
-            this.chkOverwriteFiles.Size = new System.Drawing.Size(95, 17);
-            this.chkOverwriteFiles.TabIndex = 119;
-            this.chkOverwriteFiles.Text = "Overwrite Files";
-            this.chkOverwriteFiles.UseVisualStyleBackColor = true;
-            this.chkOverwriteFiles.CheckedChanged += new System.EventHandler(this.chkOverwriteFiles_CheckedChanged);
             // 
             // ZScreen
             // 
