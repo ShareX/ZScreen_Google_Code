@@ -13,7 +13,7 @@ namespace ZScreenLib
         [Category("Options"), Description("List of Profiles")]
         public List<Workflow> Profiles = new List<Workflow>();
 
-        public readonly static string SettingsFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName + @"\Profiles.xml");
+        public readonly static string SettingsFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName + @"\Profiles1.xml");
 
         #region I/O Methods
 

@@ -154,7 +154,10 @@
             this.Controls.Add(this.btnProfileEdit);
             this.Controls.Add(this.btnProfileCreate);
             this.Controls.Add(this.lvProfiles);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "ProfileManager";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProfileManager";
             this.Load += new System.EventHandler(this.ProfileManager_Load);
             this.ResumeLayout(false);
