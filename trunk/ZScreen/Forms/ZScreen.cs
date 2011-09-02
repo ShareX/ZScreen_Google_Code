@@ -126,7 +126,7 @@ namespace ZScreenGUI
                 }
                 ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
             }
-            else if (Engine.AppConf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+            else if (Engine.AppConf.ShowInTaskbar && Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
             {
                 this.WindowState = FormWindowState.Minimized;
             }
@@ -346,7 +346,7 @@ namespace ZScreenGUI
                     case NativeMethods.WM_SYSCOMMAND:
                         if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {
-                            switch (Engine.conf.WindowButtonActionMinimize)
+                            switch (Engine.AppConf.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.ExitApplication:
                                     CloseMethod = CloseMethod.MinimizeButton;
@@ -411,16 +411,16 @@ namespace ZScreenGUI
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
             {
-                if (Engine.conf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
+                if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
                 {
                     CloseMethod = CloseMethod.CloseButton;
                 }
-                else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
                 {
                     WindowState = FormWindowState.Minimized;
                     e.Cancel = true;
                 }
-                else if (Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
+                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
                 {
                     Hide();
                     DelayedTrimMemoryUse();
@@ -2028,12 +2028,12 @@ namespace ZScreenGUI
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
+            Engine.AppConf.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
         }
 
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
+            Engine.AppConf.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
 
         private void LbSoftwareMouseClick(object sender, MouseEventArgs e)
