@@ -306,7 +306,7 @@ namespace ZScreenLib
         public static bool CheckFTPAccounts()
         {
             // TODO: Only using Image index for FTP
-            return Engine.MyUploadersConfig.FTPAccountList.CheckSelected(Engine.MyUploadersConfig.FTPSelectedImage);
+            return Engine.MyWorkflow.OutputsConfig.FTPAccountList.CheckSelected(Engine.MyWorkflow.OutputsConfig.FTPSelectedImage);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -314,7 +314,7 @@ namespace ZScreenLib
             FTPAccount acc = null;
             if (CheckFTPAccounts())
             {
-                acc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage];
+                acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage];
             }
             return acc;
         }
@@ -399,9 +399,9 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAccount()
         {
-            if (Engine.MyUploadersConfig.TwitterOAuthInfoList.CheckSelected(Engine.MyUploadersConfig.TwitterSelectedAccount))
+            if (Engine.MyWorkflow.OutputsConfig.TwitterOAuthInfoList.CheckSelected(Engine.MyWorkflow.OutputsConfig.TwitterSelectedAccount))
             {
-                return Engine.MyUploadersConfig.TwitterOAuthInfoList[Engine.MyUploadersConfig.TwitterSelectedAccount];
+                return Engine.MyWorkflow.OutputsConfig.TwitterOAuthInfoList[Engine.MyWorkflow.OutputsConfig.TwitterSelectedAccount];
             }
 
             return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);

@@ -6,7 +6,7 @@ namespace JBirdGUI
 {
     internal static class Program
     {
-        public static ProfileSettings ProfilesConfig = new ProfileSettings();
+        public static WorkflowConfig ProfilesConfig = new WorkflowConfig();
 
         /// <summary>
         /// The main entry point for the application.

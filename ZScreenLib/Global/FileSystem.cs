@@ -94,7 +94,7 @@ namespace ZScreenLib
             }
 
             EImageFormat imageFormat;
-            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(Engine.ProfileConfig.Profiles[0], img, out imageFormat))
+            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(Engine.MyWorkflow, img, out imageFormat))
             {
                 try
                 {
@@ -328,7 +328,7 @@ namespace ZScreenLib
                 string fp = Path.Combine(Engine.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.MyUploadersConfig.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.MyWorkflow.OutputsConfig.FTPAccountList);
                     fam.Save(fp);
                 }
             }

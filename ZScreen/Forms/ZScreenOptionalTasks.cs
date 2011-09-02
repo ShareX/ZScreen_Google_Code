@@ -29,7 +29,6 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
-using UploadersLib.OtherServices;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
@@ -111,11 +110,6 @@ namespace ZScreenGUI
         {
             try
             {
-                if (Engine.MyGTConfig.GoogleLanguages == null || Engine.MyGTConfig.GoogleLanguages.Count < 1)
-                {
-                    Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
-                }
-
                 if (Uploader.ProxySettings != null)
                 {
                     // TODO: Method to update TinyPic RegCode automatically - implement BackgroundTasks in UploaderConfig
@@ -123,7 +117,7 @@ namespace ZScreenGUI
 
                 if (Adapter.CheckFTPAccounts())
                 {
-                    foreach (FTPAccount acc in Engine.MyUploadersConfig.FTPAccountList)
+                    foreach (FTPAccount acc in Engine.MyWorkflow.OutputsConfig.FTPAccountList)
                     {
                         Adapter.TestFTPAccount(acc, true);
                     }

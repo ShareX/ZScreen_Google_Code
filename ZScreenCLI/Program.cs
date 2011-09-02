@@ -88,8 +88,8 @@ namespace ZScreenCLI
                 return;
             }
 
-            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.UploadersConfigPath));
-            Engine.MyUploadersConfig = UploadersConfig.Load(Engine.AppConf.UploadersConfigPath);
+            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.WorkflowConfigPath));
+            Engine.MyWorkflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigPath);
 
             if (listOutputTypes.Count == 0)
             {

@@ -29,7 +29,7 @@ namespace JBirdGUI
 
         protected void bwConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            Program.ProfilesConfig = ProfileSettings.Read();
+            Program.ProfilesConfig = WorkflowConfig.Read();
         }
 
         protected void bwConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

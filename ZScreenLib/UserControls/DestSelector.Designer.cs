@@ -92,7 +92,7 @@
             this.tsddbOutputs.Name = "tsddbOutputs";
             this.tsddbOutputs.Size = new System.Drawing.Size(350, 20);
             this.tsddbOutputs.Tag = "Outputs";
-            this.tsddbOutputs.Text = "Outputs:";
+            this.tsddbOutputs.Text = "Outputs: loading...";
             // 
             // tsddbClipboardContent
             // 
@@ -102,7 +102,7 @@
             this.tsddbClipboardContent.Name = "tsddbClipboardContent";
             this.tsddbClipboardContent.Size = new System.Drawing.Size(350, 20);
             this.tsddbClipboardContent.Tag = "Clipboard content";
-            this.tsddbClipboardContent.Text = "Clipboard content:";
+            this.tsddbClipboardContent.Text = "Clipboard content: loading...";
             this.tsddbClipboardContent.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbClipboardContent_DropDownItemClicked);
             // 
             // tsddbLinkFormat
@@ -113,7 +113,7 @@
             this.tsddbLinkFormat.Name = "tsddbLinkFormat";
             this.tsddbLinkFormat.Size = new System.Drawing.Size(350, 20);
             this.tsddbLinkFormat.Tag = "URL format";
-            this.tsddbLinkFormat.Text = "URL format:";
+            this.tsddbLinkFormat.Text = "URL format: loading...";
             this.tsddbLinkFormat.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddbLinkFormat_DropDownItemClicked);
             // 
             // toolStripSeparator3
@@ -130,6 +130,7 @@
             this.tsddbDestImage.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestImage.Tag = "Upload image to";
+            this.tsddbDestImage.Text = "Upload image to: loading...";
             // 
             // tsddDestText
             // 
@@ -140,6 +141,7 @@
             this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestText.Size = new System.Drawing.Size(350, 20);
             this.tsddDestText.Tag = "Upload text to";
+            this.tsddDestText.Text = "Upload text to: loading...";
             // 
             // tsddDestFile
             // 
@@ -150,6 +152,7 @@
             this.tsddDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddDestFile.Size = new System.Drawing.Size(350, 20);
             this.tsddDestFile.Tag = "Upload file to";
+            this.tsddDestFile.Text = "Upload file to: loading...";
             // 
             // tsddbDestLink
             // 
@@ -160,7 +163,7 @@
             this.tsddbDestLink.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddbDestLink.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestLink.Tag = "URL shortener";
-            this.tsddbDestLink.Text = "URL shortener:";
+            this.tsddbDestLink.Text = "URL shortener: loading...";
             this.tsddbDestLink.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddDestLinks_DropDownItemClicked);
             // 
             // toolStripSeparator2

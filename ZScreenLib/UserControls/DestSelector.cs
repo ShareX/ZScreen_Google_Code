@@ -14,7 +14,7 @@ namespace ZScreenLib
 
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
-            UploadersConfigForm form = new UploadersConfigForm(Engine.MyUploadersConfig, ZKeys.GetAPIKeys());
+            UploadersConfigForm form = new UploadersConfigForm(Engine.MyWorkflow.OutputsConfig, ZKeys.GetAPIKeys());
             form.Icon = Resources.zss_main;
             form.Show();
         }
