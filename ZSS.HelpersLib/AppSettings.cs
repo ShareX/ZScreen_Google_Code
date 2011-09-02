@@ -55,6 +55,9 @@ namespace HelpersLib
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
 
+        public WindowButtonAction WindowButtonActionClose = WindowButtonAction.MinimizeToTray;
+        public WindowButtonAction WindowButtonActionMinimize = WindowButtonAction.MinimizeToTaskbar;
+
         #endregion Program Window
 
         public AppSettings()

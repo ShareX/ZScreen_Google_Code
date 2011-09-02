@@ -299,8 +299,6 @@ namespace ZScreenLib
         public bool LockFormSize { get; set; }
 
         public bool AutoSaveSettings = true;
-        public WindowButtonAction WindowButtonActionClose = WindowButtonAction.MinimizeToTray;
-        public WindowButtonAction WindowButtonActionMinimize = WindowButtonAction.MinimizeToTaskbar;
 
         // General - Monitor Clipboard
 
