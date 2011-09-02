@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
@@ -58,29 +57,11 @@ namespace ZScreenGUI
                     this.Size = this.MinimumSize;
                 }
             }
-
-            if (IsReady)
-            {
-                if (Engine.conf.SaveFormSizePosition)
-                {
-                    Engine.conf.WindowLocation = this.Location;
-                    Engine.conf.WindowSize = this.Size;
-                }
-                else
-                {
-                    Engine.conf.WindowLocation = Point.Empty;
-                    Engine.conf.WindowSize = Size.Empty;
-                }
-            }
         }
 
         private void ZScreen_Preconfig()
         {
-            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
-
             this.Icon = Resources.zss_main;
-            this.Text = Engine.GetProductName();
-            this.niTray.Text = this.Text;
 
             // Tab Image List
             tabImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -114,9 +95,6 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
-
-            timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
-
         }
 
         private void ZScreen_ConfigGUI_Main()
@@ -221,8 +199,8 @@ namespace ZScreenGUI
             // General
             chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
             chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
-            chkOpenMainWindow.Checked = Engine.conf.ShowMainWindow;
-            chkShowTaskbar.Checked = Engine.conf.ShowInTaskbar;
+            chkOpenMainWindow.Checked = Engine.AppConf.ShowMainWindow;
+            chkShowTaskbar.Checked = Engine.AppConf.ShowInTaskbar;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.conf.Windows7TaskbarIntegration;
@@ -385,15 +363,15 @@ namespace ZScreenGUI
                 cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
 
-            cboFileFormat.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageFormat;
-            nudImageQuality.Value = Engine.ProfileConfig.Profiles[0].ImageJPEGQuality;
-            cbGIFQuality.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageGIFQuality;
-            nudSwitchAfter.Value = Engine.ProfileConfig.Profiles[0].ImageSizeLimit;
+            cboFileFormat.SelectedIndex = (int)Engine.MyWorkflow.ImageFormat;
+            nudImageQuality.Value = Engine.MyWorkflow.ImageJPEGQuality;
+            cbGIFQuality.SelectedIndex = (int)Engine.MyWorkflow.ImageGIFQuality;
+            nudSwitchAfter.Value = Engine.MyWorkflow.ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)
             {
                 cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
-            cboSwitchFormat.SelectedIndex = (int)Engine.ProfileConfig.Profiles[0].ImageFormat2;
+            cboSwitchFormat.SelectedIndex = (int)Engine.MyWorkflow.ImageFormat2;
 
             switch (Engine.conf.ImageSizeType)
             {

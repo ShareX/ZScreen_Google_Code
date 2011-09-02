@@ -211,9 +211,9 @@ namespace ZScreenLib
 
         private void sBwFetchlist()
         {
-            if (Engine.MyUploadersConfig.FTPAccountList != null)
+            if (Engine.MyWorkflow.OutputsConfig.FTPAccountList != null)
             {
-                mAcc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage];
+                mAcc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage];
             }
 
             bwRemoteViewer.ReportProgress((int)RemoteViewerTask.ProgressType.UPDATE_STATUS_BAR_TEXT,

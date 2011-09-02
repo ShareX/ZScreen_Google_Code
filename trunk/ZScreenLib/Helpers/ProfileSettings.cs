@@ -8,7 +8,7 @@ using HelpersLib;
 namespace ZScreenLib
 {
     [Serializable]
-    public class ProfileSettings
+    public class WorkflowConfig
     {
         [Category("Options"), Description("List of Profiles")]
         public List<Workflow> Profiles = new List<Workflow>();
@@ -24,24 +24,24 @@ namespace ZScreenLib
             File.Copy(SettingsFilePath, Path.Combine(dirPath, Path.GetFileName(SettingsFilePath)));
         }
 
-        public static ProfileSettings Read(string filePath)
+        public static WorkflowConfig Read(string filePath)
         {
-            return SettingsHelper.Load<ProfileSettings>(filePath, SerializationType.Xml);
+            return SettingsHelper.Load<WorkflowConfig>(filePath, SerializationType.Xml);
         }
 
-        public static ProfileSettings Read()
+        public static WorkflowConfig Read()
         {
-            return SettingsHelper.Load<ProfileSettings>(SettingsFilePath, SerializationType.Xml);
+            return SettingsHelper.Load<WorkflowConfig>(SettingsFilePath, SerializationType.Xml);
         }
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save<ProfileSettings>(this, filePath, SerializationType.Xml);
+            return SettingsHelper.Save<WorkflowConfig>(this, filePath, SerializationType.Xml);
         }
 
         public bool Write()
         {
-            return SettingsHelper.Save<ProfileSettings>(this, SettingsFilePath, SerializationType.Xml);
+            return SettingsHelper.Save<WorkflowConfig>(this, SettingsFilePath, SerializationType.Xml);
         }
 
         #endregion I/O Methods

@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -68,53 +69,96 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
-            ZScreen_Preconfig();
-            this.WindowState = Engine.conf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
+            this.WindowState = Engine.AppConf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
+
+            BackgroundWorker bwConfig = new BackgroundWorker();
+            bwConfig.DoWork += new DoWorkEventHandler(bwConfig_DoWork);
+            bwConfig.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwConfig_RunWorkerCompleted);
+            bwConfig.RunWorkerAsync();
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
             LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
-            Uploader.ProxySettings = Adapter.CheckProxySettings();
-            ZScreen_ConfigGUI();
 
-            PerformOnlineTasks();
-            if (Engine.conf.CheckUpdates)
+            Engine.zHandle = this.Handle;
+
+            if (Engine.IsMultipleInstance)
             {
-                CheckUpdates();
+                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
             }
+
+            ZScreen_Preconfig();
+
+            #region Windows Size/Location
 
             if (this.WindowState == FormWindowState.Normal)
             {
-                if (Engine.conf.WindowLocation.IsEmpty)
+                if (Engine.AppConf.WindowLocation.IsEmpty)
                 {
-                    Engine.conf.WindowLocation = this.Location;
+                    Engine.AppConf.WindowLocation = this.Location;
                 }
 
-                if (Engine.conf.WindowSize.IsEmpty)
+                if (Engine.AppConf.WindowSize.IsEmpty)
                 {
-                    Engine.conf.WindowSize = this.Size;
+                    Engine.AppConf.WindowSize = this.Size;
                 }
 
                 Rectangle screenRect = GraphicsMgr.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
-                if (screenRect.IntersectsWith(new Rectangle(Engine.conf.WindowLocation, Engine.conf.WindowSize)))
+                if (screenRect.IntersectsWith(new Rectangle(Engine.AppConf.WindowLocation, Engine.AppConf.WindowSize)))
                 {
-                    this.Size = Engine.conf.WindowSize;
-                    this.Location = Engine.conf.WindowLocation;
+                    this.Size = Engine.AppConf.WindowSize;
+                    this.Location = Engine.AppConf.WindowLocation;
                 }
             }
 
-            CleanCache();
-            StartStatistics();
+            if (Engine.AppConf.ShowMainWindow)
+            {
+                if (Engine.AppConf.WindowState == FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+                ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
+            }
+            else if (Engine.AppConf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                Hide();
+            }
+
+            if (IsReady)
+            {
+                if (Engine.conf.SaveFormSizePosition)
+                {
+                    Engine.AppConf.WindowLocation = this.Location;
+                    Engine.AppConf.WindowSize = this.Size;
+                }
+                else
+                {
+                    Engine.AppConf.WindowLocation = Point.Empty;
+                    Engine.AppConf.WindowSize = Size.Empty;
+                }
+            }
+
+            #endregion Windows Size/Location
+
+            mDebug = new DebugHelper();
+            mDebug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
 
             SetToolTip(nudScreenshotDelay);
 
             CreateCodesMenu();
 
             dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
-
-            niTray.Visible = true;
 
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
@@ -124,11 +168,30 @@ namespace ZScreenGUI
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
         }
 
-        private void ZScreen_Shown(object sender, EventArgs e)
+        private void bwConfig_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Engine.LoadSettings();
+        }
+
+        private void bwConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
 
-            Engine.zHandle = this.Handle;
+            this.Text = Engine.GetProductName();
+            this.niTray.Text = this.Text;
+
+            Uploader.ProxySettings = Adapter.CheckProxySettings();
+
+            ZScreen_ConfigGUI();
+
+            if (Engine.conf.CheckUpdates)
+            {
+                CheckUpdates();
+            }
+
+            PerformOnlineTasks();
+
+            CleanCache();
 
             Engine.ClipboardHook();
 
@@ -152,35 +215,8 @@ namespace ZScreenGUI
                 ZScreen_Windows7onlyTasks();
             }
 
-            if (Engine.conf.ShowMainWindow)
-            {
-                if (Engine.conf.WindowState == FormWindowState.Maximized)
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-                else
-                {
-                    this.WindowState = FormWindowState.Normal;
-                }
-                ShowInTaskbar = Engine.conf.ShowInTaskbar;
-            }
-            else if (Engine.conf.ShowInTaskbar && Engine.conf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                Hide();
-            }
-
             UpdateHotkeys(false);
             InitKeyboardHook();
-
-            if (Engine.IsMultipleInstance)
-            {
-                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
-                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
-            }
 
             if (Engine.conf.FirstRun)
             {
@@ -195,7 +231,7 @@ namespace ZScreenGUI
             }
 
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
-            Engine.MyLogger.WriteLine("ZScreen_Shown. Startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
+            Engine.MyLogger.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
 
             UseCommandLineArg(Loader.CommandLineArg);
             IsReady = true;
@@ -205,14 +241,14 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                Engine.conf.WindowState = WindowState;
+                Engine.AppConf.WindowState = WindowState;
 
                 if (WindowState == FormWindowState.Normal)
                 {
                     if (Engine.conf.SaveFormSizePosition)
                     {
-                        Engine.conf.WindowLocation = Location;
-                        Engine.conf.WindowSize = Size;
+                        Engine.AppConf.WindowLocation = Location;
+                        Engine.AppConf.WindowSize = Size;
                     }
                 }
 
@@ -411,7 +447,7 @@ namespace ZScreenGUI
         /// </summary>
         private void DelayedTrimMemoryUse()
         {
-            if (Engine.conf.EnableAutoMemoryTrim)
+            if (Engine.conf != null && Engine.conf.EnableAutoMemoryTrim)
             {
                 try
                 {
@@ -792,19 +828,19 @@ namespace ZScreenGUI
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.ProfileConfig.Profiles[0].ImageFormat);
+            Engine.MyWorkflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.MyWorkflow.ImageFormat);
         }
 
         private void txtImageQuality_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].ImageJPEGQuality = (int)nudImageQuality.Value;
+            Engine.MyWorkflow.ImageJPEGQuality = (int)nudImageQuality.Value;
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.ProfileConfig.Profiles[0].ImageFormat2);
+            Engine.MyWorkflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.MyWorkflow.ImageFormat2);
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -893,6 +929,8 @@ namespace ZScreenGUI
             }
         }
 
+        #region Codes Menu
+
         private void CreateCodesMenu()
         {
             var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
@@ -907,6 +945,25 @@ namespace ZScreenGUI
 
             CodesMenuCloseEvents();
         }
+
+        private void CodesMenuCloseEvents()
+        {
+            tpWatermark.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
+            foreach (Control cntrl in tpWatermark.Controls)
+            {
+                if (cntrl.GetType() == typeof(GroupBox))
+                {
+                    cntrl.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
+                }
+            }
+        }
+
+        private void CodesMenuCloseEvent(object sender, MouseEventArgs e)
+        {
+            codesMenu.Close();
+        }
+
+        #endregion Codes Menu
 
         private void watermarkCodeMenu_Click(object sender, EventArgs e)
         {
@@ -1119,19 +1176,19 @@ namespace ZScreenGUI
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowMainWindow = chkOpenMainWindow.Checked;
+            Engine.AppConf.ShowMainWindow = chkOpenMainWindow.Checked;
         }
 
         private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowInTaskbar = chkShowTaskbar.Checked;
+            Engine.AppConf.ShowInTaskbar = chkShowTaskbar.Checked;
             if (IsReady)
             {
                 if (!chkShowTaskbar.Checked)
                 {
                     this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
                 }
-                this.ShowInTaskbar = Engine.conf.ShowInTaskbar;
+                this.ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
             }
         }
 
@@ -1153,23 +1210,6 @@ namespace ZScreenGUI
         private void txtWatermarkText_MouseDown(object sender, MouseEventArgs e)
         {
             CheckForCodes(sender);
-        }
-
-        private void CodesMenuCloseEvents()
-        {
-            tpWatermark.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
-            foreach (Control cntrl in tpWatermark.Controls)
-            {
-                if (cntrl.GetType() == typeof(GroupBox))
-                {
-                    cntrl.MouseClick += new MouseEventHandler(CodesMenuCloseEvent);
-                }
-            }
-        }
-
-        private void CodesMenuCloseEvent(object sender, MouseEventArgs e)
-        {
-            codesMenu.Close();
         }
 
         private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
@@ -1216,7 +1256,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage];
+                acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage];
             }
 
             return acc;
@@ -1320,7 +1360,7 @@ namespace ZScreenGUI
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Engine.MyWorkflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
@@ -1427,12 +1467,6 @@ namespace ZScreenGUI
             {
                 txtWatermarkImageLocation.Text = fd.FileName;
             }
-        }
-
-        private void StartStatistics()
-        {
-            mDebug = new DebugHelper();
-            mDebug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
         }
 
         private void debug_GetDebugInfo(object sender, string e)
@@ -1822,9 +1856,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.MyUploadersConfig.FTPAccountList.Count > 0)
+            if (Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.MyUploadersConfig.FTPAccountList[Engine.MyUploadersConfig.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
@@ -1974,7 +2008,7 @@ namespace ZScreenGUI
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ProfileConfig.Profiles[0].ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+            Engine.MyWorkflow.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
@@ -2321,9 +2355,9 @@ namespace ZScreenGUI
             {
                 UpdateGuiControlsPaths();
 
-                if (!string.IsNullOrEmpty(Engine.AppConf.UploadersConfigCustomPath))
+                if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
                 {
-                    Engine.MyUploadersConfig = UploadersConfig.Load(Engine.AppConf.UploadersConfigCustomPath);
+                    Engine.MyWorkflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
                 }
             }
         }

@@ -3,6 +3,7 @@ using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using UploadersLib.OtherServices;
 using ZScreenLib;
 
 namespace ZScreenGUI
@@ -15,6 +16,12 @@ namespace ZScreenGUI
             {
                 Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             }
+
+            if (Engine.MyGTConfig.GoogleLanguages == null || Engine.MyGTConfig.GoogleLanguages.Count < 1)
+            {
+                Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
+            }
+
             return Loader.MyGTGUI;
         }
 

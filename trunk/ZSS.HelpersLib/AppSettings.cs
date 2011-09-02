@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Design;
 using System.IO;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace HelpersLib
@@ -18,7 +20,7 @@ namespace HelpersLib
         public string XMLSettingsPath { get; set; }
 
         [ReadOnly(true), Browsable(false)]
-        public string UploadersConfigPath { get; set; }
+        public string WorkflowConfigPath { get; set; }
 
         [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
@@ -30,12 +32,12 @@ namespace HelpersLib
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string UploadersHistoryCustomPath { get; set; }
 
-        [Category("Options / Paths"), DefaultValue(false), Description("Use a customised Uploaders Configuration path.")]
+        [Category("Options / Paths"), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
         public bool UseUploadersConfigCustomPath { get; set; }
 
         [Category("Options / Paths"), Description("Path where uploaders config file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
-        public string UploadersConfigCustomPath { get; set; }
+        public string WorkflowConfigCustomPath { get; set; }
 
         public List<int> Outputs = new List<int>();
         public List<int> ClipboardContent = new List<int>();
@@ -43,6 +45,17 @@ namespace HelpersLib
         public List<int> FileUploaders = new List<int>();  // default value is from ConfigWizard
         public List<int> TextUploaders = new List<int>();  // default value is from ConfigWizard
         public List<int> LinkUploaders = new List<int>();   // default value is from ConfigWizard
+
+        #region Program Window
+
+        public bool ShowMainWindow = false;
+        public bool ShowInTaskbar = true;
+
+        public FormWindowState WindowState = FormWindowState.Normal;
+        public Size WindowSize = Size.Empty;
+        public Point WindowLocation = Point.Empty;
+
+        #endregion Program Window
 
         public AppSettings()
         {

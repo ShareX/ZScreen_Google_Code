@@ -53,9 +53,6 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool FirstRun = true;
-        public FormWindowState WindowState = FormWindowState.Normal;
-        public Size WindowSize = Size.Empty;
-        public Point WindowLocation = Point.Empty;
         public bool Windows7TaskbarIntegration = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -293,9 +290,6 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // General - Program
-
-        public bool ShowMainWindow = false;
-        public bool ShowInTaskbar = true;
         public bool ShowHelpBalloonTips = true;
 
         [Category("Options / General"), DefaultValue(true), Description("Remember Main Window size and position.")]

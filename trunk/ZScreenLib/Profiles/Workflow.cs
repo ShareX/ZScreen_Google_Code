@@ -9,8 +9,26 @@ namespace ZScreenLib
     [Serializable]
     public class Workflow
     {
-        private Workflow()
+        #region I/O Methods
+
+        public bool Write(string filePath)
         {
+            return SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
+        }
+
+        public static Workflow Read(string filePath)
+        {
+            return SettingsHelper.Load<Workflow>(filePath, SerializationType.Xml);
+        }
+
+        #endregion I/O Methods
+
+        public Workflow()
+        {
+            this.Description = "New Workflow";
+            this.Enabled = true;
+            this.Outputs = new List<OutputEnum>();
+            this.OutputsConfig = new UploadersConfig();
             ApplyDefaultValues(this);
         }
 
@@ -18,9 +36,6 @@ namespace ZScreenLib
             : this()
         {
             this.Description = name;
-            this.Enabled = true;
-            this.Outputs = new List<OutputEnum>();
-            this.OutputsConfig = new UploadersConfig();
         }
 
         public static void ApplyDefaultValues(object self)

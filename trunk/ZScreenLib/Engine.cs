@@ -63,11 +63,10 @@ namespace ZScreenLib
 
         internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         private static readonly string HistoryFileName = "UploadersHistory.xml";
-        private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
         private static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
         private static readonly string PluginsFolderName = ApplicationName + "Plugins";
         private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
-        private static readonly string ProfileConfigFileName = "ProfileConfig.xml";
+        private static readonly string WorkflowConfigFileName = "WorkflowConfig.xml";
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
@@ -116,17 +115,17 @@ namespace ZScreenLib
             }
         }
 
-        public static string UploadersConfigPath
+        public static string WorkflowConfigPath
         {
             get
             {
-                if (conf != null && AppConf.UseUploadersConfigCustomPath && !string.IsNullOrEmpty(AppConf.UploadersConfigCustomPath))
+                if (conf != null && AppConf.UseUploadersConfigCustomPath && !string.IsNullOrEmpty(AppConf.WorkflowConfigCustomPath))
                 {
-                    return AppConf.UploadersHistoryCustomPath;
+                    return AppConf.WorkflowConfigCustomPath;
                 }
                 else
                 {
-                    return Path.Combine(SettingsDir, UploadersConfigFileName);
+                    return Path.Combine(SettingsDir, WorkflowConfigFileName);
                 }
             }
         }
@@ -145,14 +144,6 @@ namespace ZScreenLib
             get
             {
                 return Path.Combine(SettingsDir, GoogleTranslateConfigFileName);
-            }
-        }
-
-        public static string ProfileConfigPath
-        {
-            get
-            {
-                return Path.Combine(SettingsDir, ProfileConfigFileName);
             }
         }
 
@@ -203,8 +194,7 @@ namespace ZScreenLib
         private static bool RunConfig = false;
 
         public static XMLSettings conf { get; set; }
-        public static ProfileSettings ProfileConfig { get; set; }
-        public static UploadersConfig MyUploadersConfig { get; set; }
+        public static Workflow MyWorkflow { get; set; }
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
@@ -266,9 +256,9 @@ namespace ZScreenLib
             {
                 if (options.ShowConfigWizard && !File.Exists(AppSettings.AppSettingsFile))
                 {
-                    if (MyUploadersConfig == null)
+                    if (MyWorkflow == null)
                     {
-                        MyUploadersConfig = UploadersConfig.Load(Engine.UploadersConfigPath);
+                        MyWorkflow = Workflow.Read(Engine.WorkflowConfigPath);
                     }
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     startEngine = cw.ShowDialog();
@@ -286,7 +276,7 @@ namespace ZScreenLib
                         Engine.AppConf.TextUploaders = cw.cwTextUploaders;
                         Engine.AppConf.LinkUploaders = cw.cwLinkUploaders;
 
-                        MyUploadersConfig.Save(UploadersConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
+                        MyWorkflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
                         AppConf.Write();
 
                         RunConfig = true;
@@ -409,7 +399,7 @@ namespace ZScreenLib
         {
             if (!IsPortable)
             {
-                AppConf.UploadersConfigPath = Engine.UploadersConfigPath;
+                AppConf.WorkflowConfigPath = Engine.WorkflowConfigPath;
                 AppConf.Write();
             }
 
@@ -444,11 +434,11 @@ namespace ZScreenLib
                 }
             });
 
-            Thread uploadersConfigThread = new Thread(() =>
+            Thread profileConfigThread = new Thread(() =>
             {
-                if (Engine.MyUploadersConfig != null)
+                if (Engine.MyWorkflow != null)
                 {
-                    Engine.MyUploadersConfig.Save(UploadersConfigPath);
+                    Engine.MyWorkflow.Write(WorkflowConfigPath);
                 }
             });
 
@@ -460,23 +450,13 @@ namespace ZScreenLib
                 }
             });
 
-            Thread profileConfigThread = new Thread(() =>
-            {
-                if (Engine.ProfileConfig != null)
-                {
-                    Engine.ProfileConfig.Write(ProfileConfigPath);
-                }
-            });
-
             settingsThread.Start();
-            uploadersConfigThread.Start();
             googleTranslateThread.Start();
             profileConfigThread.Start();
 
             if (!isAsync)
             {
                 settingsThread.Join();
-                uploadersConfigThread.Join();
                 googleTranslateThread.Join();
                 profileConfigThread.Join();
             }
@@ -498,9 +478,9 @@ namespace ZScreenLib
                 }
             });
 
-            Thread uploadersConfigThread = new Thread(() =>
+            Thread workflowConfigThread = new Thread(() =>
             {
-                Engine.MyUploadersConfig = UploadersConfig.Load(UploadersConfigPath);
+                Engine.MyWorkflow = Workflow.Read(WorkflowConfigPath);
             });
 
             Thread googleTranslateThread = new Thread(() =>
@@ -508,25 +488,13 @@ namespace ZScreenLib
                 Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
             });
 
-            Thread profileConfigThread = new Thread(() =>
-            {
-                Engine.ProfileConfig = ProfileSettings.Read(ProfileConfigPath);
-            });
-
             settingsThread.Start();
-            uploadersConfigThread.Start();
             googleTranslateThread.Start();
-            profileConfigThread.Start();
+            workflowConfigThread.Start();
 
             settingsThread.Join();
-            uploadersConfigThread.Join();
-            googleTranslateThread.Join();
-            profileConfigThread.Join();
-
-            if (ProfileConfig.Profiles.Count == 0)
-            {
-                ProfileConfig.Profiles.Add(new Workflow("Default")); // add default for compatibility
-            }
+            // googleTranslateThread.Join(); not necessary wait for this finish
+            workflowConfigThread.Join();
 
             timer.WriteLineTime("LoadSettings finished");
 
@@ -554,7 +522,7 @@ namespace ZScreenLib
         {
             get
             {
-                return ProfileConfig.Profiles[0];
+                return MyWorkflow;
             }
         }
 
