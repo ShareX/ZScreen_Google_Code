@@ -119,7 +119,8 @@ namespace UploadersLib
         public string GetHttpHomePath()
         {
             NameParser parser = new NameParser { Host = this.Host, IsFolderPath = true };
-            return parser.Convert(this.HttpHomePath);
+            HttpHomePath = parser.RemovePrefixes(HttpHomePath);
+            return parser.Convert(HttpHomePath);
         }
 
         public string GetUriPath(string fileName)
