@@ -54,11 +54,11 @@ namespace UploadersLib
         [Category("Localhost"), Description("Localhost Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
-        [Category("Localhost"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(Protocol.File)]
-        public Protocol RemoteProtocol { get; set; }
-
         [Category("Localhost"), Description("HTTP Home Path, %host = Host e.g. zscreen.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
+
+        [Category("Localhost"), Description("Choose an appropriate protocol to be accessed by the browser. Use 'file' for Shared Folders. RemoteProtocol will always be 'file' if HTTP Home Path is empty. "), DefaultValue(Protocol.File)]
+        public Protocol RemoteProtocol { get; set; }
 
         [Category("Localhost"), Description("file://Host:Port"), Browsable(false)]
         public string LocalUri
@@ -133,6 +133,15 @@ namespace UploadersLib
             string path = string.Empty;
             string httppath = string.Empty;
             string lHttpHomePath = GetHttpHomePath();
+            if (string.IsNullOrEmpty(lHttpHomePath))
+            {
+                RemoteProtocol = Protocol.File;
+            }
+            else if (!string.IsNullOrEmpty(lHttpHomePath) && RemoteProtocol == Protocol.File)
+            {
+                RemoteProtocol = Protocol.Http;
+            }
+
             string lFolderPath = this.GetSubFolderPath();
 
             if (lHttpHomePath.StartsWith("@") || customPath)

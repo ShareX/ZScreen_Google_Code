@@ -49,7 +49,14 @@ namespace ZScreenGUI
                             {
                                 if (!string.IsNullOrEmpty(ur.URL))
                                 {
-                                    ThreadPool.QueueUserWorkItem(x => Process.Start(ur.URL));
+                                    try
+                                    {
+                                        ThreadPool.QueueUserWorkItem(x => Process.Start(ur.URL));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Engine.MyLogger.WriteException(ex);
+                                    }
                                 }
                             }
                         }

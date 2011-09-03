@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lvWorkflows = new HelpersLib.MyListView();
-            this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chHotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnProfileCreate = new System.Windows.Forms.Button();
@@ -43,9 +43,10 @@
             // 
             // lvWorkflows
             // 
+            this.lvWorkflows.AllowColumnReorder = true;
             this.lvWorkflows.CheckBoxes = true;
             this.lvWorkflows.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chDescription,
+            this.chName,
             this.chTask,
             this.chHotkey});
             this.lvWorkflows.FullRowSelect = true;
@@ -59,10 +60,10 @@
             this.lvWorkflows.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvWorkflows_ItemChecked);
             this.lvWorkflows.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvProfiles_MouseDoubleClick);
             // 
-            // chDescription
+            // chName
             // 
-            this.chDescription.Text = "Description";
-            this.chDescription.Width = 224;
+            this.chName.Text = "Name";
+            this.chName.Width = 224;
             // 
             // chTask
             // 
@@ -147,8 +148,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "WorkflowManager";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ProfileManager";
+            this.Text = "Workflow Manager";
             this.Load += new System.EventHandler(this.WorkflowManager_Load);
             this.Shown += new System.EventHandler(this.ProfileManager_Shown);
             this.flpButtons.ResumeLayout(false);
@@ -159,7 +159,7 @@
         #endregion
 
         private HelpersLib.MyListView lvWorkflows;
-        private System.Windows.Forms.ColumnHeader chDescription;
+        private System.Windows.Forms.ColumnHeader chName;
         private System.Windows.Forms.ColumnHeader chHotkey;
         private System.Windows.Forms.Button btnProfileCreate;
         private System.Windows.Forms.Button btnProfileEdit;
