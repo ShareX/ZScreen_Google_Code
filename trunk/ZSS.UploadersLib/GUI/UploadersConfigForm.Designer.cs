@@ -54,6 +54,8 @@
             this.lblTinyPicRegistrationCode = new System.Windows.Forms.Label();
             this.txtTinyPicRegistrationCode = new System.Windows.Forms.TextBox();
             this.tpImgur = new System.Windows.Forms.TabPage();
+            this.cbImgurThumbnailType = new System.Windows.Forms.ComboBox();
+            this.lblImgurThumbnailType = new System.Windows.Forms.Label();
             this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.gbImgurUserAccount = new System.Windows.Forms.GroupBox();
             this.btnImgurOpenAuthorizePage = new System.Windows.Forms.Button();
@@ -196,8 +198,6 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.cbImgurThumbnailType = new System.Windows.Forms.ComboBox();
-            this.lblImgurThumbnailType = new System.Windows.Forms.Label();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -518,6 +518,25 @@
             this.tpImgur.TabIndex = 2;
             this.tpImgur.Text = "Imgur";
             this.tpImgur.UseVisualStyleBackColor = true;
+            // 
+            // cbImgurThumbnailType
+            // 
+            this.cbImgurThumbnailType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbImgurThumbnailType.FormattingEnabled = true;
+            this.cbImgurThumbnailType.Location = new System.Drawing.Point(104, 52);
+            this.cbImgurThumbnailType.Name = "cbImgurThumbnailType";
+            this.cbImgurThumbnailType.Size = new System.Drawing.Size(144, 21);
+            this.cbImgurThumbnailType.TabIndex = 16;
+            this.cbImgurThumbnailType.SelectedIndexChanged += new System.EventHandler(this.cbImgurThumbnailType_SelectedIndexChanged);
+            // 
+            // lblImgurThumbnailType
+            // 
+            this.lblImgurThumbnailType.AutoSize = true;
+            this.lblImgurThumbnailType.Location = new System.Drawing.Point(16, 56);
+            this.lblImgurThumbnailType.Name = "lblImgurThumbnailType";
+            this.lblImgurThumbnailType.Size = new System.Drawing.Size(82, 13);
+            this.lblImgurThumbnailType.TabIndex = 17;
+            this.lblImgurThumbnailType.Text = "Thumbnail type:";
             // 
             // atcImgurAccountType
             // 
@@ -1972,7 +1991,7 @@
             this.tpSharedFolders.Padding = new System.Windows.Forms.Padding(3);
             this.tpSharedFolders.Size = new System.Drawing.Size(772, 448);
             this.tpSharedFolders.TabIndex = 5;
-            this.tpSharedFolders.Text = "Shared Folders";
+            this.tpSharedFolders.Text = "Shared Folders or Web Servers";
             this.tpSharedFolders.UseVisualStyleBackColor = true;
             // 
             // ucLocalhostAccounts
@@ -1998,25 +2017,6 @@
             this.actRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
-            // 
-            // cbImgurThumbnailType
-            // 
-            this.cbImgurThumbnailType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbImgurThumbnailType.FormattingEnabled = true;
-            this.cbImgurThumbnailType.Location = new System.Drawing.Point(104, 52);
-            this.cbImgurThumbnailType.Name = "cbImgurThumbnailType";
-            this.cbImgurThumbnailType.Size = new System.Drawing.Size(144, 21);
-            this.cbImgurThumbnailType.TabIndex = 16;
-            this.cbImgurThumbnailType.SelectedIndexChanged += new System.EventHandler(this.cbImgurThumbnailType_SelectedIndexChanged);
-            // 
-            // lblImgurThumbnailType
-            // 
-            this.lblImgurThumbnailType.AutoSize = true;
-            this.lblImgurThumbnailType.Location = new System.Drawing.Point(16, 56);
-            this.lblImgurThumbnailType.Name = "lblImgurThumbnailType";
-            this.lblImgurThumbnailType.Size = new System.Drawing.Size(82, 13);
-            this.lblImgurThumbnailType.TabIndex = 17;
-            this.lblImgurThumbnailType.Text = "Thumbnail type:";
             // 
             // UploadersConfigForm
             // 

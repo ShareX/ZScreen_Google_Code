@@ -133,6 +133,19 @@ namespace HelpersLib
             Type = nameParserType;
         }
 
+        public string RemovePrefixes(string host)
+        {
+            string[] lPrefixes = new string[] { "http://", "https://" };
+            foreach (string prefix in lPrefixes)
+            {
+                if (host.StartsWith(prefix))
+                {
+                    host = host.Remove(0, prefix.Length);
+                }
+            }
+            return host;
+        }
+
         public string Convert(string pattern)
         {
             if (string.IsNullOrEmpty(pattern))
