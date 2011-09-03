@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace UploadersLib.HelperClasses
 {
@@ -192,7 +193,14 @@ namespace UploadersLib.HelperClasses
         {
             if (!string.IsNullOrEmpty(fp))
             {
-                return new Uri(fp).AbsoluteUri;
+                try
+                {
+                    return new Uri(fp).AbsoluteUri;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                }
             }
             return string.Empty;
         }
