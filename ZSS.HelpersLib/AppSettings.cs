@@ -51,6 +51,8 @@ namespace HelpersLib
         public bool ShowMainWindow = false;
         public bool ShowInTaskbar = true;
 
+        public bool Windows7TaskbarIntegration = true;
+
         public FormWindowState WindowState = FormWindowState.Normal;
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;

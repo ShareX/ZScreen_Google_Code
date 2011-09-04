@@ -69,6 +69,7 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
+            this.Icon = Resources.zss_main;
             this.WindowState = Engine.AppConf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
             BackgroundWorker bwConfig = new BackgroundWorker();
@@ -210,11 +211,6 @@ namespace ZScreenGUI
                 FileSystem.BackupAppSettings();
             }
 
-            if (Engine.conf.Windows7TaskbarIntegration && Engine.HasWindows7)
-            {
-                ZScreen_Windows7onlyTasks();
-            }
-
             UpdateHotkeys(false);
             InitKeyboardHook();
 
@@ -234,6 +230,12 @@ namespace ZScreenGUI
             Engine.MyLogger.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
 
             UseCommandLineArg(Loader.CommandLineArg);
+
+            if (Engine.AppConf.Windows7TaskbarIntegration && Engine.HasWindows7)
+            {
+                ZScreen_Windows7onlyTasks();
+            }
+
             IsReady = true;
         }
 
@@ -253,6 +255,48 @@ namespace ZScreenGUI
                 }
 
                 Refresh();
+            }
+        }
+
+        private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Save Destinations
+
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
+
+            // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
+            if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
+            {
+                if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
+                {
+                    CloseMethod = CloseMethod.CloseButton;
+                }
+                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                {
+                    WindowState = FormWindowState.Minimized;
+                    e.Cancel = true;
+                }
+                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
+                {
+                    Hide();
+                    DelayedTrimMemoryUse();
+                    if (Engine.conf.AutoSaveSettings) Engine.WriteSettingsAsync();
+                    e.Cancel = true;
+                }
+            }
+
+            // If really ZScreen is closing
+            if (!e.Cancel)
+            {
+                Engine.MyLogger.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
+                Engine.WriteSettings();
+                Engine.TurnOff();
             }
         }
 
@@ -394,47 +438,6 @@ namespace ZScreenGUI
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropRegionHotkeyInfo = chkRegionHotkeyInfo.Checked;
-        }
-
-        private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Save Destinations
-
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
-
-            // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
-            if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
-            {
-                if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
-                {
-                    CloseMethod = CloseMethod.CloseButton;
-                }
-                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
-                {
-                    WindowState = FormWindowState.Minimized;
-                    e.Cancel = true;
-                }
-                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
-                {
-                    Hide();
-                    DelayedTrimMemoryUse();
-                    if (Engine.conf.AutoSaveSettings) Engine.WriteSettingsAsync();
-                    e.Cancel = true;
-                }
-            }
-
-            // If really ZScreen is closing
-            if (!e.Cancel)
-            {
-                Engine.MyLogger.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
-                Engine.WriteSettings();
-            }
         }
 
         #region Trim memory
@@ -1849,7 +1852,7 @@ namespace ZScreenGUI
                 {
                     chkShowTaskbar.Checked = true; // Application requires to be shown in Taskbar for Windows 7 Integration
                 }
-                Engine.conf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
+                Engine.AppConf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
                 ZScreen_Windows7onlyTasks();
             }
         }

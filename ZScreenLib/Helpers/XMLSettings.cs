@@ -53,7 +53,6 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         public bool FirstRun = true;
-        public bool Windows7TaskbarIntegration = true;
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Main
