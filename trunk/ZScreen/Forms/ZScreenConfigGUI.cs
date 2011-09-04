@@ -61,8 +61,6 @@ namespace ZScreenGUI
 
         private void ZScreen_Preconfig()
         {
-            this.Icon = Resources.zss_main;
-
             // Tab Image List
             tabImageList.ColorDepth = ColorDepth.Depth32Bit;
             tabImageList.Images.Add("application_form", Resources.application_form);
@@ -203,7 +201,7 @@ namespace ZScreenGUI
             chkShowTaskbar.Checked = Engine.AppConf.ShowInTaskbar;
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.conf.Windows7TaskbarIntegration;
+            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.AppConf.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
             // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
@@ -461,7 +459,7 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (!Engine.conf.Windows7TaskbarIntegration)
+            if (!Engine.AppConf.Windows7TaskbarIntegration)
             {
                 if (Engine.zJumpList != null)
                 {
@@ -469,7 +467,8 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (Engine.conf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
+            else if (Engine.AppConf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
+                && this.ShowInTaskbar && this.WindowState == FormWindowState.Normal)
             {
                 try
                 {
