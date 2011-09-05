@@ -27,7 +27,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public partial class RegionCapturePreview : Form
     {

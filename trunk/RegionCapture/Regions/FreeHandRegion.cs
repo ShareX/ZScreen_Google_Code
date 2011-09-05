@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public class FreeHandRegion : Surface
     {

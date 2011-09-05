@@ -26,7 +26,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public class DragableRegion : Surface
     {

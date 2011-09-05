@@ -25,7 +25,7 @@
 
 using System.Drawing;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public class DrawableObject
     {

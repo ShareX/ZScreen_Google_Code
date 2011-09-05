@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersAPILib", "ZAPI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUploaderScreenshotPlugin", "ZUploaderScreenshotPlugin\ZUploaderScreenshotPlugin.csproj", "{A269F11C-43AC-4210-B716-BD621C915B43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionCapture", "RegionCapture\RegionCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "RegionCapture\ScreenCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
