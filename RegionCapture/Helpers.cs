@@ -29,7 +29,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public static class Helpers
     {
@@ -65,12 +65,24 @@ namespace RegionCapture
 
             if (handle.ToInt32() > 0)
             {
-                Rectangle rect = NativeMethods.GetWindowRectangle(handle);
+                Rectangle rect = GetWindowRectangle(handle);
 
                 return GetScreenshot(rect);
             }
 
             return null;
+        }
+
+        public static Rectangle GetWindowRectangle(IntPtr handle)
+        {
+            Rectangle rect;
+
+            if (Environment.OSVersion.Version.Major < 6 || !NativeMethods.GetExtendedFrameBounds(handle, out rect))
+            {
+                rect = NativeMethods.GetWindowRect(handle);
+            }
+
+            return NativeMethods.MaximizedWindowFix(handle, rect);
         }
 
         public static Rectangle GetScreenBounds()

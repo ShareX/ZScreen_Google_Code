@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using RegionCapture;
+using ScreenCapture;
 using ZUploaderPluginBase;
 using ZUploaderScreenshotPlugin.Properties;
 
@@ -13,7 +13,7 @@ namespace ZUploaderScreenshotPlugin
     {
         public override string Name
         {
-            get { return "Screenshot capture"; }
+            get { return "Screenshot Plugin"; }
         }
 
         public override Version Version
@@ -28,7 +28,7 @@ namespace ZUploaderScreenshotPlugin
 
         public override string Description
         {
-            get { return "Fullscreen capture, Crop capture"; }
+            get { return "Fullscreen, active window, rectangle, rounded rectangle, ellipse, triangle, diamond, polygon, freehand captures"; }
         }
 
         public override void Initialize()

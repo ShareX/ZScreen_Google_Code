@@ -1,4 +1,4 @@
-﻿namespace RegionCapture
+﻿namespace ScreenCapture
 {
     partial class RegionCapturePreview
     {

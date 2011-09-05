@@ -1,4 +1,4 @@
-﻿namespace RegionCapture
+﻿namespace ScreenCapture
 {
     public enum NodePosition { TopLeft, Top, TopRight, Right, BottomRight, Bottom, BottomLeft, Left }
 

@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RegionCapture
+namespace ScreenCapture
 {
     public static class NativeMethods
     {
@@ -142,18 +142,6 @@ namespace RegionCapture
             NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
             NativeMethods.GetWindowPlacement(handle, ref wp);
             return wp.showCmd == (int)NativeMethods.SHOWWINDOW.SW_MAXIMIZE;
-        }
-
-        public static Rectangle GetWindowRectangle(IntPtr handle)
-        {
-            Rectangle rect;
-
-            if (Environment.OSVersion.Version.Major < 6 || !GetExtendedFrameBounds(handle, out rect))
-            {
-                rect = GetWindowRect(handle);
-            }
-
-            return MaximizedWindowFix(handle, rect);
         }
 
         public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)

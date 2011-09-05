@@ -53,9 +53,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RegionCapture\RegionCapture.csproj">
+    <ProjectReference Include="..\RegionCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
-      <Name>RegionCapture</Name>
+      <Name>ScreenCapture</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZUploaderPlugin\ZUploaderPlugin.csproj">
       <Project>{0FF779CC-C98B-4712-98DE-22DC2DDE4B58}</Project>
