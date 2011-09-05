@@ -22,8 +22,6 @@ namespace ZUploader
 
             manager = new ExtensionManager<ZUploaderPlugin, IPluginHost>();
             manager.LoadDefaultFileExtensions();
-            manager.AssemblyFailedLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyFailedLoadingEventHandler(manager_AssemblyFailedLoading);
-            manager.AssemblyLoading += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadingEventHandler(manager_AssemblyLoading);
             manager.AssemblyLoaded += new ExtensionManager<ZUploaderPlugin, IPluginHost>.AssemblyLoadedEventHandler(manager_AssemblyLoaded);
             host = pluginHost;
         }
@@ -32,16 +30,6 @@ namespace ZUploader
         {
             string assemblyPath = Path.Combine(PluginFolderPath, args.Name.Substring(0, args.Name.IndexOf(",")) + ".dll");
             return Assembly.LoadFrom(assemblyPath);
-        }
-
-        private void manager_AssemblyFailedLoading(object sender, AssemblyFailedLoadingEventArgs e)
-        {
-            Program.MyLogger.WriteLine("Plugin load failed: {0}\r\n{1}", e.Filename, e.ErrorMessage);
-        }
-
-        private void manager_AssemblyLoading(object sender, AssemblyLoadingEventArgs e)
-        {
-            Program.MyLogger.WriteLine("Plugin loading: " + e.Filename);
         }
 
         private void manager_AssemblyLoaded(object sender, AssemblyLoadedEventArgs e)

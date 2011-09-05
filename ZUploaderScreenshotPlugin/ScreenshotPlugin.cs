@@ -73,16 +73,35 @@ namespace ZUploaderScreenshotPlugin
             tsmiFreeHand.Image = Resources.FreeHand;
             tsmiFreeHand.Click += new EventHandler(tsmiFreeHand_Click);
 
+            #region Hotkeys
+
             tsmiFullscreen.ShortcutKeyDisplayString = "PrintScreen";
             Host.RegisterPluginHotkey(Keys.PrintScreen, () => CaptureScreen(false));
 
             tsmiRectangle.ShortcutKeyDisplayString = "Ctrl + PrintScreen";
             Host.RegisterPluginHotkey(Keys.Control | Keys.PrintScreen, () => CaptureRegion(new RectangleRegion(), false));
 
+            tsmiRoundedRectangle.ShortcutKeyDisplayString = "Ctrl + Shift + R";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.Shift | Keys.R, () => CaptureRegion(new RoundedRectangleRegion(), false));
+
+            tsmiEllipse.ShortcutKeyDisplayString = "Ctrl + Shift + E";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.Shift | Keys.E, () => CaptureRegion(new EllipseRegion(), false));
+
+            tsmiTriangle.ShortcutKeyDisplayString = "Ctrl + Shift + T";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.Shift | Keys.T, () => CaptureRegion(new TriangleRegion(), false));
+
+            tsmiDiamond.ShortcutKeyDisplayString = "Ctrl + Shift + D";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.Shift | Keys.D, () => CaptureRegion(new DiamondRegion(), false));
+
+            tsmiPolygon.ShortcutKeyDisplayString = "Ctrl + Shift + P";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.Shift | Keys.P, () => CaptureRegion(new PolygonRegion(), false));
+
             tsmiFreeHand.ShortcutKeyDisplayString = "Shift + PrintScreen";
             Host.RegisterPluginHotkey(Keys.Shift | Keys.PrintScreen, () => CaptureRegion(new FreeHandRegion(), false));
 
             Host.RegisterPluginHotkey(Keys.Alt | Keys.PrintScreen, () => CaptureActiveWindow(false));
+
+            #endregion Hotkeys
 
             Host.AddPluginButton(tsmiFullscreen);
             Host.AddPluginButton(tsmiRectangle);

@@ -33,6 +33,7 @@
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
+            this.cbLoadPlugins = new System.Windows.Forms.CheckBox();
             this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOpenZUploaderPath = new System.Windows.Forms.Button();
@@ -81,7 +82,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbLoadPlugins = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -161,6 +161,17 @@
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbLoadPlugins
+            // 
+            this.cbLoadPlugins.AutoSize = true;
+            this.cbLoadPlugins.Location = new System.Drawing.Point(16, 112);
+            this.cbLoadPlugins.Name = "cbLoadPlugins";
+            this.cbLoadPlugins.Size = new System.Drawing.Size(136, 17);
+            this.cbLoadPlugins.TabIndex = 20;
+            this.cbLoadPlugins.Text = "Load plugins on startup";
+            this.cbLoadPlugins.UseVisualStyleBackColor = true;
+            this.cbLoadPlugins.CheckedChanged += new System.EventHandler(this.cbLoadPlugins_CheckedChanged);
             // 
             // cbURLShortenAfterUpload
             // 
@@ -731,24 +742,12 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbLoadPlugins
-            // 
-            this.cbLoadPlugins.AutoSize = true;
-            this.cbLoadPlugins.Location = new System.Drawing.Point(16, 112);
-            this.cbLoadPlugins.Name = "cbLoadPlugins";
-            this.cbLoadPlugins.Size = new System.Drawing.Size(136, 17);
-            this.cbLoadPlugins.TabIndex = 20;
-            this.cbLoadPlugins.Text = "Load plugins on startup";
-            this.cbLoadPlugins.UseVisualStyleBackColor = true;
-            this.cbLoadPlugins.CheckedChanged += new System.EventHandler(this.cbLoadPlugins_CheckedChanged);
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 291);
             this.Controls.Add(this.tcSettings);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Padding = new System.Windows.Forms.Padding(3);
