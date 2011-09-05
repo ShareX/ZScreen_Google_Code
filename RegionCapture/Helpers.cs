@@ -47,6 +47,32 @@ namespace RegionCapture
             return screenshot;
         }
 
+        public static Bitmap GetScreenshot(Rectangle rect)
+        {
+            Bitmap screenshot = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(screenshot))
+            {
+                g.CopyFromScreen(rect.Location, Point.Empty, rect.Size, CopyPixelOperation.SourceCopy);
+            }
+
+            return screenshot;
+        }
+
+        public static Bitmap GetActiveWindowScreenshot()
+        {
+            IntPtr handle = NativeMethods.GetForegroundWindow();
+
+            if (handle.ToInt32() > 0)
+            {
+                Rectangle rect = NativeMethods.GetWindowRectangle(handle);
+
+                return GetScreenshot(rect);
+            }
+
+            return null;
+        }
+
         public static Rectangle GetScreenBounds()
         {
             return SystemInformation.VirtualScreen;

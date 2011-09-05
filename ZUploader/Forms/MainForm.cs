@@ -36,7 +36,7 @@ using ZUploaderPluginBase;
 
 namespace ZUploader
 {
-    public partial class MainForm : Form, IPluginHost
+    public partial class MainForm : HotkeyForm, IPluginHost
     {
         public bool IsReady { get; private set; }
 
@@ -606,6 +606,16 @@ namespace ZUploader
         public void UploadText(string text)
         {
             UploadManager.UploadText(text);
+        }
+
+        public void RegisterPluginHotkey(Keys key, Action action)
+        {
+            RegisterHotkey(key, action);
+        }
+
+        public void UnregisterPluginHotkey(Keys key, Action action)
+        {
+            UnregisterHotkey(key);
         }
 
         #endregion IPluginHost

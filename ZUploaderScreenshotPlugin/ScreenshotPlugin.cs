@@ -73,6 +73,17 @@ namespace ZUploaderScreenshotPlugin
             tsmiFreeHand.Image = Resources.FreeHand;
             tsmiFreeHand.Click += new EventHandler(tsmiFreeHand_Click);
 
+            tsmiFullscreen.ShortcutKeyDisplayString = "PrintScreen";
+            Host.RegisterPluginHotkey(Keys.PrintScreen, () => CaptureScreen(false));
+
+            tsmiRectangle.ShortcutKeyDisplayString = "Ctrl + PrintScreen";
+            Host.RegisterPluginHotkey(Keys.Control | Keys.PrintScreen, () => CaptureRegion(new RectangleRegion(), false));
+
+            tsmiFreeHand.ShortcutKeyDisplayString = "Shift + PrintScreen";
+            Host.RegisterPluginHotkey(Keys.Shift | Keys.PrintScreen, () => CaptureRegion(new FreeHandRegion(), false));
+
+            Host.RegisterPluginHotkey(Keys.Alt | Keys.PrintScreen, () => CaptureActiveWindow(false));
+
             Host.AddPluginButton(tsmiFullscreen);
             Host.AddPluginButton(tsmiRectangle);
             Host.AddPluginButton(tsmiRoundedRectangle);
@@ -99,21 +110,16 @@ namespace ZUploaderScreenshotPlugin
             }
         }
 
-        private void CaptureRegion(Surface surface)
+        private void Capture(Action action, bool autoHide = true)
         {
-            BeforeCapture();
+            if (autoHide)
+            {
+                BeforeCapture();
+            }
 
             try
             {
-                Image screenshot = Helpers.GetScreenshot();
-
-                surface.LoadBackground(screenshot);
-
-                if (surface.ShowDialog() == DialogResult.OK)
-                {
-                    Image img = surface.GetRegionImage();
-                    AfterCapture(img);
-                }
+                action();
             }
             catch (Exception ex)
             {
@@ -125,23 +131,43 @@ namespace ZUploaderScreenshotPlugin
             }
         }
 
-        private void tsmiFullscreen_Click(object sender, EventArgs e)
+        private void CaptureScreen(bool autoHide = true)
         {
-            BeforeCapture();
-
-            try
+            Capture(() =>
             {
                 Image screenshot = Helpers.GetScreenshot();
                 AfterCapture(screenshot);
-            }
-            catch (Exception ex)
+            }, autoHide);
+        }
+
+        private void CaptureActiveWindow(bool autoHide = true)
+        {
+            Capture(() =>
             {
-                Debug.WriteLine(ex.ToString());
-            }
-            finally
+                Image screenshot = Helpers.GetActiveWindowScreenshot();
+                AfterCapture(screenshot);
+            }, autoHide);
+        }
+
+        private void CaptureRegion(Surface surface, bool autoHide = true)
+        {
+            Capture(() =>
             {
-                AfterCapture();
-            }
+                Image screenshot = Helpers.GetScreenshot();
+
+                surface.LoadBackground(screenshot);
+
+                if (surface.ShowDialog() == DialogResult.OK)
+                {
+                    Image img = surface.GetRegionImage();
+                    AfterCapture(img);
+                }
+            }, autoHide);
+        }
+
+        private void tsmiFullscreen_Click(object sender, EventArgs e)
+        {
+            CaptureScreen();
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)
