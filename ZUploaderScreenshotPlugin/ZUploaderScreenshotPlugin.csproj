@@ -53,7 +53,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RegionCapture\ScreenCapture.csproj">
+    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
     </ProjectReference>
