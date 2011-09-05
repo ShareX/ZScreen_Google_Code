@@ -191,14 +191,6 @@ namespace ExtensionManager
                 // It's in the compiled file extension list, so just load it
                 this.LoadCompiledFile(filename);
             }
-            else
-            {
-                // Unknown extension, raise the failed loading event
-                AssemblyFailedLoadingEventArgs e = new AssemblyFailedLoadingEventArgs(filename);
-                e.ExtensionType = ExtensionType.Unknown;
-                e.ErrorMessage = "File (" + filename + ") does not match any SourceFileExtensionMappings or CompiledFileExtensions and cannot be loaded.";
-                this.OnAssemblyFailedLoading(e);
-            }
         }
 
         #endregion Public Methods
