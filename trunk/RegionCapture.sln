@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionCapture", "RegionCapture\RegionCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegionCaptureTest", "RegionCaptureTest\RegionCaptureTest.csproj", "{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "ScreenCapture\ScreenCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,16 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|x86.ActiveCfg = Release|Any CPU
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -35,6 +25,16 @@ Global
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Release|Mixed Platforms.Build.0 = Release|x86
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Release|x86.ActiveCfg = Release|x86
 		{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}.Release|x86.Build.0 = Release|x86
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

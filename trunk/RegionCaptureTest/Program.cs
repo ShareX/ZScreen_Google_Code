@@ -25,7 +25,7 @@
 
 using System;
 using System.Windows.Forms;
-using RegionCapture;
+using ScreenCapture;
 
 namespace RegionCaptureTest
 {
