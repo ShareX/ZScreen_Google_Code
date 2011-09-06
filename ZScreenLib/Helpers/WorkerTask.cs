@@ -36,7 +36,7 @@ using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using RegionCapture;
+using ScreenCapture;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.FileUploaders;

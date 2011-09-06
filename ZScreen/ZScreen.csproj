@@ -355,10 +355,6 @@
       <Project>{1D8C78B8-96D0-474A-96DA-84732D52C87A}</Project>
       <Name>ZSS.ResourcesLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
-      <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
-      <Name>ZSS.UpdateCheckerLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
       <Name>ZSS.UploadersLib</Name>
