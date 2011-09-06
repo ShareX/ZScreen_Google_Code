@@ -252,9 +252,9 @@
       <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
       <Name>ImageQuantization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RegionCapture\RegionCapture.csproj">
+    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
-      <Name>RegionCapture</Name>
+      <Name>ScreenCapture</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
@@ -275,10 +275,6 @@
     <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
       <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
       <Name>ZSS.IndexersLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZSS.UpdateChecker\ZSS.UpdateCheckerLib.csproj">
-      <Project>{091475E0-BF06-4D9D-9A4D-7E71BE08FB96}</Project>
-      <Name>ZSS.UpdateCheckerLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>

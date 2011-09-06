@@ -129,6 +129,14 @@
     <Compile Include="UserControls\MyPictureBox.Designer.cs">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateChecker\UpdateChecker.cs" />
+    <Compile Include="UpdateChecker\UpdateInfo.cs" />
+    <Compile Include="UpdateChecker\UpdaterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateChecker\UpdaterForm.designer.cs">
+      <DependentUpon>UpdaterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="XmlFileNameEditor.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="XMLSettingsBase.cs" />
@@ -159,6 +167,10 @@
     </Compile>
     <EmbeddedResource Include="UserControls\MyPictureBox.resx">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateChecker\UpdaterForm.resx">
+      <DependentUpon>UpdaterForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
