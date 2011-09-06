@@ -170,6 +170,12 @@ namespace ZUploader
             if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
 
             StartTimer = Stopwatch.StartNew();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            SplashForm.ShowSplash();
+
             MyLogger = new Logger();
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
@@ -187,9 +193,6 @@ namespace ZUploader
                 LoadUploadersConfig();
             });
             settingThread.Start();
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             MyLogger.WriteLine("new MainForm() started");
             mainForm = new MainForm();
