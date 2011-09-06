@@ -116,13 +116,6 @@ namespace ZUploader.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap diamond {
-            get {
-                object obj = ResourceManager.GetObject("diamond", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap document__arrow {
             get {
                 object obj = ResourceManager.GetObject("document--arrow", resourceCulture);
@@ -189,6 +182,13 @@ namespace ZUploader.Properties {
         internal static System.Drawing.Bitmap notebook {
             get {
                 object obj = ResourceManager.GetObject("notebook", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap present {
+            get {
+                object obj = ResourceManager.GetObject("present", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

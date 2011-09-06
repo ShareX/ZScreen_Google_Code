@@ -11,15 +11,25 @@ using ZUploader.Properties;
 
 namespace ZUploader
 {
-    public partial class SplashForm : Form
+    public class SplashForm : Form
     {
         private static Thread splashThread;
         private static SplashForm splashForm;
 
         public SplashForm(Image splashImage)
         {
-            InitializeComponent();
-            BackgroundImage = splashImage;
+            this.SuspendLayout();
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(splashImage.Width, splashImage.Height);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.BackgroundImage = splashImage;
+            this.Name = "SplashForm";
+            this.ShowInTaskbar = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "SplashForm";
+            this.TopMost = true;
+            this.ResumeLayout(false);
         }
 
         public static void ShowSplash()
@@ -29,6 +39,18 @@ namespace ZUploader
                 splashThread = new Thread(DoShowSplash);
                 splashThread.IsBackground = true;
                 splashThread.Start();
+            }
+        }
+
+        public static void CloseSplash()
+        {
+            if (splashForm.InvokeRequired)
+            {
+                splashForm.Invoke(new MethodInvoker(CloseSplash));
+            }
+            else
+            {
+                Application.ExitThread();
             }
         }
 
@@ -42,16 +64,15 @@ namespace ZUploader
             Application.Run(splashForm);
         }
 
-        public static void CloseSplash()
+        private IContainer components = null;
+
+        protected override void Dispose(bool disposing)
         {
-            if (splashForm.InvokeRequired)
+            if (disposing && (components != null))
             {
-                splashForm.Invoke(new MethodInvoker(CloseSplash));
+                components.Dispose();
             }
-            else
-            {
-                Application.ExitThread();
-            }
+            base.Dispose(disposing);
         }
     }
 }
