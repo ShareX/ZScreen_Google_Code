@@ -12,7 +12,7 @@
     <AssemblyName>ZUploader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>zss-main.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\ZUploaderIcon.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -176,6 +176,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ZUploaderIcon.ico" />
     <None Include="Resources\navigation-090-button.png" />
     <None Include="Resources\cross-button.png" />
     <None Include="Resources\tick-button.png" />
@@ -201,7 +202,6 @@
     <None Include="Resources\block.png" />
     <None Include="Resources\ZUploaderLogo.png" />
     <None Include="Resources\present.png" />
-    <Content Include="zss-main.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
