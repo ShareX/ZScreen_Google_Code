@@ -32,6 +32,7 @@ using HistoryLib;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZUploader.Properties;
 using ZUploaderPluginBase;
 
 namespace ZUploader
@@ -68,6 +69,7 @@ namespace ZUploader
             InitializeComponent();
 
             this.Text = Program.Title;
+            this.Icon = Resources.ZUploaderIcon;
 
             foreach (string imageUploader in ZAppHelper.GetEnumDescriptions<ImageDestination>())
             {

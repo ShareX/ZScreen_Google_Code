@@ -1,14 +1,14 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZUploader")]
-[assembly: AssemblyDescription("A program that allows you to upload images, texts or files")]
+[assembly: AssemblyTitle("ScreenCapture")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZScreen Developers")]
-[assembly: AssemblyProduct("ZUploader")]
+[assembly: AssemblyProduct("ScreenCapture")]
 [assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2297155a-a3f0-496e-9233-30158a687333")]
+[assembly: Guid("9a892054-a73a-4fc1-9166-e97b425b874a")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("4.2.5.2500")]
-[assembly: AssemblyFileVersion("4.2.5")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

@@ -214,6 +214,13 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Icon ZUploaderIcon {
+            get {
+                object obj = ResourceManager.GetObject("ZUploaderIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ZUploaderLogo {
             get {
                 object obj = ResourceManager.GetObject("ZUploaderLogo", resourceCulture);
