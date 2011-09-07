@@ -2,29 +2,29 @@
 <Update>
   <ZScreen>
     <Stable>
-      <Version>3.27.3.1</Version>
-      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZScreen-3.27.3.1-setup.exe</URL>
-      <Date>2011-03-15</Date>
+      <Version>4.2.5</Version>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.5.2503-setup.exe</URL>
+      <Date>2011-09-07</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
     </Stable>
     <Beta>
       <Version>4.2.5</Version>
-      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.5.2499-setup.exe</URL>
-      <Date>2011-09-06</Date>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.5.2503-setup.exe</URL>
+      <Date>2011-09-07</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
     </Beta>
     <Dev>
-      <Version>4.2.5.2499</Version>
-      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.5.2499-setup.exe</URL>
-      <Date>2011-09-06</Date>
+      <Version>4.2.5.2503</Version>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.2.5.2503-setup.exe</URL>
+      <Date>2011-09-07</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
     </Dev>
   </ZScreen>
   <ZUploader>
     <Stable>
-      <Version>3.8.0.0</Version>
-      <URL>http://code.google.com/p/zscreen/downloads/detail?name=ZUploader-3.8-Beta.zip</URL>
-      <Date>2011-01-02</Date>
+      <Version>4.0.0.2503</Version>
+      <URL>http://zscreen.googlecode.com/files/ZUploader-4.0.0.2503-setup.exe</URL>
+      <Date>2011-09-07</Date>
       <Summary>http://zscreen.googlecode.com/svn/branches/ZUploader/ZUploader/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ZUploader>
