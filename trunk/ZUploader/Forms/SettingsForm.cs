@@ -39,13 +39,11 @@ namespace ZUploader
 
         private bool loaded;
         private ContextMenuStrip codesMenu;
-        private MainForm mainForm;
 
-        public SettingsForm(MainForm mainForm)
+        public SettingsForm()
         {
             InitializeComponent();
             LoadSettings();
-            this.mainForm = mainForm;
             loaded = true;
         }
 
@@ -217,7 +215,7 @@ namespace ZUploader
             if (loaded)
             {
                 Program.Settings.ShowTray = cbShowTray.Checked;
-                mainForm.niTray.Visible = Program.Settings.ShowTray;
+                Program.mainForm.niTray.Visible = Program.Settings.ShowTray;
             }
         }
 

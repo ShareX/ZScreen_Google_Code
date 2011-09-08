@@ -161,7 +161,7 @@ namespace ZUploader
             }
         }
 
-        private static MainForm mainForm;
+        public static MainForm mainForm;
 
         [STAThread]
         private static void Main(string[] args)

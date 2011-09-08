@@ -428,7 +428,7 @@ namespace ZUploader
 
         private void tsbSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm form = new SettingsForm(this);
+            SettingsForm form = new SettingsForm();
             form.Icon = this.Icon;
             form.Show();
         }
@@ -584,6 +584,16 @@ namespace ZUploader
             if (!Visible)
             {
                 Show();
+            }
+        }
+
+        private void niTray_BalloonTipClicked(object sender, EventArgs e)
+        {
+            string url = niTray.Tag as string;
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                StaticHelper.LoadBrowser(url);
             }
         }
 
