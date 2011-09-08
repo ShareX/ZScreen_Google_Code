@@ -102,6 +102,7 @@ namespace ZUploader
             this.tsmiTrayFileUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbDebug = new System.Windows.Forms.ToolStripButton();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -205,6 +206,7 @@ namespace ZUploader
             this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClipboardUpload,
             this.tsbFileUpload,
+            this.tsbDebug,
             this.tssMain1,
             this.tsbCopy,
             this.tsbOpen,
@@ -220,7 +222,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(769, 33);
+            this.tsMain.Size = new System.Drawing.Size(921, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -518,6 +520,16 @@ namespace ZUploader
             this.tsmiTrayExit.Text = "Exit";
             this.tsmiTrayExit.Click += new System.EventHandler(this.tsmiTrayExit_Click);
             // 
+            // tsbDebug
+            // 
+            this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
+            this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDebug.Name = "tsbDebug";
+            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
+            this.tsbDebug.Text = "Test upload";
+            this.tsbDebug.Visible = false;
+            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -599,5 +611,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiTrayFileUpload;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.NotifyIcon niTray;
+        private System.Windows.Forms.ToolStripButton tsbDebug;
     }
 }
