@@ -107,6 +107,10 @@ namespace ZUploader
             lvUploads.FillLastColumn();
 
             UploadManager.ListViewControl = lvUploads;
+
+#if DEBUG
+            tsbDebug.Visible = true;
+#endif
         }
 
         private void LoadSettings()
@@ -409,6 +413,11 @@ namespace ZUploader
         private void tsbFileUpload_Click(object sender, EventArgs e)
         {
             UploadManager.UploadFile();
+        }
+
+        private void tsbDebug_Click(object sender, EventArgs e)
+        {
+            UploadManager.UploadImage(Resources.ZUploaderLogo);
         }
 
         private void tsbCopy_Click(object sender, EventArgs e)
