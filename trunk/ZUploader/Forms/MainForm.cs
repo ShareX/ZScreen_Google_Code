@@ -42,6 +42,7 @@ namespace ZUploader
         public bool IsReady { get; private set; }
 
         private PluginManager pluginManager;
+        private bool trayClose;
 
         public MainForm()
         {
@@ -70,6 +71,7 @@ namespace ZUploader
 
             this.Text = Program.Title;
             this.Icon = Resources.ZUploaderIcon;
+            niTray.Icon = this.Icon;
 
             foreach (string imageUploader in ZAppHelper.GetEnumDescriptions<ImageDestination>())
             {
@@ -109,6 +111,8 @@ namespace ZUploader
 
         private void LoadSettings()
         {
+            niTray.Visible = Program.Settings.ShowTray;
+
             if (ZAppHelper.GetEnumLength<ImageDestination>() <= Program.Settings.SelectedImageUploaderDestination)
             {
                 Program.Settings.SelectedImageUploaderDestination = 0;
@@ -369,6 +373,15 @@ namespace ZUploader
             this.Refresh();
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing && Program.Settings.ShowTray && !trayClose)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
+
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop, false) ||
@@ -390,22 +403,7 @@ namespace ZUploader
 
         private void tsbClipboardUpload_Click(object sender, EventArgs e)
         {
-            if (Program.Settings.ShowClipboardContentViewer)
-            {
-                using (ClipboardContentViewer ccv = new ClipboardContentViewer())
-                {
-                    if (ccv.ShowDialog() == DialogResult.OK && !ccv.IsClipboardEmpty)
-                    {
-                        UploadManager.ClipboardUpload();
-                    }
-
-                    Program.Settings.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
-                }
-            }
-            else
-            {
-                UploadManager.ClipboardUpload();
-            }
+            UploadManager.ClipboardUploadWithContentViewer();
         }
 
         private void tsbFileUpload_Click(object sender, EventArgs e)
@@ -430,7 +428,7 @@ namespace ZUploader
 
         private void tsbSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm form = new SettingsForm();
+            SettingsForm form = new SettingsForm(this);
             form.Icon = this.Icon;
             form.Show();
         }
@@ -578,6 +576,34 @@ namespace ZUploader
         {
             new UploadersConfigForm(Program.UploadersConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon }.ShowDialog();
         }
+
+        #region Tray events
+
+        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!Visible)
+            {
+                Show();
+            }
+        }
+
+        private void tsmiTrayClipboardUpload_Click(object sender, EventArgs e)
+        {
+            UploadManager.ClipboardUploadWithContentViewer();
+        }
+
+        private void tsmiTrayFileUpload_Click(object sender, EventArgs e)
+        {
+            UploadManager.UploadFile();
+        }
+
+        private void tsmiTrayExit_Click(object sender, EventArgs e)
+        {
+            trayClose = true;
+            Close();
+        }
+
+        #endregion Tray events
 
         #endregion Form events
 

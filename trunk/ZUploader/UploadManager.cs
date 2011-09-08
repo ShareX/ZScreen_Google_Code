@@ -129,6 +129,26 @@ namespace ZUploader
             }
         }
 
+        public static void ClipboardUploadWithContentViewer()
+        {
+            if (Program.Settings.ShowClipboardContentViewer)
+            {
+                using (ClipboardContentViewer ccv = new ClipboardContentViewer())
+                {
+                    if (ccv.ShowDialog() == DialogResult.OK && !ccv.IsClipboardEmpty)
+                    {
+                        UploadManager.ClipboardUpload();
+                    }
+
+                    Program.Settings.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
+                }
+            }
+            else
+            {
+                UploadManager.ClipboardUpload();
+            }
+        }
+
         public static void DragDropUpload(IDataObject data)
         {
             if (data.GetDataPresent(DataFormats.FileDrop, false))

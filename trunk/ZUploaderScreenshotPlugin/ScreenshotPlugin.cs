@@ -31,8 +31,16 @@ namespace ZUploaderScreenshotPlugin
             get { return "Fullscreen, active window, rectangle, rounded rectangle, ellipse, triangle, diamond, polygon, freehand captures"; }
         }
 
+        public ScreenshotDestination Destination { get; set; }
+
+        private delegate Image ScreenCaptureDelegate();
+
         public override void Initialize()
         {
+            Destination = ScreenshotDestination.Upload;
+
+            #region Controls
+
             ToolStripMenuItem tsmiFullscreen = new ToolStripMenuItem();
             tsmiFullscreen.Text = "Fullscreen";
             tsmiFullscreen.Image = Resources.Fullscreen;
@@ -72,6 +80,8 @@ namespace ZUploaderScreenshotPlugin
             tsmiFreeHand.Text = "FreeHand";
             tsmiFreeHand.Image = Resources.FreeHand;
             tsmiFreeHand.Click += new EventHandler(tsmiFreeHand_Click);
+
+            #endregion Controls
 
             #region Hotkeys
 
@@ -113,32 +123,19 @@ namespace ZUploaderScreenshotPlugin
             Host.AddPluginButton(tsmiFreeHand);
         }
 
-        private void BeforeCapture()
+        private void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)
         {
-            Host.Hide();
-            Thread.Sleep(250);
-        }
-
-        private void AfterCapture(Image img = null)
-        {
-            Host.Show();
-
-            if (img != null)
+            if (autoHideForm)
             {
-                Host.UploadImage(img);
+                Host.Hide();
+                Thread.Sleep(250);
             }
-        }
 
-        private void Capture(Action action, bool autoHide = true)
-        {
-            if (autoHide)
-            {
-                BeforeCapture();
-            }
+            Image img = null;
 
             try
             {
-                action();
+                img = capture();
             }
             catch (Exception ex)
             {
@@ -146,42 +143,52 @@ namespace ZUploaderScreenshotPlugin
             }
             finally
             {
-                AfterCapture();
+                if (autoHideForm)
+                {
+                    Host.Show();
+                }
+
+                if (img != null)
+                {
+                    switch (Destination)
+                    {
+                        default:
+                        case ScreenshotDestination.Upload:
+                            Host.UploadImage(img);
+                            break;
+                        case ScreenshotDestination.Clipboard:
+                            Clipboard.SetImage(img);
+                            break;
+                    }
+                }
             }
         }
 
-        private void CaptureScreen(bool autoHide = true)
+        private void CaptureScreen(bool autoHideForm = true)
         {
-            Capture(() =>
-            {
-                Image screenshot = Helpers.GetScreenshot();
-                AfterCapture(screenshot);
-            }, autoHide);
+            Capture(Helpers.GetScreenshot, autoHideForm);
         }
 
-        private void CaptureActiveWindow(bool autoHide = true)
+        private void CaptureActiveWindow(bool autoHideForm = true)
         {
-            Capture(() =>
-            {
-                Image screenshot = Helpers.GetActiveWindowScreenshot();
-                AfterCapture(screenshot);
-            }, autoHide);
+            Capture(Helpers.GetActiveWindowScreenshot, autoHideForm);
         }
 
-        private void CaptureRegion(Surface surface, bool autoHide = true)
+        private void CaptureRegion(Surface surface, bool autoHideForm = true)
         {
             Capture(() =>
             {
-                Image screenshot = Helpers.GetScreenshot();
+                Image img = null, screenshot = Helpers.GetScreenshot();
 
                 surface.LoadBackground(screenshot);
 
                 if (surface.ShowDialog() == DialogResult.OK)
                 {
-                    Image img = surface.GetRegionImage();
-                    AfterCapture(img);
+                    img = surface.GetRegionImage();
                 }
-            }, autoHide);
+
+                return img;
+            }, autoHideForm);
         }
 
         private void tsmiFullscreen_Click(object sender, EventArgs e)

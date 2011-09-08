@@ -29,7 +29,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ScreenCapture;
 
-namespace ZUploaderScreenshotPlugin
+namespace ScreenCapture
 {
     public class CropLight : Form
     {
