@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="CLIManager.cs" />
+    <Compile Include="CLIParser.cs" />
     <Compile Include="ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>

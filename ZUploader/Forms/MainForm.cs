@@ -224,19 +224,22 @@ namespace ZUploader
             }
         }
 
-        public void UseCommandLineArg(string arg)
+        public void UseCommandLineArg(string args)
         {
-            if (!string.IsNullOrEmpty(arg))
+            if (!string.IsNullOrEmpty(args))
             {
-                arg = arg.Trim();
+                CLIParser parser = new CLIParser();
 
-                if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                foreach (string arg in parser.Parse(args))
                 {
-                    UploadManager.ClipboardUpload();
-                }
-                else
-                {
-                    UploadManager.UploadFile(arg);
+                    if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        UploadManager.ClipboardUpload();
+                    }
+                    else
+                    {
+                        UploadManager.UploadFile(arg);
+                    }
                 }
             }
         }
