@@ -39,15 +39,10 @@ namespace ZUploader
     public static class UploadManager
     {
         public static ImageDestination ImageUploader { get; set; }
-
         public static TextDestination TextUploader { get; set; }
-
         public static FileDestination FileUploader { get; set; }
-
         public static UrlShortenerType URLShortener { get; set; }
-
         public static MyListView ListViewControl { get; set; }
-
         public static List<Task> Tasks { get; private set; }
 
         static UploadManager()
@@ -343,6 +338,12 @@ namespace ZUploader
                             if (Program.Settings.SaveHistory)
                             {
                                 HistoryManager.AddHistoryItemAsync(Program.HistoryFilePath, info.GetHistoryItem());
+                            }
+
+                            if (Program.mainForm.niTray.Visible)
+                            {
+                                Program.mainForm.niTray.Tag = info.Result.URL;
+                                Program.mainForm.niTray.ShowBalloonTip(5000, "ZUploader - Upload completed", info.Result.URL, ToolTipIcon.Info);
                             }
                         }
 

@@ -98,10 +98,10 @@ namespace ZUploader
             this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrayClipboardUpload = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiTrayFileUpload = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -476,6 +476,7 @@ namespace ZUploader
             // 
             this.niTray.ContextMenuStrip = this.cmsTray;
             this.niTray.Text = "ZUploader";
+            this.niTray.BalloonTipClicked += new System.EventHandler(this.niTray_BalloonTipClicked);
             this.niTray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niTray_MouseDoubleClick);
             // 
             // cmsTray
@@ -488,14 +489,6 @@ namespace ZUploader
             this.cmsTray.Name = "cmsTray";
             this.cmsTray.Size = new System.Drawing.Size(176, 76);
             // 
-            // tsmiTrayExit
-            // 
-            this.tsmiTrayExit.Image = global::ZUploader.Properties.Resources.cross_button;
-            this.tsmiTrayExit.Name = "tsmiTrayExit";
-            this.tsmiTrayExit.Size = new System.Drawing.Size(175, 22);
-            this.tsmiTrayExit.Text = "Exit";
-            this.tsmiTrayExit.Click += new System.EventHandler(this.tsmiTrayExit_Click);
-            // 
             // tsmiTrayClipboardUpload
             // 
             this.tsmiTrayClipboardUpload.Image = global::ZUploader.Properties.Resources.clipboard__plus;
@@ -504,11 +497,6 @@ namespace ZUploader
             this.tsmiTrayClipboardUpload.Text = "Clipboard upload...";
             this.tsmiTrayClipboardUpload.Click += new System.EventHandler(this.tsmiTrayClipboardUpload_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
-            // 
             // tsmiTrayFileUpload
             // 
             this.tsmiTrayFileUpload.Image = global::ZUploader.Properties.Resources.folder__plus;
@@ -516,6 +504,19 @@ namespace ZUploader
             this.tsmiTrayFileUpload.Size = new System.Drawing.Size(175, 22);
             this.tsmiTrayFileUpload.Text = "File upload...";
             this.tsmiTrayFileUpload.Click += new System.EventHandler(this.tsmiTrayFileUpload_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
+            // 
+            // tsmiTrayExit
+            // 
+            this.tsmiTrayExit.Image = global::ZUploader.Properties.Resources.cross_button;
+            this.tsmiTrayExit.Name = "tsmiTrayExit";
+            this.tsmiTrayExit.Size = new System.Drawing.Size(175, 22);
+            this.tsmiTrayExit.Text = "Exit";
+            this.tsmiTrayExit.Click += new System.EventHandler(this.tsmiTrayExit_Click);
             // 
             // MainForm
             // 
