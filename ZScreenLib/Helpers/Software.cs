@@ -93,7 +93,7 @@ namespace ZScreenLib
 
         public static Software GetByName(string name)
         {
-            foreach (Software software in Engine.conf.ActionsList)
+            foreach (Software software in Engine.conf.ActionsAppList)
             {
                 if (software.Name == name) return software;
             }
@@ -103,7 +103,7 @@ namespace ZScreenLib
 
         public static bool Exist(string name)
         {
-            foreach (Software software in Engine.conf.ActionsList)
+            foreach (Software software in Engine.conf.ActionsAppList)
             {
                 if (software.Name == name) return true;
             }
@@ -115,11 +115,11 @@ namespace ZScreenLib
         {
             if (Exist(name))
             {
-                foreach (Software software in Engine.conf.ActionsList)
+                foreach (Software software in Engine.conf.ActionsAppList)
                 {
                     if (software.Name == name)
                     {
-                        Engine.conf.ActionsList.Remove(software);
+                        Engine.conf.ActionsAppList.Remove(software);
                         return true;
                     }
                 }

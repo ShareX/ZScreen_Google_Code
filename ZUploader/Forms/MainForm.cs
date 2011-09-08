@@ -442,7 +442,7 @@ namespace ZUploader
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZU);
         }
 
         private void lvUploads_SelectedIndexChanged(object sender, EventArgs e)

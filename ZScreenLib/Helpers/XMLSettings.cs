@@ -236,7 +236,7 @@ namespace ZScreenLib
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
 
-        public List<Software> ActionsList = new List<Software>();
+        public List<Software> ActionsAppList = new List<Software>();
         public Software ImageEditor = null;
         public List<Software> TextEditors = new List<Software>();
         public Software TextEditorActive;

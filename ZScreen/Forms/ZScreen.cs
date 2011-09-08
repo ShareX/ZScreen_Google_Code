@@ -496,12 +496,12 @@ namespace ZScreenGUI
 
         private void RewriteImageEditorsRightClickMenu()
         {
-            if (Engine.conf.ActionsList != null)
+            if (Engine.conf.ActionsAppList != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
-                List<Software> imgs = Engine.conf.ActionsList;
+                List<Software> imgs = Engine.conf.ActionsAppList;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -549,20 +549,20 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.conf.ActionsList.CheckSelected(lbSoftware.SelectedIndex))
+                    if (Engine.conf.ActionsAppList.CheckSelected(lbSoftware.SelectedIndex))
                     {
-                        Engine.conf.ActionsList[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                        Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                        tsm.Checked = Engine.conf.ActionsList[lbSoftware.SelectedIndex].Enabled;
+                        tsm.Checked = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled;
                     }
                 }
                 else if (sender.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Engine.conf.ActionsList.CheckSelected(sel))
+                    if (Engine.conf.ActionsAppList.CheckSelected(sel))
                     {
-                        Engine.conf.ActionsList[sel].Enabled = tsm.Checked;
+                        Engine.conf.ActionsAppList[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
                     }
                 }
@@ -728,7 +728,7 @@ namespace ZScreenGUI
         {
             if (temp != null)
             {
-                Engine.conf.ActionsList.Add(temp);
+                Engine.conf.ActionsAppList.Add(temp);
                 lbSoftware.Items.Add(temp);
                 lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
                 RewriteImageEditorsRightClickMenu();
@@ -750,7 +750,7 @@ namespace ZScreenGUI
 
             if (sel != -1)
             {
-                Engine.conf.ActionsList.RemoveAt(sel);
+                Engine.conf.ActionsAppList.RemoveAt(sel);
 
                 lbSoftware.Items.RemoveAt(sel);
 
@@ -765,7 +765,7 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Engine.conf.ImageEditor = Engine.conf.ActionsList[lbSoftware.SelectedIndex];
+            Engine.conf.ImageEditor = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex];
         }
 
         private void ShowImageEditorsSettings()
@@ -775,7 +775,7 @@ namespace ZScreenGUI
                 Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
                 {
-                    Engine.conf.ActionsList[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                    Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnRemoveImageEditor.Enabled = !app.Protected;
@@ -1297,7 +1297,7 @@ namespace ZScreenGUI
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Engine.conf.ActionsList)
+            foreach (Software app in Engine.conf.ActionsAppList)
             {
                 if (app != null && app.Name != null)
                 {
@@ -1603,9 +1603,9 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Engine.conf.ActionsList[lbSoftware.SelectedIndex];
+            Software temp = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex];
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-            Engine.conf.ActionsList[lbSoftware.SelectedIndex] = temp;
+            Engine.conf.ActionsAppList[lbSoftware.SelectedIndex] = temp;
             RewriteImageEditorsRightClickMenu();
         }
 
@@ -2333,7 +2333,7 @@ namespace ZScreenGUI
 
         private void pbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZS);
         }
 
         private void tcMain_Selecting(object sender, TabControlCancelEventArgs e)
@@ -2372,7 +2372,7 @@ namespace ZScreenGUI
 
         private void tsbDonate_Click(object sender, EventArgs e)
         {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE);
+            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZS);
         }
 
         private void tsbDonate_MouseEnter(object sender, EventArgs e)

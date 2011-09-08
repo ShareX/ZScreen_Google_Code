@@ -35,6 +35,7 @@ namespace UploadersAPILib
         public const string URL_BERK = "http://code.google.com/u/flexy123";
         public const string URL_MIKE = "http://code.google.com/u/mcored";
         public const string URL_BRANDON = "http://code.google.com/u/rgrthat";
-        public const string URL_DONATE = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=zscreendev%40gmail%2ecom&lc=AU&item_name=ZScreen%20Group&item_number=ZScreen&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
+        public const string URL_DONATE_ZS = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=zscreendev%40gmail%2ecom&lc=AU&item_name=ZScreen%20Group&item_number=ZScreen&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
+        public const string URL_DONATE_ZU = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mcored%40gmail%2ecom&lc=US&item_name=ZUploader&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest";
     }
 }

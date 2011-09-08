@@ -32,7 +32,7 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_Options();
             ZScreen_ConfigGUI_Hotkeys();
             ZScreen_ConfigGUI_Screenshots();
-            ZScreen_ConfigGUI_Editors();
+            ZScreen_ConfigGUI_Actions();
             ZScreen_ConfigGUI_ImageHosting();
             ZScreen_ConfigGUI_TextServices();
             ZScreen_ConfigGUI_Translator();
@@ -105,21 +105,26 @@ namespace ZScreenGUI
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 
-        private void ZScreen_ConfigGUI_Editors()
+        private void ZScreen_ConfigGUI_Actions()
         {
             chkPerformActions.Checked = Engine.conf.PerformActions;
             tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            Engine.conf.ActionsList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path) || x.Name == Engine.zImageAnnotator);
-
-            Software editor = new Software(Engine.zImageAnnotator, string.Empty, true, true);
-            Engine.conf.ActionsList.Insert(0, editor);
+            if (Engine.conf.ActionsAppList.Count == 0)
+            {
+                Software editor = new Software(Engine.zImageAnnotator, Application.ExecutablePath, true, true);
+                Engine.conf.ActionsAppList.Insert(0, editor);
+            }
+            else
+            {
+                Engine.conf.ActionsAppList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
+            }
 
             ImageEditorHelper.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
-            foreach (Software app in Engine.conf.ActionsList)
+            foreach (Software app in Engine.conf.ActionsAppList)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {

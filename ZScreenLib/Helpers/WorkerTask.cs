@@ -672,7 +672,7 @@ namespace ZScreenLib
         /// </summary>
         public void PerformActions()
         {
-            foreach (Software app in Engine.conf.ActionsList)
+            foreach (Software app in Engine.conf.ActionsAppList)
             {
                 if (app.Enabled)
                 {

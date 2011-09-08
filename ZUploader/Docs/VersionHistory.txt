@@ -1,4 +1,6 @@
-﻿Version 4.0 - 2011-09-07
+﻿4.1 Added tray icon support
+
+Version 4.0 - 2011-09-07
 
 4.0 Overhauled region capture through the plugin system
 
