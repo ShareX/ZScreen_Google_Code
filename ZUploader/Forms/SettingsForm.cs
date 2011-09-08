@@ -39,11 +39,13 @@ namespace ZUploader
 
         private bool loaded;
         private ContextMenuStrip codesMenu;
+        private MainForm mainForm;
 
-        public SettingsForm()
+        public SettingsForm(MainForm mainForm)
         {
             InitializeComponent();
             LoadSettings();
+            this.mainForm = mainForm;
             loaded = true;
         }
 
@@ -56,6 +58,7 @@ namespace ZUploader
             cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
+            cbShowTray.Checked = Program.Settings.ShowTray;
             cbLoadPlugins.Checked = Program.Settings.LoadPluginsOnStartup;
 
             // Upload
@@ -206,6 +209,15 @@ namespace ZUploader
                 {
                     RegistryHelper.UnregisterShellContextMenu();
                 }
+            }
+        }
+
+        private void cbShowTray_CheckedChanged(object sender, EventArgs e)
+        {
+            if (loaded)
+            {
+                Program.Settings.ShowTray = cbShowTray.Checked;
+                mainForm.niTray.Visible = Program.Settings.ShowTray;
             }
         }
 
