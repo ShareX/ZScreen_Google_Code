@@ -32,7 +32,7 @@ namespace ZScreenLib
                 this.pbPreview.LoadingImage = Resources.Loading;
                 foreach (UploadResult ur in task.UploadResults)
                 {
-                    if (!string.IsNullOrEmpty(ur.URL))
+                    if (!string.IsNullOrEmpty(ur.URL) || !string.IsNullOrEmpty(ur.LocalFilePath))
                     {
                         this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
                         break;
@@ -43,9 +43,10 @@ namespace ZScreenLib
                 foreach (UploadResult ur in task.UploadResults)
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
+                    string path = string.IsNullOrEmpty(ur.URL) ? ur.LocalFilePath : ur.URL;
                     foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
-                        string url = ur.GetUrlByType(type, ur.URL);
+                        string url = ur.GetUrlByType(type, path);
                         if (!string.IsNullOrEmpty(url))
                         {
                             TreeNode tnLink = new TreeNode(type.GetDescription());
