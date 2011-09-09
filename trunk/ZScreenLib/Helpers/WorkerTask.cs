@@ -766,6 +766,9 @@ namespace ZScreenLib
         {
             switch (oe)
             {
+                case OutputEnum.Clipboard:
+                    SetClipboardContent();
+                    break;
                 case OutputEnum.Printer:
                     Print();
                     break;
@@ -785,6 +788,17 @@ namespace ZScreenLib
                 case OutputEnum.SharedFolder:
                     UploadToSharedFolder();
                     break;
+            }
+        }
+
+        public void SetClipboardContent()
+        {
+            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+            {
+                AddUploadResult(new UploadResult()
+                {
+                    Host = ClipboardContentEnum.Local.GetDescription()
+                });
             }
         }
 
@@ -812,14 +826,6 @@ namespace ZScreenLib
                 {
                     UploadImage(MyImageUploaders[i], PrepareData());
                 }
-            }
-
-            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
-            {
-                AddUploadResult(new UploadResult()
-                {
-                    Host = ClipboardContentEnum.Local.GetDescription()
-                });
             }
 
             EndTime = DateTime.Now;
