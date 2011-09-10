@@ -39,6 +39,7 @@ namespace ScreenCapture
 
         public bool DrawBorder { get; set; }
         public bool DrawChecker { get; set; }
+        public bool QuickCrop { get; set; }
 
         public int MinMoveSpeed { get; set; }
         public int MaxMoveSpeed { get; set; }
@@ -196,7 +197,7 @@ namespace ScreenCapture
         {
             if (e.Button == MouseButtons.Left)
             {
-                Close(false);
+                Close();
             }
         }
 
@@ -231,6 +232,11 @@ namespace ScreenCapture
             if (e.Button == MouseButtons.Left)
             {
                 isMouseDown = false;
+
+                if (QuickCrop && !(this is PolygonRegion))
+                {
+                    Close();
+                }
             }
         }
 
@@ -275,7 +281,7 @@ namespace ScreenCapture
             }
             else if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
             {
-                Close(false);
+                Close();
             }
         }
 

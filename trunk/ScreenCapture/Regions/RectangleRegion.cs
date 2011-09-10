@@ -56,16 +56,16 @@ namespace ScreenCapture
 
             if (isMouseDown && !IsAreaCreated)
             {
-                if (!IsFixedSize)
+                if (IsFixedSize)
+                {
+                    area = new Rectangle(new Point(mousePosition.X - FixedSize.Width / 2, mousePosition.Y - FixedSize.Height / 2), FixedSize);
+                    areaObject.IsDragging = true;
+                }
+                else
                 {
                     area = new Rectangle(mousePosition, new Size(1, 1));
                     ShowNodes();
                     nodes[(int)NodePosition.BottomRight].IsDragging = true;
-                }
-                else
-                {
-                    area = new Rectangle(new Point(mousePosition.X - FixedSize.Width / 2, mousePosition.Y - FixedSize.Height / 2), FixedSize);
-                    areaObject.IsDragging = true;
                 }
 
                 IsAreaCreated = true;

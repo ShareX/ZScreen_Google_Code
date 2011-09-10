@@ -45,6 +45,7 @@
             this.cbIsFixedSize = new System.Windows.Forms.CheckBox();
             this.nudFixedWidth = new System.Windows.Forms.NumericUpDown();
             this.nudFixedHeight = new System.Windows.Forms.NumericUpDown();
+            this.cbQuickCrop = new System.Windows.Forms.CheckBox();
             this.tsRegionTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             this.pImage.SuspendLayout();
@@ -240,12 +241,24 @@
             0,
             0});
             // 
+            // cbQuickCrop
+            // 
+            this.cbQuickCrop.AutoSize = true;
+            this.cbQuickCrop.ForeColor = System.Drawing.Color.White;
+            this.cbQuickCrop.Location = new System.Drawing.Point(648, 8);
+            this.cbQuickCrop.Name = "cbQuickCrop";
+            this.cbQuickCrop.Size = new System.Drawing.Size(78, 17);
+            this.cbQuickCrop.TabIndex = 2;
+            this.cbQuickCrop.Text = "Quick crop";
+            this.cbQuickCrop.UseVisualStyleBackColor = true;
+            // 
             // RegionCapturePreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1123, 649);
+            this.Controls.Add(this.cbQuickCrop);
             this.Controls.Add(this.nudFixedHeight);
             this.Controls.Add(this.nudFixedWidth);
             this.Controls.Add(this.cbIsFixedSize);
@@ -286,5 +299,6 @@
         private System.Windows.Forms.CheckBox cbIsFixedSize;
         private System.Windows.Forms.NumericUpDown nudFixedWidth;
         private System.Windows.Forms.NumericUpDown nudFixedHeight;
+        private System.Windows.Forms.CheckBox cbQuickCrop;
     }
 }
