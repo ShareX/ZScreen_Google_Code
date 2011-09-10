@@ -70,7 +70,7 @@ namespace ZScreenLib
         public Times ScreenshotDelayTimes = Times.Seconds;
         public bool PromptForOutputs = false;
 
-        [Category("Options / Clipboard Upload"), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Show Clipboard Content Viewer before uploading Clipboard Content using the Main tab.")]
         public bool ShowClipboardContentViewer { get; set; }
 
         //~~~~~~~~~~~~~~~~~~~~~
@@ -83,7 +83,7 @@ namespace ZScreenLib
 
         // TinyPic
 
-        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Switch from TinyPic to ImageShack if the image dimensions are greater than 1600 pixels.")]
         public bool TinyPicSizeCheck { get; set; }
 
         // Twitter
@@ -152,10 +152,10 @@ namespace ZScreenLib
         public Rectangle LastRegion = Rectangle.Empty;
         public Rectangle LastCapture = Rectangle.Empty;
 
-        [Category("Screenshots"), DefaultValue(false), Description("Make the corners rounded")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Make the corners rounded")]
         public bool ImageAddRoundedCorners { get; set; }
 
-        [Category("Screenshots"), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Add a shadow (if the screenshot is big enough)")]
         public bool ImageAddShadow { get; set; }
 
         public bool CropGridToggle = false;
@@ -192,7 +192,7 @@ namespace ZScreenLib
         public bool CloseDropBox = false;
         public Point LastDropBoxPosition = Point.Empty;
 
-        [Category("Options / Naming Conventions"), DefaultValue(false), Description("Prompt to save the image in a different location")]
+        [Category(ComponentModelStrings.FileNaming), DefaultValue(false), Description("Prompt to save the image in a different location")]
         public bool ShowSaveFileDialogImages { get; set; }
 
         public bool MakeJPGBackgroundWhite = true;
@@ -212,7 +212,7 @@ namespace ZScreenLib
         public bool WatermarkAddReflection = false;
         public bool WatermarkAutoHide = true;
 
-        [Category("Options / Clipboard Upload"), DefaultValue(false), Description("Do not apply watermark during Clipboard Upload")]
+        [Category(ComponentModelStrings.InputsClipboard), DefaultValue(false), Description("Do not apply watermark during Clipboard Upload")]
         public bool WatermarkExcludeClipboardUpload { get; set; }
 
         public string WatermarkText = "%h:%mi";
@@ -248,22 +248,22 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
 
         // Image Uploaders
-        [Category("Options / Image Uploaders"), DefaultValue(true), Description("Automatically switch to File Uploader if a user copies (Clipboard Upload) or drags a non-Image.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(true), Description("Automatically switch to File Uploader if a user copies (Clipboard Upload) or drags a non-Image.")]
         public bool AutoSwitchFileUploader { get; set; }
 
-        [Category("Options / Image Uploaders"), DefaultValue(2), Description("Number of Retries if image uploading fails.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(2), Description("Number of Retries if image uploading fails.")]
         public int ErrorRetryCount { get; set; }
 
-        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with between TinyPic and ImageShack if the TinyPic or ImageShack fails the first attempt.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Retry with between TinyPic and ImageShack if the TinyPic or ImageShack fails the first attempt.")]
         public bool ImageUploadRetryOnFail { get; set; }
 
-        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Randomly select a valid destination when instead of retrying between ImageShack and TinyPic.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Randomly select a valid destination when instead of retrying between ImageShack and TinyPic.")]
         public bool ImageUploadRandomRetryOnFail { get; set; }
 
-        [Category("Options / Image Uploaders"), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(false), Description("Retry with another Image Uploader if the Image Uploader fails the first attempt.")]
         public bool ImageUploadRetryOnTimeout { get; set; }
 
-        [Category("Options / Image Uploaders"), DefaultValue(30000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
+        [Category(ComponentModelStrings.OutputsRemoteImage), DefaultValue(30000), Description("Change the Image Uploader if the upload times out by this amount of milliseconds.")]
         public int UploadDurationLimit { get; set; }
 
         // Indexer
@@ -291,10 +291,10 @@ namespace ZScreenLib
         // General - Program
         public bool ShowHelpBalloonTips = true;
 
-        [Category("Options / General"), DefaultValue(true), Description("Remember Main Window size and position.")]
+        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Remember Main Window size and position.")]
         public bool SaveFormSizePosition { get; set; }
 
-        [Category("Options / General"), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
+        [Category(ComponentModelStrings.App), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
 
         public bool AutoSaveSettings = true;
@@ -336,7 +336,7 @@ namespace ZScreenLib
         public Times AutoCaptureDelayTimes = Times.Seconds;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
-        [Category("Options / Auto Capture"), DefaultValue(false), Description("Automatically start capturing after loading Auto Capture")]
+        [Category(ComponentModelStrings.InputsAutoCapture), DefaultValue(false), Description("Automatically start capturing after loading Auto Capture")]
         public bool AutoCaptureExecute { get; set; }
 
         #region Properties for PropertyGrid
@@ -348,95 +348,95 @@ namespace ZScreenLib
 
         // Destinations / FTP
 
-        [Category("Destinations / FTP"), DefaultValue(true), Description("Periodically backup FTP settings.")]
+        [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(true), Description("Periodically backup FTP settings.")]
         public bool BackupFTPSettings { get; set; }
 
-        [Category("Destinations / FTP"), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
+        [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
         public int ScreenshotCacheSize { get; set; }
 
-        [Category("Destinations / FTP"), DefaultValue(false), Description("Allows you to choose the FTP account before uploading.")]
+        [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(false), Description("Allows you to choose the FTP account before uploading.")]
         public bool ShowFTPSettingsBeforeUploading { get; set; }
 
         // Options / General
 
-        [Category("Options / General"), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("Show Clipboard Mode Chooser after upload is complete")]
         public bool ShowUploadResultsWindow { get; set; }
 
-        [Category("Options / Interaction"), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
+        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Showing upload progress percentage in tray icon")]
         public bool ShowTrayUploadProgress { get; set; }
 
-        [Category("Options / General"), DefaultValue(true), Description("Write debug information into a log file.")]
+        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Write debug information into a log file.")]
         public bool WriteDebugFile { get; set; }
 
-        [Category("Options / General"), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
+        [Category(ComponentModelStrings.App), DefaultValue(false), Description("Use SetProcessWorkingSetSize when ZScreen window is closed (minimized to tray) or idle.")]
         public bool EnableAutoMemoryTrim { get; set; }
 
-        [Category("Options / General"), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
+        [Category(ComponentModelStrings.App), DefaultValue(false), Description("Enables keyboard hook timer which reactivating keyboard hook every 5 seconds.")]
         public bool EnableKeyboardHookTimer { get; set; }
 
         // Options / Interaction
 
-        [Category("Options / URL Shorteners"), DefaultValue(true),
+        [Category(ComponentModelStrings.InputsURLShorteners), DefaultValue(true),
         Description("If you use Clipboard Upload and the clipboard contains a URL then the URL will be shortened instead of performing a text upload.")]
         public bool ShortenUrlUsingClipboardUpload { get; set; }
 
-        [Category("Options / URL Shorteners"), DefaultValue(80),
+        [Category(ComponentModelStrings.InputsURLShorteners), DefaultValue(80),
         Description("ShortenUrlAfterUpload will only be activated if the length of a URL exceeds this value. To always shorten a URL set this value to 0.")]
         public int ShortenUrlAfterUploadAfter { get; set; }
 
-        [Category("Options / URL Shorteners"), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
+        [Category(ComponentModelStrings.InputsURLShorteners), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
 
-        [Category("Options / Clipboard"), DefaultValue(false), Description("Show file size after the URL whenever possible.")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("Show file size after the URL whenever possible.")]
         public bool ClipboardShowFileSize { get; set; }
 
-        [Category("Options / Clipboard"), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
         public bool ClipboardAppendMultipleLinks { get; set; }
 
         // Options / Paths
 
-        [Category("Options / Paths"), DefaultValue(true), Description("Periodically backup application settings.")]
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(true), Description("Periodically backup application settings.")]
         public bool BackupApplicationSettings { get; set; }
 
-        [Category("Options / Paths"), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
+        [Category(ComponentModelStrings.AppPaths), Description("Custom Images directory where screenshots and pictures will be stored locally.")]
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string CustomImagesDir { get; set; }
 
-        [Category("Options / Paths"), DefaultValue(false), Description("Use Custom Images directory.")]
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Use Custom Images directory.")]
         public bool UseCustomImagesDir { get; set; }
 
         // Options / Watch Folder
 
-        [Category("Options / Watch Folder"), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
+        [Category(ComponentModelStrings.InputsWatchFolder), DefaultValue(false), Description("Automatically upload files saved in to this folder.")]
         public bool FolderMonitoring { get; set; }
 
-        [Category("Options / Watch Folder"), Description("Folder monitor path where files automatically get uploaded.")]
+        [Category(ComponentModelStrings.InputsWatchFolder), Description("Folder monitor path where files automatically get uploaded.")]
         [EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string FolderMonitorPath { get; set; }
 
         // Screenshots / Bevel
 
-        [Category("Screenshots / Bevel"), DefaultValue(false), Description("Add bevel effect to screenshots.")]
+        [Category(ComponentModelStrings.ScreenshotsBevel), DefaultValue(false), Description("Add bevel effect to screenshots.")]
         public bool BevelEffect { get; set; }
 
-        [Category("Screenshots / Bevel"), DefaultValue(15), Description("Bevel effect size.")]
+        [Category(ComponentModelStrings.ScreenshotsBevel), DefaultValue(15), Description("Bevel effect size.")]
         public int BevelEffectOffset { get; set; }
 
-        [Category("Screenshots / Bevel"), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
+        [Category(ComponentModelStrings.ScreenshotsBevel), DefaultValue(FilterType.Brightness), Description("Bevel effect filter type.")]
         public FilterType BevelFilterType { get; set; }
 
         //Screenshots / Border
 
-        [Category("Screenshots / Border"), DefaultValue(false), Description("Add border to screenshots.")]
+        [Category(ComponentModelStrings.ScreenshotsBorder), DefaultValue(false), Description("Add border to screenshots.")]
         public bool BorderEffect { get; set; }
 
-        [Category("Screenshots / Border"), DefaultValue(1), Description("Border size in px.")]
+        [Category(ComponentModelStrings.ScreenshotsBorder), DefaultValue(1), Description("Border size in px.")]
         public int BorderEffectSize { get; set; }
 
-        [XmlIgnore(), Category("Screenshots / Border"), Description("Border Color.")]
+        [XmlIgnore(), Category(ComponentModelStrings.ScreenshotsBorder), Description("Border Color.")]
         public Color BorderEffectColor { get; set; }
 
-        [XmlIgnore(), Category("Options / Clipboard"), Description("Background color of images captured to clipboard.")]
+        [XmlIgnore(), Category(ComponentModelStrings.OutputsClipboard), Description("Background color of images captured to clipboard.")]
         public Color ClipboardBackgroundColor { get; set; }
 
         [XmlElement("BorderEffectColor"), BrowsableAttribute(false)]
@@ -467,48 +467,48 @@ namespace ZScreenLib
 
         // Screenshots / General
 
-        [Category("Screenshots / General"), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(-10), Description("Region style setting. Must be between these values: -100, 100")]
         public int BackgroundRegionBrightnessValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(100), Description("Region style setting. Must be between these values: 0, 255")]
         public int BackgroundRegionTransparentValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window.")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show Confirmation for Entire Screen or Active Window.")]
         public bool PromptForUpload { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
+        [Category(ComponentModelStrings.ScreenshotsRegion), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
+        [Category(ComponentModelStrings.ScreenshotsRegion), DefaultValue(75), Description("Region style setting. Must be between these values: 0, 255")]
         public int RegionTransparentValue { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(CropEngineType.Cropv1), Description("Choose the method of Crop")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(CropEngineType.Cropv1), Description("Choose the method of Crop")]
         public CropEngineType CropEngineMode { get; set; }
 
-        [Category("Screenshots / General"), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
 
         // Screenshots / Reflection
 
-        [Category("Screenshots / Reflection"), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(false), Description("Draw reflection bottom of screenshots.")]
         public bool DrawReflection { get; set; }
 
-        [Category("Screenshots / Reflection"), DefaultValue(0), Description("Reflection position will start: Screenshot height + Offset")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(0), Description("Reflection position will start: Screenshot height + Offset")]
         public int ReflectionOffset { get; set; }
 
-        [Category("Screenshots / Reflection"), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(20), Description("Reflection height size relative to screenshot height.")]
         public int ReflectionPercentage { get; set; }
 
-        [Category("Screenshots / Reflection"), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(true), Description("Adding skew to reflection from bottom left to bottom right.")]
         public bool ReflectionSkew { get; set; }
 
-        [Category("Screenshots / Reflection"), DefaultValue(25), Description("How much pixel skew left to right.")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(25), Description("How much pixel skew left to right.")]
         public int ReflectionSkewSize { get; set; }
 
-        [Category("Screenshots / Reflection"), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
+        [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
 
         #endregion Properties for PropertyGrid

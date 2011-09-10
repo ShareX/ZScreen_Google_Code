@@ -414,6 +414,8 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.tpAdvancedWorkflow = new System.Windows.Forms.TabPage();
+            this.pgWorkflow = new System.Windows.Forms.PropertyGrid();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -521,6 +523,7 @@ namespace ZScreenGUI
             this.gbImageBamApiKeys.SuspendLayout();
             this.tpOptionsClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
+            this.tpAdvancedWorkflow.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -4443,6 +4446,7 @@ namespace ZScreenGUI
             // tcAdvanced
             // 
             this.tcAdvanced.Controls.Add(this.tpSettings);
+            this.tcAdvanced.Controls.Add(this.tpAdvancedWorkflow);
             this.tcAdvanced.Controls.Add(this.tpDebugLog);
             this.tcAdvanced.Controls.Add(this.tpStats);
             this.tcAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4864,6 +4868,25 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // tpAdvancedWorkflow
+            // 
+            this.tpAdvancedWorkflow.Controls.Add(this.pgWorkflow);
+            this.tpAdvancedWorkflow.Location = new System.Drawing.Point(4, 22);
+            this.tpAdvancedWorkflow.Name = "tpAdvancedWorkflow";
+            this.tpAdvancedWorkflow.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(799, 408);
+            this.tpAdvancedWorkflow.TabIndex = 8;
+            this.tpAdvancedWorkflow.Text = "Workflow";
+            this.tpAdvancedWorkflow.UseVisualStyleBackColor = true;
+            // 
+            // pgWorkflow
+            // 
+            this.pgWorkflow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgWorkflow.Location = new System.Drawing.Point(3, 3);
+            this.pgWorkflow.Name = "pgWorkflow";
+            this.pgWorkflow.Size = new System.Drawing.Size(793, 402);
+            this.pgWorkflow.TabIndex = 1;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5030,6 +5053,7 @@ namespace ZScreenGUI
             this.tpOptionsClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
+            this.tpAdvancedWorkflow.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -5415,5 +5439,7 @@ namespace ZScreenGUI
         private Button btnLastCropShotReset;
         internal GroupBox groupBox1;
         private CheckBox chkOverwriteFiles;
+        private TabPage tpAdvancedWorkflow;
+        internal PropertyGrid pgWorkflow;
     }
 }

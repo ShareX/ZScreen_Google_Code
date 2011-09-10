@@ -48,10 +48,13 @@ namespace ZScreenLib
             }
         }
 
+        [Browsable(false)]
         public string Description { get; set; }
 
+        [Browsable(false)]
         public bool Enabled { get; set; }
 
+        [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
 
         #region Active Window
@@ -63,7 +66,7 @@ namespace ZScreenLib
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
 
-        [Category("Screenshots / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
+        [Category("Capture / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
         public bool ActiveWindowGDIFreezeWindow { get; set; }
 
         #endregion Active Window
@@ -84,20 +87,23 @@ namespace ZScreenLib
         public string SaveFolderPattern = "%y-%mo";
         public int MaxNameLength = 100;
 
-        [Category("File Naming"), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
+        [Category(ComponentModelStrings.FileNaming), DefaultValue(0), Description("Adjust the current Auto-Increment number.")]
         public int AutoIncrement { get; set; }
 
-        [Category("File Naming"), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
-        public bool OverwriteFiles { get; set; }
+        [Category(ComponentModelStrings.FileNaming), DefaultValue(false), Description("Overwrite existing file without creating new files.")]
+        public bool OverwriteFiles = false;
 
         #endregion File Naming
 
         #region Outputs
 
-        [Category("Clipboard"), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
 
+        [Browsable(false)]
         public List<OutputEnum> Outputs { get; set; }
+
+        [Browsable(false)]
         public UploadersConfig OutputsConfig { get; set; }
 
         #endregion Outputs

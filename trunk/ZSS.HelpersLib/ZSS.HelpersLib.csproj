@@ -65,6 +65,7 @@
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="CloneManager.cs" />
+    <Compile Include="ComponentModelStrings.cs" />
     <Compile Include="ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
