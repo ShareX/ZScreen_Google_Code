@@ -21,6 +21,7 @@ namespace ZScreenGUI
 
             pgAppSettings.SelectedObject = Engine.AppConf;
             pgAppConfig.SelectedObject = Engine.conf;
+            pgWorkflow.SelectedObject = Engine.MyWorkflow;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
             UpdateGuiControlsPaths();
