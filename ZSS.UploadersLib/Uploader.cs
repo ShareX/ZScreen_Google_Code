@@ -475,15 +475,16 @@ namespace UploadersLib
 
         #region OAuth methods
 
-        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo, string callback = null)
+        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo, string callback = null,
+            Dictionary<string, string> customParameters = null)
         {
-            string url = OAuthManager.GenerateQuery(requestTokenURL, null, HttpMethod.GET, authInfo);
+            string url = OAuthManager.GenerateQuery(requestTokenURL, customParameters, HttpMethod.GET, authInfo);
 
             string response = SendGetRequest(url);
 
             if (!string.IsNullOrEmpty(response))
             {
-                return OAuthManager.GetAuthorizationURL(response, authInfo, authorizeURL, callback);
+                return OAuthManager.GetAuthorizationURL(response, authInfo, authorizeURL);
             }
 
             return null;

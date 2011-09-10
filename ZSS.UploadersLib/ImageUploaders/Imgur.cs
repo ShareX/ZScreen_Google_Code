@@ -45,23 +45,15 @@ namespace UploadersLib.ImageUploaders
     {
         private const string URLAnonymousUpload = "https://api.imgur.com/2/upload.xml";
         private const string URLUserUpload = "https://api.imgur.com/2/account/images.xml";
+
         private const string URLRequestToken = "https://api.imgur.com/oauth/request_token";
         private const string URLAuthorize = "https://api.imgur.com/oauth/authorize";
         private const string URLAccessToken = "https://api.imgur.com/oauth/access_token";
 
-        /// <summary>
-        /// Upload method: Anonymous or User?
-        /// </summary>
         public AccountType UploadMethod { get; set; }
 
-        /// <summary>
-        /// Required for Anonymous upload
-        /// </summary>
         public string AnonymousKey { get; set; }
 
-        /// <summary>
-        /// Required for User upload (OAuth)
-        /// </summary>
         public OAuthInfo AuthInfo { get; set; }
 
         public ImgurThumbnailType ThumbnailType { get; set; }
@@ -91,6 +83,7 @@ namespace UploadersLib.ImageUploaders
 
             switch (UploadMethod)
             {
+                default:
                 case AccountType.Anonymous:
                     ur = AnonymousUpload(stream, fileName);
                     break;
