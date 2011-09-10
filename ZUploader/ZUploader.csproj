@@ -12,7 +12,8 @@
     <AssemblyName>ZUploader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>Resources\ZUploaderIcon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -176,9 +177,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ZUploaderIcon.ico" />
     <None Include="Resources\ZUploaderSmallBusyIcon.ico" />
     <None Include="Resources\ZUploaderSmallIcon.ico" />
-    <None Include="Resources\ZUploaderIcon.ico" />
     <None Include="Resources\navigation-090-button.png" />
     <None Include="Resources\cross-button.png" />
     <None Include="Resources\tick-button.png" />
