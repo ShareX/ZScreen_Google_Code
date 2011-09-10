@@ -597,6 +597,14 @@ namespace ZUploader
             {
                 Show();
             }
+
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+
+            BringToFront();
+            Activate();
         }
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
