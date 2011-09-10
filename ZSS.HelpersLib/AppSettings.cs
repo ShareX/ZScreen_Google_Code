@@ -30,10 +30,10 @@ namespace HelpersLib
 
         [Category("Options / Paths"), Description("Path where history file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
-        public string UploadersHistoryCustomPath { get; set; }
+        public string HistoryCustomPath { get; set; }
 
         [Category("Options / Paths"), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
-        public bool UseUploadersConfigCustomPath { get; set; }
+        public bool UseWorkflowConfigCustomPath { get; set; }
 
         [Category("Options / Paths"), Description("Path where uploaders config file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
