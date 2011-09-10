@@ -31,6 +31,7 @@ using System.Windows.Forms;
 using SingleInstanceApplication;
 using UploadersLib;
 using ZScreenLib;
+using System.IO;
 
 namespace ZScreenGUI
 {
@@ -57,6 +58,16 @@ namespace ZScreenGUI
                 if (CommandLineArg.Contains("-m"))
                 {
                     IsMultiInstance = true;
+                }
+
+                else if (args.Length > 1 && args[0] == "/doc")
+                {
+                    string fp = args[1];
+                    if (File.Exists(fp))
+                    {
+                        Process.Start(fp);
+                    }
+                    return;
                 }
             }
 

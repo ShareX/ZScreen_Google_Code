@@ -80,18 +80,6 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
-
-            Engine.zHandle = this.Handle;
-
-            if (Engine.IsMultipleInstance)
-            {
-                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
-                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
-            }
-
-            ZScreen_Preconfig();
-
             #region Windows Size/Location
 
             if (this.WindowState == FormWindowState.Normal)
@@ -151,6 +139,18 @@ namespace ZScreenGUI
             }
 
             #endregion Windows Size/Location
+
+            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
+
+            Engine.zHandle = this.Handle;
+
+            if (Engine.IsMultipleInstance)
+            {
+                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
+            }
+
+            ZScreen_Preconfig();
 
             mDebug = new DebugHelper();
             mDebug.GetDebugInfo += new StringEventHandler(debug_GetDebugInfo);
@@ -261,14 +261,16 @@ namespace ZScreenGUI
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
+            if (Engine.conf != null)
+            {
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
+            }
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
