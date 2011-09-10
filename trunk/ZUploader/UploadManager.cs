@@ -33,6 +33,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using HistoryLib;
 using UploadersLib;
+using ZUploader.Properties;
 
 namespace ZUploader
 {
@@ -44,6 +45,8 @@ namespace ZUploader
         public static UrlShortenerType URLShortener { get; set; }
         public static MyListView ListViewControl { get; set; }
         public static List<Task> Tasks { get; private set; }
+
+        private static object uploadManagerLock = new object();
 
         static UploadManager()
         {
@@ -263,6 +266,7 @@ namespace ZUploader
 
         private static void task_UploadPreparing(UploadInfo info)
         {
+            UpdateTrayIcon();
             Program.MyLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
             ChangeListViewItemStatus(info);
         }
@@ -359,6 +363,31 @@ namespace ZUploader
             finally
             {
                 StartTasks();
+                UpdateTrayIcon();
+            }
+        }
+
+        private static void UpdateTrayIcon()
+        {
+            if (Program.mainForm.niTray.Visible)
+            {
+                lock (uploadManagerLock)
+                {
+                    bool isWorking = Tasks.Any(x => x.IsWorking);
+
+                    Icon icon = null;
+
+                    if (isWorking)
+                    {
+                        icon = Resources.ZUploaderSmallBusyIcon;
+                    }
+                    else
+                    {
+                        icon = Resources.ZUploaderSmallIcon;
+                    }
+
+                    Program.mainForm.niTray.Icon = icon;
+                }
             }
         }
     }
