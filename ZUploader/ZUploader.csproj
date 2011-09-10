@@ -176,6 +176,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ZUploaderSmallBusyIcon.ico" />
+    <None Include="Resources\ZUploaderSmallIcon.ico" />
     <None Include="Resources\ZUploaderIcon.ico" />
     <None Include="Resources\navigation-090-button.png" />
     <None Include="Resources\cross-button.png" />
