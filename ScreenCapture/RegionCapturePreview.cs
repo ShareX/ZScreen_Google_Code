@@ -48,6 +48,7 @@ namespace ScreenCapture
 
             surface.DrawBorder = cbDrawBorder.Checked;
             surface.DrawChecker = cbDrawChecker.Checked;
+            surface.QuickCrop = cbQuickCrop.Checked;
 
             if (surface is RectangleRegion)
             {
