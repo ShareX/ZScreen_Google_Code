@@ -104,9 +104,9 @@ namespace ZScreenLib
         {
             get
             {
-                if (conf != null && AppConf.UseHistoryCustomPath && !string.IsNullOrEmpty(AppConf.UploadersHistoryCustomPath))
+                if (conf != null && AppConf.UseHistoryCustomPath && !string.IsNullOrEmpty(AppConf.HistoryCustomPath))
                 {
-                    return AppConf.UploadersHistoryCustomPath;
+                    return AppConf.HistoryCustomPath;
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace ZScreenLib
         {
             get
             {
-                if (conf != null && AppConf.UseUploadersConfigCustomPath && !string.IsNullOrEmpty(AppConf.WorkflowConfigCustomPath))
+                if (conf != null && AppConf.UseWorkflowConfigCustomPath && !string.IsNullOrEmpty(AppConf.WorkflowConfigCustomPath))
                 {
                     return AppConf.WorkflowConfigCustomPath;
                 }

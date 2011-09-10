@@ -321,6 +321,7 @@ namespace ZScreenGUI
         {
             if (!string.IsNullOrEmpty(arg))
             {
+                Engine.MyLogger.WriteLine("CommandLine: " + arg);
                 CLIManager cli = new CLIManager();
 
                 cli.Commands = new List<Command>()
