@@ -23,26 +23,76 @@
 
 #endregion License Information (GPL v2)
 
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Newtonsoft.Json;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib.URLShorteners
 {
-    public class GoogleURLShortener : URLShortener
+    public class GoogleURLShortener : URLShortener, IOAuth
     {
         private const string APIURL = "https://www.googleapis.com/urlshortener/v1/url";
 
-        private string APIKey;
+        private const string URLRequestToken = "https://www.google.com/accounts/OAuthGetRequestToken";
+        private const string URLAuthorize = "https://www.google.com/accounts/OAuthAuthorizeToken";
+        private const string URLAccessToken = "https://www.google.com/accounts/OAuthGetAccessToken";
 
-        public GoogleURLShortener(string key)
+        public AccountType UploadMethod { get; set; }
+
+        public string AnonymousKey { get; set; }
+
+        public OAuthInfo AuthInfo { get; set; }
+
+        public GoogleURLShortener(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {
-            APIKey = key;
+            UploadMethod = uploadMethod;
+            AnonymousKey = anonymousKey;
+            AuthInfo = oauth;
+        }
+
+        public GoogleURLShortener(string anonymousKey)
+        {
+            UploadMethod = AccountType.Anonymous;
+            AnonymousKey = anonymousKey;
+        }
+
+        public GoogleURLShortener(OAuthInfo oauth)
+        {
+            UploadMethod = AccountType.User;
+            AuthInfo = oauth;
+        }
+
+        public string GetAuthorizationURL()
+        {
+            AuthInfo = new OAuthInfo("1011702346808.apps.googleusercontent.com", "EmT1pAOddpDRYUDd5smypTbH");
+            return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo, "oob",
+                new Dictionary<string, string> { { "scope", "https://www.googleapis.com/auth/urlshortener" }, { "xoauth_displayname", Application.ProductName } });
+        }
+
+        public bool GetAccessToken(string verificationCode = null)
+        {
+            AuthInfo.AuthVerifier = verificationCode;
+            return GetAccessToken(URLAccessToken, AuthInfo);
         }
 
         public override string ShortenURL(string url)
         {
             if (!string.IsNullOrEmpty(url))
             {
-                string query = string.Format("{0}?key={1}", APIURL, APIKey);
+                string query;
+
+                switch (UploadMethod)
+                {
+                    default:
+                    case AccountType.Anonymous:
+                        query = string.Format("{0}?key={1}", APIURL, AnonymousKey);
+                        break;
+                    case AccountType.User:
+                        query = OAuthManager.GenerateQuery(APIURL, null, HttpMethod.POST, AuthInfo);
+                        break;
+                }
+
                 string json = string.Format("{{\"longUrl\":\"{0}\"}}", url);
 
                 string response = SendPostRequestJSON(query, json);

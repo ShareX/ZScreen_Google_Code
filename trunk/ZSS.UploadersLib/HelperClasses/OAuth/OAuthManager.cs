@@ -51,7 +51,7 @@ namespace UploadersLib.HelperClasses
         private const string HMACSHA1SignatureType = "HMAC-SHA1";
         private const string RSASHA1SignatureType = "RSA-SHA1";
 
-        public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod, OAuthInfo oauth)
+        public static string GenerateQuery(string url, Dictionary<string, string> args, HttpMethod httpMethod, OAuthInfo oauth, string callback = null)
         {
             if (string.IsNullOrEmpty(oauth.ConsumerKey) || string.IsNullOrEmpty(oauth.ConsumerSecret))
             {
@@ -81,6 +81,11 @@ namespace UploadersLib.HelperClasses
                 {
                     parameters.Add(ParameterVerifier, oauth.AuthVerifier);
                 }
+            }
+
+            if (!string.IsNullOrEmpty(callback))
+            {
+                parameters.Add(ParameterCallback, callback);
             }
 
             if (args != null)
@@ -114,7 +119,7 @@ namespace UploadersLib.HelperClasses
 
                 if (!string.IsNullOrEmpty(callback))
                 {
-                    url += ParameterCallback + "=" + ZAppHelper.URLEncode(callback);
+                    url += string.Format("&{0}={1}", ParameterCallback, ZAppHelper.URLEncode(callback));
                 }
 
                 if (args[ParameterTokenSecret] != null)

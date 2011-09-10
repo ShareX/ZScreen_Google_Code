@@ -141,6 +141,9 @@ namespace UploadersLib
 
         #region URL shorteners
 
+        public AccountType GoogleURLShortenerAccountType = AccountType.Anonymous;
+        public OAuthInfo GoogleURLShortenerOAuthInfo = null;
+
         #endregion URL shorteners
 
         #region Other services
