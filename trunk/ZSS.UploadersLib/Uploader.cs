@@ -475,12 +475,12 @@ namespace UploadersLib
 
         #region OAuth methods
 
-        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo, string callback = null,
-            Dictionary<string, string> customParameters = null)
+        protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo,
+            Dictionary<string, string> customParameters = null, HttpMethod httpMethod = HttpMethod.GET)
         {
-            string url = OAuthManager.GenerateQuery(requestTokenURL, customParameters, HttpMethod.GET, authInfo);
+            string url = OAuthManager.GenerateQuery(requestTokenURL, customParameters, httpMethod, authInfo);
 
-            string response = SendGetRequest(url);
+            string response = SendRequest(httpMethod, url);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -490,16 +490,16 @@ namespace UploadersLib
             return null;
         }
 
-        protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo)
+        protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.GET)
         {
             if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret))
             {
                 throw new Exception("Auth infos missing. Open Authorization URL first.");
             }
 
-            string url = OAuthManager.GenerateQuery(accessTokenURL, null, HttpMethod.GET, authInfo);
+            string url = OAuthManager.GenerateQuery(accessTokenURL, null, httpMethod, authInfo);
 
-            string response = SendGetRequest(url);
+            string response = SendRequest(httpMethod, url);
 
             if (!string.IsNullOrEmpty(response))
             {

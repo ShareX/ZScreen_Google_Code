@@ -38,6 +38,8 @@ namespace UploadersAPILib
         public const string ImgurConsumerSecret = "edd13f72e7c9908b50c8090a8e912b73";
         public const string FlickrKey = "009382d913746758f23d0ba9906b9fde";
         public const string FlickrSecret = "7a147b763b1c7ebc";
+        public const string PhotobucketConsumerKey = "149828681";
+        public const string PhotobucketConsumerSecret = "d2638b653e88315aac528087e9db54e3";
         public const string UploadScreenshotKey = "2807828f379860848433221358";
         public const string ImageBamKey = "P9MMWVORXYCVM9LL";
         public const string ImageBamSecret = "8NHVT2W777DEHZBV54A4CIT23XJFTL1D";
@@ -80,6 +82,8 @@ namespace UploadersAPILib
                 ImgurConsumerSecret = ImgurConsumerSecret,
                 FlickrKey = FlickrKey,
                 FlickrSecret = FlickrSecret,
+                PhotobucketConsumerKey = PhotobucketConsumerKey,
+                PhotobucketConsumerSecret = PhotobucketConsumerSecret,
                 DropboxConsumerKey = DropboxConsumerKey,
                 DropboxConsumerSecret = DropboxConsumerSecret,
                 SendSpaceKey = SendSpaceKey,

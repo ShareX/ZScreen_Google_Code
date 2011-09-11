@@ -166,8 +166,7 @@ namespace ZUploader
         [STAThread]
         private static void Main(string[] args)
         {
-            string name = Assembly.GetExecutingAssembly().GetName().Name;
-            if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
+            if (!ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback)) return;
 
             StartTimer = Stopwatch.StartNew();
 

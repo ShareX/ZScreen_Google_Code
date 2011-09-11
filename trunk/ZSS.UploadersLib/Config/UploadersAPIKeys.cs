@@ -34,6 +34,8 @@ namespace UploadersLib
         public string ImgurConsumerSecret { get; set; }
         public string FlickrKey { get; set; }
         public string FlickrSecret { get; set; }
+        public string PhotobucketConsumerKey { get; set; }
+        public string PhotobucketConsumerSecret { get; set; }
 
         // File Uploaders
         public string DropboxConsumerKey { get; set; }
