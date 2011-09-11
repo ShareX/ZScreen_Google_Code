@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
@@ -58,6 +59,12 @@ namespace SingleInstanceApplication
             }
 
             return InstanceProxy.IsFirstInstance;
+        }
+
+        public static bool CreateSingleInstance(EventHandler<InstanceCallbackEventArgs> callback)
+        {
+            string name = Assembly.GetExecutingAssembly().GetName().Name;
+            return CreateSingleInstance(name, callback);
         }
 
         /// <summary>

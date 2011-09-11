@@ -194,6 +194,7 @@
     <Compile Include="HelperClasses\ImageFile.cs" />
     <Compile Include="HelperClasses\CustomUploaderInfo.cs" />
     <Compile Include="HelperClasses\CustomUploaderManager.cs" />
+    <Compile Include="ImageUploaders\Photobucket.cs" />
     <Compile Include="OtherServices\Twitter.cs" />
     <Compile Include="HelperClasses\ProgressManager.cs" />
     <Compile Include="HelperClasses\ProxyInfo.cs" />

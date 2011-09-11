@@ -12,17 +12,28 @@ namespace ZUploader
             InitializeComponent();
         }
 
+        public static string GetInputText()
+        {
+            using (InputBox form = new InputBox())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    return form.InputText;
+                }
+
+                return null;
+            }
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             InputText = tbInput.Text;
             DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            Close();
         }
     }
 }
