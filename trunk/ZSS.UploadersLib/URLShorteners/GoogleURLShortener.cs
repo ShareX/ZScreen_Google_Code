@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
+using HelpersLib;
 
 namespace UploadersLib.URLShorteners
 {
@@ -43,6 +44,14 @@ namespace UploadersLib.URLShorteners
         public string AnonymousKey { get; set; }
 
         public OAuthInfo AuthInfo { get; set; }
+
+        public override string Host
+        {
+            get
+            {
+                return UrlShortenerType.Google.GetDescription();
+            }
+        }
 
         public GoogleURLShortener(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {

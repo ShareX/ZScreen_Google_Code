@@ -33,6 +33,14 @@ namespace UploadersLib.URLShorteners
 
         private string APIKey;
 
+        public override string Host
+        {
+            get
+            {
+                return "3.ly";
+            }
+        }
+
         public ThreelyURLShortener(string key)
         {
             APIKey = key;
