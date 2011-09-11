@@ -126,11 +126,11 @@ namespace UploadersLib.HelperClasses
             return url;
         }
 
-        public static bool ParseAccessTokenResponse(string accessTokenResponse, OAuthInfo oauth)
+        public static NameValueCollection ParseAccessTokenResponse(string accessTokenResponse, OAuthInfo oauth)
         {
             NameValueCollection args = HttpUtility.ParseQueryString(accessTokenResponse);
 
-            if (args[ParameterToken] != null)
+            if (args != null && args[ParameterToken] != null)
             {
                 oauth.UserToken = args[ParameterToken];
 
@@ -138,11 +138,11 @@ namespace UploadersLib.HelperClasses
                 {
                     oauth.UserSecret = args[ParameterTokenSecret];
 
-                    return true;
+                    return args;
                 }
             }
 
-            return false;
+            return null;
         }
 
         private static string GenerateSignatureBase(HttpMethod httpMethod, string normalizedUrl, string normalizedParameters)
