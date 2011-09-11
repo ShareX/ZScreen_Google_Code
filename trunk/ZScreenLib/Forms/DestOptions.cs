@@ -45,7 +45,7 @@ namespace ZScreenLib
             btnBrowse.Enabled = !task.Status.Contains(WorkerTask.TaskStatus.ThreadMode);
             txtFilePath.Enabled = task.Job2 != WorkerTask.JobLevel2.UploadFromDragDrop;
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
-            dsh.AddEnumOutputsWithConfigSettings(Task.Profile.Outputs);
+            dsh.AddEnumOutputsWithConfigSettings(Task.MyWorkflow.Outputs);
             dsh.AddEnumClipboardContentWithRuntimeSettings(Task.TaskClipboardContent);
             dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
@@ -84,7 +84,7 @@ namespace ZScreenLib
                 FilePath = txtFilePath.Text;
                 this.DialogResult = DialogResult.OK;
 
-                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Task.Profile.Outputs);
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Task.MyWorkflow.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);

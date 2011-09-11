@@ -26,10 +26,9 @@ namespace ZScreenLib
             return stream;
         }
 
-        public static string PrepareFilename(Workflow profile, Image img, NameParserType patternType)
+        public static string PrepareFilename(Workflow profile, Image img, EImageFormat imageFormat, NameParserType patternType)
         {
             string ext = "png";
-            EImageFormat imageFormat = profile.ImageFormat;
 
             switch (imageFormat)
             {

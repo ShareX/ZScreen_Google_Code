@@ -134,11 +134,11 @@ namespace ZScreenCLI
             WorkerTask tempTask = new WorkerTask();
             foreach (int o in listOutputTypes)
             {
-                tempTask.Profile.Outputs.Add((OutputEnum)o);
+                tempTask.MyWorkflow.Outputs.Add((OutputEnum)o);
             }
-            if (tempTask.Profile.Outputs.Count == 0)
+            if (tempTask.MyWorkflow.Outputs.Count == 0)
             {
-                tempTask.Profile.Outputs.Add(OutputEnum.RemoteHost);
+                tempTask.MyWorkflow.Outputs.Add(OutputEnum.RemoteHost);
             }
             tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             foreach (int ut in listImageHosts)

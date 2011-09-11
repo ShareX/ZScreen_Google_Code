@@ -497,7 +497,7 @@ namespace ZScreenGUI
             {
                 string text = Clipboard.GetText();
                 string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
-                if (cbTask.Profile.Outputs.Contains(OutputEnum.LocalDisk))
+                if (cbTask.MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
                 {
                     FileSystem.WriteText(cufp, text);
                 }
