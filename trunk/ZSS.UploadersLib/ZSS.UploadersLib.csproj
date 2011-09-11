@@ -301,6 +301,7 @@
     <Content Include="Favicons\TwitSnaps.ico" />
     <Content Include="Favicons\Twitter.ico" />
     <Content Include="Favicons\YFrog.ico" />
+    <None Include="Resources\photobucket.png" />
     <None Include="Resources\server[1].png" />
     <None Include="Resources\ZScreen_256.png" />
     <None Include="Resources\page_white_powerpoint.gif" />

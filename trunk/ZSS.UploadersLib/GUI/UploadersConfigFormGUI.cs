@@ -43,6 +43,7 @@ namespace UploadersLib
             imageUploadersImageList.Images.Add("ImageShack", Resources.ImageShack);
             imageUploadersImageList.Images.Add("TinyPic", Resources.TinyPic);
             imageUploadersImageList.Images.Add("Imgur", Resources.Imgur);
+            imageUploadersImageList.Images.Add("Photobucket", Resources.Photobucket);
             imageUploadersImageList.Images.Add("Flickr", Resources.Flickr);
             imageUploadersImageList.Images.Add("TwitPic", Resources.TwitPic);
             imageUploadersImageList.Images.Add("TwitSnaps", Resources.TwitSnaps);
@@ -75,6 +76,7 @@ namespace UploadersLib
             tpTinyPic.ImageKey = "TinyPic";
             tpImgur.ImageKey = "Imgur";
             tpFlickr.ImageKey = "Flickr";
+            tpPhotobucket.ImageKey = "Photobucket";
             tpTwitPic.ImageKey = "TwitPic";
             tpTwitSnaps.ImageKey = "TwitSnaps";
             tpYFrog.ImageKey = "YFrog";
