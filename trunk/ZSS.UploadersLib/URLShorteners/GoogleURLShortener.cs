@@ -65,7 +65,6 @@ namespace UploadersLib.URLShorteners
 
         public string GetAuthorizationURL()
         {
-            AuthInfo = new OAuthInfo("1011702346808.apps.googleusercontent.com", "EmT1pAOddpDRYUDd5smypTbH");
             return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo, "oob",
                 new Dictionary<string, string> { { "scope", "https://www.googleapis.com/auth/urlshortener" }, { "xoauth_displayname", Application.ProductName } });
         }

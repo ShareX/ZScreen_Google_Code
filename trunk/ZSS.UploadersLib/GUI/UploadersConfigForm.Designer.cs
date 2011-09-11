@@ -172,7 +172,7 @@
             this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tcURLShorteners = new System.Windows.Forms.TabControl();
-            this.tpURLShortenerPage1 = new System.Windows.Forms.TabPage();
+            this.tpGoogleURLShortener = new System.Windows.Forms.TabPage();
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
@@ -198,6 +198,7 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcGoogleURLShortenerAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -229,6 +230,7 @@
             this.tpPastebin.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
             this.tcURLShorteners.SuspendLayout();
+            this.tpGoogleURLShortener.SuspendLayout();
             this.tpOtherServices.SuspendLayout();
             this.tcOtherServices.SuspendLayout();
             this.tpTwitter.SuspendLayout();
@@ -1743,7 +1745,7 @@
             // 
             // tcURLShorteners
             // 
-            this.tcURLShorteners.Controls.Add(this.tpURLShortenerPage1);
+            this.tcURLShorteners.Controls.Add(this.tpGoogleURLShortener);
             this.tcURLShorteners.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcURLShorteners.Location = new System.Drawing.Point(3, 3);
             this.tcURLShorteners.Name = "tcURLShorteners";
@@ -1751,15 +1753,16 @@
             this.tcURLShorteners.Size = new System.Drawing.Size(780, 474);
             this.tcURLShorteners.TabIndex = 0;
             // 
-            // tpURLShortenerPage1
+            // tpGoogleURLShortener
             // 
-            this.tpURLShortenerPage1.Location = new System.Drawing.Point(4, 22);
-            this.tpURLShortenerPage1.Name = "tpURLShortenerPage1";
-            this.tpURLShortenerPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tpURLShortenerPage1.Size = new System.Drawing.Size(772, 448);
-            this.tpURLShortenerPage1.TabIndex = 0;
-            this.tpURLShortenerPage1.Text = "Nothing yet";
-            this.tpURLShortenerPage1.UseVisualStyleBackColor = true;
+            this.tpGoogleURLShortener.Controls.Add(this.atcGoogleURLShortenerAccountType);
+            this.tpGoogleURLShortener.Location = new System.Drawing.Point(4, 22);
+            this.tpGoogleURLShortener.Name = "tpGoogleURLShortener";
+            this.tpGoogleURLShortener.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGoogleURLShortener.Size = new System.Drawing.Size(772, 448);
+            this.tpGoogleURLShortener.TabIndex = 0;
+            this.tpGoogleURLShortener.Text = "Google";
+            this.tpGoogleURLShortener.UseVisualStyleBackColor = true;
             // 
             // tpOtherServices
             // 
@@ -2018,6 +2021,15 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
+            // atcGoogleURLShortenerAccountType
+            // 
+            this.atcGoogleURLShortenerAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcGoogleURLShortenerAccountType.Name = "atcGoogleURLShortenerAccountType";
+            this.atcGoogleURLShortenerAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcGoogleURLShortenerAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcGoogleURLShortenerAccountType.TabIndex = 0;
+            this.atcGoogleURLShortenerAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcGoogleURLShortenerAccountType_AccountTypeChanged);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2076,6 +2088,7 @@
             this.tpPastebin.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
             this.tcURLShorteners.ResumeLayout(false);
+            this.tpGoogleURLShortener.ResumeLayout(false);
             this.tpOtherServices.ResumeLayout(false);
             this.tcOtherServices.ResumeLayout(false);
             this.tpTwitter.ResumeLayout(false);
@@ -2112,7 +2125,7 @@
         private System.Windows.Forms.TabControl tcTextUploaders;
         private System.Windows.Forms.TabPage tpPastebin;
         private System.Windows.Forms.TabControl tcURLShorteners;
-        private System.Windows.Forms.TabPage tpURLShortenerPage1;
+        private System.Windows.Forms.TabPage tpGoogleURLShortener;
         private System.Windows.Forms.TabControl tcOtherServices;
         private System.Windows.Forms.TabPage tpTwitter;
         internal System.Windows.Forms.Button btnImageShackOpenPublicProfile;
@@ -2260,5 +2273,6 @@
         public System.Windows.Forms.TabPage tpFileUploaders;
         private System.Windows.Forms.ComboBox cbImgurThumbnailType;
         private System.Windows.Forms.Label lblImgurThumbnailType;
+        private GUI.AccountTypeControl atcGoogleURLShortenerAccountType;
     }
 }

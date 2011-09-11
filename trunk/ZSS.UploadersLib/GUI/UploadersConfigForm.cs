@@ -51,7 +51,7 @@ namespace UploadersLib
             Refresh();
         }
 
-        #region Image uploaders
+        #region Image Uploaders
 
         #region ImageShack
 
@@ -251,9 +251,9 @@ namespace UploadersLib
 
         #endregion YFrog
 
-        #endregion Image uploaders
+        #endregion Image Uploaders
 
-        #region File uploaders
+        #region File Uploaders
 
         #region Dropbox
 
@@ -599,9 +599,9 @@ namespace UploadersLib
 
         #endregion Custom Uploader
 
-        #endregion File uploaders
+        #endregion File Uploaders
 
-        #region Text uploaders
+        #region Text Uploaders
 
         #region Pastebin
 
@@ -612,7 +612,16 @@ namespace UploadersLib
 
         #endregion Pastebin
 
-        #endregion Text uploaders
+        #endregion Text Uploaders
+
+        #region URL Shorteners
+
+        private void atcGoogleURLShortenerAccountType_AccountTypeChanged(AccountType accountType)
+        {
+            Config.GoogleURLShortenerAccountType = accountType;
+        }
+
+        #endregion URL Shorteners
 
         #region Other Services
 

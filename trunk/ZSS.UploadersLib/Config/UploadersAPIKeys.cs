@@ -43,6 +43,10 @@ namespace UploadersLib
         // Text Uploaders
         public string PastebinKey { get; set; }
 
+        // URL Shorteners
+        public string GoogleConsumerKey { get; set; }
+        public string GoogleConsumerSecret { get; set; }
+
         // Other Services
         public string TwitterConsumerKey { get; set; }
         public string TwitterConsumerSecret { get; set; }

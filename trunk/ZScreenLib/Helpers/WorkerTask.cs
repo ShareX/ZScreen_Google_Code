@@ -1383,7 +1383,8 @@ namespace ZScreenLib
                 }
                 else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
                 {
-                    us = new GoogleURLShortener(ZKeys.GoogleURLShortenerKey);
+                    us = new GoogleURLShortener(Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerAccountType, ZKeys.GoogleURLShortenerKey,
+                        Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerOAuthInfo);
                 }
                 else if (MyLinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
