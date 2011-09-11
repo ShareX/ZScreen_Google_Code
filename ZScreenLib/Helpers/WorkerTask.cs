@@ -133,7 +133,7 @@ namespace ZScreenLib
         #region Properties
 
         public BackgroundWorker MyWorker { get; set; }
-        public Workflow Profile { get; private set; }
+        public Workflow MyWorkflow { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
 
@@ -179,6 +179,8 @@ namespace ZScreenLib
 
         public string TempText { get; private set; }
 
+        private Stream Data;
+
         public GoogleTranslateInfo TranslationInfo { get; private set; }
 
         public string FileName { get; private set; }
@@ -213,7 +215,7 @@ namespace ZScreenLib
             : this()
         {
             MyWorker = worker;
-            Profile = profile;
+            MyWorkflow = profile;
             if (profile.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Count == 0)
             {
                 TaskClipboardContent.Add(ClipboardContentEnum.Data);
@@ -236,7 +238,8 @@ namespace ZScreenLib
             }
 
             MyWorker = worker;
-            Profile = Engine.CoreConf;
+            IClone cm = new CloneManager();
+            MyWorkflow = cm.Clone<Workflow>(Engine.CoreConf);
             StartWork(job);
 
             if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
@@ -295,7 +298,7 @@ namespace ZScreenLib
 
             if (!Status.Contains(TaskStatus.Prepared) && !Status.Contains(TaskStatus.CancellationPending))
             {
-                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Profile.Outputs);
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyWorkflow.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
@@ -332,10 +335,10 @@ namespace ZScreenLib
 
                 TempImage = img;
                 EImageFormat imageFormat;
-                WorkerTaskHelper.PrepareImage(Profile, TempImage, out imageFormat);
+                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
 
-                string fn = WorkerTaskHelper.PrepareFilename(Profile, TempImage, GetPatternType());
-                string imgfp = FileSystem.GetUniqueFilePath(Profile, Engine.ImagesDir, fn);
+                string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
+                string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
                 UpdateLocalFilePath(imgfp);
 
                 Job1 = JobLevel1.Image;
@@ -600,7 +603,7 @@ namespace ZScreenLib
         {
             if (TempImage == null)
             {
-                SetImage(Capture.CaptureActiveWindow(this.Profile));
+                SetImage(Capture.CaptureActiveWindow(this.MyWorkflow));
             }
             return TempImage != null;
         }
@@ -691,7 +694,7 @@ namespace ZScreenLib
                                 capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
                                 capture.CaptureDetails.AddMetaData("source", "file");
                                 Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, Profile.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                                 editor.SetImagePath(LocalFilePath);
                                 editor.Visible = false;
                                 editor.ShowDialog();
@@ -724,7 +727,7 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (Profile.Outputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
+            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
             {
                 string fp = LocalFilePath;
                 Image img = TempImage;
@@ -750,7 +753,7 @@ namespace ZScreenLib
         {
             if (File.Exists(LocalFilePath) || TempImage != null || !string.IsNullOrEmpty(TempText))
             {
-                foreach (OutputEnum oe in Profile.Outputs)
+                foreach (OutputEnum oe in MyWorkflow.Outputs)
                 {
                     PublishData(oe);
                 }
@@ -806,7 +809,7 @@ namespace ZScreenLib
         {
             StartTime = DateTime.Now;
 
-            if (Profile.Outputs.Contains(OutputEnum.RemoteHost))
+            if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(LocalFilePath))
                 {
@@ -853,7 +856,7 @@ namespace ZScreenLib
             }
             else if (TempImage != null)
             {
-                data = TempImage.SaveImage(Profile, Profile.ImageFormat);
+                data = TempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -970,7 +973,7 @@ namespace ZScreenLib
                 // Need this for shortening URL using Clipboard Upload
                 ShortenURL(TempText);
             }
-            else if (Profile.Outputs.Contains(OutputEnum.RemoteHost))
+            else if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 foreach (TextUploaderType textUploaderType in MyTextUploaders)
                 {
@@ -1175,7 +1178,7 @@ namespace ZScreenLib
 
         public void Print()
         {
-            if (Profile.Outputs.Contains(OutputEnum.Printer))
+            if (MyWorkflow.Outputs.Contains(OutputEnum.Printer))
             {
                 if (TempImage != null)
                 {
@@ -1246,14 +1249,14 @@ namespace ZScreenLib
                 else if (TempImage != null)
                 {
                     EImageFormat imageFormat;
-                    WorkerTaskHelper.PrepareImage(Profile, TempImage, out imageFormat);
-                    fn = WorkerTaskHelper.PrepareFilename(Profile, TempImage, GetPatternType());
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
+                    fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, TempImage);
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
-                    fn = new NameParser(NameParserType.EntireScreen).Convert(Profile.EntireScreenPattern) + ".txt";
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(MyWorkflow.EntireScreenPattern) + ".txt";
                     string destFile = acc.GetLocalhostPath(fn);
                     FileSystem.WriteText(destFile, TempText);
                 }
@@ -1421,7 +1424,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return Profile.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && TempImage != null;
+            return MyWorkflow.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && TempImage != null;
         }
 
         private bool CreateThumbnail()
@@ -1496,7 +1499,7 @@ namespace ZScreenLib
         public string GetOutputsDescription()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (OutputEnum ut in Profile.Outputs)
+            foreach (OutputEnum ut in MyWorkflow.Outputs)
             {
                 sb.Append(ut.GetDescription());
                 sb.Append(", ");
@@ -1518,7 +1521,7 @@ namespace ZScreenLib
             }
             if (sb.Length < 3)
             {
-                foreach (OutputEnum ut in Profile.Outputs)
+                foreach (OutputEnum ut in MyWorkflow.Outputs)
                 {
                     sb.Append(ut.GetDescription());
                     sb.Append(", ");
@@ -1603,6 +1606,7 @@ namespace ZScreenLib
         public void Dispose()
         {
             if (TempImage != null) TempImage.Dispose();
+            if (Data != null) Data.Dispose();
             if (MyWorker != null) MyWorker.Dispose();
         }
 
