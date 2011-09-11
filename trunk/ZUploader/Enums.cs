@@ -37,6 +37,8 @@ namespace ZUploader
         Imgur,
         [Description("flickr.com")]
         Flickr,
+        [Description("photobucket.com")]
+        Photobucket,
         [Description("uploadscreenshot.com")]
         UploadScreenshot,
         [Description("File Uploader")]

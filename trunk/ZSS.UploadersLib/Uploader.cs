@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -492,6 +493,11 @@ namespace UploadersLib
 
         protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.GET)
         {
+            return GetAccessTokenEx(accessTokenURL, authInfo, httpMethod) != null;
+        }
+
+        protected NameValueCollection GetAccessTokenEx(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.GET)
+        {
             if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret))
             {
                 throw new Exception("Auth infos missing. Open Authorization URL first.");
@@ -506,7 +512,7 @@ namespace UploadersLib
                 return OAuthManager.ParseAccessTokenResponse(response, authInfo);
             }
 
-            return false;
+            return null;
         }
 
         #endregion OAuth methods
