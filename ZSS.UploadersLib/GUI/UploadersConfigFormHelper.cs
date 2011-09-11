@@ -87,7 +87,7 @@ namespace UploadersLib
                     {
                         lblImgurAccountStatus.Text = "Login failed.";
                         MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        atcImageShackAccountType.SelectedAccountType = AccountType.Anonymous;
+                        atcImgurAccountType.SelectedAccountType = AccountType.Anonymous;
                     }
                 }
             }
@@ -180,6 +180,61 @@ namespace UploadersLib
         }
 
         #endregion Flickr
+
+        #region Photobucket
+
+        public void PhotobucketAuthOpen()
+        {
+            try
+            {
+                OAuthInfo oauth = new OAuthInfo(APIKeys.PhotobucketConsumerKey, APIKeys.PhotobucketConsumerSecret);
+
+                string url = new Photobucket(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.PhotobucketOAuthInfo = oauth;
+                    StaticHelper.LoadBrowser(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void PhotobucketAuthComplete()
+        {
+            try
+            {
+                string verification = txtPhotobucketVerificationCode.Text;
+
+                if (!string.IsNullOrEmpty(verification) && Config.PhotobucketOAuthInfo != null &&
+                    !string.IsNullOrEmpty(Config.PhotobucketOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Config.PhotobucketOAuthInfo.AuthSecret))
+                {
+                    Photobucket pb = new Photobucket(Config.PhotobucketOAuthInfo);
+                    bool result = pb.GetAccessToken(verification);
+                    
+                    if (result)
+                    {
+                        Config.PhotobucketAccountInfo = pb.GetAccountInfo();
+                        lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        lblPhotobucketAccountStatus.Text = "Login failed.";
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion Photobucket
 
         #region MediaWiki
 

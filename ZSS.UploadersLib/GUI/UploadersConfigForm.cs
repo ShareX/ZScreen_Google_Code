@@ -189,6 +189,20 @@ namespace UploadersLib
 
         #endregion Imgur
 
+        #region Photobucket
+
+        private void btnPhotobucketAuthOpen_Click(object sender, EventArgs e)
+        {
+            PhotobucketAuthOpen();
+        }
+
+        private void btnPhotobucketAuthComplete_Click(object sender, EventArgs e)
+        {
+            PhotobucketAuthComplete();
+        }
+
+        #endregion Photobucket
+
         #region Flickr
 
         private void btnFlickrOpenAuthorize_Click(object sender, EventArgs e)
@@ -641,7 +655,6 @@ namespace UploadersLib
         }
 
         #endregion Other Services
-
 
     }
 }

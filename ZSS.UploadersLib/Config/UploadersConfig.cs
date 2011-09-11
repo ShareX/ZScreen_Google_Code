@@ -64,6 +64,11 @@ namespace UploadersLib
         public FlickrAuthInfo FlickrAuthInfo = new FlickrAuthInfo();
         public FlickrSettings FlickrSettings = new FlickrSettings();
 
+        // Photobucket
+
+        public OAuthInfo PhotobucketOAuthInfo = null;
+        public PhotobucketAccountInfo PhotobucketAccountInfo = null;
+
         // TwitPic
 
         public string TwitPicUsername = string.Empty;
