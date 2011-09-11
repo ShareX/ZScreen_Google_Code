@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
+using HelpersLib;
 
 namespace UploadersLib.URLShorteners
 {
@@ -33,6 +34,14 @@ namespace UploadersLib.URLShorteners
         private const string APIURL = "http://api.j.mp/shorten";
 
         private string APILogin, APIKey;
+
+        public override string Host
+        {
+            get
+            {
+                return UrlShortenerType.Jmp.GetDescription();
+            }
+        }
 
         public JmpURLShortener(string login, string key)
         {

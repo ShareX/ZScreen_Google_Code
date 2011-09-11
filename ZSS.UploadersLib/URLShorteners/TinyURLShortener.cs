@@ -24,12 +24,21 @@
 #endregion License Information (GPL v2)
 
 using System.Collections.Generic;
+using HelpersLib;
 
 namespace UploadersLib.URLShorteners
 {
     public sealed class TinyURLShortener : URLShortener
     {
         private const string APIURL = "http://tinyurl.com/api-create.php";
+
+        public override string Host
+        {
+            get
+            {
+                return UrlShortenerType.TINYURL.GetDescription();
+            }
+        }
 
         public override string ShortenURL(string url)
         {

@@ -32,7 +32,7 @@ namespace ZScreenLib
                 this.pbPreview.LoadingImage = Resources.Loading;
                 foreach (UploadResult ur in task.UploadResults)
                 {
-                    if (!string.IsNullOrEmpty(ur.URL) || !string.IsNullOrEmpty(ur.LocalFilePath))
+                    if (!string.IsNullOrEmpty(ur.URL) || !File.Exists(ur.LocalFilePath))
                     {
                         this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
                         break;
@@ -44,16 +44,25 @@ namespace ZScreenLib
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
                     string path = string.IsNullOrEmpty(ur.URL) ? ur.LocalFilePath : ur.URL;
-                    foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
+                    if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
                     {
-                        string url = ur.GetUrlByType(type, path);
-                        if (!string.IsNullOrEmpty(url))
+                        string url = ur.GetUrlByType(LinkFormatEnum.FULL_TINYURL, path);
+                        TreeNode tnLink = new TreeNode(LinkFormatEnum.FULL_TINYURL.GetDescription());
+                        tnLink.Nodes.Add(url);
+                        tnUploadResult.Nodes.Add(tnLink);
+                    }
+                    else
+                    {
+                        foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                         {
-                            TreeNode tnLink = new TreeNode(type.GetDescription());
-                            tnLink.Nodes.Add(url);
-                            tnUploadResult.Nodes.Add(tnLink);
-
-                            count++;
+                            string url = ur.GetUrlByType(type, path);
+                            if (!string.IsNullOrEmpty(url))
+                            {
+                                TreeNode tnLink = new TreeNode(type.GetDescription());
+                                tnLink.Nodes.Add(url);
+                                tnUploadResult.Nodes.Add(tnLink);
+                                count++;
+                            }
                         }
                     }
                     tvLinks.Nodes.Add(tnUploadResult);

@@ -721,6 +721,26 @@ namespace ZScreenLib
 
         #region Publish Data
 
+        private Stream PrepareData()
+        {
+            Stream data = null;
+
+            if (File.Exists(LocalFilePath))
+            {
+                data = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            }
+            else if (TempImage != null)
+            {
+                data = TempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
+            }
+            else if (!string.IsNullOrEmpty(TempText))
+            {
+                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
+            }
+
+            return data;
+        }
+
         /// <summary>
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
@@ -794,17 +814,6 @@ namespace ZScreenLib
             }
         }
 
-        public void SetClipboardContent()
-        {
-            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
-            {
-                AddUploadResult(new UploadResult()
-                {
-                    Host = ClipboardContentEnum.Local.GetDescription()
-                });
-            }
-        }
-
         public void UploadImage()
         {
             StartTime = DateTime.Now;
@@ -844,26 +853,6 @@ namespace ZScreenLib
                     MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
                 }
             }
-        }
-
-        private Stream PrepareData()
-        {
-            Stream data = null;
-
-            if (File.Exists(LocalFilePath))
-            {
-                data = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            }
-            else if (TempImage != null)
-            {
-                data = TempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
-            }
-            else if (!string.IsNullOrEmpty(TempText))
-            {
-                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
-            }
-
-            return data;
         }
 
         private void UploadImage(ImageUploaderType imageUploaderType, Stream data)
@@ -1028,18 +1017,70 @@ namespace ZScreenLib
             }
         }
 
-        public void UploadFile()
+        /// <summary>
+        /// Funtion to FTP the Screenshot
+        /// </summary>
+        /// <returns>Retuns a List of Screenshots</returns>
+        public UploadResult UploadToFTP(int FtpAccountId, Stream data)
         {
-            StartTime = DateTime.Now;
+            UploadResult ur = null;
 
-            Engine.MyLogger.WriteLine("Uploading File: " + LocalFilePath);
-
-            foreach (FileUploaderType fileUploaderType in MyFileUploaders)
+            try
             {
-                UploadFile(fileUploaderType, PrepareData());
+                MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+
+                if (Adapter.CheckFTPAccounts(this))
+                {
+                    FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[FtpAccountId];
+                    DestinationName = string.Format("FTP - {0}", acc.Name);
+                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
+
+                    FTPUploader fu = new FTPUploader(acc);
+                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+
+                    MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+
+                    string url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
+
+                        if (CreateThumbnail())
+                        {
+                            double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)TempImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(TempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
+                                (int)(thar * TempImage.Height)))
+                            {
+                                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
+                                sb.Append(".th");
+                                sb.Append(Path.GetExtension(LocalFilePath));
+                                string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
+                                img.Save(thPath);
+                                if (File.Exists(thPath))
+                                {
+                                    string thumb = fu.Upload(thPath).URL;
+
+                                    if (!string.IsNullOrEmpty(thumb))
+                                    {
+                                        ur = new UploadResult();
+                                        ur.Host = FileUploaderType.FTP.GetDescription();
+                                        ur.ThumbnailURL = thumb;
+                                        AddUploadResult(ur);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Engine.MyLogger.WriteException(ex, "Error while uploading to FTP Server");
+                Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
 
-            EndTime = DateTime.Now;
+            return ur;
         }
 
         private void UploadFile(FileUploaderType fileUploaderType, Stream data)
@@ -1110,70 +1151,79 @@ namespace ZScreenLib
             }
         }
 
-        /// <summary>
-        /// Funtion to FTP the Screenshot
-        /// </summary>
-        /// <returns>Retuns a List of Screenshots</returns>
-        public UploadResult UploadToFTP(int FtpAccountId, Stream data)
+        public void UploadFile()
         {
-            UploadResult ur = null;
+            StartTime = DateTime.Now;
 
-            try
+            Engine.MyLogger.WriteLine("Uploading File: " + LocalFilePath);
+
+            foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
-                MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
+                UploadFile(fileUploaderType, PrepareData());
+            }
 
-                if (Adapter.CheckFTPAccounts(this))
+            EndTime = DateTime.Now;
+        }
+
+        public bool ShortenURL(UploadResult ur, string fullUrl)
+        {
+            if (!string.IsNullOrEmpty(fullUrl))
+            {
+                Job3 = WorkerTask.JobLevel3.ShortenURL;
+                URLShortener us = null;
+
+                if (MyLinkUploaders.Contains(UrlShortenerType.BITLY))
                 {
-                    FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[FtpAccountId];
-                    DestinationName = string.Format("FTP - {0}", acc.Name);
-                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
+                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
+                {
+                    us = new GoogleURLShortener(Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerAccountType, ZKeys.GoogleURLShortenerKey,
+                        Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerOAuthInfo);
+                }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.ISGD))
+                {
+                    us = new IsgdURLShortener();
+                }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.Jmp))
+                {
+                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.TINYURL))
+                {
+                    us = new TinyURLShortener();
+                }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.TURL))
+                {
+                    us = new TurlURLShortener();
+                }
 
-                    FTPUploader fu = new FTPUploader(acc);
-                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+                if (us != null)
+                {
+                    string shortenUrl = us.ShortenURL(fullUrl);
 
-                    MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
-
-                    string url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
-
-                    if (!string.IsNullOrEmpty(url))
+                    if (!string.IsNullOrEmpty(shortenUrl))
                     {
-                        AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
-
-                        if (CreateThumbnail())
-                        {
-                            double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)TempImage.Width;
-                            using (Image img = GraphicsMgr.ChangeImageSize(TempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
-                                (int)(thar * TempImage.Height)))
-                            {
-                                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
-                                sb.Append(".th");
-                                sb.Append(Path.GetExtension(LocalFilePath));
-                                string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
-                                img.Save(thPath);
-                                if (File.Exists(thPath))
-                                {
-                                    string thumb = fu.Upload(thPath).URL;
-
-                                    if (!string.IsNullOrEmpty(thumb))
-                                    {
-                                        ur = new UploadResult();
-                                        ur.Host = FileUploaderType.FTP.GetDescription();
-                                        ur.ThumbnailURL = thumb;
-                                        AddUploadResult(ur);
-                                    }
-                                }
-                            }
-                        }
+                        Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
+                        ur.Host = us.Host;
+                        ur.ShortenedURL = shortenUrl;
+                        return true;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Engine.MyLogger.WriteException(ex, "Error while uploading to FTP Server");
-                Errors.Add("FTP upload failed.\r\n" + ex.Message);
-            }
 
-            return ur;
+            return false;
+        }
+
+        public void SetClipboardContent()
+        {
+            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+            {
+                AddUploadResult(new UploadResult()
+                {
+                    Host = ClipboardContentEnum.Local.GetDescription()
+                });
+            }
         }
 
         public void Print()
@@ -1371,55 +1421,6 @@ namespace ZScreenLib
             bool success = ShortenURL(ur, fullUrl);
             AddUploadResult(ur);
             return success;
-        }
-
-        public bool ShortenURL(UploadResult ur, string fullUrl)
-        {
-            if (!string.IsNullOrEmpty(fullUrl))
-            {
-                Job3 = WorkerTask.JobLevel3.ShortenURL;
-                URLShortener us = null;
-
-                if (MyLinkUploaders.Contains(UrlShortenerType.BITLY))
-                {
-                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
-                {
-                    us = new GoogleURLShortener(Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerAccountType, ZKeys.GoogleURLShortenerKey,
-                        Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerOAuthInfo);
-                }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.ISGD))
-                {
-                    us = new IsgdURLShortener();
-                }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.Jmp))
-                {
-                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.TINYURL))
-                {
-                    us = new TinyURLShortener();
-                }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.TURL))
-                {
-                    us = new TurlURLShortener();
-                }
-
-                if (us != null)
-                {
-                    string shortenUrl = us.ShortenURL(fullUrl);
-
-                    if (!string.IsNullOrEmpty(shortenUrl))
-                    {
-                        Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
-                        ur.ShortenedURL = shortenUrl;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
         }
 
         public bool JobIsImageToClipboard()
