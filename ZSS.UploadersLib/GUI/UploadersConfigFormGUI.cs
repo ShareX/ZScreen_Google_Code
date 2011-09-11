@@ -263,6 +263,17 @@ namespace UploadersLib
 
             #endregion File uploaders
 
+            #region URL Shorteners
+
+            atcGoogleURLShortenerAccountType.SelectedAccountType = Config.GoogleURLShortenerAccountType;
+
+            if (OAuthInfo.CheckOAuth(Config.GoogleURLShortenerOAuthInfo))
+            {
+                lblGooglAccountStatus.Text = "Login successful: " + Config.GoogleURLShortenerOAuthInfo.UserToken;
+            }
+
+            #endregion
+
             #region Other Services
 
             ucTwitterAccounts.AccountsList.Items.Clear();

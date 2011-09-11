@@ -621,6 +621,16 @@ namespace UploadersLib
             Config.GoogleURLShortenerAccountType = accountType;
         }
 
+        private void btnGoogleURLShortenerAuthOpen_Click(object sender, EventArgs e)
+        {
+            GooglAuthOpen();
+        }
+
+        private void btnGoogleURLShortenerAuthComplete_Click(object sender, EventArgs e)
+        {
+            GooglAuthComplete();
+        }
+
         #endregion URL Shorteners
 
         #region Other Services
@@ -631,5 +641,7 @@ namespace UploadersLib
         }
 
         #endregion Other Services
+
+
     }
 }

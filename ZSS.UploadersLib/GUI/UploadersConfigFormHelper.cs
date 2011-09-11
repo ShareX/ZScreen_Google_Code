@@ -39,6 +39,7 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.Properties;
 using UploadersLib.TextUploaders;
+using UploadersLib.URLShorteners;
 
 namespace UploadersLib
 {
@@ -86,6 +87,7 @@ namespace UploadersLib
                     {
                         lblImgurAccountStatus.Text = "Login failed.";
                         MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        atcImageShackAccountType.SelectedAccountType = AccountType.Anonymous;
                     }
                 }
             }
@@ -596,6 +598,66 @@ namespace UploadersLib
         }
 
         #endregion Twitter
+
+        #region URL Shorteners
+
+        #region goo.gl
+
+        public void GooglAuthOpen()
+        {
+            try
+            {
+                OAuthInfo oauth = new OAuthInfo(APIKeys.GoogleConsumerKey, APIKeys.GoogleConsumerSecret);
+
+                string url = new GoogleURLShortener(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.GoogleURLShortenerOAuthInfo = oauth;
+                    StaticHelper.LoadBrowser(url);
+                    btnGoogleURLShortenerAuthComplete.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void GooglAuthComplete()
+        {
+            if (Config.GoogleURLShortenerOAuthInfo != null && !string.IsNullOrEmpty(Config.GoogleURLShortenerOAuthInfo.AuthToken) &&
+                !string.IsNullOrEmpty(Config.GoogleURLShortenerOAuthInfo.AuthSecret))
+            {
+                GoogleURLShortener gus = new GoogleURLShortener(Config.GoogleURLShortenerOAuthInfo);
+                bool result = gus.GetAccessToken();
+
+                if (result)
+                {
+                    MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblGooglAccountStatus.Text = "Login successful: " + Config.GoogleURLShortenerOAuthInfo.UserToken;
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    atcGoogleURLShortenerAccountType.SelectedAccountType = AccountType.Anonymous;
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Config.GoogleURLShortenerOAuthInfo = null;
+            // todo: UpdateDropboxStatus();
+        }
+
+
+        #endregion goo.gl
+
+        #endregion URL Shorteners
+
 
         #region Custom uploader
 
