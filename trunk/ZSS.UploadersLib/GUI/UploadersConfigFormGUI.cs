@@ -123,6 +123,13 @@ namespace UploadersLib
                 lblImgurAccountStatus.Text = "Login successful: " + Config.ImgurOAuthInfo.UserToken;
             }
 
+            // Photobucket
+
+            if (OAuthInfo.CheckOAuth(Config.PhotobucketOAuthInfo))
+            {
+                lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
+            }
+
             // Flickr
 
             pgFlickrAuthInfo.SelectedObject = Config.FlickrAuthInfo;

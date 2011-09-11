@@ -243,7 +243,7 @@ namespace ZUploader
                     imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret, Program.UploadersConfig.FlickrAuthInfo, Program.UploadersConfig.FlickrSettings);
                     break;
                 case ImageDestination.Photobucket:
-                    imageUploader = new Photobucket();
+                    imageUploader = new Photobucket(Program.UploadersConfig.PhotobucketOAuthInfo, Program.UploadersConfig.PhotobucketAccountInfo);
                     break;
                 case ImageDestination.UploadScreenshot:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);

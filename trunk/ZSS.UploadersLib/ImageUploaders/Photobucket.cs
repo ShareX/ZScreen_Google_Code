@@ -15,12 +15,19 @@ namespace UploadersLib.ImageUploaders
         private const string URLAccessToken = "http://api.photobucket.com/login/access";
 
         public string AlbumID { get; set; }
-        public string Subdomain { get; set; }
+        public PhotobucketAccountInfo AccountInfo = new PhotobucketAccountInfo();
 
         public OAuthInfo AuthInfo { get; set; }
 
-        public Photobucket()
+        public Photobucket(OAuthInfo oauth)
         {
+            AuthInfo = oauth;
+        }
+
+        public Photobucket(OAuthInfo oauth, PhotobucketAccountInfo accountInfo)
+            : this(oauth)
+        {
+            AccountInfo = accountInfo;
         }
 
         public string GetAuthorizationURL()
@@ -36,11 +43,16 @@ namespace UploadersLib.ImageUploaders
 
             if (nv != null)
             {
-                Subdomain = nv["subdomain"];
-                return !string.IsNullOrEmpty(Subdomain);
+                AccountInfo.Subdomain = nv["subdomain"];
+                return !string.IsNullOrEmpty(AccountInfo.Subdomain);
             }
 
             return false;
+        }
+
+        public PhotobucketAccountInfo GetAccountInfo()
+        {
+            return AccountInfo;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
@@ -64,10 +76,15 @@ namespace UploadersLib.ImageUploaders
             args.Add("size", ""); // Size to resize an image to. (Images can only be made smaller.)
             */
 
-            string url = string.Format("http://{0}/album/{1}/upload", Subdomain, album);
+            string url = string.Format("http://{0}/album/{1}/upload", AccountInfo.Subdomain, album);
             string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
 
             return UploadData(stream, query, fileName, "uploadfile");
         }
+    }
+
+    public class PhotobucketAccountInfo
+    {
+        public string Subdomain = string.Empty;
     }
 }
