@@ -131,7 +131,6 @@
             this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestImage.Tag = "Upload image to";
             this.tsddbDestImage.Text = "Upload image to: loading...";
-            this.tsddbDestImage.MouseHover += new System.EventHandler(this.tsddbDestImage_MouseHover);
             // 
             // tsddDestText
             // 
@@ -190,6 +189,7 @@
             this.Controls.Add(this.tsDest);
             this.Name = "DestSelector";
             this.Size = new System.Drawing.Size(352, 200);
+            this.Load += new System.EventHandler(this.DestSelector_Load);
             this.tsDest.ResumeLayout(false);
             this.tsDest.PerformLayout();
             this.ResumeLayout(false);
