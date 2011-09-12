@@ -1,21 +1,40 @@
-﻿using System.Collections.Generic;
+﻿#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using HelpersLib;
 using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
 {
     public sealed class Photobucket : ImageUploader, IOAuth
     {
-        private const string URLRequestToken = "http://api.photobucket.com/login/request";
-        private const string URLAuthorize = "http://photobucket.com/apilogin/login";
-        private const string URLAccessToken = "http://api.photobucket.com/login/access";
-
-        public string AlbumID { get; set; }
-        public PhotobucketAccountInfo AccountInfo = new PhotobucketAccountInfo();
-
-        public OAuthInfo AuthInfo { get; set; }
-
         public override string Host
         {
             get
@@ -23,6 +42,14 @@ namespace UploadersLib.ImageUploaders
                 return "Photobucket";
             }
         }
+
+        private const string URLRequestToken = "http://api.photobucket.com/login/request";
+        private const string URLAuthorize = "http://photobucket.com/apilogin/login";
+        private const string URLAccessToken = "http://api.photobucket.com/login/access";
+
+        public PhotobucketAccountInfo AccountInfo = new PhotobucketAccountInfo();
+
+        public OAuthInfo AuthInfo { get; set; }
 
         public Photobucket(OAuthInfo oauth)
         {
@@ -49,6 +76,7 @@ namespace UploadersLib.ImageUploaders
             if (nv != null)
             {
                 AccountInfo.Subdomain = nv["subdomain"];
+                AccountInfo.AlbumID = nv["username"];
                 return !string.IsNullOrEmpty(AccountInfo.Subdomain);
             }
 
@@ -62,14 +90,13 @@ namespace UploadersLib.ImageUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            string response = UploadMedia(stream, fileName, AlbumID);
-
-            return null;
+            return UploadMedia(stream, fileName);
         }
 
-        public string UploadMedia(Stream stream, string fileName, string album)
+        public UploadResult UploadMedia(Stream stream, string fileName)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("id", AccountInfo.AlbumID);
             args.Add("type", "image"); // Media type. Options are image, video, or base64.
 
             /*
@@ -81,15 +108,33 @@ namespace UploadersLib.ImageUploaders
             args.Add("size", ""); // Size to resize an image to. (Images can only be made smaller.)
             */
 
-            string url = string.Format("http://{0}/album/{1}/upload", AccountInfo.Subdomain, album);
+            string url = "http://api.photobucket.com/album/!/upload";
             string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
+            query = query.Replace("api.photobucket.com", AccountInfo.Subdomain);
 
-            return UploadData(stream, query, fileName, "uploadfile");
+            string response = UploadData(stream, query, fileName, "uploadfile");
+
+            UploadResult ur = new UploadResult(response);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe;
+
+                if ((xe = xd.GetNode("response/content")) != null)
+                {
+                    ur.URL = xe.GetElementValue("url");
+                    ur.ThumbnailURL = xe.GetElementValue("thumb");
+                }
+            }
+
+            return ur;
         }
     }
 
     public class PhotobucketAccountInfo
     {
-        public string Subdomain = string.Empty;
+        public string Subdomain { get; set; }
+        public string AlbumID { get; set; }
     }
 }
