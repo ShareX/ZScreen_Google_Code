@@ -58,6 +58,14 @@ namespace UploadersLib.ImageUploaders
 
         public ImgurThumbnailType ThumbnailType { get; set; }
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.IMGUR.GetDescription();
+            }
+        }
+
         public Imgur(AccountType uploadMethod, string anonymousKey, OAuthInfo oauth)
         {
             UploadMethod = uploadMethod;

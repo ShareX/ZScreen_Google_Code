@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UploadersLib.HelperClasses;
 
 namespace UploadersLib.ImageUploaders
@@ -18,6 +15,14 @@ namespace UploadersLib.ImageUploaders
         public PhotobucketAccountInfo AccountInfo = new PhotobucketAccountInfo();
 
         public OAuthInfo AuthInfo { get; set; }
+
+        public override string Host
+        {
+            get
+            {
+                return "Photobucket";
+            }
+        }
 
         public Photobucket(OAuthInfo oauth)
         {

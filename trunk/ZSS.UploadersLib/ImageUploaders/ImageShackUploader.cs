@@ -38,6 +38,14 @@ namespace UploadersLib.ImageUploaders
         private string DeveloperKey { get; set; }
         private string RegistrationCode { get; set; }
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.IMAGESHACK.GetDescription();
+            }
+        }
+
         public ImageShackUploader(string developerKey, AccountType accountType = AccountType.Anonymous, string registrationCode = null)
         {
             DeveloperKey = developerKey;

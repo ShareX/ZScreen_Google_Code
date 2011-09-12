@@ -35,6 +35,14 @@ namespace UploadersLib.ImageUploaders
     {
         private string APIKey { get; set; }
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.UPLOADSCREENSHOT.GetDescription();
+            }
+        }
+
         public UploadScreenshot(string key)
         {
             APIKey = key;
