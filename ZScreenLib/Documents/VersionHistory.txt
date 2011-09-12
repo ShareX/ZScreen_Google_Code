@@ -1,4 +1,5 @@
-4.03.6 Goo.gl URL Shortener now supports User Accounts {Jaex}
+4.3.0 Added support for photobucket.com {Jaex}
+4.2.6 Goo.gl URL Shortener now supports User Accounts {Jaex}
 
 Version 4.2.5 - 20110907
 

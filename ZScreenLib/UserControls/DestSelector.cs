@@ -103,5 +103,10 @@ namespace ZScreenLib
         {
             RestrictToOneCheck(tsddbLinkFormat, e);
         }
+
+        private void tsddbDestImage_MouseHover(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

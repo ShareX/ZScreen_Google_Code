@@ -131,6 +131,7 @@
             this.tsddbDestImage.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestImage.Tag = "Upload image to";
             this.tsddbDestImage.Text = "Upload image to: loading...";
+            this.tsddbDestImage.MouseHover += new System.EventHandler(this.tsddbDestImage_MouseHover);
             // 
             // tsddDestText
             // 

@@ -219,6 +219,7 @@ namespace UploadersLib
                     {
                         Config.PhotobucketAccountInfo = pb.GetAccountInfo();
                         lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
+                        txtPhotobucketAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
