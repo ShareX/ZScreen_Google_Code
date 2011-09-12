@@ -90,13 +90,13 @@ namespace UploadersLib.ImageUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            return UploadMedia(stream, fileName);
+            return UploadMedia(stream, fileName, AccountInfo.AlbumID);
         }
 
-        public UploadResult UploadMedia(Stream stream, string fileName)
+        public UploadResult UploadMedia(Stream stream, string fileName, string albumID)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("id", AccountInfo.AlbumID);
+            args.Add("id", albumID); // Album identifier.
             args.Add("type", "image"); // Media type. Options are image, video, or base64.
 
             /*
@@ -110,7 +110,7 @@ namespace UploadersLib.ImageUploaders
 
             string url = "http://api.photobucket.com/album/!/upload";
             string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
-            query = query.Replace("api.photobucket.com", AccountInfo.Subdomain);
+            query = FixURL(query);
 
             string response = UploadData(stream, query, fileName, "uploadfile");
 
@@ -129,6 +129,39 @@ namespace UploadersLib.ImageUploaders
             }
 
             return ur;
+        }
+
+        public bool CreateAlbum(string albumID, string albumName)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("id", albumID); // Album identifier.
+            args.Add("name", albumName); // Name of result. Must be between 2 and 50 characters. Valid characters are letters, numbers, underscore ( _ ), hyphen (-), and space.
+
+            string url = "http://api.photobucket.com/album/!";
+            string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
+            query = FixURL(query);
+
+            string response = SendPostRequest(query, args);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                XDocument xd = XDocument.Parse(response);
+                XElement xe;
+
+                if ((xe = xd.GetNode("response")) != null)
+                {
+                    string status = xe.GetElementValue("status");
+
+                    return !string.IsNullOrEmpty(status) && status == "OK";
+                }
+            }
+
+            return false;
+        }
+
+        private string FixURL(string url)
+        {
+            return url.Replace("api.photobucket.com", AccountInfo.Subdomain);
         }
     }
 
