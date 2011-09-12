@@ -104,9 +104,36 @@ namespace ZScreenLib
             RestrictToOneCheck(tsddbLinkFormat, e);
         }
 
-        private void tsddbDestImage_MouseHover(object sender, System.EventArgs e)
+        private void DestSelector_Load(object sender, System.EventArgs e)
         {
+            foreach (ToolStripItem tsi in tsDest.Items)
+            {
+                if (tsi is ToolStripDropDownButton)
+                {
+                    ToolStripDropDownButton tsddb = tsi as ToolStripDropDownButton;
+                    tsddb.MouseHover += new System.EventHandler(tsddb_MouseHover);
+                }
+            }
+        }
 
+        void tsddb_MouseHover(object sender, System.EventArgs e)
+        {
+            ToolStripDropDownButton tsddb = sender as ToolStripDropDownButton;
+
+            foreach (ToolStripItem tsi in tsDest.Items)
+            {
+                if (tsi is ToolStripDropDownButton)
+                {
+                    ToolStripDropDownButton tsddb2 = tsi as ToolStripDropDownButton;
+                    if (tsddb.Text != tsddb2.Text)
+                    {
+                        tsddb.DropDown.Close();
+                    }
+                }
+            }
+
+            tsddb.ShowDropDown();
+            tsddb.DropDown.AutoClose = false;
         }
     }
 }
