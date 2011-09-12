@@ -201,6 +201,10 @@ namespace UploadersLib
             PhotobucketAuthComplete();
         }
 
+        private void btnPhotobucketCreateAlbum_Click(object sender, EventArgs e)
+        {
+        }
+
         #endregion Photobucket
 
         #region Flickr

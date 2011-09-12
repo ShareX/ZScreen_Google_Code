@@ -71,7 +71,9 @@
             this.btnFlickrCompleteAuth = new System.Windows.Forms.Button();
             this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpPhotobucket = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbPhotobucketAlbums = new System.Windows.Forms.GroupBox();
+            this.txtPhotobucketAlbumName = new System.Windows.Forms.TextBox();
+            this.gbPhotobucketUserAccount = new System.Windows.Forms.GroupBox();
             this.btnPhotobucketAuthOpen = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.btnPhotobucketAuthComplete = new System.Windows.Forms.Button();
@@ -210,8 +212,7 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.gbPhotobumAlbums = new System.Windows.Forms.GroupBox();
-            this.txtPhotobucketAlbumName = new System.Windows.Forms.TextBox();
+            this.btnPhotobucketCreateAlbum = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -221,7 +222,8 @@
             this.gbImgurUserAccount.SuspendLayout();
             this.tpFlickr.SuspendLayout();
             this.tpPhotobucket.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbPhotobucketAlbums.SuspendLayout();
+            this.gbPhotobucketUserAccount.SuspendLayout();
             this.tpTwitPic.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpYFrog.SuspendLayout();
@@ -255,7 +257,6 @@
             this.tpEmail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmailSmtpPort)).BeginInit();
             this.tpSharedFolders.SuspendLayout();
-            this.gbPhotobumAlbums.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -716,8 +717,8 @@
             // 
             // tpPhotobucket
             // 
-            this.tpPhotobucket.Controls.Add(this.gbPhotobumAlbums);
-            this.tpPhotobucket.Controls.Add(this.groupBox2);
+            this.tpPhotobucket.Controls.Add(this.gbPhotobucketAlbums);
+            this.tpPhotobucket.Controls.Add(this.gbPhotobucketUserAccount);
             this.tpPhotobucket.Location = new System.Drawing.Point(4, 22);
             this.tpPhotobucket.Name = "tpPhotobucket";
             this.tpPhotobucket.Padding = new System.Windows.Forms.Padding(3);
@@ -726,19 +727,37 @@
             this.tpPhotobucket.Text = "Photobucket";
             this.tpPhotobucket.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // gbPhotobucketAlbums
             // 
-            this.groupBox2.Controls.Add(this.btnPhotobucketAuthOpen);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.btnPhotobucketAuthComplete);
-            this.groupBox2.Controls.Add(this.txtPhotobucketVerificationCode);
-            this.groupBox2.Controls.Add(this.lblPhotobucketAccountStatus);
-            this.groupBox2.Location = new System.Drawing.Point(16, 16);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(712, 192);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "User account";
+            this.gbPhotobucketAlbums.Controls.Add(this.btnPhotobucketCreateAlbum);
+            this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketAlbumName);
+            this.gbPhotobucketAlbums.Location = new System.Drawing.Point(16, 216);
+            this.gbPhotobucketAlbums.Name = "gbPhotobucketAlbums";
+            this.gbPhotobucketAlbums.Size = new System.Drawing.Size(712, 184);
+            this.gbPhotobucketAlbums.TabIndex = 8;
+            this.gbPhotobucketAlbums.TabStop = false;
+            this.gbPhotobucketAlbums.Text = "Album Management";
+            // 
+            // txtPhotobucketAlbumName
+            // 
+            this.txtPhotobucketAlbumName.Location = new System.Drawing.Point(16, 24);
+            this.txtPhotobucketAlbumName.Name = "txtPhotobucketAlbumName";
+            this.txtPhotobucketAlbumName.Size = new System.Drawing.Size(192, 20);
+            this.txtPhotobucketAlbumName.TabIndex = 0;
+            // 
+            // gbPhotobucketUserAccount
+            // 
+            this.gbPhotobucketUserAccount.Controls.Add(this.btnPhotobucketAuthOpen);
+            this.gbPhotobucketUserAccount.Controls.Add(this.label5);
+            this.gbPhotobucketUserAccount.Controls.Add(this.btnPhotobucketAuthComplete);
+            this.gbPhotobucketUserAccount.Controls.Add(this.txtPhotobucketVerificationCode);
+            this.gbPhotobucketUserAccount.Controls.Add(this.lblPhotobucketAccountStatus);
+            this.gbPhotobucketUserAccount.Location = new System.Drawing.Point(16, 16);
+            this.gbPhotobucketUserAccount.Name = "gbPhotobucketUserAccount";
+            this.gbPhotobucketUserAccount.Size = new System.Drawing.Size(712, 192);
+            this.gbPhotobucketUserAccount.TabIndex = 7;
+            this.gbPhotobucketUserAccount.TabStop = false;
+            this.gbPhotobucketUserAccount.Text = "User account";
             // 
             // btnPhotobucketAuthOpen
             // 
@@ -2162,22 +2181,15 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
-            // gbPhotobumAlbums
+            // btnPhotobucketCreateAlbum
             // 
-            this.gbPhotobumAlbums.Controls.Add(this.txtPhotobucketAlbumName);
-            this.gbPhotobumAlbums.Location = new System.Drawing.Point(16, 216);
-            this.gbPhotobumAlbums.Name = "gbPhotobumAlbums";
-            this.gbPhotobumAlbums.Size = new System.Drawing.Size(712, 184);
-            this.gbPhotobumAlbums.TabIndex = 8;
-            this.gbPhotobumAlbums.TabStop = false;
-            this.gbPhotobumAlbums.Text = "Album Management";
-            // 
-            // txtPhotobucketAlbum
-            // 
-            this.txtPhotobucketAlbumName.Location = new System.Drawing.Point(24, 24);
-            this.txtPhotobucketAlbumName.Name = "txtPhotobucketAlbum";
-            this.txtPhotobucketAlbumName.Size = new System.Drawing.Size(192, 20);
-            this.txtPhotobucketAlbumName.TabIndex = 0;
+            this.btnPhotobucketCreateAlbum.Location = new System.Drawing.Point(16, 56);
+            this.btnPhotobucketCreateAlbum.Name = "btnPhotobucketCreateAlbum";
+            this.btnPhotobucketCreateAlbum.Size = new System.Drawing.Size(192, 23);
+            this.btnPhotobucketCreateAlbum.TabIndex = 1;
+            this.btnPhotobucketCreateAlbum.Text = "Create album";
+            this.btnPhotobucketCreateAlbum.UseVisualStyleBackColor = true;
+            this.btnPhotobucketCreateAlbum.Click += new System.EventHandler(this.btnPhotobucketCreateAlbum_Click);
             // 
             // UploadersConfigForm
             // 
@@ -2203,8 +2215,10 @@
             this.gbImgurUserAccount.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
             this.tpPhotobucket.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gbPhotobucketAlbums.ResumeLayout(false);
+            this.gbPhotobucketAlbums.PerformLayout();
+            this.gbPhotobucketUserAccount.ResumeLayout(false);
+            this.gbPhotobucketUserAccount.PerformLayout();
             this.tpTwitPic.ResumeLayout(false);
             this.tpTwitPic.PerformLayout();
             this.tpTwitSnaps.ResumeLayout(false);
@@ -2252,8 +2266,6 @@
             this.tpEmail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmailSmtpPort)).EndInit();
             this.tpSharedFolders.ResumeLayout(false);
-            this.gbPhotobumAlbums.ResumeLayout(false);
-            this.gbPhotobumAlbums.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2435,13 +2447,14 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblGooglAccountStatus;
         private System.Windows.Forms.TabPage tpPhotobucket;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbPhotobucketUserAccount;
         private System.Windows.Forms.Button btnPhotobucketAuthOpen;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnPhotobucketAuthComplete;
         private System.Windows.Forms.TextBox txtPhotobucketVerificationCode;
         private System.Windows.Forms.Label lblPhotobucketAccountStatus;
-        private System.Windows.Forms.GroupBox gbPhotobumAlbums;
+        private System.Windows.Forms.GroupBox gbPhotobucketAlbums;
         private System.Windows.Forms.TextBox txtPhotobucketAlbumName;
+        private System.Windows.Forms.Button btnPhotobucketCreateAlbum;
     }
 }
