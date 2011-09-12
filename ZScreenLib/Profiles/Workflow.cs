@@ -66,7 +66,7 @@ namespace ZScreenLib
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
 
-        [Category("Capture / Active Window"), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
+        [Category(ComponentModelStrings.ScreenshotsActiveWindow), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
         public bool ActiveWindowGDIFreezeWindow { get; set; }
 
         #endregion Active Window

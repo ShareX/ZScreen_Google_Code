@@ -39,6 +39,14 @@ namespace UploadersLib.ImageUploaders
 
         private string APIKey;
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.TWITSNAPS.GetDescription();
+            }
+        }
+
         public TwitSnapsUploader(string apiKey, OAuthInfo oauth)
         {
             APIKey = apiKey;

@@ -41,6 +41,14 @@ namespace UploadersLib.ImageUploaders
 
         private const string URLAPI = "http://api.tinypic.com/api.php";
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.TINYPIC.GetDescription();
+            }
+        }
+
         public TinyPicUploader(string id, string key, AccountType accountType = AccountType.Anonymous, string shuk = null)
         {
             TinyPicID = id;

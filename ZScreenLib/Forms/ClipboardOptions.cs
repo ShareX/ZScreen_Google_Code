@@ -44,7 +44,7 @@ namespace ZScreenLib
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
                     string path = string.IsNullOrEmpty(ur.URL) ? ur.LocalFilePath : ur.URL;
-                    if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
+                    if (task.Job1 == JobLevel1.Text && task.Job3 == WorkerTask.JobLevel3.ShortenURL)
                     {
                         string url = ur.GetUrlByType(LinkFormatEnum.FULL_TINYURL, path);
                         TreeNode tnLink = new TreeNode(LinkFormatEnum.FULL_TINYURL.GetDescription());

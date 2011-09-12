@@ -69,6 +69,14 @@ namespace UploadersLib.ImageUploaders
         private const string UploadLink = "http://yfrog.com/api/upload";
         private const string UploadAndPostLink = "http://yfrog.com/api/uploadAndPost";
 
+        public override string Host
+        {
+            get
+            {
+                return ImageUploaderType.YFROG.GetDescription();
+            }
+        }
+
         public YfrogUploader(YfrogOptions options)
         {
             Options = options;
