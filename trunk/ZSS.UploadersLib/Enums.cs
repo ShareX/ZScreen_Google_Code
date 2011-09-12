@@ -149,6 +149,8 @@ namespace UploadersLib
         IMGUR,
         [Description("flickr.com")]
         FLICKR,
+        [Description("photobucket.com")]
+        Photobucket,
         [Description("uploadscreenshot.com")]
         UPLOADSCREENSHOT,
         [Description("twitpic.com")]

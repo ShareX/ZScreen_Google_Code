@@ -882,6 +882,9 @@ namespace ZScreenLib
                     imageUploader = new FlickrUploader(ZKeys.FlickrKey, ZKeys.FlickrSecret,
                         Engine.MyWorkflow.OutputsConfig.FlickrAuthInfo, Engine.MyWorkflow.OutputsConfig.FlickrSettings);
                     break;
+                case ImageUploaderType.Photobucket:
+                    imageUploader = new Photobucket(Engine.MyWorkflow.OutputsConfig.PhotobucketOAuthInfo, Engine.MyWorkflow.OutputsConfig.PhotobucketAccountInfo);
+                    break;
                 case ImageUploaderType.UPLOADSCREENSHOT:
                     imageUploader = new UploadScreenshot(ZKeys.UploadScreenshotKey);
                     break;

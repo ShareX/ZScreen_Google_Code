@@ -130,6 +130,7 @@ namespace UploadersLib
             if (OAuthInfo.CheckOAuth(Config.PhotobucketOAuthInfo))
             {
                 lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
+                txtPhotobucketAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
             }
 
             // Flickr
