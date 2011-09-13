@@ -130,7 +130,20 @@ namespace UploadersLib
             if (OAuthInfo.CheckOAuth(Config.PhotobucketOAuthInfo))
             {
                 lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
-                txtPhotobucketAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
+                txtPhotobucketDefaultAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
+                lblPhotobucketParentAlbumPath.Text = "Parent album path e.g. " + Config.PhotobucketAccountInfo.AlbumID + "/Personal/" + DateTime.Now.Year;
+            }
+
+            if (Config.PhotobucketAccountInfo != null)
+            {
+                if (cboPhotobucketAlbumPaths.Items.Count == 0)
+                {
+                    cboPhotobucketAlbumPaths.Items.AddRange(Config.PhotobucketAccountInfo.AlbumList.ToArray());
+                    if (cboPhotobucketAlbumPaths.Items.Count > 0)
+                    {
+                        cboPhotobucketAlbumPaths.SelectedIndex = Config.PhotobucketAccountInfo.ActiveAlbumID;
+                    }
+                }
             }
 
             // Flickr
@@ -282,7 +295,7 @@ namespace UploadersLib
                 lblGooglAccountStatus.Text = "Login successful: " + Config.GoogleURLShortenerOAuthInfo.UserToken;
             }
 
-            #endregion
+            #endregion URL Shorteners
 
             #region Other Services
 

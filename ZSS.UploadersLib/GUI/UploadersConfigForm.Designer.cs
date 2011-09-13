@@ -33,7 +33,6 @@
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.tcImageUploaders = new System.Windows.Forms.TabControl();
             this.tpImageShack = new System.Windows.Forms.TabPage();
-            this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.btnImageShackOpenPublicProfile = new System.Windows.Forms.Button();
             this.cbImageShackIsPublic = new System.Windows.Forms.CheckBox();
             this.btnImageShackOpenMyImages = new System.Windows.Forms.Button();
@@ -43,7 +42,6 @@
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
             this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
-            this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.btnTinyPicLogin = new System.Windows.Forms.Button();
             this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
             this.lblTinyPicPassword = new System.Windows.Forms.Label();
@@ -62,7 +60,6 @@
             this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
             this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
             this.lblImgurAccountStatus = new System.Windows.Forms.Label();
-            this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -71,10 +68,18 @@
             this.btnFlickrCompleteAuth = new System.Windows.Forms.Button();
             this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpPhotobucket = new System.Windows.Forms.TabPage();
+            this.gbPhotobucketAlbumPath = new System.Windows.Forms.GroupBox();
+            this.cboPhotobucketAlbumPaths = new System.Windows.Forms.ComboBox();
             this.gbPhotobucketAlbums = new System.Windows.Forms.GroupBox();
-            this.txtPhotobucketAlbumName = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblPhotobucketParentAlbumPath = new System.Windows.Forms.Label();
+            this.txtPhotobucketNewAlbumName = new System.Windows.Forms.TextBox();
+            this.txtPhotobucketParentAlbumPath = new System.Windows.Forms.TextBox();
+            this.btnPhotobucketCreateAlbum = new System.Windows.Forms.Button();
             this.gbPhotobucketUserAccount = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnPhotobucketAuthOpen = new System.Windows.Forms.Button();
+            this.txtPhotobucketDefaultAlbumName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnPhotobucketAuthComplete = new System.Windows.Forms.Button();
             this.txtPhotobucketVerificationCode = new System.Windows.Forms.TextBox();
@@ -95,7 +100,11 @@
             this.txtYFrogPassword = new System.Windows.Forms.TextBox();
             this.txtYFrogUsername = new System.Windows.Forms.TextBox();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.tpTextUploaders = new System.Windows.Forms.TabPage();
+            this.tcTextUploaders = new System.Windows.Forms.TabControl();
+            this.tpPastebin = new System.Windows.Forms.TabPage();
+            this.btnPastebinLogin = new System.Windows.Forms.Button();
+            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
             this.tpFileUploaders = new System.Windows.Forms.TabPage();
             this.tcFileUploaders = new System.Windows.Forms.TabControl();
             this.tpDropbox = new System.Windows.Forms.TabPage();
@@ -114,7 +123,6 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -126,7 +134,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
-            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
             this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
@@ -137,7 +144,6 @@
             this.lblSendSpaceUsername = new System.Windows.Forms.Label();
             this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
-            this.atcSendSpaceAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -174,11 +180,6 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnCustomUploaderArgAdd = new System.Windows.Forms.Button();
             this.txtCustomUploaderArgName = new System.Windows.Forms.TextBox();
-            this.tpTextUploaders = new System.Windows.Forms.TabPage();
-            this.tcTextUploaders = new System.Windows.Forms.TabControl();
-            this.tpPastebin = new System.Windows.Forms.TabPage();
-            this.btnPastebinLogin = new System.Windows.Forms.Button();
-            this.pgPastebinSettings = new System.Windows.Forms.PropertyGrid();
             this.tpURLShorteners = new System.Windows.Forms.TabPage();
             this.tcURLShorteners = new System.Windows.Forms.TabControl();
             this.tpGoogleURLShortener = new System.Windows.Forms.TabPage();
@@ -186,12 +187,10 @@
             this.btnGoogleURLShortenerAuthComplete = new System.Windows.Forms.Button();
             this.btnGoogleURLShortenerAuthOpen = new System.Windows.Forms.Button();
             this.lblGooglAccountStatus = new System.Windows.Forms.Label();
-            this.atcGoogleURLShortenerAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
-            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
             this.tbOutputs = new System.Windows.Forms.TabPage();
             this.tcOutputs = new System.Windows.Forms.TabControl();
             this.tpEmail = new System.Windows.Forms.TabPage();
@@ -209,10 +208,18 @@
             this.txtEmailSmtpServer = new System.Windows.Forms.TextBox();
             this.lblEmailSmtpServer = new System.Windows.Forms.Label();
             this.tpSharedFolders = new System.Windows.Forms.TabPage();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
+            this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
+            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcSendSpaceAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.atcGoogleURLShortenerAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.btnPhotobucketCreateAlbum = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -222,12 +229,16 @@
             this.gbImgurUserAccount.SuspendLayout();
             this.tpFlickr.SuspendLayout();
             this.tpPhotobucket.SuspendLayout();
+            this.gbPhotobucketAlbumPath.SuspendLayout();
             this.gbPhotobucketAlbums.SuspendLayout();
             this.gbPhotobucketUserAccount.SuspendLayout();
             this.tpTwitPic.SuspendLayout();
             this.tpTwitSnaps.SuspendLayout();
             this.tpYFrog.SuspendLayout();
             this.tpMediaWiki.SuspendLayout();
+            this.tpTextUploaders.SuspendLayout();
+            this.tcTextUploaders.SuspendLayout();
+            this.tpPastebin.SuspendLayout();
             this.tpFileUploaders.SuspendLayout();
             this.tcFileUploaders.SuspendLayout();
             this.tpDropbox.SuspendLayout();
@@ -242,9 +253,6 @@
             this.gbCustomUploaders.SuspendLayout();
             this.gbCustomUploaderRegexp.SuspendLayout();
             this.gbCustomUploaderArguments.SuspendLayout();
-            this.tpTextUploaders.SuspendLayout();
-            this.tcTextUploaders.SuspendLayout();
-            this.tpPastebin.SuspendLayout();
             this.tpURLShorteners.SuspendLayout();
             this.tcURLShorteners.SuspendLayout();
             this.tpGoogleURLShortener.SuspendLayout();
@@ -262,8 +270,8 @@
             // tcUploaders
             // 
             this.tcUploaders.Controls.Add(this.tpImageUploaders);
-            this.tcUploaders.Controls.Add(this.tpFileUploaders);
             this.tcUploaders.Controls.Add(this.tpTextUploaders);
+            this.tcUploaders.Controls.Add(this.tpFileUploaders);
             this.tcUploaders.Controls.Add(this.tpURLShorteners);
             this.tcUploaders.Controls.Add(this.tpOtherServices);
             this.tcUploaders.Controls.Add(this.tbOutputs);
@@ -321,15 +329,6 @@
             this.tpImageShack.TabIndex = 0;
             this.tpImageShack.Text = "ImageShack";
             this.tpImageShack.UseVisualStyleBackColor = true;
-            // 
-            // atcImageShackAccountType
-            // 
-            this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcImageShackAccountType.Name = "atcImageShackAccountType";
-            this.atcImageShackAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImageShackAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcImageShackAccountType.TabIndex = 7;
-            this.atcImageShackAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImageShackAccountType_AccountTypeChanged);
             // 
             // btnImageShackOpenPublicProfile
             // 
@@ -393,8 +392,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
@@ -429,15 +428,6 @@
             this.tpTinyPic.TabIndex = 1;
             this.tpTinyPic.Text = "TinyPic";
             this.tpTinyPic.UseVisualStyleBackColor = true;
-            // 
-            // atcTinyPicAccountType
-            // 
-            this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
-            this.atcTinyPicAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcTinyPicAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcTinyPicAccountType.TabIndex = 14;
-            this.atcTinyPicAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
             // 
             // btnTinyPicLogin
             // 
@@ -517,8 +507,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -618,15 +608,6 @@
             this.lblImgurAccountStatus.TabIndex = 3;
             this.lblImgurAccountStatus.Text = "Login required.";
             // 
-            // atcImgurAccountType
-            // 
-            this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcImgurAccountType.Name = "atcImgurAccountType";
-            this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImgurAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcImgurAccountType.TabIndex = 7;
-            this.atcImgurAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImgurAccountType_AccountTypeChanged);
-            // 
             // tpFlickr
             // 
             this.tpFlickr.Controls.Add(this.btnFlickrOpenImages);
@@ -656,8 +637,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -668,9 +649,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -717,6 +698,7 @@
             // 
             // tpPhotobucket
             // 
+            this.tpPhotobucket.Controls.Add(this.gbPhotobucketAlbumPath);
             this.tpPhotobucket.Controls.Add(this.gbPhotobucketAlbums);
             this.tpPhotobucket.Controls.Add(this.gbPhotobucketUserAccount);
             this.tpPhotobucket.Location = new System.Drawing.Point(4, 22);
@@ -727,37 +709,107 @@
             this.tpPhotobucket.Text = "Photobucket";
             this.tpPhotobucket.UseVisualStyleBackColor = true;
             // 
+            // gbPhotobucketAlbumPath
+            // 
+            this.gbPhotobucketAlbumPath.Controls.Add(this.cboPhotobucketAlbumPaths);
+            this.gbPhotobucketAlbumPath.Location = new System.Drawing.Point(16, 344);
+            this.gbPhotobucketAlbumPath.Name = "gbPhotobucketAlbumPath";
+            this.gbPhotobucketAlbumPath.Size = new System.Drawing.Size(712, 64);
+            this.gbPhotobucketAlbumPath.TabIndex = 9;
+            this.gbPhotobucketAlbumPath.TabStop = false;
+            this.gbPhotobucketAlbumPath.Text = "Upload images to";
+            // 
+            // cboPhotobucketAlbumPaths
+            // 
+            this.cboPhotobucketAlbumPaths.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPhotobucketAlbumPaths.FormattingEnabled = true;
+            this.cboPhotobucketAlbumPaths.Location = new System.Drawing.Point(16, 24);
+            this.cboPhotobucketAlbumPaths.Name = "cboPhotobucketAlbumPaths";
+            this.cboPhotobucketAlbumPaths.Size = new System.Drawing.Size(456, 21);
+            this.cboPhotobucketAlbumPaths.TabIndex = 0;
+            this.cboPhotobucketAlbumPaths.SelectedIndexChanged += new System.EventHandler(this.cboPhotobucketAlbumPaths_SelectedIndexChanged);
+            // 
             // gbPhotobucketAlbums
             // 
+            this.gbPhotobucketAlbums.Controls.Add(this.label8);
+            this.gbPhotobucketAlbums.Controls.Add(this.lblPhotobucketParentAlbumPath);
+            this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketNewAlbumName);
+            this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketParentAlbumPath);
             this.gbPhotobucketAlbums.Controls.Add(this.btnPhotobucketCreateAlbum);
-            this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketAlbumName);
-            this.gbPhotobucketAlbums.Location = new System.Drawing.Point(16, 216);
+            this.gbPhotobucketAlbums.Location = new System.Drawing.Point(16, 208);
             this.gbPhotobucketAlbums.Name = "gbPhotobucketAlbums";
-            this.gbPhotobucketAlbums.Size = new System.Drawing.Size(712, 184);
+            this.gbPhotobucketAlbums.Size = new System.Drawing.Size(712, 128);
             this.gbPhotobucketAlbums.TabIndex = 8;
             this.gbPhotobucketAlbums.TabStop = false;
-            this.gbPhotobucketAlbums.Text = "Album Management";
+            this.gbPhotobucketAlbums.Text = "Create new album";
             // 
-            // txtPhotobucketAlbumName
+            // label8
             // 
-            this.txtPhotobucketAlbumName.Location = new System.Drawing.Point(16, 24);
-            this.txtPhotobucketAlbumName.Name = "txtPhotobucketAlbumName";
-            this.txtPhotobucketAlbumName.Size = new System.Drawing.Size(192, 20);
-            this.txtPhotobucketAlbumName.TabIndex = 0;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(16, 72);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(649, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "New album name ( must be between 2 and 50 characters. Valid characters are letter" +
+                "s, numbers, underscore ( _ ), hyphen (-), and space )";
+            // 
+            // lblPhotobucketParentAlbumPath
+            // 
+            this.lblPhotobucketParentAlbumPath.AutoSize = true;
+            this.lblPhotobucketParentAlbumPath.Location = new System.Drawing.Point(16, 24);
+            this.lblPhotobucketParentAlbumPath.Name = "lblPhotobucketParentAlbumPath";
+            this.lblPhotobucketParentAlbumPath.Size = new System.Drawing.Size(93, 13);
+            this.lblPhotobucketParentAlbumPath.TabIndex = 4;
+            this.lblPhotobucketParentAlbumPath.Text = "Parent album path";
+            // 
+            // txtPhotobucketNewAlbumName
+            // 
+            this.txtPhotobucketNewAlbumName.Location = new System.Drawing.Point(16, 88);
+            this.txtPhotobucketNewAlbumName.Name = "txtPhotobucketNewAlbumName";
+            this.txtPhotobucketNewAlbumName.Size = new System.Drawing.Size(216, 20);
+            this.txtPhotobucketNewAlbumName.TabIndex = 3;
+            // 
+            // txtPhotobucketParentAlbumPath
+            // 
+            this.txtPhotobucketParentAlbumPath.Location = new System.Drawing.Point(16, 40);
+            this.txtPhotobucketParentAlbumPath.Name = "txtPhotobucketParentAlbumPath";
+            this.txtPhotobucketParentAlbumPath.Size = new System.Drawing.Size(448, 20);
+            this.txtPhotobucketParentAlbumPath.TabIndex = 2;
+            // 
+            // btnPhotobucketCreateAlbum
+            // 
+            this.btnPhotobucketCreateAlbum.Location = new System.Drawing.Point(240, 88);
+            this.btnPhotobucketCreateAlbum.Name = "btnPhotobucketCreateAlbum";
+            this.btnPhotobucketCreateAlbum.Size = new System.Drawing.Size(128, 23);
+            this.btnPhotobucketCreateAlbum.TabIndex = 1;
+            this.btnPhotobucketCreateAlbum.Text = "Create album";
+            this.btnPhotobucketCreateAlbum.UseVisualStyleBackColor = true;
+            this.btnPhotobucketCreateAlbum.Click += new System.EventHandler(this.btnPhotobucketCreateAlbum_Click);
             // 
             // gbPhotobucketUserAccount
             // 
+            this.gbPhotobucketUserAccount.Controls.Add(this.label6);
             this.gbPhotobucketUserAccount.Controls.Add(this.btnPhotobucketAuthOpen);
+            this.gbPhotobucketUserAccount.Controls.Add(this.txtPhotobucketDefaultAlbumName);
             this.gbPhotobucketUserAccount.Controls.Add(this.label5);
             this.gbPhotobucketUserAccount.Controls.Add(this.btnPhotobucketAuthComplete);
             this.gbPhotobucketUserAccount.Controls.Add(this.txtPhotobucketVerificationCode);
             this.gbPhotobucketUserAccount.Controls.Add(this.lblPhotobucketAccountStatus);
             this.gbPhotobucketUserAccount.Location = new System.Drawing.Point(16, 16);
             this.gbPhotobucketUserAccount.Name = "gbPhotobucketUserAccount";
-            this.gbPhotobucketUserAccount.Size = new System.Drawing.Size(712, 192);
+            this.gbPhotobucketUserAccount.Size = new System.Drawing.Size(712, 184);
             this.gbPhotobucketUserAccount.TabIndex = 7;
             this.gbPhotobucketUserAccount.TabStop = false;
             this.gbPhotobucketUserAccount.Text = "User account";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(496, 128);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Default Album Name";
             // 
             // btnPhotobucketAuthOpen
             // 
@@ -765,9 +817,17 @@
             this.btnPhotobucketAuthOpen.Name = "btnPhotobucketAuthOpen";
             this.btnPhotobucketAuthOpen.Size = new System.Drawing.Size(200, 23);
             this.btnPhotobucketAuthOpen.TabIndex = 1;
-            this.btnPhotobucketAuthOpen.Text = "Open authorize page...";
+            this.btnPhotobucketAuthOpen.Text = "Step 1: Open authorize page...";
             this.btnPhotobucketAuthOpen.UseVisualStyleBackColor = true;
             this.btnPhotobucketAuthOpen.Click += new System.EventHandler(this.btnPhotobucketAuthOpen_Click);
+            // 
+            // txtPhotobucketAlbumName
+            // 
+            this.txtPhotobucketDefaultAlbumName.Location = new System.Drawing.Point(496, 144);
+            this.txtPhotobucketDefaultAlbumName.Name = "txtPhotobucketAlbumName";
+            this.txtPhotobucketDefaultAlbumName.ReadOnly = true;
+            this.txtPhotobucketDefaultAlbumName.Size = new System.Drawing.Size(200, 20);
+            this.txtPhotobucketDefaultAlbumName.TabIndex = 0;
             // 
             // label5
             // 
@@ -780,17 +840,17 @@
             // 
             // btnPhotobucketAuthComplete
             // 
-            this.btnPhotobucketAuthComplete.Location = new System.Drawing.Point(16, 120);
+            this.btnPhotobucketAuthComplete.Location = new System.Drawing.Point(16, 112);
             this.btnPhotobucketAuthComplete.Name = "btnPhotobucketAuthComplete";
             this.btnPhotobucketAuthComplete.Size = new System.Drawing.Size(200, 23);
             this.btnPhotobucketAuthComplete.TabIndex = 2;
-            this.btnPhotobucketAuthComplete.Text = "Complete authorization";
+            this.btnPhotobucketAuthComplete.Text = "Step 2: Complete authorization";
             this.btnPhotobucketAuthComplete.UseVisualStyleBackColor = true;
             this.btnPhotobucketAuthComplete.Click += new System.EventHandler(this.btnPhotobucketAuthComplete_Click);
             // 
             // txtPhotobucketVerificationCode
             // 
-            this.txtPhotobucketVerificationCode.Location = new System.Drawing.Point(16, 88);
+            this.txtPhotobucketVerificationCode.Location = new System.Drawing.Point(16, 80);
             this.txtPhotobucketVerificationCode.Name = "txtPhotobucketVerificationCode";
             this.txtPhotobucketVerificationCode.Size = new System.Drawing.Size(360, 20);
             this.txtPhotobucketVerificationCode.TabIndex = 4;
@@ -798,7 +858,7 @@
             // lblPhotobucketAccountStatus
             // 
             this.lblPhotobucketAccountStatus.AutoSize = true;
-            this.lblPhotobucketAccountStatus.Location = new System.Drawing.Point(16, 160);
+            this.lblPhotobucketAccountStatus.Location = new System.Drawing.Point(24, 152);
             this.lblPhotobucketAccountStatus.Name = "lblPhotobucketAccountStatus";
             this.lblPhotobucketAccountStatus.Size = new System.Drawing.Size(77, 13);
             this.lblPhotobucketAccountStatus.TabIndex = 3;
@@ -967,17 +1027,57 @@
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
             // 
-            // ucMediaWikiAccounts
+            // tpTextUploaders
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 432);
-            this.ucMediaWikiAccounts.TabIndex = 1;
+            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
+            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpTextUploaders.Name = "tpTextUploaders";
+            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpTextUploaders.Size = new System.Drawing.Size(786, 480);
+            this.tpTextUploaders.TabIndex = 2;
+            this.tpTextUploaders.Text = "Text uploaders";
+            this.tpTextUploaders.UseVisualStyleBackColor = true;
+            // 
+            // tcTextUploaders
+            // 
+            this.tcTextUploaders.Controls.Add(this.tpPastebin);
+            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
+            this.tcTextUploaders.Name = "tcTextUploaders";
+            this.tcTextUploaders.SelectedIndex = 0;
+            this.tcTextUploaders.Size = new System.Drawing.Size(780, 474);
+            this.tcTextUploaders.TabIndex = 0;
+            // 
+            // tpPastebin
+            // 
+            this.tpPastebin.Controls.Add(this.btnPastebinLogin);
+            this.tpPastebin.Controls.Add(this.pgPastebinSettings);
+            this.tpPastebin.Location = new System.Drawing.Point(4, 22);
+            this.tpPastebin.Name = "tpPastebin";
+            this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
+            this.tpPastebin.Size = new System.Drawing.Size(772, 448);
+            this.tpPastebin.TabIndex = 0;
+            this.tpPastebin.Text = "Pastebin";
+            this.tpPastebin.UseVisualStyleBackColor = true;
+            // 
+            // btnPastebinLogin
+            // 
+            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
+            this.btnPastebinLogin.Name = "btnPastebinLogin";
+            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
+            this.btnPastebinLogin.TabIndex = 2;
+            this.btnPastebinLogin.Text = "Login";
+            this.btnPastebinLogin.UseVisualStyleBackColor = true;
+            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
+            // 
+            // pgPastebinSettings
+            // 
+            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgPastebinSettings.Name = "pgPastebinSettings";
+            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 442);
+            this.pgPastebinSettings.TabIndex = 1;
             // 
             // tpFileUploaders
             // 
@@ -1188,15 +1288,6 @@
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
             // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
             // gbFtpSettings
             // 
             this.gbFtpSettings.Controls.Add(this.label1);
@@ -1318,15 +1409,6 @@
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
             // 
-            // atcRapidShareAccountType
-            // 
-            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
-            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcRapidShareAccountType.TabIndex = 16;
-            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
-            // 
             // lblRapidSharePassword
             // 
             this.lblRapidSharePassword.AutoSize = true;
@@ -1422,15 +1504,6 @@
             this.txtSendSpaceUserName.Size = new System.Drawing.Size(136, 20);
             this.txtSendSpaceUserName.TabIndex = 19;
             this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
-            // 
-            // atcSendSpaceAccountType
-            // 
-            this.atcSendSpaceAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcSendSpaceAccountType.Name = "atcSendSpaceAccountType";
-            this.atcSendSpaceAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcSendSpaceAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcSendSpaceAccountType.TabIndex = 24;
-            this.atcSendSpaceAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcSendSpaceAccountType_AccountTypeChanged);
             // 
             // tpCustomUploaders
             // 
@@ -1788,58 +1861,6 @@
             this.txtCustomUploaderArgName.Size = new System.Drawing.Size(112, 20);
             this.txtCustomUploaderArgName.TabIndex = 0;
             // 
-            // tpTextUploaders
-            // 
-            this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
-            this.tpTextUploaders.Location = new System.Drawing.Point(4, 22);
-            this.tpTextUploaders.Name = "tpTextUploaders";
-            this.tpTextUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextUploaders.Size = new System.Drawing.Size(786, 480);
-            this.tpTextUploaders.TabIndex = 2;
-            this.tpTextUploaders.Text = "Text uploaders";
-            this.tpTextUploaders.UseVisualStyleBackColor = true;
-            // 
-            // tcTextUploaders
-            // 
-            this.tcTextUploaders.Controls.Add(this.tpPastebin);
-            this.tcTextUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcTextUploaders.Location = new System.Drawing.Point(3, 3);
-            this.tcTextUploaders.Name = "tcTextUploaders";
-            this.tcTextUploaders.SelectedIndex = 0;
-            this.tcTextUploaders.Size = new System.Drawing.Size(780, 474);
-            this.tcTextUploaders.TabIndex = 0;
-            // 
-            // tpPastebin
-            // 
-            this.tpPastebin.Controls.Add(this.btnPastebinLogin);
-            this.tpPastebin.Controls.Add(this.pgPastebinSettings);
-            this.tpPastebin.Location = new System.Drawing.Point(4, 22);
-            this.tpPastebin.Name = "tpPastebin";
-            this.tpPastebin.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPastebin.Size = new System.Drawing.Size(772, 448);
-            this.tpPastebin.TabIndex = 0;
-            this.tpPastebin.Text = "Pastebin";
-            this.tpPastebin.UseVisualStyleBackColor = true;
-            // 
-            // btnPastebinLogin
-            // 
-            this.btnPastebinLogin.Location = new System.Drawing.Point(520, 8);
-            this.btnPastebinLogin.Name = "btnPastebinLogin";
-            this.btnPastebinLogin.Size = new System.Drawing.Size(88, 23);
-            this.btnPastebinLogin.TabIndex = 2;
-            this.btnPastebinLogin.Text = "Login";
-            this.btnPastebinLogin.UseVisualStyleBackColor = true;
-            this.btnPastebinLogin.Click += new System.EventHandler(this.btnPastebinLogin_Click);
-            // 
-            // pgPastebinSettings
-            // 
-            this.pgPastebinSettings.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pgPastebinSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgPastebinSettings.Name = "pgPastebinSettings";
-            this.pgPastebinSettings.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgPastebinSettings.Size = new System.Drawing.Size(504, 442);
-            this.pgPastebinSettings.TabIndex = 1;
-            // 
             // tpURLShorteners
             // 
             this.tpURLShorteners.Controls.Add(this.tcURLShorteners);
@@ -1915,15 +1936,6 @@
             this.lblGooglAccountStatus.TabIndex = 3;
             this.lblGooglAccountStatus.Text = "Login required.";
             // 
-            // atcGoogleURLShortenerAccountType
-            // 
-            this.atcGoogleURLShortenerAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcGoogleURLShortenerAccountType.Name = "atcGoogleURLShortenerAccountType";
-            this.atcGoogleURLShortenerAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcGoogleURLShortenerAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcGoogleURLShortenerAccountType.TabIndex = 0;
-            this.atcGoogleURLShortenerAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcGoogleURLShortenerAccountType_AccountTypeChanged);
-            // 
             // tpOtherServices
             // 
             this.tpOtherServices.Controls.Add(this.tcOtherServices);
@@ -1966,14 +1978,6 @@
             this.btnTwitterLogin.Text = "Login";
             this.btnTwitterLogin.UseVisualStyleBackColor = true;
             this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
-            this.ucTwitterAccounts.TabIndex = 24;
             // 
             // tbOutputs
             // 
@@ -2157,6 +2161,96 @@
             this.tpSharedFolders.Text = "Shared Folders or Web Servers";
             this.tpSharedFolders.UseVisualStyleBackColor = true;
             // 
+            // txtRapidSharePremiumUserName
+            // 
+            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(88, 84);
+            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
+            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePremiumUserName.TabIndex = 11;
+            // 
+            // atcImageShackAccountType
+            // 
+            this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImageShackAccountType.Name = "atcImageShackAccountType";
+            this.atcImageShackAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcImageShackAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImageShackAccountType.TabIndex = 7;
+            this.atcImageShackAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImageShackAccountType_AccountTypeChanged);
+            // 
+            // atcTinyPicAccountType
+            // 
+            this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
+            this.atcTinyPicAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcTinyPicAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcTinyPicAccountType.TabIndex = 14;
+            this.atcTinyPicAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
+            // 
+            // atcImgurAccountType
+            // 
+            this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImgurAccountType.Name = "atcImgurAccountType";
+            this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcImgurAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImgurAccountType.TabIndex = 7;
+            this.atcImgurAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImgurAccountType_AccountTypeChanged);
+            // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(680, 432);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(760, 325);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
+            // atcRapidShareAccountType
+            // 
+            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
+            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcRapidShareAccountType.TabIndex = 16;
+            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
+            // 
+            // atcSendSpaceAccountType
+            // 
+            this.atcSendSpaceAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcSendSpaceAccountType.Name = "atcSendSpaceAccountType";
+            this.atcSendSpaceAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcSendSpaceAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcSendSpaceAccountType.TabIndex = 24;
+            this.atcSendSpaceAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcSendSpaceAccountType_AccountTypeChanged);
+            // 
+            // atcGoogleURLShortenerAccountType
+            // 
+            this.atcGoogleURLShortenerAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcGoogleURLShortenerAccountType.Name = "atcGoogleURLShortenerAccountType";
+            this.atcGoogleURLShortenerAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcGoogleURLShortenerAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcGoogleURLShortenerAccountType.TabIndex = 0;
+            this.atcGoogleURLShortenerAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcGoogleURLShortenerAccountType_AccountTypeChanged);
+            // 
+            // ucTwitterAccounts
+            // 
+            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(766, 442);
+            this.ucTwitterAccounts.TabIndex = 24;
+            // 
             // ucLocalhostAccounts
             // 
             this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2166,13 +2260,6 @@
             this.ucLocalhostAccounts.Size = new System.Drawing.Size(766, 442);
             this.ucLocalhostAccounts.TabIndex = 2;
             // 
-            // txtRapidSharePremiumUserName
-            // 
-            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(88, 84);
-            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
-            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePremiumUserName.TabIndex = 11;
-            // 
             // actRapidShareAccountType
             // 
             this.actRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
@@ -2180,16 +2267,6 @@
             this.actRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
-            // 
-            // btnPhotobucketCreateAlbum
-            // 
-            this.btnPhotobucketCreateAlbum.Location = new System.Drawing.Point(16, 56);
-            this.btnPhotobucketCreateAlbum.Name = "btnPhotobucketCreateAlbum";
-            this.btnPhotobucketCreateAlbum.Size = new System.Drawing.Size(192, 23);
-            this.btnPhotobucketCreateAlbum.TabIndex = 1;
-            this.btnPhotobucketCreateAlbum.Text = "Create album";
-            this.btnPhotobucketCreateAlbum.UseVisualStyleBackColor = true;
-            this.btnPhotobucketCreateAlbum.Click += new System.EventHandler(this.btnPhotobucketCreateAlbum_Click);
             // 
             // UploadersConfigForm
             // 
@@ -2215,6 +2292,7 @@
             this.gbImgurUserAccount.PerformLayout();
             this.tpFlickr.ResumeLayout(false);
             this.tpPhotobucket.ResumeLayout(false);
+            this.gbPhotobucketAlbumPath.ResumeLayout(false);
             this.gbPhotobucketAlbums.ResumeLayout(false);
             this.gbPhotobucketAlbums.PerformLayout();
             this.gbPhotobucketUserAccount.ResumeLayout(false);
@@ -2226,6 +2304,9 @@
             this.tpYFrog.ResumeLayout(false);
             this.tpYFrog.PerformLayout();
             this.tpMediaWiki.ResumeLayout(false);
+            this.tpTextUploaders.ResumeLayout(false);
+            this.tcTextUploaders.ResumeLayout(false);
+            this.tpPastebin.ResumeLayout(false);
             this.tpFileUploaders.ResumeLayout(false);
             this.tcFileUploaders.ResumeLayout(false);
             this.tpDropbox.ResumeLayout(false);
@@ -2249,9 +2330,6 @@
             this.gbCustomUploaderRegexp.PerformLayout();
             this.gbCustomUploaderArguments.ResumeLayout(false);
             this.gbCustomUploaderArguments.PerformLayout();
-            this.tpTextUploaders.ResumeLayout(false);
-            this.tcTextUploaders.ResumeLayout(false);
-            this.tpPastebin.ResumeLayout(false);
             this.tpURLShorteners.ResumeLayout(false);
             this.tcURLShorteners.ResumeLayout(false);
             this.tpGoogleURLShortener.ResumeLayout(false);
@@ -2454,7 +2532,14 @@
         private System.Windows.Forms.TextBox txtPhotobucketVerificationCode;
         private System.Windows.Forms.Label lblPhotobucketAccountStatus;
         private System.Windows.Forms.GroupBox gbPhotobucketAlbums;
-        private System.Windows.Forms.TextBox txtPhotobucketAlbumName;
+        private System.Windows.Forms.TextBox txtPhotobucketDefaultAlbumName;
         private System.Windows.Forms.Button btnPhotobucketCreateAlbum;
+        private System.Windows.Forms.GroupBox gbPhotobucketAlbumPath;
+        private System.Windows.Forms.ComboBox cboPhotobucketAlbumPaths;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblPhotobucketParentAlbumPath;
+        private System.Windows.Forms.TextBox txtPhotobucketNewAlbumName;
+        private System.Windows.Forms.TextBox txtPhotobucketParentAlbumPath;
+        private System.Windows.Forms.Label label6;
     }
 }

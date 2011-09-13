@@ -203,6 +203,15 @@ namespace UploadersLib
 
         private void btnPhotobucketCreateAlbum_Click(object sender, EventArgs e)
         {
+            PhotobucketCreateAlbum();
+        }
+
+        private void cboPhotobucketAlbumPaths_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Config.PhotobucketAccountInfo != null)
+            {
+                Config.PhotobucketAccountInfo.ActiveAlbumID = cboPhotobucketAlbumPaths.SelectedIndex;
+            }
         }
 
         #endregion Photobucket

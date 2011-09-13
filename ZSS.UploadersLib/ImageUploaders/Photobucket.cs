@@ -90,7 +90,7 @@ namespace UploadersLib.ImageUploaders
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            return UploadMedia(stream, fileName, AccountInfo.AlbumID);
+            return UploadMedia(stream, fileName, AccountInfo.ActiveAlbumPath);
         }
 
         public UploadResult UploadMedia(Stream stream, string fileName, string albumID)
@@ -169,5 +169,15 @@ namespace UploadersLib.ImageUploaders
     {
         public string Subdomain { get; set; }
         public string AlbumID { get; set; }
+        public List<string> AlbumList = new List<string>();
+        public int ActiveAlbumID = 0;
+
+        public string ActiveAlbumPath
+        {
+            get
+            {
+                return AlbumList[ActiveAlbumID];
+            }
+        }
     }
 }
