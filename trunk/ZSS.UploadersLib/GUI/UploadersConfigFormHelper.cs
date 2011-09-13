@@ -214,12 +214,13 @@ namespace UploadersLib
                 {
                     Photobucket pb = new Photobucket(Config.PhotobucketOAuthInfo);
                     bool result = pb.GetAccessToken(verification);
-                    
+
                     if (result)
                     {
                         Config.PhotobucketAccountInfo = pb.GetAccountInfo();
                         lblPhotobucketAccountStatus.Text = "Login successful: " + Config.PhotobucketOAuthInfo.UserToken;
-                        txtPhotobucketAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
+                        txtPhotobucketDefaultAlbumName.Text = Config.PhotobucketAccountInfo.AlbumID;
+                        cboPhotobucketAlbumPaths.Items.Add(Config.PhotobucketAccountInfo.AlbumID);
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -232,6 +233,17 @@ namespace UploadersLib
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void PhotobucketCreateAlbum()
+        {
+            Photobucket pb = new Photobucket(Config.PhotobucketOAuthInfo, Config.PhotobucketAccountInfo);
+            if (pb.CreateAlbum(txtPhotobucketParentAlbumPath.Text, txtPhotobucketNewAlbumName.Text))
+            {
+                string albumPath = txtPhotobucketParentAlbumPath.Text + "/" + txtPhotobucketNewAlbumName.Text;
+                Config.PhotobucketAccountInfo.AlbumList.Add(albumPath);
+                cboPhotobucketAlbumPaths.Items.Add(albumPath);
             }
         }
 
@@ -709,11 +721,9 @@ namespace UploadersLib
             // todo: UpdateDropboxStatus();
         }
 
-
         #endregion goo.gl
 
         #endregion URL Shorteners
-
 
         #region Custom uploader
 
