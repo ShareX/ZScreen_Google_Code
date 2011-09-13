@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HelpersLib
 {
-   public static class ComponentModelStrings
+    public static class ComponentModelStrings
     {
         public const string App = "Application";
         public const string AppPaths = "Application / Paths";
@@ -14,6 +14,7 @@ namespace HelpersLib
         public const string InputsClipboard = "Inputs / Clipboard Upload";
         public const string InputsURLShorteners = "Inputs / Links";
         public const string InputsWatchFolder = "Inputs / Watch Folder";
+        public const string Outputs = "Outputs";
         public const string OutputsClipboard = "Outputs / Clipboard";
         public const string OutputsRemoteImage = "Outputs / Remote / Images";
         public const string OutputsRemoteFTP = "Outputs / Remote / FTP";

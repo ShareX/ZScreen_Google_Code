@@ -83,6 +83,7 @@
             this.tsDest.Size = new System.Drawing.Size(352, 200);
             this.tsDest.TabIndex = 128;
             this.tsDest.Text = "Destinations";
+            this.tsDest.MouseLeave += new System.EventHandler(this.tsDest_MouseLeave);
             // 
             // tsddbOutputs
             // 
