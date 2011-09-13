@@ -37,6 +37,22 @@ namespace ZScreenLib
             SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs.Cast<OutputEnum>().ToList());
         }
 
+        public void AddEnumLinkFormatWithConfigSettings(ToolStripDropDownButton tsddb, List<int> list)
+        {
+            if (tsddb.DropDownItems.Count == 0)
+            {
+                foreach (LinkFormatEnum t in Enum.GetValues(typeof(LinkFormatEnum)))
+                {
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
+                    tsmi.Tag = t;
+                    tsmi.Checked = list.Contains((int)t);
+                    tsmi.Click += new EventHandler(tsmiDestLinkFormat_Click);
+                    tsddb.DropDownItems.Add(tsmi);
+                }
+                UpdateToolStripLinkFormat();
+            }
+        }
+
         public void AddEnumOutputsWithConfigSettings(List<OutputEnum> list)
         {
             SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, list);
@@ -79,9 +95,13 @@ namespace ZScreenLib
                     }
 
                     tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
+
                     tsmi.Checked = list.Contains(t);
                     tsmi.Click += new EventHandler(tsmiOutputs_Click);
+                    if (Engine.AppConf.SupportMultipleDestinations)
+                    {
+                        tsmi.CheckOnClick = true;
+                    }
                     tsddb.DropDownItems.Add(tsmi);
                 }
                 UpdateToolStripOutputs();
@@ -101,22 +121,6 @@ namespace ZScreenLib
         public void AddEnumLinkFormatWithRuntimeSettings(List<int> list)
         {
             AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, list);
-        }
-
-        public void AddEnumLinkFormatWithConfigSettings(ToolStripDropDownButton tsddb, List<int> list)
-        {
-            if (tsddb.DropDownItems.Count == 0)
-            {
-                foreach (LinkFormatEnum t in Enum.GetValues(typeof(LinkFormatEnum)))
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
-                    tsmi.Tag = t;
-                    tsmi.Checked = list.Contains((int)t);
-                    tsmi.Click += new EventHandler(tsmiDestLinkFormat_Click);
-                    tsddb.DropDownItems.Add(tsmi);
-                }
-                UpdateToolStripLinkFormat();
-            }
         }
 
         public void AddEnumClipboardContentWithConfigSettings()
@@ -160,7 +164,7 @@ namespace ZScreenLib
             AddEnumDestImageToMenuWithRuntimeSettings(ucDestOptions.tsddbDestImage, MyImageUploaders);
         }
 
-        private void AddEnumDestImageToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyImageUploaders)
+        private void AddEnumDestImageToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -168,9 +172,12 @@ namespace ZScreenLib
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(t.GetDescription());
                     tsmi.Tag = t;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = MyImageUploaders.Contains((int)t);
+                    tsmi.Checked = list.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestImage_Click);
+                    if (Engine.AppConf.SupportMultipleDestinations)
+                    {
+                        tsmi.CheckOnClick = true;
+                    }
                     tsddb.DropDownItems.Add(tsmi);
                 }
                 UpdateToolStripDestImage();
@@ -187,7 +194,7 @@ namespace ZScreenLib
             AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddDestText, MyTextUploaders);
         }
 
-        private void AddEnumDestTextToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyTextUploaders)
+        private void AddEnumDestTextToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -195,9 +202,12 @@ namespace ZScreenLib
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = MyTextUploaders.Contains((int)ut);
+                    tsmi.Checked = list.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestText_Click);
+                    if (Engine.AppConf.SupportMultipleDestinations)
+                    {
+                        tsmi.CheckOnClick = true;
+                    }
                     tsddb.DropDownItems.Add(tsmi);
                 }
                 UpdateToolStripDestText();
@@ -214,7 +224,7 @@ namespace ZScreenLib
             AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddDestFile, MyFileUploaders);
         }
 
-        private void AddEnumDestFileToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyFileUploaders)
+        private void AddEnumDestFileToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -222,9 +232,12 @@ namespace ZScreenLib
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;
-                    tsmi.CheckOnClick = true;
-                    tsmi.Checked = MyFileUploaders.Contains((int)ut);
+                    tsmi.Checked = list.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestFiles_Click);
+                    if (Engine.AppConf.SupportMultipleDestinations)
+                    {
+                        tsmi.CheckOnClick = true;
+                    }
                     tsddb.DropDownItems.Add(tsmi);
                 }
                 UpdateToolStripDestFile();
@@ -241,7 +254,7 @@ namespace ZScreenLib
             AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddbDestLink, MyLinkUploaders);
         }
 
-        private void AddEnumDestLinkToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> MyLinkUploaders)
+        private void AddEnumDestLinkToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
         {
             if (tsddb.DropDownItems.Count == 0)
             {
@@ -249,7 +262,7 @@ namespace ZScreenLib
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(ut.GetDescription());
                     tsmi.Tag = ut;
-                    tsmi.Checked = MyLinkUploaders.Contains((int)ut);
+                    tsmi.Checked = list.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestLinks_Click);
                     tsddb.DropDownItems.Add(tsmi);
                 }

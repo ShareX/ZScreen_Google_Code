@@ -7,6 +7,8 @@ namespace ZScreenLib
 {
     public partial class DestSelector : UserControl
     {
+        Timer tmrDropDownClose = new Timer() { Interval = 5000 };
+
         public DestSelector()
         {
             InitializeComponent();
@@ -30,7 +32,7 @@ namespace ZScreenLib
 
         private void tsddDestLinks_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            RestrictToOneCheck(tsddbDestLink, e);
+            // RestrictToOneCheck(tsddbDestLink, e);
         }
 
         private void tsddbClipboardContent_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -112,11 +114,21 @@ namespace ZScreenLib
                 {
                     ToolStripDropDownButton tsddb = tsi as ToolStripDropDownButton;
                     tsddb.MouseHover += new System.EventHandler(tsddb_MouseHover);
+                    if (!Engine.AppConf.SupportMultipleDestinations)
+                    {
+                        tsddb.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddb_DropDownItemClickedRestrictToOneItem);
+                    }
                 }
             }
         }
 
-        void tsddb_MouseHover(object sender, System.EventArgs e)
+        private void tsddb_DropDownItemClickedRestrictToOneItem(object sender, ToolStripItemClickedEventArgs e)
+        {
+            ToolStripDropDownButton tsddb = sender as ToolStripDropDownButton;
+            RestrictToOneCheck(tsddb, e);
+        }
+
+        private void tsddb_MouseHover(object sender, System.EventArgs e)
         {
             ToolStripDropDownButton tsddb = sender as ToolStripDropDownButton;
 
@@ -134,6 +146,24 @@ namespace ZScreenLib
 
             tsddb.ShowDropDown();
             tsddb.DropDown.AutoClose = false;
+        }
+
+        private void tsDest_MouseLeave(object sender, System.EventArgs e)
+        {
+            tmrDropDownClose.Tick += new System.EventHandler(tmrDropDownClose_Tick);
+            tmrDropDownClose.Start();
+        }
+
+        private void tmrDropDownClose_Tick(object sender, System.EventArgs e)
+        {
+            foreach (ToolStripItem tsi in tsDest.Items)
+            {
+                if (tsi is ToolStripDropDownButton)
+                {
+                    ToolStripDropDownButton tsddb = tsi as ToolStripDropDownButton;
+                    tsddb.DropDown.Close();
+                }
+            }
         }
     }
 }

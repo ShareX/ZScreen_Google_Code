@@ -22,20 +22,23 @@ namespace HelpersLib
         [ReadOnly(true), Browsable(false)]
         public string WorkflowConfigPath { get; set; }
 
-        [Category("Options / General"), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
 
-        [Category("Options / Paths"), DefaultValue(false), Description("Use a customised History path.")]
+        [Category(ComponentModelStrings.Outputs), DefaultValue(true), Description("Support uploading to multiple destinations.")]
+        public bool SupportMultipleDestinations { get; set; }
+
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Use a customised History path.")]
         public bool UseHistoryCustomPath { get; set; }
 
-        [Category("Options / Paths"), Description("Path where history file will be saved.")]
+        [Category(ComponentModelStrings.AppPaths), Description("Path where history file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string HistoryCustomPath { get; set; }
 
-        [Category("Options / Paths"), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
+        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
         public bool UseWorkflowConfigCustomPath { get; set; }
 
-        [Category("Options / Paths"), Description("Path where uploaders config file will be saved.")]
+        [Category(ComponentModelStrings.AppPaths), Description("Path where uploaders config file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string WorkflowConfigCustomPath { get; set; }
 
