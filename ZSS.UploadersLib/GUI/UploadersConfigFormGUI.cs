@@ -143,6 +143,11 @@ namespace UploadersLib
                     {
                         cboPhotobucketAlbumPaths.SelectedIndex = Config.PhotobucketAccountInfo.ActiveAlbumID;
                     }
+                    else if (!string.IsNullOrEmpty(Config.PhotobucketAccountInfo.AlbumID))
+                    {
+                        cboPhotobucketAlbumPaths.Items.Add(Config.PhotobucketAccountInfo.AlbumID);
+                        cboPhotobucketAlbumPaths.SelectedIndex = Config.PhotobucketAccountInfo.ActiveAlbumID;
+                    }
                 }
             }
 
