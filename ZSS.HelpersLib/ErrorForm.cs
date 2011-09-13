@@ -52,7 +52,13 @@ namespace HelpersLib
 
             Text = string.Format("{0} - Error", ApplicationName);
             Logger.WriteException(Error, "Unhandled exception");
-            txtException.Text = Error.ToString();
+
+            if (Error != null)
+            {
+                lblErrorMessage.Text = Error.Message;
+                txtException.Text = Error.ToString();
+            }
+
             btnOpenLogFile.Visible = !string.IsNullOrEmpty(LogPath) && File.Exists(LogPath);
             btnSendBugReport.Visible = !string.IsNullOrEmpty(BugReportPath);
         }
@@ -99,18 +105,6 @@ namespace HelpersLib
         {
             Activate();
             BringToFront();
-        }
-
-        private void ErrorForm_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            Rectangle rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(75, 75, 75), LinearGradientMode.Vertical))
-            {
-                brush.SetSigmaBellShape(0.25f);
-                g.FillRectangle(brush, rect);
-            }
-            g.DrawString(Error.Message, new Font(FontFamily.GenericSansSerif, 9.5f, FontStyle.Regular), Brushes.White, new Rectangle(15, 11, Width - 30, 35));
         }
 
         public static void ThrowExceptionForTest()
