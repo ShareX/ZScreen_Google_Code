@@ -220,6 +220,7 @@ namespace UploadersLib
             if (!Config.PhotobucketAccountInfo.AlbumList.Contains(albumPath))
             {
                 Config.PhotobucketAccountInfo.AlbumList.Add(albumPath);
+                cboPhotobucketAlbumPaths.Items.Add(albumPath);
                 MessageBox.Show(albumPath + " successfully added to the albums list.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
