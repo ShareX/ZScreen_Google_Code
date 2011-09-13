@@ -416,6 +416,7 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
+            this.lblNoteActions = new System.Windows.Forms.Label();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -2318,6 +2319,7 @@ namespace ZScreenGUI
             // 
             // tpMainActions
             // 
+            this.tpMainActions.Controls.Add(this.lblNoteActions);
             this.tpMainActions.Controls.Add(this.lbSoftware);
             this.tpMainActions.Controls.Add(this.pgEditorsImage);
             this.tpMainActions.Controls.Add(this.btnRemoveImageEditor);
@@ -4887,6 +4889,18 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // lblNoteActions
+            // 
+            this.lblNoteActions.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.lblNoteActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblNoteActions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblNoteActions.Location = new System.Drawing.Point(296, 416);
+            this.lblNoteActions.Name = "lblNoteActions";
+            this.lblNoteActions.Size = new System.Drawing.Size(514, 21);
+            this.lblNoteActions.TabIndex = 118;
+            this.lblNoteActions.Text = "UPDATE ME";
+            this.lblNoteActions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5441,5 +5455,6 @@ namespace ZScreenGUI
         private CheckBox chkOverwriteFiles;
         private TabPage tpAdvancedWorkflow;
         internal PropertyGrid pgWorkflow;
+        private Label lblNoteActions;
     }
 }

@@ -245,6 +245,7 @@ namespace UploadersLib
                 string albumPath = txtPhotobucketParentAlbumPath.Text + "/" + txtPhotobucketNewAlbumName.Text;
                 Config.PhotobucketAccountInfo.AlbumList.Add(albumPath);
                 cboPhotobucketAlbumPaths.Items.Add(albumPath);
+                MessageBox.Show(albumPath + " successfully created.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

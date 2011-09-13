@@ -81,6 +81,9 @@ namespace ZScreenGUI
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
 
+            // Notes
+            lblNoteActions.Text = string.Format("Enable \"{0}\" in the {1} tab for functionality.", chkPerformActions.Text, tpMain.Text);
+
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
             ucProxyAccounts.btnRemove.Click += new EventHandler(ProxyAccountsRemoveButton_Click);
