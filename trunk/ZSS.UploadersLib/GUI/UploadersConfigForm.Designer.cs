@@ -392,8 +392,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(360, 20);
@@ -507,8 +507,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -637,8 +637,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -649,9 +649,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -712,7 +712,7 @@
             // gbPhotobucketAlbumPath
             // 
             this.gbPhotobucketAlbumPath.Controls.Add(this.cboPhotobucketAlbumPaths);
-            this.gbPhotobucketAlbumPath.Location = new System.Drawing.Point(16, 344);
+            this.gbPhotobucketAlbumPath.Location = new System.Drawing.Point(16, 208);
             this.gbPhotobucketAlbumPath.Name = "gbPhotobucketAlbumPath";
             this.gbPhotobucketAlbumPath.Size = new System.Drawing.Size(712, 64);
             this.gbPhotobucketAlbumPath.TabIndex = 9;
@@ -736,7 +736,7 @@
             this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketNewAlbumName);
             this.gbPhotobucketAlbums.Controls.Add(this.txtPhotobucketParentAlbumPath);
             this.gbPhotobucketAlbums.Controls.Add(this.btnPhotobucketCreateAlbum);
-            this.gbPhotobucketAlbums.Location = new System.Drawing.Point(16, 208);
+            this.gbPhotobucketAlbums.Location = new System.Drawing.Point(16, 280);
             this.gbPhotobucketAlbums.Name = "gbPhotobucketAlbums";
             this.gbPhotobucketAlbums.Size = new System.Drawing.Size(712, 128);
             this.gbPhotobucketAlbums.TabIndex = 8;
@@ -751,7 +751,7 @@
             this.label8.Size = new System.Drawing.Size(649, 13);
             this.label8.TabIndex = 5;
             this.label8.Text = "New album name ( must be between 2 and 50 characters. Valid characters are letter" +
-                "s, numbers, underscore ( _ ), hyphen (-), and space )";
+    "s, numbers, underscore ( _ ), hyphen (-), and space )";
             // 
             // lblPhotobucketParentAlbumPath
             // 
@@ -821,10 +821,10 @@
             this.btnPhotobucketAuthOpen.UseVisualStyleBackColor = true;
             this.btnPhotobucketAuthOpen.Click += new System.EventHandler(this.btnPhotobucketAuthOpen_Click);
             // 
-            // txtPhotobucketAlbumName
+            // txtPhotobucketDefaultAlbumName
             // 
             this.txtPhotobucketDefaultAlbumName.Location = new System.Drawing.Point(496, 144);
-            this.txtPhotobucketDefaultAlbumName.Name = "txtPhotobucketAlbumName";
+            this.txtPhotobucketDefaultAlbumName.Name = "txtPhotobucketDefaultAlbumName";
             this.txtPhotobucketDefaultAlbumName.ReadOnly = true;
             this.txtPhotobucketDefaultAlbumName.Size = new System.Drawing.Size(200, 20);
             this.txtPhotobucketDefaultAlbumName.TabIndex = 0;
@@ -2197,9 +2197,9 @@
             // 
             // ucMediaWikiAccounts
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
