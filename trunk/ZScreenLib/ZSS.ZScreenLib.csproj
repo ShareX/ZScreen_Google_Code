@@ -230,6 +230,13 @@
       <DependentUpon>DestSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DestSelectorHelper.cs" />
+    <Compile Include="UserControls\NumericUpDownTimer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\NumericUpDownTimer.designer.cs">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RichTextBoxMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crop2\Crop2\Crop2.csproj">
@@ -315,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DestSelector.resx">
       <DependentUpon>DestSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\NumericUpDownTimer.resx">
+      <DependentUpon>NumericUpDownTimer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

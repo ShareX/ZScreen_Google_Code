@@ -348,11 +348,14 @@ namespace ZScreenLib
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
                 }
 
-                if (!Status.Contains(TaskStatus.ImageEdited) && Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+                if (!Status.Contains(TaskStatus.ImageEdited))
                 {
                     Status.Add(TaskStatus.ImageEdited);
                     ProcessImage(img);
-                    PerformActions();
+                    if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+                    {
+                        PerformActions();
+                    }
                 }
             }
 

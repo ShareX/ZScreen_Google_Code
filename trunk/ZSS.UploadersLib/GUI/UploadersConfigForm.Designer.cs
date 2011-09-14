@@ -337,7 +337,7 @@
             this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
             this.atcImageShackAccountType.Name = "atcImageShackAccountType";
             this.atcImageShackAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImageShackAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImageShackAccountType.Size = new System.Drawing.Size(272, 29);
             this.atcImageShackAccountType.TabIndex = 7;
             this.atcImageShackAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImageShackAccountType_AccountTypeChanged);
             // 
@@ -445,7 +445,7 @@
             this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
             this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
             this.atcTinyPicAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcTinyPicAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcTinyPicAccountType.Size = new System.Drawing.Size(272, 29);
             this.atcTinyPicAccountType.TabIndex = 14;
             this.atcTinyPicAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
             // 
@@ -556,7 +556,7 @@
             this.cbImgurThumbnailType.FormattingEnabled = true;
             this.cbImgurThumbnailType.Location = new System.Drawing.Point(104, 52);
             this.cbImgurThumbnailType.Name = "cbImgurThumbnailType";
-            this.cbImgurThumbnailType.Size = new System.Drawing.Size(144, 21);
+            this.cbImgurThumbnailType.Size = new System.Drawing.Size(168, 21);
             this.cbImgurThumbnailType.TabIndex = 16;
             this.cbImgurThumbnailType.SelectedIndexChanged += new System.EventHandler(this.cbImgurThumbnailType_SelectedIndexChanged);
             // 
@@ -633,7 +633,7 @@
             this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
             this.atcImgurAccountType.Name = "atcImgurAccountType";
             this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImgurAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcImgurAccountType.Size = new System.Drawing.Size(272, 29);
             this.atcImgurAccountType.TabIndex = 7;
             this.atcImgurAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImgurAccountType_AccountTypeChanged);
             // 
