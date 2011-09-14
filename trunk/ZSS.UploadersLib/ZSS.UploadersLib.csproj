@@ -290,10 +290,12 @@
   <ItemGroup>
     <Content Include="Favicons\Dropbox.ico" />
     <Content Include="Favicons\Flickr.ico" />
+    <Content Include="Favicons\Google.ico" />
     <Content Include="Favicons\ImageShack.ico" />
     <Content Include="Favicons\Imgur.ico" />
     <Content Include="Favicons\MediaWiki.ico" />
     <Content Include="Favicons\Pastebin.ico" />
+    <Content Include="Favicons\Photobucket.ico" />
     <Content Include="Favicons\RapidShare.ico" />
     <Content Include="Favicons\SendSpace.ico" />
     <Content Include="Favicons\TinyPic.ico" />
@@ -301,6 +303,10 @@
     <Content Include="Favicons\TwitSnaps.ico" />
     <Content Include="Favicons\Twitter.ico" />
     <Content Include="Favicons\YFrog.ico" />
+    <None Include="Resources\server-network.png" />
+    <None Include="Resources\mail.png" />
+    <None Include="Resources\globe-network.png" />
+    <None Include="Resources\folder-network.png" />
     <None Include="Resources\photobucket.png" />
     <None Include="Resources\server[1].png" />
     <None Include="Resources\ZScreen_256.png" />

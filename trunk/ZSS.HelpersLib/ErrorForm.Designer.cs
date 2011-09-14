@@ -123,11 +123,10 @@
             // 
             // lblErrorMessage
             // 
-            this.lblErrorMessage.AutoSize = true;
             this.lblErrorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblErrorMessage.Location = new System.Drawing.Point(16, 8);
             this.lblErrorMessage.Name = "lblErrorMessage";
-            this.lblErrorMessage.Size = new System.Drawing.Size(34, 15);
+            this.lblErrorMessage.Size = new System.Drawing.Size(464, 32);
             this.lblErrorMessage.TabIndex = 2;
             this.lblErrorMessage.Text = "Error";
             // 
