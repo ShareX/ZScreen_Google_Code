@@ -2341,7 +2341,7 @@ namespace ZScreenGUI
 
         private void tcMain_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tpAdvanced && tcAdvanced.SelectedTab == tpDebugLog)
+            if (e.TabPage == tpAdvanced && tcAdvanced.SelectedTab == tpAdvancedDebug)
             {
                 rtbDebugLog.Text = Engine.MyLogger.ToString();
             }
@@ -2349,7 +2349,7 @@ namespace ZScreenGUI
 
         private void tcAdvanced_Selected(object sender, TabControlEventArgs e)
         {
-            if (e.TabPage == tpDebugLog)
+            if (e.TabPage == tpAdvancedDebug)
             {
                 rtbDebugLog.Text = Engine.MyLogger.ToString();
             }

@@ -104,6 +104,7 @@ namespace ZScreenGUI
                     switch (bwTask.Job2)
                     {
                         case WorkerTask.JobLevel2.UploadFromClipboard:
+                        case WorkerTask.JobLevel2.UploadFromExplorer:
                             bwTask.UploadText();
                             break;
                         case WorkerTask.JobLevel2.Translate:
@@ -513,7 +514,7 @@ namespace ZScreenGUI
 
         public void UploadUsingDragDrop(string fp)
         {
-            WorkerTask ddTask = CreateTask(WorkerTask.JobLevel2.UploadFromDragDrop);
+            WorkerTask ddTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
             ddTask.UpdateLocalFilePath(fp);
             ddTask.RunWorker();
         }
@@ -576,7 +577,7 @@ namespace ZScreenGUI
                 }
                 else
                 {
-                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromDragDrop, fp);
+                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
                     fuTask.UpdateLocalFilePath(fp);
                     fuTask.RunWorker();
                 }
@@ -664,7 +665,7 @@ namespace ZScreenGUI
                 case WorkerTask.JobLevel2.UploadFromClipboard:
                     UploadUsingClipboardOrGoogleTranslate();
                     break;
-                case WorkerTask.JobLevel2.UploadFromDragDrop:
+                case WorkerTask.JobLevel2.UploadFromExplorer:
                     ShowDropWindow();
                     break;
                 case WorkerTask.JobLevel2.Translate:
