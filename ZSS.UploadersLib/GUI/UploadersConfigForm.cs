@@ -221,7 +221,6 @@ namespace UploadersLib
             {
                 Config.PhotobucketAccountInfo.AlbumList.Add(albumPath);
                 cboPhotobucketAlbumPaths.Items.Add(albumPath);
-                MessageBox.Show(albumPath + " successfully added to the albums list.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -229,12 +228,8 @@ namespace UploadersLib
         {
             if (cboPhotobucketAlbumPaths.SelectedIndex > 0 && cboPhotobucketAlbumPaths.Items.Count > 1)
             {
-                string path = cboPhotobucketAlbumPaths.SelectedText;
-                if (MessageBox.Show("Are you sure that you want to remove " + path + " from the albums list? This does not delete the album from Photobucket.") == System.Windows.Forms.DialogResult.Yes)
-                {
-                    cboPhotobucketAlbumPaths.Items.RemoveAt(cboPhotobucketAlbumPaths.SelectedIndex);
-                    cboPhotobucketAlbumPaths.SelectedIndex = cboPhotobucketAlbumPaths.Items.Count - 1;
-                }
+                cboPhotobucketAlbumPaths.Items.RemoveAt(cboPhotobucketAlbumPaths.SelectedIndex);
+                cboPhotobucketAlbumPaths.SelectedIndex = cboPhotobucketAlbumPaths.Items.Count - 1;
             }
         }
 

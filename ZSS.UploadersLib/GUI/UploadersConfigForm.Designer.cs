@@ -72,6 +72,7 @@
             this.btnFlickrOpenAuthorize = new System.Windows.Forms.Button();
             this.tpPhotobucket = new System.Windows.Forms.TabPage();
             this.gbPhotobucketAlbumPath = new System.Windows.Forms.GroupBox();
+            this.btnPhotobucketAddAlbum = new System.Windows.Forms.Button();
             this.btnPhotobucketRemoveAlbum = new System.Windows.Forms.Button();
             this.cboPhotobucketAlbumPaths = new System.Windows.Forms.ComboBox();
             this.gbPhotobucketAlbums = new System.Windows.Forms.GroupBox();
@@ -221,7 +222,6 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.btnPhotobucketAddAlbum = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -750,6 +750,16 @@
             this.gbPhotobucketAlbumPath.TabStop = false;
             this.gbPhotobucketAlbumPath.Text = "Upload images to";
             // 
+            // btnPhotobucketAddAlbum
+            // 
+            this.btnPhotobucketAddAlbum.Location = new System.Drawing.Point(488, 24);
+            this.btnPhotobucketAddAlbum.Name = "btnPhotobucketAddAlbum";
+            this.btnPhotobucketAddAlbum.Size = new System.Drawing.Size(75, 23);
+            this.btnPhotobucketAddAlbum.TabIndex = 7;
+            this.btnPhotobucketAddAlbum.Text = "Add album";
+            this.btnPhotobucketAddAlbum.UseVisualStyleBackColor = true;
+            this.btnPhotobucketAddAlbum.Click += new System.EventHandler(this.btnPhotobucketAddAlbum_Click);
+            // 
             // btnPhotobucketRemoveAlbum
             // 
             this.btnPhotobucketRemoveAlbum.AutoSize = true;
@@ -757,7 +767,7 @@
             this.btnPhotobucketRemoveAlbum.Name = "btnPhotobucketRemoveAlbum";
             this.btnPhotobucketRemoveAlbum.Size = new System.Drawing.Size(104, 23);
             this.btnPhotobucketRemoveAlbum.TabIndex = 6;
-            this.btnPhotobucketRemoveAlbum.Text = "Remove Album...";
+            this.btnPhotobucketRemoveAlbum.Text = "Remove album";
             this.btnPhotobucketRemoveAlbum.UseVisualStyleBackColor = true;
             this.btnPhotobucketRemoveAlbum.Click += new System.EventHandler(this.btnPhotobucketRemoveAlbum_Click);
             // 
@@ -2281,16 +2291,6 @@
             this.actRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
-            // 
-            // btnPhotobucketAddAlbum
-            // 
-            this.btnPhotobucketAddAlbum.Location = new System.Drawing.Point(488, 24);
-            this.btnPhotobucketAddAlbum.Name = "btnPhotobucketAddAlbum";
-            this.btnPhotobucketAddAlbum.Size = new System.Drawing.Size(75, 23);
-            this.btnPhotobucketAddAlbum.TabIndex = 7;
-            this.btnPhotobucketAddAlbum.Text = "Add album";
-            this.btnPhotobucketAddAlbum.UseVisualStyleBackColor = true;
-            this.btnPhotobucketAddAlbum.Click += new System.EventHandler(this.btnPhotobucketAddAlbum_Click);
             // 
             // UploadersConfigForm
             // 
