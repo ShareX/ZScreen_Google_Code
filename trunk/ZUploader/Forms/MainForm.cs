@@ -70,7 +70,7 @@ namespace ZUploader
             InitializeComponent();
 
             this.Text = Program.Title;
-            this.Icon = Resources.ZUploaderIcon;
+            this.Icon = Resources.ZUploader;
             niTray.Icon = Resources.ZUploaderSmallIcon;
 
             foreach (string imageUploader in ZAppHelper.GetEnumDescriptions<ImageDestination>())
