@@ -1,8 +1,9 @@
-﻿4.1 Added tray icon support
+﻿Version 4.2 - 2011-09-13
 
-Version 4.0 - 2011-09-07
-
-4.0 Overhauled region capture through the plugin system
+4.2.0 Added Photobucket uploader support
+4.1.1 Added user account support for Goo.gl URL Shortener service
+4.1.0 Added tray icon support
+4.0.0 Overhauled region capture through the plugin system
 
 Version 3.12 - 2011-05-28
 

@@ -226,7 +226,7 @@ namespace UploadersLib
 
         private void btnPhotobucketRemoveAlbum_Click(object sender, EventArgs e)
         {
-            if (cboPhotobucketAlbumPaths.SelectedIndex > 0 && cboPhotobucketAlbumPaths.Items.Count > 1)
+            if (cboPhotobucketAlbumPaths.Items.Count > 1)
             {
                 cboPhotobucketAlbumPaths.Items.RemoveAt(cboPhotobucketAlbumPaths.SelectedIndex);
                 cboPhotobucketAlbumPaths.SelectedIndex = cboPhotobucketAlbumPaths.Items.Count - 1;
