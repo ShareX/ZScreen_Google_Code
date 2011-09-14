@@ -16,10 +16,10 @@ namespace HelpersLib
         [Browsable(false), EditorAttribute(typeof(FolderNameEditor), typeof(UITypeEditor)), Description("Relocate Root folder location")]
         public string RootDir { get; set; }
 
-        [ReadOnly(true)]
+        [Category(ComponentModelStrings.AppPaths), ReadOnly(true)]
         public string XMLSettingsPath { get; set; }
 
-        [ReadOnly(true), Browsable(false)]
+        [Category(ComponentModelStrings.AppPaths), ReadOnly(true)]
         public string WorkflowConfigPath { get; set; }
 
         [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]

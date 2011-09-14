@@ -85,8 +85,8 @@ namespace ZScreenLib
             AutoCapture,
             [Description("Clipboard Upload")]
             UploadFromClipboard,
-            [Description("Drag & Drop Window")]
-            UploadFromDragDrop,
+            [Description("Upload from Explorer")]
+            UploadFromExplorer,
             [Description("Language Translator")]
             Translate,
             [Description("Screen Color Picker")]
@@ -254,7 +254,7 @@ namespace ZScreenLib
 
             switch (job)
             {
-                case JobLevel2.UploadFromDragDrop:
+                case JobLevel2.UploadFromExplorer:
                 case JobLevel2.UploadFromClipboard:
                     Job1 = JobLevel1.File;
                     break;
