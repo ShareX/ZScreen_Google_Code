@@ -236,7 +236,6 @@ namespace UploadersLib
                     cboPhotobucketAlbumPaths.SelectedIndex = cboPhotobucketAlbumPaths.Items.Count - 1;
                 }
             }
-
         }
 
         #endregion Photobucket
@@ -693,6 +692,5 @@ namespace UploadersLib
         }
 
         #endregion Other Services
-
     }
 }

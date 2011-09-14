@@ -43,8 +43,8 @@ namespace UploadersLib
             imageUploadersImageList.Images.Add("ImageShack", Resources.ImageShack);
             imageUploadersImageList.Images.Add("TinyPic", Resources.TinyPic);
             imageUploadersImageList.Images.Add("Imgur", Resources.Imgur);
-            imageUploadersImageList.Images.Add("Photobucket", Resources.Photobucket);
             imageUploadersImageList.Images.Add("Flickr", Resources.Flickr);
+            imageUploadersImageList.Images.Add("Photobucket", Resources.Photobucket);
             imageUploadersImageList.Images.Add("TwitPic", Resources.TwitPic);
             imageUploadersImageList.Images.Add("TwitSnaps", Resources.TwitSnaps);
             imageUploadersImageList.Images.Add("YFrog", Resources.YFrog);
@@ -54,8 +54,10 @@ namespace UploadersLib
             ImageList fileUploadersImageList = new ImageList();
             fileUploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
             fileUploadersImageList.Images.Add("Dropbox", Resources.Dropbox);
+            fileUploadersImageList.Images.Add("FTP", Resources.folder_network);
             fileUploadersImageList.Images.Add("RapidShare", Resources.RapidShare);
             fileUploadersImageList.Images.Add("SendSpace", Resources.SendSpace);
+            fileUploadersImageList.Images.Add("CustomUploader", Resources.globe_network);
             tcFileUploaders.ImageList = fileUploadersImageList;
 
             ImageList textUploadersImageList = new ImageList();
@@ -65,12 +67,19 @@ namespace UploadersLib
 
             ImageList urlShortenersImageList = new ImageList();
             urlShortenersImageList.ColorDepth = ColorDepth.Depth32Bit;
+            urlShortenersImageList.Images.Add("Google", Resources.Google);
             tcURLShorteners.ImageList = urlShortenersImageList;
 
             ImageList otherServicesImageList = new ImageList();
             otherServicesImageList.ColorDepth = ColorDepth.Depth32Bit;
             otherServicesImageList.Images.Add("Twitter", Resources.Twitter);
             tcOtherServices.ImageList = otherServicesImageList;
+
+            ImageList outputsImageList = new ImageList();
+            outputsImageList.ColorDepth = ColorDepth.Depth32Bit;
+            outputsImageList.Images.Add("Email", Resources.mail);
+            outputsImageList.Images.Add("SharedFolders", Resources.server_network);
+            tcOutputs.ImageList = outputsImageList;
 
             tpImageShack.ImageKey = "ImageShack";
             tpTinyPic.ImageKey = "TinyPic";
@@ -82,10 +91,15 @@ namespace UploadersLib
             tpYFrog.ImageKey = "YFrog";
             tpMediaWiki.ImageKey = "MediaWiki";
             tpDropbox.ImageKey = "Dropbox";
+            tpFTP.ImageKey = "FTP";
             tpRapidShare.ImageKey = "RapidShare";
             tpSendSpace.ImageKey = "SendSpace";
+            tpCustomUploaders.ImageKey = "CustomUploader";
             tpPastebin.ImageKey = "Pastebin";
+            tpGoogleURLShortener.ImageKey = "Google";
             tpTwitter.ImageKey = "Twitter";
+            tpEmail.ImageKey = "Email";
+            tpSharedFolders.ImageKey = "SharedFolders";
         }
 
         public void LoadSettings(UploadersConfig uploadersConfig)
