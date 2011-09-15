@@ -194,7 +194,8 @@ namespace ZScreenGUI
 
             CleanCache();
 
-            Engine.ClipboardHook();
+            ClipboardHook();
+            nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
@@ -341,80 +342,6 @@ namespace ZScreenGUI
             }
 
             return false;
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (IsReady)
-            {
-                switch (m.Msg)
-                {
-                    case 992: // nfi but this is the only way it works for XP
-                    case (int)ClipboardHook.Msgs.WM_DRAWCLIPBOARD:
-                        try
-                        {
-                            string cbText = Clipboard.GetText();
-                            bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
-                            bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
-                            bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
-                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
-                            if (uploadImage || uploadText || uploadFile || shortenUrl)
-                            {
-                                if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
-                                {
-                                    UploadUsingClipboard();
-                                }
-                            }
-                        }
-                        catch (ExternalException ex)
-                        {
-                            // Copying a field definition in Access 2002 causes this sometimes?
-                            Engine.MyLogger.WriteException(ex, "InteropServices.ExternalException in ZScreen.WndProc");
-                            return;
-                        }
-                        catch (Exception ex)
-                        {
-                            Engine.MyLogger.WriteException(ex, "Error monitoring clipboard");
-                            return;
-                        }
-                        // pass message on to next clipboard listener
-                        ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
-                        break;
-                    case (int)ClipboardHook.Msgs.WM_CHANGECBCHAIN:
-                        if (m.WParam == ClipboardHook.mClipboardViewerNext)
-                        {
-                            ClipboardHook.mClipboardViewerNext = m.LParam;
-                        }
-                        else
-                        {
-                            ClipboardHook.SendMessage(m.Msg, m.WParam, m.LParam);
-                        }
-                        break;
-                    case NativeMethods.WM_SYSCOMMAND:
-                        if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
-                        {
-                            switch (Engine.AppConf.WindowButtonActionMinimize)
-                            {
-                                case WindowButtonAction.ExitApplication:
-                                    CloseMethod = CloseMethod.MinimizeButton;
-                                    Close();
-                                    break;
-                                case WindowButtonAction.MinimizeToTaskbar:
-                                    WindowState = FormWindowState.Minimized;
-                                    break;
-                                case WindowButtonAction.MinimizeToTray:
-                                    Hide();
-                                    break;
-                            }
-
-                            m.Result = IntPtr.Zero;
-                            return;
-                        }
-                        break;
-                }
-            }
-
-            base.WndProc(ref m);
         }
 
         private void tsmiTab_Click(object sender, EventArgs e)
@@ -1990,7 +1917,7 @@ namespace ZScreenGUI
             Engine.conf.MonitorUrls = chkMonUrls.Checked;
             if (chkMonUrls.Checked)
             {
-                Engine.ClipboardHook();
+                ClipboardHook();
             }
         }
 

@@ -188,7 +188,6 @@ namespace ZScreenLib
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
         public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
 
-        public static ClipboardHook zClipboardHook = null;
         public static string zClipboardText = string.Empty;
 
         private static bool RunConfig = false;
@@ -680,32 +679,6 @@ namespace ZScreenLib
         }
 
         #endregion Windows 7 Taskbar Methods
-
-        #region Clipboard Methods
-
-        public static void ClipboardHook()
-        {
-            if (null == zClipboardHook && IntPtr.Zero != zHandle)
-            {
-                zClipboardHook = new ClipboardHook(zHandle);
-            }
-            if (null != zClipboardHook && Adapter.ClipboardMonitor)
-            {
-                zClipboardHook.RegisterClipboardViewer();
-                Engine.MyLogger.WriteLine("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
-            }
-        }
-
-        public static void ClipboardUnhook()
-        {
-            if (null != zClipboardHook && Adapter.ClipboardMonitor)
-            {
-                zClipboardHook.UnregisterClipboardViewer();
-                Engine.MyLogger.WriteLine("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
-            }
-        }
-
-        #endregion Clipboard Methods
 
         public static void SetImageFormat(ref ImageFileFormat ziff, EImageFormat imgFormat)
         {

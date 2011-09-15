@@ -270,7 +270,9 @@ namespace ZScreenGUI
                             break;
                     }
 
+                    ClipboardUnhook();
                     UploadManager.ShowUploadResults(task, false);
+                    ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
 
                     if (Engine.conf.TwitterEnabled)
                     {
@@ -403,14 +405,14 @@ namespace ZScreenGUI
         /// <param name="job">Job Type</param>
         public void RunWorkerAsync_Screenshots(WorkerTask ssTask)
         {
-            Engine.ClipboardUnhook();
+            ClipboardUnhook();
             ssTask.WasToTakeScreenshot = true;
             ssTask.RunWorker();
         }
 
         public void RunWorkerAsync_Text(WorkerTask task)
         {
-            Engine.ClipboardUnhook();
+            ClipboardUnhook();
             task.RunWorker();
         }
 
@@ -473,7 +475,7 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboardOrGoogleTranslate()
         {
-            Engine.ClipboardUnhook();
+            ClipboardUnhook();
             if (Clipboard.ContainsText() && Engine.MyGTConfig.AutoTranslate && Clipboard.GetText().Length <= Engine.MyGTConfig.AutoTranslateLength)
             {
                 StartWorkerTranslator();

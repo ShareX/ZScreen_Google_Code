@@ -144,7 +144,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Global\SyntaxParser.cs" />
-    <Compile Include="Helpers\ClipboardHook.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
