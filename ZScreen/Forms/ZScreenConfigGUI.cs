@@ -309,6 +309,7 @@ namespace ZScreenGUI
             chkSelectedWindowShowCheckers.Checked = Engine.CoreConf.ActiveWindowShowCheckers;
 
             // Freehand Crop Shot
+            tcCapture.TabPages.Remove(tpFreehandCropShot);
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
             cbFreehandCropAutoUpload.Checked = Engine.conf.FreehandCropAutoUpload;
             cbFreehandCropAutoClose.Checked = Engine.conf.FreehandCropAutoClose;

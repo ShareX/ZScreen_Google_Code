@@ -1212,6 +1212,7 @@ namespace ZScreenLib
                     {
                         Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
                         ur.Host = us.Host;
+                        ur.URL = fullUrl;
                         ur.ShortenedURL = shortenUrl;
                         return true;
                     }
