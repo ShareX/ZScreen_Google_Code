@@ -21,8 +21,8 @@ namespace HelpersLib
         public const string Screenshots = "Inputs / Screenshots";
         public const string ScreenshotsActiveWindow = "Inputs / Screenshots / Capture / Active Window";
         public const string ScreenshotsRegion = "Inputs / Screenshots / Capture / Region";
-        public const string ScreenshotsBevel = "Inputs / Screenshots / Bevel";
-        public const string ScreenshotsBorder = "Inputs / Screenshots / Border";
-        public const string ScreenshotsReflection = "Inputs / Screenshots / Reflection";
+        public const string ScreenshotsBevel = "Inputs / Screenshots / Effects / Bevel";
+        public const string ScreenshotsBorder = "Inputs / Screenshots / Effects / Border";
+        public const string ScreenshotsReflection = "Inputs / Screenshots / Effects / Reflection";
     }
 }
