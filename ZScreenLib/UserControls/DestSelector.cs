@@ -32,7 +32,7 @@ namespace ZScreenLib
 
         private void tsddDestLinks_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // RestrictToOneCheck(tsddbDestLink, e);
+            RestrictToOneCheck(tsddbDestLink, e);
         }
 
         private void tsddbClipboardContent_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)

@@ -234,8 +234,6 @@ namespace ZScreenLib
 
                     if (clipboardText.Length > 0)
                     {
-                        Engine.ClipboardUnhook();
-
                         string tempText = clipboardText.ToString().Trim();
 
                         if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.FileSize))
@@ -259,7 +257,6 @@ namespace ZScreenLib
                         }
 
                         Engine.zClipboardText = clipboardText.ToString();
-                        Engine.ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
                     }
                 }
             }

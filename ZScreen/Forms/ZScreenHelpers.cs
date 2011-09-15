@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -10,6 +12,82 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
+        protected override void WndProc(ref Message m)
+        {
+            if (IsReady)
+            {
+                // defined in winuser.h
+                const int WM_DRAWCLIPBOARD = 0x308;
+                const int WM_CHANGECBCHAIN = 0x030D;
+
+                switch (m.Msg)
+                {
+                    case WM_DRAWCLIPBOARD:
+                        try
+                        {
+                            string cbText = Clipboard.GetText();
+                            bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
+                            bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
+                            bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
+                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
+                            if (uploadImage || uploadText || uploadFile || shortenUrl)
+                            {
+                                if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
+                                {
+                                    UploadUsingClipboard();
+                                }
+                            }
+                        }
+                        catch (ExternalException ex)
+                        {
+                            // Copying a field definition in Access 2002 causes this sometimes?
+                            Engine.MyLogger.WriteException(ex, "InteropServices.ExternalException in ZScreen.WndProc");
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            Engine.MyLogger.WriteException(ex, "Error monitoring clipboard");
+                            return;
+                        }
+                        SendMessage(nextClipboardViewer, m.Msg, m.WParam,
+                                    m.LParam);
+                        break;
+
+                    case WM_CHANGECBCHAIN:
+                        if (m.WParam == nextClipboardViewer)
+                            nextClipboardViewer = m.LParam;
+                        else
+                            SendMessage(nextClipboardViewer, m.Msg, m.WParam,
+                                        m.LParam);
+                        break;
+
+                    case NativeMethods.WM_SYSCOMMAND:
+                        if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
+                        {
+                            switch (Engine.AppConf.WindowButtonActionMinimize)
+                            {
+                                case WindowButtonAction.ExitApplication:
+                                    CloseMethod = CloseMethod.MinimizeButton;
+                                    Close();
+                                    break;
+                                case WindowButtonAction.MinimizeToTaskbar:
+                                    WindowState = FormWindowState.Minimized;
+                                    break;
+                                case WindowButtonAction.MinimizeToTray:
+                                    Hide();
+                                    break;
+                            }
+
+                            m.Result = IntPtr.Zero;
+                            return;
+                        }
+                        break;
+                }
+            }
+
+            base.WndProc(ref m);
+        }
+
         public GoogleTranslateGUI GetGTGUI()
         {
             if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)

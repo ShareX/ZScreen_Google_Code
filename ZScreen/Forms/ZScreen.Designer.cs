@@ -109,7 +109,7 @@ namespace ZScreenGUI
             this.chHotkeys_Keys = new System.Windows.Forms.DataGridViewButtonColumn();
             this.DefaultKeys = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpMainInput = new System.Windows.Forms.TabPage();
-            this.tcScreenshots = new System.Windows.Forms.TabControl();
+            this.tcCapture = new System.Windows.Forms.TabControl();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
             this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
@@ -296,7 +296,6 @@ namespace ZScreenGUI
             this.btwWatermarkBrowseImage = new System.Windows.Forms.Button();
             this.txtWatermarkImageLocation = new System.Windows.Forms.TextBox();
             this.tpPaths = new System.Windows.Forms.TabPage();
-            this.pgAppSettings = new System.Windows.Forms.PropertyGrid();
             this.gbRoot = new System.Windows.Forms.GroupBox();
             this.btnViewRootDir = new System.Windows.Forms.Button();
             this.btnRelocateRootDir = new System.Windows.Forms.Button();
@@ -380,6 +379,8 @@ namespace ZScreenGUI
             this.pgAppConfig = new System.Windows.Forms.PropertyGrid();
             this.tpAdvancedWorkflow = new System.Windows.Forms.TabPage();
             this.pgWorkflow = new System.Windows.Forms.PropertyGrid();
+            this.tpAdvancedCore = new System.Windows.Forms.TabPage();
+            this.pgAppSettings = new System.Windows.Forms.PropertyGrid();
             this.tpAdvancedDebug = new System.Windows.Forms.TabPage();
             this.rtbDebugLog = new System.Windows.Forms.RichTextBox();
             this.tpAdvancedStats = new System.Windows.Forms.TabPage();
@@ -405,7 +406,7 @@ namespace ZScreenGUI
             this.txtImageBamSecret = new System.Windows.Forms.TextBox();
             this.lblImageBamKey = new System.Windows.Forms.Label();
             this.txtImageBamApiKey = new System.Windows.Forms.TextBox();
-            this.tpOptionsClipboard = new System.Windows.Forms.TabPage();
+            this.tpCaptureClipboard = new System.Windows.Forms.TabPage();
             this.gbMonitorClipboard = new System.Windows.Forms.GroupBox();
             this.chkMonUrls = new System.Windows.Forms.CheckBox();
             this.chkMonFiles = new System.Windows.Forms.CheckBox();
@@ -417,7 +418,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.tpAdvancedCore = new System.Windows.Forms.TabPage();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -427,7 +427,7 @@ namespace ZScreenGUI
             this.tpHotkeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).BeginInit();
             this.tpMainInput.SuspendLayout();
-            this.tcScreenshots.SuspendLayout();
+            this.tcCapture.SuspendLayout();
             this.tpActivewindow.SuspendLayout();
             this.tpSelectedWindow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowHueRange)).BeginInit();
@@ -516,6 +516,7 @@ namespace ZScreenGUI
             this.tcAdvanced.SuspendLayout();
             this.tpAdvancedSettings.SuspendLayout();
             this.tpAdvancedWorkflow.SuspendLayout();
+            this.tpAdvancedCore.SuspendLayout();
             this.tpAdvancedDebug.SuspendLayout();
             this.tpAdvancedStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
@@ -524,9 +525,8 @@ namespace ZScreenGUI
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
-            this.tpOptionsClipboard.SuspendLayout();
+            this.tpCaptureClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
-            this.tpAdvancedCore.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1296,7 +1296,7 @@ namespace ZScreenGUI
             // 
             // tpMainInput
             // 
-            this.tpMainInput.Controls.Add(this.tcScreenshots);
+            this.tpMainInput.Controls.Add(this.tcCapture);
             this.tpMainInput.ImageKey = "(none)";
             this.tpMainInput.Location = new System.Drawing.Point(4, 22);
             this.tpMainInput.Name = "tpMainInput";
@@ -1306,20 +1306,21 @@ namespace ZScreenGUI
             this.tpMainInput.Text = "Capture";
             this.tpMainInput.UseVisualStyleBackColor = true;
             // 
-            // tcScreenshots
+            // tcCapture
             // 
-            this.tcScreenshots.Controls.Add(this.tpActivewindow);
-            this.tcScreenshots.Controls.Add(this.tpSelectedWindow);
-            this.tcScreenshots.Controls.Add(this.tpCropShot);
-            this.tcScreenshots.Controls.Add(this.tpCropShotLast);
-            this.tcScreenshots.Controls.Add(this.tpFreehandCropShot);
-            this.tcScreenshots.Controls.Add(this.tpWebPageUpload);
-            this.tcScreenshots.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcScreenshots.Location = new System.Drawing.Point(3, 3);
-            this.tcScreenshots.Name = "tcScreenshots";
-            this.tcScreenshots.SelectedIndex = 0;
-            this.tcScreenshots.Size = new System.Drawing.Size(807, 434);
-            this.tcScreenshots.TabIndex = 77;
+            this.tcCapture.Controls.Add(this.tpActivewindow);
+            this.tcCapture.Controls.Add(this.tpSelectedWindow);
+            this.tcCapture.Controls.Add(this.tpCropShot);
+            tcCapture.Controls.Add(this.tpCaptureClipboard);
+            this.tcCapture.Controls.Add(this.tpCropShotLast);
+            this.tcCapture.Controls.Add(this.tpFreehandCropShot);
+            this.tcCapture.Controls.Add(this.tpWebPageUpload);
+            this.tcCapture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcCapture.Location = new System.Drawing.Point(3, 3);
+            this.tcCapture.Name = "tcCapture";
+            this.tcCapture.SelectedIndex = 0;
+            this.tcCapture.Size = new System.Drawing.Size(807, 434);
+            this.tcCapture.TabIndex = 77;
             // 
             // tpActivewindow
             // 
@@ -3509,16 +3510,6 @@ namespace ZScreenGUI
             this.tpPaths.Text = "Paths";
             this.tpPaths.UseVisualStyleBackColor = true;
             // 
-            // pgAppSettings
-            // 
-            this.pgAppSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgAppSettings.HelpVisible = false;
-            this.pgAppSettings.Location = new System.Drawing.Point(3, 3);
-            this.pgAppSettings.Name = "pgAppSettings";
-            this.pgAppSettings.Size = new System.Drawing.Size(793, 402);
-            this.pgAppSettings.TabIndex = 118;
-            this.pgAppSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppSettings_PropertyValueChanged);
-            // 
             // gbRoot
             // 
             this.gbRoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -4511,6 +4502,27 @@ namespace ZScreenGUI
             this.pgWorkflow.Size = new System.Drawing.Size(793, 402);
             this.pgWorkflow.TabIndex = 1;
             // 
+            // tpAdvancedCore
+            // 
+            this.tpAdvancedCore.Controls.Add(this.pgAppSettings);
+            this.tpAdvancedCore.Location = new System.Drawing.Point(4, 22);
+            this.tpAdvancedCore.Name = "tpAdvancedCore";
+            this.tpAdvancedCore.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAdvancedCore.Size = new System.Drawing.Size(799, 408);
+            this.tpAdvancedCore.TabIndex = 9;
+            this.tpAdvancedCore.Text = "Core";
+            this.tpAdvancedCore.UseVisualStyleBackColor = true;
+            // 
+            // pgAppSettings
+            // 
+            this.pgAppSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgAppSettings.HelpVisible = false;
+            this.pgAppSettings.Location = new System.Drawing.Point(3, 3);
+            this.pgAppSettings.Name = "pgAppSettings";
+            this.pgAppSettings.Size = new System.Drawing.Size(793, 402);
+            this.pgAppSettings.TabIndex = 118;
+            this.pgAppSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppSettings_PropertyValueChanged);
+            // 
             // tpAdvancedDebug
             // 
             this.tpAdvancedDebug.Controls.Add(this.rtbDebugLog);
@@ -4787,14 +4799,14 @@ namespace ZScreenGUI
             // 
             // tpOptionsClipboard
             // 
-            this.tpOptionsClipboard.Controls.Add(this.gbMonitorClipboard);
-            this.tpOptionsClipboard.Location = new System.Drawing.Point(4, 22);
-            this.tpOptionsClipboard.Name = "tpOptionsClipboard";
-            this.tpOptionsClipboard.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOptionsClipboard.Size = new System.Drawing.Size(791, 404);
-            this.tpOptionsClipboard.TabIndex = 8;
-            this.tpOptionsClipboard.Text = "Clipboard";
-            this.tpOptionsClipboard.UseVisualStyleBackColor = true;
+            this.tpCaptureClipboard.Controls.Add(this.gbMonitorClipboard);
+            this.tpCaptureClipboard.Location = new System.Drawing.Point(4, 22);
+            this.tpCaptureClipboard.Name = "tpOptionsClipboard";
+            this.tpCaptureClipboard.Padding = new System.Windows.Forms.Padding(3);
+            this.tpCaptureClipboard.Size = new System.Drawing.Size(791, 404);
+            this.tpCaptureClipboard.TabIndex = 8;
+            this.tpCaptureClipboard.Text = "Clipboard";
+            this.tpCaptureClipboard.UseVisualStyleBackColor = true;
             // 
             // gbMonitorClipboard
             // 
@@ -4902,17 +4914,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // tpAdvancedCore
-            // 
-            this.tpAdvancedCore.Controls.Add(this.pgAppSettings);
-            this.tpAdvancedCore.Location = new System.Drawing.Point(4, 22);
-            this.tpAdvancedCore.Name = "tpAdvancedCore";
-            this.tpAdvancedCore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedCore.Size = new System.Drawing.Size(799, 408);
-            this.tpAdvancedCore.TabIndex = 9;
-            this.tpAdvancedCore.Text = "Core";
-            this.tpAdvancedCore.UseVisualStyleBackColor = true;
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4944,7 +4945,7 @@ namespace ZScreenGUI
             this.tpHotkeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHotkeys)).EndInit();
             this.tpMainInput.ResumeLayout(false);
-            this.tcScreenshots.ResumeLayout(false);
+            this.tcCapture.ResumeLayout(false);
             this.tpActivewindow.ResumeLayout(false);
             this.tpActivewindow.PerformLayout();
             this.tpSelectedWindow.ResumeLayout(false);
@@ -5067,6 +5068,7 @@ namespace ZScreenGUI
             this.tcAdvanced.ResumeLayout(false);
             this.tpAdvancedSettings.ResumeLayout(false);
             this.tpAdvancedWorkflow.ResumeLayout(false);
+            this.tpAdvancedCore.ResumeLayout(false);
             this.tpAdvancedDebug.ResumeLayout(false);
             this.tpAdvancedStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
@@ -5077,10 +5079,9 @@ namespace ZScreenGUI
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
             this.gbImageBamApiKeys.PerformLayout();
-            this.tpOptionsClipboard.ResumeLayout(false);
+            this.tpCaptureClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
-            this.tpAdvancedCore.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -5139,7 +5140,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblHotkeyStatus;
         internal System.Windows.Forms.DataGridView dgvHotkeys;
         internal System.Windows.Forms.TabPage tpMainInput;
-        internal System.Windows.Forms.TabControl tcScreenshots;
+        internal System.Windows.Forms.TabControl tcCapture;
         internal System.Windows.Forms.TabPage tpCropShot;
         internal System.Windows.Forms.GroupBox gbCropRegionSettings;
         internal System.Windows.Forms.NumericUpDown nudCropHueRange;
@@ -5424,7 +5425,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.NumericUpDown nudHistoryMaxItems;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
-        private System.Windows.Forms.TabPage tpOptionsClipboard;
+        private System.Windows.Forms.TabPage tpCaptureClipboard;
         private System.Windows.Forms.Label lblFileSystemNote;
         private System.Windows.Forms.GroupBox btnOptionsBalloonTip;
         private System.Windows.Forms.CheckBox chkShortenURL;
