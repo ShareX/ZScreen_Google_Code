@@ -1458,7 +1458,7 @@ namespace ZScreenGUI
                 Engine.SetRootFolder(dirNew);
                 txtRootFolder.Text = Engine.AppConf.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
-                UpdateGuiControlsPaths();
+                ZScreen_ConfigGUI_Options_Paths();
                 Engine.conf = XMLSettings.Read();
                 ZScreen_ConfigGUI();
             }
@@ -1990,7 +1990,7 @@ namespace ZScreenGUI
                 Engine.conf.UseCustomImagesDir = true;
                 Engine.conf.CustomImagesDir = dirNew;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
-                UpdateGuiControlsPaths();
+                ZScreen_ConfigGUI_Options_Paths();
             }
         }
 
@@ -2286,7 +2286,7 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                UpdateGuiControlsPaths();
+                ZScreen_ConfigGUI_Options_Paths();
 
                 if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
                 {

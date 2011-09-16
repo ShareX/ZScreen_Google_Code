@@ -256,7 +256,7 @@ namespace ZScreenLib
                             }
                         }
 
-                        Engine.zClipboardText = clipboardText.ToString();
+                        Engine.zPreviousClipboardText = clipboardText.ToString();
                     }
                 }
             }

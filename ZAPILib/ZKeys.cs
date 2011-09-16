@@ -48,6 +48,8 @@ namespace UploadersAPILib
         // File Uploaders
         public const string DropboxConsumerKey = "0te7j9ype9lrdfn";
         public const string DropboxConsumerSecret = "r5d3aptd9a0cwp9";
+        public const string MinusConsumerKey = "b57b69843f7a302a276dde89890fc6";
+        public const string MinusConsumerSecret = "3fb097f08314d713959b1f41d543b0";
         public const string SendSpaceKey = "LV6OS1R0Q3";
         public const string DropIOKey = "6c65e2d2bfd858f7d0aa6509784f876483582eea";
 
@@ -86,6 +88,8 @@ namespace UploadersAPILib
                 PhotobucketConsumerSecret = PhotobucketConsumerSecret,
                 DropboxConsumerKey = DropboxConsumerKey,
                 DropboxConsumerSecret = DropboxConsumerSecret,
+                MinusConsumerKey = MinusConsumerKey,
+                MinusConsumerSecret = MinusConsumerSecret,
                 SendSpaceKey = SendSpaceKey,
                 PastebinKey = PastebinKey,
                 TwitterConsumerKey = TwitterConsumerKey,
