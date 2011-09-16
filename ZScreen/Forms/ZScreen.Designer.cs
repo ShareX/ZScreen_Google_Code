@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -373,11 +373,12 @@ namespace ZScreenGUI
             this.cbHistorySave = new System.Windows.Forms.CheckBox();
             this.nudHistoryMaxItems = new System.Windows.Forms.NumericUpDown();
             this.tpBackupRestore = new System.Windows.Forms.TabPage();
+            this.gbBackupRestoreOutputs = new System.Windows.Forms.GroupBox();
             this.btnOutputsConfigExport = new System.Windows.Forms.Button();
+            this.btnOutputsConfigImport = new System.Windows.Forms.Button();
             this.gbBackupRestoreFTP = new System.Windows.Forms.GroupBox();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFTPExport = new System.Windows.Forms.Button();
-            this.btnOutputsConfigImport = new System.Windows.Forms.Button();
             this.gbSettingsExportImport = new System.Windows.Forms.GroupBox();
             this.btnSettingsDefault = new System.Windows.Forms.Button();
             this.btnSettingsExport = new System.Windows.Forms.Button();
@@ -421,7 +422,6 @@ namespace ZScreenGUI
             this.btnUploadTextClipboard = new System.Windows.Forms.Button();
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.gbBackupRestoreOutputs = new System.Windows.Forms.GroupBox();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -517,6 +517,7 @@ namespace ZScreenGUI
             this.tpHistoryOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).BeginInit();
             this.tpBackupRestore.SuspendLayout();
+            this.gbBackupRestoreOutputs.SuspendLayout();
             this.gbBackupRestoreFTP.SuspendLayout();
             this.gbSettingsExportImport.SuspendLayout();
             this.tpAdvanced.SuspendLayout();
@@ -532,7 +533,6 @@ namespace ZScreenGUI
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
-            this.gbBackupRestoreOutputs.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -1285,7 +1285,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -4432,6 +4432,17 @@ namespace ZScreenGUI
             this.tpBackupRestore.Text = "Backup & Restore";
             this.tpBackupRestore.UseVisualStyleBackColor = true;
             // 
+            // gbBackupRestoreOutputs
+            // 
+            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigExport);
+            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigImport);
+            this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(168, 16);
+            this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
+            this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 136);
+            this.gbBackupRestoreOutputs.TabIndex = 41;
+            this.gbBackupRestoreOutputs.TabStop = false;
+            this.gbBackupRestoreOutputs.Text = "Outputs";
+            // 
             // btnOutputsConfigExport
             // 
             this.btnOutputsConfigExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -4444,13 +4455,25 @@ namespace ZScreenGUI
             this.btnOutputsConfigExport.UseVisualStyleBackColor = true;
             this.btnOutputsConfigExport.Click += new System.EventHandler(this.btnOutputsConfigExport_Click);
             // 
+            // btnOutputsConfigImport
+            // 
+            this.btnOutputsConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnOutputsConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOutputsConfigImport.Location = new System.Drawing.Point(16, 24);
+            this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
+            this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
+            this.btnOutputsConfigImport.TabIndex = 2;
+            this.btnOutputsConfigImport.Text = "Import Outputs Configuration...";
+            this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
+            this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
+            // 
             // gbBackupRestoreFTP
             // 
             this.gbBackupRestoreFTP.Controls.Add(this.btnFTPImport);
             this.gbBackupRestoreFTP.Controls.Add(this.btnFTPExport);
             this.gbBackupRestoreFTP.Location = new System.Drawing.Point(392, 16);
             this.gbBackupRestoreFTP.Name = "gbBackupRestoreFTP";
-            this.gbBackupRestoreFTP.Size = new System.Drawing.Size(152, 136);
+            this.gbBackupRestoreFTP.Size = new System.Drawing.Size(144, 136);
             this.gbBackupRestoreFTP.TabIndex = 40;
             this.gbBackupRestoreFTP.TabStop = false;
             this.gbBackupRestoreFTP.Text = "FTP";
@@ -4479,18 +4502,6 @@ namespace ZScreenGUI
             this.btnFTPExport.Text = "Export FTP Accounts...";
             this.btnFTPExport.UseVisualStyleBackColor = true;
             // 
-            // btnOutputsConfigImport
-            // 
-            this.btnOutputsConfigImport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOutputsConfigImport.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOutputsConfigImport.Location = new System.Drawing.Point(16, 24);
-            this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
-            this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
-            this.btnOutputsConfigImport.TabIndex = 2;
-            this.btnOutputsConfigImport.Text = "Import Outputs Configuration...";
-            this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
-            this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
-            // 
             // gbSettingsExportImport
             // 
             this.gbSettingsExportImport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -4499,9 +4510,9 @@ namespace ZScreenGUI
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsDefault);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsExport);
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
-            this.gbSettingsExportImport.Location = new System.Drawing.Point(8, 16);
+            this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
             this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(152, 136);
+            this.gbSettingsExportImport.Size = new System.Drawing.Size(136, 136);
             this.gbSettingsExportImport.TabIndex = 6;
             this.gbSettingsExportImport.TabStop = false;
             this.gbSettingsExportImport.Text = "Application Settings";
@@ -4950,17 +4961,6 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
-            // gbBackupRestoreOutputs
-            // 
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigExport);
-            this.gbBackupRestoreOutputs.Controls.Add(this.btnOutputsConfigImport);
-            this.gbBackupRestoreOutputs.Location = new System.Drawing.Point(176, 16);
-            this.gbBackupRestoreOutputs.Name = "gbBackupRestoreOutputs";
-            this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 136);
-            this.gbBackupRestoreOutputs.TabIndex = 41;
-            this.gbBackupRestoreOutputs.TabStop = false;
-            this.gbBackupRestoreOutputs.Text = "Outputs";
-            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -5112,6 +5112,7 @@ namespace ZScreenGUI
             this.tpHistoryOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItems)).EndInit();
             this.tpBackupRestore.ResumeLayout(false);
+            this.gbBackupRestoreOutputs.ResumeLayout(false);
             this.gbBackupRestoreFTP.ResumeLayout(false);
             this.gbBackupRestoreFTP.PerformLayout();
             this.gbSettingsExportImport.ResumeLayout(false);
@@ -5130,7 +5131,6 @@ namespace ZScreenGUI
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
             this.gbImageBamApiKeys.PerformLayout();
-            this.gbBackupRestoreOutputs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

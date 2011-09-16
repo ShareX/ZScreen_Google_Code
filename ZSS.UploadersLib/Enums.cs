@@ -199,8 +199,8 @@ namespace UploadersLib
         Google,
         [Description("bit.ly")]
         BITLY,
-        //[Description("Threely - www.3.ly")]
-        //THREELY,
+        [Description("deb.li")]
+        Debli,
         [Description("j.mp")]
         Jmp,
         [Description("is.gd")]

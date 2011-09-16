@@ -1182,6 +1182,10 @@ namespace ZScreenLib
                 {
                     us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
+                else if (MyLinkUploaders.Contains(UrlShortenerType.Debli))
+                {
+                    us = new DebliURLShortener();
+                }
                 else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
                 {
                     us = new GoogleURLShortener(Engine.MyWorkflow.OutputsConfig.GoogleURLShortenerAccountType, ZKeys.GoogleURLShortenerKey,
