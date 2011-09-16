@@ -43,6 +43,7 @@ using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
+using UploadersLib.ImageUploaders;
 
 namespace ZScreenLib
 {
@@ -595,6 +596,33 @@ namespace ZScreenLib
             get
             {
                 return Engine.conf.MonitorImages || Engine.conf.MonitorText || Engine.conf.MonitorFiles || Engine.conf.MonitorUrls;
+            }
+        }
+
+        public static void UpdateTinyPicRegCode()
+        {
+            if (Uploader.ProxySettings != null && Engine.MyWorkflow != null)
+            {
+                try
+                {
+                    if (Engine.MyWorkflow.OutputsConfig.TinyPicRememberUserPass &&
+                        !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.TinyPicUsername) &&
+                        !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.TinyPicPassword))
+                    {
+                        TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
+                        string regCode = tpu.UserAuth(Engine.MyWorkflow.OutputsConfig.TinyPicUsername,
+                            Engine.MyWorkflow.OutputsConfig.TinyPicPassword);
+                        if (Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode != regCode)
+                        {
+                            Engine.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode, regCode));
+                            Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode = regCode;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Engine.MyLogger.WriteException(ex, "error while trying to update TinyPic registration code.");
+                }
             }
         }
     }

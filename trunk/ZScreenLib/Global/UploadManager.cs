@@ -240,22 +240,23 @@ namespace ZScreenLib
                         {
                             tempText += " " + task.FileSize;
                         }
-
-                        Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + tempText);
-                        Clipboard.SetText(tempText); // auto
-                        // optional deletion link
-                        if (task.UploadResults != null)
+                        if (!string.IsNullOrEmpty(tempText))
                         {
-                            foreach (UploadResult ur in task.UploadResults)
+                            Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + tempText);
+                            Clipboard.SetText(tempText); // auto
+                            // optional deletion link
+                            if (task.UploadResults != null)
                             {
-                                string linkdel = ur.DeletionURL;
-                                if (!string.IsNullOrEmpty(linkdel))
+                                foreach (UploadResult ur in task.UploadResults)
                                 {
-                                    Engine.MyLogger.WriteLine("Deletion Link: " + linkdel);
+                                    string linkdel = ur.DeletionURL;
+                                    if (!string.IsNullOrEmpty(linkdel))
+                                    {
+                                        Engine.MyLogger.WriteLine("Deletion Link: " + linkdel);
+                                    }
                                 }
                             }
                         }
-
                         Engine.zPreviousClipboardText = clipboardText.ToString();
                     }
                 }

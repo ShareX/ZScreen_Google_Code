@@ -32,6 +32,7 @@ using UploadersLib;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
+using UploadersLib.ImageUploaders;
 
 namespace ZScreenGUI
 {
@@ -40,6 +41,7 @@ namespace ZScreenGUI
     /// </summary>
     public partial class ZScreen : HotkeyForm
     {
+        private Timer tmrTinyPicRegCodeUpdater = new Timer() { Interval = 3 * 3600 * 1000, Enabled = true };
         #region Check Updates
 
         public void CheckUpdates()
@@ -105,16 +107,20 @@ namespace ZScreenGUI
             BackgroundWorker bwOnlineWorker = new BackgroundWorker();
             bwOnlineWorker.DoWork += new DoWorkEventHandler(bwOnlineTasks_DoWork);
             bwOnlineWorker.RunWorkerAsync();
+
+            tmrTinyPicRegCodeUpdater.Tick += new EventHandler(tmrTinyPicRegCodeUpdater_Tick);
+        }
+
+        void tmrTinyPicRegCodeUpdater_Tick(object sender, EventArgs e)
+        {
+            Adapter.UpdateTinyPicRegCode();
         }
 
         private void bwOnlineTasks_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
-                if (Uploader.ProxySettings != null)
-                {
-                    // TODO: Method to update TinyPic RegCode automatically - implement BackgroundTasks in UploaderConfig
-                }
+                Adapter.UpdateTinyPicRegCode();
 
                 if (Adapter.CheckFTPAccounts())
                 {
