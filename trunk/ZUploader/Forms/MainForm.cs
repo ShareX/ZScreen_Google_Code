@@ -28,6 +28,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
+using HelpersLib.CLI;
 using HistoryLib;
 using UploadersAPILib;
 using UploadersLib;

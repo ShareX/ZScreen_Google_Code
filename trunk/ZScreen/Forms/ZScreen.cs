@@ -39,6 +39,7 @@ using System.Windows.Forms;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.CLI;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -323,17 +324,17 @@ namespace ZScreenGUI
             if (!string.IsNullOrEmpty(arg))
             {
                 Engine.MyLogger.WriteLine("CommandLine: " + arg);
-                CLIManager cli = new CLIManager();
+                CLIManagerRegex cli = new CLIManagerRegex();
 
-                cli.Commands = new List<Command>()
+                cli.Commands = new List<CLICommandRegex>()
                 {
-                    new Command("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
-                    new Command("cu|clipboardupload", () => UploadUsingClipboard()),
-                    new Command("fs|fullscreen", () => CaptureEntireScreen()),
-                    new Command("cc|crop", () => CaptureRectRegion()),
-                    new Command("sw|selectedwindow", () => CaptureSelectedWindow()),
-                    new Command("hi|history", () => OpenHistory()),
-                    new Command("ac|autocapture", () => ShowAutoCapture())
+                    new CLICommandRegex("fu|fileupload", filePath => UploadUsingFileSystem(filePath)),
+                    new CLICommandRegex("cu|clipboardupload", () => UploadUsingClipboard()),
+                    new CLICommandRegex("fs|fullscreen", () => CaptureEntireScreen()),
+                    new CLICommandRegex("cc|crop", () => CaptureRectRegion()),
+                    new CLICommandRegex("sw|selectedwindow", () => CaptureSelectedWindow()),
+                    new CLICommandRegex("hi|history", () => OpenHistory()),
+                    new CLICommandRegex("ac|autocapture", () => ShowAutoCapture())
                 };
 
                 cli.FilePathAction = filePath => UploadUsingFileSystem(filePath);
