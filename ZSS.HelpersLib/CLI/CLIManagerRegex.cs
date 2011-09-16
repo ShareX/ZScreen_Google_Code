@@ -1,15 +1,40 @@
-﻿using System;
+﻿#region License Information (GPL v2)
+
+/*
+    ZUploader - A program that allows you to upload images, texts or files
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace HelpersLib
+namespace HelpersLib.CLI
 {
     public enum ActionInput { None, Text, Number }
 
-    public class CLIManager
+    public class CLIManagerRegex
     {
-        public List<Command> Commands { get; set; }
+        public List<CLICommandRegex> Commands { get; set; }
         public Action<string> FilePathAction { get; set; }
 
         public bool Parse(string text)
@@ -18,7 +43,7 @@ namespace HelpersLib
             {
                 text = text.Trim();
 
-                foreach (Command command in Commands)
+                foreach (CLICommandRegex command in Commands)
                 {
                     if (command.Parse(text)) return true;
                 }
@@ -33,7 +58,7 @@ namespace HelpersLib
         }
     }
 
-    public class Command
+    public class CLICommandRegex
     {
         public string Commands;
         public ActionInput InputType;
@@ -41,26 +66,26 @@ namespace HelpersLib
         public Action<string> TextAction;
         public Action<int> NumberAction;
 
-        private Command(string commands)
+        private CLICommandRegex(string commands)
         {
             Commands = commands;
         }
 
-        public Command(string commands, Action action)
+        public CLICommandRegex(string commands, Action action)
             : this(commands)
         {
             InputType = ActionInput.None;
             DefaultAction = action;
         }
 
-        public Command(string commands, Action<int> action)
+        public CLICommandRegex(string commands, Action<int> action)
             : this(commands)
         {
             InputType = ActionInput.Number;
             NumberAction = action;
         }
 
-        public Command(string commands, Action<string> action)
+        public CLICommandRegex(string commands, Action<string> action)
             : this(commands)
         {
             InputType = ActionInput.Text;

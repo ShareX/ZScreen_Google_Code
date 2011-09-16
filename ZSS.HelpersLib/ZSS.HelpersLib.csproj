@@ -56,8 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="CLIManager.cs" />
-    <Compile Include="CLIParser.cs" />
+    <Compile Include="CLI\CLICommand.cs" />
+    <Compile Include="CLI\CLICommandAction.cs" />
+    <Compile Include="CLI\CLIManager.cs" />
+    <Compile Include="CLI\CLIManagerRegex.cs" />
+    <Compile Include="CLI\CLIParser.cs" />
     <Compile Include="ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
