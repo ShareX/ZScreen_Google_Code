@@ -42,12 +42,12 @@ namespace HelpersLib
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string WorkflowConfigCustomPath { get; set; }
 
-        public List<int> Outputs = new List<int>();
+        public List<int> AppOutputs = new List<int>();
         public List<int> ClipboardContent = new List<int>();
         public List<int> ImageUploaders = new List<int>(); // default value is from ConfigWizard
         public List<int> FileUploaders = new List<int>();  // default value is from ConfigWizard
         public List<int> TextUploaders = new List<int>();  // default value is from ConfigWizard
-        public List<int> LinkUploaders = new List<int>();   // default value is from ConfigWizard
+        public List<int> LinkUploaders = new List<int>();  // default value is from ConfigWizard
 
         #region Program Window
 

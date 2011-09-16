@@ -7,6 +7,7 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
 using ZScreenLib;
+using System.IO;
 
 namespace ZScreenGUI
 {
@@ -152,5 +153,53 @@ namespace ZScreenGUI
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
+
+        #region Backup & Restore
+
+        private void AppSettingsImport()
+        {
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                XMLSettings temp = XMLSettings.Read(dlg.FileName);
+                temp.FirstRun = false;
+                Engine.conf = temp;
+                ZScreen_ConfigGUI();
+            }
+        }
+
+        private void AppSettingsExport()
+        {
+            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dlg.FileName = Engine.SettingsFileName;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Engine.conf.Write(dlg.FileName);
+            }
+        }
+
+        private void OutputsConfigImport()
+        {
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Workflow temp = Workflow.Read(dlg.FileName);
+                Engine.MyWorkflow = temp;
+            }
+        }
+
+        private void OutputsConfigExport()
+        {
+            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dlg.FileName = Engine.WorkflowConfigFileName;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Engine.MyWorkflow.Write(dlg.FileName);
+            }
+        }
+
+        #endregion
     }
 }

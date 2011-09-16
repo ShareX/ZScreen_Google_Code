@@ -636,23 +636,12 @@ namespace ZScreenGUI
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_SETTINGS };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Engine.conf.Write(dlg.FileName);
-            }
+            AppSettingsExport();
         }
 
         private void btnSettingsImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_SETTINGS };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                XMLSettings temp = XMLSettings.Read(dlg.FileName);
-                temp.FirstRun = false;
-                Engine.conf = temp;
-                ZScreen_ConfigGUI();
-            }
+            AppSettingsImport();
         }
 
         private void AddImageSoftwareToList(Software temp)
@@ -2325,6 +2314,16 @@ namespace ZScreenGUI
         private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
         {
             Engine.CoreConf.OverwriteFiles = chkOverwriteFiles.Checked;
+        }
+
+        private void btnOutputsConfigImport_Click(object sender, EventArgs e)
+        {
+            OutputsConfigImport();
+        }
+
+        private void btnOutputsConfigExport_Click(object sender, EventArgs e)
+        {
+            OutputsConfigExport();
         }
     }
 }
