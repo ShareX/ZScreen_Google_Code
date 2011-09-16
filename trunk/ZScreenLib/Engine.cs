@@ -61,12 +61,12 @@ namespace ZScreenLib
         private static readonly string PortableRootFolder = ApplicationName; // using relative paths
         public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
-        internal static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
-        private static readonly string HistoryFileName = "UploadersHistory.xml";
-        private static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
-        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
-        private static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
-        private static readonly string WorkflowConfigFileName = "WorkflowConfig.xml";
+        public static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
+        public static readonly string HistoryFileName = "UploadersHistory.xml";
+        public static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
+        public static readonly string PluginsFolderName = ApplicationName + "Plugins";
+        public static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
+        public static readonly string WorkflowConfigFileName = "WorkflowConfig.xml";
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
@@ -198,7 +198,7 @@ namespace ZScreenLib
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
-        public const string FILTER_SETTINGS = "ZScreen XML Settings(*.xml)|*.xml";
+        public const string FILTER_XML_FILES = "XML Files(*.xml)|*.xml";
 
         #region Windows 7 Taskbar
 
@@ -268,7 +268,7 @@ namespace ZScreenLib
                             Engine.AppConf.RootDir = cw.RootFolder;
                         }
                         Engine.AppConf.PreferSystemFolders = cw.PreferSystemFolders;
-                        Engine.AppConf.Outputs = cw.cwOutputs.Cast<int>().ToList();
+                        Engine.AppConf.AppOutputs = cw.cwOutputs.Cast<int>().ToList();
                         Engine.AppConf.ClipboardContent = cw.cwClipboardContent.Cast<int>().ToList();
                         Engine.AppConf.ImageUploaders = cw.cwImageUploaders;
                         Engine.AppConf.FileUploaders = cw.cwFileUploaders;
@@ -502,7 +502,7 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.ConfOutputs = Engine.AppConf.Outputs;
+                Engine.conf.ConfOutputs = Engine.AppConf.AppOutputs;
                 Engine.conf.ConfClipboardContent = Engine.AppConf.ClipboardContent;
                 Engine.conf.MyImageUploaders = Engine.AppConf.ImageUploaders;
                 Engine.conf.MyTextUploaders = Engine.AppConf.TextUploaders;
