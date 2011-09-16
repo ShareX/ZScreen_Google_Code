@@ -32,7 +32,7 @@ namespace ZScreenGUI
                             bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
                             if (uploadImage || uploadText || uploadFile || shortenUrl)
                             {
-                                if (cbText != Engine.zClipboardText || string.IsNullOrEmpty(cbText))
+                                if (cbText != Engine.zPreviousClipboardText || string.IsNullOrEmpty(cbText))
                                 {
                                     UploadUsingClipboard();
                                 }
@@ -49,16 +49,14 @@ namespace ZScreenGUI
                             Engine.MyLogger.WriteException(ex, "Error monitoring clipboard");
                             return;
                         }
-                        SendMessage(nextClipboardViewer, m.Msg, m.WParam,
-                                    m.LParam);
+                        SendMessage(nextClipboardViewer, m.Msg, m.WParam, m.LParam);
                         break;
 
                     case WM_CHANGECBCHAIN:
                         if (m.WParam == nextClipboardViewer)
                             nextClipboardViewer = m.LParam;
                         else
-                            SendMessage(nextClipboardViewer, m.Msg, m.WParam,
-                                        m.LParam);
+                            SendMessage(nextClipboardViewer, m.Msg, m.WParam, m.LParam);
                         break;
 
                     case NativeMethods.WM_SYSCOMMAND:
@@ -86,6 +84,11 @@ namespace ZScreenGUI
             }
 
             base.WndProc(ref m);
+        }
+
+        public void DisableFeatures()
+        {
+            tcCapture.TabPages.Remove(tpFreehandCropShot);
         }
 
         public GoogleTranslateGUI GetGTGUI()

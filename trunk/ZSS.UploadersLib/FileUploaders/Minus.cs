@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
@@ -6,10 +7,17 @@ using UploadersLib.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
-    public class Minus : FileUploader
+    public class Minus : FileUploader, IOAuth
     {
         public CookieCollection Cookies { get; set; }
         public string GalleryID { get; set; }
+
+        public OAuthInfo AuthInfo { get; set; }
+
+        public Minus(OAuthInfo oauth)
+        {
+            this.AuthInfo = oauth;
+        }
 
         public MinusSignInResponse SignIn(string username, string password)
         {
@@ -67,6 +75,16 @@ namespace UploadersLib.FileUploaders
 
             return result;
         }
+
+        public string GetAuthorizationURL()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool GetAccessToken(string verificationCode)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class MinusSignInResponse
@@ -83,8 +101,17 @@ namespace UploadersLib.FileUploaders
     public class MinusUploadItemResponse
     {
         public string ID { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Caption { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string FileSize { get; set; }
+        public string MimeType { get; set; }
+        public string Folder { get; set; }
+        public string URL { get; set; }
+        public DateTime Uploaded { get; set; }
+        public string URLRawFile { get; set; }
+        public string URLThumbnail { get; set; }
     }
 }
