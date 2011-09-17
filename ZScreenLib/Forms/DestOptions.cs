@@ -27,6 +27,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using UploadersLib;
+using System.IO;
 
 namespace ZScreenLib
 {
@@ -208,8 +209,8 @@ namespace ZScreenLib
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = FilePath;
-            dlg.Filter = "Png files (*.png)|*.png";
+            dlg.FileName = Path.GetFileNameWithoutExtension(FilePath);
+            dlg.Filter = string.Format("{0} files (*{0})|*{0}", Path.GetExtension(FilePath));
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 txtFilePath.Text = dlg.FileName;
