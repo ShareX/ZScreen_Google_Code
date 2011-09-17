@@ -432,9 +432,8 @@ namespace ZScreenLib
                 dlgResult = dialog.ShowDialog();
                 if (dlgResult == DialogResult.OK)
                 {
-                    if (!string.IsNullOrEmpty(FileName))
+                    if (!string.IsNullOrEmpty(dialog.FilePath))
                     {
-                        filePath = dialog.FilePath;
                         UpdateLocalFilePath(dialog.FilePath);
                     }
                 }

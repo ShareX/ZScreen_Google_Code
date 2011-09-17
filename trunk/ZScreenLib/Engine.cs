@@ -188,7 +188,7 @@ namespace ZScreenLib
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
         public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
 
-        public static string zPreviousClipboardText = string.Empty;
+        public static string zPreviousClipboardText = Clipboard.GetText();
 
         private static bool RunConfig = false;
 
