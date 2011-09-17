@@ -61,7 +61,7 @@ namespace ZScreenLib
                     break;
             }
             string fn = parser.Convert(pattern);
-            profile.AutoIncrement = parser.AutoIncrementNumber;
+            Engine.CoreConf.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.CoreConf.AutoIncrement has to be updated
             return string.Format("{0}.{1}", fn, ext);
         }
     }
