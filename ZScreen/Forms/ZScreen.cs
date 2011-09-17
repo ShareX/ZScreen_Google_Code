@@ -196,7 +196,6 @@ namespace ZScreenGUI
             CleanCache();
 
             ClipboardHook();
-            nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
@@ -1905,10 +1904,6 @@ namespace ZScreenGUI
         private void chkMonUrls_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.MonitorUrls = chkMonUrls.Checked;
-            if (chkMonUrls.Checked)
-            {
-                ClipboardHook();
-            }
         }
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)

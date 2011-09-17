@@ -8,6 +8,7 @@ using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
 using ZScreenLib;
 using System.IO;
+using System.Threading;
 
 namespace ZScreenGUI
 {
@@ -17,49 +18,8 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                // defined in winuser.h
-                const int WM_DRAWCLIPBOARD = 0x308;
-                const int WM_CHANGECBCHAIN = 0x030D;
-
                 switch (m.Msg)
                 {
-                    case WM_DRAWCLIPBOARD:
-                        try
-                        {
-                            string cbText = Clipboard.GetText();
-                            bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
-                            bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
-                            bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
-                            bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
-                            if (uploadImage || uploadText || uploadFile || shortenUrl)
-                            {
-                                if (cbText != Engine.zPreviousClipboardText || string.IsNullOrEmpty(cbText))
-                                {
-                                    UploadUsingClipboard();
-                                }
-                            }
-                        }
-                        catch (ExternalException ex)
-                        {
-                            // Copying a field definition in Access 2002 causes this sometimes?
-                            Engine.MyLogger.WriteException(ex, "InteropServices.ExternalException in ZScreen.WndProc");
-                            return;
-                        }
-                        catch (Exception ex)
-                        {
-                            Engine.MyLogger.WriteException(ex, "Error monitoring clipboard");
-                            return;
-                        }
-                        SendMessage(nextClipboardViewer, m.Msg, m.WParam, m.LParam);
-                        break;
-
-                    case WM_CHANGECBCHAIN:
-                        if (m.WParam == nextClipboardViewer)
-                            nextClipboardViewer = m.LParam;
-                        else
-                            SendMessage(nextClipboardViewer, m.Msg, m.WParam, m.LParam);
-                        break;
-
                     case NativeMethods.WM_SYSCOMMAND:
                         if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {

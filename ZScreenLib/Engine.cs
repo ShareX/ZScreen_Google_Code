@@ -294,7 +294,7 @@ namespace ZScreenLib
 
             if (startEngine == DialogResult.OK)
             {
-                Engine.MyLogger.WriteLine("Config file: " + AppSettings.AppSettingsFile);
+                Engine.MyLogger.WriteLine("Core file: " + AppSettings.AppSettingsFile);
                 if (!AppConf.PreferSystemFolders)
                 {
                     Engine.MyLogger.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
