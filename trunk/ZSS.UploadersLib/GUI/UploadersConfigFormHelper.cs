@@ -433,15 +433,15 @@ namespace UploadersLib
             try
             {
                 OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
-                MinusOptions mai = new MinusOptions() { AuthInfo = oauth };
-                Minus minus = new Minus(mai, txtMinusUsername.Text, txtMinusPassword.Text);
+                MinusOptions mai = new MinusOptions();
+                Minus minus = new Minus(mai, oauth, txtMinusUsername.Text, txtMinusPassword.Text);
                 string url = minus.GetAuthorizationURL();
 
                 if (!string.IsNullOrEmpty(url))
                 {
                     if (minus.GetAccessToken())
                     {
-                        minus.ReadFolderList();
+                        minus.ReadFolderList(MinusScope.upload_new);
                         Config.MinusConfig = minus.Config;
                         UpdateMinusControls();
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -466,7 +466,7 @@ namespace UploadersLib
         {
             if (Config.MinusConfig != null)
             {
-                lblMinusAuthStatus.Text = "Logged in: " + Config.MinusConfig.AuthInfo.UserToken;
+                lblMinusAuthStatus.Text = "Logged in: " + Config.MinusConfig.MinusUser.username;
                 cboMinusFolders.Items.Clear();
                 if (Config.MinusConfig.FolderList.Count > 0)
                 {

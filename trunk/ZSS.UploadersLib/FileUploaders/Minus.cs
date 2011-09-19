@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
+using System.ComponentModel;
 
 namespace UploadersLib.FileUploaders
 {
@@ -12,23 +13,20 @@ namespace UploadersLib.FileUploaders
         private const string APIVersion = "2";
         private const string URLAPI = "https://minus.com/api/v" + APIVersion;
 
-        private string URLAuth = string.Empty;
-        private const string URLAccessToken = URLAPI + "/oauth/token";
-
         public OAuthInfo AuthInfo { get; set; }
         public MinusOptions Config { get; private set; }
 
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public Minus(MinusOptions config)
+        public Minus(MinusOptions config, OAuthInfo auth)
         {
             this.Config = config;
-            this.AuthInfo = config.AuthInfo;
+            this.AuthInfo = auth;
         }
 
-        public Minus(MinusOptions config, string username, string password)
-            : this(config)
+        public Minus(MinusOptions config, OAuthInfo auth, string username, string password)
+            : this(config, auth)
         {
             this.UserName = username;
             this.Password = password;
@@ -36,33 +34,45 @@ namespace UploadersLib.FileUploaders
 
         public string GetAuthorizationURL()
         {
-            URLAuth = string.Format("{0}/oauth/token?grant_type=password&client_id={1}&client_secret={2}&scope=upload_new&username={3}&password={4}",
+            string url = string.Format("{0}/oauth/token?grant_type=password&client_id={1}&client_secret={2}&scope=upload_new&username={3}&password={4}",
                 URLAPI,
-               Config.AuthInfo.ConsumerKey,
-                Config.AuthInfo.ConsumerSecret,
+                AuthInfo.ConsumerKey,
+                AuthInfo.ConsumerSecret,
                 this.UserName,
                 this.Password);
 
-            return URLAuth;
+            return url;
         }
 
         public bool GetAccessToken(string verificationCode = null)
         {
-            string response = SendGetRequest(URLAuth);
-            MinusAuthToken mat = JsonConvert.DeserializeObject<MinusAuthToken>(response);
+            Config.Tokens.Clear();
 
-            if (mat != null)
+            foreach (MinusScope scope in Enum.GetValues(typeof(MinusScope)))
             {
-                Config.AuthInfo.UserToken = mat.access_token;
-                Config.AuthInfo.UserSecret = mat.refresh_token;
+                string url = string.Format("{0}/oauth/token?grant_type=password&client_id={1}&client_secret={2}&scope={3}&username={4}&password={5}",
+                URLAPI,
+                AuthInfo.ConsumerKey,
+                AuthInfo.ConsumerSecret,
+                scope.ToString(),
+                this.UserName,
+                this.Password);
+
+                string response = SendGetRequest(url);
+                MinusAuthToken mat = JsonConvert.DeserializeObject<MinusAuthToken>(response);
+
+                if (mat != null)
+                {
+                    Config.Tokens.Add(mat);
+                }
             }
 
-            return mat != null;
+            return true;
         }
 
-        public List<MinusFolder> ReadFolderList()
+        public List<MinusFolder> ReadFolderList(MinusScope scope)
         {
-            MinusFolderListResponse mflr = GetUserFolderList();
+            MinusFolderListResponse mflr = GetUserFolderList(scope);
 
             if (mflr.results.Length > 0)
             {
@@ -77,24 +87,34 @@ namespace UploadersLib.FileUploaders
             return Config.FolderList;
         }
 
-        public void RefreshAccessToken()
+        public void RefreshAccessTokens()
         {
-            string url = string.Format("{0}/oauth/token?grant_type=refresh_token&client_id={1}&client_secret={2}&scope=read_public&refresh_token={3}",
-                URLAPI, Config.AuthInfo.ConsumerKey, Config.AuthInfo.ConsumerSecret, Config.AuthInfo.UserToken);
+            List<MinusAuthToken> newTokens = new List<MinusAuthToken>();
 
-            string response = SendGetRequest(url);
-            MinusAuthToken mat = JsonConvert.DeserializeObject<MinusAuthToken>(response);
-
-            if (mat != null)
+            foreach (MinusScope scope in Enum.GetValues(typeof(MinusScope)))
             {
-                Config.AuthInfo.UserToken = mat.access_token;
-                Config.AuthInfo.UserSecret = mat.refresh_token;
+                string url = string.Format("{0}/oauth/token?grant_type=refresh_token&client_id={1}&client_secret={2}&scope={3}&refresh_token={4}",
+                       URLAPI,
+                       AuthInfo.ConsumerKey,
+                       AuthInfo.ConsumerSecret,
+                       scope.ToString(),
+                       Config.GetToken(scope).refresh_token);
+
+                string response = SendGetRequest(url);
+                MinusAuthToken mat = JsonConvert.DeserializeObject<MinusAuthToken>(response);
+
+                if (mat != null)
+                {
+                    newTokens.Add(mat);
+                }
             }
+
+            Config.Tokens = newTokens;
         }
 
-        public MinusUser GetActiveUser()
+        public MinusUser GetActiveUser(MinusScope scope)
         {
-            string url = URLAPI + "/activeuser?bearer_token=" + Config.AuthInfo.UserToken;
+            string url = URLAPI + "/activeuser?bearer_token=" + Config.GetToken(scope).access_token;
             string response = SendGetRequest(url);
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
@@ -106,16 +126,17 @@ namespace UploadersLib.FileUploaders
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
 
-        private string GetActiveUserFolderURL()
+        private string GetActiveUserFolderURL(MinusScope scope)
         {
-            MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser();
-            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + Config.AuthInfo.UserToken;
+            MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser(scope);
+            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
             Console.WriteLine(url);
             return url;
         }
-        public MinusFolderListResponse GetUserFolderList()
+
+        public MinusFolderListResponse GetUserFolderList(MinusScope scope)
         {
-            string response = SendGetRequest(GetActiveUserFolderURL());
+            string response = SendGetRequest(GetActiveUserFolderURL(scope));
             return JsonConvert.DeserializeObject<MinusFolderListResponse>(response);
         }
 
@@ -126,7 +147,7 @@ namespace UploadersLib.FileUploaders
             args.Add("is_public", is_public.ToString().ToLower());
 
             MinusFolder dir = null;
-            string response = SendPostRequestURLEncoded(GetActiveUserFolderURL(), args);
+            string response = SendPostRequestURLEncoded(GetActiveUserFolderURL(MinusScope.upload_new), args);
             if (!string.IsNullOrEmpty(response))
             {
                 dir = JsonConvert.DeserializeObject<MinusFolder>(response);
@@ -140,26 +161,26 @@ namespace UploadersLib.FileUploaders
 
         public bool DeleteFolder(string id)
         {
-            string url = GetFolderLinkFromID(id);
+            string url = GetFolderLinkFromID(id, MinusScope.modify_all);
             string resp = SendDeleteRequest(url);
             return !string.IsNullOrEmpty(resp);
         }
 
-        public MinusFileListResponse GetFiles(string folderId)
+        public MinusFileListResponse GetFiles(string folderId, MinusScope scope)
         {
-            string url = URLAPI + "/folders/" + folderId + "/files?bearer_token=" + Config.AuthInfo.UserToken;
+            string url = URLAPI + "/folders/" + folderId + "/files?bearer_token=" + Config.GetToken(scope).access_token;
             string response = SendGetRequest(url);
             return JsonConvert.DeserializeObject<MinusFileListResponse>(response);
         }
 
-        private string GetFolderLinkFromID(string id)
+        private string GetFolderLinkFromID(string id, MinusScope scope)
         {
-            return URLAPI + "/folders/" + id + "/files?bearer_token=" + Config.AuthInfo.UserToken;
+            return URLAPI + "/folders/" + id + "/files?bearer_token=" + Config.GetToken(scope).access_token;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            string url = GetFolderLinkFromID(Config.FolderList[Config.FolderID].id);
+            string url = GetFolderLinkFromID(Config.FolderList[Config.FolderID].id, MinusScope.upload_new);
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("caption", fileName);
@@ -182,6 +203,20 @@ namespace UploadersLib.FileUploaders
 
             return result;
         }
+    }
+
+    public enum MinusScope
+    {
+        [Description("Read public files")]
+        read_public,
+        [Description("Read all folders and files")]
+        read_all,
+        [Description("Upload new files and folders")]
+        upload_new,
+        [Description("Delete/Modify all existing files and folders")]
+        modify_all,
+        [Description("Modify user preferences")]
+        modify_user,
     }
 
     public class MinusAuthToken
@@ -215,10 +250,22 @@ namespace UploadersLib.FileUploaders
 
     public class MinusOptions
     {
-        public OAuthInfo AuthInfo { get; set; }
+        public List<MinusAuthToken> Tokens = new List<MinusAuthToken>();
         public MinusUser MinusUser { get; set; }
         public List<MinusFolder> FolderList = new List<MinusFolder>();
         public int FolderID { get; set; }
+
+        public MinusAuthToken GetToken(MinusScope scope)
+        {
+            foreach (MinusAuthToken mat in Tokens)
+            {
+                if (scope.ToString() == mat.scope)
+                {
+                    return mat;
+                }
+            }
+            return null;
+        }
     }
 
     public class MinusUser
