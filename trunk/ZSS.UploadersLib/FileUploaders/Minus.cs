@@ -15,6 +15,7 @@ namespace UploadersLib.FileUploaders
         private const string URLAuthorize = URLAPI + "/oauth/token";
         private const string URLAccessToken = URLAPI + "/oauth/token";
 
+        public MinusAccountInfo AccountInfo { get; set; }
         public OAuthInfo AuthInfo { get; set; }
 
         public string FolderID { get; set; }
@@ -33,6 +34,12 @@ namespace UploadersLib.FileUploaders
             this.Password = password;
         }
 
+        public Minus(OAuthInfo oauth, MinusAccountInfo account)
+            : this(oauth)
+        {
+            this.AccountInfo = account;
+        }
+
         public MinusUser GetActiveUser()
         {
             string url = URLAPI + "/activeuser";
@@ -47,17 +54,42 @@ namespace UploadersLib.FileUploaders
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
 
+        public MinusFolderListResponse GetUserFolderList()
+        {
+            MinusUser user = AccountInfo != null ? AccountInfo.UserAccount : GetActiveUser();
+            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + AuthInfo.AuthToken;
+            string response = SendGetRequest(url);
+            return JsonConvert.DeserializeObject<MinusFolderListResponse>(response);
+        }
+
+        private string GetActiveUserFolderURL()
+        {
+            MinusUser user = AccountInfo != null ? AccountInfo.UserAccount : GetActiveUser();
+            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + AuthInfo.AuthToken;
+            return url;
+        }
+
+        public MinusFolder CreateFolder(string name, bool is_public)
+        {
+            Dictionary<string, string> args = new Dictionary<string, string>();
+            args.Add("name", name);
+            args.Add("is_public", is_public.ToString());
+
+            string response = SendPostRequest(GetActiveUserFolderURL(), args);
+            MinusFolder dir = JsonConvert.DeserializeObject<MinusFolder>(response);
+            return dir;
+        }
+
         public MinusFileListResponse GetFiles(string folderId)
         {
-            string url = URLAPI + "/folders/" + folderId + "/files";
+            string url = URLAPI + "/folders/" + folderId + "/files?bearer_token=" + AuthInfo.AuthToken;
             string response = SendGetRequest(url);
             return JsonConvert.DeserializeObject<MinusFileListResponse>(response);
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            // https://minus.com/api/v2/folders/0FQHJakL/files
-            string url = URLAPI + "/folders/" + this.FolderID + "/files";
+            string url = URLAPI + "/folders/" + this.FolderID + "/files?bearer_token=" + AuthInfo.AuthToken;
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("caption", fileName);
@@ -74,6 +106,7 @@ namespace UploadersLib.FileUploaders
                 if (minusFile != null && !string.IsNullOrEmpty(minusFile.id))
                 {
                     result.URL = minusFile.url_rawfile;
+                    result.ThumbnailURL = minusFile.url_thumbnail;
                 }
             }
 
@@ -122,9 +155,20 @@ namespace UploadersLib.FileUploaders
         public string previous { get; set; }
     }
 
+    public class MinusFolderListResponse : MinusListResponse
+    {
+        public MinusFolder[] results { get; set; }
+    }
+
     public class MinusFileListResponse : MinusListResponse
     {
         public MinusFile[] results { get; set; }
+    }
+
+    public class MinusAccountInfo
+    {
+        public MinusUser UserAccount { get; set; }
+        public List<string> FolderList = new List<string>();
     }
 
     public class MinusUser
