@@ -425,6 +425,54 @@ namespace UploadersLib
 
         #endregion Dropbox
 
+        #region Minus
+
+        public void MinusAuth()
+        {
+            try
+            {
+                OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
+
+                string url = new Minus(oauth).GetAuthorizationURL();
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Config.MinusOAuthInfo = oauth;
+                    StaticHelper.LoadBrowser(url);
+                    btnMinusAuthComplete.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void MinusAuthComplete()
+        {
+            if (Config.MinusOAuthInfo != null && !string.IsNullOrEmpty(Config.MinusOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Config.MinusOAuthInfo.AuthSecret))
+            {
+                Minus minus = new Minus(Config.MinusOAuthInfo);
+                bool result = minus.GetAccessToken();
+
+                if (result)
+                {
+                    lblMinusAuthStatus.Text = minus.AuthInfo.UserToken;
+                    MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion Minus
+
         #region FTP
 
         public bool CheckFTPAccounts()

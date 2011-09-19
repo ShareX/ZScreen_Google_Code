@@ -336,6 +336,20 @@ namespace UploadersLib
 
         #endregion Dropbox
 
+        #region Minus
+
+        private void btnMinusAuth_Click(object sender, EventArgs e)
+        {
+            MinusAuth();
+        }
+
+        private void btnMinusAuthComplete_Click(object sender, EventArgs e)
+        {
+            MinusAuthComplete();
+        }
+
+        #endregion Minus
+
         #region FTP
 
         private void cboFtpImages_SelectedIndexChanged(object sender, EventArgs e)
@@ -687,5 +701,6 @@ namespace UploadersLib
         }
 
         #endregion Other Services
+
     }
 }
