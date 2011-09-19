@@ -27,9 +27,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using HelpersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
-using UploadersLib.FileUploaders;
 
 namespace UploadersLib
 {
@@ -382,11 +382,14 @@ namespace UploadersLib
             if (!string.IsNullOrEmpty(cboMinusFolders.Text) && HasFolder(cboMinusFolders.Text))
             {
                 Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
-                MinusFolder dir = Config.MinusConfig.FolderList[cboMinusFolders.SelectedIndex] as MinusFolder;
-                minus.DeleteFolder(dir.id);
-                if (dir != null)
+
+                int id = cboMinusFolders.SelectedIndex;
+
+                MinusFolder dir = Config.MinusConfig.FolderList[id] as MinusFolder;
+
+                if (dir != null && minus.DeleteFolder(dir.id))
                 {
-                    cboMinusFolders.Items.Add(dir);
+                    cboMinusFolders.Items.RemoveAt(id);
                 }
             }
         }
@@ -744,6 +747,5 @@ namespace UploadersLib
         }
 
         #endregion URL Shorteners
-
     }
 }
