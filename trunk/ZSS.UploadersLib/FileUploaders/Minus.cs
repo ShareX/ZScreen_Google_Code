@@ -12,16 +12,25 @@ namespace UploadersLib.FileUploaders
         private const string APIVersion = "2";
         private const string URLAPI = "https://minus.com/api/v" + APIVersion;
 
-        private const string URLRequestToken = URLAPI + "/oauth/request_token";
-        private const string URLAuthorize = URLAPI + "/oauth/authorize";
-        private const string URLAccessToken = URLAPI + "/oauth/access_token";
+        private const string URLAuthorize = URLAPI + "/oauth/token";
+        private const string URLAccessToken = URLAPI + "/oauth/token";
 
         public OAuthInfo AuthInfo { get; set; }
+
         public string FolderID { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
 
         public Minus(OAuthInfo oauth)
         {
             this.AuthInfo = oauth;
+        }
+
+        public Minus(OAuthInfo oauth, string username, string password)
+            : this(oauth)
+        {
+            this.UserName = username;
+            this.Password = password;
         }
 
         public MinusUser GetActiveUser()
@@ -73,7 +82,18 @@ namespace UploadersLib.FileUploaders
 
         public string GetAuthorizationURL()
         {
-            return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo);
+            string url = string.Format("{0}?grant_type=password&client_id={1}&client_secret={2}&scope=modify_all&username={3}&password={4}",
+                URLAuthorize,
+                AuthInfo.ConsumerKey,
+                AuthInfo.ConsumerSecret,
+                this.UserName,
+                this.Password);
+
+            string response = SendGetRequest(url);
+            MinusAuthToken mat = JsonConvert.DeserializeObject<MinusAuthToken>(response);
+
+            AuthInfo.AuthToken = mat.access_token;
+            return url;
         }
 
         public bool GetAccessToken(string verificationCode = null)
@@ -81,6 +101,15 @@ namespace UploadersLib.FileUploaders
             AuthInfo.AuthVerifier = verificationCode;
             return GetAccessToken(URLAccessToken, AuthInfo);
         }
+    }
+
+    public class MinusAuthToken
+    {
+        public string access_token { get; set; }
+        public string token_type { get; set; }
+        public string expire_in { get; set; }
+        public string refresh_token { get; set; }
+        public string scope { get; set; }
     }
 
     public abstract class MinusListResponse
