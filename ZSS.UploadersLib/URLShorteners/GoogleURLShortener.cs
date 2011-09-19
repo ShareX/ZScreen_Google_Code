@@ -97,7 +97,7 @@ namespace UploadersLib.URLShorteners
                         query = string.Format("{0}?key={1}", APIURL, AnonymousKey);
                         break;
                     case AccountType.User:
-                        query = OAuthManager.GenerateQuery(APIURL, null, HttpMethod.POST, AuthInfo);
+                        query = OAuthManager.GenerateQuery(APIURL, null, HttpMethod.Post, AuthInfo);
                         break;
                 }
 
