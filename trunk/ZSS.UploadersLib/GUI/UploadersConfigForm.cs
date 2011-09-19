@@ -354,7 +354,7 @@ namespace UploadersLib
 
         private void btnMinusFolderAdd_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !cboMinusFolders.Items.Contains(cboMinusFolders.Text))
+            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !HasFolder(cboMinusFolders.Text))
             {
                 Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
                 MinusFolder dir = minus.CreateFolder(cboMinusFolders.Text, chkMinusPublic.Checked);
@@ -365,9 +365,21 @@ namespace UploadersLib
             }
         }
 
+        private bool HasFolder(string name)
+        {
+            foreach (MinusFolder mf in cboMinusFolders.Items)
+            {
+                if (mf.name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void btnMinusFolderRemove_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !cboMinusFolders.Items.Contains(cboMinusFolders.Text))
+            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && HasFolder(cboMinusFolders.Text))
             {
                 Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
                 MinusFolder dir = Config.MinusConfig.FolderList[cboMinusFolders.SelectedIndex] as MinusFolder;
