@@ -91,9 +91,9 @@ namespace UploadersLib
         {
             switch (httpMethod)
             {
-                case HttpMethod.GET:
+                case HttpMethod.Get:
                     return SendGetRequest(url, arguments, responseType);
-                case HttpMethod.POST:
+                case HttpMethod.Post:
                     return SendPostRequest(url, arguments, responseType);
             }
 
@@ -277,6 +277,40 @@ namespace UploadersLib
 
         #endregion Get methods
 
+        #region Delete methods
+
+        protected string SendDeleteRequest(string url, Dictionary<string, string> arguments = null, ResponseType responseType = ResponseType.Text)
+        {
+            using (HttpWebResponse response = GetResponseUsingDelete(url, arguments))
+            {
+                return ResponseToString(response, responseType);
+            }
+        }
+
+        private HttpWebResponse GetResponseUsingDelete(string url, Dictionary<string, string> arguments = null)
+        {
+            IsUploading = true;
+
+            url = CreateQuery(url, arguments);
+
+            try
+            {
+                return (HttpWebResponse)PrepareDeleteWebRequest(url).GetResponse();
+            }
+            catch (Exception e)
+            {
+                AddWebError(e);
+            }
+            finally
+            {
+                IsUploading = false;
+            }
+
+            return null;
+        }
+
+        #endregion Delete methods
+
         #region Helper methods
 
         private HttpWebRequest PreparePostWebRequest(string url, string boundary, long length, string contentType, CookieCollection cookies = null)
@@ -290,7 +324,7 @@ namespace UploadersLib
             request.CookieContainer = new CookieContainer();
             if (cookies != null) request.CookieContainer.Add(cookies);
             request.KeepAlive = false;
-            request.Method = "POST";
+            request.Method = HttpMethod.Post.GetDescription();
             request.Pipelined = false;
             request.ProtocolVersion = HttpVersion.Version11;
             request.Proxy = ProxySettings.GetWebProxy;
@@ -304,7 +338,19 @@ namespace UploadersLib
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.KeepAlive = false;
-            request.Method = "GET";
+            request.Method = HttpMethod.Get.GetDescription();
+            IWebProxy proxy = ProxySettings.GetWebProxy;
+            if (proxy != null) request.Proxy = proxy;
+            request.UserAgent = UserAgent;
+
+            return request;
+        }
+
+        private HttpWebRequest PrepareDeleteWebRequest(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.KeepAlive = false;
+            request.Method = HttpMethod.Delete.GetDescription();
             IWebProxy proxy = ProxySettings.GetWebProxy;
             if (proxy != null) request.Proxy = proxy;
             request.UserAgent = UserAgent;
@@ -477,7 +523,7 @@ namespace UploadersLib
         #region OAuth methods
 
         protected string GetAuthorizationURL(string requestTokenURL, string authorizeURL, OAuthInfo authInfo,
-            Dictionary<string, string> customParameters = null, HttpMethod httpMethod = HttpMethod.GET)
+            Dictionary<string, string> customParameters = null, HttpMethod httpMethod = HttpMethod.Get)
         {
             string url = OAuthManager.GenerateQuery(requestTokenURL, customParameters, httpMethod, authInfo);
 
@@ -491,12 +537,12 @@ namespace UploadersLib
             return null;
         }
 
-        protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.GET)
+        protected bool GetAccessToken(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.Get)
         {
             return GetAccessTokenEx(accessTokenURL, authInfo, httpMethod) != null;
         }
 
-        protected NameValueCollection GetAccessTokenEx(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.GET)
+        protected NameValueCollection GetAccessTokenEx(string accessTokenURL, OAuthInfo authInfo, HttpMethod httpMethod = HttpMethod.Get)
         {
             if (string.IsNullOrEmpty(authInfo.AuthToken) || string.IsNullOrEmpty(authInfo.AuthSecret))
             {

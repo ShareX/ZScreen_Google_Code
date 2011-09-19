@@ -82,7 +82,7 @@ namespace UploadersLib.FileUploaders
                 args.Add("email", email);
                 args.Add("password", password);
 
-                string url = OAuthManager.GenerateQuery(URLToken, args, HttpMethod.GET, AuthInfo);
+                string url = OAuthManager.GenerateQuery(URLToken, args, HttpMethod.Get, AuthInfo);
 
                 string response = SendGetRequest(url);
 
@@ -106,7 +106,7 @@ namespace UploadersLib.FileUploaders
         {
             if (OAuthInfo.CheckOAuth(AuthInfo))
             {
-                string url = OAuthManager.GenerateQuery(URLAccountInfo, null, HttpMethod.GET, AuthInfo);
+                string url = OAuthManager.GenerateQuery(URLAccountInfo, null, HttpMethod.Get, AuthInfo);
 
                 string response = SendGetRequest(url);
 
@@ -131,7 +131,7 @@ namespace UploadersLib.FileUploaders
 
             if (OAuthInfo.CheckOAuth(AuthInfo))
             {
-                string url = OAuthManager.GenerateQuery(ZAppHelper.CombineURL(URLMetaData, path), null, HttpMethod.GET, AuthInfo);
+                string url = OAuthManager.GenerateQuery(ZAppHelper.CombineURL(URLMetaData, path), null, HttpMethod.Get, AuthInfo);
 
                 string response = SendGetRequest(url);
 
@@ -156,7 +156,7 @@ namespace UploadersLib.FileUploaders
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("file", fileName);
 
-            string query = OAuthManager.GenerateQuery(url, args, HttpMethod.POST, AuthInfo);
+            string query = OAuthManager.GenerateQuery(url, args, HttpMethod.Post, AuthInfo);
 
             string response = UploadData(stream, query, fileName);
 

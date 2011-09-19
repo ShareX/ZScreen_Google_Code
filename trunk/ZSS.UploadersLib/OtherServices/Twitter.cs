@@ -63,7 +63,7 @@ namespace UploadersLib.OtherServices
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("status", message);
 
-            string query = OAuthManager.GenerateQuery(URLTweet, args, HttpMethod.POST, AuthInfo);
+            string query = OAuthManager.GenerateQuery(URLTweet, args, HttpMethod.Post, AuthInfo);
 
             string response = SendPostRequest(query);
 

@@ -429,45 +429,54 @@ namespace UploadersLib
 
         public void MinusAuth()
         {
+            btnMinusAuth.Enabled = false;
             try
             {
                 OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
-
-                string url = new Minus(oauth, txtMinusUsername.Text, txtMinusPassword.Text).GetAuthorizationURL();
+                MinusOptions mai = new MinusOptions() { AuthInfo = oauth };
+                Minus minus = new Minus(mai, txtMinusUsername.Text, txtMinusPassword.Text);
+                string url = minus.GetAuthorizationURL();
 
                 if (!string.IsNullOrEmpty(url))
                 {
-                    Config.MinusOAuthInfo = oauth;
-                    StaticHelper.LoadBrowser(url);
-                    btnMinusAuthComplete.Enabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        public void MinusAuthComplete()
-        {
-            if (Config.MinusOAuthInfo != null && !string.IsNullOrEmpty(Config.MinusOAuthInfo.AuthToken) && !string.IsNullOrEmpty(Config.MinusOAuthInfo.AuthSecret))
-            {
-                Minus minus = new Minus(Config.MinusOAuthInfo);
-                bool result = minus.GetAccessToken();
-
-                if (result)
-                {
-                    lblMinusAuthStatus.Text = minus.AuthInfo.UserToken;
-                    MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (minus.GetAccessToken())
+                    {
+                        minus.ReadFolderList();
+                        Config.MinusConfig = minus.Config;
+                        UpdateMinusControls();
+                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnMinusAuth.Enabled = true;
+            }
+        }
+
+        public void UpdateMinusControls()
+        {
+            if (Config.MinusConfig != null)
+            {
+                lblMinusAuthStatus.Text = "Logged in: " + Config.MinusConfig.AuthInfo.UserToken;
+                cboMinusFolders.Items.Clear();
+                if (Config.MinusConfig.FolderList.Count > 0)
+                {
+                    cboMinusFolders.Items.AddRange(Config.MinusConfig.FolderList.ToArray());
+                    cboMinusFolders.SelectedIndex = Config.MinusConfig.FolderID;
+                }
+            }
             else
             {
-                MessageBox.Show("You must give access to ZScreen from Authorize page first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lblMinusAuthStatus.Text = "Not logged in.";
             }
         }
 

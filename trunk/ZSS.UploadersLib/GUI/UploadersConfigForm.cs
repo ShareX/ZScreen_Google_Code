@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
+using UploadersLib.FileUploaders;
 
 namespace UploadersLib
 {
@@ -343,10 +344,50 @@ namespace UploadersLib
             MinusAuth();
         }
 
-        private void btnMinusAuthComplete_Click(object sender, EventArgs e)
+        private void cboMinusFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MinusAuthComplete();
+            if (Config.MinusConfig != null)
+            {
+                Config.MinusConfig.FolderID = cboMinusFolders.SelectedIndex;
+            }
         }
+
+        private void btnMinusFolderAdd_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !cboMinusFolders.Items.Contains(cboMinusFolders.Text))
+            {
+                Minus minus = new Minus(Config.MinusConfig);
+                MinusFolder dir = minus.CreateFolder(cboMinusFolders.Text, chkMinusPublic.Checked);
+                if (dir != null)
+                {
+                    cboMinusFolders.Items.Add(dir);
+                }
+            }
+        }
+
+
+        private void btnMinusFolderRemove_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !cboMinusFolders.Items.Contains(cboMinusFolders.Text))
+            {
+                Minus minus = new Minus(Config.MinusConfig);
+                MinusFolder dir = Config.MinusConfig.FolderList[cboMinusFolders.SelectedIndex] as MinusFolder;
+                minus.DeleteFolder(dir.id);
+                if (dir != null)
+                {
+                    cboMinusFolders.Items.Add(dir);
+                }
+            }
+        }
+
+        #region Other Services
+
+        private void btnTwitterLogin_Click(object sender, EventArgs e)
+        {
+            TwitterLogin();
+        }
+
+        #endregion Other Services
 
         #endregion Minus
 
@@ -692,15 +733,6 @@ namespace UploadersLib
         }
 
         #endregion URL Shorteners
-
-        #region Other Services
-
-        private void btnTwitterLogin_Click(object sender, EventArgs e)
-        {
-            TwitterLogin();
-        }
-
-        #endregion Other Services
 
     }
 }

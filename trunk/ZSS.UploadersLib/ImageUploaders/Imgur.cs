@@ -121,7 +121,7 @@ namespace UploadersLib.ImageUploaders
                 throw new Exception("UserToken or UserSecret is empty. Login is required.");
             }
 
-            string query = OAuthManager.GenerateQuery(URLUserUpload, null, HttpMethod.POST, AuthInfo);
+            string query = OAuthManager.GenerateQuery(URLUserUpload, null, HttpMethod.Post, AuthInfo);
 
             string response = UploadData(stream, query, fileName, "image");
 

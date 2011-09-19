@@ -124,7 +124,15 @@
             this.btnDropboxOpenAuthorize = new System.Windows.Forms.Button();
             this.txtDropboxPath = new System.Windows.Forms.TextBox();
             this.tpMinus = new System.Windows.Forms.TabPage();
-            this.btnMinusAuthComplete = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkMinusPublic = new System.Windows.Forms.CheckBox();
+            this.btnMinusFolderAdd = new System.Windows.Forms.Button();
+            this.btnMinusFolderRemove = new System.Windows.Forms.Button();
+            this.cboMinusFolders = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtMinusPassword = new System.Windows.Forms.TextBox();
+            this.txtMinusUsername = new System.Windows.Forms.TextBox();
             this.lblMinusAuthStatus = new System.Windows.Forms.Label();
             this.btnMinusAuth = new System.Windows.Forms.Button();
             this.tpFTP = new System.Windows.Forms.TabPage();
@@ -226,10 +234,6 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtMinusPassword = new System.Windows.Forms.TextBox();
-            this.txtMinusUsername = new System.Windows.Forms.TextBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -254,6 +258,7 @@
             this.tpDropbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).BeginInit();
             this.tpMinus.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tpFTP.SuspendLayout();
             this.tlpFtp.SuspendLayout();
             this.panelFtp.SuspendLayout();
@@ -1288,11 +1293,11 @@
             // 
             // tpMinus
             // 
+            this.tpMinus.Controls.Add(this.groupBox2);
             this.tpMinus.Controls.Add(this.label7);
             this.tpMinus.Controls.Add(this.label9);
             this.tpMinus.Controls.Add(this.txtMinusPassword);
             this.tpMinus.Controls.Add(this.txtMinusUsername);
-            this.tpMinus.Controls.Add(this.btnMinusAuthComplete);
             this.tpMinus.Controls.Add(this.lblMinusAuthStatus);
             this.tpMinus.Controls.Add(this.btnMinusAuth);
             this.tpMinus.Location = new System.Drawing.Point(4, 22);
@@ -1303,16 +1308,91 @@
             this.tpMinus.Text = "Minus";
             this.tpMinus.UseVisualStyleBackColor = true;
             // 
-            // btnMinusAuthComplete
+            // groupBox2
             // 
-            this.btnMinusAuthComplete.Enabled = false;
-            this.btnMinusAuthComplete.Location = new System.Drawing.Point(176, 88);
-            this.btnMinusAuthComplete.Name = "btnMinusAuthComplete";
-            this.btnMinusAuthComplete.Size = new System.Drawing.Size(152, 24);
-            this.btnMinusAuthComplete.TabIndex = 23;
-            this.btnMinusAuthComplete.Text = "2. Complete authorization";
-            this.btnMinusAuthComplete.UseVisualStyleBackColor = true;
-            this.btnMinusAuthComplete.Click += new System.EventHandler(this.btnMinusAuthComplete_Click);
+            this.groupBox2.Controls.Add(this.chkMinusPublic);
+            this.groupBox2.Controls.Add(this.btnMinusFolderAdd);
+            this.groupBox2.Controls.Add(this.btnMinusFolderRemove);
+            this.groupBox2.Controls.Add(this.cboMinusFolders);
+            this.groupBox2.Location = new System.Drawing.Point(16, 160);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(712, 64);
+            this.groupBox2.TabIndex = 28;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Upload images to";
+            // 
+            // chkMinusPublic
+            // 
+            this.chkMinusPublic.AutoSize = true;
+            this.chkMinusPublic.Location = new System.Drawing.Point(416, 24);
+            this.chkMinusPublic.Name = "chkMinusPublic";
+            this.chkMinusPublic.Size = new System.Drawing.Size(55, 17);
+            this.chkMinusPublic.TabIndex = 8;
+            this.chkMinusPublic.Text = "Public";
+            this.chkMinusPublic.UseVisualStyleBackColor = true;
+            // 
+            // btnMinusFolderAdd
+            // 
+            this.btnMinusFolderAdd.Location = new System.Drawing.Point(488, 24);
+            this.btnMinusFolderAdd.Name = "btnMinusFolderAdd";
+            this.btnMinusFolderAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnMinusFolderAdd.TabIndex = 7;
+            this.btnMinusFolderAdd.Text = "Add folder";
+            this.btnMinusFolderAdd.UseVisualStyleBackColor = true;
+            this.btnMinusFolderAdd.Click += new System.EventHandler(this.btnMinusFolderAdd_Click);
+            // 
+            // btnMinusFolderRemove
+            // 
+            this.btnMinusFolderRemove.AutoSize = true;
+            this.btnMinusFolderRemove.Location = new System.Drawing.Point(568, 24);
+            this.btnMinusFolderRemove.Name = "btnMinusFolderRemove";
+            this.btnMinusFolderRemove.Size = new System.Drawing.Size(104, 23);
+            this.btnMinusFolderRemove.TabIndex = 6;
+            this.btnMinusFolderRemove.Text = "Remove folder";
+            this.btnMinusFolderRemove.UseVisualStyleBackColor = true;
+            this.btnMinusFolderRemove.Click += new System.EventHandler(this.btnMinusFolderRemove_Click);
+            // 
+            // cboMinusFolders
+            // 
+            this.cboMinusFolders.FormattingEnabled = true;
+            this.cboMinusFolders.Location = new System.Drawing.Point(16, 24);
+            this.cboMinusFolders.Name = "cboMinusFolders";
+            this.cboMinusFolders.Size = new System.Drawing.Size(392, 21);
+            this.cboMinusFolders.TabIndex = 0;
+            this.cboMinusFolders.SelectedIndexChanged += new System.EventHandler(this.cboMinusFolders_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(16, 56);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.TabIndex = 27;
+            this.label7.Text = "Password";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(16, 24);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Username";
+            // 
+            // txtMinusPassword
+            // 
+            this.txtMinusPassword.Location = new System.Drawing.Point(80, 52);
+            this.txtMinusPassword.Name = "txtMinusPassword";
+            this.txtMinusPassword.PasswordChar = '*';
+            this.txtMinusPassword.Size = new System.Drawing.Size(136, 20);
+            this.txtMinusPassword.TabIndex = 25;
+            // 
+            // txtMinusUsername
+            // 
+            this.txtMinusUsername.Location = new System.Drawing.Point(80, 20);
+            this.txtMinusUsername.Name = "txtMinusUsername";
+            this.txtMinusUsername.Size = new System.Drawing.Size(136, 20);
+            this.txtMinusUsername.TabIndex = 24;
             // 
             // lblMinusAuthStatus
             // 
@@ -1328,9 +1408,9 @@
             // 
             this.btnMinusAuth.Location = new System.Drawing.Point(16, 88);
             this.btnMinusAuth.Name = "btnMinusAuth";
-            this.btnMinusAuth.Size = new System.Drawing.Size(152, 24);
+            this.btnMinusAuth.Size = new System.Drawing.Size(200, 24);
             this.btnMinusAuth.TabIndex = 21;
-            this.btnMinusAuth.Text = "1. Open authorize page...";
+            this.btnMinusAuth.Text = "Authorize using OAuth";
             this.btnMinusAuth.UseVisualStyleBackColor = true;
             this.btnMinusAuth.Click += new System.EventHandler(this.btnMinusAuth_Click);
             // 
@@ -2351,39 +2431,6 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
-            this.label7.TabIndex = 27;
-            this.label7.Text = "Password";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(16, 24);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Username";
-            // 
-            // txtMinusPassword
-            // 
-            this.txtMinusPassword.Location = new System.Drawing.Point(80, 52);
-            this.txtMinusPassword.Name = "txtMinusPassword";
-            this.txtMinusPassword.PasswordChar = '*';
-            this.txtMinusPassword.Size = new System.Drawing.Size(136, 20);
-            this.txtMinusPassword.TabIndex = 25;
-            // 
-            // txtMinusUsername
-            // 
-            this.txtMinusUsername.Location = new System.Drawing.Point(80, 20);
-            this.txtMinusUsername.Name = "txtMinusUsername";
-            this.txtMinusUsername.Size = new System.Drawing.Size(136, 20);
-            this.txtMinusUsername.TabIndex = 24;
-            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2432,6 +2479,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbDropboxLogo)).EndInit();
             this.tpMinus.ResumeLayout(false);
             this.tpMinus.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tpFTP.ResumeLayout(false);
             this.tlpFtp.ResumeLayout(false);
             this.panelFtp.ResumeLayout(false);
@@ -2664,12 +2713,16 @@
         private System.Windows.Forms.Button btnPhotobucketRemoveAlbum;
         private System.Windows.Forms.Button btnPhotobucketAddAlbum;
         private System.Windows.Forms.TabPage tpMinus;
-        private System.Windows.Forms.Button btnMinusAuthComplete;
         private System.Windows.Forms.Label lblMinusAuthStatus;
         private System.Windows.Forms.Button btnMinusAuth;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtMinusPassword;
         private System.Windows.Forms.TextBox txtMinusUsername;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnMinusFolderAdd;
+        private System.Windows.Forms.Button btnMinusFolderRemove;
+        private System.Windows.Forms.ComboBox cboMinusFolders;
+        private System.Windows.Forms.CheckBox chkMinusPublic;
     }
 }
