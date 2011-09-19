@@ -147,7 +147,14 @@ namespace UploadersLib.FileUploaders
             args.Add("is_public", is_public.ToString().ToLower());
 
             MinusFolder dir = null;
-            string response = SendPostRequestURLEncoded(GetActiveUserFolderURL(MinusScope.upload_new), args);
+            string response = string.Empty;
+            if (is_public)
+            {
+                 response = SendPostRequestURLEncoded(GetActiveUserFolderURL(MinusScope.upload_new), args);
+            }
+            else{
+                  response = SendPostRequest(GetActiveUserFolderURL(MinusScope.upload_new), args);
+            }
             if (!string.IsNullOrEmpty(response))
             {
                 dir = JsonConvert.DeserializeObject<MinusFolder>(response);
