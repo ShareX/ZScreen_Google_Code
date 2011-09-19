@@ -443,7 +443,7 @@ namespace UploadersLib
                     {
                         minus.ReadFolderList(MinusScope.upload_new);
                         Config.MinusConfig = minus.Config;
-                        UpdateMinusControls();
+                        MinusUpdateControls();
                         MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
@@ -462,21 +462,23 @@ namespace UploadersLib
             }
         }
 
-        public void UpdateMinusControls()
+        public void MinusUpdateControls()
         {
-            if (Config.MinusConfig != null)
+            if (Config.MinusConfig != null && Config.MinusConfig.MinusUser != null)
             {
                 lblMinusAuthStatus.Text = "Logged in: " + Config.MinusConfig.MinusUser.username;
                 cboMinusFolders.Items.Clear();
                 if (Config.MinusConfig.FolderList.Count > 0)
                 {
                     cboMinusFolders.Items.AddRange(Config.MinusConfig.FolderList.ToArray());
-                    cboMinusFolders.SelectedIndex = Config.MinusConfig.FolderID;
+                    cboMinusFolders.SelectedIndex = Config.MinusConfig.FolderID.BetweenOrDefault(0, cboMinusFolders.Items.Count - 1);
                 }
+                btnMinusAuth.Enabled = false;
             }
             else
             {
                 lblMinusAuthStatus.Text = "Not logged in.";
+                btnMinusAuth.Enabled = true;
             }
         }
 

@@ -224,7 +224,7 @@ namespace UploadersLib
 
             // Minus
 
-            UpdateMinusControls();
+            MinusUpdateControls();
 
             // FTP
 
