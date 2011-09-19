@@ -9,67 +9,62 @@ namespace UploadersLib.FileUploaders
 {
     public class Minus : FileUploader, IOAuth
     {
-        public CookieCollection Cookies { get; set; }
-        public string GalleryID { get; set; }
+        private const string APIVersion = "2";
+        private const string URLAPI = "https://minus.com/api/v" + APIVersion;
+
+        private const string URLRequestToken = URLAPI + "/oauth/request_token";
+        private const string URLAuthorize = URLAPI + "/oauth/authorize";
+        private const string URLAccessToken = URLAPI + "/oauth/access_token";
 
         public OAuthInfo AuthInfo { get; set; }
+        public string FolderID { get; set; }
 
         public Minus(OAuthInfo oauth)
         {
             this.AuthInfo = oauth;
         }
 
-        public MinusSignInResponse SignIn(string username, string password)
+        public MinusUser GetActiveUser()
         {
-            string url = @"http://min.us/api/SignIn";
-
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("username", username);
-            args.Add("password1", password);
-
-            string response = SendPostRequest(url, args, ResponseType.Text);
-
-            Cookies = LastResponseCookies;
-
-            return JsonConvert.DeserializeObject<MinusSignInResponse>(response);
+            string url = URLAPI + "/activeuser";
+            string response = SendGetRequest(url);
+            return JsonConvert.DeserializeObject<MinusUser>(response);
         }
 
-        public MinusCreateGalleryResponse CreateGallery()
+        public MinusUser GetUser(string slug)
         {
-            string url = @"http://min.us/api/CreateGallery";
+            string url = URLAPI + "/users/" + slug;
+            string response = SendGetRequest(url);
+            return JsonConvert.DeserializeObject<MinusUser>(response);
+        }
 
-            string response = SendPostRequest(url, null, ResponseType.Text, Cookies);
-
-            MinusCreateGalleryResponse responseObj = JsonConvert.DeserializeObject<MinusCreateGalleryResponse>(response);
-
-            if (responseObj != null)
-            {
-                GalleryID = responseObj.Editor_ID;
-            }
-
-            return responseObj;
+        public MinusFileListResponse GetFiles(string folderId)
+        {
+            string url = URLAPI + "/folders/" + folderId + "/files";
+            string response = SendGetRequest(url);
+            return JsonConvert.DeserializeObject<MinusFileListResponse>(response);
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            string url = @"http://min.us/api/UploadItem";
+            // https://minus.com/api/v2/folders/0FQHJakL/files
+            string url = URLAPI + "/folders/" + this.FolderID + "/files";
 
             Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("editor_id", GalleryID);
-            args.Add("key", "OK");
+            args.Add("caption", fileName);
             args.Add("filename", fileName);
 
-            string response = UploadData(stream, url, fileName, "file", args, Cookies);
+            string response = UploadData(stream, url, fileName, "file", args);
 
             UploadResult result = new UploadResult(response);
 
             if (!string.IsNullOrEmpty(response))
             {
-                MinusUploadItemResponse responseObj = JsonConvert.DeserializeObject<MinusUploadItemResponse>(response);
+                MinusFile minusFile = JsonConvert.DeserializeObject<MinusFile>(response);
 
-                if (responseObj != null && !string.IsNullOrEmpty(responseObj.ID))
+                if (minusFile != null && !string.IsNullOrEmpty(minusFile.id))
                 {
-                    result.URL = "http://min.us/i" + responseObj.ID;
+                    result.URL = minusFile.url_rawfile;
                 }
             }
 
@@ -78,40 +73,79 @@ namespace UploadersLib.FileUploaders
 
         public string GetAuthorizationURL()
         {
-            throw new System.NotImplementedException();
+            return GetAuthorizationURL(URLRequestToken, URLAuthorize, AuthInfo);
         }
 
-        public bool GetAccessToken(string verificationCode)
+        public bool GetAccessToken(string verificationCode = null)
         {
-            throw new System.NotImplementedException();
+            AuthInfo.AuthVerifier = verificationCode;
+            return GetAccessToken(URLAccessToken, AuthInfo);
         }
     }
 
-    public class MinusSignInResponse
+    public abstract class MinusListResponse
     {
-        public bool Success { get; set; }
+        public int page { get; set; }
+        public string next { get; set; }
+        public int per_page { get; set; }
+        public int total { get; set; }
+        public int pages { get; set; }
+        public string previous { get; set; }
     }
 
-    public class MinusCreateGalleryResponse
+    public class MinusFileListResponse : MinusListResponse
     {
-        public string Editor_ID { get; set; }
-        public string Reader_ID { get; set; }
+        public MinusFile[] results { get; set; }
     }
 
-    public class MinusUploadItemResponse
+    public class MinusUser
     {
-        public string ID { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public string Caption { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public string FileSize { get; set; }
-        public string MimeType { get; set; }
-        public string Folder { get; set; }
-        public string URL { get; set; }
-        public DateTime Uploaded { get; set; }
-        public string URLRawFile { get; set; }
-        public string URLThumbnail { get; set; }
+        public string username { get; set; }
+        public string display_name { get; set; }
+        public string description { get; set; }
+        public string email { get; set; }
+        public string slug { get; set; }
+        public string fb_profile_link { get; set; }
+        public string fb_username { get; set; }
+        public string twitter_screen_name { get; set; }
+        public int visits { get; set; }
+        public int karma { get; set; }
+        public int shared { get; set; }
+        public string folders { get; set; }
+        public string url { get; set; }
+        public string avatar { get; set; }
+        public int storage_used { get; set; }
+        public int storage_quota { get; set; }
+    }
+
+    public class MinusFolder
+    {
+        public string id { get; set; }
+        public string thumbnail_url { get; set; }
+        public string name { get; set; }
+        public bool is_public { get; set; }
+        public int view_count { get; set; }
+        public string creator { get; set; }
+        public int file_count { get; set; }
+        public DateTime date_last_updated { get; set; }
+        public string files { get; set; }
+        public string url { get; set; }
+    }
+
+    public class MinusFile
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string title { get; set; }
+        public string caption { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+        public int filesize { get; set; }
+        public string mimetype { get; set; }
+        public string folder { get; set; }
+        public string url { get; set; }
+        public DateTime uploaded { get; set; }
+        public string url_rawfile { get; set; }
+        public string url_thumbnail { get; set; }
     }
 }

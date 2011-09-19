@@ -1117,6 +1117,9 @@ namespace ZScreenLib
                             break;
                     }
                     break;
+                case FileUploaderType.Minus:
+                    fileUploader = new Minus(Engine.MyWorkflow.OutputsConfig.MinusOAuthInfo);
+                    break;
                 case FileUploaderType.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyWorkflow.OutputsConfig.DropboxUploadPath));
                     fileUploader = new Dropbox(Engine.MyWorkflow.OutputsConfig.DropboxOAuthInfo, uploadPath, Engine.MyWorkflow.OutputsConfig.DropboxAccountInfo);

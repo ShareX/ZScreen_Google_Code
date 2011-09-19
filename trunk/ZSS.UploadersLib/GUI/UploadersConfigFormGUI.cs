@@ -220,6 +220,10 @@ namespace UploadersLib
             txtDropboxPath.Text = Config.DropboxUploadPath;
             UpdateDropboxStatus();
 
+            // Minus
+
+            lblMinusAuthStatus.Text = Config.MinusOAuthInfo.UserToken;
+
             // FTP
 
             if (Config.FTPAccountList == null || Config.FTPAccountList.Count == 0)

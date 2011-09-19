@@ -187,6 +187,8 @@ namespace UploadersLib
         SendSpace,
         [Description("dropbox.com")]
         Dropbox,
+        [Description("minus.com")]
+        Minus,
         [Description("Custom Uploader")]
         CustomUploader,
         [Description("FTP Server")]
