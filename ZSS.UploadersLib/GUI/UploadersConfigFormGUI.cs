@@ -222,7 +222,10 @@ namespace UploadersLib
 
             // Minus
 
-            lblMinusAuthStatus.Text = Config.MinusOAuthInfo.UserToken;
+            if (OAuthInfo.CheckOAuth(Config.MinusOAuthInfo))
+            {
+                lblMinusAuthStatus.Text = Config.MinusOAuthInfo.UserToken;
+            }
 
             // FTP
 

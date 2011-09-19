@@ -433,7 +433,7 @@ namespace UploadersLib
             {
                 OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
 
-                string url = new Minus(oauth).GetAuthorizationURL();
+                string url = new Minus(oauth, txtMinusUsername.Text, txtMinusPassword.Text).GetAuthorizationURL();
 
                 if (!string.IsNullOrEmpty(url))
                 {
