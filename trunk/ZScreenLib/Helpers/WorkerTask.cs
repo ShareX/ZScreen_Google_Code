@@ -767,7 +767,10 @@ namespace ZScreenLib
                     Host = OutputEnum.LocalDisk.GetDescription(),
                     LocalFilePath = LocalFilePath,
                 };
-                ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                if (!MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+                {
+                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                }
                 AddUploadResult(ur);
 
                 // todo: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);

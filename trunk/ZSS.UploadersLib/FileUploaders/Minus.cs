@@ -145,12 +145,28 @@ namespace UploadersLib.FileUploaders
                 {
                     Config.FolderList.Add(mflr.results[i]);
                 }
-                Config.FolderID = 0;
             }
+            else
+            {
+                // this is when user has no MinusFolders
+                MinusFolder mf = CreateFolder("ZScreen", true);
+                if (mf != null)
+                {
+                    Config.FolderList.Add(mf);
+                }
+            }
+
+            Config.FolderID = 0;
 
             return Config.FolderList;
         }
 
+        /// <summary>
+        /// Creates a new folder in your Minus.com account
+        /// </summary>
+        /// <param name="name">folder name</param>
+        /// <param name="is_public">true for Public access or false for Private access</param>
+        /// <returns>Returns the Minus folder object created</returns>
         public MinusFolder CreateFolder(string name, bool is_public)
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
@@ -159,7 +175,7 @@ namespace UploadersLib.FileUploaders
 
             MinusFolder dir = null;
 
-            string response  = SendPostRequestURLEncoded(GetActiveUserFolderURL(MinusScope.upload_new), args);
+            string response = SendPostRequestURLEncoded(GetActiveUserFolderURL(MinusScope.upload_new), args);
             if (!string.IsNullOrEmpty(response))
             {
                 dir = JsonConvert.DeserializeObject<MinusFolder>(response);
