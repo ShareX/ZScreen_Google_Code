@@ -28,19 +28,33 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                string cbText = Clipboard.GetText();
-                if (cbText != Engine.zPreviousClipboardText || string.IsNullOrEmpty(cbText))
+                bool uploadImage = false, uploadText = false, uploadFile = false, shortenUrl = false;
+
+                if (Engine.conf.MonitorImages)
                 {
-                    bool uploadImage = Clipboard.ContainsImage() && Engine.conf.MonitorImages;
-                    bool uploadText = Clipboard.ContainsText() && Engine.conf.MonitorText;
-                    bool uploadFile = Clipboard.ContainsFileDropList() && Engine.conf.MonitorFiles;
-                    bool shortenUrl = Clipboard.ContainsText() && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter && Engine.conf.MonitorUrls;
-                    if (uploadImage || uploadText || uploadFile || shortenUrl)
-                    {
-                        UploadUsingClipboard();
-                        ClipboardUnhook();
-                    }
+                    uploadImage = Clipboard.ContainsImage();
                 }
+                if (Engine.conf.MonitorText)
+                {
+                    string cbText = Clipboard.GetText();
+                    uploadText = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && cbText != Engine.zPreviousClipboardText;
+                }
+                if (Engine.conf.MonitorFiles)
+                {
+                    uploadFile = Clipboard.ContainsFileDropList();
+                }
+                if (Engine.conf.MonitorUrls)
+                {
+                    string cbText = Clipboard.GetText();
+                    shortenUrl = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && cbText != Engine.zPreviousClipboardText && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
+                }
+
+                if (uploadImage || uploadText || uploadFile || shortenUrl)
+                {
+                    ClipboardUnhook();
+                    UploadUsingClipboard();
+                }
+
             }
         }
 
