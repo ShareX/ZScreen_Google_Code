@@ -493,7 +493,7 @@ namespace ZScreenGUI
             if (Clipboard.ContainsImage())
             {
                 cbTask.SetImage(Clipboard.GetImage());
-                cbTask.WriteImage();
+                // todo: check for bugs as this line is removed because it gets called under PublishData() cbTask.WriteImage();
                 cbTask.RunWorker();
             }
             else if (Clipboard.ContainsText())
