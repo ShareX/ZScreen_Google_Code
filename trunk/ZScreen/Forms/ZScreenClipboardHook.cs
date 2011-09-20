@@ -13,7 +13,7 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
-        private Timer tmrClipboardMonitor = new Timer() { Interval = 100, Enabled = true };
+        private Timer tmrClipboardMonitor = new Timer() { Interval = 500, Enabled = true };
 
         #region Clipboard Methods
 
