@@ -729,7 +729,11 @@ namespace ZScreenLib
 
             if (File.Exists(LocalFilePath))
             {
-                data = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using (FileStream fs = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    data = new MemoryStream();
+                    fs.CopyStreamTo(data);
+                }
             }
             else if (TempImage != null)
             {
