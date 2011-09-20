@@ -70,23 +70,6 @@ namespace UploadersLib.FileUploaders
             return true;
         }
 
-        public List<MinusFolder> ReadFolderList(MinusScope scope)
-        {
-            MinusFolderListResponse mflr = GetUserFolderList(scope);
-
-            if (mflr.results.Length > 0)
-            {
-                Config.FolderList.Clear();
-                for (int i = 0; i < mflr.results.Length; i++)
-                {
-                    Config.FolderList.Add(mflr.results[i]);
-                }
-                Config.FolderID = 0;
-            }
-
-            return Config.FolderList;
-        }
-
         public void RefreshAccessTokens()
         {
             List<MinusAuthToken> newTokens = new List<MinusAuthToken>();
@@ -112,6 +95,18 @@ namespace UploadersLib.FileUploaders
             Config.Tokens = newTokens;
         }
 
+        private string GetFolderLinkFromID(string id, MinusScope scope)
+        {
+            return URLAPI + "/folders/" + id + "/files?bearer_token=" + Config.GetToken(scope).access_token;
+        }
+
+        private string GetActiveUserFolderURL(MinusScope scope)
+        {
+            MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser(scope);
+            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
+            return url;
+        }
+
         public MinusUser GetActiveUser(MinusScope scope)
         {
             string url = URLAPI + "/activeuser?bearer_token=" + Config.GetToken(scope).access_token;
@@ -126,18 +121,34 @@ namespace UploadersLib.FileUploaders
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
 
-        private string GetActiveUserFolderURL(MinusScope scope)
+        public MinusFileListResponse GetFiles(string folderId, MinusScope scope)
         {
-            MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser(scope);
-            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
-            Console.WriteLine(url);
-            return url;
+            string url = GetFolderLinkFromID(folderId, scope);
+            string response = SendGetRequest(url);
+            return JsonConvert.DeserializeObject<MinusFileListResponse>(response);
         }
 
-        public MinusFolderListResponse GetUserFolderList(MinusScope scope)
+        private MinusFolderListResponse GetUserFolderList(MinusScope scope)
         {
             string response = SendGetRequest(GetActiveUserFolderURL(scope));
             return JsonConvert.DeserializeObject<MinusFolderListResponse>(response);
+        }
+
+        public List<MinusFolder> ReadFolderList(MinusScope scope)
+        {
+            MinusFolderListResponse mflr = GetUserFolderList(scope);
+
+            if (mflr.results.Length > 0)
+            {
+                Config.FolderList.Clear();
+                for (int i = 0; i < mflr.results.Length; i++)
+                {
+                    Config.FolderList.Add(mflr.results[i]);
+                }
+                Config.FolderID = 0;
+            }
+
+            return Config.FolderList;
         }
 
         public MinusFolder CreateFolder(string name, bool is_public)
@@ -166,18 +177,6 @@ namespace UploadersLib.FileUploaders
             string url = GetFolderLinkFromID(id, MinusScope.modify_all);
             string resp = SendDeleteRequest(url);
             return !string.IsNullOrEmpty(resp);
-        }
-
-        public MinusFileListResponse GetFiles(string folderId, MinusScope scope)
-        {
-            string url = URLAPI + "/folders/" + folderId + "/files?bearer_token=" + Config.GetToken(scope).access_token;
-            string response = SendGetRequest(url);
-            return JsonConvert.DeserializeObject<MinusFileListResponse>(response);
-        }
-
-        private string GetFolderLinkFromID(string id, MinusScope scope)
-        {
-            return URLAPI + "/folders/" + id + "/files?bearer_token=" + Config.GetToken(scope).access_token;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)

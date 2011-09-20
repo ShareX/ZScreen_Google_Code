@@ -20,8 +20,11 @@ namespace UploadersLib.URLShorteners
         {
             if (!string.IsNullOrEmpty(url))
             {
-                DebliRequest json = new DebliRequest() { add_url = url };
-                return SendPostRequestJSON(APIURL, JsonConvert.SerializeObject(json));
+                Dictionary<string, string> args = new Dictionary<string, string>();
+                args.Add("add_url", url);
+
+                string response = SendPostRequest(APIURL, args);
+                
             }
 
             return null;
