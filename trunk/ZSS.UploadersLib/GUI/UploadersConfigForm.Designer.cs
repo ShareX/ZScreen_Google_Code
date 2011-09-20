@@ -234,6 +234,7 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.btnMinusReadFolderList = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -1310,13 +1311,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnMinusReadFolderList);
             this.groupBox2.Controls.Add(this.chkMinusPublic);
             this.groupBox2.Controls.Add(this.btnMinusFolderAdd);
             this.groupBox2.Controls.Add(this.btnMinusFolderRemove);
             this.groupBox2.Controls.Add(this.cboMinusFolders);
             this.groupBox2.Location = new System.Drawing.Point(16, 160);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(712, 64);
+            this.groupBox2.Size = new System.Drawing.Size(712, 96);
             this.groupBox2.TabIndex = 28;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Upload images to";
@@ -2431,6 +2433,17 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
+            // btnMinusReadFolderList
+            // 
+            this.btnMinusReadFolderList.AutoSize = true;
+            this.btnMinusReadFolderList.Location = new System.Drawing.Point(488, 56);
+            this.btnMinusReadFolderList.Name = "btnMinusReadFolderList";
+            this.btnMinusReadFolderList.Size = new System.Drawing.Size(184, 23);
+            this.btnMinusReadFolderList.TabIndex = 9;
+            this.btnMinusReadFolderList.Text = "Reload folder list";
+            this.btnMinusReadFolderList.UseVisualStyleBackColor = true;
+            this.btnMinusReadFolderList.Click += new System.EventHandler(this.btnMinusReadFolderList_Click);
+            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2724,5 +2737,6 @@
         private System.Windows.Forms.Button btnMinusFolderRemove;
         private System.Windows.Forms.ComboBox cboMinusFolders;
         private System.Windows.Forms.CheckBox chkMinusPublic;
+        private System.Windows.Forms.Button btnMinusReadFolderList;
     }
 }

@@ -336,8 +336,19 @@ namespace UploadersLib
         }
 
         #endregion Dropbox
-
         #region Minus
+
+        private bool HasFolder(string name)
+        {
+            foreach (MinusFolder mf in cboMinusFolders.Items)
+            {
+                if (mf.name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         private void btnMinusAuth_Click(object sender, EventArgs e)
         {
@@ -349,6 +360,8 @@ namespace UploadersLib
             if (Config.MinusConfig != null)
             {
                 Config.MinusConfig.FolderID = cboMinusFolders.SelectedIndex;
+                MinusFolder tempMf = Config.MinusConfig.MinusFolderActive;
+                chkMinusPublic.Checked = tempMf.is_public;
             }
         }
 
@@ -365,18 +378,6 @@ namespace UploadersLib
             }
         }
 
-        private bool HasFolder(string name)
-        {
-            foreach (MinusFolder mf in cboMinusFolders.Items)
-            {
-                if (mf.name == name)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private void btnMinusFolderRemove_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(cboMinusFolders.Text) && HasFolder(cboMinusFolders.Text))
@@ -391,6 +392,24 @@ namespace UploadersLib
                 {
                     cboMinusFolders.Items.RemoveAt(id);
                 }
+            }
+        }
+
+        private void btnMinusReadFolderList_Click(object sender, EventArgs e)
+        {
+            if (Config.MinusConfig != null)
+            {
+                btnMinusReadFolderList.Enabled = false;
+
+                List<MinusFolder> tempListMf = new Minus(Config.MinusConfig, Config.MinusOAuthInfo).ReadFolderList(MinusScope.read_all);
+                if (tempListMf.Count > 0)
+                {
+                    cboMinusFolders.Items.Clear();
+                    cboMinusFolders.Items.AddRange(tempListMf.ToArray());
+                    cboMinusFolders.SelectedIndex = Config.MinusConfig.FolderID;
+                }
+
+                btnMinusReadFolderList.Enabled = true;
             }
         }
 

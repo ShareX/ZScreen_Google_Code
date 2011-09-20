@@ -470,6 +470,7 @@ namespace UploadersLib
             if (Config.MinusConfig != null && Config.MinusConfig.MinusUser != null)
             {
                 lblMinusAuthStatus.Text = "Logged in: " + Config.MinusConfig.MinusUser.username;
+                txtMinusUsername.Text = Config.MinusConfig.MinusUser.username;
                 cboMinusFolders.Items.Clear();
                 if (Config.MinusConfig.FolderList.Count > 0)
                 {

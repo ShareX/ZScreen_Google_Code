@@ -268,6 +268,14 @@ namespace UploadersLib.FileUploaders
             }
             return null;
         }
+
+        public MinusFolder MinusFolderActive
+        {
+            get
+            {
+                return FolderList[FolderID];
+            }
+        }
     }
 
     public class MinusUser
