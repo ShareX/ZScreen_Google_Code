@@ -317,7 +317,7 @@ namespace ZScreenLib
 
             if (dlgResult == DialogResult.OK)
             {
-                WriteImage();
+                // todo moved this to PublishData()  WriteImage();
             }
 
             return dlgResult;
@@ -762,8 +762,15 @@ namespace ZScreenLib
                 FileSize = string.Format("{0} KiB", (fi.Length / 1024.0).ToString("0"));
 
                 Status.Add(TaskStatus.ImageWritten);
+                UploadResult ur = new UploadResult()
+                {
+                    Host = OutputEnum.LocalDisk.GetDescription(),
+                    LocalFilePath = LocalFilePath,
+                };
+                ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                AddUploadResult(ur);
 
-                UpdateLocalFilePath(fp);
+                // todo: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
 
                 if (!File.Exists(LocalFilePath))
                 {
@@ -777,6 +784,8 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
+            StartTime = DateTime.Now;
+
             if (File.Exists(LocalFilePath) || TempImage != null || !string.IsNullOrEmpty(TempText))
             {
                 foreach (OutputEnum oe in MyWorkflow.Outputs)
@@ -789,12 +798,17 @@ namespace ZScreenLib
                     FlashIcon();
                 }
             }
+
+            EndTime = DateTime.Now;
         }
 
         private void PublishData(OutputEnum oe)
         {
             switch (oe)
             {
+                case OutputEnum.LocalDisk:
+                    WriteImage();
+                    break;
                 case OutputEnum.Clipboard:
                     SetClipboardContent();
                     break;
@@ -822,8 +836,6 @@ namespace ZScreenLib
 
         public void UploadImage()
         {
-            StartTime = DateTime.Now;
-
             if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(LocalFilePath))
@@ -845,8 +857,6 @@ namespace ZScreenLib
                     UploadImage(MyImageUploaders[i], PrepareData());
                 }
             }
-
-            EndTime = DateTime.Now;
 
             if (Engine.conf != null && Engine.conf.ImageUploadRetryOnTimeout && UploadDuration > (int)Engine.conf.UploadDurationLimit)
             {
@@ -962,8 +972,6 @@ namespace ZScreenLib
 
         public void UploadText()
         {
-            StartTime = DateTime.Now;
-
             MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
             if (ShouldShortenURL(TempText))
@@ -978,8 +986,6 @@ namespace ZScreenLib
                     UploadText(textUploaderType);
                 }
             }
-
-            EndTime = DateTime.Now;
         }
 
         private void UploadText(TextUploaderType textUploaderType)
@@ -1165,16 +1171,12 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
-            StartTime = DateTime.Now;
-
             Engine.MyLogger.WriteLine("Uploading File: " + LocalFilePath);
 
             foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
                 UploadFile(fileUploaderType, PrepareData());
             }
-
-            EndTime = DateTime.Now;
         }
 
         public bool ShortenURL(UploadResult ur, string fullUrl)
