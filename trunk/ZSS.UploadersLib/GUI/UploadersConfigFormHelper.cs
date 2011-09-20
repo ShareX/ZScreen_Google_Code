@@ -429,36 +429,39 @@ namespace UploadersLib
 
         public void MinusAuth()
         {
-            btnMinusAuth.Enabled = false;
-            try
+            if (!string.IsNullOrEmpty(txtMinusUsername.Text) && !string.IsNullOrEmpty(txtMinusPassword.Text))
             {
-                OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
-                MinusOptions mai = new MinusOptions();
-                Minus minus = new Minus(mai, oauth, txtMinusUsername.Text, txtMinusPassword.Text);
-                string url = minus.GetAuthorizationURL();
-
-                if (!string.IsNullOrEmpty(url))
+                btnMinusAuth.Enabled = false;
+                try
                 {
-                    if (minus.GetAccessToken())
+                    OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
+                    MinusOptions mai = new MinusOptions();
+                    Minus minus = new Minus(mai, oauth, txtMinusUsername.Text, txtMinusPassword.Text);
+                    string url = minus.GetAuthorizationURL();
+
+                    if (!string.IsNullOrEmpty(url))
                     {
-                        minus.ReadFolderList(MinusScope.upload_new);
-                        Config.MinusConfig = minus.Config;
-                        MinusUpdateControls();
-                        MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (minus.GetAccessToken())
+                        {
+                            minus.ReadFolderList(MinusScope.upload_new);
+                            Config.MinusConfig = minus.Config;
+                            MinusUpdateControls();
+                            MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Login failed.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                btnMinusAuth.Enabled = true;
+                finally
+                {
+                    btnMinusAuth.Enabled = true;
+                }
             }
         }
 
@@ -473,12 +476,10 @@ namespace UploadersLib
                     cboMinusFolders.Items.AddRange(Config.MinusConfig.FolderList.ToArray());
                     cboMinusFolders.SelectedIndex = Config.MinusConfig.FolderID.BetweenOrDefault(0, cboMinusFolders.Items.Count - 1);
                 }
-                btnMinusAuth.Enabled = false;
             }
             else
             {
                 lblMinusAuthStatus.Text = "Not logged in.";
-                btnMinusAuth.Enabled = true;
             }
         }
 
