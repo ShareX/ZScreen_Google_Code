@@ -72,21 +72,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\JBirdMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="GUI\JBirdMain.cs" />
     <Compile Include="GUI\JBirdMain.Designer.cs">
       <DependentUpon>JBirdMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\JBirdCoreUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="GUI\JBirdCoreUI.cs" />
     <Compile Include="GUI\JBirdCoreUI.Designer.cs">
       <DependentUpon>JBirdCoreUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\JBirdToolbar.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="GUI\JBirdToolbar.cs" />
     <Compile Include="GUI\JBirdToolbar.Designer.cs">
       <DependentUpon>JBirdToolbar.cs</DependentUpon>
     </Compile>

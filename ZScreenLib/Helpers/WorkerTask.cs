@@ -770,9 +770,9 @@ namespace ZScreenLib
                 if (!MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
                 {
                     ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                    AddUploadResult(ur);
                 }
-                AddUploadResult(ur);
-
+              
                 // todo: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
 
                 if (!File.Exists(LocalFilePath))

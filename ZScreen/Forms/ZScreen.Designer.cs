@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -1285,7 +1285,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -2523,7 +2523,7 @@ namespace ZScreenGUI
             this.gbUpdates.Controls.Add(this.chkCheckUpdates);
             this.gbUpdates.Location = new System.Drawing.Point(8, 208);
             this.gbUpdates.Name = "gbUpdates";
-            this.gbUpdates.Size = new System.Drawing.Size(760, 96);
+            this.gbUpdates.Size = new System.Drawing.Size(760, 128);
             this.gbUpdates.TabIndex = 8;
             this.gbUpdates.TabStop = false;
             this.gbUpdates.Text = "Check Updates";
@@ -2532,7 +2532,7 @@ namespace ZScreenGUI
             // 
             this.cboReleaseChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboReleaseChannel.FormattingEnabled = true;
-            this.cboReleaseChannel.Location = new System.Drawing.Point(240, 22);
+            this.cboReleaseChannel.Location = new System.Drawing.Point(240, 24);
             this.cboReleaseChannel.Name = "cboReleaseChannel";
             this.cboReleaseChannel.Size = new System.Drawing.Size(121, 21);
             this.cboReleaseChannel.TabIndex = 8;
@@ -2542,7 +2542,7 @@ namespace ZScreenGUI
             // 
             this.lblUpdateInfo.AutoSize = true;
             this.lblUpdateInfo.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblUpdateInfo.Location = new System.Drawing.Point(392, 24);
+            this.lblUpdateInfo.Location = new System.Drawing.Point(24, 56);
             this.lblUpdateInfo.Name = "lblUpdateInfo";
             this.lblUpdateInfo.Size = new System.Drawing.Size(116, 16);
             this.lblUpdateInfo.TabIndex = 6;
@@ -2550,7 +2550,7 @@ namespace ZScreenGUI
             // 
             // btnCheckUpdate
             // 
-            this.btnCheckUpdate.Location = new System.Drawing.Point(16, 56);
+            this.btnCheckUpdate.Location = new System.Drawing.Point(368, 24);
             this.btnCheckUpdate.Name = "btnCheckUpdate";
             this.btnCheckUpdate.Size = new System.Drawing.Size(104, 24);
             this.btnCheckUpdate.TabIndex = 5;
