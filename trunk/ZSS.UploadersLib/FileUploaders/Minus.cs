@@ -5,13 +5,15 @@ using System.Net;
 using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
 using System.ComponentModel;
+using System.Threading;
 
 namespace UploadersLib.FileUploaders
 {
     public class Minus : FileUploader, IOAuth
     {
-        private const string APIVersion = "2";
-        private const string URLAPI = "https://minus.com/api/v" + APIVersion;
+        private const string URL_HOST = "https://minus.com";
+        private const string API_VERSION = "2";
+        private const string URL_API = URL_HOST + "/api/v" + API_VERSION;
 
         public OAuthInfo AuthInfo { get; set; }
         public MinusOptions Config { get; private set; }
@@ -35,7 +37,7 @@ namespace UploadersLib.FileUploaders
         public string GetAuthorizationURL()
         {
             string url = string.Format("{0}/oauth/token?grant_type=password&client_id={1}&client_secret={2}&scope=upload_new&username={3}&password={4}",
-                URLAPI,
+                URL_HOST,
                 AuthInfo.ConsumerKey,
                 AuthInfo.ConsumerSecret,
                 this.UserName,
@@ -51,7 +53,7 @@ namespace UploadersLib.FileUploaders
             foreach (MinusScope scope in Enum.GetValues(typeof(MinusScope)))
             {
                 string url = string.Format("{0}/oauth/token?grant_type=password&client_id={1}&client_secret={2}&scope={3}&username={4}&password={5}",
-                URLAPI,
+                URL_HOST,
                 AuthInfo.ConsumerKey,
                 AuthInfo.ConsumerSecret,
                 scope.ToString(),
@@ -77,7 +79,7 @@ namespace UploadersLib.FileUploaders
             foreach (MinusScope scope in Enum.GetValues(typeof(MinusScope)))
             {
                 string url = string.Format("{0}/oauth/token?grant_type=refresh_token&client_id={1}&client_secret={2}&scope={3}&refresh_token={4}",
-                       URLAPI,
+                       URL_API,
                        AuthInfo.ConsumerKey,
                        AuthInfo.ConsumerSecret,
                        scope.ToString(),
@@ -97,26 +99,26 @@ namespace UploadersLib.FileUploaders
 
         private string GetFolderLinkFromID(string id, MinusScope scope)
         {
-            return URLAPI + "/folders/" + id + "/files?bearer_token=" + Config.GetToken(scope).access_token;
+            return URL_API + "/folders/" + id + "/files?bearer_token=" + Config.GetToken(scope).access_token;
         }
 
         private string GetActiveUserFolderURL(MinusScope scope)
         {
             MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser(scope);
-            string url = URLAPI + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
+            string url = URL_API + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
             return url;
         }
 
         public MinusUser GetActiveUser(MinusScope scope)
         {
-            string url = URLAPI + "/activeuser?bearer_token=" + Config.GetToken(scope).access_token;
+            string url = URL_API + "/activeuser?bearer_token=" + Config.GetToken(scope).access_token;
             string response = SendGetRequest(url);
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
 
         public MinusUser GetUser(string slug)
         {
-            string url = URLAPI + "/users/" + slug;
+            string url = URL_API + "/users/" + slug;
             string response = SendGetRequest(url);
             return JsonConvert.DeserializeObject<MinusUser>(response);
         }
@@ -138,7 +140,7 @@ namespace UploadersLib.FileUploaders
         {
             MinusFolderListResponse mflr = GetUserFolderList(scope);
 
-            if (mflr.results.Length > 0)
+            if (mflr.results != null && mflr.results.Length > 0)
             {
                 Config.FolderList.Clear();
                 for (int i = 0; i < mflr.results.Length; i++)
@@ -148,7 +150,7 @@ namespace UploadersLib.FileUploaders
             }
             else
             {
-                // this is when user has no MinusFolders
+                Thread.Sleep(1000);
                 MinusFolder mf = CreateFolder("ZScreen", true);
                 if (mf != null)
                 {
@@ -179,25 +181,32 @@ namespace UploadersLib.FileUploaders
             if (!string.IsNullOrEmpty(response))
             {
                 dir = JsonConvert.DeserializeObject<MinusFolder>(response);
-                if (dir != null)
+                if (dir != null && !string.IsNullOrEmpty(dir.id))
                 {
                     Config.FolderList.Add(dir);
+                    return dir;
                 }
             }
 
-            return dir;
+            return null;
         }
 
-        public bool DeleteFolder(string id)
+        public bool DeleteFolder(int id)
         {
-            string url = GetFolderLinkFromID(id, MinusScope.modify_all);
-            string resp = SendDeleteRequest(url);
-            return !string.IsNullOrEmpty(resp);
+            if (id < Config.FolderList.Count)
+            {
+                MinusFolder mf = Config.FolderList[id];
+                string url = GetFolderLinkFromID(mf.id, MinusScope.modify_all);
+                string resp = SendDeleteRequest(url);
+                Config.FolderList.RemoveAt(id);
+                return !string.IsNullOrEmpty(resp);
+            }
+            return false;
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            string url = GetFolderLinkFromID(Config.FolderList[Config.FolderID].id, MinusScope.upload_new);
+            string url = GetFolderLinkFromID(Config.MinusFolderActive.id, MinusScope.upload_new);
 
             Dictionary<string, string> args = new Dictionary<string, string>();
             args.Add("caption", fileName);
@@ -288,6 +297,8 @@ namespace UploadersLib.FileUploaders
         {
             get
             {
+                if (FolderID < 0) FolderID = 0;
+                if (FolderID > FolderList.Count) FolderID = 0;
                 return FolderList[FolderID];
             }
         }

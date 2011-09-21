@@ -434,9 +434,8 @@ namespace UploadersLib
                 btnMinusAuth.Enabled = false;
                 try
                 {
-                    OAuthInfo oauth = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
-                    MinusOptions mai = new MinusOptions();
-                    Minus minus = new Minus(mai, oauth, txtMinusUsername.Text, txtMinusPassword.Text);
+                    Config.MinusOAuthInfo = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
+                    Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo, txtMinusUsername.Text, txtMinusPassword.Text);
                     string url = minus.GetAuthorizationURL();
 
                     if (!string.IsNullOrEmpty(url))
@@ -444,7 +443,6 @@ namespace UploadersLib
                         if (minus.GetAccessToken())
                         {
                             minus.ReadFolderList(MinusScope.upload_new);
-                            Config.MinusConfig = minus.Config;
                             MinusUpdateControls();
                             MessageBox.Show("Login successful.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -481,6 +479,7 @@ namespace UploadersLib
             else
             {
                 lblMinusAuthStatus.Text = "Not logged in.";
+                btnAuthRefresh.Enabled = false;
             }
         }
 

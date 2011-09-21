@@ -355,6 +355,15 @@ namespace UploadersLib
             MinusAuth();
         }
 
+        private void btnAuthRefresh_Click(object sender, EventArgs e)
+        {
+            if (Config.MinusConfig != null)
+            {
+                Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
+                minus.RefreshAccessTokens(); 
+            }
+        }
+
         private void cboMinusFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Config.MinusConfig != null)
@@ -386,9 +395,7 @@ namespace UploadersLib
 
                 int id = cboMinusFolders.SelectedIndex;
 
-                MinusFolder dir = Config.MinusConfig.FolderList[id] as MinusFolder;
-
-                if (dir != null && minus.DeleteFolder(dir.id))
+                if (minus.DeleteFolder(id))
                 {
                     cboMinusFolders.Items.RemoveAt(id);
                 }
