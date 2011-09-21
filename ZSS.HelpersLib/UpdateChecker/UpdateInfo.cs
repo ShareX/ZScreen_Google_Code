@@ -37,6 +37,7 @@ namespace ZSS.UpdateCheckerLib
         public DateTime Date { get; set; }
         public string Summary { get; set; }
         public ReleaseChannelType ReleaseChannel { get; private set; }
+        public UpdateStatus Status { get; set; }
 
         private const bool ForceUpdate = false;
 

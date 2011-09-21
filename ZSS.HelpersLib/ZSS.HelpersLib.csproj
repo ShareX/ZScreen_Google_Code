@@ -103,6 +103,12 @@
     <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
     <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
     <Compile Include="StaticHelper.cs" />
+    <Compile Include="UpdateChecker\UpdateCheckerLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UpdateChecker\UpdateCheckerLabel.Designer.cs">
+      <DependentUpon>UpdateCheckerLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -170,6 +176,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UpdateChecker\UpdateCheckerLabel.resx">
+      <DependentUpon>UpdateCheckerLabel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MyPictureBox.resx">
       <DependentUpon>MyPictureBox.cs</DependentUpon>
     </EmbeddedResource>
