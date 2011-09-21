@@ -29,10 +29,10 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
+using UploadersLib.ImageUploaders;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using UploadersLib.ImageUploaders;
 
 namespace ZScreenGUI
 {
@@ -42,6 +42,7 @@ namespace ZScreenGUI
     public partial class ZScreen : HotkeyForm
     {
         private Timer tmrTinyPicRegCodeUpdater = new Timer() { Interval = 3 * 3600 * 1000, Enabled = true };
+
         #region Check Updates
 
         public void CheckUpdates()
@@ -72,7 +73,20 @@ namespace ZScreenGUI
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName,
                 new Version(Engine.conf.ReleaseChannel == ReleaseChannelType.Dev ? Adapter.AssemblyVersion : Application.ProductVersion),
                 Engine.conf.ReleaseChannel, Adapter.CheckProxySettings().GetWebProxy, nvwo);
-            worker.ReportProgress(1, updateChecker.CheckUpdate());
+
+            updateChecker.CheckUpdate();
+
+            string status;
+            if (updateChecker.UpdateInfo.Status == UpdateStatus.UpdateCheckFailed)
+            {
+                status = "Update check failed";
+            }
+            else
+            {
+                status = updateChecker.UpdateInfo.ToString();
+            }
+
+            worker.ReportProgress(1, status);
             updateChecker.ShowPrompt();
         }
 
@@ -111,7 +125,7 @@ namespace ZScreenGUI
             tmrTinyPicRegCodeUpdater.Tick += new EventHandler(tmrTinyPicRegCodeUpdater_Tick);
         }
 
-        void tmrTinyPicRegCodeUpdater_Tick(object sender, EventArgs e)
+        private void tmrTinyPicRegCodeUpdater_Tick(object sender, EventArgs e)
         {
             Adapter.UpdateTinyPicRegCode();
         }

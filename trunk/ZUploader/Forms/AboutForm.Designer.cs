@@ -43,22 +43,26 @@
             this.pbBrandonURL = new System.Windows.Forms.PictureBox();
             this.pbUS = new System.Windows.Forms.PictureBox();
             this.lblBrandon = new System.Windows.Forms.Label();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.uclUpdate = new ZSS.UpdateCheckerLib.UpdateCheckerLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbTR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBerkURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMikeURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBrandonURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // lblProductName
             // 
+            this.lblProductName.AutoSize = true;
             this.lblProductName.BackColor = System.Drawing.Color.Transparent;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblProductName.ForeColor = System.Drawing.Color.White;
-            this.lblProductName.Location = new System.Drawing.Point(8, 16);
+            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblProductName.ForeColor = System.Drawing.Color.Black;
+            this.lblProductName.Location = new System.Drawing.Point(272, 8);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(360, 24);
+            this.lblProductName.Size = new System.Drawing.Size(159, 24);
             this.lblProductName.TabIndex = 1;
             this.lblProductName.Text = "ZUploader 1.0.0.0";
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -69,8 +73,8 @@
             this.lblZScreen.BackColor = System.Drawing.Color.Transparent;
             this.lblZScreen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblZScreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblZScreen.ForeColor = System.Drawing.Color.White;
-            this.lblZScreen.Location = new System.Drawing.Point(100, 48);
+            this.lblZScreen.ForeColor = System.Drawing.Color.Black;
+            this.lblZScreen.Location = new System.Drawing.Point(272, 64);
             this.lblZScreen.Name = "lblZScreen";
             this.lblZScreen.Size = new System.Drawing.Size(67, 13);
             this.lblZScreen.TabIndex = 2;
@@ -79,24 +83,23 @@
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.Black;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(280, 240);
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Location = new System.Drawing.Point(456, 224);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(83, 31);
+            this.btnClose.Size = new System.Drawing.Size(67, 31);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lblCopyright
             // 
+            this.lblCopyright.AutoSize = true;
             this.lblCopyright.BackColor = System.Drawing.Color.Transparent;
-            this.lblCopyright.ForeColor = System.Drawing.Color.White;
-            this.lblCopyright.Location = new System.Drawing.Point(16, 200);
+            this.lblCopyright.ForeColor = System.Drawing.Color.Black;
+            this.lblCopyright.Location = new System.Drawing.Point(272, 198);
             this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(352, 23);
+            this.lblCopyright.Size = new System.Drawing.Size(51, 13);
             this.lblCopyright.TabIndex = 4;
             this.lblCopyright.Text = "Copyright";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -105,8 +108,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(16, 160);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(272, 166);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(195, 26);
             this.label1.TabIndex = 5;
@@ -118,8 +121,8 @@
             this.lblBugs.BackColor = System.Drawing.Color.Transparent;
             this.lblBugs.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblBugs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblBugs.ForeColor = System.Drawing.Color.White;
-            this.lblBugs.Location = new System.Drawing.Point(179, 48);
+            this.lblBugs.ForeColor = System.Drawing.Color.Black;
+            this.lblBugs.Location = new System.Drawing.Point(344, 64);
             this.lblBugs.Name = "lblBugs";
             this.lblBugs.Size = new System.Drawing.Size(100, 13);
             this.lblBugs.TabIndex = 6;
@@ -130,8 +133,8 @@
             // 
             this.lblBerk.AutoSize = true;
             this.lblBerk.BackColor = System.Drawing.Color.Transparent;
-            this.lblBerk.ForeColor = System.Drawing.Color.White;
-            this.lblBerk.Location = new System.Drawing.Point(64, 84);
+            this.lblBerk.ForeColor = System.Drawing.Color.Black;
+            this.lblBerk.Location = new System.Drawing.Point(328, 92);
             this.lblBerk.Name = "lblBerk";
             this.lblBerk.Size = new System.Drawing.Size(108, 13);
             this.lblBerk.TabIndex = 7;
@@ -141,7 +144,7 @@
             // 
             this.pbTR.BackColor = System.Drawing.Color.Transparent;
             this.pbTR.Image = global::ZUploader.Properties.Resources.tr;
-            this.pbTR.Location = new System.Drawing.Point(16, 82);
+            this.pbTR.Location = new System.Drawing.Point(280, 90);
             this.pbTR.Name = "pbTR";
             this.pbTR.Size = new System.Drawing.Size(16, 16);
             this.pbTR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -153,7 +156,7 @@
             this.pbBerkURL.BackColor = System.Drawing.Color.Transparent;
             this.pbBerkURL.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbBerkURL.Image = global::ZUploader.Properties.Resources.application_browser;
-            this.pbBerkURL.Location = new System.Drawing.Point(40, 82);
+            this.pbBerkURL.Location = new System.Drawing.Point(304, 90);
             this.pbBerkURL.Name = "pbBerkURL";
             this.pbBerkURL.Size = new System.Drawing.Size(16, 16);
             this.pbBerkURL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -166,7 +169,7 @@
             this.pbMikeURL.BackColor = System.Drawing.Color.Transparent;
             this.pbMikeURL.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbMikeURL.Image = global::ZUploader.Properties.Resources.application_browser;
-            this.pbMikeURL.Location = new System.Drawing.Point(40, 104);
+            this.pbMikeURL.Location = new System.Drawing.Point(304, 112);
             this.pbMikeURL.Name = "pbMikeURL";
             this.pbMikeURL.Size = new System.Drawing.Size(16, 16);
             this.pbMikeURL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -178,7 +181,7 @@
             // 
             this.pbAU.BackColor = System.Drawing.Color.Transparent;
             this.pbAU.Image = global::ZUploader.Properties.Resources.au;
-            this.pbAU.Location = new System.Drawing.Point(16, 104);
+            this.pbAU.Location = new System.Drawing.Point(280, 112);
             this.pbAU.Name = "pbAU";
             this.pbAU.Size = new System.Drawing.Size(16, 16);
             this.pbAU.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -189,8 +192,8 @@
             // 
             this.lblMike.AutoSize = true;
             this.lblMike.BackColor = System.Drawing.Color.Transparent;
-            this.lblMike.ForeColor = System.Drawing.Color.White;
-            this.lblMike.Location = new System.Drawing.Point(64, 106);
+            this.lblMike.ForeColor = System.Drawing.Color.Black;
+            this.lblMike.Location = new System.Drawing.Point(328, 114);
             this.lblMike.Name = "lblMike";
             this.lblMike.Size = new System.Drawing.Size(164, 13);
             this.lblMike.TabIndex = 11;
@@ -201,7 +204,7 @@
             this.pbBrandonURL.BackColor = System.Drawing.Color.Transparent;
             this.pbBrandonURL.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbBrandonURL.Image = global::ZUploader.Properties.Resources.application_browser;
-            this.pbBrandonURL.Location = new System.Drawing.Point(40, 128);
+            this.pbBrandonURL.Location = new System.Drawing.Point(304, 136);
             this.pbBrandonURL.Name = "pbBrandonURL";
             this.pbBrandonURL.Size = new System.Drawing.Size(16, 16);
             this.pbBrandonURL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -213,7 +216,7 @@
             // 
             this.pbUS.BackColor = System.Drawing.Color.Transparent;
             this.pbUS.Image = global::ZUploader.Properties.Resources.us;
-            this.pbUS.Location = new System.Drawing.Point(16, 128);
+            this.pbUS.Location = new System.Drawing.Point(280, 136);
             this.pbUS.Name = "pbUS";
             this.pbUS.Size = new System.Drawing.Size(16, 16);
             this.pbUS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -224,19 +227,38 @@
             // 
             this.lblBrandon.AutoSize = true;
             this.lblBrandon.BackColor = System.Drawing.Color.Transparent;
-            this.lblBrandon.ForeColor = System.Drawing.Color.White;
-            this.lblBrandon.Location = new System.Drawing.Point(64, 130);
+            this.lblBrandon.ForeColor = System.Drawing.Color.Black;
+            this.lblBrandon.Location = new System.Drawing.Point(328, 138);
             this.lblBrandon.Name = "lblBrandon";
             this.lblBrandon.Size = new System.Drawing.Size(177, 13);
             this.lblBrandon.TabIndex = 15;
             this.lblBrandon.Text = "inf1ni (rgrthat) - Brandon Zimmerman";
             // 
+            // pbLogo
+            // 
+            this.pbLogo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pbLogo.Image = global::ZUploader.Properties.Resources.ZUploaderLogo;
+            this.pbLogo.Location = new System.Drawing.Point(0, 0);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(264, 264);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbLogo.TabIndex = 19;
+            this.pbLogo.TabStop = false;
+            // 
+            // uclUpdate
+            // 
+            this.uclUpdate.Location = new System.Drawing.Point(272, 35);
+            this.uclUpdate.Name = "uclUpdate";
+            this.uclUpdate.Size = new System.Drawing.Size(250, 24);
+            this.uclUpdate.TabIndex = 20;
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(379, 283);
+            this.ClientSize = new System.Drawing.Size(533, 264);
+            this.Controls.Add(this.uclUpdate);
+            this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.pbBrandonURL);
             this.Controls.Add(this.pbUS);
             this.Controls.Add(this.lblBrandon);
@@ -258,13 +280,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZUploader - About";
             this.Shown += new System.EventHandler(this.AboutForm_Shown);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.AboutForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pbTR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBerkURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMikeURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAU)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBrandonURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,5 +309,7 @@
         private System.Windows.Forms.PictureBox pbBrandonURL;
         private System.Windows.Forms.PictureBox pbUS;
         private System.Windows.Forms.Label lblBrandon;
+        private System.Windows.Forms.PictureBox pbLogo;
+        private ZSS.UpdateCheckerLib.UpdateCheckerLabel uclUpdate;
     }
 }

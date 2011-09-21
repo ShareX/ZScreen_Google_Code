@@ -30,6 +30,8 @@ using System.Reflection;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
+using UploadersLib;
+using ZSS.UpdateCheckerLib;
 
 namespace ZUploader
 {
@@ -41,23 +43,16 @@ namespace ZUploader
             Text = Program.Title;
             lblProductName.Text = Program.Title;
             lblCopyright.Text = AssemblyCopyright;
+
+            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Application.ProductVersion),
+                ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy);
+            uclUpdate.CheckUpdate(updateChecker);
         }
 
         private void AboutForm_Shown(object sender, EventArgs e)
         {
             this.BringToFront();
             this.Activate();
-        }
-
-        private void AboutForm_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            Rectangle rect = new Rectangle(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.Black, Color.FromArgb(50, 50, 50), LinearGradientMode.Vertical))
-            {
-                brush.SetSigmaBellShape(0.25f);
-                g.FillRectangle(brush, rect);
-            }
         }
 
         public string AssemblyCopyright

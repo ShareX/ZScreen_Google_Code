@@ -45,6 +45,13 @@ namespace ZSS.UpdateCheckerLib
         Dev
     }
 
+    public enum UpdateStatus
+    {
+        UpdateCheckFailed,
+        UpdateRequired,
+        UpToDate
+    }
+
     public class UpdateChecker
     {
         public string URL { get; private set; }
@@ -56,7 +63,7 @@ namespace ZSS.UpdateCheckerLib
         private IWebProxy proxy;
         private NewVersionWindowOptions nvwo;
 
-        public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo)
+        public UpdateChecker(string url, string applicationName, Version applicationVersion, ReleaseChannelType channel, IWebProxy proxy, NewVersionWindowOptions nvwo = null)
         {
             URL = url;
             ApplicationName = applicationName;
@@ -66,8 +73,11 @@ namespace ZSS.UpdateCheckerLib
             this.nvwo = nvwo;
         }
 
-        public string CheckUpdate()
+        public bool CheckUpdate()
         {
+            UpdateInfo = new UpdateInfo(ReleaseChannel);
+            UpdateInfo.ApplicationVersion = ApplicationVersion;
+
             try
             {
                 using (WebClient wc = new WebClient { Proxy = proxy })
@@ -99,21 +109,33 @@ namespace ZSS.UpdateCheckerLib
 
                         if (xe != null)
                         {
-                            UpdateInfo = new UpdateInfo(ReleaseChannel)
-                            {
-                                ApplicationVersion = ApplicationVersion,
-                                LatestVersion = new Version(xe.GetValue("Version")),
-                                URL = xe.GetValue("URL"),
-                                Date = DateTime.Parse(xe.GetValue("Date"), CultureInfo.InvariantCulture),
-                                Summary = xe.GetValue("Summary")
-                            };
+                            UpdateInfo.LatestVersion = new Version(xe.GetValue("Version"));
+                            UpdateInfo.URL = xe.GetValue("URL");
+                            UpdateInfo.Date = DateTime.Parse(xe.GetValue("Date"), CultureInfo.InvariantCulture);
+                            UpdateInfo.Summary = xe.GetValue("Summary");
 
-                            if (UpdateInfo.IsUpdateRequired && !string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
+                            if (UpdateInfo.IsUpdateRequired)
                             {
-                                UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
+                                UpdateInfo.Status = UpdateStatus.UpdateRequired;
+
+                                if (!string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
+                                {
+                                    try
+                                    {
+                                        UpdateInfo.Summary = wc.DownloadString(UpdateInfo.Summary.Trim());
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        StaticHelper.WriteException(ex);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                UpdateInfo.Status = UpdateStatus.UpToDate;
                             }
 
-                            return UpdateInfo.ToString();
+                            return true;
                         }
                     }
                 }
@@ -121,10 +143,11 @@ namespace ZSS.UpdateCheckerLib
             catch (Exception ex)
             {
                 StaticHelper.WriteException(ex);
-                return "Update check failed:\r\n" + ex.ToString();
             }
 
-            return null;
+            UpdateInfo.Status = UpdateStatus.UpdateCheckFailed;
+
+            return false;
         }
 
         public bool ShowPrompt()
