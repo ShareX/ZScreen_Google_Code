@@ -56,9 +56,13 @@ namespace ZUploader
         private void AfterShownJobs()
         {
             SplashForm.CloseSplash();
+
             BringToFront();
             Activate();
+
+            InitCaptureHotkeys();
             UseCommandLineArg(Program.CommandLineArg);
+
             IsReady = true;
         }
 

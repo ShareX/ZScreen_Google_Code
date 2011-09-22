@@ -76,6 +76,8 @@ namespace ScreenCapture
                 LoadBackground(backgroundImage);
             }
 
+            Config = new SurfaceOptions();
+
             DrawableObjects = new List<DrawableObject>();
 
             timer = new Stopwatch();
@@ -472,7 +474,7 @@ namespace ScreenCapture
         public bool DrawBorder { get; set; }
         [Category("Shape"), DefaultValue(false), Description("Draw checkerboard pattern replacing transparent areas.")]
         public bool DrawChecker { get; set; }
-        [Category("Shape"), DefaultValue(true), Description("Complete capture as soon as the mouse button is released, except when capturing polygon.")]
+        [Category("Shape"), DefaultValue(false), Description("Complete capture as soon as the mouse button is released, except when capturing polygon.")]
         public bool QuickCrop { get; set; }
 
         [Category("Shape"), DefaultValue(1), Description("Minimum number of pixels to move shape at each arrow key stroke while pressing Ctrl key.")]
@@ -487,18 +489,20 @@ namespace ScreenCapture
 
         public SurfaceOptions()
         {
-            ApplyDefaultValues(this);
-            FixedSize = new Size(250, 250);
+            ApplyDefaultValues();
         }
 
-        public static void ApplyDefaultValues(object self)
+        public void ApplyDefaultValues()
         {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
+            DrawBorder = false;
+            DrawChecker = false;
+            QuickCrop = false;
+
+            MinMoveSpeed = 1;
+            MaxMoveSpeed = 5;
+
+            IsFixedSize = false;
+            FixedSize = new Size(250, 250);
         }
     }
 }

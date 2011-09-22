@@ -123,6 +123,13 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Diamond {
+            get {
+                object obj = ResourceManager.GetObject("Diamond", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap document__arrow {
             get {
                 object obj = ResourceManager.GetObject("document--arrow", resourceCulture);
@@ -151,9 +158,30 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Ellipse {
+            get {
+                object obj = ResourceManager.GetObject("Ellipse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap folder__plus {
             get {
                 object obj = ResourceManager.GetObject("folder--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap FreeHand {
+            get {
+                object obj = ResourceManager.GetObject("FreeHand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Fullscreen {
+            get {
+                object obj = ResourceManager.GetObject("Fullscreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +221,30 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Polygon {
+            get {
+                object obj = ResourceManager.GetObject("Polygon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap present {
             get {
                 object obj = ResourceManager.GetObject("present", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Rectangle {
+            get {
+                object obj = ResourceManager.GetObject("Rectangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RoundedRectangle {
+            get {
+                object obj = ResourceManager.GetObject("RoundedRectangle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -210,6 +259,13 @@ namespace ZUploader.Properties {
         internal static System.Drawing.Bitmap tr {
             get {
                 object obj = ResourceManager.GetObject("tr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Triangle {
+            get {
+                object obj = ResourceManager.GetObject("Triangle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
