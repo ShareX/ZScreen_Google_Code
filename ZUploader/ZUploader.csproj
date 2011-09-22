@@ -97,6 +97,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\MainForm_Capture.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +171,10 @@
     <Compile Include="UploadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
+      <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
+      <Name>ScreenCapture</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
       <Name>ZSS.UploadersAPILib</Name>
@@ -190,6 +197,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\RoundedRectangle.png" />
+    <None Include="Resources\Rectangle.png" />
+    <None Include="Resources\Polygon.png" />
+    <None Include="Resources\Fullscreen.png" />
+    <None Include="Resources\FreeHand.png" />
+    <None Include="Resources\Ellipse.png" />
+    <None Include="Resources\Triangle.png" />
     <None Include="Resources\camera.png" />
     <None Include="Resources\monitor.png" />
     <None Include="Resources\ZUploader.ico" />
