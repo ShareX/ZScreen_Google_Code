@@ -502,6 +502,11 @@ namespace UploadersLib
             Config.EmailPassword = txtEmailPassword.Text;
         }
 
+        private void chkEmailConfirm_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.EmailConfirmSend = chkEmailConfirm.Checked;
+        }
+
         private void cbRememberLastToEmail_CheckedChanged(object sender, EventArgs e)
         {
             Config.EmailRememberLastTo = cbEmailRememberLastTo.Checked;

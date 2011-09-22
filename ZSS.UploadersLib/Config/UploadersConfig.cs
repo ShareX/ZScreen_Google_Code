@@ -107,9 +107,10 @@ namespace UploadersLib
         public string EmailFrom = "...@gmail.com";
         public string EmailPassword = string.Empty;
         public bool EmailRememberLastTo = true;
+        public bool EmailConfirmSend = true;
         public string EmailLastTo = string.Empty;
         public string EmailDefaultSubject = "Sending Email from ZScreen";
-        public string EmailDefaultBody = string.Empty;
+        public string EmailDefaultBody = "Screenshot is attached.";
 
         // Dropbox
 
