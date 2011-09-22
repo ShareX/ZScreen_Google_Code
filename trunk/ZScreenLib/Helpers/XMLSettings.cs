@@ -36,6 +36,7 @@ using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
+using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZSS.IndexersLib;
@@ -180,6 +181,8 @@ namespace ZScreenLib
         public bool FreehandCropAutoUpload = false;
         public bool FreehandCropAutoClose = false;
         public bool FreehandCropShowRectangleBorder = false;
+
+        public SurfaceOptions SurfaceConfig = new SurfaceOptions();
 
         // Interaction
 

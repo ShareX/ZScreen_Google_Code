@@ -147,6 +147,7 @@ namespace ZScreenGUI
             cbFreehandCropAutoUpload.Checked = Engine.conf.FreehandCropAutoUpload;
             cbFreehandCropAutoClose.Checked = Engine.conf.FreehandCropAutoClose;
             cbFreehandCropShowRectangleBorder.Checked = Engine.conf.FreehandCropShowRectangleBorder;
+            pgSurfaceConfig.SelectedObject = Engine.conf.SurfaceConfig;
 
             // Naming Conventions
             txtActiveWindow.Text = Engine.CoreConf.ActiveWindowPattern;

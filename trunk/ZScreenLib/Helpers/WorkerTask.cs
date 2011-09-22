@@ -588,7 +588,7 @@ namespace ZScreenLib
 
         public bool CaptureRegion()
         {
-            RegionCapturePreview rcp = new RegionCapturePreview();
+            RegionCapturePreview rcp = new RegionCapturePreview(Engine.conf.SurfaceConfig);
 
             if (rcp.ShowDialog() == DialogResult.OK)
             {
@@ -772,7 +772,7 @@ namespace ZScreenLib
                     ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
                     AddUploadResult(ur);
                 }
-              
+
                 // todo: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
 
                 if (!File.Exists(LocalFilePath))

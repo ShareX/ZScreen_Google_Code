@@ -342,10 +342,6 @@ namespace ZScreenGUI
             }
 
             rtbDebugLog.Text = Engine.MyLogger.ToString();
-            foreach (WorkerTask.TaskStatus ts in task.Status)
-            {
-                Console.WriteLine(ts.ToString());
-            }
         }
 
         #endregion Worker Events

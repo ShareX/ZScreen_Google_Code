@@ -37,12 +37,7 @@ namespace ScreenCapture
     {
         public Image SurfaceImage { get; protected set; }
 
-        public bool DrawBorder { get; set; }
-        public bool DrawChecker { get; set; }
-        public bool QuickCrop { get; set; }
-
-        public int MinMoveSpeed { get; set; }
-        public int MaxMoveSpeed { get; set; }
+        public SurfaceOptions Config { get; set; }
 
         protected Rectangle area;
 
@@ -81,8 +76,6 @@ namespace ScreenCapture
                 LoadBackground(backgroundImage);
             }
 
-            MinMoveSpeed = 1;
-            MaxMoveSpeed = 5;
             DrawableObjects = new List<DrawableObject>();
 
             timer = new Stopwatch();
@@ -150,13 +143,13 @@ namespace ScreenCapture
 
                     img = Helpers.CropImage(img, Rectangle.Round(bounds), gp);
 
-                    if (DrawBorder)
+                    if (Config.DrawBorder)
                     {
                         img = Helpers.DrawBorder(img, gp);
                     }
                 }
 
-                if (DrawChecker)
+                if (Config.DrawChecker)
                 {
                     img = Helpers.DrawCheckers(img);
                 }
@@ -165,7 +158,7 @@ namespace ScreenCapture
             {
                 img = Helpers.CropImage(img, Area);
 
-                if (DrawBorder)
+                if (Config.DrawBorder)
                 {
                     img = Helpers.DrawBorder(img);
                 }
@@ -233,7 +226,7 @@ namespace ScreenCapture
             {
                 isMouseDown = false;
 
-                if (QuickCrop && !(this is PolygonRegion))
+                if (Config.QuickCrop && !(this is PolygonRegion))
                 {
                     Close();
                 }
@@ -246,11 +239,11 @@ namespace ScreenCapture
 
             if (e.Control)
             {
-                speed = MaxMoveSpeed;
+                speed = Config.MaxMoveSpeed;
             }
             else
             {
-                speed = MinMoveSpeed;
+                speed = Config.MinMoveSpeed;
             }
 
             switch (e.KeyCode)
@@ -399,7 +392,7 @@ namespace ScreenCapture
                 rect = new RectangleF(Width / 2 - size.Width / 2, Height - size.Height - offset - 1, size.Width, size.Height);
             }
 
-            Helpers.DrawTextWithShadow(g, text, rect.Location, textFont, Color.White, Color.Black, 1);
+            Helpers.DrawTextWithShadow(g, text, Screen.PrimaryScreen.Bounds.Location, textFont, Color.White, Color.Black, 1);
         }
 
         protected Rectangle CalculateAreaFromNodes()
@@ -471,5 +464,41 @@ namespace ScreenCapture
         }
 
         #endregion Windows Form Designer generated code
+    }
+
+    public class SurfaceOptions
+    {
+        [Category("Shape"), DefaultValue(false), Description("Draw border around the shape")]
+        public bool DrawBorder { get; set; }
+        [Category("Shape"), DefaultValue(false), Description("Draw checkerboard pattern replacing transparent areas.")]
+        public bool DrawChecker { get; set; }
+        [Category("Shape"), DefaultValue(true), Description("Complete capture as soon as the mouse button is released, except when capturing polygon.")]
+        public bool QuickCrop { get; set; }
+
+        [Category("Shape"), DefaultValue(1), Description("Minimum number of pixels to move shape at each arrow key stroke while pressing Ctrl key.")]
+        public int MinMoveSpeed { get; set; }
+        [Category("Shape"), DefaultValue(5), Description("Minimum number of pixels to move shape at each arrow key stroke while pressing Ctrl key and Shift key.")]
+        public int MaxMoveSpeed { get; set; }
+
+        [Category("Shape / Rectangle"), DefaultValue(false), Description("Fixed rectangle")]
+        public bool IsFixedSize { get; set; }
+        [Category("Shape / Rectangle"), Description("Fixed rectangle size.")]
+        public Size FixedSize { get; set; }
+
+        public SurfaceOptions()
+        {
+            ApplyDefaultValues(this);
+            FixedSize = new Size(250, 250);
+        }
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
     }
 }
