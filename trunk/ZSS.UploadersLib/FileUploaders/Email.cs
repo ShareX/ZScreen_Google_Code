@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 
@@ -37,5 +38,13 @@ namespace UploadersLib.FileUploaders
                 smtp.Send(message);
             }
         }
+    }
+
+    public enum EmailProtocol
+    {
+        [Description("SMTP")]
+        Smtp,
+        [Description("IMAP")]
+        Imap
     }
 }

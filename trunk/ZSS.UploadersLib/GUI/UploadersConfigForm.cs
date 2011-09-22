@@ -779,5 +779,11 @@ namespace UploadersLib
         }
 
         #endregion URL Shorteners
+
+        private void btnGmailAuth_Click(object sender, EventArgs e)
+        {
+            Gmail gmail = new Gmail("mcored@gmail.com", new OAuthInfo(APIKeys.GoogleConsumerKey, APIKeys.GoogleConsumerSecret));
+            StaticHelper.LoadBrowser(gmail.GetAuthorizationURL());
+        }
     }
 }
