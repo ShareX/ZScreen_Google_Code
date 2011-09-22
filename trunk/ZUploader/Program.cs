@@ -53,7 +53,6 @@ namespace ZUploader
         private static readonly string HistoryFileName = "UploadersHistory.xml";
         private static readonly string UploadersConfigFileName = "UploadersConfig.xml";
         private static readonly string LogFileName = ApplicationName + "Log-{0}-{1}.txt";
-        private static readonly string PluginsFolderName = ApplicationName + "Plugins";
 
         public static string PersonalPath
         {
@@ -114,14 +113,6 @@ namespace ZUploader
             {
                 DateTime now = FastDateTime.Now;
                 return Path.Combine(PersonalPath, string.Format(LogFileName, now.Year, now.Month));
-            }
-        }
-
-        public static string PluginsFolderPath
-        {
-            get
-            {
-                return Path.Combine(Application.StartupPath, PluginsFolderName);
             }
         }
 

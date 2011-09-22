@@ -4,12 +4,11 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using ScreenCapture;
-using ZUploaderPluginBase;
 using ZUploaderScreenshotPlugin.Properties;
 
 namespace ZUploaderScreenshotPlugin
 {
-    public class ScreenshotPlugin : ZUploaderPlugin
+    /*public class ScreenshotPlugin
     {
         public override string Name
         {
@@ -112,15 +111,6 @@ namespace ZUploaderScreenshotPlugin
             Host.RegisterPluginHotkey(Keys.Alt | Keys.PrintScreen, () => CaptureActiveWindow(false));
 
             #endregion Hotkeys
-
-            Host.AddPluginButton(tsmiFullscreen);
-            Host.AddPluginButton(tsmiRectangle);
-            Host.AddPluginButton(tsmiRoundedRectangle);
-            Host.AddPluginButton(tsmiEllipse);
-            Host.AddPluginButton(tsmiTriangle);
-            Host.AddPluginButton(tsmiDiamond);
-            Host.AddPluginButton(tsmiPolygon);
-            Host.AddPluginButton(tsmiFreeHand);
         }
 
         private void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)
@@ -230,5 +220,5 @@ namespace ZUploaderScreenshotPlugin
         {
             CaptureRegion(new FreeHandRegion());
         }
-    }
+    }*/
 }

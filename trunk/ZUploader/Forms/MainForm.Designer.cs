@@ -68,6 +68,8 @@ namespace ZUploader
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsddbCapture = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsbDebug = new System.Windows.Forms.ToolStripButton();
             this.tssMain1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbCopy = new System.Windows.Forms.ToolStripButton();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
@@ -102,7 +104,6 @@ namespace ZUploader
             this.tsmiTrayFileUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiTrayExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbDebug = new System.Windows.Forms.ToolStripButton();
             this.cmsUploads.SuspendLayout();
             this.tsMain.SuspendLayout();
             this.tscMain.ContentPanel.SuspendLayout();
@@ -206,6 +207,7 @@ namespace ZUploader
             this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClipboardUpload,
             this.tsbFileUpload,
+            this.tsddbCapture,
             this.tsbDebug,
             this.tssMain1,
             this.tsbCopy,
@@ -243,6 +245,24 @@ namespace ZUploader
             this.tsbFileUpload.Size = new System.Drawing.Size(94, 20);
             this.tsbFileUpload.Text = "File upload...";
             this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
+            // 
+            // tsddbCapture
+            // 
+            this.tsddbCapture.Image = global::ZUploader.Properties.Resources.camera;
+            this.tsddbCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbCapture.Name = "tsddbCapture";
+            this.tsddbCapture.Size = new System.Drawing.Size(78, 20);
+            this.tsddbCapture.Text = "Capture";
+            // 
+            // tsbDebug
+            // 
+            this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
+            this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDebug.Name = "tsbDebug";
+            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
+            this.tsbDebug.Text = "Test upload";
+            this.tsbDebug.Visible = false;
+            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
             // 
             // tssMain1
             // 
@@ -520,16 +540,6 @@ namespace ZUploader
             this.tsmiTrayExit.Text = "Exit";
             this.tsmiTrayExit.Click += new System.EventHandler(this.tsmiTrayExit_Click);
             // 
-            // tsbDebug
-            // 
-            this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
-            this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDebug.Name = "tsbDebug";
-            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
-            this.tsbDebug.Text = "Test upload";
-            this.tsbDebug.Visible = false;
-            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -612,5 +622,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.NotifyIcon niTray;
         private System.Windows.Forms.ToolStripButton tsbDebug;
+        private System.Windows.Forms.ToolStripDropDownButton tsddbCapture;
     }
 }

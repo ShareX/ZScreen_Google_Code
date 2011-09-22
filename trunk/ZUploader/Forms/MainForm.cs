@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
@@ -34,15 +33,13 @@ using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.Properties;
-using ZUploaderPluginBase;
 
 namespace ZUploader
 {
-    public partial class MainForm : HotkeyForm, IPluginHost
+    public partial class MainForm : HotkeyForm
     {
         public bool IsReady { get; private set; }
 
-        private PluginManager pluginManager;
         private bool trayClose;
 
         public MainForm()
@@ -54,7 +51,6 @@ namespace ZUploader
         private void AfterLoadJobs()
         {
             LoadSettings();
-            LoadPlugins();
         }
 
         private void AfterShownJobs()
@@ -110,6 +106,7 @@ namespace ZUploader
             UploadManager.ListViewControl = lvUploads;
 
 #if DEBUG
+            // Test upload button
             tsbDebug.Visible = true;
 #endif
         }
@@ -149,15 +146,6 @@ namespace ZUploader
 
             ((ToolStripMenuItem)tsmiURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
-        }
-
-        private void LoadPlugins()
-        {
-            if (Program.Settings.LoadPluginsOnStartup)
-            {
-                pluginManager = new PluginManager(Program.PluginsFolderPath, this);
-                pluginManager.LoadPlugins();
-            }
         }
 
         private void UpdateControls()
@@ -637,49 +625,5 @@ namespace ZUploader
         #endregion Tray events
 
         #endregion Form events
-
-        #region IPluginHost
-
-        public void AddPluginButton(ToolStripMenuItem tsmi)
-        {
-            if (tsmi != null)
-            {
-                if (!tsddbPlugins.Visible) tsddbPlugins.Visible = true;
-
-                tsddbPlugins.DropDownItems.Add(tsmi);
-            }
-        }
-
-        public void UploadFile(string path)
-        {
-            UploadManager.UploadFile(path);
-        }
-
-        public void UploadFile(string[] files)
-        {
-            UploadManager.UploadFile(files);
-        }
-
-        public void UploadImage(Image img)
-        {
-            UploadManager.UploadImage(img);
-        }
-
-        public void UploadText(string text)
-        {
-            UploadManager.UploadText(text);
-        }
-
-        public void RegisterPluginHotkey(Keys key, Action action)
-        {
-            RegisterHotkey(key, action);
-        }
-
-        public void UnregisterPluginHotkey(Keys key, Action action)
-        {
-            UnregisterHotkey(key);
-        }
-
-        #endregion IPluginHost
     }
 }

@@ -33,7 +33,7 @@
             this.pgProxy = new System.Windows.Forms.PropertyGrid();
             this.tcSettings = new System.Windows.Forms.TabControl();
             this.tpGeneral = new System.Windows.Forms.TabPage();
-            this.cbLoadPlugins = new System.Windows.Forms.CheckBox();
+            this.cbShowTray = new System.Windows.Forms.CheckBox();
             this.cbURLShortenAfterUpload = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOpenZUploaderPath = new System.Windows.Forms.Button();
@@ -82,7 +82,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbShowTray = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -148,7 +147,6 @@
             // tpGeneral
             // 
             this.tpGeneral.Controls.Add(this.cbShowTray);
-            this.tpGeneral.Controls.Add(this.cbLoadPlugins);
             this.tpGeneral.Controls.Add(this.cbURLShortenAfterUpload);
             this.tpGeneral.Controls.Add(this.label1);
             this.tpGeneral.Controls.Add(this.btnOpenZUploaderPath);
@@ -164,16 +162,16 @@
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
             // 
-            // cbLoadPlugins
+            // cbShowTray
             // 
-            this.cbLoadPlugins.AutoSize = true;
-            this.cbLoadPlugins.Location = new System.Drawing.Point(16, 136);
-            this.cbLoadPlugins.Name = "cbLoadPlugins";
-            this.cbLoadPlugins.Size = new System.Drawing.Size(136, 17);
-            this.cbLoadPlugins.TabIndex = 20;
-            this.cbLoadPlugins.Text = "Load plugins on startup";
-            this.cbLoadPlugins.UseVisualStyleBackColor = true;
-            this.cbLoadPlugins.CheckedChanged += new System.EventHandler(this.cbLoadPlugins_CheckedChanged);
+            this.cbShowTray.AutoSize = true;
+            this.cbShowTray.Location = new System.Drawing.Point(16, 112);
+            this.cbShowTray.Name = "cbShowTray";
+            this.cbShowTray.Size = new System.Drawing.Size(149, 17);
+            this.cbShowTray.TabIndex = 21;
+            this.cbShowTray.Text = "Show ZUploader tray icon";
+            this.cbShowTray.UseVisualStyleBackColor = true;
+            this.cbShowTray.CheckedChanged += new System.EventHandler(this.cbShowTray_CheckedChanged);
             // 
             // cbURLShortenAfterUpload
             // 
@@ -744,17 +742,6 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // cbShowTray
-            // 
-            this.cbShowTray.AutoSize = true;
-            this.cbShowTray.Location = new System.Drawing.Point(16, 112);
-            this.cbShowTray.Name = "cbShowTray";
-            this.cbShowTray.Size = new System.Drawing.Size(149, 17);
-            this.cbShowTray.TabIndex = 21;
-            this.cbShowTray.Text = "Show ZUploader tray icon";
-            this.cbShowTray.UseVisualStyleBackColor = true;
-            this.cbShowTray.CheckedChanged += new System.EventHandler(this.cbShowTray_CheckedChanged);
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -846,7 +833,6 @@
         private System.Windows.Forms.CheckBox cbUseCustomUploadersConfigPath;
         private System.Windows.Forms.Button btnLoadUploadersConfig;
         private System.Windows.Forms.Button btnAutofillProxy;
-        private System.Windows.Forms.CheckBox cbLoadPlugins;
         private System.Windows.Forms.CheckBox cbShowTray;
     }
 }
