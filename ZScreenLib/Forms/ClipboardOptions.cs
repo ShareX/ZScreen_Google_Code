@@ -15,15 +15,11 @@ namespace ZScreenLib
     public partial class ClipboardOptions : Form
     {
         private WorkerTask urTask = null;
+        private string longUrl = string.Empty;
 
         public ClipboardOptions(WorkerTask task)
         {
             InitializeComponent();
-
-            //if (task.TempImage != null)
-            //{
-            //    this.pbPreview.BackgroundImage = task.TempImage;
-            //}
 
             if (task != null && task.UploadResults.Count > 0)
             {
@@ -58,6 +54,10 @@ namespace ZScreenLib
                             string url = ur.GetUrlByType(type, path);
                             if (!string.IsNullOrEmpty(url))
                             {
+                                if (type == LinkFormatEnum.FULL)
+                                {
+                                    this.longUrl = url;
+                                }
                                 TreeNode tnLink = new TreeNode(type.GetDescription());
                                 tnLink.Nodes.Add(url);
                                 tnUploadResult.Nodes.Add(tnLink);
@@ -84,23 +84,29 @@ namespace ZScreenLib
 
                 this.MinimumSize = new Size(this.Width, this.Height);
 
-                Button btnOpenLocal = new Button();
-                btnOpenLocal.Text = "Open &Local file";
-                btnOpenLocal.AutoSize = true;
-                btnOpenLocal.Click += new EventHandler(btnOpenLocal_Click);
-                flpButtons.Controls.Add(btnOpenLocal);
+                if (File.Exists(task.LocalFilePath))
+                {
+                    Button btnOpenLocal = new Button();
+                    btnOpenLocal.Text = "Open &Local file";
+                    btnOpenLocal.AutoSize = true;
+                    btnOpenLocal.Click += new EventHandler(btnOpenLocal_Click);
+                    flpButtons.Controls.Add(btnOpenLocal);
 
-                Button btnOpenRemote = new Button();
-                btnOpenRemote.Text = "Open &Remote file";
-                btnOpenRemote.AutoSize = true;
-                btnOpenRemote.Click += new EventHandler(btnOpenRemote_Click);
-                flpButtons.Controls.Add(btnOpenRemote);
+                    Button btnDeleteClose = new Button();
+                    btnDeleteClose.Text = "&Delete Local file and Close";
+                    btnDeleteClose.AutoSize = true;
+                    btnDeleteClose.Click += new EventHandler(btnDeleteClose_Click);
+                    flpButtons.Controls.Add(btnDeleteClose);
+                }
 
-                Button btnDeleteClose = new Button();
-                btnDeleteClose.Text = "&Delete Local file and Close";
-                btnDeleteClose.AutoSize = true;
-                btnDeleteClose.Click += new EventHandler(btnDeleteClose_Click);
-                flpButtons.Controls.Add(btnDeleteClose);
+                if (!string.IsNullOrEmpty(longUrl))
+                {
+                    Button btnOpenRemote = new Button();
+                    btnOpenRemote.Text = "Open &Remote file";
+                    btnOpenRemote.AutoSize = true;
+                    btnOpenRemote.Click += new EventHandler(btnOpenRemote_Click);
+                    flpButtons.Controls.Add(btnOpenRemote);
+                }
 
                 Button btnClose = new Button();
                 btnClose.Text = "&Close";
@@ -114,7 +120,8 @@ namespace ZScreenLib
 
         private void btnCopyLink_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(tvLinks.SelectedNode.Text);
+            string url = string.IsNullOrEmpty(tvLinks.SelectedNode.Text) ? longUrl : tvLinks.SelectedNode.Text;
+            Clipboard.SetText(url);
         }
 
         private void btnCopyImage_Click(object sender, EventArgs e)
@@ -134,7 +141,8 @@ namespace ZScreenLib
 
         private void btnOpenRemote_Click(object sender, EventArgs e)
         {
-            string url = tvLinks.SelectedNode.Text;
+            string link = tvLinks.SelectedNode.Text;
+            string url = !string.IsNullOrEmpty(link) && FileSystem.IsValidLink(link) ? tvLinks.SelectedNode.Text : longUrl;
             if (FileSystem.IsValidLink(url))
             {
                 ThreadPool.QueueUserWorkItem(x => Process.Start(url));
