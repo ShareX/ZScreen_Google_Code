@@ -35,27 +35,46 @@ namespace ScreenCapture
 
         private Bitmap screenshot;
         private Surface surface;
+        public SurfaceOptions SurfaceConfig { get; set; }
 
-        public RegionCapturePreview()
+        public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
             screenshot = Helpers.GetScreenshot();
+
+            SurfaceConfig = surfaceConfig;
+
+            cbDrawBorder.Checked = surfaceConfig.DrawBorder;
+            cbDrawChecker.Checked = surfaceConfig.DrawChecker;
+            cbQuickCrop.Checked = surfaceConfig.QuickCrop;
         }
 
         private void CaptureRegion()
         {
             pbResult.Image = null;
 
-            surface.DrawBorder = cbDrawBorder.Checked;
-            surface.DrawChecker = cbDrawChecker.Checked;
-            surface.QuickCrop = cbQuickCrop.Checked;
+            if (SurfaceConfig != null)
+            {
+                surface.Config = SurfaceConfig;
+            }
+            else
+            {
+                surface.Config = new SurfaceOptions()
+                {
+                    DrawBorder = cbDrawBorder.Checked,
+                    DrawChecker = cbDrawChecker.Checked,
+                    QuickCrop = cbQuickCrop.Checked,
+                    MinMoveSpeed = 1,
+                    MaxMoveSpeed = 5
+                };
+            }
 
             if (surface is RectangleRegion)
             {
                 RectangleRegion rectangle = (RectangleRegion)surface;
-                if (rectangle.IsFixedSize = cbIsFixedSize.Checked)
+                if (rectangle.Config.IsFixedSize = cbIsFixedSize.Checked)
                 {
-                    rectangle.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
+                    rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
                 }
             }
 

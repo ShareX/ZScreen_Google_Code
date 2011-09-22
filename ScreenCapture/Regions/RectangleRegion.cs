@@ -29,9 +29,6 @@ namespace ScreenCapture
 {
     public class RectangleRegion : DragableRegion
     {
-        public bool IsFixedSize { get; set; }
-        public Size FixedSize { get; set; }
-
         protected NodeObject[] nodes;
 
         private Rectangle tempRect;
@@ -56,9 +53,9 @@ namespace ScreenCapture
 
             if (isMouseDown && !IsAreaCreated)
             {
-                if (IsFixedSize)
+                if (Config.IsFixedSize)
                 {
-                    area = new Rectangle(new Point(mousePosition.X - FixedSize.Width / 2, mousePosition.Y - FixedSize.Height / 2), FixedSize);
+                    area = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
                     areaObject.IsDragging = true;
                 }
                 else

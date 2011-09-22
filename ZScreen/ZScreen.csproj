@@ -158,15 +158,27 @@
     <Compile Include="Forms\DropWindow.Designer.cs">
       <DependentUpon>DropWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZScreenConfigGUI.cs" />
-    <Compile Include="Forms\ZScreenHelpers.cs" />
-    <Compile Include="Forms\ZScreenTray.cs" />
-    <Compile Include="Forms\ZScreenUserControls.cs" />
+    <Compile Include="Forms\ZScreenConfigGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenHelpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenUserControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Global\FormsMgr.cs" />
     <Compile Include="Helpers\FolderWatcher.cs" />
     <Compile Include="Global\ImageEditorHelper.cs" />
-    <Compile Include="Forms\ZScreenWorker.cs" />
-    <Compile Include="Forms\ZScreenOptionalTasks.cs" />
+    <Compile Include="Forms\ZScreenWorker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenOptionalTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Loader.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -181,13 +193,19 @@
     <Compile Include="Forms\ViewRemote.Designer.cs">
       <DependentUpon>ViewRemote.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ZScreen.cs" />
+    <Compile Include="Forms\ZScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ZScreen.Designer.cs">
       <DependentUpon>ZScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\ZScreenHotkeys.cs" />
-    <Compile Include="Forms\ZScreenClipboardHook.cs" />
+    <Compile Include="Forms\ZScreenHotkeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenClipboardHook.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -233,6 +251,10 @@
     <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
+      <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
+      <Name>ScreenCapture</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>

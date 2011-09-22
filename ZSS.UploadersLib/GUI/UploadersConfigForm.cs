@@ -336,6 +336,7 @@ namespace UploadersLib
         }
 
         #endregion Dropbox
+
         #region Minus
 
         private bool HasFolder(string name)
@@ -360,7 +361,7 @@ namespace UploadersLib
             if (Config.MinusConfig != null)
             {
                 Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
-                minus.RefreshAccessTokens(); 
+                minus.RefreshAccessTokens();
             }
         }
 
