@@ -57,7 +57,6 @@ namespace ZUploader
             cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
             cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
             cbShowTray.Checked = Program.Settings.ShowTray;
-            cbLoadPlugins.Checked = Program.Settings.LoadPluginsOnStartup;
 
             // Upload
             cbUseCustomUploadersConfigPath.Checked = Program.Settings.UseCustomUploadersConfigPath;
@@ -217,11 +216,6 @@ namespace ZUploader
                 Program.Settings.ShowTray = cbShowTray.Checked;
                 Program.mainForm.niTray.Visible = Program.Settings.ShowTray;
             }
-        }
-
-        private void cbLoadPlugins_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.LoadPluginsOnStartup = cbLoadPlugins.Checked;
         }
 
         private void btnOpenZUploaderPath_Click(object sender, EventArgs e)

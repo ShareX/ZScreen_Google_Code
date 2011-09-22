@@ -102,6 +102,13 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap camera {
+            get {
+                object obj = ResourceManager.GetObject("camera", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clipboard__plus {
             get {
                 object obj = ResourceManager.GetObject("clipboard--plus", resourceCulture);
