@@ -128,7 +128,7 @@ namespace UploadersLib
         FULL_IMAGE_WIKI,
         [Description("Full Image Link for MediaWiki")]
         FULL_IMAGE_MEDIAWIKI,
-        [Description("Full Image for Twitter")]
+        [Description("Shortened URL")]
         FULL_TINYURL,
         [Description("Linked Thumbnail for Forums")]
         LINKED_THUMBNAIL,
