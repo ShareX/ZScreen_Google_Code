@@ -237,6 +237,7 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
+            this.chkEmailConfirm = new System.Windows.Forms.CheckBox();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -422,8 +423,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(368, 20);
@@ -546,8 +547,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -686,8 +687,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -698,9 +699,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -822,7 +823,7 @@
             this.label8.Size = new System.Drawing.Size(649, 13);
             this.label8.TabIndex = 5;
             this.label8.Text = "New album name ( must be between 2 and 50 characters. Valid characters are letter" +
-                "s, numbers, underscore ( _ ), hyphen (-), and space )";
+    "s, numbers, underscore ( _ ), hyphen (-), and space )";
             // 
             // lblPhotobucketParentAlbumPath
             // 
@@ -1100,9 +1101,9 @@
             // 
             // ucMediaWikiAccounts
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
@@ -2289,6 +2290,7 @@
             // 
             // tpEmail
             // 
+            this.tpEmail.Controls.Add(this.chkEmailConfirm);
             this.tpEmail.Controls.Add(this.cbEmailRememberLastTo);
             this.tpEmail.Controls.Add(this.txtEmailDefaultBody);
             this.tpEmail.Controls.Add(this.lblEmailDefaultBody);
@@ -2315,9 +2317,9 @@
             this.cbEmailRememberLastTo.AutoSize = true;
             this.cbEmailRememberLastTo.Location = new System.Drawing.Point(24, 104);
             this.cbEmailRememberLastTo.Name = "cbEmailRememberLastTo";
-            this.cbEmailRememberLastTo.Size = new System.Drawing.Size(150, 17);
+            this.cbEmailRememberLastTo.Size = new System.Drawing.Size(179, 17);
             this.cbEmailRememberLastTo.TabIndex = 12;
-            this.cbEmailRememberLastTo.Text = "Remember last \"To Email\"";
+            this.cbEmailRememberLastTo.Text = "Remember last recipient address";
             this.cbEmailRememberLastTo.UseVisualStyleBackColor = true;
             this.cbEmailRememberLastTo.CheckedChanged += new System.EventHandler(this.cbRememberLastToEmail_CheckedChanged);
             // 
@@ -2470,6 +2472,17 @@
             this.actRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
+            // 
+            // chkEmailConfirm
+            // 
+            this.chkEmailConfirm.AutoSize = true;
+            this.chkEmailConfirm.Location = new System.Drawing.Point(224, 104);
+            this.chkEmailConfirm.Name = "chkEmailConfirm";
+            this.chkEmailConfirm.Size = new System.Drawing.Size(134, 17);
+            this.chkEmailConfirm.TabIndex = 13;
+            this.chkEmailConfirm.Text = "Confirm before sending";
+            this.chkEmailConfirm.UseVisualStyleBackColor = true;
+            this.chkEmailConfirm.CheckedChanged += new System.EventHandler(this.chkEmailConfirm_CheckedChanged);
             // 
             // UploadersConfigForm
             // 
@@ -2768,5 +2781,6 @@
         private System.Windows.Forms.Button btnMinusReadFolderList;
         private System.Windows.Forms.Button btnAuthRefresh;
         private System.Windows.Forms.GroupBox gbMinusUserPass;
+        private System.Windows.Forms.CheckBox chkEmailConfirm;
     }
 }

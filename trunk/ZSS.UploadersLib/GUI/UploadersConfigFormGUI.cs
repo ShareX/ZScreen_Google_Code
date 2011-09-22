@@ -250,6 +250,7 @@ namespace UploadersLib
             nudEmailSmtpPort.Value = Config.EmailSmtpPort;
             txtEmailFrom.Text = Config.EmailFrom;
             txtEmailPassword.Text = Config.EmailPassword;
+            chkEmailConfirm.Checked = Config.EmailConfirmSend;
             cbEmailRememberLastTo.Checked = Config.EmailRememberLastTo;
             txtEmailDefaultSubject.Text = Config.EmailDefaultSubject;
             txtEmailDefaultBody.Text = Config.EmailDefaultBody;
