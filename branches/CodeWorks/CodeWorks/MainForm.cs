@@ -18,7 +18,7 @@ namespace CodeWorks
         public MainForm()
         {
             InitializeComponent();
-            searchText = Resources.SearchText;
+            searchText = Resources.ZUploaderLicense;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

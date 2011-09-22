@@ -1,10 +1,9 @@
-using System;
-using System.Xml.Serialization;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace HelpersLib
 {
-    public class CloneManager:IClone
+    public class CloneManager : IClone
     {
         /// <summary>
         /// Clones the specified instance.

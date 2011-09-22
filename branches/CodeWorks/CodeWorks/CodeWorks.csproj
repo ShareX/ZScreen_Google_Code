@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ZScreenLicense.txt" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,7 +87,7 @@
     <Compile Include="TextInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SearchText.txt" />
+    <Content Include="ZUploaderLicense.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
