@@ -69,7 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserControls\ObjectListView.cs" />
+    <Compile Include="UserControls\ObjectListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="HistoryForm.cs">
       <SubType>Form</SubType>
