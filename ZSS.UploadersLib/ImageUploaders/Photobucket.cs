@@ -26,7 +26,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using HelpersLib;
 using UploadersLib.HelperClasses;

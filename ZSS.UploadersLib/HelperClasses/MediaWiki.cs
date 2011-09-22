@@ -68,6 +68,8 @@ namespace UploadersLib.HelperClasses
 
     public class MediaWiki
     {
+        // TODO: Use FileUploader class for uploading
+
         private MediaWikiOptions Options { get; set; }
 
         public MediaWiki(MediaWikiOptions options)

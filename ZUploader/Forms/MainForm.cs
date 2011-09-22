@@ -60,7 +60,7 @@ namespace ZUploader
             BringToFront();
             Activate();
 
-            InitCaptureHotkeys();
+            InitHotkeys();
             UseCommandLineArg(Program.CommandLineArg);
 
             IsReady = true;

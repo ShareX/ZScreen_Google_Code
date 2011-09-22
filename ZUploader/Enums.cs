@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZUploader - A program that allows you to upload images, text or files in your clipboard
+    ZUploader - A program that allows you to upload images, texts or files
     Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
@@ -93,6 +93,16 @@ namespace ZUploader
     public enum TaskJob
     {
         DataUpload, FileUpload, ImageUpload, TextUpload
+    }
+
+    public enum TaskStatus
+    {
+        InQueue, Preparing, Uploading, URLShortening, Completed
+    }
+
+    public enum TaskProgress
+    {
+        ReportStarted, ReportProgress
     }
 
     public enum ScreenshotDestination
