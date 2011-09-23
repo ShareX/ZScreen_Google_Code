@@ -145,5 +145,35 @@ namespace ScreenCapture
                 DialogResult = DialogResult.Cancel;
             }
         }
+
+        private void cbDrawBorder_CheckedChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.DrawBorder = cbDrawBorder.Checked;
+        }
+
+        private void cbDrawChecker_CheckedChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.DrawChecker = cbDrawChecker.Checked;
+        }
+
+        private void cbIsFixedSize_CheckedChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.IsFixedSize = cbIsFixedSize.Checked;
+        }
+
+        private void nudFixedWidth_ValueChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.FixedSize = new Size((int)nudFixedWidth.Value, SurfaceConfig.FixedSize.Height);
+        }
+
+        private void nudFixedHeight_ValueChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.FixedSize = new Size( SurfaceConfig.FixedSize.Width, (int)nudFixedHeight.Value);
+        }
+
+        private void cbQuickCrop_CheckedChanged(object sender, EventArgs e)
+        {
+            SurfaceConfig.QuickCrop = cbQuickCrop.Checked;
+        }
     }
 }
