@@ -1283,6 +1283,10 @@ namespace ZScreenGUI
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
             Engine.MyWorkflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            if ((int)nudSwitchAfter.Value == 0)
+                cboSwitchFormat.Enabled = false;
+            else
+                cboSwitchFormat.Enabled = true;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
