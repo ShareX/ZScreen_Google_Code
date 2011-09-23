@@ -70,6 +70,7 @@
             this.tsRegionTools.Location = new System.Drawing.Point(0, 0);
             this.tsRegionTools.Name = "tsRegionTools";
             this.tsRegionTools.Padding = new System.Windows.Forms.Padding(10, 10, 1, 0);
+            this.tsRegionTools.ShowItemToolTips = false;
             this.tsRegionTools.Size = new System.Drawing.Size(168, 649);
             this.tsRegionTools.TabIndex = 0;
             this.tsRegionTools.Text = "toolStrip1";
@@ -181,9 +182,9 @@
             // 
             // pImage
             // 
-            this.pImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pImage.AutoScroll = true;
             this.pImage.Controls.Add(this.pbResult);
             this.pImage.Location = new System.Drawing.Point(176, 32);

@@ -112,6 +112,7 @@ namespace ScreenCapture
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
+            this.Location = new Point(0, 0);
             g.FillRectangle(backgroundBrush, Bounds);
 
 #if DEBUG

@@ -136,7 +136,7 @@ namespace ScreenCapture
 
         private void RegionCapturePreview_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Result != null)
+            if (pbResult.Image != null)
             {
                 DialogResult = DialogResult.OK;
             }
