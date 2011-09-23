@@ -522,18 +522,27 @@ namespace HistoryLib
 
         private void tsmiDeleteFromHistory_Click(object sender, EventArgs e)
         {
-            RemoveSelectedHistoryItem();
+            while (lvHistory.SelectedItems.Count > 0)
+            {
+                RemoveSelectedHistoryItem();
+            }
         }
 
         private void tsmiDeleteLocalFile_Click(object sender, EventArgs e)
         {
-            him.DeleteLocalFile();
+            while (lvHistory.SelectedItems.Count > 0)
+            {
+                him.DeleteLocalFile();
+            }
         }
 
         private void tsmiDeleteFromHistoryAndLocalFile_Click(object sender, EventArgs e)
         {
-            RemoveSelectedHistoryItem();
-            him.DeleteLocalFile();
+            while (lvHistory.SelectedItems.Count > 0)
+            {
+                RemoveSelectedHistoryItem();
+                him.DeleteLocalFile();
+            }
         }
 
         private void tsmiMoreInfo_Click(object sender, EventArgs e)
