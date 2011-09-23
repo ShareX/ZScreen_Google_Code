@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using UploadersLib.HelperClasses;
+using System.Diagnostics;
 
 namespace UploadersLib.FileUploaders
 {
@@ -36,26 +37,31 @@ namespace UploadersLib.FileUploaders
         private const string URL_AUTH_REQUEST_BASE = "https://mail.google.com/mail/b/";
         private EmailProtocol Protocol = EmailProtocol.Smtp;
         private string URL_OAuthRequest = URL_AUTH_REQUEST_BASE;
+        private string EmailAddress = string.Empty; 
 
         public OAuthInfo AuthInfo { get; set; }
 
         public Gmail(string email_address, OAuthInfo oauth)
         {
-            this.URL_OAuthRequest = URL_AUTH_REQUEST_BASE + email_address + "/" + this.Protocol.ToString().ToLower() + "/?xoauth_requestor_id=" + System.Web.HttpUtility.UrlEncode(email_address);
+            this.URL_OAuthRequest = URL_AUTH_REQUEST_BASE + email_address + "/" + this.Protocol.ToString().ToLower();
+            this.EmailAddress = email_address;
             this.AuthInfo = oauth;
         }
 
         public string GetAuthorizationURL()
         {
             Dictionary<string, string> args = new Dictionary<string, string>();
-            args.Add("scope", "https://mail.google.com");
-            args.Add("xoauth_displayname", Application.ProductName);
+            args.Add("xoauth_requestor_id", System.Web.HttpUtility.UrlEncode(EmailAddress));
+            //args.Add("scope", "https://mail.google.com");
+            //args.Add("xoauth_displayname", Application.ProductName);
 
             string url = OAuthManager.GenerateQuery(URL_OAuthRequest, args, HttpMethod.Get, AuthInfo);
             string response = SendRequest(HttpMethod.Get, url);
             if (!string.IsNullOrEmpty(response))
             {
-                return OAuthManager.GetAuthorizationURL(response, AuthInfo, URLAuthorize);
+                Console.WriteLine(url);
+                string authurl = OAuthManager.GetAuthorizationURL(response, AuthInfo, URLAuthorize);
+                return authurl;
             }
 
             return null;

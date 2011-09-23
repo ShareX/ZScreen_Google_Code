@@ -7,8 +7,6 @@ namespace ZScreenLib
 {
     public partial class DestSelector : UserControl
     {
-        Timer tmrDropDownClose = new Timer() { Interval = 5000 };
-
         public DestSelector()
         {
             InitializeComponent();
@@ -148,13 +146,7 @@ namespace ZScreenLib
             tsddb.DropDown.AutoClose = false;
         }
 
-        private void tsDest_MouseLeave(object sender, System.EventArgs e)
-        {
-            tmrDropDownClose.Tick += new System.EventHandler(tmrDropDownClose_Tick);
-            tmrDropDownClose.Start();
-        }
-
-        private void tmrDropDownClose_Tick(object sender, System.EventArgs e)
+        public void DropDownMenusClose()
         {
             foreach (ToolStripItem tsi in tsDest.Items)
             {

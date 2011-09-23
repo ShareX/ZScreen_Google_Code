@@ -2324,5 +2324,10 @@ namespace ZScreenGUI
         {
             OutputsConfigExport();
         }
+
+        private void tpMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            ucDestOptions.DropDownMenusClose();
+        }
     }
 }

@@ -59,7 +59,10 @@ namespace HelpersLib
 
         public static void LoadBrowser(string url)
         {
-            ThreadPool.QueueUserWorkItem(x => Process.Start(url));
+            if (!string.IsNullOrEmpty(url))
+            {
+                ThreadPool.QueueUserWorkItem(x => Process.Start(url));
+            }
         }
     }
 }

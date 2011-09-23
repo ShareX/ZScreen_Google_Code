@@ -168,6 +168,7 @@
             this.cbDrawChecker.TabIndex = 2;
             this.cbDrawChecker.Text = "Draw checkered background";
             this.cbDrawChecker.UseVisualStyleBackColor = true;
+            this.cbDrawChecker.CheckedChanged += new System.EventHandler(this.cbDrawChecker_CheckedChanged);
             // 
             // cbDrawBorder
             // 
@@ -179,12 +180,13 @@
             this.cbDrawBorder.TabIndex = 3;
             this.cbDrawBorder.Text = "Draw border";
             this.cbDrawBorder.UseVisualStyleBackColor = true;
+            this.cbDrawBorder.CheckedChanged += new System.EventHandler(this.cbDrawBorder_CheckedChanged);
             // 
             // pImage
             // 
-            this.pImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pImage.AutoScroll = true;
             this.pImage.Controls.Add(this.pbResult);
             this.pImage.Location = new System.Drawing.Point(176, 32);
@@ -202,6 +204,7 @@
             this.cbIsFixedSize.TabIndex = 5;
             this.cbIsFixedSize.Text = "Is fixed size?";
             this.cbIsFixedSize.UseVisualStyleBackColor = true;
+            this.cbIsFixedSize.CheckedChanged += new System.EventHandler(this.cbIsFixedSize_CheckedChanged);
             // 
             // nudFixedWidth
             // 
@@ -224,6 +227,7 @@
             0,
             0,
             0});
+            this.nudFixedWidth.ValueChanged += new System.EventHandler(this.nudFixedWidth_ValueChanged);
             // 
             // nudFixedHeight
             // 
@@ -241,6 +245,7 @@
             0,
             0,
             0});
+            this.nudFixedHeight.ValueChanged += new System.EventHandler(this.nudFixedHeight_ValueChanged);
             // 
             // cbQuickCrop
             // 
@@ -252,6 +257,7 @@
             this.cbQuickCrop.TabIndex = 2;
             this.cbQuickCrop.Text = "Quick crop";
             this.cbQuickCrop.UseVisualStyleBackColor = true;
+            this.cbQuickCrop.CheckedChanged += new System.EventHandler(this.cbQuickCrop_CheckedChanged);
             // 
             // RegionCapturePreview
             // 
