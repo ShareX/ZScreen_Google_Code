@@ -146,5 +146,7 @@ namespace ZScreenLib
         Cropv1,
         [Description("Crop v2 - Advanced crop engine to move cropped region")]
         Cropv2,
+        [Description("Crop v3 - Crop Rectangle using Surface")]
+        Cropv3,
     }
 }
