@@ -67,6 +67,8 @@ namespace ZScreenGUI
 
         #endregion Variables
 
+        #region ZScreen Form Events
+
         public ZScreen()
         {
             InitializeComponent();
@@ -303,10 +305,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            ShowMainWindow();
-        }
+        #endregion ZScreen Form Events
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
         {
@@ -344,20 +343,7 @@ namespace ZScreenGUI
             return false;
         }
 
-        private void tsmiTab_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            tcMain.SelectedTab = tcMain.TabPages[(string)tsmi.Tag];
 
-            ShowWindow();
-            tcMain.Focus();
-        }
-
-        private void exitZScreenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CloseMethod = CloseMethod.TrayButton;
-            Close();
-        }
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
@@ -424,54 +410,7 @@ namespace ZScreenGUI
 
         #endregion Trim memory
 
-        private void RewriteImageEditorsRightClickMenu()
-        {
-            if (Engine.conf.ActionsAppList != null)
-            {
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-                tsmEditinImageSoftware.DropDownItems.Clear();
-
-                List<Software> imgs = Engine.conf.ActionsAppList;
-
-                //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                for (int x = 0; x < imgs.Count; x++)
-                {
-                    ToolStripMenuItem tsm = new ToolStripMenuItem
-                    {
-                        Tag = x,
-                        Text = imgs[x].Name,
-                        CheckOnClick = true,
-                        Checked = imgs[x].Enabled
-                    };
-                    tsm.Click += new EventHandler(TrayImageEditorClick);
-                    tsm.MouseEnter += new EventHandler(TrayImageEditor_MouseEnter);
-                    tsm.MouseLeave += new EventHandler(TrayImageEditor_MouseLeave);
-                    tsmEditinImageSoftware.DropDownItems.Add(tsm);
-                }
-
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                //show drop down menu in the correct place if menu is selected
-                if (tsmEditinImageSoftware.Selected)
-                {
-                    tsmEditinImageSoftware.DropDown.Hide();
-                    tsmEditinImageSoftware.DropDown.Show();
-                }
-            }
-        }
-
-        private void TrayImageEditor_MouseLeave(object sender, EventArgs e)
-        {
-            tsmEditinImageSoftware.DropDown.AutoClose = true;
-        }
-
-        private void TrayImageEditor_MouseEnter(object sender, EventArgs e)
-        {
-            tsmEditinImageSoftware.DropDown.AutoClose = false;
-        }
-
+  
         private void UpdateGuiEditors(object sender)
         {
             if (IsReady)
@@ -496,20 +435,6 @@ namespace ZScreenGUI
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
                     }
                 }
-            }
-        }
-
-        private void TrayImageEditorClick(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-
-            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text);
-
-            if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
-            {
-                tsmEditinImageSoftware.DropDown.AutoClose = false;
-                lbSoftware.SelectedItem = tsm.Text;
-                UpdateGuiEditors(sender);
             }
         }
 
@@ -602,11 +527,7 @@ namespace ZScreenGUI
             Engine.conf.PromptForOutputs = chkManualNaming.Checked;
         }
 
-        private void niTray2_BalloonTipClicked(object sender, EventArgs e)
-        {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-        }
+
 
         private void clipboardUpload_Click(object sender, EventArgs e)
         {

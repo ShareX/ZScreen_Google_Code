@@ -768,7 +768,7 @@ namespace ZScreenGUI
             this.tsmExitZScreen.Name = "tsmExitZScreen";
             this.tsmExitZScreen.Size = new System.Drawing.Size(205, 22);
             this.tsmExitZScreen.Text = "Exit ZScreen";
-            this.tsmExitZScreen.Click += new System.EventHandler(this.exitZScreenToolStripMenuItem_Click);
+            this.tsmExitZScreen.Click += new System.EventHandler(this.tsmExitZScreen_Click);
             // 
             // tsmActions
             // 
