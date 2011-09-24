@@ -82,9 +82,9 @@ namespace ZScreenLib
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, cwOutputs);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, cwClipboardContent);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, cwLinkFormat);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestFile, cwFileUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestFile, cwFileUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, cwImageUploaders);
-            Adapter.SaveMenuConfigToList(ucDestOptions.tsddDestText, cwTextUploaders);
+            Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestText, cwTextUploaders);
             Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, cwLinkUploaders);
 
             this.DialogResult = DialogResult.OK;

@@ -302,8 +302,8 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
-                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, MyTextUploaders);
-                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, MyFileUploaders);
+                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, MyTextUploaders);
+                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
@@ -1162,7 +1162,7 @@ namespace ZScreenLib
                     }
                     break;
                 case FileUploaderType.Minus:
-                    fileUploader = new Minus(Engine.MyWorkflow.OutputsConfig.MinusConfig, Engine.MyWorkflow.OutputsConfig.MinusOAuthInfo);
+                    fileUploader = new Minus(Engine.MyWorkflow.OutputsConfig.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
                     break;
                 case FileUploaderType.Dropbox:
                     string uploadPath = new NameParser { IsFolderPath = true }.Convert(Dropbox.TidyUploadPath(Engine.MyWorkflow.OutputsConfig.DropboxUploadPath));

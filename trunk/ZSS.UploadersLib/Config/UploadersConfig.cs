@@ -121,7 +121,6 @@ namespace UploadersLib
         // Minus
 
         public MinusOptions MinusConfig = new MinusOptions();
-        public OAuthInfo MinusOAuthInfo = null;
 
         // RapidShare
 

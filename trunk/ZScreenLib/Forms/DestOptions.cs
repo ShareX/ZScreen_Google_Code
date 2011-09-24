@@ -88,8 +88,8 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Task.MyWorkflow.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
-                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddDestText, Task.MyTextUploaders);
-                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddDestFile, Task.MyFileUploaders);
+                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, Task.MyTextUploaders);
+                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, Task.MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, Task.MyLinkUploaders);
 
                 this.Hide();
