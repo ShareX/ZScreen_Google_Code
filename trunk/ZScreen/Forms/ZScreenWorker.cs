@@ -270,10 +270,8 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    ClipboardUnhook();
                     UploadManager.ShowUploadResults(task, false);
-                    ClipboardHook(); // This is for Clipboard Monitoring - we resume monitoring the clipboard
-
+              
                     if (Engine.conf.TwitterEnabled)
                     {
                         Adapter.TwitterMsg(task);
@@ -484,32 +482,28 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboard()
         {
-            WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+            if (!Engine.IsClipboardUploading)
+            {
+                ClipboardUnhook();
 
-            if (Clipboard.ContainsImage())
-            {
-                cbTask.SetImage(Clipboard.GetImage());
-                // todo: check for bugs as this line is removed because it gets called under PublishData() cbTask.WriteImage();
-                cbTask.RunWorker();
-            }
-            else if (Clipboard.ContainsText())
-            {
-                string text = Clipboard.GetText();
-                if (text != Engine.zPreviousClipboardText)
+                WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+
+                if (Clipboard.ContainsImage())
                 {
-                    string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
-                    if (cbTask.MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
-                    {
-                        FileSystem.WriteText(cufp, text);
-                    }
-                    cbTask.UpdateLocalFilePath(cufp);
-                    cbTask.SetText(text);
+                    cbTask.SetImage(Clipboard.GetImage());
                     cbTask.RunWorker();
                 }
-            }
-            else if (Clipboard.ContainsFileDropList())
-            {
-                UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()).ToArray());
+                else if (Clipboard.ContainsText())
+                {
+                    string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                    cbTask.UpdateLocalFilePath(cufp);
+                    cbTask.SetText(Clipboard.GetText());
+                    cbTask.RunWorker();
+                }
+                else if (Clipboard.ContainsFileDropList())
+                {
+                    UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()).ToArray());
+                }
             }
         }
 

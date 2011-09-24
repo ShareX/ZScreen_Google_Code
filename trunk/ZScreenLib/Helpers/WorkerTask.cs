@@ -592,7 +592,7 @@ namespace ZScreenLib
                                     if (surface.ShowDialog() == DialogResult.OK)
                                     {
                                         SetImage(surface.GetRegionImage());
-                                    }                              
+                                    }
                                     break;
                             }
                         }
@@ -841,7 +841,15 @@ namespace ZScreenLib
             switch (oe)
             {
                 case OutputEnum.LocalDisk:
-                    WriteImage();
+                    switch (Job1)
+                    {
+                        case JobLevel1.Text:
+                            FileSystem.WriteText(LocalFilePath, TempText);
+                            break;
+                        default:
+                            WriteImage();
+                            break;
+                    }
                     break;
                 case OutputEnum.Clipboard:
                     SetClipboardContent();

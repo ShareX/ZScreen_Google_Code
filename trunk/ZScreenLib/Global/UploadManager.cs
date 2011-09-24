@@ -243,8 +243,9 @@ namespace ZScreenLib
                         if (!string.IsNullOrEmpty(tempText))
                         {
                             Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + tempText);
-                            Engine.zPreviousClipboardText = tempText;
                             Clipboard.SetText(tempText); // auto
+                            Engine.IsClipboardUploading = false;
+
                             // optional deletion link
                             if (task.UploadResults != null)
                             {

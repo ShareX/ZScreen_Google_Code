@@ -13,20 +13,13 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
-        private Timer tmrClipboardMonitor = new Timer() { Interval = 1000, Enabled = true };
+        private static Timer tmrClipboardMonitor = new Timer() { Interval = 1000, Enabled = true };
 
         #region Clipboard Methods
 
-        public void ClipboardHook()
-        {
-            tmrClipboardMonitor.Enabled = true;
-            tmrClipboardMonitor.Tick += new EventHandler(tmrClipboardMonitor_Tick);
-            Engine.MyLogger.WriteLine("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
-        }
-
         void tmrClipboardMonitor_Tick(object sender, EventArgs e)
         {
-            if (IsReady)
+            if (IsReady && !Engine.IsClipboardUploading)
             {
                 bool uploadImage = false, uploadText = false, uploadFile = false, shortenUrl = false;
 
@@ -37,7 +30,7 @@ namespace ZScreenGUI
                 if (Engine.conf.MonitorText)
                 {
                     string cbText = Clipboard.GetText();
-                    uploadText = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && cbText != Engine.zPreviousClipboardText;
+                    uploadText = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText);
                 }
                 if (Engine.conf.MonitorFiles)
                 {
@@ -46,21 +39,27 @@ namespace ZScreenGUI
                 if (Engine.conf.MonitorUrls)
                 {
                     string cbText = Clipboard.GetText();
-                    shortenUrl = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && cbText != Engine.zPreviousClipboardText && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
+                    shortenUrl = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
                 }
 
                 if (uploadImage || uploadText || uploadFile || shortenUrl)
                 {
-                    ClipboardUnhook();
                     UploadUsingClipboard();
                 }
 
             }
         }
 
+        public void ClipboardHook()
+        {
+            Engine.IsClipboardUploading = false;
+            tmrClipboardMonitor.Tick += new EventHandler(tmrClipboardMonitor_Tick);
+            Engine.MyLogger.WriteLine("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+        }
+
         public void ClipboardUnhook()
         {
-            tmrClipboardMonitor.Enabled = false;
+            Engine.IsClipboardUploading = true;
             Engine.MyLogger.WriteLine("Unregistered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
         }
 
