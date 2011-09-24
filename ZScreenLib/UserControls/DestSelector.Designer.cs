@@ -36,8 +36,8 @@
             this.tsddbLinkFormat = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsddbDestImage = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddDestText = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsddDestFile = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbDestText = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsddbDestFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbDestLink = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
@@ -67,16 +67,16 @@
             this.tsDest.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsDest.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbDestConfig,
             this.tsddbOutputs,
+            this.toolStripSeparator2,
             this.tsddbClipboardContent,
             this.tsddbLinkFormat,
             this.toolStripSeparator3,
             this.tsddbDestImage,
-            this.tsddDestText,
-            this.tsddDestFile,
-            this.tsddbDestLink,
-            this.toolStripSeparator2,
-            this.tsbDestConfig});
+            this.tsddbDestText,
+            this.tsddbDestFile,
+            this.tsddbDestLink});
             this.tsDest.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.tsDest.Location = new System.Drawing.Point(0, 0);
             this.tsDest.Name = "tsDest";
@@ -133,27 +133,27 @@
             this.tsddbDestImage.Tag = "Upload image to";
             this.tsddbDestImage.Text = "Upload image to: loading...";
             // 
-            // tsddDestText
+            // tsddbDestText
             // 
-            this.tsddDestText.Image = global::ZScreenLib.Properties.Resources.pencil_go;
-            this.tsddDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestText.Name = "tsddDestText";
-            this.tsddDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestText.Size = new System.Drawing.Size(350, 20);
-            this.tsddDestText.Tag = "Upload text to";
-            this.tsddDestText.Text = "Upload text to: loading...";
+            this.tsddbDestText.Image = global::ZScreenLib.Properties.Resources.pencil_go;
+            this.tsddbDestText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddbDestText.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbDestText.Name = "tsddbDestText";
+            this.tsddbDestText.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddbDestText.Size = new System.Drawing.Size(350, 20);
+            this.tsddbDestText.Tag = "Upload text to";
+            this.tsddbDestText.Text = "Upload text to: loading...";
             // 
             // tsddDestFile
             // 
-            this.tsddDestFile.Image = global::ZScreenLib.Properties.Resources.page_go;
-            this.tsddDestFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsddDestFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddDestFile.Name = "tsddDestFile";
-            this.tsddDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsddDestFile.Size = new System.Drawing.Size(350, 20);
-            this.tsddDestFile.Tag = "Upload file to";
-            this.tsddDestFile.Text = "Upload file to: loading...";
+            this.tsddbDestFile.Image = global::ZScreenLib.Properties.Resources.page_go;
+            this.tsddbDestFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsddbDestFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddbDestFile.Name = "tsddDestFile";
+            this.tsddbDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tsddbDestFile.Size = new System.Drawing.Size(350, 20);
+            this.tsddbDestFile.Tag = "Upload file to";
+            this.tsddbDestFile.Text = "Upload file to: loading...";
             // 
             // tsddbDestLink
             // 
@@ -203,8 +203,8 @@
         private System.Windows.Forms.ToolStrip tsDest;
         public System.Windows.Forms.ToolStripDropDownButton tsddbClipboardContent;
         public System.Windows.Forms.ToolStripDropDownButton tsddbDestImage;
-        public System.Windows.Forms.ToolStripDropDownButton tsddDestText;
-        public System.Windows.Forms.ToolStripDropDownButton tsddDestFile;
+        public System.Windows.Forms.ToolStripDropDownButton tsddbDestText;
+        public System.Windows.Forms.ToolStripDropDownButton tsddbDestFile;
         public System.Windows.Forms.ToolStripDropDownButton tsddbDestLink;
         private System.Windows.Forms.ToolStripButton tsbDestConfig;
         public System.Windows.Forms.ToolStripDropDownButton tsddbLinkFormat;

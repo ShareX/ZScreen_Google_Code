@@ -360,7 +360,7 @@ namespace UploadersLib
         {
             if (Config.MinusConfig != null)
             {
-                Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
+                Minus minus = new Minus(Config.MinusConfig, new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret));
                 minus.RefreshAccessTokens();
             }
         }
@@ -379,7 +379,7 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(cboMinusFolders.Text) && !HasFolder(cboMinusFolders.Text))
             {
-                Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
+                Minus minus = new Minus(Config.MinusConfig, new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret));
                 MinusFolder dir = minus.CreateFolder(cboMinusFolders.Text, chkMinusPublic.Checked);
                 if (dir != null)
                 {
@@ -392,7 +392,7 @@ namespace UploadersLib
         {
             if (!string.IsNullOrEmpty(cboMinusFolders.Text) && HasFolder(cboMinusFolders.Text))
             {
-                Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo);
+                Minus minus = new Minus(Config.MinusConfig, new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret));
 
                 int id = cboMinusFolders.SelectedIndex;
 
@@ -409,7 +409,8 @@ namespace UploadersLib
             {
                 btnMinusReadFolderList.Enabled = false;
 
-                List<MinusFolder> tempListMf = new Minus(Config.MinusConfig, Config.MinusOAuthInfo).ReadFolderList(MinusScope.read_all);
+                List<MinusFolder> tempListMf = new Minus(Config.MinusConfig, 
+                    new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret)).ReadFolderList(MinusScope.read_all);
                 if (tempListMf.Count > 0)
                 {
                     cboMinusFolders.Items.Clear();
@@ -784,6 +785,11 @@ namespace UploadersLib
         {
             Gmail gmail = new Gmail("mcored@gmail.com", new OAuthInfo(APIKeys.GoogleConsumerKey, APIKeys.GoogleConsumerSecret));
             StaticHelper.LoadBrowser(gmail.GetAuthorizationURL());
+        }
+
+        private void UploadersConfigForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
     }
 }

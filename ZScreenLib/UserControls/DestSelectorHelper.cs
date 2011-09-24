@@ -186,12 +186,12 @@ namespace ZScreenLib
 
         public void AddEnumDestTextToMenuWithConfigSettings()
         {
-            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddDestText, Engine.conf.MyTextUploaders);
+            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddbDestText, Engine.conf.MyTextUploaders);
         }
 
         public void AddEnumDestTextToMenuWithRuntimeSettings(List<int> MyTextUploaders)
         {
-            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddDestText, MyTextUploaders);
+            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddbDestText, MyTextUploaders);
         }
 
         private void AddEnumDestTextToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
@@ -216,12 +216,12 @@ namespace ZScreenLib
 
         public void AddEnumDestFileToMenuWithConfigSettings()
         {
-            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddDestFile, Engine.conf.MyFileUploaders);
+            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddbDestFile, Engine.conf.MyFileUploaders);
         }
 
         public void AddEnumDestFileToMenuWithRuntimeSettings(List<int> MyFileUploaders)
         {
-            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddDestFile, MyFileUploaders);
+            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddbDestFile, MyFileUploaders);
         }
 
         private void AddEnumDestFileToMenuWithRuntimeSettings(ToolStripDropDownButton tsddb, List<int> list)
@@ -317,12 +317,12 @@ namespace ZScreenLib
 
         private void UpdateToolStripDestText()
         {
-            UpdateToolStripDest(ucDestOptions.tsddDestText);
+            UpdateToolStripDest(ucDestOptions.tsddbDestText);
         }
 
         private void UpdateToolStripDestFile()
         {
-            UpdateToolStripDest(ucDestOptions.tsddDestFile);
+            UpdateToolStripDest(ucDestOptions.tsddbDestFile);
         }
 
         private void UpdateToolStripDestLink()
@@ -347,16 +347,21 @@ namespace ZScreenLib
 
         private void tsmiDestImage_Click(object sender, EventArgs e)
         {
+            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestImage();
+            UpdateToolStripOutputs();
         }
 
         private void tsmiDestText_Click(object sender, EventArgs e)
         {
+            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestText();
+            UpdateToolStripOutputs();
         }
 
         private void tsmiDestFiles_Click(object sender, EventArgs e)
         {
+            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestFile();
         }
 

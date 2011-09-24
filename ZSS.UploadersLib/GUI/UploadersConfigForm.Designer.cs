@@ -220,6 +220,7 @@
             this.tbOutputs = new System.Windows.Forms.TabPage();
             this.tcOutputs = new System.Windows.Forms.TabControl();
             this.tpEmail = new System.Windows.Forms.TabPage();
+            this.btnGmailAuth = new System.Windows.Forms.Button();
             this.chkEmailConfirm = new System.Windows.Forms.CheckBox();
             this.cbEmailRememberLastTo = new System.Windows.Forms.CheckBox();
             this.txtEmailDefaultBody = new System.Windows.Forms.TextBox();
@@ -238,7 +239,6 @@
             this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.btnGmailAuth = new System.Windows.Forms.Button();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
             this.tcImageUploaders.SuspendLayout();
@@ -424,8 +424,8 @@
             // 
             // txtImageShackRegistrationCode
             // 
-            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtImageShackRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImageShackRegistrationCode.Location = new System.Drawing.Point(16, 80);
             this.txtImageShackRegistrationCode.Name = "txtImageShackRegistrationCode";
             this.txtImageShackRegistrationCode.Size = new System.Drawing.Size(368, 20);
@@ -548,8 +548,8 @@
             // 
             // txtTinyPicRegistrationCode
             // 
-            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTinyPicRegistrationCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTinyPicRegistrationCode.BackColor = System.Drawing.Color.White;
             this.txtTinyPicRegistrationCode.Location = new System.Drawing.Point(16, 232);
             this.txtTinyPicRegistrationCode.Name = "txtTinyPicRegistrationCode";
@@ -688,8 +688,8 @@
             // 
             // pgFlickrAuthInfo
             // 
-            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrAuthInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrAuthInfo.CommandsVisibleIfAvailable = false;
             this.pgFlickrAuthInfo.Location = new System.Drawing.Point(16, 16);
             this.pgFlickrAuthInfo.Name = "pgFlickrAuthInfo";
@@ -700,9 +700,9 @@
             // 
             // pgFlickrSettings
             // 
-            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgFlickrSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pgFlickrSettings.CommandsVisibleIfAvailable = false;
             this.pgFlickrSettings.Location = new System.Drawing.Point(16, 184);
             this.pgFlickrSettings.Name = "pgFlickrSettings";
@@ -824,7 +824,7 @@
             this.label8.Size = new System.Drawing.Size(649, 13);
             this.label8.TabIndex = 5;
             this.label8.Text = "New album name ( must be between 2 and 50 characters. Valid characters are letter" +
-                "s, numbers, underscore ( _ ), hyphen (-), and space )";
+    "s, numbers, underscore ( _ ), hyphen (-), and space )";
             // 
             // lblPhotobucketParentAlbumPath
             // 
@@ -1102,9 +1102,9 @@
             // 
             // ucMediaWikiAccounts
             // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
             this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
             this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
@@ -2314,6 +2314,16 @@
             this.tpEmail.Text = "Email";
             this.tpEmail.UseVisualStyleBackColor = true;
             // 
+            // btnGmailAuth
+            // 
+            this.btnGmailAuth.Location = new System.Drawing.Point(440, 16);
+            this.btnGmailAuth.Name = "btnGmailAuth";
+            this.btnGmailAuth.Size = new System.Drawing.Size(75, 23);
+            this.btnGmailAuth.TabIndex = 1;
+            this.btnGmailAuth.Text = "&Authorize";
+            this.btnGmailAuth.UseVisualStyleBackColor = true;
+            this.btnGmailAuth.Click += new System.EventHandler(this.btnGmailAuth_Click);
+            // 
             // chkEmailConfirm
             // 
             this.chkEmailConfirm.AutoSize = true;
@@ -2486,16 +2496,6 @@
             this.actRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
             this.actRapidShareAccountType.TabIndex = 16;
             // 
-            // btnGmailAuth
-            // 
-            this.btnGmailAuth.Location = new System.Drawing.Point(440, 16);
-            this.btnGmailAuth.Name = "btnGmailAuth";
-            this.btnGmailAuth.Size = new System.Drawing.Size(75, 23);
-            this.btnGmailAuth.TabIndex = 1;
-            this.btnGmailAuth.Text = "&Authorize";
-            this.btnGmailAuth.UseVisualStyleBackColor = true;
-            this.btnGmailAuth.Click += new System.EventHandler(this.btnGmailAuth_Click);
-            // 
             // UploadersConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2507,6 +2507,7 @@
             this.Padding = new System.Windows.Forms.Padding(3);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Outputs Configuration";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UploadersConfigForm_FormClosed);
             this.Resize += new System.EventHandler(this.UploadersConfigForm_Resize);
             this.tcUploaders.ResumeLayout(false);
             this.tpImageUploaders.ResumeLayout(false);

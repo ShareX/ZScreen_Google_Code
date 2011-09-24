@@ -434,8 +434,7 @@ namespace UploadersLib
                 btnMinusAuth.Enabled = false;
                 try
                 {
-                    Config.MinusOAuthInfo = new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret);
-                    Minus minus = new Minus(Config.MinusConfig, Config.MinusOAuthInfo, txtMinusUsername.Text, txtMinusPassword.Text);
+                    Minus minus = new Minus(Config.MinusConfig, new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret), txtMinusUsername.Text, txtMinusPassword.Text);
                     string url = minus.GetAuthorizationURL();
 
                     if (!string.IsNullOrEmpty(url))

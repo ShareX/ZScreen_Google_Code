@@ -323,7 +323,7 @@ namespace ZUploader
                         Program.UploadersConfig.RapidSharePassword);
                     break;
                 case FileDestination.Minus:
-                    fileUploader = new Minus(Program.UploadersConfig.MinusConfig, Program.UploadersConfig.MinusOAuthInfo);
+                    fileUploader = new Minus(Program.UploadersConfig.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
                     break;
                 case FileDestination.CustomUploader:
                     if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))

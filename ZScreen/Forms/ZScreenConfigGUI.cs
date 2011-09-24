@@ -10,6 +10,7 @@ using UploadersLib.HelperClasses;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
+using UploadersLib;
 
 namespace ZScreenGUI
 {
@@ -102,6 +103,7 @@ namespace ZScreenGUI
         {
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumDestToMenuWithConfigSettings();
+            ucDestOptions.ReconfigOutputsUI();
 
             chkManualNaming.Checked = Engine.conf.PromptForOutputs;
             chkShowCursor.Checked = Engine.CoreConf.ShowCursor;

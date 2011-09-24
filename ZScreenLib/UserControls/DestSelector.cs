@@ -16,7 +16,10 @@ namespace ZScreenLib
         {
             UploadersConfigForm form = new UploadersConfigForm(Engine.MyWorkflow.OutputsConfig, ZKeys.GetAPIKeys());
             form.Icon = Resources.zss_main;
-            form.Show();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                ReconfigOutputsUI();
+            }
         }
 
         private void RestrictToOneCheck(ToolStripDropDownButton tsddb, ToolStripItemClickedEventArgs e)
@@ -89,8 +92,8 @@ namespace ZScreenLib
             }
 
             tsddbDestImage.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
-            tsddDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
-            tsddDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
+            tsddbDestFile.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
+            tsddbDestText.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
             tsddbLinkFormat.Enabled = tsmiOClipboard.Checked && !tsmiCCData.Checked;
             tsddbDestLink.Enabled = tsmiORemoteHost.Checked && tsmiCCRemote.Enabled;
 
@@ -157,5 +160,174 @@ namespace ZScreenLib
                 }
             }
         }
+
+        #region ConfigGUI
+
+        public bool ReconfigOutputsUI()
+        {
+            // Outputs > Files
+            bool bHasValidFileUploader = HasValidFileUploader();
+
+            // Outputs > Text
+            bool bHasValidTextUploader = HasValidTextUploader(bHasValidFileUploader);
+
+            // Outputs > Images
+            bool bHasValidImageUploader = HasValidImageUploader(bHasValidFileUploader);
+
+            // Outputs 
+            foreach (ToolStripMenuItem tsmi in tsddbOutputs.DropDownItems)
+            {
+                OutputEnum ut = (OutputEnum)tsmi.Tag;
+                switch (ut)
+                {
+                    case OutputEnum.RemoteHost:
+                        if (!bHasValidTextUploader && !bHasValidImageUploader)
+                        {
+                            tsmi.Checked = false;
+                        }
+                        break;
+                    case OutputEnum.SharedFolder:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.LocalhostAccountList.Count > 0;
+                        if (!tsmi.Enabled)
+                        {
+                            tsmi.Checked = false;
+                        }
+                        break;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HasValidImageUploader(bool bHasValidFileUploader)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddbDestImage.DropDownItems)
+            {
+                ImageUploaderType ut = (ImageUploaderType)tsmi.Tag;
+                switch (ut)
+                {
+                    case ImageUploaderType.FileUploader:
+                        tsmi.Enabled = bHasValidFileUploader;
+                        if (!tsmi.Enabled)
+                        {
+                            tsmi.Checked = false;
+                        }
+                        break;
+                    case ImageUploaderType.FLICKR:
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.FlickrAuthInfo.Token);
+                        break;
+                    case ImageUploaderType.IMAGESHACK:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.ImageShackAccountType == AccountType.Anonymous ||
+                            Engine.MyWorkflow.OutputsConfig.ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.ImageShackRegistrationCode);
+                        break;
+                    case ImageUploaderType.IMGUR:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.ImgurOAuthInfo != null;
+                        break;
+                    case ImageUploaderType.MEDIAWIKI:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MediaWikiAccountList.Count > 0;
+                        break;
+                    case ImageUploaderType.Photobucket:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.PhotobucketOAuthInfo != null;
+                        break;
+                    case ImageUploaderType.TINYPIC:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.TinyPicAccountType == AccountType.Anonymous ||
+                            Engine.MyWorkflow.OutputsConfig.TinyPicAccountType == AccountType.User &&
+                         !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode);
+                        break;
+                    case ImageUploaderType.TWITPIC:
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.TwitPicPassword);
+                        break;
+                    case ImageUploaderType.TWITSNAPS:
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.TwitterOAuthInfoList.Count > 0;
+                        break;
+                    case ImageUploaderType.UPLOADSCREENSHOT:
+                        break;
+                    case ImageUploaderType.YFROG:
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.YFrogPassword);
+                        break;
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestImage.DropDownItems)
+            {
+                if (tsmi.Enabled && tsmi.Checked)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HasValidTextUploader(bool bHasValidFileUploader)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddbDestText.DropDownItems)
+            {
+                TextUploaderType ut = (TextUploaderType)tsmi.Tag;
+                switch (ut)
+                {
+                    case TextUploaderType.FileUploader:
+                        tsmi.Enabled = bHasValidFileUploader;
+                        if (!tsmi.Enabled)
+                        {
+                            tsmi.Checked = false;
+                        }
+                        break;
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestText.DropDownItems)
+            {
+                if (tsmi.Enabled && tsmi.Checked)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HasValidFileUploader()
+        {
+            bool success = true;
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
+            {
+                FileUploaderType ut = (FileUploaderType)tsmi.Tag;
+                switch (ut)
+                {
+                    case FileUploaderType.CustomUploader:
+                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.CustomUploadersList.Count > 0;
+                        break;
+                    case FileUploaderType.Dropbox:
+                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.DropboxOAuthInfo != null;
+                        break;
+                    case FileUploaderType.FTP:
+                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0;
+                        break;
+                    case FileUploaderType.Minus:
+                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MinusConfig != null;
+                        break;
+                    case FileUploaderType.RapidShare:
+                        success = tsmi.Enabled;
+                        break;
+                    case FileUploaderType.SendSpace:
+                        success = tsmi.Enabled;
+                        break;
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
+            {
+                if (tsmi.Enabled && tsmi.Checked)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }
