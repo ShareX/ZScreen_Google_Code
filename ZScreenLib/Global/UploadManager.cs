@@ -111,7 +111,7 @@ namespace ZScreenLib
                     {
                         ClipboardOptions cmp = new ClipboardOptions(task);
                         cmp.Icon = Resources.zss_main;
-                        if (showDialog) { cmp.ShowDialog(); } else { cmp.Show(); }
+                        if (showDialog) { cmp.ShowDialog(); } else { NativeMethods.ShowWindow(cmp.Handle, (int)ZScreenLib.NativeMethods.WindowShowStyle.ShowNoActivate); }
                     }
                 }
 

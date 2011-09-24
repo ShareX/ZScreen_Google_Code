@@ -7,11 +7,96 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib;
+using System.Collections.Generic;
 
 namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
+
+        private void TrayImageEditorClick(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
+
+            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text);
+
+            if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
+            {
+                tsmEditinImageSoftware.DropDown.AutoClose = false;
+                lbSoftware.SelectedItem = tsm.Text;
+                UpdateGuiEditors(sender);
+            }
+        }
+
+        private void RewriteImageEditorsRightClickMenu()
+        {
+            if (Engine.conf.ActionsAppList != null)
+            {
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+                tsmEditinImageSoftware.DropDownItems.Clear();
+
+                List<Software> imgs = Engine.conf.ActionsAppList;
+
+                //tsm.TextDirection = ToolStripTextDirection.Horizontal;
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+
+                for (int x = 0; x < imgs.Count; x++)
+                {
+                    ToolStripMenuItem tsm = new ToolStripMenuItem
+                    {
+                        Tag = x,
+                        Text = imgs[x].Name,
+                        CheckOnClick = true,
+                        Checked = imgs[x].Enabled
+                    };
+                    tsm.Click += new EventHandler(TrayImageEditorClick);
+                    tsm.MouseEnter += new EventHandler(TrayImageEditor_MouseEnter);
+                    tsm.MouseLeave += new EventHandler(TrayImageEditor_MouseLeave);
+                    tsmEditinImageSoftware.DropDownItems.Add(tsm);
+                }
+
+                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
+
+                //show drop down menu in the correct place if menu is selected
+                if (tsmEditinImageSoftware.Selected)
+                {
+                    tsmEditinImageSoftware.DropDown.Hide();
+                    tsmEditinImageSoftware.DropDown.Show();
+                }
+            }
+        }
+
+        private void TrayImageEditor_MouseLeave(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = true;
+        }
+
+        private void TrayImageEditor_MouseEnter(object sender, EventArgs e)
+        {
+            tsmEditinImageSoftware.DropDown.AutoClose = false;
+        }
+
+
+        private void tsmiTab_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            tcMain.SelectedTab = tcMain.TabPages[(string)tsmi.Tag];
+
+            ShowWindow();
+            tcMain.Focus();
+        }
+
+        private void tsmExitZScreen_Click(object sender, EventArgs e)
+        {
+            CloseMethod = CloseMethod.TrayButton;
+            Close();
+        }
+
+        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ShowMainWindow();
+        }
+
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
             if (Engine.conf.BalloonTipOpenLink)
@@ -26,6 +111,12 @@ namespace ZScreenGUI
                     Engine.MyLogger.WriteException(ex, "Error while clicking Balloon Tip");
                 }
             }
+        }
+
+        private void niTray2_BalloonTipClicked(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
 
         public void ClickBalloonTip(WorkerTask task)
