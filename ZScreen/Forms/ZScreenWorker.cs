@@ -271,7 +271,7 @@ namespace ZScreenGUI
                     }
 
                     UploadManager.ShowUploadResults(task, false);
-              
+
                     if (Engine.conf.TwitterEnabled)
                     {
                         Adapter.TwitterMsg(task);
@@ -495,8 +495,6 @@ namespace ZScreenGUI
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
-                    cbTask.UpdateLocalFilePath(cufp);
                     cbTask.SetText(Clipboard.GetText());
                     cbTask.RunWorker();
                 }
@@ -559,22 +557,21 @@ namespace ZScreenGUI
             {
                 if (GraphicsMgr.IsValidImage(fp))
                 {
-                    WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-                    cbTask.SetImage(fp);
-                    cbTask.UpdateLocalFilePath(fp);
-                    cbTask.RunWorker();
+                    WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                    fpimgTask.SetImage(fp);
+                    fpimgTask.RunWorker();
                 }
                 else if (FileSystem.IsValidTextFile(fp))
                 {
-                    WorkerTask tfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
-                    tfTask.SetText(File.ReadAllText(fp));
-                    tfTask.RunWorker();
+                    WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                    fptfTask.SetText(File.ReadAllText(fp));
+                    fptfTask.RunWorker();
                 }
                 else
                 {
-                    WorkerTask fuTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
-                    fuTask.UpdateLocalFilePath(fp);
-                    fuTask.RunWorker();
+                    WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
+                    fpdataTask.UpdateLocalFilePath(fp);
+                    fpdataTask.RunWorker();
                 }
             }
 
@@ -741,7 +738,6 @@ namespace ZScreenGUI
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
                     task2.SetImage(task.LocalFilePath);
-                    task2.UpdateLocalFilePath(task.LocalFilePath);
                     task2.Status.Add(WorkerTask.TaskStatus.Finished); // we do not retry again
 
                     if (task.Job1 == JobLevel1.Image)

@@ -327,7 +327,12 @@ namespace ZScreenLib
 
         #region Populating Task
 
-        public bool SetImage(Image img)
+        public bool SetImage(string savePath)
+        {
+            return SetImage(GraphicsMgr.GetImageSafely(savePath), savePath);
+        }
+
+        public bool SetImage(Image img, string savePath = "")
         {
             if (img != null)
             {
@@ -337,9 +342,16 @@ namespace ZScreenLib
                 EImageFormat imageFormat;
                 Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
 
-                string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
-                string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
-                UpdateLocalFilePath(imgfp);
+                if (!string.IsNullOrEmpty(savePath))
+                {
+                    UpdateLocalFilePath(savePath);
+                }
+                else
+                {
+                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
+                    string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
+                    UpdateLocalFilePath(imgfp);
+                }
 
                 Job1 = JobLevel1.Image;
                 if (Engine.conf != null && Engine.conf.ShowOutputsAsap)
@@ -362,15 +374,13 @@ namespace ZScreenLib
             return TempImage != null;
         }
 
-        public void SetImage(string fp)
-        {
-            SetImage(GraphicsMgr.GetImageSafely(fp));
-        }
-
         public void SetText(string text)
         {
             Job1 = JobLevel1.Text;
             TempText = text;
+
+            string fp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+            UpdateLocalFilePath(fp);
 
             if (Directory.Exists(text))
             {
@@ -404,6 +414,10 @@ namespace ZScreenLib
                     indexer.IndexNow(IndexingMode.IN_ONE_FOLDER_MERGED);
                     UpdateLocalFilePath(settings.GetConfig().GetIndexFilePath());
                 }
+            }
+            else if (FileSystem.IsValidLink(text))
+            {
+                Job3 = WorkerTask.JobLevel3.ShortenURL;
             }
             else
             {
