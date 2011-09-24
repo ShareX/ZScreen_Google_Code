@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using HelpersLib;
 
 namespace UploadersLib.HelperClasses
 {
@@ -77,34 +78,34 @@ namespace UploadersLib.HelperClasses
 
         #region Links
 
-        public string GetUrlByType(LinkFormatEnum type, string linkPath)
+        public string GetUrlByType(LinkFormatEnum type, string longUrl)
         {
             switch (type)
             {
                 case LinkFormatEnum.FULL:
-                    return linkPath;
+                    return longUrl;
                 case LinkFormatEnum.FULL_TINYURL:
                     return this.ShortenedURL;
                 case LinkFormatEnum.FULL_IMAGE_FORUMS:
-                    return GetFullImageForumsUrl(linkPath);
+                    return GetFullImageForumsUrl(longUrl);
                 case LinkFormatEnum.FULL_IMAGE_HTML:
-                    return GetFullImageHTML(linkPath);
+                    return GetFullImageHTML(longUrl);
                 case LinkFormatEnum.FULL_IMAGE_WIKI:
-                    return GetFullImageWiki(linkPath);
+                    return GetFullImageWiki(longUrl);
                 case LinkFormatEnum.FULL_IMAGE_MEDIAWIKI:
-                    return GetFullImageMediaWikiInnerLink(linkPath);
+                    return GetFullImageMediaWikiInnerLink(longUrl);
                 case LinkFormatEnum.LINKED_THUMBNAIL:
-                    return GetLinkedThumbnailForumUrl(linkPath);
+                    return GetLinkedThumbnailForumUrl(longUrl);
                 case LinkFormatEnum.LinkedThumbnailHtml:
-                    return GetLinkedThumbnailHtmlUrl(linkPath);
+                    return GetLinkedThumbnailHtmlUrl(longUrl);
                 case LinkFormatEnum.LINKED_THUMBNAIL_WIKI:
-                    return GetLinkedThumbnailWikiUrl(linkPath);
+                    return GetLinkedThumbnailWikiUrl(longUrl);
                 case LinkFormatEnum.THUMBNAIL:
                     return this.ThumbnailURL;
                 case LinkFormatEnum.LocalFilePath:
                     return this.LocalFilePath;
                 case LinkFormatEnum.LocalFilePathUri:
-                    return GetLocalFilePathAsUri(linkPath);
+                    return GetLocalFilePathAsUri(longUrl);
             }
 
             return this.URL;
@@ -117,16 +118,16 @@ namespace UploadersLib.HelperClasses
 
         public string GetFullImageForumsUrl(string url)
         {
-            if (!string.IsNullOrEmpty(url))
+            if (!string.IsNullOrEmpty(url) && ZAppHelper.IsImageFile(url))
             {
                 return string.Format("[IMG]{0}[/IMG]", url);
             }
-            return GetFullImageUrl();
+            return string.Empty;
         }
 
         public string GetFullImageHTML(string url)
         {
-            if (!string.IsNullOrEmpty(url))
+            if (!string.IsNullOrEmpty(url) && ZAppHelper.IsImageFile(url))
             {
                 return string.Format("<img src=\"{0}\"/>", url);
             }
@@ -135,7 +136,7 @@ namespace UploadersLib.HelperClasses
 
         public string GetFullImageWiki(string url)
         {
-            if (!string.IsNullOrEmpty(url))
+            if (!string.IsNullOrEmpty(url) && ZAppHelper.IsImageFile(url))
             {
                 return string.Format("[{0}]", url);
             }

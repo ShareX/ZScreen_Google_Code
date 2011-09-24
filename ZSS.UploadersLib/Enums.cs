@@ -118,7 +118,7 @@ namespace UploadersLib
 
     public enum LinkFormatEnum
     {
-        [Description("Full Image")]
+        [Description("Full URL")]
         FULL,
         [Description("Full Image for Forums")]
         FULL_IMAGE_FORUMS,
