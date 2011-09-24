@@ -140,13 +140,13 @@ namespace ZScreenLib
 
     public enum CropEngineType
     {
-        [Description("Crop Lite - Simple crop for slow computers.")]
+        [Description("Crop v0 - Simple crop engine for slow computers.")]
         CropLite,
-        [Description("Crop v1 - Default crop engine")]
+        [Description("Crop v1 - Default crop engine with magnifier")]
         Cropv1,
-        [Description("Crop v2 - Advanced crop engine to move cropped region")]
+        [Description("Crop v2 - Crop engine with support for multiple areas")]
         Cropv2,
-        [Description("Crop v3 - Crop Rectangle using Surface")]
+        [Description("Crop v3 - Capture Rectangle as shown in Capture Shape")]
         Cropv3,
     }
 }

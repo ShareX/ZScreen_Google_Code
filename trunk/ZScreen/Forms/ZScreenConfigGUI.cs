@@ -161,6 +161,12 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
         {
+            if (cboCropEngine.Items.Count == 0)
+            {
+                cboCropEngine.Items.AddRange(typeof(CropEngineType).GetDescriptions());
+                cboCropEngine.SelectedIndex = (int)Engine.conf.CropEngineMode;
+            }
+
             // Crop Region Settings
             if (chkCropStyle.Items.Count == 0)
             {
