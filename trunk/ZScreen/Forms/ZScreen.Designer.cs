@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,10 @@ namespace ZScreenGUI
             this.tmrApp = new System.Windows.Forms.Timer(this.components);
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpMain = new System.Windows.Forms.TabPage();
+            this.tsLinks = new System.Windows.Forms.ToolStrip();
+            this.tsbLinkHome = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.tsMainTab = new System.Windows.Forms.ToolStrip();
             this.tsbFullscreenCapture = new System.Windows.Forms.ToolStripButton();
             this.tsbActiveWindow = new System.Windows.Forms.ToolStripButton();
@@ -97,9 +101,6 @@ namespace ZScreenGUI
             this.nudScreenshotDelay = new ZScreenGUI.NumericUpDownTimer();
             this.chkShowCursor = new System.Windows.Forms.CheckBox();
             this.chkManualNaming = new System.Windows.Forms.CheckBox();
-            this.llProjectPage = new System.Windows.Forms.LinkLabel();
-            this.llWebsite = new System.Windows.Forms.LinkLabel();
-            this.llblBugReports = new System.Windows.Forms.LinkLabel();
             this.ucDestOptions = new ZScreenLib.DestSelector();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
             this.btnResetHotkeys = new System.Windows.Forms.Button();
@@ -429,6 +430,7 @@ namespace ZScreenGUI
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
+            this.tsLinks.SuspendLayout();
             this.tsMainTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.gbImageSettings.SuspendLayout();
@@ -807,13 +809,11 @@ namespace ZScreenGUI
             // 
             this.tpMain.AllowDrop = true;
             this.tpMain.BackColor = System.Drawing.Color.White;
+            this.tpMain.Controls.Add(this.tsLinks);
             this.tpMain.Controls.Add(this.tsMainTab);
             this.tpMain.Controls.Add(this.pbLogo);
             this.tpMain.Controls.Add(this.lblFileSystemNote);
             this.tpMain.Controls.Add(this.gbImageSettings);
-            this.tpMain.Controls.Add(this.llProjectPage);
-            this.tpMain.Controls.Add(this.llWebsite);
-            this.tpMain.Controls.Add(this.llblBugReports);
             this.tpMain.Controls.Add(this.ucDestOptions);
             this.tpMain.ImageKey = "(none)";
             this.tpMain.Location = new System.Drawing.Point(4, 22);
@@ -825,6 +825,52 @@ namespace ZScreenGUI
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
             this.tpMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tpMain_MouseClick);
+            // 
+            // tsLinks
+            // 
+            this.tsLinks.AutoSize = false;
+            this.tsLinks.BackColor = System.Drawing.Color.White;
+            this.tsLinks.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsLinks.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsLinks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbLinkHome,
+            this.toolStripButton2,
+            this.toolStripButton3});
+            this.tsLinks.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+            this.tsLinks.Location = new System.Drawing.Point(384, 312);
+            this.tsLinks.Name = "tsLinks";
+            this.tsLinks.Size = new System.Drawing.Size(136, 90);
+            this.tsLinks.TabIndex = 127;
+            this.tsLinks.Text = "toolStrip1";
+            // 
+            // tsbLinkHome
+            // 
+            this.tsbLinkHome.Image = global::ZScreenGUI.Properties.Resources.world_go;
+            this.tsbLinkHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbLinkHome.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbLinkHome.Name = "tsbLinkHome";
+            this.tsbLinkHome.Size = new System.Drawing.Size(254, 20);
+            this.tsbLinkHome.Text = "Home Page";
+            this.tsbLinkHome.Click += new System.EventHandler(this.tsbLinkHome_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::ZScreenGUI.Properties.Resources.bug;
+            this.toolStripButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(254, 20);
+            this.toolStripButton2.Text = "Bugs/Suggestions?";
+            this.toolStripButton2.Click += new System.EventHandler(this.tsbLinkIssues_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = global::ZScreenGUI.Properties.Resources.help;
+            this.toolStripButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(254, 20);
+            this.toolStripButton3.Text = "Tutorials";
             // 
             // tsMainTab
             // 
@@ -1162,46 +1208,6 @@ namespace ZScreenGUI
             this.chkManualNaming.UseVisualStyleBackColor = true;
             this.chkManualNaming.CheckedChanged += new System.EventHandler(this.chkManualNaming_CheckedChanged);
             // 
-            // llProjectPage
-            // 
-            this.llProjectPage.AutoSize = true;
-            this.llProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llProjectPage.Location = new System.Drawing.Point(592, 272);
-            this.llProjectPage.Name = "llProjectPage";
-            this.llProjectPage.Size = new System.Drawing.Size(47, 13);
-            this.llProjectPage.TabIndex = 83;
-            this.llProjectPage.TabStop = true;
-            this.llProjectPage.Text = "Tutorials";
-            this.ttZScreen.SetToolTip(this.llProjectPage, "View ZScreen\'s project page on the web.");
-            this.llProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llProjectPage_LinkClicked);
-            // 
-            // llWebsite
-            // 
-            this.llWebsite.AutoSize = true;
-            this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llWebsite.Location = new System.Drawing.Point(384, 272);
-            this.llWebsite.Name = "llWebsite";
-            this.llWebsite.Size = new System.Drawing.Size(63, 13);
-            this.llWebsite.TabIndex = 82;
-            this.llWebsite.TabStop = true;
-            this.llWebsite.Text = "Home Page";
-            this.ttZScreen.SetToolTip(this.llWebsite, "Visit the home of ZScreen.");
-            this.llWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWebsite_LinkClicked);
-            // 
-            // llblBugReports
-            // 
-            this.llblBugReports.AutoSize = true;
-            this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(472, 272);
-            this.llblBugReports.Name = "llblBugReports";
-            this.llblBugReports.Size = new System.Drawing.Size(100, 13);
-            this.llblBugReports.TabIndex = 81;
-            this.llblBugReports.TabStop = true;
-            this.llblBugReports.Text = "Bugs/Suggestions?";
-            this.ttZScreen.SetToolTip(this.llblBugReports, "Have a bug report or a suggestion for us?\r\nCome visit our website and create an i" +
-        "ssue.");
-            this.llblBugReports.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblBugReports_LinkClicked);
-            // 
             // ucDestOptions
             // 
             this.ucDestOptions.Location = new System.Drawing.Point(16, 16);
@@ -1292,7 +1298,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle6;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -5031,6 +5037,8 @@ namespace ZScreenGUI
             this.tcMain.ResumeLayout(false);
             this.tpMain.ResumeLayout(false);
             this.tpMain.PerformLayout();
+            this.tsLinks.ResumeLayout(false);
+            this.tsLinks.PerformLayout();
             this.tsMainTab.ResumeLayout(false);
             this.tsMainTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
@@ -5228,9 +5236,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblGridSize;
         internal System.Windows.Forms.Label lblGridSizeHeight;
         internal System.Windows.Forms.NumericUpDown nudCropGridWidth;
-        internal System.Windows.Forms.LinkLabel llProjectPage;
-        internal System.Windows.Forms.LinkLabel llWebsite;
-        internal System.Windows.Forms.LinkLabel llblBugReports;
         internal NumericUpDownTimer nudScreenshotDelay;
         internal System.Windows.Forms.CheckBox chkManualNaming;
         internal System.Windows.Forms.CheckBox chkShowCursor;
@@ -5578,5 +5583,9 @@ namespace ZScreenGUI
         internal PropertyGrid pgSurfaceConfig;
         internal GroupBox groupBox1;
         private ComboBox cboCropEngine;
+        private ToolStrip tsLinks;
+        private ToolStripButton tsbLinkHome;
+        private ToolStripButton toolStripButton2;
+        private ToolStripButton toolStripButton3;
     }
 }

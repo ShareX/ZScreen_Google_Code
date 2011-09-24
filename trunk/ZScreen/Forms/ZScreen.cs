@@ -2261,5 +2261,20 @@ namespace ZScreenGUI
             gbCropRegionSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
             gbCropShotMagnifyingGlass.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
         }
+
+        private void tsbLinkHome_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
+        }
+
+        private void tsbLinkIssues_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
+        }
+
+        private void tsbLinkHelp_Click(object sender, EventArgs e)
+        {
+            StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
+        }
     }
 }

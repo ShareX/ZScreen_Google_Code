@@ -339,6 +339,8 @@
     <None Include="Resources\shape_square_edit.png" />
     <None Include="Resources\paypal.gif" />
     <None Include="Resources\pictures.ico" />
+    <None Include="Resources\world_go.png" />
+    <None Include="Resources\bug.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -27,19 +27,19 @@ namespace ZScreenGUI
                 {
                     uploadImage = Clipboard.ContainsImage();
                 }
-                if (Engine.conf.MonitorText)
+                if (Engine.conf.MonitorText && Clipboard.ContainsText())
                 {
                     string cbText = Clipboard.GetText();
-                    uploadText = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText);
+                    uploadText = !string.IsNullOrEmpty(cbText);
                 }
                 if (Engine.conf.MonitorFiles)
                 {
                     uploadFile = Clipboard.ContainsFileDropList();
                 }
-                if (Engine.conf.MonitorUrls)
+                if (Engine.conf.MonitorUrls && Clipboard.ContainsText())
                 {
                     string cbText = Clipboard.GetText();
-                    shortenUrl = Clipboard.ContainsText() && !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
+                    shortenUrl = !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
                 }
 
                 if (uploadImage || uploadText || uploadFile || shortenUrl)
