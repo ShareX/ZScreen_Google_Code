@@ -86,10 +86,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\AxSHDocVw.dll</HintPath>
     </Reference>
-    <Reference Include="Greenshot">
+    <Reference Include="Greenshot, Version=0.8.1.1288, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Greenshot.dll</HintPath>
     </Reference>
-    <Reference Include="GreenshotPlugin">
+    <Reference Include="GreenshotPlugin, Version=1.0.0.1282, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\GreenshotPlugin.dll</HintPath>
     </Reference>
     <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">

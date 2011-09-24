@@ -475,7 +475,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (Engine.AppConf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
+            else if (!IsDisposed && Engine.AppConf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
                 && this.ShowInTaskbar && this.WindowState == FormWindowState.Normal)
             {
                 try
@@ -539,9 +539,11 @@ namespace ZScreenGUI
                     ThumbnailToolBarButton openHistory = new ThumbnailToolBarButton(Resources.pictures_ico, "History");
                     openHistory.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(tsbOpenHistory_Click);
 
-                    Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload, openHistory);
-
-                    Engine.zJumpList.Refresh();
+                    if (!IsDisposed)
+                    {
+                        Engine.zWindowsTaskbar.ThumbnailToolBars.AddButtons(this.Handle, cropShot, selWindow, clipboardUpload, openHistory);
+                        Engine.zJumpList.Refresh();
+                    }
 
                     Engine.MyLogger.WriteLine("Integrated into Windows 7 Taskbar");
                 }

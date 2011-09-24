@@ -1166,12 +1166,12 @@ namespace ZScreenGUI
             // 
             this.llProjectPage.AutoSize = true;
             this.llProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llProjectPage.Location = new System.Drawing.Point(576, 272);
+            this.llProjectPage.Location = new System.Drawing.Point(592, 272);
             this.llProjectPage.Name = "llProjectPage";
-            this.llProjectPage.Size = new System.Drawing.Size(61, 13);
+            this.llProjectPage.Size = new System.Drawing.Size(47, 13);
             this.llProjectPage.TabIndex = 83;
             this.llProjectPage.TabStop = true;
-            this.llProjectPage.Text = "Wiki Pages";
+            this.llProjectPage.Text = "Tutorials";
             this.ttZScreen.SetToolTip(this.llProjectPage, "View ZScreen\'s project page on the web.");
             this.llProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llProjectPage_LinkClicked);
             // 
@@ -1181,10 +1181,10 @@ namespace ZScreenGUI
             this.llWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.llWebsite.Location = new System.Drawing.Point(384, 272);
             this.llWebsite.Name = "llWebsite";
-            this.llWebsite.Size = new System.Drawing.Size(66, 13);
+            this.llWebsite.Size = new System.Drawing.Size(63, 13);
             this.llWebsite.TabIndex = 82;
             this.llWebsite.TabStop = true;
-            this.llWebsite.Text = "ZScreen.net";
+            this.llWebsite.Text = "Home Page";
             this.ttZScreen.SetToolTip(this.llWebsite, "Visit the home of ZScreen.");
             this.llWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWebsite_LinkClicked);
             // 
@@ -1192,7 +1192,7 @@ namespace ZScreenGUI
             // 
             this.llblBugReports.AutoSize = true;
             this.llblBugReports.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llblBugReports.Location = new System.Drawing.Point(464, 272);
+            this.llblBugReports.Location = new System.Drawing.Point(472, 272);
             this.llblBugReports.Name = "llblBugReports";
             this.llblBugReports.Size = new System.Drawing.Size(100, 13);
             this.llblBugReports.TabIndex = 81;
