@@ -108,7 +108,7 @@ namespace ZScreenGUI
                             bwTask.UploadText();
                             break;
                         case WorkerTask.JobLevel2.Translate:
-                            bwTask.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleTranslateKey).TranslateText(bwTask.TranslationInfo));
+                            bwTask.SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleApiKey).TranslateText(bwTask.TranslationInfo));
                             bwTask.SetText(bwTask.TranslationInfo.Result);
                             break;
                     }
@@ -119,7 +119,7 @@ namespace ZScreenGUI
             {
                 foreach (UploadResult ur in bwTask.UploadResults)
                 {
-                    if (bwTask.ShouldShortenURL(ur.URL))
+                    if (bwTask.ShouldShortenURL(ur.URL) && string.IsNullOrEmpty(ur.ShortenedURL))
                     {
                         bwTask.ShortenURL(ur, ur.URL);
                     }
@@ -399,14 +399,12 @@ namespace ZScreenGUI
         /// <param name="job">Job Type</param>
         public void RunWorkerAsync_Screenshots(WorkerTask ssTask)
         {
-            ClipboardUnhook();
             ssTask.WasToTakeScreenshot = true;
             ssTask.RunWorker();
         }
 
         public void RunWorkerAsync_Text(WorkerTask task)
         {
-            ClipboardUnhook();
             task.RunWorker();
         }
 
@@ -459,7 +457,7 @@ namespace ZScreenGUI
             WorkerTask gtTask = CreateTask(WorkerTask.JobLevel2.Translate);
             if (Loader.MyGTGUI == null)
             {
-                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys());
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig);
             }
             Loader.MyGTGUI.btnTranslate.Enabled = false;
             Loader.MyGTGUI.btnTranslateTo.Enabled = false;
@@ -469,7 +467,6 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboardOrGoogleTranslate()
         {
-            ClipboardUnhook();
             if (Clipboard.ContainsText() && Engine.MyGTConfig.AutoTranslate && Clipboard.GetText().Length <= Engine.MyGTConfig.AutoTranslateLength)
             {
                 StartWorkerTranslator();
@@ -484,7 +481,7 @@ namespace ZScreenGUI
         {
             if (!Engine.IsClipboardUploading)
             {
-                ClipboardUnhook();
+                Engine.IsClipboardUploading = true;
 
                 WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
 

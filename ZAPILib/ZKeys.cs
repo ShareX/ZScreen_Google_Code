@@ -64,14 +64,13 @@ namespace UploadersAPILib
         public const string BitlyConsumerSecret = "fe5f906b5f5e8114d5c266a709a9438c94e1cd3f";
         public const string GoogleConsumerKey = "1011702346808.apps.googleusercontent.com";
         public const string GoogleConsumerSecret = "EmT1pAOddpDRYUDd5smypTbH";
-        public const string GoogleURLShortenerKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
         public const string KlamKey = "a4e5a8de710d80db774a8264f4588ffb";
         public const string ThreelyKey = "em5893833";
 
         // Other Services
         public const string TwitterConsumerKey = "Jzzcm6ytcyml14sQIvqvmA";
         public const string TwitterConsumerSecret = "aJYZ9W1gJnGMgSqhRYrvoUyUc14FssVJOFAqHjriU";
-        public const string GoogleTranslateKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
+        public const string GoogleApiKey = "AIzaSyCcYJvYPvS3UE0JqqsSNpjPjN1NPBmMbmE";
         public const string PicnikKey = "3aacd2de4563b8817de708b29b5bdd0e";
 
         public static UploadersAPIKeys GetAPIKeys()
@@ -94,7 +93,7 @@ namespace UploadersAPILib
                 PastebinKey = PastebinKey,
                 TwitterConsumerKey = TwitterConsumerKey,
                 TwitterConsumerSecret = TwitterConsumerSecret,
-                GoogleTranslateKey = GoogleTranslateKey,
+                GoogleTranslateKey = GoogleApiKey,
                 GoogleConsumerKey = GoogleConsumerKey,
                 GoogleConsumerSecret = GoogleConsumerSecret
             };

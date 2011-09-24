@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -869,8 +869,9 @@ namespace ZScreenGUI
             this.toolStripButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(254, 20);
+            this.toolStripButton3.Size = new System.Drawing.Size(134, 20);
             this.toolStripButton3.Text = "Tutorials";
+            this.toolStripButton3.Click += new System.EventHandler(this.tsbLinkHelp_Click);
             // 
             // tsMainTab
             // 
@@ -1298,7 +1299,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle6;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle7;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;

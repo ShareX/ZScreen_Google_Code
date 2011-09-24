@@ -56,12 +56,17 @@ namespace ZScreenGUI
         {
             if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)
             {
-                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig) { Icon = this.Icon };
+            }
+
+            if (string.IsNullOrEmpty(Engine.MyGTConfig.APIKey))
+            {
+                StaticHelper.LoadBrowser("http://code.google.com/apis/language/translate/overview.html");
             }
 
             if (Engine.MyGTConfig.GoogleLanguages == null || Engine.MyGTConfig.GoogleLanguages.Count < 1)
             {
-                Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleTranslateKey).GetLanguages();
+                Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleApiKey).GetLanguages();
             }
 
             return Loader.MyGTGUI;

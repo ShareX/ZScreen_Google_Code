@@ -352,7 +352,7 @@ namespace ZUploader
                     urlShortener = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                     break;
                 case UrlShortenerType.Google:
-                    urlShortener = new GoogleURLShortener(Program.UploadersConfig.GoogleURLShortenerAccountType, ZKeys.GoogleURLShortenerKey,
+                    urlShortener = new GoogleURLShortener(Program.UploadersConfig.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey,
                         Program.UploadersConfig.GoogleURLShortenerOAuthInfo);
                     break;
                 case UrlShortenerType.ISGD:
