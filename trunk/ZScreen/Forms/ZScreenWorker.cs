@@ -495,14 +495,17 @@ namespace ZScreenGUI
             else if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
-                if (cbTask.MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
+                if (text != Engine.zPreviousClipboardText)
                 {
-                    FileSystem.WriteText(cufp, text);
+                    string cufp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+                    if (cbTask.MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
+                    {
+                        FileSystem.WriteText(cufp, text);
+                    }
+                    cbTask.UpdateLocalFilePath(cufp);
+                    cbTask.SetText(text);
+                    cbTask.RunWorker();
                 }
-                cbTask.UpdateLocalFilePath(cufp);
-                cbTask.SetText(text);
-                cbTask.RunWorker();
             }
             else if (Clipboard.ContainsFileDropList())
             {

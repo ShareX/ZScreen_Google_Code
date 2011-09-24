@@ -40,31 +40,23 @@ namespace ZScreenLib
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
                     string path = string.IsNullOrEmpty(ur.URL) ? ur.LocalFilePath : ur.URL;
-                    if (task.Job1 == JobLevel1.Text && task.Job3 == WorkerTask.JobLevel3.ShortenURL)
+
+                    foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
-                        string url = ur.GetUrlByType(LinkFormatEnum.FULL_TINYURL, path);
-                        TreeNode tnLink = new TreeNode(LinkFormatEnum.FULL_TINYURL.GetDescription());
-                        tnLink.Nodes.Add(url);
-                        tnUploadResult.Nodes.Add(tnLink);
-                    }
-                    else
-                    {
-                        foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
+                        string url = ur.GetUrlByType(type, path);
+                        if (!string.IsNullOrEmpty(url))
                         {
-                            string url = ur.GetUrlByType(type, path);
-                            if (!string.IsNullOrEmpty(url))
+                            if (type == LinkFormatEnum.FULL)
                             {
-                                if (type == LinkFormatEnum.FULL)
-                                {
-                                    this.longUrl = url;
-                                }
-                                TreeNode tnLink = new TreeNode(type.GetDescription());
-                                tnLink.Nodes.Add(url);
-                                tnUploadResult.Nodes.Add(tnLink);
-                                count++;
+                                this.longUrl = url;
                             }
+                            TreeNode tnLink = new TreeNode(type.GetDescription());
+                            tnLink.Nodes.Add(url);
+                            tnUploadResult.Nodes.Add(tnLink);
+                            count++;
                         }
                     }
+
                     tvLinks.Nodes.Add(tnUploadResult);
                 }
 
