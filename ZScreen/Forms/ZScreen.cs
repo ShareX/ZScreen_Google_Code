@@ -2329,5 +2329,16 @@ namespace ZScreenGUI
         {
             ucDestOptions.DropDownMenusClose();
         }
+
+        private void cboCropEngine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.conf.CropEngineMode = (CropEngineType)cboCropEngine.SelectedIndex;
+            gbCropRegion.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            gbCropCrosshairSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            gbCropDynamicRegionBorderColorSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            gbCropGridMode.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            gbCropRegionSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            gbCropShotMagnifyingGlass.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+        }
     }
 }

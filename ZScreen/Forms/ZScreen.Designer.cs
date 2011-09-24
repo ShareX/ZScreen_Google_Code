@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,9 +135,11 @@ namespace ZScreenGUI
             this.lblSelectedWindowBorderSize = new System.Windows.Forms.Label();
             this.pbSelectedWindowBorderColor = new System.Windows.Forms.PictureBox();
             this.tpCropShot = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboCropEngine = new System.Windows.Forms.ComboBox();
             this.gbCropShotMagnifyingGlass = new System.Windows.Forms.GroupBox();
             this.chkCropShowMagnifyingGlass = new System.Windows.Forms.CheckBox();
-            this.gbDynamicRegionBorderColorSettings = new System.Windows.Forms.GroupBox();
+            this.gbCropDynamicRegionBorderColorSettings = new System.Windows.Forms.GroupBox();
             this.nudCropRegionStep = new System.Windows.Forms.NumericUpDown();
             this.nudCropHueRange = new System.Windows.Forms.NumericUpDown();
             this.cbCropDynamicBorderColor = new System.Windows.Forms.CheckBox();
@@ -145,7 +147,7 @@ namespace ZScreenGUI
             this.lblCropHueRange = new System.Windows.Forms.Label();
             this.lblCropRegionStep = new System.Windows.Forms.Label();
             this.nudCropRegionInterval = new System.Windows.Forms.NumericUpDown();
-            this.gpCropRegion = new System.Windows.Forms.GroupBox();
+            this.gbCropRegion = new System.Windows.Forms.GroupBox();
             this.lblCropRegionStyle = new System.Windows.Forms.Label();
             this.chkRegionHotkeyInfo = new System.Windows.Forms.CheckBox();
             this.chkCropStyle = new System.Windows.Forms.ComboBox();
@@ -157,7 +159,7 @@ namespace ZScreenGUI
             this.lblCropBorderColor = new System.Windows.Forms.Label();
             this.pbCropBorderColor = new System.Windows.Forms.PictureBox();
             this.nudCropBorderSize = new System.Windows.Forms.NumericUpDown();
-            this.gbCrosshairSettings = new System.Windows.Forms.GroupBox();
+            this.gbCropCrosshairSettings = new System.Windows.Forms.GroupBox();
             this.chkCropDynamicCrosshair = new System.Windows.Forms.CheckBox();
             this.lblCropCrosshairStep = new System.Windows.Forms.Label();
             this.chkCropShowBigCross = new System.Windows.Forms.CheckBox();
@@ -170,7 +172,7 @@ namespace ZScreenGUI
             this.nudCropCrosshairStep = new System.Windows.Forms.NumericUpDown();
             this.lblCrosshairLineSize = new System.Windows.Forms.Label();
             this.lblCrosshairLineCount = new System.Windows.Forms.Label();
-            this.gbGridMode = new System.Windows.Forms.GroupBox();
+            this.gbCropGridMode = new System.Windows.Forms.GroupBox();
             this.cboCropGridMode = new System.Windows.Forms.CheckBox();
             this.nudCropGridHeight = new System.Windows.Forms.NumericUpDown();
             this.lblGridSizeWidth = new System.Windows.Forms.Label();
@@ -442,22 +444,23 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).BeginInit();
             this.tpCropShot.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.gbCropShotMagnifyingGlass.SuspendLayout();
-            this.gbDynamicRegionBorderColorSettings.SuspendLayout();
+            this.gbCropDynamicRegionBorderColorSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).BeginInit();
-            this.gpCropRegion.SuspendLayout();
+            this.gbCropRegion.SuspendLayout();
             this.gbCropRegionSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).BeginInit();
-            this.gbCrosshairSettings.SuspendLayout();
+            this.gbCropCrosshairSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).BeginInit();
-            this.gbGridMode.SuspendLayout();
+            this.gbCropGridMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).BeginInit();
             this.tpCropShotLast.SuspendLayout();
@@ -1289,7 +1292,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle3;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle2;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
@@ -1622,12 +1625,13 @@ namespace ZScreenGUI
             // 
             // tpCropShot
             // 
+            this.tpCropShot.Controls.Add(this.groupBox1);
             this.tpCropShot.Controls.Add(this.gbCropShotMagnifyingGlass);
-            this.tpCropShot.Controls.Add(this.gbDynamicRegionBorderColorSettings);
-            this.tpCropShot.Controls.Add(this.gpCropRegion);
+            this.tpCropShot.Controls.Add(this.gbCropDynamicRegionBorderColorSettings);
+            this.tpCropShot.Controls.Add(this.gbCropRegion);
             this.tpCropShot.Controls.Add(this.gbCropRegionSettings);
-            this.tpCropShot.Controls.Add(this.gbCrosshairSettings);
-            this.tpCropShot.Controls.Add(this.gbGridMode);
+            this.tpCropShot.Controls.Add(this.gbCropCrosshairSettings);
+            this.tpCropShot.Controls.Add(this.gbCropGridMode);
             this.tpCropShot.ImageKey = "shape_square.png";
             this.tpCropShot.Location = new System.Drawing.Point(4, 22);
             this.tpCropShot.Name = "tpCropShot";
@@ -1637,12 +1641,32 @@ namespace ZScreenGUI
             this.tpCropShot.Text = "Crop Shot";
             this.tpCropShot.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cboCropEngine);
+            this.groupBox1.Location = new System.Drawing.Point(8, 8);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(352, 56);
+            this.groupBox1.TabIndex = 125;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Crop Engine of choice";
+            // 
+            // cboCropEngine
+            // 
+            this.cboCropEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCropEngine.FormattingEnabled = true;
+            this.cboCropEngine.Location = new System.Drawing.Point(8, 24);
+            this.cboCropEngine.Name = "cboCropEngine";
+            this.cboCropEngine.Size = new System.Drawing.Size(336, 21);
+            this.cboCropEngine.TabIndex = 0;
+            this.cboCropEngine.SelectedIndexChanged += new System.EventHandler(this.cboCropEngine_SelectedIndexChanged);
+            // 
             // gbCropShotMagnifyingGlass
             // 
             this.gbCropShotMagnifyingGlass.Controls.Add(this.chkCropShowMagnifyingGlass);
-            this.gbCropShotMagnifyingGlass.Location = new System.Drawing.Point(8, 136);
+            this.gbCropShotMagnifyingGlass.Location = new System.Drawing.Point(368, 280);
             this.gbCropShotMagnifyingGlass.Name = "gbCropShotMagnifyingGlass";
-            this.gbCropShotMagnifyingGlass.Size = new System.Drawing.Size(352, 56);
+            this.gbCropShotMagnifyingGlass.Size = new System.Drawing.Size(392, 56);
             this.gbCropShotMagnifyingGlass.TabIndex = 124;
             this.gbCropShotMagnifyingGlass.TabStop = false;
             this.gbCropShotMagnifyingGlass.Text = "Ease of Access";
@@ -1658,21 +1682,21 @@ namespace ZScreenGUI
             this.chkCropShowMagnifyingGlass.UseVisualStyleBackColor = true;
             this.chkCropShowMagnifyingGlass.CheckedChanged += new System.EventHandler(this.cbCropShowMagnifyingGlass_CheckedChanged);
             // 
-            // gbDynamicRegionBorderColorSettings
+            // gbCropDynamicRegionBorderColorSettings
             // 
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionStep);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropHueRange);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.cbCropDynamicBorderColor);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionInterval);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropHueRange);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionStep);
-            this.gbDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionInterval);
-            this.gbDynamicRegionBorderColorSettings.Location = new System.Drawing.Point(368, 192);
-            this.gbDynamicRegionBorderColorSettings.Name = "gbDynamicRegionBorderColorSettings";
-            this.gbDynamicRegionBorderColorSettings.Size = new System.Drawing.Size(392, 80);
-            this.gbDynamicRegionBorderColorSettings.TabIndex = 123;
-            this.gbDynamicRegionBorderColorSettings.TabStop = false;
-            this.gbDynamicRegionBorderColorSettings.Text = "Dynamic Region Border Color Settings";
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionStep);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.nudCropHueRange);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.cbCropDynamicBorderColor);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionInterval);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.lblCropHueRange);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.lblCropRegionStep);
+            this.gbCropDynamicRegionBorderColorSettings.Controls.Add(this.nudCropRegionInterval);
+            this.gbCropDynamicRegionBorderColorSettings.Location = new System.Drawing.Point(368, 192);
+            this.gbCropDynamicRegionBorderColorSettings.Name = "gbCropDynamicRegionBorderColorSettings";
+            this.gbCropDynamicRegionBorderColorSettings.Size = new System.Drawing.Size(392, 80);
+            this.gbCropDynamicRegionBorderColorSettings.TabIndex = 123;
+            this.gbCropDynamicRegionBorderColorSettings.TabStop = false;
+            this.gbCropDynamicRegionBorderColorSettings.Text = "Dynamic Region Border Color Settings";
             // 
             // nudCropRegionStep
             // 
@@ -1756,18 +1780,18 @@ namespace ZScreenGUI
             this.nudCropRegionInterval.TabIndex = 30;
             this.nudCropRegionInterval.ValueChanged += new System.EventHandler(this.nudCropRegionInterval_ValueChanged);
             // 
-            // gpCropRegion
+            // gbCropRegion
             // 
-            this.gpCropRegion.Controls.Add(this.lblCropRegionStyle);
-            this.gpCropRegion.Controls.Add(this.chkRegionHotkeyInfo);
-            this.gpCropRegion.Controls.Add(this.chkCropStyle);
-            this.gpCropRegion.Controls.Add(this.chkRegionRectangleInfo);
-            this.gpCropRegion.Location = new System.Drawing.Point(8, 8);
-            this.gpCropRegion.Name = "gpCropRegion";
-            this.gpCropRegion.Size = new System.Drawing.Size(352, 120);
-            this.gpCropRegion.TabIndex = 121;
-            this.gpCropRegion.TabStop = false;
-            this.gpCropRegion.Text = "Crop Region Settings";
+            this.gbCropRegion.Controls.Add(this.lblCropRegionStyle);
+            this.gbCropRegion.Controls.Add(this.chkRegionHotkeyInfo);
+            this.gbCropRegion.Controls.Add(this.chkCropStyle);
+            this.gbCropRegion.Controls.Add(this.chkRegionRectangleInfo);
+            this.gbCropRegion.Location = new System.Drawing.Point(8, 72);
+            this.gbCropRegion.Name = "gbCropRegion";
+            this.gbCropRegion.Size = new System.Drawing.Size(352, 120);
+            this.gbCropRegion.TabIndex = 121;
+            this.gbCropRegion.TabStop = false;
+            this.gbCropRegion.Text = "Crop Region Settings";
             // 
             // lblCropRegionStyle
             // 
@@ -1885,26 +1909,26 @@ namespace ZScreenGUI
             this.nudCropBorderSize.TabIndex = 12;
             this.nudCropBorderSize.ValueChanged += new System.EventHandler(this.nudCropBorderSize_ValueChanged);
             // 
-            // gbCrosshairSettings
+            // gbCropCrosshairSettings
             // 
-            this.gbCrosshairSettings.Controls.Add(this.chkCropDynamicCrosshair);
-            this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairStep);
-            this.gbCrosshairSettings.Controls.Add(this.chkCropShowBigCross);
-            this.gbCrosshairSettings.Controls.Add(this.pbCropCrosshairColor);
-            this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairInterval);
-            this.gbCrosshairSettings.Controls.Add(this.lblCropCrosshairColor);
-            this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineCount);
-            this.gbCrosshairSettings.Controls.Add(this.nudCropCrosshairInterval);
-            this.gbCrosshairSettings.Controls.Add(this.nudCrosshairLineSize);
-            this.gbCrosshairSettings.Controls.Add(this.nudCropCrosshairStep);
-            this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineSize);
-            this.gbCrosshairSettings.Controls.Add(this.lblCrosshairLineCount);
-            this.gbCrosshairSettings.Location = new System.Drawing.Point(8, 200);
-            this.gbCrosshairSettings.Name = "gbCrosshairSettings";
-            this.gbCrosshairSettings.Size = new System.Drawing.Size(352, 144);
-            this.gbCrosshairSettings.TabIndex = 25;
-            this.gbCrosshairSettings.TabStop = false;
-            this.gbCrosshairSettings.Text = "Crosshair Settings";
+            this.gbCropCrosshairSettings.Controls.Add(this.chkCropDynamicCrosshair);
+            this.gbCropCrosshairSettings.Controls.Add(this.lblCropCrosshairStep);
+            this.gbCropCrosshairSettings.Controls.Add(this.chkCropShowBigCross);
+            this.gbCropCrosshairSettings.Controls.Add(this.pbCropCrosshairColor);
+            this.gbCropCrosshairSettings.Controls.Add(this.lblCropCrosshairInterval);
+            this.gbCropCrosshairSettings.Controls.Add(this.lblCropCrosshairColor);
+            this.gbCropCrosshairSettings.Controls.Add(this.nudCrosshairLineCount);
+            this.gbCropCrosshairSettings.Controls.Add(this.nudCropCrosshairInterval);
+            this.gbCropCrosshairSettings.Controls.Add(this.nudCrosshairLineSize);
+            this.gbCropCrosshairSettings.Controls.Add(this.nudCropCrosshairStep);
+            this.gbCropCrosshairSettings.Controls.Add(this.lblCrosshairLineSize);
+            this.gbCropCrosshairSettings.Controls.Add(this.lblCrosshairLineCount);
+            this.gbCropCrosshairSettings.Location = new System.Drawing.Point(8, 200);
+            this.gbCropCrosshairSettings.Name = "gbCropCrosshairSettings";
+            this.gbCropCrosshairSettings.Size = new System.Drawing.Size(352, 144);
+            this.gbCropCrosshairSettings.TabIndex = 25;
+            this.gbCropCrosshairSettings.TabStop = false;
+            this.gbCropCrosshairSettings.Text = "Crosshair Settings";
             // 
             // chkCropDynamicCrosshair
             // 
@@ -2042,21 +2066,21 @@ namespace ZScreenGUI
             this.lblCrosshairLineCount.TabIndex = 19;
             this.lblCrosshairLineCount.Text = "Number of concentric circles:";
             // 
-            // gbGridMode
+            // gbCropGridMode
             // 
-            this.gbGridMode.Controls.Add(this.cboCropGridMode);
-            this.gbGridMode.Controls.Add(this.nudCropGridHeight);
-            this.gbGridMode.Controls.Add(this.lblGridSizeWidth);
-            this.gbGridMode.Controls.Add(this.lblGridSize);
-            this.gbGridMode.Controls.Add(this.lblGridSizeHeight);
-            this.gbGridMode.Controls.Add(this.nudCropGridWidth);
-            this.gbGridMode.Location = new System.Drawing.Point(368, 8);
-            this.gbGridMode.Name = "gbGridMode";
-            this.gbGridMode.Size = new System.Drawing.Size(392, 80);
-            this.gbGridMode.TabIndex = 120;
-            this.gbGridMode.TabStop = false;
-            this.gbGridMode.Tag = "With Grid Mode you can take screenshots of preset portions of the Screen";
-            this.gbGridMode.Text = "Grid Mode Settings";
+            this.gbCropGridMode.Controls.Add(this.cboCropGridMode);
+            this.gbCropGridMode.Controls.Add(this.nudCropGridHeight);
+            this.gbCropGridMode.Controls.Add(this.lblGridSizeWidth);
+            this.gbCropGridMode.Controls.Add(this.lblGridSize);
+            this.gbCropGridMode.Controls.Add(this.lblGridSizeHeight);
+            this.gbCropGridMode.Controls.Add(this.nudCropGridWidth);
+            this.gbCropGridMode.Location = new System.Drawing.Point(368, 8);
+            this.gbCropGridMode.Name = "gbCropGridMode";
+            this.gbCropGridMode.Size = new System.Drawing.Size(392, 80);
+            this.gbCropGridMode.TabIndex = 120;
+            this.gbCropGridMode.TabStop = false;
+            this.gbCropGridMode.Tag = "With Grid Mode you can take screenshots of preset portions of the Screen";
+            this.gbCropGridMode.Text = "Grid Mode Settings";
             // 
             // cboCropGridMode
             // 
@@ -5027,28 +5051,29 @@ namespace ZScreenGUI
             ((System.ComponentModel.ISupportInitialize)(this.nudSelectedWindowBorderSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectedWindowBorderColor)).EndInit();
             this.tpCropShot.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.gbCropShotMagnifyingGlass.ResumeLayout(false);
             this.gbCropShotMagnifyingGlass.PerformLayout();
-            this.gbDynamicRegionBorderColorSettings.ResumeLayout(false);
-            this.gbDynamicRegionBorderColorSettings.PerformLayout();
+            this.gbCropDynamicRegionBorderColorSettings.ResumeLayout(false);
+            this.gbCropDynamicRegionBorderColorSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropHueRange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropRegionInterval)).EndInit();
-            this.gpCropRegion.ResumeLayout(false);
-            this.gpCropRegion.PerformLayout();
+            this.gbCropRegion.ResumeLayout(false);
+            this.gbCropRegion.PerformLayout();
             this.gbCropRegionSettings.ResumeLayout(false);
             this.gbCropRegionSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropBorderColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropBorderSize)).EndInit();
-            this.gbCrosshairSettings.ResumeLayout(false);
-            this.gbCrosshairSettings.PerformLayout();
+            this.gbCropCrosshairSettings.ResumeLayout(false);
+            this.gbCropCrosshairSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCropCrosshairColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCrosshairLineSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropCrosshairStep)).EndInit();
-            this.gbGridMode.ResumeLayout(false);
-            this.gbGridMode.PerformLayout();
+            this.gbCropGridMode.ResumeLayout(false);
+            this.gbCropGridMode.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCropGridWidth)).EndInit();
             this.tpCropShotLast.ResumeLayout(false);
@@ -5196,7 +5221,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Timer tmrApp;
         internal System.Windows.Forms.TabControl tcMain;
         internal System.Windows.Forms.TabPage tpMain;
-        internal System.Windows.Forms.GroupBox gbGridMode;
+        internal System.Windows.Forms.GroupBox gbCropGridMode;
         internal System.Windows.Forms.CheckBox cboCropGridMode;
         internal System.Windows.Forms.NumericUpDown nudCropGridHeight;
         internal System.Windows.Forms.Label lblGridSizeWidth;
@@ -5230,7 +5255,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Label lblCropBorderColor;
         internal System.Windows.Forms.PictureBox pbCropBorderColor;
         internal System.Windows.Forms.NumericUpDown nudCropBorderSize;
-        internal System.Windows.Forms.GroupBox gbCrosshairSettings;
+        internal System.Windows.Forms.GroupBox gbCropCrosshairSettings;
         internal System.Windows.Forms.CheckBox chkCropShowMagnifyingGlass;
         internal System.Windows.Forms.CheckBox chkCropShowBigCross;
         internal System.Windows.Forms.CheckBox chkCropDynamicCrosshair;
@@ -5402,11 +5427,11 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnUploadTextClipboardFile;
         internal System.Windows.Forms.PropertyGrid pgEditorsImage;
         internal System.Windows.Forms.GroupBox gbImageSettings;
-        internal System.Windows.Forms.GroupBox gpCropRegion;
+        internal System.Windows.Forms.GroupBox gbCropRegion;
         internal System.Windows.Forms.ToolTip ttZScreen;
         internal System.Windows.Forms.CheckBox cbShowHelpBalloonTips;
         internal System.Windows.Forms.Label lblScreenshotDelay;
-        internal System.Windows.Forms.GroupBox gbDynamicRegionBorderColorSettings;
+        internal System.Windows.Forms.GroupBox gbCropDynamicRegionBorderColorSettings;
         private System.Windows.Forms.TabPage tpProxy;
         internal System.Windows.Forms.GroupBox gpProxySettings;
         private System.Windows.Forms.ToolStripMenuItem tsmFTPClient;
@@ -5551,5 +5576,7 @@ namespace ZScreenGUI
         private GroupBox gbBackupRestoreOutputs;
         private TabPage tpCaptureShape;
         internal PropertyGrid pgSurfaceConfig;
+        internal GroupBox groupBox1;
+        private ComboBox cboCropEngine;
     }
 }
