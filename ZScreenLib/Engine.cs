@@ -51,6 +51,7 @@ namespace ZScreenLib
         public static Stopwatch StartTimer { get; private set; }
 
         public static bool IsTakingScreenShot { get; set; }
+        public static bool IsClipboardUploading { get; set; }
 
         public static bool IsPortable { get; private set; }
 
@@ -187,8 +188,6 @@ namespace ZScreenLib
         public const string zImageAnnotator = "Image Annotator";
         public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
         public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
-
-        public static string zPreviousClipboardText = Clipboard.GetText();
 
         private static bool RunConfig = false;
 
