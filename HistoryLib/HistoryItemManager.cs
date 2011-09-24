@@ -232,6 +232,7 @@ namespace HistoryLib
 
         public void DeleteLocalFile()
         {
+            RefreshInfo();
             if (HistoryItem != null && IsFileExist && MessageBox.Show("Do you want to delete this file?\n" + HistoryItem.Filepath,
                 "Delete Local File", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
