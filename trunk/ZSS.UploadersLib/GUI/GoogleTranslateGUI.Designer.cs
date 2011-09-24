@@ -40,6 +40,8 @@
             this.lblFromLanguage = new System.Windows.Forms.Label();
             this.cbToLanguage = new System.Windows.Forms.ComboBox();
             this.cbFromLanguage = new System.Windows.Forms.ComboBox();
+            this.txtGoogleApiKey = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbLanguageAutoDetect
@@ -56,22 +58,23 @@
             // txtAutoTranslate
             // 
             this.txtAutoTranslate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtAutoTranslate.Location = new System.Drawing.Point(440, 254);
+            this.txtAutoTranslate.Location = new System.Drawing.Point(440, 248);
             this.txtAutoTranslate.Name = "txtAutoTranslate";
             this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
             this.txtAutoTranslate.TabIndex = 24;
             this.txtAutoTranslate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtAutoTranslate.TextChanged += new System.EventHandler(this.txtAutoTranslate_TextChanged);
             // 
             // cbAutoTranslate
             // 
             this.cbAutoTranslate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbAutoTranslate.AutoSize = true;
-            this.cbAutoTranslate.Location = new System.Drawing.Point(24, 256);
+            this.cbAutoTranslate.Location = new System.Drawing.Point(24, 248);
             this.cbAutoTranslate.Name = "cbAutoTranslate";
             this.cbAutoTranslate.Size = new System.Drawing.Size(416, 17);
             this.cbAutoTranslate.TabIndex = 23;
             this.cbAutoTranslate.Text = "Automatically translate text instead of uploading text if the text length is smal" +
-                "ler than";
+    "ler than";
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
             this.cbAutoTranslate.CheckedChanged += new System.EventHandler(this.cbAutoTranslate_CheckedChanged);
             // 
@@ -90,14 +93,14 @@
             // 
             // txtTranslateResult
             // 
-            this.txtTranslateResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTranslateResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTranslateResult.Location = new System.Drawing.Point(360, 104);
             this.txtTranslateResult.Multiline = true;
             this.txtTranslateResult.Name = "txtTranslateResult";
             this.txtTranslateResult.ReadOnly = true;
             this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTranslateResult.Size = new System.Drawing.Size(336, 96);
+            this.txtTranslateResult.Size = new System.Drawing.Size(336, 114);
             this.txtTranslateResult.TabIndex = 21;
             // 
             // txtLanguages
@@ -126,7 +129,6 @@
             this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
             this.txtTranslateText.TabIndex = 16;
-            this.txtTranslateText.TextChanged += new System.EventHandler(this.txtTranslateText_TextChanged);
             this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
             // 
             // lblToLanguage
@@ -173,11 +175,30 @@
             this.cbFromLanguage.TabIndex = 14;
             this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
+            // txtGoogleApiKey
+            // 
+            this.txtGoogleApiKey.Location = new System.Drawing.Point(112, 280);
+            this.txtGoogleApiKey.Name = "txtGoogleApiKey";
+            this.txtGoogleApiKey.Size = new System.Drawing.Size(384, 20);
+            this.txtGoogleApiKey.TabIndex = 26;
+            this.txtGoogleApiKey.TextChanged += new System.EventHandler(this.txtGoogleApiKey_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(24, 280);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Google API Key";
+            // 
             // GoogleTranslateGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 295);
+            this.ClientSize = new System.Drawing.Size(713, 313);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtGoogleApiKey);
             this.Controls.Add(this.cbLanguageAutoDetect);
             this.Controls.Add(this.txtAutoTranslate);
             this.Controls.Add(this.cbAutoTranslate);
@@ -213,5 +234,7 @@
         public System.Windows.Forms.Label lblFromLanguage;
         public System.Windows.Forms.ComboBox cbToLanguage;
         public System.Windows.Forms.ComboBox cbFromLanguage;
+        private System.Windows.Forms.TextBox txtGoogleApiKey;
+        private System.Windows.Forms.Label label1;
     }
 }

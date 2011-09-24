@@ -71,9 +71,11 @@ namespace ZScreenGUI
                     case HotkeyTask.FreehandCropShot:
                         newHotkeyInfo = RegisterHotkey(hotkey, CaptureFreeHandRegion);
                         break;
+                    /*
                     case HotkeyTask.LanguageTranslator:
                         newHotkeyInfo = RegisterHotkey(hotkey, StartWorkerTranslator);
                         break;
+                    */
                     case HotkeyTask.ScreenColorPicker:
                         newHotkeyInfo = RegisterHotkey(hotkey, ScreenColorPicker);
                         break;
@@ -87,7 +89,7 @@ namespace ZScreenGUI
                     newHotkeyInfo.Tag = hotkeyEnum;
                     Engine.MyLogger.WriteLine("Registered hotkey for " + hotkeyEnum.GetDescription());
                 }
-                else if(!IsReconfiguringHotkeys)
+                else if (!IsReconfiguringHotkeys)
                 {
                     MessageBox.Show(string.Format("Unable to register \"{0}\" hotkey.\nPlease select a different hotkey.", hotkeyEnum.GetDescription()),
                         Application.ProductName + " - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

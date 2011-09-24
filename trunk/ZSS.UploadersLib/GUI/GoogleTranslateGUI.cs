@@ -31,13 +31,11 @@ namespace UploadersLib
     public partial class GoogleTranslateGUI : Form
     {
         public GoogleTranslatorConfig Config { get; private set; }
-        public UploadersAPIKeys APIKeys { get; private set; }
 
-        public GoogleTranslateGUI(GoogleTranslatorConfig config, UploadersAPIKeys uploadersAPIKeys)
+        public GoogleTranslateGUI(GoogleTranslatorConfig config)
         {
             InitializeComponent();
             this.Config = config;
-            this.APIKeys = uploadersAPIKeys;
         }
 
         private void btnTranslate_Click(object sender, EventArgs e)
@@ -82,15 +80,6 @@ namespace UploadersLib
             }
         }
 
-        private void txtTranslateText_TextChanged(object sender, EventArgs e)
-        {
-            int number;
-            if (int.TryParse(txtAutoTranslate.Text, out number))
-            {
-                Config.AutoTranslateLength = number;
-            }
-        }
-
         private void btnTranslateTo1_DragDrop(object sender, DragEventArgs e)
         {
             Config.GoogleTargetLanguage2 = e.Data.GetData(DataFormats.Text).ToString();
@@ -113,6 +102,20 @@ namespace UploadersLib
         private void GoogleTranslateGUI_Load(object sender, EventArgs e)
         {
             LoadSettings(Config);
+        }
+
+        private void txtAutoTranslate_TextChanged(object sender, EventArgs e)
+        {
+            int number;
+            if (int.TryParse(txtAutoTranslate.Text, out number))
+            {
+                Config.AutoTranslateLength = number;
+            }
+        }
+
+        private void txtGoogleApiKey_TextChanged(object sender, EventArgs e)
+        {
+            Config.APIKey = txtGoogleApiKey.Text;
         }
     }
 }

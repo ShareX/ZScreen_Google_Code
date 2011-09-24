@@ -45,6 +45,7 @@ namespace UploadersLib
 
         #endregion I/O Methods
 
+        public string APIKey = "";
         public List<GoogleLanguage> GoogleLanguages;
         public string GoogleSourceLanguage = "en";
         public bool GoogleAutoDetectSource = true;

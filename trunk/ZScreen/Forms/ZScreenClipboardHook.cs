@@ -50,19 +50,6 @@ namespace ZScreenGUI
             }
         }
 
-        public void ClipboardHook()
-        {
-            Engine.IsClipboardUploading = false;
-            tmrClipboardMonitor.Tick += new EventHandler(tmrClipboardMonitor_Tick);
-            Engine.MyLogger.WriteLine("Registered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
-        }
-
-        public void ClipboardUnhook()
-        {
-            Engine.IsClipboardUploading = true;
-            Engine.MyLogger.WriteLine("Unregistered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
-        }
-
         #endregion Clipboard Methods
     }
 }

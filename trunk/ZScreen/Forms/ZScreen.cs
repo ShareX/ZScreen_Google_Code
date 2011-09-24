@@ -197,8 +197,6 @@ namespace ZScreenGUI
 
             CleanCache();
 
-            ClipboardHook();
-
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
                 Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
@@ -240,6 +238,9 @@ namespace ZScreenGUI
             }
 
             IsReady = true;
+
+            Engine.IsClipboardUploading = false;
+            tmrClipboardMonitor.Tick += new EventHandler(tmrClipboardMonitor_Tick);
         }
 
         private void ZScreen_Resize(object sender, EventArgs e)
@@ -410,7 +411,7 @@ namespace ZScreenGUI
 
         #endregion Trim memory
 
-  
+
         private void UpdateGuiEditors(object sender)
         {
             if (IsReady)

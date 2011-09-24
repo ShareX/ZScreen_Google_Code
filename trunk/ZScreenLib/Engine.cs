@@ -192,6 +192,14 @@ namespace ZScreenLib
         private static bool RunConfig = false;
 
         public static XMLSettings conf { get; set; }
+
+        public static Workflow CoreConf
+        {
+            get
+            {
+                return MyWorkflow;
+            }
+        }
         public static Workflow MyWorkflow { get; set; }
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
@@ -221,7 +229,6 @@ namespace ZScreenLib
 
             public bool ShowConfigWizard { get; set; }
         }
-
         #region Engine Turn On/Off
 
         public static void TurnOn()
@@ -482,9 +489,9 @@ namespace ZScreenLib
             });
 
             Thread googleTranslateThread = new Thread(() =>
-            {
-                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
-            });
+           {
+               Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
+           });
 
             settingsThread.Start();
             googleTranslateThread.Start();
@@ -513,14 +520,6 @@ namespace ZScreenLib
             if (IsPortable)
             {
                 Engine.AppConf.PreferSystemFolders = false;
-            }
-        }
-
-        public static Workflow CoreConf
-        {
-            get
-            {
-                return MyWorkflow;
             }
         }
 

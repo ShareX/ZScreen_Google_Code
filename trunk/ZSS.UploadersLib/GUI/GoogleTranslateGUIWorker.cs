@@ -43,7 +43,7 @@ namespace UploadersLib
         public void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             GoogleTranslateInfo gti = e.Argument as GoogleTranslateInfo;
-            gti = new GoogleTranslate(APIKeys.GoogleTranslateKey).TranslateText(gti);
+            gti = new GoogleTranslate(Config.APIKey).TranslateText(gti);
             e.Result = gti;
         }
 
