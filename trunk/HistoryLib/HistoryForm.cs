@@ -326,11 +326,11 @@ namespace HistoryLib
             {
                 ListViewItem lvi = lvHistory.SelectedItems[0];
                 HistoryItem hi = lvi.Tag as HistoryItem;
+                
 
                 if (hi != null)
                 {
                     history.RemoveHistoryItem(hi);
-                    lvHistory.Items.Remove(lvi);
                 }
             }
         }
@@ -525,6 +525,7 @@ namespace HistoryLib
             while (lvHistory.SelectedItems.Count > 0)
             {
                 RemoveSelectedHistoryItem();
+                lvHistory.Items.Remove(lvHistory.SelectedItems[0]);
             }
         }
 
@@ -533,6 +534,7 @@ namespace HistoryLib
             while (lvHistory.SelectedItems.Count > 0)
             {
                 him.DeleteLocalFile();
+                lvHistory.SelectedItems[0].Selected = false;
             }
         }
 
@@ -542,6 +544,7 @@ namespace HistoryLib
             {
                 RemoveSelectedHistoryItem();
                 him.DeleteLocalFile();
+                lvHistory.Items.Remove(lvHistory.SelectedItems[0]);
             }
         }
 
