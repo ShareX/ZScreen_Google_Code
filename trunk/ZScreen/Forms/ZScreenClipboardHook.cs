@@ -61,7 +61,7 @@ namespace ZScreenGUI
         public void ClipboardUnhook()
         {
             tmrClipboardMonitor.Enabled = false;
-            Engine.MyLogger.WriteLine("Unregisterd Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
+            Engine.MyLogger.WriteLine("Unregistered Clipboard Monitor via " + new StackFrame(1).GetMethod().Name);
         }
 
         #endregion Clipboard Methods
