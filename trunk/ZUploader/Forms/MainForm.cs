@@ -61,7 +61,7 @@ namespace ZUploader
             Activate();
 
             InitHotkeys();
-            UseCommandLineArg(Program.CommandLineArg);
+            UseCommandLineArgs(Environment.GetCommandLineArgs());
 
             IsReady = true;
         }
@@ -217,21 +217,19 @@ namespace ZUploader
             }
         }
 
-        public void UseCommandLineArg(string args)
+        public void UseCommandLineArgs(string[] args)
         {
-            if (!string.IsNullOrEmpty(args))
+            if (args != null && args.Length > 1)
             {
-                CLIParser parser = new CLIParser();
-
-                foreach (string arg in parser.Parse(args))
+                for (int i = 1; i < args.Length; i++)
                 {
-                    if (arg.Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
+                    if (args[i].Equals("-clipboardupload", StringComparison.InvariantCultureIgnoreCase))
                     {
                         UploadManager.ClipboardUpload();
                     }
                     else
                     {
-                        UploadManager.UploadFile(arg);
+                        UploadManager.UploadFile(args[i]);
                     }
                 }
             }

@@ -204,11 +204,8 @@
     <None Include="Resources\Ellipse.png" />
     <None Include="Resources\Triangle.png" />
     <None Include="Resources\camera.png" />
-    <None Include="Resources\monitor.png" />
     <None Include="Resources\ZUploader.ico" />
     <None Include="Resources\ZUploaderLogo.png" />
-    <None Include="Resources\ZUploaderSplash.png" />
-    <None Include="Resources\ZUploaderIcon.ico" />
     <None Include="Resources\ZUploaderSmallBusyIcon.ico" />
     <None Include="Resources\ZUploaderSmallIcon.ico" />
     <None Include="Resources\navigation-090-button.png" />
