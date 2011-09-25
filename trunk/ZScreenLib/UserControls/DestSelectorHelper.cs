@@ -347,21 +347,16 @@ namespace ZScreenLib
 
         private void tsmiDestImage_Click(object sender, EventArgs e)
         {
-            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestImage();
-            UpdateToolStripOutputs();
         }
 
         private void tsmiDestText_Click(object sender, EventArgs e)
         {
-            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestText();
-            UpdateToolStripOutputs();
         }
 
         private void tsmiDestFiles_Click(object sender, EventArgs e)
         {
-            ucDestOptions.ReconfigOutputsUI();
             UpdateToolStripDestFile();
         }
 

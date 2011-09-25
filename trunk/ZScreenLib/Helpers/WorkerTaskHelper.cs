@@ -13,7 +13,14 @@ namespace ZScreenLib
             int sizeLimit = profile.ImageSizeLimit * 1024;
             if (profile.ImageFormat != profile.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
             {
+                long streamLength = stream.Length / 1024;
                 stream = img.SaveImage(profile, profile.ImageFormat2);
+                Engine.MyLogger.WriteLine(string.Format("Converting {0} ({1} KiB) to {2} ({3} KiB which is less than {4} KiB)",
+                    profile.ImageFormat.GetDescription(),
+                    streamLength,
+                    profile.ImageFormat2.GetDescription(),
+                    stream.Length / 1024,
+                    profile.ImageSizeLimit));
                 imageFormat = profile.ImageFormat2;
             }
             else

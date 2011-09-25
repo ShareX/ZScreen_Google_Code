@@ -282,16 +282,6 @@ namespace ZScreenGUI
                     this.btnOpenSourceBrowser.Enabled = bLastSourceButtonsEnabled;
                     this.btnOpenSourceString.Enabled = bLastSourceButtonsEnabled;
 
-                    if (UploadManager.UploadInfoList.Count > 1)
-                    {
-                        this.niTray.Icon = Resources.zss_busy;
-                    }
-                    else
-                    {
-                        this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
-                        this.niTray.Icon = Resources.zss_tray;
-                    }
-
                     if (task.UploadResults.Count > 0 || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
                         if (Engine.conf.CompleteSound)
@@ -340,6 +330,17 @@ namespace ZScreenGUI
             }
 
             rtbDebugLog.Text = Engine.MyLogger.ToString();
+
+            if (UploadManager.UploadInfoList.Count > 1)
+            {
+                this.niTray.Icon = Resources.zss_busy;
+            }
+            else
+            {
+                this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
+                this.niTray.Icon = Resources.zss_tray;
+            }
+
         }
 
         #endregion Worker Events

@@ -83,7 +83,7 @@ namespace ZScreenLib
             return files;
         }
 
-        public static FileInfo WriteImage(string fp, Image img)
+        public static FileInfo WriteImage(string fp, Stream stream)
         {
             FileInfo fi = new FileInfo(fp);
 
@@ -93,8 +93,7 @@ namespace ZScreenLib
                 Directory.CreateDirectory(destDir);
             }
 
-            EImageFormat imageFormat;
-            using (MemoryStream ms = WorkerTaskHelper.PrepareImage(Engine.MyWorkflow, img, out imageFormat))
+            using (stream)
             {
                 try
                 {
@@ -104,8 +103,7 @@ namespace ZScreenLib
                     {
                         Directory.CreateDirectory(dir);
                     }
-                    Engine.MyLogger.WriteLine(string.Format("Writing image {0}x{1} to {2}", img.Width, img.Height, fp));
-                    ms.WriteToFile(fp);
+                    stream.WriteToFile(fp);
                 }
                 catch (Exception ex)
                 {
