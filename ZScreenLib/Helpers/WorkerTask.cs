@@ -465,8 +465,11 @@ namespace ZScreenLib
                     fp = Path.Combine(Application.StartupPath, fp);
                     UpdateLocalFilePath(fp);
                 }
-                ur.LocalFilePath = fp;
-                if (!string.IsNullOrEmpty(fp) || !string.IsNullOrEmpty(ur.URL))
+                if (File.Exists(fp))
+                {
+                    ur.LocalFilePath = fp;
+                }
+                if (!string.IsNullOrEmpty(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL))
                 {
                     UploadResults.Add(ur);
                     if (Engine.conf.ShowOutputsAsap)

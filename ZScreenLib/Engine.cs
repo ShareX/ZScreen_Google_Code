@@ -52,6 +52,7 @@ namespace ZScreenLib
 
         public static bool IsTakingScreenShot { get; set; }
         public static bool IsClipboardUploading { get; set; }
+        public static string zPreviousSetClipboardText { get; set; }
 
         public static bool IsPortable { get; private set; }
 
@@ -447,6 +448,7 @@ namespace ZScreenLib
                 }
             });
 
+            /*
             Thread googleTranslateThread = new Thread(() =>
             {
                 if (Engine.MyGTConfig != null)
@@ -454,15 +456,16 @@ namespace ZScreenLib
                     Engine.MyGTConfig.Write(GoogleTranslateConfigPath);
                 }
             });
+            */
 
             settingsThread.Start();
-            googleTranslateThread.Start();
+            // googleTranslateThread.Start();
             profileConfigThread.Start();
 
             if (!isAsync)
             {
                 settingsThread.Join();
-                googleTranslateThread.Join();
+                // googleTranslateThread.Join();
                 profileConfigThread.Join();
             }
         }

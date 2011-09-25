@@ -493,7 +493,15 @@ namespace ZScreenGUI
                 else if (Clipboard.ContainsText())
                 {
                     cbTask.SetText(Clipboard.GetText());
-                    cbTask.RunWorker();
+                    if (cbTask.TempText != Engine.zPreviousSetClipboardText)
+                    {
+                        cbTask.RunWorker();
+                        Engine.IsClipboardUploading = true;
+                    }
+                    else
+                    {
+                        Engine.IsClipboardUploading = false;
+                    }
                 }
                 else if (Clipboard.ContainsFileDropList())
                 {

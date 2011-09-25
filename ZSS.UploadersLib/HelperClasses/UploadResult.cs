@@ -192,7 +192,7 @@ namespace UploadersLib.HelperClasses
 
         public string GetLocalFilePathAsUri(string fp)
         {
-            if (!string.IsNullOrEmpty(fp))
+            if (File.Exists(fp))
             {
                 try
                 {
