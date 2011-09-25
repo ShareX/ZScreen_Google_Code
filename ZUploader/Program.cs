@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -120,8 +121,6 @@ namespace ZUploader
 
         public static bool IsPortable { get; private set; }
 
-        public static string CommandLineArg { get; private set; }
-
         public static Stopwatch StartTimer { get; private set; }
 
         public static Logger MyLogger { get; private set; }
@@ -170,12 +169,9 @@ namespace ZUploader
             StaticHelper.MyLogger = MyLogger;
             MyLogger.WriteLine("{0} {1} r{2} started", Application.ProductName, Application.ProductVersion, AppRevision);
             MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
-
+            MyLogger.WriteLine("CommandLine: " + Environment.CommandLine);
             IsPortable = CheckPortable();
-            MyLogger.WriteLine("IsPortable = {0}", IsPortable);
-
-            if (args != null && args.Length > 0) CommandLineArg = args[0];
-            MyLogger.WriteLine("CommandLineArg = \"{0}\"", CommandLineArg);
+            MyLogger.WriteLine("IsPortable: " + IsPortable);
 
             Thread settingThread = new Thread(() =>
             {
@@ -244,11 +240,7 @@ namespace ZUploader
 
                     mainForm.BringToFront();
                     mainForm.Activate();
-
-                    if (args != null && args.CommandLineArgs.Length > 1)
-                    {
-                        mainForm.UseCommandLineArg(args.CommandLineArgs[1]);
-                    }
+                    mainForm.UseCommandLineArgs(args.CommandLineArgs);
                 };
 
                 mainForm.Invoke(d);
