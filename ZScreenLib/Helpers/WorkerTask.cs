@@ -805,7 +805,7 @@ namespace ZScreenLib
             {
                 string fp = LocalFilePath;
                 Image img = TempImage;
-                FileInfo fi = FileSystem.WriteImage(fp, img);
+                FileInfo fi = FileSystem.WriteImage(fp, Data);
                 fp = fi.FullName;
                 FileSize = string.Format("{0} KiB", (fi.Length / 1024.0).ToString("0"));
 
@@ -1380,7 +1380,7 @@ namespace ZScreenLib
                     Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
                     fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
                     string fp = acc.GetLocalhostPath(fn);
-                    FileSystem.WriteImage(fp, TempImage);
+                    FileSystem.WriteImage(fp, Data);
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
@@ -1480,14 +1480,15 @@ namespace ZScreenLib
         {
             if (FileSystem.IsValidLink(url) && MyLinkUploaders.Count > 0)
             {
-                if (Engine.conf.ShortenUrlAfterUpload)
+                bool bShortenUrlJob = Engine.conf.ShortenUrlUsingClipboardUpload && Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(TempText);
+                bool bLongUrl = Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter;
+
+                if (bShortenUrlJob || bLongUrl)
                 {
                     Engine.MyLogger.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
                 }
-                return Engine.conf.TwitterEnabled ||
-                    Engine.conf.ShortenUrlUsingClipboardUpload && Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(TempText) ||
-                    Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter ||
-                    Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);
+                return Engine.conf.TwitterEnabled || bShortenUrlJob || bLongUrl ||
+                Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);
             }
 
             return false;
@@ -1564,15 +1565,28 @@ namespace ZScreenLib
 
         public string GetDescription()
         {
+            StringBuilder sb = new StringBuilder();
+
             if (!string.IsNullOrEmpty(FileName))
             {
-                return FileName;
+                sb.Append(FileName);
             }
-            else if (TempImage != null)
+
+            if (TempImage != null)
             {
-                return string.Format("Image ({0}x{1})", TempImage.Width, TempImage.Height);
+                sb.Append(string.Format(" ({0}x{1})", TempImage.Width, TempImage.Height));
+                if (!string.IsNullOrEmpty(FileSize))
+                {
+                    sb.Append(" " + FileSize);
+                }
             }
-            return Application.ProductName;
+
+            if (sb.Length == 0)
+            {
+                sb.Append(Application.ProductName);
+            }
+
+            return sb.ToString();
         }
 
         public string GetOutputsDescription()

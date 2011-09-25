@@ -52,7 +52,7 @@ namespace ZScreenLib
 
         public static bool IsTakingScreenShot { get; set; }
         public static bool IsClipboardUploading { get; set; }
-        public static string zPreviousSetClipboardText { get; set; }
+        public static string zPreviousSetClipboardText = Clipboard.GetText();
 
         public static bool IsPortable { get; private set; }
 
