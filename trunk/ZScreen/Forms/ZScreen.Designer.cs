@@ -35,7 +35,7 @@ namespace ZScreenGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZScreen));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.niTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmEntireScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -849,7 +849,7 @@ namespace ZScreenGUI
             this.tsbLinkHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbLinkHome.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbLinkHome.Name = "tsbLinkHome";
-            this.tsbLinkHome.Size = new System.Drawing.Size(254, 20);
+            this.tsbLinkHome.Size = new System.Drawing.Size(134, 20);
             this.tsbLinkHome.Text = "Home Page";
             this.tsbLinkHome.Click += new System.EventHandler(this.tsbLinkHome_Click);
             // 
@@ -859,7 +859,7 @@ namespace ZScreenGUI
             this.toolStripButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(254, 20);
+            this.toolStripButton2.Size = new System.Drawing.Size(134, 20);
             this.toolStripButton2.Text = "Bugs/Suggestions?";
             this.toolStripButton2.Click += new System.EventHandler(this.tsbLinkIssues_Click);
             // 
@@ -1018,6 +1018,7 @@ namespace ZScreenGUI
             this.tsbLanguageTranslator.Name = "tsbLanguageTranslator";
             this.tsbLanguageTranslator.Size = new System.Drawing.Size(155, 20);
             this.tsbLanguageTranslator.Text = "Google Translate...";
+            this.tsbLanguageTranslator.Visible = false;
             this.tsbLanguageTranslator.Click += new System.EventHandler(this.tsbLanguageTranslate_Click);
             // 
             // tsbScreenColorPicker
@@ -1299,7 +1300,7 @@ namespace ZScreenGUI
             // chHotkeys_Keys
             // 
             this.chHotkeys_Keys.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle7;
+            this.chHotkeys_Keys.DefaultCellStyle = dataGridViewCellStyle1;
             this.chHotkeys_Keys.HeaderText = "Hotkey";
             this.chHotkeys_Keys.Name = "chHotkeys_Keys";
             this.chHotkeys_Keys.ReadOnly = true;
