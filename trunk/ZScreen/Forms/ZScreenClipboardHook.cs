@@ -19,34 +19,41 @@ namespace ZScreenGUI
 
         void tmrClipboardMonitor_Tick(object sender, EventArgs e)
         {
-            if (IsReady && !Engine.IsClipboardUploading)
+            try
             {
-                bool uploadImage = false, uploadText = false, uploadFile = false, shortenUrl = false;
+                if (IsReady && !Engine.IsClipboardUploading)
+                {
+                    bool uploadImage = false, uploadText = false, uploadFile = false, shortenUrl = false;
 
-                if (Engine.conf.MonitorImages)
-                {
-                    uploadImage = Clipboard.ContainsImage();
-                }
-                if (Engine.conf.MonitorText && Clipboard.ContainsText())
-                {
-                    string cbText = Clipboard.GetText();
-                    uploadText = !string.IsNullOrEmpty(cbText);
-                }
-                if (Engine.conf.MonitorFiles)
-                {
-                    uploadFile = Clipboard.ContainsFileDropList();
-                }
-                if (Engine.conf.MonitorUrls && Clipboard.ContainsText())
-                {
-                    string cbText = Clipboard.GetText();
-                    shortenUrl = !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
-                }
+                    if (Engine.conf.MonitorImages)
+                    {
+                        uploadImage = Clipboard.ContainsImage();
+                    }
+                    if (Engine.conf.MonitorText && Clipboard.ContainsText())
+                    {
+                        string cbText = Clipboard.GetText();
+                        uploadText = !string.IsNullOrEmpty(cbText);
+                    }
+                    if (Engine.conf.MonitorFiles)
+                    {
+                        uploadFile = Clipboard.ContainsFileDropList();
+                    }
+                    if (Engine.conf.MonitorUrls && Clipboard.ContainsText())
+                    {
+                        string cbText = Clipboard.GetText();
+                        shortenUrl = !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
+                    }
 
-                if (uploadImage || uploadText || uploadFile || shortenUrl)
-                {
-                    UploadUsingClipboard();
-                }
+                    if (uploadImage || uploadText || uploadFile || shortenUrl)
+                    {
+                        UploadUsingClipboard();
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
