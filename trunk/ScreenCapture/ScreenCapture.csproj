@@ -102,6 +102,7 @@
     <Compile Include="RegionCapturePreview.Designer.cs">
       <DependentUpon>RegionCapturePreview.cs</DependentUpon>
     </Compile>
+    <Compile Include="SurfaceOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RegionCapturePreview.resx">

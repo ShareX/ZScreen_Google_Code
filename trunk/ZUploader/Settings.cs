@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using HelpersLib;
+using ScreenCapture;
 using UploadersLib.HelperClasses;
 
 namespace ZUploader
@@ -62,6 +63,9 @@ namespace ZUploader
         // Clipboard upload
         // Test: %y %mo %mon %mon2 %d %h %mi %s %ms %w %w2 %pm %rn %ra %width %height %app %ver
         public string NameFormatPattern = "%y-%mo-%d_%h-%mi-%s";
+
+        // Capture
+        public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
         // History
         public bool SaveHistory = true;

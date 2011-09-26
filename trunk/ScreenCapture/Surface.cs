@@ -95,6 +95,19 @@ namespace ScreenCapture
             KeyUp += new KeyEventHandler(Surface_KeyUp);
         }
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.Bounds = Helpers.GetScreenBounds();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            this.Text = "RegionCapture";
+#if !DEBUG
+            this.TopMost = true;
+#endif
+            this.ResumeLayout(false);
+        }
+
         public void LoadBackground(Image backgroundImage)
         {
             SurfaceImage = backgroundImage;
@@ -433,8 +446,6 @@ namespace ScreenCapture
             }
         }
 
-        #region Windows Form Designer generated code
-
         private IContainer components = null;
 
         protected override void Dispose(bool disposing)
@@ -452,59 +463,6 @@ namespace ScreenCapture
             if (textFont != null) textFont.Dispose();
 
             base.Dispose(disposing);
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.Bounds = Helpers.GetScreenBounds();
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            this.Text = "RegionCapture";
-#if !DEBUG
-            this.TopMost = true;
-#endif
-            this.ResumeLayout(false);
-        }
-
-        #endregion Windows Form Designer generated code
-    }
-
-    public class SurfaceOptions
-    {
-        [Category("Shape"), DefaultValue(false), Description("Draw border around the shape")]
-        public bool DrawBorder { get; set; }
-        [Category("Shape"), DefaultValue(false), Description("Draw checkerboard pattern replacing transparent areas.")]
-        public bool DrawChecker { get; set; }
-        [Category("Shape"), DefaultValue(false), Description("Complete capture as soon as the mouse button is released, except when capturing polygon.")]
-        public bool QuickCrop { get; set; }
-
-        [Category("Shape"), DefaultValue(1), Description("Minimum number of pixels to move shape at each arrow key stroke while pressing Ctrl key.")]
-        public int MinMoveSpeed { get; set; }
-        [Category("Shape"), DefaultValue(5), Description("Minimum number of pixels to move shape at each arrow key stroke while pressing Ctrl key and Shift key.")]
-        public int MaxMoveSpeed { get; set; }
-
-        [Category("Shape / Rectangle"), DefaultValue(false), Description("Fixed rectangle")]
-        public bool IsFixedSize { get; set; }
-        [Category("Shape / Rectangle"), Description("Fixed rectangle size.")]
-        public Size FixedSize { get; set; }
-
-        public SurfaceOptions()
-        {
-            ApplyDefaultValues();
-        }
-
-        public void ApplyDefaultValues()
-        {
-            DrawBorder = false;
-            DrawChecker = false;
-            QuickCrop = false;
-
-            MinMoveSpeed = 1;
-            MaxMoveSpeed = 5;
-
-            IsFixedSize = false;
-            FixedSize = new Size(250, 250);
         }
     }
 }

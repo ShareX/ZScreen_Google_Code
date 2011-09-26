@@ -53,7 +53,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"
