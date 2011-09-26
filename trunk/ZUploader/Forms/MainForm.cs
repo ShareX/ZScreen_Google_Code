@@ -150,6 +150,9 @@ namespace ZUploader
 
             ((ToolStripMenuItem)tsmiURLShorteners.DropDownItems[Program.Settings.SelectedURLShortenerDestination]).Checked = true;
             UploadManager.URLShortener = (UrlShortenerType)Program.Settings.SelectedURLShortenerDestination;
+
+            UpdateUploaderMenuNames();
+            UpdateCaptureMenu();
         }
 
         private void UpdateControls()
@@ -215,6 +218,23 @@ namespace ZUploader
             {
                 uploadFileToolStripMenuItem.Visible = true;
             }
+        }
+
+        private void UpdateUploaderMenuNames()
+        {
+            tsmiImageUploaders.Text = "Image uploader: " + UploadManager.ImageUploader.GetDescription();
+            tsmiFileUploaders.Text = "File uploader: " + UploadManager.FileUploader.GetDescription();
+            tsmiTextUploaders.Text = "Text uploader: " + UploadManager.TextUploader.GetDescription();
+            tsmiURLShorteners.Text = "URL shortener: " + UploadManager.URLShortener.GetDescription();
+        }
+
+        private void UpdateCaptureMenu()
+        {
+            CaptureDestination = Program.Settings.CaptureOutput;
+            bool isCaptureUpload = CaptureDestination == ScreenshotDestination.Upload;
+            tsmiCaptureOutputUpload.Checked = isCaptureUpload;
+            tsmiCaptureOutputClipboard.Checked = !isCaptureUpload;
+            tsmiCaptureOutput.Text = "Capture output: " + CaptureDestination.ToString();
         }
 
         public void UseCommandLineArgs(string[] args)
@@ -534,6 +554,8 @@ namespace ZUploader
                     UploadManager.ImageUploader = (ImageDestination)i;
                 }
             }
+
+            UpdateUploaderMenuNames();
         }
 
         private void tsddbFileUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -547,6 +569,8 @@ namespace ZUploader
                     UploadManager.FileUploader = (FileDestination)i;
                 }
             }
+
+            UpdateUploaderMenuNames();
         }
 
         private void tsddbTextUploaders_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -560,6 +584,8 @@ namespace ZUploader
                     UploadManager.TextUploader = (TextDestination)i;
                 }
             }
+
+            UpdateUploaderMenuNames();
         }
 
         private void tsddbURLShorteners_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -573,6 +599,20 @@ namespace ZUploader
                     UploadManager.URLShortener = (UrlShortenerType)i;
                 }
             }
+
+            UpdateUploaderMenuNames();
+        }
+
+        private void tsmiCaptureOutputUpload_Click(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureOutput = ScreenshotDestination.Upload;
+            UpdateCaptureMenu();
+        }
+
+        private void tsmiCaptureOutputClipboard_Click(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureOutput = ScreenshotDestination.Clipboard;
+            UpdateCaptureMenu();
         }
 
         private void tsddbUploadersConfig_Click(object sender, EventArgs e)
