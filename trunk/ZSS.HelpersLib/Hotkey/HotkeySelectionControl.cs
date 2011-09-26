@@ -23,30 +23,43 @@
 
 #endregion License Information (GPL v2)
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
-namespace HelpersLib
+namespace HelpersLib.Hotkey
 {
-    public class KeyInfo
+    public partial class HotkeySelectionControl : UserControl
     {
-        public Keys Key { get; set; }
-        public string Name { get; set; }
+        public Keys Hotkey { get; set; }
 
-        public KeyInfo(Keys key)
+        private Action hotkeyAction;
+
+        public HotkeySelectionControl(string description, Keys key, Action hotkeyAction)
         {
-            Key = key;
-            Name = key.ToString();
+            InitializeComponent();
+            lblHotkeyDescription.Text = description;
+            Hotkey = key;
+            this.hotkeyAction = hotkeyAction;
+            btnSetHotkey.Text = new KeyInfo(key).ToString();
         }
 
-        public KeyInfo(Keys key, string name)
+        private void btnSetHotkey_Click(object sender, EventArgs e)
         {
-            Key = key;
-            Name = name;
-        }
-
-        public override string ToString()
-        {
-            return Name;
+            using (HotkeyInputForm inputForm = new HotkeyInputForm(Hotkey))
+            {
+                if (inputForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Unregister old key
+                    Hotkey = inputForm.SelectedKey;
+                    // Register new key
+                }
+            }
         }
     }
 }

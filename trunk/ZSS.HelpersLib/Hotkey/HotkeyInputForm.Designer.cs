@@ -120,7 +120,9 @@
             this.Controls.Add(this.cbAlt);
             this.Controls.Add(this.cbShift);
             this.Controls.Add(this.cbControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "HotkeyInputForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HotkeyInputForm";
             this.ResumeLayout(false);
             this.PerformLayout();
