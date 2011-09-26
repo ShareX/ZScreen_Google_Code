@@ -81,6 +81,9 @@ namespace ZUploader
             txtNameFormatPattern.Text = Program.Settings.NameFormatPattern;
             CreateCodesMenu();
 
+            // Capture
+            pgCapture.SelectedObject = Program.Settings.SurfaceOptions;
+
             // History
             cbHistorySave.Checked = Program.Settings.SaveHistory;
             cbUseCustomHistoryPath.Checked = Program.Settings.UseCustomHistoryPath;

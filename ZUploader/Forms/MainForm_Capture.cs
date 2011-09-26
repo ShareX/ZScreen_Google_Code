@@ -128,6 +128,7 @@ namespace ZUploader
             {
                 Image img = null, screenshot = Helpers.GetScreenshot();
 
+                surface.Config = Program.Settings.SurfaceOptions;
                 surface.LoadBackground(screenshot);
 
                 if (surface.ShowDialog() == DialogResult.OK)

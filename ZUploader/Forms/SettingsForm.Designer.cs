@@ -82,6 +82,8 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.tpCapture = new System.Windows.Forms.TabPage();
+            this.pgCapture = new System.Windows.Forms.PropertyGrid();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -94,6 +96,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).BeginInit();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
+            this.tpCapture.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbClipboardAutoCopy
@@ -121,10 +124,10 @@
             // pgProxy
             // 
             this.pgProxy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgProxy.Location = new System.Drawing.Point(4, 4);
+            this.pgProxy.Location = new System.Drawing.Point(5, 5);
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgProxy.Size = new System.Drawing.Size(515, 251);
+            this.pgProxy.Size = new System.Drawing.Size(513, 249);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
             // 
@@ -134,6 +137,7 @@
             this.tcSettings.Controls.Add(this.tpUpload);
             this.tcSettings.Controls.Add(this.tpImage);
             this.tcSettings.Controls.Add(this.tpClipboardUpload);
+            this.tcSettings.Controls.Add(this.tpCapture);
             this.tcSettings.Controls.Add(this.tpHistory);
             this.tcSettings.Controls.Add(this.tpProxy);
             this.tcSettings.Controls.Add(this.tpDebug);
@@ -704,7 +708,7 @@
             this.tpProxy.Controls.Add(this.pgProxy);
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
-            this.tpProxy.Padding = new System.Windows.Forms.Padding(4);
+            this.tpProxy.Padding = new System.Windows.Forms.Padding(5);
             this.tpProxy.Size = new System.Drawing.Size(523, 259);
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
@@ -742,6 +746,27 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // tpCapture
+            // 
+            this.tpCapture.Controls.Add(this.pgCapture);
+            this.tpCapture.Location = new System.Drawing.Point(4, 22);
+            this.tpCapture.Name = "tpCapture";
+            this.tpCapture.Padding = new System.Windows.Forms.Padding(5);
+            this.tpCapture.Size = new System.Drawing.Size(523, 259);
+            this.tpCapture.TabIndex = 8;
+            this.tpCapture.Text = "Capture";
+            this.tpCapture.UseVisualStyleBackColor = true;
+            // 
+            // pgCapture
+            // 
+            this.pgCapture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgCapture.Location = new System.Drawing.Point(5, 5);
+            this.pgCapture.Name = "pgCapture";
+            this.pgCapture.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgCapture.Size = new System.Drawing.Size(513, 249);
+            this.pgCapture.TabIndex = 0;
+            this.pgCapture.ToolbarVisible = false;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -773,6 +798,7 @@
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
+            this.tpCapture.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -834,5 +860,7 @@
         private System.Windows.Forms.Button btnLoadUploadersConfig;
         private System.Windows.Forms.Button btnAutofillProxy;
         private System.Windows.Forms.CheckBox cbShowTray;
+        private System.Windows.Forms.TabPage tpCapture;
+        private System.Windows.Forms.PropertyGrid pgCapture;
     }
 }
