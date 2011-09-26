@@ -328,15 +328,9 @@ namespace ZScreenGUI
 
             rtbDebugLog.Text = Engine.MyLogger.ToString();
 
-            if (UploadManager.UploadInfoList.Count > 1)
-            {
-                this.niTray.Icon = Resources.zss_busy;
-            }
-            else
-            {
-                this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
-                this.niTray.Icon = Resources.zss_tray;
-            }
+            this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
+            this.niTray.Icon = Resources.zss_tray;
+
         }
 
         #endregion Worker Events

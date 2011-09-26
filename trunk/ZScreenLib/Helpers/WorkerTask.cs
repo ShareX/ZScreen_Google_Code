@@ -328,11 +328,10 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
-
                 TempImage = img;
-                EImageFormat imageFormat;
-                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
+                Job1 = JobLevel1.Image;
+
+                EImageFormat imageFormat = EImageFormat.PNG;
 
                 if (!string.IsNullOrEmpty(savePath))
                 {
@@ -345,7 +344,8 @@ namespace ZScreenLib
                     UpdateLocalFilePath(imgfp);
                 }
 
-                Job1 = JobLevel1.Image;
+                Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+
                 if (Engine.conf != null && Engine.conf.ShowOutputsAsap)
                 {
                     // IF (Bitmap)img.Clone() IS NOT USED THEN WE ARE GONNA GET CROSS THREAD OPERATION ERRORS! - McoreD
@@ -361,6 +361,8 @@ namespace ZScreenLib
                         PerformActions();
                     }
                 }
+
+                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
             }
 
             return TempImage != null;
