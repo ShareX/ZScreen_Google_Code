@@ -24,14 +24,14 @@ namespace ZScreenGUI
                 if (IsReady && !Engine.IsClipboardUploading)
                 {
                     bool uploadImage = false, uploadText = false, uploadFile = false, shortenUrl = false;
-
+                    string cbText = string.Empty;
                     if (Engine.conf.MonitorImages)
                     {
                         uploadImage = Clipboard.ContainsImage();
                     }
                     if (Engine.conf.MonitorText && Clipboard.ContainsText())
                     {
-                        string cbText = Clipboard.GetText();
+                        cbText = Clipboard.GetText();
                         uploadText = !string.IsNullOrEmpty(cbText);
                     }
                     if (Engine.conf.MonitorFiles)
@@ -40,11 +40,11 @@ namespace ZScreenGUI
                     }
                     if (Engine.conf.MonitorUrls && Clipboard.ContainsText())
                     {
-                        string cbText = Clipboard.GetText();
+                        cbText = Clipboard.GetText();
                         shortenUrl = !string.IsNullOrEmpty(cbText) && FileSystem.IsValidLink(cbText) && cbText.Length > Engine.conf.ShortenUrlAfterUploadAfter;
                     }
 
-                    if (uploadImage || uploadText || uploadFile || shortenUrl)
+                    if ((uploadImage || uploadText || uploadFile || shortenUrl) && (cbText != Engine.zPreviousSetClipboardText))
                     {
                         UploadUsingClipboard();
                     }
