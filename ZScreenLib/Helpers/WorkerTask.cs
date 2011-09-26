@@ -116,7 +116,6 @@ namespace ZScreenLib
             COPY_TO_CLIPBOARD_IMAGE, // needed only for the feature CopyImageUntilURL
             FLASH_ICON,
             INCREMENT_PROGRESS,
-            SET_ICON_BUSY,
             UPDATE_STATUS_BAR_TEXT,
             UPDATE_PROGRESS_MAX,
             UPDATE_TRAY_TITLE,
@@ -306,18 +305,11 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
-                MyWorker.ReportProgress((int)WorkerTask.ProgressType.SET_ICON_BUSY, this);
-
                 if (Engine.conf.PromptForOutputs)
                 {
                     dlgResult = SetManualOutputs(LocalFilePath);
                 }
                 Status.Add(TaskStatus.Prepared);
-            }
-
-            if (dlgResult == DialogResult.OK)
-            {
-                // todo moved this to PublishData()  WriteImage();
             }
 
             return dlgResult;
