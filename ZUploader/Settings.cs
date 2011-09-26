@@ -37,6 +37,7 @@ namespace ZUploader
         public int SelectedTextUploaderDestination = 0;
         public int SelectedFileUploaderDestination = 0;
         public int SelectedURLShortenerDestination = 0;
+        public ScreenshotDestination CaptureOutput = ScreenshotDestination.Upload;
         public bool ShowClipboardContentViewer = true;
 
         #region Settings Form

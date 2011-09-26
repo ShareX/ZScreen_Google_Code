@@ -25,6 +25,7 @@
 
 using System;
 using System.Drawing;
+using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
@@ -106,6 +107,11 @@ namespace ZUploader
                             break;
                         case ScreenshotDestination.Clipboard:
                             Clipboard.SetImage(img);
+
+                            if (Program.Settings.AutoPlaySound)
+                            {
+                                SystemSounds.Exclamation.Play();
+                            }
                             break;
                     }
                 }

@@ -87,6 +87,9 @@ namespace ZUploader
             this.tsmiTextUploaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFileUploaders = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiURLShorteners = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCaptureOutput = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCaptureOutputUpload = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCaptureOutputClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.tssDestinations1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiUploadersConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.tsddbPlugins = new System.Windows.Forms.ToolStripDropDownButton();
@@ -232,7 +235,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(847, 33);
+            this.tsMain.Size = new System.Drawing.Size(921, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -382,6 +385,7 @@ namespace ZUploader
             this.tsmiTextUploaders,
             this.tsmiFileUploaders,
             this.tsmiURLShorteners,
+            this.tsmiCaptureOutput,
             this.tssDestinations1,
             this.tsmiUploadersConfig});
             this.tsddbDestinations.Image = global::ZUploader.Properties.Resources.drive_globe;
@@ -417,6 +421,32 @@ namespace ZUploader
             this.tsmiURLShorteners.Name = "tsmiURLShorteners";
             this.tsmiURLShorteners.Size = new System.Drawing.Size(162, 22);
             this.tsmiURLShorteners.Text = "URL shorteners";
+            // 
+            // tsmiCaptureOutput
+            // 
+            this.tsmiCaptureOutput.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCaptureOutputUpload,
+            this.tsmiCaptureOutputClipboard});
+            this.tsmiCaptureOutput.Image = global::ZUploader.Properties.Resources.camera;
+            this.tsmiCaptureOutput.Name = "tsmiCaptureOutput";
+            this.tsmiCaptureOutput.Size = new System.Drawing.Size(162, 22);
+            this.tsmiCaptureOutput.Text = "Capture output";
+            // 
+            // tsmiCaptureOutputUpload
+            // 
+            this.tsmiCaptureOutputUpload.Checked = true;
+            this.tsmiCaptureOutputUpload.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiCaptureOutputUpload.Name = "tsmiCaptureOutputUpload";
+            this.tsmiCaptureOutputUpload.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCaptureOutputUpload.Text = "Upload";
+            this.tsmiCaptureOutputUpload.Click += new System.EventHandler(this.tsmiCaptureOutputUpload_Click);
+            // 
+            // tsmiCaptureOutputClipboard
+            // 
+            this.tsmiCaptureOutputClipboard.Name = "tsmiCaptureOutputClipboard";
+            this.tsmiCaptureOutputClipboard.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCaptureOutputClipboard.Text = "Clipboard";
+            this.tsmiCaptureOutputClipboard.Click += new System.EventHandler(this.tsmiCaptureOutputClipboard_Click);
             // 
             // tssDestinations1
             // 
@@ -712,5 +742,8 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiDiamond;
         private System.Windows.Forms.ToolStripMenuItem tsmiPolygon;
         private System.Windows.Forms.ToolStripMenuItem tsmiFreeHand;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutput;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputUpload;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputClipboard;
     }
 }
