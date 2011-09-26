@@ -43,6 +43,14 @@ namespace HelpersLib
             }
         }
 
+        public KeyInfo SelectedKeyInfo
+        {
+            get
+            {
+                return new KeyInfo(SelectedKey);
+            }
+        }
+
         private List<KeyInfo> keys;
 
         public HotkeyInputForm()
@@ -53,6 +61,12 @@ namespace HelpersLib
             ResetKey();
         }
 
+        public HotkeyInputForm(Keys key)
+            : this()
+        {
+            SelectedKey = key;
+        }
+
         private void AddKeys()
         {
             // None, PrintScreen, A...Z, 0...9, F1...F12
@@ -61,7 +75,7 @@ namespace HelpersLib
 
             keys.Add(new KeyInfo(Keys.None));
 
-            keys.Add(new KeyInfo(Keys.PrintScreen, "Print Screen"));
+            keys.Add(new KeyInfo(Keys.PrintScreen));
 
             for (Keys key = Keys.A; key <= Keys.Z; key++)
             {
@@ -70,7 +84,7 @@ namespace HelpersLib
 
             for (Keys key = Keys.D0; key <= Keys.D9; key++)
             {
-                keys.Add(new KeyInfo(key, (key - Keys.D0).ToString()));
+                keys.Add(new KeyInfo(key));
             }
 
             for (Keys key = Keys.F1; key <= Keys.F12; key++)

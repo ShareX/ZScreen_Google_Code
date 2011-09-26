@@ -34,7 +34,7 @@ namespace ZUploader
 {
     partial class MainForm
     {
-        public ScreenshotDestination Destination { get; set; }
+        public ScreenshotDestination CaptureDestination { get; set; }
 
         private delegate Image ScreenCaptureDelegate();
 
@@ -98,7 +98,7 @@ namespace ZUploader
 
                 if (img != null)
                 {
-                    switch (Destination)
+                    switch (CaptureDestination)
                     {
                         default:
                         case ScreenshotDestination.Upload:

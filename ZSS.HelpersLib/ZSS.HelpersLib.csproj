@@ -95,14 +95,20 @@
     <Compile Include="ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HotkeyInputForm.cs">
+    <Compile Include="Hotkey\HotkeyInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HotkeyInputForm.Designer.cs">
+    <Compile Include="Hotkey\HotkeyInputForm.Designer.cs">
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hotkey\HotkeySelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Hotkey\HotkeySelectionControl.Designer.cs">
+      <DependentUpon>HotkeySelectionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="IClone.cs" />
-    <Compile Include="KeyInfo.cs" />
+    <Compile Include="Hotkey\KeyInfo.cs" />
     <Compile Include="Printer\PrintForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,11 +147,11 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="FastDateTime.cs" />
-    <Compile Include="HotkeyForm.cs">
+    <Compile Include="Hotkey\HotkeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="HotkeyInfo.cs" />
+    <Compile Include="Hotkey\HotkeyInfo.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NameParser.cs" />
     <Compile Include="Native.cs" />
@@ -177,8 +183,11 @@
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HotkeyInputForm.resx">
+    <EmbeddedResource Include="Hotkey\HotkeyInputForm.resx">
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hotkey\HotkeySelectionControl.resx">
+      <DependentUpon>HotkeySelectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\PrintForm.resx">
       <DependentUpon>PrintForm.cs</DependentUpon>
