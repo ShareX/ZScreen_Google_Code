@@ -174,7 +174,7 @@ namespace ZScreenLib
             // Outputs > Images
             bool bHasValidImageUploader = HasValidImageUploader(bHasValidFileUploader);
 
-            // Outputs 
+            // Outputs
             foreach (ToolStripMenuItem tsmi in tsddbOutputs.DropDownItems)
             {
                 OutputEnum ut = (OutputEnum)tsmi.Tag;
@@ -250,6 +250,14 @@ namespace ZScreenLib
 
             foreach (ToolStripMenuItem tsmi in tsddbDestImage.DropDownItems)
             {
+                if (!tsmi.Enabled)
+                {
+                    tsmi.Checked = false; // if not enabled then we don't need it checked either issue 604
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestImage.DropDownItems)
+            {
                 if (tsmi.Enabled && tsmi.Checked)
                 {
                     return true;
@@ -273,6 +281,14 @@ namespace ZScreenLib
                             tsmi.Checked = false;
                         }
                         break;
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestText.DropDownItems)
+            {
+                if (!tsmi.Enabled)
+                {
+                    tsmi.Checked = false; // if not enabled then we don't need it checked either issue 604
                 }
             }
 
@@ -306,7 +322,7 @@ namespace ZScreenLib
                         success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0;
                         break;
                     case FileUploaderType.Minus:
-                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MinusConfig != null;
+                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MinusConfig.Tokens.Count > 0;
                         break;
                     case FileUploaderType.RapidShare:
                         success = tsmi.Enabled;
@@ -314,6 +330,14 @@ namespace ZScreenLib
                     case FileUploaderType.SendSpace:
                         success = tsmi.Enabled;
                         break;
+                }
+            }
+
+            foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
+            {
+                if (!tsmi.Enabled)
+                {
+                    tsmi.Checked = false; // if not enabled then we don't need it checked either issue 604
                 }
             }
 
@@ -328,6 +352,6 @@ namespace ZScreenLib
             return false;
         }
 
-        #endregion
+        #endregion ConfigGUI
     }
 }

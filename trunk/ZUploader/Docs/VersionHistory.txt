@@ -1,8 +1,10 @@
-﻿4.3.0 Added Minus uploader support
+﻿Version 4.3.0 
+
+4.3.0 Added Minus uploader support
 4.2.0 Added Photobucket uploader support
 4.1.1 Added user account support for Goo.gl URL Shortener service
 4.1.0 Added tray icon support
-4.0.0 Overhauled region capture through the plugin system
+4.0.0 Added Capture menu to capture rectangle, rounded rectangle, ellipse, triangle, diamond, polygon and freehand shapes
 
 Version 3.12 - 2011-05-28
 

@@ -162,9 +162,6 @@ namespace ZScreenGUI
                 case WorkerTask.ProgressType.FLASH_ICON:
                     Adapter.FlashNotifyIcon(this.niTray, e.UserState as Icon);
                     break;
-                case WorkerTask.ProgressType.SET_ICON_BUSY:
-                    Adapter.SetNotifyIconStatus(e.UserState as WorkerTask, this.niTray, Resources.zss_busy);
-                    break;
                 case WorkerTask.ProgressType.UpdateCropMode:
                     this.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
                     break;
@@ -340,7 +337,6 @@ namespace ZScreenGUI
                 this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
                 this.niTray.Icon = Resources.zss_tray;
             }
-
         }
 
         #endregion Worker Events
@@ -363,6 +359,7 @@ namespace ZScreenGUI
 
                     break;
             }
+            Adapter.SetNotifyIconStatus(tempTask, this.niTray, Resources.zss_busy);
             return tempTask;
         }
 
