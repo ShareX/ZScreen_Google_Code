@@ -55,6 +55,7 @@ namespace ScreenCapture
         protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
 
         private TextureBrush backgroundBrush;
+        private Rectangle drawArea, drawAreaOneSmall;
         private Stopwatch timer;
         private int frameCount;
 
@@ -70,6 +71,9 @@ namespace ScreenCapture
         public Surface(Image backgroundImage = null)
         {
             InitializeComponent();
+
+            drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
+            drawAreaOneSmall = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
 
             if (backgroundImage != null)
             {
@@ -125,10 +129,10 @@ namespace ScreenCapture
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighSpeed;
-            g.FillRectangle(backgroundBrush, Bounds);
+            g.FillRectangle(backgroundBrush, drawArea);
 
 #if DEBUG
-            g.DrawRectangle(Pens.Yellow, Bounds.X, Bounds.Y, Bounds.Width - 1, Bounds.Height - 1);
+            g.DrawRectangle(Pens.Yellow, drawAreaOneSmall);
 #endif
 
             Draw(g);
@@ -307,7 +311,7 @@ namespace ScreenCapture
 
         protected virtual new void Update()
         {
-            mousePosition = ClientMousePosition;
+            mousePosition = PointToClient(MousePosition);
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
