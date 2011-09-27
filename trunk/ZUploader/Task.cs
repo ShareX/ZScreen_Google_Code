@@ -112,7 +112,8 @@ namespace ZUploader
             if (Status == TaskStatus.InQueue && !IsStopped)
             {
                 OnUploadPreparing();
-                ApplyProxySettings();
+
+                UploadManager.UpdateProxySettings();
 
                 bw = new BackgroundWorker();
                 bw.WorkerReportsProgress = true;
@@ -135,17 +136,6 @@ namespace ZUploader
             {
                 uploader.StopUpload();
             }
-        }
-
-        private void ApplyProxySettings()
-        {
-            ProxySettings proxy = new ProxySettings();
-            if (!string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
-            {
-                proxy.ProxyConfig = ProxyConfigType.ManualProxy;
-            }
-            proxy.ProxyActive = Program.Settings.ProxySettings;
-            Uploader.ProxySettings = proxy;
         }
 
         private void UploadThread(object sender, DoWorkEventArgs e)
