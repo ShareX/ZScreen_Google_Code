@@ -1511,6 +1511,10 @@ namespace ZScreenLib
                 (!Engine.MyWorkflow.OutputsConfig.FTPThumbnailCheckSize || (Engine.MyWorkflow.OutputsConfig.FTPThumbnailCheckSize &&
                 (TempImage.Width > Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit)));
         }
+        public bool IsCancelled()
+        {
+            if (Status.Contains(TaskStatus.CancellationPending)) return true; else return false;
+        }
 
         #endregion Checks
 
