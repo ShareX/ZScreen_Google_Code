@@ -77,7 +77,7 @@ namespace ScreenCapture
                 }
 
                 IsAreaCreated = false;
-                area = Rectangle.Empty;
+                Area = Rectangle.Empty;
                 nodes.Clear();
                 DrawableObjects.Clear();
             }
