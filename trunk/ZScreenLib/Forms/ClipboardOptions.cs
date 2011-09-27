@@ -28,7 +28,9 @@ namespace ZScreenLib
                 this.pbPreview.LoadingImage = Resources.Loading;
                 foreach (UploadResult ur in task.UploadResults)
                 {
-                    if (!string.IsNullOrEmpty(ur.URL) || !File.Exists(ur.LocalFilePath))
+                    string path = File.Exists(ur.LocalFilePath) ? ur.LocalFilePath : ur.URL;
+
+                    if (ZAppHelper.IsImageFile(path) && (File.Exists(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL)))
                     {
                         this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
                         break;
