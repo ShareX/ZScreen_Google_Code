@@ -72,6 +72,8 @@ namespace ScreenCapture
         {
             InitializeComponent();
 
+            backgroundImage.Save("test.jpg");
+
             drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
             drawAreaOneSmall = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
 
@@ -102,9 +104,10 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = Helpers.GetScreenBounds();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.Bounds = Helpers.GetScreenBounds();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            this.StartPosition = FormStartPosition.Manual; // fucking important for dual monitor configurations
             this.Text = "RegionCapture";
 #if !DEBUG
             this.TopMost = true;
@@ -311,7 +314,7 @@ namespace ScreenCapture
 
         protected virtual new void Update()
         {
-            mousePosition = PointToClient(MousePosition);
+            mousePosition = PointToClient(MousePosition); // important for dual monitor configurations
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
@@ -398,7 +401,7 @@ namespace ScreenCapture
             string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", Area.X, Area.Y, Area.Width, Area.Height);
 
 #if DEBUG
-            text = string.Format("FPS: {0}\n{1}", FPS, text);
+            text = string.Format("FPS: {0}\nBounds: {1}\n{2}", FPS, Bounds, text);
 #endif
 
             SizeF textSize = g.MeasureString(text, textFont);

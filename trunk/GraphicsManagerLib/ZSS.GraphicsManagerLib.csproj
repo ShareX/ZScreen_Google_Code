@@ -95,7 +95,6 @@
     <Compile Include="BitmapCache.cs" />
     <Compile Include="ColorBgra.cs" />
     <Compile Include="ColorMatrixMgr.cs" />
-    <Compile Include="GDI.cs" />
     <Compile Include="GraphicsMgr.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Config\ImageConfig.cs" />
@@ -172,6 +171,10 @@
     <ProjectReference Include="..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
       <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
       <Name>ImageQuantization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
+      <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
+      <Name>ScreenCapture</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>

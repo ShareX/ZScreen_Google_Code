@@ -168,7 +168,7 @@ namespace ScreenCapture
 
         private void nudFixedHeight_ValueChanged(object sender, EventArgs e)
         {
-            SurfaceConfig.FixedSize = new Size( SurfaceConfig.FixedSize.Width, (int)nudFixedHeight.Value);
+            SurfaceConfig.FixedSize = new Size(SurfaceConfig.FixedSize.Width, (int)nudFixedHeight.Value);
         }
 
         private void cbQuickCrop_CheckedChanged(object sender, EventArgs e)
