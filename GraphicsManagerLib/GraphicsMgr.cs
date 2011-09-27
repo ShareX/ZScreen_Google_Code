@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -33,6 +34,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
 using HelpersLib;
+using ScreenCapture;
 
 namespace GraphicsMgrLib
 {
@@ -131,7 +133,10 @@ namespace GraphicsMgrLib
                 if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
             }
 
-            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+            Rectangle rect = new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
+
+            Debug.WriteLine(rect);
+            return rect;
         }
 
         public static Rectangle GetScreenBounds2()

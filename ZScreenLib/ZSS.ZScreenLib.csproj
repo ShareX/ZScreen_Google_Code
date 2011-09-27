@@ -136,6 +136,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Helpers\GraphicsEx.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
@@ -217,13 +218,11 @@
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Adapter.cs" />
-    <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ColorMatrices.cs" />
     <Compile Include="Global\Enums.cs" />
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\GDI.cs" />
     <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\ResxMgr.cs" />
@@ -328,6 +327,9 @@
     <EmbeddedResource Include="Forms\ConfigWizard.resx">
       <DependentUpon>ConfigWizard.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Crop.resx">
+      <DependentUpon>Crop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using ScreenCapture;
 
 namespace GraphicsMgrLib
 {
@@ -16,6 +17,9 @@ namespace GraphicsMgrLib
             SIMPLEREGION = 2,
             COMPLEXREGION = 3
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDesktopWindow();
 
         public static bool GetWindowRegion(IntPtr hWnd, out Region region)
         {

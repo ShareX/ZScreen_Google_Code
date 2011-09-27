@@ -27,7 +27,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace ZScreenLib
+namespace ScreenCapture
 {
     public static class GDI
     {
