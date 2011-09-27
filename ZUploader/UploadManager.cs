@@ -33,6 +33,7 @@ using System.Windows.Forms;
 using HelpersLib;
 using HistoryLib;
 using UploadersLib;
+using UploadersLib.HelperClasses;
 using ZUploader.Properties;
 
 namespace ZUploader
@@ -229,6 +230,17 @@ namespace ZUploader
             {
                 Tasks[index].Stop();
             }
+        }
+
+        public static void UpdateProxySettings()
+        {
+            ProxySettings proxy = new ProxySettings();
+            if (!string.IsNullOrEmpty(Program.Settings.ProxySettings.Host))
+            {
+                proxy.ProxyConfig = ProxyConfigType.ManualProxy;
+            }
+            proxy.ProxyActive = Program.Settings.ProxySettings;
+            Uploader.ProxySettings = proxy;
         }
 
         private static void ChangeListViewItemStatus(UploadInfo info)
