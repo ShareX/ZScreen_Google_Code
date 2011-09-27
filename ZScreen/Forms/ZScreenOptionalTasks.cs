@@ -71,7 +71,7 @@ namespace ZScreenGUI
             BackgroundWorker worker = (BackgroundWorker)sender;
             NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName,
-                new Version(Engine.conf.ReleaseChannel == ReleaseChannelType.Dev ? Adapter.AssemblyVersion : Application.ProductVersion),
+                new Version(Adapter.AssemblyVersion),
                 Engine.conf.ReleaseChannel, Adapter.CheckProxySettings().GetWebProxy, nvwo);
 
             updateChecker.CheckUpdate();
