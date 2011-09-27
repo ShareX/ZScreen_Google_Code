@@ -102,10 +102,10 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.FormBorderStyle = FormBorderStyle.None;
             this.Bounds = Helpers.GetScreenBounds();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.Manual;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            this.StartPosition = FormStartPosition.Manual; // fucking important for dual monitor configurations
             this.Text = "RegionCapture";
 #if !DEBUG
             this.TopMost = true;
@@ -312,7 +312,7 @@ namespace ScreenCapture
 
         protected virtual new void Update()
         {
-            mousePosition = PointToClient(MousePosition); // important for dual monitor configurations
+            mousePosition = PointToClient(MousePosition);
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 

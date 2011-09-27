@@ -133,10 +133,7 @@ namespace GraphicsMgrLib
                 if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
             }
 
-            Rectangle rect = new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
-
-            Debug.WriteLine(rect);
-            return rect;
+            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
         }
 
         public static Rectangle GetScreenBounds2()
