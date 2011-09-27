@@ -353,7 +353,7 @@ namespace ZScreenGUI
 
                     break;
             }
-            if (!tempTask.IsCancelled())
+            if (tempTask.isFinished())
                  Adapter.SetNotifyIconStatus(tempTask, this.niTray, Resources.zss_busy);
             return tempTask;
         }
