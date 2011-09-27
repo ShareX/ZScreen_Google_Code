@@ -39,13 +39,7 @@ namespace ScreenCapture
 
         public SurfaceOptions Config { get; set; }
 
-        protected Rectangle area;
-
-        public Rectangle Area
-        {
-            get { return area; }
-            protected set { area = value; }
-        }
+        public Rectangle Area { get; protected set; }
 
         public int FPS { get; private set; }
 
@@ -151,6 +145,8 @@ namespace ScreenCapture
         {
             Image img = SurfaceImage;
 
+            Rectangle newArea = Rectangle.Intersect(Area, drawArea);
+
             if (regionPath != null)
             {
                 using (GraphicsPath gp = (GraphicsPath)regionPath.Clone())
@@ -161,7 +157,7 @@ namespace ScreenCapture
                     matrix.Translate(-bounds.X, -bounds.Y);
                     gp.Transform(matrix);
 
-                    img = Helpers.CropImage(img, Rectangle.Round(bounds), gp);
+                    img = Helpers.CropImage(img, newArea, gp);
 
                     if (Config.DrawBorder)
                     {
@@ -176,7 +172,7 @@ namespace ScreenCapture
             }
             else
             {
-                img = Helpers.CropImage(img, Area);
+                img = Helpers.CropImage(img, newArea);
 
                 if (Config.DrawBorder)
                 {
@@ -191,18 +187,18 @@ namespace ScreenCapture
 
         public void MoveArea(int x, int y)
         {
-            area.Offset(x, y);
+            Area = new Rectangle(new Point(Area.X + x, Area.Y + y), Area.Size);
         }
 
         public void ShrinkArea(int x, int y)
         {
             if (isBottomRightMoving)
             {
-                area = new Rectangle(area.Left, area.Top, area.Width + x, area.Height + y);
+                Area = new Rectangle(Area.Left, Area.Top, Area.Width + x, Area.Height + y);
             }
             else
             {
-                area = new Rectangle(area.Left + x, area.Top + y, area.Width - x, area.Height - y);
+                Area = new Rectangle(Area.Left + x, Area.Top + y, Area.Width - x, Area.Height - y);
             }
         }
 
@@ -231,7 +227,7 @@ namespace ScreenCapture
             if (IsAreaCreated)
             {
                 IsAreaCreated = false;
-                area = Rectangle.Empty;
+                Area = Rectangle.Empty;
                 HideNodes();
             }
             else

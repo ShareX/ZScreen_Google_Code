@@ -138,7 +138,7 @@ namespace ScreenCapture
         {
             if (img != null && rect.Width > 0 && rect.Height > 0 && gp != null)
             {
-                Bitmap bmp = new Bitmap(rect.Width + 1, rect.Height + 1);
+                Bitmap bmp = new Bitmap(rect.Width, rect.Height);
 
                 using (Graphics g = Graphics.FromImage(bmp))
                 {

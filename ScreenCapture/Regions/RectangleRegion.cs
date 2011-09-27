@@ -55,12 +55,12 @@ namespace ScreenCapture
             {
                 if (Config.IsFixedSize)
                 {
-                    area = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
+                    Area = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
                     areaObject.IsDragging = true;
                 }
                 else
                 {
-                    area = new Rectangle(mousePosition, new Size(1, 1));
+                    Area = new Rectangle(mousePosition, new Size(1, 1));
                     ShowNodes();
                     nodes[(int)NodePosition.BottomRight].IsDragging = true;
                 }
@@ -78,7 +78,7 @@ namespace ScreenCapture
                         {
                             if (!oldIsMouseDown)
                             {
-                                tempRect = area;
+                                tempRect = Area;
                             }
 
                             if (i <= 2) // Top row
@@ -101,7 +101,7 @@ namespace ScreenCapture
                                 tempRect.Width -= mousePosition.X - oldMousePosition.X;
                             }
 
-                            area = Helpers.FixRectangle(tempRect);
+                            Area = Helpers.FixRectangle(tempRect);
 
                             break;
                         }
@@ -137,13 +137,13 @@ namespace ScreenCapture
 
         private void UpdateNodePositions()
         {
-            int xStart = area.X;
-            int xMid = area.X + area.Width / 2;
-            int xEnd = area.X + area.Width - 1;
+            int xStart = Area.X;
+            int xMid = Area.X + Area.Width / 2;
+            int xEnd = Area.X + Area.Width - 1;
 
-            int yStart = area.Y;
-            int yMid = area.Y + area.Height / 2;
-            int yEnd = area.Y + area.Height - 1;
+            int yStart = Area.Y;
+            int yMid = Area.Y + Area.Height / 2;
+            int yEnd = Area.Y + Area.Height - 1;
 
             nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
             nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);

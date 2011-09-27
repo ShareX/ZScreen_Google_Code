@@ -74,7 +74,7 @@ namespace ScreenCapture
             if (IsAreaCreated)
             {
                 IsAreaCreated = false;
-                area = Rectangle.Empty;
+                Area = Rectangle.Empty;
                 regionPath.Reset();
                 HideNodes();
                 points.Clear();
