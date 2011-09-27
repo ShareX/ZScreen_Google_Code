@@ -406,15 +406,18 @@ namespace ScreenCapture
 
             int offset = 30;
 
-            Size primaryScreen = Screen.PrimaryScreen.Bounds.Size;
-            RectangleF rect = new RectangleF(primaryScreen.Width / 2 - textSize.Width / 2, offset - 1, textSize.Width, textSize.Height);
+            Rectangle primaryScreen = Screen.PrimaryScreen.Bounds;
+
+            Point position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
+            Rectangle rect = new Rectangle(position, new Size((int)textSize.Width, (int)textSize.Height));
 
             if (rect.Contains(mousePosition))
             {
-                rect = new RectangleF(primaryScreen.Width / 2 - textSize.Width / 2, primaryScreen.Height - textSize.Height - offset - 1, textSize.Width, textSize.Height);
+                position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
+                    primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));
             }
 
-            Helpers.DrawTextWithShadow(g, text, rect.Location, textFont, Color.White, Color.Black, 1);
+            Helpers.DrawTextWithShadow(g, text, position, textFont, Color.White, Color.Black, 1);
         }
 
         protected Rectangle CalculateAreaFromNodes()
