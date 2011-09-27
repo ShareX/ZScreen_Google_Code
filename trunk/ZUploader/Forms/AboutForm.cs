@@ -44,6 +44,7 @@ namespace ZUploader
 
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Application.ProductVersion),
                 ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy);
+            updateChecker.AutoDownloadSummary = false;
             uclUpdate.CheckUpdate(updateChecker);
         }
 

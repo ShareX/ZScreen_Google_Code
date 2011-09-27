@@ -59,6 +59,7 @@ namespace ZSS.UpdateCheckerLib
         public Version ApplicationVersion { get; private set; }
         public ReleaseChannelType ReleaseChannel { get; private set; }
         public UpdateInfo UpdateInfo { get; private set; }
+        public bool AutoDownloadSummary { get; set; }
 
         private IWebProxy proxy;
         private NewVersionWindowOptions nvwo;
@@ -69,6 +70,7 @@ namespace ZSS.UpdateCheckerLib
             ApplicationName = applicationName;
             ApplicationVersion = applicationVersion;
             ReleaseChannel = channel;
+            AutoDownloadSummary = true;
             this.proxy = proxy;
             this.nvwo = nvwo;
         }
@@ -118,7 +120,7 @@ namespace ZSS.UpdateCheckerLib
                             {
                                 UpdateInfo.Status = UpdateStatus.UpdateRequired;
 
-                                if (!string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
+                                if (AutoDownloadSummary && !string.IsNullOrEmpty(UpdateInfo.Summary) && UpdateInfo.Summary.IsValidUrl())
                                 {
                                     try
                                     {
