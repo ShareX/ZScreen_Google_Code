@@ -42,8 +42,8 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using ZScreenLib.Properties;
 using UploadersLib.ImageUploaders;
+using ZScreenLib.Properties;
 
 namespace ZScreenLib
 {
@@ -111,38 +111,6 @@ namespace ZScreenLib
             if (ni != null && ico != null)
             {
                 ni.Icon = ico;
-            }
-        }
-
-        public static void SetNotifyIconStatus(WorkerTask task, NotifyIcon ni, Icon ico)
-        {
-            if (task != null && ni != null && ico != null)
-            {
-                ni.Icon = ico;
-                // Text length must be less than 64 characters long
-                StringBuilder sbMsg = new StringBuilder();
-                sbMsg.Append(task.Job2.GetDescription());
-                sbMsg.Append(" to ");
-                switch (task.Job1)
-                {
-                    case JobLevel1.Image:
-                        sbMsg.Append(task.GetActiveImageUploadersDescription());
-                        break;
-                    case JobLevel1.Text:
-                        if (task.Job3 == WorkerTask.JobLevel3.ShortenURL)
-                        {
-                            sbMsg.Append(task.GetActiveLinkUploadersDescription());
-                        }
-                        else
-                        {
-                            sbMsg.Append(task.GetActiveTextUploadersDescription());
-                        }
-                        break;
-                    case JobLevel1.File:
-                        sbMsg.Append(task.GetActiveUploadersDescription<FileUploaderType>(task.MyFileUploaders));
-                        break;
-                }
-                ni.Text = sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
             }
         }
 

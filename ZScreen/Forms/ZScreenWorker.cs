@@ -330,7 +330,6 @@ namespace ZScreenGUI
 
             this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
             this.niTray.Icon = Resources.zss_tray;
-
         }
 
         #endregion Worker Events
@@ -353,8 +352,10 @@ namespace ZScreenGUI
 
                     break;
             }
-            if (tempTask.isFinished())
-                 Adapter.SetNotifyIconStatus(tempTask, this.niTray, Resources.zss_busy);
+
+            if (tempTask.IsNotCanceled())
+                tempTask.SetNotifyIconStatus(this.niTray, Resources.zss_busy);
+
             return tempTask;
         }
 

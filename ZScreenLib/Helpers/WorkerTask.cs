@@ -1512,9 +1512,42 @@ namespace ZScreenLib
                 (TempImage.Width > Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit)));
         }
 
-        public bool isFinished()
+        public bool IsNotCanceled()
         {
-            if (Status.Contains(TaskStatus.Prepared) && (!Status.Contains(TaskStatus.CancellationPending))) return true; else return false;
+            if (Status.Contains(TaskStatus.Prepared) && (!Status.Contains(TaskStatus.CancellationPending))) return true;
+            else return false;
+        }
+
+        public void SetNotifyIconStatus(NotifyIcon ni, Icon ico)
+        {
+            if (ni != null && ico != null)
+            {
+                ni.Icon = ico;
+                // Text length must be less than 64 characters long
+                StringBuilder sbMsg = new StringBuilder();
+                sbMsg.Append(Job2.GetDescription());
+                sbMsg.Append(" to ");
+                switch (Job1)
+                {
+                    case JobLevel1.Image:
+                        sbMsg.Append(GetActiveImageUploadersDescription());
+                        break;
+                    case JobLevel1.Text:
+                        if (Job3 == WorkerTask.JobLevel3.ShortenURL)
+                        {
+                            sbMsg.Append(GetActiveLinkUploadersDescription());
+                        }
+                        else
+                        {
+                            sbMsg.Append(GetActiveTextUploadersDescription());
+                        }
+                        break;
+                    case JobLevel1.File:
+                        sbMsg.Append(GetActiveUploadersDescription<FileUploaderType>(MyFileUploaders));
+                        break;
+                }
+                ni.Text = sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
+            }
         }
 
         #endregion Checks

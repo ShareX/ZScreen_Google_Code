@@ -72,8 +72,6 @@ namespace ScreenCapture
         {
             InitializeComponent();
 
-            backgroundImage.Save("test.jpg");
-
             drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
             drawAreaOneSmall = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
 
