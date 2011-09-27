@@ -51,7 +51,7 @@ namespace ZSS.UpdateCheckerLib
             get
             {
                 return ApplicationVersion != null && LatestVersion != null && !string.IsNullOrEmpty(URL) &&
-                    (LatestVersion.CompareTo(ApplicationVersion) > 0 || ForceUpdate);
+                    (ZAppHelper.CheckVersion(LatestVersion, ApplicationVersion) || ForceUpdate);
             }
         }
 

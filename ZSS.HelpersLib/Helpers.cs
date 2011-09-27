@@ -396,5 +396,11 @@ namespace HelpersLib
         {
             return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Port;
         }
+
+        public static bool CheckVersion(Version version1, Version version2)
+        {
+            return version1.Major > version2.Major || Math.Max(version1.Minor, 0) > Math.Max(version2.Minor, 0) ||
+                Math.Max(version1.Build, 0) > Math.Max(version2.Build, 0) || Math.Max(version1.Revision, 0) > Math.Max(version2.Revision, 0);
+        }
     }
 }
