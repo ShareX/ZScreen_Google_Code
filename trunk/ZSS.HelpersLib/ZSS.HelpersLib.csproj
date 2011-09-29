@@ -101,12 +101,14 @@
     <Compile Include="Hotkey\HotkeyInputForm.Designer.cs">
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hotkey\HotkeyManager.cs" />
     <Compile Include="Hotkey\HotkeySelectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Hotkey\HotkeySelectionControl.Designer.cs">
       <DependentUpon>HotkeySelectionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hotkey\HotkeySetting.cs" />
     <Compile Include="IClone.cs" />
     <Compile Include="Hotkey\KeyInfo.cs" />
     <Compile Include="Printer\PrintForm.cs">

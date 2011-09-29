@@ -37,7 +37,7 @@ namespace ZScreenGUI
             {
                 Keys hotkey = (Keys)userHotKey;
 
-                HotkeyInfo oldHotkeyInfo = GetHotkeyInfoFromTag(hotkeyEnum);
+                HotkeyInfo oldHotkeyInfo = GetHotkeyInfoFromTag((int)hotkeyEnum);
                 UnregisterHotkey(oldHotkeyInfo);
 
                 if (hotkey == Keys.None) return null;
@@ -86,10 +86,10 @@ namespace ZScreenGUI
 
                 if (newHotkeyInfo != null)
                 {
-                    newHotkeyInfo.Tag = hotkeyEnum;
+                    newHotkeyInfo.Tag = (int)hotkeyEnum;
                     Engine.MyLogger.WriteLine("Registered hotkey for " + hotkeyEnum.GetDescription());
                 }
-                else if (!IsReconfiguringHotkeys)
+                else if (!IgnoreHotkeys)
                 {
                     MessageBox.Show(string.Format("Unable to register \"{0}\" hotkey.\nPlease select a different hotkey.", hotkeyEnum.GetDescription()),
                         Application.ProductName + " - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -177,7 +177,7 @@ namespace ZScreenGUI
                 return;
             }
 
-            IsReconfiguringHotkeys = true;
+            IgnoreHotkeys = true;
             mHKSelectedRow = e.RowIndex;
 
             lblHotkeyStatus.Text = "Press the keys you would like to use... Press enter when done setting all desired Hotkeys.";
@@ -187,7 +187,7 @@ namespace ZScreenGUI
 
         private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
         {
-            if (IsReconfiguringHotkeys)
+            if (IgnoreHotkeys)
             {
                 if (e.KeyValue == (int)Keys.Up || e.KeyValue == (int)Keys.Down || e.KeyValue == (int)Keys.Left || e.KeyValue == (int)Keys.Right)
                 {
@@ -220,7 +220,7 @@ namespace ZScreenGUI
 
         public void CheckHotkeys(object sender, KeyEventArgs e)
         {
-            if (IsReconfiguringHotkeys)
+            if (IgnoreHotkeys)
             {
                 if (e.KeyData == Keys.Enter)
                 {
@@ -255,9 +255,9 @@ namespace ZScreenGUI
 
         public void QuitSettingHotkeys()
         {
-            if (IsReconfiguringHotkeys)
+            if (IgnoreHotkeys)
             {
-                IsReconfiguringHotkeys = false;
+                IgnoreHotkeys = false;
 
                 if (mHKSelectedRow > -1)
                 {

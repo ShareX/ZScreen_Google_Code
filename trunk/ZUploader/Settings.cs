@@ -23,7 +23,9 @@
 
 #endregion License Information (GPL v2)
 
+using System.Windows.Forms;
 using HelpersLib;
+using HelpersLib.Hotkey;
 using ScreenCapture;
 using UploadersLib.HelperClasses;
 
@@ -47,6 +49,19 @@ namespace ZUploader
         public bool AutoPlaySound = true;
         public bool URLShortenAfterUpload = false;
         public bool ShowTray = false;
+
+        // Hotkeys
+        public HotkeySetting HotkeyClipboardUpload = new HotkeySetting(Keys.Control | Keys.PageUp);
+        public HotkeySetting HotkeyFileUpload = new HotkeySetting(Keys.Shift | Keys.PageUp);
+        public HotkeySetting HotkeyPrintScreen = new HotkeySetting(Keys.PrintScreen);
+        public HotkeySetting HotkeyActiveWindow = new HotkeySetting(Keys.Alt | Keys.PrintScreen);
+        public HotkeySetting HotkeyRectangleRegion = new HotkeySetting(Keys.Control | Keys.PrintScreen);
+        public HotkeySetting HotkeyRoundedRectangleRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.R);
+        public HotkeySetting HotkeyEllipseRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.E);
+        public HotkeySetting HotkeyTriangleRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.T);
+        public HotkeySetting HotkeyDiamondRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.D);
+        public HotkeySetting HotkeyPolygonRegion = new HotkeySetting(Keys.Control | Keys.Shift | Keys.P);
+        public HotkeySetting HotkeyFreeHandRegion = new HotkeySetting(Keys.Shift | Keys.PrintScreen);
 
         // Upload
         public bool UseCustomUploadersConfigPath = false;
