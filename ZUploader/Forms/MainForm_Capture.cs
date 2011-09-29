@@ -29,6 +29,7 @@ using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
+using HelpersLib.Hotkey;
 using ScreenCapture;
 
 namespace ZUploader
@@ -41,35 +42,25 @@ namespace ZUploader
 
         private void InitHotkeys()
         {
-            RegisterHotkey(Keys.Control | Keys.PageUp, UploadManager.ClipboardUpload);
-
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.PageUp, UploadManager.UploadFile);
-
-            tsmiFullscreen.ShortcutKeyDisplayString = "PrintScreen";
-            RegisterHotkey(Keys.PrintScreen, () => CaptureScreen(false));
-
-            tsmiRectangle.ShortcutKeyDisplayString = "Ctrl + PrintScreen";
-            RegisterHotkey(Keys.Control | Keys.PrintScreen, () => CaptureRegion(new RectangleRegion(), false));
-
-            tsmiRoundedRectangle.ShortcutKeyDisplayString = "Ctrl + Shift + R";
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.R, () => CaptureRegion(new RoundedRectangleRegion(), false));
-
-            tsmiEllipse.ShortcutKeyDisplayString = "Ctrl + Shift + E";
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.E, () => CaptureRegion(new EllipseRegion(), false));
-
-            tsmiTriangle.ShortcutKeyDisplayString = "Ctrl + Shift + T";
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.T, () => CaptureRegion(new TriangleRegion(), false));
-
-            tsmiDiamond.ShortcutKeyDisplayString = "Ctrl + Shift + D";
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.D, () => CaptureRegion(new DiamondRegion(), false));
-
-            tsmiPolygon.ShortcutKeyDisplayString = "Ctrl + Shift + P";
-            RegisterHotkey(Keys.Control | Keys.Shift | Keys.P, () => CaptureRegion(new PolygonRegion(), false));
-
-            tsmiFreeHand.ShortcutKeyDisplayString = "Shift + PrintScreen";
-            RegisterHotkey(Keys.Shift | Keys.PrintScreen, () => CaptureRegion(new FreeHandRegion(), false));
-
-            RegisterHotkey(Keys.Alt | Keys.PrintScreen, () => CaptureActiveWindow(false));
+            HotkeyManager hotkeyManager = new HotkeyManager(Program.mainForm);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.ClipboardUpload, Program.Settings.HotkeyClipboardUpload, UploadManager.ClipboardUpload);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.FileUpload, Program.Settings.HotkeyFileUpload, UploadManager.UploadFile);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
+            hotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
+                () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
+                () => CaptureRegion(new RoundedRectangleRegion(), false), tsmiRoundedRectangle);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.EllipseRegion, Program.Settings.HotkeyEllipseRegion,
+                () => CaptureRegion(new EllipseRegion(), false), tsmiEllipse);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.TriangleRegion, Program.Settings.HotkeyTriangleRegion,
+                () => CaptureRegion(new TriangleRegion(), false), tsmiTriangle);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.DiamondRegion, Program.Settings.HotkeyDiamondRegion,
+                () => CaptureRegion(new DiamondRegion(), false), tsmiDiamond);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.PolygonRegion, Program.Settings.HotkeyPolygonRegion,
+                () => CaptureRegion(new PolygonRegion(), false), tsmiPolygon);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.FreeHandRegion, Program.Settings.HotkeyFreeHandRegion,
+                () => CaptureRegion(new FreeHandRegion(), false), tsmiFreeHand);
         }
 
         private new void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)

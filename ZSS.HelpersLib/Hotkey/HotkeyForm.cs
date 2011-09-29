@@ -40,14 +40,14 @@ namespace HelpersLib
 
         public event HotkeyEventHandler HotkeyPress;
 
-        protected bool IsReconfiguringHotkeys = false;
+        public bool IgnoreHotkeys { get; set; }
 
         public HotkeyForm()
         {
             HotkeyList = new List<HotkeyInfo>();
         }
 
-        public HotkeyInfo RegisterHotkey(Keys hotkey, Action hotkeyPress = null)
+        public HotkeyInfo RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = -1)
         {
             if (IsHotkeyExist(hotkey)) return null;
 
@@ -79,7 +79,7 @@ namespace HelpersLib
                     return null;
                 }
 
-                HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress);
+                HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
 
                 HotkeyList.Add(hotkeyInfo);
 
@@ -111,7 +111,9 @@ namespace HelpersLib
         {
             if (hotkeyInfo != null)
             {
-                return UnregisterHotkey(hotkeyInfo.ID);
+                bool result = UnregisterHotkey(hotkeyInfo.ID);
+                HotkeyList.Remove(hotkeyInfo);
+                return result;
             }
 
             return false;
@@ -124,12 +126,22 @@ namespace HelpersLib
             return UnregisterHotkey(hotkeyInfo);
         }
 
+        public void ChangeHotkey(int tag, Keys newHotkey)
+        {
+            HotkeyInfo hi = GetHotkeyInfoFromTag(tag);
+
+            if (hi != null)
+            {
+                UnregisterHotkey(hi);
+                RegisterHotkey(newHotkey, hi.HotkeyPress, tag);
+            }
+        }
+
         public void UnregisterAllHotkeys()
         {
             for (int i = 0; i < HotkeyList.Count; i++)
             {
                 UnregisterHotkey(HotkeyList[i]);
-                HotkeyList.RemoveAt(i);
             }
         }
 
@@ -143,7 +155,7 @@ namespace HelpersLib
             return HotkeyList.FirstOrDefault(x => x.Key == key);
         }
 
-        public HotkeyInfo GetHotkeyInfoFromTag(HotkeyTask tag)
+        public HotkeyInfo GetHotkeyInfoFromTag(int tag)
         {
             return HotkeyList.FirstOrDefault(x => x.Tag == tag);
         }
@@ -155,7 +167,7 @@ namespace HelpersLib
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == Native.WM_HOTKEY && !IsReconfiguringHotkeys)
+            if (m.Msg == Native.WM_HOTKEY && !IgnoreHotkeys)
             {
                 HotkeyInfo hotkey = GetHotkeyInfoFromID((ushort)m.WParam);
 

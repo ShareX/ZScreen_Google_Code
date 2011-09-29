@@ -36,13 +36,14 @@ namespace HelpersLib
 
         public Action HotkeyPress { get; set; }
 
-        public HotkeyTask Tag { get; set; }
+        public int Tag { get; set; }
 
-        public HotkeyInfo(ushort id, Keys key, Action hotkeyPress = null)
+        public HotkeyInfo(ushort id, Keys key, Action hotkeyPress = null, int tag = -1)
         {
             ID = id;
             Key = key;
             HotkeyPress = hotkeyPress;
+            Tag = tag;
         }
     }
 }
