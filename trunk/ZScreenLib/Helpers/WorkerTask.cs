@@ -331,7 +331,7 @@ namespace ZScreenLib
                 TempImage = img;
                 Job1 = JobLevel1.Image;
 
-                EImageFormat imageFormat = EImageFormat.PNG;
+                EImageFormat imageFormat = MyWorkflow.ImageFormat;
 
                 if (!string.IsNullOrEmpty(savePath))
                 {
