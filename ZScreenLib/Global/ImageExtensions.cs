@@ -62,16 +62,28 @@ namespace ZScreenLib
 
         public static void SaveJPG(this Image img, Stream stream, int quality, bool fillBackground)
         {
-            using (EncoderParameters encoderParameters = new EncoderParameters(1))
+            if (fillBackground)
             {
-                if (fillBackground)
-                {
-                    img = FillImageBackground(img, Color.White);
-                }
-
-                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-                img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
+                img = FillImageBackground(img, Color.White);
             }
+
+            // Using FreeImage converter.
+            using (FreeImageAPI.FreeImageBitmap fib = new FreeImageAPI.FreeImageBitmap(img))
+            {
+                fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_JPEG, FreeImageAPI.FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB | FreeImageAPI.FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444);
+            }
+
+            // Old. Using GDI converter.
+            //using (EncoderParameters encoderParameters = new EncoderParameters(1))
+            //{
+            //  if (fillBackground)
+            //  {
+            //    img = FillImageBackground(img, Color.White);
+            //  }
+
+            //  encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+            //  img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
+            //}
         }
 
         public static Image FillImageBackground(Image img, Color color)
