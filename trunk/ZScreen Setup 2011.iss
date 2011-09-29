@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ZScreen"     
-#define ExePath "ZScreen\bin\Release\ZScreen.exe"
+#define ExePath "ZScreen\bin\x86\Release\ZScreen.exe"
 #define MyAppVersion GetStringFileInfo(ExePath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
@@ -53,9 +53,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ZScreen\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZScreen\bin\x86\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\x86\Release\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\x86\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"

@@ -1,9 +1,10 @@
-4.4.2 Added support to use a custom sound after the task is finished via Advanced > Settings {TheDeathly}
-4.4.1 Capture Shape options are now accessible under Capture > Shape tab {McoreD}
-4.4.0 Support for minus.com File Uploader {McoreD}
-4.3.1 Multiple destination is now optional [Issue 571] but requires reloading the application to take effect {McoreD}
+4.4.3 Improved JPEG image settings support with JPEG Chroma subsampling options {lostdj/McoreD}
+4.4.2 Improved audio feedback with custom sound support after the task is finished via Advanced > Settings {TheDeathly}
+4.4.1 Improve Capture Shape options which are now accessible under Capture > Shape tab {McoreD}
+4.4.0 Added support for minus.com File Uploader {McoreD}
+4.3.1 Improved single destination support by making multiple destinations optional [Issue 571] but requires reloading the application to take effect {McoreD}
 4.3.0 Added support for photobucket.com {Jaex}
-4.2.6 Goo.gl URL Shortener now supports User Accounts {Jaex}
+4.2.6 Improved Goo.gl URL Shortener with support for User Accounts {Jaex}
 
 Version 4.2.5 - 20110907
 
