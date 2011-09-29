@@ -41,6 +41,7 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -514,6 +515,15 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.ScreenshotsReflection), DefaultValue(255), Description("Reflection transparency start from this value to 0.")]
         public int ReflectionTransparency { get; set; }
 
+        //Sound Settings
+
+        [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable custom sounds.")]
+        public bool EnableSounds { get; set; }
+
+        [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.")]
+        [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
+        public string SoundPath { get; set; }
+        
         #endregion Properties for PropertyGrid
 
         #endregion Settings
