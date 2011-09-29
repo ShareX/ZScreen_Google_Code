@@ -13,9 +13,8 @@ namespace ZScreenLib.Helpers
                 return base.EditValue(context, provider, value);
             }
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.FileName = "Default.css";
-            dlg.Title = "Browse for a Cascading Style Sheet...";
-            dlg.Filter = "Cascading Style Sheets (*.css)|*.css";
+            dlg.Title = "Browse for a Waveform Audio File...";
+            dlg.Filter = "Waveform Audio File (*.wav)|*.wav";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 value = dlg.FileName;
