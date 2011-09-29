@@ -825,6 +825,7 @@ namespace ZScreenGUI
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
             this.tpMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpMain_DragEnter);
             this.tpMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tpMain_MouseClick);
+            this.tpMain.MouseLeave += new System.EventHandler(this.tpMain_MouseLeave);
             // 
             // tsLinks
             // 
