@@ -401,6 +401,9 @@
   <ItemGroup>
     <Content Include="Documents\TODO.txt" />
     <Content Include="Documents\Workflow.txt" />
+    <Content Include="FreeImage.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Languages\language-en-US.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

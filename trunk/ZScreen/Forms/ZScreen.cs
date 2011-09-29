@@ -671,11 +671,6 @@ namespace ZScreenGUI
             Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.MyWorkflow.ImageFormat);
         }
 
-        private void txtImageQuality_ValueChanged(object sender, EventArgs e)
-        {
-            Engine.MyWorkflow.ImageJPEGQuality = (int)nudImageQuality.Value;
-        }
-
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.MyWorkflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
@@ -2276,6 +2271,16 @@ namespace ZScreenGUI
         private void tpMain_MouseLeave(object sender, EventArgs e)
         {
             ucDestOptions.DropDownMenusClose();
+        }
+
+        private void cboJpgQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.CoreConf.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
+        }
+
+        private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.CoreConf.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
     }
 }

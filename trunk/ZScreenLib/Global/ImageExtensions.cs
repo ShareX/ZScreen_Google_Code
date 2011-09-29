@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using FreeImageAPI;
 using HelpersLib;
 using ImageQuantization;
 
@@ -44,7 +45,7 @@ namespace ZScreenLib
                     img.Save(stream, ImageFormat.Png);
                     break;
                 case EImageFormat.JPEG:
-                    img.SaveJPG(stream, profile.ImageJPEGQuality, true);
+                    img.SaveJPG(stream, profile, true);
                     break;
                 case EImageFormat.GIF:
                     img.SaveGIF(stream, profile.ImageGIFQuality);
@@ -60,7 +61,7 @@ namespace ZScreenLib
             return stream;
         }
 
-        public static void SaveJPG(this Image img, Stream stream, int quality, bool fillBackground)
+        public static void SaveJPG(this Image img, Stream stream, Workflow workflow, bool fillBackground)
         {
             if (fillBackground)
             {
@@ -70,20 +71,46 @@ namespace ZScreenLib
             // Using FreeImage converter.
             using (FreeImageAPI.FreeImageBitmap fib = new FreeImageAPI.FreeImageBitmap(img))
             {
-                fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_JPEG, FreeImageAPI.FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB | FreeImageAPI.FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444);
+                FREE_IMAGE_SAVE_FLAGS jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
+                FREE_IMAGE_SAVE_FLAGS jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444;
+
+                switch (workflow.ImageJpegQuality)
+                {
+                    case FreeImageJpegQualityType.JPEG_QUALITYAVERAGE:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYAVERAGE;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_QUALITYBAD:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYBAD;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_QUALITYGOOD:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_QUALITYNORMAL:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYNORMAL;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_QUALITYSUPERB:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
+                        break;
+                }
+
+                switch (workflow.ImageJpegSubSampling)
+                {
+                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_411:
+                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_411;
+                        break;
+                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_420:
+                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_420;
+                        break;
+                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_422:
+                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_422;
+                        break;
+                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_444:
+                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444;
+                        break;
+                }
+
+                fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_JPEG, jpgQuality | jpgSubSampling);
             }
-
-            // Old. Using GDI converter.
-            //using (EncoderParameters encoderParameters = new EncoderParameters(1))
-            //{
-            //  if (fillBackground)
-            //  {
-            //    img = FillImageBackground(img, Color.White);
-            //  }
-
-            //  encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
-            //  img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
-            //}
         }
 
         public static Image FillImageBackground(Image img, Color color)
