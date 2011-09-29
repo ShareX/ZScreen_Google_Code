@@ -107,16 +107,16 @@ namespace HelpersLib
 
     public enum FreeImageJpegQualityType
     {
-        [Description("Save with superb quality (100:1)")]
-        JPEG_QUALITYSUPERB,
-        [Description("Save with good quality (75:1)")]
-        JPEG_QUALITYGOOD,
-        [Description("Save with normal quality (50:1)")]
-        JPEG_QUALITYNORMAL,
-        [Description("Save with average quality (25:1)")]
-        JPEG_QUALITYAVERAGE,
         [Description("Save with bad quality (10:1)")]
         JPEG_QUALITYBAD,
+        [Description("Save with average quality (25:1)")]
+        JPEG_QUALITYAVERAGE,
+        [Description("Save with normal quality (50:1)")]
+        JPEG_QUALITYNORMAL,
+        [Description("Save with good quality (75:1)")]
+        JPEG_QUALITYGOOD,
+        [Description("Save with superb quality (100:1)")]
+        JPEG_QUALITYSUPERB,
     }
 
     public enum FreeImageJpegSubSamplingType

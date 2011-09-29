@@ -331,19 +331,6 @@ namespace ZScreenLib
                 TempImage = img;
                 Job1 = JobLevel1.Image;
 
-                EImageFormat imageFormat = MyWorkflow.ImageFormat;
-
-                if (!string.IsNullOrEmpty(savePath))
-                {
-                    UpdateLocalFilePath(savePath);
-                }
-                else
-                {
-                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
-                    string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
-                    UpdateLocalFilePath(imgfp);
-                }
-
                 Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
 
                 if (Engine.conf != null && Engine.conf.ShowOutputsAsap)
@@ -362,7 +349,20 @@ namespace ZScreenLib
                     }
                 }
 
+                EImageFormat imageFormat = MyWorkflow.ImageFormat;
                 Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
+
+                if (!string.IsNullOrEmpty(savePath))
+                {
+                    UpdateLocalFilePath(savePath);
+                }
+                else
+                {
+                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
+                    string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
+                    UpdateLocalFilePath(imgfp);
+                }
+
             }
 
             return TempImage != null;

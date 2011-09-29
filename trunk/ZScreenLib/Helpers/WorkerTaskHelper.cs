@@ -1,36 +1,64 @@
 ﻿using System.Drawing;
 using System.IO;
 using HelpersLib;
+using System.Text;
 
 namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Workflow profile, Image img, out EImageFormat imageFormat)
+        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat)
         {
-            MemoryStream stream = img.SaveImage(profile, profile.ImageFormat);
+            MemoryStream stream = img.SaveImage(wf, wf.ImageFormat);
 
-            int sizeLimit = profile.ImageSizeLimit * 1024;
-            if (profile.ImageFormat != profile.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
+            long streamLength = stream.Length / 1024;
+            int sizeLimit = wf.ImageSizeLimit * 1024;
+
+            if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
             {
-                long streamLength = stream.Length / 1024;
-                stream = img.SaveImage(profile, profile.ImageFormat2);
-                Engine.MyLogger.WriteLine(string.Format("Converting {0} ({1} KiB) to {2} ({3} KiB which is less than {4} KiB)",
-                    profile.ImageFormat.GetDescription(),
-                    streamLength,
-                    profile.ImageFormat2.GetDescription(),
-                    stream.Length / 1024,
-                    profile.ImageSizeLimit));
-                imageFormat = profile.ImageFormat2;
+                stream = img.SaveImage(wf, wf.ImageFormat2);
+                Engine.MyLogger.WriteLine(ConvertImageString(streamLength, wf, stream));
+
+                while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
+                {
+                    if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
+                    {
+                        break;
+                    }
+
+                    wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
+                    stream = img.SaveImage(wf, EImageFormat.JPEG);
+                    Engine.MyLogger.WriteLine(ConvertImageString(streamLength, wf, stream));
+                }
+
+                imageFormat = wf.ImageFormat2;
             }
             else
             {
-                imageFormat = profile.ImageFormat;
+                imageFormat = wf.ImageFormat;
             }
 
             stream.Position = 0;
 
             return stream;
+        }
+
+        private static string ConvertImageString(long streamLengthPrevious, Workflow profile, Stream stream)
+        {
+            StringBuilder sbMsg = new StringBuilder();
+            sbMsg.Append(string.Format("Converting {0} KiB {1} to {2} {3} KiB to reach {4} KiB",
+                                                streamLengthPrevious,
+                                                profile.ImageFormat.GetDescription(),
+                                                stream.Length / 1024,
+                                                profile.ImageFormat2.GetDescription(),
+                                                profile.ImageSizeLimit));
+
+            if (profile.ImageFormat2 == EImageFormat.JPEG)
+            {
+                sbMsg.Append(string.Format(" using setting {0}", profile.ImageJpegQuality.GetDescription()));
+            }
+
+            return sbMsg.ToString();
         }
 
         public static string PrepareFilename(Workflow profile, Image img, EImageFormat imageFormat, NameParserType patternType)
