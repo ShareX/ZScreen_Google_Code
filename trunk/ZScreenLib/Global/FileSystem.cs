@@ -251,7 +251,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static string GetUniqueFilePath(Workflow profile, string dir, string fileName)
         {
-            string filePath = Path.Combine(dir, fileName);
+            string filePath = Path.Combine(Engine.IsPortable ? Path.Combine(Application.StartupPath, dir) : dir, fileName);
 
             if (!profile.OverwriteFiles)
             {

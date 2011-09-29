@@ -105,7 +105,7 @@ namespace UploadersLib.HelperClasses
                 case LinkFormatEnum.LocalFilePath:
                     return this.LocalFilePath;
                 case LinkFormatEnum.LocalFilePathUri:
-                    return GetLocalFilePathAsUri(longUrl);
+                    return GetLocalFilePathAsUri(LocalFilePath);
             }
 
             return this.URL;
