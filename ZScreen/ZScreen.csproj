@@ -125,7 +125,7 @@
     </Reference>
     <Reference Include="Starksoft.Net.Ftp, Version=1.0.158.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\starksoft-component-libraries\trunk\Starksoft.Net.Ftp\src\bin\Release\Starksoft.Net.Ftp.dll</HintPath>
+      <HintPath>..\Lib\Starksoft.Net.Ftp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

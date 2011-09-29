@@ -6,11 +6,11 @@ using System.Windows.Forms;
 using HelpersLib;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
-using UploadersLib;
 
 namespace ZScreenGUI
 {
@@ -373,7 +373,19 @@ namespace ZScreenGUI
             }
 
             cboFileFormat.SelectedIndex = (int)Engine.MyWorkflow.ImageFormat;
-            nudImageQuality.Value = Engine.MyWorkflow.ImageJPEGQuality;
+
+            if (cboJpgQuality.Items.Count == 0)
+            {
+                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
+            }
+            cboJpgQuality.SelectedIndex = (int)Engine.CoreConf.ImageJpegQuality;
+
+            if (cboJpgSubSampling.Items.Count == 0)
+            {
+                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
+            }
+            cboJpgSubSampling.SelectedIndex = (int)Engine.CoreConf.ImageJpegSubSampling;
+
             cbGIFQuality.SelectedIndex = (int)Engine.MyWorkflow.ImageGIFQuality;
             nudSwitchAfter.Value = Engine.MyWorkflow.ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)

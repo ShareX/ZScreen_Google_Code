@@ -206,8 +206,10 @@ namespace UploadersLib
         Google,
         [Description("bit.ly")]
         BITLY,
+        /*
         [Description("deb.li")]
         Debli,
+        */
         [Description("j.mp")]
         Jmp,
         [Description("is.gd")]

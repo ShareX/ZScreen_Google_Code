@@ -34,7 +34,7 @@ namespace UploadersLib.URLShorteners
 
         public override string Host
         {
-            get { return UrlShortenerType.Debli.GetDescription(); }
+            get { return "Deb.li"; }
         }
 
         public override string ShortenURL(string url)

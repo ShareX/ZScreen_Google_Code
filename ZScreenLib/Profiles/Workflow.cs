@@ -75,7 +75,8 @@ namespace ZScreenLib
 
         // Image Settings
         public EImageFormat ImageFormat = EImageFormat.PNG;
-        public int ImageJPEGQuality = 90;
+        public FreeImageJpegQualityType ImageJpegQuality = FreeImageJpegQualityType.JPEG_QUALITYSUPERB;
+        public FreeImageJpegSubSamplingType ImageJpegSubSampling = FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_444;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;

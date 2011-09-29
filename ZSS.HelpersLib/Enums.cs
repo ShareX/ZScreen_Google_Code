@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.ComponentModel;
 
 namespace HelpersLib
@@ -102,6 +103,32 @@ namespace HelpersLib
     public enum EImageFormat
     {
         PNG, JPEG, GIF, BMP, TIFF
+    }
+
+    public enum FreeImageJpegQualityType
+    {
+        [Description("Save with superb quality (100:1)")]
+        JPEG_QUALITYSUPERB,
+        [Description("Save with good quality (75:1)")]
+        JPEG_QUALITYGOOD,
+        [Description("Save with normal quality (50:1)")]
+        JPEG_QUALITYNORMAL,
+        [Description("Save with average quality (25:1)")]
+        JPEG_QUALITYAVERAGE,
+        [Description("Save with bad quality (10:1)")]
+        JPEG_QUALITYBAD,
+    }
+
+    public enum FreeImageJpegSubSamplingType
+    {
+        [Description("Save with high 4x1 chroma subsampling (4:1:1)")]
+        JPEG_SUBSAMPLING_411,
+        [Description("Save with medium 2x2 medium chroma subsampling (4:2:0) - default value")]
+        JPEG_SUBSAMPLING_420,
+        [Description("Save with low 2x1 chroma subsampling (4:2:2)")]
+        JPEG_SUBSAMPLING_422,
+        [Description("Save with no chroma subsampling (4:4:4)")]
+        JPEG_SUBSAMPLING_444,
     }
 
     public enum WindowButtonAction
