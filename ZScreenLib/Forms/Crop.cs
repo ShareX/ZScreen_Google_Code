@@ -397,9 +397,19 @@ namespace ZScreenLib
             {
                 Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                 Size textSize = TextRenderer.MeasureText(drawText, posFont);
+
                 Point textPos = PointToClient(new Point(screenBound.Left +
                     (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Top + 30));
+
                 Rectangle labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
+
+                if (PointIntersectsRectangle(mousePos, labelRect))
+                {
+                    textPos = PointToClient(new Point(screenBound.Left +
+                    (screenBound.Width / 2) - ((textSize.Width + 10) / 2), screenBound.Bottom - textSize.Height - 30));
+                    labelRect = new Rectangle(textPos, new Size(textSize.Width + 30, textSize.Height + 10));
+                }
+
                 using (GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRect, 7))
                 {
                     g.FillPath(new LinearGradientBrush(new Point(labelRect.X, labelRect.Y), new Point(labelRect.X +
@@ -408,6 +418,11 @@ namespace ZScreenLib
                 }
                 g.DrawString(drawText, posFont, new SolidBrush(Color.Black), labelRect.X + 5, labelRect.Y + 5);
             }
+        }
+
+        private bool PointIntersectsRectangle(Point pt, Rectangle rect)
+        {
+            return pt.X <= rect.Right && pt.X >= rect.Left && pt.Y >= rect.Top && pt.Y <= rect.Bottom;
         }
 
         private void CalculateBoundaryFromMousePosition()
