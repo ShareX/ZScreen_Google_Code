@@ -19,5 +19,6 @@
         public const string ScreenshotsBevel = "Inputs / Screenshots / Effects / Bevel";
         public const string ScreenshotsBorder = "Inputs / Screenshots / Effects / Border";
         public const string ScreenshotsReflection = "Inputs / Screenshots / Effects / Reflection";
+        public const string SoundSettings = "Outputs / Sound Settings";
     }
 }

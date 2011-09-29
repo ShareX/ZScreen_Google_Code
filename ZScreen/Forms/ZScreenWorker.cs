@@ -283,7 +283,10 @@ namespace ZScreenGUI
                     {
                         if (Engine.conf.CompleteSound)
                         {
-                            SystemSounds.Exclamation.Play();
+                            if (Engine.conf.EnableSounds && !string.IsNullOrEmpty(Engine.conf.SoundPath) && File.Exists(Engine.conf.SoundPath))
+                                new SoundPlayer(Engine.conf.SoundPath).Play();
+                            else
+                                SystemSounds.Exclamation.Play();
                         }
 
                         if (Engine.conf.ShowBalloonTip)
