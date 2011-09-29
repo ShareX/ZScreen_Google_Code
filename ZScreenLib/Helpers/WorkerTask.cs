@@ -491,7 +491,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(fp))
             {
-                LocalFilePath = fp;
+                LocalFilePath = Engine.IsPortable ? Path.Combine(Application.StartupPath, fp) : fp;
                 FileName = Path.GetFileName(fp);
 
                 if (ZAppHelper.IsTextFile(fp))

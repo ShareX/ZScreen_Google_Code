@@ -230,6 +230,7 @@ namespace ZScreenLib
 
             public bool ShowConfigWizard { get; set; }
         }
+
         #region Engine Turn On/Off
 
         public static void TurnOn()
@@ -294,7 +295,7 @@ namespace ZScreenLib
             {
                 RootAppFolder = Engine.AppConf.RootDir;
             }
-            else
+            else if (!IsPortable) // issue 613
             {
                 RootAppFolder = DefaultRootAppFolder;
             }
@@ -492,9 +493,9 @@ namespace ZScreenLib
             });
 
             Thread googleTranslateThread = new Thread(() =>
-           {
-               Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
-           });
+            {
+                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
+            });
 
             settingsThread.Start();
             googleTranslateThread.Start();
