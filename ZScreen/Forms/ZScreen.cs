@@ -344,8 +344,6 @@ namespace ZScreenGUI
             return false;
         }
 
-
-
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CropRegionRectangleInfo = chkRegionRectangleInfo.Checked;
@@ -410,7 +408,6 @@ namespace ZScreenGUI
         }
 
         #endregion Trim memory
-
 
         private void UpdateGuiEditors(object sender)
         {
@@ -527,8 +524,6 @@ namespace ZScreenGUI
         {
             Engine.conf.PromptForOutputs = chkManualNaming.Checked;
         }
-
-
 
         private void clipboardUpload_Click(object sender, EventArgs e)
         {
@@ -2276,6 +2271,11 @@ namespace ZScreenGUI
         private void tsbLinkHelp_Click(object sender, EventArgs e)
         {
             StaticHelper.LoadBrowser(ZLinks.URL_WIKIPAGES);
+        }
+
+        private void tpMain_MouseLeave(object sender, EventArgs e)
+        {
+            ucDestOptions.DropDownMenusClose();
         }
     }
 }
