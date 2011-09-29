@@ -1,3 +1,4 @@
+4.4.2 Added support to use a custom sound after the task is finished via Advanced > Settings {TheDeathly}
 4.4.1 Capture Shape options are now accessible under Capture > Shape tab {McoreD}
 4.4.0 Support for minus.com File Uploader {McoreD}
 4.3.1 Multiple destination is now optional [Issue 571] but requires reloading the application to take effect {McoreD}
