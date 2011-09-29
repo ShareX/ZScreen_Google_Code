@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="Global\ExceptionMessage.cs" />
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
+    <Compile Include="Helpers\SoundFileNameEditor.cs" />
     <Compile Include="Helpers\WorkflowSettings.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Profiles\Workflow.cs" />
