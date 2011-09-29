@@ -127,7 +127,7 @@ namespace UploadersLib
 
             // Imgur
 
-            atcImgurAccountType.SelectedAccountType = AccountType.User; // until Imgur Anonymous API limits are lifted Config.ImgurAccountType;
+            atcImgurAccountType.SelectedAccountType = Config.ImgurAccountType;
 
             if (cbImgurThumbnailType.Items.Count == 0)
             {

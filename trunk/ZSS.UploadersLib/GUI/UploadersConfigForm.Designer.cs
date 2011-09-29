@@ -651,7 +651,6 @@
             // 
             // atcImgurAccountType
             // 
-            this.atcImgurAccountType.Enabled = false;
             this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
             this.atcImgurAccountType.Name = "atcImgurAccountType";
             this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
