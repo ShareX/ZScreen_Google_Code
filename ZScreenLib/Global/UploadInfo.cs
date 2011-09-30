@@ -27,12 +27,13 @@ namespace ZScreenLib
 {
     public class UploadInfo
     {
-        public int UniqueID;
+        public int ID;
+        public string Status { get; set; }
         public int UploadPercentage;
 
         public UploadInfo(int id)
         {
-            this.UniqueID = id;
+            this.ID = id;
         }
     }
 }

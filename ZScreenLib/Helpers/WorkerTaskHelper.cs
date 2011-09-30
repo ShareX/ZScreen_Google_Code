@@ -1,12 +1,23 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using HelpersLib;
 using System.Text;
+using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
+        public static MyListView ListViewControl { get; set; }
+
+        public static List<WorkerTask> Tasks { get; private set; }
+
+        static WorkerTaskHelper()
+        {
+            Tasks = new List<WorkerTask>();
+        }
+
         public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat)
         {
             MemoryStream stream = img.SaveImage(wf, wf.ImageFormat);
@@ -99,5 +110,42 @@ namespace ZScreenLib
             Engine.CoreConf.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.CoreConf.AutoIncrement has to be updated
             return string.Format("{0}.{1}", fn, ext);
         }
+
+        #region Queue
+
+        private static void ChangeListViewItemStatus(WorkerTask wt)
+        {
+            if (ListViewControl != null)
+            {
+                ListViewItem lvi = ListViewControl.Items[wt.ID];
+                lvi.SubItems[1].Text = wt.Status[wt.Status.Count - 1].GetDescription();
+            }
+        }
+
+        private static void CreateListViewItem(WorkerTask wt)
+        {
+            if (ListViewControl != null)
+            {
+                Engine.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}", wt.ID, wt.Job1, wt.GetDescription(), wt.GetDestinationName());
+
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = wt.FileName;
+                lvi.SubItems.Add("In queue");
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(wt.GetDescription());
+                lvi.SubItems.Add(wt.GetDestinationName());
+                lvi.SubItems.Add(string.Empty);
+                lvi.BackColor = wt.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
+                lvi.ImageIndex = 3;
+                ListViewControl.Items.Add(lvi);
+                lvi.EnsureVisible();
+                ListViewControl.FillLastColumn();
+            }
+        }
+
+        #endregion Queue
     }
 }

@@ -131,15 +131,15 @@ namespace ZScreenLib
 
         #region Properties
 
+        public int ID;
+
         public BackgroundWorker MyWorker { get; set; }
         public Workflow MyWorkflow { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
 
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
-
         public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
-
         public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
 
         public List<string> Errors { get; set; }
@@ -362,7 +362,6 @@ namespace ZScreenLib
                     string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
                 }
-
             }
 
             return TempImage != null;
