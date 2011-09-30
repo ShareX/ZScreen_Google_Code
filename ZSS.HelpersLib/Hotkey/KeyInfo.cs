@@ -58,13 +58,13 @@ namespace HelpersLib
 
             Keys vk = Key & ~Keys.Modifiers;
 
-            if (vk >= Keys.D0 || vk <= Keys.D9)
+            if (vk >= Keys.D0 && vk <= Keys.D9)
             {
                 name += (vk - Keys.D0).ToString();
             }
             else
             {
-                name += ProperString(Key);
+                name += ProperString(vk);
             }
 
             return name;
