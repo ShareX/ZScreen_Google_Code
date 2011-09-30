@@ -43,8 +43,6 @@ namespace ZScreenGUI
 
         public static ZScreen MainForm { get; private set; }
 
-        public static WorkerTask LastWorkerTask { get; set; }
-
         public static GoogleTranslateGUI MyGTGUI { get; set; }
 
         [STAThread]
@@ -77,11 +75,6 @@ namespace ZScreenGUI
                 if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
             }
 
-            RunZScreen();
-        }
-
-        private static void RunZScreen()
-        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

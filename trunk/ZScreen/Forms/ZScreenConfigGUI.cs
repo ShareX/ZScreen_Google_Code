@@ -54,7 +54,7 @@ namespace ZScreenGUI
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
 
-            WorkerTaskHelper.ListViewControl = lvUploads;
+            UploadManager.ListViewControl = lvUploads;
         }
 
         private void ZScreen_ConfigGUI()

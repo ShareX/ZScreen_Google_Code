@@ -43,7 +43,7 @@ namespace ZScreenLib
         {
             InitializeComponent();
             this.Task = task;
-            btnBrowse.Enabled = !task.Status.Contains(WorkerTask.TaskStatus.ThreadMode);
+            btnBrowse.Enabled = !task.States.Contains(WorkerTask.TaskState.ThreadMode);
             txtFilePath.Enabled = task.Job2 != WorkerTask.JobLevel2.UploadFromExplorer;
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumOutputsWithConfigSettings(Task.MyWorkflow.Outputs);

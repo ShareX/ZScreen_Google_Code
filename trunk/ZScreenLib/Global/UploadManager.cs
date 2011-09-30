@@ -32,6 +32,9 @@ using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
+using System.Drawing;
+using System.Media;
+using HistoryLib;
 
 namespace ZScreenLib
 {
@@ -40,12 +43,11 @@ namespace ZScreenLib
     /// </summary>
     public static class UploadManager
     {
+        public static MyListView ListViewControl { get; set; }
+
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
-
         public static UploadResult UploadResultLast { get; set; }
-
         public static int CumulativePercentage { get; private set; }
-
         private static int UniqueNumber = 0;
 
         public static List<WorkerTask> Tasks { get; private set; }
@@ -54,6 +56,183 @@ namespace ZScreenLib
         {
             Tasks = new List<WorkerTask>();
         }
+
+        #region Queue
+
+        public static void UploadImage(WorkerTask task)
+        {
+            if (task.tempImage != null)
+            {
+                StartUpload(task);
+            }
+        }
+
+        private static void StartUpload(WorkerTask task)
+        {
+            Tasks.Add(task);
+            task.ID = Tasks.Count - 1;
+            task.UploadPreparing += new WorkerTask.TaskEventHandler(task_UploadPreparing);
+            task.UploadStarted += new WorkerTask.TaskEventHandler(task_UploadStarted);
+            task.UploadProgressChanged2 += new WorkerTask.TaskEventHandler(task_UploadProgressChanged);
+            task.UploadCompleted += new WorkerTask.TaskEventHandler(task_UploadCompleted);
+            CreateListViewItem(task);
+            // StartTasks();
+        }
+
+        private static void StartTasks()
+        {
+            int workingTasksCount = Tasks.Count(x => x.IsWorking);
+            WorkerTask[] inQueueTasks = Tasks.Where(x => x.Status == TaskStatus.InQueue).ToArray();
+
+            if (inQueueTasks.Length > 0)
+            {
+                int len = inQueueTasks.Length;
+
+                for (int i = 0; i < len; i++)
+                {
+                    inQueueTasks[i].Start();
+                }
+            }
+        }
+
+        private static void task_UploadPreparing(WorkerTask info)
+        {
+            Engine.MyLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
+            ChangeListViewItemStatus(info);
+        }
+
+        private static void task_UploadStarted(WorkerTask info)
+        {
+            string status = string.Format("Upload started. ID: {0}, Filename: {1}", info.ID, info.FileName);
+            if (!string.IsNullOrEmpty(info.LocalFilePath)) status += ", Filepath: " + info.LocalFilePath;
+            Engine.MyLogger.WriteLine(status);
+
+            ListViewItem lvi = ListViewControl.Items[info.ID];
+            lvi.Text = info.FileName;
+            lvi.SubItems[1].Text = info.Status.GetDescription();
+            lvi.ImageIndex = 0;
+        }
+
+        private static void task_UploadProgressChanged(WorkerTask info)
+        {
+            if (ListViewControl != null)
+            {
+                ListViewItem lvi = ListViewControl.Items[info.ID];
+                lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
+                    info.Progress.Position / 1024, info.Progress.Length / 1024);
+                lvi.SubItems[3].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
+                lvi.SubItems[4].Text = string.Format("{0:00}:{1:00}", info.Progress.Elapsed.Minutes, info.Progress.Elapsed.Seconds);
+                lvi.SubItems[5].Text = string.Format("{0:00}:{1:00}", info.Progress.Remaining.Minutes, info.Progress.Remaining.Seconds);
+            }
+        }
+
+        private static void task_UploadCompleted(WorkerTask info)
+        {
+            try
+            {
+                if (ListViewControl != null && info != null && info.Result != null)
+                {
+                    ListViewItem lvi = ListViewControl.Items[info.ID];
+                    lvi.Tag = info.Result;
+
+                    if (info.Result.IsError)
+                    {
+                        string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
+
+                        Engine.MyLogger.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
+
+                        lvi.SubItems[1].Text = "Error";
+                        lvi.SubItems[8].Text = string.Empty;
+                        lvi.ImageIndex = 1;
+
+                        if (Engine.conf.CompleteSound)
+                        {
+                            SystemSounds.Asterisk.Play();
+                        }
+                    }
+                    else
+                    {
+                        Engine.MyLogger.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
+                            info.Result.URL, (int)info.UploadDuration);
+
+                        lvi.SubItems[1].Text = info.Status.GetDescription();
+                        lvi.ImageIndex = 2;
+
+                        if (!string.IsNullOrEmpty(info.Result.URL))
+                        {
+                            string url = string.IsNullOrEmpty(info.Result.ShortenedURL) ? info.Result.URL : info.Result.ShortenedURL;
+
+                            lvi.SubItems[8].Text = url;
+
+                            if (Engine.MyWorkflow.ClipboardOverwrite)
+                            {
+                                ZAppHelper.CopyTextSafely(url);
+                            }
+
+                            if (Engine.conf.HistorySave)
+                            {
+                                HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, info.GenerateHistoryItem());
+                            }
+
+                            //if (Engine.niTray.Visible)
+                            //{
+                            //    Program.mainForm.niTray.Tag = info.Result.URL;
+                            //    Program.mainForm.niTray.ShowBalloonTip(5000, "ZUploader - Upload completed", info.Result.URL, ToolTipIcon.Info);
+                            //}
+                        }
+
+                        if (Engine.conf.CompleteSound)
+                        {
+                            SystemSounds.Exclamation.Play();
+                        }
+                    }
+
+                    lvi.EnsureVisible();
+                }
+            }
+            finally
+            {
+                StartTasks();
+                //  UpdateTrayIcon();
+            }
+        }
+
+
+        private static void ChangeListViewItemStatus(WorkerTask wt)
+        {
+            if (ListViewControl != null)
+            {
+                ListViewItem lvi = ListViewControl.Items[wt.ID];
+                lvi.SubItems[1].Text = wt.Status.GetDescription();
+            }
+        }
+
+        private static void CreateListViewItem(WorkerTask wt)
+        {
+            if (ListViewControl != null)
+            {
+                Engine.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
+                    wt.ID, wt.Job1, wt.Job2, wt.GetDestinationName());
+
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = wt.FileName;
+                lvi.SubItems.Add("In queue");
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(wt.GetDescription());
+                lvi.SubItems.Add(wt.GetDestinationName());
+                lvi.SubItems.Add(string.Empty);
+                lvi.BackColor = wt.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
+                lvi.ImageIndex = 3;
+                ListViewControl.Items.Add(lvi);
+                lvi.EnsureVisible();
+                ListViewControl.FillLastColumn();
+            }
+        }
+
+        #endregion Queue
 
         /// <summary>
         /// Function to be called when a new Worker thread starts
@@ -122,7 +301,7 @@ namespace ZScreenLib
 
                     if (task.JobIsImageToClipboard())
                     {
-                        Adapter.CopyImageToClipboard(task.TempImage);
+                        Adapter.CopyImageToClipboard(task.tempImage);
                     }
                     else if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                     {

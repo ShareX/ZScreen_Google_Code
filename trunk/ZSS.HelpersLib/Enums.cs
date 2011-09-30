@@ -105,6 +105,16 @@ namespace HelpersLib
         PNG, JPEG, GIF, BMP, TIFF
     }
 
+    public enum TaskStatus
+    {
+        InQueue, Preparing, Uploading, URLShortening, Completed, Stopped
+    }
+
+    public enum TaskProgress
+    {
+        ReportStarted, ReportProgress
+    }
+
     public enum FreeImageJpegQualityType
     {
         [Description("Save with bad quality (10:1)")]
