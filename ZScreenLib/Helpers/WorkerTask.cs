@@ -54,9 +54,20 @@ namespace ZScreenLib
 {
     public class WorkerTask : IDisposable
     {
+        public delegate void TaskEventHandler(WorkerTask wt);
+
+        public event TaskEventHandler UploadStarted;
+        public event TaskEventHandler UploadPreparing;
+        public event TaskEventHandler UploadProgressChanged2;
+        public event TaskEventHandler UploadCompleted;
+
+        public TaskStatus Status { get; private set; }
+        public bool IsWorking { get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; } }
+        public bool IsStopped { get; private set; }
+
         #region Enums
 
-        public enum TaskStatus
+        public enum TaskState
         {
             Created,
             Prepared,
@@ -131,7 +142,8 @@ namespace ZScreenLib
 
         #region Properties
 
-        public int ID;
+        public int ID { get; set; }
+        public ProgressManager Progress { get; set; }
 
         public BackgroundWorker MyWorker { get; set; }
         public Workflow MyWorkflow { get; private set; }
@@ -139,8 +151,8 @@ namespace ZScreenLib
         public bool WasToTakeScreenshot { get; set; }
 
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
-        public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
-        public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
+        public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
+        public JobLevel3 Job3 { get; private set; }  // Shorten URL, Upload Text, Index Folder, etc.
 
         public List<string> Errors { get; set; }
 
@@ -149,7 +161,7 @@ namespace ZScreenLib
             get { return Errors != null && Errors.Count > 0; }
         }
 
-        public List<TaskStatus> Status = new List<TaskStatus>();
+        public List<TaskState> States = new List<TaskState>();
 
         public DateTime StartTime { get; set; }
 
@@ -172,12 +184,8 @@ namespace ZScreenLib
 
         public bool IsImage { get; private set; }
 
-        public int UniqueNumber { get; set; }
-
-        public Image TempImage { get; private set; }
-
+        public Image tempImage { get; private set; }
         public string TempText { get; private set; }
-
         private Stream Data;
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
@@ -197,6 +205,13 @@ namespace ZScreenLib
         public List<FileUploaderType> MyFileUploaders = new List<FileUploaderType>();
 
         public List<UploadResult> UploadResults { get; private set; }
+        public UploadResult Result
+        {
+            get
+            {
+                return GetResult();
+            }
+        }
 
         #endregion Properties
 
@@ -206,7 +221,7 @@ namespace ZScreenLib
         {
             UploadResults = new List<UploadResult>();
             Errors = new List<string>();
-            Status.Add(TaskStatus.Created);
+            States.Add(TaskState.Created);
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
         }
 
@@ -243,7 +258,7 @@ namespace ZScreenLib
 
             if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
             {
-                this.Status.Add(TaskStatus.CancellationPending);
+                this.States.Add(TaskState.CancellationPending);
             }
         }
 
@@ -287,7 +302,7 @@ namespace ZScreenLib
 
             if (!success)
             {
-                this.Status.Add(TaskStatus.CancellationPending);
+                this.States.Add(TaskState.CancellationPending);
             }
         }
 
@@ -295,7 +310,7 @@ namespace ZScreenLib
         {
             DialogResult dlgResult = DialogResult.OK;
 
-            if (!Status.Contains(TaskStatus.Prepared) && !Status.Contains(TaskStatus.CancellationPending))
+            if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyWorkflow.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
@@ -309,13 +324,120 @@ namespace ZScreenLib
                 {
                     dlgResult = SetManualOutputs(LocalFilePath);
                 }
-                Status.Add(TaskStatus.Prepared);
+                States.Add(TaskState.Prepared);
             }
 
             return dlgResult;
         }
 
         #endregion Constructors
+
+        public void Start()
+        {
+            if (Status == TaskStatus.InQueue && !IsStopped)
+            {
+                OnUploadPreparing();
+
+                //  UploadManager.UpdateProxySettings();
+
+                MyWorker = new BackgroundWorker();
+                MyWorker.WorkerReportsProgress = true;
+                MyWorker.DoWork += new DoWorkEventHandler(MyWorker_DoWork);
+                MyWorker.ProgressChanged += new ProgressChangedEventHandler(MyWorker_ProgressChanged);
+                MyWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(MyWorker_RunWorkerCompleted);
+                MyWorker.RunWorkerAsync();
+            }
+        }
+
+        private void MyWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //  throw new NotImplementedException();
+        }
+
+        private void MyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch ((TaskProgress)e.ProgressPercentage)
+            {
+                case TaskProgress.ReportStarted:
+                    OnUploadStarted();
+                    break;
+                case TaskProgress.ReportProgress:
+                    ProgressManager progress = e.UserState as ProgressManager;
+                    if (progress != null)
+                    {
+                        Progress = progress;
+                       // OnUploadProgressChanged2();
+                    }
+                    break;
+            }
+        }
+
+        private void MyWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // OnUploadCompleted();
+        }
+
+        #region Task Events
+
+        private void OnUploadPreparing()
+        {
+            Status = TaskStatus.Preparing;
+
+            switch (Job1)
+            {
+                case JobLevel1.Image:
+                case JobLevel1.Text:
+                    Status = TaskStatus.Preparing;
+                    break;
+                default:
+                    Status = TaskStatus.InQueue;
+                    break;
+            }
+
+            if (UploadPreparing != null)
+            {
+                UploadPreparing(this);
+            }
+        }
+
+        private void OnUploadStarted()
+        {
+            if (UploadStarted != null)
+            {
+                UploadStarted(this);
+            }
+        }
+
+        private void OnUploadProgressChanged()
+        {
+            if (UploadProgressChanged2 != null)
+            {
+                UploadProgressChanged2(this);
+            }
+        }
+
+        private void OnUploadCompleted()
+        {
+            Status = TaskStatus.Completed;
+
+            if (!IsStopped)
+            {
+                Status = TaskStatus.Completed;
+            }
+            else
+            {
+                Status = TaskStatus.Stopped;
+            }
+
+            if (UploadCompleted != null)
+            {
+                UploadCompleted(this);
+            }
+
+            Dispose();
+        }
+
+        #endregion
 
         #region Populating Task
 
@@ -328,7 +450,7 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                TempImage = img;
+                tempImage = img;
                 Job1 = JobLevel1.Image;
 
                 Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
@@ -339,32 +461,37 @@ namespace ZScreenLib
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE, (Bitmap)img.Clone());
                 }
 
-                if (!Status.Contains(TaskStatus.ImageEdited))
-                {
-                    Status.Add(TaskStatus.ImageEdited);
-                    ProcessImage(img);
-                    if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
-                    {
-                        PerformActions();
-                    }
-                }
-
+                // UpdateLocalFilePath needs to happen before Image is processed
                 EImageFormat imageFormat = MyWorkflow.ImageFormat;
-                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
-
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
                 }
                 else
                 {
-                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
+                    // Prepare data so that we have the correct file extension for Image Editor
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
+                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
                     string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
                 }
+
+                // PerformActions should happen in main thread
+                if (tempImage != null && !States.Contains(TaskState.ImageEdited))
+                {
+                    States.Add(TaskState.ImageEdited);
+                    ProcessImage(tempImage);
+                    if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
+                    {
+                        PerformActions();
+                    }
+                }
+
+                // Data should be set after the image is processed
+                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
             }
 
-            return TempImage != null;
+            return tempImage != null;
         }
 
         public void SetText(string text)
@@ -501,9 +628,9 @@ namespace ZScreenLib
                 {
                     Job1 = JobLevel1.Image;
                     IsImage = true;
-                    if (TempImage == null && GraphicsMgr.IsValidImage(fp))
+                    if (tempImage == null && GraphicsMgr.IsValidImage(fp))
                     {
-                        TempImage = FileSystem.ImageFromFile(fp);
+                        tempImage = FileSystem.ImageFromFile(fp);
                     }
                 }
                 else
@@ -624,7 +751,7 @@ namespace ZScreenLib
                 }
             }
 
-            return TempImage != null;
+            return tempImage != null;
         }
 
         public bool CaptureShape()
@@ -636,7 +763,7 @@ namespace ZScreenLib
                 SetImage(rcp.Result);
             }
 
-            return TempImage != null;
+            return tempImage != null;
         }
 
         /// <summary>
@@ -644,11 +771,11 @@ namespace ZScreenLib
         /// </summary>
         public bool CaptureActiveWindow()
         {
-            if (TempImage == null)
+            if (tempImage == null)
             {
                 SetImage(Capture.CaptureActiveWindow(this.MyWorkflow));
             }
-            return TempImage != null;
+            return tempImage != null;
         }
 
         /// <summary>
@@ -656,12 +783,12 @@ namespace ZScreenLib
         /// </summary>
         public bool CaptureScreen()
         {
-            if (TempImage == null)
+            if (tempImage == null)
             {
                 SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.CoreConf.ShowCursor));
             }
 
-            return TempImage != null;
+            return tempImage != null;
         }
 
         #endregion Capture
@@ -709,7 +836,7 @@ namespace ZScreenLib
                     img = ImageEffects.ApplyWatermark(img);
                 }
 
-                TempImage = img;
+                tempImage = img;
             }
         }
 
@@ -731,7 +858,7 @@ namespace ZScreenLib
                         {
                             try
                             {
-                                Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(TempImage);
+                                Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(tempImage);
                                 capture.CaptureDetails.Filename = LocalFilePath;
                                 capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
                                 capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
@@ -743,7 +870,7 @@ namespace ZScreenLib
                                 editor.ShowDialog();
                                 if (!editor.surface.Modified)
                                 {
-                                    TempImage = editor.GetImageForExport();
+                                    tempImage = editor.GetImageForExport();
                                 }
                             }
                             catch (Exception ex)
@@ -776,9 +903,9 @@ namespace ZScreenLib
                     fs.CopyStreamTo(data);
                 }
             }
-            else if (TempImage != null)
+            else if (tempImage != null)
             {
-                data = TempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
+                data = tempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -794,15 +921,15 @@ namespace ZScreenLib
         /// <param name="t">WorkerTask</param>
         public void WriteImage()
         {
-            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && TempImage != null && !Status.Contains(TaskStatus.ImageWritten))
+            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
             {
                 string fp = LocalFilePath;
-                Image img = TempImage;
+                Image img = tempImage;
                 FileInfo fi = FileSystem.WriteImage(fp, Data);
                 fp = fi.FullName;
                 FileSize = string.Format("{0} KiB", (fi.Length / 1024.0).ToString("0"));
 
-                Status.Add(TaskStatus.ImageWritten);
+                States.Add(TaskState.ImageWritten);
                 UploadResult ur = new UploadResult()
                 {
                     Host = OutputEnum.LocalDisk.GetDescription(),
@@ -828,13 +955,70 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
+            Engine.MyLogger.WriteLine(string.Format("Job started: {0}", Job2));
+
             StartTime = DateTime.Now;
 
-            if (File.Exists(LocalFilePath) || TempImage != null || !string.IsNullOrEmpty(TempText))
+            if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(TempText))
             {
-                foreach (OutputEnum oe in MyWorkflow.Outputs)
+                if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
                 {
-                    PublishData(oe);
+                    switch (Job1)
+                    {
+                        case JobLevel1.Text:
+                            FileSystem.WriteText(LocalFilePath, TempText);
+                            break;
+                        default:
+                            WriteImage();
+                            break;
+                    }
+                }
+
+                if (MyWorkflow.Outputs.Contains(OutputEnum.Clipboard))
+                {
+                    SetClipboardContent();
+                }
+
+                if (MyWorkflow.Outputs.Contains(OutputEnum.Printer))
+                {
+                    Print();
+                }
+
+                if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+                {
+                    switch (Job1)
+                    {
+                        case JobLevel1.Image:
+                            UploadImage();
+                            break;
+
+                        case JobLevel1.Text:
+                            switch (Job2)
+                            {
+                                case WorkerTask.JobLevel2.Translate:
+                                    SetTranslationInfo(new GoogleTranslate(ZKeys.GoogleApiKey).TranslateText(TranslationInfo));
+                                    SetText(TranslationInfo.Result);
+                                    break;
+                                default:
+                                    UploadText();
+                                    break;
+                            }
+                            break;
+
+                        case JobLevel1.File:
+                            UploadFile();
+                            break;
+                    }
+                }
+
+                if (MyWorkflow.Outputs.Contains(OutputEnum.Email))
+                {
+                    SendEmail();
+                }
+
+                if (MyWorkflow.Outputs.Contains(OutputEnum.SharedFolder))
+                {
+                    UploadToSharedFolder();
                 }
 
                 if (UploadResults.Count > 0)
@@ -846,45 +1030,6 @@ namespace ZScreenLib
             EndTime = DateTime.Now;
         }
 
-        private void PublishData(OutputEnum oe)
-        {
-            switch (oe)
-            {
-                case OutputEnum.LocalDisk:
-                    switch (Job1)
-                    {
-                        case JobLevel1.Text:
-                            FileSystem.WriteText(LocalFilePath, TempText);
-                            break;
-                        default:
-                            WriteImage();
-                            break;
-                    }
-                    break;
-                case OutputEnum.Clipboard:
-                    SetClipboardContent();
-                    break;
-                case OutputEnum.Printer:
-                    Print();
-                    break;
-                case OutputEnum.RemoteHost:
-                    if (Job1 == JobLevel1.File)
-                    {
-                        UploadFile();
-                    }
-                    else
-                    {
-                        UploadImage();
-                    }
-                    break;
-                case OutputEnum.Email:
-                    SendEmail();
-                    break;
-                case OutputEnum.SharedFolder:
-                    UploadToSharedFolder();
-                    break;
-            }
-        }
 
         public void UploadImage()
         {
@@ -1011,7 +1156,7 @@ namespace ZScreenLib
                         if (UploadResults.Count > 0 && string.IsNullOrEmpty(UploadResults[UploadResults.Count - 1].URL))
                         {
                             MyWorker.ReportProgress((int)ZScreenLib.WorkerTask.ProgressType.ShowTrayWarning,
-                                string.Format("Retrying... Attempt {1}", imageUploaderType.GetDescription(), i));
+                                string.Format("Retrying... Attempt {1}", imageUploaderType.GetDescription(), i + 1));
                         }
                         else
                         {
@@ -1115,9 +1260,9 @@ namespace ZScreenLib
 
                         if (CreateThumbnail())
                         {
-                            double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)TempImage.Width;
-                            using (Image img = GraphicsMgr.ChangeImageSize(TempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
-                                (int)(thar * TempImage.Height)))
+                            double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
+                            using (Image img = GraphicsMgr.ChangeImageSize(tempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
+                                (int)(thar * tempImage.Height)))
                             {
                                 StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
                                 sb.Append(".th");
@@ -1303,9 +1448,9 @@ namespace ZScreenLib
         {
             if (MyWorkflow.Outputs.Contains(OutputEnum.Printer))
             {
-                if (TempImage != null)
+                if (tempImage != null)
                 {
-                    MyWorker.ReportProgress((int)ProgressType.PrintImage, (Image)TempImage.Clone());
+                    MyWorker.ReportProgress((int)ProgressType.PrintImage, (Image)tempImage.Clone());
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
@@ -1369,11 +1514,11 @@ namespace ZScreenLib
                     File.Copy(LocalFilePath, destFile);
                     UpdateLocalFilePath(destFile);
                 }
-                else if (TempImage != null)
+                else if (tempImage != null)
                 {
                     EImageFormat imageFormat;
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, TempImage, out imageFormat);
-                    fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, TempImage, imageFormat, GetPatternType());
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
+                    fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);
                 }
@@ -1428,7 +1573,7 @@ namespace ZScreenLib
         {
             if (Engine.conf.ShowTrayUploadProgress)
             {
-                UploadInfo uploadInfo = UploadManager.GetInfo(UniqueNumber);
+                UploadInfo uploadInfo = UploadManager.GetInfo(ID);
                 if (uploadInfo != null)
                 {
                     uploadInfo.UploadPercentage = (int)progress.Percentage;
@@ -1499,23 +1644,23 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return MyWorkflow.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && TempImage != null;
+            return MyWorkflow.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && tempImage != null;
         }
 
         private bool CreateThumbnail()
         {
-            return GraphicsMgr.IsValidImage(LocalFilePath) && TempImage != null &&
+            return GraphicsMgr.IsValidImage(LocalFilePath) && tempImage != null &&
                 (Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LINKED_THUMBNAIL_WIKI) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.LinkedThumbnailHtml) ||
                   Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.THUMBNAIL)) &&
                 (!Engine.MyWorkflow.OutputsConfig.FTPThumbnailCheckSize || (Engine.MyWorkflow.OutputsConfig.FTPThumbnailCheckSize &&
-                (TempImage.Width > Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit)));
+                (tempImage.Width > Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit)));
         }
 
         public bool IsNotCanceled()
         {
-            if (Status.Contains(TaskStatus.Prepared) && (!Status.Contains(TaskStatus.CancellationPending))) return true;
+            if (States.Contains(TaskState.Prepared) && (!States.Contains(TaskState.CancellationPending))) return true;
             else return false;
         }
 
@@ -1605,9 +1750,9 @@ namespace ZScreenLib
                 sb.Append(FileName);
             }
 
-            if (TempImage != null)
+            if (tempImage != null)
             {
-                sb.Append(string.Format(" ({0}x{1})", TempImage.Width, TempImage.Height));
+                sb.Append(string.Format(" ({0}x{1})", tempImage.Width, tempImage.Height));
                 if (!string.IsNullOrEmpty(FileSize))
                 {
                     sb.Append(" " + FileSize);
@@ -1711,6 +1856,24 @@ namespace ZScreenLib
             MyWorker.RunWorkerAsync(this);
         }
 
+        public UploadResult GetResult()
+        {
+            foreach (UploadResult ur in this.UploadResults)
+            {
+                if (!string.IsNullOrEmpty(ur.URL))
+                {
+                    return ur;
+                }
+            }
+
+            return null;
+        }
+
+        public HistoryItem GenerateHistoryItem()
+        {
+            return GenerateHistoryItem(Result);
+        }
+
         public HistoryItem GenerateHistoryItem(UploadResult ur)
         {
             HistoryLib.HistoryItem hi = new HistoryLib.HistoryItem();
@@ -1731,7 +1894,7 @@ namespace ZScreenLib
 
         public void Dispose()
         {
-            if (TempImage != null) TempImage.Dispose();
+            if (tempImage != null) tempImage.Dispose();
             if (Data != null) Data.Dispose();
             if (MyWorker != null) MyWorker.Dispose();
         }

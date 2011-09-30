@@ -498,9 +498,6 @@ namespace UploadersLib
                 StringBuilder str = new StringBuilder();
                 str.AppendLine("Message:");
                 str.AppendLine(e.Message);
-                str.AppendLine();
-                str.AppendLine("StackTrace:");
-                str.AppendLine(e.StackTrace);
 
                 if (e is WebException)
                 {
@@ -513,6 +510,10 @@ namespace UploadersLib
                         str.AppendLine(response);
                     }
                 }
+
+                str.AppendLine();
+                str.AppendLine("StackTrace:");
+                str.AppendLine(e.StackTrace);
 
                 Errors.Add(str.ToString());
             }

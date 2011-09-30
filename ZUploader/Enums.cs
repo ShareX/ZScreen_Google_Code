@@ -85,24 +85,9 @@ namespace ZUploader
         PNG, JPEG, GIF, BMP, TIFF
     }
 
-    public enum GIFQuality
-    {
-        Default, Bit8, Bit4, Grayscale
-    }
-
     public enum TaskJob
     {
         DataUpload, FileUpload, ImageUpload, TextUpload
-    }
-
-    public enum TaskStatus
-    {
-        InQueue, Preparing, Uploading, URLShortening, Completed
-    }
-
-    public enum TaskProgress
-    {
-        ReportStarted, ReportProgress
     }
 
     public enum ScreenshotDestination

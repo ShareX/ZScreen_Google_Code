@@ -127,9 +127,9 @@ namespace ZScreenLib
                     Adapter.CopyImageToClipboard(img);
                 }
             }
-            else if (urTask.TempImage != null)
+            else if (urTask.tempImage != null)
             {
-                Adapter.CopyImageToClipboard(urTask.TempImage);
+                Adapter.CopyImageToClipboard(urTask.tempImage);
             }
         }
 
