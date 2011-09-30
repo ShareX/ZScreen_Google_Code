@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using HelpersLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
@@ -89,7 +90,7 @@ namespace ZScreenLib
 
         public static UploadInfo GetInfo(int number)
         {
-            return UploadInfoList.Find(x => x.UniqueID == number);
+            return UploadInfoList.Find(x => x.ID == number);
         }
 
         public static int GetAverageProgress()

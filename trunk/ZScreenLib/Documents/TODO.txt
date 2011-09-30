@@ -1,4 +1,6 @@
-﻿yfrog and twitpic using OAuth
+﻿Queue tab before Options
+
+yfrog and twitpic using OAuth
 
 FileWriter class to manage all writing to hard disk based on settings
 Option to prevent writing to hard disk
@@ -6,9 +8,8 @@ Option to prevent writing to hard disk
 Run the following tasks before uploading
 	Image Editor
 	Command Line Tools 
-	Need to share bw_DoWork in Worker and WorkerPrimary first
 
-Windwos.Forms.WebBrowser			
+Windows.Forms.WebBrowser			
 	Preview CSS editing in a WebBrowser
 	
 Clipboard Upload Wizard
@@ -17,5 +18,3 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
-
-Tray menu need text and url shortener destination

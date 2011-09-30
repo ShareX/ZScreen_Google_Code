@@ -53,6 +53,8 @@ namespace ZScreenGUI
             codesMenu.ShowImageMargin = false;
 
             niTray.BalloonTipClicked += new EventHandler(niTray_BalloonTipClicked);
+
+            WorkerTaskHelper.ListViewControl = lvUploads;
         }
 
         private void ZScreen_ConfigGUI()
