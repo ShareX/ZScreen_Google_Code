@@ -1246,14 +1246,14 @@ namespace ZScreenLib
                     Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
                     string url;
                     FTPUploader fu;
-                    SFTP sftp;
+                    SFTPUploader sftp;
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     switch (acc.Protocol)
                     {
                         case FTPProtocol.SFTP:
-                            sftp = new SFTP(acc);
-                            sftp.ProgressChanged += new SFTP.ProgressEventHandler(UploadProgressChanged);
-                            url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath,FileName) : sftp.Upload(data, FileName);
+                            sftp = new SFTPUploader(acc);
+                            sftp.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+                            url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath).URL : sftp.Upload(data, FileName).URL;
                             ur = CreateThumbnail(url, sftp);
                             break;
                         default:
@@ -1309,7 +1309,7 @@ namespace ZScreenLib
             }
             return null;
         }
-        private UploadResult CreateThumbnail(string url, SFTP fu)
+        private UploadResult CreateThumbnail(string url, SFTPUploader fu)
         {
             if (!string.IsNullOrEmpty(url))
             {
@@ -1326,9 +1326,10 @@ namespace ZScreenLib
                         sb.Append(Path.GetExtension(LocalFilePath));
                         string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
                         img.Save(thPath);
+
                         if (File.Exists(thPath))
                         {
-                            string thumb = fu.Upload(thPath,sb.ToString());
+                            string thumb = fu.Upload(thPath).URL;
 
                             if (!string.IsNullOrEmpty(thumb))
                             {
