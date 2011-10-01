@@ -26,11 +26,17 @@
 using System;
 using System.ComponentModel;
 using HelpersLib;
+using UploadersLib.HelperClasses;
+using System.Drawing.Design;
 
 namespace UploadersLib
 {
     public class FTPAccount : ICloneable
     {
+        
+        [Category("FTP"), Description("Connection Protocol"), DefaultValue(FTPProtocol.FTP)]
+        public FTPProtocol Protocol { get; set; }
+
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
 
@@ -46,11 +52,18 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
+        [Category("FTP"),Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
+        public string Passphrase { get; set; }
+
+        [Category("FTP"), Description("Key Location")]
+        [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
+        public string Keypath { get; set; }
+
         [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
-        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(Protocol.Http)]
-        public Protocol RemoteProtocol { get; set; }
+        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(RemoteProtocol.Http)]
+        public RemoteProtocol RemoteProtocol { get; set; }
 
         [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. zscreen.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
@@ -59,6 +72,8 @@ namespace UploadersLib
         public bool IsActive { get; set; }
 
         [Category("FTP"), Description("ftp://Host:Port"), Browsable(false)]
+
+
         public string FTPAddress
         {
             get
