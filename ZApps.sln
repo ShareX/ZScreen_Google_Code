@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 		Lib\log4net.dll = Lib\log4net.dll
 		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
 		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
+		Lib\Renci.SshNet.dll = Lib\Renci.SshNet.dll
 		Lib\SHDocVw.dll = Lib\SHDocVw.dll
 		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
 	EndProjectSection

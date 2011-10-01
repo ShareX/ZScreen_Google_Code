@@ -41,10 +41,12 @@ namespace UploadersLib
         public event Uploader.ProgressEventHandler ProgressChanged;
 
         public FTPAccount Account { get; set; }
-
+       
         public FtpClient Client { get; set; }
-
+        
         public bool AutoReconnect { get; set; }
+
+        public Logger logger = new Logger();
 
         private ProgressManager progress;
 
@@ -56,8 +58,13 @@ namespace UploadersLib
             switch (account.Protocol)
             {
                 case FTPProtocol.FTPS:
-                    Client.SecurityProtocol = account.FtpsSecurityProtocol;
-                    Client.SecurityCertificates.Add(X509Certificate.CreateFromSignedFile(account.FtpsCertLocation));
+                    if (File.Exists(account.FtpsCertLocation))
+                    {
+                        Client.SecurityProtocol = account.FtpsSecurityProtocol;
+                        Client.SecurityCertificates.Add(X509Certificate.CreateFromSignedFile(account.FtpsCertLocation));
+                    }
+                    else
+                        logger.WriteLine("Can't find ftps certificate (" + account.FtpsCertLocation + ")");
                     break;
                 default:
                     Client.SecurityProtocol = FtpSecurityProtocol.None;

@@ -60,11 +60,9 @@ namespace ZScreenLib
         public event TaskEventHandler UploadPreparing;
         public event TaskEventHandler UploadProgressChanged2;
         public event TaskEventHandler UploadCompleted;
-
         public TaskStatus Status { get; private set; }
         public bool IsWorking { get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; } }
         public bool IsStopped { get; private set; }
-
         #region Enums
 
         public enum TaskState
@@ -153,7 +151,7 @@ namespace ZScreenLib
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
         public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
         public JobLevel3 Job3 { get; private set; }  // Shorten URL, Upload Text, Index Folder, etc.
-
+        
         public List<string> Errors { get; set; }
 
         public bool IsError
@@ -1246,44 +1244,26 @@ namespace ZScreenLib
                     FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
                     Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
-
-                    FTPUploader fu = new FTPUploader(acc);
-                    fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-
-                    MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
-
-                    string url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
-
-                    if (!string.IsNullOrEmpty(url))
+                    string url;
+                    FTPUploader fu;
+                    SFTP sftp;
+                    
+                    switch (acc.Protocol)
                     {
-                        AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
-
-                        if (CreateThumbnail())
-                        {
-                            double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
-                            using (Image img = GraphicsMgr.ChangeImageSize(tempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
-                                (int)(thar * tempImage.Height)))
-                            {
-                                StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
-                                sb.Append(".th");
-                                sb.Append(Path.GetExtension(LocalFilePath));
-                                string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
-                                img.Save(thPath);
-                                if (File.Exists(thPath))
-                                {
-                                    string thumb = fu.Upload(thPath).URL;
-
-                                    if (!string.IsNullOrEmpty(thumb))
-                                    {
-                                        ur = new UploadResult();
-                                        ur.Host = FileUploaderType.FTP.GetDescription();
-                                        ur.ThumbnailURL = thumb;
-                                        AddUploadResult(ur);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                        case FTPProtocol.SFTP:
+                            sftp = new SFTP(acc);
+                            MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+                            url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath,FileName) : sftp.Upload(data, FileName);
+                            ur = CreateThumbnail(url, sftp);
+                            break;
+                        default:
+                            fu = new FTPUploader(acc);
+                            fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
+                            MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+                            url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
+                            ur = CreateThumbnail(url, fu);
+                            break;
+                    }                   
                 }
             }
             catch (Exception ex)
@@ -1291,8 +1271,80 @@ namespace ZScreenLib
                 Engine.MyLogger.WriteException(ex, "Error while uploading to FTP Server");
                 Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
-
             return ur;
+        }
+
+        private UploadResult CreateThumbnail(string url, FTPUploader fu)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
+
+                if (CreateThumbnail())
+                {
+                    double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
+                    using (Image img = GraphicsMgr.ChangeImageSize(tempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
+                        (int)(thar * tempImage.Height)))
+                    {
+                        StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
+                        sb.Append(".th");
+                        sb.Append(Path.GetExtension(LocalFilePath));
+                        string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
+                        img.Save(thPath);
+                        if (File.Exists(thPath))
+                        {
+                            string thumb = fu.Upload(thPath).URL;
+
+                            if (!string.IsNullOrEmpty(thumb))
+                            {
+                                UploadResult ur = new UploadResult();
+                                ur.Host = FileUploaderType.FTP.GetDescription();
+                                ur.ThumbnailURL = thumb;
+                                AddUploadResult(ur);
+                                return ur;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            return null;
+        }
+        private UploadResult CreateThumbnail(string url, SFTP fu)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
+
+                if (CreateThumbnail())
+                {
+                    double thar = (double)Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
+                    using (Image img = GraphicsMgr.ChangeImageSize(tempImage, Engine.MyWorkflow.OutputsConfig.FTPThumbnailWidthLimit,
+                        (int)(thar * tempImage.Height)))
+                    {
+                        StringBuilder sb = new StringBuilder(Path.GetFileNameWithoutExtension(LocalFilePath));
+                        sb.Append(".th");
+                        sb.Append(Path.GetExtension(LocalFilePath));
+                        string thPath = Path.Combine(Path.GetDirectoryName(LocalFilePath), sb.ToString());
+                        img.Save(thPath);
+                        if (File.Exists(thPath))
+                        {
+                            string thumb = fu.Upload(thPath,sb.ToString());
+
+                            if (!string.IsNullOrEmpty(thumb))
+                            {
+                                UploadResult ur = new UploadResult();
+                                ur.Host = FileUploaderType.FTP.GetDescription();
+                                ur.ThumbnailURL = thumb;
+                                AddUploadResult(ur);
+                                return ur;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            return null;
         }
 
         private void UploadFile(FileUploaderType fileUploaderType, Stream data)
