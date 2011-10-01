@@ -54,7 +54,15 @@ namespace UploadersLib
         SOCKS5
     }
 
-    public enum Protocol
+    public enum FTPProtocol
+    {
+        [Description("FTP")]
+        FTP,
+        [Description("SFTP")]
+        SFTP
+    }
+
+    public enum RemoteProtocol
     {
         [Description("http://")]
         Http,

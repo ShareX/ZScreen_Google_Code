@@ -79,6 +79,12 @@ namespace ZScreenGUI
             bwConfig.DoWork += new DoWorkEventHandler(bwConfig_DoWork);
             bwConfig.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwConfig_RunWorkerCompleted);
             bwConfig.RunWorkerAsync();
+
+            //Better ensures value changes for nudSwitchAfter
+            nudSwitchAfter.LostFocus += new EventHandler(nudSwitchAfter_LostFocus);
+            tpCaptureQuality.MouseDown += new MouseEventHandler(tpCaptureQuality_MouseDown);
+            gbPictureQuality.MouseDown += new MouseEventHandler(gbPictureQuality_MouseDown);
+            gbImageSize.MouseDown += new MouseEventHandler(gbImageSize_MouseDown);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -1193,11 +1199,34 @@ namespace ZScreenGUI
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
+            nudSwitchAfterValueChanged();
+        }
+        void nudSwitchAfter_LostFocus(object sender, EventArgs e)
+        {
+            nudSwitchAfterValueChanged();
+        }
+        private void nudSwitchAfterValueChanged()
+        {
             Engine.MyWorkflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
             if ((int)nudSwitchAfter.Value == 0)
                 cboSwitchFormat.Enabled = false;
             else
                 cboSwitchFormat.Enabled = true;
+        }
+
+        void gbImageSize_MouseDown(object sender, MouseEventArgs e)
+        {
+            gbImageSize.Focus();
+        }
+
+        void gbPictureQuality_MouseDown(object sender, MouseEventArgs e)
+        {
+            gbPictureQuality.Focus();
+        }
+
+        void tpCaptureQuality_MouseDown(object sender, MouseEventArgs e)
+        {
+            tpCaptureQuality.Focus();
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
