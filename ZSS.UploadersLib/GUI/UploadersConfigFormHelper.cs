@@ -544,52 +544,68 @@ namespace UploadersLib
         {
             string msg;
             string sfp = account.GetSubFolderPath();
-            using (FTP ftpClient = new FTP(account))
+            switch (account.Protocol)
             {
-                try
-                {
-                    DateTime time = DateTime.Now;
-                    ftpClient.Test(sfp);
-                    msg = "Success!";
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.StartsWith("Could not change working directory to"))
+                case FTPProtocol.SFTP:
+                    SFTP sftp = new SFTP(account);
+                    sftp.Connect();
+                    sftp.ChangeDirectory(sfp);
+                    if (sftp.IsConnected)
+                    {
+                        MessageBox.Show("Conected!\nProbably made this folder; " + sfp + " \n\nPing results:\n " + SendPing(account.Host,3),Application.ProductName,MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        sftp.Disconnect();
+                    }
+                    break;
+                default:
+                    using (FTP ftpClient = new FTP(account))
                     {
                         try
                         {
-                            ftpClient.MakeMultiDirectory(sfp);
+                            //DateTime time = DateTime.Now;
                             ftpClient.Test(sfp);
-                            msg = "Success!\nAuto created folders: " + sfp;
+                            msg = "Success!";
                         }
-                        catch (Exception e2)
+                        catch (Exception e)
                         {
-                            msg = e2.Message;
+                            if (e.Message.StartsWith("Could not change working directory to"))
+                            {
+                                try
+                                {
+                                    ftpClient.MakeMultiDirectory(sfp);
+                                    ftpClient.Test(sfp);
+                                    msg = "Success!\nAuto created folders: " + sfp;
+                                }
+                                catch (Exception e2)
+                                {
+                                    msg = e2.Message;
+                                }
+                            }
+                            else
+                            {
+                                msg = e.Message;
+                            }
                         }
                     }
-                    else
+
+                    if (!string.IsNullOrEmpty(msg))
                     {
-                        msg = e.Message;
+                        string ping = SendPing(account.Host, 3);
+                        if (!string.IsNullOrEmpty(ping))
+                        {
+                            msg += "\n\nPing results:\n" + ping;
+                        }
+                        if (silent)
+                        {
+                            // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                        }
+                        else
+                        {
+                            MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
-                }
+                    break;
             }
 
-            if (!string.IsNullOrEmpty(msg))
-            {
-                string ping = SendPing(account.Host, 3);
-                if (!string.IsNullOrEmpty(ping))
-                {
-                    msg += "\n\nPing results:\n" + ping;
-                }
-                if (silent)
-                {
-                    // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
-                }
-                else
-                {
-                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
         }
 
         public static string SendPing(string host)
