@@ -28,19 +28,20 @@ using System.ComponentModel;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using System.Drawing.Design;
+using Starksoft.Net.Ftp;
 
 namespace UploadersLib
 {
     public class FTPAccount : ICloneable
     {
-        
-        [Category("FTP"), Description("Connection Protocol"), DefaultValue(FTPProtocol.FTP)]
+
+        [Category("Account"), Description("Connection Protocol"), DefaultValue(FTPProtocol.FTP)]
         public FTPProtocol Protocol { get; set; }
 
         [Category("FTP"), Description("Shown in the list as: Name - Server:Port")]
         public string Name { get; set; }
 
-        [Category("FTP"), Description("Host, e.g. zscreen.net")]
+        [Category("FTP"), Description("Host, e.g. google.com")]
         public string Host { get; set; }
 
         [Category("FTP"), Description("Port Number"), DefaultValue(21)]
@@ -52,12 +53,19 @@ namespace UploadersLib
         [Category("FTP"), PasswordPropertyText(true)]
         public string Password { get; set; }
 
-        [Category("FTP"),Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
+        [Category("SFTP"), Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
         public string Passphrase { get; set; }
 
-        [Category("FTP"), Description("Key Location")]
+        [Category("SFTP"), Description("Key Location")]
         [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
         public string Keypath { get; set; }
+
+        [Category("FTPS"), Description("Certification Location")]
+        [EditorAttribute(typeof(CertFileNameEditor), typeof(UITypeEditor))]
+        public string FtpsCertLocation { get; set; }
+
+        [Category("FTPS"), Description("Security Protocol"), DefaultValue(FtpSecurityProtocol.Ssl2Explicit)]
+        public FtpSecurityProtocol FtpsSecurityProtocol { get; set; }
 
         [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
@@ -65,15 +73,13 @@ namespace UploadersLib
         [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(RemoteProtocol.Http)]
         public RemoteProtocol RemoteProtocol { get; set; }
 
-        [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. zscreen.net\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
+        [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. google.com\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
 
         [Category("FTP"), Description("Set true for active or false for passive"), DefaultValue(false)]
         public bool IsActive { get; set; }
 
         [Category("FTP"), Description("ftp://Host:Port"), Browsable(false)]
-
-
         public string FTPAddress
         {
             get
@@ -117,12 +123,24 @@ namespace UploadersLib
             SubFolderPath = string.Empty;
             HttpHomePath = string.Empty;
             IsActive = false;
+
+            ApplyDefaultValues(this);
         }
 
         public FTPAccount(string name)
             : this()
         {
             this.Name = name;
+        }
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
         }
 
         public string GetSubFolderPath()

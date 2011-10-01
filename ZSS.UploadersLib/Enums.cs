@@ -58,8 +58,10 @@ namespace UploadersLib
     {
         [Description("FTP")]
         FTP,
-        [Description("SFTP")]
-        SFTP
+        [Description("FTPS (FTP over SSL)")]
+        FTPS,
+        [Description("SFTP (SSH FTP)")]
+        SFTP,
     }
 
     public enum RemoteProtocol

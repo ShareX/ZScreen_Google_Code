@@ -498,6 +498,7 @@ namespace UploadersLib
                 int selFtpList = ucFTPAccounts.AccountsList.SelectedIndex;
 
                 ucFTPAccounts.AccountsList.Items.Clear();
+                ucFTPAccounts.SettingsGrid.PropertySort = PropertySort.Categorized;
                 cboFtpImages.Items.Clear();
                 cboFtpText.Items.Clear();
                 cboFtpFiles.Items.Clear();

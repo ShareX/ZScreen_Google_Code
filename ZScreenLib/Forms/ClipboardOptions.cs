@@ -41,11 +41,10 @@ namespace ZScreenLib
                 foreach (UploadResult ur in task.UploadResults)
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
-                    string path = string.IsNullOrEmpty(ur.URL) ? ur.LocalFilePath : ur.URL;
-
+                    
                     foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
-                        string url = ur.GetUrlByType(type, path);
+                        string url = ur.GetUrlByType(type, ur.URL);
                         if (!string.IsNullOrEmpty(url))
                         {
                             if (type == LinkFormatEnum.FULL)
