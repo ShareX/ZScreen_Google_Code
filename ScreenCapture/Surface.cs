@@ -96,7 +96,7 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = Helpers.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
@@ -157,26 +157,26 @@ namespace ScreenCapture
                     matrix.Translate(-bounds.X, -bounds.Y);
                     gp.Transform(matrix);
 
-                    img = Helpers.CropImage(img, newArea, gp);
+                    img = CaptureHelpers.CropImage(img, newArea, gp);
 
                     if (Config.DrawBorder)
                     {
-                        img = Helpers.DrawBorder(img, gp);
+                        img = CaptureHelpers.DrawBorder(img, gp);
                     }
                 }
 
                 if (Config.DrawChecker)
                 {
-                    img = Helpers.DrawCheckers(img);
+                    img = CaptureHelpers.DrawCheckers(img);
                 }
             }
             else
             {
-                img = Helpers.CropImage(img, newArea);
+                img = CaptureHelpers.CropImage(img, newArea);
 
                 if (Config.DrawBorder)
                 {
-                    img = Helpers.DrawBorder(img);
+                    img = CaptureHelpers.DrawBorder(img);
                 }
             }
 
@@ -413,7 +413,7 @@ namespace ScreenCapture
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));
             }
 
-            Helpers.DrawTextWithShadow(g, text, position, textFont, Color.White, Color.Black, 1);
+            CaptureHelpers.DrawTextWithShadow(g, text, position, textFont, Color.White, Color.Black, 1);
         }
 
         protected Rectangle CalculateAreaFromNodes()
@@ -428,7 +428,7 @@ namespace ScreenCapture
                 right = nodes.Max(x => x.Position.X);
                 bottom = nodes.Max(x => x.Position.Y);
 
-                return Helpers.CreateRectangle(new Point(left, top), new Point(right, bottom));
+                return CaptureHelpers.CreateRectangle(new Point(left, top), new Point(right, bottom));
             }
 
             return Rectangle.Empty;

@@ -33,14 +33,14 @@ namespace ScreenCapture
     {
         public Image Result { get; private set; }
 
-        private Bitmap screenshot;
+        private Image screenshot;
         private Surface surface;
         public SurfaceOptions SurfaceConfig { get; set; }
 
         public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
-            screenshot = Helpers.GetScreenshot();
+            screenshot = Screenshot.GetFullscreen();
 
             SurfaceConfig = surfaceConfig;
 

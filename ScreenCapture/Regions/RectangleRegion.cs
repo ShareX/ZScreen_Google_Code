@@ -101,7 +101,7 @@ namespace ScreenCapture
                                 tempRect.Width -= mousePosition.X - oldMousePosition.X;
                             }
 
-                            Area = Helpers.FixRectangle(tempRect);
+                            Area = CaptureHelpers.FixRectangle(tempRect);
 
                             break;
                         }

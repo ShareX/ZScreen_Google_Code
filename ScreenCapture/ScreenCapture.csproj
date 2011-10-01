@@ -59,14 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Capture.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\Structs.cs" />
+    <Compile Include="Screenshot.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GDI.cs" />
+    <Compile Include="Native\GDI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="Regions\DiamondRegion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,7 +84,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawObject.cs" />
-    <Compile Include="Helpers.cs" />
+    <Compile Include="CaptureHelpers.cs" />
     <Compile Include="NodeObject.cs" />
     <Compile Include="Regions\RectangleRegion.cs">
       <SubType>Form</SubType>

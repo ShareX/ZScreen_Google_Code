@@ -111,19 +111,19 @@ namespace ZUploader
 
         private void CaptureScreen(bool autoHideForm = true)
         {
-            Capture(Helpers.GetScreenshot, autoHideForm);
+            Capture(Screenshot.GetFullscreen, autoHideForm);
         }
 
         private void CaptureActiveWindow(bool autoHideForm = true)
         {
-            Capture(Helpers.GetActiveWindowScreenshot, autoHideForm);
+            Capture(Screenshot.GetActiveWindow, autoHideForm);
         }
 
         private void CaptureRegion(Surface surface, bool autoHideForm = true)
         {
             Capture(() =>
             {
-                Image img = null, screenshot = Helpers.GetScreenshot();
+                Image img = null, screenshot = Screenshot.GetFullscreen();
 
                 surface.Config = Program.Settings.SurfaceOptions;
                 surface.LoadBackground(screenshot);
