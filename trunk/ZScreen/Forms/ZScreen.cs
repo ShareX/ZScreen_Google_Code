@@ -614,8 +614,7 @@ namespace ZScreenGUI
                     Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
-                    btnRemoveImageEditor.Enabled = !app.Protected;
-
+                    btnActionsRemove.Enabled = !app.Protected;
                     SetActiveImageSoftware();
                 }
             }
@@ -1404,6 +1403,7 @@ namespace ZScreenGUI
         {
             Engine.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
+            tcWatermark.Enabled = Engine.conf.WatermarkMode != WatermarkType.NONE;
         }
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
@@ -1722,21 +1722,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void chkHotkeys_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsReady)
-            {
-                if (chkHotkeys.Checked)
-                {
-                    UpdateHotkeys(false);
-                }
-                else
-                {
-                    UnregisterAllHotkeys();
-                }
-            }
-        }
-
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
@@ -1837,7 +1822,6 @@ namespace ZScreenGUI
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.PerformActions = chkPerformActions.Checked;
-            lbSoftware.Enabled = chkPerformActions.Checked;
         }
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)

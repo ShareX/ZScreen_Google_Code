@@ -128,6 +128,11 @@ namespace UploadersLib.FileUploaders
 
         private string GetActiveUserFolderURL(MinusScope scope)
         {
+            if (!string.IsNullOrEmpty(this.Password))
+            {
+                Config.MinusUser = null; // user requested reconfiguration
+                this.Password = string.Empty;
+            }
             MinusUser user = Config.MinusUser != null ? Config.MinusUser : Config.MinusUser = GetActiveUser(scope);
             string url = URL_API + "/users/" + user.slug + "/folders?bearer_token=" + Config.GetToken(scope).access_token;
             return url;
