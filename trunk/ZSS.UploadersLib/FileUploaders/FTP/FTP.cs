@@ -32,6 +32,7 @@ using HelpersLib;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 using ZUploader.HelperClasses;
+using System.Security.Cryptography.X509Certificates;
 
 namespace UploadersLib
 {
@@ -51,6 +52,17 @@ namespace UploadersLib
         {
             this.Account = account;
             this.Client = new FtpClient();
+
+            switch (account.Protocol)
+            {
+                case FTPProtocol.FTPS:
+                    Client.SecurityProtocol = account.FtpsSecurityProtocol;
+                    Client.SecurityCertificates.Add(X509Certificate.CreateFromSignedFile(account.FtpsCertLocation));
+                    break;
+                default:
+                    Client.SecurityProtocol = FtpSecurityProtocol.None;
+                    break;
+            }
 
             Client.Host = account.Host;
             Client.Port = account.Port;
