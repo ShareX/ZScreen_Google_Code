@@ -12,76 +12,52 @@ using ZUploader.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
-    public sealed class SFTP
+    public sealed class SFTP : IDisposable
     {
-        SftpClient sftp;
-
-
         //properties
-        public FTPAccount FtpAccount { get; set; }
-        public bool IsConnected { get { return sftp.IsConnected; } }
 
-        public delegate void ProgressEventHandler(ProgressManager progress);
-        public event ProgressEventHandler ProgressChanged;
+        public FTPAccount FTPAccount { get; set; }
+        SftpClient Client;
+        public bool IsConnected { get { return Client.IsConnected; } }
+        public event Uploader.ProgressEventHandler ProgressChanged;
+        private ProgressManager progress;
 
         static Logger logger = new Logger();
 
-        public SFTP(FTPAccount ftpAccount)
+        public SFTP(FTPAccount account)
         {
-            this.FtpAccount = ftpAccount;
+            this.FTPAccount = account;
 
-            if (FtpAccount.UserName.Contains("@"))
+            if (FTPAccount.UserName.Contains("@"))
             {
-                FtpAccount.UserName = FtpAccount.UserName.Substring(0, FtpAccount.UserName.IndexOf('@'));
+                FTPAccount.UserName = FTPAccount.UserName.Substring(0, FTPAccount.UserName.IndexOf('@'));
             }
-            if (!string.IsNullOrEmpty(FtpAccount.Password) && (string.IsNullOrEmpty(FtpAccount.Keypath)))
+            if (!string.IsNullOrEmpty(FTPAccount.Password) && (string.IsNullOrEmpty(FTPAccount.Keypath)))
             {
-                sftp = new SftpClient(FtpAccount.Host, FtpAccount.Port, FtpAccount.UserName, FtpAccount.Password);
+                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, FTPAccount.Password);
             }
-            else if (string.IsNullOrEmpty(FtpAccount.Password) && (File.Exists(FtpAccount.Keypath)) && (string.IsNullOrEmpty(FtpAccount.Passphrase)))
+            else if (string.IsNullOrEmpty(FTPAccount.Password) && (File.Exists(FTPAccount.Keypath)) && (string.IsNullOrEmpty(FTPAccount.Passphrase)))
             {
-                sftp = new SftpClient(FtpAccount.Host, FtpAccount.Port, FtpAccount.UserName, new PrivateKeyFile(FtpAccount.Keypath));
+                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath));
             }
-            else if (string.IsNullOrEmpty(FtpAccount.Password) && (File.Exists(FtpAccount.Keypath)) && (!string.IsNullOrEmpty(FtpAccount.Passphrase)))
+            else if (string.IsNullOrEmpty(FTPAccount.Password) && (File.Exists(FTPAccount.Keypath)) && (!string.IsNullOrEmpty(FTPAccount.Passphrase)))
             {
-                sftp = new SftpClient(FtpAccount.Host, FtpAccount.Port, FtpAccount.UserName, new PrivateKeyFile(FtpAccount.Keypath, FtpAccount.Passphrase));
+                Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath, FTPAccount.Passphrase));
             }
+
         }
 
         public void Connect()
         {
             if (!IsConnected)
-                 sftp.Connect();
+                Client.Connect();
         }
         public void Disconnect()
         {
             if (IsConnected)
-                sftp.Disconnect();
+                Client.Disconnect();
         }
 
-        public string Upload(Stream Inputstream, string RemoteName)
-        {
-            Connect();
-            RemoteName = ZAppHelper.ReplaceIllegalChars(RemoteName, '_');
-
-            while (RemoteName.IndexOf("__") != -1)
-            {
-                RemoteName = RemoteName.Replace("__", "_");
-            }
-            ChangeDirectory(FtpAccount.GetSubFolderPath());
-            object s = new object();
-            AsyncCallback ac = new AsyncCallback(CallBack);
-            var result = sftp.BeginUploadFile(Inputstream, RemoteName, ac, s);
-            var progress = result as SftpUploadAsyncResult;
-            
-            
-            while (!progress.IsCompleted)
-            {
-                
-            }
-            Disconnect();
-            return FtpAccount.GetUriPath(RemoteName);
-        }
         public string Upload(string Filepath, string RemoteName)
         {
             Connect();
@@ -90,44 +66,49 @@ namespace UploadersLib.FileUploaders
             {
                 RemoteName = RemoteName.Replace("__", "_");
             }
-            ChangeDirectory(FtpAccount.GetSubFolderPath());
+            ChangeDirectory(FTPAccount.GetSubFolderPath());
             object s = new object();
             AsyncCallback ac = new AsyncCallback(CallBack);
             using (var file = File.OpenRead(Filepath))
             {
-                var result = sftp.BeginUploadFile(file, RemoteName, ac, s);
-                var progress = result as SftpUploadAsyncResult;
+                var result = Client.BeginUploadFile(file, RemoteName, ac, s);
+                var resultprogress = result as SftpUploadAsyncResult;
                 ProgressManager pm = new ProgressManager(new FileInfo(Filepath).Length);
-                while (!progress.IsCompleted)
+                while (!resultprogress.IsCompleted)
                 {
-                    pm.ChangeProgress((int)progress.UploadedBytes);
+                    pm.ChangeProgress((int)resultprogress.UploadedBytes);
                     ProgressChanged(pm);
                 }
             }
             Disconnect();
-            return FtpAccount.GetUriPath(RemoteName);
+            return FTPAccount.GetUriPath(RemoteName);
         }
+
         public static void CallBack(IAsyncResult ia)
         {
             logger.WriteLine("Finished Uploading");
         }
+
         public void ChangeDirectory(string Path)
         {
             try
             {
-                sftp.ChangeDirectory(Path);
+                Client.ChangeDirectory(Path);
             }
             catch (SftpPathNotFoundException e)
             {
                 CreateDirectory(Path);
                 ChangeDirectory(Path);
+
+                logger.WriteException(e);
             }
         }
+
         public void CreateDirectory(string Path)
         {
             try
             {
-                sftp.CreateDirectory(Path);
+                Client.CreateDirectory(Path);
             }
             catch (SftpPathNotFoundException)
             {
@@ -141,7 +122,43 @@ namespace UploadersLib.FileUploaders
             }
             catch (SftpPermissionDeniedException)
             {
+
             }
+        }
+
+        private void OnTransferProgressChanged(SftpUploadAsyncResult e)
+        {
+            if (ProgressChanged != null)
+            {
+                progress.ChangeProgress((int)e.UploadedBytes);
+                ProgressChanged(progress);
+            }
+        }
+
+        public void UploadData(Stream stream, string remotePath)
+        {
+            Connect();
+            progress = new ProgressManager(stream.Length);
+
+            ChangeDirectory(FTPAccount.GetSubFolderPath());
+
+            object s = new object();
+            AsyncCallback ac = new AsyncCallback(CallBack);
+
+            var result = Client.BeginUploadFile(stream, remotePath, ac, s);
+            SftpUploadAsyncResult sftpresult = result as SftpUploadAsyncResult;
+
+            while (!sftpresult.IsCompleted)
+            {
+                OnTransferProgressChanged(sftpresult);
+            }
+
+            Disconnect();
+        }
+
+        public void Dispose()
+        {
+            Disconnect();
         }
     }
 }
