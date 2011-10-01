@@ -67,7 +67,7 @@ namespace ScreenCapture
 
                 if (positionCurrent != positionOld)
                 {
-                    SelectionRectangle = Helpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, positionCurrent.X, positionCurrent.Y);
+                    SelectionRectangle = CaptureHelpers.CreateRectangle(positionOnClick.X, positionOnClick.Y, positionCurrent.X, positionCurrent.Y);
                     Refresh();
                 }
             }
@@ -149,7 +149,7 @@ namespace ScreenCapture
             this.Name = "Crop";
             this.Text = "Crop";
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Bounds = Helpers.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.Cursor = Cursors.Cross;
             this.ShowInTaskbar = false;

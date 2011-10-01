@@ -31,53 +31,8 @@ using System.Windows.Forms;
 
 namespace ScreenCapture
 {
-    public static class Helpers
+    public static class CaptureHelpers
     {
-        public static Bitmap GetScreenshot(Rectangle rect)
-        {
-            Bitmap screenshot = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
-
-            using (Graphics g = Graphics.FromImage(screenshot))
-            {
-                g.CopyFromScreen(rect.Location, Point.Empty, rect.Size, CopyPixelOperation.SourceCopy);
-            }
-
-            return screenshot;
-        }
-
-        public static Bitmap GetScreenshot()
-        {
-            Rectangle bounds = GetScreenBounds();
-
-            return GetScreenshot(bounds);
-        }
-
-        public static Bitmap GetActiveWindowScreenshot()
-        {
-            IntPtr handle = NativeMethods.GetForegroundWindow();
-
-            if (handle.ToInt32() > 0)
-            {
-                Rectangle rect = GetWindowRectangle(handle);
-
-                return GetScreenshot(rect);
-            }
-
-            return null;
-        }
-
-        public static Rectangle GetWindowRectangle(IntPtr handle)
-        {
-            Rectangle rect;
-
-            if (Environment.OSVersion.Version.Major < 6 || !NativeMethods.GetExtendedFrameBounds(handle, out rect))
-            {
-                rect = NativeMethods.GetWindowRect(handle);
-            }
-
-            return NativeMethods.MaximizedWindowFix(handle, rect);
-        }
-
         public static Rectangle GetScreenBounds()
         {
             return SystemInformation.VirtualScreen;
@@ -121,6 +76,18 @@ namespace ScreenCapture
             return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
+        public static Rectangle GetWindowRectangle(IntPtr handle)
+        {
+            Rectangle rect;
+
+            if (Environment.OSVersion.Version.Major < 6 || !NativeMethods.GetExtendedFrameBounds(handle, out rect))
+            {
+                rect = NativeMethods.GetWindowRect(handle);
+            }
+
+            return NativeMethods.MaximizedWindowFix(handle, rect);
+        }
+
         public static Image CropImage(Image img, Rectangle rect)
         {
             if (img != null && rect.Width > 0 && rect.Height > 0)
@@ -158,6 +125,18 @@ namespace ScreenCapture
             return null;
         }
 
+        public static Image DrawBorder(Image img)
+        {
+            Bitmap bmp = new Bitmap(img);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.DrawRectangle(Pens.Black, 0, 0, img.Width - 1, img.Height - 1);
+            }
+
+            return bmp;
+        }
+
         public static Image DrawBorder(Image img, GraphicsPath gp)
         {
             if (img != null && gp != null)
@@ -174,18 +153,6 @@ namespace ScreenCapture
             }
 
             return null;
-        }
-
-        public static Image DrawBorder(Image img)
-        {
-            Bitmap bmp = new Bitmap(img);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.DrawRectangle(Pens.Black, 0, 0, img.Width - 1, img.Height - 1);
-            }
-
-            return bmp;
         }
 
         public static Image DrawCheckers(Image img)

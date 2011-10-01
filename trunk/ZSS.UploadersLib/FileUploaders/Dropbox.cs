@@ -38,17 +38,18 @@ namespace UploadersLib.FileUploaders
         public DropboxAccountInfo AccountInfo { get; set; }
         public string UploadPath { get; set; }
 
-        private const string APIVersion = "0";
+        private const string APIVersion = "1";
         private const string URLAPI = "https://api.dropbox.com/" + APIVersion;
+        private const string URLAPIContent = "https://api-content.dropbox.com/" + APIVersion;
 
         private const string URLToken = URLAPI + "/token";
         private const string URLAccountInfo = URLAPI + "/account/info";
-        private const string URLFiles = "https://api-content.dropbox.com/" + APIVersion + "/files/dropbox";
+        private const string URLFiles = URLAPIContent + "/files/dropbox";
         private const string URLMetaData = URLAPI + "/metadata/dropbox";
         private const string URLDownload = "http://dl.dropbox.com/u";
 
         private const string URLRequestToken = URLAPI + "/oauth/request_token";
-        private const string URLAuthorize = "https://www.dropbox.com/0/oauth/authorize";
+        private const string URLAuthorize = "https://www.dropbox.com/" + APIVersion + "/oauth/authorize";
         private const string URLAccessToken = URLAPI + "/oauth/access_token";
 
         public Dropbox(OAuthInfo oauth)

@@ -499,6 +499,7 @@ namespace ZScreenLib
             using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
             {
                 cursor.Position.Offset(-offset.X, -offset.Y);
+
                 using (Graphics g = Graphics.FromImage(img))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
