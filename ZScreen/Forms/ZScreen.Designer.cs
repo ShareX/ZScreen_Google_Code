@@ -211,19 +211,8 @@ namespace ZScreenGUI
             this.lblNoteActions = new System.Windows.Forms.Label();
             this.lbSoftware = new System.Windows.Forms.CheckedListBox();
             this.pgEditorsImage = new System.Windows.Forms.PropertyGrid();
-            this.btnRemoveImageEditor = new System.Windows.Forms.Button();
+            this.btnActionsRemove = new System.Windows.Forms.Button();
             this.btnAddImageSoftware = new System.Windows.Forms.Button();
-            this.tpQueue = new System.Windows.Forms.TabPage();
-            this.lvUploads = new HelpersLib.MyListView();
-            this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chElapsed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chRemaining = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpOptions = new System.Windows.Forms.TabPage();
             this.tcOptions = new System.Windows.Forms.TabControl();
             this.tpOptionsGeneral = new System.Windows.Forms.TabPage();
@@ -233,7 +222,6 @@ namespace ZScreenGUI
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
-            this.chkHotkeys = new System.Windows.Forms.CheckBox();
             this.chkShellExt = new System.Windows.Forms.CheckBox();
             this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
@@ -418,6 +406,17 @@ namespace ZScreenGUI
             this.btnOpenSourceString = new System.Windows.Forms.Button();
             this.btnOpenSourceText = new System.Windows.Forms.Button();
             this.btnOpenSourceBrowser = new System.Windows.Forms.Button();
+            this.tpQueue = new System.Windows.Forms.TabPage();
+            this.lvUploads = new HelpersLib.MyListView();
+            this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chElapsed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chRemaining = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chUploaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chHost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpDestImageBam = new System.Windows.Forms.TabPage();
             this.gbImageBamGalleries = new System.Windows.Forms.GroupBox();
             this.lbImageBamGalleries = new System.Windows.Forms.ListBox();
@@ -485,7 +484,6 @@ namespace ZScreenGUI
             this.tpCaptureClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
             this.tpMainActions.SuspendLayout();
-            this.tpQueue.SuspendLayout();
             this.tpOptions.SuspendLayout();
             this.tcOptions.SuspendLayout();
             this.tpOptionsGeneral.SuspendLayout();
@@ -548,6 +546,7 @@ namespace ZScreenGUI
             this.tpAdvancedStats.SuspendLayout();
             this.gbStatistics.SuspendLayout();
             this.gbLastSource.SuspendLayout();
+            this.tpQueue.SuspendLayout();
             this.tpDestImageBam.SuspendLayout();
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
@@ -2468,7 +2467,7 @@ namespace ZScreenGUI
             this.tpMainActions.Controls.Add(this.lblNoteActions);
             this.tpMainActions.Controls.Add(this.lbSoftware);
             this.tpMainActions.Controls.Add(this.pgEditorsImage);
-            this.tpMainActions.Controls.Add(this.btnRemoveImageEditor);
+            this.tpMainActions.Controls.Add(this.btnActionsRemove);
             this.tpMainActions.Controls.Add(this.btnAddImageSoftware);
             this.tpMainActions.ImageKey = "(none)";
             this.tpMainActions.Location = new System.Drawing.Point(4, 22);
@@ -2518,14 +2517,14 @@ namespace ZScreenGUI
             // 
             // btnRemoveImageEditor
             // 
-            this.btnRemoveImageEditor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRemoveImageEditor.Location = new System.Drawing.Point(408, 13);
-            this.btnRemoveImageEditor.Name = "btnRemoveImageEditor";
-            this.btnRemoveImageEditor.Size = new System.Drawing.Size(88, 24);
-            this.btnRemoveImageEditor.TabIndex = 58;
-            this.btnRemoveImageEditor.Text = "&Remove";
-            this.btnRemoveImageEditor.UseVisualStyleBackColor = true;
-            this.btnRemoveImageEditor.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
+            this.btnActionsRemove.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnActionsRemove.Location = new System.Drawing.Point(408, 13);
+            this.btnActionsRemove.Name = "btnRemoveImageEditor";
+            this.btnActionsRemove.Size = new System.Drawing.Size(88, 24);
+            this.btnActionsRemove.TabIndex = 58;
+            this.btnActionsRemove.Text = "&Remove";
+            this.btnActionsRemove.UseVisualStyleBackColor = true;
+            this.btnActionsRemove.Click += new System.EventHandler(this.btnDeleteImageSoftware_Click);
             // 
             // btnAddImageSoftware
             // 
@@ -2539,86 +2538,6 @@ namespace ZScreenGUI
             this.btnAddImageSoftware.Text = "Add...";
             this.btnAddImageSoftware.UseVisualStyleBackColor = false;
             this.btnAddImageSoftware.Click += new System.EventHandler(this.btnAddImageSoftware_Click);
-            // 
-            // tpQueue
-            // 
-            this.tpQueue.Controls.Add(this.lvUploads);
-            this.tpQueue.Location = new System.Drawing.Point(4, 22);
-            this.tpQueue.Name = "tpQueue";
-            this.tpQueue.Padding = new System.Windows.Forms.Padding(3);
-            this.tpQueue.Size = new System.Drawing.Size(813, 440);
-            this.tpQueue.TabIndex = 10;
-            this.tpQueue.Text = "Queue";
-            this.tpQueue.UseVisualStyleBackColor = true;
-            // 
-            // lvUploads
-            // 
-            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chFilename,
-            this.chStatus,
-            this.chProgress,
-            this.chSpeed,
-            this.chElapsed,
-            this.chRemaining,
-            this.chUploaderType,
-            this.chHost,
-            this.chURL});
-            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvUploads.FullRowSelect = true;
-            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvUploads.HideSelection = false;
-            this.lvUploads.Location = new System.Drawing.Point(3, 3);
-            this.lvUploads.Name = "lvUploads";
-            this.lvUploads.ShowItemToolTips = true;
-            this.lvUploads.Size = new System.Drawing.Size(807, 434);
-            this.lvUploads.TabIndex = 4;
-            this.lvUploads.UseCompatibleStateImageBehavior = false;
-            this.lvUploads.View = System.Windows.Forms.View.Details;
-            // 
-            // chFilename
-            // 
-            this.chFilename.Text = "Filename";
-            this.chFilename.Width = 150;
-            // 
-            // chStatus
-            // 
-            this.chStatus.Text = "Status";
-            this.chStatus.Width = 75;
-            // 
-            // chProgress
-            // 
-            this.chProgress.Text = "Progress";
-            this.chProgress.Width = 149;
-            // 
-            // chSpeed
-            // 
-            this.chSpeed.Text = "Speed";
-            this.chSpeed.Width = 65;
-            // 
-            // chElapsed
-            // 
-            this.chElapsed.Text = "Elapsed";
-            this.chElapsed.Width = 50;
-            // 
-            // chRemaining
-            // 
-            this.chRemaining.Text = "Remaining";
-            this.chRemaining.Width = 50;
-            // 
-            // chUploaderType
-            // 
-            this.chUploaderType.Text = "Type";
-            this.chUploaderType.Width = 50;
-            // 
-            // chHost
-            // 
-            this.chHost.Text = "Host";
-            this.chHost.Width = 100;
-            // 
-            // chURL
-            // 
-            this.chURL.Text = "URL";
-            this.chURL.Width = 225;
             // 
             // tpOptions
             // 
@@ -2721,7 +2640,6 @@ namespace ZScreenGUI
             // gbMisc
             // 
             this.gbMisc.BackColor = System.Drawing.Color.Transparent;
-            this.gbMisc.Controls.Add(this.chkHotkeys);
             this.gbMisc.Controls.Add(this.chkShellExt);
             this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
             this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
@@ -2735,19 +2653,6 @@ namespace ZScreenGUI
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
-            // 
-            // chkHotkeys
-            // 
-            this.chkHotkeys.AutoSize = true;
-            this.chkHotkeys.Checked = true;
-            this.chkHotkeys.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkHotkeys.Location = new System.Drawing.Point(16, 72);
-            this.chkHotkeys.Name = "chkHotkeys";
-            this.chkHotkeys.Size = new System.Drawing.Size(165, 17);
-            this.chkHotkeys.TabIndex = 9;
-            this.chkHotkeys.Text = "Keyboard Hotkeys integration";
-            this.chkHotkeys.UseVisualStyleBackColor = true;
-            this.chkHotkeys.CheckedChanged += new System.EventHandler(this.chkHotkeys_CheckedChanged);
             // 
             // chkShellExt
             // 
@@ -2775,7 +2680,7 @@ namespace ZScreenGUI
             // cbAutoSaveSettings
             // 
             this.cbAutoSaveSettings.AutoSize = true;
-            this.cbAutoSaveSettings.Location = new System.Drawing.Point(424, 96);
+            this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 96);
             this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
             this.cbAutoSaveSettings.Size = new System.Drawing.Size(245, 17);
             this.cbAutoSaveSettings.TabIndex = 7;
@@ -2787,7 +2692,7 @@ namespace ZScreenGUI
             // cbShowHelpBalloonTips
             // 
             this.cbShowHelpBalloonTips.AutoSize = true;
-            this.cbShowHelpBalloonTips.Location = new System.Drawing.Point(16, 96);
+            this.cbShowHelpBalloonTips.Location = new System.Drawing.Point(16, 72);
             this.cbShowHelpBalloonTips.Name = "cbShowHelpBalloonTips";
             this.cbShowHelpBalloonTips.Size = new System.Drawing.Size(156, 17);
             this.cbShowHelpBalloonTips.TabIndex = 5;
@@ -4910,6 +4815,86 @@ namespace ZScreenGUI
             this.btnOpenSourceBrowser.Text = "Open in Browser";
             this.btnOpenSourceBrowser.UseVisualStyleBackColor = true;
             // 
+            // tpQueue
+            // 
+            this.tpQueue.Controls.Add(this.lvUploads);
+            this.tpQueue.Location = new System.Drawing.Point(4, 22);
+            this.tpQueue.Name = "tpQueue";
+            this.tpQueue.Padding = new System.Windows.Forms.Padding(3);
+            this.tpQueue.Size = new System.Drawing.Size(813, 440);
+            this.tpQueue.TabIndex = 10;
+            this.tpQueue.Text = "Queue";
+            this.tpQueue.UseVisualStyleBackColor = true;
+            // 
+            // lvUploads
+            // 
+            this.lvUploads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chFilename,
+            this.chStatus,
+            this.chProgress,
+            this.chSpeed,
+            this.chElapsed,
+            this.chRemaining,
+            this.chUploaderType,
+            this.chHost,
+            this.chURL});
+            this.lvUploads.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUploads.FullRowSelect = true;
+            this.lvUploads.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvUploads.HideSelection = false;
+            this.lvUploads.Location = new System.Drawing.Point(3, 3);
+            this.lvUploads.Name = "lvUploads";
+            this.lvUploads.ShowItemToolTips = true;
+            this.lvUploads.Size = new System.Drawing.Size(807, 434);
+            this.lvUploads.TabIndex = 4;
+            this.lvUploads.UseCompatibleStateImageBehavior = false;
+            this.lvUploads.View = System.Windows.Forms.View.Details;
+            // 
+            // chFilename
+            // 
+            this.chFilename.Text = "Filename";
+            this.chFilename.Width = 150;
+            // 
+            // chStatus
+            // 
+            this.chStatus.Text = "Status";
+            this.chStatus.Width = 75;
+            // 
+            // chProgress
+            // 
+            this.chProgress.Text = "Progress";
+            this.chProgress.Width = 149;
+            // 
+            // chSpeed
+            // 
+            this.chSpeed.Text = "Speed";
+            this.chSpeed.Width = 65;
+            // 
+            // chElapsed
+            // 
+            this.chElapsed.Text = "Elapsed";
+            this.chElapsed.Width = 50;
+            // 
+            // chRemaining
+            // 
+            this.chRemaining.Text = "Remaining";
+            this.chRemaining.Width = 50;
+            // 
+            // chUploaderType
+            // 
+            this.chUploaderType.Text = "Type";
+            this.chUploaderType.Width = 50;
+            // 
+            // chHost
+            // 
+            this.chHost.Text = "Host";
+            this.chHost.Width = 100;
+            // 
+            // chURL
+            // 
+            this.chURL.Text = "URL";
+            this.chURL.Width = 225;
+            // 
             // tpDestImageBam
             // 
             this.tpDestImageBam.BackColor = System.Drawing.SystemColors.Window;
@@ -5185,7 +5170,6 @@ namespace ZScreenGUI
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
             this.tpMainActions.ResumeLayout(false);
-            this.tpQueue.ResumeLayout(false);
             this.tpOptions.ResumeLayout(false);
             this.tcOptions.ResumeLayout(false);
             this.tpOptionsGeneral.ResumeLayout(false);
@@ -5270,6 +5254,7 @@ namespace ZScreenGUI
             this.tpAdvancedStats.ResumeLayout(false);
             this.gbStatistics.ResumeLayout(false);
             this.gbLastSource.ResumeLayout(false);
+            this.tpQueue.ResumeLayout(false);
             this.tpDestImageBam.ResumeLayout(false);
             this.gbImageBamGalleries.ResumeLayout(false);
             this.gbImageBamLinks.ResumeLayout(false);
@@ -5472,7 +5457,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btwWatermarkBrowseImage;
         internal System.Windows.Forms.TextBox txtWatermarkImageLocation;
         internal System.Windows.Forms.TabPage tpMainActions;
-        internal System.Windows.Forms.Button btnRemoveImageEditor;
+        internal System.Windows.Forms.Button btnActionsRemove;
         internal System.Windows.Forms.CheckedListBox lbSoftware;
         internal System.Windows.Forms.Button btnAddImageSoftware;
         internal System.Windows.Forms.Button btnFTPImport;
@@ -5573,7 +5558,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.RichTextBox rtbStats;
         private System.Windows.Forms.CheckBox chkWindows7TaskbarIntegration;
         private System.Windows.Forms.CheckBox chkShellExt;
-        private System.Windows.Forms.CheckBox chkHotkeys;
         private System.Windows.Forms.CheckBox chkTwitterEnable;
         private System.Windows.Forms.Button btnOpenZScreenTester;
         private System.Windows.Forms.Label lblMaxNameLength;
