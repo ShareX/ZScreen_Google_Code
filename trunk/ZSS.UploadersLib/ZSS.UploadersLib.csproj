@@ -85,6 +85,9 @@
     <Reference Include="Newtonsoft.Json.Net35">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net35\Newtonsoft.Json.Net35.dll</HintPath>
     </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\Lib\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="Starksoft.Net.Ftp, Version=1.0.158.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Starksoft.Net.Ftp.dll</HintPath>
@@ -115,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUploaders\Email.cs" />
+    <Compile Include="FileUploaders\FTP\SFTP.cs" />
     <Compile Include="FileUploaders\Gmail.cs" />
     <Compile Include="FileUploaders\Minus.cs" />
     <Compile Include="GUI\AccountTypeControl.cs">
