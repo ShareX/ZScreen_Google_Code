@@ -8,6 +8,7 @@ using Renci.SshNet.Common;
 using System.IO;
 using HelpersLib;
 using UploadersLib.HelperClasses;
+using ZUploader.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
@@ -20,6 +21,8 @@ namespace UploadersLib.FileUploaders
         public FTPAccount FtpAccount { get; set; }
         public bool IsConnected { get { return sftp.IsConnected; } }
 
+        public delegate void ProgressEventHandler(ProgressManager progress);
+        public event ProgressEventHandler ProgressChanged;
 
         static Logger logger = new Logger();
 
@@ -70,9 +73,11 @@ namespace UploadersLib.FileUploaders
             AsyncCallback ac = new AsyncCallback(CallBack);
             var result = sftp.BeginUploadFile(Inputstream, RemoteName, ac, s);
             var progress = result as SftpUploadAsyncResult;
+            
+            
             while (!progress.IsCompleted)
             {
-                logger.WriteLine("Percent Uploaded: " + (progress.UploadedBytes / 1024));
+                
             }
             Disconnect();
             return FtpAccount.GetUriPath(RemoteName);
@@ -92,9 +97,11 @@ namespace UploadersLib.FileUploaders
             {
                 var result = sftp.BeginUploadFile(file, RemoteName, ac, s);
                 var progress = result as SftpUploadAsyncResult;
+                ProgressManager pm = new ProgressManager(new FileInfo(Filepath).Length);
                 while (!progress.IsCompleted)
                 {
-                   logger.WriteLine("Percent Uploaded: " + (progress.UploadedBytes / 1024));
+                    pm.ChangeProgress((int)progress.UploadedBytes);
+                    ProgressChanged(pm);
                 }
             }
             Disconnect();
@@ -134,7 +141,6 @@ namespace UploadersLib.FileUploaders
             }
             catch (SftpPermissionDeniedException)
             {
-                logger.WriteLine("Directory " + Path + " probably already exists.");
             }
         }
     }

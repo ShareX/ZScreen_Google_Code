@@ -1247,19 +1247,18 @@ namespace ZScreenLib
                     string url;
                     FTPUploader fu;
                     SFTP sftp;
-                    
+                    MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     switch (acc.Protocol)
                     {
                         case FTPProtocol.SFTP:
                             sftp = new SFTP(acc);
-                            MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
+                            sftp.ProgressChanged += new SFTP.ProgressEventHandler(UploadProgressChanged);
                             url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath,FileName) : sftp.Upload(data, FileName);
                             ur = CreateThumbnail(url, sftp);
                             break;
                         default:
                             fu = new FTPUploader(acc);
                             fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-                            MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                             url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
                             ur = CreateThumbnail(url, fu);
                             break;
