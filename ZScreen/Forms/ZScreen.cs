@@ -1728,6 +1728,11 @@ namespace ZScreenGUI
                 FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
+                    if (acc.Protocol == FTPProtocol.SFTP)
+                    {
+                        MessageBox.Show("Sorry, this doesn't support SFTP.", "Sorry!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        return;
+                    }
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };
                     ftpClient.Show();
                 }
