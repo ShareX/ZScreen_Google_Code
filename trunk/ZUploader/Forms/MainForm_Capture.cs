@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
 using System.Threading;
@@ -140,7 +141,15 @@ namespace ZUploader
         private void tsddbCapture_DropDownOpening(object sender, EventArgs e)
         {
             tsmiWindow.DropDownItems.Clear();
-            //tsmiWindow.DropDownItems.Add("Test");
+
+            WindowsList windowsList = new WindowsList(this.Handle);
+            List<WindowInfo> windows = windowsList.GetVisibleWindowsList();
+
+            foreach (WindowInfo window in windows)
+            {
+                string title = window.Text.Truncate(50);
+                tsmiWindow.DropDownItems.Add(title).Tag = window;
+            }
         }
 
         private void tsmiFullscreen_Click(object sender, EventArgs e)
