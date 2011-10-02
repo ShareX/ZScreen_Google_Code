@@ -84,6 +84,7 @@ namespace UploadersLib.FileUploaders
             try
             {
                 Client.CreateDirectory(Path);
+                logger.WriteLine("Creating Directory: " + Path);
             }
             catch (SftpPathNotFoundException)
             {
