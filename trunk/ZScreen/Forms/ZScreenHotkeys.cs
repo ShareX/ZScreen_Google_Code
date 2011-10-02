@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using HelpersLib;
 using ZScreenLib;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ZScreenGUI
 {
@@ -13,9 +15,27 @@ namespace ZScreenGUI
 
         private void UpdateHotkeys(bool resetKeys = false)
         {
+            List<HotkeyInfo> hkiList = new List<HotkeyInfo>();
+
             foreach (HotkeyTask hk in Enum.GetValues(typeof(HotkeyTask)))
             {
-                UpdateHotkey(hk, resetKeys);
+                hkiList.Add(UpdateHotkey(hk, resetKeys));
+            }
+
+            StringBuilder sbErrors = new StringBuilder();
+
+            foreach (HotkeyInfo hki in hkiList)
+            {
+                if (hki != null && !string.IsNullOrEmpty(hki.Error))
+                {
+                    sbErrors.AppendLine(hki.Error);
+                }
+            }
+
+            if (sbErrors.Length > 0)
+            {
+                sbErrors.AppendLine("\nPlease reconfigure different hotkeys or quit the conflicting application and start over.");
+                MessageBox.Show(sbErrors.ToString(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -91,8 +111,10 @@ namespace ZScreenGUI
                 }
                 else if (!IgnoreHotkeys)
                 {
-                    MessageBox.Show(string.Format("Unable to register \"{0}\" hotkey.\nPlease select a different hotkey.", hotkeyEnum.GetDescription()),
-                        Application.ProductName + " - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    newHotkeyInfo = new HotkeyInfo(0, Keys.None)
+                    {
+                        Error = string.Format("Unable to register \"{0}\" hotkey.", hotkeyEnum.GetDescription())
+                    };
                 }
             }
 
