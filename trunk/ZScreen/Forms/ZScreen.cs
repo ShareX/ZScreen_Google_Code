@@ -1613,101 +1613,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnWebPageUploadImage_Click(object sender, EventArgs e)
-        {
-            string url = txtWebPageURL.Text;
-
-            if (!string.IsNullOrEmpty(url))
-            {
-                url = url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) ? url : "http://" + url;
-                btnWebPageCaptureImage.Enabled = false;
-
-                IECapt capture;
-                if (Engine.conf.WebPageUseCustomSize)
-                {
-                    capture = new IECapt(Engine.conf.WebPageWidth, Engine.conf.WebPageHeight, 1);
-                }
-                else
-                {
-                    capture = new IECapt(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, 1);
-                }
-
-                capture.ImageCaptured += new IECapt.ImageEventHandler(capture_ImageCaptured);
-                capture.CapturePage(txtWebPageURL.Text);
-            }
-
-            /*
-            WebPageCapture webPageCapture;
-            if (Program.conf.WebPageUseCustomSize)
-            {
-                webPageCapture = new WebPageCapture(Program.conf.WebPageWidth, Program.conf.WebPageHeight);
-            }
-            else
-            {
-                webPageCapture = new WebPageCapture();
-            }
-
-            webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
-            webPageCapture.DownloadPage(txtWebPageURL.Text);
-            */
-        }
-
-        private void capture_ImageCaptured(Image img)
-        {
-            pbWebPageImage.Image = img;
-            btnWebPageCaptureImage.Enabled = true;
-            btnWebPageImageUpload.Enabled = img != null;
-
-            if (Engine.conf.WebPageAutoUpload)
-            {
-                WebPageUpload();
-            }
-        }
-
-        private void cbWebPageUseCustomSize_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.WebPageUseCustomSize = cbWebPageUseCustomSize.Checked;
-        }
-
-        private void txtWebPageWidth_TextChanged(object sender, EventArgs e)
-        {
-            int width;
-            if (int.TryParse(txtWebPageWidth.Text, out width))
-            {
-                Engine.conf.WebPageWidth = width;
-            }
-        }
-
-        private void txtWebPageHeight_TextChanged(object sender, EventArgs e)
-        {
-            int height;
-            if (int.TryParse(txtWebPageHeight.Text, out height))
-            {
-                Engine.conf.WebPageHeight = height;
-            }
-        }
-
-        private void btnWebPageImageUpload_Click(object sender, EventArgs e)
-        {
-            WebPageUpload();
-        }
-
-        private void WebPageUpload()
-        {
-            if (pbWebPageImage.Image != null)
-            {
-                WorkerTask wpTask = CreateTask(WorkerTask.JobLevel2.UploadImage);
-                Bitmap bmp = new Bitmap(pbWebPageImage.Image);
-                wpTask.SetImage(bmp);
-                wpTask.RunWorker();
-            }
-        }
-
-        private void cbWebPageAutoUpload_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.conf.WebPageAutoUpload = cbWebPageAutoUpload.Checked;
-        }
-
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (IsReady)
@@ -1730,7 +1635,7 @@ namespace ZScreenGUI
                 {
                     if (acc.Protocol == FTPProtocol.SFTP)
                     {
-                        MessageBox.Show("Sorry, this doesn't support SFTP.", "Sorry!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        MessageBox.Show("Sorry, this doesn't support SFTP.", "Sorry!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     FTPClient2 ftpClient = new FTPClient2(acc) { Icon = this.Icon };

@@ -82,10 +82,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxSHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\AxSHDocVw.dll</HintPath>
-    </Reference>
     <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\Lib\FreeImageNET.dll</HintPath>
     </Reference>
@@ -97,10 +93,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\GreenshotPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="IECaptComImports, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\IECaptComImports.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -109,10 +101,6 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\SHDocVw.dll</HintPath>
     </Reference>
     <Reference Include="Starksoft.Net.Ftp, Version=1.0.158.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -235,7 +223,6 @@
     <Compile Include="Helpers\ExeFileNameEditor.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\Freeze.cs" />
-    <Compile Include="Helpers\IECapt.cs" />
     <Compile Include="Helpers\MyTimer.cs" />
     <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\KeyboardHook.cs" />

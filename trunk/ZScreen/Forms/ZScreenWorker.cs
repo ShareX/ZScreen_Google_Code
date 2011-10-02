@@ -562,37 +562,6 @@ namespace ZScreenGUI
 
         #endregion RunWorkerAsync Job 2
 
-        #region Webpage Capture
-
-        public void CaptureWebpage(WorkerTask task)
-        {
-            if (task != null && FileSystem.IsValidLink(task.TempText))
-            {
-                WebPageCapture webPageCapture;
-                if (Engine.conf.WebPageUseCustomSize)
-                {
-                    webPageCapture = new WebPageCapture(Engine.conf.WebPageWidth, Engine.conf.WebPageHeight);
-                }
-                else
-                {
-                    webPageCapture = new WebPageCapture();
-                }
-
-                webPageCapture.DownloadCompleted += new WebPageCapture.ImageEventHandler(webPageCapture_DownloadCompleted);
-                webPageCapture.DownloadPage(task.TempText);
-            }
-        }
-
-        private void webPageCapture_DownloadCompleted(Image img)
-        {
-            if (img != null)
-            {
-                Bitmap bmp = new Bitmap(img);
-            }
-        }
-
-        #endregion Webpage Capture
-
         #region Auto Capture
 
         public void ShowAutoCapture()

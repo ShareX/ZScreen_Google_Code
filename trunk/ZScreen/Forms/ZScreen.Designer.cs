@@ -189,18 +189,6 @@ namespace ZScreenGUI
             this.cbFreehandCropAutoClose = new System.Windows.Forms.CheckBox();
             this.cbFreehandCropAutoUpload = new System.Windows.Forms.CheckBox();
             this.cbFreehandCropShowHelpText = new System.Windows.Forms.CheckBox();
-            this.tpCaptureWebpage = new System.Windows.Forms.TabPage();
-            this.cbWebPageAutoUpload = new System.Windows.Forms.CheckBox();
-            this.lblWebPageHeight = new System.Windows.Forms.Label();
-            this.lblWebPageWidth = new System.Windows.Forms.Label();
-            this.txtWebPageHeight = new System.Windows.Forms.TextBox();
-            this.txtWebPageWidth = new System.Windows.Forms.TextBox();
-            this.cbWebPageUseCustomSize = new System.Windows.Forms.CheckBox();
-            this.btnWebPageImageUpload = new System.Windows.Forms.Button();
-            this.pWebPageImage = new System.Windows.Forms.Panel();
-            this.pbWebPageImage = new System.Windows.Forms.PictureBox();
-            this.btnWebPageCaptureImage = new System.Windows.Forms.Button();
-            this.txtWebPageURL = new System.Windows.Forms.TextBox();
             this.tpCaptureClipboard = new System.Windows.Forms.TabPage();
             this.gbMonitorClipboard = new System.Windows.Forms.GroupBox();
             this.chkMonUrls = new System.Windows.Forms.CheckBox();
@@ -478,9 +466,6 @@ namespace ZScreenGUI
             this.tpCropShotLast.SuspendLayout();
             this.tpCaptureShape.SuspendLayout();
             this.tpFreehandCropShot.SuspendLayout();
-            this.tpCaptureWebpage.SuspendLayout();
-            this.pWebPageImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).BeginInit();
             this.tpCaptureClipboard.SuspendLayout();
             this.gbMonitorClipboard.SuspendLayout();
             this.tpMainActions.SuspendLayout();
@@ -1347,7 +1332,6 @@ namespace ZScreenGUI
             this.tcCapture.Controls.Add(this.tpCropShotLast);
             this.tcCapture.Controls.Add(this.tpCaptureShape);
             this.tcCapture.Controls.Add(this.tpFreehandCropShot);
-            this.tcCapture.Controls.Add(this.tpCaptureWebpage);
             this.tcCapture.Controls.Add(this.tpCaptureClipboard);
             this.tcCapture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcCapture.Location = new System.Drawing.Point(3, 3);
@@ -2265,135 +2249,6 @@ namespace ZScreenGUI
             this.cbFreehandCropShowHelpText.UseVisualStyleBackColor = true;
             this.cbFreehandCropShowHelpText.CheckedChanged += new System.EventHandler(this.cbFreehandCropShowHelpText_CheckedChanged);
             // 
-            // tpCaptureWebpage
-            // 
-            this.tpCaptureWebpage.Controls.Add(this.cbWebPageAutoUpload);
-            this.tpCaptureWebpage.Controls.Add(this.lblWebPageHeight);
-            this.tpCaptureWebpage.Controls.Add(this.lblWebPageWidth);
-            this.tpCaptureWebpage.Controls.Add(this.txtWebPageHeight);
-            this.tpCaptureWebpage.Controls.Add(this.txtWebPageWidth);
-            this.tpCaptureWebpage.Controls.Add(this.cbWebPageUseCustomSize);
-            this.tpCaptureWebpage.Controls.Add(this.btnWebPageImageUpload);
-            this.tpCaptureWebpage.Controls.Add(this.pWebPageImage);
-            this.tpCaptureWebpage.Controls.Add(this.btnWebPageCaptureImage);
-            this.tpCaptureWebpage.Controls.Add(this.txtWebPageURL);
-            this.tpCaptureWebpage.Location = new System.Drawing.Point(4, 22);
-            this.tpCaptureWebpage.Name = "tpCaptureWebpage";
-            this.tpCaptureWebpage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureWebpage.Size = new System.Drawing.Size(799, 408);
-            this.tpCaptureWebpage.TabIndex = 12;
-            this.tpCaptureWebpage.Text = "Webpage";
-            this.tpCaptureWebpage.UseVisualStyleBackColor = true;
-            // 
-            // cbWebPageAutoUpload
-            // 
-            this.cbWebPageAutoUpload.AutoSize = true;
-            this.cbWebPageAutoUpload.Location = new System.Drawing.Point(592, 48);
-            this.cbWebPageAutoUpload.Name = "cbWebPageAutoUpload";
-            this.cbWebPageAutoUpload.Size = new System.Drawing.Size(83, 17);
-            this.cbWebPageAutoUpload.TabIndex = 8;
-            this.cbWebPageAutoUpload.Text = "Auto upload";
-            this.cbWebPageAutoUpload.UseVisualStyleBackColor = true;
-            this.cbWebPageAutoUpload.CheckedChanged += new System.EventHandler(this.cbWebPageAutoUpload_CheckedChanged);
-            // 
-            // lblWebPageHeight
-            // 
-            this.lblWebPageHeight.AutoSize = true;
-            this.lblWebPageHeight.Location = new System.Drawing.Point(256, 48);
-            this.lblWebPageHeight.Name = "lblWebPageHeight";
-            this.lblWebPageHeight.Size = new System.Drawing.Size(41, 13);
-            this.lblWebPageHeight.TabIndex = 7;
-            this.lblWebPageHeight.Text = "Height:";
-            // 
-            // lblWebPageWidth
-            // 
-            this.lblWebPageWidth.AutoSize = true;
-            this.lblWebPageWidth.Location = new System.Drawing.Point(168, 48);
-            this.lblWebPageWidth.Name = "lblWebPageWidth";
-            this.lblWebPageWidth.Size = new System.Drawing.Size(38, 13);
-            this.lblWebPageWidth.TabIndex = 6;
-            this.lblWebPageWidth.Text = "Width:";
-            // 
-            // txtWebPageHeight
-            // 
-            this.txtWebPageHeight.Location = new System.Drawing.Point(304, 43);
-            this.txtWebPageHeight.Name = "txtWebPageHeight";
-            this.txtWebPageHeight.Size = new System.Drawing.Size(40, 20);
-            this.txtWebPageHeight.TabIndex = 5;
-            this.txtWebPageHeight.TextChanged += new System.EventHandler(this.txtWebPageHeight_TextChanged);
-            // 
-            // txtWebPageWidth
-            // 
-            this.txtWebPageWidth.Location = new System.Drawing.Point(208, 43);
-            this.txtWebPageWidth.Name = "txtWebPageWidth";
-            this.txtWebPageWidth.Size = new System.Drawing.Size(40, 20);
-            this.txtWebPageWidth.TabIndex = 4;
-            this.txtWebPageWidth.TextChanged += new System.EventHandler(this.txtWebPageWidth_TextChanged);
-            // 
-            // cbWebPageUseCustomSize
-            // 
-            this.cbWebPageUseCustomSize.AutoSize = true;
-            this.cbWebPageUseCustomSize.Location = new System.Drawing.Point(16, 48);
-            this.cbWebPageUseCustomSize.Name = "cbWebPageUseCustomSize";
-            this.cbWebPageUseCustomSize.Size = new System.Drawing.Size(146, 17);
-            this.cbWebPageUseCustomSize.TabIndex = 3;
-            this.cbWebPageUseCustomSize.Text = "Use custom browser size:";
-            this.ttZScreen.SetToolTip(this.cbWebPageUseCustomSize, "Default size is primary monitor size");
-            this.cbWebPageUseCustomSize.UseVisualStyleBackColor = true;
-            this.cbWebPageUseCustomSize.CheckedChanged += new System.EventHandler(this.cbWebPageUseCustomSize_CheckedChanged);
-            // 
-            // btnWebPageImageUpload
-            // 
-            this.btnWebPageImageUpload.Enabled = false;
-            this.btnWebPageImageUpload.Location = new System.Drawing.Point(680, 40);
-            this.btnWebPageImageUpload.Name = "btnWebPageImageUpload";
-            this.btnWebPageImageUpload.Size = new System.Drawing.Size(96, 24);
-            this.btnWebPageImageUpload.TabIndex = 1;
-            this.btnWebPageImageUpload.Text = "Upload";
-            this.btnWebPageImageUpload.UseVisualStyleBackColor = true;
-            this.btnWebPageImageUpload.Click += new System.EventHandler(this.btnWebPageImageUpload_Click);
-            // 
-            // pWebPageImage
-            // 
-            this.pWebPageImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pWebPageImage.AutoScroll = true;
-            this.pWebPageImage.BackColor = System.Drawing.Color.White;
-            this.pWebPageImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pWebPageImage.Controls.Add(this.pbWebPageImage);
-            this.pWebPageImage.Location = new System.Drawing.Point(16, 72);
-            this.pWebPageImage.Name = "pWebPageImage";
-            this.pWebPageImage.Size = new System.Drawing.Size(760, 315);
-            this.pWebPageImage.TabIndex = 2;
-            // 
-            // pbWebPageImage
-            // 
-            this.pbWebPageImage.BackColor = System.Drawing.Color.White;
-            this.pbWebPageImage.Location = new System.Drawing.Point(0, 0);
-            this.pbWebPageImage.Name = "pbWebPageImage";
-            this.pbWebPageImage.Size = new System.Drawing.Size(100, 50);
-            this.pbWebPageImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbWebPageImage.TabIndex = 0;
-            this.pbWebPageImage.TabStop = false;
-            // 
-            // btnWebPageCaptureImage
-            // 
-            this.btnWebPageCaptureImage.Location = new System.Drawing.Point(680, 13);
-            this.btnWebPageCaptureImage.Name = "btnWebPageCaptureImage";
-            this.btnWebPageCaptureImage.Size = new System.Drawing.Size(96, 24);
-            this.btnWebPageCaptureImage.TabIndex = 1;
-            this.btnWebPageCaptureImage.Text = "Capture Image";
-            this.btnWebPageCaptureImage.UseVisualStyleBackColor = true;
-            this.btnWebPageCaptureImage.Click += new System.EventHandler(this.btnWebPageUploadImage_Click);
-            // 
-            // txtWebPageURL
-            // 
-            this.txtWebPageURL.Location = new System.Drawing.Point(16, 16);
-            this.txtWebPageURL.Name = "txtWebPageURL";
-            this.txtWebPageURL.Size = new System.Drawing.Size(656, 20);
-            this.txtWebPageURL.TabIndex = 0;
-            // 
             // tpCaptureClipboard
             // 
             this.tpCaptureClipboard.Controls.Add(this.gbMonitorClipboard);
@@ -2515,11 +2370,11 @@ namespace ZScreenGUI
             this.pgEditorsImage.ToolbarVisible = false;
             this.pgEditorsImage.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgEditorsImage_PropertyValueChanged);
             // 
-            // btnRemoveImageEditor
+            // btnActionsRemove
             // 
             this.btnActionsRemove.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnActionsRemove.Location = new System.Drawing.Point(408, 13);
-            this.btnActionsRemove.Name = "btnRemoveImageEditor";
+            this.btnActionsRemove.Name = "btnActionsRemove";
             this.btnActionsRemove.Size = new System.Drawing.Size(88, 24);
             this.btnActionsRemove.TabIndex = 58;
             this.btnActionsRemove.Text = "&Remove";
@@ -5161,11 +5016,6 @@ namespace ZScreenGUI
             this.tpCaptureShape.ResumeLayout(false);
             this.tpFreehandCropShot.ResumeLayout(false);
             this.tpFreehandCropShot.PerformLayout();
-            this.tpCaptureWebpage.ResumeLayout(false);
-            this.tpCaptureWebpage.PerformLayout();
-            this.pWebPageImage.ResumeLayout(false);
-            this.pWebPageImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWebPageImage)).EndInit();
             this.tpCaptureClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.ResumeLayout(false);
             this.gbMonitorClipboard.PerformLayout();
@@ -5529,18 +5379,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.RadioButton rbImageSizeDefault;
         private System.Windows.Forms.Label lblImageSizeFixedHeight;
         private System.Windows.Forms.Label lblImageSizeFixedWidth;
-        private System.Windows.Forms.TabPage tpCaptureWebpage;
-        private System.Windows.Forms.TextBox txtWebPageURL;
-        private System.Windows.Forms.Button btnWebPageCaptureImage;
-        private System.Windows.Forms.Panel pWebPageImage;
-        private System.Windows.Forms.PictureBox pbWebPageImage;
-        private System.Windows.Forms.Button btnWebPageImageUpload;
-        private System.Windows.Forms.Label lblWebPageHeight;
-        private System.Windows.Forms.Label lblWebPageWidth;
-        private System.Windows.Forms.TextBox txtWebPageHeight;
-        private System.Windows.Forms.TextBox txtWebPageWidth;
-        private System.Windows.Forms.CheckBox cbWebPageUseCustomSize;
-        private System.Windows.Forms.CheckBox cbWebPageAutoUpload;
         private System.Windows.Forms.TabPage tpDestImageBam;
         internal System.Windows.Forms.Label lblImageBamSecret;
         internal System.Windows.Forms.TextBox txtImageBamSecret;
