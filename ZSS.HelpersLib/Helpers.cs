@@ -397,14 +397,22 @@ namespace HelpersLib
             return HttpWebRequest.DefaultWebProxy.GetProxy(new Uri("http://www.google.com")).Port;
         }
 
-        public static bool CheckVersion(Version version1, Version version2)
+        public static bool CheckVersion(Version verRemote, Version verLocal)
         {
-            return ProperVersion(version1).CompareTo(ProperVersion(version2)) > 0;
+            return ProperVersion(verRemote).CompareTo(ProperVersion(verLocal)) > 0;
         }
 
         private static Version ProperVersion(Version version)
         {
-            return new Version(Math.Max(version.Major, 0), Math.Max(version.Minor, 0), Math.Max(version.Build, 0), Math.Max(version.Minor, 0));
+            return new Version(Math.Max(version.Major, 0), Math.Max(version.Minor, 0), Math.Max(version.Build, 0), Math.Max(version.Revision, 0));
+        }
+
+        internal static double ToDouble(this Version value)
+        {
+            return Math.Max(value.Major, 0) * Math.Pow(10, 12) +
+                   Math.Max(value.Minor, 0) * Math.Pow(10, 9) +
+                   Math.Max(value.Build, 0) * Math.Pow(10, 6) +
+                   Math.Max(value.Revision, 0);
         }
     }
 }
