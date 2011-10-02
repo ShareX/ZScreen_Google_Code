@@ -24,22 +24,22 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using HelpersLib;
 
-namespace HelpersLib
+namespace ScreenCapture
 {
-    public static class Native
+    public class WindowInfo
     {
-        [Flags]
-        public enum Modifiers
-        {
-            None = 0,
-            Alt = 1,
-            Control = 2,
-            Shift = 4,
-            Win = 8
-        }
+        public string Title { get; set; }
+        public WindowStyles Styles { get; set; }
 
-        public const int WM_HOTKEY = 0x312;
-        public const uint VK_SNAPSHOT = 0x2C;
+        public WindowInfo(IntPtr handle)
+        {
+            Title = NativeMethods.GetWindowText(handle);
+            Styles = (WindowStyles)NativeMethods.GetWindowLong(handle, NativeMethods.GWL_STYLE);
+        }
     }
 }

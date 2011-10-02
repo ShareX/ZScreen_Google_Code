@@ -30,6 +30,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace ZScreenLib.Helpers
 {

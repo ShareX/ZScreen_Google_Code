@@ -1,7 +1,7 @@
 ﻿#region License Information (GPL v2)
 
 /*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    ZUploader - A program that allows you to upload images, texts or files
     Copyright (C) 2008-2011 ZScreen Developers
 
     This program is free software; you can redistribute it and/or
@@ -23,10 +23,14 @@
 
 #endregion License Information (GPL v2)
 
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
-namespace ZScreenLib
+namespace HelpersLib
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
