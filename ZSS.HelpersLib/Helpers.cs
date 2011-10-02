@@ -399,11 +399,12 @@ namespace HelpersLib
 
         public static bool CheckVersion(Version version1, Version version2)
         {
-            double remoteVersion = version1.Major * Math.Pow(10, 12) + version1.Minor * Math.Pow(10, 9) + version1.Build * Math.Pow(10, 6) + version1.Revision;
-            double localVersion = version2.Major * Math.Pow(10, 12) + version2.Minor * Math.Pow(10, 9) + version2.Build * Math.Pow(10, 6) + version2.Revision;
+            return ProperVersion(version1).CompareTo(ProperVersion(version2)) > 0;
+        }
 
-            return remoteVersion > localVersion;
-
+        private static Version ProperVersion(Version version)
+        {
+            return new Version(Math.Max(version.Major, 0), Math.Max(version.Minor, 0), Math.Max(version.Build, 0), Math.Max(version.Minor, 0));
         }
     }
 }
