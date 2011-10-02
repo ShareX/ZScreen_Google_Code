@@ -45,9 +45,7 @@ namespace ZScreenLib
     public static class Engine
     {
         public static IntPtr zHandle = IntPtr.Zero;
-
-        public static Logger MyLogger { get; private set; }
-
+        public static Logger EngineLogger = new Logger();
         public static Stopwatch StartTimer { get; private set; }
 
         public static bool IsTakingScreenShot { get; set; }
@@ -85,7 +83,7 @@ namespace ZScreenLib
 
         static Engine()
         {
-            MyLogger = new Logger();
+            StaticHelper.MyLogger = EngineLogger;
         }
 
         #region Paths
@@ -242,10 +240,9 @@ namespace ZScreenLib
         {
             StartTimer = Stopwatch.StartNew();
 
-            StaticHelper.MyLogger = MyLogger;
-            MyLogger.WriteLine();
-            MyLogger.WriteLine(string.Format("{0} r{1} started", GetProductName(), Adapter.AppRevision));
-            MyLogger.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
+            StaticHelper.WriteLine("");
+            StaticHelper.WriteLine(string.Format("{0} r{1} started", GetProductName(), Adapter.AppRevision));
+            StaticHelper.WriteLine("Operating system: " + Environment.OSVersion.VersionString);
 
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -302,12 +299,12 @@ namespace ZScreenLib
 
             if (startEngine == DialogResult.OK)
             {
-                Engine.MyLogger.WriteLine("Core file: " + AppSettings.AppSettingsFile);
+                StaticHelper.WriteLine("Core file: " + AppSettings.AppSettingsFile);
                 if (!AppConf.PreferSystemFolders)
                 {
-                    Engine.MyLogger.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
+                    StaticHelper.WriteLine(string.Format("Root Folder: {0}", RootAppFolder));
                 }
-                Engine.MyLogger.WriteLine("Initializing Default folder paths...");
+                StaticHelper.WriteLine("Initializing Default folder paths...");
                 Engine.InitializeDefaultFolderPaths(); // happens before XMLSettings is readed
 
                 bool bGrantedOwnership;
@@ -347,7 +344,7 @@ namespace ZScreenLib
 
         private static void OnError(Exception e)
         {
-            new ErrorForm(Application.ProductName, e, MyLogger, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
+            new ErrorForm(Application.ProductName, e, Engine.EngineLogger, LogFilePath, ZLinks.URL_ISSUES).ShowDialog();
         }
 
         public static void InitializeDefaultFolderPaths(bool dirCreation = true)
@@ -410,13 +407,13 @@ namespace ZScreenLib
                 AppConf.Write();
             }
 
-            Engine.MyLogger.WriteLine("ZScreen closing");
+            StaticHelper.WriteLine("ZScreen closing");
 
             if (Engine.conf != null && Engine.conf.WriteDebugFile)
             {
                 string path = Engine.LogFilePath;
-                Engine.MyLogger.WriteLine("Writing debug file: " + path);
-                Engine.MyLogger.SaveLog(path);
+                StaticHelper.WriteLine("Writing debug file: " + path);
+                Engine.EngineLogger.SaveLog(path);
             }
         }
 
@@ -431,7 +428,7 @@ namespace ZScreenLib
 
         public static void WriteSettings(bool isAsync = false)
         {
-            Engine.MyLogger.WriteLine("WriteSettings is async: " + isAsync);
+            StaticHelper.WriteLine("WriteSettings is async: " + isAsync);
 
             Thread settingsThread = new Thread(() =>
             {
@@ -473,7 +470,7 @@ namespace ZScreenLib
 
         public static void LoadSettings(string fp = null)
         {
-            LoggerTimer timer = MyLogger.StartTimer("LoadSettings started");
+            LoggerTimer timer = EngineLogger.StartTimer("LoadSettings started");
 
             Thread settingsThread = new Thread(() =>
             {
@@ -647,7 +644,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                MyLogger.WriteException(ex);
+                StaticHelper.WriteException(ex);
             }
             finally
             {

@@ -50,6 +50,7 @@ using System.Windows.Forms;
 using AxSHDocVw; // Use `aximp %SystemRoot%\system32\shdocvw.dll`
 using IECaptComImports;
 using ZScreenLib;
+using HelpersLib;
 
 [ComImport, Guid("0000010D-0000-0000-C000-000000000046"), InterfaceType((short)1), ComConversionLoss]
 public interface IViewObject
@@ -165,7 +166,7 @@ public class IECapt
 
         // If we get here, the main document cannot be navigated
         // to meaning there is nothing to draw, so we just croak.
-        Engine.MyLogger.WriteLine("Failed to navigate to {0} (0x{1:X08})", e.uRL, e.statusCode);
+        StaticHelper.WriteLine("Failed to navigate to {0} (0x{1:X08})", e.uRL, e.statusCode);
         ReportCapture(null);
 
         wb.Dispose();
@@ -181,7 +182,7 @@ public class IECapt
         }
         catch (Exception ex)
         {
-            Engine.MyLogger.WriteException(ex);
+            StaticHelper.WriteException(ex);
             ReportCapture(null);
         }
 

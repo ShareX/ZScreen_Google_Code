@@ -102,7 +102,7 @@ namespace ZScreenLib
                     CopyImageToClipboard(img);
                 }
 
-                Engine.MyLogger.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));
+                StaticHelper.WriteLine(string.Format("Saved {0} as an Image to Clipboard...", filePath));
             }
         }
 
@@ -232,7 +232,7 @@ namespace ZScreenLib
                 }
                 if (silent)
                 {
-                    Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                    StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            Engine.MyLogger.WriteLine("Proxy Config: " + Engine.conf.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
+            StaticHelper.WriteLine("Proxy Config: " + Engine.conf.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
             return new ProxySettings { ProxyConfig = Engine.conf.ProxyConfig, ProxyActive = Engine.conf.ProxyActive };
         }
 
@@ -473,7 +473,7 @@ namespace ZScreenLib
                 }
                 catch (Exception err)
                 {
-                    Engine.MyLogger.WriteException(err, "Error while initializing Font and Color");
+                    StaticHelper.WriteException(err, "Error while initializing Font and Color");
                 }
 
                 result = fDialog.ShowDialog();
@@ -485,7 +485,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Error while setting Watermark Font");
+                StaticHelper.WriteException(ex, "Error while setting Watermark Font");
             }
             return result;
         }
@@ -552,7 +552,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error while adding Recent Item to Windows 7 Taskbar");
+                    StaticHelper.WriteException(ex, "Error while adding Recent Item to Windows 7 Taskbar");
                 }
             }
         }
@@ -582,14 +582,14 @@ namespace ZScreenLib
                             Engine.MyWorkflow.OutputsConfig.TinyPicPassword);
                         if (Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode != regCode)
                         {
-                            Engine.MyLogger.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode, regCode));
+                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode, regCode));
                             Engine.MyWorkflow.OutputsConfig.TinyPicRegistrationCode = regCode;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "error while trying to update TinyPic registration code.");
+                    StaticHelper.WriteException(ex, "error while trying to update TinyPic registration code.");
                 }
             }
         }

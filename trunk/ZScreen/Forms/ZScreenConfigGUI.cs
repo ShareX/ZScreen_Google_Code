@@ -59,7 +59,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI()
         {
-            Engine.MyLogger.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
+            StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
             DisableFeatures();
 
@@ -559,15 +559,15 @@ namespace ZScreenGUI
                         Engine.zJumpList.Refresh();
                     }
 
-                    Engine.MyLogger.WriteLine("Integrated into Windows 7 Taskbar");
+                    StaticHelper.WriteLine("Integrated into Windows 7 Taskbar");
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error while configuring Windows 7 Taskbar");
+                    StaticHelper.WriteException(ex, "Error while configuring Windows 7 Taskbar");
                 }
             }
 
-            Engine.MyLogger.WriteLine(new StackFrame().GetMethod().Name);
+            StaticHelper.WriteLine(new StackFrame().GetMethod().Name);
         }
     }
 }

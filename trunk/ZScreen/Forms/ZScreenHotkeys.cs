@@ -87,7 +87,7 @@ namespace ZScreenGUI
                 if (newHotkeyInfo != null)
                 {
                     newHotkeyInfo.Tag = (int)hotkeyEnum;
-                    Engine.MyLogger.WriteLine("Registered hotkey for " + hotkeyEnum.GetDescription());
+                    StaticHelper.WriteLine("Registered hotkey for " + hotkeyEnum.GetDescription());
                 }
                 else if (!IgnoreHotkeys)
                 {
@@ -213,7 +213,7 @@ namespace ZScreenGUI
 
         private void InitKeyboardHook()
         {
-            Engine.MyLogger.WriteLine("Keyboard Hook initiated");
+            StaticHelper.WriteLine("Keyboard Hook initiated");
             ZScreenKeyboardHook = new KeyboardHook();
             ZScreenKeyboardHook.KeyDown += new KeyEventHandler(CheckHotkeys);
         }
