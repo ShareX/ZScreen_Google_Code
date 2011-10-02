@@ -23,8 +23,6 @@ namespace UploadersLib.FileUploaders
         public event Uploader.ProgressEventHandler ProgressChanged;
         private ProgressManager progress;
 
-        static Logger logger = new Logger();
-
         public SFTP(FTPAccount account)
         {
             this.FTPAccount = account;
@@ -61,7 +59,7 @@ namespace UploadersLib.FileUploaders
 
         public static void CallBack(IAsyncResult ia)
         {
-            logger.WriteLine("Finished Uploading");
+            StaticHelper.WriteLine("Finished Uploading");
         }
 
         public void ChangeDirectory(string Path)
@@ -75,7 +73,7 @@ namespace UploadersLib.FileUploaders
                 CreateDirectory(Path);
                 ChangeDirectory(Path);
 
-                logger.WriteException(e);
+                StaticHelper.WriteException(e);
             }
         }
 
@@ -84,7 +82,7 @@ namespace UploadersLib.FileUploaders
             try
             {
                 Client.CreateDirectory(Path);
-                logger.WriteLine("Creating Directory: " + Path);
+                StaticHelper.WriteLine("Creating Directory: " + Path);
             }
             catch (SftpPathNotFoundException)
             {

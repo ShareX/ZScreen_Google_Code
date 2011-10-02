@@ -168,7 +168,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            rtbDebugLog.Text = Engine.MyLogger.ToString();
+            rtbDebugLog.Text = Engine.EngineLogger.ToString();
         }
 
         private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -209,7 +209,7 @@ namespace ZScreenGUI
                 else
                 {
                     task.States.Add(WorkerTask.TaskState.Finished);
-                    Engine.MyLogger.WriteLine(string.Format("Job completed: {0}", task.Job2));
+                    StaticHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
                     if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
                     {
@@ -240,7 +240,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
-                                    Engine.MyLogger.WriteException(ex, "Error while finalizing job");
+                                   StaticHelper.WriteException(ex, "Error while finalizing job");
                                 }
                             }
                             break;
@@ -278,7 +278,7 @@ namespace ZScreenGUI
                     {
                         foreach (string error in task.Errors)
                         {
-                            Engine.MyLogger.WriteLine(error);
+                            StaticHelper.WriteLine(error);
                         }
                         niTray.ShowBalloonTip(5000, Application.ProductName, niTray.BalloonTipText + Environment.NewLine + task.Errors[task.Errors.Count - 1], ToolTipIcon.Error);
                     }
@@ -296,7 +296,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Job Completed with errors: ");
+               StaticHelper.WriteException(ex, "Job Completed with errors: ");
             }
             finally
             {
@@ -308,7 +308,7 @@ namespace ZScreenGUI
                 }
             }
 
-            rtbDebugLog.Text = Engine.MyLogger.ToString();
+            rtbDebugLog.Text = Engine.EngineLogger.ToString();
 
             this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
             this.niTray.Icon = Resources.zss_tray;
@@ -530,7 +530,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error while uploading using file system");
+                   StaticHelper.WriteException(ex, "Error while uploading using file system");
                     succ = false;
                 }
             }

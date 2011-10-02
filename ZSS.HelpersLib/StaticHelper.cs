@@ -45,11 +45,16 @@ namespace HelpersLib
             }
         }
 
-        public static void WriteException(Exception e)
+        public static void WriteLine(string format, params object[] args)
+        {
+            WriteLine(string.Format(format, args));
+        }
+
+        public static void WriteException(Exception e, string message = "Exception")
         {
             if (MyLogger != null)
             {
-                MyLogger.WriteException(e);
+                MyLogger.WriteException(e, message);
             }
             else
             {

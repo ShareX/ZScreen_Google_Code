@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ZScreenLib.Helpers
 {
@@ -57,7 +58,7 @@ namespace ZScreenLib.Helpers
             }
             else
             {
-                Engine.MyLogger.WriteLine(text);
+                StaticHelper.WriteLine(text);
             }
 
             return text;

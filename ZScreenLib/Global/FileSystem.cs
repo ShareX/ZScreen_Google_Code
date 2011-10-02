@@ -107,7 +107,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error while saving image");
+                    StaticHelper.WriteException(ex, "Error while saving image");
                 }
             }
 
@@ -152,7 +152,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "WriteText");
+                StaticHelper.WriteException(ex, "WriteText");
             }
             return succ;
         }
@@ -169,7 +169,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Error while exporting text");
+                StaticHelper.WriteException(ex, "Error while exporting text");
                 succ = false;
             }
 
@@ -198,7 +198,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Error while getting text from resource");
+                StaticHelper.WriteException(ex, "Error while getting text from resource");
             }
 
             return text;

@@ -451,7 +451,7 @@ namespace ZScreenLib
                 tempImage = img;
                 Job1 = JobLevel1.Image;
 
-                Engine.MyLogger.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
+                StaticHelper.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
 
                 if (Engine.conf != null && Engine.conf.ShowOutputsAsap)
                 {
@@ -735,7 +735,7 @@ namespace ZScreenLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error while capturing region");
+                    StaticHelper.WriteException(ex, "Error while capturing region");
                     Errors.Add(ex.Message);
                     if (Engine.conf.CaptureEntireScreenOnError)
                     {
@@ -873,7 +873,7 @@ namespace ZScreenLib
                             }
                             catch (Exception ex)
                             {
-                                Engine.MyLogger.WriteException(ex, "ImageEdit");
+                                StaticHelper.WriteException(ex, "ImageEdit");
                             }
                         }
                         else if (File.Exists(app.Path))
@@ -953,7 +953,7 @@ namespace ZScreenLib
         /// </summary>
         public void PublishData()
         {
-            Engine.MyLogger.WriteLine(string.Format("Job started: {0}", Job2));
+            StaticHelper.WriteLine(string.Format("Job started: {0}", Job2));
 
             StartTime = DateTime.Now;
 
@@ -1038,7 +1038,7 @@ namespace ZScreenLib
                     SizeF size = Image.FromFile(LocalFilePath).PhysicalDimension;
                     if (size.Width > 1600 || size.Height > 1600)
                     {
-                        Engine.MyLogger.WriteLine("Changing from TinyPic to ImageShack due to large image size");
+                        StaticHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
                         if (!MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
                         {
                             MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
@@ -1134,7 +1134,7 @@ namespace ZScreenLib
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
                 DestinationName = GetActiveImageUploadersDescription();
-                Engine.MyLogger.WriteLine("Initialized " + DestinationName);
+                StaticHelper.WriteLine("Initialized " + DestinationName);
 
                 if (data != null)
                 {
@@ -1209,7 +1209,7 @@ namespace ZScreenLib
             if (textUploader != null)
             {
                 DestinationName = textUploaderType.GetDescription();
-                Engine.MyLogger.WriteLine("Uploading to " + DestinationName);
+                StaticHelper.WriteLine("Uploading to " + DestinationName);
 
                 string url = string.Empty;
 
@@ -1243,7 +1243,7 @@ namespace ZScreenLib
                 {
                     FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
-                    Engine.MyLogger.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
+                    StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
                     string url;
                     FTPUploader fu;
                     SFTPUploader sftp;
@@ -1267,7 +1267,7 @@ namespace ZScreenLib
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Error while uploading to FTP Server");
+                StaticHelper.WriteException(ex, "Error while uploading to FTP Server");
                 Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
             return ur;
@@ -1420,7 +1420,7 @@ namespace ZScreenLib
 
         public void UploadFile()
         {
-            Engine.MyLogger.WriteLine("Uploading File: " + LocalFilePath);
+            StaticHelper.WriteLine("Uploading File: " + LocalFilePath);
 
             foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
@@ -1473,7 +1473,7 @@ namespace ZScreenLib
 
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
-                        Engine.MyLogger.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
+                        StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
                         ur.Host = us.Host;
                         ur.URL = fullUrl;
                         ur.ShortenedURL = shortenUrl;
@@ -1600,7 +1600,7 @@ namespace ZScreenLib
                 MediaWikiAccount acc = Engine.MyWorkflow.OutputsConfig.MediaWikiAccountList[Engine.MyWorkflow.OutputsConfig.MediaWikiAccountSelected];
                 System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
                 DestinationName = acc.Name;
-                Engine.MyLogger.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", FileName, acc.Url));
+                StaticHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
                 AddUploadResult(uploader.UploadImage(LocalFilePath));
 
@@ -1677,7 +1677,7 @@ namespace ZScreenLib
 
                 if (bShortenUrlJob || bLongUrl)
                 {
-                    Engine.MyLogger.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
+                    StaticHelper.WriteLine(string.Format("URL Length: {0}; Shortening after {1}", url.Length.ToString(), Engine.conf.ShortenUrlAfterUploadAfter));
                 }
                 return Engine.conf.TwitterEnabled || bShortenUrlJob || bLongUrl ||
                 Engine.conf.ConfLinkFormat.Contains((int)LinkFormatEnum.FULL_TINYURL);

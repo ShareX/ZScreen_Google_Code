@@ -97,7 +97,7 @@ namespace ZScreenLib
 
         private static void task_UploadPreparing(WorkerTask info)
         {
-            Engine.MyLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
+            Engine.EngineLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
             ChangeListViewItemStatus(info);
         }
 
@@ -105,7 +105,7 @@ namespace ZScreenLib
         {
             string status = string.Format("Upload started. ID: {0}, Filename: {1}", info.ID, info.FileName);
             if (!string.IsNullOrEmpty(info.LocalFilePath)) status += ", Filepath: " + info.LocalFilePath;
-            Engine.MyLogger.WriteLine(status);
+            StaticHelper.WriteLine(status);
 
             ListViewItem lvi = ListViewControl.Items[info.ID];
             lvi.Text = info.FileName;
@@ -139,7 +139,7 @@ namespace ZScreenLib
                     {
                         string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
 
-                        Engine.MyLogger.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
+                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
 
                         lvi.SubItems[1].Text = "Error";
                         lvi.SubItems[8].Text = string.Empty;
@@ -152,7 +152,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        Engine.MyLogger.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
+                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
                             info.Result.URL, (int)info.UploadDuration);
 
                         lvi.SubItems[1].Text = info.Status.GetDescription();
@@ -211,7 +211,7 @@ namespace ZScreenLib
         {
             if (ListViewControl != null)
             {
-                Engine.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
+                StaticHelper.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
                     wt.ID, wt.Job1, wt.Job2, wt.GetDestinationName());
 
                 ListViewItem lvi = new ListViewItem();
@@ -422,7 +422,7 @@ namespace ZScreenLib
                         }
                         if (!string.IsNullOrEmpty(tempText))
                         {
-                            Engine.MyLogger.WriteLine("Setting Clipboard with URL: " + tempText);
+                            StaticHelper.WriteLine("Setting Clipboard with URL: " + tempText);
                             Clipboard.SetText(tempText); // auto
                             Engine.zPreviousSetClipboardText = tempText;
                             Engine.IsClipboardUploading = false;
@@ -435,7 +435,7 @@ namespace ZScreenLib
                                     string linkdel = ur.DeletionURL;
                                     if (!string.IsNullOrEmpty(linkdel))
                                     {
-                                        Engine.MyLogger.WriteLine("Deletion Link: " + linkdel);
+                                        StaticHelper.WriteLine("Deletion Link: " + linkdel);
                                     }
                                 }
                             }

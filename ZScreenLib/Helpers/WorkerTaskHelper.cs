@@ -19,7 +19,7 @@ namespace ZScreenLib
             if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
             {
                 stream = img.SaveImage(wf, wf.ImageFormat2);
-                Engine.MyLogger.WriteLine(ConvertImageString(streamLength, wf, stream));
+                StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
 
                 while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
                 {
@@ -30,7 +30,7 @@ namespace ZScreenLib
 
                     wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
                     stream = img.SaveImage(wf, EImageFormat.JPEG);
-                    Engine.MyLogger.WriteLine(ConvertImageString(streamLength, wf, stream));
+                    StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                 }
 
                 imageFormat = wf.ImageFormat2;

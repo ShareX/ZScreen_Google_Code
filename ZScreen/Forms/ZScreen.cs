@@ -149,7 +149,7 @@ namespace ZScreenGUI
 
             #endregion Windows Size/Location
 
-            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
+            LoggerTimer timer = Engine.EngineLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
 
             Engine.zHandle = this.Handle;
 
@@ -185,7 +185,7 @@ namespace ZScreenGUI
 
         private void bwConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            LoggerTimer timer = Engine.MyLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
+            LoggerTimer timer = Engine.EngineLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
 
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
@@ -205,7 +205,7 @@ namespace ZScreenGUI
 
             if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
-                Engine.MyLogger.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
+                StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
             if (Engine.conf.BackupFTPSettings)
@@ -234,7 +234,7 @@ namespace ZScreenGUI
             }
 
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
-            Engine.MyLogger.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
+            StaticHelper.WriteLine("ZScreen startup time: {0} ms", Engine.StartTimer.ElapsedMilliseconds);
 
             UseCommandLineArg(Loader.CommandLineArg);
 
@@ -306,7 +306,7 @@ namespace ZScreenGUI
             // If really ZScreen is closing
             if (!e.Cancel)
             {
-                Engine.MyLogger.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
+                StaticHelper.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
                 Engine.WriteSettings();
                 Engine.TurnOff();
             }
@@ -328,7 +328,7 @@ namespace ZScreenGUI
         {
             if (!string.IsNullOrEmpty(arg))
             {
-                Engine.MyLogger.WriteLine("CommandLine: " + arg);
+                StaticHelper.WriteLine("CommandLine: " + arg);
                 CLIManagerRegex cli = new CLIManagerRegex();
 
                 cli.Commands = new List<CLICommandRegex>()
@@ -394,7 +394,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                    Engine.MyLogger.WriteException(ex, "Error in DelayedTrimMemoryUse");
+                    StaticHelper.WriteException(ex, "Error in DelayedTrimMemoryUse");
                 }
             }
         }
@@ -1565,7 +1565,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-                Engine.MyLogger.WriteException(ex, "Error while moving image files");
+                StaticHelper.WriteException(ex, "Error while moving image files");
                 MessageBox.Show(ex.Message);
             }
         }
@@ -2189,7 +2189,7 @@ namespace ZScreenGUI
         {
             if (e.TabPage == tpAdvanced && tcAdvanced.SelectedTab == tpAdvancedDebug)
             {
-                rtbDebugLog.Text = Engine.MyLogger.ToString();
+                rtbDebugLog.Text = Engine.EngineLogger.ToString();
             }
         }
 
@@ -2197,7 +2197,7 @@ namespace ZScreenGUI
         {
             if (e.TabPage == tpAdvancedDebug)
             {
-                rtbDebugLog.Text = Engine.MyLogger.ToString();
+                rtbDebugLog.Text = Engine.EngineLogger.ToString();
             }
         }
 

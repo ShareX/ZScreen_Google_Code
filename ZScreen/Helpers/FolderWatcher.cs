@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using ZScreenLib;
+using HelpersLib;
 
 namespace ZScreenGUI
 {
@@ -52,7 +53,7 @@ namespace ZScreenGUI
                     {
                         // check if the file is complete
                     }
-                    Engine.MyLogger.WriteLine(string.Format("Created {0}", filePath));
+                    StaticHelper.WriteLine(string.Format("Created {0}", filePath));
                     Loader.MainForm.UploadUsingFileSystem(filePath);
                     break;
                 }
@@ -60,7 +61,7 @@ namespace ZScreenGUI
                 {
                     if (--retry == 0)
                     {
-                        Engine.MyLogger.WriteLine("Unable to open file '" + filePath + "'");
+                        StaticHelper.WriteLine("Unable to open file '" + filePath + "'");
                     }
                     Thread.Sleep(500);
                 }
