@@ -277,6 +277,13 @@ namespace ZUploader.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Window {
+            get {
+                object obj = ResourceManager.GetObject("Window", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon ZUploader {
             get {
                 object obj = ResourceManager.GetObject("ZUploader", resourceCulture);

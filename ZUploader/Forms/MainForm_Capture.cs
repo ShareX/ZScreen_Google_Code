@@ -47,7 +47,7 @@ namespace ZUploader
             hotkeyManager.AddHotkey(ZUploaderHotkey.ClipboardUpload, Program.Settings.HotkeyClipboardUpload, UploadManager.ClipboardUpload);
             hotkeyManager.AddHotkey(ZUploaderHotkey.FileUpload, Program.Settings.HotkeyFileUpload, UploadManager.UploadFile);
             hotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
-            hotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false), tsmiWindow);
+            hotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
             hotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
                 () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
             hotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
@@ -120,6 +120,16 @@ namespace ZUploader
             Capture(Screenshot.GetActiveWindow, autoHideForm);
         }
 
+        private void CaptureWindow(IntPtr handle, bool autoHideForm = true)
+        {
+            Capture(() =>
+            {
+                NativeMethods.SetForegroundWindow(handle);
+                Thread.Sleep(250);
+                return Screenshot.GetWindow(handle);
+            }, autoHideForm);
+        }
+
         private void CaptureRegion(Surface surface, bool autoHideForm = true)
         {
             Capture(() =>
@@ -148,7 +158,9 @@ namespace ZUploader
             foreach (WindowInfo window in windows)
             {
                 string title = window.Text.Truncate(50);
-                tsmiWindow.DropDownItems.Add(title).Tag = window;
+                ToolStripItem tsi = tsmiWindow.DropDownItems.Add(title);
+                tsi.Click += tsmiWindowItems_Click;
+                tsi.Tag = window;
             }
         }
 
@@ -157,8 +169,14 @@ namespace ZUploader
             CaptureScreen();
         }
 
-        private void tsmiWindow_Click(object sender, EventArgs e)
+        private void tsmiWindowItems_Click(object sender, EventArgs e)
         {
+            ToolStripItem tsi = (ToolStripItem)sender;
+            WindowInfo wi = tsi.Tag as WindowInfo;
+            if (wi != null)
+            {
+                CaptureWindow(wi.Handle);
+            }
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)
