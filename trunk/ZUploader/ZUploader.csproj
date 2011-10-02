@@ -196,6 +196,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Window.png" />
     <None Include="Resources\RoundedRectangle.png" />
     <None Include="Resources\Rectangle.png" />
     <None Include="Resources\Polygon.png" />

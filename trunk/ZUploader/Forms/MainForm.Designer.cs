@@ -293,10 +293,10 @@ namespace ZUploader
             // 
             // tsmiWindow
             // 
+            this.tsmiWindow.Image = global::ZUploader.Properties.Resources.Window;
             this.tsmiWindow.Name = "tsmiWindow";
             this.tsmiWindow.Size = new System.Drawing.Size(177, 22);
             this.tsmiWindow.Text = "Window";
-            this.tsmiWindow.Click += new System.EventHandler(this.tsmiWindow_Click);
             // 
             // tsmiRectangle
             // 

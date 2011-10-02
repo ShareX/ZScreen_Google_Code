@@ -68,6 +68,11 @@ namespace ScreenCapture
         {
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
+            return GetWindow(handle);
+        }
+
+        public static Image GetWindow(IntPtr handle)
+        {
             if (handle.ToInt32() > 0)
             {
                 Rectangle rect = CaptureHelpers.GetWindowRectangle(handle);
