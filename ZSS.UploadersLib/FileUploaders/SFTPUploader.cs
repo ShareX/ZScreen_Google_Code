@@ -34,12 +34,10 @@ namespace UploadersLib
                     fileName = fileName.Replace("__", "_");
                 }
 
-                string remotePath = FTPHelpers.CombineURL(FTPAccount.GetSubFolderPath(), fileName);
-
                 try
                 {
                     stream.Position = 0;
-                    sftpClient.UploadData(stream, remotePath);
+                    sftpClient.UploadData(stream, fileName);
                 }
                 catch (Exception e)
                 {

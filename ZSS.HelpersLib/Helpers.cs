@@ -399,8 +399,11 @@ namespace HelpersLib
 
         public static bool CheckVersion(Version version1, Version version2)
         {
-            return version1.Major > version2.Major || Math.Max(version1.Minor, 0) > Math.Max(version2.Minor, 0) ||
-                Math.Max(version1.Build, 0) > Math.Max(version2.Build, 0) || Math.Max(version1.Revision, 0) > Math.Max(version2.Revision, 0);
+            double remoteVersion = version1.Major * Math.Pow(10, 12) + version1.Minor * Math.Pow(10, 9) + version1.Build * Math.Pow(10, 6) + version1.Revision;
+            double localVersion = version2.Major * Math.Pow(10, 12) + version2.Minor * Math.Pow(10, 9) + version2.Build * Math.Pow(10, 6) + version2.Revision;
+
+            return remoteVersion > localVersion;
+
         }
     }
 }
