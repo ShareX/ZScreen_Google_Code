@@ -9,6 +9,7 @@ using System.IO;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZUploader.HelperClasses;
+using System.Threading;
 
 namespace UploadersLib.FileUploaders
 {
@@ -58,32 +59,6 @@ namespace UploadersLib.FileUploaders
                 Client.Disconnect();
         }
 
-        public string Upload(string Filepath, string RemoteName)
-        {
-            Connect();
-            RemoteName = ZAppHelper.ReplaceIllegalChars(RemoteName, '_');
-            while (RemoteName.IndexOf("__") != -1)
-            {
-                RemoteName = RemoteName.Replace("__", "_");
-            }
-            ChangeDirectory(FTPAccount.GetSubFolderPath());
-            object s = new object();
-            AsyncCallback ac = new AsyncCallback(CallBack);
-            using (var file = File.OpenRead(Filepath))
-            {
-                var result = Client.BeginUploadFile(file, RemoteName, ac, s);
-                var resultprogress = result as SftpUploadAsyncResult;
-                ProgressManager pm = new ProgressManager(new FileInfo(Filepath).Length);
-                while (!resultprogress.IsCompleted)
-                {
-                    pm.ChangeProgress((int)resultprogress.UploadedBytes);
-                    ProgressChanged(pm);
-                }
-            }
-            Disconnect();
-            return FTPAccount.GetUriPath(RemoteName);
-        }
-
         public static void CallBack(IAsyncResult ia)
         {
             logger.WriteLine("Finished Uploading");
@@ -130,14 +105,15 @@ namespace UploadersLib.FileUploaders
         {
             if (ProgressChanged != null)
             {
-                progress.ChangeProgress((int)e.UploadedBytes);
+                progress.ChangeProgress((int)e.UploadedBytes, true);
                 ProgressChanged(progress);
             }
         }
 
-        public void UploadData(Stream stream, string remotePath)
+        public void UploadData(Stream stream, string fileName)
         {
             Connect();
+
             progress = new ProgressManager(stream.Length);
 
             ChangeDirectory(FTPAccount.GetSubFolderPath());
@@ -145,12 +121,16 @@ namespace UploadersLib.FileUploaders
             object s = new object();
             AsyncCallback ac = new AsyncCallback(CallBack);
 
-            var result = Client.BeginUploadFile(stream, remotePath, ac, s);
+            var result = Client.BeginUploadFile(stream, fileName, ac, s);
             SftpUploadAsyncResult sftpresult = result as SftpUploadAsyncResult;
 
             while (!sftpresult.IsCompleted)
             {
-                OnTransferProgressChanged(sftpresult);
+                if (sftpresult.UploadedBytes > 0)
+                {
+                    OnTransferProgressChanged(sftpresult);
+                }
+                Thread.Sleep(500);
             }
 
             Disconnect();

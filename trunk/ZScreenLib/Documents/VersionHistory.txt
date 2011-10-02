@@ -1,3 +1,4 @@
+4.5.0 Added support for SFTP and FTPS file uploaders {Josh/McoreD}
 4.4.3 Improved JPEG image settings support with JPEG Chroma subsampling options {lostdj/McoreD}
 4.4.2 Improved audio feedback with custom sound support after the task is finished via Advanced > Settings {TheDeathly}
 4.4.1 Improve Capture Shape options which are now accessible under Capture > Shape tab {McoreD}

@@ -34,7 +34,7 @@ namespace ZUploader.HelperClasses
     {
         public long Length { get; private set; }
 
-        public long Position { get; private set; }
+        public long Position { get; set; }
 
         public double Percentage { get; private set; }
 
@@ -58,9 +58,17 @@ namespace ZUploader.HelperClasses
             smoothTimer.Start();
         }
 
-        public bool ChangeProgress(int bytesRead)
+        public bool ChangeProgress(int bytesRead, bool cumulative = true)
         {
-            Position += bytesRead;
+            if (!cumulative)
+            {
+                Position += bytesRead;
+            }
+            else
+            {
+                Position = bytesRead;
+            }
+
             Percentage = (double)Position / Length * 100;
             speedTest += bytesRead;
 
