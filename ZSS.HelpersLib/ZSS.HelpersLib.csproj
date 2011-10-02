@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptographyHelpers\AESHelper.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="CLI\CLICommand.cs" />
     <Compile Include="CLI\CLICommandAction.cs" />
@@ -127,6 +128,7 @@
     </Compile>
     <Compile Include="Printer\PrintTextHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
+    <Compile Include="CryptographyHelpers\RSAHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
     <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
