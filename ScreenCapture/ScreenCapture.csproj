@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="SurfaceOptions.cs" />
     <Compile Include="WindowInfo.cs" />
+    <Compile Include="WindowsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RegionCapturePreview.resx">

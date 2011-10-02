@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using HelpersLib;
@@ -33,13 +34,59 @@ namespace ScreenCapture
 {
     public class WindowInfo
     {
-        public string Title { get; set; }
-        public WindowStyles Styles { get; set; }
+        public IntPtr Handle { get; private set; }
+
+        public string Text
+        {
+            get
+            {
+                return NativeMethods.GetWindowText(Handle);
+            }
+        }
+
+        public string ClassName
+        {
+            get
+            {
+                return NativeMethods.GetClassName(Handle);
+            }
+        }
+
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return CaptureHelpers.GetWindowRectangle(Handle);
+            }
+        }
+
+        public WindowStyles Styles
+        {
+            get
+            {
+                return (WindowStyles)NativeMethods.GetWindowLong(Handle, NativeMethods.GWL_STYLE);
+            }
+        }
+
+        public bool IsMaximized
+        {
+            get
+            {
+                return NativeMethods.IsZoomed(Handle);
+            }
+        }
+
+        public bool IsVisible
+        {
+            get
+            {
+                return NativeMethods.IsWindowVisible(Handle);
+            }
+        }
 
         public WindowInfo(IntPtr handle)
         {
-            Title = NativeMethods.GetWindowText(handle);
-            Styles = (WindowStyles)NativeMethods.GetWindowLong(handle, NativeMethods.GWL_STYLE);
+            Handle = handle;
         }
     }
 }

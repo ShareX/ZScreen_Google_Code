@@ -121,6 +121,10 @@ namespace HelpersLib
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsZoomed(IntPtr hWnd);
+
         [DllImport("User32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
@@ -186,6 +190,10 @@ namespace HelpersLib
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern ushort GlobalDeleteAtom(ushort nAtom);
 
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
+
         public static string GetWindowText(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
@@ -200,6 +208,21 @@ namespace HelpersLib
                     {
                         return sb.ToString();
                     }
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetClassName(IntPtr handle)
+        {
+            if (handle.ToInt32() > 0)
+            {
+                StringBuilder sb = new StringBuilder(256);
+
+                if (GetClassName(handle, sb, sb.Capacity) > 0)
+                {
+                    return sb.ToString();
                 }
             }
 
@@ -462,17 +485,22 @@ namespace HelpersLib
             return IntPtr.Zero;
         }
 
-        public static string GetClassName(IntPtr handle)
+        public static bool GetBorderSize(IntPtr handle, out Size size)
         {
-            const int numOfChars = 100;
-            StringBuilder sb = new StringBuilder(numOfChars);
+            WINDOWINFO wi = new WINDOWINFO();
 
-            if (GetClassName(handle, sb, numOfChars) > 0)
+            bool result = GetWindowInfo(handle, ref wi);
+
+            if (result)
             {
-                return sb.ToString();
+                size = new Size((int)wi.cxWindowBorders, (int)wi.cyWindowBorders);
+            }
+            else
+            {
+                size = Size.Empty;
             }
 
-            return string.Empty;
+            return result;
         }
 
         public static MyCursor CaptureCursor()
@@ -645,6 +673,11 @@ namespace HelpersLib
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern bool DwmIsCompositionEnabled();
 
+        public static bool IsDWMEnabled()
+        {
+            return Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled();
+        }
+
         [DllImport("dwmapi.dll")]
         public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 
@@ -726,7 +759,7 @@ namespace HelpersLib
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
-            if (Environment.OSVersion.Version.Major >= 6)
+            if (IsDWMEnabled())
             {
                 Rectangle rect;
                 if (GetExtendedFrameBounds(handle, out rect))
@@ -740,24 +773,28 @@ namespace HelpersLib
 
         public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)
         {
-            if (NativeMethods.IsWindowMaximized(handle))
+            Size size = Size.Empty;
+
+            if (GetBorderSize(handle, out size))
             {
-                Rectangle screenRect = Screen.FromRectangle(windowRect).Bounds;
-
-                if (windowRect.X < screenRect.X)
-                {
-                    windowRect.Width -= (screenRect.X - windowRect.X) * 2;
-                    windowRect.X = screenRect.X;
-                }
-
-                if (windowRect.Y < screenRect.Y)
-                {
-                    windowRect.Height -= (screenRect.Y - windowRect.Y) * 2;
-                    windowRect.Y = screenRect.Y;
-                }
-
-                windowRect.Intersect(screenRect);
+                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height, windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
             }
+
+            /*Rectangle screenRect = Screen.FromRectangle(windowRect).Bounds;
+
+            if (windowRect.X < screenRect.X)
+            {
+                windowRect.Width -= (screenRect.X - windowRect.X) * 2;
+                windowRect.X = screenRect.X;
+            }
+
+            if (windowRect.Y < screenRect.Y)
+            {
+                windowRect.Height -= (screenRect.Y - windowRect.Y) * 2;
+                windowRect.Y = screenRect.Y;
+            }
+
+            windowRect.Intersect(screenRect);*/
 
             return windowRect;
         }
