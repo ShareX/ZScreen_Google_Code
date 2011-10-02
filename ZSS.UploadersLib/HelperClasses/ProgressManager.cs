@@ -58,7 +58,7 @@ namespace ZUploader.HelperClasses
             smoothTimer.Start();
         }
 
-        public bool ChangeProgress(int bytesRead, bool cumulative = true)
+        public bool ChangeProgress(int bytesRead, bool cumulative = false)
         {
             if (!cumulative)
             {
