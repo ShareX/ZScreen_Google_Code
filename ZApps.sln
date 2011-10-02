@@ -14,16 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EE237035
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-3588-4A1D-926E-22C8692D345F}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\AxSHDocVw.dll = Lib\AxSHDocVw.dll
 		Lib\Greenshot.dll = Lib\Greenshot.dll
 		Lib\GreenshotPlugin.dll = Lib\GreenshotPlugin.dll
 		Lib\ICSharpCode.SharpZipLib.dll = Lib\ICSharpCode.SharpZipLib.dll
-		Lib\IECaptComImports.dll = Lib\IECaptComImports.dll
 		Lib\log4net.dll = Lib\log4net.dll
 		Lib\Microsoft.WindowsAPICodePack.dll = Lib\Microsoft.WindowsAPICodePack.dll
 		Lib\Microsoft.WindowsAPICodePack.Shell.dll = Lib\Microsoft.WindowsAPICodePack.Shell.dll
 		Lib\Renci.SshNet.dll = Lib\Renci.SshNet.dll
-		Lib\SHDocVw.dll = Lib\SHDocVw.dll
 		Lib\taglib-sharp.dll = Lib\taglib-sharp.dll
 	EndProjectSection
 EndProject

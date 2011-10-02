@@ -77,7 +77,6 @@ namespace ZScreenGUI
             ZScreen_ConfigGUI_Actions();
             ZScreen_ConfigGUI_Options();
             ZScreen_ConfigGUI_Options_Paths();
-            ZScreen_ConfigGUI_CaptureWebpage();
             ZScreen_ConfigGUI_Options_History();
         }
 
@@ -206,16 +205,6 @@ namespace ZScreenGUI
             cboCropGridMode.Checked = Engine.conf.CropGridToggle;
             nudCropGridWidth.Value = Engine.conf.CropGridSize.Width;
             nudCropGridHeight.Value = Engine.conf.CropGridSize.Height;
-        }
-
-        private void ZScreen_ConfigGUI_CaptureWebpage()
-        {
-            // Web Page Upload
-
-            cbWebPageUseCustomSize.Checked = Engine.conf.WebPageUseCustomSize;
-            txtWebPageWidth.Text = Engine.conf.WebPageWidth.ToString();
-            txtWebPageHeight.Text = Engine.conf.WebPageHeight.ToString();
-            cbWebPageAutoUpload.Checked = Engine.conf.WebPageAutoUpload;
         }
 
         private void ZScreen_ConfigGUI_Actions()

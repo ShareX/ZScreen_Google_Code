@@ -274,13 +274,6 @@ namespace ZScreenLib
 
         public IndexerConfig IndexerConfig = new IndexerConfig();
 
-        // Web Page Upload
-
-        public bool WebPageUseCustomSize = true;
-        public int WebPageWidth = 1024;
-        public int WebPageHeight = 768;
-        public bool WebPageAutoUpload = true;
-
         //~~~~~~~~~~~~~~~~~~~~~
         //  History
         //~~~~~~~~~~~~~~~~~~~~~
