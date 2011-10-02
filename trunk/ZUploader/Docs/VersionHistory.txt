@@ -1,4 +1,8 @@
-﻿Version 4.4.0 - 2011-09-27
+﻿Version 4.5.0
+
+
+
+Version 4.4.0 - 2011-09-27
 
 4.4.0 Added support to capture shapes to Clipboard
 4.3.0 Added Minus uploader support

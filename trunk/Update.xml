@@ -2,21 +2,21 @@
 <Update>
   <ZScreen>
     <Stable>
-      <Version>4.4.1</Version>
+      <Version>4.4.1.2600</Version>
       <URL>http://zscreen.googlecode.com/files/ZScreen-4.4.1.2600-setup.exe</URL>
       <Date>2011-09-24</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
     </Stable>
     <Beta>
-      <Version>4.4.1</Version>
-      <URL>http://zscreen.googlecode.com/files/ZScreen-4.4.1.2600-setup.exe</URL>
-      <Date>2011-09-24</Date>
-      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
-    </Beta>
-    <Dev>
       <Version>4.4.3.2638</Version>
       <URL>http://zscreen.googlecode.com/files/ZScreen-4.4.3.2638-setup.exe</URL>
       <Date>2011-09-20</Date>
+      <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
+    </Beta>
+    <Dev>
+      <Version>4.5.0.2654</Version>
+      <URL>http://zscreen.googlecode.com/files/ZScreen-4.5.0.2654-setup.exe</URL>
+      <Date>2011-10-01</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZScreenLib/Documents/VersionHistory.txt</Summary>
     </Dev>
   </ZScreen>
