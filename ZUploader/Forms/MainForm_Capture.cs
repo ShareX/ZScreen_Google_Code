@@ -160,6 +160,13 @@ namespace ZUploader
                 string title = window.Text.Truncate(50);
                 ToolStripItem tsi = tsmiWindow.DropDownItems.Add(title);
                 tsi.Click += tsmiWindowItems_Click;
+                using (Icon icon = window.Icon)
+                {
+                    if (icon != null)
+                    {
+                        tsi.Image = icon.ToBitmap();
+                    }
+                }
                 tsi.Tag = window;
             }
         }

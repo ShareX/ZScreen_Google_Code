@@ -84,6 +84,14 @@ namespace ScreenCapture
             }
         }
 
+        public Icon Icon
+        {
+            get
+            {
+                return NativeMethods.GetApplicationIcon(Handle);
+            }
+        }
+
         public WindowInfo(IntPtr handle)
         {
             Handle = handle;
