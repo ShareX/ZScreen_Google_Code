@@ -174,7 +174,7 @@ namespace HelpersLib
 
             if (Type == NameParserType.ActiveWindow || Type == NameParserType.Watermark)
             {
-                string activeWindow = ZAppHelper.GetForegroundWindowText();
+                string activeWindow = NativeMethods.GetForegroundWindowText();
 
                 if (string.IsNullOrEmpty(activeWindow))
                 {

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 using ScreenCapture;
 
 namespace ZScreenLib.Forms
@@ -57,8 +58,8 @@ namespace ZScreenLib.Forms
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.Style = unchecked((int)NativeMethods.WindowStyles.WS_POPUP);
-                cp.ExStyle |= (int)NativeMethods.WindowStyles.WS_EX_LAYERED | (int)NativeMethods.WindowStyles.WS_EX_TOPMOST;
+                cp.Style = unchecked((int)WindowStyles.WS_POPUP);
+                cp.ExStyle |= (int)WindowStyles.WS_EX_LAYERED | (int)WindowStyles.WS_EX_TOPMOST;
                 return cp;
             }
         }

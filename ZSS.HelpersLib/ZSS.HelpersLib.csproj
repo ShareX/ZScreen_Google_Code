@@ -112,6 +112,9 @@
     <Compile Include="Hotkey\HotkeySetting.cs" />
     <Compile Include="IClone.cs" />
     <Compile Include="Hotkey\KeyInfo.cs" />
+    <Compile Include="Native\GDI.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Native\Structs.cs" />
     <Compile Include="Printer\PrintForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,8 +161,6 @@
     <Compile Include="Hotkey\HotkeyInfo.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NameParser.cs" />
-    <Compile Include="Native.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

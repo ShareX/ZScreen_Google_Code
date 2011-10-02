@@ -25,16 +25,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
+using HistoryLib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib.Properties;
-using System.Drawing;
-using System.Media;
-using HistoryLib;
 
 namespace ZScreenLib
 {
@@ -197,7 +197,6 @@ namespace ZScreenLib
             }
         }
 
-
         private static void ChangeListViewItemStatus(WorkerTask wt)
         {
             if (ListViewControl != null)
@@ -291,7 +290,7 @@ namespace ZScreenLib
                     {
                         ClipboardOptions cmp = new ClipboardOptions(task);
                         cmp.Icon = Resources.zss_main;
-                        if (showDialog) { cmp.ShowDialog(); } else { NativeMethods.ShowWindow(cmp.Handle, (int)ZScreenLib.NativeMethods.WindowShowStyle.ShowNoActivate); }
+                        if (showDialog) { cmp.ShowDialog(); } else { NativeMethods.ShowWindow(cmp.Handle, (int)NativeMethods.WindowShowStyle.ShowNoActivate); }
                     }
                 }
 

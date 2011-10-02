@@ -27,7 +27,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace ScreenCapture
+namespace HelpersLib
 {
     public static class GDI
     {

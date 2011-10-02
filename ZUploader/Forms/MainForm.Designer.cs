@@ -68,8 +68,10 @@ namespace ZUploader
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbDebug = new System.Windows.Forms.ToolStripButton();
             this.tsddbCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiFullscreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRoundedRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiEllipse = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +89,6 @@ namespace ZUploader
             this.tsmiCaptureOutputClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.tssDestinations1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiUploadersConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbDebug = new System.Windows.Forms.ToolStripButton();
             this.tssMain1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbCopy = new System.Windows.Forms.ToolStripButton();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
@@ -231,7 +232,7 @@ namespace ZUploader
             this.tsMain.Name = "tsMain";
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
-            this.tsMain.Size = new System.Drawing.Size(841, 33);
+            this.tsMain.Size = new System.Drawing.Size(921, 33);
             this.tsMain.TabIndex = 87;
             this.tsMain.Text = "toolStrip1";
             // 
@@ -253,10 +254,21 @@ namespace ZUploader
             this.tsbFileUpload.Text = "File upload...";
             this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
             // 
+            // tsbDebug
+            // 
+            this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
+            this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDebug.Name = "tsbDebug";
+            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
+            this.tsbDebug.Text = "Test upload";
+            this.tsbDebug.Visible = false;
+            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
+            // 
             // tsddbCapture
             // 
             this.tsddbCapture.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiFullscreen,
+            this.tsmiWindow,
             this.tsmiRectangle,
             this.tsmiRoundedRectangle,
             this.tsmiEllipse,
@@ -269,6 +281,7 @@ namespace ZUploader
             this.tsddbCapture.Name = "tsddbCapture";
             this.tsddbCapture.Size = new System.Drawing.Size(78, 20);
             this.tsddbCapture.Text = "Capture";
+            this.tsddbCapture.DropDownOpening += new System.EventHandler(this.tsddbCapture_DropDownOpening);
             // 
             // tsmiFullscreen
             // 
@@ -277,6 +290,13 @@ namespace ZUploader
             this.tsmiFullscreen.Size = new System.Drawing.Size(177, 22);
             this.tsmiFullscreen.Text = "Fullscreen";
             this.tsmiFullscreen.Click += new System.EventHandler(this.tsmiFullscreen_Click);
+            // 
+            // tsmiWindow
+            // 
+            this.tsmiWindow.Name = "tsmiWindow";
+            this.tsmiWindow.Size = new System.Drawing.Size(177, 22);
+            this.tsmiWindow.Text = "Window";
+            this.tsmiWindow.Click += new System.EventHandler(this.tsmiWindow_Click);
             // 
             // tsmiRectangle
             // 
@@ -416,16 +436,6 @@ namespace ZUploader
             this.tsmiUploadersConfig.Size = new System.Drawing.Size(162, 22);
             this.tsmiUploadersConfig.Text = "Configuration...";
             this.tsmiUploadersConfig.Click += new System.EventHandler(this.tsddbUploadersConfig_Click);
-            // 
-            // tsbDebug
-            // 
-            this.tsbDebug.Image = global::ZUploader.Properties.Resources.gear;
-            this.tsbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDebug.Name = "tsbDebug";
-            this.tsbDebug.Size = new System.Drawing.Size(89, 20);
-            this.tsbDebug.Text = "Test upload";
-            this.tsbDebug.Visible = false;
-            this.tsbDebug.Click += new System.EventHandler(this.tsbDebug_Click);
             // 
             // tssMain1
             // 
@@ -725,5 +735,6 @@ namespace ZUploader
         private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutput;
         private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputUpload;
         private System.Windows.Forms.ToolStripMenuItem tsmiCaptureOutputClipboard;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWindow;
     }
 }

@@ -24,10 +24,12 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -202,6 +204,26 @@ namespace ScreenCapture
 
             Brush textBrush = new SolidBrush(textColor);
             g.DrawString(text, font, textBrush, position.X, position.Y);
+        }
+
+        public static List<WindowInfo> GetWindowsList()
+        {
+            NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindows);
+            NativeMethods.EnumWindows(ewp, IntPtr.Zero);
+            return null;
+        }
+
+        private static bool EvalWindows(IntPtr hWnd, IntPtr lParam)
+        {
+            WindowInfo wi = new WindowInfo(hWnd);
+
+            if ((wi.Styles & WindowStyles.WS_VISIBLE) == WindowStyles.WS_VISIBLE &&
+                (wi.Styles & WindowStyles.WS_VISIBLE) == WindowStyles.WS_CAPTION)
+            {
+                // TODO: EvalWindows
+            }
+
+            return true;
         }
     }
 }

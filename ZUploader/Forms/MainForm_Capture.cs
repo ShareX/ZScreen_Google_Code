@@ -46,7 +46,7 @@ namespace ZUploader
             hotkeyManager.AddHotkey(ZUploaderHotkey.ClipboardUpload, Program.Settings.HotkeyClipboardUpload, UploadManager.ClipboardUpload);
             hotkeyManager.AddHotkey(ZUploaderHotkey.FileUpload, Program.Settings.HotkeyFileUpload, UploadManager.UploadFile);
             hotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);
-            hotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false));
+            hotkeyManager.AddHotkey(ZUploaderHotkey.ActiveWindow, Program.Settings.HotkeyActiveWindow, () => CaptureActiveWindow(false), tsmiWindow);
             hotkeyManager.AddHotkey(ZUploaderHotkey.RectangleRegion, Program.Settings.HotkeyRectangleRegion,
                 () => CaptureRegion(new RectangleRegion(), false), tsmiRectangle);
             hotkeyManager.AddHotkey(ZUploaderHotkey.RoundedRectangleRegion, Program.Settings.HotkeyRoundedRectangleRegion,
@@ -137,9 +137,19 @@ namespace ZUploader
             }, autoHideForm);
         }
 
+        private void tsddbCapture_DropDownOpening(object sender, EventArgs e)
+        {
+            tsmiWindow.DropDownItems.Clear();
+            //tsmiWindow.DropDownItems.Add("Test");
+        }
+
         private void tsmiFullscreen_Click(object sender, EventArgs e)
         {
             CaptureScreen();
+        }
+
+        private void tsmiWindow_Click(object sender, EventArgs e)
+        {
         }
 
         private void tsmiRectangle_Click(object sender, EventArgs e)

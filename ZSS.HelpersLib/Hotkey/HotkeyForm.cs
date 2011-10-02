@@ -53,11 +53,11 @@ namespace HelpersLib
 
             Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
 
-            Native.Modifiers modifiers = Native.Modifiers.None;
+            NativeMethods.Modifiers modifiers = NativeMethods.Modifiers.None;
 
-            if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= Native.Modifiers.Alt;
-            if ((hotkey & Keys.Control) == Keys.Control) modifiers |= Native.Modifiers.Control;
-            if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= Native.Modifiers.Shift;
+            if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= NativeMethods.Modifiers.Alt;
+            if ((hotkey & Keys.Control) == Keys.Control) modifiers |= NativeMethods.Modifiers.Control;
+            if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= NativeMethods.Modifiers.Shift;
 
             ushort id = 0;
 
@@ -167,7 +167,7 @@ namespace HelpersLib
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == Native.WM_HOTKEY && !IgnoreHotkeys)
+            if (m.Msg == (int)WM.HOTKEY && !IgnoreHotkeys)
             {
                 HotkeyInfo hotkey = GetHotkeyInfoFromID((ushort)m.WParam);
 
