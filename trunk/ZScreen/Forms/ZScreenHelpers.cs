@@ -49,6 +49,7 @@ namespace ZScreenGUI
 
         public void DisableFeatures()
         {
+            tcMain.TabPages.Remove(tpQueue);
             tcCapture.TabPages.Remove(tpFreehandCropShot);
         }
 

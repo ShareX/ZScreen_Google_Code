@@ -390,11 +390,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"ZScreenLib.dll" /f /t:"ZScreenLib.XMLSettings" /t:"ZScreenLib.Workflow" /v
-if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"HelpersLib.dll" /f /t:"HelpersLib.AppSettings" /v
-if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"UploadersLib.dll" /f /t:"UploadersLib.UploadersConfig" /t:"UploadersLib.GoogleTranslatorConfig" /v</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == "Release|x86" "$(SolutionDir)Tools\Sgen.exe" /a:"ZScreenLib.dll" /f /t:"ZScreenLib.XMLSettings" /t:"ZScreenLib.Workflow" /v
+if $(ConfigurationName) == "Release|x86" "$(SolutionDir)Tools\Sgen.exe" /a:"HelpersLib.dll" /f /t:"HelpersLib.AppSettings" /v
+if $(ConfigurationName) == "Release|x86" "$(SolutionDir)Tools\Sgen.exe" /a:"UploadersLib.dll" /f /t:"UploadersLib.UploadersConfig" /t:"UploadersLib.GoogleTranslatorConfig" /v</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(ProjectDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == "Release|x86" "$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(ProjectDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
