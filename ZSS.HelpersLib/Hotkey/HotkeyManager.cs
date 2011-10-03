@@ -70,24 +70,18 @@ namespace HelpersLib.Hotkey
         public void AddHotkey(ZUploaderHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
             hotkeySetting.Tag = (int)hotkeyEnum;
+            hotkeySetting.Action = action;
             hotkeySetting.MenuItem = menuItem;
             Settings.Add(hotkeySetting);
             hotkeySetting.UpdateMenuItemShortcut();
-            hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, (int)hotkeyEnum);
+            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, (int)hotkeyEnum) != null;
         }
 
-        public void ChangeHotkey(ZUploaderHotkey hotkeyEnum, Keys newHotkey)
+        public bool UpdateHotkey(HotkeySetting setting)
         {
-            foreach (HotkeySetting hotkeySetting in Settings)
-            {
-                if (hotkeySetting.Tag == (int)hotkeyEnum)
-                {
-                    hotkeySetting.Hotkey = newHotkey;
-                    hotkeySetting.UpdateMenuItemShortcut();
-                }
-            }
-
-            hotkeyForm.ChangeHotkey((int)hotkeyEnum, newHotkey);
+            setting.UpdateMenuItemShortcut();
+            setting.IsActive = hotkeyForm.ChangeHotkey(setting.Tag, setting.Hotkey, setting.Action);
+            return setting.IsActive;
         }
     }
 }

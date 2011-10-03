@@ -61,8 +61,7 @@ namespace HelpersLib.Hotkey
         private void control_HotkeyChanged(object sender, EventArgs e)
         {
             HotkeySelectionControl control = (HotkeySelectionControl)sender;
-            HotkeySetting setting = control.Setting;
-            manager.ChangeHotkey((ZUploaderHotkey)setting.Tag, setting.Hotkey);
+             manager.UpdateHotkey(control.Setting);
         }
     }
 }

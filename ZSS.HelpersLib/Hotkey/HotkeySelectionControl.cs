@@ -41,6 +41,7 @@ namespace HelpersLib.Hotkey
             Setting = setting;
             lblHotkeyDescription.Text = ((ZUploaderHotkey)Setting.Tag).GetDescription();
             btnSetHotkey.Text = new KeyInfo(Setting.Hotkey).ToString();
+            UpdateHotkeyStatus();
         }
 
         private void btnSetHotkey_Click(object sender, EventArgs e)
@@ -52,7 +53,20 @@ namespace HelpersLib.Hotkey
                     Setting.Hotkey = inputForm.SelectedKey;
                     btnSetHotkey.Text = new KeyInfo(Setting.Hotkey).ToString();
                     OnHotkeyChanged();
+                    UpdateHotkeyStatus();
                 }
+            }
+        }
+
+        private void UpdateHotkeyStatus()
+        {
+            if (Setting.IsActive)
+            {
+                lblIsHotkeyActive.BackColor = Color.PaleGreen;
+            }
+            else
+            {
+                lblIsHotkeyActive.BackColor = Color.IndianRed;
             }
         }
 

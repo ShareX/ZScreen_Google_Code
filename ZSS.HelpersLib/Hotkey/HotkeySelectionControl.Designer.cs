@@ -30,14 +30,14 @@
         {
             this.lblHotkeyDescription = new System.Windows.Forms.Label();
             this.btnSetHotkey = new System.Windows.Forms.Button();
+            this.lblIsHotkeyActive = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblHotkeyDescription
             // 
-            this.lblHotkeyDescription.AutoSize = true;
             this.lblHotkeyDescription.Location = new System.Drawing.Point(0, 5);
             this.lblHotkeyDescription.Name = "lblHotkeyDescription";
-            this.lblHotkeyDescription.Size = new System.Drawing.Size(60, 13);
+            this.lblHotkeyDescription.Size = new System.Drawing.Size(250, 15);
             this.lblHotkeyDescription.TabIndex = 0;
             this.lblHotkeyDescription.Text = "Description";
             // 
@@ -51,16 +51,25 @@
             this.btnSetHotkey.UseVisualStyleBackColor = true;
             this.btnSetHotkey.Click += new System.EventHandler(this.btnSetHotkey_Click);
             // 
+            // lblIsHotkeyActive
+            // 
+            this.lblIsHotkeyActive.BackColor = System.Drawing.Color.IndianRed;
+            this.lblIsHotkeyActive.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblIsHotkeyActive.Location = new System.Drawing.Point(256, 1);
+            this.lblIsHotkeyActive.Name = "lblIsHotkeyActive";
+            this.lblIsHotkeyActive.Size = new System.Drawing.Size(28, 21);
+            this.lblIsHotkeyActive.TabIndex = 2;
+            // 
             // HotkeySelectionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblIsHotkeyActive);
             this.Controls.Add(this.btnSetHotkey);
             this.Controls.Add(this.lblHotkeyDescription);
             this.Name = "HotkeySelectionControl";
             this.Size = new System.Drawing.Size(483, 23);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -68,5 +77,6 @@
 
         private System.Windows.Forms.Label lblHotkeyDescription;
         private System.Windows.Forms.Button btnSetHotkey;
+        private System.Windows.Forms.Label lblIsHotkeyActive;
     }
 }
