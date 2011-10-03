@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
 using HelpersLib;
 using Renci.SshNet;
 using Renci.SshNet.Common;
@@ -12,10 +14,15 @@ namespace UploadersLib.FileUploaders
     public sealed class SFTP : IDisposable
     {
         //properties
-
         public FTPAccount FTPAccount { get; set; }
-        SftpClient Client;
         public bool IsConnected { get { return Client.IsConnected; } }
+        public string HomeDir { get; set; }
+
+        //Variables
+        SftpClient Client;
+
+
+        //Misc
         public event Uploader.ProgressEventHandler ProgressChanged;
         private ProgressManager progress;
 
@@ -44,7 +51,10 @@ namespace UploadersLib.FileUploaders
         public void Connect()
         {
             if (!IsConnected)
+            {
                 Client.Connect();
+                HomeDir = Client.WorkingDirectory;
+            }
         }
 
         public void Disconnect()
@@ -68,8 +78,6 @@ namespace UploadersLib.FileUploaders
             {
                 CreateDirectory(Path);
                 ChangeDirectory(Path);
-
-                StaticHelper.WriteException(e);
             }
         }
 
@@ -78,23 +86,57 @@ namespace UploadersLib.FileUploaders
             try
             {
                 Client.CreateDirectory(Path);
-                StaticHelper.WriteLine("Creating Directory: " + Path);
+                StaticHelper.WriteLine("Created Directory: " + Path);
             }
             catch (SftpPathNotFoundException)
             {
-                string[] Dirs = Path.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-                string s = string.Empty;
-                for (int x = 0; x <= Dirs.Length - 2; x++)
-                {
-                    s += Dirs[x] + "/";
-                }
-                CreateDirectory(s);
+                StaticHelper.WriteLine("Failed to create directory " + Path);
+                StaticHelper.WriteLine("Attempting to fix...");
+                CreateMultipleDirectorys(FTPHelpers.GetPaths(Path));
             }
             catch (SftpPermissionDeniedException)
             {
             }
         }
 
+        public bool DirectoryExists(string Dir)
+        {
+            Connect();
+            try
+            {
+                string cdir = Client.WorkingDirectory;
+                Client.ChangeDirectory(Dir);
+                Client.ChangeDirectory(cdir);
+                return true;
+            }
+            catch (SftpPathNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        public List<string> CreateMultipleDirectorys(List<string> Directories)
+        {
+            List<string> CreatedList = new List<string>();
+            for (int x = 0; x <= Directories.Count - 1; x++)
+            {
+                Directories[x] = Directories[x].Substring(1);
+                if (!DirectoryExists(Directories[x]))
+                {
+                    CreateDirectory(Directories[x]);
+                    CreatedList.Add(Directories[x]);
+                }
+            }
+            return CreatedList;
+        }
+
+        public SftpFile[] DirectoryListing(string RootDir)
+        {
+            Connect();
+            IEnumerable<SftpFile> dirlist = Client.ListDirectory(RootDir);
+            return dirlist.ToArray<SftpFile>();
+            
+        }
         private void OnTransferProgressChanged(SftpUploadAsyncResult e)
         {
             if (ProgressChanged != null)
