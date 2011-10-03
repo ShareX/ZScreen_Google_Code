@@ -556,7 +556,7 @@ namespace UploadersLib
                     }
                     if (sftp.IsConnected)
                     {
-                        msg = "Conected!\nCreated folders;\n";
+                        msg = (createddirs.Count == 0) ? "Connected!" : "Conected!\nCreated folders;\n";
                         for (int x = 0; x <= createddirs.Count - 1; x++)
                         {
                             msg += createddirs[x] + "\n";
