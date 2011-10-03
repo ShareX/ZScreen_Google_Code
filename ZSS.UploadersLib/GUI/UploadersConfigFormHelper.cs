@@ -552,7 +552,7 @@ namespace UploadersLib
                     sftp.ChangeDirectory(sfp);
                     if (sftp.IsConnected)
                     {
-                        MessageBox.Show("Conected!\nProbably made this folder; " + sfp + " \n\nPing results:\n " + SendPing(account.Host,3),Application.ProductName,MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        MessageBox.Show("Conected!\nProbably made this folder; " + sfp + " \n\nPing results:\n " + SendPing(account.Host, 3), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         sftp.Disconnect();
                     }
                     break;
@@ -605,7 +605,6 @@ namespace UploadersLib
                     }
                     break;
             }
-
         }
 
         public static string SendPing(string host)

@@ -35,7 +35,6 @@ using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
@@ -240,7 +239,7 @@ namespace ZScreenGUI
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
-                                   StaticHelper.WriteException(ex, "Error while finalizing job");
+                                    StaticHelper.WriteException(ex, "Error while finalizing job");
                                 }
                             }
                             break;
@@ -296,7 +295,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-               StaticHelper.WriteException(ex, "Job Completed with errors: ");
+                StaticHelper.WriteException(ex, "Job Completed with errors: ");
             }
             finally
             {
@@ -530,7 +529,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                   StaticHelper.WriteException(ex, "Error while uploading using file system");
+                    StaticHelper.WriteException(ex, "Error while uploading using file system");
                     succ = false;
                 }
             }

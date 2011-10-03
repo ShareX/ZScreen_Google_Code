@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
-using HelpersLib.CLI;
+using HelpersLib.Hotkey;
 using HistoryLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -39,6 +39,8 @@ namespace ZUploader
     public partial class MainForm : HotkeyForm
     {
         public bool IsReady { get; private set; }
+
+        public HotkeyManager HotkeyManager { get; private set; }
 
         private bool trayClose;
 

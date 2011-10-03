@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -7,13 +8,11 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib.HelperClasses;
 using ZScreenLib;
-using System.Collections.Generic;
 
 namespace ZScreenGUI
 {
     public partial class ZScreen : HotkeyForm
     {
-
         private void TrayImageEditorClick(object sender, EventArgs e)
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
@@ -76,7 +75,6 @@ namespace ZScreenGUI
             tsmEditinImageSoftware.DropDown.AutoClose = false;
         }
 
-
         private void tsmiTab_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
@@ -108,7 +106,7 @@ namespace ZScreenGUI
                 }
                 catch (Exception ex)
                 {
-                   StaticHelper.WriteException(ex, "Error while clicking Balloon Tip");
+                    StaticHelper.WriteException(ex, "Error while clicking Balloon Tip");
                 }
             }
         }
@@ -146,7 +144,7 @@ namespace ZScreenGUI
                                     }
                                     catch (Exception ex)
                                     {
-                                       StaticHelper.WriteException(ex);
+                                        StaticHelper.WriteException(ex);
                                     }
                                 }
                             }

@@ -326,7 +326,6 @@ namespace HistoryLib
             {
                 ListViewItem lvi = lvHistory.SelectedItems[0];
                 HistoryItem hi = lvi.Tag as HistoryItem;
-                
 
                 if (hi != null)
                 {

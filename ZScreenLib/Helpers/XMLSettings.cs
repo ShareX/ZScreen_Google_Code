@@ -39,9 +39,9 @@ using HelpersLib;
 using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
+using ZScreenLib.Helpers;
 using ZSS.IndexersLib;
 using ZSS.UpdateCheckerLib;
-using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -516,7 +516,7 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.")]
         [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
         public string SoundPath { get; set; }
-        
+
         #endregion Properties for PropertyGrid
 
         #endregion Settings

@@ -23,38 +23,46 @@
 
 #endregion License Information (GPL v2)
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace HelpersLib.Hotkey
 {
-    public class HotkeySetting
+    public partial class HotkeyManagerControl : UserControl
     {
-        public Keys Hotkey { get; set; }
+        private HotkeyManager manager;
 
-        [XmlIgnore]
-        public int Tag { get; set; }
-
-        [XmlIgnore]
-        public ToolStripMenuItem MenuItem { get; set; }
-
-        public HotkeySetting()
+        public HotkeyManagerControl()
         {
+            InitializeComponent();
         }
 
-        public HotkeySetting(Keys hotkey, int tag = -1, ToolStripMenuItem menuItem = null)
+        public void PrepareHotkeys(HotkeyManager hotkeyManager)
         {
-            Hotkey = hotkey;
-            Tag = tag;
-            MenuItem = menuItem;
-        }
-
-        public void UpdateMenuItemShortcut()
-        {
-            if (MenuItem != null)
+            if (manager == null)
             {
-                MenuItem.ShortcutKeyDisplayString = new KeyInfo(Hotkey).ToString();
+                manager = hotkeyManager;
+
+                foreach (HotkeySetting setting in manager.Settings)
+                {
+                    HotkeySelectionControl control = new HotkeySelectionControl(setting);
+                    control.HotkeyChanged += new EventHandler(control_HotkeyChanged);
+                    flpHotkeys.Controls.Add(control);
+                }
             }
+        }
+
+        private void control_HotkeyChanged(object sender, EventArgs e)
+        {
+            HotkeySelectionControl control = (HotkeySelectionControl)sender;
+            HotkeySetting setting = control.Setting;
+            manager.ChangeHotkey((ZUploaderHotkey)setting.Tag, setting.Hotkey);
         }
     }
 }

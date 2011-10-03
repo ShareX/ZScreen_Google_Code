@@ -29,7 +29,6 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
-using UploadersLib.ImageUploaders;
 using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.UpdateCheckerLib;
@@ -146,7 +145,7 @@ namespace ZScreenGUI
             }
             catch (Exception ex)
             {
-               StaticHelper.WriteException(ex, "Error while performing Online Tasks");
+                StaticHelper.WriteException(ex, "Error while performing Online Tasks");
             }
         }
 

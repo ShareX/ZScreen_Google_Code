@@ -27,12 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using HelpersLib;
 using Starksoft.Net.Ftp;
 using Starksoft.Net.Proxy;
 using ZUploader.HelperClasses;
-using System.Security.Cryptography.X509Certificates;
 
 namespace UploadersLib
 {
@@ -41,9 +41,9 @@ namespace UploadersLib
         public event Uploader.ProgressEventHandler ProgressChanged;
 
         public FTPAccount Account { get; set; }
-       
+
         public FtpClient Client { get; set; }
-        
+
         public bool AutoReconnect { get; set; }
 
         public Logger logger = new Logger();

@@ -24,11 +24,9 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using HelpersLib;
 
 namespace HelpersLib
 {

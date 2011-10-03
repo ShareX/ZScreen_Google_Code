@@ -24,41 +24,43 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace HelpersLib.Hotkey
 {
     public partial class HotkeySelectionControl : UserControl
     {
-        public Keys Hotkey { get; set; }
+        public event EventHandler HotkeyChanged;
 
-        private Action hotkeyAction;
+        public HotkeySetting Setting { get; set; }
 
-        public HotkeySelectionControl(string description, Keys key, Action hotkeyAction)
+        public HotkeySelectionControl(HotkeySetting setting)
         {
             InitializeComponent();
-            lblHotkeyDescription.Text = description;
-            Hotkey = key;
-            this.hotkeyAction = hotkeyAction;
-            btnSetHotkey.Text = new KeyInfo(key).ToString();
+            Setting = setting;
+            lblHotkeyDescription.Text = ((ZUploaderHotkey)Setting.Tag).GetDescription();
+            btnSetHotkey.Text = new KeyInfo(Setting.Hotkey).ToString();
         }
 
         private void btnSetHotkey_Click(object sender, EventArgs e)
         {
-            using (HotkeyInputForm inputForm = new HotkeyInputForm(Hotkey))
+            using (HotkeyInputForm inputForm = new HotkeyInputForm(Setting.Hotkey))
             {
                 if (inputForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Unregister old key
-                    Hotkey = inputForm.SelectedKey;
-                    // Register new key
+                    Setting.Hotkey = inputForm.SelectedKey;
+                    btnSetHotkey.Text = new KeyInfo(Setting.Hotkey).ToString();
+                    OnHotkeyChanged();
                 }
+            }
+        }
+
+        protected void OnHotkeyChanged()
+        {
+            if (HotkeyChanged != null)
+            {
+                HotkeyChanged(this, null);
             }
         }
     }

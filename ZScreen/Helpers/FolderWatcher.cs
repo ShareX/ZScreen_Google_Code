@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
-using ZScreenLib;
 using HelpersLib;
 
 namespace ZScreenGUI

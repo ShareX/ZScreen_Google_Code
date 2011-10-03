@@ -25,30 +25,40 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace HelpersLib.Hotkey
 {
     public enum ZUploaderHotkey
     {
+        [Description("Clipboard Upload")]
         ClipboardUpload,
+        [Description("File Upload")]
         FileUpload,
+        [Description("Print Screen")]
         PrintScreen,
+        [Description("Active Window")]
         ActiveWindow,
+        [Description("Rectangle Region")]
         RectangleRegion,
+        [Description("Rounded Rectangle Region")]
         RoundedRectangleRegion,
+        [Description("Ellipse Region")]
         EllipseRegion,
+        [Description("Triangle Region")]
         TriangleRegion,
+        [Description("Diamond Region")]
         DiamondRegion,
+        [Description("Polygon Region")]
         PolygonRegion,
+        [Description("Freehand Region")]
         FreeHandRegion
     }
 
     public class HotkeyManager
     {
-        private List<HotkeySetting> settings = new List<HotkeySetting>();
+        public List<HotkeySetting> Settings = new List<HotkeySetting>();
 
         private HotkeyForm hotkeyForm;
 
@@ -61,14 +71,14 @@ namespace HelpersLib.Hotkey
         {
             hotkeySetting.Tag = (int)hotkeyEnum;
             hotkeySetting.MenuItem = menuItem;
-            settings.Add(hotkeySetting);
+            Settings.Add(hotkeySetting);
             hotkeySetting.UpdateMenuItemShortcut();
             hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, (int)hotkeyEnum);
         }
 
         public void ChangeHotkey(ZUploaderHotkey hotkeyEnum, Keys newHotkey)
         {
-            foreach (HotkeySetting hotkeySetting in settings)
+            foreach (HotkeySetting hotkeySetting in Settings)
             {
                 if (hotkeySetting.Tag == (int)hotkeyEnum)
                 {

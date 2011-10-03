@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace JBirdGUI
 {
@@ -27,7 +21,6 @@ namespace JBirdGUI
 
         private void tsbCaptureWindow_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tsbExit_Click(object sender, EventArgs e)

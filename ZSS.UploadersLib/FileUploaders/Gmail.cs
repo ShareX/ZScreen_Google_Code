@@ -25,9 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using UploadersLib.HelperClasses;
-using System.Diagnostics;
 
 namespace UploadersLib.FileUploaders
 {
@@ -37,7 +35,7 @@ namespace UploadersLib.FileUploaders
         private const string URL_AUTH_REQUEST_BASE = "https://mail.google.com/mail/b/";
         private EmailProtocol Protocol = EmailProtocol.Smtp;
         private string URL_OAuthRequest = URL_AUTH_REQUEST_BASE;
-        private string EmailAddress = string.Empty; 
+        private string EmailAddress = string.Empty;
 
         public OAuthInfo AuthInfo { get; set; }
 

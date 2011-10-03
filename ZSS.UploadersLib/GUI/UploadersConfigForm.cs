@@ -409,7 +409,7 @@ namespace UploadersLib
             {
                 btnMinusReadFolderList.Enabled = false;
 
-                List<MinusFolder> tempListMf = new Minus(Config.MinusConfig, 
+                List<MinusFolder> tempListMf = new Minus(Config.MinusConfig,
                     new OAuthInfo(APIKeys.MinusConsumerKey, APIKeys.MinusConsumerSecret)).ReadFolderList(MinusScope.read_all);
                 if (tempListMf.Count > 0)
                 {

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Renci.SshNet;
-using Renci.SshNet.Sftp;
-using Renci.SshNet.Common;
 using System.IO;
-using HelpersLib;
-using UploadersLib.HelperClasses;
-using ZUploader.HelperClasses;
 using System.Threading;
+using HelpersLib;
+using Renci.SshNet;
+using Renci.SshNet.Common;
+using Renci.SshNet.Sftp;
+using ZUploader.HelperClasses;
 
 namespace UploadersLib.FileUploaders
 {
@@ -43,7 +39,6 @@ namespace UploadersLib.FileUploaders
             {
                 Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath, FTPAccount.Passphrase));
             }
-
         }
 
         public void Connect()
@@ -51,6 +46,7 @@ namespace UploadersLib.FileUploaders
             if (!IsConnected)
                 Client.Connect();
         }
+
         public void Disconnect()
         {
             if (IsConnected)
@@ -96,7 +92,6 @@ namespace UploadersLib.FileUploaders
             }
             catch (SftpPermissionDeniedException)
             {
-
             }
         }
 

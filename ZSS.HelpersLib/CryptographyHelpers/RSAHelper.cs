@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 namespace HelpersLib
 {
@@ -32,6 +28,5 @@ namespace HelpersLib
 
             return System.Text.Encoding.UTF8.GetString(provider.Decrypt(encryptedBytes, true));
         }
-
     }
 }

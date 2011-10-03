@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v2)
 
-using System;
 using System.ComponentModel;
 
 namespace HelpersLib

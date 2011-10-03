@@ -41,7 +41,7 @@ namespace ZScreenLib
                 foreach (UploadResult ur in task.UploadResults)
                 {
                     TreeNode tnUploadResult = new TreeNode(ur.Host);
-                    
+
                     foreach (LinkFormatEnum type in Enum.GetValues(typeof(LinkFormatEnum)))
                     {
                         string url = ur.GetUrlByType(type, ur.URL);

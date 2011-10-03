@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UploadersLib.HelperClasses;
 using System.IO;
-using Renci.SshNet;
-using UploadersLib.FileUploaders;
 using HelpersLib;
+using UploadersLib.FileUploaders;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib
 {
@@ -49,12 +45,9 @@ namespace UploadersLib
                 {
                     result.URL = FTPAccount.GetUriPath(fileName);
                 }
-
             }
 
             return result;
         }
-
-
     }
 }
