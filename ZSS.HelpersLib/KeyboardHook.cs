@@ -28,20 +28,21 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using HelpersLib;
 
-namespace ZScreenLib
+namespace HelpersLib
 {
     public class KeyboardHook : IDisposable
     {
         public event KeyEventHandler KeyDown, KeyUp;
 
-        private HookProc keyboardHookProc;
+        private NativeMethods.HookProc keyboardHookProc;
         private IntPtr keyboardHookHandle = IntPtr.Zero;
 
         public KeyboardHook()
         {
             keyboardHookProc = KeyboardHookProc;
-            keyboardHookHandle = SetHook(WH_KEYBOARD_LL, keyboardHookProc);
+            keyboardHookHandle = NativeMethods.SetHook(NativeMethods.WH_KEYBOARD_LL, keyboardHookProc);
         }
 
         ~KeyboardHook()
@@ -74,7 +75,7 @@ namespace ZScreenLib
                 }
             }
 
-            return CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam);
+            return NativeMethods.CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam);
         }
 
         private bool OnKeyDown(IntPtr key)
@@ -109,46 +110,7 @@ namespace ZScreenLib
 
         public void Dispose()
         {
-            UnhookWindowsHookEx(keyboardHookHandle);
+            NativeMethods.UnhookWindowsHookEx(keyboardHookHandle);
         }
-
-        #region Helpers
-
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WH_MOUSE_LL = 14;
-
-        public enum KeyEvent
-        {
-            WM_KEYDOWN = 0x100,
-            WM_KEYUP = 0x101,
-            WM_SYSKEYUP = 0x104,
-            WM_SYSKEYDOWN = 0x105
-        }
-
-        private delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        private static IntPtr SetHook(int hookType, HookProc hookProc)
-        {
-            using (Process currentProcess = Process.GetCurrentProcess())
-            using (ProcessModule currentModule = currentProcess.MainModule)
-            {
-                return SetWindowsHookEx(hookType, hookProc, GetModuleHandle(currentModule.ModuleName), 0);
-            }
-        }
-
-        #endregion Helpers
     }
 }

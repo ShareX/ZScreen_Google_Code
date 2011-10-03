@@ -225,7 +225,6 @@
     <Compile Include="Helpers\Freeze.cs" />
     <Compile Include="Helpers\MyTimer.cs" />
     <Compile Include="Helpers\Software.cs" />
-    <Compile Include="Helpers\KeyboardHook.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\ThumbnailCacher.cs" />
