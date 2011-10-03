@@ -18,13 +18,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.*/
- 
+
 #region Usings
+
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-#endregion
+
+#endregion Usings
 
 namespace HelpersLib
 {
@@ -34,7 +36,7 @@ namespace HelpersLib
     public static class AESHelper
     {
         #region Static Functions
- 
+
         /// <summary>
         /// Encrypts a string
         /// </summary>
@@ -78,7 +80,7 @@ namespace HelpersLib
             SymmetricKey.Clear();
             return Convert.ToBase64String(CipherTextBytes);
         }
- 
+
         /// <summary>
         /// Decrypts a string
         /// </summary>
@@ -112,7 +114,6 @@ namespace HelpersLib
                 {
                     using (CryptoStream CryptoStream = new CryptoStream(MemStream, Decryptor, CryptoStreamMode.Read))
                     {
- 
                         ByteCount = CryptoStream.Read(PlainTextBytes, 0, PlainTextBytes.Length);
                         MemStream.Close();
                         CryptoStream.Close();
@@ -122,7 +123,7 @@ namespace HelpersLib
             SymmetricKey.Clear();
             return Encoding.UTF8.GetString(PlainTextBytes, 0, ByteCount);
         }
- 
-        #endregion
+
+        #endregion Static Functions
     }
 }

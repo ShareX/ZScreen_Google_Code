@@ -103,6 +103,12 @@
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Hotkey\HotkeyManager.cs" />
+    <Compile Include="Hotkey\HotkeyManagerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Hotkey\HotkeyManagerControl.Designer.cs">
+      <DependentUpon>HotkeyManagerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Hotkey\HotkeySelectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Hotkey\HotkeyInputForm.resx">
       <DependentUpon>HotkeyInputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hotkey\HotkeyManagerControl.resx">
+      <DependentUpon>HotkeyManagerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Hotkey\HotkeySelectionControl.resx">
       <DependentUpon>HotkeySelectionControl.cs</DependentUpon>

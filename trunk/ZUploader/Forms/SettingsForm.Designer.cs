@@ -50,6 +50,8 @@
             this.lblBufferSize = new System.Windows.Forms.Label();
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
+            this.tpHotkeys = new System.Windows.Forms.TabPage();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
@@ -70,6 +72,8 @@
             this.lblNameFormatPattern = new System.Windows.Forms.Label();
             this.btnNameFormatPatternHelp = new System.Windows.Forms.Button();
             this.txtNameFormatPattern = new System.Windows.Forms.TextBox();
+            this.tpCapture = new System.Windows.Forms.TabPage();
+            this.pgCapture = new System.Windows.Forms.PropertyGrid();
             this.tpHistory = new System.Windows.Forms.TabPage();
             this.lblHistoryInfo = new System.Windows.Forms.Label();
             this.nudHistoryMaxItemCount = new System.Windows.Forms.NumericUpDown();
@@ -82,21 +86,20 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.tpCapture = new System.Windows.Forms.TabPage();
-            this.pgCapture = new System.Windows.Forms.PropertyGrid();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).BeginInit();
+            this.tpHotkeys.SuspendLayout();
             this.tpImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).BeginInit();
             this.tpClipboardUpload.SuspendLayout();
+            this.tpCapture.SuspendLayout();
             this.tpHistory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).BeginInit();
             this.tpProxy.SuspendLayout();
             this.tpDebug.SuspendLayout();
-            this.tpCapture.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbClipboardAutoCopy
@@ -135,6 +138,7 @@
             // 
             this.tcSettings.Controls.Add(this.tpGeneral);
             this.tcSettings.Controls.Add(this.tpUpload);
+            this.tcSettings.Controls.Add(this.tpHotkeys);
             this.tcSettings.Controls.Add(this.tpImage);
             this.tcSettings.Controls.Add(this.tpClipboardUpload);
             this.tcSettings.Controls.Add(this.tpCapture);
@@ -353,6 +357,24 @@
             this.cbBufferSize.Size = new System.Drawing.Size(64, 21);
             this.cbBufferSize.TabIndex = 0;
             this.cbBufferSize.SelectedIndexChanged += new System.EventHandler(this.cbBufferSize_SelectedIndexChanged);
+            // 
+            // tpHotkeys
+            // 
+            this.tpHotkeys.Controls.Add(this.hmHotkeys);
+            this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
+            this.tpHotkeys.Name = "tpHotkeys";
+            this.tpHotkeys.Size = new System.Drawing.Size(523, 259);
+            this.tpHotkeys.TabIndex = 9;
+            this.tpHotkeys.Text = "Hotkeys";
+            this.tpHotkeys.UseVisualStyleBackColor = true;
+            // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 259);
+            this.hmHotkeys.TabIndex = 0;
             // 
             // tpImage
             // 
@@ -599,6 +621,27 @@
             this.txtNameFormatPattern.TabIndex = 16;
             this.txtNameFormatPattern.TextChanged += new System.EventHandler(this.txtNameFormatPattern_TextChanged);
             // 
+            // tpCapture
+            // 
+            this.tpCapture.Controls.Add(this.pgCapture);
+            this.tpCapture.Location = new System.Drawing.Point(4, 22);
+            this.tpCapture.Name = "tpCapture";
+            this.tpCapture.Padding = new System.Windows.Forms.Padding(5);
+            this.tpCapture.Size = new System.Drawing.Size(523, 259);
+            this.tpCapture.TabIndex = 8;
+            this.tpCapture.Text = "Capture";
+            this.tpCapture.UseVisualStyleBackColor = true;
+            // 
+            // pgCapture
+            // 
+            this.pgCapture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgCapture.Location = new System.Drawing.Point(5, 5);
+            this.pgCapture.Name = "pgCapture";
+            this.pgCapture.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.pgCapture.Size = new System.Drawing.Size(513, 249);
+            this.pgCapture.TabIndex = 0;
+            this.pgCapture.ToolbarVisible = false;
+            // 
             // tpHistory
             // 
             this.tpHistory.Controls.Add(this.lblHistoryInfo);
@@ -746,27 +789,6 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
-            // tpCapture
-            // 
-            this.tpCapture.Controls.Add(this.pgCapture);
-            this.tpCapture.Location = new System.Drawing.Point(4, 22);
-            this.tpCapture.Name = "tpCapture";
-            this.tpCapture.Padding = new System.Windows.Forms.Padding(5);
-            this.tpCapture.Size = new System.Drawing.Size(523, 259);
-            this.tpCapture.TabIndex = 8;
-            this.tpCapture.Text = "Capture";
-            this.tpCapture.UseVisualStyleBackColor = true;
-            // 
-            // pgCapture
-            // 
-            this.pgCapture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgCapture.Location = new System.Drawing.Point(5, 5);
-            this.pgCapture.Name = "pgCapture";
-            this.pgCapture.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgCapture.Size = new System.Drawing.Size(513, 249);
-            this.pgCapture.TabIndex = 0;
-            this.pgCapture.ToolbarVisible = false;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -786,19 +808,20 @@
             this.tpUpload.ResumeLayout(false);
             this.tpUpload.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUploadLimit)).EndInit();
+            this.tpHotkeys.ResumeLayout(false);
             this.tpImage.ResumeLayout(false);
             this.tpImage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudUseImageFormat2After)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudImageJPEGQuality)).EndInit();
             this.tpClipboardUpload.ResumeLayout(false);
             this.tpClipboardUpload.PerformLayout();
+            this.tpCapture.ResumeLayout(false);
             this.tpHistory.ResumeLayout(false);
             this.tpHistory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHistoryMaxItemCount)).EndInit();
             this.tpProxy.ResumeLayout(false);
             this.tpDebug.ResumeLayout(false);
             this.tpDebug.PerformLayout();
-            this.tpCapture.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -862,5 +885,7 @@
         private System.Windows.Forms.CheckBox cbShowTray;
         private System.Windows.Forms.TabPage tpCapture;
         private System.Windows.Forms.PropertyGrid pgCapture;
+        private System.Windows.Forms.TabPage tpHotkeys;
+        private HelpersLib.Hotkey.HotkeyManagerControl hmHotkeys;
     }
 }

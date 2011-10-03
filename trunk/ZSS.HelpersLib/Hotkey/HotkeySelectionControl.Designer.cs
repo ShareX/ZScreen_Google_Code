@@ -35,16 +35,15 @@
             // lblHotkeyDescription
             // 
             this.lblHotkeyDescription.AutoSize = true;
-            this.lblHotkeyDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblHotkeyDescription.Location = new System.Drawing.Point(8, 8);
+            this.lblHotkeyDescription.Location = new System.Drawing.Point(0, 5);
             this.lblHotkeyDescription.Name = "lblHotkeyDescription";
-            this.lblHotkeyDescription.Size = new System.Drawing.Size(76, 16);
+            this.lblHotkeyDescription.Size = new System.Drawing.Size(60, 13);
             this.lblHotkeyDescription.TabIndex = 0;
             this.lblHotkeyDescription.Text = "Description";
             // 
             // btnSetHotkey
             // 
-            this.btnSetHotkey.Location = new System.Drawing.Point(296, 5);
+            this.btnSetHotkey.Location = new System.Drawing.Point(288, 0);
             this.btnSetHotkey.Name = "btnSetHotkey";
             this.btnSetHotkey.Size = new System.Drawing.Size(195, 23);
             this.btnSetHotkey.TabIndex = 1;
@@ -59,7 +58,7 @@
             this.Controls.Add(this.btnSetHotkey);
             this.Controls.Add(this.lblHotkeyDescription);
             this.Name = "HotkeySelectionControl";
-            this.Size = new System.Drawing.Size(500, 35);
+            this.Size = new System.Drawing.Size(483, 23);
             this.ResumeLayout(false);
             this.PerformLayout();
 

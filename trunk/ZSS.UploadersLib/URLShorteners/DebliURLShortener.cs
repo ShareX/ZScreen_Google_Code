@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System.Collections.Generic;
-using HelpersLib;
 
 namespace UploadersLib.URLShorteners
 {

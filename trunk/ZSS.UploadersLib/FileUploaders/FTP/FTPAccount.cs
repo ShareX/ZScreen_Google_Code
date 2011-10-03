@@ -25,16 +25,15 @@
 
 using System;
 using System.ComponentModel;
-using HelpersLib;
-using UploadersLib.HelperClasses;
 using System.Drawing.Design;
+using HelpersLib;
 using Starksoft.Net.Ftp;
+using UploadersLib.HelperClasses;
 
 namespace UploadersLib
 {
     public class FTPAccount : ICloneable
     {
-
         [Category("Account"), Description("Connection Protocol"), DefaultValue(FTPProtocol.FTP)]
         public FTPProtocol Protocol { get; set; }
 

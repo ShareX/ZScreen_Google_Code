@@ -63,6 +63,7 @@ namespace ZScreenLib
         public TaskStatus Status { get; private set; }
         public bool IsWorking { get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; } }
         public bool IsStopped { get; private set; }
+
         #region Enums
 
         public enum TaskState
@@ -151,7 +152,7 @@ namespace ZScreenLib
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
         public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
         public JobLevel3 Job3 { get; private set; }  // Shorten URL, Upload Text, Index Folder, etc.
-        
+
         public List<string> Errors { get; set; }
 
         public bool IsError
@@ -364,7 +365,7 @@ namespace ZScreenLib
                     if (progress != null)
                     {
                         Progress = progress;
-                       // OnUploadProgressChanged2();
+                        // OnUploadProgressChanged2();
                     }
                     break;
             }
@@ -435,7 +436,7 @@ namespace ZScreenLib
             Dispose();
         }
 
-        #endregion
+        #endregion Task Events
 
         #region Populating Task
 
@@ -1028,7 +1029,6 @@ namespace ZScreenLib
             EndTime = DateTime.Now;
         }
 
-
         public void UploadImage()
         {
             if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
@@ -1262,7 +1262,7 @@ namespace ZScreenLib
                             url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
                             ur = CreateThumbnail(url, fu);
                             break;
-                    }                   
+                    }
                 }
             }
             catch (Exception ex)
@@ -1309,6 +1309,7 @@ namespace ZScreenLib
             }
             return null;
         }
+
         private UploadResult CreateThumbnail(string url, SFTPUploader fu)
         {
             if (!string.IsNullOrEmpty(url))

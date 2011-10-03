@@ -44,6 +44,7 @@ namespace ZUploader
         {
             InitializeComponent();
             LoadSettings();
+            hmHotkeys.PrepareHotkeys(Program.mainForm.HotkeyManager);
             loaded = true;
         }
 

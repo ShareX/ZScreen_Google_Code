@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using HelpersLib;
 
 namespace ZScreenLib
@@ -101,5 +99,5 @@ namespace ZScreenLib
             Engine.CoreConf.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.CoreConf.AutoIncrement has to be updated
             return string.Format("{0}.{1}", fn, ext);
         }
-   }
+    }
 }

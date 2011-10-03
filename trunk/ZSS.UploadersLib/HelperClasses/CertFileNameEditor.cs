@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-
 namespace UploadersLib.HelperClasses
 {
     internal class CertFileNameEditor : FileNameEditor
