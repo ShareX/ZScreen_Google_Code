@@ -7,7 +7,7 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat)
+        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat, bool targetFileSize = true)
         {
             MemoryStream stream = img.SaveImage(wf, wf.ImageFormat);
 
@@ -19,19 +19,23 @@ namespace ZScreenLib
                 stream = img.SaveImage(wf, wf.ImageFormat2);
                 StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
 
-                while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
+                if (targetFileSize)
                 {
-                    if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
+                    while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
                     {
-                        break;
-                    }
+                        if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
+                        {
+                            break;
+                        }
 
-                    wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
-                    stream = img.SaveImage(wf, EImageFormat.JPEG);
-                    StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+                        wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
+                        stream = img.SaveImage(wf, EImageFormat.JPEG);
+                        StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+                    }
                 }
 
                 imageFormat = wf.ImageFormat2;
+
             }
             else
             {
@@ -46,7 +50,7 @@ namespace ZScreenLib
         private static string ConvertImageString(long streamLengthPrevious, Workflow profile, Stream stream)
         {
             StringBuilder sbMsg = new StringBuilder();
-            sbMsg.Append(string.Format("Converting {0} KiB {1} to {2} {3} KiB to reach {4} KiB",
+            sbMsg.Append(string.Format("Converting {0} KiB {1} to {2} {3} KiB target {4} KiB",
                                                 streamLengthPrevious,
                                                 profile.ImageFormat.GetDescription(),
                                                 stream.Length / 1024,

@@ -469,7 +469,7 @@ namespace ZScreenLib
                 else
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, targetFileSize: false);
                     string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
                     string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
@@ -483,11 +483,10 @@ namespace ZScreenLib
                     if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                     {
                         PerformActions();
+                        // Data should be set after the image is processed
+                        Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
                     }
                 }
-
-                // Data should be set after the image is processed
-                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
             }
 
             return tempImage != null;
@@ -882,6 +881,7 @@ namespace ZScreenLib
                             app.OpenFile(LocalFilePath);
                         }
                     }
+                    StaticHelper.WriteLine(string.Format("Performed Actions using {0}.", app.Name));
                 }
             }
         }
