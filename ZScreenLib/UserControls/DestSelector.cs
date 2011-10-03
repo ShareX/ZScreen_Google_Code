@@ -208,10 +208,6 @@ namespace ZScreenLib
                 {
                     case ImageUploaderType.FileUploader:
                         tsmi.Enabled = bHasValidFileUploader;
-                        if (!tsmi.Enabled)
-                        {
-                            tsmi.Checked = false;
-                        }
                         break;
                     case ImageUploaderType.FLICKR:
                         tsmi.Enabled = !string.IsNullOrEmpty(Engine.MyWorkflow.OutputsConfig.FlickrAuthInfo.Token);
@@ -305,30 +301,25 @@ namespace ZScreenLib
 
         private bool HasValidFileUploader()
         {
-            bool success = true;
-
             foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
             {
                 FileUploaderType ut = (FileUploaderType)tsmi.Tag;
                 switch (ut)
                 {
                     case FileUploaderType.CustomUploader:
-                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.CustomUploadersList.Count > 0;
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.CustomUploadersList.Count > 0;
                         break;
                     case FileUploaderType.Dropbox:
-                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.DropboxOAuthInfo != null;
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.DropboxOAuthInfo != null;
                         break;
                     case FileUploaderType.FTP:
-                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0;
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0;
                         break;
                     case FileUploaderType.Minus:
-                        success = tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MinusConfig.Tokens.Count > 0;
+                        tsmi.Enabled = Engine.MyWorkflow.OutputsConfig.MinusConfig.Tokens.Count > 0;
                         break;
                     case FileUploaderType.RapidShare:
-                        success = tsmi.Enabled;
-                        break;
                     case FileUploaderType.SendSpace:
-                        success = tsmi.Enabled;
                         break;
                 }
             }
@@ -343,7 +334,7 @@ namespace ZScreenLib
 
             foreach (ToolStripMenuItem tsmi in tsddbDestFile.DropDownItems)
             {
-                if (tsmi.Enabled && tsmi.Checked)
+                if (tsmi.Enabled)
                 {
                     return true;
                 }
