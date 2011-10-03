@@ -19,16 +19,16 @@ namespace ZScreenLib.Forms
             IntPtr hBitmap = IntPtr.Zero;
             IntPtr oldBitmap = IntPtr.Zero;
             IntPtr screenDc = NativeMethods.GetDC(IntPtr.Zero);
-            IntPtr memDc = GDI.CreateCompatibleDC(screenDc);
+            IntPtr memDc = NativeMethods.CreateCompatibleDC(screenDc);
 
             try
             {
                 hBitmap = bmp.GetHbitmap(Color.FromArgb(0));
-                oldBitmap = GDI.SelectObject(memDc, hBitmap);
+                oldBitmap = NativeMethods.SelectObject(memDc, hBitmap);
                 SIZE size = new SIZE(bmp.Width, bmp.Height);
                 POINT pointSource = new POINT(this.Left, this.Top);
                 POINT topPos = new POINT(0, 0);
-                NativeMethods.BLENDFUNCTION blend;
+                BLENDFUNCTION blend;
                 blend.BlendOp = 0;
                 blend.BlendFlags = 0;
                 blend.SourceConstantAlpha = byte.MaxValue;
@@ -45,11 +45,11 @@ namespace ZScreenLib.Forms
 
                 if (hBitmap != IntPtr.Zero)
                 {
-                    GDI.SelectObject(memDc, oldBitmap);
-                    GDI.DeleteObject(hBitmap);
+                    NativeMethods.SelectObject(memDc, oldBitmap);
+                    NativeMethods.DeleteObject(hBitmap);
                 }
 
-                GDI.DeleteDC(memDc);
+                NativeMethods.DeleteDC(memDc);
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using HelpersLib;
 using UploadersAPILib;
@@ -7,8 +9,6 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.OtherServices;
 using ZScreenLib;
-using System.IO;
-using System.Threading;
 
 namespace ZScreenGUI
 {
@@ -20,7 +20,7 @@ namespace ZScreenGUI
             {
                 switch (m.Msg)
                 {
-                    case NativeMethods.WM_SYSCOMMAND:
+                    case (int)WM.SYSCOMMAND:
                         if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {
                             switch (Engine.AppConf.WindowButtonActionMinimize)
@@ -166,6 +166,6 @@ namespace ZScreenGUI
             }
         }
 
-        #endregion
+        #endregion Backup & Restore
     }
 }

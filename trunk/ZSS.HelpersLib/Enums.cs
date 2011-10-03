@@ -173,10 +173,6 @@ namespace HelpersLib
         AutoCapture,
         [Description("Drop Window")]
         DropWindow,
-        /*
-        [Description("Google Translate")]
-        LanguageTranslator,
-        */
         [Description("Color Picker")]
         ScreenColorPicker,
         [Description("Twitter Client")]

@@ -122,6 +122,8 @@ namespace ZUploader
 
         private void CaptureWindow(IntPtr handle, bool autoHideForm = true)
         {
+            autoHideForm = autoHideForm && handle != this.Handle;
+
             Capture(() =>
             {
                 NativeMethods.SetForegroundWindow(handle);
@@ -152,7 +154,7 @@ namespace ZUploader
         {
             tsmiWindow.DropDownItems.Clear();
 
-            WindowsList windowsList = new WindowsList(this.Handle);
+            WindowsList windowsList = new WindowsList();
             List<WindowInfo> windows = windowsList.GetVisibleWindowsList();
 
             foreach (WindowInfo window in windows)
@@ -160,6 +162,7 @@ namespace ZUploader
                 string title = window.Text.Truncate(50);
                 ToolStripItem tsi = tsmiWindow.DropDownItems.Add(title);
                 tsi.Click += tsmiWindowItems_Click;
+
                 using (Icon icon = window.Icon)
                 {
                     if (icon != null)
@@ -167,6 +170,7 @@ namespace ZUploader
                         tsi.Image = icon.ToBitmap();
                     }
                 }
+
                 tsi.Tag = window;
             }
         }

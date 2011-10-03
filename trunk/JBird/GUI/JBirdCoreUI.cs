@@ -164,7 +164,7 @@ namespace JBirdGUI
             timer2.Tick += (sender, e) =>
             {
                 timer2.Stop();
-                NativeMethods.ShowWindow(Handle, (int)NativeMethods.WindowShowStyle.ShowNormal);
+                NativeMethods.ShowWindow(Handle, (int)WindowShowStyle.ShowNormal);
             };
 
             Hide();
