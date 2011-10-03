@@ -305,15 +305,15 @@ namespace GraphicsMgrLib
             {
                 IntPtr zero = IntPtr.Zero;
 
-                if (GDI.GdipLoadImageFromFile(path, out zero) == 0 &&
-                    GDI.GdipImageForceValidation(new HandleRef(null, zero)) == 0)
+                if (NativeMethods.GdipLoadImageFromFile(path, out zero) == 0 &&
+                    NativeMethods.GdipImageForceValidation(new HandleRef(null, zero)) == 0)
                 {
                     result = true;
                 }
 
                 if (zero != IntPtr.Zero)
                 {
-                    GDI.IntGdipDisposeImage(new HandleRef(null, zero));
+                    NativeMethods.GdipDisposeImage(new HandleRef(null, zero));
                 }
             }
 

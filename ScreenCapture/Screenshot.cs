@@ -109,7 +109,7 @@ namespace ScreenCapture
             {
                 IntPtr hdcDest = g.GetHdc();
                 IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
-                GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+                NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
                 g.ReleaseHdc(hdcDest);
                 NativeMethods.ReleaseDC(handle, hdcSrc);
             }
@@ -122,22 +122,22 @@ namespace ScreenCapture
             // Get the hDC of the target window
             IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
             // Create a device context we can copy to
-            IntPtr hdcDest = GDI.CreateCompatibleDC(hdcSrc);
+            IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
             // Create a bitmap we can copy it to
-            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
+            IntPtr hBitmap = NativeMethods.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
             // Select the bitmap object
-            IntPtr hOld = GDI.SelectObject(hdcDest, hBitmap);
+            IntPtr hOld = NativeMethods.SelectObject(hdcDest, hBitmap);
             // BitBlt over
-            GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+            NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
             // Restore selection
-            GDI.SelectObject(hdcDest, hOld);
+            NativeMethods.SelectObject(hdcDest, hOld);
             // Clean up
-            GDI.DeleteDC(hdcDest);
+            NativeMethods.DeleteDC(hdcDest);
             NativeMethods.ReleaseDC(handle, hdcSrc);
             // Get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
             // Free up the Bitmap object
-            GDI.DeleteObject(hBitmap);
+            NativeMethods.DeleteObject(hBitmap);
 
             return img;
         }
@@ -149,7 +149,7 @@ namespace ScreenCapture
 
         private static void DrawCursorToImage(Image img, Point offset)
         {
-            using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
+            using (MyCursor cursor = NativeMethods.CaptureCursor())
             {
                 cursor.Position.Offset(-offset.X, -offset.Y);
 

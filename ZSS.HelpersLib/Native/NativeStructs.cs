@@ -24,11 +24,9 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Windows.Forms;
 
 namespace HelpersLib
 {
@@ -71,8 +69,6 @@ namespace HelpersLib
               ^ ((Height << 7) | (Height >> 0x19));
         }
 
-        #region Operator overloads
-
         public static implicit operator Rectangle(RECT rect)
         {
             return rect.ToRectangle();
@@ -82,8 +78,6 @@ namespace HelpersLib
         {
             return FromRectangle(rect);
         }
-
-        #endregion Operator overloads
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -140,6 +134,110 @@ namespace HelpersLib
             : this()   // Allows automatic initialization of "cbSize" with "new WINDOWINFO(null/true/false)".
         {
             cbSize = (UInt32)(Marshal.SizeOf(typeof(WINDOWINFO)));
+        }
+    }
+
+    public struct WINDOWPLACEMENT
+    {
+        public int length;
+        public int flags;
+        public int showCmd;
+        public Point ptMinPosition;
+        public Point ptMaxPosition;
+        public Rectangle rcNormalPosition;
+    }
+
+    public struct BLENDFUNCTION
+    {
+        public byte BlendOp;
+        public byte BlendFlags;
+        public byte SourceConstantAlpha;
+        public byte AlphaFormat;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct APPBARDATA
+    {
+        public int cbSize;
+        public IntPtr hWnd;
+        public int uCallbackMessage;
+        public int uEdge;
+        public RECT rc;
+        public IntPtr lParam;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DWM_BLURBEHIND
+    {
+        public DWM_BB dwFlags;
+        public bool fEnable;
+        public IntPtr hRgnBlur;
+        public bool fTransitionOnMaximized;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MARGINS
+    {
+        public int leftWidth;
+        public int rightWidth;
+        public int topHeight;
+        public int bottomHeight;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DWM_THUMBNAIL_PROPERTIES
+    {
+        public int dwFlags;
+        public RECT rcDestination;
+        public RECT rcSource;
+        public byte opacity;
+        public bool fVisible;
+        public bool fSourceClientAreaOnly;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IconInfo
+    {
+        public bool fIcon;         // Specifies whether this structure defines an icon or a cursor. A value of TRUE specifies
+        public Int32 xHotspot;     // Specifies the x-coordinate of a cursor's hot spot. If this structure defines an icon, the hot
+        public Int32 yHotspot;     // Specifies the y-coordinate of the cursor's hot spot. If this structure defines an icon, the hot
+        public IntPtr hbmMask;     // (HBITMAP) Specifies the icon bitmask bitmap. If this structure defines a black and white icon,
+        public IntPtr hbmColor;    // (HBITMAP) Handle to the icon color bitmap. This member can be optional if this
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct CursorInfo
+    {
+        public Int32 cbSize;        // Specifies the size, in bytes, of the structure.
+        public Int32 flags;         // Specifies the cursor state. This parameter can be one of the following values:
+        public IntPtr hCursor;      // Handle to the cursor.
+        public Point ptScreenPos;   // A POINT structure that receives the screen coordinates of the cursor.
+    }
+
+    public class MyCursor : IDisposable
+    {
+        public Cursor Cursor;
+        public Point Position;
+        public Bitmap Bitmap;
+
+        public MyCursor()
+        {
+            this.Cursor = Cursor.Current;
+            this.Position = new Point(Cursor.Position.X - this.Cursor.HotSpot.X, Cursor.Position.Y - this.Cursor.HotSpot.Y);
+            this.Bitmap = Icon.FromHandle(this.Cursor.Handle).ToBitmap();
+        }
+
+        public MyCursor(Cursor cursor, Point position, Bitmap bitmap)
+        {
+            this.Cursor = cursor;
+            this.Position = position;
+            this.Bitmap = bitmap;
+        }
+
+        public void Dispose()
+        {
+            Cursor.Dispose();
+            Bitmap.Dispose();
         }
     }
 }

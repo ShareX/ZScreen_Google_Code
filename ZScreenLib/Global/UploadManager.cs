@@ -290,7 +290,7 @@ namespace ZScreenLib
                     {
                         ClipboardOptions cmp = new ClipboardOptions(task);
                         cmp.Icon = Resources.zss_main;
-                        if (showDialog) { cmp.ShowDialog(); } else { NativeMethods.ShowWindow(cmp.Handle, (int)NativeMethods.WindowShowStyle.ShowNoActivate); }
+                        if (showDialog) { cmp.ShowDialog(); } else { NativeMethods.ShowWindow(cmp.Handle, (int)WindowShowStyle.ShowNoActivate); }
                     }
                 }
 

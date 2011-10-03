@@ -53,11 +53,11 @@ namespace HelpersLib
 
             Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
 
-            NativeMethods.Modifiers modifiers = NativeMethods.Modifiers.None;
+            Modifiers modifiers = Modifiers.None;
 
-            if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= NativeMethods.Modifiers.Alt;
-            if ((hotkey & Keys.Control) == Keys.Control) modifiers |= NativeMethods.Modifiers.Control;
-            if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= NativeMethods.Modifiers.Shift;
+            if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= Modifiers.Alt;
+            if ((hotkey & Keys.Control) == Keys.Control) modifiers |= Modifiers.Control;
+            if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= Modifiers.Shift;
 
             ushort id = 0;
 

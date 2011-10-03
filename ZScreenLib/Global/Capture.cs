@@ -29,9 +29,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 using ScreenCapture;
 using ZScreenLib.Helpers;
-using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -72,22 +72,22 @@ namespace ZScreenLib
             // Get the hDC of the target window
             IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
             // Create a device context we can copy to
-            IntPtr hdcDest = GDI.CreateCompatibleDC(hdcSrc);
+            IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
             // Create a bitmap we can copy it to
-            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
+            IntPtr hBitmap = NativeMethods.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
             // Select the bitmap object
-            IntPtr hOld = GDI.SelectObject(hdcDest, hBitmap);
+            IntPtr hOld = NativeMethods.SelectObject(hdcDest, hBitmap);
             // BitBlt over
-            GDI.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+            NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
             // Restore selection
-            GDI.SelectObject(hdcDest, hOld);
+            NativeMethods.SelectObject(hdcDest, hOld);
             // Clean up
-            GDI.DeleteDC(hdcDest);
+            NativeMethods.DeleteDC(hdcDest);
             NativeMethods.ReleaseDC(handle, hdcSrc);
             // Get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
             // Free up the Bitmap object
-            GDI.DeleteObject(hBitmap);
+            NativeMethods.DeleteObject(hBitmap);
             return img;
         }
 
@@ -195,7 +195,7 @@ namespace ZScreenLib
                     windowRect.Inflate(offset, offset);
                     windowRect.Intersect(GraphicsMgr.GetScreenBounds());
 
-                    NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                    NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                     NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                     Application.DoEvents();
                     whiteBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
@@ -331,7 +331,7 @@ namespace ZScreenLib
                         form.ShowInTaskbar = false;
                         form.BackColor = Color.Red;
 
-                        NativeMethods.ShowWindow(form.Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                        NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                         NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                         Application.DoEvents();
                         redBGImage = CaptureRectangle(windowRect) as Bitmap;
@@ -386,7 +386,7 @@ namespace ZScreenLib
 
                 form.Show();
 
-                NativeMethods.DWM_THUMBNAIL_PROPERTIES props = new NativeMethods.DWM_THUMBNAIL_PROPERTIES();
+                DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
                 props.dwFlags = NativeMethods.DWM_TNP_VISIBLE | NativeMethods.DWM_TNP_RECTDESTINATION | NativeMethods.DWM_TNP_OPACITY;
                 props.fVisible = true;
                 props.opacity = (byte)255;
@@ -458,7 +458,7 @@ namespace ZScreenLib
             {
                 gfxBmp.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(Point.Empty, bmp.Size));
             }
-            IntPtr hRgn = GDI.CreateRectRgn(0, 0, 0, 0);
+            IntPtr hRgn = NativeMethods.CreateRectRgn(0, 0, 0, 0);
             NativeMethods.GetWindowRgn(hwnd, hRgn);
             Region region = Region.FromHrgn(hRgn);
             if (!region.IsEmpty(gfxBmp))
@@ -497,7 +497,7 @@ namespace ZScreenLib
 
         private static void DrawCursor(Image img, Point offset)
         {
-            using (NativeMethods.MyCursor cursor = NativeMethods.CaptureCursor())
+            using (MyCursor cursor = NativeMethods.CaptureCursor())
             {
                 cursor.Position.Offset(-offset.X, -offset.Y);
 

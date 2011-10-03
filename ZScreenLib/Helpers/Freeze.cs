@@ -31,7 +31,7 @@ namespace ZScreenLib.Helpers
                 {
                     foreach (ProcessThread pT in pProc.Threads)
                     {
-                        IntPtr ptrOpenThread = NativeMethods.OpenThread(NativeMethods.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                        IntPtr ptrOpenThread = NativeMethods.OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
                         if (ptrOpenThread != null)
                         {
                             NativeMethods.SuspendThread(ptrOpenThread);
@@ -50,7 +50,7 @@ namespace ZScreenLib.Helpers
                 {
                     foreach (ProcessThread pT in pProc.Threads)
                     {
-                        IntPtr ptrOpenThread = NativeMethods.OpenThread(NativeMethods.ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+                        IntPtr ptrOpenThread = NativeMethods.OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
                         if (ptrOpenThread != null)
                         {
                             NativeMethods.ResumeThread(ptrOpenThread);

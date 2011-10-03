@@ -112,9 +112,9 @@
     <Compile Include="Hotkey\HotkeySetting.cs" />
     <Compile Include="IClone.cs" />
     <Compile Include="Hotkey\KeyInfo.cs" />
-    <Compile Include="Native\GDI.cs" />
+    <Compile Include="Native\NativeEnums.cs" />
     <Compile Include="Native\NativeMethods.cs" />
-    <Compile Include="Native\Structs.cs" />
+    <Compile Include="Native\NativeStructs.cs" />
     <Compile Include="Printer\PrintForm.cs">
       <SubType>Form</SubType>
     </Compile>

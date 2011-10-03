@@ -1201,10 +1201,12 @@ namespace ZScreenGUI
         {
             nudSwitchAfterValueChanged();
         }
-        void nudSwitchAfter_LostFocus(object sender, EventArgs e)
+
+        private void nudSwitchAfter_LostFocus(object sender, EventArgs e)
         {
             nudSwitchAfterValueChanged();
         }
+
         private void nudSwitchAfterValueChanged()
         {
             Engine.MyWorkflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
@@ -1214,17 +1216,17 @@ namespace ZScreenGUI
                 cboSwitchFormat.Enabled = true;
         }
 
-        void gbImageSize_MouseDown(object sender, MouseEventArgs e)
+        private void gbImageSize_MouseDown(object sender, MouseEventArgs e)
         {
             gbImageSize.Focus();
         }
 
-        void gbPictureQuality_MouseDown(object sender, MouseEventArgs e)
+        private void gbPictureQuality_MouseDown(object sender, MouseEventArgs e)
         {
             gbPictureQuality.Focus();
         }
 
-        void tpCaptureQuality_MouseDown(object sender, MouseEventArgs e)
+        private void tpCaptureQuality_MouseDown(object sender, MouseEventArgs e)
         {
             tpCaptureQuality.Focus();
         }
@@ -1984,7 +1986,7 @@ namespace ZScreenGUI
             timer2.Tick += (sender, e) =>
             {
                 timer2.Stop();
-                NativeMethods.ShowWindow(Handle, (int)NativeMethods.WindowShowStyle.ShowNormalNoActivate);
+                NativeMethods.ShowWindow(Handle, (int)WindowShowStyle.ShowNormalNoActivate);
             };
 
             Hide();
