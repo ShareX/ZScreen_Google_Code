@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ZSS.HelpersLib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ZScreen")]
+[assembly: AssemblyCompany("ZScreen Developers")]
 [assembly: AssemblyProduct("ZSS.HelpersLib")]
 [assembly: AssemblyCopyright("Copyright 2008-2011 ZScreen Developers")]
 [assembly: AssemblyTrademark("")]
