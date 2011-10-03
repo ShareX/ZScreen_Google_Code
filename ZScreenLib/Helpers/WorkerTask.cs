@@ -1410,6 +1410,7 @@ namespace ZScreenLib
             {
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
                 DestinationName = fileUploaderType.GetDescription();
+                StaticHelper.WriteLine("Initialized " + DestinationName);
                 fileUploader.ProgressChanged += UploadProgressChanged;
                 UploadResult ur = new UploadResult();
                 ur = fileUploader.Upload(data, FileName);

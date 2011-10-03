@@ -62,6 +62,7 @@ namespace ZScreenLib
                 }
 
                 tvLinks.ExpandAll();
+                tvLinks.SelectedNode = tvLinks.Nodes[0].Nodes[0].Nodes[0];
 
                 Button btnCopyLink = new Button();
                 btnCopyLink.Text = "Copy &Link";
