@@ -542,17 +542,27 @@ namespace UploadersLib
 
         public static void TestFTPAccount(FTPAccount account, bool silent)
         {
-            string msg;
+            string msg = string.Empty;
             string sfp = account.GetSubFolderPath();
             switch (account.Protocol)
             {
                 case FTPProtocol.SFTP:
                     SFTP sftp = new SFTP(account);
                     sftp.Connect();
-                    sftp.ChangeDirectory(sfp);
+                    List<string> createddirs = new List<string>();
+                    if (!sftp.DirectoryExists(sfp))
+                    {
+                       createddirs  = sftp.CreateMultipleDirectorys(FTPHelpers.GetPaths(sfp));
+                    }
                     if (sftp.IsConnected)
                     {
-                        MessageBox.Show("Conected!\nProbably made this folder; " + sfp + " \n\nPing results:\n " + SendPing(account.Host, 3), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        msg = "Conected!\nCreated folders;\n";
+                        for (int x = 0; x <= createddirs.Count - 1; x++)
+                        {
+                            msg += createddirs[x] + "\n";
+                        }
+                        msg += " \n\nPing results:\n " + SendPing(account.Host, 3);
+                        MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         sftp.Disconnect();
                     }
                     break;
