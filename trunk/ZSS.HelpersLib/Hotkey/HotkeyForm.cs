@@ -126,15 +126,16 @@ namespace HelpersLib
             return UnregisterHotkey(hotkeyInfo);
         }
 
-        public void ChangeHotkey(int tag, Keys newHotkey)
+        public bool ChangeHotkey(int tag, Keys newHotkey, Action hotkeyPress = null)
         {
             HotkeyInfo hi = GetHotkeyInfoFromTag(tag);
 
             if (hi != null)
             {
                 UnregisterHotkey(hi);
-                RegisterHotkey(newHotkey, hi.HotkeyPress, tag);
             }
+
+            return RegisterHotkey(newHotkey, hotkeyPress, tag) != null;
         }
 
         public void UnregisterAllHotkeys()

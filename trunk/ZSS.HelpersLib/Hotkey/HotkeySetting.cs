@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -36,16 +37,28 @@ namespace HelpersLib.Hotkey
         public int Tag { get; set; }
 
         [XmlIgnore]
+        public Action Action { get; set; }
+
+        [XmlIgnore]
         public ToolStripMenuItem MenuItem { get; set; }
+
+        [XmlIgnore]
+        public bool IsActive { get; set; }
 
         public HotkeySetting()
         {
         }
 
-        public HotkeySetting(Keys hotkey, int tag = -1, ToolStripMenuItem menuItem = null)
+        public HotkeySetting(Keys hotkey)
         {
             Hotkey = hotkey;
+        }
+
+        public HotkeySetting(Keys hotkey, int tag, Action action, ToolStripMenuItem menuItem = null)
+            : this(hotkey)
+        {
             Tag = tag;
+            Action = action;
             MenuItem = menuItem;
         }
 
