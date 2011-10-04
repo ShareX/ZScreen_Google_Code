@@ -112,7 +112,7 @@ namespace HelpersLib.Hotkey
             hotkeySetting.MenuItem = menuItem;
             Settings.Add(hotkeySetting);
             hotkeySetting.UpdateMenuItemShortcut();
-            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId) != null;
+            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId);
         }
 
         public bool UpdateHotkey(HotkeySetting setting)

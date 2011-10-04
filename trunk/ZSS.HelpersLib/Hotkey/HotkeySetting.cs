@@ -32,6 +32,7 @@ namespace HelpersLib.Hotkey
     public class HotkeySetting
     {
         public Keys Hotkey { get; set; }
+
         public Keys HotkeyDefault { get; set; }
 
         [XmlIgnore]

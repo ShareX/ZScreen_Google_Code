@@ -51,7 +51,6 @@
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
-            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
@@ -86,6 +85,7 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -130,7 +130,7 @@
             this.pgProxy.Location = new System.Drawing.Point(5, 5);
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgProxy.Size = new System.Drawing.Size(513, 249);
+            this.pgProxy.Size = new System.Drawing.Size(513, 303);
             this.pgProxy.TabIndex = 1;
             this.pgProxy.ToolbarVisible = false;
             // 
@@ -149,7 +149,7 @@
             this.tcSettings.Location = new System.Drawing.Point(3, 3);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
-            this.tcSettings.Size = new System.Drawing.Size(531, 285);
+            this.tcSettings.Size = new System.Drawing.Size(531, 339);
             this.tcSettings.TabIndex = 5;
             // 
             // tpGeneral
@@ -165,7 +165,7 @@
             this.tpGeneral.Location = new System.Drawing.Point(4, 22);
             this.tpGeneral.Name = "tpGeneral";
             this.tpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGeneral.Size = new System.Drawing.Size(523, 259);
+            this.tpGeneral.Size = new System.Drawing.Size(523, 364);
             this.tpGeneral.TabIndex = 0;
             this.tpGeneral.Text = "General";
             this.tpGeneral.UseVisualStyleBackColor = true;
@@ -217,7 +217,7 @@
             this.lblGeneralInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblGeneralInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblGeneralInfo.ForeColor = System.Drawing.Color.White;
-            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblGeneralInfo.Location = new System.Drawing.Point(3, 332);
             this.lblGeneralInfo.Name = "lblGeneralInfo";
             this.lblGeneralInfo.Size = new System.Drawing.Size(517, 29);
             this.lblGeneralInfo.TabIndex = 16;
@@ -249,7 +249,7 @@
             this.tpUpload.Controls.Add(this.cbBufferSize);
             this.tpUpload.Location = new System.Drawing.Point(4, 22);
             this.tpUpload.Name = "tpUpload";
-            this.tpUpload.Size = new System.Drawing.Size(523, 259);
+            this.tpUpload.Size = new System.Drawing.Size(523, 364);
             this.tpUpload.TabIndex = 7;
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
@@ -363,18 +363,10 @@
             this.tpHotkeys.Controls.Add(this.hmHotkeys);
             this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
             this.tpHotkeys.Name = "tpHotkeys";
-            this.tpHotkeys.Size = new System.Drawing.Size(523, 259);
+            this.tpHotkeys.Size = new System.Drawing.Size(523, 313);
             this.tpHotkeys.TabIndex = 9;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
-            // 
-            // hmHotkeys
-            // 
-            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
-            this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(523, 259);
-            this.hmHotkeys.TabIndex = 0;
             // 
             // tpImage
             // 
@@ -394,7 +386,7 @@
             this.tpImage.Location = new System.Drawing.Point(4, 22);
             this.tpImage.Name = "tpImage";
             this.tpImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImage.Size = new System.Drawing.Size(523, 259);
+            this.tpImage.Size = new System.Drawing.Size(523, 364);
             this.tpImage.TabIndex = 4;
             this.tpImage.Text = "Image";
             this.tpImage.UseVisualStyleBackColor = true;
@@ -405,7 +397,7 @@
             this.lblImageInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblImageInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblImageInfo.ForeColor = System.Drawing.Color.White;
-            this.lblImageInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblImageInfo.Location = new System.Drawing.Point(3, 332);
             this.lblImageInfo.Name = "lblImageInfo";
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
@@ -566,7 +558,7 @@
             this.tpClipboardUpload.Location = new System.Drawing.Point(4, 22);
             this.tpClipboardUpload.Name = "tpClipboardUpload";
             this.tpClipboardUpload.Padding = new System.Windows.Forms.Padding(3);
-            this.tpClipboardUpload.Size = new System.Drawing.Size(523, 259);
+            this.tpClipboardUpload.Size = new System.Drawing.Size(523, 364);
             this.tpClipboardUpload.TabIndex = 6;
             this.tpClipboardUpload.Text = "Clipboard upload";
             this.tpClipboardUpload.UseVisualStyleBackColor = true;
@@ -577,7 +569,7 @@
             this.lblClipboardUploadInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblClipboardUploadInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblClipboardUploadInfo.ForeColor = System.Drawing.Color.White;
-            this.lblClipboardUploadInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblClipboardUploadInfo.Location = new System.Drawing.Point(3, 332);
             this.lblClipboardUploadInfo.Name = "lblClipboardUploadInfo";
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
@@ -627,7 +619,7 @@
             this.tpCapture.Location = new System.Drawing.Point(4, 22);
             this.tpCapture.Name = "tpCapture";
             this.tpCapture.Padding = new System.Windows.Forms.Padding(5);
-            this.tpCapture.Size = new System.Drawing.Size(523, 259);
+            this.tpCapture.Size = new System.Drawing.Size(523, 364);
             this.tpCapture.TabIndex = 8;
             this.tpCapture.Text = "Capture";
             this.tpCapture.UseVisualStyleBackColor = true;
@@ -638,7 +630,7 @@
             this.pgCapture.Location = new System.Drawing.Point(5, 5);
             this.pgCapture.Name = "pgCapture";
             this.pgCapture.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgCapture.Size = new System.Drawing.Size(513, 249);
+            this.pgCapture.Size = new System.Drawing.Size(513, 354);
             this.pgCapture.TabIndex = 0;
             this.pgCapture.ToolbarVisible = false;
             // 
@@ -654,7 +646,7 @@
             this.tpHistory.Location = new System.Drawing.Point(4, 22);
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistory.Size = new System.Drawing.Size(523, 259);
+            this.tpHistory.Size = new System.Drawing.Size(523, 364);
             this.tpHistory.TabIndex = 3;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
@@ -665,7 +657,7 @@
             this.lblHistoryInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblHistoryInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblHistoryInfo.ForeColor = System.Drawing.Color.White;
-            this.lblHistoryInfo.Location = new System.Drawing.Point(3, 227);
+            this.lblHistoryInfo.Location = new System.Drawing.Point(3, 332);
             this.lblHistoryInfo.Name = "lblHistoryInfo";
             this.lblHistoryInfo.Size = new System.Drawing.Size(517, 29);
             this.lblHistoryInfo.TabIndex = 15;
@@ -752,14 +744,15 @@
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
             this.tpProxy.Padding = new System.Windows.Forms.Padding(5);
-            this.tpProxy.Size = new System.Drawing.Size(523, 259);
+            this.tpProxy.Size = new System.Drawing.Size(523, 313);
             this.tpProxy.TabIndex = 2;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
             // btnAutofillProxy
             // 
-            this.btnAutofillProxy.Location = new System.Drawing.Point(432, 224);
+            this.btnAutofillProxy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutofillProxy.Location = new System.Drawing.Point(432, 272);
             this.btnAutofillProxy.Name = "btnAutofillProxy";
             this.btnAutofillProxy.Size = new System.Drawing.Size(75, 23);
             this.btnAutofillProxy.TabIndex = 2;
@@ -773,7 +766,7 @@
             this.tpDebug.Location = new System.Drawing.Point(4, 22);
             this.tpDebug.Name = "tpDebug";
             this.tpDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDebug.Size = new System.Drawing.Size(523, 259);
+            this.tpDebug.Size = new System.Drawing.Size(523, 364);
             this.tpDebug.TabIndex = 5;
             this.tpDebug.Text = "Debug";
             this.tpDebug.UseVisualStyleBackColor = true;
@@ -785,15 +778,23 @@
             this.txtDebugLog.Multiline = true;
             this.txtDebugLog.Name = "txtDebugLog";
             this.txtDebugLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDebugLog.Size = new System.Drawing.Size(517, 253);
+            this.txtDebugLog.Size = new System.Drawing.Size(517, 358);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
+            // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 313);
+            this.hmHotkeys.TabIndex = 0;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(537, 291);
+            this.ClientSize = new System.Drawing.Size(537, 345);
             this.Controls.Add(this.tcSettings);
             this.MaximizeBox = false;
             this.Name = "SettingsForm";

@@ -38,7 +38,7 @@
             this.flpHotkeys.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpHotkeys.Location = new System.Drawing.Point(0, 0);
             this.flpHotkeys.Name = "flpHotkeys";
-            this.flpHotkeys.Padding = new System.Windows.Forms.Padding(5);
+            this.flpHotkeys.Padding = new System.Windows.Forms.Padding(10);
             this.flpHotkeys.Size = new System.Drawing.Size(447, 256);
             this.flpHotkeys.TabIndex = 0;
             this.flpHotkeys.WrapContents = false;

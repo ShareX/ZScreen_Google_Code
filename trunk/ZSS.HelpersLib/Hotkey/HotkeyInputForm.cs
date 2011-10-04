@@ -31,7 +31,6 @@ namespace HelpersLib
 {
     public partial class HotkeyInputForm : Form
     {
-        public Keys KeyDefault { get; set; }
         public Keys SelectedKey
         {
             get
@@ -43,6 +42,8 @@ namespace HelpersLib
                 SetKey(value);
             }
         }
+
+        public Keys KeyDefault { get; set; }
 
         public KeyInfo SelectedKeyInfo
         {
@@ -57,9 +58,7 @@ namespace HelpersLib
         public HotkeyInputForm()
         {
             InitializeComponent();
-
             AddKeys();
-            ResetKey();
         }
 
         public HotkeyInputForm(Keys key, Keys keyDefault)
@@ -71,13 +70,13 @@ namespace HelpersLib
 
         private void AddKeys()
         {
-            // None, PrintScreen, A...Z, 0...9, F1...F12
-
             keys = new List<KeyInfo>();
 
             keys.Add(new KeyInfo(Keys.None));
-
             keys.Add(new KeyInfo(Keys.PrintScreen));
+            keys.Add(new KeyInfo(Keys.PageUp));
+            keys.Add(new KeyInfo(Keys.PageDown));
+            keys.Add(new KeyInfo(Keys.Space));
 
             for (Keys key = Keys.A; key <= Keys.Z; key++)
             {
@@ -100,11 +99,6 @@ namespace HelpersLib
             }
         }
 
-        private void ResetKey()
-        {
-            SetKey(KeyDefault);
-        }
-
         private Keys GetKey()
         {
             Keys key = Keys.None;
@@ -123,11 +117,13 @@ namespace HelpersLib
 
         private void SetKey(Keys key)
         {
-            cbControl.Checked = (key & Keys.Control) == Keys.Control;
-            cbShift.Checked = (key & Keys.Shift) == Keys.Shift;
-            cbAlt.Checked = (key & Keys.Alt) == Keys.Alt;
+            KeyInfo keyInfo = new KeyInfo(key);
 
-            Keys vk = key & ~Keys.Modifiers;
+            cbControl.Checked = keyInfo.Control;
+            cbShift.Checked = keyInfo.Shift;
+            cbAlt.Checked = keyInfo.Alt;
+
+            Keys vk = keyInfo.KeyCode;
 
             for (int i = 0; i < keys.Count; i++)
             {
@@ -153,7 +149,12 @@ namespace HelpersLib
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            ResetKey();
+            SetKey(KeyDefault);
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            SetKey(Keys.None);
         }
     }
 }

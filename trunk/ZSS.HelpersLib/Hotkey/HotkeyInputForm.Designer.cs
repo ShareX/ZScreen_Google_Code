@@ -35,6 +35,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbControl
@@ -74,14 +75,14 @@
             this.cbKeys.Location = new System.Drawing.Point(160, 14);
             this.cbKeys.MaxDropDownItems = 30;
             this.cbKeys.Name = "cbKeys";
-            this.cbKeys.Size = new System.Drawing.Size(104, 21);
+            this.cbKeys.Size = new System.Drawing.Size(128, 21);
             this.cbKeys.TabIndex = 3;
             // 
             // btnOK
             // 
             this.btnOK.Location = new System.Drawing.Point(8, 48);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(80, 23);
+            this.btnOK.Size = new System.Drawing.Size(64, 23);
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -89,9 +90,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(96, 48);
+            this.btnCancel.Location = new System.Drawing.Point(80, 48);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(80, 23);
+            this.btnCancel.Size = new System.Drawing.Size(64, 23);
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -99,20 +100,31 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(184, 48);
+            this.btnReset.Location = new System.Drawing.Point(152, 48);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(80, 23);
+            this.btnReset.Size = new System.Drawing.Size(64, 23);
             this.btnReset.TabIndex = 6;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(224, 48);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(64, 23);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // HotkeyInputForm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 84);
+            this.ClientSize = new System.Drawing.Size(297, 84);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -138,5 +150,6 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnClear;
     }
 }
