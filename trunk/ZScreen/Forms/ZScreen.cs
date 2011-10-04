@@ -1035,6 +1035,7 @@ namespace ZScreenGUI
         private void ZScreen_Deactivate(object sender, EventArgs e)
         {
             codesMenu.Close();
+            ucDestOptions.DropDownMenusClose();
         }
 
         private void txtWatermarkText_MouseDown(object sender, MouseEventArgs e)

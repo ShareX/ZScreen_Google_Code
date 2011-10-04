@@ -19,7 +19,6 @@ namespace ImageQueue
         private List<IPluginInterface> plugins;
 
         public Image DefaultImage { get; set; }
-        public Image EditedImage { get; private set; }
 
         public ImageEffectsGUI(string filePath)
             : this(Image.FromFile(filePath))
@@ -63,7 +62,7 @@ namespace ImageQueue
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
-            pbPreview.Image = EditedImage = GetImageForExport();
+            pbPreview.Image = GetImageForExport();
             lblPreview.Text = string.Format("Preview image ({0}x{1}) - {2} ms", pbPreview.Image.Width, pbPreview.Image.Height, timer.ElapsedMilliseconds);
             pbPreviewZoom.Image = GraphicsMgrImageEffects.Zoom(pbPreview.Image, 8, 12);
         }
@@ -72,7 +71,8 @@ namespace ImageQueue
         {
             Image img = (Image)DefaultImage.Clone();
             IPluginItem[] plugins = lvEffects.Items.Cast<ListViewItem>().Where(x => x.Tag is IPluginItem).Select(x => (IPluginItem)x.Tag).ToArray();
-            return PluginManager.ApplyEffects(plugins, img);
+            Image tempImage = PluginManager.ApplyEffects(plugins, img);
+            return tempImage != null ? tempImage : DefaultImage;
         }
 
         private void lvEffects_SelectedIndexChanged(object sender, EventArgs e)

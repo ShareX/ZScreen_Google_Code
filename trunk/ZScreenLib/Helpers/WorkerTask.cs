@@ -881,7 +881,7 @@ namespace ZScreenLib
                         {
                             ImageEffectsGUI effects = new ImageEffectsGUI(tempImage);
                             effects.ShowDialog();
-                            tempImage = effects.EditedImage;
+                            tempImage = effects.GetImageForExport();
                         }
                         else if (File.Exists(app.Path))
                         {
