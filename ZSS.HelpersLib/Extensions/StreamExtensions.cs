@@ -87,6 +87,7 @@ namespace HelpersLib
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
                     stream.CopyStreamTo(fileStream);
+                    fileStream.Close();
                 }
 
                 return true;
