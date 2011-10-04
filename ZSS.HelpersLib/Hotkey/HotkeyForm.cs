@@ -47,51 +47,43 @@ namespace HelpersLib
             HotkeyList = new List<HotkeyInfo>();
         }
 
-        public HotkeyInfo RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = -1)
+        public bool RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = 0)
         {
-            if (IsHotkeyExist(hotkey)) return null;
+            KeyInfo keyInfo = new KeyInfo(hotkey);
 
-            Keys vk = hotkey & ~Keys.Control & ~Keys.Shift & ~Keys.Alt;
-
-            Modifiers modifiers = Modifiers.None;
-
-            if ((hotkey & Keys.Alt) == Keys.Alt) modifiers |= Modifiers.Alt;
-            if ((hotkey & Keys.Control) == Keys.Control) modifiers |= Modifiers.Control;
-            if ((hotkey & Keys.Shift) == Keys.Shift) modifiers |= Modifiers.Shift;
-
-            ushort id = 0;
-
-            try
+            if (keyInfo.KeyCode == Keys.None)
             {
-                string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8") + (int)hotkey;
-
-                id = NativeMethods.GlobalAddAtom(atomName);
-
-                if (id == 0)
-                {
-                    StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error: " + Marshal.GetLastWin32Error().ToString());
-                    return null;
-                }
-
-                if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)modifiers, (uint)vk))
-                {
-                    StaticHelper.WriteLine("Unable to register hotkey. Error: " + Marshal.GetLastWin32Error().ToString());
-                    return null;
-                }
-
-                HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
-
-                HotkeyList.Add(hotkeyInfo);
-
-                return hotkeyInfo;
-            }
-            catch (Exception e)
-            {
-                UnregisterHotkey(id);
-                StaticHelper.WriteException(e);
+                StaticHelper.WriteLine("Unable to register hotkey: None");
+                return false;
             }
 
-            return null;
+            if (IsHotkeyExist(hotkey))
+            {
+                StaticHelper.WriteLine("Hotkey already exist: " + keyInfo);
+                return false;
+            }
+
+            string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8") + (int)hotkey;
+
+            ushort id = NativeMethods.GlobalAddAtom(atomName);
+
+            if (id == 0)
+            {
+                StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)keyInfo.ModifiersEnum, (uint)keyInfo.KeyCode))
+            {
+                NativeMethods.GlobalDeleteAtom(id);
+                StaticHelper.WriteLine("Unable to register hotkey: {0}\r\nError code: {1}", keyInfo, Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
+            HotkeyList.Add(hotkeyInfo);
+
+            return true;
         }
 
         public bool UnregisterHotkey(ushort id)
@@ -135,7 +127,7 @@ namespace HelpersLib
                 UnregisterHotkey(hi);
             }
 
-            return RegisterHotkey(newHotkey, hotkeyPress, tag) != null;
+            return RegisterHotkey(newHotkey, hotkeyPress, tag);
         }
 
         public void UnregisterAllHotkeys()
@@ -174,7 +166,10 @@ namespace HelpersLib
 
                 if (hotkey != null)
                 {
-                    if (hotkey.HotkeyPress != null) hotkey.HotkeyPress();
+                    if (hotkey.HotkeyPress != null)
+                    {
+                        hotkey.HotkeyPress();
+                    }
 
                     OnKeyPressed(new KeyEventArgs(hotkey.Key));
                 }

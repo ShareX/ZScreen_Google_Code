@@ -32,6 +32,60 @@ namespace HelpersLib
     {
         public Keys Key { get; set; }
 
+        public Keys KeyCode
+        {
+            get
+            {
+                return Key & Keys.KeyCode;
+            }
+        }
+
+        public Keys ModifiersKeys
+        {
+            get
+            {
+                return Key & Keys.Modifiers;
+            }
+        }
+
+        public bool Alt
+        {
+            get
+            {
+                return (Key & Keys.Alt) == Keys.Alt;
+            }
+        }
+
+        public bool Control
+        {
+            get
+            {
+                return (Key & Keys.Control) == Keys.Control;
+            }
+        }
+
+        public bool Shift
+        {
+            get
+            {
+                return (Key & Keys.Shift) == Keys.Shift;
+            }
+        }
+
+        public Modifiers ModifiersEnum
+        {
+            get
+            {
+                Modifiers modifiers = Modifiers.None;
+
+                if (Alt) modifiers |= Modifiers.Alt;
+                if (Control) modifiers |= Modifiers.Control;
+                if (Shift) modifiers |= Modifiers.Shift;
+
+                return modifiers;
+            }
+        }
+
         public KeyInfo(Keys key)
         {
             Key = key;
@@ -39,38 +93,40 @@ namespace HelpersLib
 
         public override string ToString()
         {
-            string name = string.Empty;
+            string text = string.Empty;
 
-            if ((Key & Keys.Control) == Keys.Control)
+            if (Control)
             {
-                name += "Control + ";
+                text += "Control + ";
             }
 
-            if ((Key & Keys.Shift) == Keys.Shift)
+            if (Shift)
             {
-                name += "Shift + ";
+                text += "Shift + ";
             }
 
-            if ((Key & Keys.Alt) == Keys.Alt)
+            if (Alt)
             {
-                name += "Alt + ";
+                text += "Alt + ";
             }
 
-            Keys vk = Key & ~Keys.Modifiers;
-
-            if (vk >= Keys.D0 && vk <= Keys.D9)
+            if (KeyCode == Keys.PageDown)
             {
-                name += (vk - Keys.D0).ToString();
+                text += "Page Down";
+            }
+            else if (KeyCode >= Keys.D0 && KeyCode <= Keys.D9)
+            {
+                text += (KeyCode - Keys.D0).ToString();
             }
             else
             {
-                name += ProperString(vk);
+                text += ToStringWithSpaces(KeyCode);
             }
 
-            return name;
+            return text;
         }
 
-        private string ProperString(Keys key)
+        private string ToStringWithSpaces(Keys key)
         {
             string name = key.ToString();
 
