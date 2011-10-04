@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using Plugins;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace ImageManipulation
 {

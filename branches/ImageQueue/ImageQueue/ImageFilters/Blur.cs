@@ -7,6 +7,7 @@ using System.Drawing;
 using GraphicsMgrLib;
 using System.Drawing.Imaging;
 using System.ComponentModel;
+using HelpersLib;
 
 namespace ImageFilters
 {

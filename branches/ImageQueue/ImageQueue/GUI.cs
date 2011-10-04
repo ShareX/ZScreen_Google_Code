@@ -13,12 +13,12 @@ using System.Diagnostics;
 
 namespace ImageQueue
 {
-    public partial class Form1 : Form
+    public partial class GUI : Form
     {
         private List<IPluginInterface> plugins;
         private Image previewImage;
 
-        public Form1()
+        public GUI()
         {
             InitializeComponent();
             string pluginsPath = Path.Combine(Application.StartupPath, "Plugins");

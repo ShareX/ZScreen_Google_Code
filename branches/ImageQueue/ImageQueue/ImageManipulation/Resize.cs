@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using Plugins;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace ImageManipulation
 {
@@ -33,7 +34,7 @@ namespace ImageManipulation
 
         public override Image ApplyEffect(Image img)
         {
-            return GraphicsMgr.ChangeImageSize(img, size);
+            return GraphicsMgr.ChangeImageSize(img, size.Width, size.Height);
         }
     }
 }

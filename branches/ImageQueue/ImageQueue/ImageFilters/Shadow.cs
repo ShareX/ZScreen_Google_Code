@@ -4,6 +4,7 @@ using GraphicsMgrLib;
 using System.Drawing.Imaging;
 using System.ComponentModel;
 using System;
+using HelpersLib;
 
 namespace ImageFilters
 {
