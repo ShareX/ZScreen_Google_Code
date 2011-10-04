@@ -156,4 +156,9 @@ namespace HelpersLib
     {
         ZScreen, ZUploader
     }
+
+    public enum HotkeyStatus
+    {
+        Registered, Failed, NotConfigured
+    }
 }

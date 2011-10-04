@@ -115,7 +115,7 @@ namespace HelpersLib.Hotkey
             hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId);
         }
 
-        public bool UpdateHotkey(HotkeySetting setting)
+        public HotkeyStatus UpdateHotkey(HotkeySetting setting)
         {
             setting.UpdateMenuItemShortcut();
             setting.IsActive = hotkeyForm.ChangeHotkey(setting.Tag, setting.Hotkey, setting.Action);

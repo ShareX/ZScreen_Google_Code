@@ -68,13 +68,17 @@ namespace HelpersLib.Hotkey
 
         private void UpdateHotkeyStatus()
         {
-            if (Setting.IsActive)
+            switch (Setting.IsActive)
             {
-                lblIsHotkeyActive.BackColor = Color.PaleGreen;
-            }
-            else
-            {
-                lblIsHotkeyActive.BackColor = Color.IndianRed;
+                case HotkeyStatus.Failed:
+                    lblIsHotkeyActive.BackColor = Color.IndianRed;
+                    break;
+                case HotkeyStatus.NotConfigured:
+                    lblIsHotkeyActive.BackColor = Color.LightGoldenrodYellow;
+                    break;
+                case HotkeyStatus.Registered:
+                    lblIsHotkeyActive.BackColor = Color.PaleGreen;
+                    break;
             }
         }
 
