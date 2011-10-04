@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ImageQueue
 {
@@ -15,7 +16,7 @@ namespace ImageQueue
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI());
+            Application.Run(new ImageEffectsGUI(@"..\..\ZScreenTest.png"));
         }
     }
 }

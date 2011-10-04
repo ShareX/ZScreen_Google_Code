@@ -418,20 +418,20 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.conf.ActionsAppList.CheckSelected(lbSoftware.SelectedIndex))
+                    if (Engine.conf.ActionsAppsUser.CheckSelected(lbSoftware.SelectedIndex))
                     {
-                        Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                        Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                        tsm.Checked = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled;
+                        tsm.Checked = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled;
                     }
                 }
                 else if (sender.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Engine.conf.ActionsAppList.CheckSelected(sel))
+                    if (Engine.conf.ActionsAppsUser.CheckSelected(sel))
                     {
-                        Engine.conf.ActionsAppList[sel].Enabled = tsm.Checked;
+                        Engine.conf.ActionsAppsUser[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
                     }
                 }
@@ -566,7 +566,7 @@ namespace ZScreenGUI
         {
             if (temp != null)
             {
-                Engine.conf.ActionsAppList.Add(temp);
+                Engine.conf.ActionsAppsUser.Add(temp);
                 lbSoftware.Items.Add(temp);
                 lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
                 RewriteImageEditorsRightClickMenu();
@@ -588,7 +588,7 @@ namespace ZScreenGUI
 
             if (sel != -1)
             {
-                Engine.conf.ActionsAppList.RemoveAt(sel);
+                Engine.conf.ActionsAppsUser.RemoveAt(sel);
 
                 lbSoftware.Items.RemoveAt(sel);
 
@@ -603,7 +603,7 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Engine.conf.ImageEditor = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex];
+            Engine.conf.ImageEditor = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex];
         }
 
         private void ShowImageEditorsSettings()
@@ -613,7 +613,7 @@ namespace ZScreenGUI
                 Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
                 {
-                    Engine.conf.ActionsAppList[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                    Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnActionsRemove.Enabled = !app.Protected;
@@ -1124,7 +1124,7 @@ namespace ZScreenGUI
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Engine.conf.ActionsAppList)
+            foreach (Software app in Engine.conf.ActionsAppsUser)
             {
                 if (app != null && app.Name != null)
                 {
@@ -1460,9 +1460,9 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Engine.conf.ActionsAppList[lbSoftware.SelectedIndex];
+            Software temp = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex];
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-            Engine.conf.ActionsAppList[lbSoftware.SelectedIndex] = temp;
+            Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex] = temp;
             RewriteImageEditorsRightClickMenu();
         }
 

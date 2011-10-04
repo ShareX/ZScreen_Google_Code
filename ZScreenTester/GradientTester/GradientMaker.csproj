@@ -107,7 +107,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ZSS.Colors\ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
-      <Name>ZSS.ColorsLib</Name>
+      <Name>ColorsLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
