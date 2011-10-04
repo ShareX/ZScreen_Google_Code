@@ -940,7 +940,7 @@ namespace ZScreenLib
                     AddUploadResult(ur);
                 }
 
-                // todo: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
+                // TODO: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
 
                 if (!File.Exists(LocalFilePath))
                 {

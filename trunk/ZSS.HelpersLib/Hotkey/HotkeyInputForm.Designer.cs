@@ -135,7 +135,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "HotkeyInputForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "HotkeyInputForm";
+            this.Text = "Edit Hotkey";
             this.ResumeLayout(false);
             this.PerformLayout();
 
