@@ -1259,6 +1259,11 @@ namespace ZScreenLib
                     {
                         case FTPProtocol.SFTP:
                             sftp = new SFTPUploader(acc);
+                            if (!sftp.isInstantiated)
+                            {
+                                Errors.Add("An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.");
+                                return ur;
+                            }
                             sftp.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
                             url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath).URL : sftp.Upload(data, FileName).URL;
                             ur = CreateThumbnail(url, sftp);

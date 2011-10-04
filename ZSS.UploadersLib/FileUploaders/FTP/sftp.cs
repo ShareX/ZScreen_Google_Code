@@ -17,6 +17,7 @@ namespace UploadersLib.FileUploaders
         public FTPAccount FTPAccount { get; set; }
         public bool IsConnected { get { return Client.IsConnected; } }
         public string HomeDir { get; set; }
+        public bool isInstantiated { get; set; }
 
         //Variables
         SftpClient Client;
@@ -46,6 +47,14 @@ namespace UploadersLib.FileUploaders
             {
                 Client = new SftpClient(FTPAccount.Host, FTPAccount.Port, FTPAccount.UserName, new PrivateKeyFile(FTPAccount.Keypath, FTPAccount.Passphrase));
             }
+            else
+            {
+                //Need to do something here...
+                StaticHelper.WriteLine("Can't instantiate a SFTP client...");
+                isInstantiated = false;
+                return;
+            }
+            isInstantiated = true;
         }
 
         public void Connect()
@@ -74,7 +83,7 @@ namespace UploadersLib.FileUploaders
             {
                 Client.ChangeDirectory(Path);
             }
-            catch (SftpPathNotFoundException e)
+            catch (SftpPathNotFoundException)
             {
                 CreateDirectory(Path);
                 ChangeDirectory(Path);

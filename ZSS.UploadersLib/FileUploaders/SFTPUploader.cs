@@ -8,19 +8,23 @@ namespace UploadersLib
 {
     public sealed class SFTPUploader : FileUploader
     {
+       
         public FTPAccount FTPAccount;
+        SFTP sftpClient;
+        public bool isInstantiated { get { return sftpClient.isInstantiated; } }
 
         public SFTPUploader(FTPAccount account)
         {
             FTPAccount = account;
+            sftpClient = new SFTP(FTPAccount);
+            
         }
 
         public override UploadResult Upload(Stream stream, string fileName)
         {
             UploadResult result = new UploadResult();
 
-            using (SFTP sftpClient = new SFTP(FTPAccount))
-            {
+           
                 sftpClient.ProgressChanged += new Uploader.ProgressEventHandler(x => OnProgressChanged(x));
 
                 fileName = ZAppHelper.ReplaceIllegalChars(fileName, '_');
@@ -45,7 +49,7 @@ namespace UploadersLib
                 {
                     result.URL = FTPAccount.GetUriPath(fileName);
                 }
-            }
+            
 
             return result;
         }

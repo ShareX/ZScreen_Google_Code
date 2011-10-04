@@ -548,22 +548,29 @@ namespace UploadersLib
             {
                 case FTPProtocol.SFTP:
                     SFTP sftp = new SFTP(account);
-                    sftp.Connect();
-                    List<string> createddirs = new List<string>();
-                    if (!sftp.DirectoryExists(sfp))
+                    if (!sftp.isInstantiated)
                     {
-                       createddirs  = sftp.CreateMultipleDirectorys(FTPHelpers.GetPaths(sfp));
+                        msg = "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.";
+
                     }
-                    if (sftp.IsConnected)
+                    else
                     {
-                        msg = (createddirs.Count == 0) ? "Connected!" : "Conected!\nCreated folders;\n";
-                        for (int x = 0; x <= createddirs.Count - 1; x++)
+                        sftp.Connect();
+                        List<string> createddirs = new List<string>();
+                        if (!sftp.DirectoryExists(sfp))
                         {
-                            msg += createddirs[x] + "\n";
+                            createddirs = sftp.CreateMultipleDirectorys(FTPHelpers.GetPaths(sfp));
                         }
-                        msg += " \n\nPing results:\n " + SendPing(account.Host, 3);
-                        MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        sftp.Disconnect();
+                        if (sftp.IsConnected)
+                        {
+                            msg = (createddirs.Count == 0) ? "Connected!" : "Conected!\nCreated folders;\n";
+                            for (int x = 0; x <= createddirs.Count - 1; x++)
+                            {
+                                msg += createddirs[x] + "\n";
+                            }
+                            msg += " \n\nPing results:\n " + SendPing(account.Host, 3);
+                            sftp.Disconnect();
+                        }
                     }
                     break;
                 default:
@@ -610,11 +617,12 @@ namespace UploadersLib
                         }
                         else
                         {
-                            MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     break;
             }
+            MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public static string SendPing(string host)
