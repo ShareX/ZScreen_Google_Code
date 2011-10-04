@@ -66,6 +66,8 @@ namespace ZUploader
 
         private new void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)
         {
+            Screenshot.DrawCursor = Program.Settings.ShowCursor;
+
             if (autoHideForm)
             {
                 Hide();

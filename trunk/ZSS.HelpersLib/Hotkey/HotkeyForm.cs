@@ -70,7 +70,7 @@ namespace HelpersLib
             if (id == 0)
             {
                 StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
-                return HotkeyStatus.Registered;
+                return HotkeyStatus.Failed;
             }
 
             if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)keyInfo.ModifiersEnum, (uint)keyInfo.KeyCode))
