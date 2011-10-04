@@ -39,7 +39,7 @@ namespace ScreenCapture
         public RoundedRectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
-            Radius = 15;
+            Radius = 25;
 
             MouseWheel += new MouseEventHandler(RoundedRectangleRegionSurface_MouseWheel);
         }
@@ -68,6 +68,7 @@ namespace ScreenCapture
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    DrawObjects(g);
                     g.ResetClip();
                 }
 
@@ -77,18 +78,12 @@ namespace ScreenCapture
                 }
 
                 g.DrawPath(borderPen, regionPath);
-
-                if (Radius >= 30)
-                {
-                    g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
-                }
+                g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else
             {
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
-
-            DrawObjects(g);
         }
     }
 }
