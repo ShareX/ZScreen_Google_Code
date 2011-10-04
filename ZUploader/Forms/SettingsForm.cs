@@ -30,6 +30,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
+using ScreenCapture;
 
 namespace ZUploader
 {
@@ -83,7 +84,14 @@ namespace ZUploader
             CreateCodesMenu();
 
             // Capture
-            pgCapture.SelectedObject = Program.Settings.SurfaceOptions;
+            cbShowCursor.Checked = Program.Settings.ShowCursor;
+            if (Program.Settings.SurfaceOptions == null) Program.Settings.SurfaceOptions = new SurfaceOptions();
+            cbDrawBorder.Checked = Program.Settings.SurfaceOptions.DrawBorder;
+            cbDrawCheckerboard.Checked = Program.Settings.SurfaceOptions.DrawChecker;
+            cbQuickCrop.Checked = Program.Settings.SurfaceOptions.QuickCrop;
+            cbFixedShapeSize.Checked = Program.Settings.SurfaceOptions.IsFixedSize;
+            nudFixedShapeSizeWidth.Value = Program.Settings.SurfaceOptions.FixedSize.Width;
+            nudFixedShapeSizeHeight.Value = Program.Settings.SurfaceOptions.FixedSize.Height;
 
             // History
             cbHistorySave.Checked = Program.Settings.SaveHistory;
@@ -313,6 +321,45 @@ namespace ZUploader
         }
 
         #endregion Clipboard upload
+
+        #region Capture
+
+        private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.ShowCursor = cbShowCursor.Checked;
+        }
+
+        private void cbDrawBorder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.DrawBorder = cbDrawBorder.Checked;
+        }
+
+        private void cbDrawCheckerboard_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.DrawChecker = cbDrawCheckerboard.Checked;
+        }
+
+        private void cbQuickCrop_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.QuickCrop = cbQuickCrop.Checked;
+        }
+
+        private void cbFixedShapeSize_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.IsFixedSize = cbFixedShapeSize.Checked;
+        }
+
+        private void nudFixedShapeSizeWidth_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.FixedSize = new Size((int)nudFixedShapeSizeWidth.Value, Program.Settings.SurfaceOptions.FixedSize.Height);
+        }
+
+        private void nudFixedShapeSizeHeight_ValueChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SurfaceOptions.FixedSize = new Size(Program.Settings.SurfaceOptions.FixedSize.Width, (int)nudFixedShapeSizeHeight.Value);
+        }
+
+        #endregion Capture
 
         #region History
 

@@ -81,6 +81,7 @@ namespace ZUploader
         public string NameFormatPattern = "%y-%mo-%d_%h-%mi-%s";
 
         // Capture
+        public bool ShowCursor = false;
         public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
         // History
