@@ -152,29 +152,8 @@ namespace HelpersLib
         Nothing
     }
 
-    public enum HotkeyTask
+    public enum ZAppType
     {
-        [Description("Capture Entire Screen")]
-        EntireScreen,
-        [Description("Capture Active Window")]
-        ActiveWindow,
-        [Description("Capture Rectangular Region")]
-        CropShot,
-        [Description("Capture Last Rectangular Region")]
-        LastCropShot,
-        [Description("Capture Selected Window")]
-        SelectedWindow,
-        [Description("Capture Shape")]
-        FreehandCropShot,
-        [Description("Clipboard Upload")]
-        ClipboardUpload,
-        [Description("Auto Capture")]
-        AutoCapture,
-        [Description("Drop Window")]
-        DropWindow,
-        [Description("Color Picker")]
-        ScreenColorPicker,
-        [Description("Twitter Client")]
-        TwitterClient
+        ZScreen, ZUploader
     }
 }

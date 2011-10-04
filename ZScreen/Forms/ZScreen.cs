@@ -167,8 +167,6 @@ namespace ZScreenGUI
 
             CreateCodesMenu();
 
-            dgvHotkeys.BackgroundColor = Color.FromArgb(tpHotkeys.BackColor.R, tpHotkeys.BackColor.G, tpHotkeys.BackColor.B);
-
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
 
@@ -218,7 +216,6 @@ namespace ZScreenGUI
             }
 
             UpdateHotkeys(false);
-            InitKeyboardHook();
 
             if (Engine.conf.FirstRun)
             {
@@ -715,11 +712,6 @@ namespace ZScreenGUI
                 this.WindowState = FormWindowState.Normal;
                 NativeMethods.ActivateWindow(this.Handle);
             }
-        }
-
-        private void ZScreen_Leave(object sender, EventArgs e)
-        {
-            QuitSettingHotkeys();
         }
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
@@ -1819,12 +1811,6 @@ namespace ZScreenGUI
             }
         }
 
-        private void btnResetHotkeys_Click(object sender, EventArgs e)
-        {
-            UnregisterAllHotkeys();
-            ResetHotkeys();
-        }
-
         private void editInPicnikToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: Edit in Picnik in the new History
@@ -2205,6 +2191,26 @@ namespace ZScreenGUI
         private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.CoreConf.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+        }
+
+        private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void dgvHotkeys_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
+        {
+
         }
     }
 }

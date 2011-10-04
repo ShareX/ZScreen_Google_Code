@@ -110,9 +110,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
-      <Name>ZSS.UploadersLib</Name>
+      <Name>UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

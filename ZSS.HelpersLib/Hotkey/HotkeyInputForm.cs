@@ -31,6 +31,7 @@ namespace HelpersLib
 {
     public partial class HotkeyInputForm : Form
     {
+        public Keys KeyDefault { get; set; }
         public Keys SelectedKey
         {
             get
@@ -61,10 +62,11 @@ namespace HelpersLib
             ResetKey();
         }
 
-        public HotkeyInputForm(Keys key)
+        public HotkeyInputForm(Keys key, Keys keyDefault)
             : this()
         {
             SelectedKey = key;
+            KeyDefault = keyDefault;
         }
 
         private void AddKeys()
@@ -100,10 +102,7 @@ namespace HelpersLib
 
         private void ResetKey()
         {
-            cbControl.Checked = false;
-            cbShift.Checked = false;
-            cbAlt.Checked = false;
-            cbKeys.SelectedIndex = 0;
+            SetKey(KeyDefault);
         }
 
         private Keys GetKey()

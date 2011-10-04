@@ -56,25 +56,63 @@ namespace HelpersLib.Hotkey
         FreeHandRegion
     }
 
+    public enum ZScreenHotkey
+    {
+        [Description("Capture Entire Screen")]
+        EntireScreen,
+        [Description("Capture Active Window")]
+        ActiveWindow,
+        [Description("Capture Rectangular Region")]
+        RectangleRegion,
+        [Description("Capture Last Rectangular Region")]
+        RectangleRegionLast,
+        [Description("Capture Selected Window")]
+        SelectedWindow,
+        [Description("Capture Shape")]
+        FreehandRegion,
+        [Description("Clipboard Upload")]
+        ClipboardUpload,
+        [Description("Auto Capture")]
+        AutoCapture,
+        [Description("Drop Window")]
+        DropWindow,
+        [Description("Color Picker")]
+        ScreenColorPicker,
+        [Description("Twitter Client")]
+        TwitterClient
+    }
+
     public class HotkeyManager
     {
+        public ZAppType Host = ZAppType.ZUploader;
         public List<HotkeySetting> Settings = new List<HotkeySetting>();
 
         private HotkeyForm hotkeyForm;
 
-        public HotkeyManager(HotkeyForm hotkeyForm)
+        public HotkeyManager(HotkeyForm hotkeyForm, ZAppType host)
         {
             this.hotkeyForm = hotkeyForm;
+            this.Host = host;
         }
 
         public void AddHotkey(ZUploaderHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
-            hotkeySetting.Tag = (int)hotkeyEnum;
+            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+        }
+
+        public void AddHotkey(ZScreenHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
+        {
+            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+        }
+
+        private void AddHotkey(int hotkeyId, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
+        {
+            hotkeySetting.Tag = hotkeyId;
             hotkeySetting.Action = action;
             hotkeySetting.MenuItem = menuItem;
             Settings.Add(hotkeySetting);
             hotkeySetting.UpdateMenuItemShortcut();
-            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, (int)hotkeyEnum) != null;
+            hotkeySetting.IsActive = hotkeyForm.RegisterHotkey(hotkeySetting.Hotkey, action, hotkeyId) != null;
         }
 
         public bool UpdateHotkey(HotkeySetting setting)

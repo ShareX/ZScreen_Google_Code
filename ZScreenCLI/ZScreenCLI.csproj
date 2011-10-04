@@ -96,17 +96,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZScreenLib\ZSS.ZScreenLib.csproj">
+    <ProjectReference Include="..\ZScreenLib\ZScreenLib.csproj">
       <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
-      <Name>ZSS.ZScreenLib</Name>
+      <Name>ZScreenLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
-      <Name>ZSS.HelpersLib</Name>
+      <Name>HelpersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
-      <Project>{D91D7F12-8976-41D9-9524-827EE9B02CCD}</Project>
-      <Name>ZSS.UploadersLib</Name>
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
+      <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
+      <Name>UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

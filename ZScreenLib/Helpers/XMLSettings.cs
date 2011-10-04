@@ -36,6 +36,7 @@ using System.Xml.Serialization;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
+using HelpersLib.Hotkey;
 using ScreenCapture;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -96,32 +97,20 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
         //  Hotkeys
         //~~~~~~~~~~~~~~~~~~~~~
+        public HotkeySetting HotkeyEntireScreen2 = new HotkeySetting(Keys.PrintScreen);
+        public HotkeySetting HotkeyActiveWindow2 = new HotkeySetting(Keys.Alt | Keys.PrintScreen);
+        public HotkeySetting HotkeyRectangleRegion2 = new HotkeySetting(Keys.Control | Keys.PrintScreen);
 
-        public const Keys DefaultHotkeyEntireScreen = Keys.PrintScreen;
-        public const Keys DefaultHotkeyActiveWindow = Keys.Alt | Keys.PrintScreen;
-        public const Keys DefaultHotkeyCropShot = Keys.Control | Keys.PrintScreen;
-        public const Keys DefaultHotkeySelectedWindow = Keys.Shift | Keys.PrintScreen;
-        public const Keys DefaultHotkeyFreehandCropShot = Keys.Control | Keys.Shift | Keys.PrintScreen;
-        public const Keys DefaultHotkeyClipboardUpload = Keys.Control | Keys.PageUp;
-        public const Keys DefaultHotkeyLastCropShot = Keys.None;
-        public const Keys DefaultHotkeyAutoCapture = Keys.None;
-        public const Keys DefaultHotkeyDropWindow = Keys.None;
-        public const Keys DefaultHotkeyLanguageTranslator = Keys.None;
-        public const Keys DefaultHotkeyScreenColorPicker = Keys.None;
-        public const Keys DefaultHotkeyTwitterClient = Keys.None;
+        public HotkeySetting RectangleRegionLast2 = new HotkeySetting();
+        public HotkeySetting HotkeySelectedWindow2 = new HotkeySetting(Keys.Shift | Keys.PrintScreen);
+        public HotkeySetting HotkeyFreeHandRegion2 = new HotkeySetting(Keys.Control | Keys.Shift | Keys.PrintScreen);
 
-        public Keys HotkeyEntireScreen = DefaultHotkeyEntireScreen;
-        public Keys HotkeyActiveWindow = DefaultHotkeyActiveWindow;
-        public Keys HotkeyCropShot = DefaultHotkeyCropShot;
-        public Keys HotkeySelectedWindow = DefaultHotkeySelectedWindow;
-        public Keys HotkeyFreehandCropShot = DefaultHotkeyFreehandCropShot;
-        public Keys HotkeyClipboardUpload = DefaultHotkeyClipboardUpload;
-        public Keys HotkeyLastCropShot = DefaultHotkeyLastCropShot;
-        public Keys HotkeyAutoCapture = DefaultHotkeyAutoCapture;
-        public Keys HotkeyDropWindow = DefaultHotkeyDropWindow;
-        public Keys HotkeyLanguageTranslator = DefaultHotkeyLanguageTranslator;
-        public Keys HotkeyScreenColorPicker = DefaultHotkeyScreenColorPicker;
-        public Keys HotkeyTwitterClient = DefaultHotkeyTwitterClient;
+        public HotkeySetting HotkeyClipboardUpload2 = new HotkeySetting(Keys.Control | Keys.PageUp);
+        public HotkeySetting HotkeyAutoCapture2 = new HotkeySetting();
+        public HotkeySetting HotkeyDropWindow2 = new HotkeySetting();
+
+        public HotkeySetting HotkeyScreenColorPicker2 = new HotkeySetting();
+        public HotkeySetting HotkeyTwitterClient2 = new HotkeySetting();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture

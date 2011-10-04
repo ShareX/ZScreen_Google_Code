@@ -52,13 +52,13 @@
     <Compile Include="ResizeManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\..\GraphicsManagerLib\GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
-      <Name>ZSS.GraphicsManagerLib</Name>
+      <Name>GraphicsManagerLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
-      <Name>ZSS.HelpersLib</Name>
+      <Name>HelpersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

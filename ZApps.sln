@@ -26,25 +26,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{37433C64-358
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreen", "ZScreen\ZScreen.csproj", "{BAC70392-CB22-4DD9-8756-CEE5E960FAFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ColorsLib", "ZSS.Colors\ZSS.ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorsLib", "ZSS.Colors\ColorsLib.csproj", "{9F44B572-4A09-42D9-9DB7-2587F621B462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.FTPClientLib", "ZSS.FTPClientLib\ZSS.FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTPClientLib", "ZSS.FTPClientLib\FTPClientLib.csproj", "{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.IndexersLib", "ZSS.IndexersLib\ZSS.IndexersLib.csproj", "{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexersLib", "ZSS.IndexersLib\IndexersLib.csproj", "{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersLib", "ZSS.UploadersLib\ZSS.UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersLib", "ZSS.UploadersLib\UploadersLib.csproj", "{E1C94415-3424-4517-A2A1-B2FDD1F59C67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ZScreenLib", "ZScreenLib\ZSS.ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenLib", "ZScreenLib\ZScreenLib.csproj", "{037FBAAE-819B-46E6-99FA-5CD8BD17E320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.ResourcesLib", "ZSS.ResourcesLib\ZSS.ResourcesLib.csproj", "{1D8C78B8-96D0-474A-96DA-84732D52C87A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcesLib", "ZSS.ResourcesLib\ResourcesLib.csproj", "{1D8C78B8-96D0-474A-96DA-84732D52C87A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenTesterGUI", "ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj", "{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GradientMaker", "ZScreenTester\GradientTester\ZSS.GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradientMaker", "ZScreenTester\GradientTester\GradientMaker.csproj", "{8B26E330-9E25-46E3-8DEB-A49F3F312611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.HelpersLib", "ZSS.HelpersLib\ZSS.HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpersLib", "ZSS.HelpersLib\HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.GraphicsManagerLib", "GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsManagerLib", "GraphicsManagerLib\GraphicsManagerLib.csproj", "{39CBF608-D7E7-405B-BCB4-A316BB76B562}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavuxLib", "DavuxLibMin\DavuxLib.csproj", "{6241A05D-EF12-4769-B660-EF75060DF20E}"
 EndProject
@@ -63,7 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Update.xml = Update.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSS.UploadersAPILib", "ZAPILib\ZSS.UploadersAPILib.csproj", "{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadersAPILib", "ZAPILib\UploadersAPILib.csproj", "{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenCLI", "ZScreenCLI\ZScreenCLI.csproj", "{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}"
 EndProject

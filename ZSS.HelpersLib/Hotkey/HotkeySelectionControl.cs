@@ -35,18 +35,26 @@ namespace HelpersLib.Hotkey
 
         public HotkeySetting Setting { get; set; }
 
-        public HotkeySelectionControl(HotkeySetting setting)
+        public HotkeySelectionControl(HotkeySetting setting, ZAppType host)
         {
             InitializeComponent();
             Setting = setting;
-            lblHotkeyDescription.Text = ((ZUploaderHotkey)Setting.Tag).GetDescription();
+            switch (host)
+            {
+                case ZAppType.ZScreen:
+                    lblHotkeyDescription.Text = ((ZScreenHotkey)Setting.Tag).GetDescription();
+                    break;
+                default:
+                    lblHotkeyDescription.Text = ((ZUploaderHotkey)Setting.Tag).GetDescription();
+                    break;
+            }
             btnSetHotkey.Text = new KeyInfo(Setting.Hotkey).ToString();
             UpdateHotkeyStatus();
         }
 
         private void btnSetHotkey_Click(object sender, EventArgs e)
         {
-            using (HotkeyInputForm inputForm = new HotkeyInputForm(Setting.Hotkey))
+            using (HotkeyInputForm inputForm = new HotkeyInputForm(Setting.Hotkey, Setting.HotkeyDefault))
             {
                 if (inputForm.ShowDialog() == DialogResult.OK)
                 {

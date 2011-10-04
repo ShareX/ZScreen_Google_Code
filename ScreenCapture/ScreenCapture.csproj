@@ -112,9 +112,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
-      <Name>ZSS.HelpersLib</Name>
+      <Name>HelpersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
