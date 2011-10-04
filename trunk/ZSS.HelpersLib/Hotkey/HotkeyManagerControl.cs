@@ -51,7 +51,7 @@ namespace HelpersLib.Hotkey
 
                 foreach (HotkeySetting setting in manager.Settings)
                 {
-                    HotkeySelectionControl control = new HotkeySelectionControl(setting);
+                    HotkeySelectionControl control = new HotkeySelectionControl(setting, manager.Host);
                     control.HotkeyChanged += new EventHandler(control_HotkeyChanged);
                     flpHotkeys.Controls.Add(control);
                 }
@@ -61,7 +61,7 @@ namespace HelpersLib.Hotkey
         private void control_HotkeyChanged(object sender, EventArgs e)
         {
             HotkeySelectionControl control = (HotkeySelectionControl)sender;
-             manager.UpdateHotkey(control.Setting);
+            manager.UpdateHotkey(control.Setting);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace HelpersLib.Hotkey
     public class HotkeySetting
     {
         public Keys Hotkey { get; set; }
+        public Keys HotkeyDefault { get; set; }
 
         [XmlIgnore]
         public int Tag { get; set; }
@@ -52,6 +53,7 @@ namespace HelpersLib.Hotkey
         public HotkeySetting(Keys hotkey)
         {
             Hotkey = hotkey;
+            HotkeyDefault = hotkey;
         }
 
         public HotkeySetting(Keys hotkey, int tag, Action action, ToolStripMenuItem menuItem = null)

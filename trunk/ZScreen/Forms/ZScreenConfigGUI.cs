@@ -112,7 +112,8 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Hotkeys()
         {
-            UpdateHotkeysDGV();
+            InitHotkeys();
+            hmHotkeys.PrepareHotkeys(HotkeyManager);
         }
 
         private void ZScreen_ConfigGUI_Capture()

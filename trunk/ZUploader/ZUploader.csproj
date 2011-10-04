@@ -174,17 +174,17 @@
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
+    <ProjectReference Include="..\ZAPILib\UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>ZSS.UploadersAPILib</Name>
+      <Name>UploadersAPILib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
-      <Name>ZSS.HelpersLib</Name>
+      <Name>HelpersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
-      <Name>ZSS.UploadersLib</Name>
+      <Name>UploadersLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\HistoryLib\HistoryLib.csproj">
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>

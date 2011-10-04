@@ -375,7 +375,7 @@
     <None Include="Resources\page_white_ruby.gif" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>ZSS.HelpersLib</Name>
     </ProjectReference>

@@ -43,7 +43,7 @@ namespace ZUploader
 
         private void InitHotkeys()
         {
-            HotkeyManager = new HotkeyManager(this);
+            HotkeyManager = new HotkeyManager(this, ZAppType.ZUploader);
             HotkeyManager.AddHotkey(ZUploaderHotkey.ClipboardUpload, Program.Settings.HotkeyClipboardUpload, UploadManager.ClipboardUpload);
             HotkeyManager.AddHotkey(ZUploaderHotkey.FileUpload, Program.Settings.HotkeyFileUpload, UploadManager.UploadFile);
             HotkeyManager.AddHotkey(ZUploaderHotkey.PrintScreen, Program.Settings.HotkeyPrintScreen, () => CaptureScreen(false), tsmiFullscreen);

@@ -256,9 +256,9 @@
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZAPILib\ZSS.UploadersAPILib.csproj">
+    <ProjectReference Include="..\ZAPILib\UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
-      <Name>ZSS.UploadersAPILib</Name>
+      <Name>UploadersAPILib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
       <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
@@ -348,41 +348,41 @@
       <Project>{6241A05D-EF12-4769-B660-EF75060DF20E}</Project>
       <Name>DavuxLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphicsManagerLib\ZSS.GraphicsManagerLib.csproj">
+    <ProjectReference Include="..\GraphicsManagerLib\GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
-      <Name>ZSS.GraphicsManagerLib</Name>
+      <Name>GraphicsManagerLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZScreenLib\ZSS.ZScreenLib.csproj">
+    <ProjectReference Include="..\ZScreenLib\ZScreenLib.csproj">
       <Project>{037FBAAE-819B-46E6-99FA-5CD8BD17E320}</Project>
-      <Name>ZSS.ZScreenLib</Name>
+      <Name>ZScreenLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZScreenTester\GradientTester\ZSS.GradientMaker.csproj">
+    <ProjectReference Include="..\ZScreenTester\GradientTester\GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>
-      <Name>ZSS.GradientMaker</Name>
+      <Name>GradientMaker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.Colors\ZSS.ColorsLib.csproj">
+    <ProjectReference Include="..\ZSS.Colors\ColorsLib.csproj">
       <Project>{9F44B572-4A09-42D9-9DB7-2587F621B462}</Project>
-      <Name>ZSS.ColorsLib</Name>
+      <Name>ColorsLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.FTPClientLib\ZSS.FTPClientLib.csproj">
+    <ProjectReference Include="..\ZSS.FTPClientLib\FTPClientLib.csproj">
       <Project>{20E5CC64-8C94-42EE-AB7C-3241F4732BE9}</Project>
-      <Name>ZSS.FTPClientLib</Name>
+      <Name>FTPClientLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.HelpersLib\ZSS.HelpersLib.csproj">
+    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
-      <Name>ZSS.HelpersLib</Name>
+      <Name>HelpersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.IndexersLib\ZSS.IndexersLib.csproj">
+    <ProjectReference Include="..\ZSS.IndexersLib\IndexersLib.csproj">
       <Project>{47CD5EEF-C12D-4CEA-B88A-3AFAEC6DDAD8}</Project>
-      <Name>ZSS.IndexersLib</Name>
+      <Name>IndexersLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.ResourcesLib\ZSS.ResourcesLib.csproj">
+    <ProjectReference Include="..\ZSS.ResourcesLib\ResourcesLib.csproj">
       <Project>{1D8C78B8-96D0-474A-96DA-84732D52C87A}</Project>
-      <Name>ZSS.ResourcesLib</Name>
+      <Name>ResourcesLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZSS.UploadersLib\ZSS.UploadersLib.csproj">
+    <ProjectReference Include="..\ZSS.UploadersLib\UploadersLib.csproj">
       <Project>{E1C94415-3424-4517-A2A1-B2FDD1F59C67}</Project>
-      <Name>ZSS.UploadersLib</Name>
+      <Name>UploadersLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
