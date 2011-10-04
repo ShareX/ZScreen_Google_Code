@@ -55,11 +55,19 @@ namespace ScreenCapture
                 IsAreaCreated = true;
             }
 
-            if (lastNode.Visible && lastNode.IsDragging && mousePosition != oldMousePosition)
+            if (lastNode.Visible && lastNode.IsDragging)
             {
-                points.Add(mousePosition);
-                regionPath.AddLine(oldMousePosition, mousePosition);
                 lastNode.Position = mousePosition;
+
+                if (mousePosition != oldMousePosition)
+                {
+                    points.Add(mousePosition);
+
+                    if (points.Count > 1)
+                    {
+                        regionPath.AddLine(oldMousePosition, mousePosition);
+                    }
+                }
             }
 
             if (points.Count > 2)
@@ -97,7 +105,7 @@ namespace ScreenCapture
                 }
 
                 g.DrawPath(borderPen, regionPath);
-
+                g.DrawLine(borderPen, points[0], points[points.Count - 1]);
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else

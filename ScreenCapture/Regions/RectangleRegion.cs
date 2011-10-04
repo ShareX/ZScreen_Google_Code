@@ -118,6 +118,7 @@ namespace ScreenCapture
             {
                 g.ExcludeClip(Area);
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                DrawObjects(g);
                 g.ResetClip();
 
                 if (areaObject.IsDragging || areaObject.IsMouseHover)
@@ -131,8 +132,6 @@ namespace ScreenCapture
             {
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
-
-            base.Draw(g);
         }
 
         private void UpdateNodePositions()

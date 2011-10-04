@@ -79,6 +79,7 @@ namespace ScreenCapture
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
+                    DrawObjects(g);
                     g.ResetClip();
                 }
 
@@ -88,15 +89,12 @@ namespace ScreenCapture
                 }
 
                 g.DrawPath(borderPen, regionPath);
-
                 g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
             }
             else
             {
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
             }
-
-            DrawObjects(g);
         }
     }
 }
