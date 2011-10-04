@@ -49,6 +49,7 @@ using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
+using ImageQueue;
 
 namespace ZScreenLib
 {
@@ -843,7 +844,7 @@ namespace ZScreenLib
         /// </summary>
         public void PerformActions()
         {
-            foreach (Software app in Engine.conf.ActionsAppList)
+            foreach (Software app in Engine.conf.ActionsAppsUser)
             {
                 if (app.Enabled)
                 {
@@ -875,6 +876,12 @@ namespace ZScreenLib
                             {
                                 StaticHelper.WriteException(ex, "ImageEdit");
                             }
+                        }
+                        else if (app.Name == Engine.zImageEffects)
+                        {
+                            ImageEffectsGUI effects = new ImageEffectsGUI(tempImage);
+                            effects.ShowDialog();
+                            tempImage = effects.EditedImage;
                         }
                         else if (File.Exists(app.Path))
                         {

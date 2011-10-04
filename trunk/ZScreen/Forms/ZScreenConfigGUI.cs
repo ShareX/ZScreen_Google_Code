@@ -212,21 +212,23 @@ namespace ZScreenGUI
             chkPerformActions.Checked = Engine.conf.PerformActions;
             tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
 
-            if (Engine.conf.ActionsAppList.Count == 0)
+            if (Engine.conf.ActionsAppsUser.Count == 0)
             {
                 Software editor = new Software(Engine.zImageAnnotator, Application.ExecutablePath, true, true);
-                Engine.conf.ActionsAppList.Insert(0, editor);
+                Engine.conf.ActionsAppsUser.Add(editor);
+                Software effects = new Software(Engine.zImageEffects, Application.ExecutablePath, true, false);
+                Engine.conf.ActionsAppsUser.Add(effects);
             }
             else
             {
-                Engine.conf.ActionsAppList.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
+                Engine.conf.ActionsAppsUser.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
             }
 
             ImageEditorHelper.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
-            foreach (Software app in Engine.conf.ActionsAppList)
+            foreach (Software app in Engine.conf.ActionsAppsUser)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
