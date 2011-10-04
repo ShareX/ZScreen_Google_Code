@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ZUploader"
-#define ExePath "ZUploader\bin\Release\ZUploader.exe"
+#define ExePath "ZUploader\bin\x86\Release\ZUploader.exe"
 #define MyAppVersion GetStringFileInfo(ExePath, "Assembly Version")
 #define MyAppPublisher "ZScreen Developers"
 #define MyAppURL "http://code.google.com/p/zscreen"
@@ -19,7 +19,7 @@ AppUpdatesURL=http://code.google.com/p/zscreen/downloads/list
 AppVerName={#MyAppName} {#MyAppVersion}
 AppVersion={#MyAppVersion}
 ArchitecturesAllowed=x86 x64 ia64
-ArchitecturesInstallIn64BitMode=x64 ia64
+;ArchitecturesInstallIn64BitMode=x64 ia64
 Compression=lzma/ultra64
 CreateAppDir=true
 DefaultDirName={pf}\{#MyAppName}
@@ -52,8 +52,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ZUploader\bin\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZUploader\bin\Release\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: ZUploader\bin\x86\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
+Source: ZUploader\bin\x86\Release\*.dll; DestDir: {app}; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"
