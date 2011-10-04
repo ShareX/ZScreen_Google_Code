@@ -47,20 +47,20 @@ namespace HelpersLib
             HotkeyList = new List<HotkeyInfo>();
         }
 
-        public bool RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = 0)
+        public HotkeyStatus RegisterHotkey(Keys hotkey, Action hotkeyPress = null, int tag = 0)
         {
             KeyInfo keyInfo = new KeyInfo(hotkey);
 
             if (keyInfo.KeyCode == Keys.None)
             {
                 StaticHelper.WriteLine("Unable to register hotkey: None");
-                return false;
+                return HotkeyStatus.NotConfigured;
             }
 
             if (IsHotkeyExist(hotkey))
             {
                 StaticHelper.WriteLine("Hotkey already exist: " + keyInfo);
-                return false;
+                return HotkeyStatus.Failed;
             }
 
             string atomName = Thread.CurrentThread.ManagedThreadId.ToString("X8") + (int)hotkey;
@@ -70,20 +70,20 @@ namespace HelpersLib
             if (id == 0)
             {
                 StaticHelper.WriteLine("Unable to generate unique hotkey ID. Error code: " + Marshal.GetLastWin32Error());
-                return false;
+                return HotkeyStatus.Registered;
             }
 
             if (!NativeMethods.RegisterHotKey(Handle, (int)id, (uint)keyInfo.ModifiersEnum, (uint)keyInfo.KeyCode))
             {
                 NativeMethods.GlobalDeleteAtom(id);
                 StaticHelper.WriteLine("Unable to register hotkey: {0}\r\nError code: {1}", keyInfo, Marshal.GetLastWin32Error());
-                return false;
+                return HotkeyStatus.Failed;
             }
 
             HotkeyInfo hotkeyInfo = new HotkeyInfo(id, hotkey, hotkeyPress, tag);
             HotkeyList.Add(hotkeyInfo);
 
-            return true;
+            return HotkeyStatus.Registered;
         }
 
         public bool UnregisterHotkey(ushort id)
@@ -118,7 +118,7 @@ namespace HelpersLib
             return UnregisterHotkey(hotkeyInfo);
         }
 
-        public bool ChangeHotkey(int tag, Keys newHotkey, Action hotkeyPress = null)
+        public HotkeyStatus ChangeHotkey(int tag, Keys newHotkey, Action hotkeyPress = null)
         {
             HotkeyInfo hi = GetHotkeyInfoFromTag(tag);
 
