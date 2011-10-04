@@ -10,6 +10,7 @@ using Plugins;
 using System.IO;
 using GraphicsMgrLib;
 using System.Diagnostics;
+using HelpersLib;
 
 namespace ImageQueue
 {
@@ -21,7 +22,7 @@ namespace ImageQueue
         public GUI()
         {
             InitializeComponent();
-            string pluginsPath = Path.Combine(Application.StartupPath, "Plugins");
+            string pluginsPath = Path.Combine(Application.StartupPath, "ImageEffectsPlugins");
             plugins = PluginManager.LoadPlugins<IPluginInterface>(pluginsPath);
             FillPluginsList();
             //previewImage = ImageQueue.Properties.Resources.main;

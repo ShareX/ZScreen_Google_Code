@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageQueue</RootNamespace>
-    <AssemblyName>ImageQueue</AssemblyName>
+    <RootNamespace>ImageAdjustment</RootNamespace>
+    <AssemblyName>ImageAdjustment</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -36,17 +36,16 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\ImageQueue\bin\Debug\ImageEffectsPlugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\ImageQueue\bin\Release\ImageEffectsPlugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -57,6 +56,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -64,67 +64,20 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI.Designer.cs">
-      <DependentUpon>GUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ImageAdjustment\Alpha.cs" />
-    <Compile Include="ImageAdjustment\Brightness.cs" />
-    <Compile Include="ImageAdjustment\Colorize.cs" />
-    <Compile Include="ImageAdjustment\Contrast.cs" />
-    <Compile Include="ImageAdjustment\Gamma.cs" />
-    <Compile Include="ImageAdjustment\Grayscale.cs" />
-    <Compile Include="ImageAdjustment\Hue.cs" />
-    <Compile Include="ImageAdjustment\ImageEffectsPlugin.cs" />
-    <Compile Include="ImageAdjustment\Inverse.cs" />
-    <Compile Include="ImageAdjustment\Saturation.cs" />
-    <Compile Include="ImageFilters\Blur.cs" />
-    <Compile Include="ImageFilters\ImageFiltersPlugin.cs" />
-    <Compile Include="ImageFilters\Shadow.cs" />
-    <Compile Include="ImageManipulation\Border.cs" />
-    <Compile Include="ImageManipulation\ImageManipulationPlugin.cs" />
-    <Compile Include="ImageManipulation\Reflection.cs" />
-    <Compile Include="ImageManipulation\Resize.cs" />
-    <Compile Include="ImageManipulation\Rotate.cs" />
-    <Compile Include="ImageManipulation\Scale.cs" />
-    <Compile Include="IPlugins\IPluginInterface.cs" />
-    <Compile Include="IPlugins\IPluginItem.cs" />
-    <Compile Include="IPlugins\PluginManager.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Alpha.cs" />
+    <Compile Include="Brightness.cs" />
+    <Compile Include="Colorize.cs" />
+    <Compile Include="Contrast.cs" />
+    <Compile Include="Gamma.cs" />
+    <Compile Include="Grayscale.cs" />
+    <Compile Include="Hue.cs" />
+    <Compile Include="ImageEffectsPlugin.cs" />
+    <Compile Include="Inverse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI.resx">
-      <DependentUpon>GUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="ZScreenTest.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Compile Include="Saturation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\trunk\GraphicsManagerLib\GraphicsManagerLib.csproj">
@@ -135,9 +88,11 @@
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>HelpersLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\main.png" />
+    <ProjectReference Include="..\Plugins\IPluginsLib.csproj">
+      <Project>{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}</Project>
+      <Name>IPluginsLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
