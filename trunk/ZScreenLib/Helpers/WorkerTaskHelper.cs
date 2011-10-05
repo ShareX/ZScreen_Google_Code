@@ -7,39 +7,40 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat, bool targetFileSize = true)
+        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat, 
+            bool bConvert = true, bool bTargetFileSize = true)
         {
+            imageFormat = wf.ImageFormat;
             MemoryStream stream = img.SaveImage(wf, wf.ImageFormat);
 
-            long streamLength = stream.Length / 1024;
-            int sizeLimit = wf.ImageSizeLimit * 1024;
-
-            if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
+            if (bConvert)
             {
-                stream = img.SaveImage(wf, wf.ImageFormat2);
-                StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+                long streamLength = stream.Length / 1024;
+                int sizeLimit = wf.ImageSizeLimit * 1024;
 
-                if (targetFileSize)
+                if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
                 {
-                    while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
+                    stream = img.SaveImage(wf, wf.ImageFormat2);
+                    StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
+
+                    if (bTargetFileSize)
                     {
-                        if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
+                        while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
                         {
-                            break;
+                            if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
+                            {
+                                break;
+                            }
+
+                            wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
+                            stream = img.SaveImage(wf, EImageFormat.JPEG);
+                            StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                         }
-
-                        wf.ImageJpegQuality = wf.ImageJpegQuality - 1;
-                        stream = img.SaveImage(wf, EImageFormat.JPEG);
-                        StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                     }
+
+                    imageFormat = wf.ImageFormat2;
+
                 }
-
-                imageFormat = wf.ImageFormat2;
-
-            }
-            else
-            {
-                imageFormat = wf.ImageFormat;
             }
 
             stream.Position = 0;
