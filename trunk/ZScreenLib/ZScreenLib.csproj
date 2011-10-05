@@ -387,6 +387,9 @@
     <EmbeddedResource Include="Documents\license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="apng32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documents\TODO.txt" />
     <Content Include="Documents\Workflow.txt" />
     <Content Include="FreeImage.dll">

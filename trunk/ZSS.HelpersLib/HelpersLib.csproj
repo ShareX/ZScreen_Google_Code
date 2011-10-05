@@ -82,18 +82,18 @@
     <Compile Include="CLI\CLIManager.cs" />
     <Compile Include="CLI\CLIManagerRegex.cs" />
     <Compile Include="CLI\CLIParser.cs" />
-    <Compile Include="ClipboardContentViewer.cs">
+    <Compile Include="Wizards\ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClipboardContentViewer.Designer.cs">
+    <Compile Include="Wizards\ClipboardContentViewer.Designer.cs">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="CloneManager.cs" />
     <Compile Include="ComponentModelStrings.cs" />
-    <Compile Include="ErrorForm.cs">
+    <Compile Include="Wizards\ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ErrorForm.Designer.cs">
+    <Compile Include="Wizards\ErrorForm.Designer.cs">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Hotkey\HotkeyInputForm.cs">
@@ -190,10 +190,10 @@
     <Compile Include="XmlFileNameEditor.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="XMLSettingsBase.cs" />
-    <EmbeddedResource Include="ClipboardContentViewer.resx">
+    <EmbeddedResource Include="Wizards\ClipboardContentViewer.resx">
       <DependentUpon>ClipboardContentViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ErrorForm.resx">
+    <EmbeddedResource Include="Wizards\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Hotkey\HotkeyInputForm.resx">

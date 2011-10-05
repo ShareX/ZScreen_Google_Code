@@ -92,6 +92,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AGif\AnimatedGifEncoder.cs" />
+    <Compile Include="AGif\GifDecoder.cs" />
+    <Compile Include="AGif\LZWEncoder.cs" />
+    <Compile Include="AGif\NeuQuant.cs" />
     <Compile Include="BitmapCache.cs" />
     <Compile Include="ColorBgra.cs" />
     <Compile Include="ColorMatrixMgr.cs" />
@@ -112,6 +116,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Apng\Apng.cs" />
+    <Compile Include="Apng\ApngBasicWrapper.cs" />
+    <Compile Include="Apng\Frame.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
