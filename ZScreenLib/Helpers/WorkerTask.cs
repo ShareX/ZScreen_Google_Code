@@ -467,7 +467,7 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bConvert: false, bTargetFileSize: false);
+                    Data = PrepareData(savePath);
                 }
                 else
                 {
@@ -479,7 +479,7 @@ namespace ZScreenLib
                 }
 
                 // PerformActions should happen in main thread
-                if (tempImage != null && !States.Contains(TaskState.ImageEdited))
+                if (string.IsNullOrEmpty(savePath) && tempImage != null && !States.Contains(TaskState.ImageEdited))
                 {
                     States.Add(TaskState.ImageEdited);
                     ProcessImage(tempImage);
@@ -500,8 +500,8 @@ namespace ZScreenLib
             Job1 = JobLevel1.Text;
             TempText = text;
 
-            string fp = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
-            UpdateLocalFilePath(fp);
+            string fptxt = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
+            UpdateLocalFilePath(fptxt);
 
             if (Directory.Exists(text))
             {
@@ -900,17 +900,24 @@ namespace ZScreenLib
 
         #region Publish Data
 
+        private Stream PrepareData(string fp)
+        {
+            Stream data = null;
+            using (FileStream fs = new FileStream(fp, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                data = new MemoryStream();
+                fs.CopyStreamTo(data);
+            }
+            return data;
+        }
+
         private Stream PrepareData()
         {
             Stream data = null;
 
             if (File.Exists(LocalFilePath))
             {
-                using (FileStream fs = new FileStream(LocalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    data = new MemoryStream();
-                    fs.CopyStreamTo(data);
-                }
+                data = PrepareData(LocalFilePath);
             }
             else if (tempImage != null)
             {

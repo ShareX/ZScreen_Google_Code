@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
 using HelpersLib;
+using System.Collections.Generic;
 
 namespace GraphicsMgrLib
 {
@@ -288,6 +289,32 @@ namespace GraphicsMgrLib
         {
             point -= grid - (size % grid);
             return point;
+        }
+
+        public static bool HasIdenticalImages(List<string> fps, out List<Image> listImages)
+        {
+            List<Image> tempImages = new List<Image>();
+            Size tempSize;
+
+            foreach (string fp in fps)
+            {
+                if (IsValidImage(fp))
+                {
+                    tempImages.Add(Image.FromFile(fp));
+                    tempSize = tempImages[tempImages.Count - 1].Size;
+                    if (tempImages.Count > 1)
+                    {
+                        if (tempImages[tempImages.Count - 1].Size != tempImages[tempImages.Count - 2].Size)
+                        {
+                            listImages = tempImages;
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            listImages = tempImages;
+            return true;
         }
 
         /// <summary>

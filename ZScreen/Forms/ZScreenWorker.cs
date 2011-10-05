@@ -42,6 +42,7 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZUploader.HelperClasses;
+using Gif.Components;
 
 namespace ZScreenGUI
 {
@@ -534,28 +535,58 @@ namespace ZScreenGUI
                 }
             }
 
-            foreach (string fp in strListFilePath)
+            List<Image> tempImages = new List<Image>();
+            bool bCreateAni = strListFilePath.Count < 10 && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
+
+            if (bCreateAni)
             {
-                if (GraphicsMgr.IsValidImage(fp))
+                AnimatedGifEncoder enc = new AnimatedGifEncoder();
+
+                String outputFilePath = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir,
+                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern) + ".gif");
+                enc.Start(outputFilePath);
+                enc.SetDelay(1000);
+                enc.SetRepeat(0);
+                foreach (Image img in tempImages)
                 {
-                    WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-                    fpimgTask.SetImage(fp);
-                    fpimgTask.RunWorker();
+                    enc.AddFrame(img);
                 }
-                else if (FileSystem.IsValidTextFile(fp))
+                enc.Finish();
+
+                if (File.Exists(outputFilePath))
                 {
-                    WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
-                    fptfTask.SetText(File.ReadAllText(fp));
-                    fptfTask.RunWorker();
+                    WorkerTask anigifTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                    anigifTask.SetImage(outputFilePath);
+                    anigifTask.RunWorker();
                 }
-                else
-                {
-                    WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
-                    fpdataTask.UpdateLocalFilePath(fp);
-                    fpdataTask.RunWorker();
-                }
+
+                tempImages.Clear();
             }
 
+            else
+            {
+                foreach (string fp in strListFilePath)
+                {
+                    if (GraphicsMgr.IsValidImage(fp))
+                    {
+                        WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                        fpimgTask.SetImage(fp);
+                        fpimgTask.RunWorker();
+                    }
+                    else if (FileSystem.IsValidTextFile(fp))
+                    {
+                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                        fptfTask.SetText(File.ReadAllText(fp));
+                        fptfTask.RunWorker();
+                    }
+                    else
+                    {
+                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
+                        fpdataTask.UpdateLocalFilePath(fp);
+                        fpdataTask.RunWorker();
+                    }
+                }
+            }
             return succ;
         }
 
