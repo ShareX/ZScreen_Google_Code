@@ -10,7 +10,7 @@ Version 4.5.1 - 2011-10-15
 4.3.0 Added support for photobucket.com {Jaex/McoreD}
 4.2.6 Improved Goo.gl URL Shortener with support for User Accounts {Jaex}
 
-Version 4.2.5 - 2011-09-07
+Version 4.2.5 Beta - 2011-09-06
 
 4.02.5 Capture Shape supports capturing Rounded Rectangle, Ellipse, Triangle, Diamond, Polygon and Freehand {Jaex}
 4.02.4 Adding rounded corners and shadow is now possible to all images {McoreD}
@@ -28,11 +28,11 @@ Version 4.2.5 - 2011-09-07
 4.00.0 Core changes to separate Uploader related settings from core settings and are accessed via a separate window {McoreD/Jaex}
 3.38.1 Renamed and rearranged main tabs to simplify user interface {Jaex/McoreD}
 3.38.0 Easier access to all the main functions using a new toolstrip in the main tab {Jaex}
+3.37.1 Fixed issue 275 Metafiles on Clipboard Are Not Visible to All Applications {McoreD}
+3.37.0 New toolbar in the main tab to easily access quick actions {Jaex}
 
-Version 3.37 - 20110514
+Version 3.36 Beta - 2011-05-14
 
-3.37.00.1 Fixed issue 275 Metafiles on Clipboard Are Not Visible to All Applications {McoreD}
-3.37.00.0 New toolbar in the main tab to easily access quick actions {Jaex}
 3.36.17.1 Fixed issues with Windows 7 Taskbar integration {McoreD}
 3.36.17.0 Much more reliable Google Translator engine powered by the API {Jaex}
 3.36.16.0 Provision for checking updates for Dev channel releases {McoreD}

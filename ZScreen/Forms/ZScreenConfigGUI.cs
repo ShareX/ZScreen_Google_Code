@@ -64,7 +64,7 @@ namespace ZScreenGUI
 
             pgAppSettings.SelectedObject = Engine.AppConf;
             pgAppConfig.SelectedObject = Engine.conf;
-            pgWorkflow.SelectedObject = Engine.MyWorkflow;
+            pgWorkflow.SelectedObject = Engine.Workflow;
             pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
 
             ZScreen_ConfigGUI_Form();
@@ -106,7 +106,7 @@ namespace ZScreenGUI
             ucDestOptions.ReconfigOutputsUI();
 
             chkManualNaming.Checked = Engine.conf.PromptForOutputs;
-            chkShowCursor.Checked = Engine.CoreConf.ShowCursor;
+            chkShowCursor.Checked = Engine.Workflow.ShowCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 
@@ -138,12 +138,12 @@ namespace ZScreenGUI
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
             // Active Window
-            chkActiveWindowPreferDWM.Checked = Engine.CoreConf.ActiveWindowPreferDWM;
-            chkSelectedWindowCleanBackground.Checked = Engine.CoreConf.ActiveWindowClearBackground;
-            chkSelectedWindowCleanTransparentCorners.Checked = Engine.CoreConf.ActiveWindowCleanTransparentCorners;
-            chkSelectedWindowIncludeShadow.Checked = Engine.CoreConf.ActiveWindowIncludeShadows;
-            chkActiveWindowTryCaptureChildren.Checked = Engine.CoreConf.ActiveWindowTryCaptureChildren;
-            chkSelectedWindowShowCheckers.Checked = Engine.CoreConf.ActiveWindowShowCheckers;
+            chkActiveWindowPreferDWM.Checked = Engine.Workflow.ActiveWindowPreferDWM;
+            chkSelectedWindowCleanBackground.Checked = Engine.Workflow.ActiveWindowClearBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.Workflow.ActiveWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.Workflow.ActiveWindowIncludeShadows;
+            chkActiveWindowTryCaptureChildren.Checked = Engine.Workflow.ActiveWindowTryCaptureChildren;
+            chkSelectedWindowShowCheckers.Checked = Engine.Workflow.ActiveWindowShowCheckers;
 
             // Freehand Crop Shot
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
@@ -153,10 +153,10 @@ namespace ZScreenGUI
             pgSurfaceConfig.SelectedObject = Engine.conf.SurfaceConfig;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.CoreConf.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.CoreConf.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Engine.CoreConf.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.CoreConf.MaxNameLength;
+            txtActiveWindow.Text = Engine.Workflow.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.Workflow.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.Workflow.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.Workflow.MaxNameLength;
 
             ZScreen_ConfigGUI_Options_Watermark();
             ZScreen_ConfigGUI_Options_ImageSettings();
@@ -331,7 +331,7 @@ namespace ZScreenGUI
             chkMonFiles.Checked = Engine.conf.MonitorFiles;
             chkMonUrls.Checked = Engine.conf.MonitorUrls;
 
-            chkOverwriteFiles.Checked = Engine.CoreConf.OverwriteFiles;
+            chkOverwriteFiles.Checked = Engine.Workflow.OverwriteFiles;
         }
 
         private void ZScreen_ConfigGUI_Options_Paths()
@@ -365,27 +365,27 @@ namespace ZScreenGUI
                 cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
 
-            cboFileFormat.SelectedIndex = (int)Engine.MyWorkflow.ImageFormat;
+            cboFileFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat;
 
             if (cboJpgQuality.Items.Count == 0)
             {
                 cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
             }
-            cboJpgQuality.SelectedIndex = (int)Engine.CoreConf.ImageJpegQuality;
+            cboJpgQuality.SelectedIndex = (int)Engine.Workflow.ImageJpegQuality;
 
             if (cboJpgSubSampling.Items.Count == 0)
             {
                 cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
             }
-            cboJpgSubSampling.SelectedIndex = (int)Engine.CoreConf.ImageJpegSubSampling;
+            cboJpgSubSampling.SelectedIndex = (int)Engine.Workflow.ImageJpegSubSampling;
 
-            cbGIFQuality.SelectedIndex = (int)Engine.MyWorkflow.ImageGIFQuality;
-            nudSwitchAfter.Value = Engine.MyWorkflow.ImageSizeLimit;
+            cbGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
+            nudSwitchAfter.Value = Engine.Workflow.ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)
             {
                 cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
-            cboSwitchFormat.SelectedIndex = (int)Engine.MyWorkflow.ImageFormat2;
+            cboSwitchFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat2;
 
             switch (Engine.conf.ImageSizeType)
             {

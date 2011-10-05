@@ -644,38 +644,38 @@ namespace ZScreenGUI
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowPattern = txtActiveWindow.Text;
+            Engine.Workflow.ActiveWindowPattern = txtActiveWindow.Text;
             NameParser parser = new NameParser(NameParserType.ActiveWindow)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.CoreConf.MaxNameLength
+                MaxNameLength = Engine.Workflow.MaxNameLength
             };
-            lblActiveWindowPreview.Text = parser.Convert(Engine.CoreConf.ActiveWindowPattern);
+            lblActiveWindowPreview.Text = parser.Convert(Engine.Workflow.ActiveWindowPattern);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.EntireScreenPattern = txtEntireScreen.Text;
+            Engine.Workflow.EntireScreenPattern = txtEntireScreen.Text;
             NameParser parser = new NameParser(NameParserType.EntireScreen)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.CoreConf.MaxNameLength
+                MaxNameLength = Engine.Workflow.MaxNameLength
             };
-            lblEntireScreenPreview.Text = parser.Convert(Engine.CoreConf.EntireScreenPattern);
+            lblEntireScreenPreview.Text = parser.Convert(Engine.Workflow.EntireScreenPattern);
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.MyWorkflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.MyWorkflow.ImageFormat);
+            Engine.Workflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.Workflow.ImageFormat);
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.MyWorkflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.MyWorkflow.ImageFormat2);
+            Engine.Workflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.Workflow.ImageFormat2);
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -818,7 +818,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ShowCursor = chkShowCursor.Checked;
+            Engine.Workflow.ShowCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -1087,7 +1087,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage];
+                acc = Engine.Workflow.OutputsConfig.FTPAccountList[Engine.Workflow.OutputsConfig.FTPSelectedImage];
             }
 
             return acc;
@@ -1171,7 +1171,7 @@ namespace ZScreenGUI
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.CoreConf.AutoIncrement = 0;
+            Engine.Workflow.AutoIncrement = 0;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
@@ -1201,7 +1201,7 @@ namespace ZScreenGUI
 
         private void nudSwitchAfterValueChanged()
         {
-            Engine.MyWorkflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Engine.Workflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
             if ((int)nudSwitchAfter.Value == 0)
                 cboSwitchFormat.Enabled = false;
             else
@@ -1485,7 +1485,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
+            Engine.Workflow.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
             UpdateAeroGlassConfig();
         }
 
@@ -1519,7 +1519,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
+            Engine.Workflow.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
             UpdateAeroGlassConfig();
         }
 
@@ -1535,8 +1535,8 @@ namespace ZScreenGUI
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.CoreConf.SaveFolderPattern);
+            Engine.Workflow.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.Workflow.SaveFolderPattern);
             txtImagesDir.Text = Engine.ImagesDir;
         }
 
@@ -1622,9 +1622,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.MyWorkflow.OutputsConfig.FTPAccountList.Count > 0)
+            if (Engine.Workflow.OutputsConfig.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.MyWorkflow.OutputsConfig.FTPAccountList[Engine.MyWorkflow.OutputsConfig.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.Workflow.OutputsConfig.FTPAccountList[Engine.Workflow.OutputsConfig.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     if (acc.Protocol == FTPProtocol.SFTP)
@@ -1672,7 +1672,7 @@ namespace ZScreenGUI
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.MaxNameLength = (int)nudMaxNameLength.Value;
+            Engine.Workflow.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void SetToolTip(Control original)
@@ -1711,13 +1711,13 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
+            Engine.Workflow.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
+            Engine.Workflow.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
         }
 
         private void chkMonImages_CheckedChanged(object sender, EventArgs e)
@@ -1742,12 +1742,12 @@ namespace ZScreenGUI
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
+            Engine.Workflow.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
         }
 
         private void chkActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
+            Engine.Workflow.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
             chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
             UpdateAeroGlassConfig();
         }
@@ -1759,7 +1759,7 @@ namespace ZScreenGUI
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.MyWorkflow.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+            Engine.Workflow.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
@@ -2102,7 +2102,7 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
                 {
-                    Engine.MyWorkflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
+                    Engine.Workflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
                 }
             }
         }
@@ -2135,7 +2135,7 @@ namespace ZScreenGUI
 
         private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.OverwriteFiles = chkOverwriteFiles.Checked;
+            Engine.Workflow.OverwriteFiles = chkOverwriteFiles.Checked;
         }
 
         private void btnOutputsConfigImport_Click(object sender, EventArgs e)
@@ -2186,12 +2186,12 @@ namespace ZScreenGUI
 
         private void cboJpgQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
+            Engine.Workflow.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
         }
 
         private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.CoreConf.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+            Engine.Workflow.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
 
         private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)

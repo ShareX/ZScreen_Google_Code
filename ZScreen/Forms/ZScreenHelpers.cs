@@ -148,7 +148,7 @@ namespace ZScreenGUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Workflow temp = Workflow.Read(dlg.FileName);
-                Engine.MyWorkflow = temp;
+                Engine.Workflow = temp;
             }
         }
 
@@ -159,7 +159,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.WorkflowConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.MyWorkflow.Write(dlg.FileName);
+                Engine.Workflow.Write(dlg.FileName);
             }
         }
 

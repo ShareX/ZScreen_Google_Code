@@ -505,7 +505,7 @@ namespace ZScreenGUI
                     {
                         if (GraphicsMgr.IsValidImage(fp))
                         {
-                            string fsfp = FileSystem.GetUniqueFilePath(Engine.CoreConf, Engine.ImagesDir, Path.GetFileName(fp));
+                            string fsfp = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir, Path.GetFileName(fp));
                             if (fp != fsfp)
                             {
                                 string dir = Path.GetDirectoryName(fsfp);
