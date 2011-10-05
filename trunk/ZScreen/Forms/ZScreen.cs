@@ -818,8 +818,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ShowCursor = chkShowCursor.Checked;
-            Engine.conf.SurfaceConfig.DrawCursor = chkShowCursor.Checked;
+            Engine.Workflow.DrawCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
