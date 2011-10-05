@@ -22,7 +22,7 @@ namespace ZScreenCLI
         private static bool bScreen = false;
 
         private static List<int> listOutputTypes = new List<int>();
-        private static int clipboardContent = (int)ClipboardContentEnum.Remote;
+        private static int clipboardContent = -1;
         private static List<int> listImageHosts = new List<int>();
         private static List<int> listTextHosts = new List<int>();
         private static List<int> listFileHosts = new List<int>();
@@ -52,6 +52,8 @@ namespace ZScreenCLI
                     (int v) => listTextHosts.Add(v) },
                 { "f|hf=", "File uploader type. This must be an integer.",
                     (int v) => listFileHosts.Add(v) },
+                { "cc=", "Clipboard content. This must be an integer.",
+                    (int v) => clipboardContent = v },
                 { "s|ws", "Capture selected window.",
                     v => bSelectedWindow = v != null },
                 { "r|wc", "Capture rectangular region.",
@@ -84,18 +86,12 @@ namespace ZScreenCLI
             {
                 Console.Write(string.Format("{0}: ", ApplicationName));
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try 'ZScreen.exe -help' for more information.");
+                Console.WriteLine("Try 'ZScreenCLI.exe -help' for more information.");
                 return;
             }
 
             if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.WorkflowConfigPath));
             Engine.Workflow = Workflow.Read(Engine.AppConf.WorkflowConfigPath);
-
-            if (listOutputTypes.Count == 0)
-            {
-                // if user forgets to list output then copy to clipboard
-                listOutputTypes.Add((int)OutputEnum.Clipboard);
-            }
 
             if (bShowHelp)
             {
@@ -131,7 +127,7 @@ namespace ZScreenCLI
 
         private static WorkerTask DefaultWorkerTask()
         {
-            WorkerTask tempTask = new WorkerTask(Engine.Workflow);
+            WorkerTask tempTask = new WorkerTask(new Workflow("CLI"));
 
             foreach (int o in listOutputTypes)
             {
@@ -139,9 +135,19 @@ namespace ZScreenCLI
             }
             if (tempTask.MyWorkflow.Outputs.Count == 0)
             {
-                tempTask.MyWorkflow.Outputs.Add(OutputEnum.RemoteHost);
+                tempTask.MyWorkflow.Outputs.Add(OutputEnum.Clipboard);
+                tempTask.MyWorkflow.Outputs.Add(OutputEnum.LocalDisk);
             }
-            tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+
+            if (clipboardContent > 0)
+            {
+                tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+            }
+            else
+            {
+                tempTask.TaskClipboardContent.Add(ClipboardContentEnum.Data);
+            }
+
             foreach (int ut in listImageHosts)
             {
                 if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
