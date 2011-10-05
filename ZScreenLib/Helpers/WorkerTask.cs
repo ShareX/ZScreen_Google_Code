@@ -485,10 +485,11 @@ namespace ZScreenLib
                     if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                     {
                         PerformActions();
-                        // Data should be set after the image is processed
-                        Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
                     }
                 }
+
+                // Data should be targetting the file size
+                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
             }
 
             return tempImage != null;

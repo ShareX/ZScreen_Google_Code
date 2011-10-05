@@ -75,7 +75,7 @@ namespace HelpersLib
 
         public static bool WriteToFile(this Stream stream, string filePath)
         {
-            if (stream.Length > 0 && !string.IsNullOrEmpty(filePath))
+            if (stream != null && stream.Length > 0 && !string.IsNullOrEmpty(filePath))
             {
                 string directoryName = Path.GetDirectoryName(filePath);
 
