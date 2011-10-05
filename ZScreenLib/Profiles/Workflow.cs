@@ -71,7 +71,7 @@ namespace ZScreenLib
 
         #endregion Active Window
 
-        public bool ShowCursor = false;
+        public bool DrawCursor = false;
 
         // Image Settings
         public EImageFormat ImageFormat = EImageFormat.PNG;

@@ -106,7 +106,7 @@ namespace ZScreenGUI
             ucDestOptions.ReconfigOutputsUI();
 
             chkManualNaming.Checked = Engine.conf.PromptForOutputs;
-            chkShowCursor.Checked = Engine.Workflow.ShowCursor;
+            chkShowCursor.Checked = Engine.Workflow.DrawCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }
 

@@ -813,7 +813,7 @@ namespace UploadersLib
             }
 
             Config.GoogleURLShortenerOAuthInfo = null;
-            // TODO: UpdateDropboxStatus();
+
         }
 
         #endregion goo.gl

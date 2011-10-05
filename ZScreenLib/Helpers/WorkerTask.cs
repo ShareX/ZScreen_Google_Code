@@ -686,7 +686,7 @@ namespace ZScreenLib
 
                 try
                 {
-                    using (Image imgSS = Capture.CaptureScreen(Engine.Workflow.ShowCursor))
+                    using (Image imgSS = Capture.CaptureScreen(Engine.Workflow.DrawCursor))
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
@@ -756,6 +756,7 @@ namespace ZScreenLib
 
         public bool CaptureShape()
         {
+            Screenshot.DrawCursor = Engine.Workflow.DrawCursor;
             RegionCapturePreview rcp = new RegionCapturePreview(Engine.conf.SurfaceConfig);
 
             if (rcp.ShowDialog() == DialogResult.OK)
@@ -785,7 +786,7 @@ namespace ZScreenLib
         {
             if (tempImage == null)
             {
-                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.Workflow.ShowCursor));
+                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.Workflow.DrawCursor));
             }
 
             return tempImage != null;
