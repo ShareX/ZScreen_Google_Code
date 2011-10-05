@@ -40,8 +40,9 @@ namespace ScreenCapture
         public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
-            screenshot = Screenshot.GetFullscreen();
+            Screenshot.DrawCursor = surfaceConfig.DrawChecker;
 
+            screenshot = Screenshot.GetFullscreen();
             SurfaceConfig = surfaceConfig;
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;

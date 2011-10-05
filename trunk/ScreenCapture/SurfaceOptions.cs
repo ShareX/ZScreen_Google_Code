@@ -30,6 +30,8 @@ namespace ScreenCapture
 {
     public class SurfaceOptions
     {
+        public bool DrawCursor = false;
+
         [Category("Shape"), DefaultValue(false), Description("Draw border around the shape.")]
         public bool DrawBorder { get; set; }
         [Category("Shape"), DefaultValue(false), Description("Draw checkerboard pattern replacing transparent areas.")]
