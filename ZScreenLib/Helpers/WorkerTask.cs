@@ -467,11 +467,12 @@ namespace ZScreenLib
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bConvert: false, bTargetFileSize: false);
                 }
                 else
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, targetFileSize: false);
+                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bTargetFileSize: false);
                     string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
                     string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
@@ -485,11 +486,10 @@ namespace ZScreenLib
                     if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                     {
                         PerformActions();
+                        // Data should be targetting the file size
+                        Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
                     }
                 }
-
-                // Data should be targetting the file size
-                Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
             }
 
             return tempImage != null;
