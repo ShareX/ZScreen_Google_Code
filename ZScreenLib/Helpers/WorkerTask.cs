@@ -35,6 +35,7 @@ using Crop;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
+using ImageQueue;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ScreenCapture;
 using UploadersAPILib;
@@ -49,7 +50,6 @@ using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
-using ImageQueue;
 
 namespace ZScreenLib
 {
@@ -948,8 +948,6 @@ namespace ZScreenLib
                     AddUploadResult(ur);
                 }
 
-                // TODO: check for bugs removing this. expire on r2600 // UpdateLocalFilePath(fp);
-
                 if (!File.Exists(LocalFilePath))
                 {
                     Errors.Add(string.Format("{0} does not exist", LocalFilePath));
@@ -1506,6 +1504,7 @@ namespace ZScreenLib
             {
                 AddUploadResult(new UploadResult()
                 {
+                    LocalFilePath = this.LocalFilePath,
                     Host = ClipboardContentEnum.Local.GetDescription()
                 });
             }

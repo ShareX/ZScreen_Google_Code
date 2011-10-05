@@ -422,7 +422,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-    "added as bitmap.";
+                "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -594,7 +594,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-    "ce accordingly.";
+                "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
