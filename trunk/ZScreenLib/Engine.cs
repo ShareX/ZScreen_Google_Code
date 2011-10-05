@@ -171,7 +171,7 @@ namespace ZScreenLib
                     string saveFolderPath = string.Empty;
                     if (Engine.conf != null)
                     {
-                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.CoreConf.SaveFolderPattern);
+                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.Workflow.SaveFolderPattern);
                         if (!IsPortable && Engine.AppConf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
@@ -193,14 +193,7 @@ namespace ZScreenLib
 
         public static XMLSettings conf { get; set; }
 
-        public static Workflow CoreConf
-        {
-            get
-            {
-                return MyWorkflow;
-            }
-        }
-        public static Workflow MyWorkflow { get; set; }
+        public static Workflow Workflow { get; set; }
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
@@ -261,9 +254,9 @@ namespace ZScreenLib
             {
                 if (options.ShowConfigWizard && !File.Exists(AppSettings.AppSettingsFile))
                 {
-                    if (MyWorkflow == null)
+                    if (Workflow == null)
                     {
-                        MyWorkflow = Workflow.Read(Engine.WorkflowConfigPath);
+                        Workflow = Workflow.Read(Engine.WorkflowConfigPath);
                     }
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     startEngine = cw.ShowDialog();
@@ -281,7 +274,7 @@ namespace ZScreenLib
                         Engine.AppConf.TextUploaders = cw.cwTextUploaders;
                         Engine.AppConf.LinkUploaders = cw.cwLinkUploaders;
 
-                        MyWorkflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
+                        Workflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
                         AppConf.Write();
 
                         RunConfig = true;
@@ -441,9 +434,9 @@ namespace ZScreenLib
 
             Thread profileConfigThread = new Thread(() =>
             {
-                if (Engine.MyWorkflow != null)
+                if (Engine.Workflow != null)
                 {
-                    Engine.MyWorkflow.Write(WorkflowConfigPath);
+                    Engine.Workflow.Write(WorkflowConfigPath);
                 }
             });
 
@@ -487,7 +480,7 @@ namespace ZScreenLib
 
             Thread workflowConfigThread = new Thread(() =>
             {
-                Engine.MyWorkflow = Workflow.Read(WorkflowConfigPath);
+                Engine.Workflow = Workflow.Read(WorkflowConfigPath);
             });
 
             Thread googleTranslateThread = new Thread(() =>

@@ -137,7 +137,7 @@ namespace ZScreenGUI
 
                 if (Adapter.CheckFTPAccounts())
                 {
-                    foreach (FTPAccount acc in Engine.MyWorkflow.OutputsConfig.FTPAccountList)
+                    foreach (FTPAccount acc in Engine.Workflow.OutputsConfig.FTPAccountList)
                     {
                         Adapter.TestFTPAccount(acc, true);
                     }

@@ -54,7 +54,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: ZScreen\bin\x86\Release\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
-Source: ZScreen\bin\x86\Release\*.dll; DestDir: {app}; Flags: ignoreversion
+Source: ZScreen\bin\x86\Release\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 Source: ZScreen\bin\x86\Release\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]

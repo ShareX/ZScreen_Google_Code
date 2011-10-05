@@ -89,7 +89,7 @@ namespace ZScreenCLI
             }
 
             if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.WorkflowConfigPath));
-            Engine.MyWorkflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigPath);
+            Engine.Workflow = Workflow.Read(Engine.AppConf.WorkflowConfigPath);
 
             if (listOutputTypes.Count == 0)
             {
@@ -131,7 +131,8 @@ namespace ZScreenCLI
 
         private static WorkerTask DefaultWorkerTask()
         {
-            WorkerTask tempTask = new WorkerTask();
+            WorkerTask tempTask = new WorkerTask(Engine.Workflow);
+
             foreach (int o in listOutputTypes)
             {
                 tempTask.MyWorkflow.Outputs.Add((OutputEnum)o);
@@ -157,13 +158,12 @@ namespace ZScreenCLI
         private static void CaptureScreen()
         {
             WorkerTask esTask = DefaultWorkerTask();
-            esTask.StartWork(WorkerTask.JobLevel2.CaptureEntireScreen);
             Console.WriteLine();
             Console.WriteLine("Capturing entire screen in 3 seconds.");
             Console.WriteLine("If you would like to minimize this window, then do it now.");
             Console.WriteLine();
             System.Threading.Thread.Sleep(3000);
-            esTask.CaptureScreen();
+            esTask.StartWork(WorkerTask.JobLevel2.CaptureEntireScreen);
             esTask.PublishData();
             PostPublishTask(esTask);
         }
@@ -172,12 +172,12 @@ namespace ZScreenCLI
         {
             WorkerTask csTask = DefaultWorkerTask();
             csTask.StartWork(job2);
-            if (csTask.CaptureRegionOrWindow())
+            if (csTask.IsNotCanceled())
             {
                 csTask.PublishData();
+                Console.WriteLine(csTask.ToErrorString());
+                PostPublishTask(csTask);
             }
-            Console.WriteLine(csTask.ToErrorString());
-            PostPublishTask(csTask);
         }
 
         private static void ClipboardUpload()

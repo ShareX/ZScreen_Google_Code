@@ -164,7 +164,7 @@ namespace ZScreenLib
 
                             lvi.SubItems[8].Text = url;
 
-                            if (Engine.MyWorkflow.ClipboardOverwrite)
+                            if (Engine.Workflow.ClipboardOverwrite)
                             {
                                 ZAppHelper.CopyTextSafely(url);
                             }

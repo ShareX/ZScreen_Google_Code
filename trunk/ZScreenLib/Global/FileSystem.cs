@@ -326,7 +326,7 @@ namespace ZScreenLib
                 string fp = Path.Combine(Engine.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.MyWorkflow.OutputsConfig.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.Workflow.OutputsConfig.FTPAccountList);
                     fam.Save(fp);
                 }
             }
@@ -407,7 +407,7 @@ namespace ZScreenLib
                         if (File.Exists(image))
                         {
                             time = File.GetCreationTime(image);
-                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.CoreConf.SaveFolderPattern);
+                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.Workflow.SaveFolderPattern);
                             newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))
