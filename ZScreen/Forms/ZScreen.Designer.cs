@@ -790,7 +790,9 @@ namespace ZScreenGUI
             this.tcMain.Controls.Add(this.tpMainActions);
             this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
+#if DEBUG
             this.tcMain.Controls.Add(this.tpQueue);
+#endif
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcMain.Location = new System.Drawing.Point(2, 2);
             this.tcMain.Multiline = true;

@@ -9,6 +9,7 @@
         public const string InputsClipboard = "Inputs / Clipboard Upload";
         public const string InputsURLShorteners = "Inputs / Links";
         public const string InputsWatchFolder = "Inputs / Watch Folder";
+        public const string InputsAnimatedImages = "Inputs / File Upload / Animated Images";
         public const string Outputs = "Outputs";
         public const string OutputsClipboard = "Outputs / Clipboard";
         public const string OutputsRemoteImage = "Outputs / Remote / Image Uploaders";

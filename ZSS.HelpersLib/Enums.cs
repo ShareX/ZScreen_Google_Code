@@ -104,6 +104,11 @@ namespace HelpersLib
         PNG, JPEG, GIF, BMP, TIFF
     }
 
+    public enum AnimatedImageFormat
+    {
+        PNG, GIF
+    }
+
     public enum TaskStatus
     {
         InQueue, Preparing, Uploading, URLShortening, Completed, Stopped

@@ -537,12 +537,12 @@ namespace ZScreenGUI
             }
 
             List<Image> tempImages = new List<Image>();
-            bool bCreateAni = strListFilePath.Count < 10 && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
+            bool bCreateAni = strListFilePath.Count < Engine.Workflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
 
             if (bCreateAni)
             {
                 WorkerTask agifTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
-                agifTask.SetImage(tempImages);
+                agifTask.SetImages(tempImages);
                 agifTask.RunWorker();
             }
             else

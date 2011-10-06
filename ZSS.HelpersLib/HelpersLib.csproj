@@ -119,7 +119,6 @@
     <Compile Include="Hotkey\HotkeySetting.cs" />
     <Compile Include="IClone.cs" />
     <Compile Include="Hotkey\KeyInfo.cs" />
-    <Compile Include="KeyboardHook.cs" />
     <Compile Include="Native\NativeEnums.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\NativeMethods_Helpers.cs" />
