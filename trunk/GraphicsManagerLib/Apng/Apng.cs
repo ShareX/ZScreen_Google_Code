@@ -1,6 +1,6 @@
 ﻿/*  HaRepacker - WZ extractor and repacker
  * Copyright (C) 2009, 2010 haha01haha01
-   
+
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -17,9 +17,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SharpApng
 {
@@ -71,7 +71,7 @@ namespace SharpApng
             return result;
         }
 
-        public void WriteApng(string path, bool firstFrameHidden, bool disposeAfter)
+        public void WriteApng(string path, bool firstFrameHidden = false, bool disposeAfter = true)
         {
             Size maxSize = new Size();
             foreach (Frame frame in m_frames)
