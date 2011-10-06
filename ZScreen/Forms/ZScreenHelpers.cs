@@ -180,7 +180,7 @@ namespace ZScreenGUI
         {
             SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            dlg.FileName = Engine.WorkflowConfigFileName;
+            dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Engine.Workflow.OutputsConfig.Save(dlg.FileName);
