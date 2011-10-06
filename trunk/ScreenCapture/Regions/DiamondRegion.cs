@@ -25,6 +25,7 @@
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using HelpersLib;
 
 namespace ScreenCapture
 {

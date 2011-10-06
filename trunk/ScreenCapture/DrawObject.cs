@@ -30,7 +30,7 @@ namespace ScreenCapture
     public class DrawableObject
     {
         public bool Visible { get; set; }
-        public Rectangle Rectangle { get; set; }
+        public RectangleF Rectangle { get; set; }
         public bool IsMouseHover { get; set; }
         public bool IsDragging { get; set; }
         public int Order { get; set; }

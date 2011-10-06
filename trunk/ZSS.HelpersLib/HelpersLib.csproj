@@ -82,6 +82,7 @@
     <Compile Include="CLI\CLIManager.cs" />
     <Compile Include="CLI\CLIManagerRegex.cs" />
     <Compile Include="CLI\CLIParser.cs" />
+    <Compile Include="Extensions\GraphicsPathExtensions.cs" />
     <Compile Include="Wizards\ClipboardContentViewer.cs">
       <SubType>Form</SubType>
     </Compile>
