@@ -284,11 +284,6 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (task.tempImage != null)
-                {
-                    task.tempImage.Dispose(); // For fix memory leak
-                }
-
                 if (!task.IsError)
                 {
                     AddHistoryItem(task);
@@ -540,43 +535,10 @@ namespace ZScreenGUI
 
             if (bCreateAni)
             {
-                String outputFilePath = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir,
-                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern));
-                switch (Engine.Workflow.ImageFormat)
-                {
-                    case EImageFormat.PNG:
-                        SharpApng.Apng apng = new SharpApng.Apng();
-                        foreach (Image img in tempImages)
-                        {
-                            apng.AddFrame(new Bitmap(img), 500, 1);
-                        }
-                        outputFilePath += ".png";
-                        apng.WriteApng(outputFilePath);
-                        break;
-                    default:
-                        AnimatedGifEncoder enc = new AnimatedGifEncoder();
-                        outputFilePath += ".gif";
-                        enc.Start(outputFilePath);
-                        enc.SetDelay(1000);
-                        enc.SetRepeat(0);
-                        foreach (Image img in tempImages)
-                        {
-                            enc.AddFrame(img);
-                        }
-                        enc.Finish();
-                        break;
-                }
-
-                if (File.Exists(outputFilePath))
-                {
-                    WorkerTask anigifTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-                    anigifTask.SetImage(outputFilePath);
-                    anigifTask.RunWorker();
-                }
-
-                tempImages.Clear();
+                WorkerTask agifTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
+                agifTask.SetImage(tempImages);
+                agifTask.RunWorker();
             }
-
             else
             {
                 foreach (string fp in strListFilePath)

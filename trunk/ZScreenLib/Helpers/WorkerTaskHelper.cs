@@ -7,7 +7,7 @@ namespace ZScreenLib
 {
     public static class WorkerTaskHelper
     {
-        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat, 
+        public static MemoryStream PrepareImage(Workflow wf, Image img, out EImageFormat imageFormat,
             bool bConvert = true, bool bTargetFileSize = true)
         {
             imageFormat = wf.ImageFormat;
@@ -21,10 +21,10 @@ namespace ZScreenLib
                 if (wf.ImageFormat != wf.ImageFormat2 && sizeLimit > 0 && stream.Length > sizeLimit)
                 {
                     stream = img.SaveImage(wf, wf.ImageFormat2);
-                    StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
 
                     if (bTargetFileSize)
                     {
+                        StaticHelper.WriteLine(ConvertImageString(streamLength, wf, stream));
                         while (stream.Length > sizeLimit && wf.ImageFormat2 == EImageFormat.JPEG)
                         {
                             if (wf.ImageJpegQuality == FreeImageJpegQualityType.JPEG_QUALITYBAD)
@@ -39,7 +39,6 @@ namespace ZScreenLib
                     }
 
                     imageFormat = wf.ImageFormat2;
-
                 }
             }
 

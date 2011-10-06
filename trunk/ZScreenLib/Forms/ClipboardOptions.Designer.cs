@@ -96,6 +96,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Upload Results";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClipboardOptions_FormClosed);
             this.Resize += new System.EventHandler(this.ClipboardOptions_Resize);
             this.tlpMain.ResumeLayout(false);
             this.ResumeLayout(false);
