@@ -282,7 +282,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static void ShowUploadResults(WorkerTask task, bool showDialog)
         {
-            if (!task.MyWorkflow.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || task.MyWorkflow.ClipboardOverwrite)
+            if (!task.WorkflowConfig.ClipboardOverwrite && !Clipboard.ContainsFileDropList() && !Clipboard.ContainsImage() && !Clipboard.ContainsText() || task.WorkflowConfig.ClipboardOverwrite)
             {
                 if (task.UploadResults.Count > 0)
                 {
@@ -296,7 +296,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (task.MyWorkflow.Outputs.Contains(OutputEnum.Clipboard))
+                if (task.WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     StringBuilder clipboardText = new StringBuilder();
 

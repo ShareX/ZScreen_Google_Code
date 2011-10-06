@@ -80,7 +80,13 @@ namespace ZScreenLib
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
-        public EImageFormat ImageFormatAnimated = EImageFormat.GIF;
+
+        [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(AnimatedImageFormat.GIF), Description("Animated image type.")]
+        public AnimatedImageFormat ImageFormatAnimated { get; set; }
+        [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(10), Description("Maximum number of frames per animated image. Images will be uploaded individually after this value.")]
+        public int ImageAnimatedFramesMax { get; set; }
+        [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(1), Description("Delay in seconds between each frame of the animated image.")]
+        public int ImageAnimatedFramesDelay { get; set; }
 
         #region File Naming
 

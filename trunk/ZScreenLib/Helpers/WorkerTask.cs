@@ -75,6 +75,7 @@ namespace ZScreenLib
             Started,
             RetryPending,
             ThreadMode,
+            ImageProcessed,
             ImageEdited,
             ImageWritten,
             CancellationPending,
@@ -149,7 +150,7 @@ namespace ZScreenLib
         public ProgressManager Progress { get; set; }
 
         public BackgroundWorker MyWorker { get; set; }
-        public Workflow MyWorkflow { get; private set; }
+        public Workflow WorkflowConfig { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
 
@@ -229,7 +230,7 @@ namespace ZScreenLib
             MyWorker = new BackgroundWorker() { WorkerReportsProgress = true };
 
             IClone cm = new CloneManager();
-            MyWorkflow = cm.Clone<Workflow>(wf);
+            WorkflowConfig = cm.Clone<Workflow>(wf);
         }
 
         public WorkerTask(BackgroundWorker worker, Workflow wf)
@@ -317,7 +318,7 @@ namespace ZScreenLib
 
             if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
-                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, MyWorkflow.Outputs);
+                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, WorkflowConfig.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
@@ -446,7 +447,7 @@ namespace ZScreenLib
 
         #region Populating Task
 
-        public void SetImage(List<Image> tempImages)
+        public void SetImages(List<Image> tempImages)
         {
             Job3 = JobLevel3.CreateAnimatedImage;
             this.tempImages = tempImages;
@@ -473,7 +474,7 @@ namespace ZScreenLib
                 }
 
                 // UpdateLocalFilePath needs to happen before Image is processed
-                EImageFormat imageFormat = MyWorkflow.ImageFormat;
+                EImageFormat imageFormat = WorkflowConfig.ImageFormat;
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
@@ -482,17 +483,22 @@ namespace ZScreenLib
                 else
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bTargetFileSize: false);
-                    string fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
-                    string imgfp = FileSystem.GetUniqueFilePath(MyWorkflow, Engine.ImagesDir, fn);
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat, bTargetFileSize: false);
+                    string fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetPatternType());
+                    string imgfp = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
+                }
+
+                if (!States.Contains(TaskState.ImageProcessed))
+                {
+                    States.Add(TaskState.ImageProcessed);
+                    ProcessImage(tempImage);
                 }
 
                 // PerformActions should happen in main thread
                 if (string.IsNullOrEmpty(savePath) && tempImage != null && !States.Contains(TaskState.ImageEdited))
                 {
                     States.Add(TaskState.ImageEdited);
-                    ProcessImage(tempImage);
                     if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                     {
                         PerformActions();
@@ -783,7 +789,7 @@ namespace ZScreenLib
         {
             if (tempImage == null)
             {
-                SetImage(Capture.CaptureActiveWindow(this.MyWorkflow));
+                SetImage(Capture.CaptureActiveWindow(this.WorkflowConfig));
             }
             return tempImage != null;
         }
@@ -874,7 +880,7 @@ namespace ZScreenLib
                                 capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
                                 capture.CaptureDetails.AddMetaData("source", "file");
                                 Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
+                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                                 editor.SetImagePath(LocalFilePath);
                                 editor.Visible = false;
                                 editor.ShowDialog();
@@ -921,7 +927,7 @@ namespace ZScreenLib
 
             if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(TempText))
             {
-                if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
                 {
                     switch (Job1)
                     {
@@ -934,17 +940,17 @@ namespace ZScreenLib
                     }
                 }
 
-                if (MyWorkflow.Outputs.Contains(OutputEnum.Clipboard))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     SetClipboardContent();
                 }
 
-                if (MyWorkflow.Outputs.Contains(OutputEnum.Printer))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.Printer))
                 {
                     Print();
                 }
 
-                if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
                 {
                     switch (Job1)
                     {
@@ -971,12 +977,12 @@ namespace ZScreenLib
                     }
                 }
 
-                if (MyWorkflow.Outputs.Contains(OutputEnum.Email))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.Email))
                 {
                     SendEmail();
                 }
 
-                if (MyWorkflow.Outputs.Contains(OutputEnum.SharedFolder))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.SharedFolder))
                 {
                     UploadToSharedFolder();
                 }
@@ -1019,7 +1025,7 @@ namespace ZScreenLib
             {
                 StaticHelper.WriteLine("Preparing data from image");
                 EImageFormat imageFormat;
-                data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bTargetFileSize: true);
+                data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat, bTargetFileSize: true);
             }
             else if (!string.IsNullOrEmpty(TempText))
             {
@@ -1032,16 +1038,54 @@ namespace ZScreenLib
             return data;
         }
 
+        private void SetFileSize(long sz)
+        {
+            FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
+        }
+
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage()
+        {
+            if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
+            {
+                string fp = LocalFilePath;
+                Image img = tempImage;
+                FileInfo fi = FileSystem.WriteImage(fp, PrepareData()); // PrepareData instead of using Data
+                fp = fi.FullName;
+                this.SetFileSize(fi.Length);
+
+                States.Add(TaskState.ImageWritten);
+                UploadResult ur = new UploadResult()
+                {
+                    Host = OutputEnum.LocalDisk.GetDescription(),
+                    LocalFilePath = LocalFilePath,
+                };
+                if (!WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
+                {
+                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                    AddUploadResult(ur);
+                }
+
+                if (!File.Exists(LocalFilePath))
+                {
+                    Errors.Add(string.Format("{0} does not exist", LocalFilePath));
+                }
+            }
+        }
+
         private void WriteImageAnimated()
         {
             if (tempImages != null && tempImages.Count > 0)
             {
-                String outputFilePath = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir,
-                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern));
+                String outputFilePath = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir,
+                    new NameParser(NameParserType.EntireScreen).Convert(WorkflowConfig.EntireScreenPattern));
 
-                switch (Engine.Workflow.ImageFormatAnimated)
+                switch (WorkflowConfig.ImageFormatAnimated)
                 {
-                    case EImageFormat.PNG:
+                    case AnimatedImageFormat.PNG:
                         outputFilePath += ".png";
                         SharpApng.Apng apng = new SharpApng.Apng();
                         foreach (Image img in tempImages)
@@ -1056,7 +1100,7 @@ namespace ZScreenLib
                         outputFilePath += ".gif";
                         AnimatedGifEncoder enc = new AnimatedGifEncoder();
                         enc.Start(outputFilePath);
-                        enc.SetDelay(1000);
+                        enc.SetDelay(WorkflowConfig.ImageAnimatedFramesDelay * 100);
                         enc.SetRepeat(0);
                         foreach (Image img in tempImages)
                         {
@@ -1072,47 +1116,9 @@ namespace ZScreenLib
             }
         }
 
-        private void SetFileSize(long sz)
-        {
-            FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
-        }
-
-        /// <summary>
-        /// Writes MyImage object in a WorkerTask into a file
-        /// </summary>
-        /// <param name="t">WorkerTask</param>
-        public void WriteImage()
-        {
-            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
-            {
-                string fp = LocalFilePath;
-                Image img = tempImage;
-                FileInfo fi = FileSystem.WriteImage(fp, PrepareData()); // PrepareData instead of using Data
-                fp = fi.FullName;
-                this.SetFileSize(fi.Length);
-
-                States.Add(TaskState.ImageWritten);
-                UploadResult ur = new UploadResult()
-                {
-                    Host = OutputEnum.LocalDisk.GetDescription(),
-                    LocalFilePath = LocalFilePath,
-                };
-                if (!MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
-                {
-                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
-                    AddUploadResult(ur);
-                }
-
-                if (!File.Exists(LocalFilePath))
-                {
-                    Errors.Add(string.Format("{0} does not exist", LocalFilePath));
-                }
-            }
-        }
-
         public void UploadImage()
         {
-            if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+            if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(LocalFilePath))
                 {
@@ -1255,7 +1261,7 @@ namespace ZScreenLib
                 // Need this for shortening URL using Clipboard Upload
                 ShortenURL(TempText);
             }
-            else if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+            else if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
                 foreach (TextUploaderType textUploaderType in MyTextUploaders)
                 {
@@ -1587,7 +1593,7 @@ namespace ZScreenLib
 
         public void Print()
         {
-            if (MyWorkflow.Outputs.Contains(OutputEnum.Printer))
+            if (WorkflowConfig.Outputs.Contains(OutputEnum.Printer))
             {
                 if (tempImage != null)
                 {
@@ -1658,14 +1664,14 @@ namespace ZScreenLib
                 else if (tempImage != null)
                 {
                     EImageFormat imageFormat;
-                    Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
-                    fn = WorkerTaskHelper.PrepareFilename(MyWorkflow, tempImage, imageFormat, GetPatternType());
+                    Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat);
+                    fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetPatternType());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);
                 }
                 else if (!string.IsNullOrEmpty(TempText))
                 {
-                    fn = new NameParser(NameParserType.EntireScreen).Convert(MyWorkflow.EntireScreenPattern) + ".txt";
+                    fn = new NameParser(NameParserType.EntireScreen).Convert(WorkflowConfig.EntireScreenPattern) + ".txt";
                     string destFile = acc.GetLocalhostPath(fn);
                     FileSystem.WriteText(destFile, TempText);
                 }
@@ -1785,7 +1791,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return MyWorkflow.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && tempImage != null;
+            return WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && tempImage != null;
         }
 
         private bool CreateThumbnail()
@@ -1910,7 +1916,7 @@ namespace ZScreenLib
         public string GetOutputsDescription()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (OutputEnum ut in MyWorkflow.Outputs)
+            foreach (OutputEnum ut in WorkflowConfig.Outputs)
             {
                 sb.Append(ut.GetDescription());
                 sb.Append(", ");
@@ -1932,7 +1938,7 @@ namespace ZScreenLib
             }
             if (sb.Length < 3)
             {
-                foreach (OutputEnum ut in MyWorkflow.Outputs)
+                foreach (OutputEnum ut in WorkflowConfig.Outputs)
                 {
                     sb.Append(ut.GetDescription());
                     sb.Append(", ");

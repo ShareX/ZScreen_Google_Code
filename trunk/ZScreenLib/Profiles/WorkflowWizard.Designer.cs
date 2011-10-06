@@ -34,11 +34,6 @@
             this.cboTask = new System.Windows.Forms.ComboBox();
             this.gbName = new System.Windows.Forms.GroupBox();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.gbHotey = new System.Windows.Forms.GroupBox();
-            this.txtHotkey = new System.Windows.Forms.TextBox();
-            this.cbAlt = new System.Windows.Forms.CheckBox();
-            this.cbShift = new System.Windows.Forms.CheckBox();
-            this.cbControl = new System.Windows.Forms.CheckBox();
             this.chkUseHotkey = new System.Windows.Forms.CheckBox();
             this.tpCapture = new System.Windows.Forms.TabPage();
             this.tpEditing = new System.Windows.Forms.TabPage();
@@ -57,11 +52,11 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.hotkeyManager = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcMain.SuspendLayout();
             this.tpAccessibility.SuspendLayout();
             this.gbTask.SuspendLayout();
             this.gbName.SuspendLayout();
-            this.gbHotey.SuspendLayout();
             this.tpOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
             this.gbSaveToFile.SuspendLayout();
@@ -81,9 +76,9 @@
             // 
             // tpAccessibility
             // 
+            this.tpAccessibility.Controls.Add(this.hotkeyManager);
             this.tpAccessibility.Controls.Add(this.gbTask);
             this.tpAccessibility.Controls.Add(this.gbName);
-            this.tpAccessibility.Controls.Add(this.gbHotey);
             this.tpAccessibility.Controls.Add(this.chkUseHotkey);
             this.tpAccessibility.Location = new System.Drawing.Point(4, 22);
             this.tpAccessibility.Name = "tpAccessibility";
@@ -128,56 +123,6 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(560, 20);
             this.txtName.TabIndex = 7;
-            // 
-            // gbHotey
-            // 
-            this.gbHotey.Controls.Add(this.txtHotkey);
-            this.gbHotey.Controls.Add(this.cbAlt);
-            this.gbHotey.Controls.Add(this.cbShift);
-            this.gbHotey.Controls.Add(this.cbControl);
-            this.gbHotey.Location = new System.Drawing.Point(8, 160);
-            this.gbHotey.Name = "gbHotey";
-            this.gbHotey.Size = new System.Drawing.Size(288, 56);
-            this.gbHotey.TabIndex = 8;
-            this.gbHotey.TabStop = false;
-            this.gbHotey.Text = "Hotkey Configuration";
-            // 
-            // txtHotkey
-            // 
-            this.txtHotkey.Location = new System.Drawing.Point(168, 24);
-            this.txtHotkey.Name = "txtHotkey";
-            this.txtHotkey.Size = new System.Drawing.Size(100, 20);
-            this.txtHotkey.TabIndex = 6;
-            // 
-            // cbAlt
-            // 
-            this.cbAlt.AutoSize = true;
-            this.cbAlt.Location = new System.Drawing.Point(124, 24);
-            this.cbAlt.Name = "cbAlt";
-            this.cbAlt.Size = new System.Drawing.Size(38, 17);
-            this.cbAlt.TabIndex = 5;
-            this.cbAlt.Text = "Alt";
-            this.cbAlt.UseVisualStyleBackColor = true;
-            // 
-            // cbShift
-            // 
-            this.cbShift.AutoSize = true;
-            this.cbShift.Location = new System.Drawing.Point(71, 24);
-            this.cbShift.Name = "cbShift";
-            this.cbShift.Size = new System.Drawing.Size(47, 17);
-            this.cbShift.TabIndex = 4;
-            this.cbShift.Text = "Shift";
-            this.cbShift.UseVisualStyleBackColor = true;
-            // 
-            // cbControl
-            // 
-            this.cbControl.AutoSize = true;
-            this.cbControl.Location = new System.Drawing.Point(24, 24);
-            this.cbControl.Name = "cbControl";
-            this.cbControl.Size = new System.Drawing.Size(41, 17);
-            this.cbControl.TabIndex = 3;
-            this.cbControl.Text = "Ctrl";
-            this.cbControl.UseVisualStyleBackColor = true;
             // 
             // chkUseHotkey
             // 
@@ -359,6 +304,13 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // hotkeyManager
+            // 
+            this.hotkeyManager.Location = new System.Drawing.Point(16, 168);
+            this.hotkeyManager.Name = "hotkeyManager";
+            this.hotkeyManager.Size = new System.Drawing.Size(576, 48);
+            this.hotkeyManager.TabIndex = 11;
+            // 
             // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
@@ -379,8 +331,6 @@
             this.gbTask.ResumeLayout(false);
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
-            this.gbHotey.ResumeLayout(false);
-            this.gbHotey.PerformLayout();
             this.tpOutputs.ResumeLayout(false);
             this.gbRemoteLocations.ResumeLayout(false);
             this.gbSaveToFile.ResumeLayout(false);
@@ -402,11 +352,6 @@
         private System.Windows.Forms.Button btnOutputsConfig;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox gbHotey;
-        private System.Windows.Forms.TextBox txtHotkey;
-        private System.Windows.Forms.CheckBox cbAlt;
-        private System.Windows.Forms.CheckBox cbShift;
-        private System.Windows.Forms.CheckBox cbControl;
         private System.Windows.Forms.CheckBox chkUseHotkey;
         private System.Windows.Forms.CheckBox chkSaveFile;
         private System.Windows.Forms.GroupBox gbName;
@@ -420,5 +365,6 @@
         private System.Windows.Forms.CheckBox chkUploadFTP;
         private System.Windows.Forms.CheckBox chkUploadDropbox;
         private System.Windows.Forms.TabPage tpCapture;
+        private HelpersLib.Hotkey.HotkeyManagerControl hotkeyManager;
     }
 }

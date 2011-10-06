@@ -114,7 +114,7 @@ namespace JBirdGUI
         {
             WorkerTask bwTask = e.Argument as WorkerTask;
 
-            if (bwTask.MyWorkflow.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
+            if (bwTask.WorkflowConfig.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
             {
                 bwTask.PublishData();
             }

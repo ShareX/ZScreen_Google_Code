@@ -131,12 +131,12 @@ namespace ZScreenCLI
 
             foreach (int o in listOutputTypes)
             {
-                tempTask.MyWorkflow.Outputs.Add((OutputEnum)o);
+                tempTask.WorkflowConfig.Outputs.Add((OutputEnum)o);
             }
-            if (tempTask.MyWorkflow.Outputs.Count == 0)
+            if (tempTask.WorkflowConfig.Outputs.Count == 0)
             {
-                tempTask.MyWorkflow.Outputs.Add(OutputEnum.Clipboard);
-                tempTask.MyWorkflow.Outputs.Add(OutputEnum.LocalDisk);
+                tempTask.WorkflowConfig.Outputs.Add(OutputEnum.Clipboard);
+                tempTask.WorkflowConfig.Outputs.Add(OutputEnum.LocalDisk);
             }
 
             if (clipboardContent > 0)
