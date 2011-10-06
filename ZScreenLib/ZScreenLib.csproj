@@ -407,6 +407,9 @@
     <Content Include="Languages\language-en-US.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="libpng15.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\mail.png" />
     <None Include="Resources\server.png" />
     <None Include="Resources\clipboard.png" />
