@@ -13,10 +13,10 @@
  
  
  
- var codesite_token = "f25aeb49f34aea63d2e8f744a7dea353";
+ var codesite_token = "8e914378200ce7db8523c7d299d114fe";
  
  
- var CS_env = {"profileUrl":["/u/mcored/"],"token":"f25aeb49f34aea63d2e8f744a7dea353","assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/13841197563397998716","projectHomeUrl":"/p/sharpapng","relativeBaseUrl":"","projectName":"sharpapng","loggedInUserEmail":"mcored@gmail.com"};
+ var CS_env = {"profileUrl":["/u/mcored/"],"token":"8e914378200ce7db8523c7d299d114fe","assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/13841197563397998716","projectHomeUrl":"/p/sharpapng","relativeBaseUrl":"","projectName":"sharpapng","loggedInUserEmail":"mcored@gmail.com"};
  var _gaq = _gaq || [];
  _gaq.push(
  ['siteTracker._setAccount', 'UA-18071-1'],
@@ -164,11 +164,6 @@ contributes to open source, such as <a href="http://www.firefox.com">Firefox</a>
 </div>
 <![endif]-->
 
- <div style="font-weight:bold; color:#a03; padding:5px; margin-top:10px; text-align:center; background:#ffeac0;">
- Project Hosting is currently READ-ONLY for network maintenance.
- 
- </div>
-
 
 
 
@@ -240,6 +235,8 @@ contributes to open source, such as <a href="http://www.firefox.com">Firefox</a>
  
  <a href="/p/sharpapng/source/list"
  class="tab active">Source</a>
+ 
+ 
  
  
  
@@ -1028,7 +1025,7 @@ contributes to open source, such as <a href="http://www.firefox.com">Firefox</a>
  // register our source container with the commenting code
  var paths = {'svn5': '/trunk/Bin/x86/apng.dll'}
  codereviews = CR_controller.setup(
- {"profileUrl":["/u/mcored/"],"token":"f25aeb49f34aea63d2e8f744a7dea353","assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/13841197563397998716","projectHomeUrl":"/p/sharpapng","relativeBaseUrl":"","projectName":"sharpapng","loggedInUserEmail":"mcored@gmail.com"}, '', 'svn5', paths,
+ {"profileUrl":["/u/mcored/"],"token":"8e914378200ce7db8523c7d299d114fe","assetHostPath":"http://www.gstatic.com/codesite/ph","domainName":null,"assetVersionPath":"http://www.gstatic.com/codesite/ph/13841197563397998716","projectHomeUrl":"/p/sharpapng","relativeBaseUrl":"","projectName":"sharpapng","loggedInUserEmail":"mcored@gmail.com"}, '', 'svn5', paths,
  CR_BrowseIntegrationFactory);
  
  codereviews.registerActivityListener(CR_ActivityType.REVEAL_DRAFT_PLATE, showPublishInstructions);

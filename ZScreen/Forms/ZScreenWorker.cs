@@ -31,6 +31,7 @@ using System.IO;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
+using Gif.Components;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
@@ -42,7 +43,6 @@ using ZScreenGUI.Properties;
 using ZScreenLib;
 using ZSS.ColorsLib;
 using ZUploader.HelperClasses;
-using Gif.Components;
 
 namespace ZScreenGUI
 {
@@ -540,18 +540,32 @@ namespace ZScreenGUI
 
             if (bCreateAni)
             {
-                AnimatedGifEncoder enc = new AnimatedGifEncoder();
-
                 String outputFilePath = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir,
-                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern) + ".gif");
-                enc.Start(outputFilePath);
-                enc.SetDelay(1000);
-                enc.SetRepeat(0);
-                foreach (Image img in tempImages)
+                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern));
+                switch (Engine.Workflow.ImageFormat)
                 {
-                    enc.AddFrame(img);
+                    case EImageFormat.PNG:
+                        SharpApng.Apng apng = new SharpApng.Apng();
+                        foreach (Image img in tempImages)
+                        {
+                            apng.AddFrame(new Bitmap(img), 500, 1);
+                        }
+                        outputFilePath += ".png";
+                        apng.WriteApng(outputFilePath);
+                        break;
+                    default:
+                        AnimatedGifEncoder enc = new AnimatedGifEncoder();
+                        outputFilePath += ".gif";
+                        enc.Start(outputFilePath);
+                        enc.SetDelay(1000);
+                        enc.SetRepeat(0);
+                        foreach (Image img in tempImages)
+                        {
+                            enc.AddFrame(img);
+                        }
+                        enc.Finish();
+                        break;
                 }
-                enc.Finish();
 
                 if (File.Exists(outputFilePath))
                 {
