@@ -1090,7 +1090,7 @@ namespace ZScreenLib
                         SharpApng.Apng apng = new SharpApng.Apng();
                         foreach (Image img in tempImages)
                         {
-                            apng.AddFrame(new Bitmap(img), 500, 1);
+                            apng.AddFrame(new Bitmap(img), WorkflowConfig.ImageAnimatedFramesDelay * 1000, 1000);
                         }
 
                         apng.WriteApng(outputFilePath);
@@ -1100,7 +1100,7 @@ namespace ZScreenLib
                         outputFilePath += ".gif";
                         AnimatedGifEncoder enc = new AnimatedGifEncoder();
                         enc.Start(outputFilePath);
-                        enc.SetDelay(WorkflowConfig.ImageAnimatedFramesDelay * 100);
+                        enc.SetDelay(WorkflowConfig.ImageAnimatedFramesDelay * 1000);
                         enc.SetRepeat(0);
                         foreach (Image img in tempImages)
                         {
