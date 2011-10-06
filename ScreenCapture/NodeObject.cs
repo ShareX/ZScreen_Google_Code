@@ -29,9 +29,9 @@ namespace ScreenCapture
 {
     public class NodeObject : DrawableObject
     {
-        private Point position;
+        private PointF position;
 
-        public Point Position
+        public PointF Position
         {
             get
             {
@@ -40,37 +40,31 @@ namespace ScreenCapture
             set
             {
                 position = value;
-                UpdateRectangle();
+                Rectangle = new RectangleF(position.X - (NodeSize - 1) / 2, position.Y - (NodeSize - 1) / 2, NodeSize, NodeSize);
             }
         }
 
-        public int Size { get; set; }
+        public float NodeSize { get; set; }
 
-        public int LineSize { get; set; }
+        public float LineSize { get; set; }
 
         private Pen borderPen;
         private Brush backgroundBrush;
 
-        public NodeObject(Pen borderPen, Brush backgroundBrush, int x = 0, int y = 0)
+        public NodeObject(Pen borderPen, Brush backgroundBrush, float x = 0, float y = 0)
         {
             this.borderPen = borderPen;
             this.backgroundBrush = backgroundBrush;
-            Size = 6;
+            NodeSize = 13;
             LineSize = 20;
-            Position = new Point(x, y);
-            UpdateRectangle();
-        }
-
-        private void UpdateRectangle()
-        {
-            Rectangle = new Rectangle(Position.X - Size, Position.Y - Size, Size * 2 + 1, Size * 2 + 1);
+            Position = new PointF(x, y);
         }
 
         public override void Draw(Graphics g)
         {
             g.FillEllipse(backgroundBrush, Rectangle.X, Rectangle.Y, Rectangle.Width - 1, Rectangle.Height - 1);
-            g.DrawLine(borderPen, Rectangle.X + Size - LineSize, Rectangle.Y + Size, Rectangle.X + Size + LineSize, Rectangle.Y + Size);
-            g.DrawLine(borderPen, Rectangle.X + Size, Rectangle.Y + Size - LineSize, Rectangle.X + Size, Rectangle.Y + Size + LineSize);
+            g.DrawLine(borderPen, Rectangle.X + NodeSize / 2 - LineSize, Rectangle.Y + NodeSize / 2, Rectangle.X + NodeSize / 2 + LineSize, Rectangle.Y + NodeSize / 2);
+            g.DrawLine(borderPen, Rectangle.X + NodeSize / 2, Rectangle.Y + NodeSize / 2 - LineSize, Rectangle.X + NodeSize / 2, Rectangle.Y + NodeSize / 2 + LineSize);
             g.DrawEllipse(borderPen, Rectangle.X, Rectangle.Y, Rectangle.Width - 1, Rectangle.Height - 1);
         }
     }

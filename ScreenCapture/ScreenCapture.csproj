@@ -86,7 +86,6 @@
     <Compile Include="Regions\RectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicsPathExtensions.cs" />
     <Compile Include="Regions\RoundedRectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -80,7 +81,7 @@ namespace ScreenCapture
 
             timer = new Stopwatch();
 
-            borderPen = new Pen(Color.CornflowerBlue);
+            borderPen = new Pen(Color.DarkBlue);
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
             lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);
@@ -91,6 +92,12 @@ namespace ScreenCapture
             MouseUp += new MouseEventHandler(Surface_MouseUp);
             KeyDown += new KeyEventHandler(Surface_KeyDown);
             KeyUp += new KeyEventHandler(Surface_KeyUp);
+            Shown += new EventHandler(Surface_Shown);
+        }
+
+        private void Surface_Shown(object sender, System.EventArgs e)
+        {
+            Activate();
         }
 
         private void InitializeComponent()
@@ -423,10 +430,10 @@ namespace ScreenCapture
             if (nodes.Count() > 1)
             {
                 int left, top, right, bottom;
-                left = nodes.Min(x => x.Position.X);
-                top = nodes.Min(x => x.Position.Y);
-                right = nodes.Max(x => x.Position.X);
-                bottom = nodes.Max(x => x.Position.Y);
+                left = (int)nodes.Min(x => x.Position.X);
+                top = (int)nodes.Min(x => x.Position.Y);
+                right = (int)nodes.Max(x => x.Position.X);
+                bottom = (int)nodes.Max(x => x.Position.Y);
 
                 return CaptureHelpers.CreateRectangle(new Point(left, top), new Point(right, bottom));
             }

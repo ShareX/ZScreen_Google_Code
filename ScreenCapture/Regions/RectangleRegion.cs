@@ -136,22 +136,22 @@ namespace ScreenCapture
 
         private void UpdateNodePositions()
         {
-            int xStart = Area.X;
-            int xMid = Area.X + Area.Width / 2;
-            int xEnd = Area.X + Area.Width - 1;
+            float xStart = Area.X;
+            float xMid = Area.X + Area.Width / 2;
+            float xEnd = Area.X + Area.Width - 1;
 
-            int yStart = Area.Y;
-            int yMid = Area.Y + Area.Height / 2;
-            int yEnd = Area.Y + Area.Height - 1;
+            float yStart = Area.Y;
+            float yMid = Area.Y + Area.Height / 2;
+            float yEnd = Area.Y + Area.Height - 1;
 
-            nodes[(int)NodePosition.TopLeft].Position = new Point(xStart, yStart);
-            nodes[(int)NodePosition.Top].Position = new Point(xMid, yStart);
-            nodes[(int)NodePosition.TopRight].Position = new Point(xEnd, yStart);
-            nodes[(int)NodePosition.Right].Position = new Point(xEnd, yMid);
-            nodes[(int)NodePosition.BottomRight].Position = new Point(xEnd, yEnd);
-            nodes[(int)NodePosition.Bottom].Position = new Point(xMid, yEnd);
-            nodes[(int)NodePosition.BottomLeft].Position = new Point(xStart, yEnd);
-            nodes[(int)NodePosition.Left].Position = new Point(xStart, yMid);
+            nodes[(int)NodePosition.TopLeft].Position = new PointF(xStart, yStart);
+            nodes[(int)NodePosition.Top].Position = new PointF(xMid, yStart);
+            nodes[(int)NodePosition.TopRight].Position = new PointF(xEnd, yStart);
+            nodes[(int)NodePosition.Right].Position = new PointF(xEnd, yMid);
+            nodes[(int)NodePosition.BottomRight].Position = new PointF(xEnd, yEnd);
+            nodes[(int)NodePosition.Bottom].Position = new PointF(xMid, yEnd);
+            nodes[(int)NodePosition.BottomLeft].Position = new PointF(xStart, yEnd);
+            nodes[(int)NodePosition.Left].Position = new PointF(xStart, yMid);
         }
     }
 }

@@ -161,4 +161,9 @@ namespace HelpersLib
     {
         Registered, Failed, NotConfigured
     }
+
+    public enum TriangleAngle
+    {
+        Top, Right, Bottom, Left
+    }
 }
