@@ -66,6 +66,7 @@ namespace ZScreenLib
         public static readonly string LogFileName = ApplicationName + "Log-{0}.txt";
         public static readonly string PluginsFolderName = ApplicationName + "Plugins";
         public static readonly string GoogleTranslateConfigFileName = "GoogleTranslateConfig.xml";
+        public static readonly string UploadersConfigFileName = "UploadersConfig.xml";
         public static readonly string WorkflowConfigFileName = "WorkflowConfig.xml";
 
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
