@@ -246,8 +246,6 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    UploadManager.ShowUploadResults(task, false);
-
                     if (Engine.conf.TwitterEnabled)
                     {
                         Adapter.TwitterMsg(task);
@@ -288,6 +286,9 @@ namespace ZScreenGUI
                 {
                     AddHistoryItem(task);
                 }
+
+                // do this last
+                UploadManager.ShowUploadResults(task, false);
             }
             catch (Exception ex)
             {

@@ -2194,24 +2194,14 @@ namespace ZScreenGUI
             Engine.Workflow.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
 
-        private void dgvHotkeys_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void btnUploadersConfigImport_Click(object sender, EventArgs e)
         {
-
+            UploadersConfigImport();
         }
 
-        private void dgvHotkeys_KeyDown(object sender, KeyEventArgs e)
+        private void btnUploadersConfigExport_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void dgvHotkeys_Leave(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvHotkeys_MouseLeave(object sender, EventArgs e)
-        {
-
+            UploadersConfigExport();
         }
     }
 }

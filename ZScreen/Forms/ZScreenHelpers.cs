@@ -163,6 +163,30 @@ namespace ZScreenGUI
             }
         }
 
+        private void UploadersConfigImport()
+        {
+            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                UploadersConfig temp = UploadersConfig.Load(dlg.FileName);
+                if (temp != null)
+                {
+                    Engine.Workflow.OutputsConfig = temp;
+                }
+            }
+        }
+
+        private void UploadersConfigExport()
+        {
+            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dlg.FileName = Engine.WorkflowConfigFileName;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Engine.Workflow.OutputsConfig.Save(dlg.FileName);
+            }
+        }
+
         #endregion Backup & Restore
     }
 }
