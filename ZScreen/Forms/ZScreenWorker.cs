@@ -502,8 +502,9 @@ namespace ZScreenGUI
                     {
                         if (GraphicsMgr.IsValidImage(fp))
                         {
+                            string dirfp = Path.GetDirectoryName(fp);
                             string fsfp = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir, Path.GetFileName(fp));
-                            if (fp != fsfp)
+                            if (fp != fsfp && dirfp != Engine.ImagesDir)
                             {
                                 string dir = Path.GetDirectoryName(fsfp);
                                 if (!Directory.Exists(dir))
@@ -511,12 +512,16 @@ namespace ZScreenGUI
                                     Directory.CreateDirectory(dir);
                                 }
                                 File.Copy(fp, fsfp, true);
+                                strListFilePath.Add(fsfp);
+                            }
+                            else
+                            {
+                                strListFilePath.Add(fp);
                             }
                             if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
                             {
                                 File.Delete(fp);
                             }
-                            strListFilePath.Add(fsfp);
                         }
                         else
                         {
