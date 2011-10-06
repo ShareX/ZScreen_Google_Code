@@ -32,6 +32,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Crop;
+using Gif.Components;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
@@ -119,7 +120,9 @@ namespace ZScreenLib
             [Description("Shorten URL")]
             ShortenURL,
             [Description("Index Folder")]
-            IndexFolder
+            IndexFolder,
+            [Description("Created Animated Image")]
+            CreateAnimatedImage
         }
 
         public enum ProgressType : int
@@ -184,6 +187,7 @@ namespace ZScreenLib
 
         public bool IsImage { get; private set; }
 
+        public List<Image> tempImages;
         public Image tempImage { get; private set; }
         public string TempText { get; private set; }
         private Stream Data;
@@ -442,6 +446,12 @@ namespace ZScreenLib
 
         #region Populating Task
 
+        public void SetImage(List<Image> tempImages)
+        {
+            Job3 = JobLevel3.CreateAnimatedImage;
+            this.tempImages = tempImages;
+        }
+
         public bool SetImage(string savePath)
         {
             return SetImage(GraphicsMgr.GetImageSafely(savePath), savePath);
@@ -486,8 +496,6 @@ namespace ZScreenLib
                     if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
                     {
                         PerformActions();
-                        // Data should be targetting the file size
-                        Data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat);
                     }
                 }
             }
@@ -900,78 +908,16 @@ namespace ZScreenLib
 
         #region Publish Data
 
-        private Stream PrepareData(string fp)
-        {
-            Stream data = null;
-            using (FileStream fs = new FileStream(fp, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                data = new MemoryStream();
-                fs.CopyStreamTo(data);
-            }
-            return data;
-        }
-
-        private Stream PrepareData()
-        {
-            Stream data = null;
-
-            if (File.Exists(LocalFilePath))
-            {
-                data = PrepareData(LocalFilePath);
-            }
-            else if (tempImage != null)
-            {
-                data = tempImage.SaveImage(MyWorkflow, MyWorkflow.ImageFormat);
-            }
-            else if (!string.IsNullOrEmpty(TempText))
-            {
-                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
-            }
-
-            return data;
-        }
-
         /// <summary>
-        /// Writes MyImage object in a WorkerTask into a file
-        /// </summary>
-        /// <param name="t">WorkerTask</param>
-        public void WriteImage()
-        {
-            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
-            {
-                string fp = LocalFilePath;
-                Image img = tempImage;
-                FileInfo fi = FileSystem.WriteImage(fp, Data);
-                fp = fi.FullName;
-                FileSize = string.Format("{0} KiB", (fi.Length / 1024.0).ToString("0"));
-
-                States.Add(TaskState.ImageWritten);
-                UploadResult ur = new UploadResult()
-                {
-                    Host = OutputEnum.LocalDisk.GetDescription(),
-                    LocalFilePath = LocalFilePath,
-                };
-                if (!MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
-                {
-                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
-                    AddUploadResult(ur);
-                }
-
-                if (!File.Exists(LocalFilePath))
-                {
-                    Errors.Add(string.Format("{0} does not exist", LocalFilePath));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Function to edit Image (Screenshot or Picture) in an Image Editor and Upload
+        /// Beginining of the background worker tasks
         /// </summary>
         public void PublishData()
         {
-            StaticHelper.WriteLine(string.Format("Job started: {0}", Job2));
-
             StartTime = DateTime.Now;
+
+            Data = PrepareData();
+
+            StaticHelper.WriteLine(string.Format("Job started: {0}", Job2));
 
             if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(TempText))
             {
@@ -1044,6 +990,126 @@ namespace ZScreenLib
             EndTime = DateTime.Now;
         }
 
+        private Stream PrepareData(string fp)
+        {
+            Stream data = null;
+            using (FileStream fs = new FileStream(fp, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                data = new MemoryStream();
+                fs.CopyStreamTo(data);
+            }
+            return data;
+        }
+
+        private Stream PrepareData()
+        {
+            Stream data = null;
+
+            if (Job3 == JobLevel3.CreateAnimatedImage)
+            {
+                WriteImageAnimated();
+            }
+
+            if (File.Exists(LocalFilePath))
+            {
+                StaticHelper.WriteLine("Preparing data from " + LocalFilePath);
+                data = PrepareData(LocalFilePath);
+            }
+            else if (tempImage != null)
+            {
+                StaticHelper.WriteLine("Preparing data from image");
+                EImageFormat imageFormat;
+                data = WorkerTaskHelper.PrepareImage(MyWorkflow, tempImage, out imageFormat, bTargetFileSize: true);
+            }
+            else if (!string.IsNullOrEmpty(TempText))
+            {
+                StaticHelper.WriteLine("Preparing data from text");
+                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
+            }
+
+            SetFileSize(data.Length);
+
+            return data;
+        }
+
+        private void WriteImageAnimated()
+        {
+            if (tempImages != null && tempImages.Count > 0)
+            {
+                String outputFilePath = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir,
+                    new NameParser(NameParserType.EntireScreen).Convert(Engine.Workflow.EntireScreenPattern));
+
+                switch (Engine.Workflow.ImageFormatAnimated)
+                {
+                    case EImageFormat.PNG:
+                        outputFilePath += ".png";
+                        SharpApng.Apng apng = new SharpApng.Apng();
+                        foreach (Image img in tempImages)
+                        {
+                            apng.AddFrame(new Bitmap(img), 500, 1);
+                        }
+
+                        apng.WriteApng(outputFilePath);
+                        break;
+
+                    default:
+                        outputFilePath += ".gif";
+                        AnimatedGifEncoder enc = new AnimatedGifEncoder();
+                        enc.Start(outputFilePath);
+                        enc.SetDelay(1000);
+                        enc.SetRepeat(0);
+                        foreach (Image img in tempImages)
+                        {
+                            enc.AddFrame(img);
+                        }
+                        enc.Finish();
+                        break;
+                }
+
+                UpdateLocalFilePath(outputFilePath);
+                StaticHelper.WriteLine("Wrote animated image: " + outputFilePath);
+                tempImages.Clear();
+            }
+        }
+
+        private void SetFileSize(long sz)
+        {
+            FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
+        }
+
+        /// <summary>
+        /// Writes MyImage object in a WorkerTask into a file
+        /// </summary>
+        /// <param name="t">WorkerTask</param>
+        public void WriteImage()
+        {
+            if (MyWorkflow.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
+            {
+                string fp = LocalFilePath;
+                Image img = tempImage;
+                FileInfo fi = FileSystem.WriteImage(fp, PrepareData()); // PrepareData instead of using Data
+                fp = fi.FullName;
+                this.SetFileSize(fi.Length);
+
+                States.Add(TaskState.ImageWritten);
+                UploadResult ur = new UploadResult()
+                {
+                    Host = OutputEnum.LocalDisk.GetDescription(),
+                    LocalFilePath = LocalFilePath,
+                };
+                if (!MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
+                {
+                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
+                    AddUploadResult(ur);
+                }
+
+                if (!File.Exists(LocalFilePath))
+                {
+                    Errors.Add(string.Format("{0} does not exist", LocalFilePath));
+                }
+            }
+        }
+
         public void UploadImage()
         {
             if (MyWorkflow.Outputs.Contains(OutputEnum.RemoteHost))
@@ -1064,7 +1130,7 @@ namespace ZScreenLib
 
                 for (int i = 0; i < MyImageUploaders.Count; i++)
                 {
-                    UploadImage(MyImageUploaders[i], PrepareData());
+                    UploadImage(MyImageUploaders[i], Data);
                 }
             }
 
@@ -1446,7 +1512,7 @@ namespace ZScreenLib
 
             foreach (FileUploaderType fileUploaderType in MyFileUploaders)
             {
-                UploadFile(fileUploaderType, PrepareData());
+                UploadFile(fileUploaderType, Data);
             }
         }
 
@@ -1557,7 +1623,7 @@ namespace ZScreenLib
                 Stream emailData = null;
                 try
                 {
-                    emailData = PrepareData();
+                    emailData = Data;
 
                     if (emailData != null && emailData.Length > 0)
                     {

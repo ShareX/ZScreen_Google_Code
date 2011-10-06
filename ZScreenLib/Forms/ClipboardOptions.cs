@@ -213,5 +213,10 @@ namespace ZScreenLib
         {
             ResetTimer();
         }
+
+        private void ClipboardOptions_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.urTask.Dispose();
+        }
     }
 }

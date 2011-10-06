@@ -80,6 +80,7 @@ namespace ZScreenLib
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
+        public EImageFormat ImageFormatAnimated = EImageFormat.GIF;
 
         #region File Naming
 
