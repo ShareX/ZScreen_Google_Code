@@ -1588,7 +1588,7 @@ namespace ZScreenLib
                 urCb.Host = OutputEnum.Clipboard.GetDescription();
                 urCb.LocalFilePath = this.LocalFilePath;
             }
-
+            /*
             if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
             {
                 urCb.Host = OutputEnum.Clipboard.GetDescription();
@@ -1606,7 +1606,7 @@ namespace ZScreenLib
                     File.Delete(ocrfp);
                 }
             }
-
+            */
             AddUploadResult(urCb);
         }
 
