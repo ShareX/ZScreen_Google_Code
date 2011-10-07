@@ -321,14 +321,22 @@ namespace ZScreenLib
 
         public static void BackupFTPSettings()
         {
+            string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
+
             if (Adapter.CheckFTPAccounts())
             {
-                string fp = Path.Combine(Engine.SettingsDir, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
-                if (!File.Exists(fp))
+                string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
+                if (!File.Exists(fpftp))
                 {
                     FTPAccountManager fam = new FTPAccountManager(Engine.Workflow.OutputsConfig.FTPAccountList);
-                    fam.Save(fp);
+                    fam.Save(fpftp);
                 }
+            }
+
+            string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-OutputConfig.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
+            if (!File.Exists(fpoutputsconfig))
+            {
+                Engine.Workflow.Write(fpoutputsconfig);
             }
         }
 
