@@ -31,6 +31,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -40,7 +41,7 @@ namespace ScreenCapture
 
         public SurfaceOptions Config { get; set; }
 
-        public Rectangle Area { get; protected set; }
+        public Rectangle CurrentArea { get; protected set; }
 
         public int FPS { get; private set; }
 
@@ -152,7 +153,7 @@ namespace ScreenCapture
         {
             Image img = SurfaceImage;
 
-            Rectangle newArea = Rectangle.Intersect(Area, drawArea);
+            Rectangle newArea = Rectangle.Intersect(CurrentArea, drawArea);
 
             if (regionPath != null)
             {
@@ -194,18 +195,18 @@ namespace ScreenCapture
 
         public void MoveArea(int x, int y)
         {
-            Area = new Rectangle(new Point(Area.X + x, Area.Y + y), Area.Size);
+            CurrentArea = new Rectangle(new Point(CurrentArea.X + x, CurrentArea.Y + y), CurrentArea.Size);
         }
 
         public void ShrinkArea(int x, int y)
         {
             if (isBottomRightMoving)
             {
-                Area = new Rectangle(Area.Left, Area.Top, Area.Width + x, Area.Height + y);
+                CurrentArea = new Rectangle(CurrentArea.Left, CurrentArea.Top, CurrentArea.Width + x, CurrentArea.Height + y);
             }
             else
             {
-                Area = new Rectangle(Area.Left + x, Area.Top + y, Area.Width - x, Area.Height - y);
+                CurrentArea = new Rectangle(CurrentArea.Left + x, CurrentArea.Top + y, CurrentArea.Width - x, CurrentArea.Height - y);
             }
         }
 
@@ -234,7 +235,7 @@ namespace ScreenCapture
             if (IsAreaCreated)
             {
                 IsAreaCreated = false;
-                Area = Rectangle.Empty;
+                CurrentArea = Rectangle.Empty;
                 HideNodes();
             }
             else
@@ -399,7 +400,7 @@ namespace ScreenCapture
 
         private void DrawInfo(Graphics g)
         {
-            string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", Area.X, Area.Y, Area.Width, Area.Height);
+            string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", CurrentArea.X, CurrentArea.Y, CurrentArea.Width, CurrentArea.Height);
 
 #if DEBUG
             text = string.Format("FPS: {0}\nBounds: {1}\n{2}", FPS, Bounds, text);

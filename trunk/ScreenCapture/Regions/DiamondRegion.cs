@@ -38,11 +38,11 @@ namespace ScreenCapture
 
         protected override void Draw(Graphics g)
         {
-            if (Area.Width > 0 && Area.Height > 0)
+            if (CurrentArea.Width > 0 && CurrentArea.Height > 0)
             {
                 regionPath = new GraphicsPath();
 
-                regionPath.AddDiamond(new Rectangle(Area.X, Area.Y, Area.Width - 1, Area.Height - 1));
+                regionPath.AddDiamond(new Rectangle(CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1));
 
                 using (Region region = new Region(regionPath))
                 {
@@ -58,7 +58,7 @@ namespace ScreenCapture
                 }
 
                 g.DrawPath(borderPen, regionPath);
-                g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
             }
             else
             {

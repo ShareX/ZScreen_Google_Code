@@ -59,9 +59,6 @@ namespace HelpersLib
         public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
         public static readonly IntPtr HWND_TOP = new IntPtr(0);
 
-        public const int SM_CXSCREEN = 0;
-        public const int SM_CYSCREEN = 1;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 2;
         public const int CURSOR_SHOWING = 1;
         public const int GWL_STYLE = -16;
@@ -118,6 +115,10 @@ namespace HelpersLib
         public static extern bool GetCursorInfo(out CursorInfo pci);
 
         [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetCursorPos(out POINT lpPoint);
+
+        [DllImport("user32.dll")]
         public static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
@@ -145,6 +146,9 @@ namespace HelpersLib
 
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(int smIndex);
+
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(SystemMetric smIndex);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hWnd);

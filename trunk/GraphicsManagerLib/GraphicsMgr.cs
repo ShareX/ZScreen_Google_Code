@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -33,7 +34,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphicsMgrLib.Properties;
 using HelpersLib;
-using System.Collections.Generic;
 
 namespace GraphicsMgrLib
 {
@@ -46,20 +46,6 @@ namespace GraphicsMgrLib
 
     public static class GraphicsMgr
     {
-        public static Image CropImage(Image img, Rectangle rect)
-        {
-            Image bmp = new Bitmap(rect.Width, rect.Height);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.DrawImage(img, new Rectangle(0, 0, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
-            }
-
-            return bmp;
-        }
-
         public static Image AddCanvas(Image img, int size)
         {
             Image bmp = new Bitmap(img.Width + size * 2, img.Height + size * 2);
@@ -114,58 +100,6 @@ namespace GraphicsMgrLib
                 new byte[] { (byte)PathPointType.Start, (byte)PathPointType.Line, (byte)PathPointType.Line, (byte)PathPointType.Line });
             gp.Transform(matrix);
             return Rectangle.Round(gp.GetBounds());
-        }
-
-        /// <summary>
-        /// Function to get a Rectangle of all the screens combined
-        /// </summary>
-        public static Rectangle GetScreenBounds()
-        {
-            Point topLeft = new Point(0, 0);
-            Point bottomRight = new Point(0, 0);
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                if (screen.Bounds.X < topLeft.X) topLeft.X = screen.Bounds.X;
-                if (screen.Bounds.Y < topLeft.Y) topLeft.Y = screen.Bounds.Y;
-                if ((screen.Bounds.X + screen.Bounds.Width) > bottomRight.X) bottomRight.X = screen.Bounds.X + screen.Bounds.Width;
-                if ((screen.Bounds.Y + screen.Bounds.Height) > bottomRight.Y) bottomRight.Y = screen.Bounds.Y + screen.Bounds.Height;
-            }
-
-            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
-        }
-
-        public static Rectangle GetScreenBounds2()
-        {
-            Point topLeft = new Point(int.MaxValue, int.MaxValue);
-            Point bottomRight = new Point(int.MinValue, int.MinValue);
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                topLeft.X = Math.Min(topLeft.X, screen.Bounds.X);
-                topLeft.Y = Math.Min(topLeft.Y, screen.Bounds.Y);
-                bottomRight.X = Math.Max(bottomRight.X, screen.Bounds.Right);
-                bottomRight.Y = Math.Max(bottomRight.Y, screen.Bounds.Bottom);
-            }
-
-            return new Rectangle(topLeft.X, topLeft.Y, bottomRight.X + Math.Abs(topLeft.X), bottomRight.Y + Math.Abs(topLeft.Y));
-        }
-
-        public static Rectangle GetScreenBounds3()
-        {
-            Rectangle rect = new Rectangle(int.MaxValue, int.MaxValue, int.MinValue, int.MinValue);
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                rect = Rectangle.Union(rect, screen.Bounds);
-            }
-
-            return rect;
-        }
-
-        public static Rectangle GetScreenBounds4()
-        {
-            return SystemInformation.VirtualScreen;
         }
 
         /// <summary>
@@ -264,19 +198,6 @@ namespace GraphicsMgrLib
                 point.Y = y;
             }
             return new Rectangle(x, y, width, height);
-        }
-
-        public static Rectangle FixRectangle(int x, int y, int width, int height)
-        {
-            if (width < 0) x += width;
-            if (height < 0) y += height;
-
-            return new Rectangle(x, y, Math.Abs(width), Math.Abs(height));
-        }
-
-        public static Rectangle FixRectangle(Rectangle rect)
-        {
-            return FixRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         public static int GridPoint(int point, int grid)
@@ -639,52 +560,6 @@ namespace GraphicsMgrLib
             int width = (int)(percentage / 100 * img.Width);
             int height = (int)(percentage / 100 * img.Height);
             return ChangeImageSize(img, width, height, preserveSize);
-        }
-
-        public static Bitmap ResizeImage(Image img, int width, int height, bool allowEnlarge = false, bool centerImage = true)
-        {
-            return ResizeImage(img, new Rectangle(0, 0, width, height), allowEnlarge, centerImage);
-        }
-
-        public static Bitmap ResizeImage(Image img, Rectangle rect, bool allowEnlarge = false, bool centerImage = true)
-        {
-            double ratio;
-            int newWidth, newHeight, newX, newY;
-
-            if (!allowEnlarge && img.Width <= rect.Width && img.Height <= rect.Height)
-            {
-                ratio = 1.0;
-                newWidth = img.Width;
-                newHeight = img.Height;
-            }
-            else
-            {
-                double ratioX = (double)rect.Width / (double)img.Width;
-                double ratioY = (double)rect.Height / (double)img.Height;
-                ratio = ratioX < ratioY ? ratioX : ratioY;
-                newWidth = (int)(img.Width * ratio);
-                newHeight = (int)(img.Height * ratio);
-            }
-
-            newX = rect.X;
-            newY = rect.Y;
-
-            if (centerImage)
-            {
-                newX += (int)((rect.Width - (img.Width * ratio)) / 2);
-                newY += (int)((rect.Height - (img.Height * ratio)) / 2);
-            }
-
-            Bitmap bmp = new Bitmap(rect.Width, rect.Height);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.DrawImage(img, newX, newY, newWidth, newHeight);
-            }
-
-            return bmp;
         }
 
         public static Image DrawProgressIcon(int percentage)

@@ -737,7 +737,7 @@ namespace ZScreenLib
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
-                            SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
+                            SetImage(CaptureHelpers.CropImage(imgSS, Engine.conf.LastRegion));
                         }
 
                         else if (Job2 == WorkerTask.JobLevel2.CaptureSelectedWindow)
@@ -754,7 +754,7 @@ namespace ZScreenLib
                                     {
                                         if (crop.ShowDialog() == DialogResult.OK)
                                         {
-                                            SetImage(GraphicsMgr.CropImage(imgSS, crop.SelectionRectangle));
+                                            SetImage(CaptureHelpers.CropImage(imgSS, crop.SelectionRectangle));
                                         }
                                     }
                                     break;
@@ -809,11 +809,11 @@ namespace ZScreenLib
                 {
                     if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
                     {
-                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
+                        return SetImage(CaptureHelpers.CropImage(imgSS, Engine.conf.LastRegion));
                     }
                     else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
                     {
-                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
+                        return SetImage(CaptureHelpers.CropImage(imgSS, Engine.conf.LastCapture));
                     }
                 }
             }
@@ -988,7 +988,7 @@ namespace ZScreenLib
                     UploadToSharedFolder();
                 }
 
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // Note: We need write text or image first 
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // Note: We need write text or image first
                 {
                     switch (Job1)
                     {

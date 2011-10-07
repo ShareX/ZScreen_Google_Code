@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace Crop
 {
@@ -106,7 +107,7 @@ namespace Crop
             {
                 currentPosition = GetMousePosition();
                 Rectangle rect = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X, currentPosition.Y - positionOnClick.Y);
-                CurrentArea.Rectangle = GraphicsMgr.FixRectangle(rect);
+                CurrentArea.Rectangle = CaptureHelpers.FixRectangle(rect);
             }
         }
 

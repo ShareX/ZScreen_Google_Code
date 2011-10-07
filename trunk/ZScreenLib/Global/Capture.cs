@@ -36,7 +36,6 @@ namespace ZScreenLib
 {
     public static class Capture
     {
-
         public static Image CaptureActiveWindow(Workflow wf)
         {
             IntPtr handle = NativeMethods.GetForegroundWindow();
@@ -153,9 +152,10 @@ namespace ZScreenLib
         {
             return CaptureRectangle(NativeMethods.GetDesktopWindow(), rect);
         }
+
         public static Image CaptureScreen(bool showCursor)
         {
-            Image img = CaptureRectangle(GraphicsMgr.GetScreenBounds());
+            Image img = CaptureRectangle(CaptureHelpers.GetScreenBounds());
             if (showCursor)
             {
                 DrawCursor(img);
@@ -251,7 +251,7 @@ namespace ZScreenLib
                     int offset = wfgdi.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
 
                     windowRect.Inflate(offset, offset);
-                    windowRect.Intersect(GraphicsMgr.GetScreenBounds());
+                    windowRect.Intersect(CaptureHelpers.GetScreenBounds());
 
                     NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                     NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
@@ -289,7 +289,7 @@ namespace ZScreenLib
             if (windowImage != null)
             {
                 Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
-                windowImage = GraphicsMgr.CropImage(windowImage, windowRectCropped);
+                windowImage = CaptureHelpers.CropImage(windowImage, windowRectCropped);
 
                 if (wfgdi.DrawCursor)
                 {

@@ -41,7 +41,7 @@ namespace ScreenCapture
 
         protected override void Update()
         {
-            areaObject.Rectangle = Area;
+            areaObject.Rectangle = CurrentArea;
 
             base.Update();
 

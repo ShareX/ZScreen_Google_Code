@@ -84,11 +84,11 @@ namespace HelpersLib
         {
             IntPtr iconHandle = IntPtr.Zero;
 
-            SendMessageTimeout(handle, (int)WM.GETICON, ICON_SMALL2, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
+            SendMessageTimeout(handle, (int)WindowsMessages.GETICON, ICON_SMALL2, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
 
             if (iconHandle == IntPtr.Zero)
             {
-                SendMessageTimeout(handle, (int)WM.GETICON, ICON_SMALL, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
+                SendMessageTimeout(handle, (int)WindowsMessages.GETICON, ICON_SMALL, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
 
                 if (iconHandle == IntPtr.Zero)
                 {
@@ -96,7 +96,7 @@ namespace HelpersLib
 
                     if (iconHandle == IntPtr.Zero)
                     {
-                        SendMessageTimeout(handle, (int)WM.QUERYDRAGICON, 0, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
+                        SendMessageTimeout(handle, (int)WindowsMessages.QUERYDRAGICON, 0, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
                     }
                 }
             }
@@ -113,7 +113,7 @@ namespace HelpersLib
         {
             IntPtr iconHandle = IntPtr.Zero;
 
-            SendMessageTimeout(handle, (int)WM.GETICON, ICON_BIG, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
+            SendMessageTimeout(handle, (int)WindowsMessages.GETICON, ICON_BIG, 0, SendMessageTimeoutFlags.SMTO_ABORTIFHUNG, 1000, out iconHandle);
 
             if (iconHandle == IntPtr.Zero)
             {

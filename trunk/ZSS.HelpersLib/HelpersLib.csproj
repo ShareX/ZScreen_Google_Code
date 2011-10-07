@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaptureHelpers.cs" />
     <Compile Include="CryptographyHelpers\AESHelper.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="CLI\CLICommand.cs" />

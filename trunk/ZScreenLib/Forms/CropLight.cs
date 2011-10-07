@@ -28,6 +28,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace ZScreenLib
 {
@@ -68,7 +69,7 @@ namespace ZScreenLib
 
                 if (positionCurrent != positionOld)
                 {
-                    SelectionRectangle = GraphicsMgr.FixRectangle(positionOnClick.X, positionOnClick.Y,
+                    SelectionRectangle = CaptureHelpers.FixRectangle(positionOnClick.X, positionOnClick.Y,
                         positionCurrent.X - positionOnClick.X + 1, positionCurrent.Y - positionOnClick.Y + 1);
                     Refresh();
                 }
@@ -151,7 +152,7 @@ namespace ZScreenLib
             this.Name = "Crop";
             this.Text = "Crop";
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Bounds = GraphicsMgr.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             this.Cursor = Cursors.Cross;
             this.TopMost = true;

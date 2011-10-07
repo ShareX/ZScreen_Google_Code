@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaManager.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>
@@ -81,7 +82,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawObject.cs" />
-    <Compile Include="CaptureHelpers.cs" />
     <Compile Include="NodeObject.cs" />
     <Compile Include="Regions\RectangleRegion.cs">
       <SubType>Form</SubType>

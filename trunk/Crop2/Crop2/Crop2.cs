@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace Crop
 {
@@ -32,7 +33,7 @@ namespace Crop
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = GraphicsMgr.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
             this.CausesValidation = false;
             this.ControlBox = true;
             this.Cursor = Cursors.Cross;
