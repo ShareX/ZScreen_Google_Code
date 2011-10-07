@@ -605,11 +605,6 @@ namespace ZScreenLib
                 {
                     ur.LocalFilePath = fp;
                 }
-                if (!string.IsNullOrEmpty(ur.LocalFilePath) && string.IsNullOrEmpty(ur.URL) && string.IsNullOrEmpty(ur.Host))
-                {
-                    ur.Host = OutputEnum.LocalDisk.GetDescription();
-                    ur.URL = ur.GetLocalFilePathAsUri(ur.LocalFilePath);
-                }
                 if (!string.IsNullOrEmpty(ur.Host))
                 {
                     UploadResults.Add(ur);
@@ -951,11 +946,6 @@ namespace ZScreenLib
 
             if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(tempText))
             {
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
-                {
-                    SetClipboardContent();
-                }
-
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.Printer))
                 {
                     Print();
@@ -1020,6 +1010,11 @@ namespace ZScreenLib
                         ur_local.URL = ur_local.GetLocalFilePathAsUri(LocalFilePath);
                         AddUploadResult(ur_local);
                     }
+                }
+
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
+                {
+                    SetClipboardContent();
                 }
 
                 if (UploadResults.Count > 0)

@@ -35,6 +35,10 @@ namespace ZScreenLib
                         this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
                         break;
                     }
+                    else if(task.tempImage != null)
+                    {
+                        this.pbPreview.LoadImage(task.tempImage);
+                    }
                 }
 
                 int count = 0;

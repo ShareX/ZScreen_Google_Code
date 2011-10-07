@@ -52,6 +52,12 @@ namespace HelpersLib
             pbMain.LoadProgressChanged += new ProgressChangedEventHandler(pbMain_LoadProgressChanged);
         }
 
+        public void LoadImage(Image img)
+        {
+            pbMain.Image = img;
+            isReady = true;
+        }
+
         public void LoadImage(string imagePath, string imageURL)
         {
             if (!string.IsNullOrEmpty(imagePath) && ZAppHelper.IsImageFile(imagePath) && File.Exists(imagePath))
