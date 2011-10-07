@@ -221,7 +221,7 @@ namespace ZScreenGUI
             {
                 if (Engine.HasAero)
                 {
-                    chkActiveWindowPreferDWM.CheckState = CheckState.Checked;
+                    cboCaptureEngine.SelectedIndex = (int)CaptureEngineType.DWM;
                 }
 
                 ShowWindow();
@@ -1491,6 +1491,9 @@ namespace ZScreenGUI
 
         private void UpdateAeroGlassConfig()
         {
+            gbCaptureGdi.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.GDI;
+            gbCaptureGdiDwm.Enabled = Engine.Workflow.CaptureEngineMode != CaptureEngineType.Hybrid;
+
             // Disable Show Checkers option if Clean Background is disabled
             if (!chkSelectedWindowCleanBackground.Checked)
             {
@@ -1499,14 +1502,15 @@ namespace ZScreenGUI
             chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
 
             // Disable Capture children option if DWM is enabled
-            if (chkActiveWindowPreferDWM.Checked)
+            if (cboCaptureEngine.SelectedIndex == (int)CaptureEngineType.DWM)
             {
                 chkActiveWindowTryCaptureChildren.Checked = false;
             }
-            chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
+            chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
 
             // With GDI, corner-clearing cannot be disabled when both "clean background" and "include shadow" are enabled
-            if (chkActiveWindowPreferDWM.Checked || !chkSelectedWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
+            if (chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked || 
+                !chkSelectedWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
             {
                 chkSelectedWindowCleanTransparentCorners.Enabled = true;
             }
@@ -1743,13 +1747,6 @@ namespace ZScreenGUI
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
             Engine.Workflow.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
-        }
-
-        private void chkActiveWindowPreferDWM_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ActiveWindowPreferDWM = chkActiveWindowPreferDWM.Checked;
-            chkActiveWindowTryCaptureChildren.Enabled = !chkActiveWindowPreferDWM.Checked;
-            UpdateAeroGlassConfig();
         }
 
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
@@ -2202,6 +2199,12 @@ namespace ZScreenGUI
         private void btnUploadersConfigExport_Click(object sender, EventArgs e)
         {
             UploadersConfigExport();
+        }
+
+        private void cboCaptureEngine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Engine.Workflow.CaptureEngineMode = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
+            UpdateAeroGlassConfig();
         }
     }
 }

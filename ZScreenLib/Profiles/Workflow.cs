@@ -57,9 +57,10 @@ namespace ZScreenLib
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
 
+        public CaptureEngineType CaptureEngineMode = CaptureEngineType.GDI;
+
         #region Active Window
 
-        public bool ActiveWindowPreferDWM = false;
         public bool ActiveWindowTryCaptureChildren = false;
         public bool ActiveWindowClearBackground = true;
         public bool ActiveWindowCleanTransparentCorners = true;

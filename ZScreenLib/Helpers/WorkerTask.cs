@@ -605,13 +605,18 @@ namespace ZScreenLib
                 {
                     ur.LocalFilePath = fp;
                 }
-                if (!string.IsNullOrEmpty(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL) || !string.IsNullOrEmpty(OCRText))
+                if (!string.IsNullOrEmpty(ur.LocalFilePath) && string.IsNullOrEmpty(ur.URL) && string.IsNullOrEmpty(ur.Host))
+                {
+                    ur.Host = OutputEnum.LocalDisk.GetDescription();
+                    ur.URL = ur.GetLocalFilePathAsUri(ur.LocalFilePath);
+                }
+                if (!string.IsNullOrEmpty(ur.Host))
                 {
                     UploadResults.Add(ur);
-                    if (Engine.conf.ShowOutputsAsap)
-                    {
-                        MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
-                    }
+                }
+                if (Engine.conf.ShowOutputsAsap)
+                {
+                    MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
                 }
             }
         }
@@ -660,24 +665,26 @@ namespace ZScreenLib
 
         #region Capture
 
-        private bool CaptureRegionOrWindow(Image imgSS, bool windowMode)
+        /// <summary>
+        /// Function to Capture Entire Screen
+        /// </summary>
+        public bool CaptureScreen()
         {
-            using (Crop c = new Crop(imgSS, windowMode))
+            if (tempImage == null)
             {
-                if (c.ShowDialog() == DialogResult.OK)
+                switch (WorkflowConfig.CaptureEngineMode)
                 {
-                    if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
-                    {
-                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
-                    }
-                    else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
-                    {
-                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
-                    }
+                    case CaptureEngineType.Hybrid:
+                        Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
+                        SetImage(Screenshot.GetFullscreen());
+                        break;
+                    default:
+                        SetImage(Capture.CaptureScreen(WorkflowConfig.DrawCursor));
+                        break;
                 }
             }
 
-            return false;
+            return tempImage != null;
         }
 
         private bool CaptureRectangle(Image imgSS)
@@ -685,9 +692,38 @@ namespace ZScreenLib
             return CaptureRegionOrWindow(imgSS, false);
         }
 
-        private bool CaptureWindow(Image imgSS)
+        /// <summary>
+        /// Function to Capture Active Window
+        /// </summary>
+        public bool CaptureActiveWindow()
         {
-            return CaptureRegionOrWindow(imgSS, true);
+            if (tempImage == null)
+            {
+                switch (WorkflowConfig.CaptureEngineMode)
+                {
+                    case CaptureEngineType.Hybrid:
+                        Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
+                        SetImage(Screenshot.GetActiveWindow());
+                        break;
+                    default:
+                        SetImage(Capture.CaptureActiveWindow(this.WorkflowConfig));
+                        break;
+                }
+            }
+            return tempImage != null;
+        }
+
+        public bool CaptureShape()
+        {
+            Screenshot.DrawCursor = Engine.Workflow.DrawCursor;
+            RegionCapturePreview rcp = new RegionCapturePreview(Engine.conf.SurfaceConfig);
+
+            if (rcp.ShowDialog() == DialogResult.OK)
+            {
+                SetImage(rcp.Result);
+            }
+
+            return tempImage != null;
         }
 
         public bool CaptureRegionOrWindow()
@@ -770,42 +806,29 @@ namespace ZScreenLib
             return tempImage != null;
         }
 
-        public bool CaptureShape()
+        private bool CaptureRegionOrWindow(Image imgSS, bool windowMode)
         {
-            Screenshot.DrawCursor = Engine.Workflow.DrawCursor;
-            RegionCapturePreview rcp = new RegionCapturePreview(Engine.conf.SurfaceConfig);
-
-            if (rcp.ShowDialog() == DialogResult.OK)
+            using (Crop c = new Crop(imgSS, windowMode))
             {
-                SetImage(rcp.Result);
+                if (c.ShowDialog() == DialogResult.OK)
+                {
+                    if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.conf.LastRegion.IsEmpty)
+                    {
+                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastRegion));
+                    }
+                    else if (windowMode && !Engine.conf.LastCapture.IsEmpty)
+                    {
+                        return SetImage(GraphicsMgr.CropImage(imgSS, Engine.conf.LastCapture));
+                    }
+                }
             }
 
-            return tempImage != null;
+            return false;
         }
 
-        /// <summary>
-        /// Function to Capture Active Window
-        /// </summary>
-        public bool CaptureActiveWindow()
+        private bool CaptureWindow(Image imgSS)
         {
-            if (tempImage == null)
-            {
-                SetImage(Capture.CaptureActiveWindow(this.WorkflowConfig));
-            }
-            return tempImage != null;
-        }
-
-        /// <summary>
-        /// Function to Capture Entire Screen
-        /// </summary>
-        public bool CaptureScreen()
-        {
-            if (tempImage == null)
-            {
-                SetImage(Capture.CaptureScreen(Engine.conf != null && Engine.Workflow.DrawCursor));
-            }
-
-            return tempImage != null;
+            return CaptureRegionOrWindow(imgSS, true);
         }
 
         #endregion Capture

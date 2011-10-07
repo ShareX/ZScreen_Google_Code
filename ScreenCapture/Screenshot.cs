@@ -33,12 +33,12 @@ namespace ScreenCapture
 {
     public static class Screenshot
     {
-        public static bool AutoCrop = true;
+        public static bool RemoveOutsideDesktopArea = true;
         public static bool DrawCursor = false;
 
         public static Image GetRectangle(Rectangle rect)
         {
-            if (AutoCrop)
+            if (RemoveOutsideDesktopArea)
             {
                 Rectangle bounds = CaptureHelpers.GetScreenBounds();
                 rect = Rectangle.Intersect(bounds, rect);
