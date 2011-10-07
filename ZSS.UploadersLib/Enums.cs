@@ -123,7 +123,9 @@ namespace UploadersLib
         [Description("Local file path")]
         Local,
         [Description("Uploaded URL")]
-        Remote
+        Remote,
+        [Description("Text using OCR")]
+        OCR
     }
 
     public enum LinkFormatEnum

@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
 using ZScreenLib.Properties;
@@ -76,6 +78,10 @@ namespace ZScreenLib
             ToolStripMenuItem tsmiCCData = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Data);
             ToolStripMenuItem tsmiCCLocal = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Local);
             ToolStripMenuItem tsmiCCRemote = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.Remote);
+            ToolStripMenuItem tsmiCCOCR = GetClipboardContentTsmi(tsddbClipboardContent, ClipboardContentEnum.OCR);
+
+            string mspView = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles), @"Microsoft Shared\MODI\12.0\MSPVIEW.EXE");
+            tsmiCCOCR.Enabled = File.Exists(mspView);
 
             tsmiCCLocal.Enabled = tsmiOLocalDisk.Checked;
             if (!tsmiCCLocal.Enabled)

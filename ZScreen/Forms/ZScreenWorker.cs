@@ -94,7 +94,7 @@ namespace ZScreenGUI
 
             bwTask.PublishData();
 
-            if (bwTask.UploadResults.Count > 0)
+            if (bwTask.WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost) && bwTask.UploadResults.Count > 0)
             {
                 foreach (UploadResult ur in bwTask.UploadResults)
                 {
@@ -466,7 +466,7 @@ namespace ZScreenGUI
                 else if (Clipboard.ContainsText())
                 {
                     cbTask.SetText(Clipboard.GetText());
-                    if (cbTask.TempText != Engine.zPreviousSetClipboardText)
+                    if (cbTask.tempText != Engine.zPreviousSetClipboardText)
                     {
                         cbTask.RunWorker();
                         Engine.IsClipboardUploading = true;

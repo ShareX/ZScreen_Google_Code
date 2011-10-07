@@ -190,7 +190,8 @@ namespace ZScreenLib
 
         public List<Image> tempImages;
         public Image tempImage { get; private set; }
-        public string TempText { get; private set; }
+        public string tempText { get; private set; }
+        public string OCRText { get; private set; }
         private Stream Data;
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
@@ -512,7 +513,7 @@ namespace ZScreenLib
         public void SetText(string text)
         {
             Job1 = JobLevel1.Text;
-            TempText = text;
+            tempText = text;
 
             string fptxt = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
             UpdateLocalFilePath(fptxt);
@@ -529,9 +530,9 @@ namespace ZScreenLib
                 {
                     ext = ".html";
                 }
-                FileName = Path.GetFileName(TempText) + ext;
+                FileName = Path.GetFileName(tempText) + ext;
                 settings.GetConfig().SetSingleIndexPath(Path.Combine(Engine.TextDir, FileName));
-                settings.GetConfig().FolderList.Add(TempText);
+                settings.GetConfig().FolderList.Add(tempText);
 
                 Indexer indexer = null;
                 switch (settings.GetConfig().IndexingEngineType)
@@ -604,7 +605,7 @@ namespace ZScreenLib
                 {
                     ur.LocalFilePath = fp;
                 }
-                if (!string.IsNullOrEmpty(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL))
+                if (!string.IsNullOrEmpty(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL) || !string.IsNullOrEmpty(OCRText))
                 {
                     UploadResults.Add(ur);
                     if (Engine.conf.ShowOutputsAsap)
@@ -925,14 +926,14 @@ namespace ZScreenLib
 
             StaticHelper.WriteLine(string.Format("Job started: {0}", Job2));
 
-            if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(TempText))
+            if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(tempText))
             {
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
                 {
                     switch (Job1)
                     {
                         case JobLevel1.Text:
-                            FileSystem.WriteText(LocalFilePath, TempText);
+                            FileSystem.WriteText(LocalFilePath, tempText);
                             break;
                         default:
                             WriteImage();
@@ -1027,10 +1028,10 @@ namespace ZScreenLib
                 EImageFormat imageFormat;
                 data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat, bTargetFileSize: true);
             }
-            else if (!string.IsNullOrEmpty(TempText))
+            else if (!string.IsNullOrEmpty(tempText))
             {
                 StaticHelper.WriteLine("Preparing data from text");
-                data = new MemoryStream(Encoding.UTF8.GetBytes(TempText));
+                data = new MemoryStream(Encoding.UTF8.GetBytes(tempText));
             }
 
             SetFileSize(data.Length);
@@ -1256,10 +1257,10 @@ namespace ZScreenLib
         {
             MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-            if (ShouldShortenURL(TempText))
+            if (ShouldShortenURL(tempText))
             {
                 // Need this for shortening URL using Clipboard Upload
-                ShortenURL(TempText);
+                ShortenURL(tempText);
             }
             else if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
@@ -1300,9 +1301,9 @@ namespace ZScreenLib
 
                 string url = string.Empty;
 
-                if (!string.IsNullOrEmpty(TempText))
+                if (!string.IsNullOrEmpty(tempText))
                 {
-                    url = textUploader.UploadText(TempText);
+                    url = textUploader.UploadText(tempText);
                 }
                 else
                 {
@@ -1581,14 +1582,32 @@ namespace ZScreenLib
 
         public void SetClipboardContent()
         {
-            if (TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+            UploadResult urCb = new UploadResult();
+            if (File.Exists(LocalFilePath) && TaskClipboardContent.Contains(ClipboardContentEnum.Local))
             {
-                AddUploadResult(new UploadResult()
-                {
-                    LocalFilePath = this.LocalFilePath,
-                    Host = ClipboardContentEnum.Local.GetDescription()
-                });
+                urCb.Host = OutputEnum.Clipboard.GetDescription();
+                urCb.LocalFilePath = this.LocalFilePath;
             }
+
+            if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
+            {
+                urCb.Host = OutputEnum.Clipboard.GetDescription();
+                if (File.Exists(LocalFilePath))
+                {
+                    OCRHelper ocr = new OCRHelper(LocalFilePath);
+                    this.OCRText = ocr.Text;
+                }
+                else if (tempImage != null)
+                {
+                    string ocrfp = Path.Combine(Engine.zTempDir, "ocr.png");
+                    FileInfo fi = FileSystem.WriteImage(ocrfp, tempImage.SaveImage(WorkflowConfig, EImageFormat.PNG));
+                    OCRHelper ocr = new OCRHelper(fi.FullName);
+                    this.OCRText = ocr.Text;
+                    File.Delete(ocrfp);
+                }
+            }
+
+            AddUploadResult(urCb);
         }
 
         public void Print()
@@ -1599,9 +1618,9 @@ namespace ZScreenLib
                 {
                     MyWorker.ReportProgress((int)ProgressType.PrintImage, (Image)tempImage.Clone());
                 }
-                else if (!string.IsNullOrEmpty(TempText))
+                else if (!string.IsNullOrEmpty(tempText))
                 {
-                    MyWorker.ReportProgress((int)ProgressType.PrintText, TempText);
+                    MyWorker.ReportProgress((int)ProgressType.PrintText, tempText);
                 }
             }
         }
@@ -1669,11 +1688,11 @@ namespace ZScreenLib
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);
                 }
-                else if (!string.IsNullOrEmpty(TempText))
+                else if (!string.IsNullOrEmpty(tempText))
                 {
                     fn = new NameParser(NameParserType.EntireScreen).Convert(WorkflowConfig.EntireScreenPattern) + ".txt";
                     string destFile = acc.GetLocalhostPath(fn);
-                    FileSystem.WriteText(destFile, TempText);
+                    FileSystem.WriteText(destFile, tempText);
                 }
 
                 UploadResult ur = new UploadResult()
@@ -1767,7 +1786,7 @@ namespace ZScreenLib
         {
             if (FileSystem.IsValidLink(url) && MyLinkUploaders.Count > 0)
             {
-                bool bShortenUrlJob = Engine.conf.ShortenUrlUsingClipboardUpload && Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(TempText);
+                bool bShortenUrlJob = Engine.conf.ShortenUrlUsingClipboardUpload && Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(tempText);
                 bool bLongUrl = Engine.conf.ShortenUrlAfterUpload && url.Length > Engine.conf.ShortenUrlAfterUploadAfter;
 
                 if (bShortenUrlJob || bLongUrl)
