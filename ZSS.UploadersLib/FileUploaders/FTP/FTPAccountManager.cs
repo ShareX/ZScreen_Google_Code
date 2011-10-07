@@ -47,40 +47,12 @@ namespace UploadersLib
 
         public void Save(string filePath)
         {
-            try
-            {
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(FTPAccountManager));
-                    xs.Serialize(fs, this);
-                }
-            }
-            catch (Exception ex)
-            {
-                StaticHelper.WriteException(ex);
-            }
+            SettingsHelper.Save<FTPAccountManager>(this, filePath, SerializationType.Xml);
         }
 
         public static FTPAccountManager Read(string filePath)
         {
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(FTPAccountManager));
-                        FTPAccountManager set = xs.Deserialize(fs) as FTPAccountManager;
-                        return set;
-                    }
-                }
-                catch
-                {
-                    // just return blank settings
-                }
-            }
-
-            return new FTPAccountManager();
+            return SettingsHelper.Load<FTPAccountManager>(filePath, SerializationType.Xml, false);
         }
     }
 }
