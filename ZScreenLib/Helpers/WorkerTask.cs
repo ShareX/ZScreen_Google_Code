@@ -951,19 +951,6 @@ namespace ZScreenLib
 
             if (File.Exists(LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(tempText))
             {
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
-                {
-                    switch (Job1)
-                    {
-                        case JobLevel1.Text:
-                            FileSystem.WriteText(LocalFilePath, tempText);
-                            break;
-                        default:
-                            WriteImage();
-                            break;
-                    }
-                }
-
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     SetClipboardContent();
@@ -1009,6 +996,30 @@ namespace ZScreenLib
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.SharedFolder))
                 {
                     UploadToSharedFolder();
+                }
+
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // Note: We need write text or image first 
+                {
+                    switch (Job1)
+                    {
+                        case JobLevel1.Text:
+                            FileSystem.WriteText(LocalFilePath, tempText);
+                            break;
+                        default:
+                            WriteImage();
+                            break;
+                    }
+
+                    UploadResult ur_local = new UploadResult()
+                    {
+                        Host = OutputEnum.LocalDisk.GetDescription(),
+                        LocalFilePath = LocalFilePath,
+                    };
+                    if (!WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
+                    {
+                        ur_local.URL = ur_local.GetLocalFilePathAsUri(LocalFilePath);
+                        AddUploadResult(ur_local);
+                    }
                 }
 
                 if (UploadResults.Count > 0)
@@ -1082,16 +1093,6 @@ namespace ZScreenLib
                 this.SetFileSize(fi.Length);
 
                 States.Add(TaskState.ImageWritten);
-                UploadResult ur = new UploadResult()
-                {
-                    Host = OutputEnum.LocalDisk.GetDescription(),
-                    LocalFilePath = LocalFilePath,
-                };
-                if (!WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
-                {
-                    ur.URL = ur.GetLocalFilePathAsUri(LocalFilePath);
-                    AddUploadResult(ur);
-                }
 
                 if (!File.Exists(LocalFilePath))
                 {
@@ -1256,10 +1257,10 @@ namespace ZScreenLib
 
                     for (int i = 0; i <= (int)Engine.conf.ErrorRetryCount; i++)
                     {
-                        UploadResult ur = new UploadResult();
-                        ur = imageUploader.Upload(data, FileName);
-                        ur.Host = imageUploaderType.GetDescription();
-                        AddUploadResult(ur);
+                        UploadResult ur_remote_img = new UploadResult() { LocalFilePath = LocalFilePath };
+                        ur_remote_img = imageUploader.Upload(data, FileName);
+                        ur_remote_img.Host = imageUploaderType.GetDescription();
+                        AddUploadResult(ur_remote_img);
                         Errors = imageUploader.Errors;
 
                         if (UploadResults.Count > 0 && string.IsNullOrEmpty(UploadResults[UploadResults.Count - 1].URL))
@@ -1332,8 +1333,13 @@ namespace ZScreenLib
                 {
                     url = textUploader.UploadTextFile(LocalFilePath);
                 }
-
-                AddUploadResult(new UploadResult { Host = textUploaderType.GetDescription(), URL = url });
+                UploadResult ur_remote_text = new UploadResult()
+                {
+                    LocalFilePath = LocalFilePath,
+                    Host = textUploaderType.GetDescription(),
+                    URL = url
+                };
+                AddUploadResult(ur_remote_text);
                 Errors = textUploader.Errors;
             }
         }
@@ -1344,7 +1350,11 @@ namespace ZScreenLib
         /// <returns>Retuns a List of Screenshots</returns>
         public UploadResult UploadToFTP(int FtpAccountId, Stream data)
         {
-            UploadResult ur = null;
+            UploadResult ur_remote_file_ftp = new UploadResult()
+            {
+                LocalFilePath = this.LocalFilePath,
+                Host = FileUploaderType.FTP.GetDescription()
+            };
 
             try
             {
@@ -1355,29 +1365,32 @@ namespace ZScreenLib
                     FTPAccount acc = Engine.Workflow.OutputsConfig.FTPAccountList[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
                     StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", FileName, acc.Host));
-                    string url;
-                    FTPUploader fu;
-                    SFTPUploader sftp;
+
                     MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Normal);
                     switch (acc.Protocol)
                     {
                         case FTPProtocol.SFTP:
-                            sftp = new SFTPUploader(acc);
+                            SFTPUploader sftp = new SFTPUploader(acc);
                             if (!sftp.isInstantiated)
                             {
                                 Errors.Add("An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.");
-                                return ur;
+                                return ur_remote_file_ftp;
                             }
                             sftp.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-                            url = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath).URL : sftp.Upload(data, FileName).URL;
-                            ur = CreateThumbnail(url, sftp);
+                            ur_remote_file_ftp.URL = File.Exists(LocalFilePath) ? sftp.Upload(LocalFilePath).URL : sftp.Upload(data, FileName).URL;
+                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, sftp);
                             break;
                         default:
-                            fu = new FTPUploader(acc);
+                            FTPUploader fu = new FTPUploader(acc);
                             fu.ProgressChanged += new Uploader.ProgressEventHandler(UploadProgressChanged);
-                            url = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
-                            ur = CreateThumbnail(url, fu);
+                            ur_remote_file_ftp.URL = File.Exists(LocalFilePath) ? fu.Upload(LocalFilePath).URL : fu.Upload(data, FileName).URL;
+                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, fu);
                             break;
+                    }
+
+                    if (!string.IsNullOrEmpty(ur_remote_file_ftp.URL))
+                    {
+                        AddUploadResult(ur_remote_file_ftp);
                     }
                 }
             }
@@ -1386,15 +1399,13 @@ namespace ZScreenLib
                 StaticHelper.WriteException(ex, "Error while uploading to FTP Server");
                 Errors.Add("FTP upload failed.\r\n" + ex.Message);
             }
-            return ur;
+            return ur_remote_file_ftp;
         }
 
-        private UploadResult CreateThumbnail(string url, FTPUploader fu)
+        private string CreateThumbnail(string url, FTPUploader fu)
         {
             if (!string.IsNullOrEmpty(url))
             {
-                AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
-
                 if (CreateThumbnail())
                 {
                     double thar = (double)Engine.Workflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
@@ -1412,11 +1423,7 @@ namespace ZScreenLib
 
                             if (!string.IsNullOrEmpty(thumb))
                             {
-                                UploadResult ur = new UploadResult();
-                                ur.Host = FileUploaderType.FTP.GetDescription();
-                                ur.ThumbnailURL = thumb;
-                                AddUploadResult(ur);
-                                return ur;
+                                return thumb;
                             }
                         }
                     }
@@ -1426,12 +1433,10 @@ namespace ZScreenLib
             return null;
         }
 
-        private UploadResult CreateThumbnail(string url, SFTPUploader fu)
+        private string CreateThumbnail(string url, SFTPUploader fu)
         {
             if (!string.IsNullOrEmpty(url))
             {
-                AddUploadResult(new UploadResult() { Host = FileUploaderType.FTP.GetDescription(), URL = url });
-
                 if (CreateThumbnail())
                 {
                     double thar = (double)Engine.Workflow.OutputsConfig.FTPThumbnailWidthLimit / (double)tempImage.Width;
@@ -1450,11 +1455,7 @@ namespace ZScreenLib
 
                             if (!string.IsNullOrEmpty(thumb))
                             {
-                                UploadResult ur = new UploadResult();
-                                ur.Host = FileUploaderType.FTP.GetDescription();
-                                ur.ThumbnailURL = thumb;
-                                AddUploadResult(ur);
-                                return ur;
+                                return thumb;
                             }
                         }
                     }
@@ -1528,10 +1529,13 @@ namespace ZScreenLib
                 DestinationName = fileUploaderType.GetDescription();
                 StaticHelper.WriteLine("Initialized " + DestinationName);
                 fileUploader.ProgressChanged += UploadProgressChanged;
-                UploadResult ur = new UploadResult();
-                ur = fileUploader.Upload(data, FileName);
-                ur.Host = fileUploaderType.GetDescription();
-                AddUploadResult(ur);
+                UploadResult ur_remote_file = fileUploader.Upload(data, FileName);
+                if (ur_remote_file != null)
+                {
+                    ur_remote_file.Host = fileUploaderType.GetDescription();
+                    ur_remote_file.LocalFilePath = LocalFilePath;
+                    AddUploadResult(ur_remote_file);
+                }
                 Errors = fileUploader.Errors;
             }
         }
@@ -1546,7 +1550,7 @@ namespace ZScreenLib
             }
         }
 
-        public bool ShortenURL(UploadResult ur, string fullUrl)
+        public bool ShortenURL(UploadResult ur_shorturl, string fullUrl)
         {
             if (!string.IsNullOrEmpty(fullUrl))
             {
@@ -1592,9 +1596,9 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
                         StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
-                        ur.Host = us.Host;
-                        ur.URL = fullUrl;
-                        ur.ShortenedURL = shortenUrl;
+                        ur_shorturl.Host = us.Host;
+                        ur_shorturl.URL = fullUrl;
+                        ur_shorturl.ShortenedURL = shortenUrl;
                         return true;
                     }
                 }
@@ -1605,11 +1609,11 @@ namespace ZScreenLib
 
         public void SetClipboardContent()
         {
-            UploadResult urCb = new UploadResult();
+            UploadResult ur_clipboard = new UploadResult();
             if (File.Exists(LocalFilePath) && TaskClipboardContent.Contains(ClipboardContentEnum.Local))
             {
-                urCb.Host = OutputEnum.Clipboard.GetDescription();
-                urCb.LocalFilePath = this.LocalFilePath;
+                ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
+                ur_clipboard.LocalFilePath = this.LocalFilePath;
             }
             /*
             if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
@@ -1630,7 +1634,7 @@ namespace ZScreenLib
                 }
             }
             */
-            AddUploadResult(urCb);
+            AddUploadResult(ur_clipboard);
         }
 
         public void Print()
@@ -1739,8 +1743,12 @@ namespace ZScreenLib
                 DestinationName = acc.Name;
                 StaticHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", FileName, acc.Url));
                 MediaWikiUploader uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
-                AddUploadResult(uploader.UploadImage(LocalFilePath));
-
+                UploadResult ur_remote_img_mediawiki = uploader.UploadImage(LocalFilePath);
+                if (ur_remote_img_mediawiki != null)
+                {
+                    ur_remote_img_mediawiki.LocalFilePath = this.LocalFilePath;
+                    AddUploadResult(ur_remote_img_mediawiki);
+                }
                 return true;
             }
             return false;
@@ -1825,9 +1833,9 @@ namespace ZScreenLib
 
         public bool ShortenURL(string fullUrl)
         {
-            UploadResult ur = new UploadResult();
-            bool success = ShortenURL(ur, fullUrl);
-            AddUploadResult(ur);
+            UploadResult ur_shorturl = new UploadResult();
+            bool success = ShortenURL(ur_shorturl, fullUrl);
+            AddUploadResult(ur_shorturl);
             return success;
         }
 

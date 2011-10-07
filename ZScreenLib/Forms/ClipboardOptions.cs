@@ -71,7 +71,7 @@ namespace ZScreenLib
                 */
 
                 tvLinks.ExpandAll();
-                if (tvLinks.HasChildren)
+                if (tvLinks.Nodes.Count > 0 && tvLinks.Nodes[0].Nodes.Count > 0)
                 {
                     tvLinks.SelectedNode = tvLinks.Nodes[0].Nodes[0].Nodes[0];
                 }
