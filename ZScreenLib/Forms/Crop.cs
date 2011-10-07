@@ -90,7 +90,7 @@ namespace ZScreenLib
             bmpClean = new Bitmap(myImage);
             bmpBackground = new Bitmap(bmpClean);
             bmpRegion = new Bitmap(bmpClean);
-            Bounds = GraphicsMgr.GetScreenBounds();
+            Bounds = CaptureHelpers.GetScreenBounds();
             this.CursorPos = this.PointToClient(Cursor.Position);
             rectIntersect.Size = new Size(Bounds.Width - 1, Bounds.Height - 1);
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);

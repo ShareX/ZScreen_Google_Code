@@ -160,7 +160,7 @@ namespace HelpersLib
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == (int)WM.HOTKEY && !IgnoreHotkeys)
+            if (m.Msg == (int)WindowsMessages.HOTKEY && !IgnoreHotkeys)
             {
                 HotkeyInfo hotkey = GetHotkeyInfoFromID((ushort)m.WParam);
 

@@ -53,7 +53,7 @@ namespace ZScreenLib.Shapes
         private void Initialize()
         {
             this.ShowInTaskbar = false;
-            this.Bounds = GraphicsMgr.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
 
             this.BackgroundColor = Color.FromArgb(50, Color.Black);
             this.PathPen = new Pen(Brushes.Red, 2) { DashStyle = DashStyle.Dash };

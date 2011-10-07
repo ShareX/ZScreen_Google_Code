@@ -17,7 +17,7 @@ namespace ZScreenGUI
             {
                 switch (m.Msg)
                 {
-                    case (int)WM.SYSCOMMAND:
+                    case (int)WindowsMessages.SYSCOMMAND:
                         if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {
                             switch (Engine.AppConf.WindowButtonActionMinimize)

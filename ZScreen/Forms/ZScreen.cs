@@ -102,7 +102,7 @@ namespace ZScreenGUI
                     Engine.AppConf.WindowSize = this.Size;
                 }
 
-                Rectangle screenRect = GraphicsMgr.GetScreenBounds();
+                Rectangle screenRect = CaptureHelpers.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
                 if (screenRect.IntersectsWith(new Rectangle(Engine.AppConf.WindowLocation, Engine.AppConf.WindowSize)))
                 {
@@ -1509,7 +1509,7 @@ namespace ZScreenGUI
             chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
 
             // With GDI, corner-clearing cannot be disabled when both "clean background" and "include shadow" are enabled
-            if (chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked || 
+            if (chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked ||
                 !chkSelectedWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
             {
                 chkSelectedWindowCleanTransparentCorners.Enabled = true;

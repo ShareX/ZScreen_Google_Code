@@ -46,7 +46,7 @@ namespace ZScreenLib.Helpers
         public WindowRectangle(IntPtr windowHandle)
         {
             handle = windowHandle;
-            bounds = GraphicsMgr.GetScreenBounds();
+            bounds = CaptureHelpers.GetScreenBounds();
         }
 
         public Rectangle CalculateWindowRectangle()

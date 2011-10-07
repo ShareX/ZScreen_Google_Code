@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using GraphicsMgrLib;
+using HelpersLib;
 
 namespace Crop
 {
@@ -140,7 +141,7 @@ namespace Crop
                     tempRect.Width -= e.X - mx;
                 }
 
-                region.CurrentArea.Rectangle = GraphicsMgr.FixRectangle(tempRect);
+                region.CurrentArea.Rectangle = CaptureHelpers.FixRectangle(tempRect);
                 Update(tempRect);
             }
         }

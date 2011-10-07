@@ -43,7 +43,7 @@ namespace ZScreenLib
             this.DoubleBuffered = true;
             this.FormBorderStyle = FormBorderStyle.None;
             InitializeComponent();
-            this.Bounds = GraphicsMgr.GetScreenBounds();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
             this.BackgroundImage = screenshot;
         }
 

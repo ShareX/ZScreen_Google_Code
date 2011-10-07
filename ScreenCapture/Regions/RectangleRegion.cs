@@ -24,6 +24,7 @@
 #endregion License Information (GPL v2)
 
 using System.Drawing;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -55,12 +56,12 @@ namespace ScreenCapture
             {
                 if (Config.IsFixedSize)
                 {
-                    Area = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
+                    CurrentArea = new Rectangle(new Point(mousePosition.X - Config.FixedSize.Width / 2, mousePosition.Y - Config.FixedSize.Height / 2), Config.FixedSize);
                     areaObject.IsDragging = true;
                 }
                 else
                 {
-                    Area = new Rectangle(mousePosition, new Size(1, 1));
+                    CurrentArea = new Rectangle(mousePosition, new Size(1, 1));
                     ShowNodes();
                     nodes[(int)NodePosition.BottomRight].IsDragging = true;
                 }
@@ -78,7 +79,7 @@ namespace ScreenCapture
                         {
                             if (!oldIsMouseDown)
                             {
-                                tempRect = Area;
+                                tempRect = CurrentArea;
                             }
 
                             if (i <= 2) // Top row
@@ -101,7 +102,7 @@ namespace ScreenCapture
                                 tempRect.Width -= mousePosition.X - oldMousePosition.X;
                             }
 
-                            Area = CaptureHelpers.FixRectangle(tempRect);
+                            CurrentArea = CaptureHelpers.FixRectangle(tempRect);
 
                             break;
                         }
@@ -114,19 +115,19 @@ namespace ScreenCapture
 
         protected override void Draw(Graphics g)
         {
-            if (Area.Width > 0 && Area.Height > 0)
+            if (CurrentArea.Width > 0 && CurrentArea.Height > 0)
             {
-                g.ExcludeClip(Area);
+                g.ExcludeClip(CurrentArea);
                 g.FillRectangle(shadowBrush, 0, 0, Width, Height);
                 DrawObjects(g);
                 g.ResetClip();
 
                 if (areaObject.IsDragging || areaObject.IsMouseHover)
                 {
-                    g.FillRectangle(lightBrush, Area);
+                    g.FillRectangle(lightBrush, CurrentArea);
                 }
 
-                g.DrawRectangle(borderPen, Area.X, Area.Y, Area.Width - 1, Area.Height - 1);
+                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
             }
             else
             {
@@ -136,13 +137,13 @@ namespace ScreenCapture
 
         private void UpdateNodePositions()
         {
-            float xStart = Area.X;
-            float xMid = Area.X + Area.Width / 2;
-            float xEnd = Area.X + Area.Width - 1;
+            float xStart = CurrentArea.X;
+            float xMid = CurrentArea.X + CurrentArea.Width / 2;
+            float xEnd = CurrentArea.X + CurrentArea.Width - 1;
 
-            float yStart = Area.Y;
-            float yMid = Area.Y + Area.Height / 2;
-            float yEnd = Area.Y + Area.Height - 1;
+            float yStart = CurrentArea.Y;
+            float yMid = CurrentArea.Y + CurrentArea.Height / 2;
+            float yEnd = CurrentArea.Y + CurrentArea.Height - 1;
 
             nodes[(int)NodePosition.TopLeft].Position = new PointF(xStart, yStart);
             nodes[(int)NodePosition.Top].Position = new PointF(xMid, yStart);
