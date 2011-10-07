@@ -242,17 +242,6 @@
   <ItemGroup>
     <None Include="Resources\explorer.png" />
   </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="MODI">
-      <Guid>{A5EDEDF4-2BBC-45F3-822B-E60C278A1A79}</Guid>
-      <VersionMajor>12</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -319,6 +319,7 @@ namespace ZScreenLib
                             }
                         }
                     }
+                    /*
                     else if (task.TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
                     {
                         if (!string.IsNullOrEmpty(task.OCRText))
@@ -326,7 +327,7 @@ namespace ZScreenLib
                             clipboardText.Append(task.OCRText);
                         }
                     }
-
+                    */
                 // If the user requests for the full image URL, preference is given for the Shortened URL is exists
                     else if (task.Job1 == JobLevel1.Image && task.MyLinkFormat.Contains((int)LinkFormatEnum.FULL))
                     {
