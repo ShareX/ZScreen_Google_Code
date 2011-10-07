@@ -149,4 +149,14 @@ namespace ZScreenLib
         [Description("Crop v3 - Capture Rectangle as shown in Capture Shape")]
         Cropv3,
     }
+
+    public enum CaptureEngineType
+    {
+        [Description("GDI - Graphics Device Interface for Windows XP")]
+        GDI,
+        [Description("DWM - Desktop Window Manager for Windows Vista or Windows 7")]
+        DWM,
+        [Description("Hybrid - for Windows XP, Windows Vista or Windows 7")]
+        Hybrid
+    }
 }

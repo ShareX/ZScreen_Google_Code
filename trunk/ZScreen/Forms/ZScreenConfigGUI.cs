@@ -138,7 +138,12 @@ namespace ZScreenGUI
             chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
 
             // Active Window
-            chkActiveWindowPreferDWM.Checked = Engine.Workflow.ActiveWindowPreferDWM;
+            if (cboCaptureEngine.Items.Count == 0)
+            {
+                cboCaptureEngine.Items.AddRange(typeof(CaptureEngineType).GetDescriptions());
+                cboCaptureEngine.SelectedIndex = (int)Engine.Workflow.CaptureEngineMode;
+            }
+
             chkSelectedWindowCleanBackground.Checked = Engine.Workflow.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.Workflow.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.Workflow.ActiveWindowIncludeShadows;
