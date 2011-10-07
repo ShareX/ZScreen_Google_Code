@@ -1,6 +1,7 @@
-Version 4.5.2 - 2011-10-15
+Version 4.5.3 - 2011-10-15
 
-4.5.2 File Upload, Upload using ZScreen and Drag n Drop supports creating animated GIFs for identical sized images {McoreD}
+4.5.3 Improved Clipboard Content options to include text using OCR. Requires Microsoft Office Document Imaging or else will be disabled. {McoreD}
+4.5.2 File Upload, Upload using ZScreen and Drag n Drop supports creating animated GIF or APNG for identical sized images {McoreD}
 4.5.1 Improved internal image manipulation with ability to apply Image Effects {McoreD/Jaex}
 4.5.0 Added support for SFTP and FTPS file uploaders {TheDeathly/McoreD}
 4.4.3 Improved JPEG image settings support with JPEG Chroma subsampling options {lostdj/McoreD}
