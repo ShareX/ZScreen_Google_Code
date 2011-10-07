@@ -206,6 +206,12 @@
     <Compile Include="Forms\ZScreenClipboardHook.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ZScreen5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreen5.Designer.cs">
+      <DependentUpon>ZScreen5.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -216,6 +222,9 @@
       <DependentUpon>ZScreen.cs</DependentUpon>
     </EmbeddedResource>
     <BaseApplicationManifest Include="Properties\app.manifest" />
+    <EmbeddedResource Include="Forms\ZScreen5.resx">
+      <DependentUpon>ZScreen5.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

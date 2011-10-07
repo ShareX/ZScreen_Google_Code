@@ -22,9 +22,9 @@
   </ZScreen>
   <ZUploader>
     <Stable>
-      <Version>4.4</Version>
-      <URL>http://zscreen.googlecode.com/files/ZUploader-4.4.0.2620-setup.exe</URL>
-      <Date>2011-09-27</Date>
+      <Version>4.6</Version>
+      <URL>http://zscreen.googlecode.com/files/ZUploader-4.6.0.2709-setup.exe</URL>
+      <Date>2011-10-08</Date>
       <Summary>http://zscreen.googlecode.com/svn/trunk/ZUploader/Docs/VersionHistory.txt</Summary>
     </Stable>
   </ZUploader>
