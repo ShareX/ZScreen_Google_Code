@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using HelpersLib;
+using JBirdGUI;
 
 namespace ZScreenLib
 {
@@ -30,6 +31,7 @@ namespace ZScreenLib
             {
                 lvWorkflows.Items.Add(WorkFlowToListViewItem(count++, wf));
             }
+            Program.HotkeysUpdate();
         }
 
         private ListViewItem WorkFlowToListViewItem(int id, Workflow wf)
@@ -46,6 +48,7 @@ namespace ZScreenLib
         private void btnProfileCreate_Click(object sender, EventArgs e)
         {
             WorkflowWizard pw = new WorkflowWizard("Create") { Icon = this.Icon };
+
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Workflows.Add(pw.Workflow);

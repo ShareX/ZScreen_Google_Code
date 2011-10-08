@@ -11,8 +11,6 @@ namespace JBirdGUI
 {
     public partial class JBirdCoreUI : HotkeyForm
     {
-        public static Dictionary<string, HotkeyManager> HotkeyMgrs = new Dictionary<string, HotkeyManager>();
-
         public JBirdCoreUI()
         {
             InitializeComponent();
@@ -41,17 +39,10 @@ namespace JBirdGUI
             {
                 Program.WorkflowConfig.Workflows98.AddRange(CreateDefaultWorkflows());
             }
-
-            if (HotkeyMgrs.Count == 0)
+            if (Program.HotkeyMgrs.Count == 0)
             {
-                foreach (Workflow wf in Program.WorkflowConfig.Workflows98)
-                {
-                    HotkeyManager hm = new HotkeyManager(Program.CoreUI, ZAppType.JBird);
-                    hm.AddHotkey(JBirdHotkey.Workflow, wf.Hotkey, wf.Start);
-                    HotkeyMgrs.Add(wf.ID, hm);
-                }
+                Program.HotkeysUpdate();
             }
-
             Load_TrayMenuItems();
         }
 
