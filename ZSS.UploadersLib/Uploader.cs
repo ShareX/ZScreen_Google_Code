@@ -45,6 +45,7 @@ namespace UploadersLib
         public event ProgressEventHandler ProgressChanged;
 
         public static ProxySettings ProxySettings = new ProxySettings();
+        public static bool EncryptedPasswords = false;
 
         public List<string> Errors { get; private set; }
         public bool IsUploading { get; private set; }

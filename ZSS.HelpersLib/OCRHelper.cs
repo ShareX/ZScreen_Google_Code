@@ -34,7 +34,6 @@ namespace HelpersLib
                 StaticHelper.WriteException(ex, "Error attempting to OCR " + fp);
                 return string.Empty;
             }
-            return string.Empty;
         }
     }
 }

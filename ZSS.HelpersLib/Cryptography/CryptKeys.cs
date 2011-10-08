@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Xml;
+using System.Windows.Forms;
 
-namespace ZScreenLib.Cryptography
+namespace HelpersLib
 {
-    class CryptKeys
+    public class CryptKeys
     {
         CspParameters cp;
         RSACryptoServiceProvider rsa;
-        string Container = string.Empty;
-        public CryptKeys(string container = "ZScreen")
+        public string Container = string.Empty;
+
+        public CryptKeys()
         {
-            Container = container;
+            Container = Application.ProductName;
             cp = new CspParameters();
             cp.KeyContainerName = Container;
         }
@@ -20,15 +22,18 @@ namespace ZScreenLib.Cryptography
         {
             rsa = new RSACryptoServiceProvider(cp);
         }
+
         public String ReturnKeys()
         {
             return rsa.ToXmlString(true);
         }
+
         public void DeleteKey()
         {
             rsa.PersistKeyInCsp = false;
             rsa.Clear();
         }
+
         public CryptInfo ReturnInfo()
         {
             CryptInfo ci = new CryptInfo();
@@ -40,12 +45,23 @@ namespace ZScreenLib.Cryptography
             ci.Vector = document.DocumentElement.SelectSingleNode("//D").InnerText.Substring(0, 16);
             return ci;
         }
-        public string Encrypt(string PlainText, CryptInfo ci, int KeySize, string EncryptionMethod = CryptMethod.SHA1, int PassIterations = 2)
+
+        public string Encrypt(string PlainText)
+        {
+            return Encrypt(PlainText, ReturnInfo());
+        }
+
+        public string Decrypt(string CryptedText)
+        {
+            return Decrypt(CryptedText, ReturnInfo());
+        }
+
+        public string Encrypt(string PlainText, CryptInfo ci, int KeySize = 256, string EncryptionMethod = CryptMethod.SHA1, int PassIterations = 2)
         {
             return AESEncryption.Encrypt(PlainText, ci.Password, ci.Salt, EncryptionMethod, PassIterations, ci.Vector, KeySize);
         }
 
-        public string Decrypt(string CryptedText, CryptInfo ci, int Keysize, string EncryptionMethod = CryptMethod.SHA1, int PassIterations = 2)
+        public string Decrypt(string CryptedText, CryptInfo ci, int Keysize = 256, string EncryptionMethod = CryptMethod.SHA1, int PassIterations = 2)
         {
             return AESEncryption.Decrypt(CryptedText, ci.Password, ci.Salt, EncryptionMethod, PassIterations, ci.Vector, Keysize);
         }

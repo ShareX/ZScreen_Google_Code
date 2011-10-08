@@ -188,6 +188,7 @@ namespace ZScreenGUI
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
 
+            Uploader.EncryptedPasswords = Engine.Workflow.EncryptPasswords;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
             ZScreen_ConfigGUI();

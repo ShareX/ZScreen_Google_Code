@@ -80,13 +80,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaptureHelpers.cs" />
-    <Compile Include="CryptographyHelpers\AESHelper.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="CLI\CLICommand.cs" />
     <Compile Include="CLI\CLICommandAction.cs" />
     <Compile Include="CLI\CLIManager.cs" />
     <Compile Include="CLI\CLIManagerRegex.cs" />
     <Compile Include="CLI\CLIParser.cs" />
+    <Compile Include="Cryptography\AESEncryption.cs" />
+    <Compile Include="Cryptography\CryptInfo.cs" />
+    <Compile Include="Cryptography\CryptKeys.cs" />
+    <Compile Include="Cryptography\CryptMethod.cs" />
     <Compile Include="Extensions\GraphicsPathExtensions.cs" />
     <Compile Include="OCRHelper.cs" />
     <Compile Include="Wizards\ClipboardContentViewer.cs">
@@ -145,7 +148,6 @@
     </Compile>
     <Compile Include="Printer\PrintTextHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
-    <Compile Include="CryptographyHelpers\RSAHelper.cs" />
     <Compile Include="SettingsHelper.cs" />
     <Compile Include="SingleInstanceApplication\ApplicationInstanceManager.cs" />
     <Compile Include="SingleInstanceApplication\InstanceProxy.cs" />
