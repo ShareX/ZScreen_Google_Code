@@ -35,6 +35,7 @@
             this.gbName = new System.Windows.Forms.GroupBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.chkUseHotkey = new System.Windows.Forms.CheckBox();
+            this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpCapture = new System.Windows.Forms.TabPage();
             this.tpEditing = new System.Windows.Forms.TabPage();
             this.tpOutputs = new System.Windows.Forms.TabPage();
@@ -52,7 +53,6 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcMain.SuspendLayout();
             this.tpAccessibility.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -76,10 +76,10 @@
             // 
             // tpAccessibility
             // 
-            this.tpAccessibility.Controls.Add(this.hmcHotkeys);
             this.tpAccessibility.Controls.Add(this.gbTask);
             this.tpAccessibility.Controls.Add(this.gbName);
             this.tpAccessibility.Controls.Add(this.chkUseHotkey);
+            this.tpAccessibility.Controls.Add(this.hmcHotkeys);
             this.tpAccessibility.Location = new System.Drawing.Point(4, 22);
             this.tpAccessibility.Name = "tpAccessibility";
             this.tpAccessibility.Padding = new System.Windows.Forms.Padding(3);
@@ -127,12 +127,19 @@
             // chkUseHotkey
             // 
             this.chkUseHotkey.AutoSize = true;
-            this.chkUseHotkey.Location = new System.Drawing.Point(16, 136);
+            this.chkUseHotkey.Location = new System.Drawing.Point(24, 160);
             this.chkUseHotkey.Name = "chkUseHotkey";
             this.chkUseHotkey.Size = new System.Drawing.Size(183, 17);
             this.chkUseHotkey.TabIndex = 7;
             this.chkUseHotkey.Text = "Enable a hotkey to run this profile";
             this.chkUseHotkey.UseVisualStyleBackColor = true;
+            // 
+            // hmcHotkeys
+            // 
+            this.hmcHotkeys.Location = new System.Drawing.Point(16, 144);
+            this.hmcHotkeys.Name = "hmcHotkeys";
+            this.hmcHotkeys.Size = new System.Drawing.Size(576, 32);
+            this.hmcHotkeys.TabIndex = 11;
             // 
             // tpCapture
             // 
@@ -303,13 +310,6 @@
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // hotkeyManager
-            // 
-            this.hmcHotkeys.Location = new System.Drawing.Point(16, 168);
-            this.hmcHotkeys.Name = "hotkeyManager";
-            this.hmcHotkeys.Size = new System.Drawing.Size(576, 48);
-            this.hmcHotkeys.TabIndex = 11;
             // 
             // WorkflowWizard
             // 

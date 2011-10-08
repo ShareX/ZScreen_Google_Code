@@ -84,7 +84,7 @@ namespace HelpersLib.Hotkey
 
     public enum JBirdHotkey
     {
-        [Description("Workflow Hotkey")]
+        [Description("")]
         Workflow
     }
 

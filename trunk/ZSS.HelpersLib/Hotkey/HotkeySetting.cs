@@ -76,7 +76,7 @@ namespace HelpersLib.Hotkey
 
         public override string ToString()
         {
-            return Hotkey.ToString();
+            return new KeyInfo(Hotkey).ToString();
         }
     }
 }

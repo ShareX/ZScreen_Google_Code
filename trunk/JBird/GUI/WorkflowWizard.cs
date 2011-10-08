@@ -5,6 +5,7 @@ using UploadersAPILib;
 using UploadersLib;
 using HelpersLib.Hotkey;
 using HelpersLib;
+using JBirdGUI;
 
 namespace ZScreenLib
 {
@@ -32,10 +33,16 @@ namespace ZScreenLib
             cboTask.SelectedIndex = (int)Workflow.Job;
 
             HotkeyManager tempHotkeyMgr;
-            JBirdGUI.JBirdCoreUI.HotkeyMgrs.TryGetValue(this.Workflow.ID, out tempHotkeyMgr);
+            Program.HotkeyMgrs.TryGetValue(this.Workflow.ID, out tempHotkeyMgr);
             if (tempHotkeyMgr != null)
             {
                 hmcHotkeys.PrepareHotkeys(tempHotkeyMgr);
+            }
+            else
+            {
+                HotkeyManager hm = new HotkeyManager(Program.CoreUI, ZAppType.JBird);
+                hm.AddHotkey(JBirdHotkey.Workflow, Workflow.Hotkey, Workflow.Start);
+                hmcHotkeys.PrepareHotkeys(hm);
             }
 
             // Step 4
