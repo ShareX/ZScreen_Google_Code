@@ -127,6 +127,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\AESEncryption.cs" />
+    <Compile Include="Cryptography\CryptInfo.cs" />
+    <Compile Include="Cryptography\CryptKeys.cs" />
+    <Compile Include="Cryptography\CryptMethod.cs" />
     <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Helpers\GraphicsEx.cs" />
