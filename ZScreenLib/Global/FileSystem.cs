@@ -307,19 +307,7 @@ namespace ZScreenLib
             return "0 Bytes";
         }
 
-        public static void BackupAppSettings()
-        {
-            if (Engine.conf != null)
-            {
-                string fp = Path.Combine(Engine.SettingsDir, string.Format("Settings-{0}-backup.xml", DateTime.Now.ToString("yyyyMM")));
-                if (!File.Exists(fp))
-                {
-                    Engine.conf.Write(fp);
-                }
-            }
-        }
-
-        public static void BackupFTPSettings()
+        public static void BackupSettings()
         {
             string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
 
@@ -333,11 +321,21 @@ namespace ZScreenLib
                 }
             }
 
-            string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-OutputConfig.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
+            string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-WorkflowConfig.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
             if (!File.Exists(fpoutputsconfig))
             {
                 Engine.Workflow.Write(fpoutputsconfig);
             }
+
+            if (Engine.conf != null)
+            {
+                string fp = Path.Combine(dirbackup, string.Format("{0}-{1}-Settings.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
+                if (!File.Exists(fp))
+                {
+                    Engine.conf.Write(fp);
+                }
+            }
+
         }
 
         /// <summary>

@@ -206,14 +206,9 @@ namespace ZScreenGUI
                 StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
-            if (Engine.conf.BackupFTPSettings)
-            {
-                FileSystem.BackupFTPSettings();
-            }
-
             if (Engine.conf.BackupApplicationSettings)
             {
-                FileSystem.BackupAppSettings();
+                FileSystem.BackupSettings();
             }
 
             UpdateHotkeys(false);

@@ -298,9 +298,6 @@ namespace ZScreenLib
 
         // Destinations / FTP
 
-        [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(true), Description("Periodically backup FTP settings.")]
-        public bool BackupFTPSettings { get; set; }
-
         [Category(ComponentModelStrings.OutputsRemoteFTP), DefaultValue(50), Description("Screenshots cache size in MiB for the FTP Client.")]
         public int ScreenshotCacheSize { get; set; }
 
