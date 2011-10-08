@@ -60,6 +60,7 @@ namespace ZScreenLib
             }
         }
 
+        [Browsable(false)]
         public string ID { get; set; }
 
         [Browsable(false)]
