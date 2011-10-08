@@ -468,8 +468,8 @@ namespace ZScreenLib
                 };
                 try
                 {
-                    fDialog.Color = Engine.conf.WatermarkFontArgb;
-                    fDialog.Font = Engine.conf.WatermarkFont;
+                    fDialog.Color = Engine.Workflow.WatermarkFontArgb;
+                    fDialog.Font = Engine.Workflow.WatermarkFont;
                 }
                 catch (Exception err)
                 {
@@ -479,8 +479,8 @@ namespace ZScreenLib
                 result = fDialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    Engine.conf.WatermarkFont = fDialog.Font;
-                    Engine.conf.WatermarkFontArgb = fDialog.Color;
+                    Engine.Workflow.WatermarkFont = fDialog.Font;
+                    Engine.Workflow.WatermarkFontArgb = fDialog.Color;
                 }
             }
             catch (Exception ex)

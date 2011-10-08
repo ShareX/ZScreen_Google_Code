@@ -38,9 +38,15 @@ using HelpersLib;
 
 namespace ZScreenLib
 {
-    public static class ImageEffects
+    public class ImageEffects
     {
+        private Workflow wf = null;
         private static List<int> mLogoRandomList = new List<int>(5);
+
+        public ImageEffects(Workflow workflow)
+        {
+            this.wf = workflow;
+        }
 
         public static Bitmap GetRandomLogo(Bitmap logo)
         {
@@ -93,13 +99,13 @@ namespace ZScreenLib
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public static Image ApplyWatermark(Image img)
+        public Image ApplyWatermark(Image img)
         {
-            return ApplyWatermark(img, Engine.conf.WatermarkMode);
+            return ApplyWatermark(img, wf.WatermarkMode);
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public static Image ApplyWatermark(Image img, WatermarkType watermarkType)
+        public Image ApplyWatermark(Image img, WatermarkType watermarkType)
         {
             switch (watermarkType)
             {
@@ -108,62 +114,62 @@ namespace ZScreenLib
                     return img;
                 case WatermarkType.TEXT:
                     NameParser parser = new NameParser(NameParserType.Watermark) { IsPreview = true, Picture = img };
-                    return DrawWatermark(img, parser.Convert(Engine.conf.WatermarkText));
+                    return DrawWatermark(img, parser.Convert(wf.WatermarkText));
                 case WatermarkType.IMAGE:
-                    return DrawImageWatermark(img, Engine.conf.WatermarkImageLocation);
+                    return DrawImageWatermark(img, wf.WatermarkImageLocation);
             }
         }
 
-        private static Image DrawWatermark(Image img, string drawText)
+        private Image DrawWatermark(Image img, string drawText)
         {
             if (!string.IsNullOrEmpty(drawText))
             {
-                if (0 == Engine.conf.WatermarkFont.Size)
+                if (0 == wf.WatermarkFont.Size)
                 {
                     Adapter.ShowFontDialog();
                 }
                 try
                 {
-                    int offset = (int)Engine.conf.WatermarkOffset;
-                    Font font = Engine.conf.WatermarkFont;
+                    int offset = (int)wf.WatermarkOffset;
+                    Font font = wf.WatermarkFont;
                     Size textSize = TextRenderer.MeasureText(drawText, font);
                     Size labelSize = new Size(textSize.Width + 10, textSize.Height + 10);
-                    Point labelPosition = FindPosition(Engine.conf.WatermarkPositionMode, offset, img.Size,
+                    Point labelPosition = FindPosition(wf.WatermarkPositionMode, offset, img.Size,
                         new Size(textSize.Width + 10, textSize.Height + 10), 1);
-                    if (Engine.conf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) ||
+                    if (wf.WatermarkAutoHide && ((img.Width < labelSize.Width + offset) ||
                         (img.Height < labelSize.Height + offset)))
                     {
                         return img;
                         //throw new Exception("Image size smaller than watermark size.");
                     }
                     Rectangle labelRectangle = new Rectangle(Point.Empty, labelSize);
-                    GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRectangle, (int)Engine.conf.WatermarkCornerRadius);
+                    GraphicsPath gPath = GraphicsEx.GetRoundedRectangle(labelRectangle, (int)wf.WatermarkCornerRadius);
 
-                    int backTrans = (int)Engine.conf.WatermarkBackTrans;
-                    int fontTrans = (int)Engine.conf.WatermarkFontTrans;
-                    Color fontColor = Engine.conf.WatermarkFontArgb;
+                    int backTrans = (int)wf.WatermarkBackTrans;
+                    int fontTrans = (int)wf.WatermarkFontTrans;
+                    Color fontColor = wf.WatermarkFontArgb;
                     Bitmap bmp = new Bitmap(labelRectangle.Width + 1, labelRectangle.Height + 1);
                     Graphics g = Graphics.FromImage(bmp);
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
                     LinearGradientBrush brush;
-                    if (Engine.conf.WatermarkUseCustomGradient)
+                    if (wf.WatermarkUseCustomGradient)
                     {
-                        brush = GradientMaker.CreateGradientBrush(labelRectangle.Size, Engine.conf.GradientMakerOptions.GetBrushDataActive());
+                        brush = GradientMaker.CreateGradientBrush(labelRectangle.Size, wf.GradientMakerOptions.GetBrushDataActive());
                     }
                     else
                     {
-                        brush = new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, Engine.conf.WatermarkGradient1Argb),
-                            Color.FromArgb(backTrans, Engine.conf.WatermarkGradient2Argb), Engine.conf.WatermarkGradientType);
+                        brush = new LinearGradientBrush(labelRectangle, Color.FromArgb(backTrans, wf.WatermarkGradient1Argb),
+                            Color.FromArgb(backTrans, wf.WatermarkGradient2Argb), wf.WatermarkGradientType);
                     }
                     g.FillPath(brush, gPath);
-                    g.DrawPath(new Pen(Color.FromArgb(backTrans, Engine.conf.WatermarkBorderArgb)), gPath);
+                    g.DrawPath(new Pen(Color.FromArgb(backTrans, wf.WatermarkBorderArgb)), gPath);
                     StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
                     g.DrawString(drawText, font, new SolidBrush(Color.FromArgb(fontTrans, fontColor)), bmp.Width / 2, bmp.Height / 2, sf);
                     Graphics gImg = Graphics.FromImage(img);
                     gImg.SmoothingMode = SmoothingMode.HighQuality;
                     gImg.DrawImage(bmp, labelPosition);
-                    if (Engine.conf.WatermarkAddReflection)
+                    if (wf.WatermarkAddReflection)
                     {
                         Bitmap bmp2 = AddReflection(bmp, 50, 200);
                         gImg.DrawImage(bmp2, new Rectangle(labelPosition.X, labelPosition.Y + bmp.Height - 1, bmp2.Width, bmp2.Height));
@@ -178,17 +184,17 @@ namespace ZScreenLib
             return img;
         }
 
-        private static Image DrawImageWatermark(Image img, string imgPath)
+        private Image DrawImageWatermark(Image img, string imgPath)
         {
             try
             {
                 if (!string.IsNullOrEmpty(imgPath) && File.Exists(imgPath))
                 {
-                    int offset = (int)Engine.conf.WatermarkOffset;
+                    int offset = (int)wf.WatermarkOffset;
                     Image img2 = Image.FromFile(imgPath);
-                    img2 = GraphicsMgr.ChangeImageSize((Bitmap)img2, (float)Engine.conf.WatermarkImageScale);
-                    Point imgPos = FindPosition(Engine.conf.WatermarkPositionMode, offset, img.Size, img2.Size, 0);
-                    if (Engine.conf.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
+                    img2 = GraphicsMgr.ChangeImageSize((Bitmap)img2, (float)wf.WatermarkImageScale);
+                    Point imgPos = FindPosition(wf.WatermarkPositionMode, offset, img.Size, img2.Size, 0);
+                    if (wf.WatermarkAutoHide && ((img.Width < img2.Width + offset) ||
                         (img.Height < img2.Height + offset)))
                     {
                         return img;
@@ -198,12 +204,12 @@ namespace ZScreenLib
                     Graphics g = Graphics.FromImage(img);
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.DrawImage(img2, imgPos);
-                    if (Engine.conf.WatermarkAddReflection)
+                    if (wf.WatermarkAddReflection)
                     {
                         Bitmap bmp = AddReflection((Bitmap)img2, 50, 200);
                         g.DrawImage(bmp, new Rectangle(imgPos.X, imgPos.Y + img2.Height - 1, bmp.Width, bmp.Height));
                     }
-                    if (Engine.conf.WatermarkUseBorder)
+                    if (wf.WatermarkUseBorder)
                     {
                         g.DrawRectangle(new Pen(Color.Black), new Rectangle(imgPos.X, imgPos.Y, img2.Width - 1, img2.Height - 1));
                     }
@@ -216,19 +222,19 @@ namespace ZScreenLib
             return img;
         }
 
-        public static Image ApplyScreenshotEffects(Image img)
+        public Image ApplyScreenshotEffects(Image img)
         {
-            if (Engine.conf.BevelEffect)
+            if (wf.BevelEffect)
             {
-                img = BevelImage(img, Engine.conf.BevelEffectOffset);
+                img = BevelImage(img, wf.BevelEffectOffset);
             }
-            if (Engine.conf.DrawReflection)
+            if (wf.DrawReflection)
             {
                 img = DrawReflection(img);
             }
-            if (Engine.conf.BorderEffect)
+            if (wf.BorderEffect)
             {
-                img = DrawBorder(img, Engine.conf.BorderEffectColor, Engine.conf.BorderEffectSize);
+                img = DrawBorder(img, wf.BorderEffectColor, wf.BorderEffectSize);
             }
             return img;
         }
@@ -247,17 +253,17 @@ namespace ZScreenLib
             return result;
         }
 
-        private static Image DrawReflection(Image bmp)
+        private Image DrawReflection(Image bmp)
         {
-            Bitmap reflection = AddReflection(bmp, Engine.conf.ReflectionPercentage, Engine.conf.ReflectionTransparency);
-            if (Engine.conf.ReflectionSkew)
+            Bitmap reflection = AddReflection(bmp, wf.ReflectionPercentage, wf.ReflectionTransparency);
+            if (wf.ReflectionSkew)
             {
-                reflection = AddSkew(reflection, Engine.conf.ReflectionSkewSize);
+                reflection = AddSkew(reflection, wf.ReflectionSkewSize);
             }
-            Bitmap result = new Bitmap(reflection.Width, bmp.Height + reflection.Height + Engine.conf.ReflectionOffset);
+            Bitmap result = new Bitmap(reflection.Width, bmp.Height + reflection.Height + wf.ReflectionOffset);
             Graphics g = Graphics.FromImage(result);
             g.DrawImage(bmp, new Point(0, 0));
-            g.DrawImage(reflection, new Point(0, bmp.Height + Engine.conf.ReflectionOffset));
+            g.DrawImage(reflection, new Point(0, bmp.Height + wf.ReflectionOffset));
             return result;
         }
 
@@ -342,7 +348,7 @@ namespace ZScreenLib
             return position;
         }
 
-        private static Image BevelImage(Image image, int offset)
+        private Image BevelImage(Image image, int offset)
         {
             Image defaultImage = (Image)image.Clone();
 
@@ -379,7 +385,7 @@ namespace ZScreenLib
             return defaultImage;
         }
 
-        private static Image PrepareBevel(Image image, Point[] points, int filterValue)
+        private Image PrepareBevel(Image image, Point[] points, int filterValue)
         {
             Bitmap bmp = new Bitmap(image.Width, image.Height);
             Graphics g = Graphics.FromImage(bmp);
@@ -390,7 +396,7 @@ namespace ZScreenLib
             g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
             g.Dispose();
             ColorMatrix cm;
-            switch (Engine.conf.BevelFilterType)
+            switch (wf.BevelFilterType)
             {
                 default:
                 case FilterType.Brightness:
@@ -410,15 +416,15 @@ namespace ZScreenLib
             return image;
         }
 
-        public static Image ApplySizeChanges(Image img)
+        public Image ApplySizeChanges(Image img)
         {
-            switch (Engine.conf.ImageSizeType)
+            switch (wf.ImageSizeType)
             {
                 case ImageSizeType.FIXED:
-                    img = GraphicsMgr.ChangeImageSize(img, Engine.conf.ImageSizeFixedWidth, Engine.conf.ImageSizeFixedHeight, true, true);
+                    img = GraphicsMgr.ChangeImageSize(img, wf.ImageSizeFixedWidth, wf.ImageSizeFixedHeight, true, true);
                     break;
                 case ImageSizeType.RATIO:
-                    img = GraphicsMgr.ChangeImageSize(img, Engine.conf.ImageSizeRatioPercentage);
+                    img = GraphicsMgr.ChangeImageSize(img, wf.ImageSizeRatioPercentage);
                     break;
             }
             return img;
