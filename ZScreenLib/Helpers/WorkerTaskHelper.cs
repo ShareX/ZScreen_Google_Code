@@ -100,7 +100,7 @@ namespace ZScreenLib
                     break;
             }
             string fn = parser.Convert(pattern);
-            Engine.Workflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.CoreConf.AutoIncrement has to be updated
+            Engine.Workflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
             return string.Format("{0}.{1}", fn, ext);
         }
     }

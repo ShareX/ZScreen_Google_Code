@@ -392,7 +392,7 @@ namespace ZScreenGUI
             }
             cboSwitchFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat2;
 
-            switch (Engine.conf.ImageSizeType)
+            switch (Engine.Workflow.ImageSizeType)
             {
                 case ImageSizeType.DEFAULT:
                     rbImageSizeDefault.Checked = true;
@@ -405,9 +405,9 @@ namespace ZScreenGUI
                     break;
             }
 
-            txtImageSizeFixedWidth.Text = Engine.conf.ImageSizeFixedWidth.ToString();
-            txtImageSizeFixedHeight.Text = Engine.conf.ImageSizeFixedHeight.ToString();
-            txtImageSizeRatio.Text = Engine.conf.ImageSizeRatioPercentage.ToString();
+            txtImageSizeFixedWidth.Text = Engine.Workflow.ImageSizeFixedWidth.ToString();
+            txtImageSizeFixedHeight.Text = Engine.Workflow.ImageSizeFixedHeight.ToString();
+            txtImageSizeRatio.Text = Engine.Workflow.ImageSizeRatioPercentage.ToString();
         }
 
         private void ZScreen_ConfigGUI_Options_Watermark()
@@ -417,39 +417,39 @@ namespace ZScreenGUI
                 cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
             }
 
-            cboWatermarkType.SelectedIndex = (int)Engine.conf.WatermarkMode;
+            cboWatermarkType.SelectedIndex = (int)Engine.Workflow.WatermarkMode;
             if (chkWatermarkPosition.Items.Count == 0)
             {
                 chkWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
 
-            chkWatermarkPosition.SelectedIndex = (int)Engine.conf.WatermarkPositionMode;
-            nudWatermarkOffset.Value = Engine.conf.WatermarkOffset;
-            cbWatermarkAddReflection.Checked = Engine.conf.WatermarkAddReflection;
-            cbWatermarkAutoHide.Checked = Engine.conf.WatermarkAutoHide;
+            chkWatermarkPosition.SelectedIndex = (int)Engine.Workflow.WatermarkPositionMode;
+            nudWatermarkOffset.Value = Engine.Workflow.WatermarkOffset;
+            cbWatermarkAddReflection.Checked = Engine.Workflow.WatermarkAddReflection;
+            cbWatermarkAutoHide.Checked = Engine.Workflow.WatermarkAutoHide;
 
-            txtWatermarkText.Text = Engine.conf.WatermarkText;
-            pbWatermarkFontColor.BackColor = Engine.conf.WatermarkFontArgb;
+            txtWatermarkText.Text = Engine.Workflow.WatermarkText;
+            pbWatermarkFontColor.BackColor = Engine.Workflow.WatermarkFontArgb;
             lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
-            trackWatermarkFontTrans.Value = (int)Engine.conf.WatermarkFontTrans;
-            nudWatermarkCornerRadius.Value = Engine.conf.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = Engine.conf.WatermarkGradient1Argb;
-            pbWatermarkGradient2.BackColor = Engine.conf.WatermarkGradient2Argb;
-            pbWatermarkBorderColor.BackColor = Engine.conf.WatermarkBorderArgb;
-            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
-            trackWatermarkBackgroundTrans.Value = (int)Engine.conf.WatermarkBackTrans;
+            nudWatermarkFontTrans.Value = Engine.Workflow.WatermarkFontTrans;
+            trackWatermarkFontTrans.Value = (int)Engine.Workflow.WatermarkFontTrans;
+            nudWatermarkCornerRadius.Value = Engine.Workflow.WatermarkCornerRadius;
+            pbWatermarkGradient1.BackColor = Engine.Workflow.WatermarkGradient1Argb;
+            pbWatermarkGradient2.BackColor = Engine.Workflow.WatermarkGradient2Argb;
+            pbWatermarkBorderColor.BackColor = Engine.Workflow.WatermarkBorderArgb;
+            nudWatermarkBackTrans.Value = Engine.Workflow.WatermarkBackTrans;
+            trackWatermarkBackgroundTrans.Value = (int)Engine.Workflow.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
 
-            cbWatermarkGradientType.SelectedIndex = (int)Engine.conf.WatermarkGradientType;
-            cboUseCustomGradient.Checked = Engine.conf.WatermarkUseCustomGradient;
+            cbWatermarkGradientType.SelectedIndex = (int)Engine.Workflow.WatermarkGradientType;
+            cboUseCustomGradient.Checked = Engine.Workflow.WatermarkUseCustomGradient;
 
-            txtWatermarkImageLocation.Text = Engine.conf.WatermarkImageLocation;
-            cbWatermarkUseBorder.Checked = Engine.conf.WatermarkUseBorder;
-            nudWatermarkImageScale.Value = Engine.conf.WatermarkImageScale;
+            txtWatermarkImageLocation.Text = Engine.Workflow.WatermarkImageLocation;
+            cbWatermarkUseBorder.Checked = Engine.Workflow.WatermarkUseBorder;
+            nudWatermarkImageScale.Value = Engine.Workflow.WatermarkImageScale;
 
             TestWatermark();
         }

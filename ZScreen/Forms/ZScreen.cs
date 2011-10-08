@@ -747,7 +747,7 @@ namespace ZScreenGUI
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkText = txtWatermarkText.Text;
+            Engine.Workflow.WatermarkText = txtWatermarkText.Text;
             TestWatermark();
         }
 
@@ -827,7 +827,7 @@ namespace ZScreenGUI
             DialogResult result = Adapter.ShowFontDialog();
             if (result == DialogResult.OK)
             {
-                pbWatermarkFontColor.BackColor = Engine.conf.WatermarkFontArgb;
+                pbWatermarkFontColor.BackColor = Engine.Workflow.WatermarkFontArgb;
                 lblWatermarkFont.Text = FontToString();
                 TestWatermark();
             }
@@ -835,7 +835,7 @@ namespace ZScreenGUI
 
         private string FontToString()
         {
-            return FontToString(Engine.conf.WatermarkFont, Engine.conf.WatermarkFontArgb);
+            return FontToString(Engine.Workflow.WatermarkFont, Engine.Workflow.WatermarkFontArgb);
         }
 
         private string FontToString(Font font, Color color)
@@ -846,13 +846,13 @@ namespace ZScreenGUI
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkOffset = nudWatermarkOffset.Value;
+            Engine.Workflow.WatermarkOffset = nudWatermarkOffset.Value;
             TestWatermark();
         }
 
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkBackTrans = nudWatermarkBackTrans.Value;
+            Engine.Workflow.WatermarkBackTrans = nudWatermarkBackTrans.Value;
             trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value;
         }
 
@@ -918,19 +918,19 @@ namespace ZScreenGUI
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient1Argb);
+            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkGradient1Argb);
             TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkGradient2Argb);
+            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkGradient2Argb);
             TestWatermark();
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkBorderArgb);
             TestWatermark();
         }
 
@@ -942,7 +942,7 @@ namespace ZScreenGUI
                 Graphics g = Graphics.FromImage(bmp2);
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.DrawImage(bmp, new Rectangle(0, 0, pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height));
-                pbWatermarkShow.Image = ZScreenLib.ImageEffects.ApplyWatermark(bmp2);
+                pbWatermarkShow.Image = new ImageEffects(Engine.Workflow).ApplyWatermark(bmp2);
             }
         }
 
@@ -956,7 +956,7 @@ namespace ZScreenGUI
 
         private void pbWatermarkFontColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.WatermarkFontArgb);
+            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkFontArgb);
             lblWatermarkFont.Text = FontToString();
             TestWatermark();
         }
@@ -973,25 +973,25 @@ namespace ZScreenGUI
 
         private void cbWatermarkPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
+            Engine.Workflow.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
             TestWatermark();
         }
 
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkFontTrans = nudWatermarkFontTrans.Value;
+            Engine.Workflow.WatermarkFontTrans = nudWatermarkFontTrans.Value;
             trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
+            Engine.Workflow.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
             TestWatermark();
         }
 
         private void cbWatermarkGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
+            Engine.Workflow.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
             TestWatermark();
         }
 
@@ -1313,7 +1313,7 @@ namespace ZScreenGUI
         {
             if (File.Exists(txtWatermarkImageLocation.Text))
             {
-                Engine.conf.WatermarkImageLocation = txtWatermarkImageLocation.Text;
+                Engine.Workflow.WatermarkImageLocation = txtWatermarkImageLocation.Text;
                 TestWatermark();
             }
         }
@@ -1366,13 +1366,13 @@ namespace ZScreenGUI
 
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
+            Engine.Workflow.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
             TestWatermark();
         }
 
         private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
+            Engine.Workflow.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
             TestWatermark();
         }
 
@@ -1399,35 +1399,35 @@ namespace ZScreenGUI
 
         private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkImageScale = nudWatermarkImageScale.Value;
+            Engine.Workflow.WatermarkImageScale = nudWatermarkImageScale.Value;
             TestWatermark();
         }
 
         private void trackWatermarkFontTrans_Scroll(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkFontTrans = trackWatermarkFontTrans.Value;
-            nudWatermarkFontTrans.Value = Engine.conf.WatermarkFontTrans;
+            Engine.Workflow.WatermarkFontTrans = trackWatermarkFontTrans.Value;
+            nudWatermarkFontTrans.Value = Engine.Workflow.WatermarkFontTrans;
             TestWatermark();
         }
 
         private void trackWatermarkBackgroundTrans_Scroll(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
-            nudWatermarkBackTrans.Value = Engine.conf.WatermarkBackTrans;
+            Engine.Workflow.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
+            nudWatermarkBackTrans.Value = Engine.Workflow.WatermarkBackTrans;
             TestWatermark();
         }
 
         private void cbWatermarkAutoHide_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
+            Engine.Workflow.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
             TestWatermark();
         }
 
         private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
+            Engine.Workflow.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
-            tcWatermark.Enabled = Engine.conf.WatermarkMode != WatermarkType.NONE;
+            tcWatermark.Enabled = Engine.Workflow.WatermarkMode != WatermarkType.NONE;
         }
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
@@ -1573,15 +1573,15 @@ namespace ZScreenGUI
         {
             if (rbImageSizeDefault.Checked)
             {
-                Engine.conf.ImageSizeType = ImageSizeType.DEFAULT;
+                Engine.Workflow.ImageSizeType = ImageSizeType.DEFAULT;
             }
             else if (rbImageSizeFixed.Checked)
             {
-                Engine.conf.ImageSizeType = ImageSizeType.FIXED;
+                Engine.Workflow.ImageSizeType = ImageSizeType.FIXED;
             }
             else if (rbImageSizeRatio.Checked)
             {
-                Engine.conf.ImageSizeType = ImageSizeType.RATIO;
+                Engine.Workflow.ImageSizeType = ImageSizeType.RATIO;
             }
         }
 
@@ -1590,7 +1590,7 @@ namespace ZScreenGUI
             int width;
             if (int.TryParse(txtImageSizeFixedWidth.Text, out width))
             {
-                Engine.conf.ImageSizeFixedWidth = width;
+                Engine.Workflow.ImageSizeFixedWidth = width;
             }
         }
 
@@ -1599,7 +1599,7 @@ namespace ZScreenGUI
             int height;
             if (int.TryParse(txtImageSizeFixedHeight.Text, out height))
             {
-                Engine.conf.ImageSizeFixedHeight = height;
+                Engine.Workflow.ImageSizeFixedHeight = height;
             }
         }
 
@@ -1608,7 +1608,7 @@ namespace ZScreenGUI
             float percentage;
             if (float.TryParse(txtImageSizeRatio.Text, out percentage))
             {
-                Engine.conf.ImageSizeRatioPercentage = percentage;
+                Engine.Workflow.ImageSizeRatioPercentage = percentage;
             }
         }
 
@@ -1696,12 +1696,12 @@ namespace ZScreenGUI
 
         private void btnSelectGradient_Click(object sender, EventArgs e)
         {
-            using (GradientMaker gradient = new GradientMaker(Engine.conf.GradientMakerOptions))
+            using (GradientMaker gradient = new GradientMaker(Engine.Workflow.GradientMakerOptions))
             {
                 gradient.Icon = this.Icon;
                 if (gradient.ShowDialog() == DialogResult.OK)
                 {
-                    Engine.conf.GradientMakerOptions = gradient.Options;
+                    Engine.Workflow.GradientMakerOptions = gradient.Options;
                     TestWatermark();
                 }
             }
@@ -1709,7 +1709,7 @@ namespace ZScreenGUI
 
         private void cbUseCustomGradient_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
+            Engine.Workflow.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
             gbGradientMakerBasic.Enabled = !cboUseCustomGradient.Checked;
             TestWatermark();
         }

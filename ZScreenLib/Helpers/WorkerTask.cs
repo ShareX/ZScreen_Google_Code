@@ -901,11 +901,12 @@ namespace ZScreenLib
                 }
 
                 // Watermark
-                img = ImageEffects.ApplySizeChanges(img);
-                img = ImageEffects.ApplyScreenshotEffects(img);
-                if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.conf.WatermarkExcludeClipboardUpload)
+                ImageEffects effects = new ImageEffects(WorkflowConfig);
+                img = effects.ApplySizeChanges(img);
+                img = effects.ApplyScreenshotEffects(img);
+                if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.Workflow.WatermarkExcludeClipboardUpload)
                 {
-                    img = ImageEffects.ApplyWatermark(img);
+                    img = new ImageEffects(WorkflowConfig).ApplyWatermark(img);
                 }
 
                 tempImage = img;

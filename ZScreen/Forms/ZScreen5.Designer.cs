@@ -52,6 +52,7 @@
             this.flpTasks = new System.Windows.Forms.FlowLayoutPanel();
             this.btnTasksActions = new System.Windows.Forms.Button();
             this.btnTasksEffects = new System.Windows.Forms.Button();
+            this.btnOptions = new System.Windows.Forms.Button();
             this.tsMainTab.SuspendLayout();
             this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
@@ -97,6 +98,7 @@
             this.tsbFullscreenCapture.Name = "tsbFullscreenCapture";
             this.tsbFullscreenCapture.Size = new System.Drawing.Size(156, 20);
             this.tsbFullscreenCapture.Text = "Capture Fullscreen";
+            this.tsbFullscreenCapture.Click += new System.EventHandler(this.tsbFullscreenCapture_Click);
             // 
             // tsbActiveWindow
             // 
@@ -107,6 +109,7 @@
             this.tsbActiveWindow.Size = new System.Drawing.Size(156, 20);
             this.tsbActiveWindow.Text = "Active Window (3 sec)";
             this.tsbActiveWindow.ToolTipText = "Active Window will capture after 3 seconds";
+            this.tsbActiveWindow.Click += new System.EventHandler(this.tsbActiveWindow_Click);
             // 
             // tsbSelectedWindow
             // 
@@ -116,6 +119,7 @@
             this.tsbSelectedWindow.Name = "tsbSelectedWindow";
             this.tsbSelectedWindow.Size = new System.Drawing.Size(156, 20);
             this.tsbSelectedWindow.Text = "Capture Window...";
+            this.tsbSelectedWindow.Click += new System.EventHandler(this.tsbSelectedWindow_Click);
             // 
             // tsbCropShot
             // 
@@ -125,6 +129,7 @@
             this.tsbCropShot.Name = "tsbCropShot";
             this.tsbCropShot.Size = new System.Drawing.Size(156, 20);
             this.tsbCropShot.Text = "Capture Rectangle...";
+            this.tsbCropShot.Click += new System.EventHandler(this.tsbCropShot_Click);
             // 
             // tsbLastCropShot
             // 
@@ -134,6 +139,7 @@
             this.tsbLastCropShot.Name = "tsbLastCropShot";
             this.tsbLastCropShot.Size = new System.Drawing.Size(156, 20);
             this.tsbLastCropShot.Text = "Capture Last Rectangle...";
+            this.tsbLastCropShot.Click += new System.EventHandler(this.tsbLastCropShot_Click);
             // 
             // tsbFreehandCropShot
             // 
@@ -143,6 +149,7 @@
             this.tsbFreehandCropShot.Name = "tsbFreehandCropShot";
             this.tsbFreehandCropShot.Size = new System.Drawing.Size(156, 20);
             this.tsbFreehandCropShot.Text = "Capture Shape...";
+            this.tsbFreehandCropShot.Click += new System.EventHandler(this.tsbFreehandCropShot_Click);
             // 
             // tsbAutoCapture
             // 
@@ -152,6 +159,7 @@
             this.tsbAutoCapture.Name = "tsbAutoCapture";
             this.tsbAutoCapture.Size = new System.Drawing.Size(156, 20);
             this.tsbAutoCapture.Text = "Auto Capture...";
+            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
             // 
             // tssMaintoolbar1
             // 
@@ -166,6 +174,7 @@
             this.tsbFileUpload.Name = "tsbFileUpload";
             this.tsbFileUpload.Size = new System.Drawing.Size(156, 20);
             this.tsbFileUpload.Text = "File Upload...";
+            this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
             // 
             // tsbClipboardUpload
             // 
@@ -175,6 +184,7 @@
             this.tsbClipboardUpload.Name = "tsbClipboardUpload";
             this.tsbClipboardUpload.Size = new System.Drawing.Size(156, 20);
             this.tsbClipboardUpload.Text = "Clipboard Upload...";
+            this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
             // 
             // tsbDragDropWindow
             // 
@@ -184,6 +194,7 @@
             this.tsbDragDropWindow.Name = "tsbDragDropWindow";
             this.tsbDragDropWindow.Size = new System.Drawing.Size(156, 20);
             this.tsbDragDropWindow.Text = "Drag && Drop Window...";
+            this.tsbDragDropWindow.Click += new System.EventHandler(this.tsbDragDropWindow_Click);
             // 
             // tsbLanguageTranslator
             // 
@@ -203,6 +214,7 @@
             this.tsbScreenColorPicker.Name = "tsbScreenColorPicker";
             this.tsbScreenColorPicker.Size = new System.Drawing.Size(156, 20);
             this.tsbScreenColorPicker.Text = "Screen Color Picker...";
+            this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
             // 
             // toolStripSeparator8
             // 
@@ -217,6 +229,7 @@
             this.tsbOpenHistory.Name = "tsbOpenHistory";
             this.tsbOpenHistory.Size = new System.Drawing.Size(156, 20);
             this.tsbOpenHistory.Text = "History...";
+            this.tsbOpenHistory.Click += new System.EventHandler(this.tsbOpenHistory_Click);
             // 
             // tsbImageDirectory
             // 
@@ -226,6 +239,7 @@
             this.tsbImageDirectory.Name = "tsbImageDirectory";
             this.tsbImageDirectory.Size = new System.Drawing.Size(156, 20);
             this.tsbImageDirectory.Text = "Images Directory...";
+            this.tsbImageDirectory.Click += new System.EventHandler(this.tsbImageDirectory_Click);
             // 
             // tsbAbout
             // 
@@ -235,6 +249,7 @@
             this.tsbAbout.Name = "tsbAbout";
             this.tsbAbout.Size = new System.Drawing.Size(156, 20);
             this.tsbAbout.Text = "About...";
+            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
             // 
             // tsbDonate
             // 
@@ -249,11 +264,12 @@
             this.tsbDonate.Size = new System.Drawing.Size(100, 35);
             this.tsbDonate.Text = "Donate";
             this.tsbDonate.ToolTipText = "Thanks!";
+            this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
             // 
             // tlpMain
             // 
             this.tlpMain.ColumnCount = 3;
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.tlpMain.Controls.Add(this.tsMainTab, 2, 0);
@@ -270,9 +286,9 @@
             // pbPreview
             // 
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbPreview.Location = new System.Drawing.Point(103, 3);
+            this.pbPreview.Location = new System.Drawing.Point(131, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(580, 494);
+            this.pbPreview.Size = new System.Drawing.Size(552, 494);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 128;
             this.pbPreview.TabStop = false;
@@ -281,29 +297,42 @@
             // 
             this.flpTasks.Controls.Add(this.btnTasksActions);
             this.flpTasks.Controls.Add(this.btnTasksEffects);
+            this.flpTasks.Controls.Add(this.btnOptions);
             this.flpTasks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpTasks.Location = new System.Drawing.Point(3, 3);
             this.flpTasks.Name = "flpTasks";
-            this.flpTasks.Size = new System.Drawing.Size(94, 494);
+            this.flpTasks.Size = new System.Drawing.Size(122, 494);
             this.flpTasks.TabIndex = 129;
             // 
             // btnTasksActions
             // 
+            this.btnTasksActions.AutoSize = true;
             this.btnTasksActions.Location = new System.Drawing.Point(3, 3);
             this.btnTasksActions.Name = "btnTasksActions";
-            this.btnTasksActions.Size = new System.Drawing.Size(75, 23);
+            this.btnTasksActions.Size = new System.Drawing.Size(93, 23);
             this.btnTasksActions.TabIndex = 0;
             this.btnTasksActions.Text = "Run Actions";
             this.btnTasksActions.UseVisualStyleBackColor = true;
             // 
             // btnTasksEffects
             // 
+            this.btnTasksEffects.AutoSize = true;
             this.btnTasksEffects.Location = new System.Drawing.Point(3, 32);
             this.btnTasksEffects.Name = "btnTasksEffects";
-            this.btnTasksEffects.Size = new System.Drawing.Size(75, 23);
+            this.btnTasksEffects.Size = new System.Drawing.Size(93, 23);
             this.btnTasksEffects.TabIndex = 1;
-            this.btnTasksEffects.Text = "Effects";
+            this.btnTasksEffects.Text = "Apply Effects";
             this.btnTasksEffects.UseVisualStyleBackColor = true;
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.AutoSize = true;
+            this.btnOptions.Location = new System.Drawing.Point(3, 61);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(93, 23);
+            this.btnOptions.TabIndex = 2;
+            this.btnOptions.Text = "Options...";
+            this.btnOptions.UseVisualStyleBackColor = true;
             // 
             // ZScreenSnap
             // 
@@ -319,6 +348,7 @@
             this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.flpTasks.ResumeLayout(false);
+            this.flpTasks.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -349,5 +379,6 @@
         private System.Windows.Forms.FlowLayoutPanel flpTasks;
         private System.Windows.Forms.Button btnTasksActions;
         private System.Windows.Forms.Button btnTasksEffects;
+        private System.Windows.Forms.Button btnOptions;
     }
 }
