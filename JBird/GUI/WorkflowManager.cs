@@ -38,7 +38,7 @@ namespace ZScreenLib
             lvi.Checked = wf.Enabled;
             lvi.Text = wf.Description;
             lvi.SubItems.Add(wf.Job.GetDescription());
-            lvi.SubItems.Add(string.Empty);
+            lvi.SubItems.Add(wf.Hotkey.ToString());
             lvi.Tag = id;
             return lvi;
         }

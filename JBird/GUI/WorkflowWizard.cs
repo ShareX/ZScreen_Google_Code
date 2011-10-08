@@ -3,10 +3,12 @@ using System.IO;
 using System.Windows.Forms;
 using UploadersAPILib;
 using UploadersLib;
+using HelpersLib.Hotkey;
+using HelpersLib;
 
 namespace ZScreenLib
 {
-    public partial class WorkflowWizard : Form
+    public partial class WorkflowWizard : HotkeyForm
     {
         public Workflow Workflow = null;
 
@@ -20,6 +22,7 @@ namespace ZScreenLib
 
         private void ConfigGui()
         {
+            // Step 1
             txtName.Text = Workflow.Description;
 
             if (cboTask.Items.Count == 0)
@@ -27,6 +30,15 @@ namespace ZScreenLib
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
             cboTask.SelectedIndex = (int)Workflow.Job;
+
+            HotkeyManager tempHotkeyMgr;
+            JBirdGUI.JBirdCoreUI.HotkeyMgrs.TryGetValue(this.Workflow.ID, out tempHotkeyMgr);
+            if (tempHotkeyMgr != null)
+            {
+                hmcHotkeys.PrepareHotkeys(tempHotkeyMgr);
+            }
+
+            // Step 4
 
             chkClipboard.Checked = Workflow.Outputs.Contains(OutputEnum.Clipboard);
             chkSaveFile.Checked = Workflow.Outputs.Contains(OutputEnum.LocalDisk);

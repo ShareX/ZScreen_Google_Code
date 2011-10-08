@@ -6,8 +6,8 @@ namespace JBirdGUI
 {
     internal static class Program
     {
-        public static WorkflowConfig ProfilesConfig = new WorkflowConfig();
-
+        public static WorkflowConfig WorkflowConfig = new WorkflowConfig();
+        public static JBirdCoreUI CoreUI = null;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -19,17 +19,17 @@ namespace JBirdGUI
 
             if (args.Length > 0 && args[0] == "/toolbar")
             {
-                Application.Run(new JBirdToolbar());
+                Application.Run(CoreUI = new JBirdToolbar());
             }
             else
             {
-                Application.Run(new JBirdMain());
+                Application.Run(CoreUI = new JBirdMain());
             }
         }
 
         public static Workflow GetProfile(WorkerTask.JobLevel2 job)
         {
-            foreach (Workflow profile in ProfilesConfig.Profiles)
+            foreach (Workflow profile in WorkflowConfig.Workflows98)
             {
                 if (profile.Job == job)
                 {
