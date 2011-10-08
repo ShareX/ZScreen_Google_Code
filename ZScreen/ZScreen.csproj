@@ -350,6 +350,7 @@
     <None Include="Resources\pictures.ico" />
     <None Include="Resources\world_go.png" />
     <None Include="Resources\bug.png" />
+    <None Include="Resources\application_side_boxes.png" />
     <Content Include="Resources\zss-main.ico" />
   </ItemGroup>
   <ItemGroup>

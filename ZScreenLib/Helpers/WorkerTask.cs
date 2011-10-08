@@ -54,6 +54,32 @@ using ZUploader.HelperClasses;
 
 namespace ZScreenLib
 {
+    public class TaskInfo
+    {
+        public WorkerTask.JobLevel2 Job { get; set; }
+        public IntPtr Handle { get; set; }
+        public DestSelector DestConfig { get; set; }
+        private string mFilePath;
+        public string ExistingFilePath
+        {
+            get
+            {
+                return mFilePath;
+            }
+            set
+            {
+                if (File.Exists(value))
+                {
+                    mFilePath = value;
+                }
+                else
+                {
+                    throw new Exception(string.Format("{0} does not exist.", value));
+                }
+            }
+        }
+    }
+
     public class WorkerTask : IDisposable
     {
         public delegate void TaskEventHandler(WorkerTask wt);
@@ -90,6 +116,8 @@ namespace ZScreenLib
             CaptureActiveWindow,
             [Description("Capture Window")]
             CaptureSelectedWindow,
+            [Description("Capture Window from a List")]
+            CaptureSelectedWindowFromList,
             [Description("Capture Rectangular Region")]
             CaptureRectRegion,
             [Description("Capture Previous Rectangular Region")]
@@ -153,7 +181,6 @@ namespace ZScreenLib
         public Workflow WorkflowConfig { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
-
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
         public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
         public JobLevel3 Job3 { get; private set; }  // Shorten URL, Upload Text, Index Folder, etc.
@@ -167,7 +194,7 @@ namespace ZScreenLib
 
         public List<TaskState> States = new List<TaskState>();
 
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; private set; }
 
         private DateTime mEndTime;
 
@@ -203,6 +230,7 @@ namespace ZScreenLib
 
         private string DestinationName = string.Empty;
 
+        public TaskInfo TaskProperties { get; private set; }
         public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
         public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
@@ -225,6 +253,7 @@ namespace ZScreenLib
 
         public WorkerTask(Workflow wf)
         {
+            TaskProperties = new TaskInfo();
             UploadResults = new List<UploadResult>();
             Errors = new List<string>();
             States.Add(TaskState.Created);
@@ -245,25 +274,22 @@ namespace ZScreenLib
             }
 
             StartWork(wf.Job);
-
-            if (wf.Outputs.Contains(OutputEnum.LocalDisk))
-            {
-                // write image
-            }
         }
 
-        public WorkerTask(BackgroundWorker worker, JobLevel2 job, DestSelector ucDestOptions, string fp = "")
+        public WorkerTask(BackgroundWorker worker, TaskInfo ti)
             : this(Engine.Workflow)
         {
-            if (!string.IsNullOrEmpty(fp))
+            this.TaskProperties = ti;
+
+            if (!string.IsNullOrEmpty(ti.ExistingFilePath))
             {
-                UpdateLocalFilePath(fp);
+                UpdateLocalFilePath(ti.ExistingFilePath);
             }
 
             MyWorker = worker;
-            StartWork(job);
+            StartWork(ti.Job);
 
-            if (PrepareOutputs(ucDestOptions) == DialogResult.Cancel)
+            if (PrepareOutputs(ti.DestConfig) == DialogResult.Cancel)
             {
                 this.States.Add(TaskState.CancellationPending);
             }
@@ -301,6 +327,9 @@ namespace ZScreenLib
                 case JobLevel2.CaptureRectRegion:
                 case JobLevel2.CaptureLastCroppedWindow:
                     success = CaptureRegionOrWindow();
+                    break;
+                case JobLevel2.CaptureSelectedWindowFromList:
+                    success = CaptureSelectedWindow();
                     break;
                 case JobLevel2.CaptureFreeHandRegion:
                     success = CaptureShape();
@@ -705,6 +734,14 @@ namespace ZScreenLib
                         break;
                 }
             }
+            return tempImage != null;
+        }
+
+        public bool CaptureSelectedWindow()
+        {
+            NativeMethods.SetForegroundWindow(this.TaskProperties.Handle);
+            Thread.Sleep(250);
+            SetImage(Screenshot.GetWindow(this.TaskProperties.Handle));
             return tempImage != null;
         }
 

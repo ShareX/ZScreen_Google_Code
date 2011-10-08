@@ -48,6 +48,7 @@ using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
+using ScreenCapture;
 
 namespace ZScreenGUI
 {
@@ -2205,6 +2206,41 @@ namespace ZScreenGUI
         {
             Engine.Workflow.CaptureEngineMode = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
             UpdateAeroGlassConfig();
+        }
+
+        private void tsddbSelectedWindow_DropDownOpening(object sender, EventArgs e)
+        {
+            tsddbSelectedWindow.DropDownItems.Clear();
+
+            WindowsList windowsList = new WindowsList();
+            List<WindowInfo> windows = windowsList.GetVisibleWindowsList();
+
+            foreach (WindowInfo window in windows)
+            {
+                string title = window.Text.Truncate(50);
+                ToolStripItem tsiSelectedWindow = tsddbSelectedWindow.DropDownItems.Add(title);
+                tsiSelectedWindow.Click += new EventHandler(tsiSelectedWindow_Click);
+
+                using (Icon icon = window.Icon)
+                {
+                    if (icon != null)
+                    {
+                        tsiSelectedWindow.Image = icon.ToBitmap();
+                    }
+                }
+
+                tsiSelectedWindow.Tag = window;
+            }
+        }
+
+        void tsiSelectedWindow_Click(object sender, EventArgs e)
+        {
+            ToolStripItem tsi = (ToolStripItem)sender;
+            WindowInfo wi = tsi.Tag as WindowInfo;
+            if (wi != null)
+            {
+                CaptureSelectedWindowFromList(wi.Handle);
+            }
         }
     }
 }
