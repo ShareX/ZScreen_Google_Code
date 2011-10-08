@@ -82,6 +82,12 @@ namespace HelpersLib.Hotkey
         TwitterClient
     }
 
+    public enum JBirdHotkey
+    {
+        [Description("Workflow Hotkey")]
+        Workflow
+    }
+
     public class HotkeyManager
     {
         public ZAppType Host = ZAppType.ZUploader;
@@ -101,6 +107,11 @@ namespace HelpersLib.Hotkey
         }
 
         public void AddHotkey(ZScreenHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
+        {
+            AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
+        }
+
+        public void AddHotkey(JBirdHotkey hotkeyEnum, HotkeySetting hotkeySetting, Action action, ToolStripMenuItem menuItem = null)
         {
             AddHotkey((int)hotkeyEnum, hotkeySetting, action, menuItem);
         }

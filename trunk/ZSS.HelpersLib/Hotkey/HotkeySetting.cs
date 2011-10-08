@@ -49,6 +49,7 @@ namespace HelpersLib.Hotkey
 
         public HotkeySetting()
         {
+            Hotkey = Keys.None;
         }
 
         public HotkeySetting(Keys hotkey)
@@ -71,6 +72,11 @@ namespace HelpersLib.Hotkey
             {
                 MenuItem.ShortcutKeyDisplayString = new KeyInfo(Hotkey).ToString();
             }
+        }
+
+        public override string ToString()
+        {
+            return Hotkey.ToString();
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using GradientTester;
+using HelpersLib.Hotkey;
 
 namespace ZScreenLib
 {
@@ -30,6 +31,7 @@ namespace ZScreenLib
 
         public Workflow()
         {
+            this.ID = ZAppHelper.GetRandomAlphanumeric(12);
             this.Description = "New Workflow";
             this.Enabled = true;
             this.Outputs = new List<OutputEnum>();
@@ -43,6 +45,11 @@ namespace ZScreenLib
             this.Description = name;
         }
 
+        public void Start()
+        {
+
+        }
+
         public static void ApplyDefaultValues(object self)
         {
             foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
@@ -52,6 +59,8 @@ namespace ZScreenLib
                 prop.SetValue(self, attr.Value);
             }
         }
+
+        public string ID { get; set; }
 
         [Browsable(false)]
         public string Description { get; set; }
@@ -65,6 +74,8 @@ namespace ZScreenLib
         public CaptureEngineType CaptureEngineMode = CaptureEngineType.GDI;
 
         public bool DrawCursor = false;
+
+        public HotkeySetting Hotkey = new HotkeySetting();
 
         #region Inputs / Active Window
 

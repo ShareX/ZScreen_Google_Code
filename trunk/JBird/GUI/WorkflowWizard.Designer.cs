@@ -52,7 +52,7 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.hotkeyManager = new HelpersLib.Hotkey.HotkeyManagerControl();
+            this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcMain.SuspendLayout();
             this.tpAccessibility.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -76,7 +76,7 @@
             // 
             // tpAccessibility
             // 
-            this.tpAccessibility.Controls.Add(this.hotkeyManager);
+            this.tpAccessibility.Controls.Add(this.hmcHotkeys);
             this.tpAccessibility.Controls.Add(this.gbTask);
             this.tpAccessibility.Controls.Add(this.gbName);
             this.tpAccessibility.Controls.Add(this.chkUseHotkey);
@@ -306,10 +306,10 @@
             // 
             // hotkeyManager
             // 
-            this.hotkeyManager.Location = new System.Drawing.Point(16, 168);
-            this.hotkeyManager.Name = "hotkeyManager";
-            this.hotkeyManager.Size = new System.Drawing.Size(576, 48);
-            this.hotkeyManager.TabIndex = 11;
+            this.hmcHotkeys.Location = new System.Drawing.Point(16, 168);
+            this.hmcHotkeys.Name = "hotkeyManager";
+            this.hmcHotkeys.Size = new System.Drawing.Size(576, 48);
+            this.hmcHotkeys.TabIndex = 11;
             // 
             // WorkflowWizard
             // 
@@ -365,6 +365,6 @@
         private System.Windows.Forms.CheckBox chkUploadFTP;
         private System.Windows.Forms.CheckBox chkUploadDropbox;
         private System.Windows.Forms.TabPage tpCapture;
-        private HelpersLib.Hotkey.HotkeyManagerControl hotkeyManager;
+        private HelpersLib.Hotkey.HotkeyManagerControl hmcHotkeys;
     }
 }

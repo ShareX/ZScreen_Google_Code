@@ -159,7 +159,7 @@ namespace HelpersLib
 
     public enum ZAppType
     {
-        ZScreen, ZUploader
+        ZScreen, ZUploader, JBird
     }
 
     public enum HotkeyStatus

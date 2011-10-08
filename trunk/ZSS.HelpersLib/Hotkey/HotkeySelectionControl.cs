@@ -44,6 +44,9 @@ namespace HelpersLib.Hotkey
                 case ZAppType.ZScreen:
                     lblHotkeyDescription.Text = ((ZScreenHotkey)Setting.Tag).GetDescription();
                     break;
+                case ZAppType.JBird:
+                    lblHotkeyDescription.Text = ((JBirdHotkey)Setting.Tag).GetDescription();
+                    break;
                 default:
                     lblHotkeyDescription.Text = ((ZUploaderHotkey)Setting.Tag).GetDescription();
                     break;

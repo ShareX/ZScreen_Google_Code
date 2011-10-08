@@ -5,11 +5,14 @@ using System.Windows.Forms;
 using HelpersLib;
 using UploadersLib;
 using ZScreenLib;
+using HelpersLib.Hotkey;
 
 namespace JBirdGUI
 {
     public partial class JBirdCoreUI : HotkeyForm
     {
+        public static Dictionary<string, HotkeyManager> HotkeyMgrs = new Dictionary<string, HotkeyManager>();
+
         public JBirdCoreUI()
         {
             InitializeComponent();
@@ -29,15 +32,26 @@ namespace JBirdGUI
 
         protected void bwConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            Program.ProfilesConfig = WorkflowConfig.Read();
+            Program.WorkflowConfig = WorkflowConfig.Read();
         }
 
         protected void bwConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Program.ProfilesConfig.Profiles.Count == 0)
+            if (Program.WorkflowConfig.Workflows98.Count == 0)
             {
-                Program.ProfilesConfig.Profiles.AddRange(CreateDefaultProfiles());
+                Program.WorkflowConfig.Workflows98.AddRange(CreateDefaultWorkflows());
             }
+
+            if (HotkeyMgrs.Count == 0)
+            {
+                foreach (Workflow wf in Program.WorkflowConfig.Workflows98)
+                {
+                    HotkeyManager hm = new HotkeyManager(Program.CoreUI, ZAppType.JBird);
+                    hm.AddHotkey(JBirdHotkey.Workflow, wf.Hotkey, wf.Start);
+                    HotkeyMgrs.Add(wf.ID, hm);
+                }
+            }
+
             Load_TrayMenuItems();
         }
 
@@ -45,7 +59,7 @@ namespace JBirdGUI
         {
             if (tsmiWorkflows.DropDownItems.Count == 0)
             {
-                foreach (Workflow p in Program.ProfilesConfig.Profiles)
+                foreach (Workflow p in Program.WorkflowConfig.Workflows98)
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(p.Description);
                     tsmi.Tag = p;
@@ -62,22 +76,24 @@ namespace JBirdGUI
             StartWorkflow(p);
         }
 
-        public List<Workflow> CreateDefaultProfiles()
+        public List<Workflow> CreateDefaultWorkflows()
         {
-            List<Workflow> profiles = new List<Workflow>();
+            List<Workflow> workflows = new List<Workflow>();
 
             Workflow entireScreen = new Workflow("Desktop to file");
             entireScreen.Job = WorkerTask.JobLevel2.CaptureEntireScreen;
             entireScreen.Outputs.Add(OutputEnum.Clipboard);
             entireScreen.Outputs.Add(OutputEnum.LocalDisk);
-            profiles.Add(entireScreen);
+            entireScreen.Hotkey = new HelpersLib.Hotkey.HotkeySetting(Keys.PrintScreen);
+            workflows.Add(entireScreen);
 
             Workflow activeWindow = new Workflow("Active Window to clipboard");
             activeWindow.Job = WorkerTask.JobLevel2.CaptureActiveWindow;
             activeWindow.Outputs.Add(OutputEnum.Clipboard);
-            profiles.Add(activeWindow);
+            activeWindow.Hotkey = new HelpersLib.Hotkey.HotkeySetting(Keys.Alt | Keys.PrintScreen);
+            workflows.Add(activeWindow);
 
-            return profiles;
+            return workflows;
         }
 
         protected void StartWorkflow(Workflow p)
@@ -198,13 +214,13 @@ namespace JBirdGUI
 
         protected virtual void btnWorkflows_Click(object sender, EventArgs e)
         {
-            WorkflowManager pm = new WorkflowManager(Program.ProfilesConfig.Profiles) { Icon = this.Icon };
+            WorkflowManager pm = new WorkflowManager(Program.WorkflowConfig.Workflows98) { Icon = this.Icon };
             pm.ShowDialog();
         }
 
         protected void JBirdCoreUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.ProfilesConfig.Write();
+            Program.WorkflowConfig.Write();
         }
 
         protected void JBirdCoreUI_Shown(object sender, EventArgs e)
