@@ -141,6 +141,7 @@ namespace ZScreenGUI
                                     try
                                     {
                                         ThreadPool.QueueUserWorkItem(x => Process.Start(ur.URL));
+                                        break;
                                     }
                                     catch (Exception ex)
                                     {

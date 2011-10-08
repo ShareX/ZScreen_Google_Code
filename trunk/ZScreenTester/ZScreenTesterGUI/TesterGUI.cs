@@ -225,7 +225,8 @@ namespace ZScreenTesterGUI
                     break;
                 }
 
-                WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, WorkerTask.JobLevel2.UploadFromClipboard, new DestSelector());
+                TaskInfo tiTester = new TaskInfo() { Job = WorkerTask.JobLevel2.UploadFromClipboard };
+                WorkerTask task = new WorkerTask(new BackgroundWorker() { WorkerReportsProgress = true }, tiTester);
 
                 uploader.Timer = new Stopwatch();
                 uploader.Timer.Start();

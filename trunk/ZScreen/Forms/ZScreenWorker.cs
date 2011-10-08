@@ -314,9 +314,17 @@ namespace ZScreenGUI
 
         #region Create Worker
 
-        public WorkerTask CreateTask(WorkerTask.JobLevel2 job, string fp = "")
+        public WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
-            WorkerTask tempTask = new WorkerTask(CreateWorker(), job, ucDestOptions, fp);
+            if (tiCreateTask == null)
+            {
+                tiCreateTask = new TaskInfo();
+            }
+            tiCreateTask.Job = job;
+            tiCreateTask.DestConfig = ucDestOptions;
+
+            WorkerTask tempTask = new WorkerTask(CreateWorker(), tiCreateTask);
+
             switch (job)
             {
                 case WorkerTask.JobLevel2.Translate:
@@ -385,7 +393,9 @@ namespace ZScreenGUI
         public void CaptureActiveWindow()
         {
             WorkerTask hkawTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveWindow);
+#if DEBUG
             UploadManager.UploadImage(hkawTask);
+#endif
             RunWorkerAsync_Screenshots(hkawTask);
         }
 
@@ -398,6 +408,13 @@ namespace ZScreenGUI
         public void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
+            RunWorkerAsync_Screenshots(hkswTask);
+        }
+
+        public void CaptureSelectedWindowFromList(IntPtr handle)
+        {
+            TaskInfo tiCaptureWindowFromList = new TaskInfo() { Handle = handle };
+            WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindowFromList, tiCaptureWindowFromList);
             RunWorkerAsync_Screenshots(hkswTask);
         }
 
@@ -557,13 +574,13 @@ namespace ZScreenGUI
                     }
                     else if (FileSystem.IsValidTextFile(fp))
                     {
-                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, fp);
+                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
                         fptfTask.SetText(File.ReadAllText(fp));
                         fptfTask.RunWorker();
                     }
                     else
                     {
-                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, fp);
+                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
                         fpdataTask.UpdateLocalFilePath(fp);
                         fpdataTask.RunWorker();
                     }

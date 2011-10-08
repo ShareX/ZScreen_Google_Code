@@ -1,5 +1,6 @@
-Version 4.5.3 - 2011-10-15
+Version 4.6.0 - 2011-10-15
 
+4.6.0 Added support to capture windows from a windows list {Jaex}
 4.5.3 Hybrid mode using ScreenCapture library and GUI changes in Capture Active Windows {McoreD}
 4.5.2 File Upload, Upload using ZScreen and Drag n Drop supports creating animated GIF or APNG for identical sized images {McoreD}
 4.5.1 Improved internal image manipulation with ability to apply Image Effects {McoreD/Jaex}
