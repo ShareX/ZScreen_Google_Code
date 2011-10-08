@@ -3,12 +3,12 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ZScreenLib.Cryptography
+namespace HelpersLib
 {
     /// <summary>
     /// Utility class that handles encryption
     /// </summary>
-    internal static class AESEncryption
+    public static class AESEncryption
     {
         #region Static Functions
         /// <summary>

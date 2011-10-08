@@ -69,6 +69,9 @@ namespace ZScreenLib
         [Browsable(false)]
         public bool Enabled { get; set; }
 
+        [Category(ComponentModelStrings.App), DefaultValue(false), Description("Encrypt passwords")]
+        public bool EncryptPasswords { get; set; }
+
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
 
@@ -91,7 +94,7 @@ namespace ZScreenLib
 
         #endregion Active Window
 
-        #region Inputs / File Upload 
+        #region Inputs / File Upload
 
         // Inputs / Animated Images
 

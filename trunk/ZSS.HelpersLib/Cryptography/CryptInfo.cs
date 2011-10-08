@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZScreenLib.Cryptography
+namespace HelpersLib
 {
-    internal class CryptInfo
+    public class CryptInfo
     {
         public string Password;
         public string Salt;
