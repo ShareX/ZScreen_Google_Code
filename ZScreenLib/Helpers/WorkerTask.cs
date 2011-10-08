@@ -1648,10 +1648,9 @@ namespace ZScreenLib
                 ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
                 ur_clipboard.LocalFilePath = this.LocalFilePath;
             }
-            /*
             if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
             {
-                urCb.Host = OutputEnum.Clipboard.GetDescription();
+                ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
                 if (File.Exists(LocalFilePath))
                 {
                     OCRHelper ocr = new OCRHelper(LocalFilePath);
@@ -1666,7 +1665,6 @@ namespace ZScreenLib
                     File.Delete(ocrfp);
                 }
             }
-            */
             AddUploadResult(ur_clipboard);
         }
 

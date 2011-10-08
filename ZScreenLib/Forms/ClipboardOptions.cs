@@ -65,14 +65,12 @@ namespace ZScreenLib
                     tvLinks.Nodes.Add(tnUploadResult);
                 }
 
-                /*
                 if (!string.IsNullOrEmpty(task.OCRText) && tvLinks.Nodes.Count > 0)
                 {
                     TreeNode tnOcr = new TreeNode(ClipboardContentEnum.OCR.GetDescription());
                     tnOcr.Nodes.Add(task.OCRText);
                     tvLinks.Nodes[0].Nodes.Add(tnOcr);
                 }
-                */
 
                 tvLinks.ExpandAll();
                 if (tvLinks.Nodes.Count > 0 && tvLinks.Nodes[0].Nodes.Count > 0)
