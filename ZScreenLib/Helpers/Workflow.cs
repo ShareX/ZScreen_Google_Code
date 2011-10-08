@@ -70,7 +70,19 @@ namespace ZScreenLib
         public bool Enabled { get; set; }
 
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Encrypt passwords")]
-        public bool EncryptPasswords { get; set; }
+        private bool mEncryptPasswords = false;
+        public bool EncryptPasswords
+        {
+            get
+            {
+                return mEncryptPasswords;
+            }
+            set
+            {
+                Uploader.EncryptedPasswords = value;
+                mEncryptPasswords = value;
+            }
+        }
 
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }

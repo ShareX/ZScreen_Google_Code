@@ -63,8 +63,19 @@ namespace UploadersLib
             }
         }
 
+        private string mPassphrase;
         [Category("SFTP"), Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
-        public string Passphrase { get; set; }
+        public string Passphrase
+        {
+            get
+            {
+                return Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Decrypt(mPassphrase) : mPassphrase;
+            }
+            set
+            {
+                mPassphrase = Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Encrypt(value) : value;
+            }
+        }
 
         [Category("SFTP"), Description("Key Location")]
         [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
