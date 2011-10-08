@@ -16,6 +16,7 @@ namespace HelpersLib
             Container = Application.ProductName;
             cp = new CspParameters();
             cp.KeyContainerName = Container;
+            GenerateKey();
         }
 
         public void GenerateKey()
