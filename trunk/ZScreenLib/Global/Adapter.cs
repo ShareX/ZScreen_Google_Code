@@ -44,6 +44,7 @@ using UploadersLib;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
+using UploadersLib.FileUploaders;
 
 namespace ZScreenLib
 {
@@ -191,53 +192,93 @@ namespace ZScreenLib
 
         public static void TestFTPAccount(FTPAccount account, bool silent)
         {
-            string msg;
+            string msg = string.Empty;
             string sfp = account.GetSubFolderPath();
-            using (FTP ftpClient = new FTP(account))
+            switch (account.Protocol)
             {
-                try
-                {
-                    DateTime time = DateTime.Now;
-                    ftpClient.Test(sfp);
-                    msg = "Success!";
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.StartsWith("Could not change working directory to"))
+                case FTPProtocol.SFTP:
+                    SFTP sftp = new SFTP(account);
+                    if (!sftp.isInstantiated)
                     {
-                        try
-                        {
-                            ftpClient.MakeMultiDirectory(sfp);
-                            ftpClient.Test(sfp);
-                            msg = "Success!\nAuto created folders: " + sfp;
-                        }
-                        catch (Exception e2)
-                        {
-                            msg = e2.Message;
-                        }
+                        msg = "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.";
+
                     }
                     else
                     {
-                        msg = e.Message;
+                        sftp.Connect();
+                        List<string> createddirs = new List<string>();
+                        if (!sftp.DirectoryExists(sfp))
+                        {
+                            createddirs = sftp.CreateMultipleDirectorys(FTPHelpers.GetPaths(sfp));
+                        }
+                        if (sftp.IsConnected)
+                        {
+                            msg = (createddirs.Count == 0) ? "Connected!" : "Conected!\nCreated folders;\n";
+                            for (int x = 0; x <= createddirs.Count - 1; x++)
+                            {
+                                msg += createddirs[x] + "\n";
+                            }
+                            msg += " \n\nPing results:\n " + SendPing(account.Host, 3);
+                            sftp.Disconnect();
+                        }
                     }
-                }
-            }
+                    break;
+                default:
+                    using (FTP ftpClient = new FTP(account))
+                    {
+                        try
+                        {
+                            //DateTime time = DateTime.Now;
+                            ftpClient.Test(sfp);
+                            msg = "Success!";
+                        }
+                        catch (Exception e)
+                        {
+                            if (e.Message.StartsWith("Could not change working directory to"))
+                            {
+                                try
+                                {
+                                    ftpClient.MakeMultiDirectory(sfp);
+                                    ftpClient.Test(sfp);
+                                    msg = "Success!\nAuto created folders: " + sfp;
+                                }
+                                catch (Exception e2)
+                                {
+                                    msg = e2.Message;
+                                }
+                            }
+                            else
+                            {
+                                msg = e.Message;
+                            }
+                        }
+                    }
 
-            if (!string.IsNullOrEmpty(msg))
+                    if (!string.IsNullOrEmpty(msg))
+                    {
+                        string ping = SendPing(account.Host, 3);
+                        if (!string.IsNullOrEmpty(ping))
+                        {
+                            msg += "\n\nPing results:\n" + ping;
+                        }
+                        if (silent)
+                        {
+                            // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                        }
+                        else
+                        {
+                            //MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    break;
+            }
+            if (silent)
             {
-                string ping = SendPing(account.Host, 3);
-                if (!string.IsNullOrEmpty(ping))
-                {
-                    msg += "\n\nPing results:\n" + ping;
-                }
-                if (silent)
-                {
-                    StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
-                }
-                else
-                {
-                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+            }
+            else
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

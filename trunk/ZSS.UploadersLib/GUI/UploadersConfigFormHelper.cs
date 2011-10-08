@@ -622,7 +622,14 @@ namespace UploadersLib
                     }
                     break;
             }
-            MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (silent)
+            {
+               StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+            }
+            else
+            {
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public static string SendPing(string host)
