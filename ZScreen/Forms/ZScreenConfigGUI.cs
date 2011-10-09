@@ -389,13 +389,20 @@ namespace ZScreenGUI
             }
             cboJpgSubSampling.SelectedIndex = (int)Engine.Workflow.ImageJpegSubSampling;
 
-            cbGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
+            cboGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
             nudSwitchAfter.Value = Engine.Workflow.ImageSizeLimit;
             if (cboSwitchFormat.Items.Count == 0)
             {
                 cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
             }
             cboSwitchFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat2;
+
+            cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
+                  (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG;
+
+            cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
+                (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
+
 
             switch (Engine.Workflow.ImageSizeType)
             {
