@@ -71,7 +71,7 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
         public bool PasswordsSecureUsingEncryption { get; set; }
-        [Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Mediau = 192, or High = 256")]
+        [Browsable(false), Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Medium = 192, or High = 256")]
         public EncryptionStrength PasswordsEncryptionStrength { get; set; }
 
         [Browsable(false)]

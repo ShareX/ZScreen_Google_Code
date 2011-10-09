@@ -95,9 +95,10 @@ namespace HelpersLib
                 }
                 return Encoding.UTF8.GetString(PlainTextBytes, 0, ByteCount);
             }
-            catch (Exception a)
+            catch (Exception ex)
             {
-                throw a;
+                StaticHelper.WriteException(ex);
+                return CipherText;
             }
         }
         #endregion
