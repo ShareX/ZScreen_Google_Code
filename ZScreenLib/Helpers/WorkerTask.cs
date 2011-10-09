@@ -51,6 +51,7 @@ using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
+using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -1089,20 +1090,20 @@ namespace ZScreenLib
                 WriteImageAnimated();
             }
 
-            if (File.Exists(LocalFilePath))
+            if (tempImage != null)
             {
-                StaticHelper.WriteLine("Preparing data from " + LocalFilePath);
-                data = PrepareData(LocalFilePath);
-            }
-            else if (tempImage != null)
-            {
-                StaticHelper.WriteLine("Preparing data from image");
+                StaticHelper.WriteLine(new StackFrame().GetMethod().Name + " prepared data from image");
                 EImageFormat imageFormat;
                 data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat, bTargetFileSize: true);
             }
+            else if (File.Exists(LocalFilePath))
+            {
+                StaticHelper.WriteLine(new StackFrame().GetMethod().Name + " prepared data from " + LocalFilePath);
+                data = PrepareData(LocalFilePath);
+            }
             else if (!string.IsNullOrEmpty(tempText))
             {
-                StaticHelper.WriteLine("Preparing data from text");
+                StaticHelper.WriteLine(new StackFrame().GetMethod().Name + " prepared data from text");
                 data = new MemoryStream(Encoding.UTF8.GetBytes(tempText));
             }
 
