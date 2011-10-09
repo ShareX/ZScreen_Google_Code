@@ -1,6 +1,6 @@
 ﻿namespace JBirdGUI
 {
-    partial class JBirdMain
+    partial class JBirdMain : JBirdCoreUI
     {
         /// <summary>
         /// Required designer variable.

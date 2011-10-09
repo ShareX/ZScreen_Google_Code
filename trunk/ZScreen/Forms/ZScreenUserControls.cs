@@ -6,7 +6,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         private void ProxyAccountTestButton_Click(object sender, EventArgs e)
         {

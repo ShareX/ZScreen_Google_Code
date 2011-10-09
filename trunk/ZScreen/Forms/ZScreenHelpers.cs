@@ -9,7 +9,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         protected override void WndProc(ref Message m)
         {
@@ -50,6 +50,11 @@ namespace ZScreenGUI
             tcCapture.TabPages.Remove(tpFreehandCropShot);
         }
 
+        public override void ShowGTGUI()
+        {
+            GetGTGUI().Show();
+        }
+
         public GoogleTranslateGUI GetGTGUI()
         {
             if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)
@@ -68,17 +73,6 @@ namespace ZScreenGUI
             }
 
             return Loader.MyGTGUI;
-        }
-
-        public static void OpenHistory()
-        {
-            // if Engine.conf is null then open use default amount
-            int maxNum = 100;
-            if (Engine.conf != null)
-            {
-                maxNum = Engine.conf.HistoryMaxNumber;
-            }
-            new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
 
         private void OpenLastSource(UploadResult.SourceType sType)

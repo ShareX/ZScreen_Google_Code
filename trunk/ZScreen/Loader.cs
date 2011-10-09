@@ -41,6 +41,7 @@ namespace ZScreenGUI
 
         public static string CommandLineArg { get; private set; }
 
+        public static ZScreenCoreUI CoreUI = null;
         public static ZScreen MainForm { get; private set; }
 
         public static GoogleTranslateGUI MyGTGUI { get; set; }
@@ -57,7 +58,6 @@ namespace ZScreenGUI
                 {
                     IsMultiInstance = true;
                 }
-
                 else if (args.Length > 1 && args[0] == "/doc")
                 {
                     string fp = args[1];
@@ -81,6 +81,7 @@ namespace ZScreenGUI
             if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
             {
                 Application.Run(MainForm = new ZScreen());
+               // Application.Run(CoreUI = new ZScreenSnap());
             }
         }
 

@@ -46,22 +46,13 @@ using ZUploader.HelperClasses;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         internal bool bAutoScreenshotsOpened, bDropWindowOpened;
 
         #region Worker Events
 
-        public BackgroundWorker CreateWorker()
-        {
-            BackgroundWorker bwApp = new BackgroundWorker { WorkerReportsProgress = true };
-            bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(BwApp_DoWork);
-            bwApp.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(BwApp_ProgressChanged);
-            bwApp.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BwApp_RunWorkerCompleted);
-            return bwApp;
-        }
-
-        public void BwApp_DoWork(object sender, DoWorkEventArgs e)
+        public override void BwApp_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = (WorkerTask)e.Argument;
             if (bwTask.States.Contains(WorkerTask.TaskState.CancellationPending))
@@ -108,7 +99,7 @@ namespace ZScreenGUI
             e.Result = bwTask;
         }
 
-        private void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        public override void BwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             switch ((WorkerTask.ProgressType)e.ProgressPercentage)
             {
@@ -171,7 +162,7 @@ namespace ZScreenGUI
             rtbDebugLog.Text = Engine.EngineLogger.ToString();
         }
 
-        private void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public override void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Result;
             if (task == null) return;
@@ -314,7 +305,7 @@ namespace ZScreenGUI
 
         #region Create Worker
 
-        public WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
+        public override WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
             if (tiCreateTask == null)
             {
@@ -390,7 +381,7 @@ namespace ZScreenGUI
 
         #region Screenshots
 
-        public void CaptureActiveWindow()
+        public override void CaptureActiveWindow()
         {
             WorkerTask hkawTask = CreateTask(WorkerTask.JobLevel2.CaptureActiveWindow);
 #if DEBUG
@@ -399,13 +390,13 @@ namespace ZScreenGUI
             RunWorkerAsync_Screenshots(hkawTask);
         }
 
-        public void CaptureEntireScreen()
+        public override void CaptureEntireScreen()
         {
             WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureEntireScreen);
             RunWorkerAsync_Screenshots(hkesTask);
         }
 
-        public void CaptureSelectedWindow()
+        public override void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
             RunWorkerAsync_Screenshots(hkswTask);
@@ -418,19 +409,19 @@ namespace ZScreenGUI
             RunWorkerAsync_Screenshots(hkswTask);
         }
 
-        public void CaptureRectRegion()
+        public override void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
             RunWorkerAsync_Screenshots(hkrcTask);
         }
 
-        public void CaptureRectRegionLast()
+        public override void CaptureRectRegionLast()
         {
             WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
             RunWorkerAsync_Screenshots(hkrclTask);
         }
 
-        public void CaptureFreeHandRegion()
+        public override void CaptureFreeHandRegion()
         {
             WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
             RunWorkerAsync_Screenshots(hkfhrTask);
@@ -593,7 +584,7 @@ namespace ZScreenGUI
 
         #region Auto Capture
 
-        public void ShowAutoCapture()
+        public override void ShowAutoCapture()
         {
             if (!bAutoScreenshotsOpened)
             {
@@ -644,7 +635,7 @@ namespace ZScreenGUI
                     StartWorkerTranslator();
                     break;
                 case WorkerTask.JobLevel2.SCREEN_COLOR_PICKER:
-                    ScreenColorPicker();
+                    ShowScreenColorPicker();
                     break;
             }
         }
@@ -653,7 +644,7 @@ namespace ZScreenGUI
 
         #region Drop Window
 
-        public void ShowDropWindow()
+        public override void ShowDropWindow()
         {
             if (!bDropWindowOpened)
             {
@@ -692,7 +683,7 @@ namespace ZScreenGUI
 
         #region Screen Color Picker
 
-        public void ScreenColorPicker()
+        public override void ShowScreenColorPicker()
         {
             DialogColor dialogColor = new DialogColor { ScreenPicker = true };
             dialogColor.Show();

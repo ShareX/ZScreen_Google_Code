@@ -38,7 +38,7 @@ namespace ZScreenGUI
     /// <summary>
     /// Class responsible for all other tasks except for Image Uploading
     /// </summary>
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         private Timer tmrTinyPicRegCodeUpdater = new Timer() { Interval = 3 * 3600 * 1000, Enabled = true };
 

@@ -57,18 +57,18 @@
             // tsmiWorkflows
             // 
             this.tsmiWorkflows.Name = "tsmiWorkflows";
-            this.tsmiWorkflows.Size = new System.Drawing.Size(152, 22);
+            this.tsmiWorkflows.Size = new System.Drawing.Size(113, 22);
             this.tsmiWorkflows.Text = "Profiles";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(152, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(113, 22);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -76,10 +76,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(64, 64);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ClientSize = new System.Drawing.Size(293, 264);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(67, 64);
             this.MinimumSize = new System.Drawing.Size(64, 64);
             this.Name = "JBirdCoreUI";
             this.Text = "JBirdCoreUI";
