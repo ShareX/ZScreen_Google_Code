@@ -39,7 +39,7 @@ namespace HelpersLib
         private static string ShellExtMenuFolders = @"Software\Classes\Folder\shell\" + Application.ProductName;
         private static string ShellExtMenuFoldersCmd = ShellExtMenuFolders + @"\command";
 
-        private static string ShellExtDesc = "Upload using " + Application.ProductName;
+        private static string ShellExtDesc = "Open with " + Application.ProductName;
         private static string ShellExtPath = string.Format("{0} \"%1\"", ApplicationPath);
 
         public static bool CheckStartWithWindows()
