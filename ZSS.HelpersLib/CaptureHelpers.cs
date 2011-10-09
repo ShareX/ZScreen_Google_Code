@@ -82,7 +82,7 @@ namespace HelpersLib
             return rect;
         }
 
-        // For multi monitor
+        /// <summary>For multi monitor</summary>
         public static Point FixScreenCoordinates(Point point)
         {
             int screenX = NativeMethods.GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
@@ -90,7 +90,7 @@ namespace HelpersLib
             return new Point(point.X - screenX, point.Y - screenY);
         }
 
-        // For multi monitor
+        /// <summary>For multi monitor</summary>
         public static Point GetZeroBasedMousePosition()
         {
             POINT pt = new POINT();
