@@ -55,10 +55,10 @@ namespace ScreenCapture
                 {
                     g.ExcludeClip(region);
                     g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                    //DrawObjects(g);
                     g.ResetClip();
                 }
 
+                DrawObjects(g);
                 g.DrawPath(borderPen, regionPath);
 
                 if (AreaManager.Areas.Count > 1)

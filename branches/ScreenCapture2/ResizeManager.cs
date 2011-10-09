@@ -31,8 +31,6 @@ namespace ScreenCapture
 {
     public class ResizeManager
     {
-        public bool IsMouseDown { get; private set; }
-
         private bool visible;
 
         public bool Visible
@@ -58,39 +56,75 @@ namespace ScreenCapture
 
         private Surface surface;
         private AreaManager areaManager;
-        private Label[] nodes = new Label[8];
-        private int mx, my;
+
+        private NodeObject[] nodes;
         private Rectangle tempRect;
+        private Point oldMousePosition;
 
         public ResizeManager(Surface surface, AreaManager areaManager)
         {
             this.surface = surface;
             this.areaManager = areaManager;
 
+            surface.MouseMove += new MouseEventHandler(surface_MouseMove);
             surface.KeyDown += new KeyEventHandler(surface_KeyDown);
 
-            for (int i = 0; i < nodes.Length; i++)
+            nodes = new NodeObject[8];
+
+            for (int i = 0; i < 8; i++)
             {
-                nodes[i] = new Label();
-                nodes[i].Tag = i;
-                nodes[i].Width = nodes[i].Height = 10;
-                nodes[i].BackColor = Color.White;
-                nodes[i].BorderStyle = BorderStyle.FixedSingle;
-                nodes[i].MouseDown += new MouseEventHandler(ResizeManager_MouseDown);
-                nodes[i].MouseUp += new MouseEventHandler(ResizeManager_MouseUp);
-                nodes[i].MouseMove += new MouseEventHandler(ResizeManager_MouseMove);
-                nodes[i].Visible = false;
-                surface.Controls.Add(nodes[i]);
+                nodes[i] = surface.MakeNode();
             }
 
-            nodes[0].Cursor = Cursors.SizeNWSE;
-            nodes[1].Cursor = Cursors.SizeNS;
-            nodes[2].Cursor = Cursors.SizeNESW;
-            nodes[3].Cursor = Cursors.SizeWE;
-            nodes[4].Cursor = Cursors.SizeNWSE;
-            nodes[5].Cursor = Cursors.SizeNS;
-            nodes[6].Cursor = Cursors.SizeNESW;
-            nodes[7].Cursor = Cursors.SizeWE;
+            nodes[(int)NodePosition.BottomRight].Order = 10;
+        }
+
+        private void surface_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Visible && nodes != null)
+            {
+                if (surface.IsLeftMouseDown)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        if (nodes[i].IsDragging)
+                        {
+                            if (!surface.IsBeforeLeftMouseDown)
+                            {
+                                tempRect = areaManager.CurrentArea;
+                            }
+
+                            if (i <= 2) // Top row
+                            {
+                                tempRect.Y += e.Y - oldMousePosition.Y;
+                                tempRect.Height -= e.Y - oldMousePosition.Y;
+                            }
+                            else if (i >= 4 && i <= 6) // Bottom row
+                            {
+                                tempRect.Height += e.Y - oldMousePosition.Y;
+                            }
+
+                            if (i >= 2 && i <= 4) // Right row
+                            {
+                                tempRect.Width += e.X - oldMousePosition.X;
+                            }
+                            else if (i >= 6 || i == 0) // Left row
+                            {
+                                tempRect.X += e.X - oldMousePosition.X;
+                                tempRect.Width -= e.X - oldMousePosition.X;
+                            }
+
+                            areaManager.CurrentArea = CaptureHelpers.FixRectangle(tempRect);
+
+                            break;
+                        }
+                    }
+                }
+
+                UpdateNodePositions();
+            }
+
+            oldMousePosition = e.Location;
         }
 
         private void surface_KeyDown(object sender, KeyEventArgs e)
@@ -126,54 +160,22 @@ namespace ScreenCapture
             }
         }
 
-        private void ResizeManager_MouseDown(object sender, MouseEventArgs e)
+        public bool IsCursorOnNode()
         {
-            mx = e.X;
-            my = e.Y;
-            tempRect = areaManager.CurrentArea;
-            IsMouseDown = true;
-        }
-
-        private void ResizeManager_MouseUp(object sender, MouseEventArgs e)
-        {
-            IsMouseDown = false;
-        }
-
-        private void ResizeManager_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (IsMouseDown)
+            foreach (NodeObject node in nodes)
             {
-                Label resizer = (Label)sender;
-                int index = (int)resizer.Tag;
-
-                if (index <= 2) // Top row
+                if (node.IsMouseHover)
                 {
-                    tempRect.Y += e.Y - my;
-                    tempRect.Height -= e.Y - my;
+                    return true;
                 }
-                else if (index >= 4 && index <= 6) // Bottom row
-                {
-                    tempRect.Height += e.Y - my;
-                }
-
-                if (index >= 2 && index <= 4) // Right row
-                {
-                    tempRect.Width += e.X - mx;
-                }
-                else if (index >= 6 || index == 0) // Left row
-                {
-                    tempRect.X += e.X - mx;
-                    tempRect.Width -= e.X - mx;
-                }
-
-                areaManager.CurrentArea = CaptureHelpers.FixRectangle(tempRect);
-                Update(tempRect);
             }
+
+            return false;
         }
 
         public void Show()
         {
-            Update();
+            UpdateNodePositions();
 
             Visible = true;
         }
@@ -183,58 +185,29 @@ namespace ScreenCapture
             Visible = false;
         }
 
-        public void Update()
+        public void UpdateNodePositions()
         {
-            Update(areaManager.CurrentArea);
+            UpdateNodePositions(areaManager.CurrentArea);
         }
 
-        public void Update(Rectangle rect)
+        private void UpdateNodePositions(Rectangle rect)
         {
-            int pos = nodes[0].Width / 2;
+            float xStart = rect.X;
+            float xMid = rect.X + rect.Width / 2;
+            float xEnd = rect.X + rect.Width - 1;
 
-            int xStart = rect.X - pos;
-            int xMid = rect.X + rect.Width / 2 - pos;
-            int xEnd = rect.X + rect.Width - 1 - pos;
+            float yStart = rect.Y;
+            float yMid = rect.Y + rect.Height / 2;
+            float yEnd = rect.Y + rect.Height - 1;
 
-            int yStart = rect.Y - pos;
-            int yMid = rect.Y + rect.Height / 2 - pos;
-            int yEnd = rect.Y + rect.Height - 1 - pos;
-
-            nodes[(int)NodePosition.TopLeft].Location = new Point(xStart, yStart);
-            nodes[(int)NodePosition.Top].Location = new Point(xMid, yStart);
-            nodes[(int)NodePosition.TopRight].Location = new Point(xEnd, yStart);
-            nodes[(int)NodePosition.Right].Location = new Point(xEnd, yMid);
-            nodes[(int)NodePosition.BottomRight].Location = new Point(xEnd, yEnd);
-            nodes[(int)NodePosition.Bottom].Location = new Point(xMid, yEnd);
-            nodes[(int)NodePosition.BottomLeft].Location = new Point(xStart, yEnd);
-            nodes[(int)NodePosition.Left].Location = new Point(xStart, yMid);
-
-            if ((nodes[0].Left < nodes[4].Left && nodes[0].Top < nodes[4].Top) ||
-                   nodes[0].Left > nodes[4].Left && nodes[0].Top > nodes[4].Top)
-            {
-                nodes[0].Cursor = Cursors.SizeNWSE;
-                nodes[2].Cursor = Cursors.SizeNESW;
-                nodes[4].Cursor = Cursors.SizeNWSE;
-                nodes[6].Cursor = Cursors.SizeNESW;
-            }
-            else if ((nodes[0].Left > nodes[4].Left && nodes[0].Top < nodes[4].Top) ||
-                nodes[0].Left < nodes[4].Left && nodes[0].Top > nodes[4].Top)
-            {
-                nodes[0].Cursor = Cursors.SizeNESW;
-                nodes[2].Cursor = Cursors.SizeNWSE;
-                nodes[4].Cursor = Cursors.SizeNESW;
-                nodes[6].Cursor = Cursors.SizeNWSE;
-            }
-            else if (nodes[0].Left == nodes[4].Left)
-            {
-                nodes[0].Cursor = Cursors.SizeNS;
-                nodes[4].Cursor = Cursors.SizeNS;
-            }
-            else if (nodes[0].Top == nodes[4].Top)
-            {
-                nodes[0].Cursor = Cursors.SizeWE;
-                nodes[4].Cursor = Cursors.SizeWE;
-            }
+            nodes[(int)NodePosition.TopLeft].Position = new PointF(xStart, yStart);
+            nodes[(int)NodePosition.Top].Position = new PointF(xMid, yStart);
+            nodes[(int)NodePosition.TopRight].Position = new PointF(xEnd, yStart);
+            nodes[(int)NodePosition.Right].Position = new PointF(xEnd, yMid);
+            nodes[(int)NodePosition.BottomRight].Position = new PointF(xEnd, yEnd);
+            nodes[(int)NodePosition.Bottom].Position = new PointF(xMid, yEnd);
+            nodes[(int)NodePosition.BottomLeft].Position = new PointF(xStart, yEnd);
+            nodes[(int)NodePosition.Left].Position = new PointF(xStart, yMid);
         }
 
         public void MoveCurrentArea(int x, int y)

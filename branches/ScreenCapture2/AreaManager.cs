@@ -56,8 +56,8 @@ namespace ScreenCapture
             }
         }
 
-        public bool IsMouseDown { get; private set; }
-        public bool IsMouseDragging { get; private set; }
+        public bool IsResizing { get; private set; }
+        public bool IsMoving { get; private set; }
 
         private Surface surface;
         private ResizeManager resizeManager;
@@ -83,17 +83,17 @@ namespace ScreenCapture
         {
             int areaIndex = AreaIntersect(e.Location);
 
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && !resizeManager.IsCursorOnNode())
             {
                 positionOnClick = e.Location;
 
                 if (areaIndex > -1) // Select area
                 {
-                    IsMouseDragging = true;
+                    IsMoving = true;
                     SelectedAreaIndex = areaIndex;
                     SelectArea();
                 }
-                else if (!IsMouseDown) // Create new area
+                else if (!IsResizing) // Create new area
                 {
                     DeselectArea();
 
@@ -101,13 +101,13 @@ namespace ScreenCapture
 
                     if (surface.Config.IsFixedSize)
                     {
-                        IsMouseDragging = true;
-                        rect = new Rectangle(new Point(e.Location.X - surface.Config.FixedSize.Width / 2, e.Location.Y - surface.Config.FixedSize.Height / 2),
+                        IsMoving = true;
+                        rect = new Rectangle(new Point(e.X - surface.Config.FixedSize.Width / 2, e.Y - surface.Config.FixedSize.Height / 2),
                             surface.Config.FixedSize);
                     }
                     else
                     {
-                        IsMouseDown = true;
+                        IsResizing = true;
                         rect = new Rectangle(e.Location, new Size(1, 1));
                     }
 
@@ -135,13 +135,13 @@ namespace ScreenCapture
             {
                 if (!CurrentArea.IsEmpty)
                 {
-                    IsMouseDown = false;
+                    IsResizing = false;
                     SelectArea();
                 }
 
-                if (IsMouseDragging)
+                if (IsMoving)
                 {
-                    IsMouseDragging = false;
+                    IsMoving = false;
                 }
             }
         }
@@ -153,17 +153,16 @@ namespace ScreenCapture
 
         private void surface_MouseMove(object sender, MouseEventArgs e)
         {
-            if (IsMouseDragging)
+            if (IsMoving)
             {
                 Rectangle rect = CurrentArea;
                 rect.X += e.X - positionOnClick.X;
                 rect.Y += e.Y - positionOnClick.Y;
                 positionOnClick = e.Location;
                 CurrentArea = rect;
-                resizeManager.Hide();
             }
 
-            if (IsMouseDown && !CurrentArea.IsEmpty)
+            if (IsResizing && !CurrentArea.IsEmpty)
             {
                 currentPosition = CaptureHelpers.GetZeroBasedMousePosition();
                 CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
