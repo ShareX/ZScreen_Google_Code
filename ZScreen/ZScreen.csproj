@@ -212,6 +212,12 @@
     <Compile Include="Forms\ZScreen5.Designer.cs">
       <DependentUpon>ZScreen5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ZScreenCoreUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZScreenCoreUI.Designer.cs">
+      <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -224,6 +230,9 @@
     <BaseApplicationManifest Include="Properties\app.manifest" />
     <EmbeddedResource Include="Forms\ZScreen5.resx">
       <DependentUpon>ZScreen5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZScreenCoreUI.resx">
+      <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

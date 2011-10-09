@@ -8,7 +8,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         public HotkeyManager HotkeyManager { get; private set; }
 
@@ -30,7 +30,7 @@ namespace ZScreenGUI
             HotkeyManager.AddHotkey(ZScreenHotkey.AutoCapture, Engine.conf.HotkeyAutoCapture2, ShowAutoCapture);
             HotkeyManager.AddHotkey(ZScreenHotkey.DropWindow, Engine.conf.HotkeyDropWindow2, ShowDropWindow);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.conf.HotkeyScreenColorPicker2, ScreenColorPicker);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.conf.HotkeyScreenColorPicker2, ShowScreenColorPicker);
             HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.conf.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
         }
 

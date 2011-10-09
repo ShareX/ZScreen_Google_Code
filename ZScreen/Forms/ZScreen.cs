@@ -52,11 +52,10 @@ using ScreenCapture;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         #region Variables
 
-        public bool IsReady;
         public CloseMethod CloseMethod;
 
         private int mHadFocusAt;
@@ -72,6 +71,7 @@ namespace ZScreenGUI
         public ZScreen()
         {
             InitializeComponent();
+            base.tsCoreMainTab.Visible = true;
             this.Icon = Resources.zss_main;
             this.WindowState = Engine.AppConf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
@@ -465,11 +465,6 @@ namespace ZScreenGUI
         private void tsmViewDirectory_Click(object sender, EventArgs e)
         {
             ShowDirectory(FileSystem.GetImagesDir());
-        }
-
-        private void ShowDirectory(string dir)
-        {
-            Process.Start("explorer.exe", dir);
         }
 
         private void txtActiveWindow_Leave(object sender, EventArgs e)
@@ -908,7 +903,7 @@ namespace ZScreenGUI
 
         private void screenColorPickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScreenColorPicker();
+            ShowScreenColorPicker();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
@@ -1864,7 +1859,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void FileUpload()
+        public override void FileUpload()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -1878,7 +1873,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void ClipboardUpload()
+        public override void ClipboardUpload()
         {
             if (Engine.conf.ShowClipboardContentViewer)
             {
@@ -2041,12 +2036,12 @@ namespace ZScreenGUI
 
         private void tsbLanguageTranslate_Click(object sender, EventArgs e)
         {
-            GetGTGUI().Show();
+            ShowGTGUI();
         }
 
         private void tsbScreenColorPicker_Click(object sender, EventArgs e)
         {
-            ScreenColorPicker();
+            ShowScreenColorPicker();
         }
 
         private void tsbOpenHistory_Click(object sender, EventArgs e)
@@ -2203,9 +2198,14 @@ namespace ZScreenGUI
             UpdateAeroGlassConfig();
         }
 
-        private void tsddbSelectedWindow_DropDownOpening(object sender, EventArgs e)
+        public void tsddbSelectedWindow_DropDownOpening(object sender, EventArgs e)
         {
-            tsddbSelectedWindow.DropDownItems.Clear();
+            CaptureSelectedWindowGetList();
+        }
+
+        public override void CaptureSelectedWindowGetList()
+        {
+            tsddbCoreSelectedWindow.DropDownItems.Clear();
 
             WindowsList windowsList = new WindowsList();
             List<WindowInfo> windows = windowsList.GetVisibleWindowsList();
@@ -2213,7 +2213,7 @@ namespace ZScreenGUI
             foreach (WindowInfo window in windows)
             {
                 string title = window.Text.Truncate(50);
-                ToolStripItem tsiSelectedWindow = tsddbSelectedWindow.DropDownItems.Add(title);
+                ToolStripItem tsiSelectedWindow = tsddbCoreSelectedWindow.DropDownItems.Add(title);
                 tsiSelectedWindow.Click += new EventHandler(tsiSelectedWindow_Click);
 
                 using (Icon icon = window.Icon)

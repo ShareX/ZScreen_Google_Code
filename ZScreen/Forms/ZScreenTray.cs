@@ -11,7 +11,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         private void TrayImageEditorClick(object sender, EventArgs e)
         {

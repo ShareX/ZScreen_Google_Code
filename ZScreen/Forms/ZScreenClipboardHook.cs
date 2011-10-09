@@ -5,7 +5,7 @@ using ZScreenLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         private static Timer tmrClipboardMonitor = new Timer() { Interval = 1000, Enabled = true };
 

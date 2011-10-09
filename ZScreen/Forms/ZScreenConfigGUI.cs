@@ -13,7 +13,7 @@ using ZSS.UpdateCheckerLib;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreen : HotkeyForm
+    public partial class ZScreen : ZScreenCoreUI
     {
         private void ZScreen_Preconfig()
         {

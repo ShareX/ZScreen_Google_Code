@@ -1,6 +1,6 @@
 ﻿namespace ZScreenGUI
 {
-    partial class ZScreenSnap
+    partial class ZScreenSnap : ZScreenCoreUI
     {
         /// <summary>
         /// Required designer variable.
@@ -28,243 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tsMainTab = new System.Windows.Forms.ToolStrip();
-            this.tsbFullscreenCapture = new System.Windows.Forms.ToolStripButton();
-            this.tsbActiveWindow = new System.Windows.Forms.ToolStripButton();
-            this.tsbSelectedWindow = new System.Windows.Forms.ToolStripButton();
-            this.tsbCropShot = new System.Windows.Forms.ToolStripButton();
-            this.tsbLastCropShot = new System.Windows.Forms.ToolStripButton();
-            this.tsbFreehandCropShot = new System.Windows.Forms.ToolStripButton();
-            this.tsbAutoCapture = new System.Windows.Forms.ToolStripButton();
-            this.tssMaintoolbar1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbFileUpload = new System.Windows.Forms.ToolStripButton();
-            this.tsbClipboardUpload = new System.Windows.Forms.ToolStripButton();
-            this.tsbDragDropWindow = new System.Windows.Forms.ToolStripButton();
-            this.tsbLanguageTranslator = new System.Windows.Forms.ToolStripButton();
-            this.tsbScreenColorPicker = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbOpenHistory = new System.Windows.Forms.ToolStripButton();
-            this.tsbImageDirectory = new System.Windows.Forms.ToolStripButton();
-            this.tsbAbout = new System.Windows.Forms.ToolStripButton();
-            this.tsbDonate = new System.Windows.Forms.ToolStripLabel();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.pbPreview = new System.Windows.Forms.PictureBox();
             this.flpTasks = new System.Windows.Forms.FlowLayoutPanel();
             this.btnTasksActions = new System.Windows.Forms.Button();
             this.btnTasksEffects = new System.Windows.Forms.Button();
             this.btnOptions = new System.Windows.Forms.Button();
-            this.tsMainTab.SuspendLayout();
             this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).BeginInit();
             this.flpTasks.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tsMainTab
-            // 
-            this.tsMainTab.BackColor = System.Drawing.Color.White;
-            this.tsMainTab.CanOverflow = false;
-            this.tsMainTab.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsMainTab.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsMainTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbFullscreenCapture,
-            this.tsbActiveWindow,
-            this.tsbSelectedWindow,
-            this.tsbCropShot,
-            this.tsbLastCropShot,
-            this.tsbFreehandCropShot,
-            this.tsbAutoCapture,
-            this.tssMaintoolbar1,
-            this.tsbFileUpload,
-            this.tsbClipboardUpload,
-            this.tsbDragDropWindow,
-            this.tsbLanguageTranslator,
-            this.tsbScreenColorPicker,
-            this.toolStripSeparator8,
-            this.tsbOpenHistory,
-            this.tsbImageDirectory,
-            this.tsbAbout,
-            this.tsbDonate});
-            this.tsMainTab.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.tsMainTab.Location = new System.Drawing.Point(686, 0);
-            this.tsMainTab.Name = "tsMainTab";
-            this.tsMainTab.Size = new System.Drawing.Size(158, 379);
-            this.tsMainTab.TabIndex = 127;
-            // 
-            // tsbFullscreenCapture
-            // 
-            this.tsbFullscreenCapture.Image = global::ZScreenGUI.Properties.Resources.monitor;
-            this.tsbFullscreenCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbFullscreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFullscreenCapture.Name = "tsbFullscreenCapture";
-            this.tsbFullscreenCapture.Size = new System.Drawing.Size(156, 20);
-            this.tsbFullscreenCapture.Text = "Capture Fullscreen";
-            this.tsbFullscreenCapture.Click += new System.EventHandler(this.tsbFullscreenCapture_Click);
-            // 
-            // tsbActiveWindow
-            // 
-            this.tsbActiveWindow.Image = global::ZScreenGUI.Properties.Resources.application_go;
-            this.tsbActiveWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbActiveWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbActiveWindow.Name = "tsbActiveWindow";
-            this.tsbActiveWindow.Size = new System.Drawing.Size(156, 20);
-            this.tsbActiveWindow.Text = "Active Window (3 sec)";
-            this.tsbActiveWindow.ToolTipText = "Active Window will capture after 3 seconds";
-            this.tsbActiveWindow.Click += new System.EventHandler(this.tsbActiveWindow_Click);
-            // 
-            // tsbSelectedWindow
-            // 
-            this.tsbSelectedWindow.Image = global::ZScreenGUI.Properties.Resources.application_double;
-            this.tsbSelectedWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbSelectedWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSelectedWindow.Name = "tsbSelectedWindow";
-            this.tsbSelectedWindow.Size = new System.Drawing.Size(156, 20);
-            this.tsbSelectedWindow.Text = "Capture Window...";
-            this.tsbSelectedWindow.Click += new System.EventHandler(this.tsbSelectedWindow_Click);
-            // 
-            // tsbCropShot
-            // 
-            this.tsbCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square;
-            this.tsbCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbCropShot.Name = "tsbCropShot";
-            this.tsbCropShot.Size = new System.Drawing.Size(156, 20);
-            this.tsbCropShot.Text = "Capture Rectangle...";
-            this.tsbCropShot.Click += new System.EventHandler(this.tsbCropShot_Click);
-            // 
-            // tsbLastCropShot
-            // 
-            this.tsbLastCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_go;
-            this.tsbLastCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbLastCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbLastCropShot.Name = "tsbLastCropShot";
-            this.tsbLastCropShot.Size = new System.Drawing.Size(156, 20);
-            this.tsbLastCropShot.Text = "Capture Last Rectangle...";
-            this.tsbLastCropShot.Click += new System.EventHandler(this.tsbLastCropShot_Click);
-            // 
-            // tsbFreehandCropShot
-            // 
-            this.tsbFreehandCropShot.Image = global::ZScreenGUI.Properties.Resources.shape_square_edit;
-            this.tsbFreehandCropShot.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbFreehandCropShot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFreehandCropShot.Name = "tsbFreehandCropShot";
-            this.tsbFreehandCropShot.Size = new System.Drawing.Size(156, 20);
-            this.tsbFreehandCropShot.Text = "Capture Shape...";
-            this.tsbFreehandCropShot.Click += new System.EventHandler(this.tsbFreehandCropShot_Click);
-            // 
-            // tsbAutoCapture
-            // 
-            this.tsbAutoCapture.Image = global::ZScreenGUI.Properties.Resources.images_stack;
-            this.tsbAutoCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbAutoCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAutoCapture.Name = "tsbAutoCapture";
-            this.tsbAutoCapture.Size = new System.Drawing.Size(156, 20);
-            this.tsbAutoCapture.Text = "Auto Capture...";
-            this.tsbAutoCapture.Click += new System.EventHandler(this.tsbAutoCapture_Click);
-            // 
-            // tssMaintoolbar1
-            // 
-            this.tssMaintoolbar1.Name = "tssMaintoolbar1";
-            this.tssMaintoolbar1.Size = new System.Drawing.Size(156, 6);
-            // 
-            // tsbFileUpload
-            // 
-            this.tsbFileUpload.Image = global::ZScreenGUI.Properties.Resources.drive_network;
-            this.tsbFileUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbFileUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbFileUpload.Name = "tsbFileUpload";
-            this.tsbFileUpload.Size = new System.Drawing.Size(156, 20);
-            this.tsbFileUpload.Text = "File Upload...";
-            this.tsbFileUpload.Click += new System.EventHandler(this.tsbFileUpload_Click);
-            // 
-            // tsbClipboardUpload
-            // 
-            this.tsbClipboardUpload.Image = global::ZScreenGUI.Properties.Resources.images;
-            this.tsbClipboardUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbClipboardUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbClipboardUpload.Name = "tsbClipboardUpload";
-            this.tsbClipboardUpload.Size = new System.Drawing.Size(156, 20);
-            this.tsbClipboardUpload.Text = "Clipboard Upload...";
-            this.tsbClipboardUpload.Click += new System.EventHandler(this.tsbClipboardUpload_Click);
-            // 
-            // tsbDragDropWindow
-            // 
-            this.tsbDragDropWindow.Image = global::ZScreenGUI.Properties.Resources.shape_move_backwards;
-            this.tsbDragDropWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbDragDropWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDragDropWindow.Name = "tsbDragDropWindow";
-            this.tsbDragDropWindow.Size = new System.Drawing.Size(156, 20);
-            this.tsbDragDropWindow.Text = "Drag && Drop Window...";
-            this.tsbDragDropWindow.Click += new System.EventHandler(this.tsbDragDropWindow_Click);
-            // 
-            // tsbLanguageTranslator
-            // 
-            this.tsbLanguageTranslator.Image = global::ZScreenGUI.Properties.Resources.comments;
-            this.tsbLanguageTranslator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbLanguageTranslator.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbLanguageTranslator.Name = "tsbLanguageTranslator";
-            this.tsbLanguageTranslator.Size = new System.Drawing.Size(156, 20);
-            this.tsbLanguageTranslator.Text = "Google Translate...";
-            this.tsbLanguageTranslator.Visible = false;
-            // 
-            // tsbScreenColorPicker
-            // 
-            this.tsbScreenColorPicker.Image = global::ZScreenGUI.Properties.Resources.color_wheel;
-            this.tsbScreenColorPicker.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbScreenColorPicker.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbScreenColorPicker.Name = "tsbScreenColorPicker";
-            this.tsbScreenColorPicker.Size = new System.Drawing.Size(156, 20);
-            this.tsbScreenColorPicker.Text = "Screen Color Picker...";
-            this.tsbScreenColorPicker.Click += new System.EventHandler(this.tsbScreenColorPicker_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(156, 6);
-            // 
-            // tsbOpenHistory
-            // 
-            this.tsbOpenHistory.Image = global::ZScreenGUI.Properties.Resources.pictures;
-            this.tsbOpenHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbOpenHistory.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbOpenHistory.Name = "tsbOpenHistory";
-            this.tsbOpenHistory.Size = new System.Drawing.Size(156, 20);
-            this.tsbOpenHistory.Text = "History...";
-            this.tsbOpenHistory.Click += new System.EventHandler(this.tsbOpenHistory_Click);
-            // 
-            // tsbImageDirectory
-            // 
-            this.tsbImageDirectory.Image = global::ZScreenGUI.Properties.Resources.folder_picture;
-            this.tsbImageDirectory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbImageDirectory.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbImageDirectory.Name = "tsbImageDirectory";
-            this.tsbImageDirectory.Size = new System.Drawing.Size(156, 20);
-            this.tsbImageDirectory.Text = "Images Directory...";
-            this.tsbImageDirectory.Click += new System.EventHandler(this.tsbImageDirectory_Click);
-            // 
-            // tsbAbout
-            // 
-            this.tsbAbout.Image = global::ZScreenGUI.Properties.Resources.information;
-            this.tsbAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAbout.Name = "tsbAbout";
-            this.tsbAbout.Size = new System.Drawing.Size(156, 20);
-            this.tsbAbout.Text = "About...";
-            this.tsbAbout.Click += new System.EventHandler(this.tsbAbout_Click);
-            // 
-            // tsbDonate
-            // 
-            this.tsbDonate.AutoSize = false;
-            this.tsbDonate.BackgroundImage = global::ZScreenGUI.Properties.Resources.paypal;
-            this.tsbDonate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tsbDonate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.tsbDonate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbDonate.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.tsbDonate.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.tsbDonate.Name = "tsbDonate";
-            this.tsbDonate.Size = new System.Drawing.Size(100, 35);
-            this.tsbDonate.Text = "Donate";
-            this.tsbDonate.ToolTipText = "Thanks!";
-            this.tsbDonate.Click += new System.EventHandler(this.tsbDonate_Click);
             // 
             // tlpMain
             // 
@@ -272,7 +45,6 @@
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
-            this.tlpMain.Controls.Add(this.tsMainTab, 2, 0);
             this.tlpMain.Controls.Add(this.pbPreview, 1, 0);
             this.tlpMain.Controls.Add(this.flpTasks, 0, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -282,6 +54,8 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.Size = new System.Drawing.Size(844, 500);
             this.tlpMain.TabIndex = 128;
+            this.tlpMain.Controls.SetChildIndex(this.flpTasks, 0);
+            this.tlpMain.Controls.SetChildIndex(this.pbPreview, 0);
             // 
             // pbPreview
             // 
@@ -309,7 +83,7 @@
             this.btnTasksActions.AutoSize = true;
             this.btnTasksActions.Location = new System.Drawing.Point(3, 3);
             this.btnTasksActions.Name = "btnTasksActions";
-            this.btnTasksActions.Size = new System.Drawing.Size(93, 23);
+            this.btnTasksActions.Size = new System.Drawing.Size(101, 23);
             this.btnTasksActions.TabIndex = 0;
             this.btnTasksActions.Text = "Run Actions";
             this.btnTasksActions.UseVisualStyleBackColor = true;
@@ -319,7 +93,7 @@
             this.btnTasksEffects.AutoSize = true;
             this.btnTasksEffects.Location = new System.Drawing.Point(3, 32);
             this.btnTasksEffects.Name = "btnTasksEffects";
-            this.btnTasksEffects.Size = new System.Drawing.Size(93, 23);
+            this.btnTasksEffects.Size = new System.Drawing.Size(101, 23);
             this.btnTasksEffects.TabIndex = 1;
             this.btnTasksEffects.Text = "Apply Effects";
             this.btnTasksEffects.UseVisualStyleBackColor = true;
@@ -329,7 +103,7 @@
             this.btnOptions.AutoSize = true;
             this.btnOptions.Location = new System.Drawing.Point(3, 61);
             this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(93, 23);
+            this.btnOptions.Size = new System.Drawing.Size(101, 23);
             this.btnOptions.TabIndex = 2;
             this.btnOptions.Text = "Options...";
             this.btnOptions.UseVisualStyleBackColor = true;
@@ -342,8 +116,6 @@
             this.Controls.Add(this.tlpMain);
             this.Name = "ZScreenSnap";
             this.Text = "ZScreenSnap";
-            this.tsMainTab.ResumeLayout(false);
-            this.tsMainTab.PerformLayout();
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
@@ -355,25 +127,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip tsMainTab;
-        private System.Windows.Forms.ToolStripButton tsbFullscreenCapture;
-        private System.Windows.Forms.ToolStripButton tsbActiveWindow;
-        private System.Windows.Forms.ToolStripButton tsbSelectedWindow;
-        private System.Windows.Forms.ToolStripButton tsbCropShot;
-        private System.Windows.Forms.ToolStripButton tsbLastCropShot;
-        private System.Windows.Forms.ToolStripButton tsbFreehandCropShot;
-        private System.Windows.Forms.ToolStripButton tsbAutoCapture;
-        private System.Windows.Forms.ToolStripSeparator tssMaintoolbar1;
-        private System.Windows.Forms.ToolStripButton tsbFileUpload;
-        private System.Windows.Forms.ToolStripButton tsbClipboardUpload;
-        private System.Windows.Forms.ToolStripButton tsbDragDropWindow;
-        private System.Windows.Forms.ToolStripButton tsbLanguageTranslator;
-        private System.Windows.Forms.ToolStripButton tsbScreenColorPicker;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton tsbOpenHistory;
-        private System.Windows.Forms.ToolStripButton tsbImageDirectory;
-        private System.Windows.Forms.ToolStripButton tsbAbout;
-        private System.Windows.Forms.ToolStripLabel tsbDonate;
         private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.PictureBox pbPreview;
         private System.Windows.Forms.FlowLayoutPanel flpTasks;

@@ -9,11 +9,13 @@ using System.Windows.Forms;
 
 namespace ZScreenGUI
 {
-    public partial class ZScreenSnap : Form
+    public partial class ZScreenSnap : ZScreenCoreUI
     {
         public ZScreenSnap()
         {
             InitializeComponent();
+            tsCoreMainTab.Visible = true;
+            this.tlpMain.Controls.Add(base.tsCoreMainTab, 2, 0);
         }
 
         #region Main ToolStrip Events
