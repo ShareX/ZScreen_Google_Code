@@ -217,7 +217,7 @@ namespace ZScreenGUI
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
             this.cboJpgSubSampling = new System.Windows.Forms.ComboBox();
             this.cboJpgQuality = new System.Windows.Forms.ComboBox();
-            this.cbGIFQuality = new System.Windows.Forms.ComboBox();
+            this.cboGIFQuality = new System.Windows.Forms.ComboBox();
             this.lblGIFQuality = new System.Windows.Forms.Label();
             this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
             this.lblQuality = new System.Windows.Forms.Label();
@@ -2525,7 +2525,7 @@ namespace ZScreenGUI
             this.gbPictureQuality.BackColor = System.Drawing.Color.Transparent;
             this.gbPictureQuality.Controls.Add(this.cboJpgSubSampling);
             this.gbPictureQuality.Controls.Add(this.cboJpgQuality);
-            this.gbPictureQuality.Controls.Add(this.cbGIFQuality);
+            this.gbPictureQuality.Controls.Add(this.cboGIFQuality);
             this.gbPictureQuality.Controls.Add(this.lblGIFQuality);
             this.gbPictureQuality.Controls.Add(this.nudSwitchAfter);
             this.gbPictureQuality.Controls.Add(this.lblQuality);
@@ -2564,17 +2564,17 @@ namespace ZScreenGUI
             // 
             // cbGIFQuality
             // 
-            this.cbGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGIFQuality.FormattingEnabled = true;
-            this.cbGIFQuality.Items.AddRange(new object[] {
+            this.cboGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGIFQuality.FormattingEnabled = true;
+            this.cboGIFQuality.Items.AddRange(new object[] {
             "Grayscale",
             "4 bit (16 colors)",
             "8 bit (256 colors)"});
-            this.cbGIFQuality.Location = new System.Drawing.Point(16, 144);
-            this.cbGIFQuality.Name = "cbGIFQuality";
-            this.cbGIFQuality.Size = new System.Drawing.Size(98, 21);
-            this.cbGIFQuality.TabIndex = 118;
-            this.cbGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbGIFQuality_SelectedIndexChanged);
+            this.cboGIFQuality.Location = new System.Drawing.Point(16, 144);
+            this.cboGIFQuality.Name = "cbGIFQuality";
+            this.cboGIFQuality.Size = new System.Drawing.Size(98, 21);
+            this.cboGIFQuality.TabIndex = 118;
+            this.cboGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbGIFQuality_SelectedIndexChanged);
             // 
             // lblGIFQuality
             // 
@@ -5159,7 +5159,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkMonImages;
         private System.Windows.Forms.CheckBox chkActiveWindowTryCaptureChildren;
         private System.Windows.Forms.TabPage tpActivewindow;
-        private System.Windows.Forms.ComboBox cbGIFQuality;
+        private System.Windows.Forms.ComboBox cboGIFQuality;
         private System.Windows.Forms.Label lblGIFQuality;
         private System.Windows.Forms.TabPage tpAdvancedDebug;
         private System.Windows.Forms.RichTextBox rtbDebugLog;

@@ -666,12 +666,14 @@ namespace ZScreenGUI
         {
             Engine.Workflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
             Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.Workflow.ImageFormat);
+            if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.Workflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
             Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.Workflow.ImageFormat2);
+            if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
@@ -1752,7 +1754,7 @@ namespace ZScreenGUI
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ImageGIFQuality = (GIFQuality)cbGIFQuality.SelectedIndex;
+            Engine.Workflow.ImageGIFQuality = (GIFQuality)cboGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
