@@ -62,7 +62,7 @@ namespace ZScreenGUI
 
             if (Engine.Workflow.PasswordsSecureUsingEncryption)
             {
-                CryptPasswords(bEncrypt: false);
+                Engine.Workflow.CryptPasswords(bEncrypt: false);
             }
 
             DisableFeatures();

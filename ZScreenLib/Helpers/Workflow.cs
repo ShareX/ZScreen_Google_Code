@@ -15,19 +15,7 @@ namespace ZScreenLib
     [Serializable]
     public class Workflow
     {
-        #region I/O Methods
-
-        public bool Write(string filePath)
-        {
-            return SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
-        }
-
-        public static Workflow Read(string filePath)
-        {
-            return SettingsHelper.Load<Workflow>(filePath, SerializationType.Xml);
-        }
-
-        #endregion I/O Methods
+        #region Constructors
 
         public Workflow()
         {
@@ -45,20 +33,9 @@ namespace ZScreenLib
             this.Description = name;
         }
 
-        public void Start()
-        {
+        #endregion Constructors
 
-        }
-
-        public static void ApplyDefaultValues(object self)
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
-            {
-                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
-                if (attr == null) continue;
-                prop.SetValue(self, attr.Value);
-            }
-        }
+        #region Properties 
 
         [Browsable(false)]
         public string ID { get; set; }
@@ -82,6 +59,8 @@ namespace ZScreenLib
         public bool DrawCursor = false;
 
         public HotkeySetting Hotkey = new HotkeySetting();
+
+        #endregion Properties
 
         #region Inputs / Active Window
 
@@ -258,5 +237,79 @@ namespace ZScreenLib
 
         #endregion Outputs
 
+        #region I/O Methods
+
+        public bool Write(string filePath)
+        {
+            bool succ = true;
+            // encrypt before interim save
+            if (this.PasswordsSecureUsingEncryption)
+            {
+               this.CryptPasswords(bEncrypt: true);
+            }
+            succ = SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
+            // decrypt after interim save
+            if (this.PasswordsSecureUsingEncryption)
+            {
+                this.CryptPasswords(bEncrypt: false);
+            }
+            return succ;
+        }
+
+        public static Workflow Read(string filePath)
+        {
+            // Encrypt passwords
+            return SettingsHelper.Load<Workflow>(filePath, SerializationType.Xml);
+        }
+
+        #endregion I/O Methods
+
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
+
+        public void CryptPasswords(bool bEncrypt)
+        {
+            CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength };
+
+            this.ConfigOutputs.TinyPicPassword =
+                bEncrypt ? crypt.Encrypt(this.ConfigOutputs.TinyPicPassword) :
+            crypt.Decrypt(this.ConfigOutputs.TinyPicPassword);
+
+            this.ConfigOutputs.RapidSharePassword =
+                bEncrypt ? crypt.Encrypt(this.ConfigOutputs.RapidSharePassword) :
+            crypt.Decrypt(this.ConfigOutputs.RapidSharePassword);
+
+            this.ConfigOutputs.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.SendSpacePassword) :
+            crypt.Decrypt(this.ConfigOutputs.SendSpacePassword);
+
+            foreach (FTPAccount acc in this.ConfigOutputs.FTPAccountList)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+                acc.Passphrase = bEncrypt ? crypt.Encrypt(acc.Passphrase) : crypt.Decrypt(acc.Passphrase);
+            }
+
+            foreach (LocalhostAccount acc in this.ConfigOutputs.LocalhostAccountList)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+            }
+
+            this.ConfigOutputs.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.TwitPicPassword) :
+                crypt.Decrypt(this.ConfigOutputs.TwitPicPassword);
+
+            this.ConfigOutputs.EmailPassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.EmailPassword) :
+            crypt.Decrypt(this.ConfigOutputs.EmailPassword);
+        }
+
+        public void Start()
+        {
+
+        }
     }
 }
