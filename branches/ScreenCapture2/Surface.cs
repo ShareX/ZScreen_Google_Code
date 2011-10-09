@@ -57,7 +57,6 @@ namespace ScreenCapture
         }
 
         protected List<DrawableObject> DrawableObjects { get; set; }
-        protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
 
         private TextureBrush backgroundBrush;
         private Rectangle drawArea, drawAreaOneSmall;
@@ -70,8 +69,6 @@ namespace ScreenCapture
         protected Font textFont;
         protected Point mousePosition, oldMousePosition;
         protected bool isMouseDown, oldIsMouseDown;
-
-        private bool isBottomRightMoving = true;
 
         public Surface(Image backgroundImage = null)
         {
@@ -159,7 +156,7 @@ namespace ScreenCapture
         {
             Image img = SurfaceImage;
 
-            Rectangle newArea = Rectangle.Intersect(CurrentArea, drawArea);
+            Rectangle newArea = Rectangle.Intersect(AreaManager.CombineAreas(), drawArea);
 
             if (regionPath != null)
             {
@@ -213,7 +210,7 @@ namespace ScreenCapture
 
         protected virtual new void Update()
         {
-            mousePosition = PointToClient(MousePosition);
+            mousePosition = CaptureHelpers.GetZeroBasedMousePosition();
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
@@ -309,12 +306,12 @@ namespace ScreenCapture
 
             Rectangle primaryScreen = Screen.PrimaryScreen.Bounds;
 
-            Point position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
+            Point position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
             Rectangle rect = new Rectangle(position, new Size((int)textSize.Width, (int)textSize.Height));
 
             if (rect.Contains(mousePosition))
             {
-                position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
+                position = CaptureHelpers.FixScreenCoordinates(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));
             }
 

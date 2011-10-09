@@ -38,15 +38,16 @@ namespace ScreenCapture
         public SurfaceOptions SurfaceConfig { get; set; }
 
         public RegionCapturePreview()
+            : this(new SurfaceOptions())
+        {
+        }
+
+        public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
 
             screenshot = Screenshot.GetFullscreen();
-        }
 
-        public RegionCapturePreview(SurfaceOptions surfaceConfig)
-            : this()
-        {
             SurfaceConfig = surfaceConfig;
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;
@@ -72,15 +73,6 @@ namespace ScreenCapture
                     MinMoveSpeed = 1,
                     MaxMoveSpeed = 5
                 };
-            }
-
-            if (surface is RectangleRegion)
-            {
-                RectangleRegion rectangle = (RectangleRegion)surface;
-                if (rectangle.Config.IsFixedSize = cbIsFixedSize.Checked)
-                {
-                    rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
-                }
             }
 
             if (surface.ShowDialog() == DialogResult.OK)

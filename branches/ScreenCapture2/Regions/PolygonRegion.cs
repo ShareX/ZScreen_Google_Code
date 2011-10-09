@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -153,7 +154,7 @@ namespace ScreenCapture
 
         private void ActivateNode(NodeObject node)
         {
-            node.Position = ClientMousePosition;
+            node.Position = CaptureHelpers.GetZeroBasedMousePosition();
             node.Visible = true;
             node.IsDragging = true;
         }

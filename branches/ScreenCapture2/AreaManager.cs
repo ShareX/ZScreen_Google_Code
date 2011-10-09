@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HelpersLib;
 
@@ -57,9 +58,6 @@ namespace ScreenCapture
 
         public bool IsMouseDown { get; private set; }
         public bool IsMouseDragging { get; private set; }
-
-        public bool IsFixedSize { get; set; }
-        public Size FixedSize { get; set; }
 
         private Surface surface;
         private ResizeManager resizeManager;
@@ -97,17 +95,19 @@ namespace ScreenCapture
                 }
                 else if (!IsMouseDown) // Create new area
                 {
-                    IsMouseDown = true;
                     DeselectArea();
 
                     Rectangle rect;
 
-                    if (IsFixedSize)
+                    if (surface.Config.IsFixedSize)
                     {
-                        rect = new Rectangle(new Point(e.Location.X - FixedSize.Width / 2, e.Location.Y - FixedSize.Height / 2), FixedSize);
+                        IsMouseDragging = true;
+                        rect = new Rectangle(new Point(e.Location.X - surface.Config.FixedSize.Width / 2, e.Location.Y - surface.Config.FixedSize.Height / 2),
+                            surface.Config.FixedSize);
                     }
                     else
                     {
+                        IsMouseDown = true;
                         rect = new Rectangle(e.Location, new Size(1, 1));
                     }
 
@@ -163,10 +163,8 @@ namespace ScreenCapture
                 resizeManager.Hide();
             }
 
-            if (IsMouseDown && !CurrentArea.IsEmpty /*&& !CurrentArea.Selected*/)
+            if (IsMouseDown && !CurrentArea.IsEmpty)
             {
-                //Rectangle rect = new Rectangle(positionOnClick.X, positionOnClick.Y, currentPosition.X - positionOnClick.X, currentPosition.Y - positionOnClick.Y);
-                //CurrentArea = CaptureHelpers.FixRectangle(rect);
                 currentPosition = CaptureHelpers.GetZeroBasedMousePosition();
                 CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
             }
@@ -186,7 +184,7 @@ namespace ScreenCapture
 
         private void SelectArea()
         {
-            if (!CurrentArea.IsEmpty)
+            if (!CurrentArea.IsEmpty && !surface.Config.IsFixedSize)
             {
                 resizeManager.Show();
             }
@@ -218,14 +216,19 @@ namespace ScreenCapture
 
         public Rectangle CombineAreas()
         {
-            Rectangle rect = new Rectangle();
-
-            foreach (Rectangle area in Areas)
+            if (Areas.Count > 0)
             {
-                Rectangle.Union(rect, area);
+                Rectangle rect = Areas[0];
+
+                for (int i = 1; i < Areas.Count; i++)
+                {
+                    rect = Rectangle.Union(rect, Areas[i]);
+                }
+
+                return rect;
             }
 
-            return rect;
+            return Rectangle.Empty;
         }
     }
 }
