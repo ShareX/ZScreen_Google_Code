@@ -326,6 +326,9 @@ namespace HelpersLib
         [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         public static extern int GdipDisposeImage(HandleRef image);
 
+        [DllImport("gdiplus.dll")]
+        public static extern int GdipWindingModeOutline(HandleRef path, IntPtr matrix, float flatness);
+
         #endregion gdiplus.dll
 
         #region shell32.dll

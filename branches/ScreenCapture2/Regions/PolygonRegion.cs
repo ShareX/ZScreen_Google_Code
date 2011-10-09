@@ -58,7 +58,7 @@ namespace ScreenCapture
 
                 CreateNode();
 
-                IsAreaCreated = true;
+                //IsAreaCreated = true;
             }
         }
 

@@ -45,9 +45,9 @@ namespace ScreenCapture
             {
                 visible = value;
 
-                for (int i = 0; i < resizers.Length; i++)
+                for (int i = 0; i < nodes.Length; i++)
                 {
-                    resizers[i].Visible = visible;
+                    nodes[i].Visible = visible;
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace ScreenCapture
 
         private Surface surface;
         private AreaManager areaManager;
-        private Label[] resizers = new Label[8];
+        private Label[] nodes = new Label[8];
         private int mx, my;
         private Rectangle tempRect;
 
@@ -69,28 +69,28 @@ namespace ScreenCapture
 
             surface.KeyDown += new KeyEventHandler(surface_KeyDown);
 
-            for (int i = 0; i < resizers.Length; i++)
+            for (int i = 0; i < nodes.Length; i++)
             {
-                resizers[i] = new Label();
-                resizers[i].Tag = i;
-                resizers[i].Width = resizers[i].Height = 10;
-                resizers[i].BackColor = Color.White;
-                resizers[i].BorderStyle = BorderStyle.FixedSingle;
-                resizers[i].MouseDown += new MouseEventHandler(ResizeManager_MouseDown);
-                resizers[i].MouseUp += new MouseEventHandler(ResizeManager_MouseUp);
-                resizers[i].MouseMove += new MouseEventHandler(ResizeManager_MouseMove);
-                resizers[i].Visible = false;
-                surface.Controls.Add(resizers[i]);
+                nodes[i] = new Label();
+                nodes[i].Tag = i;
+                nodes[i].Width = nodes[i].Height = 10;
+                nodes[i].BackColor = Color.White;
+                nodes[i].BorderStyle = BorderStyle.FixedSingle;
+                nodes[i].MouseDown += new MouseEventHandler(ResizeManager_MouseDown);
+                nodes[i].MouseUp += new MouseEventHandler(ResizeManager_MouseUp);
+                nodes[i].MouseMove += new MouseEventHandler(ResizeManager_MouseMove);
+                nodes[i].Visible = false;
+                surface.Controls.Add(nodes[i]);
             }
 
-            resizers[0].Cursor = Cursors.SizeNWSE;
-            resizers[1].Cursor = Cursors.SizeNS;
-            resizers[2].Cursor = Cursors.SizeNESW;
-            resizers[3].Cursor = Cursors.SizeWE;
-            resizers[4].Cursor = Cursors.SizeNWSE;
-            resizers[5].Cursor = Cursors.SizeNS;
-            resizers[6].Cursor = Cursors.SizeNESW;
-            resizers[7].Cursor = Cursors.SizeWE;
+            nodes[0].Cursor = Cursors.SizeNWSE;
+            nodes[1].Cursor = Cursors.SizeNS;
+            nodes[2].Cursor = Cursors.SizeNESW;
+            nodes[3].Cursor = Cursors.SizeWE;
+            nodes[4].Cursor = Cursors.SizeNWSE;
+            nodes[5].Cursor = Cursors.SizeNS;
+            nodes[6].Cursor = Cursors.SizeNESW;
+            nodes[7].Cursor = Cursors.SizeWE;
         }
 
         private void surface_KeyDown(object sender, KeyEventArgs e)
@@ -173,6 +173,8 @@ namespace ScreenCapture
 
         public void Show()
         {
+            Update();
+
             Visible = true;
         }
 
@@ -188,63 +190,68 @@ namespace ScreenCapture
 
         public void Update(Rectangle rect)
         {
-            int pos = resizers[0].Width / 2;
+            int pos = nodes[0].Width / 2;
 
-            int[] xChoords = new int[] { rect.Left - pos, rect.Left + rect.Width / 2 - pos, rect.Left + rect.Width - pos };
-            int[] yChoords = new int[] { rect.Top - pos, rect.Top + rect.Height / 2 - pos, rect.Top + rect.Height - pos };
+            int xStart = rect.X - pos;
+            int xMid = rect.X + rect.Width / 2 - pos;
+            int xEnd = rect.X + rect.Width - 1 - pos;
 
-            resizers[0].Left = xChoords[0]; resizers[0].Top = yChoords[0];
-            resizers[1].Left = xChoords[1]; resizers[1].Top = yChoords[0];
-            resizers[2].Left = xChoords[2]; resizers[2].Top = yChoords[0];
-            resizers[3].Left = xChoords[2]; resizers[3].Top = yChoords[1];
-            resizers[4].Left = xChoords[2]; resizers[4].Top = yChoords[2];
-            resizers[5].Left = xChoords[1]; resizers[5].Top = yChoords[2];
-            resizers[6].Left = xChoords[0]; resizers[6].Top = yChoords[2];
-            resizers[7].Left = xChoords[0]; resizers[7].Top = yChoords[1];
+            int yStart = rect.Y - pos;
+            int yMid = rect.Y + rect.Height / 2 - pos;
+            int yEnd = rect.Y + rect.Height - 1 - pos;
 
-            if ((resizers[0].Left < resizers[4].Left && resizers[0].Top < resizers[4].Top) ||
-                   resizers[0].Left > resizers[4].Left && resizers[0].Top > resizers[4].Top)
+            nodes[(int)NodePosition.TopLeft].Location = new Point(xStart, yStart);
+            nodes[(int)NodePosition.Top].Location = new Point(xMid, yStart);
+            nodes[(int)NodePosition.TopRight].Location = new Point(xEnd, yStart);
+            nodes[(int)NodePosition.Right].Location = new Point(xEnd, yMid);
+            nodes[(int)NodePosition.BottomRight].Location = new Point(xEnd, yEnd);
+            nodes[(int)NodePosition.Bottom].Location = new Point(xMid, yEnd);
+            nodes[(int)NodePosition.BottomLeft].Location = new Point(xStart, yEnd);
+            nodes[(int)NodePosition.Left].Location = new Point(xStart, yMid);
+
+            if ((nodes[0].Left < nodes[4].Left && nodes[0].Top < nodes[4].Top) ||
+                   nodes[0].Left > nodes[4].Left && nodes[0].Top > nodes[4].Top)
             {
-                resizers[0].Cursor = Cursors.SizeNWSE;
-                resizers[2].Cursor = Cursors.SizeNESW;
-                resizers[4].Cursor = Cursors.SizeNWSE;
-                resizers[6].Cursor = Cursors.SizeNESW;
+                nodes[0].Cursor = Cursors.SizeNWSE;
+                nodes[2].Cursor = Cursors.SizeNESW;
+                nodes[4].Cursor = Cursors.SizeNWSE;
+                nodes[6].Cursor = Cursors.SizeNESW;
             }
-            else if ((resizers[0].Left > resizers[4].Left && resizers[0].Top < resizers[4].Top) ||
-                resizers[0].Left < resizers[4].Left && resizers[0].Top > resizers[4].Top)
+            else if ((nodes[0].Left > nodes[4].Left && nodes[0].Top < nodes[4].Top) ||
+                nodes[0].Left < nodes[4].Left && nodes[0].Top > nodes[4].Top)
             {
-                resizers[0].Cursor = Cursors.SizeNESW;
-                resizers[2].Cursor = Cursors.SizeNWSE;
-                resizers[4].Cursor = Cursors.SizeNESW;
-                resizers[6].Cursor = Cursors.SizeNWSE;
+                nodes[0].Cursor = Cursors.SizeNESW;
+                nodes[2].Cursor = Cursors.SizeNWSE;
+                nodes[4].Cursor = Cursors.SizeNESW;
+                nodes[6].Cursor = Cursors.SizeNWSE;
             }
-            else if (resizers[0].Left == resizers[4].Left)
+            else if (nodes[0].Left == nodes[4].Left)
             {
-                resizers[0].Cursor = Cursors.SizeNS;
-                resizers[4].Cursor = Cursors.SizeNS;
+                nodes[0].Cursor = Cursors.SizeNS;
+                nodes[4].Cursor = Cursors.SizeNS;
             }
-            else if (resizers[0].Top == resizers[4].Top)
+            else if (nodes[0].Top == nodes[4].Top)
             {
-                resizers[0].Cursor = Cursors.SizeWE;
-                resizers[4].Cursor = Cursors.SizeWE;
+                nodes[0].Cursor = Cursors.SizeWE;
+                nodes[4].Cursor = Cursors.SizeWE;
             }
         }
 
         public void MoveCurrentArea(int x, int y)
         {
-            CurrentArea = new Rectangle(new Point(CurrentArea.X + x, CurrentArea.Y + y), CurrentArea.Size);
+            //CurrentArea = new Rectangle(new Point(CurrentArea.X + x, CurrentArea.Y + y), CurrentArea.Size);
         }
 
         public void ResizeCurrentArea(int x, int y, bool isBottomRightMoving)
         {
-            if (isBottomRightMoving)
+            /*if (isBottomRightMoving)
             {
                 CurrentArea = new Rectangle(CurrentArea.Left, CurrentArea.Top, CurrentArea.Width + x, CurrentArea.Height + y);
             }
             else
             {
                 CurrentArea = new Rectangle(CurrentArea.Left + x, CurrentArea.Top + y, CurrentArea.Width - x, CurrentArea.Height - y);
-            }
+            }*/
         }
     }
 }

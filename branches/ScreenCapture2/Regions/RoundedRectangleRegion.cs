@@ -24,7 +24,6 @@
 #endregion License Information (GPL v2)
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -36,64 +35,32 @@ namespace ScreenCapture
     {
         public float Radius { get; set; }
 
-        private int radiusIncrease = 3;
+        public int RadiusIncrement { get; set; }
 
         public RoundedRectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
             Radius = 25;
+            RadiusIncrement = 3;
 
-            MouseWheel += new MouseEventHandler(RoundedRectangleRegionSurface_MouseWheel);
+            MouseWheel += new MouseEventHandler(RoundedRectangleRegion_MouseWheel);
         }
 
-        private void RoundedRectangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
+        private void RoundedRectangleRegion_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
             {
-                Radius += radiusIncrease;
+                Radius += RadiusIncrement;
             }
             else if (e.Delta < 0)
             {
-                Radius = Math.Max(0, Radius - radiusIncrease);
+                Radius = Math.Max(0, Radius - RadiusIncrement);
             }
         }
 
-        protected override void Draw(Graphics g)
+        protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            if (AreaManager.Areas.Count > 0)
-            {
-                regionPath = new GraphicsPath();
-
-                foreach (Rectangle area in AreaManager.Areas)
-                {
-                    if (area.Width > 0 && area.Height > 0)
-                    {
-                        regionPath.AddRoundedRectangle(new Rectangle(area.X, area.Y, area.Width - 1, area.Height - 1), Radius);
-                    }
-                }
-
-                using (Region region = new Region(regionPath))
-                {
-                    g.ExcludeClip(region);
-                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                    //DrawObjects(g);
-                    g.ResetClip();
-                }
-
-                /*if (AreaManager.IsAreaIntersect())
-                {
-                    g.FillPath(lightBrush, regionPath);
-                }*/
-
-                g.DrawPath(borderPen, regionPath);
-
-                Rectangle totalArea = AreaManager.CombineAreas();
-                g.DrawRectangle(borderPen, totalArea.X, totalArea.Y, totalArea.Width - 1, totalArea.Height - 1);
-            }
-            else
-            {
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-            }
+            graphicsPath.AddRoundedRectangle(new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1), Radius);
         }
     }
 }

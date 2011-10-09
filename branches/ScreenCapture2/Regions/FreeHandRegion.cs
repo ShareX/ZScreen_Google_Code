@@ -48,11 +48,11 @@ namespace ScreenCapture
         {
             base.Update();
 
-            if (!IsAreaCreated && isMouseDown)
+            if (/*!IsAreaCreated &&*/ isMouseDown)
             {
                 lastNode.Visible = true;
                 lastNode.IsDragging = true;
-                IsAreaCreated = true;
+                //IsAreaCreated = true;
             }
 
             if (lastNode.Visible && lastNode.IsDragging)
