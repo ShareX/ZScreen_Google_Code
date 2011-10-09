@@ -299,11 +299,6 @@ namespace ZScreenGUI
             if (!e.Cancel)
             {
                 StaticHelper.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
-                // Encrypt passwords
-                if (Engine.Workflow.PasswordsSecureUsingEncryption)
-                {
-                    CryptPasswords(bEncrypt: true);
-                }
                 Engine.WriteSettings();
                 Engine.TurnOff();
             }
