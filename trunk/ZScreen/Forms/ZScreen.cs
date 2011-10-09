@@ -254,6 +254,11 @@ namespace ZScreenGUI
                         Engine.AppConf.WindowLocation = Location;
                         Engine.AppConf.WindowSize = Size;
                     }
+
+                    if (Math.Abs(990 - this.Size.Width) < 50)
+                    {
+                        this.Size = new Size(990, this.MinimumSize.Height);
+                    }
                 }
 
                 Refresh();
