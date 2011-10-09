@@ -2261,9 +2261,9 @@ namespace ZScreenGUI
             this.chkShellExt.AutoSize = true;
             this.chkShellExt.Location = new System.Drawing.Point(424, 72);
             this.chkShellExt.Name = "chkShellExt";
-            this.chkShellExt.Size = new System.Drawing.Size(278, 17);
+            this.chkShellExt.Size = new System.Drawing.Size(270, 17);
             this.chkShellExt.TabIndex = 9;
-            this.chkShellExt.Text = "Show \"Upload using ZScreen\" in Shell Context Menu";
+            this.chkShellExt.Text = "Show \"Open using ZScreen\" in Shell Context Menu";
             this.ttZScreen.SetToolTip(this.chkShellExt, "Use ZUploader for context menu uploads.\r\nZScreen is not recommended for this.");
             this.chkShellExt.UseVisualStyleBackColor = true;
             this.chkShellExt.CheckedChanged += new System.EventHandler(this.chkShellExt_CheckedChanged);
@@ -2562,7 +2562,7 @@ namespace ZScreenGUI
             this.cboJpgQuality.TabIndex = 119;
             this.cboJpgQuality.SelectedIndexChanged += new System.EventHandler(this.cboJpgQuality_SelectedIndexChanged);
             // 
-            // cbGIFQuality
+            // cboGIFQuality
             // 
             this.cboGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboGIFQuality.FormattingEnabled = true;
@@ -2571,7 +2571,7 @@ namespace ZScreenGUI
             "4 bit (16 colors)",
             "8 bit (256 colors)"});
             this.cboGIFQuality.Location = new System.Drawing.Point(16, 144);
-            this.cboGIFQuality.Name = "cbGIFQuality";
+            this.cboGIFQuality.Name = "cboGIFQuality";
             this.cboGIFQuality.Size = new System.Drawing.Size(98, 21);
             this.cboGIFQuality.TabIndex = 118;
             this.cboGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbGIFQuality_SelectedIndexChanged);

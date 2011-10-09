@@ -288,9 +288,10 @@ namespace ZScreenLib
             }
 
             MyWorker = worker;
-            StartWork(ti.Job);
 
-            if (PrepareOutputs(ti.DestConfig) == DialogResult.Cancel)
+            PrepareOutputs(ti.DestConfig);                                                                   // step 1
+            StartWork(ti.Job);                                                                               // step 2
+            if (Engine.conf.PromptForOutputs && SetManualOutputs(LocalFilePath) == DialogResult.Cancel)      // step 3
             {
                 this.States.Add(TaskState.CancellationPending);
             }
@@ -343,10 +344,8 @@ namespace ZScreenLib
             }
         }
 
-        private DialogResult PrepareOutputs(DestSelector ucDestOptions)
+        private void PrepareOutputs(DestSelector ucDestOptions)
         {
-            DialogResult dlgResult = DialogResult.OK;
-
             if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, WorkflowConfig.Outputs);
@@ -357,14 +356,8 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, MyFileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
-                if (Engine.conf.PromptForOutputs)
-                {
-                    dlgResult = SetManualOutputs(LocalFilePath);
-                }
                 States.Add(TaskState.Prepared);
             }
-
-            return dlgResult;
         }
 
         #endregion Constructors
@@ -663,8 +656,15 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(fp))
             {
-                LocalFilePath = Engine.IsPortable ? Path.Combine(Application.StartupPath, fp) : fp;
-                FileName = Path.GetFileName(fp);
+                if (string.IsNullOrEmpty(LocalFilePath))
+                {
+                    LocalFilePath = Engine.IsPortable ? Path.Combine(Application.StartupPath, fp) : fp;
+                }
+                else
+                {
+                    LocalFilePath = Path.ChangeExtension(LocalFilePath, Path.GetExtension(fp));
+                }
+                FileName = Path.GetFileName(LocalFilePath);
 
                 if (ZAppHelper.IsTextFile(fp))
                 {
@@ -960,6 +960,7 @@ namespace ZScreenLib
                         }
                         else if (File.Exists(app.Path))
                         {
+                            WriteImage();
                             app.OpenFile(LocalFilePath);
                         }
                     }
