@@ -1035,6 +1035,11 @@ namespace ZScreenLib
                             break;
                         default:
                             WriteImage();
+                            if (!string.IsNullOrEmpty(OCRText))
+                            {
+                                string fpocr = Path.ChangeExtension(LocalFilePath, ".txt");
+                                FileSystem.WriteText(fpocr, OCRText);
+                            }
                             break;
                     }
 

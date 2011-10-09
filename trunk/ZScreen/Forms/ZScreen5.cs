@@ -15,7 +15,6 @@ namespace ZScreenGUI
         {
             InitializeComponent();
             tsCoreMainTab.Visible = true;
-            this.tlpMain.Controls.Add(base.tsCoreMainTab, 2, 0);
         }
 
         #region Main ToolStrip Events

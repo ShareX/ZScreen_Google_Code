@@ -288,7 +288,6 @@ namespace ZScreenGUI
         #endregion
 
         private System.Windows.Forms.ToolStripButton tsbFullscreenCapture;
-        private System.Windows.Forms.ToolStripButton tsbActiveWindow;
         private System.Windows.Forms.ToolStripButton tsbSelectedWindow;
         private System.Windows.Forms.ToolStripButton tsbCropShot;
         private System.Windows.Forms.ToolStripButton tsbLastCropShot;
@@ -307,5 +306,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.ToolStripLabel tsbDonate;
         protected System.Windows.Forms.ToolStrip tsCoreMainTab;
         public System.Windows.Forms.ToolStripDropDownButton tsddbCoreSelectedWindow;
+        public System.Windows.Forms.ToolStripButton tsbActiveWindow;
     }
 }

@@ -81,7 +81,7 @@ namespace ZScreenGUI
             if (Engine.TurnOn(new Engine.EngineOptions { KeyboardHook = true, ShowConfigWizard = true }))
             {
                 Application.Run(MainForm = new ZScreen());
-               // Application.Run(CoreUI = new ZScreenSnap());
+                // Application.Run(CoreUI = new ZScreenSnap());
             }
         }
 

@@ -122,5 +122,10 @@ namespace ZScreenLib
                 txtSaveFolder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
             }
         }
+
+        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
