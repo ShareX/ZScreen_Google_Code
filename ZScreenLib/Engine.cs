@@ -631,7 +631,7 @@ namespace ZScreenLib
                 {
                     string value = appCommand.GetValue("", null) as string;
 
-                    if (!value.Contains(Application.ExecutablePath))
+                    if (string.IsNullOrEmpty(value)) // !value.Contains(Application.ExecutablePath) is quite annoying
                         registered = false;
                     else
                         registered = true;

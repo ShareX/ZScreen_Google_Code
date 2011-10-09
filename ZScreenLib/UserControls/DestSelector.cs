@@ -16,7 +16,7 @@ namespace ZScreenLib
 
         private void tsbDestConfig_Click(object sender, System.EventArgs e)
         {
-            UploadersConfigForm form = new UploadersConfigForm(Engine.Workflow.OutputsConfig, ZKeys.GetAPIKeys());
+            UploadersConfigForm form = new UploadersConfigForm(Engine.Workflow.ConfigOutputs, ZKeys.GetAPIKeys());
             form.Icon = Resources.zss_main;
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -193,7 +193,7 @@ namespace ZScreenLib
                         }
                         break;
                     case OutputEnum.SharedFolder:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.LocalhostAccountList.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.LocalhostAccountList.Count > 0;
                         if (!tsmi.Enabled)
                         {
                             tsmi.Checked = false;
@@ -216,36 +216,36 @@ namespace ZScreenLib
                         tsmi.Enabled = bHasValidFileUploader;
                         break;
                     case ImageUploaderType.FLICKR:
-                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.FlickrAuthInfo.Token);
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.FlickrAuthInfo.Token);
                         break;
                     case ImageUploaderType.IMAGESHACK:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.ImageShackAccountType == AccountType.Anonymous ||
-                            Engine.Workflow.OutputsConfig.ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.ImageShackRegistrationCode);
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.ImageShackAccountType == AccountType.Anonymous ||
+                            Engine.Workflow.ConfigOutputs.ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.ImageShackRegistrationCode);
                         break;
                     case ImageUploaderType.IMGUR:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.ImgurOAuthInfo != null;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.ImgurOAuthInfo != null;
                         break;
                     case ImageUploaderType.MEDIAWIKI:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.MediaWikiAccountList.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.MediaWikiAccountList.Count > 0;
                         break;
                     case ImageUploaderType.Photobucket:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.PhotobucketOAuthInfo != null;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.PhotobucketOAuthInfo != null;
                         break;
                     case ImageUploaderType.TINYPIC:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.TinyPicAccountType == AccountType.Anonymous ||
-                            Engine.Workflow.OutputsConfig.TinyPicAccountType == AccountType.User &&
-                         !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.TinyPicRegistrationCode);
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.TinyPicAccountType == AccountType.Anonymous ||
+                            Engine.Workflow.ConfigOutputs.TinyPicAccountType == AccountType.User &&
+                         !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode);
                         break;
                     case ImageUploaderType.TWITPIC:
-                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.TwitPicPassword);
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TwitPicPassword);
                         break;
                     case ImageUploaderType.TWITSNAPS:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.TwitterOAuthInfoList.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList.Count > 0;
                         break;
                     case ImageUploaderType.UPLOADSCREENSHOT:
                         break;
                     case ImageUploaderType.YFROG:
-                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.YFrogPassword);
+                        tsmi.Enabled = !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.YFrogPassword);
                         break;
                 }
             }
@@ -313,16 +313,16 @@ namespace ZScreenLib
                 switch (ut)
                 {
                     case FileUploaderType.CustomUploader:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.CustomUploadersList.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.CustomUploadersList.Count > 0;
                         break;
                     case FileUploaderType.Dropbox:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.DropboxOAuthInfo != null;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.DropboxOAuthInfo != null;
                         break;
                     case FileUploaderType.FTP:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.FTPAccountList.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.FTPAccountList.Count > 0;
                         break;
                     case FileUploaderType.Minus:
-                        tsmi.Enabled = Engine.Workflow.OutputsConfig.MinusConfig.Tokens.Count > 0;
+                        tsmi.Enabled = Engine.Workflow.ConfigOutputs.MinusConfig.Tokens.Count > 0;
                         break;
                     case FileUploaderType.RapidShare:
                     case FileUploaderType.SendSpace:

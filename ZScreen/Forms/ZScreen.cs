@@ -188,8 +188,11 @@ namespace ZScreenGUI
             this.Text = Engine.GetProductName();
             this.niTray.Text = this.Text;
 
-            Uploader.EncryptedPasswords = Engine.Workflow.EncryptPasswords;
             Uploader.ProxySettings = Adapter.CheckProxySettings();
+            if (Engine.Workflow.PasswordsSecureUsingEncryption)
+            {
+                CryptPasswords(false);
+            }
 
             ZScreen_ConfigGUI();
 
@@ -263,6 +266,12 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Encrypt passwords
+            if (Engine.Workflow.PasswordsSecureUsingEncryption)
+            {
+                CryptPasswords(true);
+            }
+
             // Save Destinations
             if (Engine.conf != null)
             {
@@ -1084,7 +1093,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts())
             {
-                acc = Engine.Workflow.OutputsConfig.FTPAccountList[Engine.Workflow.OutputsConfig.FTPSelectedImage];
+                acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage];
             }
 
             return acc;
@@ -1623,9 +1632,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.Workflow.OutputsConfig.FTPAccountList.Count > 0)
+            if (Engine.Workflow.ConfigOutputs.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.Workflow.OutputsConfig.FTPAccountList[Engine.Workflow.OutputsConfig.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     if (acc.Protocol == FTPProtocol.SFTP)
@@ -2096,7 +2105,7 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
                 {
-                    Engine.Workflow.OutputsConfig = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
+                    Engine.Workflow.ConfigOutputs = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
                 }
             }
         }

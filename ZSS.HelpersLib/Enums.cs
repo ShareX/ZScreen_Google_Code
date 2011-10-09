@@ -89,6 +89,11 @@ namespace HelpersLib
         sln
     }
 
+    public enum EncryptionStrength
+    {
+        Low = 128, Medium = 192, High = 256
+    }
+
     public enum EDataType
     {
         File, Image, Text

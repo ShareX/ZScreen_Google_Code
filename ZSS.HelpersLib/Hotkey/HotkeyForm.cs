@@ -53,7 +53,6 @@ namespace HelpersLib
 
             if (keyInfo.KeyCode == Keys.None)
             {
-                StaticHelper.WriteLine("Unable to register hotkey: None");
                 return HotkeyStatus.NotConfigured;
             }
 

@@ -83,9 +83,9 @@ namespace ZScreenLib
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.OutputsConfig, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.ConfigOutputs, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             ocf.ShowDialog();
-            Workflow.OutputsConfig = ocf.Config;
+            Workflow.ConfigOutputs = ocf.Config;
         }
 
         private void WorkflowWizard_Load(object sender, EventArgs e)

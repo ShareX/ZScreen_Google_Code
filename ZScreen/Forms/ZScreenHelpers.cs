@@ -117,6 +117,40 @@ namespace ZScreenGUI
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
 
+        private void CryptPasswords(bool bEncrypt)
+        {
+            CryptKeys crypt = new CryptKeys() { KeySize = Engine.Workflow.PasswordsEncryptionStrength };
+
+            Engine.Workflow.ConfigOutputs.TinyPicPassword =
+                bEncrypt ? crypt.Encrypt(Engine.Workflow.ConfigOutputs.TinyPicPassword) :
+            crypt.Decrypt(Engine.Workflow.ConfigOutputs.TinyPicPassword);
+
+            Engine.Workflow.ConfigOutputs.RapidSharePassword =
+                bEncrypt ? crypt.Encrypt(Engine.Workflow.ConfigOutputs.RapidSharePassword) :
+            crypt.Decrypt(Engine.Workflow.ConfigOutputs.RapidSharePassword);
+
+            Engine.Workflow.ConfigOutputs.SendSpacePassword = bEncrypt ? crypt.Encrypt(Engine.Workflow.ConfigOutputs.SendSpacePassword) :
+            crypt.Decrypt(Engine.Workflow.ConfigOutputs.SendSpacePassword);
+
+            foreach (FTPAccount acc in Engine.Workflow.ConfigOutputs.FTPAccountList)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+                acc.Passphrase = bEncrypt ? crypt.Encrypt(acc.Passphrase) : crypt.Decrypt(acc.Passphrase);
+            }
+
+            foreach (LocalhostAccount acc in Engine.Workflow.ConfigOutputs.LocalhostAccountList)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+            }
+
+            Engine.Workflow.ConfigOutputs.TwitPicPassword = bEncrypt ? crypt.Encrypt(Engine.Workflow.ConfigOutputs.TwitPicPassword) :
+                crypt.Decrypt(Engine.Workflow.ConfigOutputs.TwitPicPassword);
+
+            Engine.Workflow.ConfigOutputs.EmailPassword = bEncrypt ? crypt.Encrypt(Engine.Workflow.ConfigOutputs.EmailPassword) :
+            crypt.Decrypt(Engine.Workflow.ConfigOutputs.EmailPassword);
+
+        }
+
         #region Backup & Restore
 
         private void AppSettingsImport()
@@ -171,7 +205,7 @@ namespace ZScreenGUI
                 UploadersConfig temp = UploadersConfig.Load(dlg.FileName);
                 if (temp != null)
                 {
-                    Engine.Workflow.OutputsConfig = temp;
+                    Engine.Workflow.ConfigOutputs = temp;
                 }
             }
         }
@@ -183,7 +217,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.Workflow.OutputsConfig.Save(dlg.FileName);
+                Engine.Workflow.ConfigOutputs.Save(dlg.FileName);
             }
         }
 

@@ -35,7 +35,7 @@ namespace ZScreenLib
             this.Description = "New Workflow";
             this.Enabled = true;
             this.Outputs = new List<OutputEnum>();
-            this.OutputsConfig = new UploadersConfig();
+            this.ConfigOutputs = new UploadersConfig();
             ApplyDefaultValues(this);
         }
 
@@ -69,20 +69,10 @@ namespace ZScreenLib
         [Browsable(false)]
         public bool Enabled { get; set; }
 
-        [Category(ComponentModelStrings.App), DefaultValue(false), Description("Encrypt passwords")]
-        private bool mEncryptPasswords = false;
-        public bool EncryptPasswords
-        {
-            get
-            {
-                return mEncryptPasswords;
-            }
-            set
-            {
-                Uploader.EncryptedPasswords = value;
-                mEncryptPasswords = value;
-            }
-        }
+        [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
+        public bool PasswordsSecureUsingEncryption { get; set; }
+        [Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Mediau = 192, or High = 256")]
+        public EncryptionStrength PasswordsEncryptionStrength { get; set; }
 
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
@@ -264,7 +254,7 @@ namespace ZScreenLib
         public List<OutputEnum> Outputs { get; set; }
 
         [Browsable(false)]
-        public UploadersConfig OutputsConfig { get; set; }
+        public UploadersConfig ConfigOutputs { get; set; }
 
         #endregion Outputs
 

@@ -9,7 +9,8 @@ namespace HelpersLib
     {
         CspParameters cp;
         RSACryptoServiceProvider rsa;
-        public string Container = string.Empty;
+        string Container = string.Empty;
+        public EncryptionStrength KeySize = EncryptionStrength.High;
 
         public CryptKeys()
         {
@@ -49,12 +50,12 @@ namespace HelpersLib
 
         public string Encrypt(string PlainText)
         {
-            return Encrypt(PlainText, ReturnInfo());
+            return string.IsNullOrEmpty(PlainText) ? string.Empty : Encrypt(PlainText, ReturnInfo(), (int)this.KeySize);
         }
 
         public string Decrypt(string CryptedText)
         {
-            return Decrypt(CryptedText, ReturnInfo());
+            return string.IsNullOrEmpty(CryptedText) ? string.Empty : Decrypt(CryptedText, ReturnInfo(), (int)this.KeySize);
         }
 
         public string Encrypt(string PlainText, CryptInfo ci, int KeySize = 256, string EncryptionMethod = CryptMethod.SHA1, int PassIterations = 2)
