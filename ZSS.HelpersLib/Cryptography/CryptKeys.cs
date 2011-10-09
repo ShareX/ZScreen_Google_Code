@@ -48,24 +48,9 @@ namespace HelpersLib
             return ci;
         }
 
-        private bool IsAlreadyEncrypted(string text)
-        {
-            // attempt to decrypt
-            string decrypted = Decrypt(text);
-            // if not the same text then it is already encrypted
-            return decrypted != text;
-        }
-
         public string Encrypt(string text)
         {
-            if (!IsAlreadyEncrypted(text))
-            {
-                return string.IsNullOrEmpty(text) ? string.Empty : Encrypt(text, ReturnInfo(), (int)this.KeySize);
-            }
-            else
-            {
-                return text;
-            }
+            return string.IsNullOrEmpty(text) ? string.Empty : Encrypt(text, ReturnInfo(), (int)this.KeySize);
         }
 
         public string Decrypt(string CryptedText)

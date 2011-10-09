@@ -189,10 +189,6 @@ namespace ZScreenGUI
             this.niTray.Text = this.Text;
 
             Uploader.ProxySettings = Adapter.CheckProxySettings();
-            if (Engine.Workflow.PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(false);
-            }
 
             ZScreen_ConfigGUI();
 
@@ -266,12 +262,6 @@ namespace ZScreenGUI
 
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Encrypt passwords
-            if (Engine.Workflow.PasswordsSecureUsingEncryption)
-            {
-                CryptPasswords(true);
-            }
-
             // Save Destinations
             if (Engine.conf != null)
             {
@@ -309,6 +299,11 @@ namespace ZScreenGUI
             if (!e.Cancel)
             {
                 StaticHelper.WriteLine("ZScreen_FormClosing - CloseReason: {0}, CloseMethod: {1}", e.CloseReason, CloseMethod);
+                // Encrypt passwords
+                if (Engine.Workflow.PasswordsSecureUsingEncryption)
+                {
+                    CryptPasswords(bEncrypt: true);
+                }
                 Engine.WriteSettings();
                 Engine.TurnOff();
             }

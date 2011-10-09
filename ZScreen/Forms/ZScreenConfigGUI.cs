@@ -60,6 +60,11 @@ namespace ZScreenGUI
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
+            if (Engine.Workflow.PasswordsSecureUsingEncryption)
+            {
+                CryptPasswords(bEncrypt: false);
+            }
+
             DisableFeatures();
 
             pgAppSettings.SelectedObject = Engine.AppConf;
