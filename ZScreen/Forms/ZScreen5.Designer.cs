@@ -41,10 +41,10 @@
             // 
             // tlpMain
             // 
-            this.tlpMain.ColumnCount = 3;
+            this.tlpMain.ColumnCount = 2;
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMain.Controls.Add(this.pbPreview, 1, 0);
             this.tlpMain.Controls.Add(this.flpTasks, 0, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -54,15 +54,13 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.Size = new System.Drawing.Size(844, 500);
             this.tlpMain.TabIndex = 128;
-            this.tlpMain.Controls.SetChildIndex(this.flpTasks, 0);
-            this.tlpMain.Controls.SetChildIndex(this.pbPreview, 0);
             // 
             // pbPreview
             // 
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbPreview.Location = new System.Drawing.Point(131, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(552, 494);
+            this.pbPreview.Size = new System.Drawing.Size(710, 494);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 128;
             this.pbPreview.TabStop = false;
@@ -116,12 +114,13 @@
             this.Controls.Add(this.tlpMain);
             this.Name = "ZScreenSnap";
             this.Text = "ZScreenSnap";
+            this.Controls.SetChildIndex(this.tlpMain, 0);
             this.tlpMain.ResumeLayout(false);
-            this.tlpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();
             this.flpTasks.ResumeLayout(false);
             this.flpTasks.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

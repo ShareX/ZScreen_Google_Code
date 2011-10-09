@@ -106,6 +106,7 @@
             this.cboTask.Name = "cboTask";
             this.cboTask.Size = new System.Drawing.Size(360, 21);
             this.cboTask.TabIndex = 0;
+            this.cboTask.SelectedIndexChanged += new System.EventHandler(this.cboTask_SelectedIndexChanged);
             // 
             // gbName
             // 
