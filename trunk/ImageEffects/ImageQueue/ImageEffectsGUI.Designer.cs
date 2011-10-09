@@ -68,7 +68,7 @@
             this.pbPreview.Location = new System.Drawing.Point(0, 0);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(474, 492);
-            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 1;
             this.pbPreview.TabStop = false;
             // 
@@ -194,7 +194,7 @@
             this.pbDefault.Location = new System.Drawing.Point(0, 0);
             this.pbDefault.Name = "pbDefault";
             this.pbDefault.Size = new System.Drawing.Size(457, 492);
-            this.pbDefault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbDefault.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbDefault.TabIndex = 0;
             this.pbDefault.TabStop = false;
             // 
