@@ -107,17 +107,18 @@ namespace UploadersLib
             }
         }
 
-        public void Connect(string username, string password)
+        public bool Connect(string username, string password)
         {
-            if (!Client.IsConnected)
+            if (!Client.IsConnected && !string.IsNullOrEmpty(password))
             {
                 Client.Open(username, password);
             }
+            return Client.IsConnected;
         }
 
-        public void Connect()
+        public bool Connect()
         {
-            Connect(Account.UserName, Account.Password);
+            return Connect(Account.UserName, Account.Password);
         }
 
         public void Disconnect()
@@ -236,22 +237,25 @@ namespace UploadersLib
 
         public void Test(string remotePath)
         {
-            Connect();
-            remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
-            Client.ChangeDirectory(remotePath);
+            if (Connect())
+            {
+                remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
+                Client.ChangeDirectory(remotePath);
+            }
         }
 
         public void MakeDirectory(string remotePath)
         {
-            Connect();
-
-            try
+            if (Connect())
             {
-                Client.MakeDirectory(remotePath);
-            }
-            catch (Exception e)
-            {
-                StaticHelper.WriteException(e);
+                try
+                {
+                    Client.MakeDirectory(remotePath);
+                }
+                catch (Exception e)
+                {
+                    StaticHelper.WriteException(e);
+                }
             }
         }
 

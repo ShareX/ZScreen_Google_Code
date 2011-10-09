@@ -3,6 +3,7 @@
     public static class ComponentModelStrings
     {
         public const string App = "Application";
+        public const string AppPasswords = "Application / Passwords";
         public const string AppPaths = "Application / Paths";
         public const string FileNaming = "Outputs / File / Naming";
         public const string InputsAutoCapture = "Inputs / Screenshots / Capture / Auto Capture";

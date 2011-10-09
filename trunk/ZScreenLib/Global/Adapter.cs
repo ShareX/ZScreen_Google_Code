@@ -316,7 +316,7 @@ namespace ZScreenLib
         public static bool CheckFTPAccounts()
         {
             // TODO: Only using Image index for FTP
-            return Engine.Workflow.OutputsConfig.FTPAccountList.CheckSelected(Engine.Workflow.OutputsConfig.FTPSelectedImage);
+            return Engine.Workflow.ConfigOutputs.FTPAccountList.CheckSelected(Engine.Workflow.ConfigOutputs.FTPSelectedImage);
         }
 
         public static FTPAccount GetFtpAcctActive()
@@ -324,7 +324,7 @@ namespace ZScreenLib
             FTPAccount acc = null;
             if (CheckFTPAccounts())
             {
-                acc = Engine.Workflow.OutputsConfig.FTPAccountList[Engine.Workflow.OutputsConfig.FTPSelectedImage];
+                acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage];
             }
             return acc;
         }
@@ -409,9 +409,9 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAccount()
         {
-            if (Engine.Workflow.OutputsConfig.TwitterOAuthInfoList.CheckSelected(Engine.Workflow.OutputsConfig.TwitterSelectedAccount))
+            if (Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList.CheckSelected(Engine.Workflow.ConfigOutputs.TwitterSelectedAccount))
             {
-                return Engine.Workflow.OutputsConfig.TwitterOAuthInfoList[Engine.Workflow.OutputsConfig.TwitterSelectedAccount];
+                return Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList[Engine.Workflow.ConfigOutputs.TwitterSelectedAccount];
             }
 
             return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
@@ -614,17 +614,17 @@ namespace ZScreenLib
             {
                 try
                 {
-                    if (Engine.Workflow.OutputsConfig.TinyPicRememberUserPass &&
-                        !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.TinyPicUsername) &&
-                        !string.IsNullOrEmpty(Engine.Workflow.OutputsConfig.TinyPicPassword))
+                    if (Engine.Workflow.ConfigOutputs.TinyPicRememberUserPass &&
+                        !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TinyPicUsername) &&
+                        !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TinyPicPassword))
                     {
                         TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
-                        string regCode = tpu.UserAuth(Engine.Workflow.OutputsConfig.TinyPicUsername,
-                            Engine.Workflow.OutputsConfig.TinyPicPassword);
-                        if (Engine.Workflow.OutputsConfig.TinyPicRegistrationCode != regCode)
+                        string regCode = tpu.UserAuth(Engine.Workflow.ConfigOutputs.TinyPicUsername,
+                            Engine.Workflow.ConfigOutputs.TinyPicPassword);
+                        if (Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode != regCode)
                         {
-                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.Workflow.OutputsConfig.TinyPicRegistrationCode, regCode));
-                            Engine.Workflow.OutputsConfig.TinyPicRegistrationCode = regCode;
+                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode, regCode));
+                            Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode = regCode;
                         }
                     }
                 }

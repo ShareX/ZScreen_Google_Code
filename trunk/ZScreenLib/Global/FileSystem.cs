@@ -316,7 +316,7 @@ namespace ZScreenLib
                 string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fpftp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.Workflow.OutputsConfig.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.Workflow.ConfigOutputs.FTPAccountList);
                     fam.Save(fpftp);
                 }
             }

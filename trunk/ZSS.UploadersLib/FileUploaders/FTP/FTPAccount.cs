@@ -49,33 +49,11 @@ namespace UploadersLib
         [Category("FTP")]
         public string UserName { get; set; }
 
-        private string mPassword;
         [Category("FTP"), PasswordPropertyText(true)]
-        public string Password
-        {
-            get
-            {
-                return Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Decrypt(mPassword) : mPassword;
-            }
-            set
-            {
-                mPassword = Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Encrypt(value) : value;
-            }
-        }
+        public string Password { get; set; }
 
-        private string mPassphrase;
         [Category("SFTP"), Description("OpenSSH key Passphrase"), PasswordPropertyText(true)]
-        public string Passphrase
-        {
-            get
-            {
-                return Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Decrypt(mPassphrase) : mPassphrase;
-            }
-            set
-            {
-                mPassphrase = Uploader.EncryptedPasswords ? new HelpersLib.CryptKeys().Encrypt(value) : value;
-            }
-        }
+        public string Passphrase { get; set; }
 
         [Category("SFTP"), Description("Key Location")]
         [EditorAttribute(typeof(KeyFileNameEditor), typeof(UITypeEditor))]
