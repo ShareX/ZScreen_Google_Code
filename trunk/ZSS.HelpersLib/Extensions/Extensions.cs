@@ -157,7 +157,7 @@ namespace HelpersLib
             return true;
         }
 
-        public static bool CheckSelected<T>(this IEnumerable<T> list, int selected)
+        public static bool HasValidIndex<T>(this IEnumerable<T> list, int selected)
         {
             if (list != null)
             {

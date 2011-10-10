@@ -313,25 +313,14 @@ namespace ZScreenLib
             return string.Join(", ", status);
         }
 
-        public static bool CheckFTPAccounts()
+        public static bool CheckFTPAccounts(int id)
         {
-            // TODO: Only using Image index for FTP
-            return Engine.Workflow.ConfigOutputs.FTPAccountList.CheckSelected(Engine.Workflow.ConfigOutputs.FTPSelectedImage);
+            return Engine.Workflow.ConfigOutputs.FTPAccountList.HasValidIndex(id);
         }
 
-        public static FTPAccount GetFtpAcctActive()
+        public static bool CheckFTPAccounts(WorkerTask task, int id)
         {
-            FTPAccount acc = null;
-            if (CheckFTPAccounts())
-            {
-                acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage];
-            }
-            return acc;
-        }
-
-        public static bool CheckFTPAccounts(WorkerTask task)
-        {
-            bool result = CheckFTPAccounts();
+            bool result = CheckFTPAccounts(id);
             if (!result) task.Errors.Add("An FTP account does not exist or not selected properly.");
             return result;
         }
@@ -409,7 +398,7 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAccount()
         {
-            if (Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList.CheckSelected(Engine.Workflow.ConfigOutputs.TwitterSelectedAccount))
+            if (Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList.HasValidIndex(Engine.Workflow.ConfigOutputs.TwitterSelectedAccount))
             {
                 return Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList[Engine.Workflow.ConfigOutputs.TwitterSelectedAccount];
             }

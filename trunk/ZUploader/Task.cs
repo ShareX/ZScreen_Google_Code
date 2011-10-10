@@ -286,7 +286,7 @@ namespace ZUploader
             switch (UploadManager.FileUploader)
             {
                 case FileDestination.FTP:
-                    if (Program.UploadersConfig.FTPAccountList.CheckSelected(Program.UploadersConfig.FTPSelectedImage))
+                    if (Program.UploadersConfig.FTPAccountList.HasValidIndex(Program.UploadersConfig.FTPSelectedImage))
                     {
                         fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList[Program.UploadersConfig.FTPSelectedImage]);
                     }
@@ -316,7 +316,7 @@ namespace ZUploader
                     fileUploader = new Minus(Program.UploadersConfig.MinusConfig, new OAuthInfo(ZKeys.MinusConsumerKey, ZKeys.MinusConsumerSecret));
                     break;
                 case FileDestination.CustomUploader:
-                    if (Program.UploadersConfig.CustomUploadersList.CheckSelected(Program.UploadersConfig.CustomUploaderSelected))
+                    if (Program.UploadersConfig.CustomUploadersList.HasValidIndex(Program.UploadersConfig.CustomUploaderSelected))
                     {
                         fileUploader = new CustomUploader(Program.UploadersConfig.CustomUploadersList[Program.UploadersConfig.CustomUploaderSelected]);
                     }

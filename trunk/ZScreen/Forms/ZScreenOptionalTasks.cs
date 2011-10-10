@@ -135,12 +135,9 @@ namespace ZScreenGUI
             {
                 Adapter.UpdateTinyPicRegCode();
 
-                if (Adapter.CheckFTPAccounts())
+                foreach (FTPAccount acc in Engine.Workflow.ConfigOutputs.FTPAccountList)
                 {
-                    foreach (FTPAccount acc in Engine.Workflow.ConfigOutputs.FTPAccountList)
-                    {
-                        Adapter.TestFTPAccount(acc, true);
-                    }
+                    Adapter.TestFTPAccount(acc, true);
                 }
             }
             catch (Exception ex)

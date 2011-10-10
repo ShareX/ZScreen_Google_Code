@@ -419,7 +419,7 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.conf.ActionsAppsUser.CheckSelected(lbSoftware.SelectedIndex))
+                    if (Engine.conf.ActionsAppsUser.HasValidIndex(lbSoftware.SelectedIndex))
                     {
                         Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
@@ -430,7 +430,7 @@ namespace ZScreenGUI
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Engine.conf.ActionsAppsUser.CheckSelected(sel))
+                    if (Engine.conf.ActionsAppsUser.HasValidIndex(sel))
                     {
                         Engine.conf.ActionsAppsUser[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
@@ -1080,10 +1080,10 @@ namespace ZScreenGUI
             return acc;
         }
 
-        private FTPAccount GetSelectedFTP()
+        private FTPAccount GetSelectedFTPforImages()
         {
             FTPAccount acc = null;
-            if (Adapter.CheckFTPAccounts())
+            if (Adapter.CheckFTPAccounts(Engine.Workflow.ConfigOutputs.FTPSelectedImage))
             {
                 acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage];
             }

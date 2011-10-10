@@ -55,32 +55,6 @@ using System.Diagnostics;
 
 namespace ZScreenLib
 {
-    public class TaskInfo
-    {
-        public WorkerTask.JobLevel2 Job { get; set; }
-        public IntPtr Handle { get; set; }
-        public DestSelector DestConfig { get; set; }
-        private string mFilePath;
-        public string ExistingFilePath
-        {
-            get
-            {
-                return mFilePath;
-            }
-            set
-            {
-                if (File.Exists(value))
-                {
-                    mFilePath = value;
-                }
-                else
-                {
-                    throw new Exception(string.Format("{0} does not exist.", value));
-                }
-            }
-        }
-    }
-
     public class WorkerTask : IDisposable
     {
         public delegate void TaskEventHandler(WorkerTask wt);
@@ -1400,7 +1374,7 @@ namespace ZScreenLib
             {
                 MyWorker.ReportProgress((int)WorkerTask.ProgressType.UPDATE_PROGRESS_MAX, TaskbarProgressBarState.Indeterminate);
 
-                if (Adapter.CheckFTPAccounts(this))
+                if (Adapter.CheckFTPAccounts(this, FtpAccountId))
                 {
                     FTPAccount acc = Engine.Workflow.ConfigOutputs.FTPAccountList[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
@@ -1729,7 +1703,7 @@ namespace ZScreenLib
 
         public void UploadToSharedFolder()
         {
-            if (Engine.Workflow.ConfigOutputs.LocalhostAccountList.CheckSelected(Engine.Workflow.ConfigOutputs.LocalhostSelected))
+            if (Engine.Workflow.ConfigOutputs.LocalhostAccountList.HasValidIndex(Engine.Workflow.ConfigOutputs.LocalhostSelected))
             {
                 LocalhostAccount acc = Engine.Workflow.ConfigOutputs.LocalhostAccountList[Engine.Workflow.ConfigOutputs.LocalhostSelected];
                 string fn = string.Empty;
@@ -1774,7 +1748,7 @@ namespace ZScreenLib
         {
             string fullFilePath = LocalFilePath;
 
-            if (Engine.Workflow.ConfigOutputs.MediaWikiAccountList.CheckSelected(Engine.Workflow.ConfigOutputs.MediaWikiAccountSelected) && File.Exists(fullFilePath))
+            if (Engine.Workflow.ConfigOutputs.MediaWikiAccountList.HasValidIndex(Engine.Workflow.ConfigOutputs.MediaWikiAccountSelected) && File.Exists(fullFilePath))
             {
                 MediaWikiAccount acc = Engine.Workflow.ConfigOutputs.MediaWikiAccountList[Engine.Workflow.ConfigOutputs.MediaWikiAccountSelected];
                 System.Net.IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
@@ -2135,4 +2109,31 @@ namespace ZScreenLib
 
         #endregion Helper Methods
     }
+
+    public class TaskInfo
+    {
+        public WorkerTask.JobLevel2 Job { get; set; }
+        public IntPtr Handle { get; set; }
+        public DestSelector DestConfig { get; set; }
+        private string mFilePath;
+        public string ExistingFilePath
+        {
+            get
+            {
+                return mFilePath;
+            }
+            set
+            {
+                if (File.Exists(value))
+                {
+                    mFilePath = value;
+                }
+                else
+                {
+                    throw new Exception(string.Format("{0} does not exist.", value));
+                }
+            }
+        }
+    }
+
 }
