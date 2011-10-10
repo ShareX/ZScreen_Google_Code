@@ -311,7 +311,7 @@ namespace ZScreenLib
         {
             string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
 
-            if (Adapter.CheckFTPAccounts())
+            if (Engine.Workflow.ConfigOutputs.FTPAccountList.Count > 0)
             {
                 string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fpftp))

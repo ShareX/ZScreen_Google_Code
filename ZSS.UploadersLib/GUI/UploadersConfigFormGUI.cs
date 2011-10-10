@@ -466,7 +466,7 @@ namespace UploadersLib
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
             Config.LocalhostSelected = sel;
-            if (Config.LocalhostAccountList.CheckSelected(sel))
+            if (Config.LocalhostAccountList.HasValidIndex(sel))
             {
                 LocalhostAccount acc = Config.LocalhostAccountList[sel];
                 ucLocalhostAccounts.SettingsGrid.SelectedObject = acc;
@@ -563,7 +563,7 @@ namespace UploadersLib
         {
             int sel = ucFTPAccounts.AccountsList.SelectedIndex;
 
-            if (Config.FTPAccountList.CheckSelected(sel))
+            if (Config.FTPAccountList.HasValidIndex(sel))
             {
                 FTPAccount acc = Config.FTPAccountList[sel];
                 ucFTPAccounts.SettingsGrid.SelectedObject = acc;
