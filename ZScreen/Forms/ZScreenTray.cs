@@ -97,7 +97,7 @@ namespace ZScreenGUI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (Engine.conf.BalloonTipOpenLink)
+            if (Engine.conf != null && Engine.conf.BalloonTipOpenLink)
             {
                 try
                 {
