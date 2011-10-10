@@ -213,13 +213,11 @@ namespace JBirdGUI
 
         protected virtual void btnWorkflows_Click(object sender, EventArgs e)
         {
-            /*
             if (Program.WorkflowConfig != null)
             {
                 WorkflowManager pm = new WorkflowManager(Program.WorkflowConfig.Workflows98) { Icon = this.Icon };
                 pm.ShowDialog();
             }
-             */
         }
 
         #endregion Capture Events
@@ -231,16 +229,17 @@ namespace JBirdGUI
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             Workflow p = tsmi.Tag as Workflow;
             StartWorkflow(p);
-        }
 
+        }
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Close();
             Application.Exit();
-        }
 
+        }
         protected void JBirdCoreUI_Shown(object sender, EventArgs e)
         {
+
         }
 
         protected void JBirdCoreUI_Load(object sender, EventArgs e)
