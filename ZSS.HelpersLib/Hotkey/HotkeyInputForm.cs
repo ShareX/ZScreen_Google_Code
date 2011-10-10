@@ -88,6 +88,16 @@ namespace HelpersLib
                 keys.Add(new KeyInfo(key));
             }
 
+            for (Keys key = Keys.NumPad0; key <= Keys.NumPad9; key++)
+            {
+                keys.Add(new KeyInfo(key));
+            }
+
+            for (Keys key = Keys.Multiply; key <= Keys.Divide; key++)
+            {
+                keys.Add(new KeyInfo(key));
+            }
+
             for (Keys key = Keys.F1; key <= Keys.F12; key++)
             {
                 keys.Add(new KeyInfo(key));
