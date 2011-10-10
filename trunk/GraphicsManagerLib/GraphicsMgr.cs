@@ -232,6 +232,11 @@ namespace GraphicsMgrLib
                         }
                     }
                 }
+                else
+                {
+                    listImages = tempImages;
+                    return false;
+                }
             }
 
             listImages = tempImages;
