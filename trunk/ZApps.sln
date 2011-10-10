@@ -71,19 +71,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZScreenCLI", "ZScreenCLI\ZS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "ScreenCapture\ScreenCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageQueueLib", "ImageEffects\ImageQueue\ImageQueueLib.csproj", "{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageQueueLib", "ImageEffectsLib\ImageQueue\ImageQueueLib.csproj", "{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPluginsLib", "ImageEffects\Plugins\IPluginsLib.csproj", "{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPluginsLib", "ImageEffectsLib\Plugins\IPluginsLib.csproj", "{D13441B6-96E1-4D1B-8A95-58A7D6CB1E24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageQueue", "ImageQueue", "{24CB91CD-59B1-48E0-AC36-E65FD39805EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManipulationLib", "ImageEffects\ImageManipulation\ImageManipulationLib.csproj", "{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManipulationLib", "ImageEffectsLib\ImageManipulation\ImageManipulationLib.csproj", "{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{9ED6AC06-3D1E-4223-9A71-CF4610E404FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageFilters", "ImageEffects\ImageFilters\ImageFilters.csproj", "{E35F89F8-7EFB-4A2D-9D3A-F54EA627107F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageFiltersLib", "ImageEffectsLib\ImageFilters\ImageFiltersLib.csproj", "{E35F89F8-7EFB-4A2D-9D3A-F54EA627107F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAdjustmentLib", "ImageEffects\ImageEffects\ImageAdjustmentLib.csproj", "{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAdjustmentsLib", "ImageEffectsLib\ImagAdjustments\ImageAdjustmentsLib.csproj", "{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -171,10 +171,6 @@ Global
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Debug|x86.Build.0 = Debug|x86
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|x86.ActiveCfg = Release|x86
 		{E40BF216-3588-4EEF-9FFC-CB0DC86F68C0}.Release|x86.Build.0 = Release|x86
-		{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}.Debug|x86.ActiveCfg = Debug|x86
-		{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}.Debug|x86.Build.0 = Debug|x86
-		{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}.Release|x86.ActiveCfg = Release|x86
-		{26E8D8BF-DB48-4A7C-9420-1902A2C84D88}.Release|x86.Build.0 = Release|x86
 		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|x86.ActiveCfg = Debug|x86
 		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Debug|x86.Build.0 = Debug|x86
 		{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}.Release|x86.ActiveCfg = Release|x86
