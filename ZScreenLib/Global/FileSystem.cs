@@ -85,9 +85,9 @@ namespace ZScreenLib
 
         public static FileInfo WriteImage(string fp, Stream stream)
         {
-            FileInfo fi = new FileInfo(fp);
-
             string destDir = Path.GetDirectoryName(fp);
+            FileInfo fi = new FileInfo(FileSystem.GetUniqueFilePath(Engine.Workflow, destDir, Path.GetFileName(fp)));
+
             if (!Directory.Exists(destDir))
             {
                 Directory.CreateDirectory(destDir);
@@ -245,31 +245,25 @@ namespace ZScreenLib
             return false;
         }
 
-        /// <summary>
-        /// If file exist then adding number end of file name. Example: directory/fileName(2).exe
-        /// </summary>
-        /// <returns></returns>
-        public static string GetUniqueFilePath(Workflow profile, string dir, string fileName)
+        public static string GetUniqueFileName(Workflow workflow, string fileName)
         {
-            string filePath = Path.Combine(Engine.IsPortable ? Path.Combine(Application.StartupPath, dir) : dir, fileName);
-
-            if (!profile.OverwriteFiles)
+            if (!workflow.OverwriteFiles)
             {
-                string fn = Path.GetFileNameWithoutExtension(filePath);
+                string fn = Path.GetFileNameWithoutExtension(fileName);
 
-                if (fn.Length > profile.MaxNameLength)
+                if (fn.Length > workflow.MaxNameLength)
                 {
-                    string nfn = fn.Substring(0, profile.MaxNameLength);
-                    filePath = Regex.Replace(filePath, fn, nfn);
+                    string nfn = fn.Substring(0, workflow.MaxNameLength);
+                    fileName = Regex.Replace(fileName, fn, nfn);
                 }
 
                 string fp, fileExt, pattern = @"(^.+\()(\d+)(\)\.\w+$)";
                 int num = 1;
-                GroupCollection groups = Regex.Match(filePath, pattern).Groups;
+                GroupCollection groups = Regex.Match(fileName, pattern).Groups;
                 if (string.IsNullOrEmpty(groups[2].Value))
                 {
-                    fp = filePath.Substring(0, filePath.LastIndexOf('.')) + "(";
-                    fileExt = ")" + filePath.Remove(0, filePath.LastIndexOf('.'));
+                    fp = fileName.Substring(0, fileName.LastIndexOf('.')) + "(";
+                    fileExt = ")" + fileName.Remove(0, fileName.LastIndexOf('.'));
                 }
                 else
                 {
@@ -277,13 +271,25 @@ namespace ZScreenLib
                     fileExt = groups[3].Value;
                     num = Convert.ToInt32(groups[2].Value);
                 }
-                while (File.Exists(filePath))
+                while (File.Exists(fileName))
                 {
-                    filePath = fp + ++num + fileExt;
+                    fileName = fp + ++num + fileExt;
                 }
             }
 
-            return filePath;
+            return fileName;
+        }
+
+        /// <summary>
+        /// If file exist then adding number end of file name.
+        /// Example: directory/fileName(2).exe
+        /// </summary>
+        /// <returns></returns>
+        public static string GetUniqueFilePath(Workflow workflow, string dir, string fileName)
+        {
+            return Path.Combine(Engine.IsPortable ?
+                Path.Combine(Application.StartupPath, dir) : dir,
+                GetUniqueFileName(workflow, fileName));
         }
 
         public static string GetFileSize(long bytes)
@@ -335,7 +341,6 @@ namespace ZScreenLib
                     Engine.conf.Write(fp);
                 }
             }
-
         }
 
         /// <summary>

@@ -104,7 +104,10 @@ namespace ZScreenLib
             {
                 Engine.Workflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
             }
-            return string.Format("{0}.{1}", fn, ext);
+
+            string fileName = string.Format("{0}.{1}", fn, ext);
+
+            return FileSystem.GetUniqueFileName(profile, fileName);
         }
     }
 }
