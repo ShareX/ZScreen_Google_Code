@@ -52,7 +52,7 @@
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Size = new System.Drawing.Size(844, 500);
+            this.tlpMain.Size = new System.Drawing.Size(686, 500);
             this.tlpMain.TabIndex = 128;
             // 
             // pbPreview
@@ -60,7 +60,7 @@
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbPreview.Location = new System.Drawing.Point(131, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(710, 494);
+            this.pbPreview.Size = new System.Drawing.Size(552, 494);
             this.pbPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPreview.TabIndex = 128;
             this.pbPreview.TabStop = false;
@@ -114,6 +114,7 @@
             this.Controls.Add(this.tlpMain);
             this.Name = "ZScreenSnap";
             this.Text = "ZScreenSnap";
+            this.Load += new System.EventHandler(this.ZScreenSnap_Load);
             this.Controls.SetChildIndex(this.tlpMain, 0);
             this.tlpMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPreview)).EndInit();

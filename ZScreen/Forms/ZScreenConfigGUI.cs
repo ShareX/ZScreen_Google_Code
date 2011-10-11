@@ -559,7 +559,7 @@ namespace ZScreenGUI
                     clipboardUpload.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(clipboardUpload_Click);
 
                     ThumbnailToolBarButton openHistory = new ThumbnailToolBarButton(Resources.pictures_ico, "History");
-                    openHistory.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(tsbOpenHistory_Click);
+                    openHistory.Click += new EventHandler<ThumbnailButtonClickedEventArgs>(OpenHistory);
 
                     if (!IsDisposed)
                     {
