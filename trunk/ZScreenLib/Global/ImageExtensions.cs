@@ -91,6 +91,22 @@ namespace ZScreenLib
                     case FreeImageJpegQualityType.JPEG_QUALITYSUPERB:
                         jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
                         break;
+
+                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYAVERAGE:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYAVERAGE;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYBAD:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYBAD;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYGOOD:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYNORMAL:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYNORMAL;
+                        break;
+                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYSUPERB:
+                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
+                        break;
                 }
 
                 switch (workflow.ImageJpegSubSampling)
