@@ -35,7 +35,7 @@
             // 
             // pbMain
             // 
-            this.pbMain.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbMain.BackColor = System.Drawing.Color.White;
             this.pbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMain.Image = global::HelpersLib.Properties.Resources.explorer;
             this.pbMain.Location = new System.Drawing.Point(0, 0);
@@ -63,6 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.pbMain);
             this.Name = "MyPictureBox";

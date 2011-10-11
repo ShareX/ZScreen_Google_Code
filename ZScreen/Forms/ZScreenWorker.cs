@@ -295,6 +295,7 @@ namespace ZScreenGUI
                 }
             }
 
+            pbPreview.LoadImage(Resources.main);
             rtbDebugLog.Text = Engine.EngineLogger.ToString();
 
             this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
@@ -368,15 +369,20 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync_Screenshots(WorkerTask ssTask)
+        public void RunWorkerAsync_Screenshots(WorkerTask imageTask)
         {
-            ssTask.WasToTakeScreenshot = true;
-            ssTask.RunWorker();
+            imageTask.WasToTakeScreenshot = true;
+            // the last point before the task enters background
+            if (imageTask.tempImage != null)
+            {
+                pbPreview.LoadImage(imageTask.tempImage);
+            }
+            imageTask.RunWorker();
         }
 
-        public void RunWorkerAsync_Text(WorkerTask task)
+        public void RunWorkerAsync_Text(WorkerTask textTask)
         {
-            task.RunWorker();
+            textTask.RunWorker();
         }
 
         #region Screenshots
