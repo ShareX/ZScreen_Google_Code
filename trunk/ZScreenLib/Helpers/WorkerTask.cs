@@ -194,6 +194,7 @@ namespace ZScreenLib
         public Image tempImage { get; private set; }
         public string tempText { get; private set; }
         public string OCRText { get; private set; }
+        public string OCRFilePath { get; private set; }
         private Stream Data;
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
@@ -935,8 +936,21 @@ namespace ZScreenLib
                         }
                         else if (File.Exists(app.Path))
                         {
-                            WriteImage();
-                            app.OpenFile(LocalFilePath);
+                            if (!string.IsNullOrEmpty(OCRFilePath))
+                            {
+                                app.OpenFile(OCRFilePath);
+                                OCRText = File.ReadAllText(OCRFilePath);
+                            }
+                            else if (!string.IsNullOrEmpty(tempText))
+                            {
+                                app.OpenFile(LocalFilePath);
+                                tempText = File.ReadAllText(tempText);
+                            }
+                            else
+                            {
+                                WriteImage();
+                                app.OpenFile(LocalFilePath);
+                            }
                         }
                     }
                     StaticHelper.WriteLine(string.Format("Performed Actions using {0}.", app.Name));
@@ -1036,8 +1050,8 @@ namespace ZScreenLib
                 {
                     if (!string.IsNullOrEmpty(OCRText))
                     {
-                        string fpocr = Path.ChangeExtension(LocalFilePath, ".txt");
-                        FileSystem.WriteText(fpocr, OCRText);
+                        OCRFilePath = Path.ChangeExtension(LocalFilePath, ".txt");
+                        FileSystem.WriteText(OCRFilePath, OCRText);
                         PerformActions();
                     }
                 }
