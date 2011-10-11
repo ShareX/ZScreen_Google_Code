@@ -136,6 +136,16 @@ namespace HelpersLib
         JPEG_QUALITYGOOD,
         [Description("Save with superb quality (100:1)")]
         JPEG_QUALITYSUPERB,
+        [Description("Save as a progressive-JPEG with bad quality (10:1)")]
+        JPEG_PROGRESSIVE_QUALITYBAD,
+        [Description("Save as a progressive-JPEG with average quality (25:1)")]
+        JPEG_PROGRESSIVE_QUALITYAVERAGE,
+        [Description("Save as a progressive-JPEG with normal quality (50:1)")]
+        JPEG_PROGRESSIVE_QUALITYNORMAL,
+        [Description("Save as a progressive-JPEG with good quality (75:1)")]
+        JPEG_PROGRESSIVE_QUALITYGOOD,
+        [Description("Save as a progressive-JPEG with superb quality (100:1)")]
+        JPEG_PROGRESSIVE_QUALITYSUPERB,
     }
 
     public enum FreeImageJpegSubSamplingType
