@@ -899,6 +899,7 @@ namespace ZScreenLib
                 {
                     if (Job1 == JobLevel1.File && app.TriggerForFiles ||
                         Job1 == JobLevel1.Image && app.TriggerForImages && !WasToTakeScreenshot ||
+                        Job1 == JobLevel1.Image && app.TriggerForText && !string.IsNullOrEmpty(OCRText) ||
                         Job1 == JobLevel1.Image && app.TriggerForScreenshots && WasToTakeScreenshot ||
                         Job1 == JobLevel1.Text && app.TriggerForText)
                     {
@@ -1011,11 +1012,6 @@ namespace ZScreenLib
                             break;
                         default:
                             WriteImage();
-                            if (!string.IsNullOrEmpty(OCRText))
-                            {
-                                string fpocr = Path.ChangeExtension(LocalFilePath, ".txt");
-                                FileSystem.WriteText(fpocr, OCRText);
-                            }
                             break;
                     }
 
@@ -1034,6 +1030,16 @@ namespace ZScreenLib
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     SetClipboardContent();
+                }
+
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // finally try again 
+                {
+                    if (!string.IsNullOrEmpty(OCRText))
+                    {
+                        string fpocr = Path.ChangeExtension(LocalFilePath, ".txt");
+                        FileSystem.WriteText(fpocr, OCRText);
+                        PerformActions();
+                    }
                 }
 
                 if (UploadResults.Count > 0)
@@ -1620,14 +1626,13 @@ namespace ZScreenLib
         public void SetClipboardContent()
         {
             UploadResult ur_clipboard = new UploadResult();
+            ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
             if (File.Exists(LocalFilePath) && TaskClipboardContent.Contains(ClipboardContentEnum.Local))
             {
-                ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
                 ur_clipboard.LocalFilePath = this.LocalFilePath;
             }
             if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
             {
-                ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
                 if (File.Exists(LocalFilePath))
                 {
                     OCRHelper ocr = new OCRHelper(LocalFilePath);
