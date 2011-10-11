@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -51,7 +52,6 @@ using UploadersLib.URLShorteners;
 using ZScreenLib.Properties;
 using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
-using System.Diagnostics;
 
 namespace ZScreenLib
 {
@@ -1100,12 +1100,8 @@ namespace ZScreenLib
         {
             if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
             {
-                string fp = LocalFilePath;
-                Image img = tempImage;
-                FileInfo fi = FileSystem.WriteImage(fp, PrepareData()); // PrepareData instead of using Data
-                fp = fi.FullName;
+                FileInfo fi = FileSystem.WriteImage(LocalFilePath, PrepareData()); // PrepareData instead of using Data
                 this.SetFileSize(fi.Length);
-
                 States.Add(TaskState.ImageWritten);
 
                 if (!File.Exists(LocalFilePath))
@@ -2135,5 +2131,4 @@ namespace ZScreenLib
             }
         }
     }
-
 }
