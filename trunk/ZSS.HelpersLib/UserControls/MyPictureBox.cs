@@ -32,6 +32,7 @@ namespace HelpersLib
 {
     public partial class MyPictureBox : UserControl
     {
+        public bool DisableViewer { get; set; }
         public Image LoadingImage
         {
             set { pbMain.InitialImage = value; }
@@ -54,7 +55,7 @@ namespace HelpersLib
 
         public void LoadImage(Image img)
         {
-            pbMain.Image = img;
+            pbMain.Image = (Image)img.Clone();
             isReady = true;
         }
 
@@ -74,17 +75,26 @@ namespace HelpersLib
             }
         }
 
-        public void Reset()
-        {
-            pbMain.Image = null;
-        }
-
         private void LoadImage(string path)
         {
             isReady = false;
             lblStatus.Visible = true;
             this.Cursor = Cursors.Default;
             pbMain.LoadAsync(path);
+        }
+
+        public void SetNote(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                lblStatus.Text = text;
+                lblStatus.Visible = true;
+            }
+        }
+
+        public void Reset()
+        {
+            pbMain.Image = null;
         }
 
         private void pbMain_LoadCompleted(object sender, AsyncCompletedEventArgs e)
@@ -113,7 +123,7 @@ namespace HelpersLib
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && isReady && pbMain.Image != null)
+            if (!DisableViewer && e.Button == MouseButtons.Left && isReady && pbMain.Image != null)
             {
                 using (ImageViewer viewer = new ImageViewer(pbMain.Image))
                 {

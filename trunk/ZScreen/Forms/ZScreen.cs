@@ -39,6 +39,7 @@ using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.CLI;
+using ScreenCapture;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
@@ -48,7 +49,6 @@ using ZScreenLib;
 using ZSS.ColorsLib;
 using ZSS.FTPClientLib;
 using ZSS.UpdateCheckerLib;
-using ScreenCapture;
 
 namespace ZScreenGUI
 {
@@ -72,6 +72,11 @@ namespace ZScreenGUI
         {
             InitializeComponent();
             base.tsCoreMainTab.Visible = true;
+
+            pbPreview.DisableViewer = true;
+            pbPreview.LoadImage(Resources.main);
+            pbPreview.SetNote("You can also Drag n Drop files or a directory on to anywhere in this page.");
+
             this.Icon = Resources.zss_main;
             this.WindowState = Engine.AppConf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
@@ -253,11 +258,6 @@ namespace ZScreenGUI
                     {
                         Engine.AppConf.WindowLocation = Location;
                         Engine.AppConf.WindowSize = Size;
-                    }
-
-                    if (Math.Abs(990 - this.Size.Width) < 50)
-                    {
-                        this.Size = new Size(990, this.MinimumSize.Height);
                     }
                 }
 
@@ -2114,7 +2114,7 @@ namespace ZScreenGUI
             }
         }
 
-        void tsiSelectedWindow_Click(object sender, EventArgs e)
+        private void tsiSelectedWindow_Click(object sender, EventArgs e)
         {
             ToolStripItem tsi = (ToolStripItem)sender;
             WindowInfo wi = tsi.Tag as WindowInfo;
