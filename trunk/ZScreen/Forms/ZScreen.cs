@@ -1845,7 +1845,7 @@ namespace ZScreenGUI
 
         private void historyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenHistory();
+            OpenHistory(sender, e);
         }
 
         private void tpSourceFileSystem_DragDrop(object sender, DragEventArgs e)
@@ -1950,127 +1950,6 @@ namespace ZScreenGUI
                     File.Delete(Engine.HistoryPath);
                 }
             }
-        }
-
-        private void HideFormTemporary(MethodInvoker method, int executeTime = 500, int showTime = 2000)
-        {
-            var timer = new System.Windows.Forms.Timer { Interval = executeTime };
-            var timer2 = new System.Windows.Forms.Timer { Interval = showTime };
-
-            timer.Tick += (sender, e) =>
-            {
-                timer.Stop();
-                method();
-                timer2.Start();
-            };
-
-            timer2.Tick += (sender, e) =>
-            {
-                timer2.Stop();
-                NativeMethods.ShowWindow(Handle, (int)WindowShowStyle.ShowNormalNoActivate);
-            };
-
-            Hide();
-            timer.Start();
-        }
-
-        private void ExecuteTimer(MethodInvoker method, ToolStripItem control, int executeTime = 3000)
-        {
-            var timer = new System.Windows.Forms.Timer { Interval = executeTime };
-
-            timer.Tick += (sender, e) =>
-            {
-                timer.Stop();
-                method();
-                control.Enabled = true;
-            };
-
-            control.Enabled = false;
-            timer.Start();
-        }
-
-        #region Main tab toolbar
-
-        private void tsbFullscreenCapture_Click(object sender, EventArgs e)
-        {
-            HideFormTemporary(() => CaptureEntireScreen());
-        }
-
-        private void tsbActiveWindow_Click(object sender, EventArgs e)
-        {
-            ExecuteTimer(() => CaptureActiveWindow(), tsbActiveWindow);
-        }
-
-        private void tsbSelectedWindow_Click(object sender, EventArgs e)
-        {
-            HideFormTemporary(() => CaptureSelectedWindow());
-        }
-
-        private void tsbCropShot_Click(object sender, EventArgs e)
-        {
-            HideFormTemporary(() => CaptureRectRegion());
-        }
-
-        private void tsbLastCropShot_Click(object sender, EventArgs e)
-        {
-            HideFormTemporary(() => CaptureRectRegionLast());
-        }
-
-        private void tsbFreehandCropShot_Click(object sender, EventArgs e)
-        {
-            HideFormTemporary(() => CaptureFreeHandRegion());
-        }
-
-        private void tsbAutoCapture_Click(object sender, EventArgs e)
-        {
-            ShowAutoCapture();
-        }
-
-        private void tsbFileUpload_Click(object sender, EventArgs e)
-        {
-            FileUpload();
-        }
-
-        private void tsbClipboardUpload_Click(object sender, EventArgs e)
-        {
-            ClipboardUpload();
-        }
-
-        private void tsbDragDropWindow_Click(object sender, EventArgs e)
-        {
-            ShowDropWindow();
-        }
-
-        private void tsbLanguageTranslate_Click(object sender, EventArgs e)
-        {
-            ShowGTGUI();
-        }
-
-        private void tsbScreenColorPicker_Click(object sender, EventArgs e)
-        {
-            ShowScreenColorPicker();
-        }
-
-        private void tsbOpenHistory_Click(object sender, EventArgs e)
-        {
-            OpenHistory();
-        }
-
-        private void tsbImageDirectory_Click(object sender, EventArgs e)
-        {
-            ShowDirectory(FileSystem.GetImagesDir());
-        }
-
-        private void tsbAbout_Click(object sender, EventArgs e)
-        {
-            FormsMgr.ShowAboutWindow();
-        }
-
-        #endregion Main tab toolbar
-
-        private void pbDonate_Click(object sender, EventArgs e)
-        {
-            StaticHelper.LoadBrowser(ZLinks.URL_DONATE_ZS);
         }
 
         private void tcMain_Selecting(object sender, TabControlCancelEventArgs e)

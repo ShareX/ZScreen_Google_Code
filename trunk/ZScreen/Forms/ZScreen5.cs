@@ -95,5 +95,10 @@ namespace ZScreenGUI
         }
 
         #endregion Main ToolStrip Events
+
+        private void ZScreenSnap_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

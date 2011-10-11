@@ -178,7 +178,7 @@ namespace ZScreenGUI
 
         private void tsbOpenHistory_Click(object sender, EventArgs e)
         {
-            OpenHistory();
+            OpenHistory(sender, e);
         }
 
         private void tsbImageDirectory_Click(object sender, EventArgs e)
@@ -205,7 +205,7 @@ namespace ZScreenGUI
             Process.Start("explorer.exe", dir);
         }
 
-        public static void OpenHistory()
+        public static void OpenHistory(object sender = null, EventArgs e = null)
         {
             // if Engine.conf is null then open use default amount
             int maxNum = 100;
