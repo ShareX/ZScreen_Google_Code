@@ -41,10 +41,10 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using UploadersAPILib;
 using UploadersLib;
+using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
 using UploadersLib.ImageUploaders;
 using ZScreenLib.Properties;
-using UploadersLib.FileUploaders;
 
 namespace ZScreenLib
 {
@@ -201,7 +201,6 @@ namespace ZScreenLib
                     if (!sftp.isInstantiated)
                     {
                         msg = "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.";
-
                     }
                     else
                     {
@@ -370,16 +369,6 @@ namespace ZScreenLib
         }
 
         #endregion Proxy Methods
-
-        public static bool ActionsEnabled()
-        {
-            if (Engine.conf != null && Engine.conf.ImageEditor == null)
-            {
-                return false;
-            }
-
-            return Engine.conf != null && Engine.conf.PerformActions;
-        }
 
         public static void DeleteFile(string fp)
         {

@@ -64,17 +64,6 @@ namespace ZScreenGUI
 
             bwTask.ID = UploadManager.Queue();
 
-            if (Engine.conf.PromptForUpload && !bwTask.TaskClipboardContent.Contains(ClipboardContentEnum.Data) &&
-                !bwTask.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                (bwTask.Job2 == WorkerTask.JobLevel2.CaptureEntireScreen ||
-                bwTask.Job2 == WorkerTask.JobLevel2.CaptureActiveWindow) &&
-                MessageBox.Show("Do you really want to upload to " + bwTask.GetActiveImageUploadersDescription() + "?",
-                Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-            {
-                e.Result = bwTask;
-                return;
-            }
-
             if (bwTask.WasToTakeScreenshot)
             {
                 if (Engine.conf.ScreenshotDelayTime > 0)
@@ -314,6 +303,7 @@ namespace ZScreenGUI
             }
             tiCreateTask.Job = job;
             tiCreateTask.DestConfig = ucDestOptions;
+            tiCreateTask.TrayIcon = this.niTray;
 
             WorkerTask tempTask = new WorkerTask(CreateWorker(), tiCreateTask);
 
@@ -330,9 +320,6 @@ namespace ZScreenGUI
 
                     break;
             }
-
-            if (tempTask.IsNotCanceled())
-                tempTask.SetNotifyIconStatus(this.niTray, Resources.zss_busy);
 
             return tempTask;
         }
@@ -369,27 +356,44 @@ namespace ZScreenGUI
         /// Worker for Screenshots: Active Window, Crop, Entire Screen
         /// </summary>
         /// <param name="job">Job Type</param>
-        public void RunWorkerAsync_Screenshots(WorkerTask imageTask)
+        public void RunWorkerAsync(WorkerTask imageTask)
         {
             imageTask.WasToTakeScreenshot = true;
             // the last point before the task enters background
             if (imageTask.tempImage != null)
             {
-                WorkflowWizard wfw = new WorkflowWizard("Configure Workflow...", imageTask.WorkflowConfig);
-                if (wfw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                }
                 pbPreview.LoadImage(imageTask.tempImage);
+
+                DialogResult result = System.Windows.Forms.DialogResult.OK;
+
+                if (Engine.conf.PromptForWorkflowConfigUI)
+                {
+                    WorkflowWizard wfw = new WorkflowWizard("Configure", imageTask.WorkflowConfig);
+                    result = wfw.ShowDialog();
+                }
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    // PerformActions should happen in main thread
+                    if (imageTask.tempImage != null && !imageTask.States.Contains(WorkerTask.TaskState.ImageEdited))
+                    {
+                        imageTask.States.Add(WorkerTask.TaskState.ImageEdited);
+                        if (imageTask.WorkflowConfig.PerformActions && imageTask.Job2 != WorkerTask.JobLevel2.UploadImage)
+                        {
+                            imageTask.PerformActions();
+                        }
+                    }
+                    imageTask.RunWorker();
+                }
+                else
+                {
+                    imageTask.States.Add(WorkerTask.TaskState.CancellationPending);
+                }
             }
-            imageTask.RunWorker();
-        }
 
-        public void RunWorkerAsync_Text(WorkerTask textTask)
-        {
-            textTask.RunWorker();
+            if (imageTask.Canceled())
+                imageTask.SetNotifyIconStatus(this.niTray, Resources.zss_tray);
         }
-
-        #region Screenshots
 
         public override void CaptureActiveWindow()
         {
@@ -397,47 +401,45 @@ namespace ZScreenGUI
 #if DEBUG
             UploadManager.UploadImage(hkawTask);
 #endif
-            RunWorkerAsync_Screenshots(hkawTask);
+            RunWorkerAsync(hkawTask);
         }
 
         public override void CaptureEntireScreen()
         {
             WorkerTask hkesTask = CreateTask(WorkerTask.JobLevel2.CaptureEntireScreen);
-            RunWorkerAsync_Screenshots(hkesTask);
+            RunWorkerAsync(hkesTask);
         }
 
         public override void CaptureSelectedWindow()
         {
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindow);
-            RunWorkerAsync_Screenshots(hkswTask);
+            RunWorkerAsync(hkswTask);
         }
 
         public void CaptureSelectedWindowFromList(IntPtr handle)
         {
             TaskInfo tiCaptureWindowFromList = new TaskInfo() { Handle = handle };
             WorkerTask hkswTask = CreateTask(WorkerTask.JobLevel2.CaptureSelectedWindowFromList, tiCaptureWindowFromList);
-            RunWorkerAsync_Screenshots(hkswTask);
+            RunWorkerAsync(hkswTask);
         }
 
         public override void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
-            RunWorkerAsync_Screenshots(hkrcTask);
+            RunWorkerAsync(hkrcTask);
         }
 
         public override void CaptureRectRegionLast()
         {
             WorkerTask hkrclTask = CreateTask(WorkerTask.JobLevel2.CaptureLastCroppedWindow);
-            RunWorkerAsync_Screenshots(hkrclTask);
+            RunWorkerAsync(hkrclTask);
         }
 
         public override void CaptureFreeHandRegion()
         {
             WorkerTask hkfhrTask = CreateTask(WorkerTask.JobLevel2.CaptureFreeHandRegion);
-            RunWorkerAsync_Screenshots(hkfhrTask);
+            RunWorkerAsync(hkfhrTask);
         }
-
-        #endregion Screenshots
 
         #endregion RunWorkerAsync Job 1
 
@@ -499,13 +501,6 @@ namespace ZScreenGUI
                     UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()).ToArray());
                 }
             }
-        }
-
-        public void UploadUsingDragDrop(string fp)
-        {
-            WorkerTask ddTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
-            ddTask.UpdateLocalFilePath(fp);
-            ddTask.RunWorker();
         }
 
         public bool UploadUsingFileSystem(params string[] fileList)
@@ -676,11 +671,11 @@ namespace ZScreenGUI
             }
         }
 
-        private void dw_Result(object sender, string[] strings)
+        private void dw_Result(object sender, string[] dwFiles)
         {
-            if (strings != null)
+            if (dwFiles != null)
             {
-                UploadUsingFileSystem(strings);
+                UploadUsingFileSystem(dwFiles);
             }
         }
 

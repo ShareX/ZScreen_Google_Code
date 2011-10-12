@@ -419,20 +419,20 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.conf.ActionsAppsUser.HasValidIndex(lbSoftware.SelectedIndex))
+                    if (Engine.conf.ActionsApps.HasValidIndex(lbSoftware.SelectedIndex))
                     {
-                        Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                        Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                        tsm.Checked = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled;
+                        tsm.Checked = Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled;
                     }
                 }
                 else if (sender.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Engine.conf.ActionsAppsUser.HasValidIndex(sel))
+                    if (Engine.conf.ActionsApps.HasValidIndex(sel))
                     {
-                        Engine.conf.ActionsAppsUser[sel].Enabled = tsm.Checked;
+                        Engine.conf.ActionsApps[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
                     }
                 }
@@ -562,7 +562,7 @@ namespace ZScreenGUI
         {
             if (temp != null)
             {
-                Engine.conf.ActionsAppsUser.Add(temp);
+                Engine.conf.ActionsApps.Add(temp);
                 lbSoftware.Items.Add(temp);
                 lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
                 RewriteImageEditorsRightClickMenu();
@@ -584,7 +584,7 @@ namespace ZScreenGUI
 
             if (sel != -1)
             {
-                Engine.conf.ActionsAppsUser.RemoveAt(sel);
+                Engine.conf.ActionsApps.RemoveAt(sel);
 
                 lbSoftware.Items.RemoveAt(sel);
 
@@ -599,7 +599,7 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Engine.conf.ImageEditor = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex];
+            Engine.conf.ImageEditor = Engine.conf.ActionsApps[lbSoftware.SelectedIndex];
         }
 
         private void ShowImageEditorsSettings()
@@ -609,7 +609,7 @@ namespace ZScreenGUI
                 Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
                 {
-                    Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                    Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnActionsRemove.Enabled = !app.Protected;
@@ -1123,7 +1123,7 @@ namespace ZScreenGUI
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Engine.conf.ActionsAppsUser)
+            foreach (Software app in Engine.conf.ActionsApps)
             {
                 if (app != null && app.Name != null)
                 {
@@ -1459,9 +1459,9 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex];
+            Software temp = Engine.conf.ActionsApps[lbSoftware.SelectedIndex];
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-            Engine.conf.ActionsAppsUser[lbSoftware.SelectedIndex] = temp;
+            Engine.conf.ActionsApps[lbSoftware.SelectedIndex] = temp;
             RewriteImageEditorsRightClickMenu();
         }
 
@@ -1749,7 +1749,7 @@ namespace ZScreenGUI
 
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.PerformActions = chkPerformActions.Checked;
+            Engine.Workflow.PerformActions = chkPerformActions.Checked;
         }
 
         private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
@@ -1850,8 +1850,8 @@ namespace ZScreenGUI
 
         private void tpSourceFileSystem_DragDrop(object sender, DragEventArgs e)
         {
-            string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            UploadUsingFileSystem(filePaths);
+            string[] ddfilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            UploadUsingFileSystem(ddfilePaths);
         }
 
         private void tpSourceFileSystem_DragEnter(object sender, DragEventArgs e)
@@ -1915,19 +1915,19 @@ namespace ZScreenGUI
         private void tpMain_DragDrop(object sender, DragEventArgs e)
         {
             string[] fileDirPaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            List<string> files = new List<string>();
+            List<string> ddMainGUIfiles = new List<string>();
             foreach (string fdp in fileDirPaths)
             {
                 if (File.Exists(fdp))
                 {
-                    files.Add(fdp);
+                    ddMainGUIfiles.Add(fdp);
                 }
                 else if (Directory.Exists(fdp))
                 {
-                    files.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
+                    ddMainGUIfiles.AddRange(Directory.GetFiles(fdp, "*.*", SearchOption.AllDirectories));
                 }
             }
-            UploadUsingFileSystem(files.ToArray());
+            UploadUsingFileSystem(ddMainGUIfiles.ToArray());
         }
 
         private void chkShortenURL_CheckedChanged(object sender, EventArgs e)

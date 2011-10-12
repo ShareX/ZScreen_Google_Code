@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using HelpersLib;
-using UploadersLib;
-using GraphicsMgrLib;
-using System.Xml.Serialization;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 using GradientTester;
+using GraphicsMgrLib;
+using HelpersLib;
 using HelpersLib.Hotkey;
+using UploadersLib;
 
 namespace ZScreenLib
 {
@@ -35,7 +35,7 @@ namespace ZScreenLib
 
         #endregion Constructors
 
-        #region Properties 
+        #region Properties
 
         [Browsable(false)]
         public string ID { get; set; }
@@ -56,6 +56,7 @@ namespace ZScreenLib
 
         public CaptureEngineType CaptureEngineMode = CaptureEngineType.GDI;
 
+        public bool PerformActions = false;
         public bool DrawCursor = false;
 
         public HotkeySetting Hotkey = new HotkeySetting();
@@ -73,7 +74,7 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.ScreenshotsActiveWindow), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]
         public bool ActiveWindowGDIFreezeWindow { get; set; }
 
-        #endregion Active Window
+        #endregion Inputs / Active Window
 
         #region Inputs / File Upload
 
@@ -245,7 +246,7 @@ namespace ZScreenLib
             // encrypt before interim save
             if (this.PasswordsSecureUsingEncryption)
             {
-               this.CryptPasswords(bEncrypt: true);
+                this.CryptPasswords(bEncrypt: true);
             }
             succ = SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
             // decrypt after interim save
@@ -263,6 +264,8 @@ namespace ZScreenLib
         }
 
         #endregion I/O Methods
+
+        #region Helper Methods
 
         public static void ApplyDefaultValues(object self)
         {
@@ -309,7 +312,8 @@ namespace ZScreenLib
 
         public void Start()
         {
-
         }
+
+        #endregion Helper Methods
     }
 }

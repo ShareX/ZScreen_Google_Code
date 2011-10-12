@@ -39,22 +39,6 @@ namespace ZScreenLib
             mTask = task;
         }
 
-        public void TextEdit()
-        {
-            if (File.Exists(mTask.LocalFilePath))
-            {
-                Process p = new Process();
-                ProcessStartInfo psi = new ProcessStartInfo(Engine.conf.TextEditorActive.Path)
-                {
-                    Arguments = string.Format("{0}{1}{0}", "\"", mTask.LocalFilePath)
-                };
-                p.StartInfo = psi;
-                p.Start();
-                // Wait till user quits the ScreenshotEditApp
-                p.WaitForExit();
-            }
-        }
-
         public override string ToString()
         {
             StringBuilder sbDebug = new StringBuilder();

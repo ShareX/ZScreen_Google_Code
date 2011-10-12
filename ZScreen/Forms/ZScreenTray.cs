@@ -29,12 +29,12 @@ namespace ZScreenGUI
 
         private void RewriteImageEditorsRightClickMenu()
         {
-            if (Engine.conf.ActionsAppsUser != null)
+            if (Engine.conf.ActionsApps != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
-                List<Software> imgs = Engine.conf.ActionsAppsUser;
+                List<Software> imgs = Engine.conf.ActionsApps;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;

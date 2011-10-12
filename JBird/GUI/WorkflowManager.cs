@@ -51,7 +51,7 @@ namespace ZScreenLib
 
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Workflows.Add(pw.Workflow);
+                Workflows.Add(pw.Config);
                 WorkflowsGuiRefresh();
             }
         }
@@ -81,7 +81,7 @@ namespace ZScreenLib
             JBirdWorkflowWizard pw = new JBirdWorkflowWizard("Edit", wf, wfgui) { Icon = this.Icon };
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                lvi.Tag = pw.Workflow;
+                lvi.Tag = pw.Config;
                 WorkflowsGuiRefresh();
             }
         }

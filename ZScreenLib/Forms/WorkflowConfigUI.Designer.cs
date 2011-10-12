@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        protected void InitializeComponent()
+        protected virtual void InitializeComponent()
         {
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tpJob = new System.Windows.Forms.TabPage();
@@ -81,6 +81,7 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -191,6 +192,7 @@
             // 
             // gbTasks
             // 
+            this.gbTasks.Controls.Add(this.chkPerformActions);
             this.gbTasks.Controls.Add(this.chkTaskImageResize);
             this.gbTasks.Controls.Add(this.chkTaskImageFileFormat);
             this.gbTasks.Location = new System.Drawing.Point(8, 8);
@@ -203,7 +205,7 @@
             // chkTaskImageResize
             // 
             this.chkTaskImageResize.AutoSize = true;
-            this.chkTaskImageResize.Location = new System.Drawing.Point(16, 24);
+            this.chkTaskImageResize.Location = new System.Drawing.Point(16, 48);
             this.chkTaskImageResize.Name = "chkTaskImageResize";
             this.chkTaskImageResize.Size = new System.Drawing.Size(89, 17);
             this.chkTaskImageResize.TabIndex = 0;
@@ -214,7 +216,7 @@
             // chkTaskImageFileFormat
             // 
             this.chkTaskImageFileFormat.AutoSize = true;
-            this.chkTaskImageFileFormat.Location = new System.Drawing.Point(16, 48);
+            this.chkTaskImageFileFormat.Location = new System.Drawing.Point(16, 72);
             this.chkTaskImageFileFormat.Name = "chkTaskImageFileFormat";
             this.chkTaskImageFileFormat.Size = new System.Drawing.Size(142, 17);
             this.chkTaskImageFileFormat.TabIndex = 1;
@@ -656,6 +658,17 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // chkPerformActions
+            // 
+            this.chkPerformActions.AutoSize = true;
+            this.chkPerformActions.Location = new System.Drawing.Point(16, 24);
+            this.chkPerformActions.Name = "chkPerformActions";
+            this.chkPerformActions.Size = new System.Drawing.Size(101, 17);
+            this.chkPerformActions.TabIndex = 2;
+            this.chkPerformActions.Text = "Annotate Image";
+            this.chkPerformActions.UseVisualStyleBackColor = true;
+            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.chkPerformActions_CheckedChanged);
+            // 
             // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
@@ -751,5 +764,6 @@
         private System.Windows.Forms.GroupBox gbTasks;
         protected System.Windows.Forms.GroupBox gbName;
         protected System.Windows.Forms.GroupBox gbTask;
+        private System.Windows.Forms.CheckBox chkPerformActions;
     }
 }

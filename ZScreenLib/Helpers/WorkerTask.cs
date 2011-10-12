@@ -275,6 +275,7 @@ namespace ZScreenLib
         public void StartWork(JobLevel2 job)
         {
             Job2 = job;
+            SetNotifyIconStatus(TaskProperties.TrayIcon, Resources.zss_busy);
 
             switch (job)
             {
@@ -316,6 +317,7 @@ namespace ZScreenLib
             if (!success)
             {
                 this.States.Add(TaskState.CancellationPending);
+                SetNotifyIconStatus(TaskProperties.TrayIcon, Resources.zss_tray);
             }
         }
 
@@ -494,16 +496,6 @@ namespace ZScreenLib
                 {
                     States.Add(TaskState.ImageProcessed);
                     ProcessImage(tempImage);
-                }
-
-                // PerformActions should happen in main thread
-                if (string.IsNullOrEmpty(savePath) && tempImage != null && !States.Contains(TaskState.ImageEdited))
-                {
-                    States.Add(TaskState.ImageEdited);
-                    if (Adapter.ActionsEnabled() && Job2 != WorkerTask.JobLevel2.UploadImage)
-                    {
-                        PerformActions();
-                    }
                 }
             }
 
@@ -955,7 +947,7 @@ namespace ZScreenLib
         /// </summary>
         public void PerformActions()
         {
-            foreach (Software app in Engine.conf.ActionsAppsUser)
+            foreach (Software app in Engine.conf.ActionsApps)
             {
                 if (app.Enabled)
                 {
@@ -1918,6 +1910,11 @@ namespace ZScreenLib
                 (tempImage.Width > Engine.Workflow.ConfigOutputs.FTPThumbnailWidthLimit)));
         }
 
+        public bool Canceled()
+        {
+            return !IsNotCanceled();
+        }
+
         public bool IsNotCanceled()
         {
             return !States.Contains(TaskState.CancellationPending);
@@ -2166,6 +2163,8 @@ namespace ZScreenLib
         public WorkerTask.JobLevel2 Job { get; set; }
         public IntPtr Handle { get; set; }
         public DestSelector DestConfig { get; set; }
+        public NotifyIcon TrayIcon { get; set; }
+
         private string mFilePath;
         public string ExistingFilePath
         {
