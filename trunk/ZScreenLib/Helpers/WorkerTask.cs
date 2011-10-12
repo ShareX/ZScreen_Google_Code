@@ -488,6 +488,8 @@ namespace ZScreenLib
                     UpdateLocalFilePath(imgfp);
                 }
 
+                SetOCR(tempImage);
+
                 if (!States.Contains(TaskState.ImageProcessed))
                 {
                     States.Add(TaskState.ImageProcessed);
@@ -506,6 +508,44 @@ namespace ZScreenLib
             }
 
             return tempImage != null;
+        }
+
+        public void SetOCR(Image ocrImage)
+        {
+            if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR) && string.IsNullOrEmpty(OCRText))
+            {
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
+                {
+                    WriteImage(ocrImage);
+                }
+
+                OCRHelper ocr = null;
+                if (File.Exists(LocalFilePath))
+                {
+                    ocr = new OCRHelper(LocalFilePath);
+                }
+                else if (ocrImage != null)
+                {
+                    string ocrfp = Path.Combine(Engine.zTempDir, FileSystem.GetUniqueFileName(WorkflowConfig, "ocr.png"));
+                    FileInfo fi = FileSystem.WriteImage(ocrfp, ocrImage.SaveImage(WorkflowConfig, EImageFormat.PNG));
+                    if (fi.Exists)
+                    {
+                        ocr = new OCRHelper(fi.FullName);
+                        File.Delete(ocrfp);
+                    }
+                }
+
+                if (ocr != null)
+                {
+                    this.OCRText = ocr.Text;
+
+                    if (!string.IsNullOrEmpty(OCRText) && WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
+                    {
+                        OCRFilePath = Path.ChangeExtension(LocalFilePath, ".txt");
+                        FileSystem.WriteText(OCRFilePath, OCRText);
+                    }
+                }
+            }
         }
 
         public void SetText(string text)
@@ -889,6 +929,27 @@ namespace ZScreenLib
             }
         }
 
+        public bool IsValidActionFile(Software app)
+        {
+            return Job1 == JobLevel1.File && app.TriggerForFiles && File.Exists(LocalFilePath);
+        }
+
+        public bool IsValidActionText(Software app)
+        {
+            return Job1 == JobLevel1.Text && app.TriggerForText && !string.IsNullOrEmpty(tempText);
+        }
+
+        public bool IsValidActionImage(Software app)
+        {
+            return Job1 == JobLevel1.Image && app.TriggerForImages && !WasToTakeScreenshot ||
+                   Job1 == JobLevel1.Image && app.TriggerForScreenshots && WasToTakeScreenshot;
+        }
+
+        public bool IsValidActionOCR(Software app)
+        {
+            return Job1 == JobLevel1.Image && app.TriggerForText && !string.IsNullOrEmpty(OCRText) && File.Exists(OCRFilePath);
+        }
+
         /// <summary>
         /// Perform Actions after capturing image/text/file objects
         /// </summary>
@@ -898,59 +959,56 @@ namespace ZScreenLib
             {
                 if (app.Enabled)
                 {
-                    if (Job1 == JobLevel1.File && app.TriggerForFiles ||
-                        Job1 == JobLevel1.Image && app.TriggerForImages && !WasToTakeScreenshot ||
-                        Job1 == JobLevel1.Image && app.TriggerForText && !string.IsNullOrEmpty(OCRText) ||
-                        Job1 == JobLevel1.Image && app.TriggerForScreenshots && WasToTakeScreenshot ||
-                        Job1 == JobLevel1.Text && app.TriggerForText)
+                    if (IsValidActionImage(app) && app.Name == Engine.zImageAnnotator)
                     {
-                        if (app.Name == Engine.zImageAnnotator)
+                        try
                         {
-                            try
+                            Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(tempImage);
+                            capture.CaptureDetails.Filename = LocalFilePath;
+                            capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
+                            capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
+                            capture.CaptureDetails.AddMetaData("source", "file");
+                            Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
+                            Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
+                            editor.SetImagePath(LocalFilePath);
+                            editor.Visible = false;
+                            editor.ShowDialog();
+                            if (!editor.surface.Modified)
                             {
-                                Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(tempImage);
-                                capture.CaptureDetails.Filename = LocalFilePath;
-                                capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
-                                capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
-                                capture.CaptureDetails.AddMetaData("source", "file");
-                                Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
-                                Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
-                                editor.SetImagePath(LocalFilePath);
-                                editor.Visible = false;
-                                editor.ShowDialog();
-                                if (!editor.surface.Modified)
-                                {
-                                    tempImage = editor.GetImageForExport();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                StaticHelper.WriteException(ex, "ImageEdit");
+                                tempImage = editor.GetImageForExport();
                             }
                         }
-                        else if (app.Name == Engine.zImageEffects)
+                        catch (Exception ex)
                         {
-                            ImageEffectsGUI effects = new ImageEffectsGUI(tempImage);
-                            effects.ShowDialog();
-                            tempImage = effects.GetImageForExport();
+                            StaticHelper.WriteException(ex, "ImageEdit");
                         }
-                        else if (File.Exists(app.Path))
+                    }
+                    else if (IsValidActionImage(app) && app.Name == Engine.zImageEffects)
+                    {
+                        ImageEffectsGUI effects = new ImageEffectsGUI(tempImage);
+                        effects.ShowDialog();
+                        tempImage = effects.GetImageForExport();
+                    }
+                    else if (File.Exists(app.Path))
+                    {
+                        if (IsValidActionOCR(app))
                         {
-                            if (!string.IsNullOrEmpty(OCRFilePath))
-                            {
-                                app.OpenFile(OCRFilePath);
-                                OCRText = File.ReadAllText(OCRFilePath);
-                            }
-                            else if (!string.IsNullOrEmpty(tempText))
-                            {
-                                app.OpenFile(LocalFilePath);
-                                tempText = File.ReadAllText(tempText);
-                            }
-                            else
-                            {
-                                WriteImage();
-                                app.OpenFile(LocalFilePath);
-                            }
+                            app.OpenFile(OCRFilePath);
+                            OCRText = File.ReadAllText(OCRFilePath);
+                        }
+                        else if (IsValidActionText(app))
+                        {
+                            app.OpenFile(LocalFilePath);
+                            tempText = File.ReadAllText(tempText);
+                        }
+                        else if (IsValidActionImage(app))
+                        {
+                            WriteImage(tempImage);
+                            app.OpenFile(LocalFilePath);
+                        }
+                        else if (IsValidActionFile(app))
+                        {
+                            app.OpenFile(LocalFilePath);
                         }
                     }
                     StaticHelper.WriteLine(string.Format("Performed Actions using {0}.", app.Name));
@@ -1017,7 +1075,8 @@ namespace ZScreenLib
                     UploadToSharedFolder();
                 }
 
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // Note: We need write text or image first
+                // Note: We need write text or image first
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk))
                 {
                     switch (Job1)
                     {
@@ -1025,7 +1084,7 @@ namespace ZScreenLib
                             FileSystem.WriteText(LocalFilePath, tempText);
                             break;
                         default:
-                            WriteImage();
+                            WriteImage(tempImage);
                             break;
                     }
 
@@ -1044,16 +1103,6 @@ namespace ZScreenLib
                 if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     SetClipboardContent();
-                }
-
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk)) // finally try again 
-                {
-                    if (!string.IsNullOrEmpty(OCRText))
-                    {
-                        OCRFilePath = Path.ChangeExtension(LocalFilePath, ".txt");
-                        FileSystem.WriteText(OCRFilePath, OCRText);
-                        PerformActions();
-                    }
                 }
 
                 if (UploadResults.Count > 0)
@@ -1116,11 +1165,13 @@ namespace ZScreenLib
         /// Writes MyImage object in a WorkerTask into a file
         /// </summary>
         /// <param name="t">WorkerTask</param>
-        public void WriteImage()
+        public void WriteImage(Image img)
         {
-            if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk) && tempImage != null && !States.Contains(TaskState.ImageWritten))
+            if (WorkflowConfig.Outputs.Contains(OutputEnum.LocalDisk) && img != null &&
+                !States.Contains(TaskState.ImageWritten))
             {
-                FileInfo fi = FileSystem.WriteImage(LocalFilePath, PrepareData()); // PrepareData instead of using Data
+                // PrepareData instead of using Data
+                FileInfo fi = FileSystem.WriteImage(LocalFilePath, PrepareData());
                 this.SetFileSize(fi.Length);
                 States.Add(TaskState.ImageWritten);
 
@@ -1645,22 +1696,7 @@ namespace ZScreenLib
             {
                 ur_clipboard.LocalFilePath = this.LocalFilePath;
             }
-            if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
-            {
-                if (File.Exists(LocalFilePath))
-                {
-                    OCRHelper ocr = new OCRHelper(LocalFilePath);
-                    this.OCRText = ocr.Text;
-                }
-                else if (tempImage != null)
-                {
-                    string ocrfp = Path.Combine(Engine.zTempDir, "ocr.png");
-                    FileInfo fi = FileSystem.WriteImage(ocrfp, tempImage.SaveImage(WorkflowConfig, EImageFormat.PNG));
-                    OCRHelper ocr = new OCRHelper(fi.FullName);
-                    this.OCRText = ocr.Text;
-                    File.Delete(ocrfp);
-                }
-            }
+
             AddUploadResult(ur_clipboard);
         }
 
