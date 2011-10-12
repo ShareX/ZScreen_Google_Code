@@ -77,7 +77,8 @@ namespace ZScreenLib
         private void WorkflowEdit(ListViewItem lvi)
         {
             Workflow wf = Workflows[(int)lvi.Tag];
-            WorkflowWizard pw = new WorkflowWizard("Edit", wf) { Icon = this.Icon };
+            WorkflowWizardGUIOptions wfgui = new WorkflowWizardGUIOptions() { ShowTabJob = true };
+            JBirdWorkflowWizard pw = new JBirdWorkflowWizard("Edit", wf, wfgui) { Icon = this.Icon };
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 lvi.Tag = pw.Workflow;

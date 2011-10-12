@@ -1,28 +1,52 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using HelpersLib;
+using HelpersLib.Hotkey;
 using UploadersAPILib;
 using UploadersLib;
-using HelpersLib.Hotkey;
-using HelpersLib;
-using JBirdGUI;
 
 namespace ZScreenLib
 {
     public partial class WorkflowWizard : HotkeyForm
     {
+        public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
         public Workflow Workflow = null;
 
-        public WorkflowWizard(string reason = "Create", Workflow profile = null)
+        public WorkflowWizard() { }
+
+        public WorkflowWizard(string reason = "Create", Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
         {
             InitializeComponent();
-            if (profile == null) profile = new Workflow("New Workflow");
-            this.Workflow = profile;
-            this.Text = Application.ProductName + " - " + reason + " - " + Workflow.Description;
+            Initialize(reason, workflow, gui);
         }
 
-        private void ConfigGui()
+        protected void Initialize(string reason, Workflow workflow, WorkflowWizardGUIOptions gui)
         {
+            if (workflow == null) workflow = new Workflow("New Workflow");
+            this.Workflow = workflow;
+            this.Text = Application.ProductName + " - " + reason + " - " + Workflow.Description;
+            if (gui != null)
+            {
+                this.GUI = gui;
+            }
+        }
+
+        private void WorkflowWizard_Load(object sender, EventArgs e)
+        {
+            ConfigGui();
+        }
+
+        private void ProfileWizard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            BeforeClose();
+        }
+
+        protected void ConfigGui()
+        {
+            // Hide/Show Tabs
+            if (!GUI.ShowTabJob) this.tcMain.TabPages.Remove(tpJob);
+
             // Step 1
             txtName.Text = Workflow.Description;
 
@@ -31,19 +55,6 @@ namespace ZScreenLib
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
             cboTask.SelectedIndex = (int)Workflow.Job;
-
-            HotkeyManager tempHotkeyMgr;
-            Program.HotkeyMgrs.TryGetValue(this.Workflow.ID, out tempHotkeyMgr);
-            if (tempHotkeyMgr != null)
-            {
-                hmcHotkeys.PrepareHotkeys(tempHotkeyMgr);
-            }
-            else
-            {
-                HotkeyManager hm = new HotkeyManager(Program.CoreUI, ZAppType.JBird);
-                hm.AddHotkey(JBirdHotkey.Workflow, Workflow.Hotkey, Workflow.Start);
-                hmcHotkeys.PrepareHotkeys(hm);
-            }
 
             // Step 4
 
@@ -88,11 +99,6 @@ namespace ZScreenLib
             Workflow.ConfigOutputs = ocf.Config;
         }
 
-        private void WorkflowWizard_Load(object sender, EventArgs e)
-        {
-            ConfigGui();
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -103,11 +109,6 @@ namespace ZScreenLib
         {
             this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             Close();
-        }
-
-        private void ProfileWizard_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            BeforeClose();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -125,7 +126,19 @@ namespace ZScreenLib
 
         private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
+
+        private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+    }
+
+    public class WorkflowWizardGUIOptions
+    {
+        public bool ShowTabJob { get; set; }
     }
 }

@@ -127,6 +127,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\WorkflowConfigUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WorkflowConfigUI.Designer.cs">
+      <DependentUpon>WorkflowConfigUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global\Capture.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
     <Compile Include="Helpers\GraphicsEx.cs" />
@@ -320,6 +326,9 @@
     <EmbeddedResource Include="Forms\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WorkflowConfigUI.resx">
+      <DependentUpon>WorkflowConfigUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
