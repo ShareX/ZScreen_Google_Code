@@ -375,6 +375,10 @@ namespace ZScreenGUI
             // the last point before the task enters background
             if (imageTask.tempImage != null)
             {
+                WorkflowWizard wfw = new WorkflowWizard("Configure Workflow...", imageTask.WorkflowConfig);
+                if (wfw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                }
                 pbPreview.LoadImage(imageTask.tempImage);
             }
             imageTask.RunWorker();
