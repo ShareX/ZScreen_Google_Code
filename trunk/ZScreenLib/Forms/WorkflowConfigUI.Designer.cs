@@ -702,7 +702,7 @@
             this.MinimumSize = new System.Drawing.Size(664, 420);
             this.Name = "WorkflowWizard";
             this.Text = "Configure Workflow";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfileWizard_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkflowWizard_FormClosing);
             this.Load += new System.EventHandler(this.WorkflowWizard_Load);
             this.tcMain.ResumeLayout(false);
             this.tpJob.ResumeLayout(false);
