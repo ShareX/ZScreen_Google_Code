@@ -38,15 +38,7 @@ namespace ZScreenLib
             }
         }
 
-        private void WorkflowWizard_Load(object sender, EventArgs e)
-        {
-            ConfigGui();
-        }
-
-        private void ProfileWizard_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            BeforeClose();
-        }
+        #region Config GUI
 
         protected void ConfigGui()
         {
@@ -55,22 +47,44 @@ namespace ZScreenLib
             if (GUI.ShowResizeTab) this.tcMain.TabPages.Add(tpImageResize);
             if (GUI.ShowQualityTab) this.tcMain.TabPages.Add(tpImageQuality);
 
-            // Step 1
-            txtName.Text = Config.Description;
+            // Jobs
+            ConfigGuiJobs();
 
             // Tasks
-            chkPerformActions.Checked = Config.PerformActions;
+            ConfigGuiTasks();
 
+            // Resize 
+            ConfigGuiResize();
+
+            // Quality
+            ConfigGuiQuality();
+        
+            // Outputs
+            ConfigGuiOutputs();
+        }
+
+        private void ConfigGuiJobs()
+        {
+            txtName.Text = Config.Description;
             if (cboTask.Items.Count == 0)
             {
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
             cboTask.SelectedIndex = (int)Config.Job;
+        }
 
-            // Resize 
+        private void ConfigGuiTasks()
+        {
+           chkPerformActions.Checked = Config.PerformActions;
+        }
 
+        private void ConfigGuiResize()
+        {
 
-            // Quality
+        }
+
+        private void ConfigGuiQuality()
+        {
             if (cboFileFormat.Items.Count == 0)
             {
                 cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
@@ -84,19 +98,19 @@ namespace ZScreenLib
                 cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
                 cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
             }
-        
+
             if (cboJpgQuality.Items.Count == 0)
             {
                 cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
                 cboJpgQuality.SelectedIndex = (int)Config.ImageJpegQuality;
             }
-          
+
             if (cboJpgSubSampling.Items.Count == 0)
             {
                 cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
                 cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
             }
-           
+
             cboGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
 
             cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
@@ -104,9 +118,10 @@ namespace ZScreenLib
 
             cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
                 (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
-        
-            // Step 4
+        }
 
+        private void ConfigGuiOutputs()
+        {
             chkClipboard.Checked = Config.Outputs.Contains(OutputEnum.Clipboard);
             chkSaveFile.Checked = Config.Outputs.Contains(OutputEnum.LocalDisk);
             chkUpload.Checked = Config.Outputs.Contains(OutputEnum.RemoteHost);
@@ -144,6 +159,20 @@ namespace ZScreenLib
             {
                 Config.Outputs.Add(OutputEnum.Printer);
             }
+        }
+
+        #endregion Config GUI
+
+        #region Control Events
+
+        private void WorkflowWizard_Load(object sender, EventArgs e)
+        {
+            ConfigGui();
+        }
+
+        private void WorkflowWizard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            BeforeClose();
         }
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
@@ -260,6 +289,8 @@ namespace ZScreenLib
         {
             Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
+
+        #endregion Control Events
     }
 
     public class WorkflowWizardGUIOptions
