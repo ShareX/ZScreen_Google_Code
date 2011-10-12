@@ -20,7 +20,7 @@ namespace JBirdGUI
             base.Initialize(reason, workflow, gui);
 
             HotkeyManager tempHotkeyMgr;
-            Program.HotkeyMgrs.TryGetValue(this.Workflow.ID, out tempHotkeyMgr);
+            Program.HotkeyMgrs.TryGetValue(this.Config.ID, out tempHotkeyMgr);
             if (tempHotkeyMgr != null)
             {
                 hmcHotkeys.PrepareHotkeys(tempHotkeyMgr);
@@ -28,7 +28,7 @@ namespace JBirdGUI
             else
             {
                 HotkeyManager hm = new HotkeyManager(Program.CoreUI, ZAppType.JBird);
-                hm.AddHotkey(JBirdHotkey.Workflow, Workflow.Hotkey, Workflow.Start);
+                hm.AddHotkey(JBirdHotkey.Workflow, Config.Hotkey, Config.Start);
                 hmcHotkeys.PrepareHotkeys(hm);
             }
         }

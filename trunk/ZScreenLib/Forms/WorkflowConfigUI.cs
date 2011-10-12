@@ -11,7 +11,7 @@ namespace ZScreenLib
     public partial class WorkflowWizard : HotkeyForm
     {
         public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
-        public Workflow Workflow = null;
+        public Workflow Config = null;
 
         public WorkflowWizard() { }
 
@@ -24,8 +24,8 @@ namespace ZScreenLib
         protected void Initialize(string reason, Workflow workflow, WorkflowWizardGUIOptions gui)
         {
             if (workflow == null) workflow = new Workflow("New Workflow");
-            this.Workflow = workflow;
-            this.Text = Application.ProductName + " - " + reason + " - " + Workflow.Description;
+            this.Config = workflow;
+            this.Text = Application.ProductName + " - " + reason + " - " + Config.Description;
             if (gui != null)
             {
                 this.GUI = gui;
@@ -48,55 +48,63 @@ namespace ZScreenLib
             if (!GUI.ShowTabJob) this.tcMain.TabPages.Remove(tpJob);
 
             // Step 1
-            txtName.Text = Workflow.Description;
+            txtName.Text = Config.Description;
+
+            // Tasks
+            chkPerformActions.Checked = Config.PerformActions;
 
             if (cboTask.Items.Count == 0)
             {
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
-            cboTask.SelectedIndex = (int)Workflow.Job;
+            cboTask.SelectedIndex = (int)Config.Job;
 
             // Step 4
 
-            chkClipboard.Checked = Workflow.Outputs.Contains(OutputEnum.Clipboard);
-            chkSaveFile.Checked = Workflow.Outputs.Contains(OutputEnum.LocalDisk);
-            chkUpload.Checked = Workflow.Outputs.Contains(OutputEnum.RemoteHost);
-            chkPrinter.Checked = Workflow.Outputs.Contains(OutputEnum.Printer);
+            chkClipboard.Checked = Config.Outputs.Contains(OutputEnum.Clipboard);
+            chkSaveFile.Checked = Config.Outputs.Contains(OutputEnum.LocalDisk);
+            chkUpload.Checked = Config.Outputs.Contains(OutputEnum.RemoteHost);
+            chkPrinter.Checked = Config.Outputs.Contains(OutputEnum.Printer);
         }
 
         private void BeforeClose()
         {
+            // Description
             if (!string.IsNullOrEmpty(txtName.Text))
             {
-                Workflow.Description = txtName.Text;
+                Config.Description = txtName.Text;
             }
 
-            Workflow.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
+            Config.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
 
-            Workflow.Outputs.Clear();
+            // Tasks
+            Config.PerformActions = chkPerformActions.Checked;
+
+            // Outputs
+            Config.Outputs.Clear();
             if (chkClipboard.Checked)
             {
-                Workflow.Outputs.Add(OutputEnum.Clipboard);
+                Config.Outputs.Add(OutputEnum.Clipboard);
             }
             if (chkSaveFile.Checked)
             {
-                Workflow.Outputs.Add(OutputEnum.LocalDisk);
+                Config.Outputs.Add(OutputEnum.LocalDisk);
             }
             if (chkUpload.Checked)
             {
-                Workflow.Outputs.Add(OutputEnum.RemoteHost);
+                Config.Outputs.Add(OutputEnum.RemoteHost);
             }
             if (chkPrinter.Checked)
             {
-                Workflow.Outputs.Add(OutputEnum.Printer);
+                Config.Outputs.Add(OutputEnum.Printer);
             }
         }
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Workflow.ConfigOutputs, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            UploadersConfigForm ocf = new UploadersConfigForm(Config.ConfigOutputs, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             ocf.ShowDialog();
-            Workflow.ConfigOutputs = ocf.Config;
+            Config.ConfigOutputs = ocf.Config;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -134,6 +142,11 @@ namespace ZScreenLib
 
         private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
         {
+        }
+
+        private void chkPerformActions_CheckedChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 

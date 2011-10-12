@@ -219,26 +219,26 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Actions()
         {
-            chkPerformActions.Checked = Engine.conf.PerformActions;
-            tsmEditinImageSoftware.Checked = Engine.conf.PerformActions;
+            chkPerformActions.Checked = Engine.Workflow.PerformActions;
+            tsmEditinImageSoftware.Checked = Engine.Workflow.PerformActions;
 
-            if (Engine.conf.ActionsAppsUser.Count == 0)
+            if (Engine.conf.ActionsApps.Count == 0)
             {
                 Software editor = new Software(Engine.zImageAnnotator, Application.ExecutablePath, true, true);
-                Engine.conf.ActionsAppsUser.Add(editor);
+                Engine.conf.ActionsApps.Add(editor);
                 Software effects = new Software(Engine.zImageEffects, Application.ExecutablePath, true, false);
-                Engine.conf.ActionsAppsUser.Add(effects);
+                Engine.conf.ActionsApps.Add(effects);
             }
             else
             {
-                Engine.conf.ActionsAppsUser.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
+                Engine.conf.ActionsApps.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
             }
 
             ImageEditorHelper.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
-            foreach (Software app in Engine.conf.ActionsAppsUser)
+            foreach (Software app in Engine.conf.ActionsApps)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
@@ -256,13 +256,6 @@ namespace ZScreenGUI
             else if (lbSoftware.Items.Count > 0)
             {
                 lbSoftware.SelectedIndex = 0;
-            }
-
-            // Text Editors
-
-            if (Engine.conf.TextEditors.Count == 0)
-            {
-                Engine.conf.TextEditors.Add(new Software("Notepad", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "notepad.exe"), true));
             }
         }
 
@@ -402,7 +395,6 @@ namespace ZScreenGUI
 
             cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
                 (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
-
 
             switch (Engine.Workflow.ImageSizeType)
             {

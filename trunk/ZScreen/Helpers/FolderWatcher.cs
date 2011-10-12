@@ -42,25 +42,25 @@ namespace ZScreenGUI
         [STAThread]
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
-            string filePath = e.FullPath;
+            string filepathWatchFolder = e.FullPath;
             int retry = 5;
             while (retry > 0)
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    using (FileStream fs = new FileStream(filepathWatchFolder, FileMode.Open, FileAccess.Read))
                     {
                         // check if the file is complete
                     }
-                    StaticHelper.WriteLine(string.Format("Created {0}", filePath));
-                    Loader.MainForm.UploadUsingFileSystem(filePath);
+                    StaticHelper.WriteLine(string.Format("Created {0}", filepathWatchFolder));
+                    Loader.MainForm.UploadUsingFileSystem(filepathWatchFolder);
                     break;
                 }
                 catch
                 {
                     if (--retry == 0)
                     {
-                        StaticHelper.WriteLine("Unable to open file '" + filePath + "'");
+                        StaticHelper.WriteLine("Unable to open file '" + filepathWatchFolder + "'");
                     }
                     Thread.Sleep(500);
                 }
