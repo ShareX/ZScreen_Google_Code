@@ -38,6 +38,7 @@
             this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpTasks = new System.Windows.Forms.TabPage();
             this.gbTasks = new System.Windows.Forms.GroupBox();
+            this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.chkTaskImageResize = new System.Windows.Forms.CheckBox();
             this.chkTaskImageFileFormat = new System.Windows.Forms.CheckBox();
             this.tpImageFileFormat = new System.Windows.Forms.TabPage();
@@ -81,7 +82,7 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkPerformActions = new System.Windows.Forms.CheckBox();
+            this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -108,7 +109,7 @@
             this.tcMain.Location = new System.Drawing.Point(8, 8);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(624, 344);
+            this.tcMain.Size = new System.Drawing.Size(640, 344);
             this.tcMain.TabIndex = 0;
             // 
             // tpJob
@@ -120,7 +121,7 @@
             this.tpJob.Location = new System.Drawing.Point(4, 22);
             this.tpJob.Name = "tpJob";
             this.tpJob.Padding = new System.Windows.Forms.Padding(3);
-            this.tpJob.Size = new System.Drawing.Size(616, 318);
+            this.tpJob.Size = new System.Drawing.Size(632, 318);
             this.tpJob.TabIndex = 0;
             this.tpJob.Text = "Job";
             this.tpJob.UseVisualStyleBackColor = true;
@@ -185,13 +186,14 @@
             this.tpTasks.Location = new System.Drawing.Point(4, 22);
             this.tpTasks.Name = "tpTasks";
             this.tpTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTasks.Size = new System.Drawing.Size(616, 318);
+            this.tpTasks.Size = new System.Drawing.Size(632, 318);
             this.tpTasks.TabIndex = 6;
             this.tpTasks.Text = "Tasks";
             this.tpTasks.UseVisualStyleBackColor = true;
             // 
             // gbTasks
             // 
+            this.gbTasks.Controls.Add(this.chkTaskOutputConfig);
             this.gbTasks.Controls.Add(this.chkPerformActions);
             this.gbTasks.Controls.Add(this.chkTaskImageResize);
             this.gbTasks.Controls.Add(this.chkTaskImageFileFormat);
@@ -201,6 +203,17 @@
             this.gbTasks.TabIndex = 2;
             this.gbTasks.TabStop = false;
             this.gbTasks.Text = "I want to...";
+            // 
+            // chkPerformActions
+            // 
+            this.chkPerformActions.AutoSize = true;
+            this.chkPerformActions.Location = new System.Drawing.Point(16, 24);
+            this.chkPerformActions.Name = "chkPerformActions";
+            this.chkPerformActions.Size = new System.Drawing.Size(101, 17);
+            this.chkPerformActions.TabIndex = 2;
+            this.chkPerformActions.Text = "Annotate Image";
+            this.chkPerformActions.UseVisualStyleBackColor = true;
+            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.chkPerformActions_CheckedChanged);
             // 
             // chkTaskImageResize
             // 
@@ -229,7 +242,7 @@
             this.tpImageFileFormat.Controls.Add(this.gbPictureQuality);
             this.tpImageFileFormat.Location = new System.Drawing.Point(4, 22);
             this.tpImageFileFormat.Name = "tpImageFileFormat";
-            this.tpImageFileFormat.Size = new System.Drawing.Size(616, 318);
+            this.tpImageFileFormat.Size = new System.Drawing.Size(632, 318);
             this.tpImageFileFormat.TabIndex = 5;
             this.tpImageFileFormat.Text = "File Format";
             this.tpImageFileFormat.UseVisualStyleBackColor = true;
@@ -387,7 +400,7 @@
             this.tpImageResize.Location = new System.Drawing.Point(4, 22);
             this.tpImageResize.Name = "tpImageResize";
             this.tpImageResize.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageResize.Size = new System.Drawing.Size(616, 318);
+            this.tpImageResize.Size = new System.Drawing.Size(632, 318);
             this.tpImageResize.TabIndex = 4;
             this.tpImageResize.Text = "Resize";
             this.tpImageResize.UseVisualStyleBackColor = true;
@@ -519,7 +532,7 @@
             this.tpOutputs.Location = new System.Drawing.Point(4, 22);
             this.tpOutputs.Name = "tpOutputs";
             this.tpOutputs.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOutputs.Size = new System.Drawing.Size(616, 318);
+            this.tpOutputs.Size = new System.Drawing.Size(632, 318);
             this.tpOutputs.TabIndex = 2;
             this.tpOutputs.Text = "Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
@@ -658,16 +671,16 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // chkPerformActions
+            // chkTaskOutputConfig
             // 
-            this.chkPerformActions.AutoSize = true;
-            this.chkPerformActions.Location = new System.Drawing.Point(16, 24);
-            this.chkPerformActions.Name = "chkPerformActions";
-            this.chkPerformActions.Size = new System.Drawing.Size(101, 17);
-            this.chkPerformActions.TabIndex = 2;
-            this.chkPerformActions.Text = "Annotate Image";
-            this.chkPerformActions.UseVisualStyleBackColor = true;
-            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.chkPerformActions_CheckedChanged);
+            this.chkTaskOutputConfig.AutoSize = true;
+            this.chkTaskOutputConfig.Location = new System.Drawing.Point(16, 96);
+            this.chkTaskOutputConfig.Name = "chkTaskOutputConfig";
+            this.chkTaskOutputConfig.Size = new System.Drawing.Size(124, 17);
+            this.chkTaskOutputConfig.TabIndex = 3;
+            this.chkTaskOutputConfig.Text = "Reconfigure Outputs";
+            this.chkTaskOutputConfig.UseVisualStyleBackColor = true;
+            this.chkTaskOutputConfig.CheckedChanged += new System.EventHandler(this.chkTaskOutputConfig_CheckedChanged);
             // 
             // WorkflowWizard
             // 
@@ -711,59 +724,62 @@
 
         #endregion
 
-        protected System.Windows.Forms.TabControl tcMain;
-        private System.Windows.Forms.TabPage tpJob;
-        private System.Windows.Forms.ComboBox cboTask;
-        private System.Windows.Forms.TabPage tpOutputs;
-        private System.Windows.Forms.TabPage tpImageResize;
-        private System.Windows.Forms.CheckBox chkPrinter;
-        private System.Windows.Forms.CheckBox chkUpload;
-        private System.Windows.Forms.CheckBox chkClipboard;
-        private System.Windows.Forms.Button btnOutputsConfig;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkUseHotkey;
-        private System.Windows.Forms.CheckBox chkSaveFile;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.GroupBox gbSaveToFile;
-        private System.Windows.Forms.TextBox txtSaveFolder;
+
+        internal System.Windows.Forms.ComboBox cboFileFormat;
+        internal System.Windows.Forms.ComboBox cboSwitchFormat;
+        internal System.Windows.Forms.GroupBox gbPictureQuality;
+        internal System.Windows.Forms.Label lblAfter;
+        internal System.Windows.Forms.Label lblFileFormat;
+        internal System.Windows.Forms.Label lblKB;
+        internal System.Windows.Forms.Label lblQuality;
+        internal System.Windows.Forms.Label lblSwitchTo;
+        internal System.Windows.Forms.NumericUpDown nudSwitchAfter;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.GroupBox gbRemoteLocations;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnOutputsConfig;
+        private System.Windows.Forms.CheckBox chkClipboard;
+        private System.Windows.Forms.CheckBox chkPerformActions;
+        private System.Windows.Forms.CheckBox chkPrinter;
+        private System.Windows.Forms.CheckBox chkSaveFile;
         private System.Windows.Forms.CheckBox chkSendspace;
-        private System.Windows.Forms.CheckBox chkUploadFTP;
-        private System.Windows.Forms.CheckBox chkUploadDropbox;
-        private System.Windows.Forms.TabPage tpImageFileFormat;
-        protected HelpersLib.Hotkey.HotkeyManagerControl hmcHotkeys;
-        private System.Windows.Forms.TabPage tpTasks;
         private System.Windows.Forms.CheckBox chkTaskImageFileFormat;
         private System.Windows.Forms.CheckBox chkTaskImageResize;
-        private System.Windows.Forms.GroupBox gbImageSize;
-        private System.Windows.Forms.Label lblImageSizeFixedAutoScale;
-        private System.Windows.Forms.RadioButton rbImageSizeDefault;
-        private System.Windows.Forms.Label lblImageSizeFixedHeight;
-        private System.Windows.Forms.RadioButton rbImageSizeFixed;
-        private System.Windows.Forms.Label lblImageSizeFixedWidth;
-        private System.Windows.Forms.TextBox txtImageSizeRatio;
-        private System.Windows.Forms.Label lblImageSizeRatioPercentage;
-        private System.Windows.Forms.TextBox txtImageSizeFixedWidth;
-        private System.Windows.Forms.RadioButton rbImageSizeRatio;
-        private System.Windows.Forms.TextBox txtImageSizeFixedHeight;
-        internal System.Windows.Forms.GroupBox gbPictureQuality;
-        private System.Windows.Forms.ComboBox cboJpgSubSampling;
-        private System.Windows.Forms.ComboBox cboJpgQuality;
+        private System.Windows.Forms.CheckBox chkUpload;
+        private System.Windows.Forms.CheckBox chkUploadDropbox;
+        private System.Windows.Forms.CheckBox chkUploadFTP;
+        private System.Windows.Forms.CheckBox chkUseHotkey;
         private System.Windows.Forms.ComboBox cboGIFQuality;
-        private System.Windows.Forms.Label lblGIFQuality;
-        internal System.Windows.Forms.NumericUpDown nudSwitchAfter;
-        internal System.Windows.Forms.Label lblQuality;
-        internal System.Windows.Forms.ComboBox cboSwitchFormat;
-        internal System.Windows.Forms.Label lblFileFormat;
-        internal System.Windows.Forms.ComboBox cboFileFormat;
-        internal System.Windows.Forms.Label lblKB;
-        internal System.Windows.Forms.Label lblAfter;
-        internal System.Windows.Forms.Label lblSwitchTo;
+        private System.Windows.Forms.ComboBox cboJpgQuality;
+        private System.Windows.Forms.ComboBox cboJpgSubSampling;
+        private System.Windows.Forms.ComboBox cboTask;
+        private System.Windows.Forms.GroupBox gbImageSize;
+        private System.Windows.Forms.GroupBox gbRemoteLocations;
+        private System.Windows.Forms.GroupBox gbSaveToFile;
         private System.Windows.Forms.GroupBox gbTasks;
+        private System.Windows.Forms.Label lblGIFQuality;
+        private System.Windows.Forms.Label lblImageSizeFixedAutoScale;
+        private System.Windows.Forms.Label lblImageSizeFixedHeight;
+        private System.Windows.Forms.Label lblImageSizeFixedWidth;
+        private System.Windows.Forms.Label lblImageSizeRatioPercentage;
+        private System.Windows.Forms.RadioButton rbImageSizeDefault;
+        private System.Windows.Forms.RadioButton rbImageSizeFixed;
+        private System.Windows.Forms.RadioButton rbImageSizeRatio;
+        private System.Windows.Forms.TabPage tpImageFileFormat;
+        protected System.Windows.Forms.TabPage tpImageResize;
+        protected System.Windows.Forms.TabPage tpJob;
+        protected System.Windows.Forms.TabPage tpOutputs;
+        protected System.Windows.Forms.TabPage tpTasks;
+        protected System.Windows.Forms.TextBox txtImageSizeFixedHeight;
+        protected System.Windows.Forms.TextBox txtImageSizeFixedWidth;
+        protected System.Windows.Forms.TextBox txtImageSizeRatio;
+        protected System.Windows.Forms.TextBox txtName;
+        protected System.Windows.Forms.TextBox txtSaveFolder;
+        protected HelpersLib.Hotkey.HotkeyManagerControl hmcHotkeys;
         protected System.Windows.Forms.GroupBox gbName;
         protected System.Windows.Forms.GroupBox gbTask;
-        private System.Windows.Forms.CheckBox chkPerformActions;
+        protected System.Windows.Forms.TabControl tcMain;
+        private System.Windows.Forms.CheckBox chkTaskOutputConfig;
+
     }
 }

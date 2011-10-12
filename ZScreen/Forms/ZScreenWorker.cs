@@ -284,6 +284,11 @@ namespace ZScreenGUI
                 }
             }
 
+            PostWorkerTasks();
+        }
+
+        private void PostWorkerTasks()
+        {
             pbPreview.LoadImage(Resources.main);
             rtbDebugLog.Text = Engine.EngineLogger.ToString();
 
@@ -388,11 +393,9 @@ namespace ZScreenGUI
                 else
                 {
                     imageTask.States.Add(WorkerTask.TaskState.CancellationPending);
+                    PostWorkerTasks();
                 }
             }
-
-            if (imageTask.Canceled())
-                imageTask.SetNotifyIconStatus(this.niTray, Resources.zss_tray);
         }
 
         public override void CaptureActiveWindow()
