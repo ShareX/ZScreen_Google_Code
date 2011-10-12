@@ -147,10 +147,12 @@
     </Compile>
     <Compile Include="Global\ExceptionMessage.cs" />
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
+    <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\SoundFileNameEditor.cs" />
-    <Compile Include="Helpers\WorkflowSettings.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
+    <Compile Include="Helpers\WorkerTaskHelper.cs" />
     <Compile Include="Helpers\Workflow.cs" />
+    <Compile Include="Helpers\WorkflowSettings.cs" />
     <Compile Include="Shapes\FreehandCapture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,7 +220,6 @@
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\Freeze.cs" />
     <Compile Include="Helpers\MyTimer.cs" />
-    <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\PasswordManager.cs" />
     <Compile Include="Helpers\TaskManager.cs" />
     <Compile Include="Helpers\ThumbnailCacher.cs" />
@@ -232,7 +233,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\WorkerTaskHelper.cs" />
     <Compile Include="UserControls\DestSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>

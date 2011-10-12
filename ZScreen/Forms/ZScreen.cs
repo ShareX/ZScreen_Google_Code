@@ -665,14 +665,12 @@ namespace ZScreenGUI
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.Workflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormat, Engine.Workflow.ImageFormat);
             if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Engine.Workflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-            Engine.SetImageFormat(ref Engine.zImageFileFormatSwitch, Engine.Workflow.ImageFormat2);
             if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
         }
 
