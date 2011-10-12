@@ -19,6 +19,8 @@ namespace ZScreenLib
         {
             InitializeComponent();
             Initialize(reason, workflow, gui);
+            tcMain.TabPages.Clear();
+            tcMain.TabPages.Add(tpTasks);
         }
 
         protected void Initialize(string reason, Workflow workflow, WorkflowWizardGUIOptions gui)
@@ -138,15 +140,42 @@ namespace ZScreenLib
 
         private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
         {
+            if (chkTaskImageResize.Checked)
+            {
+                tcMain.TabPages.Add(tpImageResize);
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpImageResize);
+            }
         }
 
         private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
         {
+            if (chkTaskImageFileFormat.Checked)
+            {
+                tcMain.TabPages.Add(tpImageFileFormat);
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpImageFileFormat);
+            }
         }
 
         private void chkPerformActions_CheckedChanged(object sender, EventArgs e)
         {
-            
+        }
+
+        private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTaskOutputConfig.Checked)
+            {
+                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpOutputs);
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpOutputs);
+            }
         }
     }
 
