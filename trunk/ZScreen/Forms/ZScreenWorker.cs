@@ -373,7 +373,7 @@ namespace ZScreenGUI
 
                 if (Engine.conf.PromptForWorkflowConfigUI)
                 {
-                    WorkflowWizard wfw = new WorkflowWizard("Configure", imageTask.WorkflowConfig);
+                    WorkflowWizard wfw = new WorkflowWizard(imageTask.FileName, imageTask.WorkflowConfig) { Icon = this.Icon };
                     result = wfw.ShowDialog();
                 }
 

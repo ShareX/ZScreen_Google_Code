@@ -19,8 +19,6 @@ namespace ZScreenLib
         {
             InitializeComponent();
             Initialize(reason, workflow, gui);
-            tcMain.TabPages.Clear();
-            tcMain.TabPages.Add(tpTasks);
         }
 
         protected void Initialize(string reason, Workflow workflow, WorkflowWizardGUIOptions gui)
@@ -28,9 +26,15 @@ namespace ZScreenLib
             if (workflow == null) workflow = new Workflow("New Workflow");
             this.Config = workflow;
             this.Text = Application.ProductName + " - " + reason + " - " + Config.Description;
+
+            tcMain.TabPages.Clear();
             if (gui != null)
             {
                 this.GUI = gui;
+            }
+            else
+            {
+                tcMain.TabPages.Add(tpTasks);
             }
         }
 
@@ -47,7 +51,9 @@ namespace ZScreenLib
         protected void ConfigGui()
         {
             // Hide/Show Tabs
-            if (!GUI.ShowTabJob) this.tcMain.TabPages.Remove(tpJob);
+            if (GUI.ShowTabJob) this.tcMain.TabPages.Add(tpJob);
+            if (GUI.ShowResizeTab) this.tcMain.TabPages.Add(tpImageResize);
+            if (GUI.ShowQualityTab) this.tcMain.TabPages.Add(tpImageQuality);
 
             // Step 1
             txtName.Text = Config.Description;
@@ -61,6 +67,44 @@ namespace ZScreenLib
             }
             cboTask.SelectedIndex = (int)Config.Job;
 
+            // Resize 
+
+
+            // Quality
+            if (cboFileFormat.Items.Count == 0)
+            {
+                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
+            }
+
+            nudSwitchAfter.Value = Engine.Workflow.ImageSizeLimit;
+
+            if (cboSwitchFormat.Items.Count == 0)
+            {
+                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
+            }
+        
+            if (cboJpgQuality.Items.Count == 0)
+            {
+                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
+                cboJpgQuality.SelectedIndex = (int)Config.ImageJpegQuality;
+            }
+          
+            if (cboJpgSubSampling.Items.Count == 0)
+            {
+                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
+                cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
+            }
+           
+            cboGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
+
+            cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
+        (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG;
+
+            cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
+                (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
+        
             // Step 4
 
             chkClipboard.Checked = Config.Outputs.Contains(OutputEnum.Clipboard);
@@ -154,11 +198,11 @@ namespace ZScreenLib
         {
             if (chkTaskImageFileFormat.Checked)
             {
-                tcMain.TabPages.Add(tpImageFileFormat);
+                tcMain.TabPages.Add(tpImageQuality);
             }
             else
             {
-                tcMain.TabPages.Remove(tpImageFileFormat);
+                tcMain.TabPages.Remove(tpImageQuality);
             }
         }
 
@@ -177,10 +221,52 @@ namespace ZScreenLib
                 tcMain.TabPages.Remove(tpOutputs);
             }
         }
+
+        private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+        }
+
+        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
+        {
+            nudSwitchAfterValueChanged();
+        }
+
+        void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
+        {
+            nudSwitchAfterValueChanged();
+        }
+
+        private void nudSwitchAfterValueChanged()
+        {
+            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            if ((int)nudSwitchAfter.Value == 0)
+                cboSwitchFormat.Enabled = false;
+            else
+                cboSwitchFormat.Enabled = true;
+        }
+
+        private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+        }
+
+        private void cboJpgQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
+        }
+
+        private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+        }
     }
 
     public class WorkflowWizardGUIOptions
     {
         public bool ShowTabJob { get; set; }
+        public bool ShowTasks { get; set; }
+        public bool ShowResizeTab { get; set; }
+        public bool ShowQualityTab { get; set; }
     }
 }

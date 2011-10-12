@@ -38,10 +38,11 @@
             this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpTasks = new System.Windows.Forms.TabPage();
             this.gbTasks = new System.Windows.Forms.GroupBox();
+            this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
             this.chkPerformActions = new System.Windows.Forms.CheckBox();
             this.chkTaskImageResize = new System.Windows.Forms.CheckBox();
             this.chkTaskImageFileFormat = new System.Windows.Forms.CheckBox();
-            this.tpImageFileFormat = new System.Windows.Forms.TabPage();
+            this.tpImageQuality = new System.Windows.Forms.TabPage();
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
             this.cboJpgSubSampling = new System.Windows.Forms.ComboBox();
             this.cboJpgQuality = new System.Windows.Forms.ComboBox();
@@ -82,14 +83,13 @@
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
             this.gbName.SuspendLayout();
             this.tpTasks.SuspendLayout();
             this.gbTasks.SuspendLayout();
-            this.tpImageFileFormat.SuspendLayout();
+            this.tpImageQuality.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             this.tpImageResize.SuspendLayout();
@@ -103,7 +103,7 @@
             // 
             this.tcMain.Controls.Add(this.tpJob);
             this.tcMain.Controls.Add(this.tpTasks);
-            this.tcMain.Controls.Add(this.tpImageFileFormat);
+            this.tcMain.Controls.Add(this.tpImageQuality);
             this.tcMain.Controls.Add(this.tpImageResize);
             this.tcMain.Controls.Add(this.tpOutputs);
             this.tcMain.Location = new System.Drawing.Point(8, 8);
@@ -204,6 +204,17 @@
             this.gbTasks.TabStop = false;
             this.gbTasks.Text = "I want to...";
             // 
+            // chkTaskOutputConfig
+            // 
+            this.chkTaskOutputConfig.AutoSize = true;
+            this.chkTaskOutputConfig.Location = new System.Drawing.Point(16, 96);
+            this.chkTaskOutputConfig.Name = "chkTaskOutputConfig";
+            this.chkTaskOutputConfig.Size = new System.Drawing.Size(124, 17);
+            this.chkTaskOutputConfig.TabIndex = 3;
+            this.chkTaskOutputConfig.Text = "Reconfigure Outputs";
+            this.chkTaskOutputConfig.UseVisualStyleBackColor = true;
+            this.chkTaskOutputConfig.CheckedChanged += new System.EventHandler(this.chkTaskOutputConfig_CheckedChanged);
+            // 
             // chkPerformActions
             // 
             this.chkPerformActions.AutoSize = true;
@@ -231,21 +242,21 @@
             this.chkTaskImageFileFormat.AutoSize = true;
             this.chkTaskImageFileFormat.Location = new System.Drawing.Point(16, 72);
             this.chkTaskImageFileFormat.Name = "chkTaskImageFileFormat";
-            this.chkTaskImageFileFormat.Size = new System.Drawing.Size(142, 17);
+            this.chkTaskImageFileFormat.Size = new System.Drawing.Size(127, 17);
             this.chkTaskImageFileFormat.TabIndex = 1;
-            this.chkTaskImageFileFormat.Text = "Change image file format";
+            this.chkTaskImageFileFormat.Text = "Change image quality";
             this.chkTaskImageFileFormat.UseVisualStyleBackColor = true;
             this.chkTaskImageFileFormat.CheckedChanged += new System.EventHandler(this.chkTaskImageFileFormat_CheckedChanged);
             // 
-            // tpImageFileFormat
+            // tpImageQuality
             // 
-            this.tpImageFileFormat.Controls.Add(this.gbPictureQuality);
-            this.tpImageFileFormat.Location = new System.Drawing.Point(4, 22);
-            this.tpImageFileFormat.Name = "tpImageFileFormat";
-            this.tpImageFileFormat.Size = new System.Drawing.Size(632, 318);
-            this.tpImageFileFormat.TabIndex = 5;
-            this.tpImageFileFormat.Text = "File Format";
-            this.tpImageFileFormat.UseVisualStyleBackColor = true;
+            this.tpImageQuality.Controls.Add(this.gbPictureQuality);
+            this.tpImageQuality.Location = new System.Drawing.Point(4, 22);
+            this.tpImageQuality.Name = "tpImageQuality";
+            this.tpImageQuality.Size = new System.Drawing.Size(632, 318);
+            this.tpImageQuality.TabIndex = 5;
+            this.tpImageQuality.Text = "Quality";
+            this.tpImageQuality.UseVisualStyleBackColor = true;
             // 
             // gbPictureQuality
             // 
@@ -277,6 +288,7 @@
             this.cboJpgSubSampling.Name = "cboJpgSubSampling";
             this.cboJpgSubSampling.Size = new System.Drawing.Size(416, 21);
             this.cboJpgSubSampling.TabIndex = 120;
+            this.cboJpgSubSampling.SelectedIndexChanged += new System.EventHandler(this.cboJpgSubSampling_SelectedIndexChanged);
             // 
             // cboJpgQuality
             // 
@@ -286,6 +298,7 @@
             this.cboJpgQuality.Name = "cboJpgQuality";
             this.cboJpgQuality.Size = new System.Drawing.Size(416, 21);
             this.cboJpgQuality.TabIndex = 119;
+            this.cboJpgQuality.SelectedIndexChanged += new System.EventHandler(this.cboJpgQuality_SelectedIndexChanged);
             // 
             // cboGIFQuality
             // 
@@ -325,6 +338,8 @@
             0,
             0,
             0});
+            this.nudSwitchAfter.ValueChanged += new System.EventHandler(this.nudSwitchAfter_ValueChanged);
+            this.nudSwitchAfter.LostFocus += new System.EventHandler(this.nudSwitchAfter_LostFocus);
             // 
             // lblQuality
             // 
@@ -344,6 +359,7 @@
             this.cboSwitchFormat.Name = "cboSwitchFormat";
             this.cboSwitchFormat.Size = new System.Drawing.Size(98, 21);
             this.cboSwitchFormat.TabIndex = 9;
+            this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cboSwitchFormat_SelectedIndexChanged);
             // 
             // lblFileFormat
             // 
@@ -363,6 +379,7 @@
             this.cboFileFormat.Name = "cboFileFormat";
             this.cboFileFormat.Size = new System.Drawing.Size(98, 21);
             this.cboFileFormat.TabIndex = 6;
+            this.cboFileFormat.SelectedIndexChanged += new System.EventHandler(this.cboFileFormat_SelectedIndexChanged);
             // 
             // lblKB
             // 
@@ -671,17 +688,6 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // chkTaskOutputConfig
-            // 
-            this.chkTaskOutputConfig.AutoSize = true;
-            this.chkTaskOutputConfig.Location = new System.Drawing.Point(16, 96);
-            this.chkTaskOutputConfig.Name = "chkTaskOutputConfig";
-            this.chkTaskOutputConfig.Size = new System.Drawing.Size(124, 17);
-            this.chkTaskOutputConfig.TabIndex = 3;
-            this.chkTaskOutputConfig.Text = "Reconfigure Outputs";
-            this.chkTaskOutputConfig.UseVisualStyleBackColor = true;
-            this.chkTaskOutputConfig.CheckedChanged += new System.EventHandler(this.chkTaskOutputConfig_CheckedChanged);
-            // 
             // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
@@ -707,7 +713,7 @@
             this.tpTasks.ResumeLayout(false);
             this.gbTasks.ResumeLayout(false);
             this.gbTasks.PerformLayout();
-            this.tpImageFileFormat.ResumeLayout(false);
+            this.tpImageQuality.ResumeLayout(false);
             this.gbPictureQuality.ResumeLayout(false);
             this.gbPictureQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
@@ -765,7 +771,7 @@
         private System.Windows.Forms.RadioButton rbImageSizeDefault;
         private System.Windows.Forms.RadioButton rbImageSizeFixed;
         private System.Windows.Forms.RadioButton rbImageSizeRatio;
-        private System.Windows.Forms.TabPage tpImageFileFormat;
+        private System.Windows.Forms.TabPage tpImageQuality;
         protected System.Windows.Forms.TabPage tpImageResize;
         protected System.Windows.Forms.TabPage tpJob;
         protected System.Windows.Forms.TabPage tpOutputs;

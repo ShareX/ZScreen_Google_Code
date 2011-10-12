@@ -187,8 +187,6 @@ namespace ZScreenLib
 
         public const string zImageAnnotator = "Image Annotator";
         public const string zImageEffects = "Image Effects";
-        public static ImageFileFormat zImageFileFormat = new ImageFileFormatPng();
-        public static ImageFileFormat zImageFileFormatSwitch = new ImageFileFormatJpg();
 
         private static bool RunConfig = false;
 

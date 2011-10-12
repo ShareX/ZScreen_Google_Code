@@ -56,32 +56,14 @@ namespace ZScreenLib
         SELECTED_WINDOW
     }
 
-    public enum RegionStyles
+    public enum CaptureEngineType
     {
-        [Description("No Change")]
-        NO_TRANSPARENCY,
-        [Description("Region Transparent")]
-        REGION_TRANSPARENT,
-        [Description("Region Brightness")]
-        REGION_BRIGHTNESS,
-        [Description("Background Region Transparent")]
-        BACKGROUND_REGION_TRANSPARENT,
-        [Description("Background Region Brightness")]
-        BACKGROUND_REGION_BRIGHTNESS,
-        [Description("Background Region Grayscale")]
-        BACKGROUND_REGION_GRAYSCALE
-    }
-
-    public enum HistoryListFormat
-    {
-        [Description("FileName")]
-        NAME,
-        [Description("Time - FileName")]
-        TIME_NAME,
-        [Description("Date - Time - FileName")]
-        DATE_TIME_NAME,
-        [Description("Date - FileName")]
-        DATE_NAME
+        [Description("GDI - Graphics Device Interface for Windows XP")]
+        GDI,
+        [Description("DWM - Desktop Window Manager for Windows Vista or Windows 7")]
+        DWM,
+        [Description("Hybrid - for Windows XP, Windows Vista or Windows 7")]
+        Hybrid
     }
 
     public enum WatermarkType
@@ -116,6 +98,35 @@ namespace ZScreenLib
         BOTTOM_RIGHT
     }
 
+    public enum RegionStyles
+    {
+        [Description("No Change")]
+        NO_TRANSPARENCY,
+        [Description("Region Transparent")]
+        REGION_TRANSPARENT,
+        [Description("Region Brightness")]
+        REGION_BRIGHTNESS,
+        [Description("Background Region Transparent")]
+        BACKGROUND_REGION_TRANSPARENT,
+        [Description("Background Region Brightness")]
+        BACKGROUND_REGION_BRIGHTNESS,
+        [Description("Background Region Grayscale")]
+        BACKGROUND_REGION_GRAYSCALE
+    }
+
+    public enum HistoryListFormat
+    {
+        [Description("FileName")]
+        NAME,
+        [Description("Time - FileName")]
+        TIME_NAME,
+        [Description("Date - Time - FileName")]
+        DATE_TIME_NAME,
+        [Description("Date - FileName")]
+        DATE_NAME
+    }
+
+  
     public enum AutoScreenshotterJobs
     {
         [Description("Entire Screen")]
@@ -148,15 +159,5 @@ namespace ZScreenLib
         Cropv2,
         [Description("Crop v3 - Capture Rectangle as shown in Capture Shape")]
         Cropv3,
-    }
-
-    public enum CaptureEngineType
-    {
-        [Description("GDI - Graphics Device Interface for Windows XP")]
-        GDI,
-        [Description("DWM - Desktop Window Manager for Windows Vista or Windows 7")]
-        DWM,
-        [Description("Hybrid - for Windows XP, Windows Vista or Windows 7")]
-        Hybrid
     }
 }

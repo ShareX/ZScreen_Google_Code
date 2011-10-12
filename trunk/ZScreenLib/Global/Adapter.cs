@@ -476,6 +476,34 @@ namespace ZScreenLib
             }
         }
 
+        public static string GetDirPathUsingFolderBrowser(string title)
+        {
+            string newDir = string.Empty;
+            if (TaskbarManager.IsPlatformSupported)
+            {
+                CommonOpenFileDialog dlg = new CommonOpenFileDialog();
+                dlg.EnsureReadOnly = true;
+                dlg.IsFolderPicker = true;
+                dlg.AllowNonFileSystemItems = true;
+                dlg.Title = title;
+
+                if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    newDir = dlg.FileName;
+                }
+            }
+            else
+            {
+                FolderBrowserDialog dlg = new FolderBrowserDialog();
+                dlg.Description = title;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    newDir = dlg.SelectedPath;
+                }
+            }
+            return newDir;
+        }
+
         public static DialogResult ShowFontDialog()
         {
             DialogResult result = DialogResult.Cancel;
@@ -509,38 +537,7 @@ namespace ZScreenLib
             return result;
         }
 
-        /// <summary>
-        /// Method to show the appropriate Folder Browser dialog based on the OS
-        /// </summary>
-        /// <param name="title">Title for the folder browser</param>
-        /// <returns>Folder path chosen by the user</returns>
-        public static string GetDirPathUsingFolderBrowser(string title)
-        {
-            string newDir = string.Empty;
-            if (TaskbarManager.IsPlatformSupported)
-            {
-                CommonOpenFileDialog dlg = new CommonOpenFileDialog();
-                dlg.EnsureReadOnly = true;
-                dlg.IsFolderPicker = true;
-                dlg.AllowNonFileSystemItems = true;
-                dlg.Title = title;
 
-                if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    newDir = dlg.FileName;
-                }
-            }
-            else
-            {
-                FolderBrowserDialog dlg = new FolderBrowserDialog();
-                dlg.Description = title;
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    newDir = dlg.SelectedPath;
-                }
-            }
-            return newDir;
-        }
 
         #region "Windows 7 only"
 
