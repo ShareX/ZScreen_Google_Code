@@ -51,7 +51,7 @@ namespace ZScreenLib
             dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.MyImageUploaders.Cast<int>().ToList());
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.MyTextUploaders.Cast<int>().ToList());
-            dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.MyFileUploaders.Cast<int>().ToList());
+            dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.WorkflowConfig.FileUploaders.Cast<int>().ToList());
             dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.Cast<int>().ToList());
         }
 
@@ -89,7 +89,7 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.MyImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, Task.MyTextUploaders);
-                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, Task.MyFileUploaders);
+                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, Task.WorkflowConfig.FileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, Task.MyLinkUploaders);
 
                 this.Hide();

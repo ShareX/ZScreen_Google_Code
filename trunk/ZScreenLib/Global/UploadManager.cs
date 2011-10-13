@@ -101,15 +101,15 @@ namespace ZScreenLib
             ChangeListViewItemStatus(info);
         }
 
-        private static void task_UploadStarted(WorkerTask info)
+        private static void task_UploadStarted(WorkerTask task)
         {
-            string status = string.Format("Upload started. ID: {0}, Filename: {1}", info.ID, info.FileName);
-            if (!string.IsNullOrEmpty(info.LocalFilePath)) status += ", Filepath: " + info.LocalFilePath;
+            string status = string.Format("Upload started. ID: {0}, Filename: {1}", task.ID, task.Info.FileName);
+            if (!string.IsNullOrEmpty(task.Info.LocalFilePath)) status += ", Filepath: " + task.Info.LocalFilePath;
             StaticHelper.WriteLine(status);
 
-            ListViewItem lvi = ListViewControl.Items[info.ID];
-            lvi.Text = info.FileName;
-            lvi.SubItems[1].Text = info.Status.GetDescription();
+            ListViewItem lvi = ListViewControl.Items[task.ID];
+            lvi.Text = task.Info.FileName;
+            lvi.SubItems[1].Text = task.Status.GetDescription();
             lvi.ImageIndex = 0;
         }
 
@@ -126,20 +126,20 @@ namespace ZScreenLib
             }
         }
 
-        private static void task_UploadCompleted(WorkerTask info)
+        private static void task_UploadCompleted(WorkerTask task)
         {
             try
             {
-                if (ListViewControl != null && info != null && info.Result != null)
+                if (ListViewControl != null && task != null && task.Result != null)
                 {
-                    ListViewItem lvi = ListViewControl.Items[info.ID];
-                    lvi.Tag = info.Result;
+                    ListViewItem lvi = ListViewControl.Items[task.ID];
+                    lvi.Tag = task.Result;
 
-                    if (info.Result.IsError)
+                    if (task.Result.IsError)
                     {
-                        string errors = string.Join("\r\n\r\n", info.Result.Errors.ToArray());
+                        string errors = string.Join("\r\n\r\n", task.Result.Errors.ToArray());
 
-                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", info.ID, info.FileName, errors);
+                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", task.ID, task.Info.FileName, errors);
 
                         lvi.SubItems[1].Text = "Error";
                         lvi.SubItems[8].Text = string.Empty;
@@ -152,15 +152,15 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", info.ID, info.FileName,
-                            info.Result.URL, (int)info.UploadDuration);
+                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", task.ID, task.Info.FileName,
+                            task.Result.URL, (int)task.UploadDuration);
 
-                        lvi.SubItems[1].Text = info.Status.GetDescription();
+                        lvi.SubItems[1].Text = task.Status.GetDescription();
                         lvi.ImageIndex = 2;
 
-                        if (!string.IsNullOrEmpty(info.Result.URL))
+                        if (!string.IsNullOrEmpty(task.Result.URL))
                         {
-                            string url = string.IsNullOrEmpty(info.Result.ShortenedURL) ? info.Result.URL : info.Result.ShortenedURL;
+                            string url = string.IsNullOrEmpty(task.Result.ShortenedURL) ? task.Result.URL : task.Result.ShortenedURL;
 
                             lvi.SubItems[8].Text = url;
 
@@ -171,7 +171,7 @@ namespace ZScreenLib
 
                             if (Engine.conf.HistorySave)
                             {
-                                HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, info.GenerateHistoryItem());
+                                HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem());
                             }
 
                             //if (Engine.niTray.Visible)
@@ -214,7 +214,7 @@ namespace ZScreenLib
                     wt.ID, wt.Job1, wt.Job2, wt.GetDestinationName());
 
                 ListViewItem lvi = new ListViewItem();
-                lvi.Text = wt.FileName;
+                lvi.Text = wt.Info.FileName;
                 lvi.SubItems.Add("In queue");
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
@@ -424,9 +424,9 @@ namespace ZScreenLib
                     {
                         string tempText = clipboardText.ToString().Trim();
 
-                        if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.FileSize))
+                        if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.Info.FileSize))
                         {
-                            tempText += " " + task.FileSize;
+                            tempText += " " + task.Info.FileSize;
                         }
                         if (!string.IsNullOrEmpty(tempText))
                         {
