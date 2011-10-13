@@ -12,20 +12,20 @@ namespace ZScreenLib
     {
         public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
         public Workflow Config = null;
+        public TaskInfo Info = new TaskInfo();
 
-        public WorkflowWizard() { }
-
-        public WorkflowWizard(string reason = "Create", Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
+        public WorkflowWizard(TaskInfo info = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
         {
             InitializeComponent();
-            Initialize(reason, workflow, gui);
+            Initialize(info, workflow, gui);
         }
 
-        protected void Initialize(string reason, Workflow workflow, WorkflowWizardGUIOptions gui)
+        protected void Initialize(TaskInfo info, Workflow workflow, WorkflowWizardGUIOptions gui)
         {
             if (workflow == null) workflow = new Workflow("New Workflow");
             this.Config = workflow;
-            this.Text = Application.ProductName + " - " + reason + " - " + Config.Description;
+
+            this.Text = Application.ProductName + " - " + (info == null ? workflow.Description : info.Job.GetDescription());
 
             tcMain.TabPages.Clear();
             if (gui != null)
@@ -35,6 +35,10 @@ namespace ZScreenLib
             else
             {
                 tcMain.TabPages.Add(tpTasks);
+            }
+            if (info != null)
+            {
+                this.Info = info;
             }
         }
 
@@ -58,7 +62,7 @@ namespace ZScreenLib
 
             // Quality
             ConfigGuiQuality();
-        
+
             // Outputs
             ConfigGuiOutputs();
         }
@@ -75,11 +79,27 @@ namespace ZScreenLib
 
         private void ConfigGuiTasks()
         {
-           chkPerformActions.Checked = Config.PerformActions;
+            chkPerformActions.Checked = Config.PerformActions;
         }
 
         private void ConfigGuiResize()
         {
+            switch (Config.ImageSizeType)
+            {
+                case ImageSizeType.DEFAULT:
+                    rbImageSizeDefault.Checked = true;
+                    break;
+                case ImageSizeType.FIXED:
+                    rbImageSizeFixed.Checked = true;
+                    break;
+                case ImageSizeType.RATIO:
+                    rbImageSizeRatio.Checked = true;
+                    break;
+            }
+
+            txtImageSizeFixedWidth.Text = Config.ImageSizeFixedWidth.ToString();
+            txtImageSizeFixedHeight.Text = Config.ImageSizeFixedHeight.ToString();
+            txtImageSizeRatio.Text = Config.ImageSizeRatioPercentage.ToString();
 
         }
 
@@ -126,6 +146,14 @@ namespace ZScreenLib
             chkSaveFile.Checked = Config.Outputs.Contains(OutputEnum.LocalDisk);
             chkUpload.Checked = Config.Outputs.Contains(OutputEnum.RemoteHost);
             chkPrinter.Checked = Config.Outputs.Contains(OutputEnum.Printer);
+
+            gbSaveToFile.Visible = chkSaveFile.Checked;
+            txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Info.LocalFilePath);
+            txtSaveFolder.Text = Path.GetDirectoryName(Info.LocalFilePath);
+
+            chkUploadDropbox.Checked = Config.FileUploaders.Contains(FileUploaderType.Dropbox);
+            chkUploadFTP.Checked = Config.FileUploaders.Contains(FileUploaderType.FTP);
+            chkUploadSendSpace.Checked = Config.FileUploaders.Contains(FileUploaderType.SendSpace);
         }
 
         private void BeforeClose()
@@ -143,22 +171,18 @@ namespace ZScreenLib
 
             // Outputs
             Config.Outputs.Clear();
-            if (chkClipboard.Checked)
+            if (chkClipboard.Checked) Config.Outputs.Add(OutputEnum.Clipboard);
+            if (chkSaveFile.Checked) Config.Outputs.Add(OutputEnum.LocalDisk);
+            if (chkUpload.Checked) Config.Outputs.Add(OutputEnum.RemoteHost);
+            if (chkPrinter.Checked) Config.Outputs.Add(OutputEnum.Printer);
+
+            if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
             {
-                Config.Outputs.Add(OutputEnum.Clipboard);
+                string ext = Path.GetExtension(Info.LocalFilePath);
+                Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
             }
-            if (chkSaveFile.Checked)
-            {
-                Config.Outputs.Add(OutputEnum.LocalDisk);
-            }
-            if (chkUpload.Checked)
-            {
-                Config.Outputs.Add(OutputEnum.RemoteHost);
-            }
-            if (chkPrinter.Checked)
-            {
-                Config.Outputs.Add(OutputEnum.Printer);
-            }
+
+
         }
 
         #endregion Config GUI
@@ -203,8 +227,9 @@ namespace ZScreenLib
         {
             if (chkSaveFile.Checked && string.IsNullOrEmpty(txtSaveFolder.Text))
             {
-                txtSaveFolder.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName);
+                txtSaveFolder.Text = Path.GetDirectoryName(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName));
             }
+            gbSaveToFile.Visible = chkSaveFile.Checked;
         }
 
         private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
@@ -215,7 +240,7 @@ namespace ZScreenLib
         {
             if (chkTaskImageResize.Checked)
             {
-                tcMain.TabPages.Add(tpImageResize);
+                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageResize);
             }
             else
             {
@@ -227,7 +252,7 @@ namespace ZScreenLib
         {
             if (chkTaskImageFileFormat.Checked)
             {
-                tcMain.TabPages.Add(tpImageQuality);
+                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageQuality);
             }
             else
             {
@@ -237,6 +262,7 @@ namespace ZScreenLib
 
         private void chkPerformActions_CheckedChanged(object sender, EventArgs e)
         {
+
         }
 
         private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
@@ -291,6 +317,37 @@ namespace ZScreenLib
         }
 
         #endregion Control Events
+
+        private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
+        private void rbImageSizeFixed_CheckedChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
+        private void rbImageSizeRatio_CheckedChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
+        private void ImageSizeRadioBoxUpdate()
+        {
+            if (rbImageSizeDefault.Checked)
+            {
+                Config.ImageSizeType = ImageSizeType.DEFAULT;
+            }
+            else if (rbImageSizeFixed.Checked)
+            {
+                Config.ImageSizeType = ImageSizeType.FIXED;
+            }
+            else if (rbImageSizeRatio.Checked)
+            {
+                Config.ImageSizeType = ImageSizeType.RATIO;
+            }
+        }
     }
 
     public class WorkflowWizardGUIOptions

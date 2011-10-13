@@ -32,7 +32,7 @@ namespace ZScreenLib
 
                     if (ZAppHelper.IsImageFile(path) && (File.Exists(ur.LocalFilePath) || !string.IsNullOrEmpty(ur.URL)))
                     {
-                        this.pbPreview.LoadImage(task.LocalFilePath, ur.URL);
+                        this.pbPreview.LoadImage(task.Info.LocalFilePath, ur.URL);
                         break;
                     }
                     else if(task.tempImage != null)
@@ -92,7 +92,7 @@ namespace ZScreenLib
 
                 this.MinimumSize = new Size(this.Width, this.Height);
 
-                if (File.Exists(task.LocalFilePath))
+                if (File.Exists(task.Info.LocalFilePath))
                 {
                     Button btnOpenLocal = new Button();
                     btnOpenLocal.Text = "Open &Local file";
@@ -134,9 +134,9 @@ namespace ZScreenLib
 
         private void btnCopyImage_Click(object sender, EventArgs e)
         {
-            if (File.Exists(urTask.LocalFilePath))
+            if (File.Exists(urTask.Info.LocalFilePath))
             {
-                using (Image img = GraphicsMgr.GetImageSafely(urTask.LocalFilePath))
+                using (Image img = GraphicsMgr.GetImageSafely(urTask.Info.LocalFilePath))
                 {
                     Adapter.CopyImageToClipboard(img);
                 }
@@ -164,18 +164,18 @@ namespace ZScreenLib
 
         private void btnDeleteClose_Click(object sender, EventArgs e)
         {
-            if (urTask != null && File.Exists(urTask.LocalFilePath))
+            if (urTask != null && File.Exists(urTask.Info.LocalFilePath))
             {
-                File.Delete(urTask.LocalFilePath);
+                File.Delete(urTask.Info.LocalFilePath);
             }
             btnClose_Click(sender, e);
         }
 
         private void btnOpenLocal_Click(object sender, EventArgs e)
         {
-            if (urTask != null && !string.IsNullOrEmpty(urTask.LocalFilePath))
+            if (urTask != null && !string.IsNullOrEmpty(urTask.Info.LocalFilePath))
             {
-                StaticHelper.LoadBrowser(urTask.LocalFilePath);
+                StaticHelper.LoadBrowser(urTask.Info.LocalFilePath);
             }
         }
 

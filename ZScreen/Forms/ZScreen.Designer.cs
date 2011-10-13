@@ -2143,10 +2143,10 @@ namespace ZScreenGUI
             // tcOptions
             // 
             this.tcOptions.Controls.Add(this.tpOptionsGeneral);
+            this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpCaptureQuality);
             this.tcOptions.Controls.Add(this.tpWatermark);
             this.tcOptions.Controls.Add(this.tpPaths);
-            this.tcOptions.Controls.Add(this.tpFileNaming);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
             this.tcOptions.Controls.Add(this.tpInteraction);
             this.tcOptions.Controls.Add(this.tpProxy);

@@ -212,11 +212,11 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.LocalFilePath))
+                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.Info.LocalFilePath))
                             {
                                 try
                                 {
-                                    File.Delete(task.LocalFilePath);
+                                    File.Delete(task.Info.LocalFilePath);
                                 }
                                 catch (Exception ex) // TODO: sometimes file is still locked... delete those files sometime
                                 {
@@ -236,7 +236,7 @@ namespace ZScreenGUI
                     this.btnOpenSourceBrowser.Enabled = bLastSourceButtonsEnabled;
                     this.btnOpenSourceString.Enabled = bLastSourceButtonsEnabled;
 
-                    if (task.UploadResults.Count > 0 || File.Exists(task.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
+                    if (task.UploadResults.Count > 0 || File.Exists(task.Info.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
                         if (Engine.conf.CompleteSound)
                         {
@@ -363,6 +363,8 @@ namespace ZScreenGUI
         /// <param name="job">Job Type</param>
         public void RunWorkerAsync(WorkerTask imageTask)
         {
+            if (imageTask == null) return;
+
             imageTask.WasToTakeScreenshot = true;
             // the last point before the task enters background
             if (imageTask.tempImage != null)
@@ -370,12 +372,6 @@ namespace ZScreenGUI
                 pbPreview.LoadImage(imageTask.tempImage);
 
                 DialogResult result = System.Windows.Forms.DialogResult.OK;
-
-                if (Engine.conf.PromptForWorkflowConfigUI)
-                {
-                    WorkflowWizard wfw = new WorkflowWizard(imageTask.FileName, imageTask.WorkflowConfig) { Icon = this.Icon };
-                    result = wfw.ShowDialog();
-                }
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
@@ -713,10 +709,10 @@ namespace ZScreenGUI
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.Translate)
             {
                 if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.LocalFilePath))
+                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.Info.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
-                    task2.SetImage(task.LocalFilePath);
+                    task2.SetImage(task.Info.LocalFilePath);
                     task2.States.Add(WorkerTask.TaskState.Finished); // we do not retry again
 
                     if (task.Job1 == JobLevel1.Image)
@@ -769,7 +765,7 @@ namespace ZScreenGUI
                 }
             }
 
-            Adapter.AddRecentItem(task.LocalFilePath);
+            Adapter.AddRecentItem(task.Info.LocalFilePath);
         }
 
         #endregion History

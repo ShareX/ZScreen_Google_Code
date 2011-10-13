@@ -150,9 +150,9 @@ namespace ZScreenGUI
                                 }
                             }
                         }
-                        else if (File.Exists(task.LocalFilePath))
+                        else if (File.Exists(task.Info.LocalFilePath))
                         {
-                            Process.Start(task.LocalFilePath);
+                            Process.Start(task.Info.LocalFilePath);
                         }
                         break;
                 }

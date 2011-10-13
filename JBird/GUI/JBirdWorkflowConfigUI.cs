@@ -13,11 +13,11 @@ namespace JBirdGUI
 {
     public partial class JBirdWorkflowWizard : ZScreenLib.WorkflowWizard
     {
-        public JBirdWorkflowWizard(string reason = "Create", Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
+        public JBirdWorkflowWizard(TaskInfo info = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
         {
             InitializeComponent();
             base.InitializeComponent();
-            base.Initialize(reason, workflow, gui);
+            base.Initialize(info, workflow, gui);
 
             HotkeyManager tempHotkeyMgr;
             Program.HotkeyMgrs.TryGetValue(this.Config.ID, out tempHotkeyMgr);

@@ -232,6 +232,7 @@ namespace ZScreenLib
 
         [Browsable(false)]
         public List<OutputEnum> Outputs { get; set; }
+        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
 
         [Browsable(false)]
         public UploadersConfig ConfigOutputs { get; set; }

@@ -246,7 +246,7 @@ namespace ZScreenTesterGUI
                             }
                             break;
                         case UploaderType.FileUploader:
-                            task.MyFileUploaders.Add(uploader.FileUploader);
+                            task.WorkflowConfig.FileUploaders.Add(uploader.FileUploader);
                             task.UpdateLocalFilePath(TestFilePath);
                             task.UploadFile();
                             break;

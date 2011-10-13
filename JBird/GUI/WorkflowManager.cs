@@ -47,7 +47,7 @@ namespace ZScreenLib
 
         private void btnProfileCreate_Click(object sender, EventArgs e)
         {
-            WorkflowWizard pw = new WorkflowWizard("Create") { Icon = this.Icon };
+            WorkflowWizard pw = new WorkflowWizard() { Icon = this.Icon };
 
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -78,7 +78,7 @@ namespace ZScreenLib
         {
             Workflow wf = Workflows[(int)lvi.Tag];
             WorkflowWizardGUIOptions wfgui = new WorkflowWizardGUIOptions() { ShowTabJob = true };
-            JBirdWorkflowWizard pw = new JBirdWorkflowWizard("Edit", wf, wfgui) { Icon = this.Icon };
+            JBirdWorkflowWizard pw = new JBirdWorkflowWizard(null, wf, wfgui) { Icon = this.Icon };
             if (pw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 lvi.Tag = pw.Config;
