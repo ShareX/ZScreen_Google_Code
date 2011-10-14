@@ -74,7 +74,7 @@ namespace ZScreenGUI
             base.tsCoreMainTab.Visible = true;
 
             pbPreview.DisableViewer = true;
-            pbPreview.LoadImage(Resources.main);
+            pbPreview.LoadImage(Resources.ZScreen_256, PictureBoxSizeMode.CenterImage);
             pbPreview.SetNote("You can also Drag n Drop files or a directory on to anywhere in this page.");
 
             this.Icon = Resources.zss_main;

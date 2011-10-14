@@ -230,7 +230,6 @@
             this.chkPerformActions.TabIndex = 2;
             this.chkPerformActions.Text = "Annotate Image";
             this.chkPerformActions.UseVisualStyleBackColor = true;
-            this.chkPerformActions.CheckedChanged += new System.EventHandler(this.chkPerformActions_CheckedChanged);
             // 
             // chkTaskImageResize
             // 
@@ -749,7 +748,6 @@
             this.MinimumSize = new System.Drawing.Size(664, 480);
             this.Name = "WorkflowWizard";
             this.Text = "Configure Workflow";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkflowWizard_FormClosing);
             this.Load += new System.EventHandler(this.WorkflowWizard_Load);
             this.tcMain.ResumeLayout(false);
             this.tpJob.ResumeLayout(false);

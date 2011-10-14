@@ -266,17 +266,25 @@ namespace ZScreenLib
                 result = wfw.ShowDialog();
             }
 
+            if (result == DialogResult.OK)
+            {
+                if (!States.Contains(TaskState.ImageProcessed))
+                {
+                    ProcessImage(tempImage);
+                }
+            }
+
             if (result == DialogResult.Cancel)
             {
                 this.States.Add(TaskState.CancellationPending);
-                SetNotifyIconStatus(Info.TrayIcon, Resources.zss_tray);
+                SetNotifyIconStatus(Info.TrayIcon, ready: true);
             }
         }
 
         public void StartWork(JobLevel2 job)
         {
             Job2 = job;
-            SetNotifyIconStatus(Info.TrayIcon, Resources.zss_busy);
+            SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
             switch (job)
             {
@@ -497,11 +505,6 @@ namespace ZScreenLib
 
                 SetOCR(tempImage);
 
-                if (!States.Contains(TaskState.ImageProcessed))
-                {
-                    States.Add(TaskState.ImageProcessed);
-                    ProcessImage(tempImage);
-                }
             }
 
             return tempImage != null;
@@ -892,6 +895,7 @@ namespace ZScreenLib
 
         private void ProcessImage(Image img)
         {
+            States.Add(TaskState.ImageProcessed);
             bool window = Job2 == JobLevel2.CaptureActiveWindow || Job2 == JobLevel2.CaptureSelectedWindow || Job2 == JobLevel2.CaptureEntireScreen;
 
             if (img != null)
@@ -1924,8 +1928,9 @@ namespace ZScreenLib
             return !States.Contains(TaskState.CancellationPending);
         }
 
-        public void SetNotifyIconStatus(NotifyIcon ni, Icon ico)
+        public void SetNotifyIconStatus(NotifyIcon ni, bool ready)
         {
+            Icon ico = ready ? Resources.zss_tray : Resources.zss_busy;
             if (ni != null && ico != null)
             {
                 ni.Icon = ico;
@@ -1952,7 +1957,7 @@ namespace ZScreenLib
                         sbMsg.Append(GetActiveUploadersDescription<FileUploaderType>(WorkflowConfig.FileUploaders));
                         break;
                 }
-                ni.Text = sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
+                ni.Text = ready ? Engine.GetProductName() : sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
             }
         }
 

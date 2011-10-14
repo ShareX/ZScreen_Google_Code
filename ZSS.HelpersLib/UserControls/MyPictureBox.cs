@@ -53,8 +53,9 @@ namespace HelpersLib
             pbMain.LoadProgressChanged += new ProgressChangedEventHandler(pbMain_LoadProgressChanged);
         }
 
-        public void LoadImage(Image img)
+        public void LoadImage(Image img, PictureBoxSizeMode sizeMode = PictureBoxSizeMode.Zoom)
         {
+            pbMain.SizeMode = sizeMode;
             pbMain.Image = (Image)img.Clone();
             isReady = true;
         }
