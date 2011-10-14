@@ -5,6 +5,7 @@ using HelpersLib;
 using HelpersLib.Hotkey;
 using UploadersAPILib;
 using UploadersLib;
+using System.Drawing;
 
 namespace ZScreenLib
 {
@@ -152,7 +153,7 @@ namespace ZScreenLib
                 CheckBox chkUploader = new CheckBox()
                 {
                     Text = fut.GetDescription(),
-                    Checked = Config.FileUploaders.Contains(fut), 
+                    Checked = Config.FileUploaders.Contains(fut),
                     Tag = fut
                 };
                 if (Config.ConfigOutputs.IsActive(fut))
@@ -171,7 +172,9 @@ namespace ZScreenLib
                     {
                         Text = iut.GetDescription(),
                         Checked = Config.ImageUploaders.Contains(iut),
-                        Tag = iut
+                        Tag = iut,
+                        AutoSize = false,
+                        Size = new Size(100, 17)
                     };
                     if (Config.ConfigOutputs.IsActive(iut))
                     {
@@ -204,6 +207,10 @@ namespace ZScreenLib
             txtSaveFolder.Text = Path.GetDirectoryName(Info.LocalFilePath);
         }
 
+        #endregion Config GUI
+
+        #region Helper Methods
+
         private void BeforeClose()
         {
             // Description
@@ -217,7 +224,52 @@ namespace ZScreenLib
             // Tasks
             Config.PerformActions = chkPerformActions.Checked;
 
+            // Resize
+            UpdateImageSize(bChangeConfig: true);
+
             // Outputs
+            UpdateConfigOutputs();
+        }
+
+        private void UpdateImageSize(bool bChangeConfig = false)
+        {
+            double w2 = 0.0, h2 = 0.0, ratio = 0.0;
+
+            if (rbImageSizeDefault.Checked)
+            {
+                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.DEFAULT;
+                ratio = 1.0;
+                h2 = Info.ImageSize.Height;
+            }
+            else if (rbImageSizeFixed.Checked)
+            {
+                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.FIXED;
+                if (Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
+                {
+                    ratio = (double)nudImageSizeFixedWidth.Value / (double)Info.ImageSize.Width;
+                    h2 = nudImageSizeFixedHeight.Value > 0 ? (double)nudImageSizeFixedHeight.Value : (double)Info.ImageSize.Height * ratio;
+                }
+            }
+            else if (rbImageSizeRatio.Checked)
+            {
+                if (bChangeConfig) Config.ImageSizeType = ImageSizeType.RATIO;
+                if (Info.ImageSize.Width > 0)
+                {
+                    ratio = (double)nudImageSizeRatio.Value / 100.0;
+                    h2 = (double)Info.ImageSize.Height * ratio;
+                }
+            }
+
+            if (ratio > 0.0)
+            {
+                w2 = (double)Info.ImageSize.Width * ratio;
+                gbImageSize.Text = string.Format("Image Size - old: {0}x{1} - new: {2}x{3}",
+                                  Info.ImageSize.Width, Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
+            }
+        }
+
+        private void UpdateConfigOutputs()
+        {
             Config.Outputs.Clear();
             if (chkClipboard.Checked) Config.Outputs.Add(OutputEnum.Clipboard);
             if (chkSaveFile.Checked) Config.Outputs.Add(OutputEnum.LocalDisk);
@@ -252,7 +304,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion Config GUI
+        #endregion
 
         #region Control Events
 
@@ -261,9 +313,21 @@ namespace ZScreenLib
             ConfigGui();
         }
 
-        private void WorkflowWizard_FormClosing(object sender, FormClosingEventArgs e)
+        private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
         {
-            BeforeClose();
+            if (chkTaskImageResize.Checked)
+            {
+                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageResize);
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpImageResize);
+                Config.ImageSizeType = ImageSizeType.DEFAULT;
+            }
+        }
+
+        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
@@ -276,6 +340,7 @@ namespace ZScreenLib
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            BeforeClose();
             Close();
         }
 
@@ -299,22 +364,6 @@ namespace ZScreenLib
             gbSaveToFile.Visible = chkSaveFile.Checked;
         }
 
-        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTaskImageResize.Checked)
-            {
-                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageResize);
-            }
-            else
-            {
-                tcMain.TabPages.Remove(tpImageResize);
-            }
-        }
-
         private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTaskImageFileFormat.Checked)
@@ -325,11 +374,6 @@ namespace ZScreenLib
             {
                 tcMain.TabPages.Remove(tpImageQuality);
             }
-        }
-
-        private void chkPerformActions_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
@@ -383,75 +427,38 @@ namespace ZScreenLib
             Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
 
-        #endregion Control Events
 
         private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
         {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
         private void rbImageSizeFixed_CheckedChanged(object sender, EventArgs e)
         {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
         private void rbImageSizeRatio_CheckedChanged(object sender, EventArgs e)
         {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
-        private void ImageSizeRadioBoxUpdate()
+         private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
         {
-            double w2 = 0.0, h2 = 0.0, ratio = 0.0;
-
-            if (rbImageSizeDefault.Checked)
-            {
-                Config.ImageSizeType = ImageSizeType.DEFAULT;
-                ratio = 1.0;
-                h2 = Info.ImageSize.Height;
-            }
-            else if (rbImageSizeFixed.Checked)
-            {
-                Config.ImageSizeType = ImageSizeType.FIXED;
-                if (Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
-                {
-                    ratio = (double)nudImageSizeFixedWidth.Value / (double)Info.ImageSize.Width;
-                    h2 = nudImageSizeFixedHeight.Value > 0 ? (double)nudImageSizeFixedHeight.Value : (double)Info.ImageSize.Height * ratio;
-                }
-            }
-            else if (rbImageSizeRatio.Checked)
-            {
-                Config.ImageSizeType = ImageSizeType.RATIO;
-                if (Info.ImageSize.Width > 0)
-                {
-                    ratio = (double)nudImageSizeRatio.Value / 100.0;
-                    h2 = (double)Info.ImageSize.Height * ratio;
-                }
-            }
-
-            if (ratio > 0.0)
-            {
-                w2 = (double)Info.ImageSize.Width * ratio;
-                gbImageSize.Text = string.Format("Image Size - old: {0}x{1} - new: {2}x{3}",
-                                  Info.ImageSize.Width, Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
-            }
-        }
-
-        private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
-        {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
         private void nudImageSizeFixedWidth_ValueChanged(object sender, EventArgs e)
         {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
         private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
         {
-            ImageSizeRadioBoxUpdate();
+            UpdateImageSize();
         }
 
+        #endregion Control Events
     }
 
     public class WorkflowWizardGUIOptions

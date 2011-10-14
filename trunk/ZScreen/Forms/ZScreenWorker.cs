@@ -289,7 +289,7 @@ namespace ZScreenGUI
 
         private void PostWorkerTasks()
         {
-            pbPreview.LoadImage(Resources.main);
+            pbPreview.LoadImage(Resources.ZScreen_256, PictureBoxSizeMode.CenterImage);
             rtbDebugLog.Text = Engine.EngineLogger.ToString();
 
             this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
