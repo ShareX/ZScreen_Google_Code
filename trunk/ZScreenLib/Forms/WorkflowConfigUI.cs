@@ -97,9 +97,9 @@ namespace ZScreenLib
                     break;
             }
 
-            txtImageSizeFixedWidth.Text = Config.ImageSizeFixedWidth.ToString();
-            txtImageSizeFixedHeight.Text = Config.ImageSizeFixedHeight.ToString();
-            txtImageSizeRatio.Text = Config.ImageSizeRatioPercentage.ToString();
+            nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
+            nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
+            nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
 
         }
 
@@ -181,8 +181,6 @@ namespace ZScreenLib
                 string ext = Path.GetExtension(Info.LocalFilePath);
                 Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
             }
-
-
         }
 
         #endregion Config GUI
@@ -335,19 +333,56 @@ namespace ZScreenLib
 
         private void ImageSizeRadioBoxUpdate()
         {
+            double w2 = 0.0, h2 = 0.0, ratio = 0.0;
+
             if (rbImageSizeDefault.Checked)
             {
                 Config.ImageSizeType = ImageSizeType.DEFAULT;
+                ratio = 1.0;
+                h2 = Info.ImageSize.Height;
             }
             else if (rbImageSizeFixed.Checked)
             {
                 Config.ImageSizeType = ImageSizeType.FIXED;
+                if (Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
+                {
+                    ratio = (double)nudImageSizeFixedWidth.Value / (double)Info.ImageSize.Width;
+                    h2 = nudImageSizeFixedHeight.Value > 0 ? (double)nudImageSizeFixedHeight.Value : (double)Info.ImageSize.Height * ratio;
+                }
             }
             else if (rbImageSizeRatio.Checked)
             {
                 Config.ImageSizeType = ImageSizeType.RATIO;
+                if (Info.ImageSize.Width > 0)
+                {
+                    ratio = (double)nudImageSizeRatio.Value / 100.0;
+                    h2 = (double)Info.ImageSize.Height * ratio;
+                }
+            }
+
+            if (ratio > 0.0)
+            {
+                w2 = (double)Info.ImageSize.Width * ratio;
+                gbImageSize.Text = string.Format("Image Size - old: {0}x{1} - new: {2}x{3}",
+                                  Info.ImageSize.Width, Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
             }
         }
+
+        private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
+        private void nudImageSizeFixedWidth_ValueChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
+        private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
+        {
+            ImageSizeRadioBoxUpdate();
+        }
+
     }
 
     public class WorkflowWizardGUIOptions

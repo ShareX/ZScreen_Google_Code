@@ -63,12 +63,14 @@
             this.lblImageSizeFixedHeight = new System.Windows.Forms.Label();
             this.rbImageSizeFixed = new System.Windows.Forms.RadioButton();
             this.lblImageSizeFixedWidth = new System.Windows.Forms.Label();
-            this.txtImageSizeRatio = new System.Windows.Forms.TextBox();
             this.lblImageSizeRatioPercentage = new System.Windows.Forms.Label();
-            this.txtImageSizeFixedWidth = new System.Windows.Forms.TextBox();
             this.rbImageSizeRatio = new System.Windows.Forms.RadioButton();
-            this.txtImageSizeFixedHeight = new System.Windows.Forms.TextBox();
             this.tpOutputs = new System.Windows.Forms.TabPage();
+            this.gbOutputs = new System.Windows.Forms.GroupBox();
+            this.chkSaveFile = new System.Windows.Forms.CheckBox();
+            this.chkPrinter = new System.Windows.Forms.CheckBox();
+            this.chkUpload = new System.Windows.Forms.CheckBox();
+            this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.gbRemoteLocations = new System.Windows.Forms.GroupBox();
             this.chkUploadSendSpace = new System.Windows.Forms.CheckBox();
             this.chkUploadFTP = new System.Windows.Forms.CheckBox();
@@ -77,14 +79,12 @@
             this.txtFileNameWithoutExt = new System.Windows.Forms.TextBox();
             this.txtSaveFolder = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.chkSaveFile = new System.Windows.Forms.CheckBox();
             this.btnOutputsConfig = new System.Windows.Forms.Button();
-            this.chkPrinter = new System.Windows.Forms.CheckBox();
-            this.chkUpload = new System.Windows.Forms.CheckBox();
-            this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.gbOutputs = new System.Windows.Forms.GroupBox();
+            this.nudImageSizeRatio = new System.Windows.Forms.NumericUpDown();
+            this.nudImageSizeFixedHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudImageSizeFixedWidth = new System.Windows.Forms.NumericUpDown();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -97,9 +97,12 @@
             this.tpImageResize.SuspendLayout();
             this.gbImageSize.SuspendLayout();
             this.tpOutputs.SuspendLayout();
+            this.gbOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
             this.gbSaveToFile.SuspendLayout();
-            this.gbOutputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMain
@@ -427,16 +430,16 @@
             // 
             // gbImageSize
             // 
+            this.gbImageSize.Controls.Add(this.nudImageSizeFixedWidth);
+            this.gbImageSize.Controls.Add(this.nudImageSizeFixedHeight);
+            this.gbImageSize.Controls.Add(this.nudImageSizeRatio);
             this.gbImageSize.Controls.Add(this.lblImageSizeFixedAutoScale);
             this.gbImageSize.Controls.Add(this.rbImageSizeDefault);
             this.gbImageSize.Controls.Add(this.lblImageSizeFixedHeight);
             this.gbImageSize.Controls.Add(this.rbImageSizeFixed);
             this.gbImageSize.Controls.Add(this.lblImageSizeFixedWidth);
-            this.gbImageSize.Controls.Add(this.txtImageSizeRatio);
             this.gbImageSize.Controls.Add(this.lblImageSizeRatioPercentage);
-            this.gbImageSize.Controls.Add(this.txtImageSizeFixedWidth);
             this.gbImageSize.Controls.Add(this.rbImageSizeRatio);
-            this.gbImageSize.Controls.Add(this.txtImageSizeFixedHeight);
             this.gbImageSize.Location = new System.Drawing.Point(8, 8);
             this.gbImageSize.Name = "gbImageSize";
             this.gbImageSize.Size = new System.Drawing.Size(584, 120);
@@ -447,7 +450,7 @@
             // lblImageSizeFixedAutoScale
             // 
             this.lblImageSizeFixedAutoScale.AutoSize = true;
-            this.lblImageSizeFixedAutoScale.Location = new System.Drawing.Point(352, 60);
+            this.lblImageSizeFixedAutoScale.Location = new System.Drawing.Point(384, 60);
             this.lblImageSizeFixedAutoScale.Name = "lblImageSizeFixedAutoScale";
             this.lblImageSizeFixedAutoScale.Size = new System.Drawing.Size(152, 13);
             this.lblImageSizeFixedAutoScale.TabIndex = 128;
@@ -468,7 +471,7 @@
             // lblImageSizeFixedHeight
             // 
             this.lblImageSizeFixedHeight.AutoSize = true;
-            this.lblImageSizeFixedHeight.Location = new System.Drawing.Point(232, 59);
+            this.lblImageSizeFixedHeight.Location = new System.Drawing.Point(248, 59);
             this.lblImageSizeFixedHeight.Name = "lblImageSizeFixedHeight";
             this.lblImageSizeFixedHeight.Size = new System.Drawing.Size(61, 13);
             this.lblImageSizeFixedHeight.TabIndex = 126;
@@ -495,15 +498,6 @@
             this.lblImageSizeFixedWidth.TabIndex = 125;
             this.lblImageSizeFixedWidth.Text = "Width (px):";
             // 
-            // txtImageSizeRatio
-            // 
-            this.txtImageSizeRatio.Location = new System.Drawing.Point(120, 87);
-            this.txtImageSizeRatio.Name = "txtImageSizeRatio";
-            this.txtImageSizeRatio.Size = new System.Drawing.Size(32, 20);
-            this.txtImageSizeRatio.TabIndex = 116;
-            this.txtImageSizeRatio.Text = "100";
-            this.txtImageSizeRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // lblImageSizeRatioPercentage
             // 
             this.lblImageSizeRatioPercentage.AutoSize = true;
@@ -512,15 +506,6 @@
             this.lblImageSizeRatioPercentage.Size = new System.Drawing.Size(15, 13);
             this.lblImageSizeRatioPercentage.TabIndex = 118;
             this.lblImageSizeRatioPercentage.Text = "%";
-            // 
-            // txtImageSizeFixedWidth
-            // 
-            this.txtImageSizeFixedWidth.Location = new System.Drawing.Point(184, 56);
-            this.txtImageSizeFixedWidth.Name = "txtImageSizeFixedWidth";
-            this.txtImageSizeFixedWidth.Size = new System.Drawing.Size(40, 20);
-            this.txtImageSizeFixedWidth.TabIndex = 119;
-            this.txtImageSizeFixedWidth.Text = "2500";
-            this.txtImageSizeFixedWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // rbImageSizeRatio
             // 
@@ -533,15 +518,6 @@
             this.rbImageSizeRatio.Text = "Image size ratio:";
             this.rbImageSizeRatio.UseVisualStyleBackColor = true;
             this.rbImageSizeRatio.CheckedChanged += new System.EventHandler(this.rbImageSizeRatio_CheckedChanged);
-            // 
-            // txtImageSizeFixedHeight
-            // 
-            this.txtImageSizeFixedHeight.Location = new System.Drawing.Point(296, 56);
-            this.txtImageSizeFixedHeight.Name = "txtImageSizeFixedHeight";
-            this.txtImageSizeFixedHeight.Size = new System.Drawing.Size(40, 20);
-            this.txtImageSizeFixedHeight.TabIndex = 120;
-            this.txtImageSizeFixedHeight.Text = "2500";
-            this.txtImageSizeFixedHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tpOutputs
             // 
@@ -556,6 +532,55 @@
             this.tpOutputs.TabIndex = 2;
             this.tpOutputs.Text = "Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
+            // 
+            // gbOutputs
+            // 
+            this.gbOutputs.Controls.Add(this.chkSaveFile);
+            this.gbOutputs.Controls.Add(this.chkPrinter);
+            this.gbOutputs.Controls.Add(this.chkUpload);
+            this.gbOutputs.Controls.Add(this.chkClipboard);
+            this.gbOutputs.Location = new System.Drawing.Point(8, 40);
+            this.gbOutputs.Name = "gbOutputs";
+            this.gbOutputs.Size = new System.Drawing.Size(576, 70);
+            this.gbOutputs.TabIndex = 5;
+            this.gbOutputs.TabStop = false;
+            // 
+            // chkSaveFile
+            // 
+            this.chkSaveFile.Location = new System.Drawing.Point(16, 40);
+            this.chkSaveFile.Name = "chkSaveFile";
+            this.chkSaveFile.Size = new System.Drawing.Size(184, 24);
+            this.chkSaveFile.TabIndex = 4;
+            this.chkSaveFile.Text = "Save to file";
+            this.chkSaveFile.UseVisualStyleBackColor = true;
+            this.chkSaveFile.CheckedChanged += new System.EventHandler(this.chkSaveFile_CheckedChanged);
+            // 
+            // chkPrinter
+            // 
+            this.chkPrinter.Location = new System.Drawing.Point(232, 40);
+            this.chkPrinter.Name = "chkPrinter";
+            this.chkPrinter.Size = new System.Drawing.Size(184, 24);
+            this.chkPrinter.TabIndex = 3;
+            this.chkPrinter.Text = "Send to Printer";
+            this.chkPrinter.UseVisualStyleBackColor = true;
+            // 
+            // chkUpload
+            // 
+            this.chkUpload.Location = new System.Drawing.Point(232, 16);
+            this.chkUpload.Name = "chkUpload";
+            this.chkUpload.Size = new System.Drawing.Size(184, 24);
+            this.chkUpload.TabIndex = 2;
+            this.chkUpload.Text = "Upload to Remote Locations";
+            this.chkUpload.UseVisualStyleBackColor = true;
+            // 
+            // chkClipboard
+            // 
+            this.chkClipboard.Location = new System.Drawing.Point(16, 16);
+            this.chkClipboard.Name = "chkClipboard";
+            this.chkClipboard.Size = new System.Drawing.Size(184, 24);
+            this.chkClipboard.TabIndex = 1;
+            this.chkClipboard.Text = "Copy Image or Text to Clipboard";
+            this.chkClipboard.UseVisualStyleBackColor = true;
             // 
             // gbRemoteLocations
             // 
@@ -633,16 +658,6 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // chkSaveFile
-            // 
-            this.chkSaveFile.Location = new System.Drawing.Point(16, 40);
-            this.chkSaveFile.Name = "chkSaveFile";
-            this.chkSaveFile.Size = new System.Drawing.Size(184, 24);
-            this.chkSaveFile.TabIndex = 4;
-            this.chkSaveFile.Text = "Save to file";
-            this.chkSaveFile.UseVisualStyleBackColor = true;
-            this.chkSaveFile.CheckedChanged += new System.EventHandler(this.chkSaveFile_CheckedChanged);
-            // 
             // btnOutputsConfig
             // 
             this.btnOutputsConfig.Location = new System.Drawing.Point(8, 8);
@@ -652,33 +667,6 @@
             this.btnOutputsConfig.Text = "Outputs Configuration... ( Dropbox, FTP, SendSpace etc. )";
             this.btnOutputsConfig.UseVisualStyleBackColor = true;
             this.btnOutputsConfig.Click += new System.EventHandler(this.btnOutputsConfig_Click);
-            // 
-            // chkPrinter
-            // 
-            this.chkPrinter.Location = new System.Drawing.Point(232, 40);
-            this.chkPrinter.Name = "chkPrinter";
-            this.chkPrinter.Size = new System.Drawing.Size(184, 24);
-            this.chkPrinter.TabIndex = 3;
-            this.chkPrinter.Text = "Send to Printer";
-            this.chkPrinter.UseVisualStyleBackColor = true;
-            // 
-            // chkUpload
-            // 
-            this.chkUpload.Location = new System.Drawing.Point(232, 16);
-            this.chkUpload.Name = "chkUpload";
-            this.chkUpload.Size = new System.Drawing.Size(184, 24);
-            this.chkUpload.TabIndex = 2;
-            this.chkUpload.Text = "Upload to Remote Locations";
-            this.chkUpload.UseVisualStyleBackColor = true;
-            // 
-            // chkClipboard
-            // 
-            this.chkClipboard.Location = new System.Drawing.Point(16, 16);
-            this.chkClipboard.Name = "chkClipboard";
-            this.chkClipboard.Size = new System.Drawing.Size(184, 24);
-            this.chkClipboard.TabIndex = 1;
-            this.chkClipboard.Text = "Copy Image or Text to Clipboard";
-            this.chkClipboard.UseVisualStyleBackColor = true;
             // 
             // btnOK
             // 
@@ -700,17 +688,54 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // gbOutputs
+            // nudImageSizeRatio
             // 
-            this.gbOutputs.Controls.Add(this.chkSaveFile);
-            this.gbOutputs.Controls.Add(this.chkPrinter);
-            this.gbOutputs.Controls.Add(this.chkUpload);
-            this.gbOutputs.Controls.Add(this.chkClipboard);
-            this.gbOutputs.Location = new System.Drawing.Point(8, 40);
-            this.gbOutputs.Name = "gbOutputs";
-            this.gbOutputs.Size = new System.Drawing.Size(576, 70);
-            this.gbOutputs.TabIndex = 5;
-            this.gbOutputs.TabStop = false;
+            this.nudImageSizeRatio.Location = new System.Drawing.Point(120, 88);
+            this.nudImageSizeRatio.Name = "nudImageSizeRatio";
+            this.nudImageSizeRatio.Size = new System.Drawing.Size(40, 20);
+            this.nudImageSizeRatio.TabIndex = 129;
+            this.nudImageSizeRatio.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageSizeRatio.ValueChanged += new System.EventHandler(this.nudImageSizeRatio_ValueChanged);
+            // 
+            // nudImageSizeFixedHeight
+            // 
+            this.nudImageSizeFixedHeight.Location = new System.Drawing.Point(312, 56);
+            this.nudImageSizeFixedHeight.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedHeight.Name = "nudImageSizeFixedHeight";
+            this.nudImageSizeFixedHeight.Size = new System.Drawing.Size(64, 20);
+            this.nudImageSizeFixedHeight.TabIndex = 130;
+            this.nudImageSizeFixedHeight.ValueChanged += new System.EventHandler(this.nudImageSizeFixedHeight_ValueChanged);
+            // 
+            // nudImageSizeFixedWidth
+            // 
+            this.nudImageSizeFixedWidth.Location = new System.Drawing.Point(176, 56);
+            this.nudImageSizeFixedWidth.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.Name = "nudImageSizeFixedWidth";
+            this.nudImageSizeFixedWidth.Size = new System.Drawing.Size(64, 20);
+            this.nudImageSizeFixedWidth.TabIndex = 131;
+            this.nudImageSizeFixedWidth.Value = new decimal(new int[] {
+            480,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.ValueChanged += new System.EventHandler(this.nudImageSizeFixedWidth_ValueChanged);
             // 
             // WorkflowWizard
             // 
@@ -745,10 +770,13 @@
             this.gbImageSize.ResumeLayout(false);
             this.gbImageSize.PerformLayout();
             this.tpOutputs.ResumeLayout(false);
+            this.gbOutputs.ResumeLayout(false);
             this.gbRemoteLocations.ResumeLayout(false);
             this.gbSaveToFile.ResumeLayout(false);
             this.gbSaveToFile.PerformLayout();
-            this.gbOutputs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -801,9 +829,6 @@
         protected System.Windows.Forms.TabPage tpJob;
         protected System.Windows.Forms.TabPage tpOutputs;
         protected System.Windows.Forms.TabPage tpTasks;
-        protected System.Windows.Forms.TextBox txtImageSizeFixedHeight;
-        protected System.Windows.Forms.TextBox txtImageSizeFixedWidth;
-        protected System.Windows.Forms.TextBox txtImageSizeRatio;
         protected System.Windows.Forms.TextBox txtName;
         protected System.Windows.Forms.TextBox txtSaveFolder;
         protected HelpersLib.Hotkey.HotkeyManagerControl hmcHotkeys;
@@ -813,6 +838,9 @@
         private System.Windows.Forms.CheckBox chkTaskOutputConfig;
         protected System.Windows.Forms.TextBox txtFileNameWithoutExt;
         private System.Windows.Forms.GroupBox gbOutputs;
+        private System.Windows.Forms.NumericUpDown nudImageSizeRatio;
+        private System.Windows.Forms.NumericUpDown nudImageSizeFixedWidth;
+        private System.Windows.Forms.NumericUpDown nudImageSizeFixedHeight;
 
     }
 }

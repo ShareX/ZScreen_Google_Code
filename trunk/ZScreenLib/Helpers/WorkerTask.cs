@@ -322,6 +322,11 @@ namespace ZScreenLib
                     break;
             }
 
+            if (tempImage != null)
+            {
+                Info.ImageSize = tempImage.Size;
+            }
+
             if (!success)
             {
                 this.States.Add(TaskState.CancellationPending);
@@ -2206,5 +2211,7 @@ namespace ZScreenLib
                 }
             }
         }
+
+        public Size ImageSize { get; set; }
     }
 }
