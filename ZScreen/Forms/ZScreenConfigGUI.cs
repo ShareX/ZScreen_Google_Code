@@ -110,7 +110,7 @@ namespace ZScreenGUI
             dsh.AddEnumDestToMenuWithConfigSettings();
             ucDestOptions.ReconfigOutputsUI();
 
-            chkManualNaming.Checked = Engine.conf.PromptForOutputs;
+            chkShowWorkflowWizard.Checked = Engine.conf.PromptForOutputs;
             chkShowCursor.Checked = Engine.Workflow.DrawCursor;
             chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
         }

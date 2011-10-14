@@ -58,6 +58,9 @@
             this.lblSwitchTo = new System.Windows.Forms.Label();
             this.tpImageResize = new System.Windows.Forms.TabPage();
             this.gbImageSize = new System.Windows.Forms.GroupBox();
+            this.nudImageSizeFixedWidth = new System.Windows.Forms.NumericUpDown();
+            this.nudImageSizeFixedHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudImageSizeRatio = new System.Windows.Forms.NumericUpDown();
             this.lblImageSizeFixedAutoScale = new System.Windows.Forms.Label();
             this.rbImageSizeDefault = new System.Windows.Forms.RadioButton();
             this.lblImageSizeFixedHeight = new System.Windows.Forms.Label();
@@ -72,9 +75,7 @@
             this.chkUpload = new System.Windows.Forms.CheckBox();
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.gbRemoteLocations = new System.Windows.Forms.GroupBox();
-            this.chkUploadSendSpace = new System.Windows.Forms.CheckBox();
-            this.chkUploadFTP = new System.Windows.Forms.CheckBox();
-            this.chkUploadDropbox = new System.Windows.Forms.CheckBox();
+            this.flpFileUploaders = new System.Windows.Forms.FlowLayoutPanel();
             this.gbSaveToFile = new System.Windows.Forms.GroupBox();
             this.txtFileNameWithoutExt = new System.Windows.Forms.TextBox();
             this.txtSaveFolder = new System.Windows.Forms.TextBox();
@@ -82,9 +83,8 @@
             this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.nudImageSizeRatio = new System.Windows.Forms.NumericUpDown();
-            this.nudImageSizeFixedHeight = new System.Windows.Forms.NumericUpDown();
-            this.nudImageSizeFixedWidth = new System.Windows.Forms.NumericUpDown();
+            this.flpImageUploaders = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpTextUploaders = new System.Windows.Forms.FlowLayoutPanel();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -96,13 +96,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             this.tpImageResize.SuspendLayout();
             this.gbImageSize.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).BeginInit();
             this.tpOutputs.SuspendLayout();
             this.gbOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
             this.gbSaveToFile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMain
@@ -115,7 +115,7 @@
             this.tcMain.Location = new System.Drawing.Point(8, 8);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(640, 344);
+            this.tcMain.Size = new System.Drawing.Size(640, 400);
             this.tcMain.TabIndex = 0;
             // 
             // tpJob
@@ -127,7 +127,7 @@
             this.tpJob.Location = new System.Drawing.Point(4, 22);
             this.tpJob.Name = "tpJob";
             this.tpJob.Padding = new System.Windows.Forms.Padding(3);
-            this.tpJob.Size = new System.Drawing.Size(632, 318);
+            this.tpJob.Size = new System.Drawing.Size(632, 366);
             this.tpJob.TabIndex = 0;
             this.tpJob.Text = "Job";
             this.tpJob.UseVisualStyleBackColor = true;
@@ -192,7 +192,7 @@
             this.tpTasks.Location = new System.Drawing.Point(4, 22);
             this.tpTasks.Name = "tpTasks";
             this.tpTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTasks.Size = new System.Drawing.Size(632, 318);
+            this.tpTasks.Size = new System.Drawing.Size(632, 366);
             this.tpTasks.TabIndex = 6;
             this.tpTasks.Text = "Tasks";
             this.tpTasks.UseVisualStyleBackColor = true;
@@ -259,7 +259,7 @@
             this.tpImageQuality.Controls.Add(this.gbPictureQuality);
             this.tpImageQuality.Location = new System.Drawing.Point(4, 22);
             this.tpImageQuality.Name = "tpImageQuality";
-            this.tpImageQuality.Size = new System.Drawing.Size(632, 318);
+            this.tpImageQuality.Size = new System.Drawing.Size(632, 366);
             this.tpImageQuality.TabIndex = 5;
             this.tpImageQuality.Text = "Quality";
             this.tpImageQuality.UseVisualStyleBackColor = true;
@@ -423,7 +423,7 @@
             this.tpImageResize.Location = new System.Drawing.Point(4, 22);
             this.tpImageResize.Name = "tpImageResize";
             this.tpImageResize.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageResize.Size = new System.Drawing.Size(632, 318);
+            this.tpImageResize.Size = new System.Drawing.Size(632, 366);
             this.tpImageResize.TabIndex = 4;
             this.tpImageResize.Text = "Resize";
             this.tpImageResize.UseVisualStyleBackColor = true;
@@ -446,6 +446,55 @@
             this.gbImageSize.TabIndex = 125;
             this.gbImageSize.TabStop = false;
             this.gbImageSize.Text = "Image Size";
+            // 
+            // nudImageSizeFixedWidth
+            // 
+            this.nudImageSizeFixedWidth.Location = new System.Drawing.Point(176, 56);
+            this.nudImageSizeFixedWidth.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.Name = "nudImageSizeFixedWidth";
+            this.nudImageSizeFixedWidth.Size = new System.Drawing.Size(64, 20);
+            this.nudImageSizeFixedWidth.TabIndex = 131;
+            this.nudImageSizeFixedWidth.Value = new decimal(new int[] {
+            480,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedWidth.ValueChanged += new System.EventHandler(this.nudImageSizeFixedWidth_ValueChanged);
+            // 
+            // nudImageSizeFixedHeight
+            // 
+            this.nudImageSizeFixedHeight.Location = new System.Drawing.Point(312, 56);
+            this.nudImageSizeFixedHeight.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudImageSizeFixedHeight.Name = "nudImageSizeFixedHeight";
+            this.nudImageSizeFixedHeight.Size = new System.Drawing.Size(64, 20);
+            this.nudImageSizeFixedHeight.TabIndex = 130;
+            this.nudImageSizeFixedHeight.ValueChanged += new System.EventHandler(this.nudImageSizeFixedHeight_ValueChanged);
+            // 
+            // nudImageSizeRatio
+            // 
+            this.nudImageSizeRatio.Location = new System.Drawing.Point(120, 88);
+            this.nudImageSizeRatio.Name = "nudImageSizeRatio";
+            this.nudImageSizeRatio.Size = new System.Drawing.Size(40, 20);
+            this.nudImageSizeRatio.TabIndex = 129;
+            this.nudImageSizeRatio.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudImageSizeRatio.ValueChanged += new System.EventHandler(this.nudImageSizeRatio_ValueChanged);
             // 
             // lblImageSizeFixedAutoScale
             // 
@@ -528,7 +577,7 @@
             this.tpOutputs.Location = new System.Drawing.Point(4, 22);
             this.tpOutputs.Name = "tpOutputs";
             this.tpOutputs.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOutputs.Size = new System.Drawing.Size(632, 318);
+            this.tpOutputs.Size = new System.Drawing.Size(632, 374);
             this.tpOutputs.TabIndex = 2;
             this.tpOutputs.Text = "Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
@@ -541,7 +590,7 @@
             this.gbOutputs.Controls.Add(this.chkClipboard);
             this.gbOutputs.Location = new System.Drawing.Point(8, 40);
             this.gbOutputs.Name = "gbOutputs";
-            this.gbOutputs.Size = new System.Drawing.Size(576, 70);
+            this.gbOutputs.Size = new System.Drawing.Size(608, 70);
             this.gbOutputs.TabIndex = 5;
             this.gbOutputs.TabStop = false;
             // 
@@ -584,43 +633,23 @@
             // 
             // gbRemoteLocations
             // 
-            this.gbRemoteLocations.Controls.Add(this.chkUploadSendSpace);
-            this.gbRemoteLocations.Controls.Add(this.chkUploadFTP);
-            this.gbRemoteLocations.Controls.Add(this.chkUploadDropbox);
+            this.gbRemoteLocations.Controls.Add(this.flpTextUploaders);
+            this.gbRemoteLocations.Controls.Add(this.flpImageUploaders);
+            this.gbRemoteLocations.Controls.Add(this.flpFileUploaders);
             this.gbRemoteLocations.Location = new System.Drawing.Point(8, 216);
             this.gbRemoteLocations.Name = "gbRemoteLocations";
-            this.gbRemoteLocations.Size = new System.Drawing.Size(576, 48);
+            this.gbRemoteLocations.Size = new System.Drawing.Size(608, 136);
             this.gbRemoteLocations.TabIndex = 6;
             this.gbRemoteLocations.TabStop = false;
             this.gbRemoteLocations.Text = "Upload to Remote Locations";
-            this.gbRemoteLocations.Visible = false;
             // 
-            // chkUploadSendSpace
+            // flpFileUploaders
             // 
-            this.chkUploadSendSpace.Location = new System.Drawing.Point(272, 16);
-            this.chkUploadSendSpace.Name = "chkUploadSendSpace";
-            this.chkUploadSendSpace.Size = new System.Drawing.Size(104, 24);
-            this.chkUploadSendSpace.TabIndex = 6;
-            this.chkUploadSendSpace.Text = "Sendspace";
-            this.chkUploadSendSpace.UseVisualStyleBackColor = true;
-            // 
-            // chkUploadFTP
-            // 
-            this.chkUploadFTP.Location = new System.Drawing.Point(144, 16);
-            this.chkUploadFTP.Name = "chkUploadFTP";
-            this.chkUploadFTP.Size = new System.Drawing.Size(104, 24);
-            this.chkUploadFTP.TabIndex = 5;
-            this.chkUploadFTP.Text = "FTP Server";
-            this.chkUploadFTP.UseVisualStyleBackColor = true;
-            // 
-            // chkUploadDropbox
-            // 
-            this.chkUploadDropbox.Location = new System.Drawing.Point(16, 16);
-            this.chkUploadDropbox.Name = "chkUploadDropbox";
-            this.chkUploadDropbox.Size = new System.Drawing.Size(104, 24);
-            this.chkUploadDropbox.TabIndex = 4;
-            this.chkUploadDropbox.Text = "Dropbox";
-            this.chkUploadDropbox.UseVisualStyleBackColor = true;
+            this.flpFileUploaders.AutoScroll = true;
+            this.flpFileUploaders.Location = new System.Drawing.Point(312, 24);
+            this.flpFileUploaders.Name = "flpFileUploaders";
+            this.flpFileUploaders.Size = new System.Drawing.Size(280, 96);
+            this.flpFileUploaders.TabIndex = 7;
             // 
             // gbSaveToFile
             // 
@@ -629,7 +658,7 @@
             this.gbSaveToFile.Controls.Add(this.btnBrowse);
             this.gbSaveToFile.Location = new System.Drawing.Point(8, 120);
             this.gbSaveToFile.Name = "gbSaveToFile";
-            this.gbSaveToFile.Size = new System.Drawing.Size(576, 88);
+            this.gbSaveToFile.Size = new System.Drawing.Size(608, 88);
             this.gbSaveToFile.TabIndex = 5;
             this.gbSaveToFile.TabStop = false;
             this.gbSaveToFile.Text = "When taking a screenshot, save the file to a preconfigured location";
@@ -670,7 +699,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(440, 360);
+            this.btnOK.Location = new System.Drawing.Point(440, 416);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(104, 24);
             this.btnOK.TabIndex = 0;
@@ -680,7 +709,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(552, 360);
+            this.btnCancel.Location = new System.Drawing.Point(552, 416);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 24);
             this.btnCancel.TabIndex = 1;
@@ -688,67 +717,36 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // nudImageSizeRatio
+            // flpImageUploaders
             // 
-            this.nudImageSizeRatio.Location = new System.Drawing.Point(120, 88);
-            this.nudImageSizeRatio.Name = "nudImageSizeRatio";
-            this.nudImageSizeRatio.Size = new System.Drawing.Size(40, 20);
-            this.nudImageSizeRatio.TabIndex = 129;
-            this.nudImageSizeRatio.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.nudImageSizeRatio.ValueChanged += new System.EventHandler(this.nudImageSizeRatio_ValueChanged);
+            this.flpImageUploaders.AutoScroll = true;
+            this.flpImageUploaders.Location = new System.Drawing.Point(16, 24);
+            this.flpImageUploaders.Name = "flpImageUploaders";
+            this.flpImageUploaders.Size = new System.Drawing.Size(280, 96);
+            this.flpImageUploaders.TabIndex = 8;
+            this.flpImageUploaders.Visible = false;
             // 
-            // nudImageSizeFixedHeight
+            // flpTextUploaders
             // 
-            this.nudImageSizeFixedHeight.Location = new System.Drawing.Point(312, 56);
-            this.nudImageSizeFixedHeight.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudImageSizeFixedHeight.Name = "nudImageSizeFixedHeight";
-            this.nudImageSizeFixedHeight.Size = new System.Drawing.Size(64, 20);
-            this.nudImageSizeFixedHeight.TabIndex = 130;
-            this.nudImageSizeFixedHeight.ValueChanged += new System.EventHandler(this.nudImageSizeFixedHeight_ValueChanged);
-            // 
-            // nudImageSizeFixedWidth
-            // 
-            this.nudImageSizeFixedWidth.Location = new System.Drawing.Point(176, 56);
-            this.nudImageSizeFixedWidth.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudImageSizeFixedWidth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudImageSizeFixedWidth.Name = "nudImageSizeFixedWidth";
-            this.nudImageSizeFixedWidth.Size = new System.Drawing.Size(64, 20);
-            this.nudImageSizeFixedWidth.TabIndex = 131;
-            this.nudImageSizeFixedWidth.Value = new decimal(new int[] {
-            480,
-            0,
-            0,
-            0});
-            this.nudImageSizeFixedWidth.ValueChanged += new System.EventHandler(this.nudImageSizeFixedWidth_ValueChanged);
+            this.flpTextUploaders.AutoScroll = true;
+            this.flpTextUploaders.Location = new System.Drawing.Point(16, 24);
+            this.flpTextUploaders.Name = "flpTextUploaders";
+            this.flpTextUploaders.Size = new System.Drawing.Size(280, 96);
+            this.flpTextUploaders.TabIndex = 9;
+            this.flpTextUploaders.Visible = false;
             // 
             // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 394);
+            this.ClientSize = new System.Drawing.Size(658, 451);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.tcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(664, 420);
+            this.MinimumSize = new System.Drawing.Size(664, 480);
             this.Name = "WorkflowWizard";
             this.Text = "Configure Workflow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkflowWizard_FormClosing);
@@ -769,14 +767,14 @@
             this.tpImageResize.ResumeLayout(false);
             this.gbImageSize.ResumeLayout(false);
             this.gbImageSize.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).EndInit();
             this.tpOutputs.ResumeLayout(false);
             this.gbOutputs.ResumeLayout(false);
             this.gbRemoteLocations.ResumeLayout(false);
             this.gbSaveToFile.ResumeLayout(false);
             this.gbSaveToFile.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeRatio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudImageSizeFixedWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -801,12 +799,9 @@
         private System.Windows.Forms.CheckBox chkPerformActions;
         private System.Windows.Forms.CheckBox chkPrinter;
         private System.Windows.Forms.CheckBox chkSaveFile;
-        private System.Windows.Forms.CheckBox chkUploadSendSpace;
         private System.Windows.Forms.CheckBox chkTaskImageFileFormat;
         private System.Windows.Forms.CheckBox chkTaskImageResize;
         private System.Windows.Forms.CheckBox chkUpload;
-        private System.Windows.Forms.CheckBox chkUploadDropbox;
-        private System.Windows.Forms.CheckBox chkUploadFTP;
         private System.Windows.Forms.CheckBox chkUseHotkey;
         private System.Windows.Forms.ComboBox cboGIFQuality;
         private System.Windows.Forms.ComboBox cboJpgQuality;
@@ -841,6 +836,9 @@
         private System.Windows.Forms.NumericUpDown nudImageSizeRatio;
         private System.Windows.Forms.NumericUpDown nudImageSizeFixedWidth;
         private System.Windows.Forms.NumericUpDown nudImageSizeFixedHeight;
+        private System.Windows.Forms.FlowLayoutPanel flpFileUploaders;
+        private System.Windows.Forms.FlowLayoutPanel flpTextUploaders;
+        private System.Windows.Forms.FlowLayoutPanel flpImageUploaders;
 
     }
 }

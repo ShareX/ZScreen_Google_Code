@@ -520,7 +520,7 @@ namespace ZScreenGUI
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.PromptForOutputs = chkManualNaming.Checked;
+            Engine.conf.PromptForOutputs = chkShowWorkflowWizard.Checked;
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)

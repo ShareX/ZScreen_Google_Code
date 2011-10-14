@@ -1,5 +1,6 @@
-Version 4.7.1 - 2011-10-15
+Version 4.7.2 - 2011-10-15
 
+4.7.2 Workflow Wizard replaces the current Outputs Configuration dialog {McoreD}
 4.7.1 Actions ToolStrip is now visible at all times regardless of the tab that is currently active {McoreD}
 4.7.0 Workflow option to Secure passwords using encryption {TheDeathly}
 4.6.1 Improved Clipboard Content options to include text using OCR. Requires Microsoft Office Document Imaging or else will be disabled. {McoreD}

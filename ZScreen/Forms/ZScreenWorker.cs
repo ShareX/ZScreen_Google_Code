@@ -302,21 +302,19 @@ namespace ZScreenGUI
 
         public override WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
-            if (tiCreateTask == null)
-            {
-                tiCreateTask = new TaskInfo();
-            }
+            if (tiCreateTask == null) tiCreateTask = new TaskInfo();
+
             tiCreateTask.Job = job;
             tiCreateTask.DestConfig = ucDestOptions;
             tiCreateTask.TrayIcon = this.niTray;
 
-            WorkerTask tempTask = new WorkerTask(CreateWorker(), tiCreateTask);
+            WorkerTask createTask = new WorkerTask(CreateWorker(), tiCreateTask);
 
             switch (job)
             {
                 case WorkerTask.JobLevel2.Translate:
                     Loader.MyGTGUI.btnTranslate.Enabled = false;
-                    tempTask.SetTranslationInfo(new GoogleTranslateInfo()
+                    createTask.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
                         SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
@@ -326,7 +324,7 @@ namespace ZScreenGUI
                     break;
             }
 
-            return tempTask;
+            return createTask;
         }
 
         #endregion Create Worker
@@ -523,16 +521,24 @@ namespace ZScreenGUI
                                 {
                                     Directory.CreateDirectory(dir);
                                 }
-                                File.Copy(fp, fsfp, true);
+                                try
+                                {
+                                    File.Copy(fp, fsfp, true);
+                                    if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
+                                    {
+                                        File.Delete(fp);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    fsfp = fp;
+                                    StaticHelper.WriteException(e);
+                                }
                                 strListFilePath.Add(fsfp);
                             }
                             else
                             {
                                 strListFilePath.Add(fp);
-                            }
-                            if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
-                            {
-                                File.Delete(fp);
                             }
                         }
                         else
@@ -549,7 +555,7 @@ namespace ZScreenGUI
             }
 
             List<Image> tempImages = new List<Image>();
-            bool bCreateAni = strListFilePath.Count < Engine.Workflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
+            bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.Workflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
 
             if (bCreateAni)
             {
@@ -561,21 +567,22 @@ namespace ZScreenGUI
             {
                 foreach (string fp in strListFilePath)
                 {
+                    TaskInfo tifs = new TaskInfo() { ExistingFilePath = fp };
                     if (GraphicsMgr.IsValidImage(fp))
                     {
-                        WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                        WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, tifs);
                         fpimgTask.SetImage(fp);
                         fpimgTask.RunWorker();
                     }
                     else if (FileSystem.IsValidTextFile(fp))
                     {
-                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, tifs);
                         fptfTask.SetText(File.ReadAllText(fp));
                         fptfTask.RunWorker();
                     }
                     else
                     {
-                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer);
+                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, tifs);
                         fpdataTask.UpdateLocalFilePath(fp);
                         fpdataTask.RunWorker();
                     }
@@ -721,24 +728,24 @@ namespace ZScreenGUI
                         {
                             List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while (task.MyImageUploaders.Contains((ImageUploaderType)r))
+                            while (task.WorkflowConfig.ImageUploaders.Contains((ImageUploaderType)r))
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }
-                            if (!task.MyImageUploaders.Contains((ImageUploaderType)r))
+                            if (!task.WorkflowConfig.ImageUploaders.Contains((ImageUploaderType)r))
                             {
-                                task.MyImageUploaders.Add((ImageUploaderType)r);
+                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType)r);
                             }
                         }
                         else
                         {
-                            if (!task.MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                            if (!task.WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
                             {
-                                task.MyImageUploaders.Add((ImageUploaderType.TINYPIC));
+                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType.TINYPIC));
                             }
-                            else if (!task.MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                            else if (!task.WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
                             {
-                                task.MyImageUploaders.Add((ImageUploaderType.IMAGESHACK));
+                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType.IMAGESHACK));
                             }
                         }
                     }

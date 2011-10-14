@@ -176,6 +176,83 @@ namespace UploadersLib
 
         #endregion Other destinations
 
+        #region Helper Methods
+
+        public bool IsActive(FileUploaderType ut)
+        {
+            switch (ut)
+            {
+                case FileUploaderType.CustomUploader:
+                    return CustomUploadersList.Count > 0;
+                case FileUploaderType.Dropbox:
+                    return DropboxAccountInfo != null;
+                case FileUploaderType.FTP:
+                    return FTPAccountList.Count > 0;
+                case FileUploaderType.Minus:
+                    return MinusConfig != null && MinusConfig.MinusUser != null;
+                case FileUploaderType.RapidShare:
+                    return true;
+                case FileUploaderType.SendSpace:
+                    return true;
+            }
+            return false;
+        }
+
+        public bool IsActive(TextUploaderType ut)
+        {
+            switch (ut)
+            {
+                case TextUploaderType.FileUploader:
+                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
+                    {
+                        if (IsActive(fu)) return true;
+                    }
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        public bool IsActive(ImageUploaderType ut)
+        {
+            switch (ut)
+            {
+                case ImageUploaderType.FileUploader:
+                    foreach (FileUploaderType fu in Enum.GetValues(typeof(FileUploaderType)))
+                    {
+                        if (IsActive(fu)) return true;
+                    }
+                    return false;
+                case ImageUploaderType.FLICKR:
+                    return !string.IsNullOrEmpty(FlickrAuthInfo.Token);
+                case ImageUploaderType.IMAGESHACK:
+                    return ImageShackAccountType == AccountType.Anonymous ||
+                        ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(ImageShackRegistrationCode);
+                case ImageUploaderType.IMGUR:
+                    return ImgurOAuthInfo != null;
+                case ImageUploaderType.MEDIAWIKI:
+                    return MediaWikiAccountList.Count > 0;
+                case ImageUploaderType.Photobucket:
+                    return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null; 
+                case ImageUploaderType.TINYPIC:
+                    return TinyPicAccountType == AccountType.Anonymous ||
+                            TinyPicAccountType == AccountType.User && !string.IsNullOrEmpty(TinyPicRegistrationCode);
+                case ImageUploaderType.TWITPIC:
+                    return !string.IsNullOrEmpty(TwitPicPassword);
+                case ImageUploaderType.TWITSNAPS:
+                    return TwitterOAuthInfoList.Count > 0;
+                case ImageUploaderType.UPLOADSCREENSHOT:
+                    return true; 
+                case ImageUploaderType.YFROG:
+                    return !string.IsNullOrEmpty(YFrogPassword);
+            }
+
+            return false;
+        }
+
+
+        #endregion
+
         #region I/O Methods
 
         public bool Save(string filePath)

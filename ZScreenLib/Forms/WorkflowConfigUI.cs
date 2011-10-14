@@ -147,13 +147,61 @@ namespace ZScreenLib
             chkUpload.Checked = Config.Outputs.Contains(OutputEnum.RemoteHost);
             chkPrinter.Checked = Config.Outputs.Contains(OutputEnum.Printer);
 
+            foreach (FileUploaderType fut in Enum.GetValues(typeof(FileUploaderType)))
+            {
+                CheckBox chkUploader = new CheckBox()
+                {
+                    Text = fut.GetDescription(),
+                    Checked = Config.FileUploaders.Contains(fut), 
+                    Tag = fut
+                };
+                if (Config.ConfigOutputs.IsActive(fut))
+                {
+                    flpFileUploaders.Controls.Add(chkUploader);
+                }
+            }
+
+            if (ZAppHelper.IsImageFile(Info.LocalFilePath))
+            {
+                flpImageUploaders.Visible = true;
+                flpTextUploaders.Visible = false;
+                foreach (ImageUploaderType iut in Enum.GetValues(typeof(ImageUploaderType)))
+                {
+                    CheckBox chkUploader = new CheckBox()
+                    {
+                        Text = iut.GetDescription(),
+                        Checked = Config.ImageUploaders.Contains(iut),
+                        Tag = iut
+                    };
+                    if (Config.ConfigOutputs.IsActive(iut))
+                    {
+                        flpImageUploaders.Controls.Add(chkUploader);
+                    }
+                }
+            }
+            else if (ZAppHelper.IsTextFile(Info.LocalFilePath))
+            {
+                flpTextUploaders.Visible = true;
+                flpImageUploaders.Visible = false;
+                foreach (TextUploaderType tut in Enum.GetValues(typeof(TextUploaderType)))
+                {
+                    CheckBox chkUploader = new CheckBox()
+                    {
+                        Name = "chk" + tut.GetDescription().RemoveWhiteSpaces(),
+                        Text = tut.GetDescription(),
+                        Checked = Config.TextUploaders.Contains(tut),
+                        Tag = tut
+                    };
+                    if (Config.ConfigOutputs.IsActive(tut))
+                    {
+                        flpTextUploaders.Controls.Add(chkUploader);
+                    }
+                }
+            }
+
             gbSaveToFile.Visible = chkSaveFile.Checked;
             txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Info.LocalFilePath);
             txtSaveFolder.Text = Path.GetDirectoryName(Info.LocalFilePath);
-
-            chkUploadDropbox.Checked = Config.FileUploaders.Contains(FileUploaderType.Dropbox);
-            chkUploadFTP.Checked = Config.FileUploaders.Contains(FileUploaderType.FTP);
-            chkUploadSendSpace.Checked = Config.FileUploaders.Contains(FileUploaderType.SendSpace);
         }
 
         private void BeforeClose()
@@ -175,6 +223,27 @@ namespace ZScreenLib
             if (chkSaveFile.Checked) Config.Outputs.Add(OutputEnum.LocalDisk);
             if (chkUpload.Checked) Config.Outputs.Add(OutputEnum.RemoteHost);
             if (chkPrinter.Checked) Config.Outputs.Add(OutputEnum.Printer);
+
+            Config.FileUploaders.Clear();
+            foreach (CheckBox chk in flpFileUploaders.Controls)
+            {
+                FileUploaderType ut = (FileUploaderType)chk.Tag;
+                if (chk.Checked) Config.FileUploaders.Add(ut);
+            }
+
+            Config.ImageUploaders.Clear();
+            foreach (CheckBox chk in flpImageUploaders.Controls)
+            {
+                ImageUploaderType ut = (ImageUploaderType)chk.Tag;
+                if (chk.Checked) Config.ImageUploaders.Add(ut);
+            }
+
+            Config.TextUploaders.Clear();
+            foreach (CheckBox chk in flpTextUploaders.Controls)
+            {
+                TextUploaderType ut = (TextUploaderType)chk.Tag;
+                if (chk.Checked) Config.TextUploaders.Add(ut);
+            }
 
             if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
             {
