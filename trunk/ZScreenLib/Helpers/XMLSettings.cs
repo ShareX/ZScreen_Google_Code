@@ -368,9 +368,6 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show output to the user as soon as at least one output is ready e.g. copy image to clipboard until URL is retrieved.")]
         public bool ShowOutputsAsap { get; set; }
 
-        [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Show Workflow Configuration Wizard before reaching destination.")]
-        public bool PromptForWorkflowConfigUI { get; set; }
-
         [Category(ComponentModelStrings.ScreenshotsRegion), DefaultValue(15), Description("Region style setting. Must be between these values: -100, 100")]
         public int RegionBrightnessValue { get; set; }
 

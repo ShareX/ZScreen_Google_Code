@@ -151,7 +151,7 @@ namespace ZScreenCLI
             foreach (int ut in listImageHosts)
             {
                 if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
-                tempTask.MyImageUploaders.Add((ImageUploaderType)ut);
+                tempTask.WorkflowConfig.ImageUploaders.Add((ImageUploaderType)ut);
             }
             foreach (int ut in listFileHosts)
             {

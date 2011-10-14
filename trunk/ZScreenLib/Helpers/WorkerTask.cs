@@ -204,10 +204,8 @@ namespace ZScreenLib
         public TaskInfo Info { get; private set; }
         public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
-        public List<ImageUploaderType> MyImageUploaders = new List<ImageUploaderType>();
-        public List<TextUploaderType> MyTextUploaders = new List<TextUploaderType>();
         public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
-    
+
         public List<UploadResult> UploadResults { get; private set; }
         public UploadResult Result
         {
@@ -262,15 +260,10 @@ namespace ZScreenLib
 
             DialogResult result = DialogResult.OK;
 
-            if (Engine.conf.PromptForWorkflowConfigUI)
+            if (Engine.conf.PromptForOutputs)                                                                  // step 3
             {
                 WorkflowWizard wfw = new WorkflowWizard(info, this.WorkflowConfig) { Icon = Resources.zss_tray };
                 result = wfw.ShowDialog();
-            }
-
-            if (Engine.conf.PromptForOutputs)                                                                  // step 3
-            {
-                result = SetManualOutputs(Info.LocalFilePath);
             }
 
             if (result == DialogResult.Cancel)
@@ -340,8 +333,8 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, WorkflowConfig.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
-                Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, MyImageUploaders);
-                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, MyTextUploaders);
+                Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, WorkflowConfig.ImageUploaders);
+                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, WorkflowConfig.TextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, WorkflowConfig.FileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
 
@@ -568,7 +561,7 @@ namespace ZScreenLib
                 settings.LoadConfig(Engine.conf.IndexerConfig);
                 Engine.conf.IndexerConfig.FolderList.Clear();
                 string ext = ".log";
-                if (MyTextUploaders.Contains(TextUploaderType.FileUploader))
+                if (WorkflowConfig.TextUploaders.Contains(TextUploaderType.FileUploader))
                 {
                     ext = ".html";
                 }
@@ -1104,7 +1097,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
+                if (WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard) && WorkflowConfig.Outputs.Count == 1)
                 {
                     SetClipboardContent();
                 }
@@ -1230,35 +1223,35 @@ namespace ZScreenLib
         {
             if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
-                if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && MyImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(Info.LocalFilePath))
+                if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(Info.LocalFilePath))
                 {
                     SizeF size = Image.FromFile(Info.LocalFilePath).PhysicalDimension;
                     if (size.Width > 1600 || size.Height > 1600)
                     {
                         StaticHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
-                        if (!MyImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                        if (!WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
                         {
-                            MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
-                            MyImageUploaders.Remove(ImageUploaderType.TINYPIC);
+                            WorkflowConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                            WorkflowConfig.ImageUploaders.Remove(ImageUploaderType.TINYPIC);
                         }
                     }
                 }
 
-                for (int i = 0; i < MyImageUploaders.Count; i++)
+                for (int i = 0; i < WorkflowConfig.ImageUploaders.Count; i++)
                 {
-                    UploadImage(MyImageUploaders[i], Data);
+                    UploadImage(WorkflowConfig.ImageUploaders[i], Data);
                 }
             }
 
             if (Engine.conf != null && Engine.conf.ImageUploadRetryOnTimeout && UploadDuration > (int)Engine.conf.UploadDurationLimit)
             {
-                if (!MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                if (!WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
                 {
-                    MyImageUploaders.Add(ImageUploaderType.TINYPIC);
+                    WorkflowConfig.ImageUploaders.Add(ImageUploaderType.TINYPIC);
                 }
-                else if (!MyImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                else if (!WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
                 {
-                    MyImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                    WorkflowConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
                 }
             }
         }
@@ -1373,7 +1366,7 @@ namespace ZScreenLib
             }
             else if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
-                foreach (TextUploaderType textUploaderType in MyTextUploaders)
+                foreach (TextUploaderType textUploaderType in WorkflowConfig.TextUploaders)
                 {
                     UploadText(textUploaderType);
                 }
@@ -1700,7 +1693,6 @@ namespace ZScreenLib
             {
                 ur_clipboard.LocalFilePath = this.Info.LocalFilePath;
             }
-
             AddUploadResult(ur_clipboard);
         }
 
@@ -2053,7 +2045,7 @@ namespace ZScreenLib
         public string GetActiveImageUploadersDescription()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (ImageUploaderType ut in MyImageUploaders)
+            foreach (ImageUploaderType ut in WorkflowConfig.ImageUploaders)
             {
                 sb.Append(ut.GetDescription());
                 sb.Append(", ");
@@ -2075,7 +2067,7 @@ namespace ZScreenLib
 
         public string GetActiveTextUploadersDescription()
         {
-            return GetActiveUploadersDescription<TextUploaderType>(MyTextUploaders);
+            return GetActiveUploadersDescription<TextUploaderType>(WorkflowConfig.TextUploaders);
         }
 
         public string GetActiveLinkUploadersDescription()

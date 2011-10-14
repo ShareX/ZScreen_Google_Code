@@ -240,7 +240,7 @@ namespace ZScreenTesterGUI
                         case UploaderType.ImageUploader:
                             if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
                             {
-                                task.MyImageUploaders.Add(uploader.ImageUploader);
+                                task.WorkflowConfig.ImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
                                 task.UploadImage();
                             }
@@ -251,7 +251,7 @@ namespace ZScreenTesterGUI
                             task.UploadFile();
                             break;
                         case UploaderType.TextUploader:
-                            task.MyTextUploaders.Add(uploader.TextUploader);
+                            task.WorkflowConfig.TextUploaders.Add(uploader.TextUploader);
                             task.SetText(TestText);
                             task.UploadText();
                             break;
