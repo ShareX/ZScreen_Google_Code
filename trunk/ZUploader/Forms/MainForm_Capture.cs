@@ -138,7 +138,8 @@ namespace ZUploader
         {
             Capture(() =>
             {
-                Image img = null, screenshot = Screenshot.GetFullscreen();
+                Image img = null;
+                Image screenshot = Screenshot.GetFullscreen();
 
                 surface.Config = Program.Settings.SurfaceOptions;
                 surface.LoadBackground(screenshot);

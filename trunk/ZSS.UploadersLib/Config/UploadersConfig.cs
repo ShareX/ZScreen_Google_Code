@@ -233,7 +233,7 @@ namespace UploadersLib
                 case ImageUploaderType.MEDIAWIKI:
                     return MediaWikiAccountList.Count > 0;
                 case ImageUploaderType.Photobucket:
-                    return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null; 
+                    return PhotobucketAccountInfo != null && PhotobucketOAuthInfo != null;
                 case ImageUploaderType.TINYPIC:
                     return TinyPicAccountType == AccountType.Anonymous ||
                             TinyPicAccountType == AccountType.User && !string.IsNullOrEmpty(TinyPicRegistrationCode);
@@ -242,7 +242,7 @@ namespace UploadersLib
                 case ImageUploaderType.TWITSNAPS:
                     return TwitterOAuthInfoList.Count > 0;
                 case ImageUploaderType.UPLOADSCREENSHOT:
-                    return true; 
+                    return true;
                 case ImageUploaderType.YFROG:
                     return !string.IsNullOrEmpty(YFrogPassword);
             }
@@ -250,8 +250,7 @@ namespace UploadersLib
             return false;
         }
 
-
-        #endregion
+        #endregion Helper Methods
 
         #region I/O Methods
 
