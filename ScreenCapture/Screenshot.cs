@@ -33,12 +33,12 @@ namespace ScreenCapture
 {
     public static class Screenshot
     {
-        public static bool RemoveOutsideDesktopArea = true;
+        public static bool RemoveOutsideScreenArea = true;
         public static bool DrawCursor = false;
 
         public static Image GetRectangle(Rectangle rect)
         {
-            if (RemoveOutsideDesktopArea)
+            if (RemoveOutsideScreenArea)
             {
                 Rectangle bounds = CaptureHelpers.GetScreenBounds();
                 rect = Rectangle.Intersect(bounds, rect);
@@ -83,7 +83,7 @@ namespace ScreenCapture
         // Managed can't use SourceCopy | CaptureBlt because of .NET bug
         public static Image GetRectangleManaged(Rectangle rect)
         {
-            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
+            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 
             using (Graphics g = Graphics.FromImage(img))
             {
@@ -100,15 +100,15 @@ namespace ScreenCapture
 
         public static Image GetRectangleNative(IntPtr handle, Rectangle rect)
         {
-            Image img = new Bitmap(rect.Width, rect.Height);
+            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 
             using (Graphics g = Graphics.FromImage(img))
             {
-                IntPtr hdcDest = g.GetHdc();
                 IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
+                IntPtr hdcDest = g.GetHdc();
                 NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
-                g.ReleaseHdc(hdcDest);
                 NativeMethods.ReleaseDC(handle, hdcSrc);
+                g.ReleaseHdc(hdcDest);
             }
 
             return img;
