@@ -52,5 +52,5 @@ using System.Runtime.InteropServices;
 //      Minor Version
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("4.7.2.2760")]
+[assembly: AssemblyVersion("4.7.2.2766")]
 [assembly: AssemblyFileVersion("4.7.2")]

@@ -58,11 +58,11 @@ namespace ZScreenLib
 
     public enum CaptureEngineType
     {
-        [Description("Default")]
+        [Description("Capture without transparency")]
         Hybrid,
-        [Description("Transparency using GDI")]
+        [Description("Capture with transparency using GDI")]
         GDI,
-        [Description("Transparency using DWM - only for Windows Vista or Windows 7")]
+        [Description("Capture with transparency using DWM ( only for Windows Vista or higher )")]
         DWM,
     }
 
