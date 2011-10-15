@@ -199,7 +199,7 @@ namespace HelpersLib
 
             if (GetCursorInfo(out cursorInfo) && cursorInfo.flags == CURSOR_SHOWING)
             {
-                cursorInfo.ptScreenPos = ConvertPoint(Cursor.Position);
+                cursorInfo.ptScreenPos = CaptureHelpers.GetZeroBasedMousePosition();
 
                 IntPtr hicon = CopyIcon(cursorInfo.hCursor);
                 if (hicon != IntPtr.Zero)
@@ -256,19 +256,6 @@ namespace HelpersLib
             }
 
             return new MyCursor();
-        }
-
-        public static Point ConvertPoint(Point p)
-        {
-            int x = 0, y = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                x = Math.Min(x, screen.Bounds.X);
-                y = Math.Min(y, screen.Bounds.Y);
-            }
-
-            return new Point(p.X - x, p.Y - y);
         }
 
         public static bool IsCursorMonochrome(Bitmap bmp)

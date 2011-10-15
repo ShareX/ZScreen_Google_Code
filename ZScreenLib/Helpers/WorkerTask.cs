@@ -729,16 +729,8 @@ namespace ZScreenLib
         {
             if (tempImage == null)
             {
-                switch (WorkflowConfig.CaptureEngineMode)
-                {
-                    case CaptureEngineType.Hybrid:
-                        Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
-                        SetImage(Screenshot.GetFullscreen());
-                        break;
-                    default:
-                        SetImage(Capture.CaptureScreen(WorkflowConfig.DrawCursor));
-                        break;
-                }
+                Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
+                SetImage(Screenshot.GetFullscreen());
             }
 
             return tempImage != null;
@@ -763,10 +755,11 @@ namespace ZScreenLib
                         SetImage(Screenshot.GetActiveWindow());
                         break;
                     default:
-                        SetImage(Capture.CaptureActiveWindow(this.WorkflowConfig));
+                        SetImage(Capture.CaptureActiveWindow(WorkflowConfig));
                         break;
                 }
             }
+
             return tempImage != null;
         }
 
@@ -803,7 +796,9 @@ namespace ZScreenLib
 
                 try
                 {
-                    using (Image imgSS = Capture.CaptureScreen(Engine.Workflow.DrawCursor))
+                    Screenshot.DrawCursor = Engine.Workflow.DrawCursor;
+
+                    using (Image imgSS = Screenshot.GetFullscreen())
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.conf.LastRegion.IsEmpty)
                         {
