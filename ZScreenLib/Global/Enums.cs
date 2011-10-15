@@ -58,12 +58,12 @@ namespace ZScreenLib
 
     public enum CaptureEngineType
     {
-        [Description("GDI - Graphics Device Interface for Windows XP")]
+        [Description("Default")]
+        Hybrid,
+        [Description("Transparency using GDI")]
         GDI,
-        [Description("DWM - Desktop Window Manager for Windows Vista or Windows 7")]
+        [Description("Transparency using DWM - only for Windows Vista or Windows 7")]
         DWM,
-        [Description("Hybrid - for Windows XP, Windows Vista or Windows 7")]
-        Hybrid
     }
 
     public enum WatermarkType
@@ -126,7 +126,6 @@ namespace ZScreenLib
         DATE_NAME
     }
 
-  
     public enum AutoScreenshotterJobs
     {
         [Description("Entire Screen")]
