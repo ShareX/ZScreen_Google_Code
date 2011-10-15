@@ -1,8 +1,6 @@
 ﻿Mike:
 Queue tab
-Capture.cs to Helpers.Lib
-Encrypt/Decrypt passwords
-Remove Capture > Webpage
+Screenshot.cs to store Image, OCR
 
 
 yfrog and twitpic using OAuth

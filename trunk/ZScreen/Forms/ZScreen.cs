@@ -1793,7 +1793,7 @@ namespace ZScreenGUI
         private void BtnBrowseImagesDirClick(object sender, EventArgs e)
         {
             string oldDir = txtImagesDir.Text;
-            string dirNew = Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory...");
+            string dirNew = Path.Combine(Adapter.GetDirPathUsingFolderBrowser("Configure Custom Images Directory..."), "Images");
 
             if (!string.IsNullOrEmpty(dirNew))
             {
