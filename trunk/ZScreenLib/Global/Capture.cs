@@ -30,6 +30,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using GraphicsMgrLib;
 using HelpersLib;
+using ScreenCapture;
 using ZScreenLib.Helpers;
 
 namespace ZScreenLib
@@ -42,7 +43,7 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                if (wf.CaptureEngineMode == CaptureEngineType.DWM && Engine.HasAero)
+                if (wf.CaptureEngineMode == CaptureEngineType.DWM && NativeMethods.IsDWMEnabled())
                 {
                     return CaptureWithDWM(wf, handle);
                 }
@@ -55,46 +56,10 @@ namespace ZScreenLib
             return null;
         }
 
-        public static Image CaptureWindow(IntPtr handle, bool showCursor, int margin)
-        {
-            Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
-            windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
-            windowRect.Inflate(margin, margin);
-            Image img = CaptureRectangle(windowRect);
-            if (showCursor) DrawCursor(img, windowRect.Location);
-            return img;
-        }
-
-        public static Image CaptureRectangle(IntPtr handle, Rectangle rect)
-        {
-            // Get the hDC of the target window
-            IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
-            // Create a device context we can copy to
-            IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
-            // Create a bitmap we can copy it to
-            IntPtr hBitmap = NativeMethods.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
-            // Select the bitmap object
-            IntPtr hOld = NativeMethods.SelectObject(hdcDest, hBitmap);
-            // BitBlt over
-            NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
-            // Restore selection
-            NativeMethods.SelectObject(hdcDest, hOld);
-            // Clean up
-            NativeMethods.DeleteDC(hdcDest);
-            NativeMethods.ReleaseDC(handle, hdcSrc);
-            // Get a .NET image object for it
-            Image img = Image.FromHbitmap(hBitmap);
-            // Free up the Bitmap object
-            NativeMethods.DeleteObject(hBitmap);
-            return img;
-        }
-
-        /// <summary>
-        /// Captures a screenshot of a window using the Windows DWM
-        /// </summary>
+        /// <summary>Captures a screenshot of a window using the Windows DWM</summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
-        public static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle)
+        private static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle)
         {
             StaticHelper.WriteLine("Capturing with DWM");
             Image windowImage = null;
@@ -111,7 +76,7 @@ namespace ZScreenLib
             if (windowImage == null)
             {
                 StaticHelper.WriteLine("Standard capture (no transparency)");
-                windowImage = CaptureRectangle(windowRect);
+                windowImage = Screenshot.GetRectangleNative(windowRect);
             }
 
             if (wfdwm.ActiveWindowCleanTransparentCorners)
@@ -141,39 +106,17 @@ namespace ZScreenLib
 
                 if (wfdwm.DrawCursor)
                 {
-                    DrawCursor(windowImage, windowRect.Location);
+                    Screenshot.DrawCursorToImage(windowImage, windowRect.Location);
                 }
             }
 
             return windowImage;
         }
 
-        public static Image CaptureRectangle(Rectangle rect)
-        {
-            return CaptureRectangle(NativeMethods.GetDesktopWindow(), rect);
-        }
-
-        public static Image CaptureScreen(bool showCursor)
-        {
-            Image img = CaptureRectangle(CaptureHelpers.GetScreenBounds());
-            if (showCursor)
-            {
-                DrawCursor(img);
-            }
-            return img;
-        }
-
-        public static Image CaptureWindow(IntPtr handle, bool showCursor)
-        {
-            return CaptureWindow(handle, showCursor, 0);
-        }
-
-        /// <summary>
-        /// Captures a screenshot of a window using Windows GDI
-        /// </summary>
+        /// <summary>Captures a screenshot of a window using Windows GDI</summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
-        public static Image CaptureWithGDI(Workflow wfgdi, IntPtr handle)
+        private static Image CaptureWithGDI(Workflow wfgdi, IntPtr handle)
         {
             StaticHelper.WriteLine("Capturing with GDI");
             Rectangle windowRect;
@@ -202,7 +145,7 @@ namespace ZScreenLib
             {
                 using (new Freeze(wfgdi, handle))
                 {
-                    windowImage = CaptureRectangle(windowRect);
+                    windowImage = Screenshot.GetRectangleNative(windowRect);
                 }
 
                 if (wfgdi.ActiveWindowCleanTransparentCorners)
@@ -222,16 +165,14 @@ namespace ZScreenLib
 
                 if (wfgdi.DrawCursor)
                 {
-                    DrawCursor(windowImage, windowRect.Location);
+                    Screenshot.DrawCursorToImage(windowImage, windowRect.Location);
                 }
             }
 
             return windowImage;
         }
 
-        /// <summary>
-        /// Captures a screenshot of a window using Windows GDI. Captures transparency.
-        /// </summary>
+        /// <summary>Captures a screenshot of a window using Windows GDI. Captures transparency.</summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image</returns>
         private static Image CaptureWindowWithTransparencyGDI(Workflow wfgdi, IntPtr handle, Rectangle windowRect)
@@ -256,17 +197,17 @@ namespace ZScreenLib
                     NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                     NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                     Application.DoEvents();
-                    whiteBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+                    whiteBGImage = (Bitmap)Screenshot.GetRectangleNative(NativeMethods.GetDesktopWindow(), windowRect);
 
                     form.BackColor = Color.Black;
                     Application.DoEvents();
-                    blackBGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+                    blackBGImage = (Bitmap)Screenshot.GetRectangleNative(NativeMethods.GetDesktopWindow(), windowRect);
 
                     if (!wfgdi.ActiveWindowGDIFreezeWindow)
                     {
                         form.BackColor = Color.White;
                         Application.DoEvents();
-                        white2BGImage = (Bitmap)CaptureRectangle(NativeMethods.GetDesktopWindow(), windowRect);
+                        white2BGImage = (Bitmap)Screenshot.GetRectangleNative(NativeMethods.GetDesktopWindow(), windowRect);
                     }
                 }
 
@@ -295,7 +236,7 @@ namespace ZScreenLib
                 {
                     windowRect.X += windowRectCropped.X;
                     windowRect.Y += windowRectCropped.Y;
-                    DrawCursor(windowImage, windowRect.Location);
+                    Screenshot.DrawCursorToImage(windowImage, windowRect.Location);
                 }
 
                 if (wfgdi.ActiveWindowShowCheckers)
@@ -307,14 +248,7 @@ namespace ZScreenLib
             return windowImage;
         }
 
-        /// <summary>
-        /// Remove the corners of a window by replacing the background of these corners by transparency.
-        /// </summary>
-        /// <param name="handle"></param>
-        /// <param name="windowImage"></param>
-        /// <param name="redBGImage"></param>
-        /// <param name="windowRect"></param>
-        /// <returns></returns>
+        /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>
         private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
         {
             const int cornerSize = 5;
@@ -333,7 +267,7 @@ namespace ZScreenLib
                         NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                         NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                         Application.DoEvents();
-                        redBGImage = CaptureRectangle(windowRect) as Bitmap;
+                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
                     }
                 }
 
@@ -394,25 +328,25 @@ namespace ZScreenLib
                 NativeMethods.DwmUpdateThumbnailProperties(thumb, ref props);
 
                 NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap whiteBGImage = CaptureRectangle(windowRect) as Bitmap;
+                Bitmap whiteBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
 
                 form.BackColor = Color.Black;
                 form.Refresh();
                 NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap blackBGImage = CaptureRectangle(windowRect) as Bitmap;
+                Bitmap blackBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
 
                 if (captureRedBGImage)
                 {
                     form.BackColor = Color.Red;
                     form.Refresh();
                     NativeMethods.ActivateWindowRepeat(handle, 250);
-                    redBGImage = CaptureRectangle(windowRect) as Bitmap;
+                    redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
                 }
 
                 form.BackColor = Color.White;
                 form.Refresh();
                 NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap whiteBGImage2 = CaptureRectangle(windowRect) as Bitmap;
+                Bitmap whiteBGImage2 = Screenshot.GetRectangleNative(windowRect) as Bitmap;
 
                 // Don't do transparency calculation if an animated picture is detected
                 if (whiteBGImage.AreBitmapsEqual(whiteBGImage2))
@@ -443,7 +377,7 @@ namespace ZScreenLib
             return windowImage;
         }
 
-        public static Bitmap PrintWindow(IntPtr hwnd)
+        private static Bitmap PrintWindow(IntPtr hwnd)
         {
             RECT rc;
             NativeMethods.GetWindowRect(hwnd, out rc);
@@ -468,8 +402,7 @@ namespace ZScreenLib
             gfxBmp.Dispose();
             return bmp;
 
-            /*
-            RECT rect;
+            /*RECT rect;
             GetWindowRect(handle, out rect);
 
             IntPtr hDC = GetDC(handle);
@@ -488,47 +421,5 @@ namespace ZScreenLib
 
             return bmp;*/
         }
-
-        private static void DrawCursor(Image img)
-        {
-            DrawCursor(img, Point.Empty);
-        }
-
-        private static void DrawCursor(Image img, Point offset)
-        {
-            using (MyCursor cursor = NativeMethods.CaptureCursor())
-            {
-                cursor.Position.Offset(-offset.X, -offset.Y);
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.DrawImage(cursor.Bitmap, cursor.Position);
-                }
-            }
-        }
-
-        #region Clean window corners
-
-        /// <summary>
-        /// Paints 5 pixel wide red corners behind the form from which the event originates.
-        /// </summary>
-        /*private static void FormPaintRedCorners(object sender, PaintEventArgs e)
-        {
-            const int cornerSize = 5;
-            Form form = sender as Form;
-            if (form != null)
-            {
-                int width = form.Width;
-                int height = form.Height;
-
-                e.Graphics.FillRectangle(Brushes.Red, 0, 0, cornerSize, cornerSize); // top left
-                e.Graphics.FillRectangle(Brushes.Red, width - 5, 0, cornerSize, cornerSize); // top right
-                e.Graphics.FillRectangle(Brushes.Red, 0, height - 5, cornerSize, cornerSize); // bottom left
-                e.Graphics.FillRectangle(Brushes.Red, width - 5, height - 5, cornerSize, cornerSize); // bottom right
-            }
-        }*/
-
-        #endregion Clean window corners
     }
 }

@@ -61,13 +61,6 @@ namespace ScreenCapture
             return GetRectangle(bounds);
         }
 
-        public static Image GetActiveWindow()
-        {
-            IntPtr handle = NativeMethods.GetForegroundWindow();
-
-            return GetWindow(handle);
-        }
-
         public static Image GetWindow(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
@@ -78,6 +71,13 @@ namespace ScreenCapture
             }
 
             return null;
+        }
+
+        public static Image GetActiveWindow()
+        {
+            IntPtr handle = NativeMethods.GetForegroundWindow();
+
+            return GetWindow(handle);
         }
 
         // Managed can't use SourceCopy | CaptureBlt because of .NET bug
@@ -116,35 +116,26 @@ namespace ScreenCapture
 
         public static Image GetRectangleNative2(IntPtr handle, Rectangle rect)
         {
-            // Get the hDC of the target window
             IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
-            // Create a device context we can copy to
             IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
-            // Create a bitmap we can copy it to
             IntPtr hBitmap = NativeMethods.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
-            // Select the bitmap object
             IntPtr hOld = NativeMethods.SelectObject(hdcDest, hBitmap);
-            // BitBlt over
             NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.Left, rect.Top, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
-            // Restore selection
             NativeMethods.SelectObject(hdcDest, hOld);
-            // Clean up
             NativeMethods.DeleteDC(hdcDest);
             NativeMethods.ReleaseDC(handle, hdcSrc);
-            // Get a .NET image object for it
             Image img = Image.FromHbitmap(hBitmap);
-            // Free up the Bitmap object
             NativeMethods.DeleteObject(hBitmap);
 
             return img;
         }
 
-        private static void DrawCursorToImage(Image img)
+        public static void DrawCursorToImage(Image img)
         {
             DrawCursorToImage(img, Point.Empty);
         }
 
-        private static void DrawCursorToImage(Image img, Point offset)
+        public static void DrawCursorToImage(Image img, Point offset)
         {
             using (MyCursor cursor = NativeMethods.CaptureCursor())
             {

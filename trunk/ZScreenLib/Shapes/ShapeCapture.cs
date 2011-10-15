@@ -146,7 +146,7 @@ namespace ZScreenLib.Shapes
         public Image GetScreenshot(Image fullscreenSS)
         {
             Rectangle rect = Rectangle.Round(path.GetBounds());
-            rect.Location = NativeMethods.ConvertPoint(rect.Location);
+            rect.Location = CaptureHelpers.FixScreenCoordinates(rect.Location);
 
             Bitmap screenshot = new Bitmap(rect.Width, rect.Height);
 
@@ -154,7 +154,7 @@ namespace ZScreenLib.Shapes
             {
                 using (Matrix translateMatrix = new Matrix())
                 {
-                    rect.Location = NativeMethods.ConvertPoint(rect.Location);
+                    rect.Location = CaptureHelpers.FixScreenCoordinates(rect.Location);
                     translateMatrix.Translate(-path.GetBounds().X, -path.GetBounds().Y);
                     path.Transform(translateMatrix);
                 }
