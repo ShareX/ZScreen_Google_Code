@@ -25,7 +25,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using GraphicsMgrLib;
@@ -248,34 +247,6 @@ namespace ZScreenLib
             return windowImage;
         }
 
-        /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>
-        private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
-        {
-            const int cornerSize = 5;
-            if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
-            {
-                StaticHelper.WriteLine("Clean transparent corners");
-
-                if (redBGImage == null)
-                {
-                    using (Form form = new Form())
-                    {
-                        form.FormBorderStyle = FormBorderStyle.None;
-                        form.ShowInTaskbar = false;
-                        form.BackColor = Color.Red;
-
-                        NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
-                        NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
-                        Application.DoEvents();
-                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
-                    }
-                }
-
-                return GraphicsMgr.RemoveCorners(windowImage, redBGImage);
-            }
-            return null;
-        }
-
         /// <summary>
         /// Make a full-size thumbnail of the captured window on a new topmost form, and capture
         /// this new form with a black and then white background. Then compute the transparency by
@@ -375,6 +346,34 @@ namespace ZScreenLib
             }
 
             return windowImage;
+        }
+
+        /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>
+        private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
+        {
+            const int cornerSize = 5;
+            if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
+            {
+                StaticHelper.WriteLine("Clean transparent corners");
+
+                if (redBGImage == null)
+                {
+                    using (Form form = new Form())
+                    {
+                        form.FormBorderStyle = FormBorderStyle.None;
+                        form.ShowInTaskbar = false;
+                        form.BackColor = Color.Red;
+
+                        NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
+                        NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
+                        Application.DoEvents();
+                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                    }
+                }
+
+                return GraphicsMgr.RemoveCorners(windowImage, redBGImage);
+            }
+            return null;
         }
 
         private static Bitmap PrintWindow(IntPtr hwnd)

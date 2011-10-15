@@ -46,10 +46,13 @@ namespace ZScreenLib
     {
         public static IntPtr zHandle = IntPtr.Zero;
         public static Logger EngineLogger = new Logger();
+
         public static Stopwatch StartTimer { get; private set; }
 
         public static bool IsTakingScreenShot { get; set; }
+
         public static bool IsClipboardUploading { get; set; }
+
         public static string zPreviousSetClipboardText = Clipboard.GetText();
 
         public static bool IsPortable { get; private set; }
@@ -193,6 +196,7 @@ namespace ZScreenLib
         public static XMLSettings conf { get; set; }
 
         public static Workflow Workflow { get; set; }
+
         public static GoogleTranslatorConfig MyGTConfig { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
@@ -579,7 +583,7 @@ namespace ZScreenLib
         {
             get
             {
-                return Environment.OSVersion.Version.Major >= 6;
+                return NativeMethods.IsDWMEnabled();
             }
         }
 
