@@ -765,20 +765,18 @@ namespace ZScreenGUI
             // 
             // tcMain
             // 
-            this.tcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcMain.Controls.Add(this.tpMain);
             this.tcMain.Controls.Add(this.tpHotkeys);
             this.tcMain.Controls.Add(this.tpMainInput);
             this.tcMain.Controls.Add(this.tpMainActions);
             this.tcMain.Controls.Add(this.tpOptions);
             this.tcMain.Controls.Add(this.tpAdvanced);
-            this.tcMain.Location = new System.Drawing.Point(0, 0);
+            this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcMain.Location = new System.Drawing.Point(2, 2);
             this.tcMain.Multiline = true;
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
-            this.tcMain.Size = new System.Drawing.Size(804, 472);
+            this.tcMain.Size = new System.Drawing.Size(812, 482);
             this.tcMain.TabIndex = 74;
             this.tcMain.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tcMain_Selecting);
             // 
@@ -796,7 +794,7 @@ namespace ZScreenGUI
             this.tpMain.Location = new System.Drawing.Point(4, 22);
             this.tpMain.Name = "tpMain";
             this.tpMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMain.Size = new System.Drawing.Size(796, 446);
+            this.tpMain.Size = new System.Drawing.Size(804, 456);
             this.tpMain.TabIndex = 0;
             this.tpMain.Text = "Main";
             this.tpMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpMain_DragDrop);
@@ -815,10 +813,10 @@ namespace ZScreenGUI
             this.tsbLinkBugs,
             this.tsbLinkHome});
             this.tsLinks.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.tsLinks.Location = new System.Drawing.Point(3, 419);
+            this.tsLinks.Location = new System.Drawing.Point(3, 429);
             this.tsLinks.Name = "tsLinks";
             this.tsLinks.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsLinks.Size = new System.Drawing.Size(790, 24);
+            this.tsLinks.Size = new System.Drawing.Size(798, 24);
             this.tsLinks.TabIndex = 127;
             this.tsLinks.Text = "toolStrip1";
             // 
@@ -969,7 +967,7 @@ namespace ZScreenGUI
             this.pbPreview.DisableViewer = false;
             this.pbPreview.Location = new System.Drawing.Point(392, 3);
             this.pbPreview.Name = "pbPreview";
-            this.pbPreview.Size = new System.Drawing.Size(401, 408);
+            this.pbPreview.Size = new System.Drawing.Size(409, 418);
             this.pbPreview.TabIndex = 128;
             // 
             // tpHotkeys
@@ -1025,7 +1023,7 @@ namespace ZScreenGUI
             this.tpMainInput.Location = new System.Drawing.Point(4, 22);
             this.tpMainInput.Name = "tpMainInput";
             this.tpMainInput.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainInput.Size = new System.Drawing.Size(796, 446);
+            this.tpMainInput.Size = new System.Drawing.Size(804, 456);
             this.tpMainInput.TabIndex = 4;
             this.tpMainInput.Text = "Capture";
             this.tpMainInput.UseVisualStyleBackColor = true;
@@ -1043,7 +1041,7 @@ namespace ZScreenGUI
             this.tcCapture.Location = new System.Drawing.Point(3, 3);
             this.tcCapture.Name = "tcCapture";
             this.tcCapture.SelectedIndex = 0;
-            this.tcCapture.Size = new System.Drawing.Size(790, 440);
+            this.tcCapture.Size = new System.Drawing.Size(798, 450);
             this.tcCapture.TabIndex = 77;
             // 
             // tpActivewindow
@@ -1055,7 +1053,7 @@ namespace ZScreenGUI
             this.tpActivewindow.Location = new System.Drawing.Point(4, 22);
             this.tpActivewindow.Name = "tpActivewindow";
             this.tpActivewindow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpActivewindow.Size = new System.Drawing.Size(782, 414);
+            this.tpActivewindow.Size = new System.Drawing.Size(790, 424);
             this.tpActivewindow.TabIndex = 12;
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;

@@ -36,7 +36,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using GradientTester;
-using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.CLI;
 using ScreenCapture;

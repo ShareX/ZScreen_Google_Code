@@ -229,7 +229,7 @@ namespace UploadersLib
                     return ImageShackAccountType == AccountType.Anonymous ||
                         ImageShackAccountType == AccountType.User && !string.IsNullOrEmpty(ImageShackRegistrationCode);
                 case ImageUploaderType.IMGUR:
-                    return ImgurOAuthInfo != null;
+                    return ImgurOAuthInfo != null && !string.IsNullOrEmpty(ImgurOAuthInfo.ConsumerKey);
                 case ImageUploaderType.MEDIAWIKI:
                     return MediaWikiAccountList.Count > 0;
                 case ImageUploaderType.Photobucket:
