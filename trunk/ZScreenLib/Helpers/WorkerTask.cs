@@ -63,8 +63,11 @@ namespace ZScreenLib
         public event TaskEventHandler UploadPreparing;
         public event TaskEventHandler UploadProgressChanged2;
         public event TaskEventHandler UploadCompleted;
+
         public TaskStatus Status { get; private set; }
+
         public bool IsWorking { get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; } }
+
         public bool IsStopped { get; private set; }
 
         #region Enums
@@ -150,14 +153,19 @@ namespace ZScreenLib
         #region Properties
 
         public int ID { get; set; }
+
         public ProgressManager Progress { get; set; }
 
         public BackgroundWorker MyWorker { get; set; }
+
         public Workflow WorkflowConfig { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
+
         public JobLevel1 Job1 { get; private set; }  // Image, File, Text
+
         public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
+
         public JobLevel3 Job3 { get; private set; }  // Shorten URL, Upload Text, Index Folder, etc.
 
         public List<string> Errors { get; set; }
@@ -191,10 +199,15 @@ namespace ZScreenLib
         public bool IsImage { get; private set; }
 
         public List<Image> tempImages;
+
         public Image tempImage { get; private set; }
+
         public string tempText { get; private set; }
+
         public string OCRText { get; private set; }
+
         public string OCRFilePath { get; private set; }
+
         private Stream Data;
 
         public GoogleTranslateInfo TranslationInfo { get; private set; }
@@ -202,11 +215,13 @@ namespace ZScreenLib
         private string DestinationName = string.Empty;
 
         public TaskInfo Info { get; private set; }
+
         public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
         public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
         public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
 
         public List<UploadResult> UploadResults { get; private set; }
+
         public UploadResult Result
         {
             get
@@ -320,6 +335,9 @@ namespace ZScreenLib
                     break;
                 case JobLevel2.CaptureFreeHandRegion:
                     success = CaptureShape();
+                    break;
+                case JobLevel2.UploadFromClipboard:
+                    success = LoadClipboardContent();
                     break;
             }
 
@@ -504,7 +522,6 @@ namespace ZScreenLib
                 }
 
                 SetOCR(tempImage);
-
             }
 
             return tempImage != null;
@@ -1846,11 +1863,12 @@ namespace ZScreenLib
 
         #region Upload Methods
 
-        public void LoadClipboardContent()
+        public bool LoadClipboardContent()
         {
+            bool succ = true;
             if (Clipboard.ContainsImage())
             {
-                SetImage(Clipboard.GetImage());
+                succ = SetImage(Clipboard.GetImage());
             }
             else if (Clipboard.ContainsText())
             {
@@ -1865,6 +1883,8 @@ namespace ZScreenLib
                     UpdateLocalFilePath(listFiles[0]);
                 }
             }
+
+            return succ;
         }
 
         #endregion Upload Methods
@@ -2170,14 +2190,19 @@ namespace ZScreenLib
     public class TaskInfo
     {
         public WorkerTask.JobLevel2 Job { get; set; }
+
         public IntPtr Handle { get; set; }
+
         public DestSelector DestConfig { get; set; }
+
         public NotifyIcon TrayIcon { get; set; }
 
         public string FileName { get; set; }
+
         public string FileSize { get; set; }
 
         private string mFilePath;
+
         public string LocalFilePath
         {
             get

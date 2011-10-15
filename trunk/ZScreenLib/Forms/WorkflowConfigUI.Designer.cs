@@ -39,7 +39,7 @@
             this.tpTasks = new System.Windows.Forms.TabPage();
             this.gbTasks = new System.Windows.Forms.GroupBox();
             this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
-            this.chkPerformActions = new System.Windows.Forms.CheckBox();
+            this.chkTaskImageAnnotate = new System.Windows.Forms.CheckBox();
             this.chkTaskImageResize = new System.Windows.Forms.CheckBox();
             this.chkTaskImageFileFormat = new System.Windows.Forms.CheckBox();
             this.tpImageQuality = new System.Windows.Forms.TabPage();
@@ -75,6 +75,8 @@
             this.chkUpload = new System.Windows.Forms.CheckBox();
             this.chkClipboard = new System.Windows.Forms.CheckBox();
             this.gbRemoteLocations = new System.Windows.Forms.GroupBox();
+            this.flpTextUploaders = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpImageUploaders = new System.Windows.Forms.FlowLayoutPanel();
             this.flpFileUploaders = new System.Windows.Forms.FlowLayoutPanel();
             this.gbSaveToFile = new System.Windows.Forms.GroupBox();
             this.txtFileNameWithoutExt = new System.Windows.Forms.TextBox();
@@ -83,8 +85,7 @@
             this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.flpImageUploaders = new System.Windows.Forms.FlowLayoutPanel();
-            this.flpTextUploaders = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpTasks = new System.Windows.Forms.FlowLayoutPanel();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -103,6 +104,7 @@
             this.gbOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
             this.gbSaveToFile.SuspendLayout();
+            this.flpTasks.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -127,7 +129,7 @@
             this.tpJob.Location = new System.Drawing.Point(4, 22);
             this.tpJob.Name = "tpJob";
             this.tpJob.Padding = new System.Windows.Forms.Padding(3);
-            this.tpJob.Size = new System.Drawing.Size(632, 366);
+            this.tpJob.Size = new System.Drawing.Size(632, 374);
             this.tpJob.TabIndex = 0;
             this.tpJob.Text = "Job";
             this.tpJob.UseVisualStyleBackColor = true;
@@ -137,7 +139,7 @@
             this.gbTask.Controls.Add(this.cboTask);
             this.gbTask.Location = new System.Drawing.Point(8, 72);
             this.gbTask.Name = "gbTask";
-            this.gbTask.Size = new System.Drawing.Size(584, 56);
+            this.gbTask.Size = new System.Drawing.Size(608, 56);
             this.gbTask.TabIndex = 10;
             this.gbTask.TabStop = false;
             this.gbTask.Text = "Task";
@@ -157,7 +159,7 @@
             this.gbName.Controls.Add(this.txtName);
             this.gbName.Location = new System.Drawing.Point(8, 8);
             this.gbName.Name = "gbName";
-            this.gbName.Size = new System.Drawing.Size(584, 56);
+            this.gbName.Size = new System.Drawing.Size(608, 56);
             this.gbName.TabIndex = 9;
             this.gbName.TabStop = false;
             this.gbName.Text = "Description";
@@ -183,7 +185,7 @@
             // 
             this.hmcHotkeys.Location = new System.Drawing.Point(16, 144);
             this.hmcHotkeys.Name = "hmcHotkeys";
-            this.hmcHotkeys.Size = new System.Drawing.Size(576, 32);
+            this.hmcHotkeys.Size = new System.Drawing.Size(600, 32);
             this.hmcHotkeys.TabIndex = 11;
             // 
             // tpTasks
@@ -192,20 +194,17 @@
             this.tpTasks.Location = new System.Drawing.Point(4, 22);
             this.tpTasks.Name = "tpTasks";
             this.tpTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTasks.Size = new System.Drawing.Size(632, 366);
+            this.tpTasks.Size = new System.Drawing.Size(632, 374);
             this.tpTasks.TabIndex = 6;
             this.tpTasks.Text = "Tasks";
             this.tpTasks.UseVisualStyleBackColor = true;
             // 
             // gbTasks
             // 
-            this.gbTasks.Controls.Add(this.chkTaskOutputConfig);
-            this.gbTasks.Controls.Add(this.chkPerformActions);
-            this.gbTasks.Controls.Add(this.chkTaskImageResize);
-            this.gbTasks.Controls.Add(this.chkTaskImageFileFormat);
+            this.gbTasks.Controls.Add(this.flpTasks);
             this.gbTasks.Location = new System.Drawing.Point(8, 8);
             this.gbTasks.Name = "gbTasks";
-            this.gbTasks.Size = new System.Drawing.Size(600, 296);
+            this.gbTasks.Size = new System.Drawing.Size(608, 352);
             this.gbTasks.TabIndex = 2;
             this.gbTasks.TabStop = false;
             this.gbTasks.Text = "I want to...";
@@ -213,7 +212,7 @@
             // chkTaskOutputConfig
             // 
             this.chkTaskOutputConfig.AutoSize = true;
-            this.chkTaskOutputConfig.Location = new System.Drawing.Point(16, 96);
+            this.chkTaskOutputConfig.Location = new System.Drawing.Point(3, 72);
             this.chkTaskOutputConfig.Name = "chkTaskOutputConfig";
             this.chkTaskOutputConfig.Size = new System.Drawing.Size(124, 17);
             this.chkTaskOutputConfig.TabIndex = 3;
@@ -221,20 +220,20 @@
             this.chkTaskOutputConfig.UseVisualStyleBackColor = true;
             this.chkTaskOutputConfig.CheckedChanged += new System.EventHandler(this.chkTaskOutputConfig_CheckedChanged);
             // 
-            // chkPerformActions
+            // chkTaskImageAnnotate
             // 
-            this.chkPerformActions.AutoSize = true;
-            this.chkPerformActions.Location = new System.Drawing.Point(16, 24);
-            this.chkPerformActions.Name = "chkPerformActions";
-            this.chkPerformActions.Size = new System.Drawing.Size(101, 17);
-            this.chkPerformActions.TabIndex = 2;
-            this.chkPerformActions.Text = "Annotate Image";
-            this.chkPerformActions.UseVisualStyleBackColor = true;
+            this.chkTaskImageAnnotate.AutoSize = true;
+            this.chkTaskImageAnnotate.Location = new System.Drawing.Point(3, 3);
+            this.chkTaskImageAnnotate.Name = "chkTaskImageAnnotate";
+            this.chkTaskImageAnnotate.Size = new System.Drawing.Size(101, 17);
+            this.chkTaskImageAnnotate.TabIndex = 2;
+            this.chkTaskImageAnnotate.Text = "Annotate Image";
+            this.chkTaskImageAnnotate.UseVisualStyleBackColor = true;
             // 
             // chkTaskImageResize
             // 
             this.chkTaskImageResize.AutoSize = true;
-            this.chkTaskImageResize.Location = new System.Drawing.Point(16, 48);
+            this.chkTaskImageResize.Location = new System.Drawing.Point(3, 49);
             this.chkTaskImageResize.Name = "chkTaskImageResize";
             this.chkTaskImageResize.Size = new System.Drawing.Size(89, 17);
             this.chkTaskImageResize.TabIndex = 0;
@@ -245,7 +244,7 @@
             // chkTaskImageFileFormat
             // 
             this.chkTaskImageFileFormat.AutoSize = true;
-            this.chkTaskImageFileFormat.Location = new System.Drawing.Point(16, 72);
+            this.chkTaskImageFileFormat.Location = new System.Drawing.Point(3, 26);
             this.chkTaskImageFileFormat.Name = "chkTaskImageFileFormat";
             this.chkTaskImageFileFormat.Size = new System.Drawing.Size(127, 17);
             this.chkTaskImageFileFormat.TabIndex = 1;
@@ -258,7 +257,7 @@
             this.tpImageQuality.Controls.Add(this.gbPictureQuality);
             this.tpImageQuality.Location = new System.Drawing.Point(4, 22);
             this.tpImageQuality.Name = "tpImageQuality";
-            this.tpImageQuality.Size = new System.Drawing.Size(632, 366);
+            this.tpImageQuality.Size = new System.Drawing.Size(632, 374);
             this.tpImageQuality.TabIndex = 5;
             this.tpImageQuality.Text = "Quality";
             this.tpImageQuality.UseVisualStyleBackColor = true;
@@ -280,7 +279,7 @@
             this.gbPictureQuality.Controls.Add(this.lblSwitchTo);
             this.gbPictureQuality.Location = new System.Drawing.Point(8, 8);
             this.gbPictureQuality.Name = "gbPictureQuality";
-            this.gbPictureQuality.Size = new System.Drawing.Size(592, 288);
+            this.gbPictureQuality.Size = new System.Drawing.Size(608, 352);
             this.gbPictureQuality.TabIndex = 116;
             this.gbPictureQuality.TabStop = false;
             this.gbPictureQuality.Text = "Picture Quality";
@@ -422,7 +421,7 @@
             this.tpImageResize.Location = new System.Drawing.Point(4, 22);
             this.tpImageResize.Name = "tpImageResize";
             this.tpImageResize.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImageResize.Size = new System.Drawing.Size(632, 366);
+            this.tpImageResize.Size = new System.Drawing.Size(632, 374);
             this.tpImageResize.TabIndex = 4;
             this.tpImageResize.Text = "Resize";
             this.tpImageResize.UseVisualStyleBackColor = true;
@@ -441,7 +440,7 @@
             this.gbImageSize.Controls.Add(this.rbImageSizeRatio);
             this.gbImageSize.Location = new System.Drawing.Point(8, 8);
             this.gbImageSize.Name = "gbImageSize";
-            this.gbImageSize.Size = new System.Drawing.Size(584, 120);
+            this.gbImageSize.Size = new System.Drawing.Size(608, 120);
             this.gbImageSize.TabIndex = 125;
             this.gbImageSize.TabStop = false;
             this.gbImageSize.Text = "Image Size";
@@ -642,6 +641,24 @@
             this.gbRemoteLocations.TabStop = false;
             this.gbRemoteLocations.Text = "Upload to Remote Locations";
             // 
+            // flpTextUploaders
+            // 
+            this.flpTextUploaders.AutoScroll = true;
+            this.flpTextUploaders.Location = new System.Drawing.Point(16, 24);
+            this.flpTextUploaders.Name = "flpTextUploaders";
+            this.flpTextUploaders.Size = new System.Drawing.Size(280, 96);
+            this.flpTextUploaders.TabIndex = 9;
+            this.flpTextUploaders.Visible = false;
+            // 
+            // flpImageUploaders
+            // 
+            this.flpImageUploaders.AutoScroll = true;
+            this.flpImageUploaders.Location = new System.Drawing.Point(16, 24);
+            this.flpImageUploaders.Name = "flpImageUploaders";
+            this.flpImageUploaders.Size = new System.Drawing.Size(280, 96);
+            this.flpImageUploaders.TabIndex = 8;
+            this.flpImageUploaders.Visible = false;
+            // 
             // flpFileUploaders
             // 
             this.flpFileUploaders.AutoScroll = true;
@@ -716,23 +733,17 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // flpImageUploaders
+            // flpTasks
             // 
-            this.flpImageUploaders.AutoScroll = true;
-            this.flpImageUploaders.Location = new System.Drawing.Point(16, 24);
-            this.flpImageUploaders.Name = "flpImageUploaders";
-            this.flpImageUploaders.Size = new System.Drawing.Size(280, 96);
-            this.flpImageUploaders.TabIndex = 8;
-            this.flpImageUploaders.Visible = false;
-            // 
-            // flpTextUploaders
-            // 
-            this.flpTextUploaders.AutoScroll = true;
-            this.flpTextUploaders.Location = new System.Drawing.Point(16, 24);
-            this.flpTextUploaders.Name = "flpTextUploaders";
-            this.flpTextUploaders.Size = new System.Drawing.Size(280, 96);
-            this.flpTextUploaders.TabIndex = 9;
-            this.flpTextUploaders.Visible = false;
+            this.flpTasks.Controls.Add(this.chkTaskImageAnnotate);
+            this.flpTasks.Controls.Add(this.chkTaskImageFileFormat);
+            this.flpTasks.Controls.Add(this.chkTaskImageResize);
+            this.flpTasks.Controls.Add(this.chkTaskOutputConfig);
+            this.flpTasks.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpTasks.Location = new System.Drawing.Point(8, 16);
+            this.flpTasks.Name = "flpTasks";
+            this.flpTasks.Size = new System.Drawing.Size(360, 328);
+            this.flpTasks.TabIndex = 3;
             // 
             // WorkflowWizard
             // 
@@ -757,7 +768,6 @@
             this.gbName.PerformLayout();
             this.tpTasks.ResumeLayout(false);
             this.gbTasks.ResumeLayout(false);
-            this.gbTasks.PerformLayout();
             this.tpImageQuality.ResumeLayout(false);
             this.gbPictureQuality.ResumeLayout(false);
             this.gbPictureQuality.PerformLayout();
@@ -773,6 +783,8 @@
             this.gbRemoteLocations.ResumeLayout(false);
             this.gbSaveToFile.ResumeLayout(false);
             this.gbSaveToFile.PerformLayout();
+            this.flpTasks.ResumeLayout(false);
+            this.flpTasks.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -794,7 +806,7 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnOutputsConfig;
         private System.Windows.Forms.CheckBox chkClipboard;
-        private System.Windows.Forms.CheckBox chkPerformActions;
+        private System.Windows.Forms.CheckBox chkTaskImageAnnotate;
         private System.Windows.Forms.CheckBox chkPrinter;
         private System.Windows.Forms.CheckBox chkSaveFile;
         private System.Windows.Forms.CheckBox chkTaskImageFileFormat;
@@ -837,6 +849,7 @@
         private System.Windows.Forms.FlowLayoutPanel flpFileUploaders;
         private System.Windows.Forms.FlowLayoutPanel flpTextUploaders;
         private System.Windows.Forms.FlowLayoutPanel flpImageUploaders;
+        private System.Windows.Forms.FlowLayoutPanel flpTasks;
 
     }
 }

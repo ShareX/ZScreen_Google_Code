@@ -31,7 +31,6 @@ using System.IO;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
-using Gif.Components;
 using GraphicsMgrLib;
 using HelpersLib;
 using HistoryLib;
@@ -477,13 +476,11 @@ namespace ZScreenGUI
 
                 if (Clipboard.ContainsImage())
                 {
-                    cbTask.SetImage(Clipboard.GetImage());
                     cbTask.RunWorker();
                 }
                 else if (Clipboard.ContainsText())
                 {
-                    cbTask.SetText(Clipboard.GetText());
-                    if (cbTask.tempText != Engine.zPreviousSetClipboardText)
+                    if (cbTask.tempText != Engine.zPreviousSetClipboardText || !FileSystem.IsValidLink(Engine.zPreviousSetClipboardText))
                     {
                         cbTask.RunWorker();
                         Engine.IsClipboardUploading = true;
