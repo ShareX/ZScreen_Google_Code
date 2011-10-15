@@ -2,10 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 using HelpersLib;
-using HelpersLib.Hotkey;
 using UploadersAPILib;
 using UploadersLib;
-using System.Drawing;
 
 namespace ZScreenLib
 {
@@ -58,7 +56,7 @@ namespace ZScreenLib
             // Tasks
             ConfigGuiTasks();
 
-            // Resize 
+            // Resize
             ConfigGuiResize();
 
             // Quality
@@ -80,7 +78,11 @@ namespace ZScreenLib
 
         private void ConfigGuiTasks()
         {
-            chkPerformActions.Checked = Config.PerformActions;
+            chkTaskImageAnnotate.Checked = Config.PerformActions;
+            bool bDataType = ZAppHelper.IsImageFile(Info.LocalFilePath);
+            chkTaskImageAnnotate.Visible = bDataType;
+            chkTaskImageFileFormat.Visible = bDataType;
+            chkTaskImageResize.Visible = bDataType;
         }
 
         private void ConfigGuiResize()
@@ -101,7 +103,6 @@ namespace ZScreenLib
             nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
             nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
             nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
-
         }
 
         private void ConfigGuiQuality()
@@ -173,8 +174,6 @@ namespace ZScreenLib
                         Text = iut.GetDescription(),
                         Checked = Config.ImageUploaders.Contains(iut),
                         Tag = iut,
-                        AutoSize = false,
-                        Size = new Size(100, 17)
                     };
                     if (Config.ConfigOutputs.IsActive(iut))
                     {
@@ -190,7 +189,6 @@ namespace ZScreenLib
                 {
                     CheckBox chkUploader = new CheckBox()
                     {
-                        Name = "chk" + tut.GetDescription().RemoveWhiteSpaces(),
                         Text = tut.GetDescription(),
                         Checked = Config.TextUploaders.Contains(tut),
                         Tag = tut
@@ -222,7 +220,7 @@ namespace ZScreenLib
             Config.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
 
             // Tasks
-            Config.PerformActions = chkPerformActions.Checked;
+            Config.PerformActions = chkTaskImageAnnotate.Checked;
 
             // Resize
             UpdateImageSize(bChangeConfig: true);
@@ -304,7 +302,7 @@ namespace ZScreenLib
             }
         }
 
-        #endregion
+        #endregion Helper Methods
 
         #region Control Events
 
@@ -398,7 +396,7 @@ namespace ZScreenLib
             nudSwitchAfterValueChanged();
         }
 
-        void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
+        private void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
         {
             nudSwitchAfterValueChanged();
         }
@@ -427,7 +425,6 @@ namespace ZScreenLib
             Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
         }
 
-
         private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
         {
             UpdateImageSize();
@@ -443,7 +440,7 @@ namespace ZScreenLib
             UpdateImageSize();
         }
 
-         private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
+        private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
         {
             UpdateImageSize();
         }
@@ -464,8 +461,11 @@ namespace ZScreenLib
     public class WorkflowWizardGUIOptions
     {
         public bool ShowTabJob { get; set; }
+
         public bool ShowTasks { get; set; }
+
         public bool ShowResizeTab { get; set; }
+
         public bool ShowQualityTab { get; set; }
     }
 }
