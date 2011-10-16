@@ -347,7 +347,7 @@ namespace HelpersLib
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+        public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
@@ -356,22 +356,22 @@ namespace HelpersLib
         public static extern bool DwmIsCompositionEnabled();
 
         [DllImport("dwmapi.dll")]
-        public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
-
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmUnregisterThumbnail(IntPtr thumb);
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmQueryThumbnailSourceSize(IntPtr thumb, out SIZE size);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
+        public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmSetDxFrameDuration(IntPtr hwnd, uint cRefreshes);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmUnregisterThumbnail(IntPtr thumb);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
 
         #endregion dwmapi.dll
     }
