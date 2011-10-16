@@ -292,6 +292,10 @@ namespace ZScreenLib
             if (result == DialogResult.Cancel)
             {
                 this.States.Add(TaskState.CancellationPending);
+            }
+
+            if (States.Contains(TaskState.CancellationPending))
+            {
                 SetNotifyIconStatus(Info.TrayIcon, ready: true);
             }
         }
