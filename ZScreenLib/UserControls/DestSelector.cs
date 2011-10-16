@@ -68,6 +68,18 @@ namespace ZScreenLib
             return new ToolStripMenuItem();
         }
 
+        public ToolStripMenuItem GetLinkFormatTsmi(ToolStripDropDownButton tsddb, LinkFormatEnum lf)
+        {
+            foreach (ToolStripMenuItem tsmi in tsddb.DropDownItems)
+            {
+                if ((LinkFormatEnum)tsmi.Tag == lf)
+                {
+                    return tsmi;
+                }
+            }
+            return new ToolStripMenuItem();
+        }
+
         public void EnableDisableDestControls(ToolStripItemClickedEventArgs e = null)
         {
             ToolStripMenuItem tsmiOClipboard = GetOutputTsmi(tsddbOutputs, OutputEnum.Clipboard);

@@ -379,12 +379,15 @@ namespace ZScreenLib
         private void tsmiOutputs_Click(object sender, EventArgs e)
         {
             ucDestOptions.EnableDisableDestControls();
+
             UpdateToolStripOutputs();
-            if (NoRemoteOutput())
-            {
-                ucDestOptions.GetClipboardContentTsmi(ucDestOptions.tsddbClipboardContent, ClipboardContentEnum.Data).Checked = true;
-            }
+
+            ucDestOptions.GetClipboardContentTsmi(ucDestOptions.tsddbClipboardContent,
+                NoRemoteOutput() ? ClipboardContentEnum.Data : ClipboardContentEnum.Remote).Checked = true;
+
             UpdateToolStripClipboardContent();
+
+            ucDestOptions.EnableDisableDestControls();
         }
 
         private bool NoRemoteOutput()
