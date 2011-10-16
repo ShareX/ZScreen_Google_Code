@@ -123,7 +123,10 @@ namespace UploadersLib
 
         public void Disconnect()
         {
-            Client.Close();
+            if (Client != null && Client.IsConnected)
+            {
+                Client.Close();
+            }
         }
 
         public void UploadData(Stream stream, string remotePath)
@@ -235,13 +238,15 @@ namespace UploadersLib
             return Client.GetDirList(remotePath);
         }
 
-        public void Test(string remotePath)
+        public bool Test(string remotePath)
         {
             if (Connect())
             {
                 remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
                 Client.ChangeDirectory(remotePath);
+                return true;
             }
+            return false;
         }
 
         public void MakeDirectory(string remotePath)

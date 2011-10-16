@@ -194,6 +194,7 @@ namespace ZScreenLib
         {
             string msg = string.Empty;
             string sfp = account.GetSubFolderPath();
+            bool succ = false;
             switch (account.Protocol)
             {
                 case FTPProtocol.SFTP:
@@ -227,9 +228,11 @@ namespace ZScreenLib
                     {
                         try
                         {
-                            //DateTime time = DateTime.Now;
-                            ftpClient.Test(sfp);
-                            msg = "Success!";
+                            succ = ftpClient.Test(sfp);
+                            if (succ)
+                            {
+                                msg = "Success!";
+                            }
                         }
                         catch (Exception e)
                         {
@@ -253,29 +256,21 @@ namespace ZScreenLib
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(msg))
+                    if (succ && !string.IsNullOrEmpty(msg))
                     {
                         string ping = SendPing(account.Host, 3);
                         if (!string.IsNullOrEmpty(ping))
                         {
                             msg += "\n\nPing results:\n" + ping;
                         }
-                        if (silent)
-                        {
-                            // Engine.MyLogger.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
-                        }
-                        else
-                        {
-                            //MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
                     }
                     break;
             }
-            if (silent)
+            if (succ && silent)
             {
                 StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
             }
-            else
+            else if (succ)
             {
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -536,8 +531,6 @@ namespace ZScreenLib
             }
             return result;
         }
-
-
 
         #region "Windows 7 only"
 

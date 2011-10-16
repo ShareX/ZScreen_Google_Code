@@ -551,11 +551,9 @@ namespace UploadersLib
                     if (!sftp.isInstantiated)
                     {
                         msg = "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.";
-
                     }
-                    else
+                    else if (sftp.Connect())
                     {
-                        sftp.Connect();
                         List<string> createddirs = new List<string>();
                         if (!sftp.DirectoryExists(sfp))
                         {
@@ -624,7 +622,7 @@ namespace UploadersLib
             }
             if (silent)
             {
-               StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
+                StaticHelper.WriteLine(string.Format("Tested {0} sub-folder path in {1}", sfp, account.ToString()));
             }
             else
             {
@@ -820,7 +818,6 @@ namespace UploadersLib
             }
 
             Config.GoogleURLShortenerOAuthInfo = null;
-
         }
 
         #endregion goo.gl
