@@ -265,6 +265,18 @@
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageEffectsLib\ImagAdjustments\ImageAdjustmentsLib.csproj">
+      <Project>{57420699-2DFA-4F23-AD06-3FFC1E4C7D0A}</Project>
+      <Name>ImageAdjustmentsLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageEffectsLib\ImageFilters\ImageFiltersLib.csproj">
+      <Project>{E35F89F8-7EFB-4A2D-9D3A-F54EA627107F}</Project>
+      <Name>ImageFiltersLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageEffectsLib\ImageManipulation\ImageManipulationLib.csproj">
+      <Project>{EA9CA8EB-9173-4EAB-8174-5BD7E5166206}</Project>
+      <Name>ImageManipulationLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageEffectsLib\ImageQueue\ImageQueueLib.csproj">
       <Project>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</Project>
       <Name>ImageQueueLib</Name>
