@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Collections.Generic;
 using HelpersLib;
 using Renci.SshNet;
 using Renci.SshNet.Common;
@@ -15,13 +15,15 @@ namespace UploadersLib.FileUploaders
     {
         //properties
         public FTPAccount FTPAccount { get; set; }
+
         public bool IsConnected { get { return Client.IsConnected; } }
+
         public string HomeDir { get; set; }
+
         public bool isInstantiated { get; set; }
 
         //Variables
         SftpClient Client;
-
 
         //Misc
         public event Uploader.ProgressEventHandler ProgressChanged;
@@ -57,13 +59,14 @@ namespace UploadersLib.FileUploaders
             isInstantiated = true;
         }
 
-        public void Connect()
+        public bool Connect()
         {
             if (!IsConnected)
             {
                 Client.Connect();
                 HomeDir = Client.WorkingDirectory;
             }
+            return Client.IsConnected;
         }
 
         public void Disconnect()
@@ -144,8 +147,8 @@ namespace UploadersLib.FileUploaders
             Connect();
             IEnumerable<SftpFile> dirlist = Client.ListDirectory(RootDir);
             return dirlist.ToArray<SftpFile>();
-            
         }
+
         private void OnTransferProgressChanged(SftpUploadAsyncResult e)
         {
             if (ProgressChanged != null)
