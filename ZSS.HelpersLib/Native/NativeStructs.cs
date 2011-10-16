@@ -47,9 +47,11 @@ namespace HelpersLib
         }
 
         public int Height { get { return Bottom - Top; } }
+
         public int Width { get { return Right - Left; } }
 
         public Size Size { get { return new Size(Width, Height); } }
+
         public Point Location { get { return new Point(Left, Top); } }
 
         public Rectangle ToRectangle()
@@ -90,6 +92,11 @@ namespace HelpersLib
         {
             x = width;
             y = height;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}x{1}", x, y);
         }
     }
 

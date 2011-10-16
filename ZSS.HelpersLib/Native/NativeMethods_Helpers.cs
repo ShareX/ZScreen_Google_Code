@@ -335,26 +335,17 @@ namespace HelpersLib
         {
             Size size = Size.Empty;
 
-            if (GetBorderSize(handle, out size))
+            // only required for Windows XP
+            if (!NativeMethods.IsDWMEnabled() && NativeMethods.IsZoomed(handle))
             {
-                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height, windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
+                if (GetBorderSize(handle, out size))
+                {
+                    windowRect = new Rectangle(windowRect.X + size.Width,
+                        windowRect.Y + size.Height,
+                        windowRect.Width - (size.Width * 2),
+                        windowRect.Height - (size.Height * 2));
+                }
             }
-
-            /*Rectangle screenRect = Screen.FromRectangle(windowRect).Bounds;
-
-            if (windowRect.X < screenRect.X)
-            {
-                windowRect.Width -= (screenRect.X - windowRect.X) * 2;
-                windowRect.X = screenRect.X;
-            }
-
-            if (windowRect.Y < screenRect.Y)
-            {
-                windowRect.Height -= (screenRect.Y - windowRect.Y) * 2;
-                windowRect.Y = screenRect.Y;
-            }
-
-            windowRect.Intersect(screenRect);*/
 
             return windowRect;
         }
