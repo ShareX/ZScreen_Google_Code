@@ -80,18 +80,35 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                MemoryStream ms = new MemoryStream();
-                MemoryStream ms2 = new MemoryStream();
-                Bitmap bmp = new Bitmap(img);
-                bmp.Save(ms, ImageFormat.Bmp);
-                byte[] b = ms.GetBuffer();
-                ms2.Write(b, 14, (int)ms.Length - 14);
-                ms.Position = 0;
-                DataObject dataObject = new DataObject();
-                dataObject.SetData(DataFormats.Bitmap, bmp);
-                dataObject.SetData(DataFormats.Dib, ms2);
-                Clipboard.SetDataObject(dataObject, true, 3, 1000);
+                CopyMultiFormatBitmapToClipboard(img);
             }
+        }
+
+        private static void CopyMultiFormatBitmapToClipboard(this Image image)
+        {
+            using (var opaque = image.CreateOpaqueBitmap(Color.White))
+            using (var stream = new MemoryStream())
+            {
+                image.Save(stream, ImageFormat.Png);
+
+                Clipboard.Clear();
+                var data = new DataObject();
+                data.SetData(DataFormats.Bitmap, true, opaque);
+                data.SetData("PNG", true, stream);
+                Clipboard.SetDataObject(data, true, 3, 1000);
+            }
+        }
+
+        private static Image CreateOpaqueBitmap(this Image image, Color backgroundColor)
+        {
+            var bitmap = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                graphics.Clear(backgroundColor);
+                graphics.DrawImage(image, 0, 0, image.Width, image.Height);
+            }
+
+            return bitmap;
         }
 
         public static void CopyImageToClipboard(string filePath)
