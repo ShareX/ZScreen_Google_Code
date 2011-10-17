@@ -83,12 +83,6 @@ namespace ZScreenGUI
             bwConfig.DoWork += new DoWorkEventHandler(bwConfig_DoWork);
             bwConfig.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwConfig_RunWorkerCompleted);
             bwConfig.RunWorkerAsync();
-
-            //Better ensures value changes for nudSwitchAfter
-            nudSwitchAfter.LostFocus += new EventHandler(nudSwitchAfter_LostFocus);
-            tpCaptureQuality.MouseDown += new MouseEventHandler(tpCaptureQuality_MouseDown);
-            gbPictureQuality.MouseDown += new MouseEventHandler(gbPictureQuality_MouseDown);
-            gbImageSize.MouseDown += new MouseEventHandler(gbImageSize_MouseDown);
         }
 
         private void ZScreen_Load(object sender, EventArgs e)
@@ -661,18 +655,6 @@ namespace ZScreenGUI
             lblEntireScreenPreview.Text = parser.Convert(Engine.Workflow.EntireScreenPattern);
         }
 
-        private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
-            if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
-        }
-
-        private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-            if (IsReady) ZScreen_ConfigGUI_Options_ImageSettings();
-        }
-
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.ShowBalloonTip = cbShowPopup.Checked;
@@ -1004,19 +986,6 @@ namespace ZScreenGUI
             Engine.AppConf.ShowMainWindow = chkOpenMainWindow.Checked;
         }
 
-        private void cbShowTaskbar_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.AppConf.ShowInTaskbar = chkShowTaskbar.Checked;
-            if (IsReady)
-            {
-                if (!chkShowTaskbar.Checked)
-                {
-                    this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
-                }
-                this.ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
-            }
-        }
-
         private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             StaticHelper.LoadBrowser(ZLinks.URL_WEBSITE);
@@ -1182,40 +1151,6 @@ namespace ZScreenGUI
         private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
-        }
-
-        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
-        {
-            nudSwitchAfterValueChanged();
-        }
-
-        private void nudSwitchAfter_LostFocus(object sender, EventArgs e)
-        {
-            nudSwitchAfterValueChanged();
-        }
-
-        private void nudSwitchAfterValueChanged()
-        {
-            Engine.Workflow.ImageSizeLimit = (int)nudSwitchAfter.Value;
-            if ((int)nudSwitchAfter.Value == 0)
-                cboSwitchFormat.Enabled = false;
-            else
-                cboSwitchFormat.Enabled = true;
-        }
-
-        private void gbImageSize_MouseDown(object sender, MouseEventArgs e)
-        {
-            gbImageSize.Focus();
-        }
-
-        private void gbPictureQuality_MouseDown(object sender, MouseEventArgs e)
-        {
-            gbPictureQuality.Focus();
-        }
-
-        private void tpCaptureQuality_MouseDown(object sender, MouseEventArgs e)
-        {
-            tpCaptureQuality.Focus();
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
@@ -1449,7 +1384,7 @@ namespace ZScreenGUI
             PerformOnlineTasks();
         }
 
-        private void pgApp_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void pgAppConfig_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             ZScreen_ConfigGUI();
         }
@@ -1563,56 +1498,13 @@ namespace ZScreenGUI
             }
         }
 
-        private void rbImageSize_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbImageSizeDefault.Checked)
-            {
-                Engine.Workflow.ImageSizeType = ImageSizeType.DEFAULT;
-            }
-            else if (rbImageSizeFixed.Checked)
-            {
-                Engine.Workflow.ImageSizeType = ImageSizeType.FIXED;
-            }
-            else if (rbImageSizeRatio.Checked)
-            {
-                Engine.Workflow.ImageSizeType = ImageSizeType.RATIO;
-            }
-        }
-
-        private void txtImageSizeFixedWidth_TextChanged(object sender, EventArgs e)
-        {
-            int width;
-            if (int.TryParse(txtImageSizeFixedWidth.Text, out width))
-            {
-                Engine.Workflow.ImageSizeFixedWidth = width;
-            }
-        }
-
-        private void txtImageSizeFixedHeight_TextChanged(object sender, EventArgs e)
-        {
-            int height;
-            if (int.TryParse(txtImageSizeFixedHeight.Text, out height))
-            {
-                Engine.Workflow.ImageSizeFixedHeight = height;
-            }
-        }
-
-        private void txtImageSizeRatio_TextChanged(object sender, EventArgs e)
-        {
-            float percentage;
-            if (float.TryParse(txtImageSizeRatio.Text, out percentage))
-            {
-                Engine.Workflow.ImageSizeRatioPercentage = percentage;
-            }
-        }
-
         private void chkWindows7TaskbarIntegration_CheckedChanged(object sender, EventArgs e)
         {
             if (IsReady)
             {
                 if (chkWindows7TaskbarIntegration.Checked)
                 {
-                    chkShowTaskbar.Checked = true; // Application requires to be shown in Taskbar for Windows 7 Integration
+                    Engine.AppConf.ShowInTaskbar = true; // Application requires to be shown in Taskbar for Windows 7 Integration
                 }
                 Engine.AppConf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
                 ZScreen_Windows7onlyTasks();
@@ -1747,11 +1639,6 @@ namespace ZScreenGUI
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
             Engine.Workflow.PerformActions = chkPerformActions.Checked;
-        }
-
-        private void cbGIFQuality_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ImageGIFQuality = (GIFQuality)cboGIFQuality.SelectedIndex;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
@@ -2055,16 +1942,6 @@ namespace ZScreenGUI
             ucDestOptions.DropDownMenusClose();
         }
 
-        private void cboJpgQuality_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
-        }
-
-        private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Engine.Workflow.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
-        }
-
         private void btnUploadersConfigImport_Click(object sender, EventArgs e)
         {
             UploadersConfigImport();
@@ -2119,6 +1996,17 @@ namespace ZScreenGUI
             {
                 CaptureSelectedWindowFromList(wi.Handle);
             }
+        }
+
+        private void btnWorkflowConfig_Click(object sender, EventArgs e)
+        {
+            WorkflowWizardGUIOptions wfwgui = new WorkflowWizardGUIOptions()
+            {
+                ShowQualityTab = true,
+                ShowResizeTab = true
+            };
+            WorkflowWizard wfw = new WorkflowWizard(null, Engine.Workflow, wfwgui) { Icon = this.Icon };
+            wfw.Show();
         }
     }
 }

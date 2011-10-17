@@ -189,11 +189,11 @@ namespace ZScreenGUI
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.chkCheckUpdates = new System.Windows.Forms.CheckBox();
             this.gbMisc = new System.Windows.Forms.GroupBox();
+            this.btnWorkflowConfig = new System.Windows.Forms.Button();
             this.chkShellExt = new System.Windows.Forms.CheckBox();
             this.chkWindows7TaskbarIntegration = new System.Windows.Forms.CheckBox();
             this.cbAutoSaveSettings = new System.Windows.Forms.CheckBox();
             this.cbShowHelpBalloonTips = new System.Windows.Forms.CheckBox();
-            this.chkShowTaskbar = new System.Windows.Forms.CheckBox();
             this.chkOpenMainWindow = new System.Windows.Forms.CheckBox();
             this.chkStartWin = new System.Windows.Forms.CheckBox();
             this.gbWindowButtons = new System.Windows.Forms.GroupBox();
@@ -231,31 +231,6 @@ namespace ZScreenGUI
             this.gbActiveWindowNaming = new System.Windows.Forms.GroupBox();
             this.lblActiveWindowPreview = new System.Windows.Forms.Label();
             this.txtActiveWindow = new System.Windows.Forms.TextBox();
-            this.tpCaptureQuality = new System.Windows.Forms.TabPage();
-            this.gbImageSize = new System.Windows.Forms.GroupBox();
-            this.lblImageSizeFixedAutoScale = new System.Windows.Forms.Label();
-            this.rbImageSizeDefault = new System.Windows.Forms.RadioButton();
-            this.lblImageSizeFixedHeight = new System.Windows.Forms.Label();
-            this.rbImageSizeFixed = new System.Windows.Forms.RadioButton();
-            this.lblImageSizeFixedWidth = new System.Windows.Forms.Label();
-            this.txtImageSizeRatio = new System.Windows.Forms.TextBox();
-            this.lblImageSizeRatioPercentage = new System.Windows.Forms.Label();
-            this.txtImageSizeFixedWidth = new System.Windows.Forms.TextBox();
-            this.rbImageSizeRatio = new System.Windows.Forms.RadioButton();
-            this.txtImageSizeFixedHeight = new System.Windows.Forms.TextBox();
-            this.gbPictureQuality = new System.Windows.Forms.GroupBox();
-            this.cboJpgSubSampling = new System.Windows.Forms.ComboBox();
-            this.cboJpgQuality = new System.Windows.Forms.ComboBox();
-            this.cboGIFQuality = new System.Windows.Forms.ComboBox();
-            this.lblGIFQuality = new System.Windows.Forms.Label();
-            this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
-            this.lblQuality = new System.Windows.Forms.Label();
-            this.cboSwitchFormat = new System.Windows.Forms.ComboBox();
-            this.lblFileFormat = new System.Windows.Forms.Label();
-            this.cboFileFormat = new System.Windows.Forms.ComboBox();
-            this.lblKB = new System.Windows.Forms.Label();
-            this.lblAfter = new System.Windows.Forms.Label();
-            this.lblSwitchTo = new System.Windows.Forms.Label();
             this.tpWatermark = new System.Windows.Forms.TabPage();
             this.pbWatermarkShow = new System.Windows.Forms.PictureBox();
             this.gbWatermarkGeneral = new System.Windows.Forms.GroupBox();
@@ -460,10 +435,6 @@ namespace ZScreenGUI
             this.gbOthersNaming.SuspendLayout();
             this.gbCodeTitle.SuspendLayout();
             this.gbActiveWindowNaming.SuspendLayout();
-            this.tpCaptureQuality.SuspendLayout();
-            this.gbImageSize.SuspendLayout();
-            this.gbPictureQuality.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             this.tpWatermark.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).BeginInit();
             this.gbWatermarkGeneral.SuspendLayout();
@@ -2142,7 +2113,6 @@ namespace ZScreenGUI
             // 
             this.tcOptions.Controls.Add(this.tpOptionsGeneral);
             this.tcOptions.Controls.Add(this.tpFileNaming);
-            this.tcOptions.Controls.Add(this.tpCaptureQuality);
             this.tcOptions.Controls.Add(this.tpWatermark);
             this.tcOptions.Controls.Add(this.tpPaths);
             this.tcOptions.Controls.Add(this.tpTreeGUI);
@@ -2176,7 +2146,7 @@ namespace ZScreenGUI
             this.gbUpdates.Controls.Add(this.lblUpdateInfo);
             this.gbUpdates.Controls.Add(this.btnCheckUpdate);
             this.gbUpdates.Controls.Add(this.chkCheckUpdates);
-            this.gbUpdates.Location = new System.Drawing.Point(8, 208);
+            this.gbUpdates.Location = new System.Drawing.Point(8, 216);
             this.gbUpdates.Name = "gbUpdates";
             this.gbUpdates.Size = new System.Drawing.Size(760, 128);
             this.gbUpdates.TabIndex = 8;
@@ -2227,24 +2197,34 @@ namespace ZScreenGUI
             // gbMisc
             // 
             this.gbMisc.BackColor = System.Drawing.Color.Transparent;
+            this.gbMisc.Controls.Add(this.btnWorkflowConfig);
             this.gbMisc.Controls.Add(this.chkShellExt);
             this.gbMisc.Controls.Add(this.chkWindows7TaskbarIntegration);
             this.gbMisc.Controls.Add(this.cbAutoSaveSettings);
             this.gbMisc.Controls.Add(this.cbShowHelpBalloonTips);
-            this.gbMisc.Controls.Add(this.chkShowTaskbar);
             this.gbMisc.Controls.Add(this.chkOpenMainWindow);
             this.gbMisc.Controls.Add(this.chkStartWin);
             this.gbMisc.Location = new System.Drawing.Point(8, 8);
             this.gbMisc.Name = "gbMisc";
-            this.gbMisc.Size = new System.Drawing.Size(760, 128);
+            this.gbMisc.Size = new System.Drawing.Size(760, 136);
             this.gbMisc.TabIndex = 7;
             this.gbMisc.TabStop = false;
             this.gbMisc.Text = "Program";
             // 
+            // btnWorkflowConfig
+            // 
+            this.btnWorkflowConfig.Location = new System.Drawing.Point(16, 96);
+            this.btnWorkflowConfig.Name = "btnWorkflowConfig";
+            this.btnWorkflowConfig.Size = new System.Drawing.Size(304, 24);
+            this.btnWorkflowConfig.TabIndex = 9;
+            this.btnWorkflowConfig.Text = "Configure Workflow ( image file format, image quality etc. )";
+            this.btnWorkflowConfig.UseVisualStyleBackColor = true;
+            this.btnWorkflowConfig.Click += new System.EventHandler(this.btnWorkflowConfig_Click);
+            // 
             // chkShellExt
             // 
             this.chkShellExt.AutoSize = true;
-            this.chkShellExt.Location = new System.Drawing.Point(424, 72);
+            this.chkShellExt.Location = new System.Drawing.Point(424, 48);
             this.chkShellExt.Name = "chkShellExt";
             this.chkShellExt.Size = new System.Drawing.Size(270, 17);
             this.chkShellExt.TabIndex = 9;
@@ -2256,7 +2236,7 @@ namespace ZScreenGUI
             // chkWindows7TaskbarIntegration
             // 
             this.chkWindows7TaskbarIntegration.AutoSize = true;
-            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(424, 48);
+            this.chkWindows7TaskbarIntegration.Location = new System.Drawing.Point(424, 24);
             this.chkWindows7TaskbarIntegration.Name = "chkWindows7TaskbarIntegration";
             this.chkWindows7TaskbarIntegration.Size = new System.Drawing.Size(173, 17);
             this.chkWindows7TaskbarIntegration.TabIndex = 8;
@@ -2267,7 +2247,7 @@ namespace ZScreenGUI
             // cbAutoSaveSettings
             // 
             this.cbAutoSaveSettings.AutoSize = true;
-            this.cbAutoSaveSettings.Location = new System.Drawing.Point(16, 96);
+            this.cbAutoSaveSettings.Location = new System.Drawing.Point(424, 72);
             this.cbAutoSaveSettings.Name = "cbAutoSaveSettings";
             this.cbAutoSaveSettings.Size = new System.Drawing.Size(245, 17);
             this.cbAutoSaveSettings.TabIndex = 7;
@@ -2286,17 +2266,6 @@ namespace ZScreenGUI
             this.cbShowHelpBalloonTips.Text = "Show Help via Balloon Tips";
             this.cbShowHelpBalloonTips.UseVisualStyleBackColor = true;
             this.cbShowHelpBalloonTips.CheckedChanged += new System.EventHandler(this.cbShowHelpBalloonTips_CheckedChanged);
-            // 
-            // chkShowTaskbar
-            // 
-            this.chkShowTaskbar.AutoSize = true;
-            this.chkShowTaskbar.Location = new System.Drawing.Point(424, 24);
-            this.chkShowTaskbar.Name = "chkShowTaskbar";
-            this.chkShowTaskbar.Size = new System.Drawing.Size(161, 17);
-            this.chkShowTaskbar.TabIndex = 3;
-            this.chkShowTaskbar.Text = "Show Application in Taskbar";
-            this.chkShowTaskbar.UseVisualStyleBackColor = true;
-            this.chkShowTaskbar.CheckedChanged += new System.EventHandler(this.cbShowTaskbar_CheckedChanged);
             // 
             // chkOpenMainWindow
             // 
@@ -2327,7 +2296,7 @@ namespace ZScreenGUI
             this.gbWindowButtons.Controls.Add(this.cboMinimizeButtonAction);
             this.gbWindowButtons.Controls.Add(this.lblCloseButtonAction);
             this.gbWindowButtons.Controls.Add(this.lblMinimizeButtonAction);
-            this.gbWindowButtons.Location = new System.Drawing.Point(8, 144);
+            this.gbWindowButtons.Location = new System.Drawing.Point(8, 152);
             this.gbWindowButtons.Name = "gbWindowButtons";
             this.gbWindowButtons.Size = new System.Drawing.Size(760, 56);
             this.gbWindowButtons.TabIndex = 14;
@@ -2736,292 +2705,6 @@ namespace ZScreenGUI
             this.txtActiveWindow.TabIndex = 2;
             this.txtActiveWindow.TextChanged += new System.EventHandler(this.txtActiveWindow_TextChanged);
             this.txtActiveWindow.Leave += new System.EventHandler(this.txtActiveWindow_Leave);
-            // 
-            // tpCaptureQuality
-            // 
-            this.tpCaptureQuality.Controls.Add(this.gbImageSize);
-            this.tpCaptureQuality.Controls.Add(this.gbPictureQuality);
-            this.tpCaptureQuality.Location = new System.Drawing.Point(4, 22);
-            this.tpCaptureQuality.Name = "tpCaptureQuality";
-            this.tpCaptureQuality.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCaptureQuality.Size = new System.Drawing.Size(790, 424);
-            this.tpCaptureQuality.TabIndex = 0;
-            this.tpCaptureQuality.Text = "Image Settings";
-            this.tpCaptureQuality.UseVisualStyleBackColor = true;
-            // 
-            // gbImageSize
-            // 
-            this.gbImageSize.Controls.Add(this.lblImageSizeFixedAutoScale);
-            this.gbImageSize.Controls.Add(this.rbImageSizeDefault);
-            this.gbImageSize.Controls.Add(this.lblImageSizeFixedHeight);
-            this.gbImageSize.Controls.Add(this.rbImageSizeFixed);
-            this.gbImageSize.Controls.Add(this.lblImageSizeFixedWidth);
-            this.gbImageSize.Controls.Add(this.txtImageSizeRatio);
-            this.gbImageSize.Controls.Add(this.lblImageSizeRatioPercentage);
-            this.gbImageSize.Controls.Add(this.txtImageSizeFixedWidth);
-            this.gbImageSize.Controls.Add(this.rbImageSizeRatio);
-            this.gbImageSize.Controls.Add(this.txtImageSizeFixedHeight);
-            this.gbImageSize.Location = new System.Drawing.Point(8, 208);
-            this.gbImageSize.Name = "gbImageSize";
-            this.gbImageSize.Size = new System.Drawing.Size(768, 120);
-            this.gbImageSize.TabIndex = 124;
-            this.gbImageSize.TabStop = false;
-            this.gbImageSize.Text = "Image Size";
-            // 
-            // lblImageSizeFixedAutoScale
-            // 
-            this.lblImageSizeFixedAutoScale.AutoSize = true;
-            this.lblImageSizeFixedAutoScale.Location = new System.Drawing.Point(352, 60);
-            this.lblImageSizeFixedAutoScale.Name = "lblImageSizeFixedAutoScale";
-            this.lblImageSizeFixedAutoScale.Size = new System.Drawing.Size(152, 13);
-            this.lblImageSizeFixedAutoScale.TabIndex = 128;
-            this.lblImageSizeFixedAutoScale.Text = "0 height or width for auto scale";
-            // 
-            // rbImageSizeDefault
-            // 
-            this.rbImageSizeDefault.AutoSize = true;
-            this.rbImageSizeDefault.Location = new System.Drawing.Point(16, 24);
-            this.rbImageSizeDefault.Name = "rbImageSizeDefault";
-            this.rbImageSizeDefault.Size = new System.Drawing.Size(110, 17);
-            this.rbImageSizeDefault.TabIndex = 127;
-            this.rbImageSizeDefault.TabStop = true;
-            this.rbImageSizeDefault.Text = "Image size default";
-            this.rbImageSizeDefault.UseVisualStyleBackColor = true;
-            this.rbImageSizeDefault.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
-            // 
-            // lblImageSizeFixedHeight
-            // 
-            this.lblImageSizeFixedHeight.AutoSize = true;
-            this.lblImageSizeFixedHeight.Location = new System.Drawing.Point(232, 59);
-            this.lblImageSizeFixedHeight.Name = "lblImageSizeFixedHeight";
-            this.lblImageSizeFixedHeight.Size = new System.Drawing.Size(61, 13);
-            this.lblImageSizeFixedHeight.TabIndex = 126;
-            this.lblImageSizeFixedHeight.Text = "Height (px):";
-            // 
-            // rbImageSizeFixed
-            // 
-            this.rbImageSizeFixed.AutoSize = true;
-            this.rbImageSizeFixed.Location = new System.Drawing.Point(16, 56);
-            this.rbImageSizeFixed.Name = "rbImageSizeFixed";
-            this.rbImageSizeFixed.Size = new System.Drawing.Size(103, 17);
-            this.rbImageSizeFixed.TabIndex = 123;
-            this.rbImageSizeFixed.TabStop = true;
-            this.rbImageSizeFixed.Text = "Image size fixed:";
-            this.rbImageSizeFixed.UseVisualStyleBackColor = true;
-            this.rbImageSizeFixed.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
-            // 
-            // lblImageSizeFixedWidth
-            // 
-            this.lblImageSizeFixedWidth.AutoSize = true;
-            this.lblImageSizeFixedWidth.Location = new System.Drawing.Point(120, 59);
-            this.lblImageSizeFixedWidth.Name = "lblImageSizeFixedWidth";
-            this.lblImageSizeFixedWidth.Size = new System.Drawing.Size(58, 13);
-            this.lblImageSizeFixedWidth.TabIndex = 125;
-            this.lblImageSizeFixedWidth.Text = "Width (px):";
-            // 
-            // txtImageSizeRatio
-            // 
-            this.txtImageSizeRatio.Location = new System.Drawing.Point(120, 87);
-            this.txtImageSizeRatio.Name = "txtImageSizeRatio";
-            this.txtImageSizeRatio.Size = new System.Drawing.Size(32, 20);
-            this.txtImageSizeRatio.TabIndex = 116;
-            this.txtImageSizeRatio.Text = "100";
-            this.txtImageSizeRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtImageSizeRatio.TextChanged += new System.EventHandler(this.txtImageSizeRatio_TextChanged);
-            // 
-            // lblImageSizeRatioPercentage
-            // 
-            this.lblImageSizeRatioPercentage.AutoSize = true;
-            this.lblImageSizeRatioPercentage.Location = new System.Drawing.Point(159, 91);
-            this.lblImageSizeRatioPercentage.Name = "lblImageSizeRatioPercentage";
-            this.lblImageSizeRatioPercentage.Size = new System.Drawing.Size(15, 13);
-            this.lblImageSizeRatioPercentage.TabIndex = 118;
-            this.lblImageSizeRatioPercentage.Text = "%";
-            // 
-            // txtImageSizeFixedWidth
-            // 
-            this.txtImageSizeFixedWidth.Location = new System.Drawing.Point(184, 56);
-            this.txtImageSizeFixedWidth.Name = "txtImageSizeFixedWidth";
-            this.txtImageSizeFixedWidth.Size = new System.Drawing.Size(40, 20);
-            this.txtImageSizeFixedWidth.TabIndex = 119;
-            this.txtImageSizeFixedWidth.Text = "2500";
-            this.txtImageSizeFixedWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtImageSizeFixedWidth.TextChanged += new System.EventHandler(this.txtImageSizeFixedWidth_TextChanged);
-            // 
-            // rbImageSizeRatio
-            // 
-            this.rbImageSizeRatio.AutoSize = true;
-            this.rbImageSizeRatio.Location = new System.Drawing.Point(16, 88);
-            this.rbImageSizeRatio.Name = "rbImageSizeRatio";
-            this.rbImageSizeRatio.Size = new System.Drawing.Size(101, 17);
-            this.rbImageSizeRatio.TabIndex = 122;
-            this.rbImageSizeRatio.TabStop = true;
-            this.rbImageSizeRatio.Text = "Image size ratio:";
-            this.rbImageSizeRatio.UseVisualStyleBackColor = true;
-            this.rbImageSizeRatio.CheckedChanged += new System.EventHandler(this.rbImageSize_CheckedChanged);
-            // 
-            // txtImageSizeFixedHeight
-            // 
-            this.txtImageSizeFixedHeight.Location = new System.Drawing.Point(296, 56);
-            this.txtImageSizeFixedHeight.Name = "txtImageSizeFixedHeight";
-            this.txtImageSizeFixedHeight.Size = new System.Drawing.Size(40, 20);
-            this.txtImageSizeFixedHeight.TabIndex = 120;
-            this.txtImageSizeFixedHeight.Text = "2500";
-            this.txtImageSizeFixedHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtImageSizeFixedHeight.TextChanged += new System.EventHandler(this.txtImageSizeFixedHeight_TextChanged);
-            // 
-            // gbPictureQuality
-            // 
-            this.gbPictureQuality.BackColor = System.Drawing.Color.Transparent;
-            this.gbPictureQuality.Controls.Add(this.cboJpgSubSampling);
-            this.gbPictureQuality.Controls.Add(this.cboJpgQuality);
-            this.gbPictureQuality.Controls.Add(this.cboGIFQuality);
-            this.gbPictureQuality.Controls.Add(this.lblGIFQuality);
-            this.gbPictureQuality.Controls.Add(this.nudSwitchAfter);
-            this.gbPictureQuality.Controls.Add(this.lblQuality);
-            this.gbPictureQuality.Controls.Add(this.cboSwitchFormat);
-            this.gbPictureQuality.Controls.Add(this.lblFileFormat);
-            this.gbPictureQuality.Controls.Add(this.cboFileFormat);
-            this.gbPictureQuality.Controls.Add(this.lblKB);
-            this.gbPictureQuality.Controls.Add(this.lblAfter);
-            this.gbPictureQuality.Controls.Add(this.lblSwitchTo);
-            this.gbPictureQuality.Location = new System.Drawing.Point(8, 8);
-            this.gbPictureQuality.Name = "gbPictureQuality";
-            this.gbPictureQuality.Size = new System.Drawing.Size(768, 184);
-            this.gbPictureQuality.TabIndex = 115;
-            this.gbPictureQuality.TabStop = false;
-            this.gbPictureQuality.Text = "Picture Quality";
-            // 
-            // cboJpgSubSampling
-            // 
-            this.cboJpgSubSampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboJpgSubSampling.FormattingEnabled = true;
-            this.cboJpgSubSampling.Location = new System.Drawing.Point(336, 96);
-            this.cboJpgSubSampling.Name = "cboJpgSubSampling";
-            this.cboJpgSubSampling.Size = new System.Drawing.Size(416, 21);
-            this.cboJpgSubSampling.TabIndex = 120;
-            this.cboJpgSubSampling.SelectedIndexChanged += new System.EventHandler(this.cboJpgSubSampling_SelectedIndexChanged);
-            // 
-            // cboJpgQuality
-            // 
-            this.cboJpgQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboJpgQuality.FormattingEnabled = true;
-            this.cboJpgQuality.Location = new System.Drawing.Point(16, 96);
-            this.cboJpgQuality.Name = "cboJpgQuality";
-            this.cboJpgQuality.Size = new System.Drawing.Size(312, 21);
-            this.cboJpgQuality.TabIndex = 119;
-            this.cboJpgQuality.SelectedIndexChanged += new System.EventHandler(this.cboJpgQuality_SelectedIndexChanged);
-            // 
-            // cboGIFQuality
-            // 
-            this.cboGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboGIFQuality.FormattingEnabled = true;
-            this.cboGIFQuality.Items.AddRange(new object[] {
-            "Grayscale",
-            "4 bit (16 colors)",
-            "8 bit (256 colors)"});
-            this.cboGIFQuality.Location = new System.Drawing.Point(16, 144);
-            this.cboGIFQuality.Name = "cboGIFQuality";
-            this.cboGIFQuality.Size = new System.Drawing.Size(98, 21);
-            this.cboGIFQuality.TabIndex = 118;
-            this.cboGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbGIFQuality_SelectedIndexChanged);
-            // 
-            // lblGIFQuality
-            // 
-            this.lblGIFQuality.AutoSize = true;
-            this.lblGIFQuality.Location = new System.Drawing.Point(16, 128);
-            this.lblGIFQuality.Name = "lblGIFQuality";
-            this.lblGIFQuality.Size = new System.Drawing.Size(62, 13);
-            this.lblGIFQuality.TabIndex = 117;
-            this.lblGIFQuality.Text = "GIF Quality:";
-            // 
-            // nudSwitchAfter
-            // 
-            this.nudSwitchAfter.Location = new System.Drawing.Point(125, 40);
-            this.nudSwitchAfter.Maximum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            this.nudSwitchAfter.Name = "nudSwitchAfter";
-            this.nudSwitchAfter.Size = new System.Drawing.Size(72, 20);
-            this.nudSwitchAfter.TabIndex = 116;
-            this.nudSwitchAfter.Value = new decimal(new int[] {
-            350,
-            0,
-            0,
-            0});
-            this.nudSwitchAfter.ValueChanged += new System.EventHandler(this.nudSwitchAfter_ValueChanged);
-            // 
-            // lblQuality
-            // 
-            this.lblQuality.AutoSize = true;
-            this.lblQuality.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblQuality.Location = new System.Drawing.Point(16, 80);
-            this.lblQuality.Name = "lblQuality";
-            this.lblQuality.Size = new System.Drawing.Size(72, 13);
-            this.lblQuality.TabIndex = 108;
-            this.lblQuality.Text = "JPEG Quality:";
-            // 
-            // cboSwitchFormat
-            // 
-            this.cboSwitchFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSwitchFormat.FormattingEnabled = true;
-            this.cboSwitchFormat.Location = new System.Drawing.Point(232, 40);
-            this.cboSwitchFormat.Name = "cboSwitchFormat";
-            this.cboSwitchFormat.Size = new System.Drawing.Size(98, 21);
-            this.cboSwitchFormat.TabIndex = 9;
-            this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cboSwitchFormat_SelectedIndexChanged);
-            // 
-            // lblFileFormat
-            // 
-            this.lblFileFormat.AutoSize = true;
-            this.lblFileFormat.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblFileFormat.Location = new System.Drawing.Point(16, 24);
-            this.lblFileFormat.Name = "lblFileFormat";
-            this.lblFileFormat.Size = new System.Drawing.Size(61, 13);
-            this.lblFileFormat.TabIndex = 97;
-            this.lblFileFormat.Text = "File Format:";
-            // 
-            // cboFileFormat
-            // 
-            this.cboFileFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFileFormat.FormattingEnabled = true;
-            this.cboFileFormat.Location = new System.Drawing.Point(16, 40);
-            this.cboFileFormat.Name = "cboFileFormat";
-            this.cboFileFormat.Size = new System.Drawing.Size(98, 21);
-            this.cboFileFormat.TabIndex = 6;
-            this.cboFileFormat.SelectedIndexChanged += new System.EventHandler(this.cboFileFormat_SelectedIndexChanged);
-            // 
-            // lblKB
-            // 
-            this.lblKB.AutoSize = true;
-            this.lblKB.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblKB.Location = new System.Drawing.Point(197, 44);
-            this.lblKB.Name = "lblKB";
-            this.lblKB.Size = new System.Drawing.Size(23, 13);
-            this.lblKB.TabIndex = 95;
-            this.lblKB.Text = "KiB";
-            // 
-            // lblAfter
-            // 
-            this.lblAfter.AutoSize = true;
-            this.lblAfter.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblAfter.Location = new System.Drawing.Point(125, 24);
-            this.lblAfter.Name = "lblAfter";
-            this.lblAfter.Size = new System.Drawing.Size(88, 13);
-            this.lblAfter.TabIndex = 93;
-            this.lblAfter.Text = "After: (0 disables)";
-            // 
-            // lblSwitchTo
-            // 
-            this.lblSwitchTo.AutoSize = true;
-            this.lblSwitchTo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblSwitchTo.Location = new System.Drawing.Point(235, 23);
-            this.lblSwitchTo.Name = "lblSwitchTo";
-            this.lblSwitchTo.Size = new System.Drawing.Size(54, 13);
-            this.lblSwitchTo.TabIndex = 92;
-            this.lblSwitchTo.Text = "Switch to:";
             // 
             // tpWatermark
             // 
@@ -4229,7 +3912,7 @@ namespace ZScreenGUI
             this.pgAppConfig.Name = "pgAppConfig";
             this.pgAppConfig.Size = new System.Drawing.Size(784, 418);
             this.pgAppConfig.TabIndex = 0;
-            this.pgAppConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgApp_PropertyValueChanged);
+            this.pgAppConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppConfig_PropertyValueChanged);
             // 
             // tpAdvancedWorkflow
             // 
@@ -4771,12 +4454,6 @@ namespace ZScreenGUI
             this.gbCodeTitle.PerformLayout();
             this.gbActiveWindowNaming.ResumeLayout(false);
             this.gbActiveWindowNaming.PerformLayout();
-            this.tpCaptureQuality.ResumeLayout(false);
-            this.gbImageSize.ResumeLayout(false);
-            this.gbImageSize.PerformLayout();
-            this.gbPictureQuality.ResumeLayout(false);
-            this.gbPictureQuality.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
             this.tpWatermark.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbWatermarkShow)).EndInit();
             this.gbWatermarkGeneral.ResumeLayout(false);
@@ -4985,16 +4662,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.GroupBox gbActiveWindowNaming;
         internal System.Windows.Forms.Label lblActiveWindowPreview;
         internal System.Windows.Forms.TextBox txtActiveWindow;
-        internal System.Windows.Forms.TabPage tpCaptureQuality;
-        internal System.Windows.Forms.GroupBox gbPictureQuality;
-        internal System.Windows.Forms.NumericUpDown nudSwitchAfter;
-        internal System.Windows.Forms.Label lblQuality;
-        internal System.Windows.Forms.ComboBox cboSwitchFormat;
-        internal System.Windows.Forms.Label lblFileFormat;
-        internal System.Windows.Forms.ComboBox cboFileFormat;
-        internal System.Windows.Forms.Label lblKB;
-        internal System.Windows.Forms.Label lblAfter;
-        internal System.Windows.Forms.Label lblSwitchTo;
         internal System.Windows.Forms.TabPage tpWatermark;
         internal System.Windows.Forms.PictureBox pbWatermarkShow;
         internal System.Windows.Forms.GroupBox gbWatermarkGeneral;
@@ -5049,7 +4716,6 @@ namespace ZScreenGUI
         internal System.Windows.Forms.Button btnCheckUpdate;
         internal System.Windows.Forms.CheckBox chkCheckUpdates;
         internal System.Windows.Forms.GroupBox gbMisc;
-        internal System.Windows.Forms.CheckBox chkShowTaskbar;
         internal System.Windows.Forms.CheckBox chkOpenMainWindow;
         internal System.Windows.Forms.CheckBox chkStartWin;
         internal System.Windows.Forms.TabPage tpPaths;
@@ -5098,16 +4764,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label lblImagesFolderPatternPreview;
         private System.Windows.Forms.Label lblImagesFolderPattern;
         private System.Windows.Forms.Button btnMoveImageFiles;
-        private System.Windows.Forms.RadioButton rbImageSizeFixed;
-        private System.Windows.Forms.RadioButton rbImageSizeRatio;
-        private System.Windows.Forms.TextBox txtImageSizeFixedHeight;
-        private System.Windows.Forms.TextBox txtImageSizeFixedWidth;
-        private System.Windows.Forms.Label lblImageSizeRatioPercentage;
-        private System.Windows.Forms.TextBox txtImageSizeRatio;
-        private System.Windows.Forms.GroupBox gbImageSize;
-        private System.Windows.Forms.RadioButton rbImageSizeDefault;
-        private System.Windows.Forms.Label lblImageSizeFixedHeight;
-        private System.Windows.Forms.Label lblImageSizeFixedWidth;
         private System.Windows.Forms.TabPage tpDestImageBam;
         internal System.Windows.Forms.Label lblImageBamSecret;
         internal System.Windows.Forms.TextBox txtImageBamSecret;
@@ -5143,8 +4799,6 @@ namespace ZScreenGUI
         private System.Windows.Forms.CheckBox chkMonImages;
         private System.Windows.Forms.CheckBox chkActiveWindowTryCaptureChildren;
         private System.Windows.Forms.TabPage tpActivewindow;
-        private System.Windows.Forms.ComboBox cboGIFQuality;
-        private System.Windows.Forms.Label lblGIFQuality;
         private System.Windows.Forms.TabPage tpAdvancedDebug;
         private System.Windows.Forms.RichTextBox rtbDebugLog;
         private System.Windows.Forms.ComboBox cboCloseButtonAction;
@@ -5177,7 +4831,6 @@ namespace ZScreenGUI
         private TabPage tpBackupRestore;
         private PropertyGrid pgAppSettings;
         internal DestSelector ucDestOptions;
-        private Label lblImageSizeFixedAutoScale;
         private CheckBox chkShowUploadResults;
         private TabPage tpCropShotLast;
         private Button btnLastCropShotReset;
@@ -5198,8 +4851,6 @@ namespace ZScreenGUI
         private ToolStripButton tsbLinkHome;
         private ToolStripButton tsbLinkBugs;
         private ToolStripButton tsbLinkTutorials;
-        private ComboBox cboJpgSubSampling;
-        private ComboBox cboJpgQuality;
         private TabPage tpQueue;
         private HelpersLib.MyListView lvUploads;
         private ColumnHeader chFilename;
@@ -5221,5 +4872,6 @@ namespace ZScreenGUI
         private GroupBox gbCaptureGdiDwm;
         private HelpersLib.MyPictureBox pbPreview;
         private HelpProvider helpProvider1;
+        internal Button btnWorkflowConfig;
     }
 }

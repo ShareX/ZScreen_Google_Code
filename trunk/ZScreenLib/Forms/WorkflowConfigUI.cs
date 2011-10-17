@@ -113,7 +113,7 @@ namespace ZScreenLib
                 cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
             }
 
-            nudSwitchAfter.Value = Engine.Workflow.ImageSizeLimit;
+            nudSwitchAfter.Value = Config.ImageSizeLimit;
 
             if (cboSwitchFormat.Items.Count == 0)
             {
@@ -133,13 +133,9 @@ namespace ZScreenLib
                 cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
             }
 
-            cboGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
+            cboGIFQuality.SelectedIndex = (int)Config.ImageGIFQuality;
 
-            cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
-        (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG;
-
-            cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
-                (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
+            UpdateGuiQuality();
         }
 
         private void ConfigGuiOutputs()
@@ -207,10 +203,27 @@ namespace ZScreenLib
 
         #endregion Config GUI
 
+        #region Config GUI Enable/Disable
+
+        private void UpdateGuiQuality()
+        {
+            cboSwitchFormat.Enabled = nudSwitchAfter.Value > 0;
+
+            cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = ((EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
+      (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG) && nudSwitchAfter.Value > 0;
+
+            cboGIFQuality.Enabled = ((EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
+                (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF) && nudSwitchAfter.Value > 0;
+        }
+
+        #endregion Config GUI Enable/Disable
+
         #region Helper Methods
 
         private void BeforeClose()
         {
+            if (DialogResult == System.Windows.Forms.DialogResult.Cancel) return;
+
             // Description
             if (!string.IsNullOrEmpty(txtName.Text))
             {
@@ -222,6 +235,14 @@ namespace ZScreenLib
             // Tasks
             Config.PerformActions = chkTaskImageAnnotate.Checked;
 
+            // Quality
+            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
+            Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            Config.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
+            Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+            Config.ImageGIFQuality = (GIFQuality)cboGIFQuality.SelectedIndex;
+
             // Resize
             UpdateImageSize(bChangeConfig: true);
 
@@ -231,6 +252,8 @@ namespace ZScreenLib
 
         private void UpdateImageSize(bool bChangeConfig = false)
         {
+            if (Info.ImageSize.IsEmpty) return;
+
             double w2 = 0.0, h2 = 0.0, ratio = 0.0;
 
             if (rbImageSizeDefault.Checked)
@@ -388,41 +411,22 @@ namespace ZScreenLib
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            UpdateGuiQuality();
         }
 
         private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
-            nudSwitchAfterValueChanged();
+            UpdateGuiQuality();
         }
 
         private void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
         {
-            nudSwitchAfterValueChanged();
-        }
-
-        private void nudSwitchAfterValueChanged()
-        {
-            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
-            if ((int)nudSwitchAfter.Value == 0)
-                cboSwitchFormat.Enabled = false;
-            else
-                cboSwitchFormat.Enabled = true;
+            UpdateGuiQuality();
         }
 
         private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
-        }
-
-        private void cboJpgQuality_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Config.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
-        }
-
-        private void cboJpgSubSampling_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+            UpdateGuiQuality();
         }
 
         private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
@@ -453,6 +457,11 @@ namespace ZScreenLib
         private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
         {
             UpdateImageSize();
+        }
+
+        private void nudSwitchAfter_MouseUp(object sender, MouseEventArgs e)
+        {
+            ConfigGuiQuality();
         }
 
         #endregion Control Events
