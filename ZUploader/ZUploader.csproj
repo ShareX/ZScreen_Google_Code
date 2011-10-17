@@ -253,7 +253,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"$(TargetPath)" /f /t:"ZUploader.Settings" /v</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"$(TargetPath)" /f /t:"ZUploader.Settings" /v
+if $(ConfigurationName) == Release "$(SolutionDir)Tools\Sgen.exe" /a:"UploadersLib.dll" /f /t:"UploadersLib.UploadersConfig" /v</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Release "$(SolutionDir)Tools\SVNRevToAssemblyInfo.exe" dir "$(ProjectDir)" file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
