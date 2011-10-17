@@ -169,7 +169,6 @@ namespace ZScreenGUI
             nudMaxNameLength.Value = Engine.Workflow.MaxNameLength;
 
             ZScreen_ConfigGUI_Options_Watermark();
-            ZScreen_ConfigGUI_Options_ImageSettings();
         }
 
         private void ZScreen_ConfigGUI_Capture_CropShot()
@@ -265,12 +264,18 @@ namespace ZScreenGUI
             chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
             chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
             chkOpenMainWindow.Checked = Engine.AppConf.ShowMainWindow;
-            chkShowTaskbar.Checked = Engine.AppConf.ShowInTaskbar;
+
+            if (IsReady && !Engine.AppConf.ShowInTaskbar)
+            {
+                this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
+                this.ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
+            }
+
             cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.AppConf.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
-            // chkShowTaskbar.Enabled = !Engine.conf.Windows7TaskbarIntegration || !CoreHelpers.RunningOnWin7;
+
             chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
 
             // Interaction
@@ -359,59 +364,6 @@ namespace ZScreenGUI
             gbRoot.Enabled = !Engine.IsPortable;
             gbImages.Enabled = !Engine.IsPortable;
             gbLogs.Enabled = !Engine.IsPortable;
-        }
-
-        private void ZScreen_ConfigGUI_Options_ImageSettings()
-        {
-            if (cboFileFormat.Items.Count == 0)
-            {
-                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
-            }
-
-            cboFileFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat;
-
-            if (cboJpgQuality.Items.Count == 0)
-            {
-                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
-            }
-            cboJpgQuality.SelectedIndex = (int)Engine.Workflow.ImageJpegQuality;
-
-            if (cboJpgSubSampling.Items.Count == 0)
-            {
-                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
-            }
-            cboJpgSubSampling.SelectedIndex = (int)Engine.Workflow.ImageJpegSubSampling;
-
-            cboGIFQuality.SelectedIndex = (int)Engine.Workflow.ImageGIFQuality;
-            nudSwitchAfter.Value = Engine.Workflow.ImageSizeLimit;
-            if (cboSwitchFormat.Items.Count == 0)
-            {
-                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
-            }
-            cboSwitchFormat.SelectedIndex = (int)Engine.Workflow.ImageFormat2;
-
-            cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
-                  (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG;
-
-            cboGIFQuality.Enabled = (EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.GIF ||
-                (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.GIF;
-
-            switch (Engine.Workflow.ImageSizeType)
-            {
-                case ImageSizeType.DEFAULT:
-                    rbImageSizeDefault.Checked = true;
-                    break;
-                case ImageSizeType.FIXED:
-                    rbImageSizeFixed.Checked = true;
-                    break;
-                case ImageSizeType.RATIO:
-                    rbImageSizeRatio.Checked = true;
-                    break;
-            }
-
-            txtImageSizeFixedWidth.Text = Engine.Workflow.ImageSizeFixedWidth.ToString();
-            txtImageSizeFixedHeight.Text = Engine.Workflow.ImageSizeFixedHeight.ToString();
-            txtImageSizeRatio.Text = Engine.Workflow.ImageSizeRatioPercentage.ToString();
         }
 
         private void ZScreen_ConfigGUI_Options_Watermark()

@@ -52,7 +52,9 @@ namespace HelpersLib
         #region Program Window
 
         public bool ShowMainWindow = false;
-        public bool ShowInTaskbar = true;
+
+        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Show application title in the taskbar.")]
+        public bool ShowInTaskbar { get; set; }
 
         public bool Windows7TaskbarIntegration = true;
 
