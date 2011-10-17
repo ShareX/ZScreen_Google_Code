@@ -1243,10 +1243,9 @@ namespace ZScreenLib
         {
             if (WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost))
             {
-                if (Engine.conf != null && Engine.conf.TinyPicSizeCheck && WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC) && File.Exists(Info.LocalFilePath))
+                if (Engine.conf != null && tempImage != null && Engine.conf.TinyPicSizeCheck && WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
                 {
-                    SizeF size = Image.FromFile(Info.LocalFilePath).PhysicalDimension;
-                    if (size.Width > 1600 || size.Height > 1600)
+                    if (tempImage.Width > 1600 || tempImage.Height > 1600)
                     {
                         StaticHelper.WriteLine("Changing from TinyPic to ImageShack due to large image size");
                         if (!WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
