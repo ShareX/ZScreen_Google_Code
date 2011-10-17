@@ -147,7 +147,7 @@ namespace ZSS.ColorsLib
 
         private void ColorDialog_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey)
+            if (e.KeyCode == Keys.ControlKey && !txtHex.Focused)
             {
                 colorTimer.Enabled = !colorTimer.Enabled;
             }
