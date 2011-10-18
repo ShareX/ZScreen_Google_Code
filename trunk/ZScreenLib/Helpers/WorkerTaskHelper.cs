@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 using System.Text;
+using FreeImageNetLib;
 using HelpersLib;
 
 namespace ZScreenLib
@@ -47,19 +48,19 @@ namespace ZScreenLib
             return stream;
         }
 
-        private static string ConvertImageString(long streamLengthPrevious, Workflow profile, Stream stream)
+        private static string ConvertImageString(long streamLengthPrevious, Workflow workflow, Stream stream)
         {
             StringBuilder sbMsg = new StringBuilder();
             sbMsg.Append(string.Format("Converting {0} KiB {1} to {2} {3} KiB target {4} KiB",
                                                 streamLengthPrevious,
-                                                profile.ImageFormat.GetDescription(),
+                                                workflow.ImageFormat.GetDescription(),
                                                 stream.Length / 1024,
-                                                profile.ImageFormat2.GetDescription(),
-                                                profile.ImageSizeLimit));
+                                                workflow.ImageFormat2.GetDescription(),
+                                                workflow.ImageSizeLimit));
 
-            if (profile.ImageFormat2 == EImageFormat.JPEG)
+            if (workflow.ImageFormat2 == EImageFormat.JPEG)
             {
-                sbMsg.Append(string.Format(" using setting {0}", profile.ImageJpegQuality.GetDescription()));
+                sbMsg.Append(string.Format(" using setting {0}", workflow.ImageJpegQuality.GetDescription()));
             }
 
             return sbMsg.ToString();

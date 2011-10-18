@@ -82,9 +82,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\Lib\FreeImageNET.dll</HintPath>
-    </Reference>
     <Reference Include="Greenshot, Version=0.8.1.1288, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Greenshot.dll</HintPath>
@@ -257,6 +254,10 @@
       <Project>{6241A05D-EF12-4769-B660-EF75060DF20E}</Project>
       <Name>DavuxLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FreeImageNetLib\FreeImageNetLib.csproj">
+      <Project>{6C25F07A-A045-44E1-9B3E-AAE809A26B2A}</Project>
+      <Name>FreeImageNetLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphicsManagerLib\GraphicsManagerLib.csproj">
       <Project>{39CBF608-D7E7-405B-BCB4-A316BB76B562}</Project>
       <Name>GraphicsManagerLib</Name>
@@ -395,9 +396,6 @@
     </Content>
     <Content Include="Documents\TODO.txt" />
     <Content Include="Documents\Workflow.txt" />
-    <Content Include="FreeImage.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="ImageEffectsPlugins\ImageAdjustment.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
