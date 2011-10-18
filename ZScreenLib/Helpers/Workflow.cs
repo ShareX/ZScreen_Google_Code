@@ -103,6 +103,7 @@ namespace ZScreenLib
         public FreeImagePngQuality ImagePngCompression = FreeImagePngQuality.PNG_Z_DEFAULT_COMPRESSION;
         public bool ImagePngInterlaced = false;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
+        public FreeImageTiffQuality ImageTiffCompression = FreeImageTiffQuality.TIFF_NONE;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
 

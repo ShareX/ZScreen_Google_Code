@@ -144,6 +144,12 @@ namespace ZScreenLib
 
             cboGIFQuality.SelectedIndex = (int)Config.ImageGIFQuality;
 
+            if (cboTiffQuality.Items.Count == 0)
+            {
+                cboTiffQuality.Items.AddRange(typeof(FreeImageTiffQuality).GetDescriptions());
+                cboTiffQuality.SelectedIndex = (int)Config.ImageTiffCompression;
+            }
+
             UpdateGuiQuality();
         }
 
@@ -231,6 +237,9 @@ namespace ZScreenLib
                 case EImageFormat.GIF:
                     tcQuality.TabPages.Add(tpQualityGif);
                     break;
+                case EImageFormat.TIFF:
+                    tcQuality.TabPages.Add(tpQualityTiff);
+                    break;
             }
 
             EImageFormat userImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
@@ -244,6 +253,9 @@ namespace ZScreenLib
                     break;
                 case EImageFormat.GIF:
                     if (!tcQuality.TabPages.Contains(tpQualityGif)) tcQuality.TabPages.Add(tpQualityGif);
+                    break;
+                case EImageFormat.TIFF:
+                    if (!tcQuality.TabPages.Contains(tpQualityTiff)) tcQuality.TabPages.Add(tpQualityTiff);
                     break;
             }
 
@@ -285,6 +297,8 @@ namespace ZScreenLib
             Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
 
             Config.ImageGIFQuality = (GIFQuality)cboGIFQuality.SelectedIndex;
+
+            Config.ImageTiffCompression = (FreeImageTiffQuality)cboTiffQuality.SelectedIndex;
 
             // Resize
             UpdateImageSize(bChangeConfig: true);
