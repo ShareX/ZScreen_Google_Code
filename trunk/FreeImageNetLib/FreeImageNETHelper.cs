@@ -106,5 +106,43 @@ namespace FreeImageNetLib
                 fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_PNG, pngQuality);
             }
         }
+
+        public static void SaveTiff(Image img, Stream stream, FreeImageTiffQuality freeImageTiffQuality)
+        {
+            using (FreeImageAPI.FreeImageBitmap fib = new FreeImageAPI.FreeImageBitmap(img))
+            {
+                FREE_IMAGE_SAVE_FLAGS tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_NONE;
+
+                switch (freeImageTiffQuality)
+                {
+                    case FreeImageTiffQuality.TIFF_ADOBE_DEFLATE:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_ADOBE_DEFLATE;
+                        break;
+                    case FreeImageTiffQuality.TIFF_CCITTFAX3:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_CCITTFAX3;
+                        break;
+                    case FreeImageTiffQuality.TIFF_CCITTFAX4:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_CCITTFAX4;
+                        break;
+                    case FreeImageTiffQuality.TIFF_DEFLATE:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_DEFLATE;
+                        break;
+                    case FreeImageTiffQuality.TIFF_JPEG:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_JPEG;
+                        break;
+                    case FreeImageTiffQuality.TIFF_LZW:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_LZW;
+                        break;
+                    case FreeImageTiffQuality.TIFF_NONE:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_NONE;
+                        break;
+                    case FreeImageTiffQuality.TIFF_PACKBITS:
+                        tiffQuality = FREE_IMAGE_SAVE_FLAGS.TIFF_PACKBITS;
+                        break;
+                }
+
+                fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_TIFF, tiffQuality);
+            }
+        }
     }
 }

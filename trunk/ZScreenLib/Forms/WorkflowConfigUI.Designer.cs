@@ -45,12 +45,18 @@
             this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
             this.tpImageQuality = new System.Windows.Forms.TabPage();
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
+            this.tcQuality = new System.Windows.Forms.TabControl();
+            this.tpQualityPng = new System.Windows.Forms.TabPage();
+            this.chkPngQualityInterlaced = new System.Windows.Forms.CheckBox();
+            this.cboPngQuality = new System.Windows.Forms.ComboBox();
+            this.tpQualityJpeg = new System.Windows.Forms.TabPage();
+            this.lblQuality = new System.Windows.Forms.Label();
             this.cboJpgSubSampling = new System.Windows.Forms.ComboBox();
             this.cboJpgQuality = new System.Windows.Forms.ComboBox();
-            this.cboGIFQuality = new System.Windows.Forms.ComboBox();
+            this.tpQualityGif = new System.Windows.Forms.TabPage();
             this.lblGIFQuality = new System.Windows.Forms.Label();
+            this.cboGIFQuality = new System.Windows.Forms.ComboBox();
             this.nudSwitchAfter = new System.Windows.Forms.NumericUpDown();
-            this.lblQuality = new System.Windows.Forms.Label();
             this.cboSwitchFormat = new System.Windows.Forms.ComboBox();
             this.lblFileFormat = new System.Windows.Forms.Label();
             this.cboFileFormat = new System.Windows.Forms.ComboBox();
@@ -86,12 +92,8 @@
             this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.tcQuality = new System.Windows.Forms.TabControl();
-            this.tpQualityPng = new System.Windows.Forms.TabPage();
-            this.tpQualityJpeg = new System.Windows.Forms.TabPage();
-            this.tpQualityGif = new System.Windows.Forms.TabPage();
-            this.cboPngQuality = new System.Windows.Forms.ComboBox();
-            this.chkPngQualityInterlaced = new System.Windows.Forms.CheckBox();
+            this.tpQualityTiff = new System.Windows.Forms.TabPage();
+            this.cboTiffQuality = new System.Windows.Forms.ComboBox();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -101,6 +103,10 @@
             this.flpTasks.SuspendLayout();
             this.tpImageQuality.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
+            this.tcQuality.SuspendLayout();
+            this.tpQualityPng.SuspendLayout();
+            this.tpQualityJpeg.SuspendLayout();
+            this.tpQualityGif.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).BeginInit();
             this.tpImageResize.SuspendLayout();
             this.gbImageSize.SuspendLayout();
@@ -111,10 +117,7 @@
             this.gbOutputs.SuspendLayout();
             this.gbRemoteLocations.SuspendLayout();
             this.gbSaveToFile.SuspendLayout();
-            this.tcQuality.SuspendLayout();
-            this.tpQualityPng.SuspendLayout();
-            this.tpQualityJpeg.SuspendLayout();
-            this.tpQualityGif.SuspendLayout();
+            this.tpQualityTiff.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -302,6 +305,72 @@
             this.gbPictureQuality.TabStop = false;
             this.gbPictureQuality.Text = "Picture Quality";
             // 
+            // tcQuality
+            // 
+            this.tcQuality.Controls.Add(this.tpQualityPng);
+            this.tcQuality.Controls.Add(this.tpQualityJpeg);
+            this.tcQuality.Controls.Add(this.tpQualityGif);
+            this.tcQuality.Controls.Add(this.tpQualityTiff);
+            this.tcQuality.Location = new System.Drawing.Point(16, 80);
+            this.tcQuality.Name = "tcQuality";
+            this.tcQuality.SelectedIndex = 0;
+            this.tcQuality.Size = new System.Drawing.Size(584, 120);
+            this.tcQuality.TabIndex = 121;
+            // 
+            // tpQualityPng
+            // 
+            this.tpQualityPng.Controls.Add(this.chkPngQualityInterlaced);
+            this.tpQualityPng.Controls.Add(this.cboPngQuality);
+            this.tpQualityPng.Location = new System.Drawing.Point(4, 22);
+            this.tpQualityPng.Name = "tpQualityPng";
+            this.tpQualityPng.Padding = new System.Windows.Forms.Padding(3);
+            this.tpQualityPng.Size = new System.Drawing.Size(576, 94);
+            this.tpQualityPng.TabIndex = 0;
+            this.tpQualityPng.Text = "PNG";
+            this.tpQualityPng.UseVisualStyleBackColor = true;
+            // 
+            // chkPngQualityInterlaced
+            // 
+            this.chkPngQualityInterlaced.AutoSize = true;
+            this.chkPngQualityInterlaced.Location = new System.Drawing.Point(416, 16);
+            this.chkPngQualityInterlaced.Name = "chkPngQualityInterlaced";
+            this.chkPngQualityInterlaced.Size = new System.Drawing.Size(73, 17);
+            this.chkPngQualityInterlaced.TabIndex = 1;
+            this.chkPngQualityInterlaced.Text = "Interlaced";
+            this.chkPngQualityInterlaced.UseVisualStyleBackColor = true;
+            // 
+            // cboPngQuality
+            // 
+            this.cboPngQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPngQuality.FormattingEnabled = true;
+            this.cboPngQuality.Location = new System.Drawing.Point(8, 16);
+            this.cboPngQuality.Name = "cboPngQuality";
+            this.cboPngQuality.Size = new System.Drawing.Size(392, 21);
+            this.cboPngQuality.TabIndex = 0;
+            // 
+            // tpQualityJpeg
+            // 
+            this.tpQualityJpeg.Controls.Add(this.lblQuality);
+            this.tpQualityJpeg.Controls.Add(this.cboJpgSubSampling);
+            this.tpQualityJpeg.Controls.Add(this.cboJpgQuality);
+            this.tpQualityJpeg.Location = new System.Drawing.Point(4, 22);
+            this.tpQualityJpeg.Name = "tpQualityJpeg";
+            this.tpQualityJpeg.Padding = new System.Windows.Forms.Padding(3);
+            this.tpQualityJpeg.Size = new System.Drawing.Size(576, 94);
+            this.tpQualityJpeg.TabIndex = 1;
+            this.tpQualityJpeg.Text = "JPEG";
+            this.tpQualityJpeg.UseVisualStyleBackColor = true;
+            // 
+            // lblQuality
+            // 
+            this.lblQuality.AutoSize = true;
+            this.lblQuality.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblQuality.Location = new System.Drawing.Point(12, 10);
+            this.lblQuality.Name = "lblQuality";
+            this.lblQuality.Size = new System.Drawing.Size(72, 13);
+            this.lblQuality.TabIndex = 108;
+            this.lblQuality.Text = "JPEG Quality:";
+            // 
             // cboJpgSubSampling
             // 
             this.cboJpgSubSampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -320,6 +389,26 @@
             this.cboJpgQuality.Size = new System.Drawing.Size(416, 21);
             this.cboJpgQuality.TabIndex = 119;
             // 
+            // tpQualityGif
+            // 
+            this.tpQualityGif.Controls.Add(this.lblGIFQuality);
+            this.tpQualityGif.Controls.Add(this.cboGIFQuality);
+            this.tpQualityGif.Location = new System.Drawing.Point(4, 22);
+            this.tpQualityGif.Name = "tpQualityGif";
+            this.tpQualityGif.Size = new System.Drawing.Size(576, 94);
+            this.tpQualityGif.TabIndex = 2;
+            this.tpQualityGif.Text = "GIF";
+            this.tpQualityGif.UseVisualStyleBackColor = true;
+            // 
+            // lblGIFQuality
+            // 
+            this.lblGIFQuality.AutoSize = true;
+            this.lblGIFQuality.Location = new System.Drawing.Point(12, 10);
+            this.lblGIFQuality.Name = "lblGIFQuality";
+            this.lblGIFQuality.Size = new System.Drawing.Size(62, 13);
+            this.lblGIFQuality.TabIndex = 117;
+            this.lblGIFQuality.Text = "GIF Quality:";
+            // 
             // cboGIFQuality
             // 
             this.cboGIFQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -332,15 +421,6 @@
             this.cboGIFQuality.Name = "cboGIFQuality";
             this.cboGIFQuality.Size = new System.Drawing.Size(98, 21);
             this.cboGIFQuality.TabIndex = 118;
-            // 
-            // lblGIFQuality
-            // 
-            this.lblGIFQuality.AutoSize = true;
-            this.lblGIFQuality.Location = new System.Drawing.Point(12, 10);
-            this.lblGIFQuality.Name = "lblGIFQuality";
-            this.lblGIFQuality.Size = new System.Drawing.Size(62, 13);
-            this.lblGIFQuality.TabIndex = 117;
-            this.lblGIFQuality.Text = "GIF Quality:";
             // 
             // nudSwitchAfter
             // 
@@ -360,16 +440,6 @@
             0});
             this.nudSwitchAfter.ValueChanged += new System.EventHandler(this.nudSwitchAfter_ValueChanged);
             this.nudSwitchAfter.LostFocus += new System.EventHandler(this.nudSwitchAfter_LostFocus);
-            // 
-            // lblQuality
-            // 
-            this.lblQuality.AutoSize = true;
-            this.lblQuality.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblQuality.Location = new System.Drawing.Point(12, 10);
-            this.lblQuality.Name = "lblQuality";
-            this.lblQuality.Size = new System.Drawing.Size(72, 13);
-            this.lblQuality.TabIndex = 108;
-            this.lblQuality.Text = "JPEG Quality:";
             // 
             // cboSwitchFormat
             // 
@@ -749,71 +819,25 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // tabControl1
+            // tpQualityTiff
             // 
-            this.tcQuality.Controls.Add(this.tpQualityPng);
-            this.tcQuality.Controls.Add(this.tpQualityJpeg);
-            this.tcQuality.Controls.Add(this.tpQualityGif);
-            this.tcQuality.Location = new System.Drawing.Point(16, 80);
-            this.tcQuality.Name = "tabControl1";
-            this.tcQuality.SelectedIndex = 0;
-            this.tcQuality.Size = new System.Drawing.Size(584, 120);
-            this.tcQuality.TabIndex = 121;
+            this.tpQualityTiff.Controls.Add(this.cboTiffQuality);
+            this.tpQualityTiff.Location = new System.Drawing.Point(4, 22);
+            this.tpQualityTiff.Name = "tpQualityTiff";
+            this.tpQualityTiff.Padding = new System.Windows.Forms.Padding(3);
+            this.tpQualityTiff.Size = new System.Drawing.Size(576, 94);
+            this.tpQualityTiff.TabIndex = 3;
+            this.tpQualityTiff.Text = "TIFF";
+            this.tpQualityTiff.UseVisualStyleBackColor = true;
             // 
-            // tpQualityPng
+            // cboTiffQuality
             // 
-            this.tpQualityPng.Controls.Add(this.chkPngQualityInterlaced);
-            this.tpQualityPng.Controls.Add(this.cboPngQuality);
-            this.tpQualityPng.Location = new System.Drawing.Point(4, 22);
-            this.tpQualityPng.Name = "tpQualityPng";
-            this.tpQualityPng.Padding = new System.Windows.Forms.Padding(3);
-            this.tpQualityPng.Size = new System.Drawing.Size(576, 94);
-            this.tpQualityPng.TabIndex = 0;
-            this.tpQualityPng.Text = "PNG";
-            this.tpQualityPng.UseVisualStyleBackColor = true;
-            // 
-            // tpQualityJpeg
-            // 
-            this.tpQualityJpeg.Controls.Add(this.lblQuality);
-            this.tpQualityJpeg.Controls.Add(this.cboJpgSubSampling);
-            this.tpQualityJpeg.Controls.Add(this.cboJpgQuality);
-            this.tpQualityJpeg.Location = new System.Drawing.Point(4, 22);
-            this.tpQualityJpeg.Name = "tpQualityJpeg";
-            this.tpQualityJpeg.Padding = new System.Windows.Forms.Padding(3);
-            this.tpQualityJpeg.Size = new System.Drawing.Size(576, 94);
-            this.tpQualityJpeg.TabIndex = 1;
-            this.tpQualityJpeg.Text = "JPEG";
-            this.tpQualityJpeg.UseVisualStyleBackColor = true;
-            // 
-            // tpQualityGif
-            // 
-            this.tpQualityGif.Controls.Add(this.lblGIFQuality);
-            this.tpQualityGif.Controls.Add(this.cboGIFQuality);
-            this.tpQualityGif.Location = new System.Drawing.Point(4, 22);
-            this.tpQualityGif.Name = "tpQualityGif";
-            this.tpQualityGif.Size = new System.Drawing.Size(576, 94);
-            this.tpQualityGif.TabIndex = 2;
-            this.tpQualityGif.Text = "GIF";
-            this.tpQualityGif.UseVisualStyleBackColor = true;
-            // 
-            // cboPngQuality
-            // 
-            this.cboPngQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboPngQuality.FormattingEnabled = true;
-            this.cboPngQuality.Location = new System.Drawing.Point(8, 16);
-            this.cboPngQuality.Name = "cboPngQuality";
-            this.cboPngQuality.Size = new System.Drawing.Size(392, 21);
-            this.cboPngQuality.TabIndex = 0;
-            // 
-            // chkPngQualityInterlaced
-            // 
-            this.chkPngQualityInterlaced.AutoSize = true;
-            this.chkPngQualityInterlaced.Location = new System.Drawing.Point(416, 16);
-            this.chkPngQualityInterlaced.Name = "chkPngQualityInterlaced";
-            this.chkPngQualityInterlaced.Size = new System.Drawing.Size(73, 17);
-            this.chkPngQualityInterlaced.TabIndex = 1;
-            this.chkPngQualityInterlaced.Text = "Interlaced";
-            this.chkPngQualityInterlaced.UseVisualStyleBackColor = true;
+            this.cboTiffQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTiffQuality.FormattingEnabled = true;
+            this.cboTiffQuality.Location = new System.Drawing.Point(8, 16);
+            this.cboTiffQuality.Name = "cboTiffQuality";
+            this.cboTiffQuality.Size = new System.Drawing.Size(392, 21);
+            this.cboTiffQuality.TabIndex = 1;
             // 
             // WorkflowWizard
             // 
@@ -843,6 +867,13 @@
             this.tpImageQuality.ResumeLayout(false);
             this.gbPictureQuality.ResumeLayout(false);
             this.gbPictureQuality.PerformLayout();
+            this.tcQuality.ResumeLayout(false);
+            this.tpQualityPng.ResumeLayout(false);
+            this.tpQualityPng.PerformLayout();
+            this.tpQualityJpeg.ResumeLayout(false);
+            this.tpQualityJpeg.PerformLayout();
+            this.tpQualityGif.ResumeLayout(false);
+            this.tpQualityGif.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSwitchAfter)).EndInit();
             this.tpImageResize.ResumeLayout(false);
             this.gbImageSize.ResumeLayout(false);
@@ -855,13 +886,7 @@
             this.gbRemoteLocations.ResumeLayout(false);
             this.gbSaveToFile.ResumeLayout(false);
             this.gbSaveToFile.PerformLayout();
-            this.tcQuality.ResumeLayout(false);
-            this.tpQualityPng.ResumeLayout(false);
-            this.tpQualityPng.PerformLayout();
-            this.tpQualityJpeg.ResumeLayout(false);
-            this.tpQualityJpeg.PerformLayout();
-            this.tpQualityGif.ResumeLayout(false);
-            this.tpQualityGif.PerformLayout();
+            this.tpQualityTiff.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -933,6 +958,8 @@
         private System.Windows.Forms.ComboBox cboPngQuality;
         private System.Windows.Forms.TabPage tpQualityJpeg;
         private System.Windows.Forms.TabPage tpQualityGif;
+        private System.Windows.Forms.TabPage tpQualityTiff;
+        private System.Windows.Forms.ComboBox cboTiffQuality;
 
     }
 }

@@ -42,11 +42,31 @@ namespace FreeImageNetLib
     {
         [Description("Save using ZLib level 9 compression")]
         PNG_Z_BEST_COMPRESSION,
-        [Description("Save using ZLib level 1 compression")]
-        PNG_Z_BEST_SPEED,
         [Description("Save using ZLib level 6 compression")]
         PNG_Z_DEFAULT_COMPRESSION,
+        [Description("Save using ZLib level 1 compression")]
+        PNG_Z_BEST_SPEED,
         [Description("Save without ZLib compression")]
         PNG_Z_NO_COMPRESSION,
+    }
+
+    public enum FreeImageTiffQuality
+    {
+        [Description("Save using ADOBE DEFLATE compression")]
+        TIFF_ADOBE_DEFLATE,
+        [Description("Save using DEFLATE compression (a.k.a. ZLib compression)")]
+        TIFF_DEFLATE,
+        [Description("Save using JPEG compression")]
+        TIFF_JPEG,
+        [Description("Save using LZW compression")]
+        TIFF_LZW,
+        [Description("Save using PACKBITS compression")]
+        TIFF_PACKBITS,
+        [Description("Save using CCITT Group 3 fax encoding")]
+        TIFF_CCITTFAX3,
+        [Description("Save using CCITT Group 4 fax encoding")]
+        TIFF_CCITTFAX4,
+        [Description("Save without any compression")]
+        TIFF_NONE,
     }
 }
