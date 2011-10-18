@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
+using FreeImageNetLib;
 using GradientTester;
 using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using UploadersLib;
-using System.Drawing.Drawing2D;
-using System.Drawing;
 
 namespace ZScreenLib
 {
@@ -48,6 +49,7 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
         public bool PasswordsSecureUsingEncryption { get; set; }
+
         [Browsable(false), Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Medium = 192, or High = 256")]
         public EncryptionStrength PasswordsEncryptionStrength { get; set; }
 
@@ -82,8 +84,10 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(AnimatedImageFormat.GIF), Description("Animated image type.")]
         public AnimatedImageFormat ImageFormatAnimated { get; set; }
+
         [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(10), Description("Maximum number of frames per animated image. Images will be uploaded individually after this value.")]
         public int ImageAnimatedFramesMax { get; set; }
+
         [Category(ComponentModelStrings.InputsAnimatedImages), DefaultValue(1), Description("Delay in seconds between each frame of the animated image.")]
         public int ImageAnimatedFramesDelay { get; set; }
 
@@ -96,6 +100,8 @@ namespace ZScreenLib
         public EImageFormat ImageFormat = EImageFormat.PNG;
         public FreeImageJpegQualityType ImageJpegQuality = FreeImageJpegQualityType.JPEG_QUALITYSUPERB;
         public FreeImageJpegSubSamplingType ImageJpegSubSampling = FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_444;
+        public FreeImagePngQuality ImagePngCompression = FreeImagePngQuality.PNG_Z_DEFAULT_COMPRESSION;
+        public bool ImagePngInterlaced = false;
         public GIFQuality ImageGIFQuality = GIFQuality.Default;
         public int ImageSizeLimit = 512;
         public EImageFormat ImageFormat2 = EImageFormat.JPEG;
@@ -232,6 +238,7 @@ namespace ZScreenLib
 
         [Browsable(false)]
         public List<OutputEnum> Outputs { get; set; }
+
         public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
         public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();

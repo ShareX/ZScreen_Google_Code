@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using FreeImageNetLib;
 using HelpersLib;
 using UploadersAPILib;
 using UploadersLib;
@@ -121,6 +122,14 @@ namespace ZScreenLib
                 cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
             }
 
+            if (cboPngQuality.Items.Count == 0)
+            {
+                cboPngQuality.Items.AddRange(typeof(FreeImagePngQuality).GetDescriptions());
+                cboPngQuality.SelectedIndex = (int)Config.ImagePngCompression;
+            }
+
+            chkPngQualityInterlaced.Checked = Config.ImagePngInterlaced;
+
             if (cboJpgQuality.Items.Count == 0)
             {
                 cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
@@ -209,6 +218,35 @@ namespace ZScreenLib
         {
             cboSwitchFormat.Enabled = nudSwitchAfter.Value > 0;
 
+            tcQuality.TabPages.Clear();
+            EImageFormat userImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            switch (userImageFormat)
+            {
+                case EImageFormat.PNG:
+                    tcQuality.TabPages.Add(tpQualityPng);
+                    break;
+                case EImageFormat.JPEG:
+                    tcQuality.TabPages.Add(tpQualityJpeg);
+                    break;
+                case EImageFormat.GIF:
+                    tcQuality.TabPages.Add(tpQualityGif);
+                    break;
+            }
+
+            EImageFormat userImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+            switch (userImageFormat2)
+            {
+                case EImageFormat.PNG:
+                    if (!tcQuality.TabPages.Contains(tpQualityPng)) tcQuality.TabPages.Add(tpQualityPng);
+                    break;
+                case EImageFormat.JPEG:
+                    if (!tcQuality.TabPages.Contains(tpQualityJpeg)) tcQuality.TabPages.Add(tpQualityJpeg);
+                    break;
+                case EImageFormat.GIF:
+                    if (!tcQuality.TabPages.Contains(tpQualityGif)) tcQuality.TabPages.Add(tpQualityGif);
+                    break;
+            }
+
             cboJpgQuality.Enabled = cboJpgSubSampling.Enabled = ((EImageFormat)cboFileFormat.SelectedIndex == EImageFormat.JPEG ||
       (EImageFormat)cboSwitchFormat.SelectedIndex == EImageFormat.JPEG) && nudSwitchAfter.Value > 0;
 
@@ -236,11 +274,16 @@ namespace ZScreenLib
             Config.PerformActions = chkTaskImageAnnotate.Checked;
 
             // Quality
-            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
             Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
+            Config.ImageSizeLimit = (int)nudSwitchAfter.Value;
             Config.ImageFormat2 = (EImageFormat)cboSwitchFormat.SelectedIndex;
+
+            Config.ImagePngInterlaced = chkPngQualityInterlaced.Checked;
+            Config.ImagePngCompression = (FreeImagePngQuality)cboPngQuality.SelectedIndex;
+
             Config.ImageJpegQuality = (FreeImageJpegQualityType)cboJpgQuality.SelectedIndex;
             Config.ImageJpegSubSampling = (FreeImageJpegSubSamplingType)cboJpgSubSampling.SelectedIndex;
+
             Config.ImageGIFQuality = (GIFQuality)cboGIFQuality.SelectedIndex;
 
             // Resize
@@ -334,6 +377,11 @@ namespace ZScreenLib
             ConfigGui();
         }
 
+        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateGuiQuality();
+        }
+
         private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTaskImageResize.Checked)
@@ -410,11 +458,6 @@ namespace ZScreenLib
         }
 
         private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateGuiQuality();
-        }
-
-        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
         {
             UpdateGuiQuality();
         }

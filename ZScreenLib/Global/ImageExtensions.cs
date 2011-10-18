@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using FreeImageAPI;
+using FreeImageNetLib;
 using HelpersLib;
 using ImageQuantization;
 
@@ -35,20 +35,22 @@ namespace ZScreenLib
 {
     public static class ImageExtensions
     {
-        public static MemoryStream SaveImage(this Image img, Workflow profile, EImageFormat imageFormat)
+        public static MemoryStream SaveImage(this Image img, Workflow workflow, EImageFormat imageFormat)
         {
             MemoryStream stream = new MemoryStream();
 
             switch (imageFormat)
             {
                 case EImageFormat.PNG:
-                    img.Save(stream, ImageFormat.Png);
+                    StaticHelper.WriteLine("Performing PNG {0} {1} interlace", workflow.ImagePngCompression.GetDescription(), workflow.ImagePngInterlaced ? "with" : "without");
+                    FreeImageNETHelper.SavePng(img, stream, workflow.ImagePngCompression, workflow.ImagePngInterlaced);
                     break;
                 case EImageFormat.JPEG:
-                    img.SaveJPG(stream, profile, true);
+                    img.SaveJPG(stream, workflow, true);
                     break;
                 case EImageFormat.GIF:
-                    img.SaveGIF(stream, profile.ImageGIFQuality);
+                    // FreeImageNETHelper.SaveGif(img, stream);
+                    img.SaveGIF(stream, workflow.ImageGIFQuality);
                     break;
                 case EImageFormat.BMP:
                     img.Save(stream, ImageFormat.Bmp);
@@ -69,64 +71,7 @@ namespace ZScreenLib
             }
 
             // Using FreeImage converter.
-            using (FreeImageAPI.FreeImageBitmap fib = new FreeImageAPI.FreeImageBitmap(img))
-            {
-                FREE_IMAGE_SAVE_FLAGS jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
-                FREE_IMAGE_SAVE_FLAGS jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444;
-
-                switch (workflow.ImageJpegQuality)
-                {
-                    case FreeImageJpegQualityType.JPEG_QUALITYAVERAGE:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYAVERAGE;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_QUALITYBAD:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYBAD;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_QUALITYGOOD:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_QUALITYNORMAL:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYNORMAL;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_QUALITYSUPERB:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
-                        break;
-
-                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYAVERAGE:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYAVERAGE;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYBAD:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYBAD;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYGOOD:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYNORMAL:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYNORMAL;
-                        break;
-                    case FreeImageJpegQualityType.JPEG_PROGRESSIVE_QUALITYSUPERB:
-                        jpgQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_PROGRESSIVE | FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYSUPERB;
-                        break;
-                }
-
-                switch (workflow.ImageJpegSubSampling)
-                {
-                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_411:
-                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_411;
-                        break;
-                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_420:
-                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_420;
-                        break;
-                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_422:
-                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_422;
-                        break;
-                    case FreeImageJpegSubSamplingType.JPEG_SUBSAMPLING_444:
-                        jpgSubSampling = FREE_IMAGE_SAVE_FLAGS.JPEG_SUBSAMPLING_444;
-                        break;
-                }
-
-                fib.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_JPEG, jpgQuality | jpgSubSampling);
-            }
+            FreeImageNETHelper.SaveJpeg(img, stream, workflow.ImageJpegQuality, workflow.ImageJpegSubSampling);
         }
 
         public static Image FillImageBackground(Image img, Color color)

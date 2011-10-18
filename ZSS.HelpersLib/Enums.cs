@@ -124,42 +124,6 @@ namespace HelpersLib
         ReportStarted, ReportProgress
     }
 
-    public enum FreeImageJpegQualityType
-    {
-        [Description("Save with bad quality (10:1)")]
-        JPEG_QUALITYBAD,
-        [Description("Save with average quality (25:1)")]
-        JPEG_QUALITYAVERAGE,
-        [Description("Save with normal quality (50:1)")]
-        JPEG_QUALITYNORMAL,
-        [Description("Save with good quality (75:1)")]
-        JPEG_QUALITYGOOD,
-        [Description("Save with superb quality (100:1)")]
-        JPEG_QUALITYSUPERB,
-        [Description("Save as a progressive-JPEG with bad quality (10:1)")]
-        JPEG_PROGRESSIVE_QUALITYBAD,
-        [Description("Save as a progressive-JPEG with average quality (25:1)")]
-        JPEG_PROGRESSIVE_QUALITYAVERAGE,
-        [Description("Save as a progressive-JPEG with normal quality (50:1)")]
-        JPEG_PROGRESSIVE_QUALITYNORMAL,
-        [Description("Save as a progressive-JPEG with good quality (75:1)")]
-        JPEG_PROGRESSIVE_QUALITYGOOD,
-        [Description("Save as a progressive-JPEG with superb quality (100:1)")]
-        JPEG_PROGRESSIVE_QUALITYSUPERB,
-    }
-
-    public enum FreeImageJpegSubSamplingType
-    {
-        [Description("Save with high 4x1 chroma subsampling (4:1:1)")]
-        JPEG_SUBSAMPLING_411,
-        [Description("Save with medium 2x2 medium chroma subsampling (4:2:0) - default value")]
-        JPEG_SUBSAMPLING_420,
-        [Description("Save with low 2x1 chroma subsampling (4:2:2)")]
-        JPEG_SUBSAMPLING_422,
-        [Description("Save with no chroma subsampling (4:4:4)")]
-        JPEG_SUBSAMPLING_444,
-    }
-
     public enum WindowButtonAction
     {
         [Description("Minimize to Tray")]
