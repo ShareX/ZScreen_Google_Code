@@ -82,6 +82,7 @@ namespace ZUploader
 
         // Capture
         public bool ShowCursor = false;
+        public bool CaptureTransparent = true;
         public SurfaceOptions SurfaceOptions = new SurfaceOptions();
 
         // History

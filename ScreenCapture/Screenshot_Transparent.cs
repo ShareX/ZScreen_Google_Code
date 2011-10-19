@@ -32,7 +32,7 @@ using HelpersLib;
 
 namespace ScreenCapture
 {
-    public static class ScreenshotTransparent
+    public static partial class Screenshot
     {
         public static Image GetWindowTransparent(IntPtr handle)
         {
@@ -78,6 +78,12 @@ namespace ScreenCapture
                     }
 
                     Bitmap transparentImage = CreateTransparentImage(whiteBackground, blackBackground);
+
+                    if (DrawCursor)
+                    {
+                        Point cursorOffset = CaptureHelpers.FixScreenCoordinates(rect.Location);
+                        DrawCursorToImage(transparentImage, cursorOffset);
+                    }
 
                     if (capturingShadow)
                     {

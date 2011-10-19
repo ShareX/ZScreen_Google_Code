@@ -93,7 +93,7 @@
     <Compile Include="Regions\RoundedRectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScreenshotTransparent.cs" />
+    <Compile Include="Screenshot_Transparent.cs" />
     <Compile Include="Surface.cs">
       <SubType>Form</SubType>
     </Compile>
