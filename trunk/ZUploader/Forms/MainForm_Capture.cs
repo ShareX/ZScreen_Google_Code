@@ -119,7 +119,14 @@ namespace ZUploader
 
         private void CaptureActiveWindow(bool autoHideForm = true)
         {
-            Capture(ScreenshotTransparent.GetActiveWindowTransparent, autoHideForm);
+            if (Program.Settings.CaptureTransparent)
+            {
+                Capture(Screenshot.GetActiveWindowTransparent, autoHideForm);
+            }
+            else
+            {
+                Capture(Screenshot.GetActiveWindow, autoHideForm);
+            }
         }
 
         private void CaptureWindow(IntPtr handle, bool autoHideForm = true)
@@ -130,7 +137,15 @@ namespace ZUploader
             {
                 NativeMethods.SetForegroundWindow(handle);
                 Thread.Sleep(250);
-                return Screenshot.GetWindow(handle);
+
+                if (Program.Settings.CaptureTransparent)
+                {
+                    return Screenshot.GetWindowTransparent(handle);
+                }
+                else
+                {
+                    return Screenshot.GetWindow(handle);
+                }
             }, autoHideForm);
         }
 

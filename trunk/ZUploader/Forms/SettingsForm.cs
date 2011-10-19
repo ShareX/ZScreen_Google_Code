@@ -85,6 +85,7 @@ namespace ZUploader
 
             // Capture
             cbShowCursor.Checked = Program.Settings.ShowCursor;
+            cbCaptureTransparent.Checked = Program.Settings.CaptureTransparent;
             if (Program.Settings.SurfaceOptions == null) Program.Settings.SurfaceOptions = new SurfaceOptions();
             cbDrawBorder.Checked = Program.Settings.SurfaceOptions.DrawBorder;
             cbDrawCheckerboard.Checked = Program.Settings.SurfaceOptions.DrawChecker;
@@ -327,6 +328,11 @@ namespace ZUploader
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
             Program.Settings.ShowCursor = cbShowCursor.Checked;
+        }
+
+        private void cbCaptureTransparent_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.CaptureTransparent = cbCaptureTransparent.Checked;
         }
 
         private void cbDrawBorder_CheckedChanged(object sender, EventArgs e)

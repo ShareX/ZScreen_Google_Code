@@ -31,7 +31,7 @@ using HelpersLib;
 
 namespace ScreenCapture
 {
-    public static class Screenshot
+    public static partial class Screenshot
     {
         public static bool RemoveOutsideScreenArea = true;
         public static bool DrawCursor = false;
@@ -48,7 +48,8 @@ namespace ScreenCapture
 
             if (DrawCursor)
             {
-                DrawCursorToImage(img);
+                Point cursorOffset = CaptureHelpers.FixScreenCoordinates(rect.Location);
+                DrawCursorToImage(img, cursorOffset);
             }
 
             return img;

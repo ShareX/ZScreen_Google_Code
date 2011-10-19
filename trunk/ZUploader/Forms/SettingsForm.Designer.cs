@@ -95,6 +95,7 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.cbCaptureTransparent = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -422,7 +423,7 @@
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
             this.lblImageInfo.TabIndex = 14;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
-                "added as bitmap.";
+    "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUseImageFormat2AfterHint
@@ -594,7 +595,7 @@
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
             this.lblClipboardUploadInfo.TabIndex = 19;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
-                "ce accordingly.";
+    "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblNameFormatPatternPreview
@@ -635,6 +636,7 @@
             // 
             // tpCapture
             // 
+            this.tpCapture.Controls.Add(this.cbCaptureTransparent);
             this.tpCapture.Controls.Add(this.gbSurfaceSettings);
             this.tpCapture.Controls.Add(this.cbShowCursor);
             this.tpCapture.Location = new System.Drawing.Point(4, 22);
@@ -655,7 +657,7 @@
             this.gbSurfaceSettings.Controls.Add(this.cbFixedShapeSize);
             this.gbSurfaceSettings.Controls.Add(this.cbDrawCheckerboard);
             this.gbSurfaceSettings.Controls.Add(this.cbQuickCrop);
-            this.gbSurfaceSettings.Location = new System.Drawing.Point(16, 48);
+            this.gbSurfaceSettings.Location = new System.Drawing.Point(16, 72);
             this.gbSurfaceSettings.Name = "gbSurfaceSettings";
             this.gbSurfaceSettings.Size = new System.Drawing.Size(488, 176);
             this.gbSurfaceSettings.TabIndex = 6;
@@ -665,7 +667,7 @@
             // lblFixedShapeSizeHeight
             // 
             this.lblFixedShapeSizeHeight.AutoSize = true;
-            this.lblFixedShapeSizeHeight.Location = new System.Drawing.Point(40, 144);
+            this.lblFixedShapeSizeHeight.Location = new System.Drawing.Point(40, 148);
             this.lblFixedShapeSizeHeight.Name = "lblFixedShapeSizeHeight";
             this.lblFixedShapeSizeHeight.Size = new System.Drawing.Size(41, 13);
             this.lblFixedShapeSizeHeight.TabIndex = 9;
@@ -674,7 +676,7 @@
             // lblFixedShapeSizeWidth
             // 
             this.lblFixedShapeSizeWidth.AutoSize = true;
-            this.lblFixedShapeSizeWidth.Location = new System.Drawing.Point(40, 120);
+            this.lblFixedShapeSizeWidth.Location = new System.Drawing.Point(40, 124);
             this.lblFixedShapeSizeWidth.Name = "lblFixedShapeSizeWidth";
             this.lblFixedShapeSizeWidth.Size = new System.Drawing.Size(38, 13);
             this.lblFixedShapeSizeWidth.TabIndex = 8;
@@ -682,7 +684,7 @@
             // 
             // nudFixedShapeSizeHeight
             // 
-            this.nudFixedShapeSizeHeight.Location = new System.Drawing.Point(96, 140);
+            this.nudFixedShapeSizeHeight.Location = new System.Drawing.Point(96, 144);
             this.nudFixedShapeSizeHeight.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -705,7 +707,7 @@
             // 
             // nudFixedShapeSizeWidth
             // 
-            this.nudFixedShapeSizeWidth.Location = new System.Drawing.Point(96, 116);
+            this.nudFixedShapeSizeWidth.Location = new System.Drawing.Point(96, 120);
             this.nudFixedShapeSizeWidth.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -930,6 +932,17 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // cbCaptureTransparent
+            // 
+            this.cbCaptureTransparent.AutoSize = true;
+            this.cbCaptureTransparent.Location = new System.Drawing.Point(16, 40);
+            this.cbCaptureTransparent.Name = "cbCaptureTransparent";
+            this.cbCaptureTransparent.Size = new System.Drawing.Size(256, 17);
+            this.cbCaptureTransparent.TabIndex = 10;
+            this.cbCaptureTransparent.Text = "Capture with transparency (For window captures)";
+            this.cbCaptureTransparent.UseVisualStyleBackColor = true;
+            this.cbCaptureTransparent.CheckedChanged += new System.EventHandler(this.cbCaptureTransparent_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1042,5 +1055,6 @@
         private System.Windows.Forms.NumericUpDown nudFixedShapeSizeHeight;
         private System.Windows.Forms.NumericUpDown nudFixedShapeSizeWidth;
         private System.Windows.Forms.Label lblFixedShapeSizeHeight;
+        private System.Windows.Forms.CheckBox cbCaptureTransparent;
     }
 }
