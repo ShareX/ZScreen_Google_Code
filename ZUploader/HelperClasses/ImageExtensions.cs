@@ -66,28 +66,12 @@ namespace ZUploader
             {
                 if (fillBackground)
                 {
-                    img = FillImageBackground(img, Color.White);
+                    img = CaptureHelpers.FillImageBackground(img, Color.White);
                 }
 
                 encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
                 img.Save(stream, ImageFormat.Jpeg.GetCodecInfo(), encoderParameters);
             }
-        }
-
-        public static Image FillImageBackground(Image img, Color color)
-        {
-            Bitmap bmp = new Bitmap(img.Width, img.Height);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.Clear(color);
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.DrawImageUnscaled(img, 0, 0);
-            }
-
-            return bmp;
         }
 
         public static void SaveGIF(this Image img, Stream stream, GIFQuality quality)
