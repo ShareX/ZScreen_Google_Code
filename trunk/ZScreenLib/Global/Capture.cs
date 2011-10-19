@@ -280,6 +280,10 @@ namespace ZScreenLib
                 SIZE size;
                 NativeMethods.DwmQueryThumbnailSourceSize(thumb, out size);
 
+#if DEBUG
+                StaticHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
+                StaticHelper.WriteLine("Window Size: " + size.ToString());
+#endif
                 if (size.x <= 0 || size.y <= 0)
                 {
                     return null;
