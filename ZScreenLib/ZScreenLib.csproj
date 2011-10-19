@@ -396,6 +396,9 @@
     </Content>
     <Content Include="Documents\TODO.txt" />
     <Content Include="Documents\Workflow.txt" />
+    <Content Include="FreeImage.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImageEffectsPlugins\ImageAdjustment.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
