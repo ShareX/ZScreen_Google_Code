@@ -1175,7 +1175,10 @@ namespace ZScreenLib
 
         private void SetFileSize(long sz)
         {
-            Info.FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
+            if (sz > 1023)
+            {
+                Info.FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
+            }
         }
 
         /// <summary>
