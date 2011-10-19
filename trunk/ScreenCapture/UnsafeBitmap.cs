@@ -34,21 +34,25 @@ namespace ScreenCapture
         private Bitmap bitmap;
         private BitmapData bitmapData;
         private ColorBgra* pointer;
-        private int stride;
-        private Rectangle rect;
         private bool isLocked;
 
-        public int Length
+        public int Width { get; private set; }
+
+        public int Height { get; private set; }
+
+        public int PixelCount
         {
             get
             {
-                return rect.Width * rect.Height;
+                return Width * Height;
             }
         }
 
         public UnsafeBitmap(Bitmap bitmap, bool lockBitmap = false, ImageLockMode imageLockMode = ImageLockMode.ReadWrite)
         {
             this.bitmap = bitmap;
+            Width = bitmap.Width;
+            Height = bitmap.Height;
 
             if (lockBitmap) Lock(imageLockMode);
         }
@@ -58,10 +62,8 @@ namespace ScreenCapture
             if (!isLocked)
             {
                 isLocked = true;
-                rect = new Rectangle(Point.Empty, bitmap.Size);
-                bitmapData = bitmap.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                bitmapData = bitmap.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                 pointer = (ColorBgra*)bitmapData.Scan0.ToPointer();
-                stride = bitmapData.Stride;
             }
         }
 
@@ -78,7 +80,7 @@ namespace ScreenCapture
 
         public ColorBgra GetPixel(int x, int y)
         {
-            return pointer[y * stride + x];
+            return pointer[y * Width + x];
         }
 
         public ColorBgra GetPixel(int i)
@@ -88,7 +90,7 @@ namespace ScreenCapture
 
         public void SetPixel(int x, int y, ColorBgra color)
         {
-            pointer[y * stride + x] = color;
+            pointer[y * Width + x] = color;
         }
 
         public void SetPixel(int i, ColorBgra color)

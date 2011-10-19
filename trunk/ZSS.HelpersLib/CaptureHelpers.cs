@@ -161,12 +161,22 @@ namespace HelpersLib
 
         public static Image CropImage(Image img, Rectangle rect)
         {
-            if (img != null && rect.Width > 0 && rect.Height > 0)
+            if (img != null && rect.X >= 0 && rect.Y >= 0 && rect.Width > 0 && rect.Height > 0)
             {
                 using (Bitmap bmp = new Bitmap(img))
                 {
                     return bmp.Clone(rect, bmp.PixelFormat);
                 }
+            }
+
+            return null;
+        }
+
+        public static Bitmap CropBitmap(Bitmap bmp, Rectangle rect)
+        {
+            if (bmp != null && rect.X >= 0 && rect.Y >= 0 && rect.Width > 0 && rect.Height > 0)
+            {
+                return bmp.Clone(rect, bmp.PixelFormat);
             }
 
             return null;
@@ -272,6 +282,41 @@ namespace HelpersLib
             return null;
         }
 
+        public static Image FillImageBackground(Image img, Color color)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                g.Clear(color);
+                g.DrawImageUnscaled(img, 0, 0);
+            }
+
+            return bmp;
+        }
+
+        public static Image FillImageBackground(Image img, Color color, Color color2)
+        {
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                LinearGradientBrush brush = new LinearGradientBrush(new Point(0, 0), new Point(img.Width - 1, 0), color, color2);
+                g.FillRectangle(brush, 0, 0, img.Width, img.Height);
+                g.DrawImageUnscaled(img, 0, 0);
+            }
+
+            return bmp;
+        }
+
         public static Image DrawCheckers(Image img)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height);
@@ -285,7 +330,7 @@ namespace HelpersLib
                 Brush checkerBrush = new TextureBrush(checker, WrapMode.Tile);
 
                 g.FillRectangle(checkerBrush, new Rectangle(0, 0, bmp.Width, bmp.Height));
-                g.DrawImage(img, 0, 0);
+                g.DrawImageUnscaled(img, 0, 0);
             }
 
             return bmp;
