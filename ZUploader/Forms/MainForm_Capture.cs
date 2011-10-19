@@ -119,7 +119,7 @@ namespace ZUploader
 
         private void CaptureActiveWindow(bool autoHideForm = true)
         {
-            Capture(Screenshot.GetActiveWindow, autoHideForm);
+            Capture(ScreenshotTransparent.GetActiveWindowTransparent, autoHideForm);
         }
 
         private void CaptureWindow(IntPtr handle, bool autoHideForm = true)
