@@ -105,7 +105,7 @@ namespace ScreenCapture
 
         private static Bitmap CreateTransparentImage(Bitmap whiteBackground, Bitmap blackBackground)
         {
-            if (whiteBackground.Size == blackBackground.Size)
+            if (whiteBackground != null && blackBackground != null && whiteBackground.Size == blackBackground.Size)
             {
                 Bitmap result = new Bitmap(whiteBackground.Width, whiteBackground.Height, PixelFormat.Format32bppArgb);
 
@@ -126,11 +126,7 @@ namespace ScreenCapture
                         {
                             resultBitmap.SetPixel(i, white);
                         }
-                        else if (alpha == 0)
-                        {
-                            resultBitmap.SetPixel(i, 0);
-                        }
-                        else
+                        else if (alpha > 0)
                         {
                             white.Blue = (byte)(black.Blue / alpha);
                             white.Green = (byte)(black.Green / alpha);
