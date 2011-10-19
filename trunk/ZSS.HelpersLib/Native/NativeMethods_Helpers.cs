@@ -335,16 +335,10 @@ namespace HelpersLib
         {
             Size size = Size.Empty;
 
-            // only required for Windows XP
-            if (!NativeMethods.IsDWMEnabled() && NativeMethods.IsZoomed(handle))
+            if (GetBorderSize(handle, out size))
             {
-                if (GetBorderSize(handle, out size))
-                {
-                    windowRect = new Rectangle(windowRect.X + size.Width,
-                        windowRect.Y + size.Height,
-                        windowRect.Width - (size.Width * 2),
-                        windowRect.Height - (size.Height * 2));
-                }
+                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height,
+                    windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
             }
 
             return windowRect;
