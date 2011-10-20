@@ -756,7 +756,7 @@ namespace ZScreenLib
                 {
                     case CaptureEngineType.Hybrid:
                         Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
-                        SetImage(Screenshot.GetActiveWindow());
+                        SetImage(Screenshot.GetActiveWindowTransparent());
                         break;
                     default:
                         SetImage(Capture.CaptureActiveWindow(WorkflowConfig));

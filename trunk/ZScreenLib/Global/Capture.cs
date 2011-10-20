@@ -61,7 +61,7 @@ namespace ZScreenLib
         private static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle)
         {
             StaticHelper.WriteLine("Capturing with DWM");
-            Image windowImage = null;
+            Image windowImageDwm = null;
             Bitmap redBGImage = null;
 
             Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
@@ -69,30 +69,30 @@ namespace ZScreenLib
 
             if (Engine.HasAero && wfdwm.ActiveWindowClearBackground)
             {
-                windowImage = CaptureWindowWithTransparencyDWM(handle, windowRect, out redBGImage, wfdwm.ActiveWindowCleanTransparentCorners);
+                windowImageDwm = CaptureWindowWithTransparencyDWM(handle, windowRect, out redBGImage, wfdwm.ActiveWindowCleanTransparentCorners);
             }
 
-            if (windowImage == null)
+            if (windowImageDwm == null)
             {
                 StaticHelper.WriteLine("Standard capture (no transparency)");
-                windowImage = Screenshot.GetRectangleNative(windowRect);
+                windowImageDwm = Screenshot.GetRectangleNative(windowRect);
             }
 
             if (wfdwm.ActiveWindowCleanTransparentCorners)
             {
-                Image result = RemoveCorners(handle, windowImage, redBGImage, windowRect);
+                Image result = RemoveCorners(handle, windowImageDwm, redBGImage, windowRect);
                 if (result != null)
                 {
-                    windowImage = result;
+                    windowImageDwm = result;
                 }
             }
 
-            if (windowImage != null)
+            if (windowImageDwm != null)
             {
                 if (wfdwm.ActiveWindowIncludeShadows)
                 {
                     // Draw shadow manually to be able to have shadows in every case
-                    windowImage = GraphicsMgr.AddBorderShadow((Bitmap)windowImage, true);
+                    windowImageDwm = GraphicsMgr.AddBorderShadow((Bitmap)windowImageDwm, true);
                     Point shadowOffset = GraphicsMgr.ShadowOffset;
                     windowRect.X -= shadowOffset.X;
                     windowRect.Y -= shadowOffset.Y;
@@ -100,16 +100,16 @@ namespace ZScreenLib
 
                 if (wfdwm.ActiveWindowShowCheckers)
                 {
-                    windowImage = ImageEffects.DrawCheckers(windowImage);
+                    windowImageDwm = ImageEffects.DrawCheckers(windowImageDwm);
                 }
 
                 if (wfdwm.DrawCursor)
                 {
-                    Screenshot.DrawCursorToImage(windowImage, windowRect.Location);
+                    Screenshot.DrawCursorToImage(windowImageDwm, windowRect.Location);
                 }
             }
 
-            return windowImage;
+            return windowImageDwm;
         }
 
         /// <summary>Captures a screenshot of a window using Windows GDI</summary>
@@ -176,7 +176,7 @@ namespace ZScreenLib
         /// <returns>the captured window image</returns>
         private static Image CaptureWindowWithTransparencyGDI(Workflow wfgdi, IntPtr handle, Rectangle windowRect)
         {
-            Image windowImage = null;
+            Image windowImageGdi = null;
             Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
 
             try
@@ -212,11 +212,11 @@ namespace ZScreenLib
 
                 if (wfgdi.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
                 {
-                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                    windowImageGdi = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
                 }
                 else
                 {
-                    windowImage = (Image)whiteBGImage.Clone();
+                    windowImageGdi = (Image)whiteBGImage.Clone();
                 }
             }
             finally
@@ -226,25 +226,25 @@ namespace ZScreenLib
                 if (white2BGImage != null) white2BGImage.Dispose();
             }
 
-            if (windowImage != null)
+            if (windowImageGdi != null)
             {
-                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImage);
-                windowImage = CaptureHelpers.CropImage(windowImage, windowRectCropped);
+                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImageGdi);
+                windowImageGdi = CaptureHelpers.CropImage(windowImageGdi, windowRectCropped);
 
                 if (wfgdi.DrawCursor)
                 {
                     windowRect.X += windowRectCropped.X;
                     windowRect.Y += windowRectCropped.Y;
-                    Screenshot.DrawCursorToImage(windowImage, windowRect.Location);
+                    Screenshot.DrawCursorToImage(windowImageGdi, windowRect.Location);
                 }
 
                 if (wfgdi.ActiveWindowShowCheckers)
                 {
-                    windowImage = ImageEffects.DrawCheckers(windowImage);
+                    windowImageGdi = ImageEffects.DrawCheckers(windowImageGdi);
                 }
             }
 
-            return windowImage;
+            return windowImageGdi;
         }
 
         /// <summary>
