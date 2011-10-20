@@ -48,10 +48,17 @@ namespace ScreenCapture
         protected bool IsAreaCreated { get; set; }
 
         protected List<DrawableObject> DrawableObjects { get; set; }
-        protected Point ClientMousePosition { get { return PointToClient(MousePosition); } }
+
+        protected Point ClientMousePosition
+        {
+            get
+            {
+                return FixCursorPosition(MousePosition);
+            }
+        }
 
         private TextureBrush backgroundBrush;
-        private Rectangle drawArea, drawAreaOneSmall;
+        private Rectangle screenBounds, drawArea, drawAreaOneSmall;
         private Stopwatch timer;
         private int frameCount;
 
@@ -66,10 +73,12 @@ namespace ScreenCapture
 
         public Surface(Image backgroundImage = null)
         {
+            screenBounds = CaptureHelpers.GetScreenBounds();
+
             InitializeComponent();
 
-            drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
-            drawAreaOneSmall = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
+            drawArea = new Rectangle(0, 0, screenBounds.Width, screenBounds.Height);
+            drawAreaOneSmall = new Rectangle(0, 0, screenBounds.Width - 1, screenBounds.Height - 1);
 
             if (backgroundImage != null)
             {
@@ -104,7 +113,7 @@ namespace ScreenCapture
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.Bounds = CaptureHelpers.GetScreenBounds();
+            this.Bounds = screenBounds;
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
@@ -314,9 +323,14 @@ namespace ScreenCapture
             }
         }
 
+        private Point FixCursorPosition(Point position)
+        {
+            return new Point(position.X - screenBounds.X, position.Y - screenBounds.Y);
+        }
+
         protected virtual new void Update()
         {
-            mousePosition = PointToClient(MousePosition);
+            mousePosition = ClientMousePosition;
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
@@ -403,7 +417,7 @@ namespace ScreenCapture
             string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", CurrentArea.X, CurrentArea.Y, CurrentArea.Width, CurrentArea.Height);
 
 #if DEBUG
-            text = string.Format("FPS: {0}\nBounds: {1}\n{2}", FPS, Bounds, text);
+            text = string.Format("FPS: {0}\nBounds: {1}\n{2}", FPS, screenBounds, text);
 #endif
 
             SizeF textSize = g.MeasureString(text, textFont);
@@ -412,12 +426,12 @@ namespace ScreenCapture
 
             Rectangle primaryScreen = Screen.PrimaryScreen.Bounds;
 
-            Point position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
+            Point position = FixCursorPosition(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2), primaryScreen.Y + offset - 1));
             Rectangle rect = new Rectangle(position, new Size((int)textSize.Width, (int)textSize.Height));
 
             if (rect.Contains(mousePosition))
             {
-                position = PointToClient(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
+                position = FixCursorPosition(new Point(primaryScreen.X + (int)(primaryScreen.Width / 2 - textSize.Width / 2),
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));
             }
 
