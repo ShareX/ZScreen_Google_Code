@@ -151,7 +151,7 @@ namespace HelpersLib
                 rect = NativeMethods.GetWindowRect(handle);
             }
 
-            if (NativeMethods.IsWindowMaximized(handle))
+            if (NativeMethods.IsZoomed(handle))
             {
                 rect = NativeMethods.MaximizedWindowFix(handle, rect);
             }

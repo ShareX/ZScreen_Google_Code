@@ -65,7 +65,6 @@ namespace ZScreenLib
             Bitmap redBGImage = null;
 
             Rectangle windowRect = NativeMethods.GetWindowRectangle(handle);
-            windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
 
             if (Engine.HasAero && wfdwm.ActiveWindowClearBackground)
             {
@@ -128,10 +127,6 @@ namespace ZScreenLib
             {
                 windowRect = NativeMethods.GetWindowRectangle(handle);
             }
-
-            windowRect = NativeMethods.MaximizedWindowFix(handle, windowRect);
-
-            StaticHelper.WriteLine("Window rectangle: " + windowRect.ToString());
 
             Image windowImage = null;
 
