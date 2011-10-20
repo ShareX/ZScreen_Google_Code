@@ -294,9 +294,6 @@ namespace HelpersLib
             RECT rect;
             int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
             rectangle = rect.ToRectangle();
-#if DEBUG
-            StaticHelper.WriteLine("GetExtendedFrameBounds: " + rectangle.ToString());
-#endif
             return result >= 0;
         }
 
@@ -338,10 +335,9 @@ namespace HelpersLib
         {
             Size size = Size.Empty;
 
-            if (NativeMethods.IsZoomed(handle) && GetBorderSize(handle, out size))
+            if (GetBorderSize(handle, out size))
             {
-                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height,
-                    windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
+                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height, windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
             }
 
             return windowRect;
