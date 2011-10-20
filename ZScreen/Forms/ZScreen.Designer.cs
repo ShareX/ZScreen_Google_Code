@@ -89,11 +89,11 @@ namespace ZScreenGUI
             this.tcCapture = new System.Windows.Forms.TabControl();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
             this.gbCaptureGdiDwm = new System.Windows.Forms.GroupBox();
-            this.chkSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.gbCaptureEngine = new System.Windows.Forms.GroupBox();
+            this.chkSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
             this.cboCaptureEngine = new System.Windows.Forms.ComboBox();
             this.gbCaptureGdi = new System.Windows.Forms.GroupBox();
             this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
@@ -1031,33 +1031,20 @@ namespace ZScreenGUI
             // 
             // gbCaptureGdiDwm
             // 
-            this.gbCaptureGdiDwm.Controls.Add(this.chkSelectedWindowCleanBackground);
             this.gbCaptureGdiDwm.Controls.Add(this.chkSelectedWindowIncludeShadow);
             this.gbCaptureGdiDwm.Controls.Add(this.chkSelectedWindowShowCheckers);
             this.gbCaptureGdiDwm.Controls.Add(this.chkSelectedWindowCleanTransparentCorners);
-            this.gbCaptureGdiDwm.Location = new System.Drawing.Point(8, 72);
+            this.gbCaptureGdiDwm.Location = new System.Drawing.Point(8, 96);
             this.gbCaptureGdiDwm.Name = "gbCaptureGdiDwm";
-            this.gbCaptureGdiDwm.Size = new System.Drawing.Size(512, 120);
+            this.gbCaptureGdiDwm.Size = new System.Drawing.Size(512, 104);
             this.gbCaptureGdiDwm.TabIndex = 49;
             this.gbCaptureGdiDwm.TabStop = false;
             this.gbCaptureGdiDwm.Text = "GDI or DWM";
             // 
-            // chkSelectedWindowCleanBackground
-            // 
-            this.chkSelectedWindowCleanBackground.AutoSize = true;
-            this.chkSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 24);
-            this.chkSelectedWindowCleanBackground.Name = "chkSelectedWindowCleanBackground";
-            this.chkSelectedWindowCleanBackground.Size = new System.Drawing.Size(167, 17);
-            this.chkSelectedWindowCleanBackground.TabIndex = 43;
-            this.chkSelectedWindowCleanBackground.Text = "Clear \"dirty\" Aero background";
-            this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanBackground, "Clears background area that does not belong to the Active Window");
-            this.chkSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
-            this.chkSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
-            // 
             // chkSelectedWindowIncludeShadow
             // 
             this.chkSelectedWindowIncludeShadow.AutoSize = true;
-            this.chkSelectedWindowIncludeShadow.Location = new System.Drawing.Point(16, 72);
+            this.chkSelectedWindowIncludeShadow.Location = new System.Drawing.Point(16, 48);
             this.chkSelectedWindowIncludeShadow.Name = "chkSelectedWindowIncludeShadow";
             this.chkSelectedWindowIncludeShadow.Size = new System.Drawing.Size(139, 17);
             this.chkSelectedWindowIncludeShadow.TabIndex = 45;
@@ -1069,7 +1056,7 @@ namespace ZScreenGUI
             // chkSelectedWindowShowCheckers
             // 
             this.chkSelectedWindowShowCheckers.AutoSize = true;
-            this.chkSelectedWindowShowCheckers.Location = new System.Drawing.Point(16, 96);
+            this.chkSelectedWindowShowCheckers.Location = new System.Drawing.Point(16, 72);
             this.chkSelectedWindowShowCheckers.Name = "chkSelectedWindowShowCheckers";
             this.chkSelectedWindowShowCheckers.Size = new System.Drawing.Size(242, 17);
             this.chkSelectedWindowShowCheckers.TabIndex = 46;
@@ -1081,7 +1068,7 @@ namespace ZScreenGUI
             // chkSelectedWindowCleanTransparentCorners
             // 
             this.chkSelectedWindowCleanTransparentCorners.AutoSize = true;
-            this.chkSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 48);
+            this.chkSelectedWindowCleanTransparentCorners.Location = new System.Drawing.Point(16, 24);
             this.chkSelectedWindowCleanTransparentCorners.Name = "chkSelectedWindowCleanTransparentCorners";
             this.chkSelectedWindowCleanTransparentCorners.Size = new System.Drawing.Size(143, 17);
             this.chkSelectedWindowCleanTransparentCorners.TabIndex = 44;
@@ -1092,28 +1079,41 @@ namespace ZScreenGUI
             // 
             // gbCaptureEngine
             // 
+            this.gbCaptureEngine.Controls.Add(this.chkSelectedWindowCleanBackground);
             this.gbCaptureEngine.Controls.Add(this.cboCaptureEngine);
             this.gbCaptureEngine.Location = new System.Drawing.Point(8, 8);
             this.gbCaptureEngine.Name = "gbCaptureEngine";
-            this.gbCaptureEngine.Size = new System.Drawing.Size(512, 56);
+            this.gbCaptureEngine.Size = new System.Drawing.Size(512, 80);
             this.gbCaptureEngine.TabIndex = 126;
             this.gbCaptureEngine.TabStop = false;
             this.gbCaptureEngine.Text = "Capture Engine of Choice";
+            // 
+            // chkSelectedWindowCleanBackground
+            // 
+            this.chkSelectedWindowCleanBackground.AutoSize = true;
+            this.chkSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 56);
+            this.chkSelectedWindowCleanBackground.Name = "chkSelectedWindowCleanBackground";
+            this.chkSelectedWindowCleanBackground.Size = new System.Drawing.Size(295, 17);
+            this.chkSelectedWindowCleanBackground.TabIndex = 43;
+            this.chkSelectedWindowCleanBackground.Text = "Clear \"dirty\" Aero background in Windows Vista or higher";
+            this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanBackground, "Clears background area that does not belong to the Active Window");
+            this.chkSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
+            this.chkSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
             // 
             // cboCaptureEngine
             // 
             this.cboCaptureEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCaptureEngine.FormattingEnabled = true;
-            this.cboCaptureEngine.Location = new System.Drawing.Point(8, 24);
+            this.cboCaptureEngine.Location = new System.Drawing.Point(16, 24);
             this.cboCaptureEngine.Name = "cboCaptureEngine";
-            this.cboCaptureEngine.Size = new System.Drawing.Size(488, 21);
+            this.cboCaptureEngine.Size = new System.Drawing.Size(480, 21);
             this.cboCaptureEngine.TabIndex = 0;
             this.cboCaptureEngine.SelectedIndexChanged += new System.EventHandler(this.cboCaptureEngine_SelectedIndexChanged);
             // 
             // gbCaptureGdi
             // 
             this.gbCaptureGdi.Controls.Add(this.chkActiveWindowTryCaptureChildren);
-            this.gbCaptureGdi.Location = new System.Drawing.Point(8, 200);
+            this.gbCaptureGdi.Location = new System.Drawing.Point(8, 208);
             this.gbCaptureGdi.Name = "gbCaptureGdi";
             this.gbCaptureGdi.Size = new System.Drawing.Size(512, 56);
             this.gbCaptureGdi.TabIndex = 50;
@@ -4392,6 +4392,7 @@ namespace ZScreenGUI
             this.gbCaptureGdiDwm.ResumeLayout(false);
             this.gbCaptureGdiDwm.PerformLayout();
             this.gbCaptureEngine.ResumeLayout(false);
+            this.gbCaptureEngine.PerformLayout();
             this.gbCaptureGdi.ResumeLayout(false);
             this.gbCaptureGdi.PerformLayout();
             this.tpSelectedWindow.ResumeLayout(false);
