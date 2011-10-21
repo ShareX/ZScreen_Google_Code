@@ -90,6 +90,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\GreenshotPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.MODI, Version=12.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Lib\Interop.MODI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -144,6 +149,7 @@
     </Compile>
     <Compile Include="Global\ExceptionMessage.cs" />
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
+    <Compile Include="Helpers\OCRHelper.cs" />
     <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\SoundFileNameEditor.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
@@ -281,10 +287,6 @@
     <ProjectReference Include="..\ImageEffectsLib\ImageQueue\ImageQueueLib.csproj">
       <Project>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</Project>
       <Name>ImageQueueLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageQuantizer\ImageQuantization\ImageQuantization.csproj">
-      <Project>{923F9BA3-34C5-45C6-8069-D9CE7E79635A}</Project>
-      <Name>ImageQuantization</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>

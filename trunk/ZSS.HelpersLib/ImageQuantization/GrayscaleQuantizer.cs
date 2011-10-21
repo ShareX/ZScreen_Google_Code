@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Drawing;
 
-namespace ImageQuantization
+namespace HelpersLib
 {
     /// <summary>
     /// Summary description for PaletteQuantizer.

@@ -29,7 +29,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using FreeImageNetLib;
 using HelpersLib;
-using ImageQuantization;
 
 namespace ZScreenLib
 {
