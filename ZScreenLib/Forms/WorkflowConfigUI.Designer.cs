@@ -95,6 +95,7 @@
             this.btnTaskAnnotate = new System.Windows.Forms.Button();
             this.tpImagePreview = new System.Windows.Forms.TabPage();
             this.pbImage = new HelpersLib.MyPictureBox();
+            this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -119,6 +120,7 @@
             this.gbTasks.SuspendLayout();
             this.flpTasks.SuspendLayout();
             this.tpImagePreview.SuspendLayout();
+            this.flpMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -128,7 +130,7 @@
             this.tcMain.Controls.Add(this.tpImageQuality);
             this.tcMain.Controls.Add(this.tpImageResize);
             this.tcMain.Controls.Add(this.tpOutputs);
-            this.tcMain.Location = new System.Drawing.Point(168, 8);
+            this.tcMain.Location = new System.Drawing.Point(169, 3);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
             this.tcMain.Size = new System.Drawing.Size(640, 400);
@@ -747,10 +749,9 @@
             // gbTasks
             // 
             this.gbTasks.Controls.Add(this.flpTasks);
-            this.gbTasks.Dock = System.Windows.Forms.DockStyle.Left;
-            this.gbTasks.Location = new System.Drawing.Point(0, 0);
+            this.gbTasks.Location = new System.Drawing.Point(3, 3);
             this.gbTasks.Name = "gbTasks";
-            this.gbTasks.Size = new System.Drawing.Size(160, 451);
+            this.gbTasks.Size = new System.Drawing.Size(160, 389);
             this.gbTasks.TabIndex = 2;
             this.gbTasks.TabStop = false;
             this.gbTasks.Text = "I want to...";
@@ -764,7 +765,7 @@
             this.flpTasks.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpTasks.Location = new System.Drawing.Point(8, 16);
             this.flpTasks.Name = "flpTasks";
-            this.flpTasks.Size = new System.Drawing.Size(144, 416);
+            this.flpTasks.Size = new System.Drawing.Size(144, 352);
             this.flpTasks.TabIndex = 3;
             // 
             // chkTaskImageFileFormat
@@ -802,7 +803,8 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(608, 416);
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Location = new System.Drawing.Point(608, 424);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(104, 24);
             this.btnOK.TabIndex = 0;
@@ -812,7 +814,8 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(720, 416);
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(720, 424);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 24);
             this.btnCancel.TabIndex = 1;
@@ -851,19 +854,27 @@
             this.pbImage.Size = new System.Drawing.Size(626, 368);
             this.pbImage.TabIndex = 0;
             // 
+            // flpMain
+            // 
+            this.flpMain.Controls.Add(this.gbTasks);
+            this.flpMain.Controls.Add(this.tcMain);
+            this.flpMain.Location = new System.Drawing.Point(8, 8);
+            this.flpMain.Name = "flpMain";
+            this.flpMain.Size = new System.Drawing.Size(820, 408);
+            this.flpMain.TabIndex = 12;
+            // 
             // WorkflowWizard
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 451);
-            this.Controls.Add(this.gbTasks);
+            this.ClientSize = new System.Drawing.Size(850, 459);
+            this.Controls.Add(this.flpMain);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.tcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(664, 480);
+            this.MinimumSize = new System.Drawing.Size(856, 488);
             this.Name = "WorkflowWizard";
             this.Text = "Configure Workflow";
             this.Load += new System.EventHandler(this.WorkflowWizard_Load);
@@ -900,6 +911,7 @@
             this.flpTasks.ResumeLayout(false);
             this.flpTasks.PerformLayout();
             this.tpImagePreview.ResumeLayout(false);
+            this.flpMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -974,6 +986,7 @@
         private System.Windows.Forms.Button btnTaskAnnotate;
         private System.Windows.Forms.TabPage tpImagePreview;
         private HelpersLib.MyPictureBox pbImage;
+        private System.Windows.Forms.FlowLayoutPanel flpMain;
 
     }
 }
