@@ -81,7 +81,13 @@ namespace HelpersLib
         [Description("Application version")]
         ver,
         [Description("New line")]
-        n
+        n,
+        [Description("URL")]
+        url,
+        [Description("Size")]
+        size,
+        [Description("Name")]
+        name
     }
 
     public static class ReplacementExtension
@@ -100,7 +106,8 @@ namespace HelpersLib
         EntireScreen,
         ActiveWindow,
         Watermark,
-        SaveFolder
+        SaveFolder,
+        Clipboard
     }
 
     public class NameParser : IDisposable
@@ -122,6 +129,12 @@ namespace HelpersLib
         public string CustomProductName { get; set; }
 
         public int MaxNameLength { get; set; }
+
+        public string url { get; set; }
+
+        public string size { get; set; }
+
+        public string name { get; set; }
 
         public NameParser()
         {
@@ -154,6 +167,14 @@ namespace HelpersLib
             }
 
             StringBuilder sb = new StringBuilder(pattern);
+
+            #region Size, Url, name
+
+            sb.Replace(ReplacementVariables.url.ToPrefixString(), url);
+            sb.Replace(ReplacementVariables.size.ToPrefixString(), size);
+            sb.Replace(ReplacementVariables.name.ToPrefixString(), name);
+
+            #endregion
 
             #region width, height (If Picture exist)
 
@@ -282,7 +303,7 @@ namespace HelpersLib
 
             #endregion rn, ra
 
-            if (Type != NameParserType.Watermark)
+            if (Type != NameParserType.Watermark & Type != NameParserType.Clipboard)
             {
                 result = ZAppHelper.NormalizeString(result, Type != NameParserType.SaveFolder, IsFolderPath);
             }

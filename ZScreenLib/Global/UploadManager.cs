@@ -422,12 +422,16 @@ namespace ZScreenLib
 
                     if (clipboardText.Length > 0)
                     {
-                        string tempText = clipboardText.ToString().Trim();
-
-                        if (Engine.conf.ClipboardShowFileSize && !string.IsNullOrEmpty(task.Info.FileSize))
+                        string tempText = string.Empty;
+                        NameParser np = new NameParser(NameParserType.Clipboard);
+                        np.url = clipboardText.ToString().Trim();
+                        np.size = task.Info.FileSize;
+                        np.name = task.Info.FileName;
+                        if (!string.IsNullOrEmpty(Engine.conf.ClipboardFormat))
                         {
-                            tempText += " " + task.Info.FileSize;
+                            tempText = np.Convert(Engine.conf.ClipboardFormat);
                         }
+                       
                         if (!string.IsNullOrEmpty(tempText))
                         {
                             StaticHelper.WriteLine("Setting Clipboard with URL: " + tempText);
