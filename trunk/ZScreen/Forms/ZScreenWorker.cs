@@ -366,6 +366,8 @@ namespace ZScreenGUI
             // the last point before the task enters background
             if (imageTask.tempImage != null)
             {
+                imageTask.Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
+
                 pbPreview.LoadImage(imageTask.tempImage);
 
                 DialogResult result = System.Windows.Forms.DialogResult.OK;

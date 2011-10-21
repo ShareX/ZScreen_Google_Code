@@ -70,6 +70,7 @@ namespace ZScreenLib
 
         public bool IsStopped { get; private set; }
 
+
         #region Enums
 
         public enum TaskState
@@ -2243,5 +2244,7 @@ namespace ZScreenLib
         }
 
         public Size ImageSize { get; set; }
+
+        public string WindowTitleText { get; set; }
     }
 }

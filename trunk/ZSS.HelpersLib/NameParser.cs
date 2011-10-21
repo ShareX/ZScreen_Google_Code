@@ -136,6 +136,8 @@ namespace HelpersLib
 
         public string name { get; set; }
 
+        public string WindowText { get; set; }
+
         public NameParser()
         {
             Type = NameParserType.Text;
@@ -193,13 +195,13 @@ namespace HelpersLib
 
             #region t (If ActiveWindow or Watermark)
 
-            if (Type == NameParserType.ActiveWindow || Type == NameParserType.Watermark)
+            if (Type == NameParserType.ActiveWindow || Type == NameParserType.Watermark || Type == NameParserType.Clipboard)
             {
-                string activeWindow = NativeMethods.GetForegroundWindowText();
+                string activeWindow = WindowText; 
 
                 if (string.IsNullOrEmpty(activeWindow))
                 {
-                    activeWindow = Application.ProductName;
+                    activeWindow = NativeMethods.GetForegroundWindowText();
                 }
 
                 sb.Replace(ReplacementVariables.t.ToPrefixString(), activeWindow);
