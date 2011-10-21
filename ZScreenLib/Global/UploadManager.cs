@@ -427,6 +427,8 @@ namespace ZScreenLib
                         np.link = clipboardText.ToString().Trim();
                         np.size = task.Info.FileSize;
                         np.name = task.Info.FileName;
+                        np.WindowText = task.Info.WindowTitleText;
+                        
                         if (!string.IsNullOrEmpty(Engine.conf.ClipboardFormat))
                         {
                             tempText = np.Convert(Engine.conf.ClipboardFormat);
