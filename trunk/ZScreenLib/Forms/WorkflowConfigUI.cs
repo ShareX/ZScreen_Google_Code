@@ -38,11 +38,12 @@ namespace ZScreenLib
             if (gui != null)
             {
                 gbTasks.Visible = false;
+                this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
+                this.Width = this.MinimumSize.Width;
                 this.GUI = gui;
             }
             else
             {
-                tcMain.TabPages.Add(tpImagePreview);
                 chkTaskOutputConfig.Checked = true;
             }
             if (task != null)
@@ -94,7 +95,11 @@ namespace ZScreenLib
         private void ConfigGuiTasks()
         {
             bool bIsImage = ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
+
             if (!bIsImage) tcMain.TabPages.Remove(tpImagePreview);
+            else tcMain.TabPages.Add(tpImagePreview);
+            tcMain.SelectedTab = tpImagePreview;
+
             btnTaskAnnotate.Visible = bIsImage;
             chkTaskImageFileFormat.Visible = bIsImage;
             chkTaskImageResize.Visible = bIsImage;
@@ -413,7 +418,8 @@ namespace ZScreenLib
         {
             if (chkTaskImageResize.Checked)
             {
-                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpImageResize);
+                tcMain.TabPages.Insert(0, tpImageResize);
+                tcMain.SelectedTab = tpImageResize;
             }
             else
             {
@@ -464,7 +470,8 @@ namespace ZScreenLib
         {
             if (chkTaskImageFileFormat.Checked)
             {
-                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpImageQuality);
+                tcMain.TabPages.Insert(0, tpImageQuality);
+                tcMain.SelectedTab = tpImageQuality;
             }
             else
             {
@@ -476,7 +483,8 @@ namespace ZScreenLib
         {
             if (chkTaskOutputConfig.Checked)
             {
-                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpOutputs);
+                tcMain.TabPages.Insert(0, tpOutputs);
+                tcMain.SelectedTab = tpOutputs;
             }
             else
             {
