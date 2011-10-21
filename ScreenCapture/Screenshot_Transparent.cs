@@ -44,8 +44,6 @@ namespace ScreenCapture
 
                 try
                 {
-                    bool capturingShadow = false;
-
                     using (Form form = new Form())
                     {
                         form.BackColor = Color.White;
@@ -58,8 +56,6 @@ namespace ScreenCapture
 
                             rect.Inflate(offset, offset);
                             rect.Intersect(CaptureHelpers.GetScreenBounds());
-
-                            capturingShadow = true;
                         }
 
                         NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
@@ -85,10 +81,7 @@ namespace ScreenCapture
                         DrawCursorToImage(transparentImage, cursorOffset);
                     }
 
-                    if (capturingShadow)
-                    {
-                        transparentImage = QuickTrimTransparent(transparentImage);
-                    }
+                    transparentImage = TrimTransparent(transparentImage);
 
                     return transparentImage;
                 }
@@ -150,9 +143,99 @@ namespace ScreenCapture
             return whiteBackground;
         }
 
+        private static Bitmap TrimTransparent(Bitmap bitmap)
+        {
+            Rectangle source = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            Rectangle rect = source;
+
+            using (UnsafeBitmap unsafeBitmap = new UnsafeBitmap(bitmap, true, ImageLockMode.ReadOnly))
+            {
+                rect = TrimTransparentFindX(unsafeBitmap, rect);
+                rect = TrimTransparentFindY(unsafeBitmap, rect);
+                rect = TrimTransparentFindWidth(unsafeBitmap, rect);
+                rect = TrimTransparentFindHeight(unsafeBitmap, rect);
+            }
+
+            if (source != rect)
+            {
+                return CaptureHelpers.CropBitmap(bitmap, rect);
+            }
+
+            return bitmap;
+        }
+
+        private static Rectangle TrimTransparentFindX(UnsafeBitmap unsafeBitmap, Rectangle rect)
+        {
+            for (int x = rect.X; x < rect.Width; x++)
+            {
+                for (int y = rect.Y; y < rect.Height; y++)
+                {
+                    if (unsafeBitmap.GetPixel(x, y).Alpha > 0)
+                    {
+                        rect.X = x;
+                        return rect;
+                    }
+                }
+            }
+
+            return rect;
+        }
+
+        private static Rectangle TrimTransparentFindY(UnsafeBitmap unsafeBitmap, Rectangle rect)
+        {
+            for (int y = rect.Y; y < rect.Height; y++)
+            {
+                for (int x = rect.X; x < rect.Width; x++)
+                {
+                    if (unsafeBitmap.GetPixel(x, y).Alpha > 0)
+                    {
+                        rect.Y = y;
+                        return rect;
+                    }
+                }
+            }
+
+            return rect;
+        }
+
+        private static Rectangle TrimTransparentFindWidth(UnsafeBitmap unsafeBitmap, Rectangle rect)
+        {
+            for (int x = rect.Width - 1; x >= rect.X; x--)
+            {
+                for (int y = rect.Y; y < rect.Height; y++)
+                {
+                    if (unsafeBitmap.GetPixel(x, y).Alpha > 0)
+                    {
+                        rect.Width = x - rect.X + 1;
+                        return rect;
+                    }
+                }
+            }
+
+            return rect;
+        }
+
+        private static Rectangle TrimTransparentFindHeight(UnsafeBitmap unsafeBitmap, Rectangle rect)
+        {
+            for (int y = rect.Height - 1; y >= rect.Y; y--)
+            {
+                for (int x = rect.X; x < rect.Width; x++)
+                {
+                    if (unsafeBitmap.GetPixel(x, y).Alpha > 0)
+                    {
+                        rect.Height = y - rect.Y + 1;
+                        return rect;
+                    }
+                }
+            }
+
+            return rect;
+        }
+
         private static Bitmap QuickTrimTransparent(Bitmap bitmap)
         {
-            Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            Rectangle source = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            Rectangle rect = source;
 
             using (UnsafeBitmap unsafeBitmap = new UnsafeBitmap(bitmap, true, ImageLockMode.ReadOnly))
             {
@@ -160,7 +243,7 @@ namespace ScreenCapture
                 int middleY = rect.Height / 2;
 
                 // Find X
-                for (int x = 0; x < rect.Width; x++)
+                for (int x = rect.X; x < rect.Width; x++)
                 {
                     if (unsafeBitmap.GetPixel(x, middleY).Alpha > 0)
                     {
@@ -170,7 +253,7 @@ namespace ScreenCapture
                 }
 
                 // Find Y
-                for (int y = 0; y < rect.Height; y++)
+                for (int y = rect.Y; y < rect.Height; y++)
                 {
                     if (unsafeBitmap.GetPixel(middleX, y).Alpha > 0)
                     {
@@ -200,7 +283,12 @@ namespace ScreenCapture
                 }
             }
 
-            return CaptureHelpers.CropBitmap(bitmap, rect);
+            if (source != rect)
+            {
+                return CaptureHelpers.CropBitmap(bitmap, rect);
+            }
+
+            return bitmap;
         }
 
         private static byte[,] windows7Corner = new byte[12, 2] {
