@@ -424,7 +424,7 @@ namespace ZScreenLib
                     {
                         string tempText = string.Empty;
                         NameParser np = new NameParser(NameParserType.Clipboard);
-                        np.url = clipboardText.ToString().Trim();
+                        np.link = clipboardText.ToString().Trim();
                         np.size = task.Info.FileSize;
                         np.name = task.Info.FileName;
                         if (!string.IsNullOrEmpty(Engine.conf.ClipboardFormat))
