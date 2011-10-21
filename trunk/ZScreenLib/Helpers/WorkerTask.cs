@@ -304,7 +304,6 @@ namespace ZScreenLib
         public void StartWork(JobLevel2 job)
         {
             Job2 = job;
-            SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
             switch (job)
             {
@@ -319,6 +318,8 @@ namespace ZScreenLib
                     Job1 = JobLevel1.Image;
                     break;
             }
+
+            SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
             bool success = true;
 
@@ -1957,7 +1958,7 @@ namespace ZScreenLib
             return !States.Contains(TaskState.CancellationPending);
         }
 
-        public void SetNotifyIconStatus(NotifyIcon ni, bool ready)
+        private void SetNotifyIconStatus(NotifyIcon ni, bool ready)
         {
             Icon ico = ready ? Resources.zss_tray : Resources.zss_busy;
             if (ni != null && ico != null)
