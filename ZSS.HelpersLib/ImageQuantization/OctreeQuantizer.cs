@@ -3,7 +3,7 @@ using System.Collections;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ImageQuantization
+namespace HelpersLib
 {
     /// <summary>
     /// Quantize using an Octree
