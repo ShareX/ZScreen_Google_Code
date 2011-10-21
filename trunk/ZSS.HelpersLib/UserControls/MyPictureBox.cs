@@ -33,6 +33,7 @@ namespace HelpersLib
     public partial class MyPictureBox : UserControl
     {
         public bool DisableViewer { get; set; }
+
         public Image LoadingImage
         {
             set { pbMain.InitialImage = value; }

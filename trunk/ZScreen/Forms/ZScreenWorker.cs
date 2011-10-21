@@ -293,6 +293,7 @@ namespace ZScreenGUI
 
             this.niTray.Text = this.Text; // do not update notifyIcon text if there are other jobs active
             this.niTray.Icon = Resources.zss_tray;
+            Engine.IsClipboardUploading = false;
         }
 
         #endregion Worker Events
@@ -361,6 +362,11 @@ namespace ZScreenGUI
         public void RunWorkerAsync(WorkerTask imageTask)
         {
             if (imageTask == null) return;
+            if (imageTask.States.Contains(WorkerTask.TaskState.CancellationPending))
+            {
+                PostWorkerTasks();
+                return;
+            }
 
             imageTask.WasToTakeScreenshot = true;
             // the last point before the task enters background

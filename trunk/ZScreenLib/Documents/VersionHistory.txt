@@ -1,5 +1,6 @@
-Version 4.7.2 - 2011-10-15
+Version 4.7.3 - 2011-10-22
 
+4.7.3 Clipboard text format is now customizable using Advanced > Settings {TheDeathly}
 4.7.2 Workflow Wizard replaces the current Outputs Configuration dialog {McoreD}
 4.7.1 Actions ToolStrip is now visible at all times regardless of the tab that is currently active {McoreD}
 4.7.0 Workflow option to Secure passwords using encryption {TheDeathly}

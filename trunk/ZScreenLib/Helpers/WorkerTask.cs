@@ -70,7 +70,6 @@ namespace ZScreenLib
 
         public bool IsStopped { get; private set; }
 
-
         #region Enums
 
         public enum TaskState
@@ -201,7 +200,7 @@ namespace ZScreenLib
 
         public List<Image> tempImages;
 
-        public Image tempImage { get; private set; }
+        public Image tempImage;
 
         public string tempText { get; private set; }
 
@@ -278,7 +277,7 @@ namespace ZScreenLib
 
             if (Engine.conf.PromptForOutputs)                                                                  // step 3
             {
-                WorkflowWizard wfw = new WorkflowWizard(info, this.WorkflowConfig) { Icon = Resources.zss_tray };
+                WorkflowWizard wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
                 result = wfw.ShowDialog();
             }
 
