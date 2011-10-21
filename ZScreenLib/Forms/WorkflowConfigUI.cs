@@ -11,34 +11,43 @@ namespace ZScreenLib
     public partial class WorkflowWizard : HotkeyForm
     {
         public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
-        public Workflow Config = null;
-        public TaskInfo Info = new TaskInfo();
 
-        public WorkflowWizard(TaskInfo info = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
+        public Workflow Config { get; private set; }
+
+        private WorkerTask Task = null;
+
+        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
         {
             InitializeComponent();
-            Initialize(info, workflow, gui);
+            Initialize(info, gui);
         }
 
-        protected void Initialize(TaskInfo info, Workflow workflow, WorkflowWizardGUIOptions gui)
+        protected void Initialize(WorkerTask task, WorkflowWizardGUIOptions gui)
         {
-            if (workflow == null) workflow = new Workflow("New Workflow");
-            this.Config = workflow;
-
-            this.Text = Application.ProductName + " - " + (info == null ? workflow.Description : info.Job.GetDescription());
+            if (task != null)
+            {
+                this.Config = task.WorkflowConfig;
+                this.Text = Application.ProductName + " - " + task.Info.Job.GetDescription();
+            }
+            else
+            {
+                this.Text = Application.ProductName;
+            }
 
             tcMain.TabPages.Clear();
             if (gui != null)
             {
+                gbTasks.Visible = false;
                 this.GUI = gui;
             }
             else
             {
-                tcMain.TabPages.Add(tpTasks);
+                tcMain.TabPages.Add(tpImagePreview);
+                chkTaskOutputConfig.Checked = true;
             }
-            if (info != null)
+            if (task != null)
             {
-                this.Info = info;
+                this.Task = task;
             }
         }
 
@@ -50,6 +59,11 @@ namespace ZScreenLib
             if (GUI.ShowTabJob) this.tcMain.TabPages.Add(tpJob);
             if (GUI.ShowResizeTab) this.tcMain.TabPages.Add(tpImageResize);
             if (GUI.ShowQualityTab) this.tcMain.TabPages.Add(tpImageQuality);
+
+            if (Task != null && Task.tempImage != null)
+            {
+                pbImage.LoadImage(Task.tempImage);
+            }
 
             // Jobs
             ConfigGuiJobs();
@@ -79,11 +93,11 @@ namespace ZScreenLib
 
         private void ConfigGuiTasks()
         {
-            chkTaskImageAnnotate.Checked = Config.PerformActions;
-            bool bDataType = ZAppHelper.IsImageFile(Info.LocalFilePath);
-            chkTaskImageAnnotate.Visible = bDataType;
-            chkTaskImageFileFormat.Visible = bDataType;
-            chkTaskImageResize.Visible = bDataType;
+            bool bIsImage = ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
+            if (!bIsImage) tcMain.TabPages.Remove(tpImagePreview);
+            btnTaskAnnotate.Visible = bIsImage;
+            chkTaskImageFileFormat.Visible = bIsImage;
+            chkTaskImageResize.Visible = bIsImage;
         }
 
         private void ConfigGuiResize()
@@ -174,7 +188,7 @@ namespace ZScreenLib
                 }
             }
 
-            if (ZAppHelper.IsImageFile(Info.LocalFilePath))
+            if (ZAppHelper.IsImageFile(Task.Info.LocalFilePath))
             {
                 flpImageUploaders.Visible = true;
                 flpTextUploaders.Visible = false;
@@ -192,7 +206,7 @@ namespace ZScreenLib
                     }
                 }
             }
-            else if (ZAppHelper.IsTextFile(Info.LocalFilePath))
+            else if (ZAppHelper.IsTextFile(Task.Info.LocalFilePath))
             {
                 flpTextUploaders.Visible = true;
                 flpImageUploaders.Visible = false;
@@ -212,8 +226,8 @@ namespace ZScreenLib
             }
 
             gbSaveToFile.Visible = chkSaveFile.Checked;
-            txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Info.LocalFilePath);
-            txtSaveFolder.Text = Path.GetDirectoryName(Info.LocalFilePath);
+            txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Task.Info.LocalFilePath);
+            txtSaveFolder.Text = Path.GetDirectoryName(Task.Info.LocalFilePath);
         }
 
         #endregion Config GUI
@@ -283,7 +297,6 @@ namespace ZScreenLib
             Config.Job = (WorkerTask.JobLevel2)cboTask.SelectedIndex;
 
             // Tasks
-            Config.PerformActions = chkTaskImageAnnotate.Checked;
 
             // Quality
             Config.ImageFormat = (EImageFormat)cboFileFormat.SelectedIndex;
@@ -309,7 +322,7 @@ namespace ZScreenLib
 
         private void UpdateImageSize(bool bChangeConfig = false)
         {
-            if (Info.ImageSize.IsEmpty) return;
+            if (Task.Info.ImageSize.IsEmpty) return;
 
             double w2 = 0.0, h2 = 0.0, ratio = 0.0;
 
@@ -317,32 +330,32 @@ namespace ZScreenLib
             {
                 if (bChangeConfig) Config.ImageSizeType = ImageSizeType.DEFAULT;
                 ratio = 1.0;
-                h2 = Info.ImageSize.Height;
+                h2 = Task.Info.ImageSize.Height;
             }
             else if (rbImageSizeFixed.Checked)
             {
                 if (bChangeConfig) Config.ImageSizeType = ImageSizeType.FIXED;
-                if (Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
+                if (Task.Info.ImageSize.Width > 0 && nudImageSizeFixedWidth.Value > 0)
                 {
-                    ratio = (double)nudImageSizeFixedWidth.Value / (double)Info.ImageSize.Width;
-                    h2 = nudImageSizeFixedHeight.Value > 0 ? (double)nudImageSizeFixedHeight.Value : (double)Info.ImageSize.Height * ratio;
+                    ratio = (double)nudImageSizeFixedWidth.Value / (double)Task.Info.ImageSize.Width;
+                    h2 = nudImageSizeFixedHeight.Value > 0 ? (double)nudImageSizeFixedHeight.Value : (double)Task.Info.ImageSize.Height * ratio;
                 }
             }
             else if (rbImageSizeRatio.Checked)
             {
                 if (bChangeConfig) Config.ImageSizeType = ImageSizeType.RATIO;
-                if (Info.ImageSize.Width > 0)
+                if (Task.Info.ImageSize.Width > 0)
                 {
                     ratio = (double)nudImageSizeRatio.Value / 100.0;
-                    h2 = (double)Info.ImageSize.Height * ratio;
+                    h2 = (double)Task.Info.ImageSize.Height * ratio;
                 }
             }
 
             if (ratio > 0.0)
             {
-                w2 = (double)Info.ImageSize.Width * ratio;
+                w2 = (double)Task.Info.ImageSize.Width * ratio;
                 gbImageSize.Text = string.Format("Image Size - old: {0}x{1} - new: {2}x{3}",
-                                  Info.ImageSize.Width, Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
+                                  Task.Info.ImageSize.Width, Task.Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
             }
         }
 
@@ -377,8 +390,8 @@ namespace ZScreenLib
 
             if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
             {
-                string ext = Path.GetExtension(Info.LocalFilePath);
-                Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
+                string ext = Path.GetExtension(Task.Info.LocalFilePath);
+                Task.Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
             }
         }
 
@@ -400,7 +413,7 @@ namespace ZScreenLib
         {
             if (chkTaskImageResize.Checked)
             {
-                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageResize);
+                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpImageResize);
             }
             else
             {
@@ -451,7 +464,7 @@ namespace ZScreenLib
         {
             if (chkTaskImageFileFormat.Checked)
             {
-                tcMain.TabPages.Insert(Math.Max(1, tcMain.TabPages.Count - 1), tpImageQuality);
+                tcMain.TabPages.Insert(tcMain.TabPages.Count, tpImageQuality);
             }
             else
             {
@@ -522,6 +535,16 @@ namespace ZScreenLib
         }
 
         #endregion Control Events
+
+        private void chkTaskImageAnnotate_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void btnTaskAnnotate_Click(object sender, EventArgs e)
+        {
+            this.Task.PerformActions();
+            pbImage.LoadImage(this.Task.tempImage);
+        }
     }
 
     public class WorkflowWizardGUIOptions

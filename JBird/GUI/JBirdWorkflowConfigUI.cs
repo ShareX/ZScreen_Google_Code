@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using ZScreenLib;
@@ -13,11 +7,11 @@ namespace JBirdGUI
 {
     public partial class JBirdWorkflowWizard : ZScreenLib.WorkflowWizard
     {
-        public JBirdWorkflowWizard(TaskInfo info = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
+        public JBirdWorkflowWizard(WorkerTask task = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
         {
             InitializeComponent();
             base.InitializeComponent();
-            base.Initialize(info, workflow, gui);
+            base.Initialize(task, gui);
 
             HotkeyManager tempHotkeyMgr;
             Program.HotkeyMgrs.TryGetValue(this.Config.ID, out tempHotkeyMgr);

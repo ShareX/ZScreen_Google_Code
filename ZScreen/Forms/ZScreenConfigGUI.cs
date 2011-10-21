@@ -218,7 +218,8 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Actions()
         {
-            chkPerformActions.Checked = Engine.Workflow.PerformActions;
+            chkPerformActions.Checked = Engine.Workflow.PerformActions && Engine.conf.PromptForOutputs;
+            chkPerformActions.Enabled = !Engine.conf.PromptForOutputs;
             tsmEditinImageSoftware.Checked = Engine.Workflow.PerformActions;
 
             if (Engine.conf.ActionsApps.Count == 0)

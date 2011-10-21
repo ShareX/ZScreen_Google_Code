@@ -514,6 +514,11 @@ namespace ZScreenGUI
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
             Engine.conf.PromptForOutputs = chkShowWorkflowWizard.Checked;
+            if (chkShowWorkflowWizard.Checked)
+            {
+                chkPerformActions.Checked = false;
+            }
+            chkPerformActions.Enabled = !chkShowWorkflowWizard.Checked;
         }
 
         private void clipboardUpload_Click(object sender, EventArgs e)
@@ -2005,7 +2010,7 @@ namespace ZScreenGUI
                 ShowQualityTab = true,
                 ShowResizeTab = true
             };
-            WorkflowWizard wfw = new WorkflowWizard(null, Engine.Workflow, wfwgui) { Icon = this.Icon };
+            WorkflowWizard wfw = new WorkflowWizard(new WorkerTask(Engine.Workflow), wfwgui) { Icon = this.Icon };
             wfw.Show();
         }
     }
