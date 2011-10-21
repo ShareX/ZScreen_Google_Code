@@ -354,7 +354,7 @@ namespace ZScreenLib
             {
                 if (Engine.conf.EnableImageSound)
                 {
-                    if (!string.IsNullOrEmpty(Engine.conf.SoundImagePath))
+                    if (File.Exists(Engine.conf.SoundImagePath))
                         new System.Media.SoundPlayer(Engine.conf.SoundImagePath).Play();
                     else
                         new System.Media.SoundPlayer(Resources.Camera).Play();
