@@ -82,8 +82,8 @@ namespace HelpersLib
         ver,
         [Description("New line")]
         n,
-        [Description("URL")]
-        url,
+        [Description("Link")]
+        link,
         [Description("Size")]
         size,
         [Description("Name")]
@@ -130,7 +130,7 @@ namespace HelpersLib
 
         public int MaxNameLength { get; set; }
 
-        public string url { get; set; }
+        public string link { get; set; }
 
         public string size { get; set; }
 
@@ -170,7 +170,7 @@ namespace HelpersLib
 
             #region Size, Url, name
 
-            sb.Replace(ReplacementVariables.url.ToPrefixString(), url);
+            sb.Replace(ReplacementVariables.link.ToPrefixString(), link);
             sb.Replace(ReplacementVariables.size.ToPrefixString(), size);
             sb.Replace(ReplacementVariables.name.ToPrefixString(), name);
 

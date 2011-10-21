@@ -330,7 +330,7 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.InputsURLShorteners), DefaultValue(false), Description("Optionally shorten the URL after completing a task.")]
         public bool ShortenUrlAfterUpload { get; set; }
 
-        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue("%link"), Description("Customizes clipboard text \n Valid Variables: %url, %size, %name and any in (Options -> File Naming)")]
+        [Category(ComponentModelStrings.OutputsClipboard), DefaultValue("%link"), Description("Customizes clipboard text \n Valid Variables: %link, %size, %name and any in (Options -> File Naming)")]
         public string ClipboardFormat { get; set; }
 
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
