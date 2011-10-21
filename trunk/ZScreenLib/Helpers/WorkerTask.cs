@@ -350,7 +350,16 @@ namespace ZScreenLib
             {
                 Info.ImageSize = tempImage.Size;
             }
-
+            if (success)
+            {
+                if (Engine.conf.EnableImageSound)
+                {
+                    if (!string.IsNullOrEmpty(Engine.conf.SoundImagePath))
+                        new System.Media.SoundPlayer(Engine.conf.SoundImagePath).Play();
+                    else
+                        new System.Media.SoundPlayer(Resources.Camera).Play();
+                }
+            }
             if (!success)
             {
                 this.States.Add(TaskState.CancellationPending);

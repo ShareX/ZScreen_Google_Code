@@ -415,6 +415,7 @@
     <Content Include="libpng15.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Camera.wav" />
     <None Include="Resources\mail.png" />
     <None Include="Resources\server.png" />
     <None Include="Resources\clipboard.png" />
