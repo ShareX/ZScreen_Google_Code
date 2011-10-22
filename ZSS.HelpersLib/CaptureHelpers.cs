@@ -380,13 +380,18 @@ namespace HelpersLib
         {
             using (MyCursor cursor = NativeMethods.CaptureCursor())
             {
-                cursor.Position.Offset(-offset.X, -offset.Y);
+                DrawCursorToImage(cursor, img, offset);
+            }
+        }
 
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.DrawImage(cursor.Bitmap, cursor.Position);
-                }
+        public static void DrawCursorToImage(MyCursor cursor, Image img, Point offset)
+        {
+            cursor.Position.Offset(-offset.X, -offset.Y);
+
+            using (Graphics g = Graphics.FromImage(img))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.DrawImage(cursor.Bitmap, cursor.Position);
             }
         }
     }

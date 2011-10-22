@@ -771,7 +771,7 @@ namespace ZScreenLib
                         Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
                         if (WorkflowConfig.ActiveWindowClearBackground)
                         {
-                            SetImage(Screenshot.GetActiveWindowTransparent());
+                            SetImage(Screenshot.CaptureActiveWindowTransparent());
                         }
                         else
                         {

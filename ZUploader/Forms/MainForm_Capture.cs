@@ -121,7 +121,7 @@ namespace ZUploader
         {
             if (Program.Settings.CaptureTransparent)
             {
-                Capture(Screenshot.GetActiveWindowTransparent, autoHideForm);
+                Capture(Screenshot.CaptureActiveWindowTransparent, autoHideForm);
             }
             else
             {
@@ -140,7 +140,7 @@ namespace ZUploader
 
                 if (Program.Settings.CaptureTransparent)
                 {
-                    return Screenshot.GetWindowTransparent(handle);
+                    return Screenshot.CaptureWindowTransparent(handle);
                 }
                 else
                 {

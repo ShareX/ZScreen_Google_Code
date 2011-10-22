@@ -72,8 +72,7 @@ namespace ZScreenGUI
 
             if (!IsMultiInstance)
             {
-                string name = Assembly.GetExecutingAssembly().GetName().Name;
-                if (!ApplicationInstanceManager.CreateSingleInstance(name, SingleInstanceCallback)) return;
+                if (!ApplicationInstanceManager.CreateSingleInstance(SingleInstanceCallback)) return;
             }
 
             Application.EnableVisualStyles();
