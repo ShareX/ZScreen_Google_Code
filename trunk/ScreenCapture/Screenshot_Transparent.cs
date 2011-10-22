@@ -34,18 +34,22 @@ namespace ScreenCapture
 {
     public static partial class Screenshot
     {
-        public static Image GetWindowTransparent(IntPtr handle)
+        public static Image CaptureWindowTransparent(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
             {
                 Rectangle rect = CaptureHelpers.GetWindowRectangle(handle);
-
                 Bitmap whiteBackground = null, blackBackground = null, whiteBackground2 = null;
-
+                MyCursor cursor = null;
                 bool isTransparent = false;
 
                 try
                 {
+                    if (DrawCursor)
+                    {
+                        cursor = NativeMethods.CaptureCursor();
+                    }
+
                     using (Form form = new Form())
                     {
                         form.BackColor = Color.White;
@@ -92,10 +96,10 @@ namespace ScreenCapture
                         transparentImage = whiteBackground;
                     }
 
-                    if (DrawCursor)
+                    if (cursor != null)
                     {
                         Point cursorOffset = CaptureHelpers.FixScreenCoordinates(rect.Location);
-                        CaptureHelpers.DrawCursorToImage(transparentImage, cursorOffset);
+                        CaptureHelpers.DrawCursorToImage(cursor, transparentImage, cursorOffset);
                     }
 
                     if (isTransparent)
@@ -110,17 +114,18 @@ namespace ScreenCapture
                     if (isTransparent && whiteBackground != null) whiteBackground.Dispose();
                     if (blackBackground != null) blackBackground.Dispose();
                     if (whiteBackground2 != null) whiteBackground2.Dispose();
+                    if (cursor != null) cursor.Dispose();
                 }
             }
 
             return null;
         }
 
-        public static Image GetActiveWindowTransparent()
+        public static Image CaptureActiveWindowTransparent()
         {
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
-            return GetWindowTransparent(handle);
+            return CaptureWindowTransparent(handle);
         }
 
         private static bool IsImagesEqual(Bitmap bmp1, Bitmap bmp2)
@@ -142,9 +147,9 @@ namespace ScreenCapture
                 using (UnsafeBitmap blackBitmap = new UnsafeBitmap(blackBackground, true, ImageLockMode.ReadOnly))
                 using (UnsafeBitmap resultBitmap = new UnsafeBitmap(result, true, ImageLockMode.WriteOnly))
                 {
-                    int length = blackBitmap.PixelCount;
+                    int pixelCount = blackBitmap.PixelCount;
 
-                    for (int i = 0; i < length; i++)
+                    for (int i = 0; i < pixelCount; i++)
                     {
                         ColorBgra white = whiteBitmap.GetPixel(i);
                         ColorBgra black = blackBitmap.GetPixel(i);

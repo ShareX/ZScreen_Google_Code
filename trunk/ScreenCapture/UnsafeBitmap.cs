@@ -130,7 +130,7 @@ namespace ScreenCapture
 
         public ColorBgra GetPixel(int x, int y)
         {
-            return Pointer[y * Width + x];
+            return Pointer[x + y * Width];
         }
 
         public void SetPixel(int i, ColorBgra color)
@@ -140,7 +140,7 @@ namespace ScreenCapture
 
         public void SetPixel(int x, int y, ColorBgra color)
         {
-            Pointer[y * Width + x] = color;
+            Pointer[x + y * Width] = color;
         }
 
         public void SetPixel(int i, uint color)
