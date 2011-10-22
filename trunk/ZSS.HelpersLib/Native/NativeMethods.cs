@@ -65,8 +65,10 @@ namespace HelpersLib
         public const ulong TARGETWINDOW = (uint)WindowStyles.WS_BORDER | (uint)WindowStyles.WS_VISIBLE;
 
         public const int DWM_TNP_RECTDESTINATION = 0x1;
+        public const int DWM_TNP_RECTSOURCE = 0x2;
         public const int DWM_TNP_OPACITY = 0x4;
         public const int DWM_TNP_VISIBLE = 0x8;
+        public const int DWM_TNP_SOURCECLIENTAREAONLY = 0x10;
 
         public const int WH_KEYBOARD_LL = 13;
         public const int WH_MOUSE_LL = 14;

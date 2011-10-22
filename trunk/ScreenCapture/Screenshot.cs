@@ -101,7 +101,7 @@ namespace ScreenCapture
 
         public static Image GetRectangleNative(IntPtr handle, Rectangle rect)
         {
-            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
+            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
 
             using (Graphics g = Graphics.FromImage(img))
             {

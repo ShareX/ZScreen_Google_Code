@@ -1427,6 +1427,7 @@ namespace ZScreenGUI
         private void UpdateAeroGlassConfig()
         {
             gbCaptureGdi.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.GDI;
+            gbCaptureDwm.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.DWM;
             gbCaptureGdiDwm.Enabled = Engine.Workflow.CaptureEngineMode != CaptureEngineType.Hybrid;
 
             // Disable Show Checkers option if Clean Background is disabled
@@ -2012,6 +2013,20 @@ namespace ZScreenGUI
             };
             WorkflowWizard wfw = new WorkflowWizard(new WorkerTask(Engine.Workflow), wfwgui) { Icon = this.Icon };
             wfw.Show();
+        }
+
+        private void pbActiveWindowDwmBackColor_Click(object sender, EventArgs e)
+        {
+            SelectColor((PictureBox)sender, ref Engine.Workflow.ActiveWindowDwmBackColor);
+        }
+
+        private void chkActiveWindowDwmCustomColor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!chkActiveWindowDwmCustomColor.Checked)
+            {
+                pbActiveWindowDwmBackColor.BackColor = Color.White;
+                Engine.Workflow.ActiveWindowDwmBackColor = Color.White;
+            }
         }
     }
 }

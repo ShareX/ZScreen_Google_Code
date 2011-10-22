@@ -43,7 +43,7 @@ namespace ZScreenLib
 
             if (handle.ToInt32() > 0)
             {
-                Rectangle rectAw = Rectangle.Empty;
+                Rectangle rectAw = CaptureHelpers.GetWindowRectangle(handle);
 
                 if (wfAw.CaptureEngineMode == CaptureEngineType.DWM && NativeMethods.IsDWMEnabled())
                 {
@@ -80,11 +80,20 @@ namespace ZScreenLib
             Image windowImageDwm = null;
             Bitmap redBGImage = null;
 
-            windowRect = NativeMethods.GetWindowRectangle(handle);
+            windowRect = CaptureHelpers.GetWindowRectangle(handle);
 
-            if (Engine.HasAero && wfdwm.ActiveWindowClearBackground)
+            if (Engine.HasAero)
             {
-                windowImageDwm = CaptureWindowWithTransparencyDWM(handle, windowRect, out redBGImage, wfdwm.ActiveWindowCleanTransparentCorners);
+                if (wfdwm.ActiveWindowClearBackground)
+                {
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                        wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
+                }
+                else
+                {
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                        wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
+                }
             }
 
             if (windowImageDwm == null)
@@ -131,7 +140,7 @@ namespace ZScreenLib
         {
             StaticHelper.WriteLine("Capturing with GDI");
 
-            windowRect = Rectangle.Empty;
+            windowRect = CaptureHelpers.GetWindowRectangle(handle);
 
             Image windowImageGdi = null;
 
@@ -174,7 +183,7 @@ namespace ZScreenLib
             }
             else
             {
-                windowRect = NativeMethods.GetWindowRectangle(handle);
+                windowRect = CaptureHelpers.GetWindowRectangle(handle);
             }
 
             try
@@ -253,34 +262,35 @@ namespace ZScreenLib
         /// - the full form is captured even if it is obscured on the Windows desktop
         /// - there is no problem with unpredictable Z-order anymore (the background and
         ///   the window to capture are drawn on the same window)
-        /// Note: now that GDI capture is more robust, DWM capture is not that useful anymore.
         /// </summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <param name="windowRect">the bounds of the window</param>
         /// <param name="redBGImage">the window captured with a red background</param>
         /// <param name="captureRedBGImage">whether to do the capture of the window with a red background</param>
         /// <returns>the captured window image</returns>
-        private static Image CaptureWindowWithTransparencyDWM(IntPtr handle, Rectangle windowRect, out Bitmap redBGImage, bool captureRedBGImage)
+        private static Image CaptureWindowWithDWM(IntPtr handle, Rectangle windowRect, out Bitmap redBGImage, bool captureRedBGImage, Color backColor)
         {
             Image windowImage = null;
             redBGImage = null;
+            backColor = Color.FromArgb(255, backColor.R, backColor.G, backColor.B);
 
             using (Form form = new Form())
             {
                 form.FormBorderStyle = FormBorderStyle.None;
                 form.ShowInTaskbar = false;
-                form.BackColor = Color.White;
+                form.BackColor = backColor;
                 form.TopMost = true;
                 form.Bounds = windowRect;
 
                 IntPtr thumb;
                 NativeMethods.DwmRegisterThumbnail(form.Handle, handle, out thumb);
+
                 SIZE size;
                 NativeMethods.DwmQueryThumbnailSourceSize(thumb, out size);
 
 #if DEBUG
                 StaticHelper.WriteLine("Rectangle Size: " + windowRect.ToString());
-                StaticHelper.WriteLine("Window Size: " + size.ToString());
+                StaticHelper.WriteLine("Window    Size: " + size.ToString());
 #endif
                 if (size.x <= 0 || size.y <= 0)
                 {
@@ -290,61 +300,73 @@ namespace ZScreenLib
                 form.Location = new Point(windowRect.X, windowRect.Y);
                 form.Size = new Size(size.x, size.y);
 
-                form.Show();
-
                 DWM_THUMBNAIL_PROPERTIES props = new DWM_THUMBNAIL_PROPERTIES();
                 props.dwFlags = NativeMethods.DWM_TNP_VISIBLE | NativeMethods.DWM_TNP_RECTDESTINATION | NativeMethods.DWM_TNP_OPACITY;
                 props.fVisible = true;
                 props.opacity = (byte)255;
-
                 props.rcDestination = new RECT(0, 0, size.x, size.y);
+
                 NativeMethods.DwmUpdateThumbnailProperties(thumb, ref props);
 
-                NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap whiteBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                form.Show();
+                System.Threading.Thread.Sleep(250);
 
-                form.BackColor = Color.Black;
-                form.Refresh();
-                NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap blackBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
-
-                if (captureRedBGImage)
+                if (form.BackColor != Color.White)
                 {
-                    form.BackColor = Color.Red;
+                    // no need for transparency; user has requested custom background color
+                    NativeMethods.ActivateWindowRepeat(form.Handle, 250);
+                    windowImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                }
+                else if (form.BackColor == Color.White)
+                {
+                    // transparent capture
+                    NativeMethods.ActivateWindowRepeat(handle, 250);
+                    Bitmap whiteBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+
+                    form.BackColor = Color.Black;
                     form.Refresh();
                     NativeMethods.ActivateWindowRepeat(handle, 250);
-                    redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
-                }
+                    Bitmap blackBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
 
-                form.BackColor = Color.White;
-                form.Refresh();
-                NativeMethods.ActivateWindowRepeat(handle, 250);
-                Bitmap whiteBGImage2 = Screenshot.GetRectangleNative(windowRect) as Bitmap;
-
-                // Don't do transparency calculation if an animated picture is detected
-                if (whiteBGImage.AreBitmapsEqual(whiteBGImage2))
-                {
-                    windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
-                }
-                else
-                {
-                    StaticHelper.WriteLine("Detected animated image => cannot compute transparency");
-                    form.Close();
-                    Application.DoEvents();
-                    Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);
-                    using (Graphics g = Graphics.FromImage(result))
+                    if (captureRedBGImage)
                     {
-                        // Redraw the image on a black background to avoid transparent pixels artifacts
-                        g.Clear(Color.Black);
-                        g.DrawImage(whiteBGImage, 0, 0);
+                        form.BackColor = Color.Red;
+                        form.Refresh();
+                        NativeMethods.ActivateWindowRepeat(handle, 250);
+                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
                     }
-                    windowImage = result;
+
+                    form.BackColor = Color.White;
+                    form.Refresh();
+                    NativeMethods.ActivateWindowRepeat(handle, 250);
+                    Bitmap whiteBGImage2 = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+
+                    // Don't do transparency calculation if an animated picture is detected
+                    if (whiteBGImage.AreBitmapsEqual(whiteBGImage2))
+                    {
+                        windowImage = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                    }
+                    else
+                    {
+                        StaticHelper.WriteLine("Detected animated image => cannot compute transparency");
+                        form.Close();
+                        Application.DoEvents();
+                        Image result = new Bitmap(whiteBGImage.Width, whiteBGImage.Height, PixelFormat.Format32bppArgb);
+                        using (Graphics g = Graphics.FromImage(result))
+                        {
+                            // Redraw the image on a black background to avoid transparent pixels artifacts
+                            g.Clear(Color.Black);
+                            g.DrawImage(whiteBGImage, 0, 0);
+                        }
+                        windowImage = result;
+                    }
+
+                    blackBGImage.Dispose();
+                    whiteBGImage.Dispose();
+                    whiteBGImage2.Dispose();
                 }
 
                 NativeMethods.DwmUnregisterThumbnail(thumb);
-                blackBGImage.Dispose();
-                whiteBGImage.Dispose();
-                whiteBGImage2.Dispose();
             }
 
             return windowImage;

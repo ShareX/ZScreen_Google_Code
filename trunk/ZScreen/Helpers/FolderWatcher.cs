@@ -48,9 +48,12 @@ namespace ZScreenGUI
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(filepathWatchFolder, FileMode.Open, FileAccess.Read))
+                    if (File.Exists(filepathWatchFolder))
                     {
-                        // check if the file is complete
+                        using (FileStream fs = new FileStream(filepathWatchFolder, FileMode.Open, FileAccess.Read))
+                        {
+                            // check if the file is complete
+                        }
                     }
                     StaticHelper.WriteLine(string.Format("Created {0}", filepathWatchFolder));
                     Loader.MainForm.UploadUsingFileSystem(filepathWatchFolder);
