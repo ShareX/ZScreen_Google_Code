@@ -147,7 +147,7 @@ namespace ZScreenGUI
             if (cboCaptureEngine.Items.Count == 0)
             {
                 cboCaptureEngine.Items.AddRange(typeof(CaptureEngineType).GetDescriptions());
-                cboCaptureEngine.SelectedIndex = (int)Engine.ConfigWorkflow.CaptureEngineMode;
+                cboCaptureEngine.SelectedIndex = (int)Engine.ConfigWorkflow.CaptureEngineMode2;
             }
 
             chkActiveWindowCleanBackground.Checked = Engine.ConfigWorkflow.ActiveWindowClearBackground;

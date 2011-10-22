@@ -351,7 +351,8 @@ namespace ZScreenLib
             {
                 Info.ImageSize = tempImage.Size;
             }
-            if (success)
+
+            if (success && Job3 != JobLevel3.ShortenURL)
             {
                 if (Engine.ConfigUI.EnableImageSound)
                 {
@@ -765,23 +766,33 @@ namespace ZScreenLib
         {
             if (tempImage == null)
             {
-                switch (WorkflowConfig.CaptureEngineMode)
+                switch (WorkflowConfig.CaptureEngineMode2)
                 {
-                    case CaptureEngineType.Hybrid:
-                        Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
-                        if (WorkflowConfig.ActiveWindowClearBackground)
+                    case CaptureEngineType.DWM:
+                        if (NativeMethods.IsDWMEnabled())
                         {
-                            SetImage(Screenshot.CaptureActiveWindowTransparent());
+                            tempImage = Capture.CaptureWithDWM(WorkflowConfig);
                         }
                         else
                         {
-                            SetImage(Screenshot.CaptureActiveWindow());
+                            StaticHelper.WriteLine("DWM is not found in the system.");
+                            tempImage = Capture.CaptureWithGDI2(WorkflowConfig);
                         }
                         break;
-                    default:
-                        SetImage(Capture.CaptureActiveWindow(WorkflowConfig));
+                    default:    // GDI
+                        tempImage = Capture.CaptureWithGDI2(WorkflowConfig);
                         break;
                 }
+
+                if (tempImage != null)
+                {
+                    if (WorkflowConfig.ActiveWindowShowCheckers)
+                    {
+                        tempImage = ImageEffects.DrawCheckers(tempImage);
+                    }
+                }
+
+                SetImage(tempImage);
             }
 
             return tempImage != null;

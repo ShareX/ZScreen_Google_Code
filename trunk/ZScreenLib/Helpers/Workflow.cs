@@ -55,7 +55,7 @@ namespace ZScreenLib
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
 
-        public CaptureEngineType CaptureEngineMode = CaptureEngineType.GDI;
+        public CaptureEngineType CaptureEngineMode2 = CaptureEngineType.GDI;
 
         public bool PerformActions = false;
         public bool DrawCursor = false;
