@@ -2027,11 +2027,7 @@ namespace ZScreenGUI
 
         private void chkActiveWindowDwmCustomColor_CheckedChanged(object sender, EventArgs e)
         {
-            if (!chkActiveWindowDwmCustomColor.Checked)
-            {
-                pbActiveWindowDwmBackColor.BackColor = Color.White;
-                Engine.ConfigWorkflow.ActiveWindowDwmBackColor = Color.White;
-            }
+            Engine.ConfigWorkflow.ActiveWindowDwmUseCustomBackground = chkActiveWindowDwmCustomColor.Checked;
         }
     }
 }

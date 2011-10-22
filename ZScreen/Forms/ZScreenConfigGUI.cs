@@ -156,7 +156,7 @@ namespace ZScreenGUI
             chkActiveWindowTryCaptureChildren.Checked = Engine.ConfigWorkflow.ActiveWindowTryCaptureChildren;
             chkSelectedWindowShowCheckers.Checked = Engine.ConfigWorkflow.ActiveWindowShowCheckers;
             pbActiveWindowDwmBackColor.BackColor = Engine.ConfigWorkflow.ActiveWindowDwmBackColor;
-            chkActiveWindowDwmCustomColor.Checked = Engine.ConfigWorkflow.ActiveWindowDwmBackColor != Color.White;
+            chkActiveWindowDwmCustomColor.Checked = Engine.ConfigWorkflow.ActiveWindowDwmUseCustomBackground;
 
             // Freehand Crop Shot
             cbFreehandCropShowHelpText.Checked = Engine.ConfigUI.FreehandCropShowHelpText;

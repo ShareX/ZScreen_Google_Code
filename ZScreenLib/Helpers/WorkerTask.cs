@@ -1069,9 +1069,29 @@ namespace ZScreenLib
 
             if (File.Exists(Info.LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(tempText))
             {
-                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Printer))
+                // Note: We need write text or image first
+                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.LocalDisk))
                 {
-                    Print();
+                    switch (Job1)
+                    {
+                        case JobLevel1.Text:
+                            FileSystem.WriteText(Info.LocalFilePath, tempText);
+                            break;
+                        default:
+                            WriteImage(tempImage);
+                            break;
+                    }
+
+                    UploadResult ur_local = new UploadResult()
+                    {
+                        Host = OutputEnum.LocalDisk.GetDescription(),
+                        LocalFilePath = Info.LocalFilePath,
+                    };
+                    if (!WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost))
+                    {
+                        ur_local.URL = ur_local.GetLocalFilePathAsUri(Info.LocalFilePath);
+                        AddUploadResult(ur_local);
+                    }
                 }
 
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost))
@@ -1101,39 +1121,19 @@ namespace ZScreenLib
                     }
                 }
 
-                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Email))
-                {
-                    SendEmail();
-                }
-
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.SharedFolder))
                 {
                     UploadToSharedFolder();
                 }
 
-                // Note: We need write text or image first
-                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.LocalDisk))
+                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Email))
                 {
-                    switch (Job1)
-                    {
-                        case JobLevel1.Text:
-                            FileSystem.WriteText(Info.LocalFilePath, tempText);
-                            break;
-                        default:
-                            WriteImage(tempImage);
-                            break;
-                    }
+                    SendEmail();
+                }
 
-                    UploadResult ur_local = new UploadResult()
-                    {
-                        Host = OutputEnum.LocalDisk.GetDescription(),
-                        LocalFilePath = Info.LocalFilePath,
-                    };
-                    if (!WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost))
-                    {
-                        ur_local.URL = ur_local.GetLocalFilePathAsUri(Info.LocalFilePath);
-                        AddUploadResult(ur_local);
-                    }
+                if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Printer))
+                {
+                    Print();
                 }
 
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Clipboard) && WorkflowConfig.DestConfig.Outputs.Count == 1)
