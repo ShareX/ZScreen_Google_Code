@@ -352,15 +352,12 @@ namespace ZScreenLib
                 Info.ImageSize = tempImage.Size;
             }
 
-            if (success && Job3 != JobLevel3.ShortenURL)
+            if (success && Job3 != JobLevel3.ShortenURL && Engine.ConfigUI.EnableImageSound)
             {
-                if (Engine.ConfigUI.EnableImageSound)
-                {
-                    if (File.Exists(Engine.ConfigUI.SoundImagePath))
-                        new System.Media.SoundPlayer(Engine.ConfigUI.SoundImagePath).Play();
-                    else
-                        new System.Media.SoundPlayer(Resources.Camera).Play();
-                }
+                if (File.Exists(Engine.ConfigUI.SoundImagePath))
+                    new System.Media.SoundPlayer(Engine.ConfigUI.SoundImagePath).Play();
+                else
+                    new System.Media.SoundPlayer(Resources.Camera).Play();
             }
             if (!success)
             {
