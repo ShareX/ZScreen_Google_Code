@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
@@ -66,8 +67,6 @@ namespace ZUploader
 
         private new void Capture(ScreenCaptureDelegate capture, bool autoHideForm = true)
         {
-            Screenshot.DrawCursor = Program.Settings.ShowCursor;
-
             if (autoHideForm)
             {
                 Hide();
@@ -78,7 +77,13 @@ namespace ZUploader
 
             try
             {
+                Screenshot.DrawCursor = Program.Settings.ShowCursor;
                 img = capture();
+
+                if (Program.Settings.AutoPlaySound && File.Exists("Camera.wav"))
+                {
+                    new SoundPlayer("Camera.wav").Play();
+                }
             }
             catch (Exception ex)
             {
@@ -101,11 +106,6 @@ namespace ZUploader
                             break;
                         case ScreenshotDestination.Clipboard:
                             Clipboard.SetImage(img);
-
-                            if (Program.Settings.AutoPlaySound)
-                            {
-                                SystemSounds.Exclamation.Play();
-                            }
                             break;
                     }
                 }
