@@ -90,9 +90,9 @@ namespace ZScreenCLI
                 return;
             }
 
-            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.WorkflowConfigPath));
-            Engine.ConfigUploaders = UploadersConfig.Read(Engine.AppConf.UploadersConfigPath);
-            Engine.ConfigWorkflow = Workflow.Read(Engine.AppConf.WorkflowConfigPath);
+            if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.ConfigApp.WorkflowConfigPath));
+            Engine.ConfigUploaders = UploadersConfig.Read(Engine.ConfigApp.UploadersConfigPath);
+            Engine.ConfigWorkflow = Workflow.Read(Engine.ConfigApp.WorkflowConfigPath);
 
             if (bShowHelp)
             {

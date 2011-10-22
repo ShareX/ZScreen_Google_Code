@@ -66,7 +66,7 @@ namespace ZScreenLib
             return sbMsg.ToString();
         }
 
-        public static string PrepareFilename(Workflow profile, Image img, EImageFormat imageFormat, NameParserType patternType)
+        public static string PrepareFilename(Workflow workflow, Image img, EImageFormat imageFormat, NameParser parser)
         {
             string ext = "png";
 
@@ -89,15 +89,14 @@ namespace ZScreenLib
                     break;
             }
 
-            NameParser parser = new NameParser { Type = patternType, Picture = img, AutoIncrementNumber = profile.AutoIncrement };
-            string pattern = profile.EntireScreenPattern;
-            switch (patternType)
+            string pattern = workflow.EntireScreenPattern;
+            switch (parser.Type)
             {
                 case NameParserType.ActiveWindow:
-                    pattern = profile.ActiveWindowPattern;
+                    pattern = workflow.ActiveWindowPattern;
                     break;
                 default:
-                    pattern = profile.EntireScreenPattern;
+                    pattern = workflow.EntireScreenPattern;
                     break;
             }
             string fn = parser.Convert(pattern);
@@ -108,7 +107,7 @@ namespace ZScreenLib
 
             string fileName = string.Format("{0}.{1}", fn, ext);
 
-            return FileSystem.GetUniqueFileName(profile, fileName);
+            return FileSystem.GetUniqueFileName(workflow, fileName);
         }
     }
 }

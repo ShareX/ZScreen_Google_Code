@@ -133,7 +133,7 @@ namespace ZScreenLib
                 {
                     ToolStripDropDownButton tsddb = tsi as ToolStripDropDownButton;
                     tsddb.MouseHover += new System.EventHandler(tsddb_MouseHover);
-                    if (!Engine.AppConf.SupportMultipleDestinations)
+                    if (!Engine.ConfigApp.SupportMultipleDestinations)
                     {
                         tsddb.DropDownItemClicked += new ToolStripItemClickedEventHandler(tsddb_DropDownItemClickedRestrictToOneItem);
                     }

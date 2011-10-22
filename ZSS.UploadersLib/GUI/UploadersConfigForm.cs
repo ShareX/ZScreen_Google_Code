@@ -36,6 +36,7 @@ namespace UploadersLib
     public partial class UploadersConfigForm : Form
     {
         public UploadersConfig Config { get; private set; }
+
         public UploadersAPIKeys APIKeys { get; private set; }
 
         public UploadersConfigForm(UploadersConfig uploadersConfig, UploadersAPIKeys uploadersAPIKeys)
@@ -45,6 +46,7 @@ namespace UploadersLib
             CreateUserControlEvents();
             LoadSettings(uploadersConfig);
             APIKeys = uploadersAPIKeys;
+            Text = string.Format("Outputs Configuration - {0}", uploadersConfig.FilePath);
         }
 
         private void UploadersConfigForm_Resize(object sender, EventArgs e)

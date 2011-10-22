@@ -36,6 +36,8 @@ namespace UploadersLib
     [Serializable]
     public class UploadersConfig
     {
+        public string FilePath { get; set; }
+
         #region Image uploaders
 
         // ImageShack
@@ -261,7 +263,9 @@ namespace UploadersLib
 
         public static UploadersConfig Read(string filePath)
         {
-            return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
+            UploadersConfig uc = SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
+            uc.FilePath = filePath;
+            return uc;
         }
 
         #endregion I/O Methods

@@ -77,7 +77,7 @@ namespace ZScreenGUI
             pbPreview.SetNote("You can also Drag n Drop files or a directory on to anywhere in this page.");
 
             this.Icon = Resources.zss_main;
-            this.WindowState = Engine.AppConf.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
+            this.WindowState = Engine.ConfigApp.ShowMainWindow ? FormWindowState.Normal : FormWindowState.Minimized;
 
             BackgroundWorker bwConfig = new BackgroundWorker();
             bwConfig.DoWork += new DoWorkEventHandler(bwConfig_DoWork);
@@ -91,28 +91,28 @@ namespace ZScreenGUI
 
             if (this.WindowState == FormWindowState.Normal)
             {
-                if (Engine.AppConf.WindowLocation.IsEmpty)
+                if (Engine.ConfigApp.WindowLocation.IsEmpty)
                 {
-                    Engine.AppConf.WindowLocation = this.Location;
+                    Engine.ConfigApp.WindowLocation = this.Location;
                 }
 
-                if (Engine.AppConf.WindowSize.IsEmpty)
+                if (Engine.ConfigApp.WindowSize.IsEmpty)
                 {
-                    Engine.AppConf.WindowSize = this.Size;
+                    Engine.ConfigApp.WindowSize = this.Size;
                 }
 
                 Rectangle screenRect = CaptureHelpers.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
-                if (screenRect.IntersectsWith(new Rectangle(Engine.AppConf.WindowLocation, Engine.AppConf.WindowSize)))
+                if (screenRect.IntersectsWith(new Rectangle(Engine.ConfigApp.WindowLocation, Engine.ConfigApp.WindowSize)))
                 {
-                    this.Size = Engine.AppConf.WindowSize;
-                    this.Location = Engine.AppConf.WindowLocation;
+                    this.Size = Engine.ConfigApp.WindowSize;
+                    this.Location = Engine.ConfigApp.WindowLocation;
                 }
             }
 
-            if (Engine.AppConf.ShowMainWindow)
+            if (Engine.ConfigApp.ShowMainWindow)
             {
-                if (Engine.AppConf.WindowState == FormWindowState.Maximized)
+                if (Engine.ConfigApp.WindowState == FormWindowState.Maximized)
                 {
                     this.WindowState = FormWindowState.Maximized;
                 }
@@ -120,9 +120,9 @@ namespace ZScreenGUI
                 {
                     this.WindowState = FormWindowState.Normal;
                 }
-                ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
+                ShowInTaskbar = Engine.ConfigApp.ShowInTaskbar;
             }
-            else if (Engine.AppConf.ShowInTaskbar && Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+            else if (Engine.ConfigApp.ShowInTaskbar && Engine.ConfigApp.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
             {
                 this.WindowState = FormWindowState.Minimized;
             }
@@ -135,13 +135,13 @@ namespace ZScreenGUI
             {
                 if (Engine.ConfigUI.SaveFormSizePosition)
                 {
-                    Engine.AppConf.WindowLocation = this.Location;
-                    Engine.AppConf.WindowSize = this.Size;
+                    Engine.ConfigApp.WindowLocation = this.Location;
+                    Engine.ConfigApp.WindowSize = this.Size;
                 }
                 else
                 {
-                    Engine.AppConf.WindowLocation = Point.Empty;
-                    Engine.AppConf.WindowSize = Size.Empty;
+                    Engine.ConfigApp.WindowLocation = Point.Empty;
+                    Engine.ConfigApp.WindowSize = Size.Empty;
                 }
             }
 
@@ -228,7 +228,7 @@ namespace ZScreenGUI
 
             UseCommandLineArg(Loader.CommandLineArg);
 
-            if (Engine.AppConf.Windows7TaskbarIntegration && Engine.HasWindows7)
+            if (Engine.ConfigApp.Windows7TaskbarIntegration && Engine.HasWindows7)
             {
                 ZScreen_Windows7onlyTasks();
             }
@@ -243,14 +243,14 @@ namespace ZScreenGUI
         {
             if (IsReady)
             {
-                Engine.AppConf.WindowState = WindowState;
+                Engine.ConfigApp.WindowState = WindowState;
 
                 if (WindowState == FormWindowState.Normal)
                 {
                     if (Engine.ConfigUI.SaveFormSizePosition)
                     {
-                        Engine.AppConf.WindowLocation = Location;
-                        Engine.AppConf.WindowSize = Size;
+                        Engine.ConfigApp.WindowLocation = Location;
+                        Engine.ConfigApp.WindowSize = Size;
                     }
                 }
 
@@ -275,16 +275,16 @@ namespace ZScreenGUI
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
             if (e.CloseReason == CloseReason.UserClosing && CloseMethod == CloseMethod.None)
             {
-                if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.ExitApplication)
+                if (Engine.ConfigApp.WindowButtonActionClose == WindowButtonAction.ExitApplication)
                 {
                     CloseMethod = CloseMethod.CloseButton;
                 }
-                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
+                else if (Engine.ConfigApp.WindowButtonActionClose == WindowButtonAction.MinimizeToTaskbar)
                 {
                     WindowState = FormWindowState.Minimized;
                     e.Cancel = true;
                 }
-                else if (Engine.AppConf.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
+                else if (Engine.ConfigApp.WindowButtonActionClose == WindowButtonAction.MinimizeToTray)
                 {
                     Hide();
                     DelayedTrimMemoryUse();
@@ -988,7 +988,7 @@ namespace ZScreenGUI
 
         private void cbOpenMainWindow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.AppConf.ShowMainWindow = chkOpenMainWindow.Checked;
+            Engine.ConfigApp.ShowMainWindow = chkOpenMainWindow.Checked;
         }
 
         private void llWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1318,7 +1318,7 @@ namespace ZScreenGUI
             if (!string.IsNullOrEmpty(dirNew))
             {
                 Engine.SetRootFolder(dirNew);
-                txtRootFolder.Text = Engine.AppConf.RootDir;
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
                 ZScreen_ConfigGUI_Options_Paths();
                 Engine.ConfigUI = XMLSettings.Read();
@@ -1510,9 +1510,9 @@ namespace ZScreenGUI
             {
                 if (chkWindows7TaskbarIntegration.Checked)
                 {
-                    Engine.AppConf.ShowInTaskbar = true; // Application requires to be shown in Taskbar for Windows 7 Integration
+                    Engine.ConfigApp.ShowInTaskbar = true; // Application requires to be shown in Taskbar for Windows 7 Integration
                 }
-                Engine.AppConf.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
+                Engine.ConfigApp.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
                 ZScreen_Windows7onlyTasks();
             }
         }
@@ -1664,12 +1664,12 @@ namespace ZScreenGUI
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.AppConf.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
+            Engine.ConfigApp.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
         }
 
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.AppConf.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
+            Engine.ConfigApp.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
 
         private void LbSoftwareMouseClick(object sender, MouseEventArgs e)
@@ -1864,9 +1864,14 @@ namespace ZScreenGUI
             {
                 ZScreen_ConfigGUI_Options_Paths();
 
-                if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
+                if (!string.IsNullOrEmpty(Engine.ConfigApp.UploadersConfigCustomPath))
                 {
-                    Engine.ConfigUploaders = UploadersConfig.Read(Engine.AppConf.WorkflowConfigCustomPath);
+                    Engine.ConfigUploaders = UploadersConfig.Read(Engine.ConfigApp.UploadersConfigCustomPath);
+                }
+
+                if (!string.IsNullOrEmpty(Engine.ConfigApp.WorkflowConfigCustomPath))
+                {
+                    Engine.ConfigWorkflow = Workflow.Read(Engine.ConfigApp.WorkflowConfigCustomPath);
                 }
             }
         }

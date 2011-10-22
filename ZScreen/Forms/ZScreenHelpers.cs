@@ -20,7 +20,7 @@ namespace ZScreenGUI
                     case (int)WindowsMessages.SYSCOMMAND:
                         if (m.WParam.ToInt32() == NativeMethods.SC_MINIMIZE) // Minimize button handling
                         {
-                            switch (Engine.AppConf.WindowButtonActionMinimize)
+                            switch (Engine.ConfigApp.WindowButtonActionMinimize)
                             {
                                 case WindowButtonAction.ExitApplication:
                                     CloseMethod = CloseMethod.MinimizeButton;
