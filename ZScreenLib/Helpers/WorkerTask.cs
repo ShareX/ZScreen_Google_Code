@@ -270,12 +270,11 @@ namespace ZScreenLib
             }
 
             MyWorker = worker;
-            PrepareOutputs(info.DestConfig);                                                                   // step 1
-            StartWork(info.Job);                                                                               // step 2
+            PrepareOutputs(info.DestConfig);                                                                        // step 1
 
-            DialogResult result = DialogResult.OK;
+            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel;                     // step 2
 
-            if (Engine.ConfigUI.PromptForOutputs)                                                                  // step 3
+            if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs)                                      // step 3
             {
                 WorkflowWizard wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
                 result = wfw.ShowDialog();
@@ -300,7 +299,7 @@ namespace ZScreenLib
             }
         }
 
-        public void StartWork(JobLevel2 job)
+        public bool StartWork(JobLevel2 job)
         {
             Job2 = job;
 
@@ -366,6 +365,8 @@ namespace ZScreenLib
             {
                 this.States.Add(TaskState.CancellationPending);
             }
+
+            return success;
         }
 
         private void PrepareOutputs(DestSelector ucDestOptions)

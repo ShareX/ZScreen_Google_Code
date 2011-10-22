@@ -203,17 +203,17 @@ namespace ZScreenLib
                     NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                     NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                     Application.DoEvents();
-                    whiteBGImage = (Bitmap)Screenshot.GetRectangleNative(windowRect);
+                    whiteBGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
 
                     form.BackColor = Color.Black;
                     Application.DoEvents();
-                    blackBGImage = (Bitmap)Screenshot.GetRectangleNative(windowRect);
+                    blackBGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
 
                     if (!wfgdi.ActiveWindowGDIFreezeWindow)
                     {
                         form.BackColor = Color.White;
                         Application.DoEvents();
-                        white2BGImage = (Bitmap)Screenshot.GetRectangleNative(windowRect);
+                        white2BGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
                     }
                 }
 

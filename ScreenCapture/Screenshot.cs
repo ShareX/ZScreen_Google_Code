@@ -99,9 +99,15 @@ namespace ScreenCapture
             return GetRectangleNative(NativeMethods.GetDesktopWindow(), rect);
         }
 
+        public static Image GetRectangleNative2(Rectangle rect)
+        {
+            return GetRectangleNative2(NativeMethods.GetDesktopWindow(), rect);
+        }
+
         public static Image GetRectangleNative(IntPtr handle, Rectangle rect)
         {
-            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+            // Format24bppRgb because some images can show up with white dots
+            Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 
             using (Graphics g = Graphics.FromImage(img))
             {
