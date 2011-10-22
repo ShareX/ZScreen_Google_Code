@@ -73,6 +73,7 @@
             this.btnNameFormatPatternHelp = new System.Windows.Forms.Button();
             this.txtNameFormatPattern = new System.Windows.Forms.TextBox();
             this.tpCapture = new System.Windows.Forms.TabPage();
+            this.cbCaptureTransparent = new System.Windows.Forms.CheckBox();
             this.gbSurfaceSettings = new System.Windows.Forms.GroupBox();
             this.lblFixedShapeSizeHeight = new System.Windows.Forms.Label();
             this.lblFixedShapeSizeWidth = new System.Windows.Forms.Label();
@@ -95,7 +96,6 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
-            this.cbCaptureTransparent = new System.Windows.Forms.CheckBox();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -131,9 +131,9 @@
             this.cbAutoPlaySound.AutoSize = true;
             this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
             this.cbAutoPlaySound.Name = "cbAutoPlaySound";
-            this.cbAutoPlaySound.Size = new System.Drawing.Size(199, 17);
+            this.cbAutoPlaySound.Size = new System.Drawing.Size(327, 17);
             this.cbAutoPlaySound.TabIndex = 3;
-            this.cbAutoPlaySound.Text = "Play sound after upload is completed";
+            this.cbAutoPlaySound.Text = "Play sound when capture is made and after upload is completed";
             this.cbAutoPlaySound.UseVisualStyleBackColor = true;
             this.cbAutoPlaySound.CheckedChanged += new System.EventHandler(this.cbAutoPlaySound_CheckedChanged);
             // 
@@ -647,6 +647,17 @@
             this.tpCapture.Text = "Capture";
             this.tpCapture.UseVisualStyleBackColor = true;
             // 
+            // cbCaptureTransparent
+            // 
+            this.cbCaptureTransparent.AutoSize = true;
+            this.cbCaptureTransparent.Location = new System.Drawing.Point(16, 40);
+            this.cbCaptureTransparent.Name = "cbCaptureTransparent";
+            this.cbCaptureTransparent.Size = new System.Drawing.Size(256, 17);
+            this.cbCaptureTransparent.TabIndex = 10;
+            this.cbCaptureTransparent.Text = "Capture with transparency (For window captures)";
+            this.cbCaptureTransparent.UseVisualStyleBackColor = true;
+            this.cbCaptureTransparent.CheckedChanged += new System.EventHandler(this.cbCaptureTransparent_CheckedChanged);
+            // 
             // gbSurfaceSettings
             // 
             this.gbSurfaceSettings.Controls.Add(this.lblFixedShapeSizeHeight);
@@ -931,17 +942,6 @@
             this.txtDebugLog.Size = new System.Drawing.Size(517, 307);
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
-            // 
-            // cbCaptureTransparent
-            // 
-            this.cbCaptureTransparent.AutoSize = true;
-            this.cbCaptureTransparent.Location = new System.Drawing.Point(16, 40);
-            this.cbCaptureTransparent.Name = "cbCaptureTransparent";
-            this.cbCaptureTransparent.Size = new System.Drawing.Size(256, 17);
-            this.cbCaptureTransparent.TabIndex = 10;
-            this.cbCaptureTransparent.Text = "Capture with transparency (For window captures)";
-            this.cbCaptureTransparent.UseVisualStyleBackColor = true;
-            this.cbCaptureTransparent.CheckedChanged += new System.EventHandler(this.cbCaptureTransparent_CheckedChanged);
             // 
             // SettingsForm
             // 
