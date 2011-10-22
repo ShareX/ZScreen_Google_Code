@@ -272,7 +272,11 @@ namespace ZScreenLib
         {
             Image windowImage = null;
             redBGImage = null;
-            backColor = Color.FromArgb(255, backColor.R, backColor.G, backColor.B);
+
+            if (backColor != Color.White)
+            {
+                backColor = Color.FromArgb(255, backColor.R, backColor.G, backColor.B);
+            }
 
             using (Form form = new Form())
             {

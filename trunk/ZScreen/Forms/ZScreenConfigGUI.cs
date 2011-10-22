@@ -150,7 +150,7 @@ namespace ZScreenGUI
                 cboCaptureEngine.SelectedIndex = (int)Engine.Workflow.CaptureEngineMode;
             }
 
-            chkSelectedWindowCleanBackground.Checked = Engine.Workflow.ActiveWindowClearBackground;
+            chkActiveWindowCleanBackground.Checked = Engine.Workflow.ActiveWindowClearBackground;
             chkSelectedWindowCleanTransparentCorners.Checked = Engine.Workflow.ActiveWindowCleanTransparentCorners;
             chkSelectedWindowIncludeShadow.Checked = Engine.Workflow.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChildren.Checked = Engine.Workflow.ActiveWindowTryCaptureChildren;
