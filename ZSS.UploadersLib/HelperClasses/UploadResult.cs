@@ -200,7 +200,7 @@ namespace UploadersLib.HelperClasses
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.ToString());
+                    StaticHelper.WriteException(ex);
                 }
             }
             return string.Empty;

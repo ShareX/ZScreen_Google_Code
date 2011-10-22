@@ -197,8 +197,6 @@ namespace ScreenCapture
                 }
             }
 
-            Debug.WriteLine("Image width: " + img.Width + ", height: " + img.Height);
-
             return img;
         }
 

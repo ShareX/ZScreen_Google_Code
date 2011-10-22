@@ -40,7 +40,9 @@ namespace ScreenCapture
             {
                 Rectangle rect = CaptureHelpers.GetWindowRectangle(handle);
 
-                Bitmap whiteBackground = null, blackBackground = null;
+                Bitmap whiteBackground = null, blackBackground = null, whiteBackground2 = null;
+
+                bool isTransparent = false;
 
                 try
                 {
@@ -69,11 +71,30 @@ namespace ScreenCapture
 
                         blackBackground = (Bitmap)Screenshot.GetRectangleNative(rect);
 
+                        form.BackColor = Color.White;
+                        Application.DoEvents();
+
+                        whiteBackground2 = (Bitmap)Screenshot.GetRectangleNative(rect);
+
                         form.Close();
                         Application.DoEvents();
                     }
 
-                    Bitmap transparentImage = CreateTransparentImage(whiteBackground, blackBackground);
+                    Bitmap transparentImage;
+
+                    Stopwatch timer = Stopwatch.StartNew();
+
+                    if (IsImagesEqual(whiteBackground, whiteBackground2))
+                    {
+                        Debug.WriteLine(timer.ElapsedMilliseconds);
+
+                        transparentImage = CreateTransparentImage(whiteBackground, blackBackground);
+                        isTransparent = true;
+                    }
+                    else
+                    {
+                        transparentImage = whiteBackground;
+                    }
 
                     if (DrawCursor)
                     {
@@ -81,14 +102,18 @@ namespace ScreenCapture
                         DrawCursorToImage(transparentImage, cursorOffset);
                     }
 
-                    transparentImage = TrimTransparent(transparentImage);
+                    if (isTransparent)
+                    {
+                        transparentImage = TrimTransparent(transparentImage);
+                    }
 
                     return transparentImage;
                 }
                 finally
                 {
-                    if (whiteBackground != null) whiteBackground.Dispose();
+                    if (isTransparent && whiteBackground != null) whiteBackground.Dispose();
                     if (blackBackground != null) blackBackground.Dispose();
+                    if (whiteBackground2 != null) whiteBackground2.Dispose();
                 }
             }
 
@@ -100,6 +125,15 @@ namespace ScreenCapture
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
             return GetWindowTransparent(handle);
+        }
+
+        private static bool IsImagesEqual(Bitmap bmp1, Bitmap bmp2)
+        {
+            using (UnsafeBitmap unsafeBitmap1 = new UnsafeBitmap(bmp1))
+            using (UnsafeBitmap unsafeBitmap2 = new UnsafeBitmap(bmp2))
+            {
+                return unsafeBitmap1 == unsafeBitmap2;
+            }
         }
 
         private static Bitmap CreateTransparentImage(Bitmap whiteBackground, Bitmap blackBackground)

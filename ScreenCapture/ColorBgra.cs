@@ -45,6 +45,26 @@ namespace ScreenCapture
 
         public const byte SizeOf = 4;
 
+        public ColorBgra(uint bgra)
+            : this()
+        {
+            Bgra = bgra;
+        }
+
+        public ColorBgra(byte b, byte g, byte r, byte a = 255)
+            : this()
+        {
+            Blue = b;
+            Green = g;
+            Red = r;
+            Alpha = a;
+        }
+
+        public ColorBgra(Color color)
+            : this(color.B, color.G, color.R, color.A)
+        {
+        }
+
         public static bool operator ==(ColorBgra c1, ColorBgra c2)
         {
             return c1.Bgra == c2.Bgra;
@@ -60,29 +80,22 @@ namespace ScreenCapture
             return obj != null && obj is ColorBgra && ((ColorBgra)obj).Bgra == Bgra;
         }
 
-        public static ColorBgra FromBgra(uint bgra)
+        public override int GetHashCode()
         {
-            return new ColorBgra { Bgra = bgra };
-        }
-
-        public static ColorBgra FromBgra(byte b, byte g, byte r, byte a = 255)
-        {
-            return FromBgra(BgraToUInt32(b, g, r, a));
-        }
-
-        public static ColorBgra FromColor(Color color)
-        {
-            return FromBgra(color.B, color.G, color.R, color.A);
-        }
-
-        public static uint BgraToUInt32(byte b, byte g, byte r, byte a)
-        {
-            return (uint)b + ((uint)g << 8) + ((uint)r << 16) + ((uint)a << 24);
+            unchecked
+            {
+                return (int)Bgra;
+            }
         }
 
         public static implicit operator ColorBgra(uint color)
         {
-            return ColorBgra.FromBgra(color);
+            return new ColorBgra(color);
+        }
+
+        public static implicit operator uint(ColorBgra color)
+        {
+            return color.Bgra;
         }
 
         public Color ToColor()
@@ -93,6 +106,11 @@ namespace ScreenCapture
         public override string ToString()
         {
             return string.Format("B: {0}, G: {1}, R: {2}, A: {3}", Blue, Green, Red, Alpha);
+        }
+
+        public static uint BgraToUInt32(byte b, byte g, byte r, byte a)
+        {
+            return (uint)b + ((uint)g << 8) + ((uint)r << 16) + ((uint)a << 24);
         }
     }
 }
