@@ -133,7 +133,7 @@ namespace ZScreenGUI
 
             if (IsReady)
             {
-                if (Engine.conf.SaveFormSizePosition)
+                if (Engine.ConfigUI.SaveFormSizePosition)
                 {
                     Engine.AppConf.WindowLocation = this.Location;
                     Engine.AppConf.WindowSize = this.Size;
@@ -190,7 +190,7 @@ namespace ZScreenGUI
 
             ZScreen_ConfigGUI();
 
-            if (Engine.conf.CheckUpdates)
+            if (Engine.ConfigUI.CheckUpdates)
             {
                 CheckUpdates();
             }
@@ -199,19 +199,19 @@ namespace ZScreenGUI
 
             CleanCache();
 
-            if (Engine.conf.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
+            if (Engine.ConfigUI.ProxyConfig != ProxyConfigType.NoProxy && Uploader.ProxySettings.ProxyActive != null)
             {
                 StaticHelper.WriteLine("Proxy Settings: " + Uploader.ProxySettings.ProxyActive.ToString());
             }
 
-            if (Engine.conf.BackupApplicationSettings)
+            if (Engine.ConfigUI.BackupApplicationSettings)
             {
                 FileSystem.BackupSettings();
             }
 
             UpdateHotkeys(false);
 
-            if (Engine.conf.FirstRun)
+            if (Engine.ConfigUI.FirstRun)
             {
                 if (Engine.HasAero)
                 {
@@ -220,7 +220,7 @@ namespace ZScreenGUI
 
                 ShowWindow();
 
-                Engine.conf.FirstRun = false;
+                Engine.ConfigUI.FirstRun = false;
             }
 
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
@@ -247,7 +247,7 @@ namespace ZScreenGUI
 
                 if (WindowState == FormWindowState.Normal)
                 {
-                    if (Engine.conf.SaveFormSizePosition)
+                    if (Engine.ConfigUI.SaveFormSizePosition)
                     {
                         Engine.AppConf.WindowLocation = Location;
                         Engine.AppConf.WindowSize = Size;
@@ -261,15 +261,15 @@ namespace ZScreenGUI
         private void ZScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save Destinations
-            if (Engine.conf != null)
+            if (Engine.ConfigUI != null)
             {
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestFile, Engine.conf.MyFileUploaders);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestText, Engine.conf.MyTextUploaders);
-                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbOutputs, Engine.ConfigUI.ConfOutputs);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbLinkFormat, Engine.ConfigUI.ConfLinkFormat);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbClipboardContent, Engine.ConfigUI.ConfClipboardContent);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestImage, Engine.ConfigUI.MyImageUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestFile, Engine.ConfigUI.MyFileUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestText, Engine.ConfigUI.MyTextUploaders);
+                Adapter.SaveMenuConfigToList(ucDestOptions.tsddbDestLink, Engine.ConfigUI.MyURLShorteners);
             }
 
             // If UserClosing && ZScreenCloseReason.None then this means close button pressed in title bar
@@ -288,7 +288,7 @@ namespace ZScreenGUI
                 {
                     Hide();
                     DelayedTrimMemoryUse();
-                    if (Engine.conf.AutoSaveSettings) Engine.WriteSettingsAsync();
+                    if (Engine.ConfigUI.AutoSaveSettings) Engine.WriteSettingsAsync();
                     e.Cancel = true;
                 }
             }
@@ -342,13 +342,13 @@ namespace ZScreenGUI
 
         private void cbRegionRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionRectangleInfo = chkRegionRectangleInfo.Checked;
+            Engine.ConfigUI.CropRegionRectangleInfo = chkRegionRectangleInfo.Checked;
             chkCropShowMagnifyingGlass.Enabled = chkRegionRectangleInfo.Checked;
         }
 
         private void cbRegionHotkeyInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionHotkeyInfo = chkRegionHotkeyInfo.Checked;
+            Engine.ConfigUI.CropRegionHotkeyInfo = chkRegionHotkeyInfo.Checked;
         }
 
         #region Trim memory
@@ -361,7 +361,7 @@ namespace ZScreenGUI
         /// </summary>
         private void DelayedTrimMemoryUse()
         {
-            if (Engine.conf != null && Engine.conf.EnableAutoMemoryTrim)
+            if (Engine.ConfigUI != null && Engine.ConfigUI.EnableAutoMemoryTrim)
             {
                 try
                 {
@@ -412,20 +412,20 @@ namespace ZScreenGUI
                 if (sender.GetType() == lbSoftware.GetType())
                 {
                     // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.conf.ActionsApps.HasValidIndex(lbSoftware.SelectedIndex))
+                    if (Engine.ConfigUI.ActionsApps.HasValidIndex(lbSoftware.SelectedIndex))
                     {
-                        Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                        Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled = !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                         ToolStripMenuItem tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                        tsm.Checked = Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled;
+                        tsm.Checked = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled;
                     }
                 }
                 else if (sender.GetType() == typeof(ToolStripMenuItem))
                 {
                     ToolStripMenuItem tsm = sender as ToolStripMenuItem;
                     int sel = (int)tsm.Tag;
-                    if (Engine.conf.ActionsApps.HasValidIndex(sel))
+                    if (Engine.ConfigUI.ActionsApps.HasValidIndex(sel))
                     {
-                        Engine.conf.ActionsApps[sel].Enabled = tsm.Checked;
+                        Engine.ConfigUI.ActionsApps[sel].Enabled = tsm.Checked;
                         lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
                     }
                 }
@@ -513,7 +513,7 @@ namespace ZScreenGUI
 
         private void chkManualNaming_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.PromptForOutputs = chkShowWorkflowWizard.Checked;
+            Engine.ConfigUI.PromptForOutputs = chkShowWorkflowWizard.Checked;
             if (chkShowWorkflowWizard.Checked)
             {
                 chkPerformActions.Checked = false;
@@ -543,7 +543,7 @@ namespace ZScreenGUI
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.FlashTrayCount = nudFlashIconCount.Value;
+            Engine.ConfigUI.FlashTrayCount = nudFlashIconCount.Value;
         }
 
         private void btnSettingsExport_Click(object sender, EventArgs e)
@@ -560,7 +560,7 @@ namespace ZScreenGUI
         {
             if (temp != null)
             {
-                Engine.conf.ActionsApps.Add(temp);
+                Engine.ConfigUI.ActionsApps.Add(temp);
                 lbSoftware.Items.Add(temp);
                 lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
                 RewriteImageEditorsRightClickMenu();
@@ -582,7 +582,7 @@ namespace ZScreenGUI
 
             if (sel != -1)
             {
-                Engine.conf.ActionsApps.RemoveAt(sel);
+                Engine.ConfigUI.ActionsApps.RemoveAt(sel);
 
                 lbSoftware.Items.RemoveAt(sel);
 
@@ -597,7 +597,7 @@ namespace ZScreenGUI
 
         private void SetActiveImageSoftware()
         {
-            Engine.conf.ImageEditor = Engine.conf.ActionsApps[lbSoftware.SelectedIndex];
+            Engine.ConfigUI.ImageEditor = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex];
         }
 
         private void ShowImageEditorsSettings()
@@ -607,7 +607,7 @@ namespace ZScreenGUI
                 Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
                 if (app != null)
                 {
-                    Engine.conf.ActionsApps[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
+                    Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled = lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
                     pgEditorsImage.SelectedObject = app;
                     pgEditorsImage.Enabled = !app.Protected;
                     btnActionsRemove.Enabled = !app.Protected;
@@ -633,43 +633,43 @@ namespace ZScreenGUI
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.DeleteLocal = chkDeleteLocal.Checked;
+            Engine.ConfigUI.DeleteLocal = chkDeleteLocal.Checked;
         }
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowPattern = txtActiveWindow.Text;
+            Engine.ConfigWorkflow.ActiveWindowPattern = txtActiveWindow.Text;
             NameParser parser = new NameParser(NameParserType.ActiveWindow)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.Workflow.MaxNameLength
+                MaxNameLength = Engine.ConfigWorkflow.MaxNameLength
             };
-            lblActiveWindowPreview.Text = parser.Convert(Engine.Workflow.ActiveWindowPattern);
+            lblActiveWindowPreview.Text = parser.Convert(Engine.ConfigWorkflow.ActiveWindowPattern);
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.EntireScreenPattern = txtEntireScreen.Text;
+            Engine.ConfigWorkflow.EntireScreenPattern = txtEntireScreen.Text;
             NameParser parser = new NameParser(NameParserType.EntireScreen)
             {
                 CustomProductName = Engine.GetProductName(),
                 IsPreview = true,
-                MaxNameLength = Engine.Workflow.MaxNameLength
+                MaxNameLength = Engine.ConfigWorkflow.MaxNameLength
             };
-            lblEntireScreenPreview.Text = parser.Convert(Engine.Workflow.EntireScreenPattern);
+            lblEntireScreenPreview.Text = parser.Convert(Engine.ConfigWorkflow.EntireScreenPattern);
         }
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowBalloonTip = cbShowPopup.Checked;
+            Engine.ConfigUI.ShowBalloonTip = cbShowPopup.Checked;
         }
 
         private void LoadSettingsDefault()
         {
-            Engine.conf = new XMLSettings();
+            Engine.ConfigUI = new XMLSettings();
             ZScreen_ConfigGUI();
-            Engine.conf.FirstRun = false;
+            Engine.ConfigUI.FirstRun = false;
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -698,17 +698,17 @@ namespace ZScreenGUI
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
+            Engine.ConfigUI.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.CropBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.CropBorderArgb);
         }
 
         private void nudCropBorderSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropBorderSize = nudCropBorderSize.Value;
+            Engine.ConfigUI.CropBorderSize = nudCropBorderSize.Value;
         }
 
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -718,17 +718,17 @@ namespace ZScreenGUI
 
         private void cbCompleteSound_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CompleteSound = cbCompleteSound.Checked;
+            Engine.ConfigUI.CompleteSound = cbCompleteSound.Checked;
         }
 
         private void cbCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CheckUpdates = chkCheckUpdates.Checked;
+            Engine.ConfigUI.CheckUpdates = chkCheckUpdates.Checked;
         }
 
         private void txtWatermarkText_TextChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkText = txtWatermarkText.Text;
+            Engine.ConfigWorkflow.WatermarkText = txtWatermarkText.Text;
             TestWatermark();
         }
 
@@ -800,7 +800,7 @@ namespace ZScreenGUI
 
         private void cbShowCursor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.DrawCursor = chkShowCursor.Checked;
+            Engine.ConfigWorkflow.DrawCursor = chkShowCursor.Checked;
         }
 
         private void btnWatermarkFont_Click(object sender, EventArgs e)
@@ -808,7 +808,7 @@ namespace ZScreenGUI
             DialogResult result = Adapter.ShowFontDialog();
             if (result == DialogResult.OK)
             {
-                pbWatermarkFontColor.BackColor = Engine.Workflow.WatermarkFontArgb;
+                pbWatermarkFontColor.BackColor = Engine.ConfigWorkflow.WatermarkFontArgb;
                 lblWatermarkFont.Text = FontToString();
                 TestWatermark();
             }
@@ -816,7 +816,7 @@ namespace ZScreenGUI
 
         private string FontToString()
         {
-            return FontToString(Engine.Workflow.WatermarkFont, Engine.Workflow.WatermarkFontArgb);
+            return FontToString(Engine.ConfigWorkflow.WatermarkFont, Engine.ConfigWorkflow.WatermarkFontArgb);
         }
 
         private string FontToString(Font font, Color color)
@@ -827,13 +827,13 @@ namespace ZScreenGUI
 
         private void nudWatermarkOffset_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkOffset = nudWatermarkOffset.Value;
+            Engine.ConfigWorkflow.WatermarkOffset = nudWatermarkOffset.Value;
             TestWatermark();
         }
 
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkBackTrans = nudWatermarkBackTrans.Value;
+            Engine.ConfigWorkflow.WatermarkBackTrans = nudWatermarkBackTrans.Value;
             trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value;
         }
 
@@ -899,19 +899,19 @@ namespace ZScreenGUI
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkGradient1Argb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkGradient1Argb);
             TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkGradient2Argb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkGradient2Argb);
             TestWatermark();
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkBorderArgb);
             TestWatermark();
         }
 
@@ -923,7 +923,7 @@ namespace ZScreenGUI
                 Graphics g = Graphics.FromImage(bmp2);
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.DrawImage(bmp, new Rectangle(0, 0, pbWatermarkShow.ClientRectangle.Width, pbWatermarkShow.ClientRectangle.Height));
-                pbWatermarkShow.Image = new ImageEffects(Engine.Workflow).ApplyWatermark(bmp2);
+                pbWatermarkShow.Image = new ImageEffects(Engine.ConfigWorkflow).ApplyWatermark(bmp2);
             }
         }
 
@@ -937,7 +937,7 @@ namespace ZScreenGUI
 
         private void pbWatermarkFontColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.Workflow.WatermarkFontArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkFontArgb);
             lblWatermarkFont.Text = FontToString();
             TestWatermark();
         }
@@ -954,25 +954,25 @@ namespace ZScreenGUI
 
         private void cbWatermarkPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
             TestWatermark();
         }
 
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkFontTrans = nudWatermarkFontTrans.Value;
+            Engine.ConfigWorkflow.WatermarkFontTrans = nudWatermarkFontTrans.Value;
             trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
+            Engine.ConfigWorkflow.WatermarkCornerRadius = nudWatermarkCornerRadius.Value;
             TestWatermark();
         }
 
         private void cbWatermarkGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
             TestWatermark();
         }
 
@@ -1014,7 +1014,7 @@ namespace ZScreenGUI
 
         private void chkBalloonTipOpenLink_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
+            Engine.ConfigUI.BalloonTipOpenLink = chkBalloonTipOpenLink.Checked;
         }
 
         private void cmVersionHistory_Click(object sender, EventArgs e)
@@ -1031,9 +1031,9 @@ namespace ZScreenGUI
             if (accs != null)
             {
                 ucProxyAccounts.AccountsList.Items.Clear();
-                Engine.conf.ProxyList = new List<ProxyInfo>();
-                Engine.conf.ProxyList.AddRange(accs);
-                foreach (ProxyInfo acc in Engine.conf.ProxyList)
+                Engine.ConfigUI.ProxyList = new List<ProxyInfo>();
+                Engine.ConfigUI.ProxyList.AddRange(accs);
+                foreach (ProxyInfo acc in Engine.ConfigUI.ProxyList)
                 {
                     ucProxyAccounts.AccountsList.Items.Add(acc);
                 }
@@ -1043,9 +1043,9 @@ namespace ZScreenGUI
         private ProxyInfo GetSelectedProxy()
         {
             ProxyInfo acc = null;
-            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 && Engine.conf.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
+            if (ucProxyAccounts.AccountsList.SelectedIndex != -1 && Engine.ConfigUI.ProxyList.Count >= ucProxyAccounts.AccountsList.Items.Count)
             {
-                acc = Engine.conf.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
+                acc = Engine.ConfigUI.ProxyList[ucProxyAccounts.AccountsList.SelectedIndex];
             }
 
             return acc;
@@ -1054,9 +1054,9 @@ namespace ZScreenGUI
         private FTPAccount GetSelectedFTPforImages()
         {
             FTPAccount acc = null;
-            if (Adapter.CheckFTPAccounts(Engine.Workflow.ConfigOutputs.FTPSelectedImage))
+            if (Adapter.CheckFTPAccounts(Engine.ConfigUploaders.FTPSelectedImage))
             {
-                acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage];
+                acc = Engine.ConfigUploaders.FTPAccountList[Engine.ConfigUploaders.FTPSelectedImage];
             }
 
             return acc;
@@ -1064,17 +1064,17 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowRectangleInfo_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
+            Engine.ConfigUI.SelectedWindowRectangleInfo = cbSelectedWindowRectangleInfo.Checked;
         }
 
         private void pbSelectedWindowBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.SelectedWindowBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.SelectedWindowBorderArgb);
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
+            Engine.ConfigUI.SelectedWindowBorderSize = nudSelectedWindowBorderSize.Value;
         }
 
         private void btnCheckUpdate_Click(object sender, EventArgs e)
@@ -1084,7 +1084,7 @@ namespace ZScreenGUI
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowUploadDuration = cbShowUploadDuration.Checked;
+            Engine.ConfigUI.ShowUploadDuration = cbShowUploadDuration.Checked;
         }
 
         /// <summary>
@@ -1094,7 +1094,7 @@ namespace ZScreenGUI
         /// <returns></returns>
         private static Software GetImageSoftware(string name)
         {
-            foreach (Software app in Engine.conf.ActionsApps)
+            foreach (Software app in Engine.ConfigUI.ActionsApps)
             {
                 if (app != null && app.Name != null)
                 {
@@ -1110,144 +1110,144 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
+            Engine.ConfigUI.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
         }
 
         private void nudCropGridSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropGridSize.Width = (int)nudCropGridWidth.Value;
+            Engine.ConfigUI.CropGridSize.Width = (int)nudCropGridWidth.Value;
         }
 
         private void nudCropGridHeight_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropGridSize.Height = (int)nudCropGridHeight.Value;
+            Engine.ConfigUI.CropGridSize.Height = (int)nudCropGridHeight.Value;
         }
 
         private void cbCropShowGrids_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowGrids = cbCropShowGrids.Checked;
+            Engine.ConfigUI.CropShowGrids = cbCropShowGrids.Checked;
         }
 
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
+            Engine.ConfigUI.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
         }
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CloseDropBox = cbCloseDropBox.Checked;
+            Engine.ConfigUI.CloseDropBox = cbCloseDropBox.Checked;
         }
 
         private void btnResetIncrement_Click(object sender, EventArgs e)
         {
-            Engine.Workflow.AutoIncrement = 0;
+            Engine.ConfigWorkflow.AutoIncrement = 0;
         }
 
         private void cbHistorySave_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.HistorySave = cbHistorySave.Checked;
+            Engine.ConfigUI.HistorySave = cbHistorySave.Checked;
         }
 
         private void pbCropCrosshairColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.conf.CropCrosshairArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.CropCrosshairArgb);
         }
 
         private void chkCaptureFallback_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
+            Engine.ConfigUI.CaptureEntireScreenOnError = chkCaptureFallback.Checked;
         }
 
         private void cbCropDynamicCrosshair_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropDynamicCrosshair = chkCropDynamicCrosshair.Checked;
+            Engine.ConfigUI.CropDynamicCrosshair = chkCropDynamicCrosshair.Checked;
         }
 
         private void nudCrosshairLineCount_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
+            Engine.ConfigUI.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
         }
 
         private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
+            Engine.ConfigUI.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
         }
 
         private void nudCropInterval_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropInterval = (int)nudCropCrosshairInterval.Value;
+            Engine.ConfigUI.CropInterval = (int)nudCropCrosshairInterval.Value;
         }
 
         private void nudCropStep_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropStep = (int)nudCropCrosshairStep.Value;
+            Engine.ConfigUI.CropStep = (int)nudCropCrosshairStep.Value;
         }
 
         private void cbCropShowBigCross_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowBigCross = chkCropShowBigCross.Checked;
+            Engine.ConfigUI.CropShowBigCross = chkCropShowBigCross.Checked;
         }
 
         private void cbShowCropRuler_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowRuler = cbShowCropRuler.Checked;
+            Engine.ConfigUI.CropShowRuler = cbShowCropRuler.Checked;
         }
 
         private void cbSelectedWindowRuler_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
+            Engine.ConfigUI.SelectedWindowRuler = cbSelectedWindowRuler.Checked;
         }
 
         private void cbCropDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropDynamicBorderColor = cbCropDynamicBorderColor.Checked;
+            Engine.ConfigUI.CropDynamicBorderColor = cbCropDynamicBorderColor.Checked;
         }
 
         private void nudCropRegionInterval_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionInterval = nudCropRegionInterval.Value;
+            Engine.ConfigUI.CropRegionInterval = nudCropRegionInterval.Value;
         }
 
         private void nudCropRegionStep_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropRegionStep = nudCropRegionStep.Value;
+            Engine.ConfigUI.CropRegionStep = nudCropRegionStep.Value;
         }
 
         private void nudCropHueRange_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropHueRange = nudCropHueRange.Value;
+            Engine.ConfigUI.CropHueRange = nudCropHueRange.Value;
         }
 
         private void cbSelectedWindowDynamicBorderColor_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowDynamicBorderColor = cbSelectedWindowDynamicBorderColor.Checked;
+            Engine.ConfigUI.SelectedWindowDynamicBorderColor = cbSelectedWindowDynamicBorderColor.Checked;
         }
 
         private void nudSelectedWindowRegionInterval_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowRegionInterval = nudSelectedWindowRegionInterval.Value;
+            Engine.ConfigUI.SelectedWindowRegionInterval = nudSelectedWindowRegionInterval.Value;
         }
 
         private void nudSelectedWindowRegionStep_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowRegionStep = nudSelectedWindowRegionStep.Value;
+            Engine.ConfigUI.SelectedWindowRegionStep = nudSelectedWindowRegionStep.Value;
         }
 
         private void nudSelectedWindowHueRange_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
+            Engine.ConfigUI.SelectedWindowHueRange = nudSelectedWindowHueRange.Value;
         }
 
         private void cbCropGridMode_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropGridToggle = cboCropGridMode.Checked;
+            Engine.ConfigUI.CropGridToggle = cboCropGridMode.Checked;
         }
 
         private void txtWatermarkImageLocation_TextChanged(object sender, EventArgs e)
         {
             if (File.Exists(txtWatermarkImageLocation.Text))
             {
-                Engine.Workflow.WatermarkImageLocation = txtWatermarkImageLocation.Text;
+                Engine.ConfigWorkflow.WatermarkImageLocation = txtWatermarkImageLocation.Text;
                 TestWatermark();
             }
         }
@@ -1300,13 +1300,13 @@ namespace ZScreenGUI
 
         private void cbWatermarkUseBorder_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
+            Engine.ConfigWorkflow.WatermarkUseBorder = cbWatermarkUseBorder.Checked;
             TestWatermark();
         }
 
         private void cbWatermarkAddReflection_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
+            Engine.ConfigWorkflow.WatermarkAddReflection = cbWatermarkAddReflection.Checked;
             TestWatermark();
         }
 
@@ -1321,7 +1321,7 @@ namespace ZScreenGUI
                 txtRootFolder.Text = Engine.AppConf.RootDir;
                 FileSystem.MoveDirectory(oldRootDir, txtRootFolder.Text);
                 ZScreen_ConfigGUI_Options_Paths();
-                Engine.conf = XMLSettings.Read();
+                Engine.ConfigUI = XMLSettings.Read();
                 ZScreen_ConfigGUI();
             }
         }
@@ -1333,50 +1333,50 @@ namespace ZScreenGUI
 
         private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkImageScale = nudWatermarkImageScale.Value;
+            Engine.ConfigWorkflow.WatermarkImageScale = nudWatermarkImageScale.Value;
             TestWatermark();
         }
 
         private void trackWatermarkFontTrans_Scroll(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkFontTrans = trackWatermarkFontTrans.Value;
-            nudWatermarkFontTrans.Value = Engine.Workflow.WatermarkFontTrans;
+            Engine.ConfigWorkflow.WatermarkFontTrans = trackWatermarkFontTrans.Value;
+            nudWatermarkFontTrans.Value = Engine.ConfigWorkflow.WatermarkFontTrans;
             TestWatermark();
         }
 
         private void trackWatermarkBackgroundTrans_Scroll(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
-            nudWatermarkBackTrans.Value = Engine.Workflow.WatermarkBackTrans;
+            Engine.ConfigWorkflow.WatermarkBackTrans = trackWatermarkBackgroundTrans.Value;
+            nudWatermarkBackTrans.Value = Engine.ConfigWorkflow.WatermarkBackTrans;
             TestWatermark();
         }
 
         private void cbWatermarkAutoHide_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
+            Engine.ConfigWorkflow.WatermarkAutoHide = cbWatermarkAutoHide.Checked;
             TestWatermark();
         }
 
         private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
-            tcWatermark.Enabled = Engine.Workflow.WatermarkMode != WatermarkType.NONE;
+            tcWatermark.Enabled = Engine.ConfigWorkflow.WatermarkMode != WatermarkType.NONE;
         }
 
         private void cbCropShowMagnifyingGlass_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropShowMagnifyingGlass = chkCropShowMagnifyingGlass.Checked;
+            Engine.ConfigUI.CropShowMagnifyingGlass = chkCropShowMagnifyingGlass.Checked;
         }
 
         private void numericUpDownTimer1_ValueChanged(object sender, EventArgs e)
         {
-            Engine.conf.ScreenshotDelayTime = nudScreenshotDelay.Value;
+            Engine.ConfigUI.ScreenshotDelayTime = nudScreenshotDelay.Value;
         }
 
         private void nudtScreenshotDelay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ScreenshotDelayTimes = nudScreenshotDelay.Time;
+            Engine.ConfigUI.ScreenshotDelayTimes = nudScreenshotDelay.Time;
         }
 
         /// <summary>
@@ -1396,16 +1396,16 @@ namespace ZScreenGUI
 
         private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Software temp = Engine.conf.ActionsApps[lbSoftware.SelectedIndex];
+            Software temp = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex];
             lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-            Engine.conf.ActionsApps[lbSoftware.SelectedIndex] = temp;
+            Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex] = temp;
             RewriteImageEditorsRightClickMenu();
         }
 
         private void cbShowHelpBalloonTips_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
-            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
+            Engine.ConfigUI.ShowHelpBalloonTips = cbShowHelpBalloonTips.Checked;
+            ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
         }
 
         private void tsmFTPClient_Click(object sender, EventArgs e)
@@ -1415,20 +1415,20 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCaptureObjects_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.SelectedWindowCaptureObjects = chkSelectedWindowCaptureObjects.Checked;
+            Engine.ConfigUI.SelectedWindowCaptureObjects = chkSelectedWindowCaptureObjects.Checked;
         }
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowClearBackground = chkActiveWindowCleanBackground.Checked;
+            Engine.ConfigWorkflow.ActiveWindowClearBackground = chkActiveWindowCleanBackground.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void UpdateAeroGlassConfig()
         {
-            gbCaptureGdi.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.GDI;
-            gbCaptureDwm.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.DWM && !chkActiveWindowCleanBackground.Checked;
-            gbCaptureGdiDwm.Enabled = Engine.Workflow.CaptureEngineMode != CaptureEngineType.Hybrid;
+            gbCaptureGdi.Enabled = Engine.ConfigWorkflow.CaptureEngineMode == CaptureEngineType.GDI;
+            gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode == CaptureEngineType.DWM && !chkActiveWindowCleanBackground.Checked;
+            gbCaptureGdiDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode != CaptureEngineType.Hybrid;
 
             // Disable Show Checkers option if Clean Background is disabled
             if (!chkActiveWindowCleanBackground.Checked)
@@ -1459,13 +1459,13 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
+            Engine.ConfigWorkflow.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.AutoSaveSettings = cbAutoSaveSettings.Checked;
+            Engine.ConfigUI.AutoSaveSettings = cbAutoSaveSettings.Checked;
         }
 
         private void nudtScreenshotDelay_MouseHover(object sender, EventArgs e)
@@ -1475,8 +1475,8 @@ namespace ZScreenGUI
 
         private void txtImagesFolderPattern_TextChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.SaveFolderPattern = txtImagesFolderPattern.Text;
-            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.Workflow.SaveFolderPattern);
+            Engine.ConfigWorkflow.SaveFolderPattern = txtImagesFolderPattern.Text;
+            lblImagesFolderPatternPreview.Text = new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
             txtImagesDir.Text = Engine.ImagesDir;
         }
 
@@ -1519,9 +1519,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.Workflow.ConfigOutputs.FTPAccountList.Count > 0)
+            if (Engine.ConfigUploaders.FTPAccountList.Count > 0)
             {
-                FTPAccount acc = Engine.Workflow.ConfigOutputs.FTPAccountList[Engine.Workflow.ConfigOutputs.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.ConfigUploaders.FTPAccountList[Engine.ConfigUploaders.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     if (acc.Protocol == FTPProtocol.SFTP)
@@ -1554,7 +1554,7 @@ namespace ZScreenGUI
 
         private void chkTwitterEnable_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.TwitterEnabled = chkTwitterEnable.Checked;
+            Engine.ConfigUI.TwitterEnabled = chkTwitterEnable.Checked;
         }
 
         private void btnFtpHelp_Click(object sender, EventArgs e)
@@ -1569,7 +1569,7 @@ namespace ZScreenGUI
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.MaxNameLength = (int)nudMaxNameLength.Value;
+            Engine.ConfigWorkflow.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void SetToolTip(Control original)
@@ -1588,12 +1588,12 @@ namespace ZScreenGUI
 
         private void btnSelectGradient_Click(object sender, EventArgs e)
         {
-            using (GradientMaker gradient = new GradientMaker(Engine.Workflow.GradientMakerOptions))
+            using (GradientMaker gradient = new GradientMaker(Engine.ConfigWorkflow.GradientMakerOptions))
             {
                 gradient.Icon = this.Icon;
                 if (gradient.ShowDialog() == DialogResult.OK)
                 {
-                    Engine.Workflow.GradientMakerOptions = gradient.Options;
+                    Engine.ConfigWorkflow.GradientMakerOptions = gradient.Options;
                     TestWatermark();
                 }
             }
@@ -1601,50 +1601,50 @@ namespace ZScreenGUI
 
         private void cbUseCustomGradient_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
+            Engine.ConfigWorkflow.WatermarkUseCustomGradient = cboUseCustomGradient.Checked;
             gbGradientMakerBasic.Enabled = !cboUseCustomGradient.Checked;
             TestWatermark();
         }
 
         private void cbSelectedWindowIncludeShadow_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
+            Engine.ConfigWorkflow.ActiveWindowIncludeShadows = chkSelectedWindowIncludeShadow.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void cbSelectedWindowShowCheckers_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
+            Engine.ConfigWorkflow.ActiveWindowShowCheckers = chkSelectedWindowShowCheckers.Checked;
         }
 
         private void chkMonImages_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.MonitorImages = chkMonImages.Checked;
+            Engine.ConfigUI.MonitorImages = chkMonImages.Checked;
         }
 
         private void chkMonText_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.MonitorText = chkMonText.Checked;
+            Engine.ConfigUI.MonitorText = chkMonText.Checked;
         }
 
         private void chkMonFiles_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.MonitorFiles = chkMonFiles.Checked;
+            Engine.ConfigUI.MonitorFiles = chkMonFiles.Checked;
         }
 
         private void chkMonUrls_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.MonitorUrls = chkMonUrls.Checked;
+            Engine.ConfigUI.MonitorUrls = chkMonUrls.Checked;
         }
 
         private void chkActiveWindowTryCaptureChilds_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
+            Engine.ConfigWorkflow.ActiveWindowTryCaptureChildren = chkActiveWindowTryCaptureChildren.Checked;
         }
 
         private void ChkEditorsEnableCheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.PerformActions = chkPerformActions.Checked;
+            Engine.ConfigWorkflow.PerformActions = chkPerformActions.Checked;
         }
 
         private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
@@ -1690,8 +1690,8 @@ namespace ZScreenGUI
 
             if (!string.IsNullOrEmpty(dirNew))
             {
-                Engine.conf.UseCustomImagesDir = true;
-                Engine.conf.CustomImagesDir = dirNew;
+                Engine.ConfigUI.UseCustomImagesDir = true;
+                Engine.ConfigUI.CustomImagesDir = dirNew;
                 FileSystem.MoveDirectory(oldDir, txtImagesDir.Text);
                 ZScreen_ConfigGUI_Options_Paths();
             }
@@ -1706,27 +1706,27 @@ namespace ZScreenGUI
 
         private void cbFreehandCropShowHelpText_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.FreehandCropShowHelpText = cbFreehandCropShowHelpText.Checked;
+            Engine.ConfigUI.FreehandCropShowHelpText = cbFreehandCropShowHelpText.Checked;
         }
 
         private void cbFreehandCropAutoUpload_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.FreehandCropAutoUpload = cbFreehandCropAutoUpload.Checked;
+            Engine.ConfigUI.FreehandCropAutoUpload = cbFreehandCropAutoUpload.Checked;
         }
 
         private void cbFreehandCropAutoClose_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
+            Engine.ConfigUI.FreehandCropAutoClose = cbFreehandCropAutoClose.Checked;
         }
 
         private void cbFreehandCropShowRectangleBorder_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
+            Engine.ConfigUI.FreehandCropShowRectangleBorder = cbFreehandCropShowRectangleBorder.Checked;
         }
 
         private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
+            Engine.ConfigUI.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
             if (IsReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
@@ -1772,7 +1772,7 @@ namespace ZScreenGUI
 
         public override void ClipboardUpload()
         {
-            if (Engine.conf.ShowClipboardContentViewer)
+            if (Engine.ConfigUI.ShowClipboardContentViewer)
             {
                 using (ClipboardContentViewer ccv = new ClipboardContentViewer())
                 {
@@ -1781,7 +1781,7 @@ namespace ZScreenGUI
                         UploadUsingClipboard();
                     }
 
-                    Engine.conf.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
+                    Engine.ConfigUI.ShowClipboardContentViewer = !ccv.DontShowThisWindow;
                 }
             }
             else
@@ -1822,12 +1822,12 @@ namespace ZScreenGUI
 
         private void chkShortenURL_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShortenUrlAfterUpload = chkShortenURL.Checked;
+            Engine.ConfigUI.ShortenUrlAfterUpload = chkShortenURL.Checked;
         }
 
         private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
+            Engine.ConfigUI.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
         }
 
         private void btnClearHistory_Click(object sender, EventArgs e)
@@ -1866,14 +1866,14 @@ namespace ZScreenGUI
 
                 if (!string.IsNullOrEmpty(Engine.AppConf.WorkflowConfigCustomPath))
                 {
-                    Engine.Workflow.ConfigOutputs = UploadersConfig.Load(Engine.AppConf.WorkflowConfigCustomPath);
+                    Engine.ConfigUploaders = UploadersConfig.Read(Engine.AppConf.WorkflowConfigCustomPath);
                 }
             }
         }
 
         private void chkShowUploadResults_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.conf.ShowUploadResultsWindow = chkShowUploadResults.Checked;
+            Engine.ConfigUI.ShowUploadResultsWindow = chkShowUploadResults.Checked;
         }
 
         private void tsbDonate_Click(object sender, EventArgs e)
@@ -1893,13 +1893,13 @@ namespace ZScreenGUI
 
         private void btnLastCropShotReset_Click(object sender, EventArgs e)
         {
-            Engine.conf.LastCapture = Rectangle.Empty;
-            Engine.conf.LastRegion = Rectangle.Empty;
+            Engine.ConfigUI.LastCapture = Rectangle.Empty;
+            Engine.ConfigUI.LastRegion = Rectangle.Empty;
         }
 
         private void chkOverwriteFiles_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.OverwriteFiles = chkOverwriteFiles.Checked;
+            Engine.ConfigWorkflow.OverwriteFiles = chkOverwriteFiles.Checked;
         }
 
         private void btnOutputsConfigImport_Click(object sender, EventArgs e)
@@ -1919,13 +1919,13 @@ namespace ZScreenGUI
 
         private void cboCropEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.conf.CropEngineMode = (CropEngineType)cboCropEngine.SelectedIndex;
-            gbCropRegion.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
-            gbCropCrosshairSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
-            gbCropDynamicRegionBorderColorSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
-            gbCropGridMode.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
-            gbCropRegionSettings.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
-            gbCropShotMagnifyingGlass.Visible = Engine.conf.CropEngineMode == CropEngineType.Cropv1;
+            Engine.ConfigUI.CropEngineMode = (CropEngineType)cboCropEngine.SelectedIndex;
+            gbCropRegion.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
+            gbCropCrosshairSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
+            gbCropDynamicRegionBorderColorSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
+            gbCropGridMode.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
+            gbCropRegionSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
+            gbCropShotMagnifyingGlass.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
         }
 
         private void tsbLinkHome_Click(object sender, EventArgs e)
@@ -1960,7 +1960,7 @@ namespace ZScreenGUI
 
         private void cboCaptureEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.CaptureEngineMode = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
+            Engine.ConfigWorkflow.CaptureEngineMode = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
             UpdateAeroGlassConfig();
         }
 
@@ -2011,13 +2011,13 @@ namespace ZScreenGUI
                 ShowQualityTab = true,
                 ShowResizeTab = true
             };
-            WorkflowWizard wfw = new WorkflowWizard(new WorkerTask(Engine.Workflow), wfwgui) { Icon = this.Icon };
+            WorkflowWizard wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow), wfwgui) { Icon = this.Icon };
             wfw.Show();
         }
 
         private void pbActiveWindowDwmBackColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox)sender, ref Engine.Workflow.ActiveWindowDwmBackColor);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.ActiveWindowDwmBackColor);
         }
 
         private void chkActiveWindowDwmCustomColor_CheckedChanged(object sender, EventArgs e)
@@ -2025,7 +2025,7 @@ namespace ZScreenGUI
             if (!chkActiveWindowDwmCustomColor.Checked)
             {
                 pbActiveWindowDwmBackColor.BackColor = Color.White;
-                Engine.Workflow.ActiveWindowDwmBackColor = Color.White;
+                Engine.ConfigWorkflow.ActiveWindowDwmBackColor = Color.White;
             }
         }
     }

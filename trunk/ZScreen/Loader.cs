@@ -42,6 +42,7 @@ namespace ZScreenGUI
         public static string CommandLineArg { get; private set; }
 
         public static ZScreenCoreUI CoreUI = null;
+
         public static ZScreen MainForm { get; private set; }
 
         public static GoogleTranslateGUI MyGTGUI { get; set; }

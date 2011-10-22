@@ -190,7 +190,7 @@ namespace ZUploader
             Application.Run(mainForm);
 
             Settings.Save();
-            UploadersConfig.Save(UploadersConfigFilePath);
+            UploadersConfig.Write(UploadersConfigFilePath);
 
             MyLogger.WriteLine("ZUploader closing");
             MyLogger.SaveLog(LogFilePath);
@@ -203,7 +203,7 @@ namespace ZUploader
 
         public static void LoadUploadersConfig()
         {
-            UploadersConfig = UploadersConfig.Load(UploadersConfigFilePath);
+            UploadersConfig = UploadersConfig.Read(UploadersConfigFilePath);
         }
 
         private static bool CheckPortable()

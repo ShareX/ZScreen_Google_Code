@@ -65,15 +65,15 @@ namespace ZScreenGUI
 
             if (bwTask.WasToTakeScreenshot)
             {
-                if (Engine.conf.ScreenshotDelayTime > 0)
+                if (Engine.ConfigUI.ScreenshotDelayTime > 0)
                 {
-                    Thread.Sleep((int)Engine.conf.ScreenshotDelayTime);
+                    Thread.Sleep((int)Engine.ConfigUI.ScreenshotDelayTime);
                 }
             }
 
             bwTask.PublishData();
 
-            if (bwTask.WorkflowConfig.Outputs.Contains(OutputEnum.RemoteHost) && bwTask.UploadResults.Count > 0)
+            if (bwTask.WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.RemoteHost) && bwTask.UploadResults.Count > 0)
             {
                 foreach (UploadResult ur in bwTask.UploadResults)
                 {
@@ -121,7 +121,7 @@ namespace ZScreenGUI
                     Adapter.FlashNotifyIcon(this.niTray, e.UserState as Icon);
                     break;
                 case WorkerTask.ProgressType.UpdateCropMode:
-                    this.cboCropGridMode.Checked = Engine.conf.CropGridToggle;
+                    this.cboCropGridMode.Checked = Engine.ConfigUI.CropGridToggle;
                     break;
                 case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
                     UploadManager.SetCumulativePercentatge((int)((ProgressManager)e.UserState).Percentage);
@@ -135,7 +135,7 @@ namespace ZScreenGUI
                     break;
                 case WorkerTask.ProgressType.ShowBalloonTip:
                     WorkerTask task = e.UserState as WorkerTask;
-                    if (Engine.conf.ShowBalloonTip)
+                    if (Engine.ConfigUI.ShowBalloonTip)
                     {
                         ShowBalloonTip(task);
                     }
@@ -190,7 +190,7 @@ namespace ZScreenGUI
                     task.States.Add(WorkerTask.TaskState.Finished);
                     StaticHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
-                    if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.ShowSaveFileDialogImages)
+                    if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.tempImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -211,7 +211,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.conf.DeleteLocal && File.Exists(task.Info.LocalFilePath))
+                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.DeleteLocal && File.Exists(task.Info.LocalFilePath))
                             {
                                 try
                                 {
@@ -225,7 +225,7 @@ namespace ZScreenGUI
                             break;
                     }
 
-                    if (Engine.conf.TwitterEnabled)
+                    if (Engine.ConfigUI.TwitterEnabled)
                     {
                         Adapter.TwitterMsg(task);
                     }
@@ -237,15 +237,15 @@ namespace ZScreenGUI
 
                     if (task.UploadResults.Count > 0 || File.Exists(task.Info.LocalFilePath) || task.Job2 == WorkerTask.JobLevel2.Translate)
                     {
-                        if (Engine.conf.CompleteSound)
+                        if (Engine.ConfigUI.CompleteSound)
                         {
-                            if (Engine.conf.EnableSounds && !string.IsNullOrEmpty(Engine.conf.SoundPath) && File.Exists(Engine.conf.SoundPath))
-                                new SoundPlayer(Engine.conf.SoundPath).Play();
+                            if (Engine.ConfigUI.EnableSounds && !string.IsNullOrEmpty(Engine.ConfigUI.SoundPath) && File.Exists(Engine.ConfigUI.SoundPath))
+                                new SoundPlayer(Engine.ConfigUI.SoundPath).Play();
                             else
                                 SystemSounds.Exclamation.Play();
                         }
 
-                        if (Engine.conf.ShowBalloonTip)
+                        if (Engine.ConfigUI.ShowBalloonTip)
                         {
                             ShowBalloonTip(task);
                         }
@@ -317,8 +317,8 @@ namespace ZScreenGUI
                     createTask.SetTranslationInfo(new GoogleTranslateInfo()
                     {
                         Text = Loader.MyGTGUI.txtTranslateText.Text,
-                        SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
-                        TargetLanguage = Engine.MyGTConfig.GoogleTargetLanguage
+                        SourceLanguage = Engine.ConfigGT.GoogleSourceLanguage,
+                        TargetLanguage = Engine.ConfigGT.GoogleTargetLanguage
                     });
 
                     break;
@@ -338,8 +338,8 @@ namespace ZScreenGUI
                 RunWorkerAsync_LanguageTranslator(new GoogleTranslateInfo()
                 {
                     Text = Clipboard.GetText(),
-                    SourceLanguage = Engine.MyGTConfig.GoogleSourceLanguage,
-                    TargetLanguage = Engine.MyGTConfig.GoogleTargetLanguage
+                    SourceLanguage = Engine.ConfigGT.GoogleSourceLanguage,
+                    TargetLanguage = Engine.ConfigGT.GoogleTargetLanguage
                 });
             }
         }
@@ -454,7 +454,7 @@ namespace ZScreenGUI
             WorkerTask gtTask = CreateTask(WorkerTask.JobLevel2.Translate);
             if (Loader.MyGTGUI == null)
             {
-                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig);
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.ConfigGT);
             }
             Loader.MyGTGUI.btnTranslate.Enabled = false;
             Loader.MyGTGUI.btnTranslateTo.Enabled = false;
@@ -464,7 +464,7 @@ namespace ZScreenGUI
 
         public void UploadUsingClipboardOrGoogleTranslate()
         {
-            if (Clipboard.ContainsText() && Engine.MyGTConfig.AutoTranslate && Clipboard.GetText().Length <= Engine.MyGTConfig.AutoTranslateLength)
+            if (Clipboard.ContainsText() && Engine.ConfigGT.AutoTranslate && Clipboard.GetText().Length <= Engine.ConfigGT.AutoTranslateLength)
             {
                 StartWorkerTranslator();
             }
@@ -518,7 +518,7 @@ namespace ZScreenGUI
                         if (GraphicsMgr.IsValidImage(fp))
                         {
                             string dirfp = Path.GetDirectoryName(fp);
-                            string fsfp = FileSystem.GetUniqueFilePath(Engine.Workflow, Engine.ImagesDir, Path.GetFileName(fp));
+                            string fsfp = FileSystem.GetUniqueFilePath(Engine.ConfigWorkflow, Engine.ImagesDir, Path.GetFileName(fp));
                             if (fp != fsfp && dirfp != Engine.ImagesDir)
                             {
                                 string dir = Path.GetDirectoryName(fsfp);
@@ -529,7 +529,7 @@ namespace ZScreenGUI
                                 try
                                 {
                                     File.Copy(fp, fsfp, true);
-                                    if (Path.GetDirectoryName(fp) == Engine.conf.FolderMonitorPath)
+                                    if (Path.GetDirectoryName(fp) == Engine.ConfigUI.FolderMonitorPath)
                                     {
                                         File.Delete(fp);
                                     }
@@ -560,7 +560,7 @@ namespace ZScreenGUI
             }
 
             List<Image> tempImages = new List<Image>();
-            bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.Workflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
+            bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.ConfigWorkflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
 
             if (bCreateAni)
             {
@@ -609,7 +609,7 @@ namespace ZScreenGUI
                 autoScreenshots.EventJob += new JobsEventHandler(EventJobs);
                 autoScreenshots.FormClosed += new FormClosedEventHandler(autoScreenshots_FormClosed);
                 autoScreenshots.Show();
-                if (Engine.conf.AutoCaptureExecute) autoScreenshots.Execute();
+                if (Engine.ConfigUI.AutoCaptureExecute) autoScreenshots.Execute();
             }
         }
 
@@ -670,14 +670,14 @@ namespace ZScreenGUI
                 dw.FormClosed += new FormClosedEventHandler(dw_FormClosed);
                 dw.Show();
                 Rectangle taskbar = NativeMethods.GetTaskbarRectangle();
-                if (Engine.conf.LastDropBoxPosition == Point.Empty)
+                if (Engine.ConfigUI.LastDropBoxPosition == Point.Empty)
                 {
                     dw.Location = new Point(SystemInformation.PrimaryMonitorSize.Width - dw.Width - 100,
                         SystemInformation.PrimaryMonitorSize.Height - taskbar.Height - dw.Height - 10);
                 }
                 else
                 {
-                    dw.Location = Engine.conf.LastDropBoxPosition;
+                    dw.Location = Engine.ConfigUI.LastDropBoxPosition;
                 }
             }
         }
@@ -721,7 +721,7 @@ namespace ZScreenGUI
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.Translate)
             {
                 if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.conf.ImageUploadRetryOnFail && task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.Info.LocalFilePath))
+                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.ConfigUI.ImageUploadRetryOnFail && task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.Info.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
                     task2.SetImage(task.Info.LocalFilePath);
@@ -729,28 +729,28 @@ namespace ZScreenGUI
 
                     if (task.Job1 == JobLevel1.Image)
                     {
-                        if (Engine.conf.ImageUploadRandomRetryOnFail)
+                        if (Engine.ConfigUI.ImageUploadRandomRetryOnFail)
                         {
                             List<ImageUploaderType> randomDest = new List<ImageUploaderType>() { ImageUploaderType.IMAGESHACK, ImageUploaderType.TINYPIC, ImageUploaderType.IMGUR };
                             int r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
-                            while (task.WorkflowConfig.ImageUploaders.Contains((ImageUploaderType)r))
+                            while (task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageUploaderType)r))
                             {
                                 r = Adapter.RandomNumber(3, 3 + randomDest.Count - 1);
                             }
-                            if (!task.WorkflowConfig.ImageUploaders.Contains((ImageUploaderType)r))
+                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains((ImageUploaderType)r))
                             {
-                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType)r);
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType)r);
                             }
                         }
                         else
                         {
-                            if (!task.WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
+                            if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.TINYPIC))
                             {
-                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType.TINYPIC));
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType.TINYPIC));
                             }
-                            else if (!task.WorkflowConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
+                            else if (!task.WorkflowConfig.DestConfig.ImageUploaders.Contains(ImageUploaderType.IMAGESHACK))
                             {
-                                task.WorkflowConfig.ImageUploaders.Add((ImageUploaderType.IMAGESHACK));
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType.IMAGESHACK));
                             }
                         }
                     }
@@ -769,7 +769,7 @@ namespace ZScreenGUI
 
         public void AddHistoryItem(WorkerTask task)
         {
-            if (Engine.conf.HistorySave)
+            if (Engine.ConfigUI.HistorySave)
             {
                 foreach (UploadResult ur in task.UploadResults)
                 {

@@ -59,17 +59,17 @@ namespace ZScreenGUI
         {
             if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)
             {
-                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.MyGTConfig) { Icon = this.Icon };
+                Loader.MyGTGUI = new GoogleTranslateGUI(Engine.ConfigGT) { Icon = this.Icon };
             }
 
-            if (string.IsNullOrEmpty(Engine.MyGTConfig.APIKey))
+            if (string.IsNullOrEmpty(Engine.ConfigGT.APIKey))
             {
                 StaticHelper.LoadBrowser("http://code.google.com/apis/language/translate/overview.html");
             }
 
-            if (Engine.MyGTConfig.GoogleLanguages == null || Engine.MyGTConfig.GoogleLanguages.Count < 1)
+            if (Engine.ConfigGT.GoogleLanguages == null || Engine.ConfigGT.GoogleLanguages.Count < 1)
             {
-                Engine.MyGTConfig.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleApiKey).GetLanguages();
+                Engine.ConfigGT.GoogleLanguages = new GoogleTranslate(ZKeys.GoogleApiKey).GetLanguages();
             }
 
             return Loader.MyGTGUI;
@@ -106,7 +106,7 @@ namespace ZScreenGUI
 
         public void ProxyAdd(ProxyInfo acc)
         {
-            Engine.conf.ProxyList.Add(acc);
+            Engine.ConfigUI.ProxyList.Add(acc);
             ucProxyAccounts.AccountsList.Items.Add(acc);
             ucProxyAccounts.AccountsList.SelectedIndex = ucProxyAccounts.AccountsList.Items.Count - 1;
         }
@@ -120,7 +120,7 @@ namespace ZScreenGUI
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
                 temp.FirstRun = false;
-                Engine.conf = temp;
+                Engine.ConfigUI = temp;
                 ZScreen_ConfigGUI();
             }
         }
@@ -132,7 +132,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.SettingsFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.conf.Write(dlg.FileName);
+                Engine.ConfigUI.Write(dlg.FileName);
             }
         }
 
@@ -142,7 +142,7 @@ namespace ZScreenGUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Workflow temp = Workflow.Read(dlg.FileName);
-                Engine.Workflow = temp;
+                Engine.ConfigWorkflow = temp;
             }
         }
 
@@ -153,7 +153,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.WorkflowConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.Workflow.Write(dlg.FileName);
+                Engine.ConfigWorkflow.Write(dlg.FileName);
             }
         }
 
@@ -162,10 +162,10 @@ namespace ZScreenGUI
             OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                UploadersConfig temp = UploadersConfig.Load(dlg.FileName);
+                UploadersConfig temp = UploadersConfig.Read(dlg.FileName);
                 if (temp != null)
                 {
-                    Engine.Workflow.ConfigOutputs = temp;
+                    Engine.ConfigUploaders = temp;
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace ZScreenGUI
             dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Engine.Workflow.ConfigOutputs.Save(dlg.FileName);
+                Engine.ConfigUploaders.Write(dlg.FileName);
             }
         }
 

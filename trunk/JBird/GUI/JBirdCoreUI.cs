@@ -84,14 +84,14 @@ namespace JBirdGUI
 
             Workflow entireScreen = new Workflow("Desktop to file");
             entireScreen.Job = WorkerTask.JobLevel2.CaptureEntireScreen;
-            entireScreen.Outputs.Add(OutputEnum.Clipboard);
-            entireScreen.Outputs.Add(OutputEnum.LocalDisk);
+            entireScreen.DestConfig.Outputs.Add(OutputEnum.Clipboard);
+            entireScreen.DestConfig.Outputs.Add(OutputEnum.LocalDisk);
             entireScreen.Hotkey = new HelpersLib.Hotkey.HotkeySetting(Keys.PrintScreen);
             workflows.Add(entireScreen);
 
             Workflow activeWindow = new Workflow("Active Window to clipboard");
             activeWindow.Job = WorkerTask.JobLevel2.CaptureActiveWindow;
-            activeWindow.Outputs.Add(OutputEnum.Clipboard);
+            activeWindow.DestConfig.Outputs.Add(OutputEnum.Clipboard);
             activeWindow.Hotkey = new HelpersLib.Hotkey.HotkeySetting(Keys.Alt | Keys.PrintScreen);
             workflows.Add(activeWindow);
 
@@ -150,7 +150,7 @@ namespace JBirdGUI
         {
             WorkerTask bwTask = e.Argument as WorkerTask;
 
-            if (bwTask.WorkflowConfig.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
+            if (bwTask.WorkflowConfig.DestConfig.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
             {
                 bwTask.PublishData();
             }
@@ -229,17 +229,16 @@ namespace JBirdGUI
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             Workflow p = tsmi.Tag as Workflow;
             StartWorkflow(p);
-
         }
+
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Close();
             Application.Exit();
-
         }
+
         protected void JBirdCoreUI_Shown(object sender, EventArgs e)
         {
-
         }
 
         protected void JBirdCoreUI_Load(object sender, EventArgs e)

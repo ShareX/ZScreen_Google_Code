@@ -22,25 +22,35 @@ namespace HelpersLib
         [Category(ComponentModelStrings.AppPaths), ReadOnly(true)]
         public string WorkflowConfigPath { get; set; }
 
+        [Category(ComponentModelStrings.AppPaths), ReadOnly(true)]
+        public string UploadersConfigPath { get; set; }
+
         [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Prefer System Folders for all the data created by ZScreen")]
         public bool PreferSystemFolders { get; set; }  // default value is from ConfigWizard
 
         [Category(ComponentModelStrings.Outputs), DefaultValue(true), Description("Support uploading to multiple destinations.")]
         public bool SupportMultipleDestinations { get; set; }
 
-        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Use a customised History path.")]
+        [Category(ComponentModelStrings.AppPathsHistory), DefaultValue(false), Description("Use a customised History path.")]
         public bool UseHistoryCustomPath { get; set; }
 
-        [Category(ComponentModelStrings.AppPaths), Description("Path where history file will be saved.")]
+        [Category(ComponentModelStrings.AppPathsHistory), Description("Path where history file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string HistoryCustomPath { get; set; }
 
-        [Category(ComponentModelStrings.AppPaths), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
+        [Category(ComponentModelStrings.AppPathsWorkflow), DefaultValue(false), Description("Use a customised Workflow Configuration path.")]
         public bool UseWorkflowConfigCustomPath { get; set; }
 
-        [Category(ComponentModelStrings.AppPaths), Description("Path where uploaders config file will be saved.")]
+        [Category(ComponentModelStrings.AppPathsUploaders), DefaultValue(false), Description("Use a customised Uploaders Configuration path.")]
+        public bool UseUploadersConfigCustomPath { get; set; }
+
+        [Category(ComponentModelStrings.AppPathsWorkflow), Description("Path where workflow config file will be saved.")]
         [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
         public string WorkflowConfigCustomPath { get; set; }
+
+        [Category(ComponentModelStrings.AppPathsUploaders), Description("Path where uploaders config file will be saved.")]
+        [EditorAttribute(typeof(XmlFileNameEditor), typeof(UITypeEditor))]
+        public string UploadersConfigCustomPath { get; set; }
 
         public List<int> AppOutputs = new List<int>();
         public List<int> ClipboardContent = new List<int>();

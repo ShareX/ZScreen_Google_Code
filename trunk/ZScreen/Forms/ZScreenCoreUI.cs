@@ -64,7 +64,7 @@ namespace ZScreenGUI
 
         public virtual WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
-            return new WorkerTask(Engine.Workflow);
+            return new WorkerTask(Engine.ConfigWorkflow);
         }
 
         #region Worker Events
@@ -209,9 +209,9 @@ namespace ZScreenGUI
         {
             // if Engine.conf is null then open use default amount
             int maxNum = 100;
-            if (Engine.conf != null)
+            if (Engine.ConfigUI != null)
             {
-                maxNum = Engine.conf.HistoryMaxNumber;
+                maxNum = Engine.ConfigUI.HistoryMaxNumber;
             }
             new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }

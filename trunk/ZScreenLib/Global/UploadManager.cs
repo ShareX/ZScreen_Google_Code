@@ -46,8 +46,11 @@ namespace ZScreenLib
         public static MyListView ListViewControl { get; set; }
 
         public static List<UploadInfo> UploadInfoList = new List<UploadInfo>();
+
         public static UploadResult UploadResultLast { get; set; }
+
         public static int CumulativePercentage { get; private set; }
+
         private static int UniqueNumber = 0;
 
         public static List<WorkerTask> Tasks { get; private set; }
@@ -145,7 +148,7 @@ namespace ZScreenLib
                         lvi.SubItems[8].Text = string.Empty;
                         lvi.ImageIndex = 1;
 
-                        if (Engine.conf.CompleteSound)
+                        if (Engine.ConfigUI.CompleteSound)
                         {
                             SystemSounds.Asterisk.Play();
                         }
@@ -164,12 +167,12 @@ namespace ZScreenLib
 
                             lvi.SubItems[8].Text = url;
 
-                            if (Engine.Workflow.ClipboardOverwrite)
+                            if (Engine.ConfigWorkflow.ClipboardOverwrite)
                             {
                                 ZAppHelper.CopyTextSafely(url);
                             }
 
-                            if (Engine.conf.HistorySave)
+                            if (Engine.ConfigUI.HistorySave)
                             {
                                 HistoryManager.AddHistoryItemAsync(Engine.HistoryPath, task.GenerateHistoryItem());
                             }
@@ -181,7 +184,7 @@ namespace ZScreenLib
                             //}
                         }
 
-                        if (Engine.conf.CompleteSound)
+                        if (Engine.ConfigUI.CompleteSound)
                         {
                             SystemSounds.Exclamation.Play();
                         }
@@ -286,7 +289,7 @@ namespace ZScreenLib
             {
                 if (task.UploadResults.Count > 0)
                 {
-                    if (task.TaskClipboardContent.Count > 1 || Engine.conf.ShowUploadResultsWindow || showDialog)
+                    if (task.TaskClipboardContent.Count > 1 || Engine.ConfigUI.ShowUploadResultsWindow || showDialog)
                     {
                         ClipboardOptions cmp = new ClipboardOptions(task);
                         cmp.Icon = Resources.zss_main;
@@ -296,7 +299,7 @@ namespace ZScreenLib
                     }
                 }
 
-                if (task.WorkflowConfig.Outputs.Contains(OutputEnum.Clipboard))
+                if (task.WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Clipboard))
                 {
                     StringBuilder clipboardText = new StringBuilder();
 
@@ -308,12 +311,12 @@ namespace ZScreenLib
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {
-                            if (Engine.conf.ConfLinkFormat.Count > 0)
+                            if (Engine.ConfigUI.ConfLinkFormat.Count > 0)
                             {
                                 clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath));
                             }
 
-                            if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                            if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                             {
                                 break;
                             }
@@ -337,7 +340,7 @@ namespace ZScreenLib
                                 if (!string.IsNullOrEmpty(ur.ShortenedURL))
                                 {
                                     clipboardText.AppendLine(ur.ShortenedURL);
-                                    if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                    if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                                     {
                                         break;
                                     }
@@ -352,7 +355,7 @@ namespace ZScreenLib
                                 if (!string.IsNullOrEmpty(ur.URL))
                                 {
                                     clipboardText.AppendLine(FileSystem.GetBrowserFriendlyUrl(ur.URL));
-                                    if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                    if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                                     {
                                         break;
                                     }
@@ -365,7 +368,7 @@ namespace ZScreenLib
                                     if (!string.IsNullOrEmpty(ur.LocalFilePath))
                                     {
                                         clipboardText.AppendLine(ur.LocalFilePath);
-                                        if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                        if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                                         {
                                             break;
                                         }
@@ -387,7 +390,7 @@ namespace ZScreenLib
                                     clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL));
                                 }
 
-                                if (!Engine.conf.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
+                                if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
                                 {
                                     break;
                                 }
@@ -428,12 +431,12 @@ namespace ZScreenLib
                         np.size = task.Info.FileSize;
                         np.name = task.Info.FileName;
                         np.WindowText = task.Info.WindowTitleText;
-                        
-                        if (!string.IsNullOrEmpty(Engine.conf.ClipboardFormat))
+
+                        if (!string.IsNullOrEmpty(Engine.ConfigUI.ClipboardFormat))
                         {
-                            tempText = np.Convert(Engine.conf.ClipboardFormat);
+                            tempText = np.Convert(Engine.ConfigUI.ClipboardFormat);
                         }
-                       
+
                         if (!string.IsNullOrEmpty(tempText))
                         {
                             StaticHelper.WriteLine("Setting Clipboard with URL: " + tempText);

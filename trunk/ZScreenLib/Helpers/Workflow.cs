@@ -23,8 +23,7 @@ namespace ZScreenLib
             this.ID = ZAppHelper.GetRandomAlphanumeric(12);
             this.Description = "New Workflow";
             this.Enabled = true;
-            this.Outputs = new List<OutputEnum>();
-            this.ConfigOutputs = new UploadersConfig();
+            this.DestConfig = new DestConfig();
             ApplyDefaultValues(this);
         }
 
@@ -238,15 +237,7 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
 
-        [Browsable(false)]
-        public List<OutputEnum> Outputs { get; set; }
-
-        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
-        public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
-        public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();
-
-        [Browsable(false)]
-        public UploadersConfig ConfigOutputs { get; set; }
+        public DestConfig DestConfig { get; set; }
 
         #endregion Outputs
 
@@ -293,33 +284,33 @@ namespace ZScreenLib
         {
             CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength };
 
-            this.ConfigOutputs.TinyPicPassword =
-                bEncrypt ? crypt.Encrypt(this.ConfigOutputs.TinyPicPassword) :
-            crypt.Decrypt(this.ConfigOutputs.TinyPicPassword);
+            Engine.ConfigUploaders.TinyPicPassword =
+                bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.TinyPicPassword) :
+            crypt.Decrypt(Engine.ConfigUploaders.TinyPicPassword);
 
-            this.ConfigOutputs.RapidSharePassword =
-                bEncrypt ? crypt.Encrypt(this.ConfigOutputs.RapidSharePassword) :
-            crypt.Decrypt(this.ConfigOutputs.RapidSharePassword);
+            Engine.ConfigUploaders.RapidSharePassword =
+                bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.RapidSharePassword) :
+            crypt.Decrypt(Engine.ConfigUploaders.RapidSharePassword);
 
-            this.ConfigOutputs.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.SendSpacePassword) :
-            crypt.Decrypt(this.ConfigOutputs.SendSpacePassword);
+            Engine.ConfigUploaders.SendSpacePassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.SendSpacePassword) :
+            crypt.Decrypt(Engine.ConfigUploaders.SendSpacePassword);
 
-            foreach (FTPAccount acc in this.ConfigOutputs.FTPAccountList)
+            foreach (FTPAccount acc in Engine.ConfigUploaders.FTPAccountList)
             {
                 acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
                 acc.Passphrase = bEncrypt ? crypt.Encrypt(acc.Passphrase) : crypt.Decrypt(acc.Passphrase);
             }
 
-            foreach (LocalhostAccount acc in this.ConfigOutputs.LocalhostAccountList)
+            foreach (LocalhostAccount acc in Engine.ConfigUploaders.LocalhostAccountList)
             {
                 acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
             }
 
-            this.ConfigOutputs.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.TwitPicPassword) :
-                crypt.Decrypt(this.ConfigOutputs.TwitPicPassword);
+            Engine.ConfigUploaders.TwitPicPassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.TwitPicPassword) :
+                crypt.Decrypt(Engine.ConfigUploaders.TwitPicPassword);
 
-            this.ConfigOutputs.EmailPassword = bEncrypt ? crypt.Encrypt(this.ConfigOutputs.EmailPassword) :
-            crypt.Decrypt(this.ConfigOutputs.EmailPassword);
+            Engine.ConfigUploaders.EmailPassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.EmailPassword) :
+            crypt.Decrypt(Engine.ConfigUploaders.EmailPassword);
         }
 
         public void Start()
@@ -327,5 +318,15 @@ namespace ZScreenLib
         }
 
         #endregion Helper Methods
+    }
+
+    public class DestConfig
+    {
+        [Browsable(false)]
+        public List<OutputEnum> Outputs { get; set; }
+
+        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
+        public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
+        public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();
     }
 }

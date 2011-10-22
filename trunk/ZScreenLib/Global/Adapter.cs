@@ -59,7 +59,7 @@ namespace ZScreenLib
         {
             if (img != null)
             {
-                new PrintForm(img, Engine.conf.PrintSettings).Show();
+                new PrintForm(img, Engine.ConfigUI.PrintSettings).Show();
             }
         }
 
@@ -67,7 +67,7 @@ namespace ZScreenLib
         {
             if (!string.IsNullOrEmpty(text))
             {
-                new PrintTextForm(text, Engine.conf.PrintSettings).Show();
+                new PrintTextForm(text, Engine.ConfigUI.PrintSettings).Show();
             }
         }
 
@@ -326,7 +326,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts(int id)
         {
-            return Engine.Workflow.ConfigOutputs.FTPAccountList.HasValidIndex(id);
+            return Engine.ConfigUploaders.FTPAccountList.HasValidIndex(id);
         }
 
         public static bool CheckFTPAccounts(WorkerTask task, int id)
@@ -354,8 +354,8 @@ namespace ZScreenLib
 
         public static ProxySettings CheckProxySettings()
         {
-            StaticHelper.WriteLine("Proxy Config: " + Engine.conf.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
-            return new ProxySettings { ProxyConfig = Engine.conf.ProxyConfig, ProxyActive = Engine.conf.ProxyActive };
+            StaticHelper.WriteLine("Proxy Config: " + Engine.ConfigUI.ProxyConfig.ToString() + " called by " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
+            return new ProxySettings { ProxyConfig = Engine.ConfigUI.ProxyConfig, ProxyActive = Engine.ConfigUI.ProxyActive };
         }
 
         public static void TestProxyAccount(ProxyInfo acc)
@@ -399,9 +399,9 @@ namespace ZScreenLib
         /// <returns></returns>
         public static OAuthInfo TwitterGetActiveAccount()
         {
-            if (Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList.HasValidIndex(Engine.Workflow.ConfigOutputs.TwitterSelectedAccount))
+            if (Engine.ConfigUploaders.TwitterOAuthInfoList.HasValidIndex(Engine.ConfigUploaders.TwitterSelectedAccount))
             {
-                return Engine.Workflow.ConfigOutputs.TwitterOAuthInfoList[Engine.Workflow.ConfigOutputs.TwitterSelectedAccount];
+                return Engine.ConfigUploaders.TwitterOAuthInfoList[Engine.ConfigUploaders.TwitterSelectedAccount];
             }
 
             return new OAuthInfo(ZKeys.TwitterConsumerKey, ZKeys.TwitterConsumerSecret);
@@ -433,7 +433,7 @@ namespace ZScreenLib
                 TwitterMsg msg = new TwitterMsg(TwitterGetActiveAccount(), string.Format("{0} - Update Twitter Status...", acc.Description));
                 msg.ActiveAccountName = acc.Description;
                 msg.Icon = Resources.zss_main;
-                msg.Config = Engine.conf.TwitterClientConfig;
+                msg.Config = Engine.ConfigUI.TwitterClientConfig;
                 msg.FormClosed += new FormClosedEventHandler(twitterClient_FormClosed);
                 msg.txtTweet.Text = url;
                 msg.Show();
@@ -443,7 +443,7 @@ namespace ZScreenLib
         private static void twitterClient_FormClosed(object sender, FormClosedEventArgs e)
         {
             TwitterMsg msg = sender as TwitterMsg;
-            Engine.conf.TwitterClientConfig = msg.Config;
+            Engine.ConfigUI.TwitterClientConfig = msg.Config;
         }
 
         #endregion Twitter Methods
@@ -527,8 +527,8 @@ namespace ZScreenLib
                 };
                 try
                 {
-                    fDialog.Color = Engine.Workflow.WatermarkFontArgb;
-                    fDialog.Font = Engine.Workflow.WatermarkFont;
+                    fDialog.Color = Engine.ConfigWorkflow.WatermarkFontArgb;
+                    fDialog.Font = Engine.ConfigWorkflow.WatermarkFont;
                 }
                 catch (Exception err)
                 {
@@ -538,8 +538,8 @@ namespace ZScreenLib
                 result = fDialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    Engine.Workflow.WatermarkFont = fDialog.Font;
-                    Engine.Workflow.WatermarkFontArgb = fDialog.Color;
+                    Engine.ConfigWorkflow.WatermarkFont = fDialog.Font;
+                    Engine.ConfigWorkflow.WatermarkFontArgb = fDialog.Color;
                 }
             }
             catch (Exception ex)
@@ -589,27 +589,27 @@ namespace ZScreenLib
         {
             get
             {
-                return Engine.conf.MonitorImages || Engine.conf.MonitorText || Engine.conf.MonitorFiles || Engine.conf.MonitorUrls;
+                return Engine.ConfigUI.MonitorImages || Engine.ConfigUI.MonitorText || Engine.ConfigUI.MonitorFiles || Engine.ConfigUI.MonitorUrls;
             }
         }
 
         public static void UpdateTinyPicRegCode()
         {
-            if (Uploader.ProxySettings != null && Engine.Workflow != null)
+            if (Uploader.ProxySettings != null && Engine.ConfigWorkflow != null)
             {
                 try
                 {
-                    if (Engine.Workflow.ConfigOutputs.TinyPicRememberUserPass &&
-                        !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TinyPicUsername) &&
-                        !string.IsNullOrEmpty(Engine.Workflow.ConfigOutputs.TinyPicPassword))
+                    if (Engine.ConfigUploaders.TinyPicRememberUserPass &&
+                        !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicUsername) &&
+                        !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicPassword))
                     {
                         TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
-                        string regCode = tpu.UserAuth(Engine.Workflow.ConfigOutputs.TinyPicUsername,
-                            Engine.Workflow.ConfigOutputs.TinyPicPassword);
-                        if (Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode != regCode)
+                        string regCode = tpu.UserAuth(Engine.ConfigUploaders.TinyPicUsername,
+                            Engine.ConfigUploaders.TinyPicPassword);
+                        if (Engine.ConfigUploaders.TinyPicRegistrationCode != regCode)
                         {
-                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode, regCode));
-                            Engine.Workflow.ConfigOutputs.TinyPicRegistrationCode = regCode;
+                            StaticHelper.WriteLine(string.Format("Updated TinyPic Shuk from {0} to {1}", Engine.ConfigUploaders.TinyPicRegistrationCode, regCode));
+                            Engine.ConfigUploaders.TinyPicRegistrationCode = regCode;
                         }
                     }
                 }

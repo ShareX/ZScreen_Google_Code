@@ -59,7 +59,7 @@ namespace ZScreenLib.Helpers
 
                 string processName = Process.GetProcessById((int)processId).ProcessName;
 
-                if (!Engine.Workflow.ActiveWindowTryCaptureChildren || processName == "explorer")
+                if (!Engine.ConfigWorkflow.ActiveWindowTryCaptureChildren || processName == "explorer")
                 {
                     windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(handle, rectangle));
                 }

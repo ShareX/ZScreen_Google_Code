@@ -91,7 +91,8 @@ namespace ZScreenCLI
             }
 
             if (bVerbose) Console.WriteLine(string.Format("Loading {0}", Engine.AppConf.WorkflowConfigPath));
-            Engine.Workflow = Workflow.Read(Engine.AppConf.WorkflowConfigPath);
+            Engine.ConfigUploaders = UploadersConfig.Read(Engine.AppConf.UploadersConfigPath);
+            Engine.ConfigWorkflow = Workflow.Read(Engine.AppConf.WorkflowConfigPath);
 
             if (bShowHelp)
             {
@@ -131,12 +132,12 @@ namespace ZScreenCLI
 
             foreach (int o in listOutputTypes)
             {
-                tempTask.WorkflowConfig.Outputs.Add((OutputEnum)o);
+                tempTask.WorkflowConfig.DestConfig.Outputs.Add((OutputEnum)o);
             }
-            if (tempTask.WorkflowConfig.Outputs.Count == 0)
+            if (tempTask.WorkflowConfig.DestConfig.Outputs.Count == 0)
             {
-                tempTask.WorkflowConfig.Outputs.Add(OutputEnum.Clipboard);
-                tempTask.WorkflowConfig.Outputs.Add(OutputEnum.LocalDisk);
+                tempTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.Clipboard);
+                tempTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.LocalDisk);
             }
 
             if (clipboardContent > 0)
@@ -151,12 +152,12 @@ namespace ZScreenCLI
             foreach (int ut in listImageHosts)
             {
                 if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((ImageUploaderType)ut).GetDescription()));
-                tempTask.WorkflowConfig.ImageUploaders.Add((ImageUploaderType)ut);
+                tempTask.WorkflowConfig.DestConfig.ImageUploaders.Add((ImageUploaderType)ut);
             }
             foreach (int ut in listFileHosts)
             {
                 if (bVerbose) Console.WriteLine(string.Format("Added {0}", ((FileUploaderType)ut).GetDescription()));
-                tempTask.WorkflowConfig.FileUploaders.Add((FileUploaderType)ut);
+                tempTask.WorkflowConfig.DestConfig.FileUploaders.Add((FileUploaderType)ut);
             }
             return tempTask;
         }

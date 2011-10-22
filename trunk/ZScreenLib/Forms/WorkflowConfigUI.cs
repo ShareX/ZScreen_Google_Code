@@ -96,9 +96,15 @@ namespace ZScreenLib
         {
             bool bIsImage = ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
 
-            if (!bIsImage) tcMain.TabPages.Remove(tpImagePreview);
-            else tcMain.TabPages.Add(tpImagePreview);
-            tcMain.SelectedTab = tpImagePreview;
+            if (!bIsImage)
+            {
+                tcMain.TabPages.Remove(tpImagePreview);
+            }
+            else
+            {
+                tcMain.TabPages.Add(tpImagePreview);
+                tcMain.SelectedTab = tpImagePreview;
+            }
 
             btnTaskAnnotate.Visible = bIsImage;
             chkTaskImageFileFormat.Visible = bIsImage;
@@ -174,20 +180,20 @@ namespace ZScreenLib
 
         private void ConfigGuiOutputs()
         {
-            chkClipboard.Checked = Config.Outputs.Contains(OutputEnum.Clipboard);
-            chkSaveFile.Checked = Config.Outputs.Contains(OutputEnum.LocalDisk);
-            chkUpload.Checked = Config.Outputs.Contains(OutputEnum.RemoteHost);
-            chkPrinter.Checked = Config.Outputs.Contains(OutputEnum.Printer);
+            chkClipboard.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.Clipboard);
+            chkSaveFile.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.LocalDisk);
+            chkUpload.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.RemoteHost);
+            chkPrinter.Checked = Config.DestConfig.Outputs.Contains(OutputEnum.Printer);
 
             foreach (FileUploaderType fut in Enum.GetValues(typeof(FileUploaderType)))
             {
                 CheckBox chkUploader = new CheckBox()
                 {
                     Text = fut.GetDescription(),
-                    Checked = Config.FileUploaders.Contains(fut),
+                    Checked = Config.DestConfig.FileUploaders.Contains(fut),
                     Tag = fut
                 };
-                if (Config.ConfigOutputs.IsActive(fut))
+                if (Engine.ConfigUploaders.IsActive(fut))
                 {
                     flpFileUploaders.Controls.Add(chkUploader);
                 }
@@ -202,10 +208,10 @@ namespace ZScreenLib
                     CheckBox chkUploader = new CheckBox()
                     {
                         Text = iut.GetDescription(),
-                        Checked = Config.ImageUploaders.Contains(iut),
+                        Checked = Config.DestConfig.ImageUploaders.Contains(iut),
                         Tag = iut,
                     };
-                    if (Config.ConfigOutputs.IsActive(iut))
+                    if (Engine.ConfigUploaders.IsActive(iut))
                     {
                         flpImageUploaders.Controls.Add(chkUploader);
                     }
@@ -220,10 +226,10 @@ namespace ZScreenLib
                     CheckBox chkUploader = new CheckBox()
                     {
                         Text = tut.GetDescription(),
-                        Checked = Config.TextUploaders.Contains(tut),
+                        Checked = Config.DestConfig.TextUploaders.Contains(tut),
                         Tag = tut
                     };
-                    if (Config.ConfigOutputs.IsActive(tut))
+                    if (Engine.ConfigUploaders.IsActive(tut))
                     {
                         flpTextUploaders.Controls.Add(chkUploader);
                     }
@@ -366,31 +372,31 @@ namespace ZScreenLib
 
         private void UpdateConfigOutputs()
         {
-            Config.Outputs.Clear();
-            if (chkClipboard.Checked) Config.Outputs.Add(OutputEnum.Clipboard);
-            if (chkSaveFile.Checked) Config.Outputs.Add(OutputEnum.LocalDisk);
-            if (chkUpload.Checked) Config.Outputs.Add(OutputEnum.RemoteHost);
-            if (chkPrinter.Checked) Config.Outputs.Add(OutputEnum.Printer);
+            Config.DestConfig.Outputs.Clear();
+            if (chkClipboard.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Clipboard);
+            if (chkSaveFile.Checked) Config.DestConfig.Outputs.Add(OutputEnum.LocalDisk);
+            if (chkUpload.Checked) Config.DestConfig.Outputs.Add(OutputEnum.RemoteHost);
+            if (chkPrinter.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Printer);
 
-            Config.FileUploaders.Clear();
+            Config.DestConfig.FileUploaders.Clear();
             foreach (CheckBox chk in flpFileUploaders.Controls)
             {
                 FileUploaderType ut = (FileUploaderType)chk.Tag;
-                if (chk.Checked) Config.FileUploaders.Add(ut);
+                if (chk.Checked) Config.DestConfig.FileUploaders.Add(ut);
             }
 
-            Config.ImageUploaders.Clear();
+            Config.DestConfig.ImageUploaders.Clear();
             foreach (CheckBox chk in flpImageUploaders.Controls)
             {
                 ImageUploaderType ut = (ImageUploaderType)chk.Tag;
-                if (chk.Checked) Config.ImageUploaders.Add(ut);
+                if (chk.Checked) Config.DestConfig.ImageUploaders.Add(ut);
             }
 
-            Config.TextUploaders.Clear();
+            Config.DestConfig.TextUploaders.Clear();
             foreach (CheckBox chk in flpTextUploaders.Controls)
             {
                 TextUploaderType ut = (TextUploaderType)chk.Tag;
-                if (chk.Checked) Config.TextUploaders.Add(ut);
+                if (chk.Checked) Config.DestConfig.TextUploaders.Add(ut);
             }
 
             if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
@@ -434,9 +440,9 @@ namespace ZScreenLib
 
         private void btnOutputsConfig_Click(object sender, EventArgs e)
         {
-            UploadersConfigForm ocf = new UploadersConfigForm(Config.ConfigOutputs, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys()) { Icon = this.Icon };
             ocf.ShowDialog();
-            Config.ConfigOutputs = ocf.Config;
+            Engine.ConfigUploaders = ocf.Config;
         }
 
         private void btnOK_Click(object sender, EventArgs e)

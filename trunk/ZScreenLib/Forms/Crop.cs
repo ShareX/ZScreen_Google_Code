@@ -47,7 +47,7 @@ namespace ZScreenLib
         private Point mousePos, mousePosOnClick, oldMousePos, screenMousePos;
         private Rectangle screenBound, clientBound, cropRegion, rectRegion, rectIntersect;
         private Pen labelBorderPen = new Pen(Color.Black);
-        private Pen crosshairPen = new Pen(Engine.conf.CropCrosshairArgb);
+        private Pen crosshairPen = new Pen(Engine.ConfigUI.CropCrosshairArgb);
         private Pen crosshairPen2 = new Pen(Color.FromArgb(150, Color.Gray));
         private string strMouseUp = "Mouse Left Down: Create crop region" +
             "\nMouse Right Down & Escape: Cancel screenshot\nSpace: Capture entire screen\nTab: Toggle crop grid mode";
@@ -100,7 +100,7 @@ namespace ZScreenLib
 
             if (selectedWindowMode)
             {
-                captureObjects = Engine.conf.SelectedWindowCaptureObjects;
+                captureObjects = Engine.ConfigUI.SelectedWindowCaptureObjects;
                 myRectangle = new DynamicRectangle(CaptureType.SELECTED_WINDOW);
                 NativeMethods.EnumWindowsProc ewp = new NativeMethods.EnumWindowsProc(EvalWindow);
                 NativeMethods.EnumWindows(ewp, IntPtr.Zero);
@@ -109,7 +109,7 @@ namespace ZScreenLib
             {
                 myRectangle = new DynamicRectangle(CaptureType.CROP);
 
-                if (Engine.conf.UseHardwareCursor)
+                if (Engine.ConfigUI.UseHardwareCursor)
                 {
                     Cursor = Cursors.Cross;
                 }
@@ -125,36 +125,36 @@ namespace ZScreenLib
                 gBackground.SmoothingMode = SmoothingMode.HighQuality;
                 gRegion.SmoothingMode = SmoothingMode.HighQuality;
 
-                if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
-                (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT))
+                if ((selectedWindowMode && Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT) ||
+                (!selectedWindowMode && Engine.ConfigUI.CropRegionStyles == RegionStyles.REGION_TRANSPARENT))
                 { // If Region Transparent
-                    gRegion.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.RegionTransparentValue, Color.White)),
+                    gRegion.FillRectangle(new SolidBrush(Color.FromArgb(Engine.ConfigUI.RegionTransparentValue, Color.White)),
                         new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height));
                 }
-                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
-                (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
+                else if ((selectedWindowMode && Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS) ||
+                (!selectedWindowMode && Engine.ConfigUI.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS))
                 { // If Region Brightness
                     ImageAttributes imgattr = new ImageAttributes();
-                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.RegionBrightnessValue));
+                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.ConfigUI.RegionBrightnessValue));
                     gRegion.DrawImage(bmpClean, new Rectangle(0, 0, bmpRegion.Width, bmpRegion.Height), 0, 0,
                         bmpRegion.Width, bmpRegion.Height, GraphicsUnit.Pixel, imgattr);
                 }
-                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
-                (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
+                else if ((selectedWindowMode && Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT) ||
+                (!selectedWindowMode && Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT))
                 { // If Background Region Transparent
-                    gBackground.FillRectangle(new SolidBrush(Color.FromArgb(Engine.conf.BackgroundRegionTransparentValue, Color.White)),
+                    gBackground.FillRectangle(new SolidBrush(Color.FromArgb(Engine.ConfigUI.BackgroundRegionTransparentValue, Color.White)),
                         new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height));
                 }
-                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
-                (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
+                else if ((selectedWindowMode && Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) ||
+                (!selectedWindowMode && Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS))
                 { // If Background Region Brightness
                     ImageAttributes imgattr = new ImageAttributes();
-                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.conf.BackgroundRegionBrightnessValue));
+                    imgattr.SetColorMatrix(ColorMatrices.BrightnessFilter(Engine.ConfigUI.BackgroundRegionBrightnessValue));
                     gBackground.DrawImage(bmpClean, new Rectangle(0, 0, bmpBackground.Width, bmpBackground.Height), 0, 0,
                         bmpBackground.Width, bmpBackground.Height, GraphicsUnit.Pixel, imgattr);
                 }
-                else if ((selectedWindowMode && Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
-                (!selectedWindowMode && Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
+                else if ((selectedWindowMode && Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE) ||
+                (!selectedWindowMode && Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE))
                 { // If Background Region Grayscale
                     ImageAttributes imgattr = new ImageAttributes();
                     imgattr.SetColorMatrix(ColorMatrices.GrayscaleFilter());
@@ -197,7 +197,7 @@ namespace ZScreenLib
         {
             CalculateBoundaryFromMousePosition();
 
-            if (Engine.conf.CropDynamicCrosshair) forceCheck = true;
+            if (Engine.ConfigUI.CropDynamicCrosshair) forceCheck = true;
 
             if (oldMousePos != mousePos || forceCheck)
             {
@@ -226,8 +226,8 @@ namespace ZScreenLib
                 if (mouseDown && dragging)
                 {
                     CropRegion = GraphicsMgr.GetRectangle(mousePos.X, mousePos.Y,
-                        mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Engine.conf.CropGridSize,
-                        Engine.conf.CropGridToggle, ref mousePos);
+                        mousePosOnClick.X - mousePos.X, mousePosOnClick.Y - mousePos.Y, Engine.ConfigUI.CropGridSize,
+                        Engine.ConfigUI.CropGridToggle, ref mousePos);
                     CropRegion = Rectangle.Intersect(CropRegion, rectIntersect);
                     mousePos = mousePos.Intersect(rectIntersect);
                 }
@@ -272,20 +272,20 @@ namespace ZScreenLib
             g.FillRectangle(brushBackground, 0, 0, bmpBackground.Width, bmpBackground.Height);
 
             // Draw region
-            if ((selectedWindowMode && (Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
-                Engine.conf.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
-                (!selectedWindowMode && (Engine.conf.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
-                Engine.conf.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mouseDown))
+            if ((selectedWindowMode && (Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.REGION_TRANSPARENT ||
+                Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.REGION_BRIGHTNESS)) ||
+                (!selectedWindowMode && (Engine.ConfigUI.CropRegionStyles == RegionStyles.REGION_TRANSPARENT ||
+                Engine.ConfigUI.CropRegionStyles == RegionStyles.REGION_BRIGHTNESS) && mouseDown))
             { // If Region Transparent or Region Brightness
                 g.FillRectangle(brushRegion, CropRegion);
             }
             else if (((selectedWindowMode &&
-                (Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
-                Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
-                Engine.conf.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS)) ||
-                (!selectedWindowMode && (Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
-                Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
-                Engine.conf.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mouseDown))
+                (Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
+                Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
+                Engine.ConfigUI.SelectedWindowRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS)) ||
+                (!selectedWindowMode && (Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_TRANSPARENT ||
+                Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_GRAYSCALE ||
+                Engine.ConfigUI.CropRegionStyles == RegionStyles.BACKGROUND_REGION_BRIGHTNESS) && mouseDown))
                 && CropRegion.Width > 0 && CropRegion.Height > 0)
             { // If Background Region Transparent or Background Region Grayscale or Background Region Brightness
                 g.FillRectangle(brushClean, CropRegion);
@@ -295,7 +295,7 @@ namespace ZScreenLib
             {
                 myRectangle.DrawRectangle(g, CropRegion);
 
-                if (Engine.conf.SelectedWindowRectangleInfo)
+                if (Engine.ConfigUI.SelectedWindowRectangleInfo)
                 {
                     DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " + CropRegion.Width +
                         " px, Height: " + CropRegion.Height + " px", new Point(20, 20), g);
@@ -303,7 +303,7 @@ namespace ZScreenLib
             }
             else
             {
-                if (Engine.conf.CropShowBigCross)
+                if (Engine.ConfigUI.CropShowBigCross)
                 {
                     g.DrawLine(crosshairPen2, new Point(0, mousePos.Y), new Point(bmpBackground.Width, mousePos.Y));
                     g.DrawLine(crosshairPen2, new Point(mousePos.X, 0), new Point(mousePos.X, bmpBackground.Height));
@@ -311,7 +311,7 @@ namespace ZScreenLib
 
                 if (mouseDown)
                 {
-                    if (Engine.conf.CropShowGrids && Engine.conf.CropGridToggle)
+                    if (Engine.ConfigUI.CropShowGrids && Engine.ConfigUI.CropGridToggle)
                     {
                         DrawGrids(g);
                     }
@@ -319,7 +319,7 @@ namespace ZScreenLib
                     DrawInstructor(strMouseDown, g);
                     myRectangle.DrawRectangle(g, CropRegion);
 
-                    if (Engine.conf.CropRegionRectangleInfo)
+                    if (Engine.ConfigUI.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + CropRegion.X + " px, Y: " + CropRegion.Y + " px\nWidth: " +
                             rectRegion.Width + " px, Height: " + rectRegion.Height + " px", new Point(20, 20), g);
@@ -332,13 +332,13 @@ namespace ZScreenLib
                 {
                     DrawInstructor(strMouseUp, g);
 
-                    if (Engine.conf.CropRegionRectangleInfo)
+                    if (Engine.ConfigUI.CropRegionRectangleInfo)
                     {
                         DrawTooltip("X: " + mousePos.X + " px, Y: " + mousePos.Y + " px", new Point(20, 20), g);
                     }
                 }
 
-                if (!Engine.conf.UseHardwareCursor)
+                if (!Engine.ConfigUI.UseHardwareCursor)
                 {
                     crosshair.Draw(g, mousePos);
                 }
@@ -362,7 +362,7 @@ namespace ZScreenLib
                 g.DrawPath(labelBorderPen, gPath);
             }
             g.DrawString(text, font, new SolidBrush(Color.White), labelRect.X + 5, labelRect.Y + 5);
-            if ((!selectedWindowMode || (selectedWindowMode && dragging)) && Engine.conf.CropShowMagnifyingGlass)
+            if ((!selectedWindowMode || (selectedWindowMode && dragging)) && Engine.ConfigUI.CropShowMagnifyingGlass)
             {
                 int posY = labelRect.Y - offset.Y * 2 - 100;
                 if (posY < 5) posY = labelRect.Y + labelRect.Height + 10;
@@ -372,29 +372,29 @@ namespace ZScreenLib
 
         private void DrawGrids(Graphics g)
         {
-            if (Engine.conf.CropGridSize.Width >= 10)
+            if (Engine.ConfigUI.CropGridSize.Width >= 10)
             {
-                for (int x = 0; x <= (CropRegion.Width / Engine.conf.CropGridSize.Width); x++)
+                for (int x = 0; x <= (CropRegion.Width / Engine.ConfigUI.CropGridSize.Width); x++)
                 {
                     g.DrawLine(crosshairPen2,
-                        new Point(CropRegion.X + (Engine.conf.CropGridSize.Width * x), CropRegion.Y),
-                        new Point(CropRegion.X + (Engine.conf.CropGridSize.Width * x), CropRegion.Y + CropRegion.Height));
+                        new Point(CropRegion.X + (Engine.ConfigUI.CropGridSize.Width * x), CropRegion.Y),
+                        new Point(CropRegion.X + (Engine.ConfigUI.CropGridSize.Width * x), CropRegion.Y + CropRegion.Height));
                 }
             }
-            if (Engine.conf.CropGridSize.Height >= 10)
+            if (Engine.ConfigUI.CropGridSize.Height >= 10)
             {
-                for (int y = 0; y <= (CropRegion.Height / Engine.conf.CropGridSize.Height); y++)
+                for (int y = 0; y <= (CropRegion.Height / Engine.ConfigUI.CropGridSize.Height); y++)
                 {
                     g.DrawLine(crosshairPen2,
-                        new Point(CropRegion.X, CropRegion.Y + (Engine.conf.CropGridSize.Height * y)),
-                        new Point(CropRegion.X + CropRegion.Width, CropRegion.Y + (Engine.conf.CropGridSize.Height * y)));
+                        new Point(CropRegion.X, CropRegion.Y + (Engine.ConfigUI.CropGridSize.Height * y)),
+                        new Point(CropRegion.X + CropRegion.Width, CropRegion.Y + (Engine.ConfigUI.CropGridSize.Height * y)));
                 }
             }
         }
 
         private void DrawInstructor(string drawText, Graphics g)
         {
-            if (Engine.conf.CropRegionHotkeyInfo)
+            if (Engine.ConfigUI.CropRegionHotkeyInfo)
             {
                 Font posFont = new Font(FontFamily.GenericSansSerif, 8);
                 Size textSize = TextRenderer.MeasureText(drawText, posFont);
@@ -495,7 +495,7 @@ namespace ZScreenLib
 
             if (e.KeyCode == Keys.Tab && !selectedWindowMode)
             {
-                Engine.conf.CropGridToggle = !Engine.conf.CropGridToggle;
+                Engine.ConfigUI.CropGridToggle = !Engine.ConfigUI.CropGridToggle;
                 forceCheck = true;
             }
 
@@ -531,16 +531,16 @@ namespace ZScreenLib
             {
                 if (dragging)
                 {
-                    Engine.conf.LastCapture = rectRegion;
+                    Engine.ConfigUI.LastCapture = rectRegion;
                 }
                 else
                 {
-                    Engine.conf.LastCapture = CropRegion;
+                    Engine.ConfigUI.LastCapture = CropRegion;
                 }
             }
             else
             {
-                Engine.conf.LastRegion = rectRegion;
+                Engine.ConfigUI.LastRegion = rectRegion;
             }
             DialogResult = DialogResult.OK;
             Close();
@@ -670,23 +670,23 @@ namespace ZScreenLib
         {
             if (ct == CaptureType.CROP)
             {
-                color = (Color)Engine.conf.CropBorderArgb;
-                size = (float)Engine.conf.CropBorderSize;
-                ruler = Engine.conf.CropShowRuler;
-                changeColor = Engine.conf.CropDynamicBorderColor;
-                interval = (int)Engine.conf.CropRegionInterval;
-                step = (int)Engine.conf.CropRegionStep;
-                colorDiff = (int)Engine.conf.CropHueRange;
+                color = (Color)Engine.ConfigUI.CropBorderArgb;
+                size = (float)Engine.ConfigUI.CropBorderSize;
+                ruler = Engine.ConfigUI.CropShowRuler;
+                changeColor = Engine.ConfigUI.CropDynamicBorderColor;
+                interval = (int)Engine.ConfigUI.CropRegionInterval;
+                step = (int)Engine.ConfigUI.CropRegionStep;
+                colorDiff = (int)Engine.ConfigUI.CropHueRange;
             }
             else if (ct == CaptureType.SELECTED_WINDOW)
             {
-                color = (Color)Engine.conf.SelectedWindowBorderArgb;
-                size = (float)Engine.conf.SelectedWindowBorderSize;
-                ruler = Engine.conf.SelectedWindowRuler;
-                changeColor = Engine.conf.SelectedWindowDynamicBorderColor;
-                interval = (int)Engine.conf.SelectedWindowRegionInterval;
-                step = (int)Engine.conf.SelectedWindowRegionStep;
-                colorDiff = (int)Engine.conf.SelectedWindowHueRange;
+                color = (Color)Engine.ConfigUI.SelectedWindowBorderArgb;
+                size = (float)Engine.ConfigUI.SelectedWindowBorderSize;
+                ruler = Engine.ConfigUI.SelectedWindowRuler;
+                changeColor = Engine.ConfigUI.SelectedWindowDynamicBorderColor;
+                interval = (int)Engine.ConfigUI.SelectedWindowRegionInterval;
+                step = (int)Engine.ConfigUI.SelectedWindowRegionStep;
+                colorDiff = (int)Engine.ConfigUI.SelectedWindowHueRange;
             }
             colorHue = color.Hue * 360;
             colorHueMin = color.Hue * 360 - colorDiff;
@@ -753,8 +753,8 @@ namespace ZScreenLib
 
     public class DynamicCrosshair
     {
-        private int interval = Engine.conf.CropInterval;
-        private int step = Engine.conf.CropStep;
+        private int interval = Engine.ConfigUI.CropInterval;
+        private int step = Engine.ConfigUI.CropStep;
         private int currentStep;
         private int minSize = 1;
         private int maxSize;
@@ -763,9 +763,9 @@ namespace ZScreenLib
         private long lastTime;
         private int currentSize;
         private int normalSize;
-        private int lineCount = Engine.conf.CrosshairLineCount;
-        private int lineSize = Engine.conf.CrosshairLineSize;
-        private Color crosshairColor = Engine.conf.CropCrosshairArgb;
+        private int lineCount = Engine.ConfigUI.CrosshairLineCount;
+        private int lineSize = Engine.ConfigUI.CrosshairLineSize;
+        private Color crosshairColor = Engine.ConfigUI.CropCrosshairArgb;
 
         public DynamicCrosshair()
         {
@@ -780,7 +780,7 @@ namespace ZScreenLib
         public void Draw(Graphics g, Point mousePos)
         {
             g.SmoothingMode = SmoothingMode.HighQuality;
-            if (Engine.conf.CropDynamicCrosshair)
+            if (Engine.ConfigUI.CropDynamicCrosshair)
             {
                 if (timer.ElapsedMilliseconds - lastTime >= interval)
                 {
@@ -802,7 +802,7 @@ namespace ZScreenLib
             {
                 currentSize = normalSize;
             }
-            if (Engine.conf.CropGridToggle)
+            if (Engine.ConfigUI.CropGridToggle)
             {
                 for (int i = 0; i < lineCount; i++)
                 {

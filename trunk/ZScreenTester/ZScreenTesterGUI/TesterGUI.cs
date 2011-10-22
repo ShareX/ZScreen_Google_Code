@@ -240,18 +240,18 @@ namespace ZScreenTesterGUI
                         case UploaderType.ImageUploader:
                             if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
                             {
-                                task.WorkflowConfig.ImageUploaders.Add(uploader.ImageUploader);
+                                task.WorkflowConfig.DestConfig.ImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
                                 task.UploadImage();
                             }
                             break;
                         case UploaderType.FileUploader:
-                            task.WorkflowConfig.FileUploaders.Add(uploader.FileUploader);
+                            task.WorkflowConfig.DestConfig.FileUploaders.Add(uploader.FileUploader);
                             task.UpdateLocalFilePath(TestFilePath);
                             task.UploadFile();
                             break;
                         case UploaderType.TextUploader:
-                            task.WorkflowConfig.TextUploaders.Add(uploader.TextUploader);
+                            task.WorkflowConfig.DestConfig.TextUploaders.Add(uploader.TextUploader);
                             task.SetText(TestText);
                             task.UploadText();
                             break;
