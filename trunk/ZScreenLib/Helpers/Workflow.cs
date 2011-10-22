@@ -71,6 +71,7 @@ namespace ZScreenLib
         public bool ActiveWindowCleanTransparentCorners = true;
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
+        public bool ActiveWindowDwmUseCustomBackground = false;
         public XColor ActiveWindowDwmBackColor = Color.White;
 
         [Category(ComponentModelStrings.ScreenshotsActiveWindow), DefaultValue(false), Description("Freeze active window during capture. WARNING: Do not try this on a Windows process.")]

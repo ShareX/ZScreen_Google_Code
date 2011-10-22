@@ -89,7 +89,7 @@ namespace ZScreenLib
                     windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
                         wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
                 }
-                else
+                else if (wfdwm.ActiveWindowDwmUseCustomBackground)
                 {
                     windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
                         wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
