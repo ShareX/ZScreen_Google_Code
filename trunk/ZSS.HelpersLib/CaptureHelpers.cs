@@ -143,7 +143,12 @@ namespace HelpersLib
 
             if (NativeMethods.IsDWMEnabled())
             {
-                NativeMethods.GetExtendedFrameBounds(handle, out rect);
+                Rectangle tempRect;
+
+                if (NativeMethods.GetExtendedFrameBounds(handle, out tempRect))
+                {
+                    rect = tempRect;
+                }
             }
 
             if (rect.IsEmpty)

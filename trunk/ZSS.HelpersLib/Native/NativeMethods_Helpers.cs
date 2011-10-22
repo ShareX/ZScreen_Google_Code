@@ -294,17 +294,17 @@ namespace HelpersLib
             RECT rect;
             int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
             rectangle = rect.ToRectangle();
-            return result >= 0;
+            return result == 0;
         }
 
-        public static bool DWMWA_NCRENDERING_ENABLED(IntPtr handle)
+        public static bool GetNCRenderingEnabled(IntPtr handle)
         {
             bool enabled;
             int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingEnabled, out enabled, sizeof(bool));
-            return enabled;
+            return result == 0 && enabled;
         }
 
-        public static void SetDWMWindowAttributeNCRenderingPolicy(IntPtr handle, DwmNCRenderingPolicy renderingPolicy)
+        public static void SetNCRenderingPolicy(IntPtr handle, DwmNCRenderingPolicy renderingPolicy)
         {
             int renderPolicy = (int)renderingPolicy;
             DwmSetWindowAttribute(handle, (int)DwmWindowAttribute.NCRenderingPolicy, ref renderPolicy, sizeof(int));
