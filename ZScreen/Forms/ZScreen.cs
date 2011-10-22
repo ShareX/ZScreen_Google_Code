@@ -1426,10 +1426,9 @@ namespace ZScreenGUI
 
         private void UpdateAeroGlassConfig()
         {
-            gbCaptureGdi.Enabled = Engine.ConfigWorkflow.CaptureEngineMode == CaptureEngineType.GDI;
-            gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode == CaptureEngineType.DWM && !chkActiveWindowCleanBackground.Checked;
-            gbCaptureGdiDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode != CaptureEngineType.Hybrid;
-
+            gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.DWM;
+            gbCaptureGdi.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.GDI;
+     
             // Disable Show Checkers option if Clean Background is disabled
             if (!chkActiveWindowCleanBackground.Checked)
             {
@@ -1965,7 +1964,7 @@ namespace ZScreenGUI
 
         private void cboCaptureEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.CaptureEngineMode = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
+            Engine.ConfigWorkflow.CaptureEngineMode2 = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
             UpdateAeroGlassConfig();
         }
 

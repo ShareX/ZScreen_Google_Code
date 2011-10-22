@@ -27,7 +27,7 @@ namespace ZScreenLib
             if (task != null)
             {
                 this.Config = task.WorkflowConfig;
-                this.Text = Application.ProductName + " - " + task.Info.Job.GetDescription();
+                this.Text = Application.ProductName + " - Workflow - " + task.Info.Job.GetDescription();
             }
             else
             {

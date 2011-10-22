@@ -36,63 +36,55 @@ namespace ZScreenLib
 {
     public static class Capture
     {
-        public static Image CaptureActiveWindow(Workflow wfAw)
+        /// <summary>
+        /// Captures Active Window and draws cursor if the option is set in WorkflowConfig
+        /// </summary>
+        /// <param name="WorkflowConfig">Optios for Active Window</param>
+        /// <returns></returns>
+        public static Image CaptureWithGDI2(Workflow WorkflowConfig)
         {
-            Image imgAw = null;
-            IntPtr handle = NativeMethods.GetForegroundWindow();
+            StaticHelper.WriteLine("Capturing with GDI");
+            Image tempImage = null;
 
-            if (handle.ToInt32() > 0)
+            Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
+            if (WorkflowConfig.ActiveWindowClearBackground)
             {
-                Rectangle rectAw = CaptureHelpers.GetWindowRectangle(handle);
-
-                if (wfAw.CaptureEngineMode == CaptureEngineType.DWM && NativeMethods.IsDWMEnabled())
-                {
-                    imgAw = CaptureWithDWM(wfAw, handle, out rectAw);
-                }
-                else
-                {
-                    imgAw = CaptureWithGDI(wfAw, handle, out rectAw);
-                }
-
-                if (imgAw != null)
-                {
-                    if (wfAw.DrawCursor)
-                    {
-                        CaptureHelpers.DrawCursorToImage(imgAw, rectAw.Location);
-                    }
-
-                    if (wfAw.ActiveWindowShowCheckers)
-                    {
-                        imgAw = ImageEffects.DrawCheckers(imgAw);
-                    }
-                }
+                tempImage = Screenshot.CaptureActiveWindowTransparent();
+            }
+            else
+            {
+                tempImage = Screenshot.CaptureActiveWindow();
             }
 
-            return imgAw;
+            return tempImage;
         }
 
         /// <summary>Captures a screenshot of a window using the Windows DWM</summary>
         /// <param name="handle">handle of the window to capture</param>
-        /// <returns>the captured window image</returns>
-        private static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle, out Rectangle windowRect)
+        /// <returns>the captured window image with or without cursor</returns>
+        public static Image CaptureWithDWM(Workflow wfdwm)
         {
             StaticHelper.WriteLine("Capturing with DWM");
+            IntPtr handle = NativeMethods.GetForegroundWindow();
             Image windowImageDwm = null;
             Bitmap redBGImage = null;
 
-            windowRect = CaptureHelpers.GetWindowRectangle(handle);
+            Rectangle windowRect = CaptureHelpers.GetWindowRectangle(handle);
 
             if (Engine.HasAero)
             {
                 if (wfdwm.ActiveWindowClearBackground)
                 {
-                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                        wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
-                }
-                else if (wfdwm.ActiveWindowDwmUseCustomBackground)
-                {
-                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                        wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
+                    if (wfdwm.ActiveWindowDwmUseCustomBackground)
+                    {
+                        windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                            wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
+                    }
+                    else
+                    {
+                        windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                            wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
+                    }
                 }
             }
 
@@ -130,131 +122,12 @@ namespace ZScreenLib
                 }
             }
 
+            if (wfdwm.DrawCursor)
+            {
+                CaptureHelpers.DrawCursorToImage(windowImageDwm, windowRect.Location);
+            }
+
             return windowImageDwm;
-        }
-
-        /// <summary>Captures a screenshot of a window using Windows GDI</summary>
-        /// <param name="handle">handle of the window to capture</param>
-        /// <returns>the captured window image</returns>
-        private static Image CaptureWithGDI(Workflow wfgdi, IntPtr handle, out Rectangle windowRect)
-        {
-            StaticHelper.WriteLine("Capturing with GDI");
-
-            windowRect = CaptureHelpers.GetWindowRectangle(handle);
-
-            Image windowImageGdi = null;
-
-            if (wfgdi.ActiveWindowClearBackground)
-            {
-                windowImageGdi = CaptureWindowWithTransparencyGDI(wfgdi, handle, out windowRect);
-            }
-
-            if (windowImageGdi == null)
-            {
-                using (new Freeze(wfgdi, handle))
-                {
-                    windowImageGdi = Screenshot.CaptureRectangleNative(windowRect);
-                }
-
-                if (wfgdi.ActiveWindowCleanTransparentCorners)
-                {
-                    Image result = RemoveCorners(handle, windowImageGdi, null, windowRect);
-                    if (result != null)
-                    {
-                        windowImageGdi = result;
-                    }
-                }
-            }
-
-            return windowImageGdi;
-        }
-
-        /// <summary>Captures a screenshot of a window using Windows GDI. Captures transparency.</summary>
-        /// <param name="handle">handle of the window to capture</param>
-        /// <returns>the captured window image</returns>
-        private static Image CaptureWindowWithTransparencyGDI(Workflow wfgdi, IntPtr handle, out Rectangle windowRect)
-        {
-            Image windowImageGdi = null;
-            Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
-
-            if (wfgdi.ActiveWindowTryCaptureChildren)
-            {
-                windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
-            }
-            else
-            {
-                windowRect = CaptureHelpers.GetWindowRectangle(handle);
-            }
-
-            try
-            {
-                using (new Freeze(wfgdi, handle))
-                using (Form form = new Form())
-                {
-                    form.BackColor = Color.White;
-                    form.FormBorderStyle = FormBorderStyle.None;
-                    form.ShowInTaskbar = false;
-
-                    int offset = wfgdi.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
-
-                    windowRect.Inflate(offset, offset);
-                    windowRect.Intersect(CaptureHelpers.GetScreenBounds());
-
-                    NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
-                    NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
-                    Application.DoEvents();
-
-                    whiteBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
-
-                    form.BackColor = Color.Black;
-                    Application.DoEvents();
-
-                    blackBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
-
-                    if (!wfgdi.ActiveWindowGDIFreezeWindow)
-                    {
-                        form.BackColor = Color.White;
-                        Application.DoEvents();
-
-                        white2BGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
-                    }
-                }
-
-                if (wfgdi.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
-                {
-                    windowImageGdi = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
-                }
-                else
-                {
-                    windowImageGdi = (Image)whiteBGImage.Clone();
-                }
-            }
-            finally
-            {
-                if (whiteBGImage != null) whiteBGImage.Dispose();
-                if (blackBGImage != null) blackBGImage.Dispose();
-                if (white2BGImage != null) white2BGImage.Dispose();
-            }
-
-            if (windowImageGdi != null)
-            {
-                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImageGdi);
-                windowImageGdi = CaptureHelpers.CropImage(windowImageGdi, windowRectCropped);
-
-                if (wfgdi.DrawCursor)
-                {
-#if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
-#endif
-                    windowRect.X += windowRectCropped.X;
-                    windowRect.Y += windowRectCropped.Y;
-#if DEBUG
-                    StaticHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
-#endif
-                }
-            }
-
-            return windowImageGdi;
         }
 
         /// <summary>
@@ -377,6 +250,130 @@ namespace ZScreenLib
             }
 
             return windowImage;
+        }
+
+        /// <summary>Captures a screenshot of a window using Windows GDI</summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <returns>the captured window image</returns>
+        private static Image CaptureWithGDI(Workflow wfgdi, IntPtr handle, out Rectangle windowRect)
+        {
+            StaticHelper.WriteLine("Capturing with GDI");
+
+            windowRect = CaptureHelpers.GetWindowRectangle(handle);
+
+            Image windowImageGdi = null;
+
+            if (wfgdi.ActiveWindowClearBackground)
+            {
+                windowImageGdi = CaptureWindowWithGDI(wfgdi, handle, out windowRect);
+            }
+
+            if (windowImageGdi == null)
+            {
+                using (new Freeze(wfgdi, handle))
+                {
+                    windowImageGdi = Screenshot.CaptureRectangleNative(windowRect);
+                }
+
+                if (wfgdi.ActiveWindowCleanTransparentCorners)
+                {
+                    Image result = RemoveCorners(handle, windowImageGdi, null, windowRect);
+                    if (result != null)
+                    {
+                        windowImageGdi = result;
+                    }
+                }
+            }
+
+            return windowImageGdi;
+        }
+
+        /// <summary>Captures a screenshot of a window using Windows GDI. Captures transparency.</summary>
+        /// <param name="handle">handle of the window to capture</param>
+        /// <returns>the captured window image</returns>
+        private static Image CaptureWindowWithGDI(Workflow wfgdi, IntPtr handle, out Rectangle windowRect)
+        {
+            Image windowImageGdi = null;
+            Bitmap whiteBGImage = null, blackBGImage = null, white2BGImage = null;
+
+            if (wfgdi.ActiveWindowTryCaptureChildren)
+            {
+                windowRect = new WindowRectangle(handle).CalculateWindowRectangle();
+            }
+            else
+            {
+                windowRect = CaptureHelpers.GetWindowRectangle(handle);
+            }
+
+            try
+            {
+                using (new Freeze(wfgdi, handle))
+                using (Form form = new Form())
+                {
+                    form.BackColor = Color.White;
+                    form.FormBorderStyle = FormBorderStyle.None;
+                    form.ShowInTaskbar = false;
+
+                    int offset = wfgdi.ActiveWindowIncludeShadows && !NativeMethods.IsWindowMaximized(handle) ? 20 : 0;
+
+                    windowRect.Inflate(offset, offset);
+                    windowRect.Intersect(CaptureHelpers.GetScreenBounds());
+
+                    NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
+                    NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
+                    Application.DoEvents();
+
+                    whiteBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
+
+                    form.BackColor = Color.Black;
+                    Application.DoEvents();
+
+                    blackBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
+
+                    if (!wfgdi.ActiveWindowGDIFreezeWindow)
+                    {
+                        form.BackColor = Color.White;
+                        Application.DoEvents();
+
+                        white2BGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
+                    }
+                }
+
+                if (wfgdi.ActiveWindowGDIFreezeWindow || whiteBGImage.AreBitmapsEqual(white2BGImage))
+                {
+                    windowImageGdi = GraphicsMgr.ComputeOriginal(whiteBGImage, blackBGImage);
+                }
+                else
+                {
+                    windowImageGdi = (Image)whiteBGImage.Clone();
+                }
+            }
+            finally
+            {
+                if (whiteBGImage != null) whiteBGImage.Dispose();
+                if (blackBGImage != null) blackBGImage.Dispose();
+                if (white2BGImage != null) white2BGImage.Dispose();
+            }
+
+            if (windowImageGdi != null)
+            {
+                Rectangle windowRectCropped = GraphicsMgr.GetCroppedArea((Bitmap)windowImageGdi);
+                windowImageGdi = CaptureHelpers.CropImage(windowImageGdi, windowRectCropped);
+
+                if (wfgdi.DrawCursor)
+                {
+#if DEBUG
+                    StaticHelper.WriteLine("Fixed cursor position (before): " + windowRect.ToString());
+#endif
+                    windowRect.X += windowRectCropped.X;
+                    windowRect.Y += windowRectCropped.Y;
+#if DEBUG
+                    StaticHelper.WriteLine("Fixed cursor position (after):  " + windowRect.ToString());
+#endif
+                }
+            }
+
+            return windowImageGdi;
         }
 
         /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>

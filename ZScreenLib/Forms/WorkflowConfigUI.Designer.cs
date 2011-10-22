@@ -36,6 +36,8 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.chkUseHotkey = new System.Windows.Forms.CheckBox();
             this.hmcHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
+            this.tpImagePreview = new System.Windows.Forms.TabPage();
+            this.pbImage = new HelpersLib.MyPictureBox();
             this.tpImageQuality = new System.Windows.Forms.TabPage();
             this.gbPictureQuality = new System.Windows.Forms.GroupBox();
             this.tcQuality = new System.Windows.Forms.TabControl();
@@ -87,19 +89,18 @@
             this.btnOutputsConfig = new System.Windows.Forms.Button();
             this.gbTasks = new System.Windows.Forms.GroupBox();
             this.flpTasks = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnTaskAnnotate = new System.Windows.Forms.Button();
             this.chkTaskImageFileFormat = new System.Windows.Forms.CheckBox();
             this.chkTaskImageResize = new System.Windows.Forms.CheckBox();
             this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnTaskAnnotate = new System.Windows.Forms.Button();
-            this.tpImagePreview = new System.Windows.Forms.TabPage();
-            this.pbImage = new HelpersLib.MyPictureBox();
             this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
             this.gbName.SuspendLayout();
+            this.tpImagePreview.SuspendLayout();
             this.tpImageQuality.SuspendLayout();
             this.gbPictureQuality.SuspendLayout();
             this.tcQuality.SuspendLayout();
@@ -119,7 +120,6 @@
             this.gbSaveToFile.SuspendLayout();
             this.gbTasks.SuspendLayout();
             this.flpTasks.SuspendLayout();
-            this.tpImagePreview.SuspendLayout();
             this.flpMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -203,6 +203,27 @@
             this.hmcHotkeys.Name = "hmcHotkeys";
             this.hmcHotkeys.Size = new System.Drawing.Size(600, 32);
             this.hmcHotkeys.TabIndex = 11;
+            // 
+            // tpImagePreview
+            // 
+            this.tpImagePreview.Controls.Add(this.pbImage);
+            this.tpImagePreview.Location = new System.Drawing.Point(4, 22);
+            this.tpImagePreview.Name = "tpImagePreview";
+            this.tpImagePreview.Padding = new System.Windows.Forms.Padding(3);
+            this.tpImagePreview.Size = new System.Drawing.Size(632, 374);
+            this.tpImagePreview.TabIndex = 6;
+            this.tpImagePreview.Text = "Preview";
+            this.tpImagePreview.UseVisualStyleBackColor = true;
+            // 
+            // pbImage
+            // 
+            this.pbImage.BackColor = System.Drawing.Color.White;
+            this.pbImage.DisableViewer = false;
+            this.pbImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbImage.Location = new System.Drawing.Point(3, 3);
+            this.pbImage.Name = "pbImage";
+            this.pbImage.Size = new System.Drawing.Size(626, 368);
+            this.pbImage.TabIndex = 0;
             // 
             // tpImageQuality
             // 
@@ -768,6 +789,16 @@
             this.flpTasks.Size = new System.Drawing.Size(144, 352);
             this.flpTasks.TabIndex = 3;
             // 
+            // btnTaskAnnotate
+            // 
+            this.btnTaskAnnotate.Location = new System.Drawing.Point(3, 3);
+            this.btnTaskAnnotate.Name = "btnTaskAnnotate";
+            this.btnTaskAnnotate.Size = new System.Drawing.Size(117, 23);
+            this.btnTaskAnnotate.TabIndex = 4;
+            this.btnTaskAnnotate.Text = "Annotate Image...";
+            this.btnTaskAnnotate.UseVisualStyleBackColor = true;
+            this.btnTaskAnnotate.Click += new System.EventHandler(this.btnTaskAnnotate_Click);
+            // 
             // chkTaskImageFileFormat
             // 
             this.chkTaskImageFileFormat.AutoSize = true;
@@ -808,13 +839,14 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(104, 24);
             this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "&Save && Close";
+            this.btnOK.Text = "&Save && Continue";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(720, 424);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 24);
@@ -822,37 +854,6 @@
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnTaskAnnotate
-            // 
-            this.btnTaskAnnotate.Location = new System.Drawing.Point(3, 3);
-            this.btnTaskAnnotate.Name = "btnTaskAnnotate";
-            this.btnTaskAnnotate.Size = new System.Drawing.Size(117, 23);
-            this.btnTaskAnnotate.TabIndex = 4;
-            this.btnTaskAnnotate.Text = "Annotate Image...";
-            this.btnTaskAnnotate.UseVisualStyleBackColor = true;
-            this.btnTaskAnnotate.Click += new System.EventHandler(this.btnTaskAnnotate_Click);
-            // 
-            // tpImagePreview
-            // 
-            this.tpImagePreview.Controls.Add(this.pbImage);
-            this.tpImagePreview.Location = new System.Drawing.Point(4, 22);
-            this.tpImagePreview.Name = "tpImagePreview";
-            this.tpImagePreview.Padding = new System.Windows.Forms.Padding(3);
-            this.tpImagePreview.Size = new System.Drawing.Size(632, 374);
-            this.tpImagePreview.TabIndex = 6;
-            this.tpImagePreview.Text = "Preview";
-            this.tpImagePreview.UseVisualStyleBackColor = true;
-            // 
-            // pbImage
-            // 
-            this.pbImage.BackColor = System.Drawing.Color.White;
-            this.pbImage.DisableViewer = false;
-            this.pbImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbImage.Location = new System.Drawing.Point(3, 3);
-            this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(626, 368);
-            this.pbImage.TabIndex = 0;
             // 
             // flpMain
             // 
@@ -868,6 +869,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(850, 459);
             this.Controls.Add(this.flpMain);
             this.Controls.Add(this.btnOK);
@@ -884,6 +886,7 @@
             this.gbTask.ResumeLayout(false);
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
+            this.tpImagePreview.ResumeLayout(false);
             this.tpImageQuality.ResumeLayout(false);
             this.gbPictureQuality.ResumeLayout(false);
             this.gbPictureQuality.PerformLayout();
@@ -910,7 +913,6 @@
             this.gbTasks.ResumeLayout(false);
             this.flpTasks.ResumeLayout(false);
             this.flpTasks.PerformLayout();
-            this.tpImagePreview.ResumeLayout(false);
             this.flpMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
