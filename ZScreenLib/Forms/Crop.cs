@@ -255,7 +255,7 @@ namespace ZScreenLib
                 NativeMethods.EnumChildWindows(hWnd, ewp, IntPtr.Zero);
             }
 
-            Rectangle rect = NativeMethods.GetWindowRectangle(hWnd);
+            Rectangle rect = CaptureHelpers.GetWindowRectangle(hWnd);
             rect.Intersect(Bounds);
             windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
 

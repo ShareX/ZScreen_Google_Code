@@ -370,5 +370,24 @@ namespace HelpersLib
             Brush textBrush = new SolidBrush(textColor);
             g.DrawString(text, font, textBrush, position.X, position.Y);
         }
+
+        public static void DrawCursorToImage(Image img)
+        {
+            DrawCursorToImage(img, Point.Empty);
+        }
+
+        public static void DrawCursorToImage(Image img, Point offset)
+        {
+            using (MyCursor cursor = NativeMethods.CaptureCursor())
+            {
+                cursor.Position.Offset(-offset.X, -offset.Y);
+
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.DrawImage(cursor.Bitmap, cursor.Position);
+                }
+            }
+        }
     }
 }

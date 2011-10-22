@@ -58,7 +58,7 @@ namespace ZScreenLib
                 {
                     if (wfAw.DrawCursor)
                     {
-                        Screenshot.DrawCursorToImage(imgAw, rectAw.Location);
+                        CaptureHelpers.DrawCursorToImage(imgAw, rectAw.Location);
                     }
 
                     if (wfAw.ActiveWindowShowCheckers)
@@ -99,7 +99,7 @@ namespace ZScreenLib
             if (windowImageDwm == null)
             {
                 StaticHelper.WriteLine("Standard capture (no transparency)");
-                windowImageDwm = Screenshot.GetRectangleNative(windowRect);
+                windowImageDwm = Screenshot.CaptureRectangleNative(windowRect);
             }
 
             if (wfdwm.ActiveWindowCleanTransparentCorners)
@@ -153,7 +153,7 @@ namespace ZScreenLib
             {
                 using (new Freeze(wfgdi, handle))
                 {
-                    windowImageGdi = Screenshot.GetRectangleNative(windowRect);
+                    windowImageGdi = Screenshot.CaptureRectangleNative(windowRect);
                 }
 
                 if (wfgdi.ActiveWindowCleanTransparentCorners)
@@ -203,17 +203,20 @@ namespace ZScreenLib
                     NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                     NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                     Application.DoEvents();
-                    whiteBGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
+
+                    whiteBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
 
                     form.BackColor = Color.Black;
                     Application.DoEvents();
-                    blackBGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
+
+                    blackBGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
 
                     if (!wfgdi.ActiveWindowGDIFreezeWindow)
                     {
                         form.BackColor = Color.White;
                         Application.DoEvents();
-                        white2BGImage = (Bitmap)Screenshot.GetRectangleNative2(windowRect);
+
+                        white2BGImage = (Bitmap)Screenshot.CaptureRectangleNative2(windowRect);
                     }
                 }
 
@@ -319,31 +322,31 @@ namespace ZScreenLib
                 {
                     // no need for transparency; user has requested custom background color
                     NativeMethods.ActivateWindowRepeat(form.Handle, 250);
-                    windowImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                    windowImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
                 }
                 else if (form.BackColor == Color.White)
                 {
                     // transparent capture
                     NativeMethods.ActivateWindowRepeat(handle, 250);
-                    Bitmap whiteBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                    Bitmap whiteBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
 
                     form.BackColor = Color.Black;
                     form.Refresh();
                     NativeMethods.ActivateWindowRepeat(handle, 250);
-                    Bitmap blackBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                    Bitmap blackBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
 
                     if (captureRedBGImage)
                     {
                         form.BackColor = Color.Red;
                         form.Refresh();
                         NativeMethods.ActivateWindowRepeat(handle, 250);
-                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                        redBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
                     }
 
                     form.BackColor = Color.White;
                     form.Refresh();
                     NativeMethods.ActivateWindowRepeat(handle, 250);
-                    Bitmap whiteBGImage2 = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                    Bitmap whiteBGImage2 = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
 
                     // Don't do transparency calculation if an animated picture is detected
                     if (whiteBGImage.AreBitmapsEqual(whiteBGImage2))
@@ -395,58 +398,13 @@ namespace ZScreenLib
                         NativeMethods.ShowWindow(form.Handle, (int)WindowShowStyle.ShowNormalNoActivate);
                         NativeMethods.SetWindowPos(form.Handle, handle, windowRect.X, windowRect.Y, windowRect.Width, windowRect.Height, NativeMethods.SWP_NOACTIVATE);
                         Application.DoEvents();
-                        redBGImage = Screenshot.GetRectangleNative(windowRect) as Bitmap;
+                        redBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
                     }
                 }
 
                 return GraphicsMgr.RemoveCorners(windowImage, redBGImage);
             }
             return null;
-        }
-
-        private static Bitmap PrintWindow(IntPtr hwnd)
-        {
-            RECT rc;
-            NativeMethods.GetWindowRect(hwnd, out rc);
-
-            Bitmap bmp = new Bitmap(rc.Width, rc.Height, PixelFormat.Format32bppArgb);
-            Graphics gfxBmp = Graphics.FromImage(bmp);
-            IntPtr hdcBitmap = gfxBmp.GetHdc();
-            bool succeeded = NativeMethods.PrintWindow(hwnd, hdcBitmap, 0);
-            gfxBmp.ReleaseHdc(hdcBitmap);
-            if (!succeeded)
-            {
-                gfxBmp.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(Point.Empty, bmp.Size));
-            }
-            IntPtr hRgn = NativeMethods.CreateRectRgn(0, 0, 0, 0);
-            NativeMethods.GetWindowRgn(hwnd, hRgn);
-            Region region = Region.FromHrgn(hRgn);
-            if (!region.IsEmpty(gfxBmp))
-            {
-                gfxBmp.ExcludeClip(region);
-                gfxBmp.Clear(Color.Transparent);
-            }
-            gfxBmp.Dispose();
-            return bmp;
-
-            /*RECT rect;
-            GetWindowRect(handle, out rect);
-
-            IntPtr hDC = GetDC(handle);
-            IntPtr hDCMem = GDI.CreateCompatibleDC(hDC);
-            IntPtr hBitmap = GDI.CreateCompatibleBitmap(hDC, rect.Width, rect.Height);
-
-            IntPtr hOld = GDI.SelectObject(hDCMem, hBitmap);
-
-            SendMessage(handle, (uint)WM.PRINT, hDCMem, (IntPtr)(PRF.CHILDREN | PRF.CLIENT | PRF.ERASEBKGND | PRF.NONCLIENT | PRF.OWNED));
-            GDI.SelectObject(hDCMem, hOld);
-
-            Bitmap bmp = Bitmap.FromHbitmap(hBitmap);
-
-            GDI.DeleteDC(hDCMem);
-            ReleaseDC(handle, hDC);
-
-            return bmp;*/
         }
     }
 }

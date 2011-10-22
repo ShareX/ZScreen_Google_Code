@@ -36,7 +36,7 @@ namespace ScreenCapture
         public static bool RemoveOutsideScreenArea = true;
         public static bool DrawCursor = false;
 
-        public static Image GetRectangle(Rectangle rect)
+        public static Image CaptureRectangle(Rectangle rect)
         {
             if (RemoveOutsideScreenArea)
             {
@@ -44,45 +44,45 @@ namespace ScreenCapture
                 rect = Rectangle.Intersect(bounds, rect);
             }
 
-            Image img = GetRectangleNative(rect);
+            Image img = CaptureRectangleNative(rect);
 
             if (DrawCursor)
             {
                 Point cursorOffset = CaptureHelpers.FixScreenCoordinates(rect.Location);
-                DrawCursorToImage(img, cursorOffset);
+                CaptureHelpers.DrawCursorToImage(img, cursorOffset);
             }
 
             return img;
         }
 
-        public static Image GetFullscreen()
+        public static Image CaptureFullscreen()
         {
             Rectangle bounds = CaptureHelpers.GetScreenBounds();
 
-            return GetRectangle(bounds);
+            return CaptureRectangle(bounds);
         }
 
-        public static Image GetWindow(IntPtr handle)
+        public static Image CaptureWindow(IntPtr handle)
         {
             if (handle.ToInt32() > 0)
             {
                 Rectangle rect = CaptureHelpers.GetWindowRectangle(handle);
 
-                return GetRectangle(rect);
+                return CaptureRectangle(rect);
             }
 
             return null;
         }
 
-        public static Image GetActiveWindow()
+        public static Image CaptureActiveWindow()
         {
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
-            return GetWindow(handle);
+            return CaptureWindow(handle);
         }
 
         // Managed can't use SourceCopy | CaptureBlt because of .NET bug
-        public static Image GetRectangleManaged(Rectangle rect)
+        public static Image CaptureRectangleManaged(Rectangle rect)
         {
             Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 
@@ -94,17 +94,12 @@ namespace ScreenCapture
             return img;
         }
 
-        public static Image GetRectangleNative(Rectangle rect)
+        public static Image CaptureRectangleNative(Rectangle rect)
         {
-            return GetRectangleNative(NativeMethods.GetDesktopWindow(), rect);
+            return CaptureRectangleNative(NativeMethods.GetDesktopWindow(), rect);
         }
 
-        public static Image GetRectangleNative2(Rectangle rect)
-        {
-            return GetRectangleNative2(NativeMethods.GetDesktopWindow(), rect);
-        }
-
-        public static Image GetRectangleNative(IntPtr handle, Rectangle rect)
+        public static Image CaptureRectangleNative(IntPtr handle, Rectangle rect)
         {
             // Format24bppRgb because some images can show up with white dots
             Image img = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
@@ -121,7 +116,12 @@ namespace ScreenCapture
             return img;
         }
 
-        public static Image GetRectangleNative2(IntPtr handle, Rectangle rect)
+        public static Image CaptureRectangleNative2(Rectangle rect)
+        {
+            return CaptureRectangleNative2(NativeMethods.GetDesktopWindow(), rect);
+        }
+
+        public static Image CaptureRectangleNative2(IntPtr handle, Rectangle rect)
         {
             IntPtr hdcSrc = NativeMethods.GetWindowDC(handle);
             IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
@@ -135,25 +135,6 @@ namespace ScreenCapture
             NativeMethods.DeleteObject(hBitmap);
 
             return img;
-        }
-
-        public static void DrawCursorToImage(Image img)
-        {
-            DrawCursorToImage(img, Point.Empty);
-        }
-
-        public static void DrawCursorToImage(Image img, Point offset)
-        {
-            using (MyCursor cursor = NativeMethods.CaptureCursor())
-            {
-                cursor.Position.Offset(-offset.X, -offset.Y);
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.DrawImage(cursor.Bitmap, cursor.Position);
-                }
-            }
         }
     }
 }

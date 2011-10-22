@@ -747,7 +747,7 @@ namespace ZScreenLib
             if (tempImage == null)
             {
                 Screenshot.DrawCursor = WorkflowConfig.DrawCursor;
-                SetImage(Screenshot.GetFullscreen());
+                SetImage(Screenshot.CaptureFullscreen());
             }
 
             return tempImage != null;
@@ -775,7 +775,7 @@ namespace ZScreenLib
                         }
                         else
                         {
-                            SetImage(Screenshot.GetActiveWindow());
+                            SetImage(Screenshot.CaptureActiveWindow());
                         }
                         break;
                     default:
@@ -791,7 +791,7 @@ namespace ZScreenLib
         {
             NativeMethods.SetForegroundWindow(this.Info.Handle);
             Thread.Sleep(250);
-            SetImage(Screenshot.GetWindow(this.Info.Handle));
+            SetImage(Screenshot.CaptureWindow(this.Info.Handle));
             return tempImage != null;
         }
 
@@ -822,7 +822,7 @@ namespace ZScreenLib
                 {
                     Screenshot.DrawCursor = Engine.ConfigWorkflow.DrawCursor;
 
-                    using (Image imgSS = Screenshot.GetFullscreen())
+                    using (Image imgSS = Screenshot.CaptureFullscreen())
                     {
                         if (Job2 == WorkerTask.JobLevel2.CaptureLastCroppedWindow && !Engine.ConfigUI.LastRegion.IsEmpty)
                         {

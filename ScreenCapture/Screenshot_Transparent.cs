@@ -64,17 +64,17 @@ namespace ScreenCapture
                         NativeMethods.SetWindowPos(form.Handle, handle, rect.X, rect.Y, rect.Width, rect.Height, NativeMethods.SWP_NOACTIVATE);
                         Application.DoEvents();
 
-                        whiteBackground = (Bitmap)Screenshot.GetRectangleNative(rect);
+                        whiteBackground = (Bitmap)Screenshot.CaptureRectangleNative(rect);
 
                         form.BackColor = Color.Black;
                         Application.DoEvents();
 
-                        blackBackground = (Bitmap)Screenshot.GetRectangleNative(rect);
+                        blackBackground = (Bitmap)Screenshot.CaptureRectangleNative(rect);
 
                         form.BackColor = Color.White;
                         Application.DoEvents();
 
-                        whiteBackground2 = (Bitmap)Screenshot.GetRectangleNative(rect);
+                        whiteBackground2 = (Bitmap)Screenshot.CaptureRectangleNative(rect);
 
                         form.Close();
                         Application.DoEvents();
@@ -82,12 +82,8 @@ namespace ScreenCapture
 
                     Bitmap transparentImage;
 
-                    Stopwatch timer = Stopwatch.StartNew();
-
                     if (IsImagesEqual(whiteBackground, whiteBackground2))
                     {
-                        Debug.WriteLine(timer.ElapsedMilliseconds);
-
                         transparentImage = CreateTransparentImage(whiteBackground, blackBackground);
                         isTransparent = true;
                     }
@@ -99,7 +95,7 @@ namespace ScreenCapture
                     if (DrawCursor)
                     {
                         Point cursorOffset = CaptureHelpers.FixScreenCoordinates(rect.Location);
-                        DrawCursorToImage(transparentImage, cursorOffset);
+                        CaptureHelpers.DrawCursorToImage(transparentImage, cursorOffset);
                     }
 
                     if (isTransparent)
