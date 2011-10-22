@@ -88,6 +88,9 @@ namespace ZScreenGUI
             this.tpMainInput = new System.Windows.Forms.TabPage();
             this.tcCapture = new System.Windows.Forms.TabControl();
             this.tpActivewindow = new System.Windows.Forms.TabPage();
+            this.gbCaptureDwm = new System.Windows.Forms.GroupBox();
+            this.pbActiveWindowDwmBackColor = new System.Windows.Forms.PictureBox();
+            this.chkActiveWindowDwmCustomColor = new System.Windows.Forms.CheckBox();
             this.gbCaptureGdiDwm = new System.Windows.Forms.GroupBox();
             this.chkSelectedWindowIncludeShadow = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
@@ -389,6 +392,8 @@ namespace ZScreenGUI
             this.tpMainInput.SuspendLayout();
             this.tcCapture.SuspendLayout();
             this.tpActivewindow.SuspendLayout();
+            this.gbCaptureDwm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbActiveWindowDwmBackColor)).BeginInit();
             this.gbCaptureGdiDwm.SuspendLayout();
             this.gbCaptureEngine.SuspendLayout();
             this.gbCaptureGdi.SuspendLayout();
@@ -1017,6 +1022,7 @@ namespace ZScreenGUI
             // 
             // tpActivewindow
             // 
+            this.tpActivewindow.Controls.Add(this.gbCaptureDwm);
             this.tpActivewindow.Controls.Add(this.gbCaptureGdiDwm);
             this.tpActivewindow.Controls.Add(this.gbCaptureEngine);
             this.tpActivewindow.Controls.Add(this.gbCaptureGdi);
@@ -1028,6 +1034,40 @@ namespace ZScreenGUI
             this.tpActivewindow.TabIndex = 12;
             this.tpActivewindow.Text = "Active Window";
             this.tpActivewindow.UseVisualStyleBackColor = true;
+            // 
+            // gbCaptureDwm
+            // 
+            this.gbCaptureDwm.Controls.Add(this.pbActiveWindowDwmBackColor);
+            this.gbCaptureDwm.Controls.Add(this.chkActiveWindowDwmCustomColor);
+            this.gbCaptureDwm.Location = new System.Drawing.Point(8, 272);
+            this.gbCaptureDwm.Name = "gbCaptureDwm";
+            this.gbCaptureDwm.Size = new System.Drawing.Size(512, 56);
+            this.gbCaptureDwm.TabIndex = 51;
+            this.gbCaptureDwm.TabStop = false;
+            this.gbCaptureDwm.Text = "DWM";
+            // 
+            // pbActiveWindowDwmBackColor
+            // 
+            this.pbActiveWindowDwmBackColor.BackColor = System.Drawing.Color.White;
+            this.pbActiveWindowDwmBackColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pbActiveWindowDwmBackColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbActiveWindowDwmBackColor.Location = new System.Drawing.Point(224, 17);
+            this.pbActiveWindowDwmBackColor.Name = "pbActiveWindowDwmBackColor";
+            this.pbActiveWindowDwmBackColor.Size = new System.Drawing.Size(24, 24);
+            this.pbActiveWindowDwmBackColor.TabIndex = 127;
+            this.pbActiveWindowDwmBackColor.TabStop = false;
+            this.pbActiveWindowDwmBackColor.Click += new System.EventHandler(this.pbActiveWindowDwmBackColor_Click);
+            // 
+            // chkActiveWindowDwmCustomColor
+            // 
+            this.chkActiveWindowDwmCustomColor.AutoSize = true;
+            this.chkActiveWindowDwmCustomColor.Location = new System.Drawing.Point(16, 24);
+            this.chkActiveWindowDwmCustomColor.Name = "chkActiveWindowDwmCustomColor";
+            this.chkActiveWindowDwmCustomColor.Size = new System.Drawing.Size(168, 17);
+            this.chkActiveWindowDwmCustomColor.TabIndex = 48;
+            this.chkActiveWindowDwmCustomColor.Text = "Use custom background color";
+            this.chkActiveWindowDwmCustomColor.UseVisualStyleBackColor = true;
+            this.chkActiveWindowDwmCustomColor.CheckedChanged += new System.EventHandler(this.chkActiveWindowDwmCustomColor_CheckedChanged);
             // 
             // gbCaptureGdiDwm
             // 
@@ -4389,6 +4429,9 @@ namespace ZScreenGUI
             this.tpMainInput.ResumeLayout(false);
             this.tcCapture.ResumeLayout(false);
             this.tpActivewindow.ResumeLayout(false);
+            this.gbCaptureDwm.ResumeLayout(false);
+            this.gbCaptureDwm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbActiveWindowDwmBackColor)).EndInit();
             this.gbCaptureGdiDwm.ResumeLayout(false);
             this.gbCaptureGdiDwm.PerformLayout();
             this.gbCaptureEngine.ResumeLayout(false);
@@ -4874,5 +4917,8 @@ namespace ZScreenGUI
         private HelpersLib.MyPictureBox pbPreview;
         private HelpProvider helpProvider1;
         internal Button btnWorkflowConfig;
+        internal PictureBox pbActiveWindowDwmBackColor;
+        private GroupBox gbCaptureDwm;
+        private CheckBox chkActiveWindowDwmCustomColor;
     }
 }

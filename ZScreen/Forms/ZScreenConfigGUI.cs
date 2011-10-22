@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
@@ -154,6 +155,8 @@ namespace ZScreenGUI
             chkSelectedWindowIncludeShadow.Checked = Engine.Workflow.ActiveWindowIncludeShadows;
             chkActiveWindowTryCaptureChildren.Checked = Engine.Workflow.ActiveWindowTryCaptureChildren;
             chkSelectedWindowShowCheckers.Checked = Engine.Workflow.ActiveWindowShowCheckers;
+            pbActiveWindowDwmBackColor.BackColor = Engine.Workflow.ActiveWindowDwmBackColor;
+            chkActiveWindowDwmCustomColor.Checked = Engine.Workflow.ActiveWindowDwmBackColor != Color.White;
 
             // Freehand Crop Shot
             cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
