@@ -80,7 +80,7 @@ namespace ZUploader
                 Screenshot.DrawCursor = Program.Settings.ShowCursor;
                 img = capture();
 
-                if (Program.Settings.AutoPlaySound && File.Exists("Camera.wav"))
+                if (img != null && Program.Settings.AutoPlaySound && File.Exists("Camera.wav"))
                 {
                     new SoundPlayer("Camera.wav").Play();
                 }
