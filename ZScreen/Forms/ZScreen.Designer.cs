@@ -96,7 +96,7 @@ namespace ZScreenGUI
             this.chkSelectedWindowShowCheckers = new System.Windows.Forms.CheckBox();
             this.chkSelectedWindowCleanTransparentCorners = new System.Windows.Forms.CheckBox();
             this.gbCaptureEngine = new System.Windows.Forms.GroupBox();
-            this.chkSelectedWindowCleanBackground = new System.Windows.Forms.CheckBox();
+            this.chkActiveWindowCleanBackground = new System.Windows.Forms.CheckBox();
             this.cboCaptureEngine = new System.Windows.Forms.ComboBox();
             this.gbCaptureGdi = new System.Windows.Forms.GroupBox();
             this.chkActiveWindowTryCaptureChildren = new System.Windows.Forms.CheckBox();
@@ -1119,7 +1119,7 @@ namespace ZScreenGUI
             // 
             // gbCaptureEngine
             // 
-            this.gbCaptureEngine.Controls.Add(this.chkSelectedWindowCleanBackground);
+            this.gbCaptureEngine.Controls.Add(this.chkActiveWindowCleanBackground);
             this.gbCaptureEngine.Controls.Add(this.cboCaptureEngine);
             this.gbCaptureEngine.Location = new System.Drawing.Point(8, 8);
             this.gbCaptureEngine.Name = "gbCaptureEngine";
@@ -1128,17 +1128,17 @@ namespace ZScreenGUI
             this.gbCaptureEngine.TabStop = false;
             this.gbCaptureEngine.Text = "Capture Engine of Choice";
             // 
-            // chkSelectedWindowCleanBackground
+            // chkActiveWindowCleanBackground
             // 
-            this.chkSelectedWindowCleanBackground.AutoSize = true;
-            this.chkSelectedWindowCleanBackground.Location = new System.Drawing.Point(16, 56);
-            this.chkSelectedWindowCleanBackground.Name = "chkSelectedWindowCleanBackground";
-            this.chkSelectedWindowCleanBackground.Size = new System.Drawing.Size(295, 17);
-            this.chkSelectedWindowCleanBackground.TabIndex = 43;
-            this.chkSelectedWindowCleanBackground.Text = "Clear \"dirty\" Aero background in Windows Vista or higher";
-            this.ttZScreen.SetToolTip(this.chkSelectedWindowCleanBackground, "Clears background area that does not belong to the Active Window");
-            this.chkSelectedWindowCleanBackground.UseVisualStyleBackColor = true;
-            this.chkSelectedWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
+            this.chkActiveWindowCleanBackground.AutoSize = true;
+            this.chkActiveWindowCleanBackground.Location = new System.Drawing.Point(16, 56);
+            this.chkActiveWindowCleanBackground.Name = "chkActiveWindowCleanBackground";
+            this.chkActiveWindowCleanBackground.Size = new System.Drawing.Size(295, 17);
+            this.chkActiveWindowCleanBackground.TabIndex = 43;
+            this.chkActiveWindowCleanBackground.Text = "Clear \"dirty\" Aero background in Windows Vista or higher";
+            this.ttZScreen.SetToolTip(this.chkActiveWindowCleanBackground, "Clears background area that does not belong to the Active Window");
+            this.chkActiveWindowCleanBackground.UseVisualStyleBackColor = true;
+            this.chkActiveWindowCleanBackground.CheckedChanged += new System.EventHandler(this.cbSelectedWindowCleanBackground_CheckedChanged);
             // 
             // cboCaptureEngine
             // 
@@ -4832,7 +4832,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.Button btnSelectGradient;
         private System.Windows.Forms.CheckBox cboUseCustomGradient;
         private System.Windows.Forms.GroupBox gbGradientMakerBasic;
-        private System.Windows.Forms.CheckBox chkSelectedWindowCleanBackground;
+        private System.Windows.Forms.CheckBox chkActiveWindowCleanBackground;
         private System.Windows.Forms.CheckBox chkSelectedWindowCleanTransparentCorners;
         private System.Windows.Forms.CheckBox chkSelectedWindowShowCheckers;
         private System.Windows.Forms.CheckBox chkSelectedWindowIncludeShadow;

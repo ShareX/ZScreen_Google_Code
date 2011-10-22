@@ -1420,22 +1420,22 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowCleanBackground_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.Workflow.ActiveWindowClearBackground = chkSelectedWindowCleanBackground.Checked;
+            Engine.Workflow.ActiveWindowClearBackground = chkActiveWindowCleanBackground.Checked;
             UpdateAeroGlassConfig();
         }
 
         private void UpdateAeroGlassConfig()
         {
             gbCaptureGdi.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.GDI;
-            gbCaptureDwm.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.DWM;
+            gbCaptureDwm.Enabled = Engine.Workflow.CaptureEngineMode == CaptureEngineType.DWM && !chkActiveWindowCleanBackground.Checked;
             gbCaptureGdiDwm.Enabled = Engine.Workflow.CaptureEngineMode != CaptureEngineType.Hybrid;
 
             // Disable Show Checkers option if Clean Background is disabled
-            if (!chkSelectedWindowCleanBackground.Checked)
+            if (!chkActiveWindowCleanBackground.Checked)
             {
                 chkSelectedWindowShowCheckers.Checked = false;
             }
-            chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked;
+            chkSelectedWindowShowCheckers.Enabled = chkActiveWindowCleanBackground.Checked;
 
             // Disable Capture children option if DWM is enabled
             if (cboCaptureEngine.SelectedIndex == (int)CaptureEngineType.DWM)
@@ -1445,8 +1445,8 @@ namespace ZScreenGUI
             chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
 
             // With GDI, corner-clearing cannot be disabled when both "clean background" and "include shadow" are enabled
-            if (chkSelectedWindowShowCheckers.Enabled = chkSelectedWindowCleanBackground.Checked ||
-                !chkSelectedWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
+            if (chkSelectedWindowShowCheckers.Enabled = chkActiveWindowCleanBackground.Checked ||
+                !chkActiveWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
             {
                 chkSelectedWindowCleanTransparentCorners.Enabled = true;
             }
