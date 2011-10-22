@@ -68,7 +68,7 @@ namespace ZScreenGUI
 
             DisableFeatures();
 
-            pgAppSettings.SelectedObject = Engine.AppConf;
+            pgAppSettings.SelectedObject = Engine.ConfigApp;
             pgAppConfig.SelectedObject = Engine.ConfigUI;
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
             pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
@@ -267,17 +267,17 @@ namespace ZScreenGUI
             // General
             chkStartWin.Checked = RegistryHelper.CheckStartWithWindows();
             chkShellExt.Checked = RegistryHelper.CheckShellContextMenu();
-            chkOpenMainWindow.Checked = Engine.AppConf.ShowMainWindow;
+            chkOpenMainWindow.Checked = Engine.ConfigApp.ShowMainWindow;
 
-            if (IsReady && !Engine.AppConf.ShowInTaskbar)
+            if (IsReady && !Engine.ConfigApp.ShowInTaskbar)
             {
                 this.chkWindows7TaskbarIntegration.Checked = false; // Windows 7 Taskbar Integration cannot work without showing in Taskbar
-                this.ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
+                this.ShowInTaskbar = Engine.ConfigApp.ShowInTaskbar;
             }
 
             cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
             cbAutoSaveSettings.Checked = Engine.ConfigUI.AutoSaveSettings;
-            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.AppConf.Windows7TaskbarIntegration;
+            chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.ConfigApp.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
 
             chkTwitterEnable.Checked = Engine.ConfigUI.TwitterEnabled;
@@ -313,8 +313,8 @@ namespace ZScreenGUI
             {
                 cboCloseButtonAction.Items.AddRange(typeof(WindowButtonAction).GetDescriptions());
             }
-            cboCloseButtonAction.SelectedIndex = (int)Engine.AppConf.WindowButtonActionClose;
-            cboMinimizeButtonAction.SelectedIndex = (int)Engine.AppConf.WindowButtonActionMinimize;
+            cboCloseButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionClose;
+            cboMinimizeButtonAction.SelectedIndex = (int)Engine.ConfigApp.WindowButtonActionMinimize;
 
             ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
 
@@ -353,18 +353,18 @@ namespace ZScreenGUI
             txtImagesDir.Text = Engine.ImagesDir;
             txtLogsDir.Text = Engine.LogsDir;
 
-            if (Engine.AppConf.PreferSystemFolders)
+            if (Engine.ConfigApp.PreferSystemFolders)
             {
                 txtRootFolder.Text = Engine.SettingsDir;
                 gbRoot.Text = "Settings";
             }
             else
             {
-                txtRootFolder.Text = Engine.AppConf.RootDir;
+                txtRootFolder.Text = Engine.ConfigApp.RootDir;
                 gbRoot.Text = "Root";
             }
 
-            btnRelocateRootDir.Enabled = !Engine.AppConf.PreferSystemFolders;
+            btnRelocateRootDir.Enabled = !Engine.ConfigApp.PreferSystemFolders;
             gbRoot.Enabled = !Engine.IsPortable;
             gbImages.Enabled = !Engine.IsPortable;
             gbLogs.Enabled = !Engine.IsPortable;
@@ -437,7 +437,7 @@ namespace ZScreenGUI
 
         internal void ZScreen_Windows7onlyTasks()
         {
-            if (!Engine.AppConf.Windows7TaskbarIntegration)
+            if (!Engine.ConfigApp.Windows7TaskbarIntegration)
             {
                 if (Engine.zJumpList != null)
                 {
@@ -445,7 +445,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (!IsDisposed && Engine.AppConf.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
+            else if (!IsDisposed && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
                 && this.ShowInTaskbar && this.WindowState == FormWindowState.Normal)
             {
                 try

@@ -99,7 +99,7 @@ namespace ZScreenLib
 
                     tsmi.Checked = list.Contains(t);
                     tsmi.Click += new EventHandler(tsmiOutputs_Click);
-                    if (Engine.AppConf.SupportMultipleDestinations)
+                    if (Engine.ConfigApp.SupportMultipleDestinations)
                     {
                         tsmi.CheckOnClick = true;
                     }
@@ -175,7 +175,7 @@ namespace ZScreenLib
                     tsmi.Tag = t;
                     tsmi.Checked = list.Contains((int)t);
                     tsmi.Click += new EventHandler(tsmiDestImage_Click);
-                    if (Engine.AppConf.SupportMultipleDestinations)
+                    if (Engine.ConfigApp.SupportMultipleDestinations)
                     {
                         tsmi.CheckOnClick = true;
                     }
@@ -205,7 +205,7 @@ namespace ZScreenLib
                     tsmi.Tag = ut;
                     tsmi.Checked = list.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestText_Click);
-                    if (Engine.AppConf.SupportMultipleDestinations)
+                    if (Engine.ConfigApp.SupportMultipleDestinations)
                     {
                         tsmi.CheckOnClick = true;
                     }
@@ -235,7 +235,7 @@ namespace ZScreenLib
                     tsmi.Tag = ut;
                     tsmi.Checked = list.Contains((int)ut);
                     tsmi.Click += new EventHandler(tsmiDestFiles_Click);
-                    if (Engine.AppConf.SupportMultipleDestinations)
+                    if (Engine.ConfigApp.SupportMultipleDestinations)
                     {
                         tsmi.CheckOnClick = true;
                     }

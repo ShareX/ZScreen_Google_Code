@@ -320,6 +320,8 @@ namespace ZScreenLib
 
             SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
+            Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
+
             bool success = true;
 
             switch (job)
@@ -530,7 +532,7 @@ namespace ZScreenLib
                 {
                     // Prepare data so that we have the correct file extension for Image Editor
                     Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat, bTargetFileSize: false);
-                    string fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetPatternType());
+                    string fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetNameParser());
                     string imgfp = FileSystem.GetUniqueFilePath(WorkflowConfig, Engine.ImagesDir, fn);
                     UpdateLocalFilePath(imgfp);
                 }
@@ -758,7 +760,7 @@ namespace ZScreenLib
         /// <summary>
         /// Function to Capture Active Window
         /// </summary>
-        public bool CaptureActiveWindow()
+        private bool CaptureActiveWindow()
         {
             if (tempImage == null)
             {
@@ -956,7 +958,7 @@ namespace ZScreenLib
                 img = effects.ApplyScreenshotEffects(img);
                 if (Job2 != WorkerTask.JobLevel2.UploadFromClipboard || !Engine.ConfigWorkflow.WatermarkExcludeClipboardUpload)
                 {
-                    img = new ImageEffects(WorkflowConfig).ApplyWatermark(img);
+                    img = new ImageEffects(WorkflowConfig).ApplyWatermark(img, GetNameParser(NameParserType.Watermark));
                 }
 
                 tempImage = img;
@@ -1809,7 +1811,7 @@ namespace ZScreenLib
                 {
                     EImageFormat imageFormat;
                     Data = WorkerTaskHelper.PrepareImage(WorkflowConfig, tempImage, out imageFormat);
-                    fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetPatternType());
+                    fn = WorkerTaskHelper.PrepareFilename(WorkflowConfig, tempImage, imageFormat, GetNameParser());
                     string fp = acc.GetLocalhostPath(fn);
                     FileSystem.WriteImage(fp, Data);
                 }
@@ -2003,16 +2005,20 @@ namespace ZScreenLib
 
         #region Descriptions
 
-        public NameParserType GetPatternType()
+        public NameParser GetNameParser()
         {
-            if (Job2 == JobLevel2.CaptureActiveWindow)
+            return GetNameParser(Job2 == JobLevel2.CaptureActiveWindow ? NameParserType.ActiveWindow : NameParserType.EntireScreen);
+        }
+
+        public NameParser GetNameParser(NameParserType parserType)
+        {
+            return new NameParser
             {
-                return NameParserType.ActiveWindow;
-            }
-            else
-            {
-                return NameParserType.EntireScreen;
-            }
+                Type = parserType,
+                Picture = tempImage,
+                AutoIncrementNumber = WorkflowConfig.AutoIncrement,
+                WindowText = Info.WindowTitleText
+            };
         }
 
         public string GetDestinationName()

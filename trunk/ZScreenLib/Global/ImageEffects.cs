@@ -99,13 +99,17 @@ namespace ZScreenLib
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public Image ApplyWatermark(Image img)
+        public Image ApplyWatermark(Image img, NameParser parser = null)
         {
-            return ApplyWatermark(img, wf.WatermarkMode);
+            if (parser == null)
+            {
+                parser = new NameParser(NameParserType.Watermark) { IsPreview = true, Picture = img };
+            }
+            return ApplyWatermark(img, parser, wf.WatermarkMode);
         }
 
         /// <summary>Get Image with Watermark</summary>
-        public Image ApplyWatermark(Image img, WatermarkType watermarkType)
+        public Image ApplyWatermark(Image img, NameParser parser, WatermarkType watermarkType)
         {
             switch (watermarkType)
             {
@@ -113,7 +117,6 @@ namespace ZScreenLib
                 case WatermarkType.NONE:
                     return img;
                 case WatermarkType.TEXT:
-                    NameParser parser = new NameParser(NameParserType.Watermark) { IsPreview = true, Picture = img };
                     return DrawWatermark(img, parser.Convert(wf.WatermarkText));
                 case WatermarkType.IMAGE:
                     return DrawImageWatermark(img, wf.WatermarkImageLocation);
