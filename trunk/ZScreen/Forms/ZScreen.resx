@@ -389,12 +389,6 @@
   <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>420, 17</value>
   </metadata>
-  <metadata name="tsLinks.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>523, 17</value>
-  </metadata>
-  <metadata name="ttZScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>420, 17</value>
-  </metadata>
   <data name="cbAutoSaveSettings.ToolTip" xml:space="preserve">
     <value>ZScreen normally saving settings when ZScreen closing.
 But if error happen and ZScreen can't close properly then settings can't be saved.

@@ -648,7 +648,7 @@ namespace ZScreenGUI
             this.tsmiTabs.Image = global::ZScreenGUI.Properties.Resources.wrench;
             this.tsmiTabs.Name = "tsmiTabs";
             this.tsmiTabs.Size = new System.Drawing.Size(205, 22);
-            this.tsmiTabs.Text = "View Settings Menu...";
+            this.tsmiTabs.Text = "Show Main Window...";
             this.tsmiTabs.Click += new System.EventHandler(this.tsmSettings_Click);
             // 
             // historyToolStripMenuItem
