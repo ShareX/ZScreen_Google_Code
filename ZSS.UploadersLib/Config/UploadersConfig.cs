@@ -254,12 +254,12 @@ namespace UploadersLib
 
         #region I/O Methods
 
-        public bool Save(string filePath)
+        public bool Write(string filePath)
         {
             return SettingsHelper.Save(this, filePath, SerializationType.Xml);
         }
 
-        public static UploadersConfig Load(string filePath)
+        public static UploadersConfig Read(string filePath)
         {
             return SettingsHelper.Load<UploadersConfig>(filePath, SerializationType.Xml);
         }

@@ -22,19 +22,19 @@ namespace ZScreenGUI
             int sel = ucProxyAccounts.AccountsList.SelectedIndex;
             if (ucProxyAccounts.RemoveItem(sel))
             {
-                Engine.conf.ProxyList.RemoveAt(sel);
+                Engine.ConfigUI.ProxyList.RemoveAt(sel);
             }
         }
 
         private void ProxyAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucProxyAccounts.AccountsList.SelectedIndex;
-            if (Engine.conf.ProxyList != null && sel != -1 && sel < Engine.conf.ProxyList.Count && Engine.conf.ProxyList[sel] != null)
+            if (Engine.ConfigUI.ProxyList != null && sel != -1 && sel < Engine.ConfigUI.ProxyList.Count && Engine.ConfigUI.ProxyList[sel] != null)
             {
-                ProxyInfo acc = Engine.conf.ProxyList[sel];
+                ProxyInfo acc = Engine.ConfigUI.ProxyList[sel];
                 ucProxyAccounts.SettingsGrid.SelectedObject = acc;
-                Engine.conf.ProxyActive = acc;
-                Engine.conf.ProxySelected = ucProxyAccounts.AccountsList.SelectedIndex;
+                Engine.ConfigUI.ProxyActive = acc;
+                Engine.ConfigUI.ProxySelected = ucProxyAccounts.AccountsList.SelectedIndex;
             }
             if (IsReady)
             {

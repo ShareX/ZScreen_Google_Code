@@ -17,7 +17,7 @@ namespace ZScreenGUI
         {
             ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
 
-            Engine.conf.ImageEditor = GetImageSoftware(tsm.Text);
+            Engine.ConfigUI.ImageEditor = GetImageSoftware(tsm.Text);
 
             if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
             {
@@ -29,12 +29,12 @@ namespace ZScreenGUI
 
         private void RewriteImageEditorsRightClickMenu()
         {
-            if (Engine.conf.ActionsApps != null)
+            if (Engine.ConfigUI.ActionsApps != null)
             {
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
                 tsmEditinImageSoftware.DropDownItems.Clear();
 
-                List<Software> imgs = Engine.conf.ActionsApps;
+                List<Software> imgs = Engine.ConfigUI.ActionsApps;
 
                 //tsm.TextDirection = ToolStripTextDirection.Horizontal;
                 tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
@@ -97,7 +97,7 @@ namespace ZScreenGUI
 
         private void niTray_BalloonTipClicked(object sender, EventArgs e)
         {
-            if (Engine.conf != null && Engine.conf.BalloonTipOpenLink)
+            if (Engine.ConfigUI != null && Engine.ConfigUI.BalloonTipOpenLink)
             {
                 try
                 {
@@ -214,7 +214,7 @@ namespace ZScreenGUI
                     }
                 }
 
-                if (Engine.conf.ShowUploadDuration && task.UploadDuration > 0)
+                if (Engine.ConfigUI.ShowUploadDuration && task.UploadDuration > 0)
                 {
                     sbMsg.AppendLine("Upload duration: " + task.UploadDuration + " ms");
                 }

@@ -60,7 +60,7 @@ namespace ZScreenLib
         {
             this.FilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
             Result(this, FilePaths);
-            if (Engine.conf.CloseDropBox)
+            if (Engine.ConfigUI.CloseDropBox)
             {
                 this.Close();
             }
@@ -73,7 +73,7 @@ namespace ZScreenLib
 
         private void DropWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Engine.conf.LastDropBoxPosition = this.Location;
+            Engine.ConfigUI.LastDropBoxPosition = this.Location;
         }
 
         private void DropWindow_MouseDown(object sender, MouseEventArgs e)

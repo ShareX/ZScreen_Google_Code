@@ -30,12 +30,12 @@ namespace ZScreenLib
 
         public void AddEnumOutputsWithConfigSettings()
         {
-            if (Engine.conf.ConfOutputs.Count == 0)
+            if (Engine.ConfigUI.ConfOutputs.Count == 0)
             {
-                Engine.conf.ConfOutputs.Add((int)OutputEnum.Clipboard);
-                Engine.conf.ConfOutputs.Add((int)OutputEnum.LocalDisk);
+                Engine.ConfigUI.ConfOutputs.Add((int)OutputEnum.Clipboard);
+                Engine.ConfigUI.ConfOutputs.Add((int)OutputEnum.LocalDisk);
             }
-            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.conf.ConfOutputs.Cast<OutputEnum>().ToList());
+            SetupOutputsWithRuntimeSettings(ucDestOptions.tsddbOutputs, Engine.ConfigUI.ConfOutputs.Cast<OutputEnum>().ToList());
         }
 
         public void AddEnumLinkFormatWithConfigSettings(ToolStripDropDownButton tsddb, List<int> list)
@@ -112,11 +112,11 @@ namespace ZScreenLib
 
         public void AddEnumLinkFormatWithConfigSettings()
         {
-            if (Engine.conf.ConfLinkFormat.Count == 0)
+            if (Engine.ConfigUI.ConfLinkFormat.Count == 0)
             {
-                Engine.conf.ConfLinkFormat.Add((int)ClipboardContentEnum.Data);
+                Engine.ConfigUI.ConfLinkFormat.Add((int)ClipboardContentEnum.Data);
             }
-            AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, Engine.conf.ConfLinkFormat);
+            AddEnumLinkFormatWithConfigSettings(ucDestOptions.tsddbLinkFormat, Engine.ConfigUI.ConfLinkFormat);
         }
 
         public void AddEnumLinkFormatWithRuntimeSettings(List<int> list)
@@ -126,11 +126,11 @@ namespace ZScreenLib
 
         public void AddEnumClipboardContentWithConfigSettings()
         {
-            if (Engine.conf.ConfClipboardContent.Count == 0)
+            if (Engine.ConfigUI.ConfClipboardContent.Count == 0)
             {
-                Engine.conf.ConfClipboardContent.Add((int)ClipboardContentEnum.Data);
+                Engine.ConfigUI.ConfClipboardContent.Add((int)ClipboardContentEnum.Data);
             }
-            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.conf.ConfClipboardContent.Cast<ClipboardContentEnum>().ToList());
+            AddEnumClipboardContentWithRuntimeSettings(ucDestOptions.tsddbClipboardContent, Engine.ConfigUI.ConfClipboardContent.Cast<ClipboardContentEnum>().ToList());
         }
 
         public void AddEnumClipboardContentWithRuntimeSettings(List<ClipboardContentEnum> cctList)
@@ -157,7 +157,7 @@ namespace ZScreenLib
 
         public void AddEnumDestImageToMenuWithConfigSettings()
         {
-            AddEnumDestImageToMenuWithRuntimeSettings(ucDestOptions.tsddbDestImage, Engine.conf.MyImageUploaders);
+            AddEnumDestImageToMenuWithRuntimeSettings(ucDestOptions.tsddbDestImage, Engine.ConfigUI.MyImageUploaders);
         }
 
         public void AddEnumDestImageToMenuWithRuntimeSettings(List<int> MyImageUploaders)
@@ -187,7 +187,7 @@ namespace ZScreenLib
 
         public void AddEnumDestTextToMenuWithConfigSettings()
         {
-            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddbDestText, Engine.conf.MyTextUploaders);
+            AddEnumDestTextToMenuWithRuntimeSettings(ucDestOptions.tsddbDestText, Engine.ConfigUI.MyTextUploaders);
         }
 
         public void AddEnumDestTextToMenuWithRuntimeSettings(List<int> MyTextUploaders)
@@ -217,7 +217,7 @@ namespace ZScreenLib
 
         public void AddEnumDestFileToMenuWithConfigSettings()
         {
-            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddbDestFile, Engine.conf.MyFileUploaders);
+            AddEnumDestFileToMenuWithRuntimeSettings(ucDestOptions.tsddbDestFile, Engine.ConfigUI.MyFileUploaders);
         }
 
         public void AddEnumDestFileToMenuWithRuntimeSettings(List<int> MyFileUploaders)
@@ -247,7 +247,7 @@ namespace ZScreenLib
 
         public void AddEnumDestLinkToMenuWithConfigSettings()
         {
-            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddbDestLink, Engine.conf.MyURLShorteners);
+            AddEnumDestLinkToMenuWithRuntimeSettings(ucDestOptions.tsddbDestLink, Engine.ConfigUI.MyURLShorteners);
         }
 
         public void AddEnumDestLinkToMenuWithRuntimeSettings(List<int> MyLinkUploaders)

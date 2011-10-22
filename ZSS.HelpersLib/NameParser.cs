@@ -176,7 +176,7 @@ namespace HelpersLib
             sb.Replace(ReplacementVariables.size.ToPrefixString(), size);
             sb.Replace(ReplacementVariables.name.ToPrefixString(), name);
 
-            #endregion
+            #endregion Size, Url, name
 
             #region width, height (If Picture exist)
 
@@ -197,18 +197,7 @@ namespace HelpersLib
 
             if (Type == NameParserType.ActiveWindow || Type == NameParserType.Watermark || Type == NameParserType.Clipboard)
             {
-                string activeWindow = WindowText; 
-
-                if (string.IsNullOrEmpty(activeWindow))
-                {
-                    activeWindow = NativeMethods.GetForegroundWindowText();
-                }
-
-                sb.Replace(ReplacementVariables.t.ToPrefixString(), activeWindow);
-            }
-            else
-            {
-                sb.Replace(ReplacementVariables.t.ToPrefixString(), string.Empty);
+                sb.Replace(ReplacementVariables.t.ToPrefixString(), WindowText);
             }
 
             #endregion t (If ActiveWindow or Watermark)

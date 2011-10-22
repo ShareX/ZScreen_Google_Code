@@ -86,7 +86,7 @@ namespace ZScreenLib
         public static FileInfo WriteImage(string fp, Stream stream)
         {
             string destDir = Path.GetDirectoryName(fp);
-            FileInfo fi = new FileInfo(FileSystem.GetUniqueFilePath(Engine.Workflow, destDir, Path.GetFileName(fp)));
+            FileInfo fi = new FileInfo(FileSystem.GetUniqueFilePath(Engine.ConfigWorkflow, destDir, Path.GetFileName(fp)));
 
             if (!Directory.Exists(destDir))
             {
@@ -317,12 +317,12 @@ namespace ZScreenLib
         {
             string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
 
-            if (Engine.Workflow.ConfigOutputs.FTPAccountList.Count > 0)
+            if (Engine.ConfigUploaders.FTPAccountList.Count > 0)
             {
                 string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fpftp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.Workflow.ConfigOutputs.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.ConfigUploaders.FTPAccountList);
                     fam.Save(fpftp);
                 }
             }
@@ -330,15 +330,15 @@ namespace ZScreenLib
             string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-WorkflowConfig.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
             if (!File.Exists(fpoutputsconfig))
             {
-                Engine.Workflow.Write(fpoutputsconfig);
+                Engine.ConfigWorkflow.Write(fpoutputsconfig);
             }
 
-            if (Engine.conf != null)
+            if (Engine.ConfigUI != null)
             {
                 string fp = Path.Combine(dirbackup, string.Format("{0}-{1}-Settings.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
                 if (!File.Exists(fp))
                 {
-                    Engine.conf.Write(fp);
+                    Engine.ConfigUI.Write(fp);
                 }
             }
         }
@@ -420,7 +420,7 @@ namespace ZScreenLib
                         if (File.Exists(image))
                         {
                             time = File.GetCreationTime(image);
-                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.Workflow.SaveFolderPattern);
+                            newFolderPath = new NameParser(NameParserType.SaveFolder) { CustomDate = time }.Convert(Engine.ConfigWorkflow.SaveFolderPattern);
                             newFolderPath = Path.Combine(Engine.RootImagesDir, newFolderPath);
 
                             if (!Directory.Exists(newFolderPath))

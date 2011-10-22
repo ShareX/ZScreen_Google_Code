@@ -61,17 +61,17 @@ namespace ZScreenGUI
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
-            if (Engine.Workflow.PasswordsSecureUsingEncryption)
+            if (Engine.ConfigWorkflow.PasswordsSecureUsingEncryption)
             {
-                Engine.Workflow.CryptPasswords(bEncrypt: false);
+                Engine.ConfigWorkflow.CryptPasswords(bEncrypt: false);
             }
 
             DisableFeatures();
 
             pgAppSettings.SelectedObject = Engine.AppConf;
-            pgAppConfig.SelectedObject = Engine.conf;
-            pgWorkflow.SelectedObject = Engine.Workflow;
-            pgIndexer.SelectedObject = Engine.conf.IndexerConfig;
+            pgAppConfig.SelectedObject = Engine.ConfigUI;
+            pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
+            pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
 
             ZScreen_ConfigGUI_Form();
             ZScreen_ConfigGUI_TrayMenu();
@@ -87,7 +87,7 @@ namespace ZScreenGUI
 
         private void ZScreen_ConfigGUI_Form()
         {
-            if (Engine.conf.LockFormSize)
+            if (Engine.ConfigUI.LockFormSize)
             {
                 if (this.FormBorderStyle != FormBorderStyle.FixedSingle)
                 {
@@ -111,9 +111,9 @@ namespace ZScreenGUI
             dsh.AddEnumDestToMenuWithConfigSettings();
             ucDestOptions.ReconfigOutputsUI();
 
-            chkShowWorkflowWizard.Checked = Engine.conf.PromptForOutputs;
-            chkShowCursor.Checked = Engine.Workflow.DrawCursor;
-            chkShowUploadResults.Checked = Engine.conf.ShowUploadResultsWindow;
+            chkShowWorkflowWizard.Checked = Engine.ConfigUI.PromptForOutputs;
+            chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;
+            chkShowUploadResults.Checked = Engine.ConfigUI.ShowUploadResultsWindow;
         }
 
         private void ZScreen_ConfigGUI_Hotkeys()
@@ -132,44 +132,44 @@ namespace ZScreenGUI
                 cbSelectedWindowStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
 
-            cbSelectedWindowStyle.SelectedIndex = (int)Engine.conf.SelectedWindowRegionStyles;
-            cbSelectedWindowRectangleInfo.Checked = Engine.conf.SelectedWindowRectangleInfo;
-            cbSelectedWindowRuler.Checked = Engine.conf.SelectedWindowRuler;
-            pbSelectedWindowBorderColor.BackColor = Engine.conf.SelectedWindowBorderArgb;
-            nudSelectedWindowBorderSize.Value = Engine.conf.SelectedWindowBorderSize;
-            cbSelectedWindowDynamicBorderColor.Checked = Engine.conf.SelectedWindowDynamicBorderColor;
-            nudSelectedWindowRegionInterval.Value = Engine.conf.SelectedWindowRegionInterval;
-            nudSelectedWindowRegionStep.Value = Engine.conf.SelectedWindowRegionStep;
-            nudSelectedWindowHueRange.Value = Engine.conf.SelectedWindowHueRange;
-            chkSelectedWindowCaptureObjects.Checked = Engine.conf.SelectedWindowCaptureObjects;
+            cbSelectedWindowStyle.SelectedIndex = (int)Engine.ConfigUI.SelectedWindowRegionStyles;
+            cbSelectedWindowRectangleInfo.Checked = Engine.ConfigUI.SelectedWindowRectangleInfo;
+            cbSelectedWindowRuler.Checked = Engine.ConfigUI.SelectedWindowRuler;
+            pbSelectedWindowBorderColor.BackColor = Engine.ConfigUI.SelectedWindowBorderArgb;
+            nudSelectedWindowBorderSize.Value = Engine.ConfigUI.SelectedWindowBorderSize;
+            cbSelectedWindowDynamicBorderColor.Checked = Engine.ConfigUI.SelectedWindowDynamicBorderColor;
+            nudSelectedWindowRegionInterval.Value = Engine.ConfigUI.SelectedWindowRegionInterval;
+            nudSelectedWindowRegionStep.Value = Engine.ConfigUI.SelectedWindowRegionStep;
+            nudSelectedWindowHueRange.Value = Engine.ConfigUI.SelectedWindowHueRange;
+            chkSelectedWindowCaptureObjects.Checked = Engine.ConfigUI.SelectedWindowCaptureObjects;
 
             // Active Window
             if (cboCaptureEngine.Items.Count == 0)
             {
                 cboCaptureEngine.Items.AddRange(typeof(CaptureEngineType).GetDescriptions());
-                cboCaptureEngine.SelectedIndex = (int)Engine.Workflow.CaptureEngineMode;
+                cboCaptureEngine.SelectedIndex = (int)Engine.ConfigWorkflow.CaptureEngineMode;
             }
 
-            chkActiveWindowCleanBackground.Checked = Engine.Workflow.ActiveWindowClearBackground;
-            chkSelectedWindowCleanTransparentCorners.Checked = Engine.Workflow.ActiveWindowCleanTransparentCorners;
-            chkSelectedWindowIncludeShadow.Checked = Engine.Workflow.ActiveWindowIncludeShadows;
-            chkActiveWindowTryCaptureChildren.Checked = Engine.Workflow.ActiveWindowTryCaptureChildren;
-            chkSelectedWindowShowCheckers.Checked = Engine.Workflow.ActiveWindowShowCheckers;
-            pbActiveWindowDwmBackColor.BackColor = Engine.Workflow.ActiveWindowDwmBackColor;
-            chkActiveWindowDwmCustomColor.Checked = Engine.Workflow.ActiveWindowDwmBackColor != Color.White;
+            chkActiveWindowCleanBackground.Checked = Engine.ConfigWorkflow.ActiveWindowClearBackground;
+            chkSelectedWindowCleanTransparentCorners.Checked = Engine.ConfigWorkflow.ActiveWindowCleanTransparentCorners;
+            chkSelectedWindowIncludeShadow.Checked = Engine.ConfigWorkflow.ActiveWindowIncludeShadows;
+            chkActiveWindowTryCaptureChildren.Checked = Engine.ConfigWorkflow.ActiveWindowTryCaptureChildren;
+            chkSelectedWindowShowCheckers.Checked = Engine.ConfigWorkflow.ActiveWindowShowCheckers;
+            pbActiveWindowDwmBackColor.BackColor = Engine.ConfigWorkflow.ActiveWindowDwmBackColor;
+            chkActiveWindowDwmCustomColor.Checked = Engine.ConfigWorkflow.ActiveWindowDwmBackColor != Color.White;
 
             // Freehand Crop Shot
-            cbFreehandCropShowHelpText.Checked = Engine.conf.FreehandCropShowHelpText;
-            cbFreehandCropAutoUpload.Checked = Engine.conf.FreehandCropAutoUpload;
-            cbFreehandCropAutoClose.Checked = Engine.conf.FreehandCropAutoClose;
-            cbFreehandCropShowRectangleBorder.Checked = Engine.conf.FreehandCropShowRectangleBorder;
-            pgSurfaceConfig.SelectedObject = Engine.conf.SurfaceConfig;
+            cbFreehandCropShowHelpText.Checked = Engine.ConfigUI.FreehandCropShowHelpText;
+            cbFreehandCropAutoUpload.Checked = Engine.ConfigUI.FreehandCropAutoUpload;
+            cbFreehandCropAutoClose.Checked = Engine.ConfigUI.FreehandCropAutoClose;
+            cbFreehandCropShowRectangleBorder.Checked = Engine.ConfigUI.FreehandCropShowRectangleBorder;
+            pgSurfaceConfig.SelectedObject = Engine.ConfigUI.SurfaceConfig;
 
             // Naming Conventions
-            txtActiveWindow.Text = Engine.Workflow.ActiveWindowPattern;
-            txtEntireScreen.Text = Engine.Workflow.EntireScreenPattern;
-            txtImagesFolderPattern.Text = Engine.Workflow.SaveFolderPattern;
-            nudMaxNameLength.Value = Engine.Workflow.MaxNameLength;
+            txtActiveWindow.Text = Engine.ConfigWorkflow.ActiveWindowPattern;
+            txtEntireScreen.Text = Engine.ConfigWorkflow.EntireScreenPattern;
+            txtImagesFolderPattern.Text = Engine.ConfigWorkflow.SaveFolderPattern;
+            nudMaxNameLength.Value = Engine.ConfigWorkflow.MaxNameLength;
 
             ZScreen_ConfigGUI_Options_Watermark();
         }
@@ -179,7 +179,7 @@ namespace ZScreenGUI
             if (cboCropEngine.Items.Count == 0)
             {
                 cboCropEngine.Items.AddRange(typeof(CropEngineType).GetDescriptions());
-                cboCropEngine.SelectedIndex = (int)Engine.conf.CropEngineMode;
+                cboCropEngine.SelectedIndex = (int)Engine.ConfigUI.CropEngineMode;
             }
 
             // Crop Region Settings
@@ -187,61 +187,61 @@ namespace ZScreenGUI
             {
                 chkCropStyle.Items.AddRange(typeof(RegionStyles).GetDescriptions());
             }
-            chkCropStyle.SelectedIndex = (int)Engine.conf.CropRegionStyles;
-            chkRegionRectangleInfo.Checked = Engine.conf.CropRegionRectangleInfo;
-            chkRegionHotkeyInfo.Checked = Engine.conf.CropRegionHotkeyInfo;
+            chkCropStyle.SelectedIndex = (int)Engine.ConfigUI.CropRegionStyles;
+            chkRegionRectangleInfo.Checked = Engine.ConfigUI.CropRegionRectangleInfo;
+            chkRegionHotkeyInfo.Checked = Engine.ConfigUI.CropRegionHotkeyInfo;
 
             // Crosshair Settings
-            chkCropDynamicCrosshair.Checked = Engine.conf.CropDynamicCrosshair;
-            nudCropCrosshairInterval.Value = Engine.conf.CropInterval;
-            nudCropCrosshairStep.Value = Engine.conf.CropStep;
-            nudCrosshairLineCount.Value = Engine.conf.CrosshairLineCount;
-            nudCrosshairLineSize.Value = Engine.conf.CrosshairLineSize;
-            pbCropCrosshairColor.BackColor = Engine.conf.CropCrosshairArgb;
-            chkCropShowBigCross.Checked = Engine.conf.CropShowBigCross;
-            chkCropShowMagnifyingGlass.Checked = Engine.conf.CropShowMagnifyingGlass;
+            chkCropDynamicCrosshair.Checked = Engine.ConfigUI.CropDynamicCrosshair;
+            nudCropCrosshairInterval.Value = Engine.ConfigUI.CropInterval;
+            nudCropCrosshairStep.Value = Engine.ConfigUI.CropStep;
+            nudCrosshairLineCount.Value = Engine.ConfigUI.CrosshairLineCount;
+            nudCrosshairLineSize.Value = Engine.ConfigUI.CrosshairLineSize;
+            pbCropCrosshairColor.BackColor = Engine.ConfigUI.CropCrosshairArgb;
+            chkCropShowBigCross.Checked = Engine.ConfigUI.CropShowBigCross;
+            chkCropShowMagnifyingGlass.Checked = Engine.ConfigUI.CropShowMagnifyingGlass;
 
             // Region Settings
-            cbShowCropRuler.Checked = Engine.conf.CropShowRuler;
-            cbCropDynamicBorderColor.Checked = Engine.conf.CropDynamicBorderColor;
-            nudCropRegionInterval.Value = Engine.conf.CropRegionInterval;
-            nudCropRegionStep.Value = Engine.conf.CropRegionStep;
-            nudCropHueRange.Value = Engine.conf.CropHueRange;
-            pbCropBorderColor.BackColor = Engine.conf.CropBorderArgb;
-            nudCropBorderSize.Value = Engine.conf.CropBorderSize;
-            cbCropShowGrids.Checked = Engine.conf.CropShowGrids;
+            cbShowCropRuler.Checked = Engine.ConfigUI.CropShowRuler;
+            cbCropDynamicBorderColor.Checked = Engine.ConfigUI.CropDynamicBorderColor;
+            nudCropRegionInterval.Value = Engine.ConfigUI.CropRegionInterval;
+            nudCropRegionStep.Value = Engine.ConfigUI.CropRegionStep;
+            nudCropHueRange.Value = Engine.ConfigUI.CropHueRange;
+            pbCropBorderColor.BackColor = Engine.ConfigUI.CropBorderArgb;
+            nudCropBorderSize.Value = Engine.ConfigUI.CropBorderSize;
+            cbCropShowGrids.Checked = Engine.ConfigUI.CropShowGrids;
 
             // Grid Mode Settings
-            nudScreenshotDelay.Time = Engine.conf.ScreenshotDelayTimes;
-            nudScreenshotDelay.Value = Engine.conf.ScreenshotDelayTime;
-            cboCropGridMode.Checked = Engine.conf.CropGridToggle;
-            nudCropGridWidth.Value = Engine.conf.CropGridSize.Width;
-            nudCropGridHeight.Value = Engine.conf.CropGridSize.Height;
+            nudScreenshotDelay.Time = Engine.ConfigUI.ScreenshotDelayTimes;
+            nudScreenshotDelay.Value = Engine.ConfigUI.ScreenshotDelayTime;
+            cboCropGridMode.Checked = Engine.ConfigUI.CropGridToggle;
+            nudCropGridWidth.Value = Engine.ConfigUI.CropGridSize.Width;
+            nudCropGridHeight.Value = Engine.ConfigUI.CropGridSize.Height;
         }
 
         private void ZScreen_ConfigGUI_Actions()
         {
-            chkPerformActions.Checked = Engine.Workflow.PerformActions && Engine.conf.PromptForOutputs;
-            chkPerformActions.Enabled = !Engine.conf.PromptForOutputs;
-            tsmEditinImageSoftware.Checked = Engine.Workflow.PerformActions;
+            chkPerformActions.Checked = Engine.ConfigWorkflow.PerformActions && Engine.ConfigUI.PromptForOutputs;
+            chkPerformActions.Enabled = !Engine.ConfigUI.PromptForOutputs;
+            tsmEditinImageSoftware.Checked = Engine.ConfigWorkflow.PerformActions;
 
-            if (Engine.conf.ActionsApps.Count == 0)
+            if (Engine.ConfigUI.ActionsApps.Count == 0)
             {
                 Software editor = new Software(Engine.zImageAnnotator, Application.ExecutablePath, true, true);
-                Engine.conf.ActionsApps.Add(editor);
+                Engine.ConfigUI.ActionsApps.Add(editor);
                 Software effects = new Software(Engine.zImageEffects, Application.ExecutablePath, true, false);
-                Engine.conf.ActionsApps.Add(effects);
+                Engine.ConfigUI.ActionsApps.Add(effects);
             }
             else
             {
-                Engine.conf.ActionsApps.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
+                Engine.ConfigUI.ActionsApps.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
             }
 
             ImageEditorHelper.FindImageEditors();
 
             lbSoftware.Items.Clear();
 
-            foreach (Software app in Engine.conf.ActionsApps)
+            foreach (Software app in Engine.ConfigUI.ActionsApps)
             {
                 if (!String.IsNullOrEmpty(app.Name))
                 {
@@ -252,7 +252,7 @@ namespace ZScreenGUI
             RewriteImageEditorsRightClickMenu();
 
             int i;
-            if (Engine.conf.ImageEditor != null && (i = lbSoftware.Items.IndexOf(Engine.conf.ImageEditor.Name)) != -1)
+            if (Engine.ConfigUI.ImageEditor != null && (i = lbSoftware.Items.IndexOf(Engine.ConfigUI.ImageEditor.Name)) != -1)
             {
                 lbSoftware.SelectedIndex = i;
             }
@@ -275,34 +275,34 @@ namespace ZScreenGUI
                 this.ShowInTaskbar = Engine.AppConf.ShowInTaskbar;
             }
 
-            cbShowHelpBalloonTips.Checked = Engine.conf.ShowHelpBalloonTips;
-            cbAutoSaveSettings.Checked = Engine.conf.AutoSaveSettings;
+            cbShowHelpBalloonTips.Checked = Engine.ConfigUI.ShowHelpBalloonTips;
+            cbAutoSaveSettings.Checked = Engine.ConfigUI.AutoSaveSettings;
             chkWindows7TaskbarIntegration.Checked = TaskbarManager.IsPlatformSupported && Engine.AppConf.Windows7TaskbarIntegration;
             chkWindows7TaskbarIntegration.Enabled = TaskbarManager.IsPlatformSupported;
 
-            chkTwitterEnable.Checked = Engine.conf.TwitterEnabled;
+            chkTwitterEnable.Checked = Engine.ConfigUI.TwitterEnabled;
 
             // Interaction
-            chkShortenURL.Checked = Engine.conf.ShortenUrlAfterUpload;
-            nudFlashIconCount.Value = Engine.conf.FlashTrayCount;
-            chkCaptureFallback.Checked = Engine.conf.CaptureEntireScreenOnError;
-            cbShowPopup.Checked = Engine.conf.ShowBalloonTip;
-            chkBalloonTipOpenLink.Checked = Engine.conf.BalloonTipOpenLink;
-            cbShowUploadDuration.Checked = Engine.conf.ShowUploadDuration;
-            cbCompleteSound.Checked = Engine.conf.CompleteSound;
-            cbCloseDropBox.Checked = Engine.conf.CloseDropBox;
+            chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
+            nudFlashIconCount.Value = Engine.ConfigUI.FlashTrayCount;
+            chkCaptureFallback.Checked = Engine.ConfigUI.CaptureEntireScreenOnError;
+            cbShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
+            chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
+            cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
+            cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
+            cbCloseDropBox.Checked = Engine.ConfigUI.CloseDropBox;
 
             // Proxy
             if (cboProxyConfig.Items.Count == 0)
             {
                 cboProxyConfig.Items.AddRange(typeof(ProxyConfigType).GetDescriptions());
             }
-            cboProxyConfig.SelectedIndex = (int)Engine.conf.ProxyConfig;
+            cboProxyConfig.SelectedIndex = (int)Engine.ConfigUI.ProxyConfig;
 
-            ProxySetup(Engine.conf.ProxyList);
+            ProxySetup(Engine.ConfigUI.ProxyList);
             if (ucProxyAccounts.AccountsList.Items.Count > 0)
             {
-                ucProxyAccounts.AccountsList.SelectedIndex = Engine.conf.ProxySelected;
+                ucProxyAccounts.AccountsList.SelectedIndex = Engine.ConfigUI.ProxySelected;
             }
 
             if (cboCloseButtonAction.Items.Count == 0)
@@ -316,19 +316,19 @@ namespace ZScreenGUI
             cboCloseButtonAction.SelectedIndex = (int)Engine.AppConf.WindowButtonActionClose;
             cboMinimizeButtonAction.SelectedIndex = (int)Engine.AppConf.WindowButtonActionMinimize;
 
-            ttZScreen.Active = Engine.conf.ShowHelpBalloonTips;
+            ttZScreen.Active = Engine.ConfigUI.ShowHelpBalloonTips;
 
-            chkCheckUpdates.Checked = Engine.conf.CheckUpdates;
+            chkCheckUpdates.Checked = Engine.ConfigUI.CheckUpdates;
             if (cboReleaseChannel.Items.Count == 0)
             {
                 cboReleaseChannel.Items.AddRange(typeof(ReleaseChannelType).GetDescriptions());
-                cboReleaseChannel.SelectedIndex = (int)Engine.conf.ReleaseChannel;
+                cboReleaseChannel.SelectedIndex = (int)Engine.ConfigUI.ReleaseChannel;
             }
-            chkDeleteLocal.Checked = Engine.conf.DeleteLocal;
+            chkDeleteLocal.Checked = Engine.ConfigUI.DeleteLocal;
 
             FolderWatcher zWatcher = new FolderWatcher(this);
-            zWatcher.FolderPath = Engine.conf.FolderMonitorPath;
-            if (Engine.conf.FolderMonitoring)
+            zWatcher.FolderPath = Engine.ConfigUI.FolderMonitorPath;
+            if (Engine.ConfigUI.FolderMonitoring)
             {
                 zWatcher.StartWatching();
             }
@@ -338,12 +338,12 @@ namespace ZScreenGUI
             }
 
             // Monitor Clipboard
-            chkMonImages.Checked = Engine.conf.MonitorImages;
-            chkMonText.Checked = Engine.conf.MonitorText;
-            chkMonFiles.Checked = Engine.conf.MonitorFiles;
-            chkMonUrls.Checked = Engine.conf.MonitorUrls;
+            chkMonImages.Checked = Engine.ConfigUI.MonitorImages;
+            chkMonText.Checked = Engine.ConfigUI.MonitorText;
+            chkMonFiles.Checked = Engine.ConfigUI.MonitorFiles;
+            chkMonUrls.Checked = Engine.ConfigUI.MonitorUrls;
 
-            chkOverwriteFiles.Checked = Engine.Workflow.OverwriteFiles;
+            chkOverwriteFiles.Checked = Engine.ConfigWorkflow.OverwriteFiles;
         }
 
         private void ZScreen_ConfigGUI_Options_Paths()
@@ -377,47 +377,47 @@ namespace ZScreenGUI
                 cboWatermarkType.Items.AddRange(typeof(WatermarkType).GetDescriptions());
             }
 
-            cboWatermarkType.SelectedIndex = (int)Engine.Workflow.WatermarkMode;
+            cboWatermarkType.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkMode;
             if (chkWatermarkPosition.Items.Count == 0)
             {
                 chkWatermarkPosition.Items.AddRange(typeof(WatermarkPositionType).GetDescriptions());
             }
 
-            chkWatermarkPosition.SelectedIndex = (int)Engine.Workflow.WatermarkPositionMode;
-            nudWatermarkOffset.Value = Engine.Workflow.WatermarkOffset;
-            cbWatermarkAddReflection.Checked = Engine.Workflow.WatermarkAddReflection;
-            cbWatermarkAutoHide.Checked = Engine.Workflow.WatermarkAutoHide;
+            chkWatermarkPosition.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkPositionMode;
+            nudWatermarkOffset.Value = Engine.ConfigWorkflow.WatermarkOffset;
+            cbWatermarkAddReflection.Checked = Engine.ConfigWorkflow.WatermarkAddReflection;
+            cbWatermarkAutoHide.Checked = Engine.ConfigWorkflow.WatermarkAutoHide;
 
-            txtWatermarkText.Text = Engine.Workflow.WatermarkText;
-            pbWatermarkFontColor.BackColor = Engine.Workflow.WatermarkFontArgb;
+            txtWatermarkText.Text = Engine.ConfigWorkflow.WatermarkText;
+            pbWatermarkFontColor.BackColor = Engine.ConfigWorkflow.WatermarkFontArgb;
             lblWatermarkFont.Text = FontToString();
-            nudWatermarkFontTrans.Value = Engine.Workflow.WatermarkFontTrans;
-            trackWatermarkFontTrans.Value = (int)Engine.Workflow.WatermarkFontTrans;
-            nudWatermarkCornerRadius.Value = Engine.Workflow.WatermarkCornerRadius;
-            pbWatermarkGradient1.BackColor = Engine.Workflow.WatermarkGradient1Argb;
-            pbWatermarkGradient2.BackColor = Engine.Workflow.WatermarkGradient2Argb;
-            pbWatermarkBorderColor.BackColor = Engine.Workflow.WatermarkBorderArgb;
-            nudWatermarkBackTrans.Value = Engine.Workflow.WatermarkBackTrans;
-            trackWatermarkBackgroundTrans.Value = (int)Engine.Workflow.WatermarkBackTrans;
+            nudWatermarkFontTrans.Value = Engine.ConfigWorkflow.WatermarkFontTrans;
+            trackWatermarkFontTrans.Value = (int)Engine.ConfigWorkflow.WatermarkFontTrans;
+            nudWatermarkCornerRadius.Value = Engine.ConfigWorkflow.WatermarkCornerRadius;
+            pbWatermarkGradient1.BackColor = Engine.ConfigWorkflow.WatermarkGradient1Argb;
+            pbWatermarkGradient2.BackColor = Engine.ConfigWorkflow.WatermarkGradient2Argb;
+            pbWatermarkBorderColor.BackColor = Engine.ConfigWorkflow.WatermarkBorderArgb;
+            nudWatermarkBackTrans.Value = Engine.ConfigWorkflow.WatermarkBackTrans;
+            trackWatermarkBackgroundTrans.Value = (int)Engine.ConfigWorkflow.WatermarkBackTrans;
             if (cbWatermarkGradientType.Items.Count == 0)
             {
                 cbWatermarkGradientType.Items.AddRange(Enum.GetNames(typeof(LinearGradientMode)));
             }
 
-            cbWatermarkGradientType.SelectedIndex = (int)Engine.Workflow.WatermarkGradientType;
-            cboUseCustomGradient.Checked = Engine.Workflow.WatermarkUseCustomGradient;
+            cbWatermarkGradientType.SelectedIndex = (int)Engine.ConfigWorkflow.WatermarkGradientType;
+            cboUseCustomGradient.Checked = Engine.ConfigWorkflow.WatermarkUseCustomGradient;
 
-            txtWatermarkImageLocation.Text = Engine.Workflow.WatermarkImageLocation;
-            cbWatermarkUseBorder.Checked = Engine.Workflow.WatermarkUseBorder;
-            nudWatermarkImageScale.Value = Engine.Workflow.WatermarkImageScale;
+            txtWatermarkImageLocation.Text = Engine.ConfigWorkflow.WatermarkImageLocation;
+            cbWatermarkUseBorder.Checked = Engine.ConfigWorkflow.WatermarkUseBorder;
+            nudWatermarkImageScale.Value = Engine.ConfigWorkflow.WatermarkImageScale;
 
             TestWatermark();
         }
 
         private void ZScreen_ConfigGUI_Options_History()
         {
-            nudHistoryMaxItems.Value = Engine.conf.HistoryMaxNumber;
-            cbHistorySave.Checked = Engine.conf.HistorySave;
+            nudHistoryMaxItems.Value = Engine.ConfigUI.HistoryMaxNumber;
+            cbHistorySave.Checked = Engine.ConfigUI.HistorySave;
         }
 
         private void ZScreen_ConfigGUI_TrayMenu()

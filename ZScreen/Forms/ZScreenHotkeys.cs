@@ -18,20 +18,20 @@ namespace ZScreenGUI
         {
             HotkeyManager = new HotkeyManager(this, ZAppType.ZScreen);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.EntireScreen, Engine.conf.HotkeyEntireScreen2, CaptureEntireScreen);
-            HotkeyManager.AddHotkey(ZScreenHotkey.ActiveWindow, Engine.conf.HotkeyActiveWindow2, CaptureActiveWindow);
-            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegion, Engine.conf.HotkeyRectangleRegion2, CaptureRectRegion);
+            HotkeyManager.AddHotkey(ZScreenHotkey.EntireScreen, Engine.ConfigUI.HotkeyEntireScreen2, CaptureEntireScreen);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ActiveWindow, Engine.ConfigUI.HotkeyActiveWindow2, CaptureActiveWindow);
+            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegion, Engine.ConfigUI.HotkeyRectangleRegion2, CaptureRectRegion);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionLast, Engine.conf.RectangleRegionLast2, CaptureRectRegionLast);
-            HotkeyManager.AddHotkey(ZScreenHotkey.SelectedWindow, Engine.conf.HotkeySelectedWindow2, CaptureSelectedWindow);
-            HotkeyManager.AddHotkey(ZScreenHotkey.FreehandRegion, Engine.conf.HotkeyFreeHandRegion2, CaptureFreeHandRegion);
+            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionLast, Engine.ConfigUI.RectangleRegionLast2, CaptureRectRegionLast);
+            HotkeyManager.AddHotkey(ZScreenHotkey.SelectedWindow, Engine.ConfigUI.HotkeySelectedWindow2, CaptureSelectedWindow);
+            HotkeyManager.AddHotkey(ZScreenHotkey.FreehandRegion, Engine.ConfigUI.HotkeyFreeHandRegion2, CaptureFreeHandRegion);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.ClipboardUpload, Engine.conf.HotkeyClipboardUpload2, UploadUsingClipboardOrGoogleTranslate);
-            HotkeyManager.AddHotkey(ZScreenHotkey.AutoCapture, Engine.conf.HotkeyAutoCapture2, ShowAutoCapture);
-            HotkeyManager.AddHotkey(ZScreenHotkey.DropWindow, Engine.conf.HotkeyDropWindow2, ShowDropWindow);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ClipboardUpload, Engine.ConfigUI.HotkeyClipboardUpload2, UploadUsingClipboardOrGoogleTranslate);
+            HotkeyManager.AddHotkey(ZScreenHotkey.AutoCapture, Engine.ConfigUI.HotkeyAutoCapture2, ShowAutoCapture);
+            HotkeyManager.AddHotkey(ZScreenHotkey.DropWindow, Engine.ConfigUI.HotkeyDropWindow2, ShowDropWindow);
 
-            HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.conf.HotkeyScreenColorPicker2, ShowScreenColorPicker);
-            HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.conf.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
+            HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.ConfigUI.HotkeyScreenColorPicker2, ShowScreenColorPicker);
+            HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.ConfigUI.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
         }
 
         private void UpdateHotkeys(bool resetKeys = false)

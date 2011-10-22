@@ -101,9 +101,9 @@ namespace ZScreenLib
                     break;
             }
             string fn = parser.Convert(pattern);
-            if (Engine.Workflow != null)
+            if (Engine.ConfigWorkflow != null)
             {
-                Engine.Workflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
+                Engine.ConfigWorkflow.AutoIncrement = parser.AutoIncrementNumber; // issue 577; Engine.Workflow.AutoIncrement has to be updated
             }
 
             string fileName = string.Format("{0}.{1}", fn, ext);

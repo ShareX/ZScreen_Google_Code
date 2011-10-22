@@ -71,7 +71,7 @@ namespace ZScreenGUI
             NewVersionWindowOptions nvwo = new NewVersionWindowOptions { MyIcon = Resources.zss_main, MyImage = Resources.main };
             UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName,
                 new Version(Adapter.AssemblyVersion),
-                Engine.conf.ReleaseChannel, Adapter.CheckProxySettings().GetWebProxy, nvwo);
+                Engine.ConfigUI.ReleaseChannel, Adapter.CheckProxySettings().GetWebProxy, nvwo);
 
             updateChecker.CheckUpdate();
 
@@ -107,7 +107,7 @@ namespace ZScreenGUI
 
         private void BwCache_DoWork(object sender, DoWorkEventArgs e)
         {
-            CacheCleanerTask t = new CacheCleanerTask(Engine.CacheDir, Engine.conf.ScreenshotCacheSize);
+            CacheCleanerTask t = new CacheCleanerTask(Engine.CacheDir, Engine.ConfigUI.ScreenshotCacheSize);
             t.CleanCache();
         }
 
@@ -135,7 +135,7 @@ namespace ZScreenGUI
             {
                 Adapter.UpdateTinyPicRegCode();
 
-                foreach (FTPAccount acc in Engine.Workflow.ConfigOutputs.FTPAccountList)
+                foreach (FTPAccount acc in Engine.ConfigUploaders.FTPAccountList)
                 {
                     Adapter.TestFTPAccount(acc, true);
                 }

@@ -61,12 +61,12 @@ namespace ZScreenLib.Shapes
                 path.CloseFigure();
                 Draw();
 
-                if (Engine.conf.FreehandCropAutoUpload)
+                if (Engine.ConfigUI.FreehandCropAutoUpload)
                 {
                     Exit(true);
                 }
             }
-            else if (Engine.conf.FreehandCropAutoClose && e.Button == MouseButtons.Right)
+            else if (Engine.ConfigUI.FreehandCropAutoClose && e.Button == MouseButtons.Right)
             {
                 Exit(false);
             }
@@ -107,7 +107,7 @@ namespace ZScreenLib.Shapes
 
         private void DrawHelpText(Graphics g)
         {
-            if (Engine.conf.FreehandCropShowHelpText)
+            if (Engine.ConfigUI.FreehandCropShowHelpText)
             {
                 g.CompositingMode = CompositingMode.SourceOver;
                 g.SmoothingMode = SmoothingMode.HighSpeed;
@@ -129,7 +129,7 @@ namespace ZScreenLib.Shapes
 
         private void DrawRectangleBorder(Graphics g)
         {
-            if (Engine.conf.FreehandCropShowRectangleBorder)
+            if (Engine.ConfigUI.FreehandCropShowRectangleBorder)
             {
                 g.CompositingMode = CompositingMode.SourceOver;
                 Rectangle rect = Rectangle.Round(path.GetBounds());

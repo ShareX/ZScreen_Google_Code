@@ -108,7 +108,7 @@ namespace ZScreenLib
         {
             get
             {
-                if (conf != null && AppConf.UseHistoryCustomPath && !string.IsNullOrEmpty(AppConf.HistoryCustomPath))
+                if (ConfigUI != null && AppConf.UseHistoryCustomPath && !string.IsNullOrEmpty(AppConf.HistoryCustomPath))
                 {
                     return AppConf.HistoryCustomPath;
                 }
@@ -123,13 +123,28 @@ namespace ZScreenLib
         {
             get
             {
-                if (conf != null && AppConf.UseWorkflowConfigCustomPath && !string.IsNullOrEmpty(AppConf.WorkflowConfigCustomPath))
+                if (ConfigUI != null && AppConf.UseWorkflowConfigCustomPath && !string.IsNullOrEmpty(AppConf.WorkflowConfigCustomPath))
                 {
                     return AppConf.WorkflowConfigCustomPath;
                 }
                 else
                 {
                     return Path.Combine(SettingsDir, WorkflowConfigFileName);
+                }
+            }
+        }
+
+        public static string UploadersConfigPath
+        {
+            get
+            {
+                if (ConfigUI != null && AppConf.UseUploadersConfigCustomPath && !string.IsNullOrEmpty(AppConf.UploadersConfigCustomPath))
+                {
+                    return AppConf.UploadersConfigCustomPath;
+                }
+                else
+                {
+                    return Path.Combine(SettingsDir, UploadersConfigFileName);
                 }
             }
         }
@@ -165,17 +180,17 @@ namespace ZScreenLib
         {
             get
             {
-                if (conf != null && conf.UseCustomImagesDir && !String.IsNullOrEmpty(conf.CustomImagesDir))
+                if (ConfigUI != null && ConfigUI.UseCustomImagesDir && !String.IsNullOrEmpty(ConfigUI.CustomImagesDir))
                 {
-                    return conf.CustomImagesDir;
+                    return ConfigUI.CustomImagesDir;
                 }
                 else
                 {
                     string imagesDir = RootImagesDir;
                     string saveFolderPath = string.Empty;
-                    if (Engine.conf != null)
+                    if (Engine.ConfigUI != null)
                     {
-                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.Workflow.SaveFolderPattern);
+                        saveFolderPath = new NameParser(NameParserType.SaveFolder).Convert(Engine.ConfigWorkflow.SaveFolderPattern);
                         if (!IsPortable && Engine.AppConf.PreferSystemFolders)
                         {
                             imagesDir = zPicturesDir;
@@ -193,11 +208,13 @@ namespace ZScreenLib
 
         private static bool RunConfig = false;
 
-        public static XMLSettings conf { get; set; }
+        public static XMLSettings ConfigUI { get; set; }
 
-        public static Workflow Workflow { get; set; }
+        public static Workflow ConfigWorkflow { get; set; }
 
-        public static GoogleTranslatorConfig MyGTConfig { get; set; }
+        public static UploadersConfig ConfigUploaders { get; set; }
+
+        public static GoogleTranslatorConfig ConfigGT { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
@@ -257,9 +274,9 @@ namespace ZScreenLib
             {
                 if (options.ShowConfigWizard && !File.Exists(AppSettings.AppSettingsFile))
                 {
-                    if (Workflow == null)
+                    if (ConfigWorkflow == null)
                     {
-                        Workflow = Workflow.Read(Engine.WorkflowConfigPath);
+                        ConfigWorkflow = Workflow.Read(Engine.WorkflowConfigPath);
                     }
                     ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
                     startEngine = cw.ShowDialog();
@@ -277,7 +294,7 @@ namespace ZScreenLib
                         Engine.AppConf.TextUploaders = cw.cwTextUploaders;
                         Engine.AppConf.LinkUploaders = cw.cwLinkUploaders;
 
-                        Workflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
+                        ConfigWorkflow.Write(WorkflowConfigPath); // DestSelector in ConfigWizard automatically initializes MyUploadersConfig if null so no errors
                         AppConf.Write();
 
                         RunConfig = true;
@@ -392,7 +409,7 @@ namespace ZScreenLib
             if (!File.Exists(cssIndexer))
             {
                 ZSS.IndexersLib.IndexerAdapter.CopyDefaultCss(SettingsDir);
-                conf.IndexerConfig.CssFilePath = cssIndexer;
+                ConfigUI.IndexerConfig.CssFilePath = cssIndexer;
             }
         }
 
@@ -400,13 +417,14 @@ namespace ZScreenLib
         {
             if (!IsPortable)
             {
+                AppConf.UploadersConfigPath = Engine.UploadersConfigPath;
                 AppConf.WorkflowConfigPath = Engine.WorkflowConfigPath;
                 AppConf.Write();
             }
 
             StaticHelper.WriteLine("ZScreen closing");
 
-            if (Engine.conf != null && Engine.conf.WriteDebugFile)
+            if (Engine.ConfigUI != null && Engine.ConfigUI.WriteDebugFile)
             {
                 string path = Engine.LogFilePath;
                 StaticHelper.WriteLine("Writing debug file: " + path);
@@ -429,39 +447,47 @@ namespace ZScreenLib
 
             Thread settingsThread = new Thread(() =>
             {
-                if (Engine.conf != null)
+                if (Engine.ConfigUI != null)
                 {
-                    Engine.conf.Write();
+                    Engine.ConfigUI.Write();
                 }
             });
 
-            Thread profileConfigThread = new Thread(() =>
+            Thread workflowConfigThread = new Thread(() =>
             {
-                if (Engine.Workflow != null)
+                if (Engine.ConfigWorkflow != null)
                 {
-                    Engine.Workflow.Write(WorkflowConfigPath);
+                    Engine.ConfigWorkflow.Write(WorkflowConfigPath);
                 }
             });
 
-            /*
+            Thread uploadersConfigThread = new Thread(() =>
+            {
+                if (Engine.ConfigUploaders != null)
+                {
+                    Engine.ConfigUploaders.Write(UploadersConfigPath);
+                }
+            });
+
             Thread googleTranslateThread = new Thread(() =>
             {
-                if (Engine.MyGTConfig != null)
+                if (Engine.ConfigGT != null)
                 {
-                    Engine.MyGTConfig.Write(GoogleTranslateConfigPath);
+                    Engine.ConfigGT.Write(GoogleTranslateConfigPath);
                 }
             });
-            */
 
             settingsThread.Start();
-            // googleTranslateThread.Start();
-            profileConfigThread.Start();
+            googleTranslateThread.Start();
+            workflowConfigThread.Start();
+            uploadersConfigThread.Start();
 
             if (!isAsync)
             {
                 settingsThread.Join();
-                // googleTranslateThread.Join();
-                profileConfigThread.Join();
+                googleTranslateThread.Join();
+                workflowConfigThread.Join();
+                uploadersConfigThread.Join();
             }
         }
 
@@ -473,31 +499,38 @@ namespace ZScreenLib
             {
                 if (string.IsNullOrEmpty(fp))
                 {
-                    Engine.conf = XMLSettings.Read();
+                    Engine.ConfigUI = XMLSettings.Read();
                 }
                 else
                 {
-                    Engine.conf = XMLSettings.Read(fp);
+                    Engine.ConfigUI = XMLSettings.Read(fp);
                 }
             });
 
             Thread workflowConfigThread = new Thread(() =>
             {
-                Engine.Workflow = Workflow.Read(WorkflowConfigPath);
+                Engine.ConfigWorkflow = Workflow.Read(WorkflowConfigPath);
+            });
+
+            Thread uploadersConfigThread = new Thread(() =>
+            {
+                Engine.ConfigUploaders = UploadersConfig.Read(UploadersConfigPath);
             });
 
             Thread googleTranslateThread = new Thread(() =>
             {
-                Engine.MyGTConfig = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
+                Engine.ConfigGT = GoogleTranslatorConfig.Read(GoogleTranslateConfigPath);
             });
 
             settingsThread.Start();
             googleTranslateThread.Start();
             workflowConfigThread.Start();
+            uploadersConfigThread.Start();
 
             settingsThread.Join();
             // googleTranslateThread.Join(); not necessary wait for this finish
             workflowConfigThread.Join();
+            uploadersConfigThread.Join();
 
             timer.WriteLineTime("LoadSettings finished");
 
@@ -506,12 +539,12 @@ namespace ZScreenLib
             // Use Configuration Wizard Settings if applied
             if (RunConfig)
             {
-                Engine.conf.ConfOutputs = Engine.AppConf.AppOutputs;
-                Engine.conf.ConfClipboardContent = Engine.AppConf.ClipboardContent;
-                Engine.conf.MyImageUploaders = Engine.AppConf.ImageUploaders;
-                Engine.conf.MyTextUploaders = Engine.AppConf.TextUploaders;
-                Engine.conf.MyFileUploaders = Engine.AppConf.FileUploaders;
-                Engine.conf.MyURLShorteners = Engine.AppConf.LinkUploaders;
+                Engine.ConfigUI.ConfOutputs = Engine.AppConf.AppOutputs;
+                Engine.ConfigUI.ConfClipboardContent = Engine.AppConf.ClipboardContent;
+                Engine.ConfigUI.MyImageUploaders = Engine.AppConf.ImageUploaders;
+                Engine.ConfigUI.MyTextUploaders = Engine.AppConf.TextUploaders;
+                Engine.ConfigUI.MyFileUploaders = Engine.AppConf.FileUploaders;
+                Engine.ConfigUI.MyURLShorteners = Engine.AppConf.LinkUploaders;
             }
 
             // Portable then we don't need PreferSystemFolders to be true
@@ -560,7 +593,7 @@ namespace ZScreenLib
             string title = ApplicationName;
             if (IsMultipleInstance) title += "*";
             title += " " + Application.ProductVersion;
-            if (conf != null && conf.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " r" + Adapter.AppRevision;
+            if (ConfigUI != null && ConfigUI.ReleaseChannel == ZSS.UpdateCheckerLib.ReleaseChannelType.Dev) title += " r" + Adapter.AppRevision;
             if (IsPortable) title += " Portable";
             return title;
         }
