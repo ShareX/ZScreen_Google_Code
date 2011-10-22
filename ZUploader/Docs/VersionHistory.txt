@@ -1,4 +1,9 @@
-﻿Version 4.6.0
+﻿Version 4.7.1 - 2011-10-22
+
+4.7.1 Added camera sound when capture is made
+4.7.0 Added Transparent window capture 
+
+Version 4.6.0 - 2011-10-07
 
 4.6.0 Added Hotkeys support
 4.5.0 Added support to capture window from a list of windows
