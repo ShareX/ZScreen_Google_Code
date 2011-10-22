@@ -114,7 +114,7 @@ namespace ZUploader
 
         private void CaptureScreen(bool autoHideForm = true)
         {
-            Capture(Screenshot.GetFullscreen, autoHideForm);
+            Capture(Screenshot.CaptureFullscreen, autoHideForm);
         }
 
         private void CaptureActiveWindow(bool autoHideForm = true)
@@ -125,7 +125,7 @@ namespace ZUploader
             }
             else
             {
-                Capture(Screenshot.GetActiveWindow, autoHideForm);
+                Capture(Screenshot.CaptureActiveWindow, autoHideForm);
             }
         }
 
@@ -144,7 +144,7 @@ namespace ZUploader
                 }
                 else
                 {
-                    return Screenshot.GetWindow(handle);
+                    return Screenshot.CaptureWindow(handle);
                 }
             }, autoHideForm);
         }
@@ -154,7 +154,7 @@ namespace ZUploader
             Capture(() =>
             {
                 Image img = null;
-                Image screenshot = Screenshot.GetFullscreen();
+                Image screenshot = Screenshot.CaptureFullscreen();
 
                 surface.Config = Program.Settings.SurfaceOptions;
                 surface.LoadBackground(screenshot);

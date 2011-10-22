@@ -42,7 +42,7 @@ namespace ScreenCapture
             InitializeComponent();
             Screenshot.DrawCursor = surfaceConfig.DrawChecker;
 
-            screenshot = Screenshot.GetFullscreen();
+            screenshot = Screenshot.CaptureFullscreen();
             SurfaceConfig = surfaceConfig;
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;

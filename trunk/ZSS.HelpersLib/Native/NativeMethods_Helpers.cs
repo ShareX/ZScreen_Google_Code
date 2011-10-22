@@ -317,20 +317,6 @@ namespace HelpersLib
             return rect.ToRectangle();
         }
 
-        public static Rectangle GetWindowRectangle(IntPtr handle)
-        {
-            if (IsDWMEnabled())
-            {
-                Rectangle rect;
-                if (GetExtendedFrameBounds(handle, out rect))
-                {
-                    return rect;
-                }
-            }
-
-            return GetWindowRect(handle);
-        }
-
         public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)
         {
             Size size = Size.Empty;

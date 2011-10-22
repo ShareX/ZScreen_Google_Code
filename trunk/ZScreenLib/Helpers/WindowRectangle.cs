@@ -53,7 +53,7 @@ namespace ZScreenLib.Helpers
         {
             if (handle.ToInt32() > 0)
             {
-                rectangle = NativeMethods.GetWindowRectangle(handle);
+                rectangle = CaptureHelpers.GetWindowRectangle(handle);
 
                 NativeMethods.GetWindowThreadProcessId(handle, out processId);
 
@@ -108,7 +108,7 @@ namespace ZScreenLib.Helpers
 
             if (this.processId == processId)
             {
-                Rectangle rect = NativeMethods.GetWindowRectangle(hWnd);
+                Rectangle rect = CaptureHelpers.GetWindowRectangle(hWnd);
                 windows.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
             }
 
@@ -127,7 +127,7 @@ namespace ZScreenLib.Helpers
                 }
             }
 
-            Rectangle rect = NativeMethods.GetWindowRectangle(hWnd);
+            Rectangle rect = CaptureHelpers.GetWindowRectangle(hWnd);
             controls.Enqueue(new KeyValuePair<IntPtr, Rectangle>(hWnd, rect));
 
             return true;
