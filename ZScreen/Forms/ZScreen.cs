@@ -188,6 +188,11 @@ namespace ZScreenGUI
 
             Uploader.ProxySettings = Adapter.CheckProxySettings();
 
+            if (Engine.ConfigUploaders.PasswordsSecureUsingEncryption)
+            {
+                Engine.ConfigUploaders.CryptPasswords(bEncrypt: false);
+            }
+
             ZScreen_ConfigGUI();
 
             if (Engine.ConfigUI.CheckUpdates)
