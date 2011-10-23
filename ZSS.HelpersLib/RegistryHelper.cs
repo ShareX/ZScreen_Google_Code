@@ -23,6 +23,7 @@
 
 #endregion License Information (GPL v2)
 
+using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
@@ -55,7 +56,10 @@ namespace HelpersLib
                 {
                     if (startWithWindows)
                     {
-                        regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
+                        if (!File.Exists(GetRegistryValue(WindowsStartupRun, Application.ProductName)))
+                        {
+                            regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
+                        }
                     }
                     else
                     {
@@ -114,6 +118,19 @@ namespace HelpersLib
             {
                 return rk != null && rk.GetValue(name, null) as string != null;
             }
+        }
+
+        private static string GetRegistryValue(string path, string name = null)
+        {
+            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(path))
+            {
+                if (rk != null)
+                {
+                    string temp = rk.GetValue(name, null) as string;
+                    return temp.Replace("\"", "");
+                }
+            }
+            return string.Empty;
         }
     }
 }
