@@ -768,7 +768,7 @@ namespace ZScreenLib
                     case CaptureEngineType.DWM:
                         if (NativeMethods.IsDWMEnabled())
                         {
-                            tempImage = Capture.CaptureWithDWM(WorkflowConfig);
+                            tempImage = Capture.CaptureWithDWM(WorkflowConfig, NativeMethods.GetForegroundWindow());
                         }
                         else
                         {
@@ -799,7 +799,17 @@ namespace ZScreenLib
         {
             NativeMethods.SetForegroundWindow(this.Info.Handle);
             Thread.Sleep(250);
-            SetImage(Screenshot.CaptureWindow(this.Info.Handle));
+
+            switch (WorkflowConfig.CaptureEngineMode2)
+            {
+                case CaptureEngineType.DWM:
+                    SetImage(Capture.CaptureWithDWM(WorkflowConfig, this.Info.Handle));
+                    break;
+                default:
+                    SetImage(Screenshot.CaptureWindow(this.Info.Handle));
+                    break;
+            }
+
             return tempImage != null;
         }
 

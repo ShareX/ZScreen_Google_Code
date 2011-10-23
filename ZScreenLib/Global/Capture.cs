@@ -62,10 +62,9 @@ namespace ZScreenLib
         /// <summary>Captures a screenshot of a window using the Windows DWM</summary>
         /// <param name="handle">handle of the window to capture</param>
         /// <returns>the captured window image with or without cursor</returns>
-        public static Image CaptureWithDWM(Workflow wfdwm)
+        public static Image CaptureWithDWM(Workflow wfdwm, IntPtr handle)
         {
             StaticHelper.WriteLine("Capturing with DWM");
-            IntPtr handle = NativeMethods.GetForegroundWindow();
             Image windowImageDwm = null;
             Bitmap redBGImage = null;
 
@@ -73,18 +72,15 @@ namespace ZScreenLib
 
             if (Engine.HasAero)
             {
-                if (wfdwm.ActiveWindowClearBackground)
+                if (wfdwm.ActiveWindowDwmUseCustomBackground)
                 {
-                    if (wfdwm.ActiveWindowDwmUseCustomBackground)
-                    {
-                        windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                            wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
-                    }
-                    else
-                    {
-                        windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                            wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
-                    }
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                        wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
+                }
+                else if (wfdwm.ActiveWindowClearBackground)
+                {
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
+                        wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
                 }
             }
 
