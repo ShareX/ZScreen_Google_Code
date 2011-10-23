@@ -29,14 +29,11 @@
         protected override void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
-            // JBirdWorkflowWizard
-            // 
-            this.ClientSize = new System.Drawing.Size(788, 442);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(850, 459);
             this.Name = "JBirdWorkflowWizard";
             this.Load += new System.EventHandler(this.JBirdWorkflowWizard_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion

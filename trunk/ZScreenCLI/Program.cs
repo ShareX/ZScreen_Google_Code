@@ -142,11 +142,11 @@ namespace ZScreenCLI
 
             if (clipboardContent > 0)
             {
-                tempTask.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
+                tempTask.WorkflowConfig.DestConfig.TaskClipboardContent.Add((ClipboardContentEnum)clipboardContent);
             }
             else
             {
-                tempTask.TaskClipboardContent.Add(ClipboardContentEnum.Data);
+                tempTask.WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
             }
 
             foreach (int ut in listImageHosts)

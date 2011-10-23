@@ -282,6 +282,7 @@ namespace ZScreenLib
         public Times AutoCaptureDelayTimes = Times.Seconds;
         public bool AutoCaptureAutoMinimize = false;
         public bool AutoCaptureWaitUploads = true;
+
         [Category(ComponentModelStrings.InputsAutoCapture), DefaultValue(false), Description("Automatically start capturing after loading Auto Capture")]
         public bool AutoCaptureExecute { get; set; }
 
@@ -382,22 +383,6 @@ namespace ZScreenLib
 
         [Category(ComponentModelStrings.Screenshots), DefaultValue(false), Description("Don't display the crosshair and use the cross mouse cursor instead.")]
         public bool UseHardwareCursor { get; set; }
-
-        //Sound Settings
-
-        [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable custom sounds when upload completed.")]
-        public bool EnableSounds { get; set; }
-
-        [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.")]
-        [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
-        public string SoundPath { get; set; }
-
-        [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable sound when screenshot is taken.")]
-        public bool EnableImageSound { get; set; }
-
-        [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.\nIf no sound is selected, a default camera click will play")]
-        [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
-        public string SoundImagePath { get; set; }
 
         #endregion Properties for PropertyGrid
 

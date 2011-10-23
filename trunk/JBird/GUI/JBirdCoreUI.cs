@@ -59,16 +59,18 @@ namespace JBirdGUI
 
         protected void bwConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            Program.WorkflowConfig = WorkflowConfig.Read();
+            Program.ConfigUploaders = UploadersConfig.Read(Program.ConfigUploadersFilePath);
+            Engine.ConfigUploaders = Program.ConfigUploaders;
+            Program.ConfigWorkflow = WorkflowConfig.Read();
         }
 
         protected void bwConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Program.WorkflowConfig != null)
+            if (Program.ConfigWorkflow != null)
             {
-                if (Program.WorkflowConfig.Workflows98.Count == 0)
+                if (Program.ConfigWorkflow.Workflows98.Count == 0)
                 {
-                    Program.WorkflowConfig.Workflows98.AddRange(CreateDefaultWorkflows());
+                    Program.ConfigWorkflow.Workflows98.AddRange(CreateDefaultWorkflows());
                 }
                 if (Program.HotkeyMgrs.Count == 0)
                 {
@@ -102,7 +104,7 @@ namespace JBirdGUI
         {
             if (tsmiWorkflows.DropDownItems.Count == 0)
             {
-                foreach (Workflow p in Program.WorkflowConfig.Workflows98)
+                foreach (Workflow p in Program.ConfigWorkflow.Workflows98)
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(p.Description);
                     tsmi.Tag = p;
@@ -131,9 +133,10 @@ namespace JBirdGUI
 
         #region Task Methods
 
-        public WorkerTask CreateTask(Workflow profile)
+        public WorkerTask CreateTask(Workflow workflow)
         {
-            WorkerTask tempTask = new WorkerTask(CreateWorker(), profile);
+            Engine.ConfigWorkflow = workflow;
+            WorkerTask tempTask = new WorkerTask(CreateWorker(), workflow);
             return tempTask;
         }
 
@@ -149,12 +152,15 @@ namespace JBirdGUI
         public void BwTask_DoWork(object sender, DoWorkEventArgs e)
         {
             WorkerTask bwTask = e.Argument as WorkerTask;
-
-            if (bwTask.WorkflowConfig.DestConfig.Outputs.Contains(UploadersLib.OutputEnum.RemoteHost))
+            if (bwTask.WorkflowConfig.DestConfig.ImageUploaders.Count == 0)
             {
-                bwTask.PublishData();
+                bwTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.Clipboard);
+                bwTask.WorkflowConfig.DestConfig.Outputs.Add(OutputEnum.RemoteHost);
+                bwTask.WorkflowConfig.DestConfig.ImageUploaders.Add(ImageUploaderType.IMAGESHACK);
+                bwTask.WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Remote);
+                bwTask.WorkflowConfig.DestConfig.LinkFormat.Add(LinkFormatEnum.FULL);
             }
-
+            bwTask.PublishData();
             e.Result = bwTask;
         }
 
@@ -213,9 +219,9 @@ namespace JBirdGUI
 
         protected virtual void btnWorkflows_Click(object sender, EventArgs e)
         {
-            if (Program.WorkflowConfig != null)
+            if (Program.ConfigWorkflow != null)
             {
-                WorkflowManager pm = new WorkflowManager(Program.WorkflowConfig.Workflows98) { Icon = this.Icon };
+                WorkflowManager pm = new WorkflowManager(Program.ConfigWorkflow.Workflows98) { Icon = this.Icon };
                 pm.ShowDialog();
             }
         }
@@ -251,7 +257,7 @@ namespace JBirdGUI
 
         protected void JBirdCoreUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.WorkflowConfig.Write();
+            Program.ConfigWorkflow.Write();
         }
 
         #endregion Form Events

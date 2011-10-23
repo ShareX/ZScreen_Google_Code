@@ -289,7 +289,7 @@ namespace ZScreenLib
             {
                 if (task.UploadResults.Count > 0)
                 {
-                    if (task.TaskClipboardContent.Count > 1 || Engine.ConfigUI.ShowUploadResultsWindow || showDialog)
+                    if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Count > 1 || Engine.ConfigUI.ShowUploadResultsWindow || showDialog)
                     {
                         ClipboardOptions cmp = new ClipboardOptions(task);
                         cmp.Icon = Resources.zss_main;
@@ -307,13 +307,13 @@ namespace ZScreenLib
                     {
                         Adapter.CopyImageToClipboard(task.tempImage);
                     }
-                    else if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+                    else if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                     {
                         foreach (UploadResult ur in task.UploadResults)
                         {
                             if (Engine.ConfigUI.ConfLinkFormat.Count > 0)
                             {
-                                clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.LocalFilePath));
+                                clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.WorkflowConfig.DestConfig.LinkFormat[0], ur.LocalFilePath));
                             }
 
                             if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)
@@ -322,7 +322,7 @@ namespace ZScreenLib
                             }
                         }
                     }
-                    else if (task.TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
+                    else if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.OCR))
                     {
                         if (!string.IsNullOrEmpty(task.OCRText))
                         {
@@ -331,7 +331,7 @@ namespace ZScreenLib
                     }
 
                 // If the user requests for the full image URL, preference is given for the Shortened URL is exists
-                    else if (task.Job1 == JobLevel1.Image && task.MyLinkFormat.Contains((int)LinkFormatEnum.FULL))
+                    else if (task.Job1 == JobLevel1.Image && task.WorkflowConfig.DestConfig.LinkFormat.Contains((int)LinkFormatEnum.FULL))
                     {
                         if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
                         {
@@ -361,7 +361,7 @@ namespace ZScreenLib
                                     }
                                 }
                             }
-                            if (clipboardText.Length == 0 && task.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+                            if (clipboardText.Length == 0 && task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                             {
                                 foreach (UploadResult ur in task.UploadResults)
                                 {
@@ -385,9 +385,9 @@ namespace ZScreenLib
                         {
                             foreach (UploadResult ur in task.UploadResults)
                             {
-                                if (task.MyLinkFormat.Count > 0)
+                                if (task.WorkflowConfig.DestConfig.LinkFormat.Count > 0)
                                 {
-                                    clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.MyLinkFormat[0], ur.URL));
+                                    clipboardText.AppendLine(ur.GetUrlByType((LinkFormatEnum)task.WorkflowConfig.DestConfig.LinkFormat[0], ur.URL));
                                 }
 
                                 if (!Engine.ConfigUI.ClipboardAppendMultipleLinks && clipboardText.Length > 0)

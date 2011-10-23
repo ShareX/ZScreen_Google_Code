@@ -12,13 +12,18 @@ namespace ZScreenLib
     {
         public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
 
-        public Workflow Config { get; private set; }
+        public Workflow Config = new Workflow();
 
-        private WorkerTask Task = null;
+        protected WorkerTask Task = null;
 
-        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
+        public WorkflowWizard()
         {
             InitializeComponent();
+        }
+
+        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
+            : this()
+        {
             Initialize(info, gui);
         }
 
@@ -94,7 +99,7 @@ namespace ZScreenLib
 
         private void ConfigGuiTasks()
         {
-            bool bIsImage = ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
+            bool bIsImage = Task != null && ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
 
             if (!bIsImage)
             {
@@ -193,13 +198,14 @@ namespace ZScreenLib
                     Checked = Config.DestConfig.FileUploaders.Contains(fut),
                     Tag = fut
                 };
+
                 if (Engine.ConfigUploaders.IsActive(fut))
                 {
                     flpFileUploaders.Controls.Add(chkUploader);
                 }
             }
 
-            if (ZAppHelper.IsImageFile(Task.Info.LocalFilePath))
+            if (Task != null && ZAppHelper.IsImageFile(Task.Info.LocalFilePath))
             {
                 flpImageUploaders.Visible = true;
                 flpTextUploaders.Visible = false;
@@ -217,7 +223,7 @@ namespace ZScreenLib
                     }
                 }
             }
-            else if (ZAppHelper.IsTextFile(Task.Info.LocalFilePath))
+            else if (Task != null && ZAppHelper.IsTextFile(Task.Info.LocalFilePath))
             {
                 flpTextUploaders.Visible = true;
                 flpImageUploaders.Visible = false;
@@ -237,8 +243,11 @@ namespace ZScreenLib
             }
 
             gbSaveToFile.Visible = chkSaveFile.Checked;
-            txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Task.Info.LocalFilePath);
-            txtSaveFolder.Text = Path.GetDirectoryName(Task.Info.LocalFilePath);
+            if (Task != null)
+            {
+                txtFileNameWithoutExt.Text = Path.GetFileNameWithoutExtension(Task.Info.LocalFilePath);
+                txtSaveFolder.Text = Path.GetDirectoryName(Task.Info.LocalFilePath);
+            }
         }
 
         #endregion Config GUI
@@ -333,6 +342,7 @@ namespace ZScreenLib
 
         private void UpdateImageSize(bool bChangeConfig = false)
         {
+            if (Task == null) return;
             if (Task.Info.ImageSize.IsEmpty) return;
 
             double w2 = 0.0, h2 = 0.0, ratio = 0.0;

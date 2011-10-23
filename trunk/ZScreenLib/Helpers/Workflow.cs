@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 using FreeImageNetLib;
@@ -10,6 +11,7 @@ using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using UploadersLib;
+using ZScreenLib.Helpers;
 
 namespace ZScreenLib
 {
@@ -242,6 +244,24 @@ namespace ZScreenLib
 
         #endregion Outputs
 
+        #region Sound Settings
+
+        [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable custom sounds when upload completed.")]
+        public bool EnableSounds { get; set; }
+
+        [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.")]
+        [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
+        public string SoundPath { get; set; }
+
+        [Category(ComponentModelStrings.SoundSettings), DefaultValue(false), Description("Enable sound when screenshot is taken.")]
+        public bool EnableImageSound { get; set; }
+
+        [Category(ComponentModelStrings.SoundSettings), Description("Location of .wav file.\nIf no sound is selected, a default camera click will play")]
+        [EditorAttribute(typeof(SoundFileNameEditor), typeof(UITypeEditor))]
+        public string SoundImagePath { get; set; }
+
+        #endregion Sound Settings
+
         #region I/O Methods
 
         public bool Write(string filePath)
@@ -323,11 +343,13 @@ namespace ZScreenLib
 
     public class DestConfig
     {
-        [Browsable(false)]
-        public List<OutputEnum> Outputs { get; set; }
+        public List<OutputEnum> Outputs = new List<OutputEnum>();
+        public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
+        public List<LinkFormatEnum> LinkFormat = new List<LinkFormatEnum>();
 
-        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
         public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
         public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();
+        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
+        public List<UrlShortenerType> LinkUploaders = new List<UrlShortenerType>();
     }
 }

@@ -238,7 +238,7 @@ namespace ZScreenTesterGUI
                     switch (uploader.UploaderType)
                     {
                         case UploaderType.ImageUploader:
-                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
+                            if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Data))
                             {
                                 task.WorkflowConfig.DestConfig.ImageUploaders.Add(uploader.ImageUploader);
                                 task.UpdateLocalFilePath(TestImageFilePath);
@@ -256,7 +256,7 @@ namespace ZScreenTesterGUI
                             task.UploadText();
                             break;
                         case UploaderType.UrlShortener:
-                            task.MyLinkUploaders.Add(uploader.UrlShortener);
+                            task.WorkflowConfig.DestConfig.LinkUploaders.Add(uploader.UrlShortener);
                             task.ShortenURL(TestURL);
                             break;
                         default:

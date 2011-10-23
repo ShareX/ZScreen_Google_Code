@@ -212,7 +212,7 @@ namespace ZScreenLib
 
         public static Workflow ConfigWorkflow { get; set; }
 
-        public static UploadersConfig ConfigUploaders { get; set; }
+        public static UploadersConfig ConfigUploaders = new UploadersConfig();
 
         public static GoogleTranslatorConfig ConfigGT { get; set; }
 
