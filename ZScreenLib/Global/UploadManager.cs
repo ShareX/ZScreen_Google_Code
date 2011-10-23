@@ -426,15 +426,22 @@ namespace ZScreenLib
                     if (clipboardText.Length > 0)
                     {
                         string tempText = string.Empty;
-                        NameParser np = new NameParser(NameParserType.Clipboard);
-                        np.link = clipboardText.ToString().Trim();
-                        np.size = task.Info.FileSize;
-                        np.name = task.Info.FileName;
-                        np.WindowText = task.Info.WindowTitleText;
-
-                        if (!string.IsNullOrEmpty(Engine.ConfigUI.ClipboardFormat))
+                        if (Engine.ConfigUI.EnableClipboardFormatOnShorten && task.Job3 == WorkerTask.JobLevel3.ShortenURL)
                         {
-                            tempText = np.Convert(Engine.ConfigUI.ClipboardFormat);
+                            NameParser np = new NameParser(NameParserType.Clipboard);
+                            np.link = clipboardText.ToString().Trim();
+                            np.size = task.Info.FileSize;
+                            np.name = task.Info.FileName;
+                            np.WindowText = task.Info.WindowTitleText;
+
+                            if (!string.IsNullOrEmpty(Engine.ConfigUI.ClipboardFormat))
+                            {
+                                tempText = np.Convert(Engine.ConfigUI.ClipboardFormat);
+                            }
+                        }
+                        else
+                        {
+                            tempText = clipboardText.ToString().Trim();
                         }
 
                         if (!string.IsNullOrEmpty(tempText))
