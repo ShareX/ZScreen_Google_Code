@@ -1501,7 +1501,7 @@ namespace ZScreenLib
 
                 if (Adapter.CheckFTPAccounts(this, FtpAccountId))
                 {
-                    FTPAccount acc = Engine.ConfigUploaders.FTPAccountList[FtpAccountId];
+                    FTPAccount acc = Engine.ConfigUploaders.FTPAccountList2[FtpAccountId];
                     DestinationName = string.Format("FTP - {0}", acc.Name);
                     StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
 

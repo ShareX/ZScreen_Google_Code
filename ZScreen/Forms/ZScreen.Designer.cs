@@ -382,6 +382,8 @@ namespace ZScreenGUI
             this.btnUploadTextClipboardFile = new System.Windows.Forms.Button();
             this.ttZScreen = new System.Windows.Forms.ToolTip(this.components);
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.tpAdvanedUploaders = new System.Windows.Forms.TabPage();
+            this.pgUploaders = new System.Windows.Forms.PropertyGrid();
             this.cmTray.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tpMain.SuspendLayout();
@@ -490,6 +492,7 @@ namespace ZScreenGUI
             this.gbImageBamGalleries.SuspendLayout();
             this.gbImageBamLinks.SuspendLayout();
             this.gbImageBamApiKeys.SuspendLayout();
+            this.tpAdvanedUploaders.SuspendLayout();
             this.SuspendLayout();
             // 
             // niTray
@@ -3910,10 +3913,11 @@ namespace ZScreenGUI
             // 
             // tcAdvanced
             // 
+            this.tcAdvanced.Controls.Add(this.tpAdvancedDebug);
+            this.tcAdvanced.Controls.Add(this.tpAdvancedCore);
             this.tcAdvanced.Controls.Add(this.tpAdvancedSettings);
             this.tcAdvanced.Controls.Add(this.tpAdvancedWorkflow);
-            this.tcAdvanced.Controls.Add(this.tpAdvancedCore);
-            this.tcAdvanced.Controls.Add(this.tpAdvancedDebug);
+            this.tcAdvanced.Controls.Add(this.tpAdvanedUploaders);
             this.tcAdvanced.Controls.Add(this.tpAdvancedStats);
             this.tcAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
@@ -4386,6 +4390,25 @@ namespace ZScreenGUI
             this.ttZScreen.ReshowDelay = 200;
             this.ttZScreen.ShowAlways = true;
             // 
+            // tpAdvanedUploaders
+            // 
+            this.tpAdvanedUploaders.Controls.Add(this.pgUploaders);
+            this.tpAdvanedUploaders.Location = new System.Drawing.Point(4, 22);
+            this.tpAdvanedUploaders.Name = "tpAdvanedUploaders";
+            this.tpAdvanedUploaders.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAdvanedUploaders.Size = new System.Drawing.Size(790, 424);
+            this.tpAdvanedUploaders.TabIndex = 10;
+            this.tpAdvanedUploaders.Text = "Uploaders";
+            this.tpAdvanedUploaders.UseVisualStyleBackColor = true;
+            // 
+            // pgUploaders
+            // 
+            this.pgUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgUploaders.Location = new System.Drawing.Point(3, 3);
+            this.pgUploaders.Name = "pgUploaders";
+            this.pgUploaders.Size = new System.Drawing.Size(784, 418);
+            this.pgUploaders.TabIndex = 2;
+            // 
             // ZScreen
             // 
             this.AllowDrop = true;
@@ -4551,6 +4574,7 @@ namespace ZScreenGUI
             this.gbImageBamLinks.PerformLayout();
             this.gbImageBamApiKeys.ResumeLayout(false);
             this.gbImageBamApiKeys.PerformLayout();
+            this.tpAdvanedUploaders.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4906,5 +4930,7 @@ namespace ZScreenGUI
         internal PictureBox pbActiveWindowDwmBackColor;
         private GroupBox gbCaptureDwm;
         private CheckBox chkActiveWindowDwmCustomColor;
+        private TabPage tpAdvanedUploaders;
+        internal PropertyGrid pgUploaders;
     }
 }

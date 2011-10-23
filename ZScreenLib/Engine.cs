@@ -82,7 +82,20 @@ namespace ZScreenLib
         internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Path.Combine(ApplicationName, "Text"));
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
+        #region Config Objects
+
         public static AppSettings ConfigApp = AppSettings.Read();
+
+        public static XMLSettings ConfigUI { get; set; }
+
+        public static Workflow ConfigWorkflow { get; set; }
+
+        public static UploadersConfig ConfigUploaders = new UploadersConfig();
+
+        public static GoogleTranslatorConfig ConfigGT { get; set; }
+
+        #endregion Config Objects
+
         public static string RootAppFolder = ConfigApp.PreferSystemFolders ? zRoamingAppDataFolder : DefaultRootAppFolder;
 
         static Engine()
@@ -207,14 +220,6 @@ namespace ZScreenLib
         public const string zImageEffects = "Image Effects";
 
         private static bool RunConfig = false;
-
-        public static XMLSettings ConfigUI { get; set; }
-
-        public static Workflow ConfigWorkflow { get; set; }
-
-        public static UploadersConfig ConfigUploaders = new UploadersConfig();
-
-        public static GoogleTranslatorConfig ConfigGT { get; set; }
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";

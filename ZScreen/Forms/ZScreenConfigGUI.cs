@@ -61,9 +61,9 @@ namespace ZScreenGUI
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
-            if (Engine.ConfigWorkflow.PasswordsSecureUsingEncryption)
+            if (Engine.ConfigUploaders.PasswordsSecureUsingEncryption)
             {
-                Engine.ConfigWorkflow.CryptPasswords(bEncrypt: false);
+                Engine.ConfigUploaders.CryptPasswords(bEncrypt: false);
             }
 
             DisableFeatures();
@@ -71,6 +71,7 @@ namespace ZScreenGUI
             pgAppSettings.SelectedObject = Engine.ConfigApp;
             pgAppConfig.SelectedObject = Engine.ConfigUI;
             pgWorkflow.SelectedObject = Engine.ConfigWorkflow;
+            pgUploaders.SelectedObject = Engine.ConfigUploaders;
             pgIndexer.SelectedObject = Engine.ConfigUI.IndexerConfig;
 
             ZScreen_ConfigGUI_Form();
@@ -110,6 +111,7 @@ namespace ZScreenGUI
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumDestToMenuWithConfigSettings();
             ucDestOptions.ReconfigOutputsUI();
+            ucDestOptions.EnableDisableDestControls();
 
             chkShowWorkflowWizard.Checked = Engine.ConfigUI.PromptForOutputs;
             chkShowCursor.Checked = Engine.ConfigWorkflow.DrawCursor;

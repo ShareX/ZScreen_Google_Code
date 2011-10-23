@@ -1056,7 +1056,7 @@ namespace ZScreenGUI
             FTPAccount acc = null;
             if (Adapter.CheckFTPAccounts(Engine.ConfigUploaders.FTPSelectedImage))
             {
-                acc = Engine.ConfigUploaders.FTPAccountList[Engine.ConfigUploaders.FTPSelectedImage];
+                acc = Engine.ConfigUploaders.FTPAccountList2[Engine.ConfigUploaders.FTPSelectedImage];
             }
 
             return acc;
@@ -1428,7 +1428,7 @@ namespace ZScreenGUI
         {
             gbCaptureDwm.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.DWM;
             gbCaptureGdi.Enabled = Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.GDI;
-     
+
             // Disable Show Checkers option if Clean Background is disabled
             if (!chkActiveWindowCleanBackground.Checked)
             {
@@ -1518,9 +1518,9 @@ namespace ZScreenGUI
 
         public void OpenFTPClient()
         {
-            if (Engine.ConfigUploaders.FTPAccountList.Count > 0)
+            if (Engine.ConfigUploaders.FTPAccountList2.Count > 0)
             {
-                FTPAccount acc = Engine.ConfigUploaders.FTPAccountList[Engine.ConfigUploaders.FTPSelectedImage] as FTPAccount;
+                FTPAccount acc = Engine.ConfigUploaders.FTPAccountList2[Engine.ConfigUploaders.FTPSelectedImage] as FTPAccount;
                 if (acc != null)
                 {
                     if (acc.Protocol == FTPProtocol.SFTP)

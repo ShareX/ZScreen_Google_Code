@@ -48,12 +48,6 @@ namespace ZScreenLib
         [Browsable(false)]
         public bool Enabled { get; set; }
 
-        [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
-        public bool PasswordsSecureUsingEncryption { get; set; }
-
-        [Browsable(false), Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Medium = 192, or High = 256")]
-        public EncryptionStrength PasswordsEncryptionStrength { get; set; }
-
         [Browsable(false)]
         public WorkerTask.JobLevel2 Job { get; set; }
 
@@ -266,19 +260,7 @@ namespace ZScreenLib
 
         public bool Write(string filePath)
         {
-            bool succ = true;
-            // encrypt before interim save
-            if (this.PasswordsSecureUsingEncryption)
-            {
-                this.CryptPasswords(bEncrypt: true);
-            }
-            succ = SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
-            // decrypt after interim save
-            if (this.PasswordsSecureUsingEncryption)
-            {
-                this.CryptPasswords(bEncrypt: false);
-            }
-            return succ;
+            return SettingsHelper.Save<Workflow>(this, filePath, SerializationType.Xml);
         }
 
         public static Workflow Read(string filePath)
@@ -299,39 +281,6 @@ namespace ZScreenLib
                 if (attr == null) continue;
                 prop.SetValue(self, attr.Value);
             }
-        }
-
-        public void CryptPasswords(bool bEncrypt)
-        {
-            CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength };
-
-            Engine.ConfigUploaders.TinyPicPassword =
-                bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.TinyPicPassword) :
-            crypt.Decrypt(Engine.ConfigUploaders.TinyPicPassword);
-
-            Engine.ConfigUploaders.RapidSharePassword =
-                bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.RapidSharePassword) :
-            crypt.Decrypt(Engine.ConfigUploaders.RapidSharePassword);
-
-            Engine.ConfigUploaders.SendSpacePassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.SendSpacePassword) :
-            crypt.Decrypt(Engine.ConfigUploaders.SendSpacePassword);
-
-            foreach (FTPAccount acc in Engine.ConfigUploaders.FTPAccountList)
-            {
-                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
-                acc.Passphrase = bEncrypt ? crypt.Encrypt(acc.Passphrase) : crypt.Decrypt(acc.Passphrase);
-            }
-
-            foreach (LocalhostAccount acc in Engine.ConfigUploaders.LocalhostAccountList)
-            {
-                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
-            }
-
-            Engine.ConfigUploaders.TwitPicPassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.TwitPicPassword) :
-                crypt.Decrypt(Engine.ConfigUploaders.TwitPicPassword);
-
-            Engine.ConfigUploaders.EmailPassword = bEncrypt ? crypt.Encrypt(Engine.ConfigUploaders.EmailPassword) :
-            crypt.Decrypt(Engine.ConfigUploaders.EmailPassword);
         }
 
         public void Start()

@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using HelpersLib;
 using UploadersLib.FileUploaders;
 using UploadersLib.HelperClasses;
@@ -36,7 +37,27 @@ namespace UploadersLib
     [Serializable]
     public class UploadersConfig
     {
+        #region Constructor
+
+        public UploadersConfig()
+        {
+            ApplyDefaultValues(this);
+        }
+
+        #endregion Constructor
+
+        #region General
+
+        [Category(ComponentModelStrings.AppPathsUploaders), ReadOnly(true), Description("File Path of the Uploaders Configuration")]
         public string FilePath { get; set; }
+
+        [Category(ComponentModelStrings.AppPasswords), DefaultValue(false), Description("Encrypt passwords using AES")]
+        public bool PasswordsSecureUsingEncryption { get; set; }
+
+        [Browsable(false), Category(ComponentModelStrings.AppPasswords), DefaultValue(EncryptionStrength.High), Description("Strength can be Low = 128, Medium = 192, or High = 256")]
+        public EncryptionStrength PasswordsEncryptionStrength2 { get; set; }
+
+        #endregion General
 
         #region Image uploaders
 
@@ -94,7 +115,7 @@ namespace UploadersLib
 
         // FTP
 
-        public List<FTPAccount> FTPAccountList = new List<FTPAccount>();
+        public List<FTPAccount> FTPAccountList2 = new List<FTPAccount>();
         public int FTPSelectedImage = 0;
         public int FTPSelectedText = 0;
         public int FTPSelectedFile = 0;
@@ -180,6 +201,16 @@ namespace UploadersLib
 
         #region Helper Methods
 
+        public static void ApplyDefaultValues(object self)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(self))
+            {
+                DefaultValueAttribute attr = prop.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+                if (attr == null) continue;
+                prop.SetValue(self, attr.Value);
+            }
+        }
+
         public bool IsActive(FileUploaderType ut)
         {
             switch (ut)
@@ -189,7 +220,7 @@ namespace UploadersLib
                 case FileUploaderType.Dropbox:
                     return DropboxAccountInfo != null;
                 case FileUploaderType.FTP:
-                    return FTPAccountList.Count > 0;
+                    return FTPAccountList2.Count > 0;
                 case FileUploaderType.Minus:
                     return MinusConfig != null && MinusConfig.MinusUser != null;
                 case FileUploaderType.RapidShare:
@@ -198,6 +229,41 @@ namespace UploadersLib
                     return true;
             }
             return false;
+        }
+
+        public void CryptPasswords(bool bEncrypt)
+        {
+            StaticHelper.WriteLine((bEncrypt ? "Encrypting " : "Decrypting") + " passwords.");
+
+            CryptKeys crypt = new CryptKeys() { KeySize = this.PasswordsEncryptionStrength2 };
+
+            this.TinyPicPassword =
+                bEncrypt ? crypt.Encrypt(this.TinyPicPassword) :
+            crypt.Decrypt(this.TinyPicPassword);
+
+            this.RapidSharePassword =
+                bEncrypt ? crypt.Encrypt(this.RapidSharePassword) :
+            crypt.Decrypt(this.RapidSharePassword);
+
+            this.SendSpacePassword = bEncrypt ? crypt.Encrypt(this.SendSpacePassword) :
+            crypt.Decrypt(this.SendSpacePassword);
+
+            foreach (FTPAccount acc in this.FTPAccountList2)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+                acc.Passphrase = bEncrypt ? crypt.Encrypt(acc.Passphrase) : crypt.Decrypt(acc.Passphrase);
+            }
+
+            foreach (LocalhostAccount acc in this.LocalhostAccountList)
+            {
+                acc.Password = bEncrypt ? crypt.Encrypt(acc.Password) : crypt.Decrypt(acc.Password);
+            }
+
+            this.TwitPicPassword = bEncrypt ? crypt.Encrypt(this.TwitPicPassword) :
+                crypt.Decrypt(this.TwitPicPassword);
+
+            this.EmailPassword = bEncrypt ? crypt.Encrypt(this.EmailPassword) :
+            crypt.Decrypt(this.EmailPassword);
         }
 
         public bool IsActive(TextUploaderType ut)
@@ -258,7 +324,23 @@ namespace UploadersLib
 
         public bool Write(string filePath)
         {
-            return SettingsHelper.Save(this, filePath, SerializationType.Xml);
+            bool succ = true;
+
+            // encrypt before interim save
+            if (this.PasswordsSecureUsingEncryption)
+            {
+                this.CryptPasswords(bEncrypt: true);
+            }
+
+            succ = SettingsHelper.Save(this, filePath, SerializationType.Xml);
+
+            // decrypt after interim save
+            if (this.PasswordsSecureUsingEncryption)
+            {
+                this.CryptPasswords(bEncrypt: false);
+            }
+
+            return succ;
         }
 
         public static UploadersConfig Read(string filePath)

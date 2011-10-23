@@ -331,7 +331,7 @@ namespace ZScreenLib
                         tsmi.Enabled = Engine.ConfigUploaders.DropboxOAuthInfo != null;
                         break;
                     case FileUploaderType.FTP:
-                        tsmi.Enabled = Engine.ConfigUploaders.FTPAccountList.Count > 0;
+                        tsmi.Enabled = Engine.ConfigUploaders.FTPAccountList2.Count > 0;
                         break;
                     case FileUploaderType.Minus:
                         tsmi.Enabled = Engine.ConfigUploaders.MinusConfig.Tokens.Count > 0;

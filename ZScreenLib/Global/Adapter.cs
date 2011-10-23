@@ -326,7 +326,7 @@ namespace ZScreenLib
 
         public static bool CheckFTPAccounts(int id)
         {
-            return Engine.ConfigUploaders.FTPAccountList.HasValidIndex(id);
+            return Engine.ConfigUploaders.FTPAccountList2.HasValidIndex(id);
         }
 
         public static bool CheckFTPAccounts(WorkerTask task, int id)
