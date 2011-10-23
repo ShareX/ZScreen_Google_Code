@@ -25,7 +25,6 @@ namespace ZScreenLib
             this.ID = ZAppHelper.GetRandomAlphanumeric(12);
             this.Description = "New Workflow";
             this.Enabled = true;
-            this.DestConfig = new DestConfig();
             ApplyDefaultValues(this);
         }
 
@@ -234,7 +233,7 @@ namespace ZScreenLib
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(true), Description("Always overwrite the clipboard with the screenshot image or url.")]
         public bool ClipboardOverwrite { get; set; }
 
-        public DestConfig DestConfig { get; set; }
+        public DestConfig DestConfig = new DestConfig();
 
         #endregion Outputs
 

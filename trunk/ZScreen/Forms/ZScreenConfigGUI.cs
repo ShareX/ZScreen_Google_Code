@@ -61,11 +61,6 @@ namespace ZScreenGUI
         {
             StaticHelper.WriteLine("Configuring ZScreen GUI via " + new StackFrame(1).GetMethod().Name);
 
-            if (Engine.ConfigUploaders.PasswordsSecureUsingEncryption)
-            {
-                Engine.ConfigUploaders.CryptPasswords(bEncrypt: false);
-            }
-
             DisableFeatures();
 
             pgAppSettings.SelectedObject = Engine.ConfigApp;
