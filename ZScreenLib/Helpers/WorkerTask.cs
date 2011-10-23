@@ -194,6 +194,9 @@ namespace ZScreenLib
             }
         }
 
+        /// <summary>
+        /// Duration in milliseconds
+        /// </summary>
         public int UploadDuration { get; set; }
 
         public bool IsImage { get; private set; }
@@ -320,7 +323,9 @@ namespace ZScreenLib
             SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
             Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
-
+#if DEBUG
+            StaticHelper.WriteLine("Retrieved Window Title at " + new StackFrame().GetMethod().Name);
+#endif
             bool success = true;
 
             switch (job)
@@ -1083,8 +1088,6 @@ namespace ZScreenLib
             StartTime = DateTime.Now;
 
             Data = PrepareData();
-
-            StaticHelper.WriteLine(string.Format("Job started: {0}", Job2));
 
             if (File.Exists(Info.LocalFilePath) || tempImage != null || !string.IsNullOrEmpty(tempText))
             {
@@ -2181,6 +2184,7 @@ namespace ZScreenLib
         /// </summary>
         public void RunWorker()
         {
+            Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
             MyWorker.RunWorkerAsync(this);
         }
 
