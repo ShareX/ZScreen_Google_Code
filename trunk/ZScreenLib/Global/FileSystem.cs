@@ -317,12 +317,12 @@ namespace ZScreenLib
         {
             string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
 
-            if (Engine.ConfigUploaders.FTPAccountList.Count > 0)
+            if (Engine.ConfigUploaders.FTPAccountList2.Count > 0)
             {
                 string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fpftp))
                 {
-                    FTPAccountManager fam = new FTPAccountManager(Engine.ConfigUploaders.FTPAccountList);
+                    FTPAccountManager fam = new FTPAccountManager(Engine.ConfigUploaders.FTPAccountList2);
                     fam.Save(fpftp);
                 }
             }
