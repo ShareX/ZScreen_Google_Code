@@ -188,7 +188,6 @@ namespace ZScreenGUI
                 else
                 {
                     task.States.Add(WorkerTask.TaskState.Finished);
-                    StaticHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
 
                     if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
                     {
@@ -283,6 +282,8 @@ namespace ZScreenGUI
                 }
             }
 
+            StaticHelper.WriteLine(string.Format("Job completed: {0}", task.Job2));
+            StaticHelper.WriteLine(string.Format("Task duration: {0} ms", task.UploadDuration));
             PostWorkerTasks();
         }
 
@@ -302,6 +303,7 @@ namespace ZScreenGUI
 
         public override WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
+            StaticHelper.WriteLine(string.Format("Creating job: {0}", job));
             if (tiCreateTask == null) tiCreateTask = new TaskInfo();
 
             tiCreateTask.Job = job;
@@ -372,8 +374,6 @@ namespace ZScreenGUI
             // the last point before the task enters background
             if (imageTask.tempImage != null)
             {
-                imageTask.Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
-
                 pbPreview.LoadImage(imageTask.tempImage);
 
                 DialogResult result = System.Windows.Forms.DialogResult.OK;
