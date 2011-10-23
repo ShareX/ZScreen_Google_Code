@@ -9,11 +9,13 @@ namespace JBirdGUI
     {
         public JBirdWorkflowWizard(WorkerTask task = null, Workflow workflow = null, WorkflowWizardGUIOptions gui = null)
         {
-            InitializeComponent();
             base.InitializeComponent();
+            InitializeComponent();
             base.Initialize(task, gui);
 
             HotkeyManager tempHotkeyMgr;
+            this.Task = new WorkerTask(workflow);
+            this.Config = workflow;
             Program.HotkeyMgrs.TryGetValue(this.Config.ID, out tempHotkeyMgr);
             if (tempHotkeyMgr != null)
             {
@@ -29,7 +31,7 @@ namespace JBirdGUI
 
         private void JBirdWorkflowWizard_Load(object sender, EventArgs e)
         {
-            this.Controls.Add(tcMain);
+            // this.Controls.Add(tcMain);
         }
     }
 }

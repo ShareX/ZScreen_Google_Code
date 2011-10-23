@@ -47,12 +47,12 @@ namespace ZScreenLib
             txtFilePath.Enabled = task.Job2 != WorkerTask.JobLevel2.UploadFromExplorer;
             DestSelectorHelper dsh = new DestSelectorHelper(ucDestOptions);
             dsh.AddEnumOutputsWithConfigSettings(Task.WorkflowConfig.DestConfig.Outputs);
-            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.TaskClipboardContent);
-            dsh.AddEnumLinkFormatWithRuntimeSettings(Task.MyLinkFormat.Cast<int>().ToList());
+            dsh.AddEnumClipboardContentWithRuntimeSettings(Task.WorkflowConfig.DestConfig.TaskClipboardContent);
+            dsh.AddEnumLinkFormatWithRuntimeSettings(Task.WorkflowConfig.DestConfig.LinkFormat.Cast<int>().ToList());
             dsh.AddEnumDestImageToMenuWithRuntimeSettings(Task.WorkflowConfig.DestConfig.ImageUploaders.Cast<int>().ToList());
             dsh.AddEnumDestTextToMenuWithRuntimeSettings(Task.WorkflowConfig.DestConfig.TextUploaders.Cast<int>().ToList());
             dsh.AddEnumDestFileToMenuWithRuntimeSettings(Task.WorkflowConfig.DestConfig.FileUploaders.Cast<int>().ToList());
-            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.MyLinkUploaders.Cast<int>().ToList());
+            dsh.AddEnumDestLinkToMenuWithRuntimeSettings(Task.WorkflowConfig.DestConfig.LinkUploaders.Cast<int>().ToList());
         }
 
         private void DestOptions_Load(object sender, EventArgs e)
@@ -86,11 +86,11 @@ namespace ZScreenLib
                 this.DialogResult = DialogResult.OK;
 
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, Task.WorkflowConfig.DestConfig.Outputs);
-                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.TaskClipboardContent);
+                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, Task.WorkflowConfig.DestConfig.TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, Task.WorkflowConfig.DestConfig.ImageUploaders);
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, Task.WorkflowConfig.DestConfig.TextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, Task.WorkflowConfig.DestConfig.FileUploaders);
-                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, Task.MyLinkUploaders);
+                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, Task.WorkflowConfig.DestConfig.LinkUploaders);
 
                 this.Hide();
             }

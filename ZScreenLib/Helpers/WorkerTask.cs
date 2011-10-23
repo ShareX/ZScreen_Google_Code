@@ -219,10 +219,6 @@ namespace ZScreenLib
 
         public TaskInfo Info { get; private set; }
 
-        public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
-        public List<LinkFormatEnum> MyLinkFormat = new List<LinkFormatEnum>();
-        public List<UrlShortenerType> MyLinkUploaders = new List<UrlShortenerType>();
-
         public List<UploadResult> UploadResults { get; private set; }
 
         public UploadResult Result
@@ -254,9 +250,9 @@ namespace ZScreenLib
         {
             MyWorker = worker;
 
-            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Count == 0)
+            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) && WorkflowConfig.DestConfig.TaskClipboardContent.Count == 0)
             {
-                TaskClipboardContent.Add(ClipboardContentEnum.Data);
+                WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
             }
 
             StartWork(wf.Job);
@@ -275,7 +271,7 @@ namespace ZScreenLib
             MyWorker = worker;
             PrepareOutputs(info.DestConfig);                                                                        // step 1
 
-            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel;                     // step 2
+            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel;                      // step 2
 
             if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs)                                      // step 3
             {
@@ -357,10 +353,10 @@ namespace ZScreenLib
                 Info.ImageSize = tempImage.Size;
             }
 
-            if (success && Job3 != JobLevel3.ShortenURL && Engine.ConfigUI.EnableImageSound)
+            if (success && Job3 != JobLevel3.ShortenURL && WorkflowConfig.EnableImageSound)
             {
-                if (File.Exists(Engine.ConfigUI.SoundImagePath))
-                    new System.Media.SoundPlayer(Engine.ConfigUI.SoundImagePath).Play();
+                if (File.Exists(WorkflowConfig.SoundImagePath))
+                    new System.Media.SoundPlayer(WorkflowConfig.SoundImagePath).Play();
                 else
                     new System.Media.SoundPlayer(Resources.Camera).Play();
             }
@@ -372,10 +368,12 @@ namespace ZScreenLib
             return success;
         }
 
-        private void PrepareOutputs(DestSelector ucDestOptions)
+        private void PrepareOutputs(DestConfig ucDestOptions)
         {
             if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
+                WorkflowConfig.DestConfig = ucDestOptions;
+                /*
                 Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, WorkflowConfig.DestConfig.Outputs);
                 Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
                 Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
@@ -383,7 +381,7 @@ namespace ZScreenLib
                 Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, WorkflowConfig.DestConfig.TextUploaders);
                 Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, WorkflowConfig.DestConfig.FileUploaders);
                 Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
-
+                */
                 States.Add(TaskState.Prepared);
             }
         }
@@ -409,7 +407,7 @@ namespace ZScreenLib
 
         private void MyWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //  throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void MyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -549,7 +547,7 @@ namespace ZScreenLib
 
         public void SetOCR(Image ocrImage)
         {
-            if (TaskClipboardContent.Contains(ClipboardContentEnum.OCR) && string.IsNullOrEmpty(OCRText))
+            if (WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.OCR) && string.IsNullOrEmpty(OCRText))
             {
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.LocalDisk))
                 {
@@ -1698,7 +1696,7 @@ namespace ZScreenLib
                 Job3 = WorkerTask.JobLevel3.ShortenURL;
                 URLShortener us = null;
 
-                if (MyLinkUploaders.Contains(UrlShortenerType.BITLY))
+                if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.BITLY))
                 {
                     us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
@@ -1708,24 +1706,24 @@ namespace ZScreenLib
                     us = new DebliURLShortener();
                 }
                 */
-                else if (MyLinkUploaders.Contains(UrlShortenerType.Google))
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
                 {
                     us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey,
                         Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
                 }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.ISGD))
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
                 {
                     us = new IsgdURLShortener();
                 }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.Jmp))
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Jmp))
                 {
                     us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
                 }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.TINYURL))
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TINYURL))
                 {
                     us = new TinyURLShortener();
                 }
-                else if (MyLinkUploaders.Contains(UrlShortenerType.TURL))
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TURL))
                 {
                     us = new TurlURLShortener();
                 }
@@ -1752,7 +1750,7 @@ namespace ZScreenLib
         {
             UploadResult ur_clipboard = new UploadResult();
             ur_clipboard.Host = OutputEnum.Clipboard.GetDescription();
-            if (File.Exists(Info.LocalFilePath) && TaskClipboardContent.Contains(ClipboardContentEnum.Local))
+            if (File.Exists(Info.LocalFilePath) && WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
             {
                 ur_clipboard.LocalFilePath = this.Info.LocalFilePath;
             }
@@ -1940,7 +1938,7 @@ namespace ZScreenLib
         /// <returns>true/false whether URL should or could shorten</returns>
         public bool ShouldShortenURL(string url)
         {
-            if (FileSystem.IsValidLink(url) && MyLinkUploaders.Count > 0)
+            if (FileSystem.IsValidLink(url) && WorkflowConfig.DestConfig.LinkUploaders.Count > 0)
             {
                 bool bShortenUrlJob = Engine.ConfigUI.ShortenUrlUsingClipboardUpload && Job2 == JobLevel2.UploadFromClipboard && FileSystem.IsValidLink(tempText);
                 bool bLongUrl = Engine.ConfigUI.ShortenUrlAfterUpload && url.Length > Engine.ConfigUI.ShortenUrlAfterUploadAfter;
@@ -1966,7 +1964,7 @@ namespace ZScreenLib
 
         public bool JobIsImageToClipboard()
         {
-            return WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Clipboard) && TaskClipboardContent.Contains(ClipboardContentEnum.Data) && tempImage != null;
+            return WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Clipboard) && WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && tempImage != null;
         }
 
         private bool CreateThumbnail()
@@ -2143,7 +2141,7 @@ namespace ZScreenLib
 
         public string GetActiveLinkUploadersDescription()
         {
-            return GetActiveUploadersDescription<UrlShortenerType>(MyLinkUploaders);
+            return GetActiveUploadersDescription<UrlShortenerType>(WorkflowConfig.DestConfig.LinkUploaders);
         }
 
         public string GetActiveUploadersDescription<T>(List<T> list)
@@ -2240,7 +2238,7 @@ namespace ZScreenLib
 
         public IntPtr Handle { get; set; }
 
-        public DestSelector DestConfig { get; set; }
+        public DestConfig DestConfig { get; set; }
 
         public NotifyIcon TrayIcon { get; set; }
 

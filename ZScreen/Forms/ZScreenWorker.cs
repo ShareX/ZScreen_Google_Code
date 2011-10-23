@@ -189,7 +189,7 @@ namespace ZScreenGUI
                 {
                     task.States.Add(WorkerTask.TaskState.Finished);
 
-                    if (task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
+                    if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
                     {
                         string fp = Adapter.SaveImage(task.tempImage);
                         if (!string.IsNullOrEmpty(fp))
@@ -210,7 +210,7 @@ namespace ZScreenGUI
                             }
                             break;
                         case JobLevel1.Image:
-                            if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.DeleteLocal && File.Exists(task.Info.LocalFilePath))
+                            if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.DeleteLocal && File.Exists(task.Info.LocalFilePath))
                             {
                                 try
                                 {
@@ -238,8 +238,8 @@ namespace ZScreenGUI
                     {
                         if (Engine.ConfigUI.CompleteSound)
                         {
-                            if (Engine.ConfigUI.EnableSounds && !string.IsNullOrEmpty(Engine.ConfigUI.SoundPath) && File.Exists(Engine.ConfigUI.SoundPath))
-                                new SoundPlayer(Engine.ConfigUI.SoundPath).Play();
+                            if (Engine.ConfigWorkflow.EnableSounds && !string.IsNullOrEmpty(Engine.ConfigWorkflow.SoundPath) && File.Exists(Engine.ConfigWorkflow.SoundPath))
+                                new SoundPlayer(Engine.ConfigWorkflow.SoundPath).Play();
                             else
                                 SystemSounds.Exclamation.Play();
                         }
@@ -301,13 +301,28 @@ namespace ZScreenGUI
 
         #region Create Worker
 
+        public DestConfig GetDestConfig(DestSelector ucDestOptions)
+        {
+            DestConfig DestConfig = new ZScreenLib.DestConfig();
+
+            Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, DestConfig.Outputs);
+            Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, DestConfig.TaskClipboardContent);
+            Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, DestConfig.LinkFormat);
+            Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, DestConfig.ImageUploaders);
+            Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, DestConfig.TextUploaders);
+            Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, DestConfig.FileUploaders);
+            Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, DestConfig.LinkUploaders);
+
+            return DestConfig;
+        }
+
         public override WorkerTask CreateTask(WorkerTask.JobLevel2 job, TaskInfo tiCreateTask = null)
         {
             StaticHelper.WriteLine(string.Format("Creating job: {0}", job));
             if (tiCreateTask == null) tiCreateTask = new TaskInfo();
 
             tiCreateTask.Job = job;
-            tiCreateTask.DestConfig = ucDestOptions;
+            tiCreateTask.DestConfig = GetDestConfig(ucDestOptions);
             tiCreateTask.TrayIcon = this.niTray;
 
             WorkerTask createTask = new WorkerTask(CreateWorker(), tiCreateTask);
@@ -720,8 +735,10 @@ namespace ZScreenGUI
         {
             if (task.UploadResults.Count > 0 && task.Job2 != WorkerTask.JobLevel2.Translate)
             {
-                if (!task.TaskClipboardContent.Contains(ClipboardContentEnum.Data) && !task.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
-                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.ConfigUI.ImageUploadRetryOnFail && task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.Info.LocalFilePath))
+                if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Data) &&
+                    !task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) &&
+                    string.IsNullOrEmpty(task.UploadResults[0].URL) && Engine.ConfigUI.ImageUploadRetryOnFail &&
+                    task.States.Contains(WorkerTask.TaskState.RetryPending) && File.Exists(task.Info.LocalFilePath))
                 {
                     WorkerTask task2 = CreateTask(WorkerTask.JobLevel2.UploadImage);
                     task2.SetImage(task.Info.LocalFilePath);
