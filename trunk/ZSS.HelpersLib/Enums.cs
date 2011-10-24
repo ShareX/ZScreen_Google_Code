@@ -96,7 +96,7 @@ namespace HelpersLib
 
     public enum EDataType
     {
-        File, Image, Text
+        File, Image, Text, URL
     }
 
     public enum GIFQuality

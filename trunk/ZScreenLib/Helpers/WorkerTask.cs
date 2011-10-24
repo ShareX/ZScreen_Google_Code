@@ -162,7 +162,7 @@ namespace ZScreenLib
 
         public bool WasToTakeScreenshot { get; set; }
 
-        public JobLevel1 Job1 { get; private set; }  // Image, File, Text
+        public EDataType Job1 { get; private set; }  // Image, File, Text
 
         public JobLevel2 Job2 { get; private set; }  // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
 
@@ -300,21 +300,9 @@ namespace ZScreenLib
 
         public bool StartWork(JobLevel2 job)
         {
-            Job2 = job;
+            StaticHelper.WriteLine(WorkflowConfig.DestConfig.ToString());
 
-            switch (job)
-            {
-                case JobLevel2.UploadFromExplorer:
-                case JobLevel2.UploadFromClipboard:
-                    Job1 = JobLevel1.File;
-                    break;
-                case JobLevel2.Translate:
-                    Job1 = JobLevel1.Text;
-                    break;
-                default:
-                    Job1 = JobLevel1.Image;
-                    break;
-            }
+            Job2 = job;
 
             SetNotifyIconStatus(Info.TrayIcon, ready: false);
 
@@ -324,7 +312,7 @@ namespace ZScreenLib
 #endif
             bool success = true;
 
-            switch (job)
+            switch (Job2)
             {
                 case JobLevel2.CaptureActiveWindow:
                     success = CaptureActiveWindow();
@@ -345,6 +333,29 @@ namespace ZScreenLib
                     break;
                 case JobLevel2.UploadFromClipboard:
                     success = LoadClipboardContent();
+                    break;
+            }
+
+            switch (job)
+            {
+                case JobLevel2.UploadFromExplorer:
+                    Job1 = EDataType.File;
+                    break;
+                case JobLevel2.UploadFromClipboard:
+                    if (FileSystem.IsValidLink(tempText))
+                    {
+                        Job1 = EDataType.URL;
+                    }
+                    else
+                    {
+                        Job1 = EDataType.File;
+                    }
+                    break;
+                case JobLevel2.Translate:
+                    Job1 = EDataType.Text;
+                    break;
+                default:
+                    Job1 = EDataType.Image;
                     break;
             }
 
@@ -373,15 +384,6 @@ namespace ZScreenLib
             if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
                 WorkflowConfig.DestConfig = ucDestOptions;
-                /*
-                Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, WorkflowConfig.DestConfig.Outputs);
-                Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, TaskClipboardContent);
-                Adapter.SaveMenuConfigToList<LinkFormatEnum>(ucDestOptions.tsddbLinkFormat, MyLinkFormat);
-                Adapter.SaveMenuConfigToList<ImageUploaderType>(ucDestOptions.tsddbDestImage, WorkflowConfig.DestConfig.ImageUploaders);
-                Adapter.SaveMenuConfigToList<TextUploaderType>(ucDestOptions.tsddbDestText, WorkflowConfig.DestConfig.TextUploaders);
-                Adapter.SaveMenuConfigToList<FileUploaderType>(ucDestOptions.tsddbDestFile, WorkflowConfig.DestConfig.FileUploaders);
-                Adapter.SaveMenuConfigToList<UrlShortenerType>(ucDestOptions.tsddbDestLink, MyLinkUploaders);
-                */
                 States.Add(TaskState.Prepared);
             }
         }
@@ -441,8 +443,8 @@ namespace ZScreenLib
 
             switch (Job1)
             {
-                case JobLevel1.Image:
-                case JobLevel1.Text:
+                case EDataType.Image:
+                case EDataType.Text:
                     Status = TaskStatus.Preparing;
                     break;
                 default:
@@ -513,7 +515,7 @@ namespace ZScreenLib
             if (img != null)
             {
                 tempImage = img;
-                Job1 = JobLevel1.Image;
+                Job1 = EDataType.Image;
 
                 StaticHelper.WriteLine(string.Format("Setting Image {0}x{1} to WorkerTask", img.Width, img.Height));
 
@@ -585,7 +587,7 @@ namespace ZScreenLib
 
         public void SetText(string text)
         {
-            Job1 = JobLevel1.Text;
+            Job1 = EDataType.Text;
             tempText = text;
 
             string fptxt = FileSystem.GetUniqueFilePath(Engine.ConfigWorkflow, Engine.TextDir, new NameParser().Convert("%y.%mo.%d-%h.%mi.%s") + ".txt");
@@ -718,11 +720,11 @@ namespace ZScreenLib
 
                 if (ZAppHelper.IsTextFile(fp))
                 {
-                    Job1 = JobLevel1.Text;
+                    Job1 = EDataType.Text;
                 }
                 else if (ZAppHelper.IsImageFile(fp))
                 {
-                    Job1 = JobLevel1.Image;
+                    Job1 = EDataType.Image;
                     IsImage = true;
                     if (tempImage == null && GraphicsMgr.IsValidImage(fp))
                     {
@@ -731,7 +733,7 @@ namespace ZScreenLib
                 }
                 else
                 {
-                    Job1 = JobLevel1.File;
+                    Job1 = EDataType.File;
                 }
             }
         }
@@ -942,7 +944,7 @@ namespace ZScreenLib
 
         public void SetTranslationInfo(GoogleTranslateInfo gti)
         {
-            Job1 = JobLevel1.Text;
+            Job1 = EDataType.Text;
             TranslationInfo = gti;
         }
 
@@ -989,23 +991,23 @@ namespace ZScreenLib
 
         public bool IsValidActionFile(Software app)
         {
-            return Job1 == JobLevel1.File && app.TriggerForFiles && File.Exists(Info.LocalFilePath);
+            return Job1 == EDataType.File && app.TriggerForFiles && File.Exists(Info.LocalFilePath);
         }
 
         public bool IsValidActionText(Software app)
         {
-            return Job1 == JobLevel1.Text && app.TriggerForText && !string.IsNullOrEmpty(tempText);
+            return Job1 == EDataType.Text && app.TriggerForText && !string.IsNullOrEmpty(tempText);
         }
 
         public bool IsValidActionImage(Software app)
         {
-            return Job1 == JobLevel1.Image && app.TriggerForImages && !WasToTakeScreenshot ||
-                   Job1 == JobLevel1.Image && app.TriggerForScreenshots && WasToTakeScreenshot;
+            return Job1 == EDataType.Image && app.TriggerForImages && !WasToTakeScreenshot ||
+                   Job1 == EDataType.Image && app.TriggerForScreenshots && WasToTakeScreenshot;
         }
 
         public bool IsValidActionOCR(Software app)
         {
-            return Job1 == JobLevel1.Image && app.TriggerForText && !string.IsNullOrEmpty(OCRText) && File.Exists(OCRFilePath);
+            return Job1 == EDataType.Image && app.TriggerForText && !string.IsNullOrEmpty(OCRText) && File.Exists(OCRFilePath);
         }
 
         /// <summary>
@@ -1094,7 +1096,8 @@ namespace ZScreenLib
                 {
                     switch (Job1)
                     {
-                        case JobLevel1.Text:
+                        case EDataType.Text:
+                        case EDataType.URL:
                             FileSystem.WriteText(Info.LocalFilePath, tempText);
                             break;
                         default:
@@ -1118,11 +1121,12 @@ namespace ZScreenLib
                 {
                     switch (Job1)
                     {
-                        case JobLevel1.Image:
+                        case EDataType.Image:
                             UploadImage();
                             break;
 
-                        case JobLevel1.Text:
+                        case EDataType.Text:
+                        case EDataType.URL:
                             switch (Job2)
                             {
                                 case WorkerTask.JobLevel2.Translate:
@@ -1135,7 +1139,7 @@ namespace ZScreenLib
                             }
                             break;
 
-                        case JobLevel1.File:
+                        case EDataType.File:
                             UploadFile();
                             break;
                     }
@@ -1384,7 +1388,7 @@ namespace ZScreenLib
             if (imageUploader != null)
             {
                 imageUploader.ProgressChanged += (x) => UploadProgressChanged(x);
-                DestinationName = GetActiveImageUploadersDescription();
+                DestinationName = WorkflowConfig.DestConfig.ToStringImageUploaders();
                 StaticHelper.WriteLine("Initialized " + DestinationName);
 
                 if (data != null)
@@ -1621,14 +1625,14 @@ namespace ZScreenLib
                     }
                     switch (Job1)
                     {
-                        case JobLevel1.Text:
+                        case EDataType.Text:
                             UploadToFTP(Engine.ConfigUploaders.FTPSelectedText, data);
                             break;
-                        case JobLevel1.Image:
+                        case EDataType.Image:
                             UploadToFTP(Engine.ConfigUploaders.FTPSelectedImage, data);
                             break;
                         default:
-                        case JobLevel1.File:
+                        case EDataType.File:
                             UploadToFTP(Engine.ConfigUploaders.FTPSelectedFile, data);
                             break;
                     }
@@ -2000,21 +2004,21 @@ namespace ZScreenLib
                 sbMsg.Append(" to ");
                 switch (Job1)
                 {
-                    case JobLevel1.Image:
-                        sbMsg.Append(GetActiveImageUploadersDescription());
+                    case EDataType.Image:
+                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringImageUploaders());
                         break;
-                    case JobLevel1.Text:
+                    case EDataType.Text:
                         if (Job3 == WorkerTask.JobLevel3.ShortenURL)
                         {
-                            sbMsg.Append(GetActiveLinkUploadersDescription());
+                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringLinkUploaders());
                         }
                         else
                         {
-                            sbMsg.Append(GetActiveTextUploadersDescription());
+                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringTextUploaders());
                         }
                         break;
-                    case JobLevel1.File:
-                        sbMsg.Append(GetActiveUploadersDescription<FileUploaderType>(WorkflowConfig.DestConfig.FileUploaders));
+                    case EDataType.File:
+                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringFileUploaders());
                         break;
                 }
                 ni.Text = ready ? Engine.GetProductName() : sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
@@ -2048,22 +2052,22 @@ namespace ZScreenLib
             {
                 switch (Job1)
                 {
-                    case JobLevel1.Image:
-                        destName = GetActiveImageUploadersDescription();
+                    case EDataType.Image:
+                        destName = WorkflowConfig.DestConfig.ToStringImageUploaders();
                         break;
-                    case JobLevel1.Text:
+                    case EDataType.Text:
                         switch (Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
-                                destName = GetActiveLinkUploadersDescription();
+                                destName = WorkflowConfig.DestConfig.ToStringLinkUploaders();
                                 break;
                             default:
-                                destName = GetActiveTextUploadersDescription();
+                                destName = WorkflowConfig.DestConfig.ToStringTextUploaders();
                                 break;
                         }
                         break;
-                    case JobLevel1.File:
-                        destName = GetActiveUploadersDescription<FileUploaderType>(WorkflowConfig.DestConfig.FileUploaders);
+                    case EDataType.File:
+                        destName = WorkflowConfig.DestConfig.ToStringFileUploaders();
                         break;
                 }
             }
@@ -2096,70 +2100,6 @@ namespace ZScreenLib
             return sb.ToString();
         }
 
-        public string GetOutputsDescription()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (OutputEnum ut in WorkflowConfig.DestConfig.Outputs)
-            {
-                sb.Append(ut.GetDescription());
-                sb.Append(", ");
-            }
-            if (sb.Length > 2)
-            {
-                sb.Remove(sb.Length - 2, 2);
-            }
-            return sb.ToString();
-        }
-
-        public string GetActiveImageUploadersDescription()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (ImageUploaderType ut in WorkflowConfig.DestConfig.ImageUploaders)
-            {
-                sb.Append(ut.GetDescription());
-                sb.Append(", ");
-            }
-            if (sb.Length < 3)
-            {
-                foreach (OutputEnum ut in WorkflowConfig.DestConfig.Outputs)
-                {
-                    sb.Append(ut.GetDescription());
-                    sb.Append(", ");
-                }
-            }
-            if (sb.Length > 2)
-            {
-                sb.Remove(sb.Length - 2, 2);
-            }
-            return sb.ToString();
-        }
-
-        public string GetActiveTextUploadersDescription()
-        {
-            return GetActiveUploadersDescription<TextUploaderType>(WorkflowConfig.DestConfig.TextUploaders);
-        }
-
-        public string GetActiveLinkUploadersDescription()
-        {
-            return GetActiveUploadersDescription<UrlShortenerType>(WorkflowConfig.DestConfig.LinkUploaders);
-        }
-
-        public string GetActiveUploadersDescription<T>(List<T> list)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (T ut in list)
-            {
-                Enum en = (Enum)Convert.ChangeType(ut, typeof(Enum));
-                sb.Append(en.GetDescription());
-                sb.Append(", ");
-            }
-            if (sb.Length > 2)
-            {
-                sb.Remove(sb.Length - 2, 2);
-            }
-            return sb.ToString();
-        }
-
         public string ToErrorString()
         {
             return string.Join("\r\n", Errors.ToArray());
@@ -2168,8 +2108,8 @@ namespace ZScreenLib
         public override string ToString()
         {
             StringBuilder sbDebug = new StringBuilder();
-            sbDebug.AppendLine(string.Format("Image Uploaders: {0}", GetActiveImageUploadersDescription()));
-            sbDebug.AppendLine(string.Format(" File Uploader: {0}", GetActiveUploadersDescription<FileUploaderType>(WorkflowConfig.DestConfig.FileUploaders)));
+            sbDebug.AppendLine(string.Format("Image Uploaders: {0}", WorkflowConfig.DestConfig.ToStringImageUploaders()));
+            sbDebug.AppendLine(string.Format("  File Uploader: {0}", WorkflowConfig.DestConfig.ToStringFileUploaders()));
             return sbDebug.ToString();
         }
 

@@ -288,16 +288,4 @@ namespace ZScreenLib
 
         #endregion Helper Methods
     }
-
-    public class DestConfig
-    {
-        public List<OutputEnum> Outputs = new List<OutputEnum>();
-        public List<ClipboardContentEnum> TaskClipboardContent = new List<ClipboardContentEnum>();
-        public List<LinkFormatEnum> LinkFormat = new List<LinkFormatEnum>();
-
-        public List<ImageUploaderType> ImageUploaders = new List<ImageUploaderType>();
-        public List<TextUploaderType> TextUploaders = new List<TextUploaderType>();
-        public List<FileUploaderType> FileUploaders = new List<FileUploaderType>();
-        public List<UrlShortenerType> LinkUploaders = new List<UrlShortenerType>();
-    }
 }
