@@ -46,8 +46,7 @@ namespace ScreenCapture
         {
             InitializeComponent();
 
-            screenshot = Screenshot.GetFullscreen();
-
+            screenshot = Screenshot.CaptureFullscreen();
             SurfaceConfig = surfaceConfig;
 
             cbDrawBorder.Checked = surfaceConfig.DrawBorder;
@@ -73,6 +72,15 @@ namespace ScreenCapture
                     MinMoveSpeed = 1,
                     MaxMoveSpeed = 5
                 };
+            }
+
+            if (surface is RectangleRegion)
+            {
+                RectangleRegion rectangle = (RectangleRegion)surface;
+                if (rectangle.Config.IsFixedSize = cbIsFixedSize.Checked)
+                {
+                    rectangle.Config.FixedSize = new Size((int)nudFixedWidth.Value, (int)nudFixedHeight.Value);
+                }
             }
 
             if (surface.ShowDialog() == DialogResult.OK)
