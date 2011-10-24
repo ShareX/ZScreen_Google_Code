@@ -79,6 +79,11 @@ namespace ScreenCapture
             surface.KeyUp += new KeyEventHandler(surface_KeyUp);
         }
 
+        public void Update()
+        {
+            resizeManager.Update();
+        }
+
         private void surface_MouseDown(object sender, MouseEventArgs e)
         {
             int areaIndex = AreaIntersect(e.Location);

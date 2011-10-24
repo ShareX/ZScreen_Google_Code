@@ -162,6 +162,7 @@ namespace ScreenCapture
 #endif
 
             Update();
+            AreaManager.Update();
             AfterUpdate();
 
             Graphics g = e.Graphics;

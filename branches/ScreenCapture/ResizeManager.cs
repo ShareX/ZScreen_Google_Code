@@ -59,14 +59,12 @@ namespace ScreenCapture
 
         private NodeObject[] nodes;
         private Rectangle tempRect;
-        private Point oldMousePosition;
 
         public ResizeManager(Surface surface, AreaManager areaManager)
         {
             this.surface = surface;
             this.areaManager = areaManager;
 
-            surface.MouseMove += new MouseEventHandler(surface_MouseMove);
             surface.KeyDown += new KeyEventHandler(surface_KeyDown);
 
             nodes = new NodeObject[8];
@@ -79,7 +77,7 @@ namespace ScreenCapture
             nodes[(int)NodePosition.BottomRight].Order = 10;
         }
 
-        private void surface_MouseMove(object sender, MouseEventArgs e)
+        public void Update()
         {
             if (Visible && nodes != null)
             {
@@ -94,24 +92,28 @@ namespace ScreenCapture
                                 tempRect = areaManager.CurrentArea;
                             }
 
-                            if (i <= 2) // Top row
+                            int x = surface.CurrentMousePosition.X - surface.BeforeMousePosition.X;
+
+                            if (i >= 2 && i <= 4) // Right
                             {
-                                tempRect.Y += e.Y - oldMousePosition.Y;
-                                tempRect.Height -= e.Y - oldMousePosition.Y;
+                                tempRect.Width += x;
                             }
-                            else if (i >= 4 && i <= 6) // Bottom row
+                            else if (i >= 6 || i == 0) // Left
                             {
-                                tempRect.Height += e.Y - oldMousePosition.Y;
+                                tempRect.X += x;
+                                tempRect.Width -= x;
                             }
 
-                            if (i >= 2 && i <= 4) // Right row
+                            int y = surface.CurrentMousePosition.Y - surface.BeforeMousePosition.Y;
+
+                            if (i <= 2) // Top
                             {
-                                tempRect.Width += e.X - oldMousePosition.X;
+                                tempRect.Y += y;
+                                tempRect.Height -= y;
                             }
-                            else if (i >= 6 || i == 0) // Left row
+                            else if (i >= 4 && i <= 6) // Bottom
                             {
-                                tempRect.X += e.X - oldMousePosition.X;
-                                tempRect.Width -= e.X - oldMousePosition.X;
+                                tempRect.Height += y;
                             }
 
                             areaManager.CurrentArea = CaptureHelpers.FixRectangle(tempRect);
@@ -123,8 +125,6 @@ namespace ScreenCapture
 
                 UpdateNodePositions();
             }
-
-            oldMousePosition = e.Location;
         }
 
         private void surface_KeyDown(object sender, KeyEventArgs e)
@@ -212,19 +212,21 @@ namespace ScreenCapture
 
         public void MoveCurrentArea(int x, int y)
         {
-            //CurrentArea = new Rectangle(new Point(CurrentArea.X + x, CurrentArea.Y + y), CurrentArea.Size);
+            areaManager.CurrentArea = new Rectangle(new Point(areaManager.CurrentArea.X + x, areaManager.CurrentArea.Y + y), areaManager.CurrentArea.Size);
         }
 
         public void ResizeCurrentArea(int x, int y, bool isBottomRightMoving)
         {
-            /*if (isBottomRightMoving)
+            if (isBottomRightMoving)
             {
-                CurrentArea = new Rectangle(CurrentArea.Left, CurrentArea.Top, CurrentArea.Width + x, CurrentArea.Height + y);
+                areaManager.CurrentArea = new Rectangle(areaManager.CurrentArea.X, areaManager.CurrentArea.Y,
+                    areaManager.CurrentArea.Width + x, areaManager.CurrentArea.Height + y);
             }
             else
             {
-                CurrentArea = new Rectangle(CurrentArea.Left + x, CurrentArea.Top + y, CurrentArea.Width - x, CurrentArea.Height - y);
-            }*/
+                areaManager.CurrentArea = new Rectangle(areaManager.CurrentArea.X + x, areaManager.CurrentArea.Y + y,
+                    areaManager.CurrentArea.Width - x, areaManager.CurrentArea.Height - y);
+            }
         }
     }
 }
