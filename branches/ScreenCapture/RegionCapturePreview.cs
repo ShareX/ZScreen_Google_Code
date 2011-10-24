@@ -37,10 +37,14 @@ namespace ScreenCapture
         private Surface surface;
         public SurfaceOptions SurfaceConfig { get; set; }
 
+        public RegionCapturePreview()
+            : this(new SurfaceOptions())
+        {
+        }
+
         public RegionCapturePreview(SurfaceOptions surfaceConfig)
         {
             InitializeComponent();
-            Screenshot.DrawCursor = surfaceConfig.DrawChecker;
 
             screenshot = Screenshot.CaptureFullscreen();
             SurfaceConfig = surfaceConfig;

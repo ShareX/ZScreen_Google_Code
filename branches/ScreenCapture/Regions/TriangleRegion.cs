@@ -39,10 +39,10 @@ namespace ScreenCapture
         {
             Angle = TriangleAngle.Top;
 
-            MouseWheel += new MouseEventHandler(TriangleRegionSurface_MouseWheel);
+            MouseWheel += new MouseEventHandler(TriangleRegion_MouseWheel);
         }
 
-        private void TriangleRegionSurface_MouseWheel(object sender, MouseEventArgs e)
+        private void TriangleRegion_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
             {
@@ -68,34 +68,9 @@ namespace ScreenCapture
             }
         }
 
-        protected override void Draw(Graphics g)
+        protected override void AddShapePath(GraphicsPath graphicsPath, Rectangle rect)
         {
-            if (CurrentArea != null && CurrentArea.Width > 0 && CurrentArea.Height > 0)
-            {
-                regionPath = new GraphicsPath();
-
-                regionPath.AddTriangle(new Rectangle(CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1), Angle);
-
-                using (Region region = new Region(regionPath))
-                {
-                    g.ExcludeClip(region);
-                    g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-                    DrawObjects(g);
-                    g.ResetClip();
-                }
-
-                if (areaObject.IsDragging || areaObject.IsMouseHover)
-                {
-                    g.FillPath(lightBrush, regionPath);
-                }
-
-                g.DrawPath(borderPen, regionPath);
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
-            }
-            else
-            {
-                g.FillRectangle(shadowBrush, 0, 0, Width, Height);
-            }
+            graphicsPath.AddTriangle(new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1), Angle);
         }
     }
 }

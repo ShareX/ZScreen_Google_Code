@@ -47,7 +47,7 @@ namespace ScreenCapture
 
             if (areaObject.IsDragging && DrawableObjects.OfType<NodeObject>().All(x => !x.IsDragging && !x.IsMouseHover))
             {
-                MoveArea(mousePosition.X - oldMousePosition.X, mousePosition.Y - oldMousePosition.Y);
+                //AreaManager.MoveCurrentArea(mousePosition.X - oldMousePosition.X, mousePosition.Y - oldMousePosition.Y);
             }
         }
     }

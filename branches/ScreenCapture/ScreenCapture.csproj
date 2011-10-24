@@ -63,7 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaManager.cs" />
     <Compile Include="ColorBgra.cs" />
+    <Compile Include="ResizeManager.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>
@@ -117,7 +119,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZSS.HelpersLib\HelpersLib.csproj">
+    <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>HelpersLib</Name>
     </ProjectReference>

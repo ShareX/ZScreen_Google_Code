@@ -48,24 +48,24 @@ namespace ScreenCapture
         {
             base.Update();
 
-            if (!IsAreaCreated && isMouseDown)
+            if (/*!IsAreaCreated &&*/ IsLeftMouseDown)
             {
                 lastNode.Visible = true;
                 lastNode.IsDragging = true;
-                IsAreaCreated = true;
+                //IsAreaCreated = true;
             }
 
             if (lastNode.Visible && lastNode.IsDragging)
             {
-                lastNode.Position = mousePosition;
+                lastNode.Position = CurrentMousePosition;
 
-                if (mousePosition != oldMousePosition)
+                if (CurrentMousePosition != BeforeMousePosition)
                 {
-                    points.Add(mousePosition);
+                    points.Add(CurrentMousePosition);
 
                     if (points.Count > 1)
                     {
-                        regionPath.AddLine(oldMousePosition, mousePosition);
+                        regionPath.AddLine(BeforeMousePosition, CurrentMousePosition);
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace ScreenCapture
             }
         }
 
-        protected override void OnRightClickCancel()
+        /*protected override void OnRightClickCancel()
         {
             if (IsAreaCreated)
             {
@@ -91,7 +91,7 @@ namespace ScreenCapture
             {
                 Close(true);
             }
-        }
+        }*/
 
         protected override void Draw(Graphics g)
         {
