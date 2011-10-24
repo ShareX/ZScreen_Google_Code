@@ -1023,11 +1023,17 @@ namespace ZScreenLib
                     {
                         try
                         {
+                            // Compatibility fixes
+                            string APPLICATIONDATA_LANGUAGE_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Greenshot\Languages\");
+                            if (!Directory.Exists(APPLICATIONDATA_LANGUAGE_PATH)) Directory.CreateDirectory(APPLICATIONDATA_LANGUAGE_PATH);
+                            IniFile.IniConfig.Init();
+
                             Greenshot.Helpers.Capture capture = new Greenshot.Helpers.Capture(tempImage);
                             capture.CaptureDetails.Filename = Info.LocalFilePath;
                             capture.CaptureDetails.Title = Path.GetFileNameWithoutExtension(capture.CaptureDetails.Filename);
                             capture.CaptureDetails.AddMetaData("file", capture.CaptureDetails.Filename);
                             capture.CaptureDetails.AddMetaData("source", "file");
+
                             Greenshot.Drawing.Surface surface = new Greenshot.Drawing.Surface(capture);
                             Greenshot.ImageEditorForm editor = new Greenshot.ImageEditorForm(surface, WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.LocalDisk)) { Icon = Resources.zss_main };
                             editor.SetImagePath(Info.LocalFilePath);
