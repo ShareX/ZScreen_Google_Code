@@ -64,7 +64,7 @@ namespace ScreenCapture
             if (isMouseDown)
             {
                 positionOld = positionCurrent;
-                positionCurrent = PointToClient(Cursor.Position);
+                positionCurrent = CaptureHelpers.GetZeroBasedMousePosition();
 
                 if (positionCurrent != positionOld)
                 {
