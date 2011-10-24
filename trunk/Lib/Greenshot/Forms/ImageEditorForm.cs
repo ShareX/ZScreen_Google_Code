@@ -85,6 +85,8 @@ namespace Greenshot
             //
             InitializeComponent();
             MainForm.instance = new MainForm(new CopyDataTransport());
+            // Init Log4NET
+            MainForm.InitializeLog4NET();
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageEditorForm));
             Image backgroundForTransparency = (Image)resources.GetObject("checkerboard.Image");
