@@ -82,14 +82,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Greenshot, Version=0.8.1.1288, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Greenshot.dll</HintPath>
-    </Reference>
-    <Reference Include="GreenshotPlugin, Version=1.0.0.1282, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\GreenshotPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.MODI, Version=12.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -287,6 +279,14 @@
       <Project>{FD0080E8-9054-49DE-8C75-8A4DC076C6DD}</Project>
       <Name>ImageQueueLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lib\GreenshotPlugin\GreenshotPlugin.csproj">
+      <Project>{5B924697-4DCD-4F98-85F1-105CB84B7341}</Project>
+      <Name>GreenshotPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\Greenshot\Greenshot.csproj">
+      <Project>{CD642BF4-D815-4D67-A0B5-C69F0B8231AF}</Project>
+      <Name>Greenshot</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
@@ -408,6 +408,9 @@
     </Content>
     <Content Include="ImageEffectsPlugins\ImageManipulation.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\help-en-US.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\language-en-US.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
