@@ -83,10 +83,10 @@ namespace Greenshot
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
-            InitializeComponent();
             MainForm.instance = new MainForm(new CopyDataTransport());
             // Init Log4NET
             MainForm.InitializeLog4NET();
+            InitializeComponent();
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageEditorForm));
             Image backgroundForTransparency = (Image)resources.GetObject("checkerboard.Image");
@@ -175,7 +175,7 @@ namespace Greenshot
             string editorTitle = lang.GetString(LangKey.editor_title);
             if (surface != null && surface.CaptureDetails != null && surface.CaptureDetails.Title != null)
             {
-                editorTitle = surface.CaptureDetails.Title + " - " + editorTitle;
+                // editorTitle = surface.CaptureDetails.Title + " - " + editorTitle;
             }
             this.Text = editorTitle;
 
