@@ -263,7 +263,7 @@ namespace HelpersLib
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.DrawRectangle(Pens.Black, 0, 0, img.Width - 1, img.Height - 1);
+                g.DrawRectangleProper(Pens.Black, new Rectangle(0, 0, img.Width, img.Height));
             }
 
             return bmp;
