@@ -293,20 +293,17 @@ namespace UploadersLib
             }
             else
             {
-                List<CustomUploaderInfo> iUploaders = Config.CustomUploadersList;
-                foreach (CustomUploaderInfo iUploader in iUploaders)
+                foreach (CustomUploaderInfo customUploader in Config.CustomUploadersList)
                 {
-                    lbCustomUploaderList.Items.Add(iUploader.Name);
+                    lbCustomUploaderList.Items.Add(customUploader.Name);
                 }
 
-                if (lbCustomUploaderList.Items.Count > 0)
-                {
-                    lbCustomUploaderList.SelectedIndex = Config.CustomUploaderSelected;
-                }
+                int selected = Config.CustomUploaderSelected;
 
-                if (lbCustomUploaderList.SelectedIndex > -1)
+                if (selected >= 0 && selected < lbCustomUploaderList.Items.Count)
                 {
-                    LoadCustomUploader(Config.CustomUploadersList[lbCustomUploaderList.SelectedIndex]);
+                    lbCustomUploaderList.SelectedIndex = selected;
+                    LoadCustomUploader(Config.CustomUploadersList[selected]);
                 }
             }
 
