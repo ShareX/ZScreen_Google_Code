@@ -40,16 +40,6 @@ namespace ZScreenLib
         CloseButton
     }
 
-    /// <summary>
-    /// Top level Capture Types for ZScreen. Pictures: Images that user created, Screenshots: Images that ZScreen created
-    /// </summary>
-    public enum JobLevel1
-    {
-        File, // important to have this listed first as this must be the default unless otherwise specified
-        Image,
-        Text
-    }
-
     public enum CaptureType
     {
         CROP,

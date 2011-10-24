@@ -331,7 +331,7 @@ namespace ZScreenLib
                     }
 
                 // If the user requests for the full image URL, preference is given for the Shortened URL is exists
-                    else if (task.Job1 == JobLevel1.Image && task.WorkflowConfig.DestConfig.LinkFormat.Contains((int)LinkFormatEnum.FULL))
+                    else if (task.Job1 == EDataType.Image && task.WorkflowConfig.DestConfig.LinkFormat.Contains((int)LinkFormatEnum.FULL))
                     {
                         if (task.Job3 == WorkerTask.JobLevel3.ShortenURL && !string.IsNullOrEmpty(task.UploadResults[0].ShortenedURL))
                         {
@@ -381,7 +381,7 @@ namespace ZScreenLib
                     else
                     {
                         // From this point onwards app needs to respect all other Clipboard URL modes for Images
-                        if (task.UploadResults.Count > 0 && task.Job1 == JobLevel1.Image)
+                        if (task.UploadResults.Count > 0 && task.Job1 == EDataType.Image)
                         {
                             foreach (UploadResult ur in task.UploadResults)
                             {
@@ -397,7 +397,7 @@ namespace ZScreenLib
                             }
                         }
                         // Text and File catagories are still left to process. Exception for Google Translate
-                        else if (task.Job1 == JobLevel1.Text && task.Job2 == WorkerTask.JobLevel2.Translate)
+                        else if (task.Job1 == EDataType.Text && task.Job2 == WorkerTask.JobLevel2.Translate)
                         {
                             if (task.TranslationInfo != null)
                             {
@@ -430,8 +430,8 @@ namespace ZScreenLib
                         np.link = clipboardText.ToString().Trim();
                         np.size = task.Info.FileSize;
                         np.name = task.Info.FileName;
-                        if (Engine.ConfigUI.EnableClipboardFormatOnShorten && task.Job3 == WorkerTask.JobLevel3.ShortenURL ||
-                                          task.Job3 != WorkerTask.JobLevel3.ShortenURL)
+                        if (Engine.ConfigUI.EnableClipboardFormatOnShorten && task.Job1 == EDataType.URL ||
+                                          task.Job1 != EDataType.URL)
                         {
                             np.WindowText = task.Info.WindowTitleText;
                         }

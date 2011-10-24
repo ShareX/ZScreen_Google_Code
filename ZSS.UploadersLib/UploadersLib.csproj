@@ -117,6 +117,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DestConfig.cs" />
     <Compile Include="FileUploaders\Email.cs" />
     <Compile Include="FileUploaders\FTP\SFTP.cs" />
     <Compile Include="FileUploaders\Gmail.cs" />

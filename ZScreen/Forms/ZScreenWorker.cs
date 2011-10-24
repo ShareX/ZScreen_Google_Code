@@ -182,7 +182,7 @@ namespace ZScreenGUI
 
                 if (checkTask.States.Contains(WorkerTask.TaskState.RetryPending))
                 {
-                    string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.GetActiveImageUploadersDescription());
+                    string message = string.Format("{0}\r\n\r\nAutomatically retrying upload for {1}.", string.Join("\r\n", task.Errors.ToArray()), checkTask.WorkflowConfig.DestConfig.ToStringImageUploaders());
                     niTray.ShowBalloonTip(5000, Application.ProductName, message, ToolTipIcon.Warning);
                 }
                 else
@@ -200,7 +200,7 @@ namespace ZScreenGUI
 
                     switch (task.Job1)
                     {
-                        case JobLevel1.Text:
+                        case EDataType.Text:
                             if (task.Job2 == WorkerTask.JobLevel2.Translate)
                             {
                                 UpdateGoogleTranslateGUI(task.TranslationInfo);
@@ -209,7 +209,7 @@ namespace ZScreenGUI
                                 Loader.MyGTGUI.btnTranslateTo.Enabled = true;
                             }
                             break;
-                        case JobLevel1.Image:
+                        case EDataType.Image:
                             if (!task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.DeleteLocal && File.Exists(task.Info.LocalFilePath))
                             {
                                 try
@@ -303,7 +303,7 @@ namespace ZScreenGUI
 
         public DestConfig GetDestConfig(DestSelector ucDestOptions)
         {
-            DestConfig DestConfig = new ZScreenLib.DestConfig();
+            DestConfig DestConfig = new UploadersLib.DestConfig();
 
             Adapter.SaveMenuConfigToList<OutputEnum>(ucDestOptions.tsddbOutputs, DestConfig.Outputs);
             Adapter.SaveMenuConfigToList<ClipboardContentEnum>(ucDestOptions.tsddbClipboardContent, DestConfig.TaskClipboardContent);
@@ -744,7 +744,7 @@ namespace ZScreenGUI
                     task2.SetImage(task.Info.LocalFilePath);
                     task2.States.Add(WorkerTask.TaskState.Finished); // we do not retry again
 
-                    if (task.Job1 == JobLevel1.Image)
+                    if (task.Job1 == EDataType.Image)
                     {
                         if (Engine.ConfigUI.ImageUploadRandomRetryOnFail)
                         {

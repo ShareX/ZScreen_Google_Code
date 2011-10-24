@@ -176,22 +176,22 @@ namespace ZScreenGUI
 
                 switch (task.Job1)
                 {
-                    case JobLevel1.Text:
+                    case EDataType.Text:
                         string dest = string.Empty;
                         switch (task.Job3)
                         {
                             case WorkerTask.JobLevel3.ShortenURL:
-                                dest = task.GetActiveLinkUploadersDescription();
+                                dest = task.WorkflowConfig.DestConfig.ToStringLinkUploaders();
                                 break;
                             default:
-                                dest = task.GetActiveTextUploadersDescription();
+                                dest = task.WorkflowConfig.DestConfig.ToStringTextUploaders();
                                 break;
                         }
                         sbMsg.AppendLine(string.Format("Destination: {0}", dest));
                         break;
                     default:
                         sbMsg.Append("Outputs: ");
-                        sbMsg.AppendLine(task.GetOutputsDescription());
+                        sbMsg.AppendLine(task.WorkflowConfig.DestConfig.ToStringOutputs());
                         break;
                 }
 
