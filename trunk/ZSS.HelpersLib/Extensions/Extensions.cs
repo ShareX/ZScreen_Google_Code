@@ -167,5 +167,13 @@ namespace HelpersLib
 
             return false;
         }
+
+        public static void DrawRectangleProper(this Graphics g, Pen pen, Rectangle rect)
+        {
+            if (rect.Width > 1 && rect.Height > 1)
+            {
+                g.DrawRectangle(pen, new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1));
+            }
+        }
     }
 }

@@ -50,6 +50,8 @@ namespace ScreenCapture
             }
         }
 
+        public bool IsResizing { get; private set; }
+
         public int MaxMoveSpeed { get; set; }
         public int MinMoveSpeed { get; set; }
         public bool IsBottomRightResizing { get; set; }
@@ -87,33 +89,47 @@ namespace ScreenCapture
                     {
                         if (nodes[i].IsDragging)
                         {
+                            IsResizing = true;
+
                             if (!surface.IsBeforeLeftMouseDown)
                             {
                                 tempRect = areaManager.CurrentArea;
                             }
 
+                            NodePosition nodePosition = (NodePosition)i;
+
                             int x = surface.CurrentMousePosition.X - surface.BeforeMousePosition.X;
 
-                            if (i >= 2 && i <= 4) // Right
+                            switch (nodePosition)
                             {
-                                tempRect.Width += x;
-                            }
-                            else if (i >= 6 || i == 0) // Left
-                            {
-                                tempRect.X += x;
-                                tempRect.Width -= x;
+                                case NodePosition.TopLeft:
+                                case NodePosition.Left:
+                                case NodePosition.BottomLeft:
+                                    tempRect.X += x;
+                                    tempRect.Width -= x;
+                                    break;
+                                case NodePosition.TopRight:
+                                case NodePosition.Right:
+                                case NodePosition.BottomRight:
+                                    tempRect.Width += x;
+                                    break;
                             }
 
                             int y = surface.CurrentMousePosition.Y - surface.BeforeMousePosition.Y;
 
-                            if (i <= 2) // Top
+                            switch (nodePosition)
                             {
-                                tempRect.Y += y;
-                                tempRect.Height -= y;
-                            }
-                            else if (i >= 4 && i <= 6) // Bottom
-                            {
-                                tempRect.Height += y;
+                                case NodePosition.TopLeft:
+                                case NodePosition.Top:
+                                case NodePosition.TopRight:
+                                    tempRect.Y += y;
+                                    tempRect.Height -= y;
+                                    break;
+                                case NodePosition.BottomLeft:
+                                case NodePosition.Bottom:
+                                case NodePosition.BottomRight:
+                                    tempRect.Height += y;
+                                    break;
                             }
 
                             areaManager.CurrentArea = CaptureHelpers.FixRectangle(tempRect);
@@ -121,6 +137,10 @@ namespace ScreenCapture
                             break;
                         }
                     }
+                }
+                else
+                {
+                    IsResizing = false;
                 }
 
                 UpdateNodePositions();

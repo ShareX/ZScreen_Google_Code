@@ -128,7 +128,7 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                g.DrawRectangleProper(borderPen, CurrentArea);
             }
             else
             {

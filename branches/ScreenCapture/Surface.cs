@@ -43,7 +43,6 @@ namespace ScreenCapture
 
         public AreaManager AreaManager { get; private set; }
 
-        // TODO: Remove later
         public Rectangle CurrentArea
         {
             get
@@ -66,12 +65,12 @@ namespace ScreenCapture
         protected List<DrawableObject> DrawableObjects { get; set; }
 
         private TextureBrush backgroundBrush;
-        private Rectangle drawArea, drawAreaOneSmall;
+        private Rectangle drawArea;
         private Stopwatch timer;
         private int frameCount;
 
         protected GraphicsPath regionPath;
-        protected Pen borderPen;
+        protected Pen borderPen, borderDotPen;
         protected Brush shadowBrush, lightBrush, nodeBackgroundBrush;
         protected Font textFont;
 
@@ -80,7 +79,6 @@ namespace ScreenCapture
             InitializeComponent();
 
             drawArea = new Rectangle(0, 0, Bounds.Width, Bounds.Height);
-            drawAreaOneSmall = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
 
             DrawableObjects = new List<DrawableObject>();
 
@@ -94,6 +92,8 @@ namespace ScreenCapture
             timer = new Stopwatch();
 
             borderPen = new Pen(Color.DarkBlue);
+            borderDotPen = new Pen(Color.DarkBlue);
+            borderDotPen.DashStyle = DashStyle.Dot;
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
             lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);
@@ -170,7 +170,7 @@ namespace ScreenCapture
             g.FillRectangle(backgroundBrush, drawArea);
 
 #if DEBUG
-            g.DrawRectangle(Pens.Yellow, drawAreaOneSmall);
+            g.DrawRectangleProper(Pens.Yellow, drawArea);
 #endif
 
             Draw(g);
@@ -246,7 +246,7 @@ namespace ScreenCapture
 
             DrawableObject[] objects = DrawableObjects.OrderByDescending(x => x.Order).ToArray();
 
-            if (objects.All(x => !x.IsDragging))
+            if (objects.All(x => x.Visible && !x.IsDragging))
             {
                 for (int i = 0; i < objects.Count(); i++)
                 {
@@ -404,6 +404,7 @@ namespace ScreenCapture
             if (backgroundBrush != null) backgroundBrush.Dispose();
             if (regionPath != null) regionPath.Dispose();
             if (borderPen != null) borderPen.Dispose();
+            if (borderDotPen != null) borderDotPen.Dispose();
             if (shadowBrush != null) shadowBrush.Dispose();
             if (nodeBackgroundBrush != null) nodeBackgroundBrush.Dispose();
             if (textFont != null) textFont.Dispose();

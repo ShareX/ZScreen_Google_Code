@@ -26,6 +26,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using HelpersLib;
 
 namespace ScreenCapture
 {
@@ -106,7 +107,7 @@ namespace ScreenCapture
 
                 g.DrawPath(borderPen, regionPath);
                 g.DrawLine(borderPen, points[0], points[points.Count - 1]);
-                g.DrawRectangle(borderPen, CurrentArea.X, CurrentArea.Y, CurrentArea.Width - 1, CurrentArea.Height - 1);
+                g.DrawRectangleProper(borderPen, CurrentArea);
             }
             else
             {

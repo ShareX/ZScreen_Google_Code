@@ -58,13 +58,32 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                DrawObjects(g);
+                if (!AreaManager.ResizeManager.IsCursorOnNode() && !AreaManager.IsCreating && !AreaManager.IsMoving && !AreaManager.IsResizing)
+                {
+                    Rectangle areaHover = AreaManager.GetAreaIntersect();
+
+                    if (!areaHover.IsEmpty)
+                    {
+                        GraphicsPath regionPathHover = new GraphicsPath();
+                        AddShapePath(regionPathHover, areaHover);
+
+                        g.FillPath(lightBrush, regionPathHover);
+                        g.DrawRectangleProper(borderDotPen, areaHover);
+                    }
+                }
+
                 g.DrawPath(borderPen, regionPath);
+
+                if (!AreaManager.CurrentArea.IsEmpty)
+                {
+                    g.DrawRectangleProper(borderDotPen, AreaManager.CurrentArea);
+                    DrawObjects(g);
+                }
 
                 if (AreaManager.Areas.Count > 1)
                 {
                     Rectangle totalArea = AreaManager.CombineAreas();
-                    g.DrawRectangle(borderPen, totalArea.X, totalArea.Y, totalArea.Width - 1, totalArea.Height - 1);
+                    g.DrawRectangleProper(borderPen, totalArea);
                 }
             }
             else

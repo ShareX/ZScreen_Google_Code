@@ -56,18 +56,20 @@ namespace ScreenCapture
             }
         }
 
-        public bool IsResizing { get; private set; }
+        public ResizeManager ResizeManager { get; private set; }
+
+        public bool IsCreating { get; private set; }
         public bool IsMoving { get; private set; }
+        public bool IsResizing { get { return ResizeManager.IsResizing; } }
 
         private Surface surface;
-        private ResizeManager resizeManager;
         private Point currentPosition;
         private Point positionOnClick;
 
         public AreaManager(Surface surface)
         {
             this.surface = surface;
-            resizeManager = new ResizeManager(surface, this);
+            ResizeManager = new ResizeManager(surface, this);
 
             Areas = new List<Rectangle>();
             SelectedAreaIndex = -1;
@@ -75,22 +77,35 @@ namespace ScreenCapture
             surface.MouseDown += new MouseEventHandler(surface_MouseDown);
             surface.MouseUp += new MouseEventHandler(surface_MouseUp);
             surface.MouseDoubleClick += new MouseEventHandler(surface_MouseDoubleClick);
-            surface.MouseMove += new MouseEventHandler(surface_MouseMove);
             surface.KeyUp += new KeyEventHandler(surface_KeyUp);
         }
 
         public void Update()
         {
-            resizeManager.Update();
+            if (IsMoving)
+            {
+                Rectangle rect = CurrentArea;
+                rect.X += surface.CurrentMousePosition.X - surface.BeforeMousePosition.X;
+                rect.Y += surface.CurrentMousePosition.Y - surface.BeforeMousePosition.Y;
+                CurrentArea = rect;
+            }
+
+            if (IsCreating && !CurrentArea.IsEmpty)
+            {
+                currentPosition = CaptureHelpers.GetZeroBasedMousePosition();
+                CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
+            }
+
+            ResizeManager.Update();
         }
 
         private void surface_MouseDown(object sender, MouseEventArgs e)
         {
-            int areaIndex = AreaIntersect(e.Location);
+            int areaIndex = AreaIntersect(surface.CurrentMousePosition);
 
-            if (e.Button == MouseButtons.Left && !resizeManager.IsCursorOnNode())
+            if (e.Button == MouseButtons.Left && !ResizeManager.IsCursorOnNode())
             {
-                positionOnClick = e.Location;
+                positionOnClick = surface.CurrentMousePosition;
 
                 if (areaIndex > -1) // Select area
                 {
@@ -98,7 +113,7 @@ namespace ScreenCapture
                     SelectedAreaIndex = areaIndex;
                     SelectArea();
                 }
-                else if (!IsResizing) // Create new area
+                else if (!IsCreating) // Create new area
                 {
                     DeselectArea();
 
@@ -112,7 +127,7 @@ namespace ScreenCapture
                     }
                     else
                     {
-                        IsResizing = true;
+                        IsCreating = true;
                         rect = new Rectangle(e.Location, new Size(1, 1));
                     }
 
@@ -140,7 +155,7 @@ namespace ScreenCapture
             {
                 if (!CurrentArea.IsEmpty)
                 {
-                    IsResizing = false;
+                    IsCreating = false;
                     SelectArea();
                 }
 
@@ -153,24 +168,9 @@ namespace ScreenCapture
 
         private void surface_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            surface.Close(true);
-        }
-
-        private void surface_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (IsMoving)
+            if (e.Button == MouseButtons.Left)
             {
-                Rectangle rect = CurrentArea;
-                rect.X += e.X - positionOnClick.X;
-                rect.Y += e.Y - positionOnClick.Y;
-                positionOnClick = e.Location;
-                CurrentArea = rect;
-            }
-
-            if (IsResizing && !CurrentArea.IsEmpty)
-            {
-                currentPosition = CaptureHelpers.GetZeroBasedMousePosition();
-                CurrentArea = CaptureHelpers.CreateRectangle(positionOnClick, currentPosition);
+                surface.Close(true);
             }
         }
 
@@ -190,14 +190,14 @@ namespace ScreenCapture
         {
             if (!CurrentArea.IsEmpty && !surface.Config.IsFixedSize)
             {
-                resizeManager.Show();
+                ResizeManager.Show();
             }
         }
 
         private void DeselectArea()
         {
             SelectedAreaIndex = -1;
-            resizeManager.Hide();
+            ResizeManager.Hide();
         }
 
         public int AreaIntersect(Point mousePosition)
@@ -213,9 +213,26 @@ namespace ScreenCapture
             return -1;
         }
 
+        public int AreaIntersect()
+        {
+            return AreaIntersect(surface.CurrentMousePosition);
+        }
+
+        public Rectangle GetAreaIntersect()
+        {
+            int areaIndex = AreaIntersect();
+
+            if (areaIndex > -1)
+            {
+                return Areas[areaIndex];
+            }
+
+            return Rectangle.Empty;
+        }
+
         public bool IsAreaIntersect()
         {
-            return AreaIntersect(CaptureHelpers.GetZeroBasedMousePosition()) > -1;
+            return AreaIntersect() > -1;
         }
 
         public Rectangle CombineAreas()

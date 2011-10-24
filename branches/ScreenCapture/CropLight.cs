@@ -122,7 +122,7 @@ namespace ScreenCapture
 
             if (isMouseDown)
             {
-                g.DrawRectangle(rectanglePen, SelectionRectangle.X, SelectionRectangle.Y, SelectionRectangle.Width - 1, SelectionRectangle.Height - 1);
+                g.DrawRectangleProper(rectanglePen, SelectionRectangle);
             }
         }
 
