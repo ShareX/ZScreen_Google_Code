@@ -18,4 +18,5 @@ Clipboard Upload Wizard
 		Index Folders
 
 Greenshot Editor Mods
-- remove preferencesToolStripMenuItem
+- remove General and Quality tabs in SettingsForm
+- 
