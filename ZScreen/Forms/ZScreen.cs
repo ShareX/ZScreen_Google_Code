@@ -1447,24 +1447,6 @@ namespace ZScreenGUI
                 chkActiveWindowTryCaptureChildren.Checked = false;
             }
             chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
-
-            // With GDI, corner-clearing cannot be disabled when both "clean background" and "include shadow" are enabled
-            if (chkSelectedWindowShowCheckers.Enabled = chkActiveWindowCleanBackground.Checked ||
-                !chkActiveWindowCleanBackground.Checked || !chkSelectedWindowIncludeShadow.Checked)
-            {
-                chkSelectedWindowCleanTransparentCorners.Enabled = true;
-            }
-            else
-            {
-                chkSelectedWindowCleanTransparentCorners.Enabled = false;
-                chkSelectedWindowCleanTransparentCorners.Checked = true;
-            }
-        }
-
-        private void cbSelectedWindowCleanTransparentCorners_CheckedChanged(object sender, EventArgs e)
-        {
-            Engine.ConfigWorkflow.ActiveWindowCleanTransparentCorners = chkSelectedWindowCleanTransparentCorners.Checked;
-            UpdateAeroGlassConfig();
         }
 
         private void cbAutoSaveSettings_CheckedChanged(object sender, EventArgs e)

@@ -74,13 +74,11 @@ namespace ZScreenLib
             {
                 if (wfdwm.ActiveWindowDwmUseCustomBackground)
                 {
-                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                        wfdwm.ActiveWindowCleanTransparentCorners, wfdwm.ActiveWindowDwmBackColor);
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage, wfdwm.ActiveWindowDwmBackColor);
                 }
                 else if (wfdwm.ActiveWindowClearBackground)
                 {
-                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage,
-                        wfdwm.ActiveWindowCleanTransparentCorners, Color.White);
+                    windowImageDwm = CaptureWindowWithDWM(handle, windowRect, out redBGImage, Color.White);
                 }
             }
 
@@ -90,13 +88,10 @@ namespace ZScreenLib
                 windowImageDwm = Screenshot.CaptureRectangleNative(windowRect);
             }
 
-            if (wfdwm.ActiveWindowCleanTransparentCorners)
+            Image result = RemoveCorners(handle, windowImageDwm, redBGImage, windowRect);
+            if (result != null)
             {
-                Image result = RemoveCorners(handle, windowImageDwm, redBGImage, windowRect);
-                if (result != null)
-                {
-                    windowImageDwm = result;
-                }
+                windowImageDwm = result;
             }
 
             if (wfdwm.ActiveWindowIncludeShadows)
@@ -140,7 +135,7 @@ namespace ZScreenLib
         /// <param name="redBGImage">the window captured with a red background</param>
         /// <param name="captureRedBGImage">whether to do the capture of the window with a red background</param>
         /// <returns>the captured window image</returns>
-        private static Image CaptureWindowWithDWM(IntPtr handle, Rectangle windowRect, out Bitmap redBGImage, bool captureRedBGImage, Color backColor)
+        private static Image CaptureWindowWithDWM(IntPtr handle, Rectangle windowRect, out Bitmap redBGImage, Color backColor)
         {
             Image windowImage = null;
             redBGImage = null;
@@ -204,7 +199,8 @@ namespace ZScreenLib
                     NativeMethods.ActivateWindowRepeat(handle, 250);
                     Bitmap blackBGImage = Screenshot.CaptureRectangleNative(windowRect) as Bitmap;
 
-                    if (captureRedBGImage)
+                    // Capture rounded corners with except for Windows 8
+                    if (StaticHelper.IsWindows8())
                     {
                         form.BackColor = Color.Red;
                         form.Refresh();
@@ -271,13 +267,10 @@ namespace ZScreenLib
                     windowImageGdi = Screenshot.CaptureRectangleNative(windowRect);
                 }
 
-                if (wfgdi.ActiveWindowCleanTransparentCorners)
+                Image result = RemoveCorners(handle, windowImageGdi, null, windowRect);
+                if (result != null)
                 {
-                    Image result = RemoveCorners(handle, windowImageGdi, null, windowRect);
-                    if (result != null)
-                    {
-                        windowImageGdi = result;
-                    }
+                    windowImageGdi = result;
                 }
             }
 
@@ -375,6 +368,12 @@ namespace ZScreenLib
         /// <summary>Remove the corners of a window by replacing the background of these corners by transparency.</summary>
         private static Image RemoveCorners(IntPtr handle, Image windowImage, Bitmap redBGImage, Rectangle windowRect)
         {
+            if (StaticHelper.IsWindows8())
+            {
+                // Windows 8 UI does not have round corners
+                return windowImage;
+            }
+
             const int cornerSize = 5;
             if (windowRect.Width > cornerSize * 2 && windowRect.Height > cornerSize * 2)
             {

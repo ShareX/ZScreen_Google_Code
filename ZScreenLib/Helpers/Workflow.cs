@@ -63,7 +63,6 @@ namespace ZScreenLib
 
         public bool ActiveWindowTryCaptureChildren = false;
         public bool ActiveWindowClearBackground = true;
-        public bool ActiveWindowCleanTransparentCorners = true;
         public bool ActiveWindowIncludeShadows = true;
         public bool ActiveWindowShowCheckers = false;
         public bool ActiveWindowDwmUseCustomBackground = false;
