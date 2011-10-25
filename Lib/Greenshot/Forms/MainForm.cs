@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -113,7 +114,6 @@ namespace Greenshot
         private ILanguage lang;
         private ToolTip tooltip;
         private CaptureForm captureForm = null;
-        private CopyData copyData = null;
 
         // Thumbnail preview
         private FormWithoutActivation thumbnailForm = null;
@@ -820,24 +820,6 @@ namespace Greenshot
                 notifyIcon.Visible = false;
                 notifyIcon.Dispose();
                 notifyIcon = null;
-            }
-        }
-
-        /// <summary>
-        /// Do work in the background
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BackgroundWorkerTimerTick(object sender, EventArgs e)
-        {
-            LOG.Debug("BackgroundWorkerTimerTick");
-
-            if (UpdateHelper.IsUpdateCheckNeeded())
-            {
-                // Start update check in the background
-                Thread backgroundTask = new Thread(new ThreadStart(UpdateHelper.CheckAndAskForUpdate));
-                backgroundTask.IsBackground = true;
-                backgroundTask.Start();
             }
         }
     }
