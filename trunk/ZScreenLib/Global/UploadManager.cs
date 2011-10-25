@@ -436,7 +436,7 @@ namespace ZScreenLib
                             np.WindowText = task.Info.WindowTitleText;
                         }
 
-                        tempText = !string.IsNullOrEmpty(Engine.ConfigUI.ClipboardFormat) ?
+                        tempText = !string.IsNullOrEmpty(Engine.ConfigUI.ClipboardFormat) && (Engine.ConfigUI.EnableClipboardFormatOnShorten) ?
                             np.Convert(Engine.ConfigUI.ClipboardFormat) : clipboardText.ToString();
 
                         if (!string.IsNullOrEmpty(tempText))
