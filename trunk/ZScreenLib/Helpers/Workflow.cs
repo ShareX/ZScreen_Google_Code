@@ -52,7 +52,23 @@ namespace ZScreenLib
 
         public CaptureEngineType CaptureEngineMode2 = CaptureEngineType.GDI;
 
-        public bool PerformActions = false;
+        private bool bPerformActions = false;
+
+        public bool PerformActions
+        {
+            get
+            {
+                return bPerformActions ||
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.CapsLock ||
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.NumLock ||
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.Scroll) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.ScrollLock;
+            }
+            set
+            {
+                bPerformActions = value;
+            }
+        }
+
         public bool DrawCursor = false;
 
         public HotkeySetting Hotkey = new HotkeySetting();
@@ -89,6 +105,10 @@ namespace ZScreenLib
         #endregion Inputs / File Upload
 
         #region Image Manipulation
+
+        // Image Editor
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(EImageEditorOnKeyPress.None), Description("Automatically start Image Editor on a key press.")]
+        public EImageEditorOnKeyPress ImageEditorOnKeyPress { get; set; }
 
         // Image Settings
 
