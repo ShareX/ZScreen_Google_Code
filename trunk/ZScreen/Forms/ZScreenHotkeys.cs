@@ -32,6 +32,7 @@ namespace ZScreenGUI
 
             HotkeyManager.AddHotkey(ZScreenHotkey.ScreenColorPicker, Engine.ConfigUI.HotkeyScreenColorPicker2, ShowScreenColorPicker);
             HotkeyManager.AddHotkey(ZScreenHotkey.TwitterClient, Engine.ConfigUI.HotkeyTwitterClient2, Adapter.ShowTwitterClient);
+            HotkeyManager.AddHotkey(ZScreenHotkey.RectangleRegionClipboard, Engine.ConfigUI.HotkeyCaptureRectangeRegionClipboard2, CaptureRectRegionClipboard);
         }
 
         private void UpdateHotkeys(bool resetKeys = false)

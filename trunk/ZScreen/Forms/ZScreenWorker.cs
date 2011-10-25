@@ -323,6 +323,12 @@ namespace ZScreenGUI
 
             tiCreateTask.Job = job;
             tiCreateTask.DestConfig = GetDestConfig(ucDestOptions);
+            if (job == WorkerTask.JobLevel2.CaptureRectRegionClipboard)
+            {
+                tiCreateTask.DestConfig.TaskClipboardContent.Clear();
+                tiCreateTask.DestConfig.ImageUploaders.Clear();
+                tiCreateTask.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
+            }
             tiCreateTask.TrayIcon = this.niTray;
 
             WorkerTask createTask = new WorkerTask(CreateWorker(), tiCreateTask);
@@ -445,6 +451,12 @@ namespace ZScreenGUI
         public override void CaptureRectRegion()
         {
             WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegion);
+            RunWorkerAsync(hkrcTask);
+        }
+
+        public override void CaptureRectRegionClipboard()
+        {
+            WorkerTask hkrcTask = CreateTask(WorkerTask.JobLevel2.CaptureRectRegionClipboard);
             RunWorkerAsync(hkrcTask);
         }
 

@@ -79,7 +79,9 @@ namespace HelpersLib.Hotkey
         [Description("Color Picker")]
         ScreenColorPicker,
         [Description("Twitter Client")]
-        TwitterClient
+        TwitterClient,
+        [Description("Capture Rectangular Region to Clipboard")]
+        RectangleRegionClipboard,
     }
 
     public enum JBirdHotkey

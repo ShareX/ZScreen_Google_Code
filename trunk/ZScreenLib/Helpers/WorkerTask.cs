@@ -98,6 +98,8 @@ namespace ZScreenLib
             CaptureSelectedWindowFromList,
             [Description("Capture Rectangular Region")]
             CaptureRectRegion,
+            [Description("Capture Rectangular Region to Clipboard")]
+            CaptureRectRegionClipboard,
             [Description("Capture Previous Rectangular Region")]
             CaptureLastCroppedWindow,
             [Description("Auto Capture")]
@@ -322,6 +324,7 @@ namespace ZScreenLib
                     break;
                 case JobLevel2.CaptureSelectedWindow:
                 case JobLevel2.CaptureRectRegion:
+                case JobLevel2.CaptureRectRegionClipboard:
                 case JobLevel2.CaptureLastCroppedWindow:
                     success = CaptureRegionOrWindow();
                     break;
@@ -919,7 +922,8 @@ namespace ZScreenLib
             {
                 if (c.ShowDialog() == DialogResult.OK)
                 {
-                    if (Job2 == WorkerTask.JobLevel2.CaptureRectRegion && !Engine.ConfigUI.LastRegion.IsEmpty)
+                    if ((Job2 == WorkerTask.JobLevel2.CaptureRectRegion || Job2 == JobLevel2.CaptureRectRegionClipboard)
+                        && !Engine.ConfigUI.LastRegion.IsEmpty)
                     {
                         return SetImage(CaptureHelpers.CropImage(imgSS, Engine.ConfigUI.LastRegion));
                     }

@@ -54,7 +54,7 @@ namespace ZScreenLib
         DWM,
     }
 
-    public enum EImageEditorOnKeyPress
+    public enum EImageEditorOnKeyLock
     {
         [Description("None")]
         None,

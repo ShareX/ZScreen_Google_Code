@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using HelpersLib;
-using ZScreenLib;
-using UploadersLib.OtherServices;
 using HelpersLib.Properties;
-using System.Diagnostics;
 using UploadersAPILib;
+using UploadersLib.OtherServices;
+using ZScreenLib;
 
 namespace ZScreenGUI
 {
@@ -98,17 +98,31 @@ namespace ZScreenGUI
         #region ToolStrip methods
 
         public virtual void CaptureEntireScreen() { }
+
         public virtual void CaptureActiveWindow() { }
+
         public virtual void CaptureSelectedWindow() { }
+
         public virtual void CaptureSelectedWindowGetList() { }
+
         public virtual void CaptureRectRegion() { }
+
+        public virtual void CaptureRectRegionClipboard() { }
+
         public virtual void CaptureRectRegionLast() { }
+
         public virtual void CaptureFreeHandRegion() { }
+
         public virtual void ShowAutoCapture() { }
+
         public virtual void FileUpload() { }
+
         public virtual void ClipboardUpload() { }
+
         public virtual void ShowDropWindow() { }
+
         public virtual void ShowGTGUI() { }
+
         public virtual void ShowScreenColorPicker() { }
 
         private void tsbFullscreenCapture_Click(object sender, EventArgs e)
@@ -216,8 +230,6 @@ namespace ZScreenGUI
             new HistoryLib.HistoryForm(Engine.HistoryPath, maxNum, string.Format("{0} - History", Engine.GetProductName())).Show();
         }
 
-
-        #endregion
-
+        #endregion Helper Methods
     }
 }

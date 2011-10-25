@@ -59,9 +59,9 @@ namespace ZScreenLib
             get
             {
                 return bPerformActions ||
-                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.CapsLock ||
-                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.NumLock ||
-                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.Scroll) && ImageEditorOnKeyPress == EImageEditorOnKeyPress.ScrollLock;
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.CapsLock) && ImageEditorOnKeyPress == EImageEditorOnKeyLock.CapsLock ||
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.NumLock) && ImageEditorOnKeyPress == EImageEditorOnKeyLock.NumLock ||
+                 System.Windows.Forms.Control.IsKeyLocked(System.Windows.Forms.Keys.Scroll) && ImageEditorOnKeyPress == EImageEditorOnKeyLock.ScrollLock;
             }
             set
             {
@@ -107,8 +107,8 @@ namespace ZScreenLib
         #region Image Manipulation
 
         // Image Editor
-        [Category(ComponentModelStrings.Screenshots), DefaultValue(EImageEditorOnKeyPress.None), Description("Automatically start Image Editor on a key press.")]
-        public EImageEditorOnKeyPress ImageEditorOnKeyPress { get; set; }
+        [Category(ComponentModelStrings.Screenshots), DefaultValue(EImageEditorOnKeyLock.None), Description("Automatically start Image Editor on a key press.")]
+        public EImageEditorOnKeyLock ImageEditorOnKeyPress { get; set; }
 
         // Image Settings
 
