@@ -1,7 +1,5 @@
 ﻿Mike:
 Queue tab
-Screenshot.cs to store Image, OCR
-
 
 yfrog and twitpic using OAuth
 
@@ -18,3 +16,6 @@ Clipboard Upload Wizard
 		Upload Images
 		Upload Everything (Images/Text/Files)
 		Index Folders
+
+Greenshot Editor Mods
+- remove preferencesToolStripMenuItem

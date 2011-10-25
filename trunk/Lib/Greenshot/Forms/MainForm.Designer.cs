@@ -229,12 +229,6 @@ namespace Greenshot {
 			this.contextmenu_captureie.ShortcutKeyDisplayString = "Ctrl + Shift + Print";
 			this.contextmenu_captureie.MouseEnter += new System.EventHandler(EnterCaptureIEMenuItem);
 			// 
-			// backgroundWorkerTimer
-			// 
-			this.backgroundWorkerTimer.Enabled = true;
-			this.backgroundWorkerTimer.Interval = 300000;
-			this.backgroundWorkerTimer.Tick += new System.EventHandler(this.BackgroundWorkerTimerTick);
-			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
