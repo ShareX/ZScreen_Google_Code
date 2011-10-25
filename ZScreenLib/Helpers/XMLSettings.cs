@@ -111,6 +111,7 @@ namespace ZScreenLib
 
         public HotkeySetting HotkeyScreenColorPicker2 = new HotkeySetting();
         public HotkeySetting HotkeyTwitterClient2 = new HotkeySetting();
+        public HotkeySetting HotkeyCaptureRectangeRegionClipboard2 = new HotkeySetting(Keys.Control | Keys.Alt | Keys.PrintScreen);
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  Capture
