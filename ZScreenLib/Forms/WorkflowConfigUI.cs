@@ -569,6 +569,12 @@ namespace ZScreenLib
             this.Task.PerformActions();
             pbImage.LoadImage(this.Task.tempImage);
         }
+
+        private void btnCopyImageClose_Click(object sender, EventArgs e)
+        {
+            Adapter.CopyImageToClipboard(this.Task.tempImage);
+            btnCancel_Click(sender, e);
+        }
     }
 
     public class WorkflowWizardGUIOptions

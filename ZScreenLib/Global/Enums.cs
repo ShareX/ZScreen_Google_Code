@@ -54,6 +54,18 @@ namespace ZScreenLib
         DWM,
     }
 
+    public enum EImageEditorOnKeyPress
+    {
+        [Description("None")]
+        None,
+        [Description("Caps Lock")]
+        CapsLock,
+        [Description("Num Lock")]
+        NumLock,
+        [Description("Scroll Lock")]
+        ScrollLock
+    }
+
     public enum WatermarkType
     {
         [Description("None")]

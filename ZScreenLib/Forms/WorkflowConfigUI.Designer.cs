@@ -96,6 +96,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnCopyImageClose = new System.Windows.Forms.Button();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -783,6 +784,7 @@
             this.flpTasks.Controls.Add(this.chkTaskImageFileFormat);
             this.flpTasks.Controls.Add(this.chkTaskImageResize);
             this.flpTasks.Controls.Add(this.chkTaskOutputConfig);
+            this.flpTasks.Controls.Add(this.btnCopyImageClose);
             this.flpTasks.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpTasks.Location = new System.Drawing.Point(8, 16);
             this.flpTasks.Name = "flpTasks";
@@ -863,6 +865,16 @@
             this.flpMain.Name = "flpMain";
             this.flpMain.Size = new System.Drawing.Size(820, 408);
             this.flpMain.TabIndex = 12;
+            // 
+            // btnCopyImageClose
+            // 
+            this.btnCopyImageClose.Location = new System.Drawing.Point(3, 101);
+            this.btnCopyImageClose.Name = "btnCopyImageClose";
+            this.btnCopyImageClose.Size = new System.Drawing.Size(117, 23);
+            this.btnCopyImageClose.TabIndex = 5;
+            this.btnCopyImageClose.Text = "Copy Image && Close";
+            this.btnCopyImageClose.UseVisualStyleBackColor = true;
+            this.btnCopyImageClose.Click += new System.EventHandler(this.btnCopyImageClose_Click);
             // 
             // WorkflowWizard
             // 
@@ -989,6 +1001,7 @@
         private System.Windows.Forms.TabPage tpImagePreview;
         private HelpersLib.MyPictureBox pbImage;
         private System.Windows.Forms.FlowLayoutPanel flpMain;
+        private System.Windows.Forms.Button btnCopyImageClose;
 
     }
 }
