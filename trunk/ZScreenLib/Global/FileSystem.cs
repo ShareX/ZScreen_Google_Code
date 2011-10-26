@@ -378,7 +378,7 @@ namespace ZScreenLib
             bool b = false;
             if (!string.IsNullOrEmpty(url))
             {
-                b = Uri.IsWellFormedUriString(url, UriKind.Absolute);
+                b = !url.StartsWith("file") && Uri.IsWellFormedUriString(url, UriKind.Absolute);
             }
             return b;
         }
