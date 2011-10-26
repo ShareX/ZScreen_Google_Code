@@ -171,6 +171,10 @@
     <Compile Include="UploadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ScreenCapture.Shapes\ScreenCapture.Shapes.csproj">
+      <Project>{87E2211F-3D55-4A15-B497-2586085442CF}</Project>
+      <Name>ScreenCapture.Shapes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>

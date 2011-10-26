@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenshot", "Lib\Greenshot\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenshotPlugin", "Lib\GreenshotPlugin\GreenshotPlugin.csproj", "{5B924697-4DCD-4F98-85F1-105CB84B7341}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture.Shapes", "ScreenCapture.Shapes\ScreenCapture.Shapes.csproj", "{87E2211F-3D55-4A15-B497-2586085442CF}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -435,6 +437,16 @@ Global
 		{5B924697-4DCD-4F98-85F1-105CB84B7341}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5B924697-4DCD-4F98-85F1-105CB84B7341}.Release|x86.ActiveCfg = Release|x86
 		{5B924697-4DCD-4F98-85F1-105CB84B7341}.Release|x86.Build.0 = Release|x86
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{87E2211F-3D55-4A15-B497-2586085442CF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

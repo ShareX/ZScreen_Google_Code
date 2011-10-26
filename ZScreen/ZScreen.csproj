@@ -279,6 +279,10 @@
       <Project>{E7DE6237-AEA2-498B-8F56-9B392472C490}</Project>
       <Name>HistoryLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScreenCapture.Shapes\ScreenCapture.Shapes.csproj">
+      <Project>{87E2211F-3D55-4A15-B497-2586085442CF}</Project>
+      <Name>ScreenCapture.Shapes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScreenCapture\ScreenCapture.csproj">
       <Project>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</Project>
       <Name>ScreenCapture</Name>
