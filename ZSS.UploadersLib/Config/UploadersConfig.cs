@@ -195,7 +195,9 @@ namespace UploadersLib
         // Localhost
 
         public List<LocalhostAccount> LocalhostAccountList = new List<LocalhostAccount>();
-        public int LocalhostSelected = 0;
+        public int LocalhostSelectedImages = 0;
+        public int LocalhostSelectedText = 0;
+        public int LocalhostSelectedFiles = 0;
 
         #endregion Other destinations
 

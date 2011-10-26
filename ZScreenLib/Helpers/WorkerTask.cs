@@ -1157,7 +1157,12 @@ namespace ZScreenLib
 
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.SharedFolder))
                 {
-                    UploadToSharedFolder();
+                    switch (Job1)
+                    {
+                        case EDataType.File:
+                            UploadToSharedFolder(Engine.ConfigUploaders.LocalhostSelectedFiles);
+                            break;
+                    }
                 }
 
                 if (WorkflowConfig.DestConfig.Outputs.Contains(OutputEnum.Email))
@@ -1823,11 +1828,11 @@ namespace ZScreenLib
             }
         }
 
-        public void UploadToSharedFolder()
+        public void UploadToSharedFolder(int id)
         {
-            if (Engine.ConfigUploaders.LocalhostAccountList.HasValidIndex(Engine.ConfigUploaders.LocalhostSelected))
+            if (Engine.ConfigUploaders.LocalhostAccountList.HasValidIndex(id))
             {
-                LocalhostAccount acc = Engine.ConfigUploaders.LocalhostAccountList[Engine.ConfigUploaders.LocalhostSelected];
+                LocalhostAccount acc = Engine.ConfigUploaders.LocalhostAccountList[id];
                 string fn = string.Empty;
                 if (File.Exists(Info.LocalFilePath))
                 {

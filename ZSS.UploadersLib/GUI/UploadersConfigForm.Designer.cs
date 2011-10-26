@@ -228,6 +228,14 @@
             this.lblEmailSmtpServer = new System.Windows.Forms.Label();
             this.tpSharedFolders = new System.Windows.Forms.TabPage();
             this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
+            this.tlpSharedFolders = new System.Windows.Forms.TableLayoutPanel();
+            this.gbSharedFolder = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cboSharedFolderFiles = new System.Windows.Forms.ComboBox();
+            this.cboSharedFolderText = new System.Windows.Forms.ComboBox();
+            this.cboSharedFolderImages = new System.Windows.Forms.ComboBox();
             this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
@@ -287,6 +295,8 @@
             this.tpEmail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmailSmtpPort)).BeginInit();
             this.tpSharedFolders.SuspendLayout();
+            this.tlpSharedFolders.SuspendLayout();
+            this.gbSharedFolder.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcUploaders
@@ -2379,7 +2389,7 @@
             // 
             // tpSharedFolders
             // 
-            this.tpSharedFolders.Controls.Add(this.ucLocalhostAccounts);
+            this.tpSharedFolders.Controls.Add(this.tlpSharedFolders);
             this.tpSharedFolders.Location = new System.Drawing.Point(4, 22);
             this.tpSharedFolders.Name = "tpSharedFolders";
             this.tpSharedFolders.Padding = new System.Windows.Forms.Padding(3);
@@ -2394,6 +2404,99 @@
             this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
             this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
             this.txtRapidSharePremiumUserName.TabIndex = 11;
+            // 
+            // tlpSharedFolders
+            // 
+            this.tlpSharedFolders.ColumnCount = 1;
+            this.tlpSharedFolders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpSharedFolders.Controls.Add(this.ucLocalhostAccounts, 0, 0);
+            this.tlpSharedFolders.Controls.Add(this.gbSharedFolder, 0, 1);
+            this.tlpSharedFolders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSharedFolders.Location = new System.Drawing.Point(3, 3);
+            this.tlpSharedFolders.Name = "tlpSharedFolders";
+            this.tlpSharedFolders.RowCount = 2;
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpSharedFolders.Size = new System.Drawing.Size(798, 468);
+            this.tlpSharedFolders.TabIndex = 3;
+            // 
+            // gbSharedFolder
+            // 
+            this.gbSharedFolder.Controls.Add(this.label10);
+            this.gbSharedFolder.Controls.Add(this.label11);
+            this.gbSharedFolder.Controls.Add(this.label12);
+            this.gbSharedFolder.Controls.Add(this.cboSharedFolderFiles);
+            this.gbSharedFolder.Controls.Add(this.cboSharedFolderText);
+            this.gbSharedFolder.Controls.Add(this.cboSharedFolderImages);
+            this.gbSharedFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbSharedFolder.Location = new System.Drawing.Point(3, 354);
+            this.gbSharedFolder.Name = "gbSharedFolder";
+            this.gbSharedFolder.Size = new System.Drawing.Size(792, 111);
+            this.gbSharedFolder.TabIndex = 3;
+            this.gbSharedFolder.TabStop = false;
+            this.gbSharedFolder.Text = "Settings";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(24, 78);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(28, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "Files";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(24, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(28, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Text";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(11, 27);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Images";
+            // 
+            // cboSharedFolderFiles
+            // 
+            this.cboSharedFolderFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSharedFolderFiles.FormattingEnabled = true;
+            this.cboSharedFolderFiles.Location = new System.Drawing.Point(64, 72);
+            this.cboSharedFolderFiles.Name = "cboSharedFolderFiles";
+            this.cboSharedFolderFiles.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderFiles.TabIndex = 14;
+            this.cboSharedFolderFiles.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderFiles_SelectedIndexChanged);
+            // 
+            // cboSharedFolderText
+            // 
+            this.cboSharedFolderText.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSharedFolderText.FormattingEnabled = true;
+            this.cboSharedFolderText.Location = new System.Drawing.Point(64, 48);
+            this.cboSharedFolderText.Name = "cboSharedFolderText";
+            this.cboSharedFolderText.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderText.TabIndex = 13;
+            this.cboSharedFolderText.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderText_SelectedIndexChanged);
+            // 
+            // cboSharedFolderImages
+            // 
+            this.cboSharedFolderImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSharedFolderImages.FormattingEnabled = true;
+            this.cboSharedFolderImages.Location = new System.Drawing.Point(64, 24);
+            this.cboSharedFolderImages.Name = "cboSharedFolderImages";
+            this.cboSharedFolderImages.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderImages.TabIndex = 12;
+            this.cboSharedFolderImages.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderImages_SelectedIndexChanged);
             // 
             // atcImageShackAccountType
             // 
@@ -2481,10 +2584,10 @@
             // ucLocalhostAccounts
             // 
             this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(4, 4);
             this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
             this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(798, 468);
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(790, 343);
             this.ucLocalhostAccounts.TabIndex = 2;
             // 
             // actRapidShareAccountType
@@ -2579,6 +2682,9 @@
             this.tpEmail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEmailSmtpPort)).EndInit();
             this.tpSharedFolders.ResumeLayout(false);
+            this.tlpSharedFolders.ResumeLayout(false);
+            this.gbSharedFolder.ResumeLayout(false);
+            this.gbSharedFolder.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2795,5 +2901,13 @@
         private System.Windows.Forms.GroupBox gbMinusUserPass;
         private System.Windows.Forms.CheckBox chkEmailConfirm;
         private System.Windows.Forms.Button btnGmailAuth;
+        private System.Windows.Forms.TableLayoutPanel tlpSharedFolders;
+        private System.Windows.Forms.GroupBox gbSharedFolder;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cboSharedFolderFiles;
+        private System.Windows.Forms.ComboBox cboSharedFolderText;
+        private System.Windows.Forms.ComboBox cboSharedFolderImages;
     }
 }

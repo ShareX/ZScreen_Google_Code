@@ -278,7 +278,10 @@ namespace UploadersLib
                 LocalhostAccountsSetup(Config.LocalhostAccountList);
                 if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
                 {
-                    ucLocalhostAccounts.AccountsList.SelectedIndex = Config.LocalhostSelected;
+                    ucLocalhostAccounts.AccountsList.SelectedIndex = 0;
+                    cboSharedFolderImages.SelectedIndex = Config.LocalhostSelectedImages.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
+                    cboSharedFolderText.SelectedIndex = Config.LocalhostSelectedText.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
+                    cboSharedFolderFiles.SelectedIndex = Config.LocalhostSelectedFiles.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
                 }
             }
 
@@ -362,6 +365,7 @@ namespace UploadersLib
             ucLocalhostAccounts.btnRemove.Click += new EventHandler(LocalhostAccountRemoveButton_Click);
             ucLocalhostAccounts.btnTest.Visible = false;
             ucLocalhostAccounts.AccountsList.SelectedIndexChanged += new EventHandler(LocalhostAccountsList_SelectedIndexChanged);
+            ucLocalhostAccounts.SettingsGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(SettingsGrid_LocalhostPropertyValueChanged);
 
             // Twitter
 
@@ -462,7 +466,7 @@ namespace UploadersLib
         private void LocalhostAccountsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
-            Config.LocalhostSelected = sel;
+
             if (Config.LocalhostAccountList.HasValidIndex(sel))
             {
                 LocalhostAccount acc = Config.LocalhostAccountList[sel];
@@ -470,16 +474,39 @@ namespace UploadersLib
             }
         }
 
+        private void SettingsGrid_LocalhostPropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            LocalhostAccountsSetup(Config.LocalhostAccountList);
+        }
+
         private void LocalhostAccountsSetup(IEnumerable<LocalhostAccount> accs)
         {
             if (accs != null)
             {
+                int sel = ucLocalhostAccounts.AccountsList.SelectedIndex;
+
                 ucLocalhostAccounts.AccountsList.Items.Clear();
                 Config.LocalhostAccountList = new List<LocalhostAccount>();
                 Config.LocalhostAccountList.AddRange(accs);
+
+                cboSharedFolderFiles.Items.Clear();
+                cboSharedFolderImages.Items.Clear();
+                cboSharedFolderText.Items.Clear();
+
                 foreach (LocalhostAccount acc in Config.LocalhostAccountList)
                 {
                     ucLocalhostAccounts.AccountsList.Items.Add(acc);
+                    cboSharedFolderFiles.Items.Add(acc);
+                    cboSharedFolderImages.Items.Add(acc);
+                    cboSharedFolderText.Items.Add(acc);
+                }
+
+                if (ucLocalhostAccounts.AccountsList.Items.Count > 0)
+                {
+                    ucLocalhostAccounts.AccountsList.SelectedIndex = sel.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
+                    cboSharedFolderFiles.SelectedIndex = Config.LocalhostSelectedFiles.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
+                    cboSharedFolderImages.SelectedIndex = Config.LocalhostSelectedImages.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
+                    cboSharedFolderText.SelectedIndex = Config.LocalhostSelectedText.Between(0, ucLocalhostAccounts.AccountsList.Items.Count - 1);
                 }
             }
         }

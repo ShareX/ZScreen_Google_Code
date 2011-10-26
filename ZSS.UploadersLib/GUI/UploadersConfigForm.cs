@@ -793,5 +793,24 @@ namespace UploadersLib
         {
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
+
+        #region Other Services
+
+        private void cboSharedFolderImages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.LocalhostSelectedImages = cboSharedFolderImages.SelectedIndex;
+        }
+
+        private void cboSharedFolderText_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.LocalhostSelectedText = cboSharedFolderText.SelectedIndex;
+        }
+
+        private void cboSharedFolderFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.LocalhostSelectedFiles = cboSharedFolderFiles.SelectedIndex;
+        }
+
+        #endregion Other Services
     }
 }
