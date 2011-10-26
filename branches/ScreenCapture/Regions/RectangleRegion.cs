@@ -31,9 +31,18 @@ namespace ScreenCapture
 {
     public class RectangleRegion : Surface
     {
+        public AreaManager AreaManager { get; private set; }
+
         public RectangleRegion(Image backgroundImage = null)
             : base(backgroundImage)
         {
+            AreaManager = new AreaManager(this);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            AreaManager.Update();
         }
 
         protected override void Draw(Graphics g)
@@ -45,11 +54,18 @@ namespace ScreenCapture
 
                 foreach (Rectangle area in AreaManager.Areas)
                 {
+                    g.Clip = new Region(area);
+
+                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", area.X, area.Y, area.Width, area.Height),
+                        new PointF(area.X + 5, area.Y + 5), textFont, Color.White, Color.Black);
+
                     if (area.Width > 0 && area.Height > 0)
                     {
                         AddShapePath(regionPath, area);
                     }
                 }
+
+                g.ResetClip();
 
                 using (Region region = new Region(regionPath))
                 {
@@ -83,7 +99,9 @@ namespace ScreenCapture
                 if (AreaManager.Areas.Count > 1)
                 {
                     Rectangle totalArea = AreaManager.CombineAreas();
-                    g.DrawRectangleProper(borderPen, totalArea);
+                    g.DrawCrossRectangle(borderPen, totalArea, 15);
+                    CaptureHelpers.DrawTextWithOutline(g, string.Format("X:{0}, Y:{1}, Width:{2}, Height:{3}", totalArea.X, totalArea.Y,
+                        totalArea.Width, totalArea.Height), new PointF(totalArea.X + 5, totalArea.Y - 20), textFont, Color.White, Color.Black);
                 }
             }
             else

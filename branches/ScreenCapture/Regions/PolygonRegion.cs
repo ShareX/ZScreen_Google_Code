@@ -104,7 +104,7 @@ namespace ScreenCapture
             if (nodes.Count > 2)
             {
                 RectangleF rect = regionPath.GetBounds();
-                CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+                //CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -128,7 +128,7 @@ namespace ScreenCapture
                     g.ResetClip();
                 }
 
-                g.DrawRectangleProper(borderPen, CurrentArea);
+                //g.DrawRectangleProper(borderPen, CurrentArea);
             }
             else
             {

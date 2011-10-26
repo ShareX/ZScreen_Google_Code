@@ -122,8 +122,7 @@ namespace ScreenCapture
                     if (surface.Config.IsFixedSize)
                     {
                         IsMoving = true;
-                        rect = new Rectangle(new Point(e.X - surface.Config.FixedSize.Width / 2, e.Y - surface.Config.FixedSize.Height / 2),
-                            surface.Config.FixedSize);
+                        rect = new Rectangle(new Point(e.X - surface.Config.FixedSize.Width / 2, e.Y - surface.Config.FixedSize.Height / 2), surface.Config.FixedSize);
                     }
                     else
                     {

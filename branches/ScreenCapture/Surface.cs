@@ -41,20 +41,6 @@ namespace ScreenCapture
         public SurfaceOptions Config { get; set; }
         public int FPS { get; private set; }
 
-        public AreaManager AreaManager { get; private set; }
-
-        public Rectangle CurrentArea
-        {
-            get
-            {
-                return AreaManager.CurrentArea;
-            }
-            set
-            {
-                AreaManager.CurrentArea = value;
-            }
-        }
-
         public bool IsLeftMouseDown { get; private set; }
         public bool IsRightMouseDown { get; private set; }
         public bool IsBeforeLeftMouseDown { get; private set; }
@@ -97,13 +83,25 @@ namespace ScreenCapture
             shadowBrush = new SolidBrush(Color.FromArgb(75, Color.Black));
             lightBrush = new SolidBrush(Color.FromArgb(10, Color.Black));
             nodeBackgroundBrush = new SolidBrush(Color.White);
-            textFont = new Font("Arial", 18, FontStyle.Bold);
+            textFont = new Font("Arial", 12, FontStyle.Bold);
 
             Shown += new EventHandler(Surface_Shown);
             MouseDown += new MouseEventHandler(Surface_MouseDown);
             MouseUp += new MouseEventHandler(Surface_MouseUp);
+        }
 
-            AreaManager = new AreaManager(this);
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.Bounds = CaptureHelpers.GetScreenBounds();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.Manual;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            this.Text = "RegionCapture";
+#if !DEBUG
+            this.TopMost = true;
+#endif
+            this.ResumeLayout(false);
         }
 
         private void Surface_Shown(object sender, System.EventArgs e)
@@ -135,20 +133,6 @@ namespace ScreenCapture
             }
         }
 
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.Bounds = CaptureHelpers.GetScreenBounds();
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.Manual;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            this.Text = "RegionCapture";
-#if !DEBUG
-            this.TopMost = true;
-#endif
-            this.ResumeLayout(false);
-        }
-
         public void LoadBackground(Image backgroundImage)
         {
             SurfaceImage = backgroundImage;
@@ -162,7 +146,6 @@ namespace ScreenCapture
 #endif
 
             Update();
-            AreaManager.Update();
             AfterUpdate();
 
             Graphics g = e.Graphics;
@@ -177,9 +160,8 @@ namespace ScreenCapture
 
 #if DEBUG
             CheckFPS();
-#endif
-
             DrawInfo(g);
+#endif
 
             Invalidate();
         }
@@ -188,7 +170,8 @@ namespace ScreenCapture
         {
             Image img = SurfaceImage;
 
-            Rectangle newArea = Rectangle.Intersect(AreaManager.CombineAreas(), drawArea);
+            Rectangle regionArea = Rectangle.Round(regionPath.GetBounds());
+            Rectangle newArea = Rectangle.Intersect(regionArea, drawArea);
 
             if (regionPath != null)
             {
@@ -327,11 +310,7 @@ namespace ScreenCapture
 
         private void DrawInfo(Graphics g)
         {
-            string text = string.Format("X: {0}, Y: {1}\nWidth: {2}, Height: {3}", CurrentArea.X, CurrentArea.Y, CurrentArea.Width, CurrentArea.Height);
-
-#if DEBUG
-            text = string.Format("FPS: {0}\nBounds: {1}\n{2}", FPS, Bounds, text);
-#endif
+            string text = string.Format("FPS: {0}\nBounds: {1}", FPS, Bounds);
 
             SizeF textSize = g.MeasureString(text, textFont);
 
@@ -348,7 +327,7 @@ namespace ScreenCapture
                     primaryScreen.Y + primaryScreen.Height - (int)textSize.Height - offset - 1));
             }
 
-            CaptureHelpers.DrawTextWithShadow(g, text, position, textFont, Color.White, Color.Black, 1);
+            CaptureHelpers.DrawTextWithOutline(g, text, position, textFont, Color.White, Color.Black);
         }
 
         protected Rectangle CalculateAreaFromNodes()

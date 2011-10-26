@@ -74,7 +74,7 @@ namespace ScreenCapture
             if (points.Count > 2)
             {
                 RectangleF rect = regionPath.GetBounds();
-                CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
+                //CurrentArea = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width + 1, (int)rect.Height + 1);
             }
         }
 
@@ -107,7 +107,7 @@ namespace ScreenCapture
 
                 g.DrawPath(borderPen, regionPath);
                 g.DrawLine(borderPen, points[0], points[points.Count - 1]);
-                g.DrawRectangleProper(borderPen, CurrentArea);
+                //g.DrawRectangleProper(borderPen, CurrentArea);
             }
             else
             {

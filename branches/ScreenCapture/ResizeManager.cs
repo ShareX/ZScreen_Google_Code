@@ -67,6 +67,9 @@ namespace ScreenCapture
             this.surface = surface;
             this.areaManager = areaManager;
 
+            MinMoveSpeed = surface.Config.MinMoveSpeed;
+            MaxMoveSpeed = surface.Config.MaxMoveSpeed;
+
             surface.KeyDown += new KeyEventHandler(surface_KeyDown);
 
             nodes = new NodeObject[8];
