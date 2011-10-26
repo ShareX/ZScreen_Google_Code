@@ -53,7 +53,7 @@ namespace ZScreenLib
         public CaptureEngineType CaptureEngineMode2 = CaptureEngineType.GDI;
 
         private bool bPerformActions = false;
-
+        [Browsable(false)]
         public bool PerformActions
         {
             get

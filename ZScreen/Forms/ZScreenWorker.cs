@@ -153,6 +153,7 @@ namespace ZScreenGUI
         public override void BwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             WorkerTask task = (WorkerTask)e.Result;
+            PostWorkerTasks();
             if (task == null) return;
 
             this.Text = Engine.GetProductName();
@@ -507,27 +508,30 @@ namespace ZScreenGUI
             {
                 Engine.IsClipboardUploading = true;
 
-                WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
-
-                if (Clipboard.ContainsImage())
-                {
-                    cbTask.RunWorker();
-                }
-                else if (Clipboard.ContainsText())
-                {
-                    if (cbTask.tempText != Engine.zPreviousSetClipboardText || !FileSystem.IsValidLink(Engine.zPreviousSetClipboardText))
-                    {
-                        cbTask.RunWorker();
-                        Engine.IsClipboardUploading = true;
-                    }
-                    else
-                    {
-                        Engine.IsClipboardUploading = false;
-                    }
-                }
-                else if (Clipboard.ContainsFileDropList())
+                if (Clipboard.ContainsFileDropList())
                 {
                     UploadUsingFileSystem(FileSystem.GetExplorerFileList(Clipboard.GetFileDropList()).ToArray());
+                }
+                else
+                {
+                    WorkerTask cbTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard);
+
+                    if (Clipboard.ContainsImage())
+                    {
+                        cbTask.RunWorker();
+                    }
+                    else if (Clipboard.ContainsText())
+                    {
+                        if (cbTask.tempText != Engine.zPreviousSetClipboardText || !FileSystem.IsValidLink(Engine.zPreviousSetClipboardText))
+                        {
+                            cbTask.RunWorker();
+                            Engine.IsClipboardUploading = true;
+                        }
+                        else
+                        {
+                            Engine.IsClipboardUploading = false;
+                        }
+                    }
                 }
             }
         }
