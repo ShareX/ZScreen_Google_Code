@@ -176,7 +176,7 @@ namespace Greenshot
             string editorTitle = lang.GetString(LangKey.editor_title);
             if (surface != null && surface.CaptureDetails != null && surface.CaptureDetails.Title != null)
             {
-                // editorTitle = surface.CaptureDetails.Title + " - " + editorTitle;
+                editorTitle = surface.CaptureDetails.Title + " - " + editorTitle;
             }
             this.Text = editorTitle;
 
@@ -286,7 +286,7 @@ namespace Greenshot
                 return;
             }
             updateStatusLabel(lang.GetFormattedString(LangKey.editor_imagesaved, fullpath), fileSavedStatusContextMenu);
-            this.Text = lang.GetString(LangKey.editor_title) + " - " + Path.GetFileName(fullpath);
+            this.Text = Path.GetFileName(fullpath) + " - " + lang.GetString(LangKey.editor_title);
         }
 
         private void surface_DrawingModeChanged(object source, DrawingModes drawingMode)
