@@ -1162,6 +1162,13 @@ namespace ZScreenLib
                         case EDataType.File:
                             UploadToSharedFolder(Engine.ConfigUploaders.LocalhostSelectedFiles);
                             break;
+                        case EDataType.Image:
+                            UploadToSharedFolder(Engine.ConfigUploaders.LocalhostSelectedImages);
+                            break;
+                        case EDataType.Text:
+                        case EDataType.URL:
+                            UploadToSharedFolder(Engine.ConfigUploaders.LocalhostSelectedText);
+                            break;
                     }
                 }
 
