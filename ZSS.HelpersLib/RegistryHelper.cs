@@ -56,10 +56,7 @@ namespace HelpersLib
                 {
                     if (startWithWindows)
                     {
-                        if (!File.Exists(GetRegistryValue(WindowsStartupRun, Application.ProductName)))
-                        {
-                            regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
-                        }
+                        regkey.SetValue(Application.ProductName, ApplicationPath, RegistryValueKind.String);
                     }
                     else
                     {
@@ -127,7 +124,11 @@ namespace HelpersLib
                 if (rk != null)
                 {
                     string temp = rk.GetValue(name, null) as string;
-                    return temp.Replace("\"", "");
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        temp = temp.Replace("\"", "");
+                    }
+                    return temp;
                 }
             }
             return string.Empty;
