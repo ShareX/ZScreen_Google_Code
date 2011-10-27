@@ -70,7 +70,7 @@ namespace ZScreenLib
 
             Rectangle windowRect = CaptureHelpers.GetWindowRectangle(handle);
 
-            if (Engine.HasAero)
+            if (NativeMethods.IsDWMEnabled())
             {
                 if (wfdwm.ActiveWindowDwmUseCustomBackground)
                 {

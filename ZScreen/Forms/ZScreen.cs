@@ -218,7 +218,7 @@ namespace ZScreenGUI
 
             if (Engine.ConfigUI.FirstRun)
             {
-                if (Engine.HasAero)
+                if (Engine.HasVista)
                 {
                     cboCaptureEngine.SelectedIndex = (int)CaptureEngineType.DWM;
                 }

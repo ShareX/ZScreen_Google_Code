@@ -143,7 +143,17 @@ namespace ZScreenGUI
             // Active Window
             if (cboCaptureEngine.Items.Count == 0)
             {
-                cboCaptureEngine.Items.AddRange(typeof(CaptureEngineType).GetDescriptions());
+                foreach (CaptureEngineType engine in Enum.GetValues(typeof(CaptureEngineType)))
+                {
+                    if (!(engine == CaptureEngineType.DWM && !Engine.HasVista))
+                    {
+                        cboCaptureEngine.Items.Add(engine.GetDescription());
+                    }
+                }
+                if (!Engine.HasVista && Engine.ConfigWorkflow.CaptureEngineMode2 == CaptureEngineType.DWM)
+                {
+                    Engine.ConfigWorkflow.CaptureEngineMode2 = CaptureEngineType.GDI;
+                }
                 cboCaptureEngine.SelectedIndex = (int)Engine.ConfigWorkflow.CaptureEngineMode2;
             }
 

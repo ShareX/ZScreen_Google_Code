@@ -617,11 +617,11 @@ namespace ZScreenLib
         /// Method to return if Windows Vista or Windows 7 or above
         /// </summary>
         /// <returns></returns>
-        public static bool HasAero
+        public static bool HasVista
         {
             get
             {
-                return NativeMethods.IsDWMEnabled();
+                return Environment.OSVersion.Version.Major >= 6;
             }
         }
 
@@ -629,7 +629,15 @@ namespace ZScreenLib
         {
             get
             {
-                return HasAero && Environment.OSVersion.Version.Minor >= 1;
+                return HasVista && Environment.OSVersion.Version.Minor >= 1;
+            }
+        }
+
+        public static bool HasWindows8
+        {
+            get
+            {
+                return HasVista && Environment.OSVersion.Version.Minor >= 2;
             }
         }
 
