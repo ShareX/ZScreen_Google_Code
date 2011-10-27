@@ -8,8 +8,8 @@
     <ProjectGuid>{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScreenCapture</RootNamespace>
-    <AssemblyName>ScreenCapture</AssemblyName>
+    <RootNamespace>ScreenCapture.Shapes</RootNamespace>
+    <AssemblyName>ScreenCapture.Shapes</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -64,9 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AreaManager.cs" />
-    <Compile Include="ColorBgra.cs" />
     <Compile Include="ResizeManager.cs" />
-    <Compile Include="Screenshot.cs" />
     <Compile Include="CropLight.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,7 +90,6 @@
     <Compile Include="Regions\RoundedRectangleRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Screenshot_Transparent.cs" />
     <Compile Include="Surface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,9 +103,6 @@
       <DependentUpon>RegionCapturePreview.cs</DependentUpon>
     </Compile>
     <Compile Include="SurfaceOptions.cs" />
-    <Compile Include="UnsafeBitmap.cs" />
-    <Compile Include="WindowInfo.cs" />
-    <Compile Include="WindowsList.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RegionCapturePreview.resx">
@@ -116,6 +110,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\trunk\ScreenCapture\ScreenCapture.csproj">
+      <Project>{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}</Project>
+      <Name>ScreenCapture</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\trunk\ZSS.HelpersLib\HelpersLib.csproj">
       <Project>{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}</Project>
       <Name>HelpersLib</Name>

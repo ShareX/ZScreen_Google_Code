@@ -1,2 +1,2 @@
-SVNRevToAssemblyInfo.exe dir "..\" auto update
+SVNRevToAssemblyInfo.exe dir "..\" auto
 pause

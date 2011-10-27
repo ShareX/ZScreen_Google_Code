@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCaptureTest", "ScreenCaptureTest\ScreenCaptureTest.csproj", "{AA34CBDF-5AE1-4CE9-B705-04C1B9DF1BD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "ScreenCapture\ScreenCapture.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture.Shapes", "ScreenCapture.Shapes\ScreenCapture.Shapes.csproj", "{7F53BD0C-1BBD-416C-89CE-3FF39D4D3414}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpersLib", "..\trunk\ZSS.HelpersLib\HelpersLib.csproj", "{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "..\trunk\ScreenCapture\ScreenCapture.csproj", "{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,18 @@ Global
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|Mixed Platforms.Build.0 = Release|x86
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|x86.ActiveCfg = Release|x86
 		{327750E1-9FB7-4CC3-8AEA-9BC42180CAD3}.Release|x86.Build.0 = Release|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|x86.ActiveCfg = Debug|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Debug|x86.Build.0 = Debug|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|Mixed Platforms.Build.0 = Release|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|x86.ActiveCfg = Release|x86
+		{DBDB0DAA-B3AE-4CC4-A8C2-20550B7F32E3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
