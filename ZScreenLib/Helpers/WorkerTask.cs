@@ -1237,6 +1237,10 @@ namespace ZScreenLib
             {
                 Info.FileSize = string.Format("{0} KiB", (sz / 1024.0).ToString("0"));
             }
+            else
+            {
+                Info.FileSize = string.Format("{0} B", (sz).ToString("0"));
+            }
         }
 
         /// <summary>
