@@ -1108,7 +1108,7 @@ namespace ZScreenLib
                     {
                         case EDataType.Text:
                         case EDataType.URL:
-                            FileSystem.WriteText(Info.LocalFilePath, tempText);
+                            WriteText(tempText);
                             break;
                         default:
                             WriteImage(tempImage);
@@ -1247,6 +1247,14 @@ namespace ZScreenLib
             else
             {
                 Info.FileSize = string.Format("{0} B", (sz).ToString("0"));
+            }
+        }
+
+        private void WriteText(string text)
+        {
+            if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(Info.LocalFilePath))
+            {
+                FileSystem.WriteText(Info.LocalFilePath, text);
             }
         }
 
