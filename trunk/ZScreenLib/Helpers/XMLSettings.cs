@@ -336,7 +336,7 @@ namespace ZScreenLib
         public string ClipboardFormat { get; set; }
 
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("Enable ClipboardFormat for shortened URLs generated for long URLs captured using Clipboard Monitor or Clipboard Upload. This means that ClipboardFormat will still continue to work for shortened URLs of screenshot captures.")]
-        public bool EnableClipboardFormatOnShorten { get; set; }
+        public bool EnableClipboardFormatForLongURLs { get; set; }
 
         [Category(ComponentModelStrings.OutputsClipboard), DefaultValue(false), Description("When multiple upload locations are configured in Outputs, application will append each URL to clipboard.")]
         public bool ClipboardAppendMultipleLinks { get; set; }
