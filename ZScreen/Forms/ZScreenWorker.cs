@@ -522,15 +522,8 @@ namespace ZScreenGUI
                     }
                     else if (Clipboard.ContainsText())
                     {
-                        if (cbTask.tempText != Engine.zPreviousSetClipboardText || !FileSystem.IsValidLink(Engine.zPreviousSetClipboardText))
-                        {
-                            cbTask.RunWorker();
-                            Engine.IsClipboardUploading = true;
-                        }
-                        else
-                        {
-                            Engine.IsClipboardUploading = false;
-                        }
+                        cbTask.RunWorker();
+                        Engine.IsClipboardUploading = true;
                     }
                 }
             }

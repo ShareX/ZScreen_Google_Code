@@ -1931,7 +1931,8 @@ namespace ZScreenLib
             }
             else if (Clipboard.ContainsText())
             {
-                SetText(Clipboard.GetText());
+                Engine.zPreviousSetClipboardText = Clipboard.GetText();
+                SetText(Engine.zPreviousSetClipboardText);
             }
             else if (Clipboard.ContainsFileDropList())
             {
