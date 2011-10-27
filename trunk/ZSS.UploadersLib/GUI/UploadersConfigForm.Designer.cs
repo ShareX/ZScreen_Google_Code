@@ -33,6 +33,7 @@
             this.tpImageUploaders = new System.Windows.Forms.TabPage();
             this.tcImageUploaders = new System.Windows.Forms.TabControl();
             this.tpImageShack = new System.Windows.Forms.TabPage();
+            this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.btnImageShackOpenPublicProfile = new System.Windows.Forms.Button();
             this.cbImageShackIsPublic = new System.Windows.Forms.CheckBox();
             this.btnImageShackOpenMyImages = new System.Windows.Forms.Button();
@@ -42,6 +43,7 @@
             this.txtImageShackRegistrationCode = new System.Windows.Forms.TextBox();
             this.lblImageShackRegistrationCode = new System.Windows.Forms.Label();
             this.tpTinyPic = new System.Windows.Forms.TabPage();
+            this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.btnTinyPicLogin = new System.Windows.Forms.Button();
             this.txtTinyPicPassword = new System.Windows.Forms.TextBox();
             this.lblTinyPicPassword = new System.Windows.Forms.Label();
@@ -60,6 +62,7 @@
             this.btnImgurEnterVerificationCode = new System.Windows.Forms.Button();
             this.txtImgurVerificationCode = new System.Windows.Forms.TextBox();
             this.lblImgurAccountStatus = new System.Windows.Forms.Label();
+            this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpFlickr = new System.Windows.Forms.TabPage();
             this.btnFlickrOpenImages = new System.Windows.Forms.Button();
             this.pgFlickrAuthInfo = new System.Windows.Forms.PropertyGrid();
@@ -102,6 +105,7 @@
             this.txtYFrogPassword = new System.Windows.Forms.TextBox();
             this.txtYFrogUsername = new System.Windows.Forms.TextBox();
             this.tpMediaWiki = new System.Windows.Forms.TabPage();
+            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
             this.tpTextUploaders = new System.Windows.Forms.TabPage();
             this.tcTextUploaders = new System.Windows.Forms.TabControl();
             this.tpPastebin = new System.Windows.Forms.TabPage();
@@ -140,6 +144,7 @@
             this.btnFTPExport = new System.Windows.Forms.Button();
             this.btnFTPImport = new System.Windows.Forms.Button();
             this.btnFtpHelp = new System.Windows.Forms.Button();
+            this.ucFTPAccounts = new UploadersLib.AccountsControl();
             this.gbFtpSettings = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -151,6 +156,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFTPThumbWidth = new System.Windows.Forms.TextBox();
             this.tpRapidShare = new System.Windows.Forms.TabPage();
+            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.lblRapidSharePassword = new System.Windows.Forms.Label();
             this.lblRapidSharePremiumUsername = new System.Windows.Forms.Label();
             this.txtRapidSharePassword = new System.Windows.Forms.TextBox();
@@ -161,6 +167,7 @@
             this.lblSendSpaceUsername = new System.Windows.Forms.Label();
             this.txtSendSpacePassword = new System.Windows.Forms.TextBox();
             this.txtSendSpaceUserName = new System.Windows.Forms.TextBox();
+            this.atcSendSpaceAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpCustomUploaders = new System.Windows.Forms.TabPage();
             this.txtCustomUploaderLog = new System.Windows.Forms.RichTextBox();
             this.btnCustomUploaderTest = new System.Windows.Forms.Button();
@@ -204,10 +211,12 @@
             this.btnGoogleURLShortenerAuthComplete = new System.Windows.Forms.Button();
             this.btnGoogleURLShortenerAuthOpen = new System.Windows.Forms.Button();
             this.lblGooglAccountStatus = new System.Windows.Forms.Label();
+            this.atcGoogleURLShortenerAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tpOtherServices = new System.Windows.Forms.TabPage();
             this.tcOtherServices = new System.Windows.Forms.TabControl();
             this.tpTwitter = new System.Windows.Forms.TabPage();
             this.btnTwitterLogin = new System.Windows.Forms.Button();
+            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
             this.tbOutputs = new System.Windows.Forms.TabPage();
             this.tcOutputs = new System.Windows.Forms.TabControl();
             this.tpEmail = new System.Windows.Forms.TabPage();
@@ -227,8 +236,8 @@
             this.txtEmailSmtpServer = new System.Windows.Forms.TextBox();
             this.lblEmailSmtpServer = new System.Windows.Forms.Label();
             this.tpSharedFolders = new System.Windows.Forms.TabPage();
-            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.tlpSharedFolders = new System.Windows.Forms.TableLayoutPanel();
+            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
             this.gbSharedFolder = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -236,16 +245,7 @@
             this.cboSharedFolderFiles = new System.Windows.Forms.ComboBox();
             this.cboSharedFolderText = new System.Windows.Forms.ComboBox();
             this.cboSharedFolderImages = new System.Windows.Forms.ComboBox();
-            this.atcImageShackAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.atcTinyPicAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.atcImgurAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.ucMediaWikiAccounts = new UploadersLib.AccountsControl();
-            this.ucFTPAccounts = new UploadersLib.AccountsControl();
-            this.atcRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.atcSendSpaceAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.atcGoogleURLShortenerAccountType = new UploadersLib.GUI.AccountTypeControl();
-            this.ucTwitterAccounts = new UploadersLib.AccountsControl();
-            this.ucLocalhostAccounts = new UploadersLib.AccountsControl();
+            this.txtRapidSharePremiumUserName = new System.Windows.Forms.TextBox();
             this.actRapidShareAccountType = new UploadersLib.GUI.AccountTypeControl();
             this.tcUploaders.SuspendLayout();
             this.tpImageUploaders.SuspendLayout();
@@ -363,6 +363,15 @@
             this.tpImageShack.Text = "ImageShack";
             this.tpImageShack.UseVisualStyleBackColor = true;
             // 
+            // atcImageShackAccountType
+            // 
+            this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImageShackAccountType.Name = "atcImageShackAccountType";
+            this.atcImageShackAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcImageShackAccountType.Size = new System.Drawing.Size(272, 29);
+            this.atcImageShackAccountType.TabIndex = 0;
+            this.atcImageShackAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImageShackAccountType_AccountTypeChanged);
+            // 
             // btnImageShackOpenPublicProfile
             // 
             this.btnImageShackOpenPublicProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -461,6 +470,15 @@
             this.tpTinyPic.TabIndex = 1;
             this.tpTinyPic.Text = "TinyPic";
             this.tpTinyPic.UseVisualStyleBackColor = true;
+            // 
+            // atcTinyPicAccountType
+            // 
+            this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
+            this.atcTinyPicAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcTinyPicAccountType.Size = new System.Drawing.Size(272, 29);
+            this.atcTinyPicAccountType.TabIndex = 0;
+            this.atcTinyPicAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
             // 
             // btnTinyPicLogin
             // 
@@ -640,6 +658,15 @@
             this.lblImgurAccountStatus.Size = new System.Drawing.Size(77, 13);
             this.lblImgurAccountStatus.TabIndex = 4;
             this.lblImgurAccountStatus.Text = "Login required.";
+            // 
+            // atcImgurAccountType
+            // 
+            this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcImgurAccountType.Name = "atcImgurAccountType";
+            this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcImgurAccountType.Size = new System.Drawing.Size(272, 29);
+            this.atcImgurAccountType.TabIndex = 0;
+            this.atcImgurAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImgurAccountType_AccountTypeChanged);
             // 
             // tpFlickr
             // 
@@ -1082,6 +1109,18 @@
             this.tpMediaWiki.Text = "MediaWiki";
             this.tpMediaWiki.UseVisualStyleBackColor = true;
             // 
+            // ucMediaWikiAccounts
+            // 
+            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
+            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
+            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
+            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(712, 458);
+            this.ucMediaWikiAccounts.TabIndex = 1;
+            // 
             // tpTextUploaders
             // 
             this.tpTextUploaders.Controls.Add(this.tcTextUploaders);
@@ -1502,6 +1541,15 @@
             this.btnFtpHelp.UseVisualStyleBackColor = true;
             this.btnFtpHelp.Click += new System.EventHandler(this.btnFtpHelp_Click);
             // 
+            // ucFTPAccounts
+            // 
+            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
+            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucFTPAccounts.Name = "ucFTPAccounts";
+            this.ucFTPAccounts.Size = new System.Drawing.Size(792, 345);
+            this.ucFTPAccounts.TabIndex = 0;
+            // 
             // gbFtpSettings
             // 
             this.gbFtpSettings.Controls.Add(this.label1);
@@ -1623,6 +1671,15 @@
             this.tpRapidShare.Text = "RapidShare";
             this.tpRapidShare.UseVisualStyleBackColor = true;
             // 
+            // atcRapidShareAccountType
+            // 
+            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
+            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcRapidShareAccountType.TabIndex = 16;
+            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
+            // 
             // lblRapidSharePassword
             // 
             this.lblRapidSharePassword.AutoSize = true;
@@ -1718,6 +1775,15 @@
             this.txtSendSpaceUserName.Size = new System.Drawing.Size(136, 20);
             this.txtSendSpaceUserName.TabIndex = 19;
             this.txtSendSpaceUserName.TextChanged += new System.EventHandler(this.txtSendSpaceUserName_TextChanged);
+            // 
+            // atcSendSpaceAccountType
+            // 
+            this.atcSendSpaceAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcSendSpaceAccountType.Name = "atcSendSpaceAccountType";
+            this.atcSendSpaceAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcSendSpaceAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcSendSpaceAccountType.TabIndex = 24;
+            this.atcSendSpaceAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcSendSpaceAccountType_AccountTypeChanged);
             // 
             // tpCustomUploaders
             // 
@@ -2150,6 +2216,15 @@
             this.lblGooglAccountStatus.TabIndex = 3;
             this.lblGooglAccountStatus.Text = "Login required.";
             // 
+            // atcGoogleURLShortenerAccountType
+            // 
+            this.atcGoogleURLShortenerAccountType.Location = new System.Drawing.Point(8, 16);
+            this.atcGoogleURLShortenerAccountType.Name = "atcGoogleURLShortenerAccountType";
+            this.atcGoogleURLShortenerAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
+            this.atcGoogleURLShortenerAccountType.Size = new System.Drawing.Size(214, 29);
+            this.atcGoogleURLShortenerAccountType.TabIndex = 0;
+            this.atcGoogleURLShortenerAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcGoogleURLShortenerAccountType_AccountTypeChanged);
+            // 
             // tpOtherServices
             // 
             this.tpOtherServices.Controls.Add(this.tcOtherServices);
@@ -2192,6 +2267,14 @@
             this.btnTwitterLogin.Text = "Login";
             this.btnTwitterLogin.UseVisualStyleBackColor = true;
             this.btnTwitterLogin.Click += new System.EventHandler(this.btnTwitterLogin_Click);
+            // 
+            // ucTwitterAccounts
+            // 
+            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
+            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
+            this.ucTwitterAccounts.Size = new System.Drawing.Size(798, 468);
+            this.ucTwitterAccounts.TabIndex = 24;
             // 
             // tbOutputs
             // 
@@ -2398,13 +2481,6 @@
             this.tpSharedFolders.Text = "Shared Folders or Web Servers";
             this.tpSharedFolders.UseVisualStyleBackColor = true;
             // 
-            // txtRapidSharePremiumUserName
-            // 
-            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(88, 84);
-            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
-            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
-            this.txtRapidSharePremiumUserName.TabIndex = 11;
-            // 
             // tlpSharedFolders
             // 
             this.tlpSharedFolders.ColumnCount = 1;
@@ -2424,6 +2500,15 @@
             this.tlpSharedFolders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpSharedFolders.Size = new System.Drawing.Size(798, 468);
             this.tlpSharedFolders.TabIndex = 3;
+            // 
+            // ucLocalhostAccounts
+            // 
+            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLocalhostAccounts.Location = new System.Drawing.Point(4, 4);
+            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
+            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
+            this.ucLocalhostAccounts.Size = new System.Drawing.Size(790, 343);
+            this.ucLocalhostAccounts.TabIndex = 2;
             // 
             // gbSharedFolder
             // 
@@ -2474,7 +2559,7 @@
             this.cboSharedFolderFiles.FormattingEnabled = true;
             this.cboSharedFolderFiles.Location = new System.Drawing.Point(64, 72);
             this.cboSharedFolderFiles.Name = "cboSharedFolderFiles";
-            this.cboSharedFolderFiles.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderFiles.Size = new System.Drawing.Size(472, 21);
             this.cboSharedFolderFiles.TabIndex = 14;
             this.cboSharedFolderFiles.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderFiles_SelectedIndexChanged);
             // 
@@ -2484,7 +2569,7 @@
             this.cboSharedFolderText.FormattingEnabled = true;
             this.cboSharedFolderText.Location = new System.Drawing.Point(64, 48);
             this.cboSharedFolderText.Name = "cboSharedFolderText";
-            this.cboSharedFolderText.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderText.Size = new System.Drawing.Size(472, 21);
             this.cboSharedFolderText.TabIndex = 13;
             this.cboSharedFolderText.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderText_SelectedIndexChanged);
             // 
@@ -2494,101 +2579,16 @@
             this.cboSharedFolderImages.FormattingEnabled = true;
             this.cboSharedFolderImages.Location = new System.Drawing.Point(64, 24);
             this.cboSharedFolderImages.Name = "cboSharedFolderImages";
-            this.cboSharedFolderImages.Size = new System.Drawing.Size(272, 21);
+            this.cboSharedFolderImages.Size = new System.Drawing.Size(472, 21);
             this.cboSharedFolderImages.TabIndex = 12;
             this.cboSharedFolderImages.SelectedIndexChanged += new System.EventHandler(this.cboSharedFolderImages_SelectedIndexChanged);
             // 
-            // atcImageShackAccountType
+            // txtRapidSharePremiumUserName
             // 
-            this.atcImageShackAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcImageShackAccountType.Name = "atcImageShackAccountType";
-            this.atcImageShackAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImageShackAccountType.Size = new System.Drawing.Size(272, 29);
-            this.atcImageShackAccountType.TabIndex = 0;
-            this.atcImageShackAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImageShackAccountType_AccountTypeChanged);
-            // 
-            // atcTinyPicAccountType
-            // 
-            this.atcTinyPicAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcTinyPicAccountType.Name = "atcTinyPicAccountType";
-            this.atcTinyPicAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcTinyPicAccountType.Size = new System.Drawing.Size(272, 29);
-            this.atcTinyPicAccountType.TabIndex = 0;
-            this.atcTinyPicAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcTinyPicAccountType_AccountTypeChanged);
-            // 
-            // atcImgurAccountType
-            // 
-            this.atcImgurAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcImgurAccountType.Name = "atcImgurAccountType";
-            this.atcImgurAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcImgurAccountType.Size = new System.Drawing.Size(272, 29);
-            this.atcImgurAccountType.TabIndex = 0;
-            this.atcImgurAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcImgurAccountType_AccountTypeChanged);
-            // 
-            // ucMediaWikiAccounts
-            // 
-            this.ucMediaWikiAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ucMediaWikiAccounts.BackColor = System.Drawing.Color.Transparent;
-            this.ucMediaWikiAccounts.Location = new System.Drawing.Point(8, 8);
-            this.ucMediaWikiAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucMediaWikiAccounts.Name = "ucMediaWikiAccounts";
-            this.ucMediaWikiAccounts.Size = new System.Drawing.Size(712, 458);
-            this.ucMediaWikiAccounts.TabIndex = 1;
-            // 
-            // ucFTPAccounts
-            // 
-            this.ucFTPAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFTPAccounts.Location = new System.Drawing.Point(0, 0);
-            this.ucFTPAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucFTPAccounts.Name = "ucFTPAccounts";
-            this.ucFTPAccounts.Size = new System.Drawing.Size(792, 345);
-            this.ucFTPAccounts.TabIndex = 0;
-            // 
-            // atcRapidShareAccountType
-            // 
-            this.atcRapidShareAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcRapidShareAccountType.Name = "atcRapidShareAccountType";
-            this.atcRapidShareAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcRapidShareAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcRapidShareAccountType.TabIndex = 16;
-            this.atcRapidShareAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcRapidShareAccountType_AccountTypeChanged);
-            // 
-            // atcSendSpaceAccountType
-            // 
-            this.atcSendSpaceAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcSendSpaceAccountType.Name = "atcSendSpaceAccountType";
-            this.atcSendSpaceAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcSendSpaceAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcSendSpaceAccountType.TabIndex = 24;
-            this.atcSendSpaceAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcSendSpaceAccountType_AccountTypeChanged);
-            // 
-            // atcGoogleURLShortenerAccountType
-            // 
-            this.atcGoogleURLShortenerAccountType.Location = new System.Drawing.Point(8, 16);
-            this.atcGoogleURLShortenerAccountType.Name = "atcGoogleURLShortenerAccountType";
-            this.atcGoogleURLShortenerAccountType.SelectedAccountType = UploadersLib.AccountType.Anonymous;
-            this.atcGoogleURLShortenerAccountType.Size = new System.Drawing.Size(214, 29);
-            this.atcGoogleURLShortenerAccountType.TabIndex = 0;
-            this.atcGoogleURLShortenerAccountType.AccountTypeChanged += new UploadersLib.GUI.AccountTypeControl.AccountTypeChangedEventHandler(this.atcGoogleURLShortenerAccountType_AccountTypeChanged);
-            // 
-            // ucTwitterAccounts
-            // 
-            this.ucTwitterAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucTwitterAccounts.Location = new System.Drawing.Point(3, 3);
-            this.ucTwitterAccounts.Name = "ucTwitterAccounts";
-            this.ucTwitterAccounts.Size = new System.Drawing.Size(798, 468);
-            this.ucTwitterAccounts.TabIndex = 24;
-            // 
-            // ucLocalhostAccounts
-            // 
-            this.ucLocalhostAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLocalhostAccounts.Location = new System.Drawing.Point(4, 4);
-            this.ucLocalhostAccounts.Margin = new System.Windows.Forms.Padding(4);
-            this.ucLocalhostAccounts.Name = "ucLocalhostAccounts";
-            this.ucLocalhostAccounts.Size = new System.Drawing.Size(790, 343);
-            this.ucLocalhostAccounts.TabIndex = 2;
+            this.txtRapidSharePremiumUserName.Location = new System.Drawing.Point(88, 84);
+            this.txtRapidSharePremiumUserName.Name = "txtRapidSharePremiumUserName";
+            this.txtRapidSharePremiumUserName.Size = new System.Drawing.Size(120, 20);
+            this.txtRapidSharePremiumUserName.TabIndex = 11;
             // 
             // actRapidShareAccountType
             // 
