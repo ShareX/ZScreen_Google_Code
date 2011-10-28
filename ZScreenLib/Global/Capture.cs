@@ -69,8 +69,13 @@ namespace ZScreenLib
             Bitmap redBGImage = null;
 
             Rectangle windowRect = CaptureHelpers.GetWindowRectangle(handle);
+            if (windowRect.Width == 0)
+            {
+                System.Threading.Thread.Sleep(250);
+                windowRect = CaptureHelpers.GetWindowRectangle(handle); // try again
+            }
 
-            if (NativeMethods.IsDWMEnabled())
+            if (windowRect.Width > 0 && NativeMethods.IsDWMEnabled())
             {
                 if (wfdwm.ActiveWindowDwmUseCustomBackground)
                 {
