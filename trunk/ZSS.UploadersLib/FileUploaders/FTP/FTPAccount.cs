@@ -69,8 +69,11 @@ namespace UploadersLib
         [Category("FTP"), Description("FTP/HTTP Sub-folder Path, e.g. screenshots, %y = year, %mo = month. SubFolderPath will be automatically appended to HttpHomePath if HttpHomePath does not start with @"), DefaultValue("")]
         public string SubFolderPath { get; set; }
 
-        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(RemoteProtocol.Http)]
-        public RemoteProtocol RemoteProtocol { get; set; }
+        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the browser"), DefaultValue(BrowserProtocol.Http)]
+        public BrowserProtocol BrowserProtocol { get; set; }
+
+        [Category("FTP"), Description("Choose an appropriate protocol to be accessed by the server. This affects the server address."), DefaultValue(ServerProtocol.Ftp)]
+        public ServerProtocol ServerProtocol { get; set; }
 
         [Category("FTP"), Description("HTTP Home Path, %host = Host e.g. google.com\nURL = HttpHomePath (+ SubFolderPath, if HttpHomePath does not start with @) + FileName\nURL = Host + SubFolderPath + FileName (if HttpHomePath is empty)"), DefaultValue("")]
         public string HttpHomePath { get; set; }
@@ -88,7 +91,7 @@ namespace UploadersLib
                     return string.Empty;
                 }
 
-                return string.Format("ftp://{0}:{1}", Host, Port);
+                return string.Format("{0}{1}:{2}", ServerProtocol.GetDescription(), Host, Port);
             }
         }
 
@@ -192,9 +195,17 @@ namespace UploadersLib
                 path = FTPHelpers.CombineURL(httppath, lFolderPath, fileName);
             }
 
-            if (!path.StartsWith(RemoteProtocol.GetDescription()))
+            if (!path.StartsWith(BrowserProtocol.GetDescription()))
             {
-                path = RemoteProtocol.GetDescription() + path;
+                switch (BrowserProtocol)
+                {
+                    case UploadersLib.BrowserProtocol.ServerProtocol:
+                        path = FTPHelpers.CombineURL(FTPAddress, lFolderPath, fileName);
+                        break;
+                    default:
+                        path = BrowserProtocol.GetDescription() + path;
+                        break;
+                }
             }
 
             return path;

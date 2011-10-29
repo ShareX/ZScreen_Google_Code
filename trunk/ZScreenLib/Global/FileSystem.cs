@@ -250,10 +250,11 @@ namespace ZScreenLib
             if (!workflow.OverwriteFiles)
             {
                 string fn = Path.GetFileNameWithoutExtension(fileName);
+                string ext = Path.GetExtension(fileName);
 
-                if (fn.Length > workflow.MaxNameLength)
+                if (fn.Length > workflow.MaxNameLength - ext.Length)
                 {
-                    string nfn = fn.Substring(0, workflow.MaxNameLength);
+                    string nfn = fn.Substring(0, workflow.MaxNameLength - ext.Length);
                     fileName = Regex.Replace(fileName, fn, nfn);
                 }
 
@@ -315,11 +316,11 @@ namespace ZScreenLib
 
         public static void BackupSettings()
         {
-            string dirbackup = Path.Combine(Engine.SettingsDir, "Archive");
+            string dirbackup = Path.Combine(Engine.DocsAppFolder, "Archive");
 
             if (Engine.ConfigUploaders.FTPAccountList2.Count > 0)
             {
-                string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
+                string fpftp = Path.Combine(dirbackup, string.Format("{0}-{1}-ftp-accounts.{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.EXT_FTP_ACCOUNTS));
                 if (!File.Exists(fpftp))
                 {
                     FTPAccountManager fam = new FTPAccountManager(Engine.ConfigUploaders.FTPAccountList2);
@@ -327,10 +328,16 @@ namespace ZScreenLib
                 }
             }
 
-            string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-WorkflowConfig.xml", Application.ProductName, DateTime.Now.ToString("yyyyMM")));
+            string fpWorkflowConfig = Path.Combine(dirbackup, string.Format("{0}-{1}-{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.WorkflowConfigFileName));
+            if (!File.Exists(fpWorkflowConfig))
+            {
+                Engine.ConfigWorkflow.Write(fpWorkflowConfig);
+            }
+
+            string fpoutputsconfig = Path.Combine(dirbackup, string.Format("{0}-{1}-{2}", Application.ProductName, DateTime.Now.ToString("yyyyMM"), Engine.UploadersConfigFileName));
             if (!File.Exists(fpoutputsconfig))
             {
-                Engine.ConfigWorkflow.Write(fpoutputsconfig);
+                Engine.ConfigUploaders.Write(fpoutputsconfig);
             }
 
             if (Engine.ConfigUI != null)

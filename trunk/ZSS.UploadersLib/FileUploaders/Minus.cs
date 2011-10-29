@@ -327,7 +327,7 @@ namespace UploadersLib.FileUploaders
             get
             {
                 if (FolderID < 0) FolderID = 0;
-                if (FolderID > FolderList.Count) FolderID = 0;
+                if (FolderID >= FolderList.Count) FolderID = 0;
                 return FolderList[FolderID];
             }
         }

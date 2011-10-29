@@ -62,7 +62,7 @@ namespace ZScreenLib
         private static readonly string ApplicationName = Application.ProductName;
 
         private static readonly string PortableRootFolder = ApplicationName; // using relative paths
-        public static readonly string DefaultRootAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
+        public static readonly string DocsAppFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
         public static readonly string SettingsFileName = ApplicationName + string.Format("-{0}-Settings.xml", Application.ProductVersion);
         public static readonly string HistoryFileName = "UploadersHistory.xml";
@@ -75,11 +75,11 @@ namespace ZScreenLib
         internal static readonly string zRoamingAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName);
         internal static readonly string zLocalAppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ApplicationName);
         internal static readonly string zCacheDir = Path.Combine(zLocalAppDataFolder, "Cache");
-        internal static readonly string zFilesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Path.Combine(ApplicationName, "Files"));
+        internal static readonly string zFilesDir = Path.Combine(DocsAppFolder, "Files");
         internal static readonly string zLogsDir = Path.Combine(zLocalAppDataFolder, "Logs");
         internal static readonly string zPicturesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), ApplicationName);
         internal static readonly string zSettingsDir = Path.Combine(zRoamingAppDataFolder, "Settings");
-        internal static readonly string zTextDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Path.Combine(ApplicationName, "Text"));
+        internal static readonly string zTextDir = Path.Combine(DocsAppFolder, "Text");
         internal static readonly string zTempDir = Path.Combine(zLocalAppDataFolder, "Temp");
 
         #region Config Objects
@@ -96,7 +96,7 @@ namespace ZScreenLib
 
         #endregion Config Objects
 
-        public static string RootAppFolder = ConfigApp.PreferSystemFolders ? zRoamingAppDataFolder : DefaultRootAppFolder;
+        public static string RootAppFolder = ConfigApp.PreferSystemFolders ? zRoamingAppDataFolder : DocsAppFolder;
 
         static Engine()
         {
@@ -283,7 +283,7 @@ namespace ZScreenLib
                     {
                         ConfigWorkflow = Workflow.Read(Engine.WorkflowConfigPath);
                     }
-                    ConfigWizard cw = new ConfigWizard(DefaultRootAppFolder);
+                    ConfigWizard cw = new ConfigWizard(DocsAppFolder);
                     startEngine = cw.ShowDialog();
                     if (startEngine == DialogResult.OK)
                     {
@@ -313,7 +313,7 @@ namespace ZScreenLib
             }
             else if (!IsPortable) // issue 613
             {
-                RootAppFolder = DefaultRootAppFolder;
+                RootAppFolder = DocsAppFolder;
             }
 
             if (startEngine == DialogResult.OK)
