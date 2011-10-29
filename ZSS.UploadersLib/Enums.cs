@@ -64,14 +64,24 @@ namespace UploadersLib
         SFTP,
     }
 
-    public enum RemoteProtocol
+    public enum BrowserProtocol
     {
         [Description("http://")]
         Http,
         [Description("https://")]
         Https,
+        [Description("Same as ServerProtocol")]
+        ServerProtocol,
         [Description("file://")]
-        File
+        File,
+    }
+
+    public enum ServerProtocol
+    {
+        [Description("ftp://")]
+        Ftp,
+        [Description("ftps://")]
+        Ftps,
     }
 
     public enum LinkType
