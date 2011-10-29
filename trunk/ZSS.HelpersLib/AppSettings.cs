@@ -69,6 +69,8 @@ namespace HelpersLib
         public bool Windows7TaskbarIntegration = true;
 
         public FormWindowState WindowState = FormWindowState.Normal;
+        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Remember Main Window size and position.")]
+        public bool SaveFormSizePosition { get; set; }
         public Size WindowSize = Size.Empty;
         public Point WindowLocation = Point.Empty;
 

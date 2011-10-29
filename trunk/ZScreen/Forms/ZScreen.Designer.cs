@@ -2062,7 +2062,7 @@ namespace ZScreenGUI
             this.lblNoteActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblNoteActions.Location = new System.Drawing.Point(296, 432);
             this.lblNoteActions.Name = "lblNoteActions";
-            this.lblNoteActions.Size = new System.Drawing.Size(510, 21);
+            this.lblNoteActions.Size = new System.Drawing.Size(505, 21);
             this.lblNoteActions.TabIndex = 118;
             this.lblNoteActions.Text = "UPDATE ME";
             this.lblNoteActions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2734,7 +2734,7 @@ namespace ZScreenGUI
             this.tpWatermark.Location = new System.Drawing.Point(4, 22);
             this.tpWatermark.Name = "tpWatermark";
             this.tpWatermark.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermark.Size = new System.Drawing.Size(795, 424);
+            this.tpWatermark.Size = new System.Drawing.Size(790, 424);
             this.tpWatermark.TabIndex = 11;
             this.tpWatermark.Text = "Watermark";
             this.tpWatermark.UseVisualStyleBackColor = true;
@@ -2869,7 +2869,7 @@ namespace ZScreenGUI
             this.tcWatermark.Location = new System.Drawing.Point(288, 4);
             this.tcWatermark.Name = "tcWatermark";
             this.tcWatermark.SelectedIndex = 0;
-            this.tcWatermark.Size = new System.Drawing.Size(482, 407);
+            this.tcWatermark.Size = new System.Drawing.Size(477, 407);
             this.tcWatermark.TabIndex = 29;
             // 
             // tpWatermarkText
@@ -2880,7 +2880,7 @@ namespace ZScreenGUI
             this.tpWatermarkText.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkText.Name = "tpWatermarkText";
             this.tpWatermarkText.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkText.Size = new System.Drawing.Size(474, 381);
+            this.tpWatermarkText.Size = new System.Drawing.Size(469, 381);
             this.tpWatermarkText.TabIndex = 0;
             this.tpWatermarkText.Text = "Text";
             this.tpWatermarkText.UseVisualStyleBackColor = true;
@@ -2897,7 +2897,7 @@ namespace ZScreenGUI
             this.gbWatermarkBackground.Controls.Add(this.lblWatermarkCornerRadiusTip);
             this.gbWatermarkBackground.Location = new System.Drawing.Point(8, 136);
             this.gbWatermarkBackground.Name = "gbWatermarkBackground";
-            this.gbWatermarkBackground.Size = new System.Drawing.Size(452, 216);
+            this.gbWatermarkBackground.Size = new System.Drawing.Size(447, 216);
             this.gbWatermarkBackground.TabIndex = 25;
             this.gbWatermarkBackground.TabStop = false;
             this.gbWatermarkBackground.Text = "Text Background Settings";
@@ -3100,7 +3100,7 @@ namespace ZScreenGUI
             this.gbWatermarkText.Controls.Add(this.pbWatermarkFontColor);
             this.gbWatermarkText.Location = new System.Drawing.Point(8, 8);
             this.gbWatermarkText.Name = "gbWatermarkText";
-            this.gbWatermarkText.Size = new System.Drawing.Size(452, 120);
+            this.gbWatermarkText.Size = new System.Drawing.Size(447, 120);
             this.gbWatermarkText.TabIndex = 24;
             this.gbWatermarkText.TabStop = false;
             this.gbWatermarkText.Text = "Text Settings";
@@ -3207,7 +3207,7 @@ namespace ZScreenGUI
             this.tpWatermarkImage.Location = new System.Drawing.Point(4, 22);
             this.tpWatermarkImage.Name = "tpWatermarkImage";
             this.tpWatermarkImage.Padding = new System.Windows.Forms.Padding(3);
-            this.tpWatermarkImage.Size = new System.Drawing.Size(474, 381);
+            this.tpWatermarkImage.Size = new System.Drawing.Size(469, 381);
             this.tpWatermarkImage.TabIndex = 1;
             this.tpWatermarkImage.Text = "Image";
             this.tpWatermarkImage.UseVisualStyleBackColor = true;
@@ -3279,7 +3279,7 @@ namespace ZScreenGUI
             this.tpPaths.Controls.Add(this.gbLogs);
             this.tpPaths.Location = new System.Drawing.Point(4, 22);
             this.tpPaths.Name = "tpPaths";
-            this.tpPaths.Size = new System.Drawing.Size(795, 424);
+            this.tpPaths.Size = new System.Drawing.Size(790, 424);
             this.tpPaths.TabIndex = 2;
             this.tpPaths.Text = "Paths";
             this.tpPaths.UseVisualStyleBackColor = true;
@@ -3293,7 +3293,7 @@ namespace ZScreenGUI
             this.gbRoot.Controls.Add(this.txtRootFolder);
             this.gbRoot.Location = new System.Drawing.Point(8, 8);
             this.gbRoot.Name = "gbRoot";
-            this.gbRoot.Size = new System.Drawing.Size(772, 64);
+            this.gbRoot.Size = new System.Drawing.Size(767, 64);
             this.gbRoot.TabIndex = 117;
             this.gbRoot.TabStop = false;
             this.gbRoot.Text = "Root";
@@ -3301,7 +3301,7 @@ namespace ZScreenGUI
             // btnViewRootDir
             // 
             this.btnViewRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewRootDir.Location = new System.Drawing.Point(656, 22);
+            this.btnViewRootDir.Location = new System.Drawing.Point(651, 22);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewRootDir.TabIndex = 116;
@@ -3314,7 +3314,7 @@ namespace ZScreenGUI
             this.btnRelocateRootDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRelocateRootDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRelocateRootDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRelocateRootDir.Location = new System.Drawing.Point(567, 22);
+            this.btnRelocateRootDir.Location = new System.Drawing.Point(562, 22);
             this.btnRelocateRootDir.Name = "btnRelocateRootDir";
             this.btnRelocateRootDir.Size = new System.Drawing.Size(80, 24);
             this.btnRelocateRootDir.TabIndex = 115;
@@ -3329,7 +3329,7 @@ namespace ZScreenGUI
             this.txtRootFolder.Location = new System.Drawing.Point(16, 24);
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(535, 20);
+            this.txtRootFolder.Size = new System.Drawing.Size(530, 20);
             this.txtRootFolder.TabIndex = 0;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
     "";
@@ -3349,7 +3349,7 @@ namespace ZScreenGUI
             this.gbImages.Controls.Add(this.txtImagesDir);
             this.gbImages.Location = new System.Drawing.Point(8, 80);
             this.gbImages.Name = "gbImages";
-            this.gbImages.Size = new System.Drawing.Size(772, 120);
+            this.gbImages.Size = new System.Drawing.Size(767, 120);
             this.gbImages.TabIndex = 114;
             this.gbImages.TabStop = false;
             this.gbImages.Text = "Images";
@@ -3359,7 +3359,7 @@ namespace ZScreenGUI
             this.btnBrowseImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowseImagesDir.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBrowseImagesDir.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowseImagesDir.Location = new System.Drawing.Point(567, 21);
+            this.btnBrowseImagesDir.Location = new System.Drawing.Point(562, 21);
             this.btnBrowseImagesDir.Name = "btnBrowseImagesDir";
             this.btnBrowseImagesDir.Size = new System.Drawing.Size(80, 24);
             this.btnBrowseImagesDir.TabIndex = 117;
@@ -3370,7 +3370,7 @@ namespace ZScreenGUI
             // btnMoveImageFiles
             // 
             this.btnMoveImageFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveImageFiles.Location = new System.Drawing.Point(584, 56);
+            this.btnMoveImageFiles.Location = new System.Drawing.Point(579, 56);
             this.btnMoveImageFiles.Name = "btnMoveImageFiles";
             this.btnMoveImageFiles.Size = new System.Drawing.Size(176, 23);
             this.btnMoveImageFiles.TabIndex = 117;
@@ -3420,7 +3420,7 @@ namespace ZScreenGUI
             // btnViewImagesDir
             // 
             this.btnViewImagesDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewImagesDir.Location = new System.Drawing.Point(656, 21);
+            this.btnViewImagesDir.Location = new System.Drawing.Point(651, 21);
             this.btnViewImagesDir.Name = "btnViewImagesDir";
             this.btnViewImagesDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewImagesDir.TabIndex = 113;
@@ -3437,7 +3437,7 @@ namespace ZScreenGUI
             this.txtImagesDir.Location = new System.Drawing.Point(16, 24);
             this.txtImagesDir.Name = "txtImagesDir";
             this.txtImagesDir.ReadOnly = true;
-            this.txtImagesDir.Size = new System.Drawing.Size(535, 20);
+            this.txtImagesDir.Size = new System.Drawing.Size(530, 20);
             this.txtImagesDir.TabIndex = 1;
             // 
             // gbLogs
@@ -3449,7 +3449,7 @@ namespace ZScreenGUI
             this.gbLogs.Controls.Add(this.txtLogsDir);
             this.gbLogs.Location = new System.Drawing.Point(8, 208);
             this.gbLogs.Name = "gbLogs";
-            this.gbLogs.Size = new System.Drawing.Size(772, 64);
+            this.gbLogs.Size = new System.Drawing.Size(767, 64);
             this.gbLogs.TabIndex = 1;
             this.gbLogs.TabStop = false;
             this.gbLogs.Text = "Logs";
@@ -3457,7 +3457,7 @@ namespace ZScreenGUI
             // btnViewCacheDir
             // 
             this.btnViewCacheDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnViewCacheDir.Location = new System.Drawing.Point(652, 22);
+            this.btnViewCacheDir.Location = new System.Drawing.Point(647, 22);
             this.btnViewCacheDir.Name = "btnViewCacheDir";
             this.btnViewCacheDir.Size = new System.Drawing.Size(104, 24);
             this.btnViewCacheDir.TabIndex = 7;
@@ -3474,7 +3474,7 @@ namespace ZScreenGUI
             this.txtLogsDir.Location = new System.Drawing.Point(16, 24);
             this.txtLogsDir.Name = "txtLogsDir";
             this.txtLogsDir.ReadOnly = true;
-            this.txtLogsDir.Size = new System.Drawing.Size(630, 20);
+            this.txtLogsDir.Size = new System.Drawing.Size(625, 20);
             this.txtLogsDir.TabIndex = 0;
             // 
             // tpTreeGUI
@@ -3483,7 +3483,7 @@ namespace ZScreenGUI
             this.tpTreeGUI.Location = new System.Drawing.Point(4, 22);
             this.tpTreeGUI.Name = "tpTreeGUI";
             this.tpTreeGUI.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTreeGUI.Size = new System.Drawing.Size(795, 424);
+            this.tpTreeGUI.Size = new System.Drawing.Size(790, 424);
             this.tpTreeGUI.TabIndex = 15;
             this.tpTreeGUI.Text = "Directory Indexer";
             this.tpTreeGUI.UseVisualStyleBackColor = true;
@@ -3493,7 +3493,7 @@ namespace ZScreenGUI
             this.pgIndexer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgIndexer.Location = new System.Drawing.Point(3, 3);
             this.pgIndexer.Name = "pgIndexer";
-            this.pgIndexer.Size = new System.Drawing.Size(789, 418);
+            this.pgIndexer.Size = new System.Drawing.Size(784, 418);
             this.pgIndexer.TabIndex = 0;
             // 
             // tpInteraction
@@ -3504,7 +3504,7 @@ namespace ZScreenGUI
             this.tpInteraction.Location = new System.Drawing.Point(4, 22);
             this.tpInteraction.Name = "tpInteraction";
             this.tpInteraction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInteraction.Size = new System.Drawing.Size(795, 424);
+            this.tpInteraction.Size = new System.Drawing.Size(790, 424);
             this.tpInteraction.TabIndex = 5;
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
@@ -3653,7 +3653,7 @@ namespace ZScreenGUI
             this.tpProxy.Location = new System.Drawing.Point(4, 22);
             this.tpProxy.Name = "tpProxy";
             this.tpProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProxy.Size = new System.Drawing.Size(795, 424);
+            this.tpProxy.Size = new System.Drawing.Size(790, 424);
             this.tpProxy.TabIndex = 6;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
@@ -3665,7 +3665,7 @@ namespace ZScreenGUI
             this.gpProxySettings.Controls.Add(this.cboProxyConfig);
             this.gpProxySettings.Location = new System.Drawing.Point(16, 331);
             this.gpProxySettings.Name = "gpProxySettings";
-            this.gpProxySettings.Size = new System.Drawing.Size(755, 72);
+            this.gpProxySettings.Size = new System.Drawing.Size(750, 72);
             this.gpProxySettings.TabIndex = 117;
             this.gpProxySettings.TabStop = false;
             this.gpProxySettings.Text = "Proxy Settings";
@@ -3688,7 +3688,7 @@ namespace ZScreenGUI
             this.ucProxyAccounts.Location = new System.Drawing.Point(3, 3);
             this.ucProxyAccounts.Margin = new System.Windows.Forms.Padding(4);
             this.ucProxyAccounts.Name = "ucProxyAccounts";
-            this.ucProxyAccounts.Size = new System.Drawing.Size(783, 330);
+            this.ucProxyAccounts.Size = new System.Drawing.Size(778, 330);
             this.ucProxyAccounts.TabIndex = 0;
             // 
             // tpHistoryOptions
@@ -3700,7 +3700,7 @@ namespace ZScreenGUI
             this.tpHistoryOptions.Location = new System.Drawing.Point(4, 22);
             this.tpHistoryOptions.Name = "tpHistoryOptions";
             this.tpHistoryOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tpHistoryOptions.Size = new System.Drawing.Size(795, 424);
+            this.tpHistoryOptions.Size = new System.Drawing.Size(790, 424);
             this.tpHistoryOptions.TabIndex = 16;
             this.tpHistoryOptions.Text = "History";
             this.tpHistoryOptions.UseVisualStyleBackColor = true;
@@ -3762,7 +3762,7 @@ namespace ZScreenGUI
             this.tpBackupRestore.Location = new System.Drawing.Point(4, 22);
             this.tpBackupRestore.Name = "tpBackupRestore";
             this.tpBackupRestore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBackupRestore.Size = new System.Drawing.Size(795, 424);
+            this.tpBackupRestore.Size = new System.Drawing.Size(790, 424);
             this.tpBackupRestore.TabIndex = 17;
             this.tpBackupRestore.Text = "Backup & Restore";
             this.tpBackupRestore.UseVisualStyleBackColor = true;
@@ -3847,7 +3847,7 @@ namespace ZScreenGUI
             this.gbSettingsExportImport.Controls.Add(this.btnSettingsImport);
             this.gbSettingsExportImport.Location = new System.Drawing.Point(16, 16);
             this.gbSettingsExportImport.Name = "gbSettingsExportImport";
-            this.gbSettingsExportImport.Size = new System.Drawing.Size(132, 136);
+            this.gbSettingsExportImport.Size = new System.Drawing.Size(127, 136);
             this.gbSettingsExportImport.TabIndex = 6;
             this.gbSettingsExportImport.TabStop = false;
             this.gbSettingsExportImport.Text = "Application Settings";
@@ -3910,7 +3910,7 @@ namespace ZScreenGUI
             this.tcAdvanced.Location = new System.Drawing.Point(3, 3);
             this.tcAdvanced.Name = "tcAdvanced";
             this.tcAdvanced.SelectedIndex = 0;
-            this.tcAdvanced.Size = new System.Drawing.Size(803, 450);
+            this.tcAdvanced.Size = new System.Drawing.Size(798, 450);
             this.tcAdvanced.TabIndex = 1;
             this.tcAdvanced.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcAdvanced_Selected);
             // 
@@ -3920,7 +3920,7 @@ namespace ZScreenGUI
             this.tpAdvancedDebug.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedDebug.Name = "tpAdvancedDebug";
             this.tpAdvancedDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedDebug.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvancedDebug.Size = new System.Drawing.Size(790, 424);
             this.tpAdvancedDebug.TabIndex = 7;
             this.tpAdvancedDebug.Text = "Debug";
             this.tpAdvancedDebug.UseVisualStyleBackColor = true;
@@ -3933,7 +3933,7 @@ namespace ZScreenGUI
             this.rtbDebugLog.Location = new System.Drawing.Point(3, 3);
             this.rtbDebugLog.Name = "rtbDebugLog";
             this.rtbDebugLog.ReadOnly = true;
-            this.rtbDebugLog.Size = new System.Drawing.Size(789, 418);
+            this.rtbDebugLog.Size = new System.Drawing.Size(784, 418);
             this.rtbDebugLog.TabIndex = 0;
             this.rtbDebugLog.Text = "";
             this.rtbDebugLog.WordWrap = false;
@@ -3944,7 +3944,7 @@ namespace ZScreenGUI
             this.tpAdvancedCore.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedCore.Name = "tpAdvancedCore";
             this.tpAdvancedCore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedCore.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvancedCore.Size = new System.Drawing.Size(790, 424);
             this.tpAdvancedCore.TabIndex = 9;
             this.tpAdvancedCore.Text = "Core";
             this.tpAdvancedCore.UseVisualStyleBackColor = true;
@@ -3965,7 +3965,7 @@ namespace ZScreenGUI
             this.tpAdvancedSettings.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedSettings.Name = "tpAdvancedSettings";
             this.tpAdvancedSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedSettings.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvancedSettings.Size = new System.Drawing.Size(790, 424);
             this.tpAdvancedSettings.TabIndex = 0;
             this.tpAdvancedSettings.Text = "Settings";
             this.tpAdvancedSettings.UseVisualStyleBackColor = true;
@@ -3985,7 +3985,7 @@ namespace ZScreenGUI
             this.tpAdvancedWorkflow.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedWorkflow.Name = "tpAdvancedWorkflow";
             this.tpAdvancedWorkflow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvancedWorkflow.Size = new System.Drawing.Size(790, 424);
             this.tpAdvancedWorkflow.TabIndex = 8;
             this.tpAdvancedWorkflow.Text = "Workflow";
             this.tpAdvancedWorkflow.UseVisualStyleBackColor = true;
@@ -4004,7 +4004,7 @@ namespace ZScreenGUI
             this.tpAdvanedUploaders.Location = new System.Drawing.Point(4, 22);
             this.tpAdvanedUploaders.Name = "tpAdvanedUploaders";
             this.tpAdvanedUploaders.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvanedUploaders.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvanedUploaders.Size = new System.Drawing.Size(790, 424);
             this.tpAdvanedUploaders.TabIndex = 10;
             this.tpAdvanedUploaders.Text = "Uploaders";
             this.tpAdvanedUploaders.UseVisualStyleBackColor = true;
@@ -4025,7 +4025,7 @@ namespace ZScreenGUI
             this.tpAdvancedStats.Location = new System.Drawing.Point(4, 22);
             this.tpAdvancedStats.Name = "tpAdvancedStats";
             this.tpAdvancedStats.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAdvancedStats.Size = new System.Drawing.Size(795, 424);
+            this.tpAdvancedStats.Size = new System.Drawing.Size(790, 424);
             this.tpAdvancedStats.TabIndex = 1;
             this.tpAdvancedStats.Text = "Statistics";
             this.tpAdvancedStats.UseVisualStyleBackColor = true;
@@ -4413,6 +4413,7 @@ namespace ZScreenGUI
             this.Deactivate += new System.EventHandler(this.ZScreen_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ZScreen_FormClosing);
             this.Load += new System.EventHandler(this.ZScreen_Load);
+            this.Move += new System.EventHandler(this.ZScreen_Move);
             this.Resize += new System.EventHandler(this.ZScreen_Resize);
             this.Controls.SetChildIndex(this.tcMain, 0);
             this.cmTray.ResumeLayout(false);

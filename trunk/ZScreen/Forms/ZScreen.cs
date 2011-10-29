@@ -87,28 +87,40 @@ namespace ZScreenGUI
 
         private void ZScreen_Load(object sender, EventArgs e)
         {
-            #region Windows Size/Location
+            Engine.zHandle = this.Handle;
 
-            if (this.WindowState == FormWindowState.Normal)
+            if (Engine.ConfigApp.Windows7TaskbarIntegration && Engine.HasWindows7)
             {
-                if (Engine.ConfigApp.WindowLocation.IsEmpty)
-                {
-                    Engine.ConfigApp.WindowLocation = this.Location;
-                }
+                ZScreen_Windows7onlyTasks();
+            }
 
-                if (Engine.ConfigApp.WindowSize.IsEmpty)
-                {
-                    Engine.ConfigApp.WindowSize = this.Size;
-                }
+            #region Window Size/Location
 
+            if (Engine.ConfigApp.WindowLocation.IsEmpty)
+            {
+                Engine.ConfigApp.WindowLocation = this.Location;
+            }
+
+            if (Engine.ConfigApp.WindowSize.IsEmpty)
+            {
+                Engine.ConfigApp.WindowSize = this.Size;
+            }
+
+            if (Engine.ConfigApp.SaveFormSizePosition)
+            {
                 Rectangle screenRect = CaptureHelpers.GetScreenBounds();
                 screenRect.Inflate(-100, -100);
+
                 if (screenRect.IntersectsWith(new Rectangle(Engine.ConfigApp.WindowLocation, Engine.ConfigApp.WindowSize)))
                 {
                     this.Size = Engine.ConfigApp.WindowSize;
                     this.Location = Engine.ConfigApp.WindowLocation;
                 }
             }
+
+            #endregion Windows Size/Location
+
+            #region Window Show/Hide 
 
             if (Engine.ConfigApp.ShowMainWindow)
             {
@@ -128,34 +140,12 @@ namespace ZScreenGUI
             }
             else
             {
-                Hide();
+                Hide(); // this should happen after windows 7 taskbar integration
             }
 
-            if (IsReady)
-            {
-                if (Engine.ConfigUI.SaveFormSizePosition)
-                {
-                    Engine.ConfigApp.WindowLocation = this.Location;
-                    Engine.ConfigApp.WindowSize = this.Size;
-                }
-                else
-                {
-                    Engine.ConfigApp.WindowLocation = Point.Empty;
-                    Engine.ConfigApp.WindowSize = Size.Empty;
-                }
-            }
-
-            #endregion Windows Size/Location
+            #endregion Window Show/Hide
 
             LoggerTimer timer = Engine.EngineLogger.StartTimer(new StackFrame().GetMethod().Name + " started");
-
-            Engine.zHandle = this.Handle;
-
-            if (Engine.IsMultipleInstance)
-            {
-                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
-                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
-            }
 
             ZScreen_Preconfig();
 
@@ -169,9 +159,16 @@ namespace ZScreenGUI
             new RichTextBoxMenu(rtbDebugLog, true);
             new RichTextBoxMenu(rtbStats, true);
 
-            Application.Idle += new EventHandler(Application_Idle);
+            if (Engine.IsMultipleInstance)
+            {
+                niTray.ShowBalloonTip(2000, Engine.GetProductName(), string.Format("Another instance of {0} is already running...", Application.ProductName), ToolTipIcon.Warning);
+                niTray.BalloonTipClicked += new EventHandler(niTray2_BalloonTipClicked);
+            }
 
             timer.WriteLineTime(new StackFrame().GetMethod().Name + " finished");
+
+            Application.Idle += new EventHandler(Application_Idle);
+
         }
 
         private void bwConfig_DoWork(object sender, DoWorkEventArgs e)
@@ -233,11 +230,6 @@ namespace ZScreenGUI
 
             UseCommandLineArg(Loader.CommandLineArg);
 
-            if (Engine.ConfigApp.Windows7TaskbarIntegration && Engine.HasWindows7)
-            {
-                ZScreen_Windows7onlyTasks();
-            }
-
             IsReady = true;
 
             Engine.IsClipboardUploading = false;
@@ -250,16 +242,20 @@ namespace ZScreenGUI
             {
                 Engine.ConfigApp.WindowState = WindowState;
 
-                if (WindowState == FormWindowState.Normal)
+                if (WindowState == FormWindowState.Normal && Engine.ConfigApp.SaveFormSizePosition)
                 {
-                    if (Engine.ConfigUI.SaveFormSizePosition)
-                    {
-                        Engine.ConfigApp.WindowLocation = Location;
-                        Engine.ConfigApp.WindowSize = Size;
-                    }
+                    Engine.ConfigApp.WindowLocation = Location;
+                    Engine.ConfigApp.WindowSize = Size;
                 }
+            }
+        }
 
-                Refresh();
+        private void ZScreen_Move(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal && Engine.ConfigApp.SaveFormSizePosition)
+            {
+                Engine.ConfigApp.WindowLocation = Location;
+                Engine.ConfigApp.WindowSize = Size;
             }
         }
 
