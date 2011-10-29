@@ -1,3 +1,4 @@
 #summary ZScreen Wiki
 #labels Phase-Support
-[http://dl.dropbox.com/u/25501373/ZScreen/2011-05/ZScreen_3.37.0.0-2011-05-15_16.31.03.png]
+
+<wiki:gadget url="http://www.google.com/moderator/static/moderator-embed-gadget.xml" height="768" width="1024" up_url="http://www.google.com/moderator/#15/e=112d0a&t=112d0a.40" up_sort="HOT" up_hl="en" />
