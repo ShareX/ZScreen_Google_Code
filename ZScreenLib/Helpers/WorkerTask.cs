@@ -205,7 +205,7 @@ namespace ZScreenLib
 
         public List<Image> tempImages;
 
-        public Image tempImage;
+        public Image tempImage { get; private set; }
 
         public string tempText { get; private set; }
 
@@ -729,7 +729,7 @@ namespace ZScreenLib
                 {
                     Job1 = EDataType.Image;
                     IsImage = true;
-                    if (tempImage == null && GraphicsMgr.IsValidImage(fp))
+                    if (tempImage == null && GraphicsMgr.IsValidImage(fp) && Job3 != JobLevel3.CreateAnimatedImage)
                     {
                         tempImage = FileSystem.ImageFromFile(fp);
                     }
