@@ -451,8 +451,7 @@ namespace ZScreenGUI
                     Engine.zJumpList.Refresh();
                 }
             }
-            else if (!IsDisposed && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported
-                && this.ShowInTaskbar && this.WindowState == FormWindowState.Normal)
+            else if (!IsDisposed && Engine.ConfigApp.Windows7TaskbarIntegration && this.Handle != IntPtr.Zero && TaskbarManager.IsPlatformSupported && this.ShowInTaskbar)
             {
                 try
                 {

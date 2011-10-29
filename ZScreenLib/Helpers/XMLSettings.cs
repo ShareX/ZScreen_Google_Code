@@ -238,9 +238,6 @@ namespace ZScreenLib
         // General - Program
         public bool ShowHelpBalloonTips = true;
 
-        [Category(ComponentModelStrings.App), DefaultValue(true), Description("Remember Main Window size and position.")]
-        public bool SaveFormSizePosition { get; set; }
-
         [Category(ComponentModelStrings.App), DefaultValue(false), Description("Lock Main Window size to the minimum possible size and disable resizing.")]
         public bool LockFormSize { get; set; }
 
