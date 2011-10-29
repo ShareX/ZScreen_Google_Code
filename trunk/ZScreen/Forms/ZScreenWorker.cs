@@ -583,6 +583,7 @@ namespace ZScreenGUI
                 }
             }
 
+            strListFilePath.Sort();
             List<Image> tempImages = new List<Image>();
             bool bCreateAni = strListFilePath.Count > 1 && strListFilePath.Count < Engine.ConfigWorkflow.ImageAnimatedFramesMax && GraphicsMgr.HasIdenticalImages(strListFilePath, out tempImages);
 
