@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tmrClose = new System.Windows.Forms.Timer(this.components);
+            this.tmrClose = new System.Windows.Forms.Timer();
             this.tvLinks = new System.Windows.Forms.TreeView();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.flpButtons = new System.Windows.Forms.FlowLayoutPanel();
@@ -68,7 +67,7 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tlpMain.Size = new System.Drawing.Size(600, 452);
-            this.tlpMain.TabIndex = 2;
+            this.tlpMain.TabIndex = 0;
             // 
             // flpButtons
             // 
@@ -80,11 +79,13 @@
             // 
             // pbPreview
             // 
+            this.pbPreview.BackColor = System.Drawing.Color.White;
+            this.pbPreview.DisableViewer = false;
             this.pbPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbPreview.Location = new System.Drawing.Point(3, 3);
             this.pbPreview.Name = "pbPreview";
             this.pbPreview.Size = new System.Drawing.Size(594, 204);
-            this.pbPreview.TabIndex = 3;
+            this.pbPreview.TabIndex = 0;
             // 
             // ClipboardOptions
             // 

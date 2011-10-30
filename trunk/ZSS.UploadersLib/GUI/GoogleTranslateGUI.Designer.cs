@@ -50,7 +50,7 @@
             this.cbLanguageAutoDetect.Location = new System.Drawing.Point(224, 18);
             this.cbLanguageAutoDetect.Name = "cbLanguageAutoDetect";
             this.cbLanguageAutoDetect.Size = new System.Drawing.Size(128, 17);
-            this.cbLanguageAutoDetect.TabIndex = 25;
+            this.cbLanguageAutoDetect.TabIndex = 2;
             this.cbLanguageAutoDetect.Text = "Auto detect language";
             this.cbLanguageAutoDetect.UseVisualStyleBackColor = true;
             this.cbLanguageAutoDetect.CheckedChanged += new System.EventHandler(this.cbLanguageAutoDetect_CheckedChanged);
@@ -61,7 +61,7 @@
             this.txtAutoTranslate.Location = new System.Drawing.Point(440, 248);
             this.txtAutoTranslate.Name = "txtAutoTranslate";
             this.txtAutoTranslate.Size = new System.Drawing.Size(56, 20);
-            this.txtAutoTranslate.TabIndex = 24;
+            this.txtAutoTranslate.TabIndex = 11;
             this.txtAutoTranslate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtAutoTranslate.TextChanged += new System.EventHandler(this.txtAutoTranslate_TextChanged);
             // 
@@ -72,7 +72,7 @@
             this.cbAutoTranslate.Location = new System.Drawing.Point(24, 248);
             this.cbAutoTranslate.Name = "cbAutoTranslate";
             this.cbAutoTranslate.Size = new System.Drawing.Size(416, 17);
-            this.cbAutoTranslate.TabIndex = 23;
+            this.cbAutoTranslate.TabIndex = 10;
             this.cbAutoTranslate.Text = "Automatically translate text instead of uploading text if the text length is smal" +
     "ler than";
             this.cbAutoTranslate.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             this.btnTranslateTo.Location = new System.Drawing.Point(216, 208);
             this.btnTranslateTo.Name = "btnTranslateTo";
             this.btnTranslateTo.Size = new System.Drawing.Size(136, 24);
-            this.btnTranslateTo.TabIndex = 22;
+            this.btnTranslateTo.TabIndex = 9;
             this.btnTranslateTo.Text = "???";
             this.btnTranslateTo.UseVisualStyleBackColor = true;
             this.btnTranslateTo.Click += new System.EventHandler(this.btnTranslateTo_Click);
@@ -101,7 +101,7 @@
             this.txtTranslateResult.ReadOnly = true;
             this.txtTranslateResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtTranslateResult.Size = new System.Drawing.Size(336, 114);
-            this.txtTranslateResult.TabIndex = 21;
+            this.txtTranslateResult.TabIndex = 7;
             // 
             // txtLanguages
             // 
@@ -109,14 +109,14 @@
             this.txtLanguages.Name = "txtLanguages";
             this.txtLanguages.ReadOnly = true;
             this.txtLanguages.Size = new System.Drawing.Size(336, 20);
-            this.txtLanguages.TabIndex = 20;
+            this.txtLanguages.TabIndex = 6;
             // 
             // btnTranslate
             // 
             this.btnTranslate.Location = new System.Drawing.Point(16, 208);
             this.btnTranslate.Name = "btnTranslate";
             this.btnTranslate.Size = new System.Drawing.Size(192, 24);
-            this.btnTranslate.TabIndex = 18;
+            this.btnTranslate.TabIndex = 8;
             this.btnTranslate.Text = "Translate ( Ctrl + Enter )";
             this.btnTranslate.UseVisualStyleBackColor = true;
             this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
@@ -128,7 +128,7 @@
             this.txtTranslateText.Name = "txtTranslateText";
             this.txtTranslateText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtTranslateText.Size = new System.Drawing.Size(336, 120);
-            this.txtTranslateText.TabIndex = 16;
+            this.txtTranslateText.TabIndex = 5;
             this.txtTranslateText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTranslateText_KeyDown);
             // 
             // lblToLanguage
@@ -137,7 +137,7 @@
             this.lblToLanguage.Location = new System.Drawing.Point(16, 40);
             this.lblToLanguage.Name = "lblToLanguage";
             this.lblToLanguage.Size = new System.Drawing.Size(48, 32);
-            this.lblToLanguage.TabIndex = 19;
+            this.lblToLanguage.TabIndex = 3;
             this.lblToLanguage.Text = "Target:";
             this.lblToLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblToLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblToLanguage_MouseDown);
@@ -147,7 +147,7 @@
             this.lblFromLanguage.Location = new System.Drawing.Point(16, 10);
             this.lblFromLanguage.Name = "lblFromLanguage";
             this.lblFromLanguage.Size = new System.Drawing.Size(48, 32);
-            this.lblFromLanguage.TabIndex = 17;
+            this.lblFromLanguage.TabIndex = 0;
             this.lblFromLanguage.Text = "Source:";
             this.lblFromLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -160,7 +160,7 @@
             this.cbToLanguage.MaxDropDownItems = 20;
             this.cbToLanguage.Name = "cbToLanguage";
             this.cbToLanguage.Size = new System.Drawing.Size(144, 21);
-            this.cbToLanguage.TabIndex = 15;
+            this.cbToLanguage.TabIndex = 4;
             this.cbToLanguage.SelectedIndexChanged += new System.EventHandler(this.cbToLanguage_SelectedIndexChanged);
             // 
             // cbFromLanguage
@@ -172,7 +172,7 @@
             this.cbFromLanguage.MaxDropDownItems = 20;
             this.cbFromLanguage.Name = "cbFromLanguage";
             this.cbFromLanguage.Size = new System.Drawing.Size(144, 21);
-            this.cbFromLanguage.TabIndex = 14;
+            this.cbFromLanguage.TabIndex = 1;
             this.cbFromLanguage.SelectedIndexChanged += new System.EventHandler(this.cbFromLanguage_SelectedIndexChanged);
             // 
             // txtGoogleApiKey
@@ -180,7 +180,7 @@
             this.txtGoogleApiKey.Location = new System.Drawing.Point(112, 280);
             this.txtGoogleApiKey.Name = "txtGoogleApiKey";
             this.txtGoogleApiKey.Size = new System.Drawing.Size(384, 20);
-            this.txtGoogleApiKey.TabIndex = 26;
+            this.txtGoogleApiKey.TabIndex = 13;
             this.txtGoogleApiKey.TextChanged += new System.EventHandler(this.txtGoogleApiKey_TextChanged);
             // 
             // label1
@@ -189,7 +189,7 @@
             this.label1.Location = new System.Drawing.Point(24, 280);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 13);
-            this.label1.TabIndex = 27;
+            this.label1.TabIndex = 12;
             this.label1.Text = "Google API Key";
             // 
             // GoogleTranslateGUI

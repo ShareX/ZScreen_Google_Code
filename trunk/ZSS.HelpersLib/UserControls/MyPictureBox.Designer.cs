@@ -54,7 +54,7 @@
             this.lblStatus.Location = new System.Drawing.Point(0, 0);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(150, 24);
-            this.lblStatus.TabIndex = 1;
+            this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "Test";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblStatus.Visible = false;

@@ -58,7 +58,7 @@
             this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(75, 13);
-            this.labelProductName.TabIndex = 19;
+            this.labelProductName.TabIndex = 0;
             this.labelProductName.Text = "Product Name";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelProductName.Click += new System.EventHandler(this.labelProductName_Click);
@@ -72,7 +72,7 @@
             this.labelCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(51, 13);
-            this.labelCopyright.TabIndex = 21;
+            this.labelCopyright.TabIndex = 3;
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -85,7 +85,7 @@
             this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(42, 13);
-            this.labelVersion.TabIndex = 83;
+            this.labelVersion.TabIndex = 1;
             this.labelVersion.Text = "Version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -110,7 +110,7 @@
             this.lblBerk.Location = new System.Drawing.Point(53, 247);
             this.lblBerk.Name = "lblBerk";
             this.lblBerk.Size = new System.Drawing.Size(66, 13);
-            this.lblBerk.TabIndex = 86;
+            this.lblBerk.TabIndex = 7;
             this.lblBerk.Text = "Jaex ( Berk )";
             this.lblBerk.Click += new System.EventHandler(this.lblBerk_Click);
             // 
@@ -135,7 +135,7 @@
             this.lblMike.Location = new System.Drawing.Point(53, 223);
             this.lblMike.Name = "lblMike";
             this.lblMike.Size = new System.Drawing.Size(126, 13);
-            this.lblMike.TabIndex = 88;
+            this.lblMike.TabIndex = 6;
             this.lblMike.Text = "McoreD ( Mike Delpach )";
             this.lblMike.Click += new System.EventHandler(this.lblMike_Click);
             // 
@@ -160,7 +160,7 @@
             this.lblBrandon.Location = new System.Drawing.Point(53, 199);
             this.lblBrandon.Name = "lblBrandon";
             this.lblBrandon.Size = new System.Drawing.Size(144, 13);
-            this.lblBrandon.TabIndex = 90;
+            this.lblBrandon.TabIndex = 5;
             this.lblBrandon.Text = "inf1ni ( Brandon Zimmerman )";
             this.lblBrandon.Click += new System.EventHandler(this.lblBrandon_Click);
             // 
@@ -185,7 +185,7 @@
             this.lblDevelopers.Location = new System.Drawing.Point(24, 174);
             this.lblDevelopers.Name = "lblDevelopers";
             this.lblDevelopers.Size = new System.Drawing.Size(61, 13);
-            this.lblDevelopers.TabIndex = 92;
+            this.lblDevelopers.TabIndex = 4;
             this.lblDevelopers.Text = "Developers";
             // 
             // lblRev
@@ -198,7 +198,7 @@
             this.lblRev.Location = new System.Drawing.Point(408, 56);
             this.lblRev.Name = "lblRev";
             this.lblRev.Size = new System.Drawing.Size(30, 13);
-            this.lblRev.TabIndex = 94;
+            this.lblRev.TabIndex = 2;
             this.lblRev.Text = "Rev.";
             this.lblRev.Click += new System.EventHandler(this.lblRev_Click_1);
             // 
@@ -209,7 +209,7 @@
             this.btnOK.Location = new System.Drawing.Point(424, 280);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 95;
+            this.btnOK.TabIndex = 9;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -222,7 +222,7 @@
             this.textBoxDescription.Location = new System.Drawing.Point(224, 160);
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(272, 112);
-            this.textBoxDescription.TabIndex = 96;
+            this.textBoxDescription.TabIndex = 8;
             this.textBoxDescription.Text = "Description";
             this.textBoxDescription.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.textBoxDescription_LinkClicked);
             // 

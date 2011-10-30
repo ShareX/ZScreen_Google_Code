@@ -51,7 +51,7 @@
             this.gbRoot.Location = new System.Drawing.Point(8, 33);
             this.gbRoot.Name = "gbRoot";
             this.gbRoot.Size = new System.Drawing.Size(608, 64);
-            this.gbRoot.TabIndex = 118;
+            this.gbRoot.TabIndex = 1;
             this.gbRoot.TabStop = false;
             this.gbRoot.Text = "Root folder for Settings and Data";
             this.gbRoot.UseCompatibleTextRendering = true;
@@ -62,7 +62,7 @@
             this.btnViewRootDir.Location = new System.Drawing.Point(490, 24);
             this.btnViewRootDir.Name = "btnViewRootDir";
             this.btnViewRootDir.Size = new System.Drawing.Size(104, 24);
-            this.btnViewRootDir.TabIndex = 116;
+            this.btnViewRootDir.TabIndex = 2;
             this.btnViewRootDir.Text = "View Directory...";
             this.btnViewRootDir.UseCompatibleTextRendering = true;
             this.btnViewRootDir.UseVisualStyleBackColor = true;
@@ -76,7 +76,7 @@
             this.btnBrowseRootDir.Location = new System.Drawing.Point(402, 24);
             this.btnBrowseRootDir.Name = "btnBrowseRootDir";
             this.btnBrowseRootDir.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowseRootDir.TabIndex = 115;
+            this.btnBrowseRootDir.TabIndex = 1;
             this.btnBrowseRootDir.Text = "Relocate...";
             this.btnBrowseRootDir.UseCompatibleTextRendering = true;
             this.btnBrowseRootDir.UseVisualStyleBackColor = true;
@@ -92,7 +92,7 @@
             this.txtRootFolder.Name = "txtRootFolder";
             this.txtRootFolder.ReadOnly = true;
             this.txtRootFolder.Size = new System.Drawing.Size(376, 20);
-            this.txtRootFolder.TabIndex = 114;
+            this.txtRootFolder.TabIndex = 0;
             this.txtRootFolder.Tag = "Path of the Root folder that holds Images, Text, Cache, Settings and Temp folders" +
     "";
             // 
@@ -102,7 +102,7 @@
             this.btnOK.Location = new System.Drawing.Point(543, 310);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 28);
-            this.btnOK.TabIndex = 117;
+            this.btnOK.TabIndex = 4;
             this.btnOK.Text = "&OK";
             this.btnOK.UseCompatibleTextRendering = true;
             this.btnOK.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@
             this.chkPreferSystemFolders.Location = new System.Drawing.Point(8, 8);
             this.chkPreferSystemFolders.Name = "chkPreferSystemFolders";
             this.chkPreferSystemFolders.Size = new System.Drawing.Size(230, 17);
-            this.chkPreferSystemFolders.TabIndex = 121;
+            this.chkPreferSystemFolders.TabIndex = 0;
             this.chkPreferSystemFolders.Text = "&Prefer Known Folders for Settings and Data";
             this.chkPreferSystemFolders.UseVisualStyleBackColor = true;
             this.chkPreferSystemFolders.CheckedChanged += new System.EventHandler(this.chkPreferSystemFolders_CheckedChanged);
@@ -133,7 +133,7 @@
             this.btnExit.Location = new System.Drawing.Point(462, 310);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 28);
-            this.btnExit.TabIndex = 122;
+            this.btnExit.TabIndex = 3;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseCompatibleTextRendering = true;
             this.btnExit.UseVisualStyleBackColor = true;
@@ -144,7 +144,7 @@
             this.ucDestOptions.Location = new System.Drawing.Point(8, 104);
             this.ucDestOptions.Name = "ucDestOptions";
             this.ucDestOptions.Size = new System.Drawing.Size(608, 200);
-            this.ucDestOptions.TabIndex = 123;
+            this.ucDestOptions.TabIndex = 2;
             // 
             // ConfigWizard
             // 

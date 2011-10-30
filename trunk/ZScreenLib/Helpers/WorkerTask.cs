@@ -34,11 +34,217 @@ using UploadersLib.URLShorteners;
 using ZSS.IndexersLib;
 using ZScreenLib.Properties;
 using ZUploader.HelperClasses;
+#region License Information (GPL v2)
+
+/*
+    ZScreen - A program that allows you to upload screenshots in one keystroke.
+    Copyright (C) 2008-2011 ZScreen Developers
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v2)
 
 namespace ZScreenLib
 {
     public class WorkerTask : IDisposable
     {
+        #region 0 Enums
+
+        #region JobLevel2 enum
+
+        public enum JobLevel2
+        {
+            [Description("Capture Entire Screen")]
+            CaptureEntireScreen,
+            [Description("Capture Active Window")]
+            CaptureActiveWindow,
+            [Description("Capture Window")]
+            CaptureSelectedWindow,
+            [Description("Capture Window from a List")]
+            CaptureSelectedWindowFromList,
+            [Description("Capture Rectangular Region")]
+            CaptureRectRegion,
+            [Description("Capture Rectangular Region to Clipboard")]
+            CaptureRectRegionClipboard,
+            [Description("Capture Previous Rectangular Region")]
+            CaptureLastCroppedWindow,
+            [Description("Auto Capture")]
+            AutoCapture,
+            [Description("Clipboard Upload")]
+            UploadFromClipboard,
+            [Description("Upload from Explorer")]
+            UploadFromExplorer,
+            [Description("Language Translator")]
+            Translate,
+            [Description("Screen Color Picker")]
+            ScreenColorPicker,
+            [Description("Upload Image")]
+            UploadImage,
+            [Description("Webpage Capture")]
+            WebpageCapture,
+            [Description("Capture Shape")]
+            CaptureFreeHandRegion
+        }
+
+        #endregion
+
+        #region JobLevel3 enum
+
+        public enum JobLevel3
+        {
+            [Description("None")]
+            None,
+            [Description("Upload Text")]
+            UploadText,
+            [Description("Shorten URL")]
+            ShortenURL,
+            [Description("Index Folder")]
+            IndexFolder,
+            [Description("Created Animated Image")]
+            CreateAnimatedImage
+        }
+
+        #endregion
+
+        #region ProgressType enum
+
+        public enum ProgressType
+        {
+            CopyToClipboardImage, // needed only for the feature CopyImageUntilURL
+            FlashIcon,
+            IncrementProgress,
+            UpdateStatusBarText,
+            UpdateProgressMax,
+            UpdateTrayTitle,
+            UpdateCropMode,
+            ChangeTrayIconProgress,
+            ShowBalloonTip,
+            ShowTrayWarning,
+            PrintText,
+            PrintImage
+        }
+
+        #endregion
+
+        #region TaskState enum
+
+        public enum TaskState
+        {
+            Created,
+            Prepared,
+            Started,
+            RetryPending,
+            ThreadMode,
+            ImageProcessed,
+            ImageEdited,
+            ImageWritten,
+            CancellationPending,
+            Finished
+        }
+
+        #endregion
+        #endregion Enums
+
+        #region 0 Events
+
+
+        public event TaskEventHandler UploadCompleted;
+        public event TaskEventHandler UploadPreparing;
+        public event TaskEventHandler UploadProgressChanged2;
+        public event TaskEventHandler UploadStarted; 
+        #endregion
+
+        #region 0 Properties
+
+        private Stream Data;
+        private string DestinationName = string.Empty;
+
+        public DateTime EndTime
+        {
+            get { return mEndTime; }
+            set
+            {
+                mEndTime = value;
+                UploadDuration = (int)Math.Round((mEndTime - StartTime).TotalMilliseconds);
+            }
+        }
+
+        public List<string> Errors { get; set; }
+        public int Id { get; set; }
+
+        public TaskInfo Info { get; private set; }
+
+        public bool IsError
+        {
+            get { return Errors != null && Errors.Count > 0; }
+        }
+
+        public bool IsImage { get; private set; }
+
+        public bool IsStopped { get; private set; }
+
+        public bool IsWorking
+        {
+            get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; }
+        }
+
+        public EDataType Job1 { get; private set; } // Image, File, Text
+
+        public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
+
+        public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
+        private DateTime mEndTime;
+
+        public BackgroundWorker MyWorker { get; set; }
+
+        public string OCRFilePath { get; private set; }
+
+        public string OCRText { get; private set; }
+
+        public ProgressManager Progress { get; set; }
+
+        public UploadResult Result
+        {
+            get { return GetResult(); }
+        }
+
+        public DateTime StartTime { get; private set; }
+        public List<TaskState> States = new List<TaskState>();
+
+        public TaskStatus Status { get; private set; }
+
+        public Image TempImage { get; private set; }
+        public List<Image> tempImages;
+
+        public string TempText { get; private set; }
+
+        public GoogleTranslateInfo TranslationInfo { get; private set; }
+
+        /// <summary>
+        /// Duration in milliseconds
+        /// </summary>
+        public int UploadDuration { get; set; }
+
+        public List<UploadResult> UploadResults { get; private set; }
+
+        public bool WasToTakeScreenshot { get; set; }
+        public Workflow WorkflowConfig { get; private set; }
+        #endregion Properties
 
         #region Capture
 
@@ -272,6 +478,39 @@ namespace ZScreenLib
                    TempImage != null;
         }
 
+        private void SetNotifyIconStatus(NotifyIcon ni, bool ready)
+        {
+            Icon ico = ready ? Resources.zss_tray : Resources.zss_busy;
+            if (ni != null && ico != null)
+            {
+                ni.Icon = ico;
+                // Text length must be less than 64 characters long
+                var sbMsg = new StringBuilder();
+                sbMsg.Append(Job2.GetDescription());
+                sbMsg.Append(" to ");
+                switch (Job1)
+                {
+                    case EDataType.Image:
+                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringImageUploaders());
+                        break;
+                    case EDataType.Text:
+                        if (Job3 == JobLevel3.ShortenURL)
+                        {
+                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringLinkUploaders());
+                        }
+                        else
+                        {
+                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringTextUploaders());
+                        }
+                        break;
+                    case EDataType.File:
+                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringFileUploaders());
+                        break;
+                }
+                ni.Text = ready ? Engine.GetProductName() : sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
+            }
+        }
+
         public bool ShortenURL(string fullUrl)
         {
             var ur_shorturl = new UploadResult();
@@ -305,107 +544,16 @@ namespace ZScreenLib
 
             return false;
         }
-
-        private void SetNotifyIconStatus(NotifyIcon ni, bool ready)
-        {
-            Icon ico = ready ? Resources.zss_tray : Resources.zss_busy;
-            if (ni != null && ico != null)
-            {
-                ni.Icon = ico;
-                // Text length must be less than 64 characters long
-                var sbMsg = new StringBuilder();
-                sbMsg.Append(Job2.GetDescription());
-                sbMsg.Append(" to ");
-                switch (Job1)
-                {
-                    case EDataType.Image:
-                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringImageUploaders());
-                        break;
-                    case EDataType.Text:
-                        if (Job3 == JobLevel3.ShortenURL)
-                        {
-                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringLinkUploaders());
-                        }
-                        else
-                        {
-                            sbMsg.Append(WorkflowConfig.DestConfig.ToStringTextUploaders());
-                        }
-                        break;
-                    case EDataType.File:
-                        sbMsg.Append(WorkflowConfig.DestConfig.ToStringFileUploaders());
-                        break;
-                }
-                ni.Text = ready ? Engine.GetProductName() : sbMsg.ToString().Substring(0, Math.Min(sbMsg.Length, 63));
-            }
-        }
         #endregion Checks
 
         #region Constructors
 
-
-        public WorkerTask(Workflow wf)
+        private void PrepareOutputs(DestConfig ucDestOptions)
         {
-            Info = new TaskInfo();
-            UploadResults = new List<UploadResult>();
-            Errors = new List<string>();
-            States.Add(TaskState.Created);
-            MyWorker = new BackgroundWorker { WorkerReportsProgress = true };
-
-            IClone cm = new CloneManager();
-            WorkflowConfig = cm.Clone(wf);
-        }
-
-        public WorkerTask(BackgroundWorker worker, Workflow wf)
-            : this(wf)
-        {
-            MyWorker = worker;
-
-            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) &&
-                WorkflowConfig.DestConfig.TaskClipboardContent.Count == 0)
+            if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
             {
-                WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
-            }
-
-            StartWork(wf.Job);
-        }
-
-        public WorkerTask(BackgroundWorker worker, TaskInfo info)
-            : this(Engine.ConfigWorkflow)
-        {
-            Info = info;
-
-            if (!string.IsNullOrEmpty(info.ExistingFilePath))
-            {
-                UpdateLocalFilePath(info.ExistingFilePath);
-            }
-
-            MyWorker = worker;
-            PrepareOutputs(info.DestConfig); // step 1
-
-            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel; // step 2
-
-            if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs) // step 3
-            {
-                var wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
-                result = wfw.ShowDialog();
-            }
-
-            if (result == DialogResult.OK)
-            {
-                if (!States.Contains(TaskState.ImageProcessed))
-                {
-                    ProcessImage(TempImage);
-                }
-            }
-
-            if (result == DialogResult.Cancel)
-            {
-                States.Add(TaskState.CancellationPending);
-            }
-
-            if (States.Contains(TaskState.CancellationPending))
-            {
-                SetNotifyIconStatus(Info.TrayIcon, ready: true);
+                WorkflowConfig.DestConfig = ucDestOptions;
+                States.Add(TaskState.Prepared);
             }
         }
 
@@ -491,15 +639,74 @@ namespace ZScreenLib
             return success;
         }
 
-        private void PrepareOutputs(DestConfig ucDestOptions)
+
+        public WorkerTask(Workflow wf)
         {
-            if (!States.Contains(TaskState.Prepared) && !States.Contains(TaskState.CancellationPending))
+            Info = new TaskInfo();
+            UploadResults = new List<UploadResult>();
+            Errors = new List<string>();
+            States.Add(TaskState.Created);
+            MyWorker = new BackgroundWorker { WorkerReportsProgress = true };
+
+            IClone cm = new CloneManager();
+            WorkflowConfig = cm.Clone(wf);
+        }
+
+        public WorkerTask(BackgroundWorker worker, Workflow wf)
+            : this(wf)
+        {
+            MyWorker = worker;
+
+            if (wf.DestConfig.Outputs.Contains(OutputEnum.Clipboard) &&
+                WorkflowConfig.DestConfig.TaskClipboardContent.Count == 0)
             {
-                WorkflowConfig.DestConfig = ucDestOptions;
-                States.Add(TaskState.Prepared);
+                WorkflowConfig.DestConfig.TaskClipboardContent.Add(ClipboardContentEnum.Data);
+            }
+
+            StartWork(wf.Job);
+        }
+
+        public WorkerTask(BackgroundWorker worker, TaskInfo info)
+            : this(Engine.ConfigWorkflow)
+        {
+            Info = info;
+
+            if (!string.IsNullOrEmpty(info.ExistingFilePath))
+            {
+                UpdateLocalFilePath(info.ExistingFilePath);
+            }
+
+            MyWorker = worker;
+            PrepareOutputs(info.DestConfig); // step 1
+
+            DialogResult result = StartWork(info.Job) ? DialogResult.OK : DialogResult.Cancel; // step 2
+
+            if (result == DialogResult.OK && Engine.ConfigUI.PromptForOutputs) // step 3
+            {
+                var wfw = new WorkflowWizard(this) { Icon = Resources.zss_tray };
+                result = wfw.ShowDialog();
+            }
+
+            if (result == DialogResult.OK)
+            {
+                if (!States.Contains(TaskState.ImageProcessed))
+                {
+                    ProcessImage(TempImage);
+                }
+            }
+
+            if (result == DialogResult.Cancel)
+            {
+                States.Add(TaskState.CancellationPending);
+            }
+
+            if (States.Contains(TaskState.CancellationPending))
+            {
+                SetNotifyIconStatus(Info.TrayIcon, ready: true);
             }
         }
         #endregion Constructors
+
         #region Delegates
 
         public delegate void TaskEventHandler(WorkerTask wt);
@@ -739,104 +946,6 @@ namespace ZScreenLib
         }
         #endregion Edit Image
 
-        #region Enums
-
-
-        #region JobLevel2 enum
-
-        public enum JobLevel2
-        {
-            [Description("Capture Entire Screen")]
-            CaptureEntireScreen,
-            [Description("Capture Active Window")]
-            CaptureActiveWindow,
-            [Description("Capture Window")]
-            CaptureSelectedWindow,
-            [Description("Capture Window from a List")]
-            CaptureSelectedWindowFromList,
-            [Description("Capture Rectangular Region")]
-            CaptureRectRegion,
-            [Description("Capture Rectangular Region to Clipboard")]
-            CaptureRectRegionClipboard,
-            [Description("Capture Previous Rectangular Region")]
-            CaptureLastCroppedWindow,
-            [Description("Auto Capture")]
-            AutoCapture,
-            [Description("Clipboard Upload")]
-            UploadFromClipboard,
-            [Description("Upload from Explorer")]
-            UploadFromExplorer,
-            [Description("Language Translator")]
-            Translate,
-            [Description("Screen Color Picker")]
-            ScreenColorPicker,
-            [Description("Upload Image")]
-            UploadImage,
-            [Description("Webpage Capture")]
-            WebpageCapture,
-            [Description("Capture Shape")]
-            CaptureFreeHandRegion
-        }
-
-        #endregion
-
-        #region JobLevel3 enum
-
-        public enum JobLevel3
-        {
-            [Description("None")]
-            None,
-            [Description("Upload Text")]
-            UploadText,
-            [Description("Shorten URL")]
-            ShortenURL,
-            [Description("Index Folder")]
-            IndexFolder,
-            [Description("Created Animated Image")]
-            CreateAnimatedImage
-        }
-
-        #endregion
-
-        #region ProgressType enum
-
-        public enum ProgressType
-        {
-            CopyToClipboardImage, // needed only for the feature CopyImageUntilURL
-            FlashIcon,
-            IncrementProgress,
-            UpdateStatusBarText,
-            UpdateProgressMax,
-            UpdateTrayTitle,
-            UpdateCropMode,
-            ChangeTrayIconProgress,
-            ShowBalloonTip,
-            ShowTrayWarning,
-            PrintText,
-            PrintImage
-        }
-
-        #endregion
-
-        #region TaskState enum
-
-        public enum TaskState
-        {
-            Created,
-            Prepared,
-            Started,
-            RetryPending,
-            ThreadMode,
-            ImageProcessed,
-            ImageEdited,
-            ImageWritten,
-            CancellationPending,
-            Finished
-        }
-
-        #endregion
-        #endregion Enums
-
         #region Google Translate
 
         public void SetTranslationInfo(GoogleTranslateInfo gti)
@@ -848,6 +957,17 @@ namespace ZScreenLib
         #endregion Google Translate
 
         #region Helper Methods
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
+        public void Dispose()
+        {
+            if (TempImage != null) TempImage.Dispose();
+            if (Data != null) Data.Dispose();
+            if (MyWorker != null) MyWorker.Dispose();
+        }
 
 
         public HistoryItem GenerateHistoryItem()
@@ -880,17 +1000,6 @@ namespace ZScreenLib
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        /// <filterpriority>2</filterpriority>
-        public void Dispose()
-        {
-            if (TempImage != null) TempImage.Dispose();
-            if (Data != null) Data.Dispose();
-            if (MyWorker != null) MyWorker.Dispose();
-        }
-
-        /// <summary>
         /// Runs BwApp_DoWork
         /// </summary>
         public void RunWorker()
@@ -900,7 +1009,60 @@ namespace ZScreenLib
         }
         #endregion Helper Methods
 
+        private void MyWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch ((TaskProgress)e.ProgressPercentage)
+            {
+                case TaskProgress.ReportStarted:
+                    OnUploadStarted();
+                    break;
+                case TaskProgress.ReportProgress:
+                    var progress = e.UserState as ProgressManager;
+                    if (progress != null)
+                    {
+                        Progress = progress;
+                        // OnUploadProgressChanged2();
+                    }
+                    break;
+            }
+        }
+
+        private void MyWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // OnUploadCompleted();
+        }
+
         #region Populating Task
+
+        public void AddUploadResult(UploadResult ur)
+        {
+            if (ur != null && !ExistsUploadResult(ur))
+            {
+                string fp = Info.LocalFilePath;
+                if (Engine.IsPortable)
+                {
+                    fp = Path.Combine(Application.StartupPath, fp);
+                    UpdateLocalFilePath(fp);
+                }
+                if (File.Exists(fp))
+                {
+                    ur.LocalFilePath = fp;
+                }
+                if (!string.IsNullOrEmpty(ur.Host))
+                {
+                    UploadResults.Add(ur);
+                }
+                if (Engine.ConfigUI.ShowOutputsAsap)
+                {
+                    MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
+                }
+            }
+        }
 
 
         private bool ExistsUploadResult(UploadResult ur2)
@@ -929,7 +1091,7 @@ namespace ZScreenLib
                 }
 
                 // UpdateLocalFilePath needs to happen before Image is processed
-                EImageFormat imageFormat = WorkflowConfig.ImageFormat;
+                EImageFormat imageFormat;
                 if (!string.IsNullOrEmpty(savePath))
                 {
                     UpdateLocalFilePath(savePath);
@@ -949,6 +1111,12 @@ namespace ZScreenLib
             }
 
             return TempImage != null;
+        }
+
+        public void SetImages(List<Image> tempImages)
+        {
+            Job3 = JobLevel3.CreateAnimatedImage;
+            this.tempImages = tempImages;
         }
 
         /// <summary>
@@ -979,37 +1147,6 @@ namespace ZScreenLib
                 }
             }
             return dlgResult;
-        }
-
-        public void AddUploadResult(UploadResult ur)
-        {
-            if (ur != null && !ExistsUploadResult(ur))
-            {
-                string fp = Info.LocalFilePath;
-                if (Engine.IsPortable)
-                {
-                    fp = Path.Combine(Application.StartupPath, fp);
-                    UpdateLocalFilePath(fp);
-                }
-                if (File.Exists(fp))
-                {
-                    ur.LocalFilePath = fp;
-                }
-                if (!string.IsNullOrEmpty(ur.Host))
-                {
-                    UploadResults.Add(ur);
-                }
-                if (Engine.ConfigUI.ShowOutputsAsap)
-                {
-                    MyWorker.ReportProgress((int)ProgressType.ShowBalloonTip, this);
-                }
-            }
-        }
-
-        public void SetImages(List<Image> tempImages)
-        {
-            Job3 = JobLevel3.CreateAnimatedImage;
-            this.tempImages = tempImages;
         }
 
         public void SetOCR(Image ocrImage)
@@ -1139,86 +1276,7 @@ namespace ZScreenLib
         }
         #endregion Populating Task
 
-        #region Properties
-
-
-        private Stream Data;
-        private string DestinationName = string.Empty;
-        private DateTime mEndTime;
-        public List<TaskState> States = new List<TaskState>();
-        public List<Image> tempImages;
-
-        public DateTime EndTime
-        {
-            get { return mEndTime; }
-            set
-            {
-                mEndTime = value;
-                UploadDuration = (int)Math.Round((mEndTime - StartTime).TotalMilliseconds);
-            }
-        }
-
-        public List<string> Errors { get; set; }
-        public int Id { get; set; }
-
-        public TaskInfo Info { get; private set; }
-
-        public bool IsError
-        {
-            get { return Errors != null && Errors.Count > 0; }
-        }
-
-        public bool IsImage { get; private set; }
-
-        public EDataType Job1 { get; private set; } // Image, File, Text
-
-        public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
-
-        public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
-
-        public bool IsStopped { get; private set; }
-
-        public bool IsWorking
-        {
-            get { return Status == TaskStatus.Preparing || Status == TaskStatus.Uploading; }
-        }
-
-        public TaskStatus Status { get; private set; }
-
-        public BackgroundWorker MyWorker { get; set; }
-
-        public string OCRFilePath { get; private set; }
-
-        public string OCRText { get; private set; }
-
-        public ProgressManager Progress { get; set; }
-
-        public UploadResult Result
-        {
-            get { return GetResult(); }
-        }
-
-        public DateTime StartTime { get; private set; }
-
-        public Image TempImage { get; private set; }
-
-        public string TempText { get; private set; }
-
-        public GoogleTranslateInfo TranslationInfo { get; private set; }
-
-        /// <summary>
-        /// Duration in milliseconds
-        /// </summary>
-        public int UploadDuration { get; set; }
-
-        public List<UploadResult> UploadResults { get; private set; }
-
-        public bool WasToTakeScreenshot { get; set; }
-        public Workflow WorkflowConfig { get; private set; }
-        #endregion Properties
-
         #region Publish Data
-
 
         private string CreateThumbnail(string url, FTPUploader fu)
         {
@@ -1286,6 +1344,18 @@ namespace ZScreenLib
             return null;
         }
 
+        private void FlashIcon()
+        {
+            for (int i = 0; i < (int)Engine.ConfigUI.FlashTrayCount; i++)
+            {
+                MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_uploaded);
+                Thread.Sleep(250);
+                MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_green);
+                Thread.Sleep(250);
+            }
+            MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_tray);
+        }
+
         private Stream PrepareData(string fp)
         {
             Stream data = null;
@@ -1326,163 +1396,6 @@ namespace ZScreenLib
             SetFileSize(data.Length);
 
             return data;
-        }
-
-        public bool ShortenURL(UploadResult ur_shorturl, string fullUrl)
-        {
-            if (!string.IsNullOrEmpty(fullUrl))
-            {
-                Job3 = JobLevel3.ShortenURL;
-                URLShortener us = null;
-
-                if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.BITLY))
-                {
-                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                }
-                /*
-            else if (MyLinkUploaders.Contains(UrlShortenerType.Debli))
-            {
-                us = new DebliURLShortener();
-            }
-            */
-                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
-                {
-                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey,
-                                                Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
-                }
-                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
-                {
-                    us = new IsgdURLShortener();
-                }
-                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Jmp))
-                {
-                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
-                }
-                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TINYURL))
-                {
-                    us = new TinyURLShortener();
-                }
-                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TURL))
-                {
-                    us = new TurlURLShortener();
-                }
-
-                if (us != null)
-                {
-                    string shortenUrl = us.ShortenURL(fullUrl);
-
-                    if (!string.IsNullOrEmpty(shortenUrl))
-                    {
-                        StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
-                        ur_shorturl.Host = us.Host;
-                        ur_shorturl.URL = fullUrl;
-                        ur_shorturl.ShortenedURL = shortenUrl;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Funtion to FTP the Screenshot
-        /// </summary>
-        /// <returns>Retuns a List of Screenshots</returns>
-        public UploadResult UploadToFTP(int FtpAccountId, Stream data)
-        {
-            var ur_remote_file_ftp = new UploadResult
-                                         {
-                                             LocalFilePath = Info.LocalFilePath,
-                                             Host = FileUploaderType.FTP.GetDescription()
-                                         };
-
-            try
-            {
-                MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Indeterminate);
-
-                if (Adapter.CheckFTPAccounts(this, FtpAccountId))
-                {
-                    FTPAccount acc = Engine.ConfigUploaders.FTPAccountList2[FtpAccountId];
-                    DestinationName = string.Format("FTP - {0}", acc.Name);
-                    StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
-
-                    MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Normal);
-                    switch (acc.Protocol)
-                    {
-                        case FTPProtocol.SFTP:
-                            var sftp = new SFTPUploader(acc);
-                            if (!sftp.isInstantiated)
-                            {
-                                Errors.Add(
-                                    "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.");
-                                return ur_remote_file_ftp;
-                            }
-                            sftp.ProgressChanged += UploadProgressChanged;
-                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
-                                                         ? sftp.Upload(Info.LocalFilePath).URL
-                                                         : sftp.Upload(data, Info.FileName).URL;
-                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, sftp);
-                            break;
-                        default:
-                            var fu = new FTPUploader(acc);
-                            fu.ProgressChanged += UploadProgressChanged;
-                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
-                                                         ? fu.Upload(Info.LocalFilePath).URL
-                                                         : fu.Upload(data, Info.FileName).URL;
-                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, fu);
-                            break;
-                    }
-
-                    if (!string.IsNullOrEmpty(ur_remote_file_ftp.URL))
-                    {
-                        AddUploadResult(ur_remote_file_ftp);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                StaticHelper.WriteException(ex, "Error while uploading to FTP Server");
-                Errors.Add("FTP upload failed.\r\n" + ex.Message);
-            }
-            return ur_remote_file_ftp;
-        }
-
-        public bool UploadToMediaWiki()
-        {
-            string fullFilePath = Info.LocalFilePath;
-
-            if (
-                Engine.ConfigUploaders.MediaWikiAccountList.HasValidIndex(
-                    Engine.ConfigUploaders.MediaWikiAccountSelected) && File.Exists(fullFilePath))
-            {
-                MediaWikiAccount acc =
-                    Engine.ConfigUploaders.MediaWikiAccountList[Engine.ConfigUploaders.MediaWikiAccountSelected];
-                IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
-                DestinationName = acc.Name;
-                StaticHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", Info.FileName, acc.Url));
-                var uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
-                UploadResult ur_remote_img_mediawiki = uploader.UploadImage(Info.LocalFilePath);
-                if (ur_remote_img_mediawiki != null)
-                {
-                    ur_remote_img_mediawiki.LocalFilePath = Info.LocalFilePath;
-                    AddUploadResult(ur_remote_img_mediawiki);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private void FlashIcon()
-        {
-            for (int i = 0; i < (int)Engine.ConfigUI.FlashTrayCount; i++)
-            {
-                MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_uploaded);
-                Thread.Sleep(250);
-                MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_green);
-                Thread.Sleep(250);
-            }
-            MyWorker.ReportProgress((int)ProgressType.FlashIcon, Resources.zss_tray);
         }
 
         public void Print()
@@ -1664,6 +1577,63 @@ namespace ZScreenLib
             Info.FileSize = sz > 1023
                                 ? string.Format("{0} KiB", (sz / 1024.0).ToString("0"))
                                 : string.Format("{0} B", (sz).ToString("0"));
+        }
+
+        public bool ShortenURL(UploadResult ur_shorturl, string fullUrl)
+        {
+            if (!string.IsNullOrEmpty(fullUrl))
+            {
+                Job3 = JobLevel3.ShortenURL;
+                URLShortener us = null;
+
+                if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.BITLY))
+                {
+                    us = new BitlyURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                /*
+            else if (MyLinkUploaders.Contains(UrlShortenerType.Debli))
+            {
+                us = new DebliURLShortener();
+            }
+            */
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Google))
+                {
+                    us = new GoogleURLShortener(Engine.ConfigUploaders.GoogleURLShortenerAccountType, ZKeys.GoogleApiKey,
+                                                Engine.ConfigUploaders.GoogleURLShortenerOAuthInfo);
+                }
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.ISGD))
+                {
+                    us = new IsgdURLShortener();
+                }
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.Jmp))
+                {
+                    us = new JmpURLShortener(ZKeys.BitlyLogin, ZKeys.BitlyKey);
+                }
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TINYURL))
+                {
+                    us = new TinyURLShortener();
+                }
+                else if (WorkflowConfig.DestConfig.LinkUploaders.Contains(UrlShortenerType.TURL))
+                {
+                    us = new TurlURLShortener();
+                }
+
+                if (us != null)
+                {
+                    string shortenUrl = us.ShortenURL(fullUrl);
+
+                    if (!string.IsNullOrEmpty(shortenUrl))
+                    {
+                        StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
+                        ur_shorturl.Host = us.Host;
+                        ur_shorturl.URL = fullUrl;
+                        ur_shorturl.ShortenedURL = shortenUrl;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private void UploadFile(FileUploaderType fileUploaderType, Stream data)
@@ -1982,6 +1952,94 @@ namespace ZScreenLib
             }
         }
 
+        /// <summary>
+        /// Funtion to FTP the Screenshot
+        /// </summary>
+        /// <returns>Retuns a List of Screenshots</returns>
+        public UploadResult UploadToFTP(int FtpAccountId, Stream data)
+        {
+            var ur_remote_file_ftp = new UploadResult
+                                         {
+                                             LocalFilePath = Info.LocalFilePath,
+                                             Host = FileUploaderType.FTP.GetDescription()
+                                         };
+
+            try
+            {
+                MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Indeterminate);
+
+                if (Adapter.CheckFTPAccounts(this, FtpAccountId))
+                {
+                    FTPAccount acc = Engine.ConfigUploaders.FTPAccountList2[FtpAccountId];
+                    DestinationName = string.Format("FTP - {0}", acc.Name);
+                    StaticHelper.WriteLine(string.Format("Uploading {0} to FTP: {1}", Info.FileName, acc.Host));
+
+                    MyWorker.ReportProgress((int)ProgressType.UpdateProgressMax, TaskbarProgressBarState.Normal);
+                    switch (acc.Protocol)
+                    {
+                        case FTPProtocol.SFTP:
+                            var sftp = new SFTPUploader(acc);
+                            if (!sftp.isInstantiated)
+                            {
+                                Errors.Add(
+                                    "An SFTP client couldn't be instantiated, not enough information.\nCould be a missing key file.");
+                                return ur_remote_file_ftp;
+                            }
+                            sftp.ProgressChanged += UploadProgressChanged;
+                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
+                                                         ? sftp.Upload(Info.LocalFilePath).URL
+                                                         : sftp.Upload(data, Info.FileName).URL;
+                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, sftp);
+                            break;
+                        default:
+                            var fu = new FTPUploader(acc);
+                            fu.ProgressChanged += UploadProgressChanged;
+                            ur_remote_file_ftp.URL = File.Exists(Info.LocalFilePath)
+                                                         ? fu.Upload(Info.LocalFilePath).URL
+                                                         : fu.Upload(data, Info.FileName).URL;
+                            ur_remote_file_ftp.ThumbnailURL = CreateThumbnail(ur_remote_file_ftp.URL, fu);
+                            break;
+                    }
+
+                    if (!string.IsNullOrEmpty(ur_remote_file_ftp.URL))
+                    {
+                        AddUploadResult(ur_remote_file_ftp);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                StaticHelper.WriteException(ex, "Error while uploading to FTP Server");
+                Errors.Add("FTP upload failed.\r\n" + ex.Message);
+            }
+            return ur_remote_file_ftp;
+        }
+
+        public bool UploadToMediaWiki()
+        {
+            string fullFilePath = Info.LocalFilePath;
+
+            if (
+                Engine.ConfigUploaders.MediaWikiAccountList.HasValidIndex(
+                    Engine.ConfigUploaders.MediaWikiAccountSelected) && File.Exists(fullFilePath))
+            {
+                MediaWikiAccount acc =
+                    Engine.ConfigUploaders.MediaWikiAccountList[Engine.ConfigUploaders.MediaWikiAccountSelected];
+                IWebProxy proxy = Adapter.CheckProxySettings().GetWebProxy;
+                DestinationName = acc.Name;
+                StaticHelper.WriteLine(string.Format("Uploading {0} to MediaWiki: {1}", Info.FileName, acc.Url));
+                var uploader = new MediaWikiUploader(new MediaWikiOptions(acc, proxy));
+                UploadResult ur_remote_img_mediawiki = uploader.UploadImage(Info.LocalFilePath);
+                if (ur_remote_img_mediawiki != null)
+                {
+                    ur_remote_img_mediawiki.LocalFilePath = Info.LocalFilePath;
+                    AddUploadResult(ur_remote_img_mediawiki);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public void UploadToSharedFolder(int id)
         {
             if (Engine.ConfigUploaders.LocalhostAccountList.HasValidIndex(id))
@@ -2097,8 +2155,24 @@ namespace ZScreenLib
         }
         #endregion Publish Data
 
-        #region Task Events
+        public void Start()
+        {
+            if (Status == TaskStatus.InQueue && !IsStopped)
+            {
+                OnUploadPreparing();
 
+                //  UploadManager.UpdateProxySettings();
+
+                MyWorker = new BackgroundWorker();
+                MyWorker.WorkerReportsProgress = true;
+                MyWorker.DoWork += MyWorker_DoWork;
+                MyWorker.ProgressChanged += MyWorker_ProgressChanged;
+                MyWorker.RunWorkerCompleted += MyWorker_RunWorkerCompleted;
+                MyWorker.RunWorkerAsync();
+            }
+        }
+
+        #region Task Events
 
         private void OnUploadCompleted()
         {
@@ -2175,8 +2249,7 @@ namespace ZScreenLib
             }
             else if (Clipboard.ContainsFileDropList())
             {
-                var listFiles = new List<string>();
-                listFiles = FileSystem.GetExplorerFileList(Clipboard.GetFileDropList());
+                List<string> listFiles = FileSystem.GetExplorerFileList(Clipboard.GetFileDropList());
                 if (listFiles.Count > 0)
                 {
                     UpdateLocalFilePath(listFiles[0]);
@@ -2187,79 +2260,5 @@ namespace ZScreenLib
         }
 
         #endregion Upload Methods
-        public event TaskEventHandler UploadCompleted;
-        public event TaskEventHandler UploadPreparing;
-        public event TaskEventHandler UploadProgressChanged2;
-
-        public event TaskEventHandler UploadStarted;
-
-        private void MyWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MyWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            switch ((TaskProgress)e.ProgressPercentage)
-            {
-                case TaskProgress.ReportStarted:
-                    OnUploadStarted();
-                    break;
-                case TaskProgress.ReportProgress:
-                    var progress = e.UserState as ProgressManager;
-                    if (progress != null)
-                    {
-                        Progress = progress;
-                        // OnUploadProgressChanged2();
-                    }
-                    break;
-            }
-        }
-
-        private void MyWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // OnUploadCompleted();
-        }
-
-        public void Start()
-        {
-            if (Status == TaskStatus.InQueue && !IsStopped)
-            {
-                OnUploadPreparing();
-
-                //  UploadManager.UpdateProxySettings();
-
-                MyWorker = new BackgroundWorker();
-                MyWorker.WorkerReportsProgress = true;
-                MyWorker.DoWork += MyWorker_DoWork;
-                MyWorker.ProgressChanged += MyWorker_ProgressChanged;
-                MyWorker.RunWorkerCompleted += MyWorker_RunWorkerCompleted;
-                MyWorker.RunWorkerAsync();
-            }
-        }
     }
 }
-#region License Information (GPL v2)
-
-/*
-    ZScreen - A program that allows you to upload screenshots in one keystroke.
-    Copyright (C) 2008-2011 ZScreen Developers
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
-*/
-
-#endregion License Information (GPL v2)
