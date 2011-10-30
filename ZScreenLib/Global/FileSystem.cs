@@ -92,24 +92,27 @@ namespace ZScreenLib
             {
                 Directory.CreateDirectory(destDir);
             }
-
-            using (stream)
+            if (!File.Exists(fp))
             {
-                try
+                using (stream)
                 {
-                    string dir = Path.GetDirectoryName(fp);
-
-                    if (!Directory.Exists(dir))
+                    try
                     {
-                        Directory.CreateDirectory(dir);
+                        string dir = Path.GetDirectoryName(fp);
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+                        stream.WriteToFile(fp);
                     }
-                    stream.WriteToFile(fp);
-                }
-                catch (Exception ex)
-                {
-                    StaticHelper.WriteException(ex, "Error while saving image");
+                    catch (Exception ex)
+                    {
+                        StaticHelper.WriteException(ex, "Error while saving image");
+                    }
                 }
             }
+
 
             return fi;
         }
