@@ -10,54 +10,28 @@ namespace ZScreenLib
 {
     public partial class WorkflowWizard : HotkeyForm
     {
-        public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
+
+        private void btnCopyImageClose_Click(object sender, EventArgs e)
+        {
+            Adapter.CopyImageToClipboard(this.Task.TempImage);
+            btnCancel_Click(sender, e);
+        }
+
+        private void btnTaskAnnotate_Click(object sender, EventArgs e)
+        {
+            this.Task.PerformActions();
+            pbImage.LoadImage(this.Task.TempImage);
+        }
+
+        private void chkTaskImageAnnotate_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
 
         public Workflow Config = new Workflow();
 
-        protected WorkerTask Task = null;
-
-        public WorkflowWizard()
-        {
-            InitializeComponent();
-        }
-
-        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
-            : this()
-        {
-            Initialize(info, gui);
-        }
-
-        protected void Initialize(WorkerTask task, WorkflowWizardGUIOptions gui)
-        {
-            if (task != null)
-            {
-                this.Config = task.WorkflowConfig;
-                this.Text = Application.ProductName + " - Workflow - " + task.Info.Job.GetDescription();
-            }
-            else
-            {
-                this.Text = Application.ProductName;
-            }
-
-            tcMain.TabPages.Clear();
-            if (gui != null)
-            {
-                gbTasks.Visible = false;
-                this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
-                this.Width = this.MinimumSize.Width;
-                this.GUI = gui;
-            }
-            else
-            {
-                chkTaskOutputConfig.Checked = true;
-            }
-            if (task != null)
-            {
-                this.Task = task;
-            }
-        }
-
         #region Config GUI
+
 
         protected void ConfigGui()
         {
@@ -95,92 +69,6 @@ namespace ZScreenLib
                 cboTask.Items.AddRange(typeof(WorkerTask.JobLevel2).GetDescriptions());
             }
             cboTask.SelectedIndex = (int)Config.Job;
-        }
-
-        private void ConfigGuiTasks()
-        {
-            bool bIsImage = Task != null && ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
-
-            if (!bIsImage)
-            {
-                tcMain.TabPages.Remove(tpImagePreview);
-            }
-            else
-            {
-                tcMain.TabPages.Add(tpImagePreview);
-                tcMain.SelectedTab = tpImagePreview;
-            }
-
-            btnTaskAnnotate.Visible = Task.Job1 == EDataType.Image;
-            chkTaskImageFileFormat.Visible = bIsImage;
-            chkTaskImageResize.Visible = bIsImage;
-        }
-
-        private void ConfigGuiResize()
-        {
-            switch (Config.ImageSizeType)
-            {
-                case ImageSizeType.DEFAULT:
-                    rbImageSizeDefault.Checked = true;
-                    break;
-                case ImageSizeType.FIXED:
-                    rbImageSizeFixed.Checked = true;
-                    break;
-                case ImageSizeType.RATIO:
-                    rbImageSizeRatio.Checked = true;
-                    break;
-            }
-
-            nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
-            nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
-            nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
-        }
-
-        private void ConfigGuiQuality()
-        {
-            if (cboFileFormat.Items.Count == 0)
-            {
-                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
-                cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
-            }
-
-            nudSwitchAfter.Value = Config.ImageSizeLimit;
-
-            if (cboSwitchFormat.Items.Count == 0)
-            {
-                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
-                cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
-            }
-
-            if (cboPngQuality.Items.Count == 0)
-            {
-                cboPngQuality.Items.AddRange(typeof(FreeImagePngQuality).GetDescriptions());
-                cboPngQuality.SelectedIndex = (int)Config.ImagePngCompression;
-            }
-
-            chkPngQualityInterlaced.Checked = Config.ImagePngInterlaced;
-
-            if (cboJpgQuality.Items.Count == 0)
-            {
-                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
-                cboJpgQuality.SelectedIndex = (int)Config.ImageJpegQuality;
-            }
-
-            if (cboJpgSubSampling.Items.Count == 0)
-            {
-                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
-                cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
-            }
-
-            cboGIFQuality.SelectedIndex = (int)Config.ImageGIFQuality;
-
-            if (cboTiffQuality.Items.Count == 0)
-            {
-                cboTiffQuality.Items.AddRange(typeof(FreeImageTiffQuality).GetDescriptions());
-                cboTiffQuality.SelectedIndex = (int)Config.ImageTiffCompression;
-            }
-
-            UpdateGuiQuality();
         }
 
         private void ConfigGuiOutputs()
@@ -250,6 +138,91 @@ namespace ZScreenLib
             }
         }
 
+        private void ConfigGuiQuality()
+        {
+            if (cboFileFormat.Items.Count == 0)
+            {
+                cboFileFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboFileFormat.SelectedIndex = (int)Config.ImageFormat;
+            }
+
+            nudSwitchAfter.Value = Config.ImageSizeLimit;
+
+            if (cboSwitchFormat.Items.Count == 0)
+            {
+                cboSwitchFormat.Items.AddRange(typeof(EImageFormat).GetDescriptions());
+                cboSwitchFormat.SelectedIndex = (int)Config.ImageFormat2;
+            }
+
+            if (cboPngQuality.Items.Count == 0)
+            {
+                cboPngQuality.Items.AddRange(typeof(FreeImagePngQuality).GetDescriptions());
+                cboPngQuality.SelectedIndex = (int)Config.ImagePngCompression;
+            }
+
+            chkPngQualityInterlaced.Checked = Config.ImagePngInterlaced;
+
+            if (cboJpgQuality.Items.Count == 0)
+            {
+                cboJpgQuality.Items.AddRange(typeof(FreeImageJpegQualityType).GetDescriptions());
+                cboJpgQuality.SelectedIndex = (int)Config.ImageJpegQuality;
+            }
+
+            if (cboJpgSubSampling.Items.Count == 0)
+            {
+                cboJpgSubSampling.Items.AddRange(typeof(FreeImageJpegSubSamplingType).GetDescriptions());
+                cboJpgSubSampling.SelectedIndex = (int)Config.ImageJpegSubSampling;
+            }
+
+            cboGIFQuality.SelectedIndex = (int)Config.ImageGIFQuality;
+
+            if (cboTiffQuality.Items.Count == 0)
+            {
+                cboTiffQuality.Items.AddRange(typeof(FreeImageTiffQuality).GetDescriptions());
+                cboTiffQuality.SelectedIndex = (int)Config.ImageTiffCompression;
+            }
+
+            UpdateGuiQuality();
+        }
+
+        private void ConfigGuiResize()
+        {
+            switch (Config.ImageSizeType)
+            {
+                case ImageSizeType.DEFAULT:
+                    rbImageSizeDefault.Checked = true;
+                    break;
+                case ImageSizeType.FIXED:
+                    rbImageSizeFixed.Checked = true;
+                    break;
+                case ImageSizeType.RATIO:
+                    rbImageSizeRatio.Checked = true;
+                    break;
+            }
+
+            nudImageSizeFixedWidth.Value = Config.ImageSizeFixedWidth;
+            nudImageSizeFixedHeight.Value = Config.ImageSizeFixedHeight;
+            nudImageSizeRatio.Value = (decimal)Config.ImageSizeRatioPercentage;
+        }
+
+        private void ConfigGuiTasks()
+        {
+            bool bIsImage = Task != null && ZAppHelper.IsImageFile(Task.Info.LocalFilePath);
+
+            if (!bIsImage)
+            {
+                tcMain.TabPages.Remove(tpImagePreview);
+            }
+            else
+            {
+                tcMain.TabPages.Add(tpImagePreview);
+                tcMain.SelectedTab = tpImagePreview;
+            }
+
+            btnTaskAnnotate.Visible = Task.Job1 == EDataType.Image;
+            chkTaskImageFileFormat.Visible = bIsImage;
+            chkTaskImageResize.Visible = bIsImage;
+        }
         #endregion Config GUI
 
         #region Config GUI Enable/Disable
@@ -302,7 +275,152 @@ namespace ZScreenLib
 
         #endregion Config GUI Enable/Disable
 
+        #region Control Events
+
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            txtSaveFolder.Text = Adapter.GetDirPathUsingFolderBrowser("Browse for a folder to save files...");
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            BeforeClose();
+            Close();
+        }
+
+        private void btnOutputsConfig_Click(object sender, EventArgs e)
+        {
+            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys()) { Icon = this.Icon };
+            ocf.ShowDialog();
+            Engine.ConfigUploaders = ocf.Config;
+        }
+
+        private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateGuiQuality();
+        }
+
+        private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateGuiQuality();
+        }
+
+        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void chkSaveFile_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSaveFile.Checked && string.IsNullOrEmpty(txtSaveFolder.Text))
+            {
+                txtSaveFolder.Text = Path.GetDirectoryName(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName));
+            }
+            gbSaveToFile.Visible = chkSaveFile.Checked;
+        }
+
+        private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTaskImageFileFormat.Checked)
+            {
+                tcMain.TabPages.Insert(0, tpImageQuality);
+                tcMain.SelectedTab = tpImageQuality;
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpImageQuality);
+            }
+        }
+
+        private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTaskImageResize.Checked)
+            {
+                tcMain.TabPages.Insert(0, tpImageResize);
+                tcMain.SelectedTab = tpImageResize;
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpImageResize);
+                Config.ImageSizeType = ImageSizeType.DEFAULT;
+            }
+        }
+
+        private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTaskOutputConfig.Checked)
+            {
+                tcMain.TabPages.Insert(0, tpOutputs);
+                tcMain.SelectedTab = tpOutputs;
+            }
+            else
+            {
+                tcMain.TabPages.Remove(tpOutputs);
+            }
+        }
+
+        private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void nudImageSizeFixedWidth_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
+        {
+            UpdateGuiQuality();
+        }
+
+        private void nudSwitchAfter_MouseUp(object sender, MouseEventArgs e)
+        {
+            ConfigGuiQuality();
+        }
+
+        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateGuiQuality();
+        }
+
+        private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void rbImageSizeFixed_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void rbImageSizeRatio_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateImageSize();
+        }
+
+        private void WorkflowWizard_Load(object sender, EventArgs e)
+        {
+            ConfigGui();
+        }
+        #endregion Control Events
+
+        public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
+
         #region Helper Methods
+
 
         private void BeforeClose()
         {
@@ -338,6 +456,42 @@ namespace ZScreenLib
 
             // Outputs
             UpdateConfigOutputs();
+        }
+
+        private void UpdateConfigOutputs()
+        {
+            Config.DestConfig.Outputs.Clear();
+            if (chkClipboard.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Clipboard);
+            if (chkSaveFile.Checked) Config.DestConfig.Outputs.Add(OutputEnum.LocalDisk);
+            if (chkUpload.Checked) Config.DestConfig.Outputs.Add(OutputEnum.RemoteHost);
+            if (chkPrinter.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Printer);
+
+            Config.DestConfig.FileUploaders.Clear();
+            foreach (CheckBox chk in flpFileUploaders.Controls)
+            {
+                FileUploaderType ut = (FileUploaderType)chk.Tag;
+                if (chk.Checked) Config.DestConfig.FileUploaders.Add(ut);
+            }
+
+            Config.DestConfig.ImageUploaders.Clear();
+            foreach (CheckBox chk in flpImageUploaders.Controls)
+            {
+                ImageUploaderType ut = (ImageUploaderType)chk.Tag;
+                if (chk.Checked) Config.DestConfig.ImageUploaders.Add(ut);
+            }
+
+            Config.DestConfig.TextUploaders.Clear();
+            foreach (CheckBox chk in flpTextUploaders.Controls)
+            {
+                TextUploaderType ut = (TextUploaderType)chk.Tag;
+                if (chk.Checked) Config.DestConfig.TextUploaders.Add(ut);
+            }
+
+            if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
+            {
+                string ext = Path.GetExtension(Task.Info.LocalFilePath);
+                Task.Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
+            }
         }
 
         private void UpdateImageSize(bool bChangeConfig = false)
@@ -379,212 +533,62 @@ namespace ZScreenLib
                                   Task.Info.ImageSize.Width, Task.Info.ImageSize.Height, Math.Round(w2, 0), Math.Round(h2, 0));
             }
         }
-
-        private void UpdateConfigOutputs()
-        {
-            Config.DestConfig.Outputs.Clear();
-            if (chkClipboard.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Clipboard);
-            if (chkSaveFile.Checked) Config.DestConfig.Outputs.Add(OutputEnum.LocalDisk);
-            if (chkUpload.Checked) Config.DestConfig.Outputs.Add(OutputEnum.RemoteHost);
-            if (chkPrinter.Checked) Config.DestConfig.Outputs.Add(OutputEnum.Printer);
-
-            Config.DestConfig.FileUploaders.Clear();
-            foreach (CheckBox chk in flpFileUploaders.Controls)
-            {
-                FileUploaderType ut = (FileUploaderType)chk.Tag;
-                if (chk.Checked) Config.DestConfig.FileUploaders.Add(ut);
-            }
-
-            Config.DestConfig.ImageUploaders.Clear();
-            foreach (CheckBox chk in flpImageUploaders.Controls)
-            {
-                ImageUploaderType ut = (ImageUploaderType)chk.Tag;
-                if (chk.Checked) Config.DestConfig.ImageUploaders.Add(ut);
-            }
-
-            Config.DestConfig.TextUploaders.Clear();
-            foreach (CheckBox chk in flpTextUploaders.Controls)
-            {
-                TextUploaderType ut = (TextUploaderType)chk.Tag;
-                if (chk.Checked) Config.DestConfig.TextUploaders.Add(ut);
-            }
-
-            if (!string.IsNullOrEmpty(txtFileNameWithoutExt.Text) && !string.IsNullOrEmpty(txtSaveFolder.Text))
-            {
-                string ext = Path.GetExtension(Task.Info.LocalFilePath);
-                Task.Info.LocalFilePath = Path.Combine(txtSaveFolder.Text, txtFileNameWithoutExt.Text) + ext;
-            }
-        }
-
         #endregion Helper Methods
 
-        #region Control Events
-
-        private void WorkflowWizard_Load(object sender, EventArgs e)
+        protected void Initialize(WorkerTask task, WorkflowWizardGUIOptions gui)
         {
-            ConfigGui();
-        }
-
-        private void nudSwitchAfter_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateGuiQuality();
-        }
-
-        private void chkTaskImageResize_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTaskImageResize.Checked)
+            if (task != null)
             {
-                tcMain.TabPages.Insert(0, tpImageResize);
-                tcMain.SelectedTab = tpImageResize;
+                this.Config = task.WorkflowConfig;
+                this.Text = Application.ProductName + " - Workflow - " + task.Info.Job.GetDescription();
             }
             else
             {
-                tcMain.TabPages.Remove(tpImageResize);
-                Config.ImageSizeType = ImageSizeType.DEFAULT;
+                this.Text = Application.ProductName;
             }
-        }
 
-        private void cboTask_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void btnOutputsConfig_Click(object sender, EventArgs e)
-        {
-            UploadersConfigForm ocf = new UploadersConfigForm(Engine.ConfigUploaders, ZKeys.GetAPIKeys()) { Icon = this.Icon };
-            ocf.ShowDialog();
-            Engine.ConfigUploaders = ocf.Config;
-        }
-
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            BeforeClose();
-            Close();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            Close();
-        }
-
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            txtSaveFolder.Text = Adapter.GetDirPathUsingFolderBrowser("Browse for a folder to save files...");
-        }
-
-        private void chkSaveFile_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkSaveFile.Checked && string.IsNullOrEmpty(txtSaveFolder.Text))
+            tcMain.TabPages.Clear();
+            if (gui != null)
             {
-                txtSaveFolder.Text = Path.GetDirectoryName(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.ProductName));
-            }
-            gbSaveToFile.Visible = chkSaveFile.Checked;
-        }
-
-        private void chkTaskImageFileFormat_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTaskImageFileFormat.Checked)
-            {
-                tcMain.TabPages.Insert(0, tpImageQuality);
-                tcMain.SelectedTab = tpImageQuality;
+                gbTasks.Visible = false;
+                this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
+                this.Width = this.MinimumSize.Width;
+                this.GUI = gui;
             }
             else
             {
-                tcMain.TabPages.Remove(tpImageQuality);
+                chkTaskOutputConfig.Checked = true;
             }
-        }
-
-        private void chkTaskOutputConfig_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkTaskOutputConfig.Checked)
+            if (task != null)
             {
-                tcMain.TabPages.Insert(0, tpOutputs);
-                tcMain.SelectedTab = tpOutputs;
-            }
-            else
-            {
-                tcMain.TabPages.Remove(tpOutputs);
+                this.Task = task;
             }
         }
 
-        private void cboFileFormat_SelectedIndexChanged(object sender, EventArgs e)
+        protected WorkerTask Task = null;
+
+        #region MyRegion
+        public WorkflowWizard()
         {
-            UpdateGuiQuality();
+            InitializeComponent();
         }
 
-        private void nudSwitchAfter_LostFocus(object sender, System.EventArgs e)
+        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
+            : this()
         {
-            UpdateGuiQuality();
-        }
-
-        private void cboSwitchFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateGuiQuality();
-        }
-
-        private void rbImageSizeDefault_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void rbImageSizeFixed_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void rbImageSizeRatio_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void nudImageSizeRatio_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void nudImageSizeFixedWidth_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void nudImageSizeFixedHeight_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateImageSize();
-        }
-
-        private void nudSwitchAfter_MouseUp(object sender, MouseEventArgs e)
-        {
-            ConfigGuiQuality();
-        }
-
-        #endregion Control Events
-
-        private void chkTaskImageAnnotate_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void btnTaskAnnotate_Click(object sender, EventArgs e)
-        {
-            this.Task.PerformActions();
-            pbImage.LoadImage(this.Task.TempImage);
-        }
-
-        private void btnCopyImageClose_Click(object sender, EventArgs e)
-        {
-            Adapter.CopyImageToClipboard(this.Task.TempImage);
-            btnCancel_Click(sender, e);
-        }
+            Initialize(info, gui);
+        } 
+        #endregion
     }
 
     public class WorkflowWizardGUIOptions
     {
+
+        public bool ShowQualityTab { get; set; }
+
+        public bool ShowResizeTab { get; set; }
         public bool ShowTabJob { get; set; }
 
         public bool ShowTasks { get; set; }
-
-        public bool ShowResizeTab { get; set; }
-
-        public bool ShowQualityTab { get; set; }
     }
 }
