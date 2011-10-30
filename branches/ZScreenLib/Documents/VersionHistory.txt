@@ -1,5 +1,6 @@
-Version 4.7.4 - 2011-10-22
+Version 4.7.5 - 2011-10-22
 
+4.7.5 Shared Folders can now be individually selected for image/text/file upload types {McoreD}
 4.7.4 Ability to automatically open Image Editor after a screenshot capture by using Caps Lock, Num Lock or Scroll Lock {McoreD}
 4.7.3 Clipboard text format is now customizable using Advanced > Settings {TheDeathly}
 4.7.2 Workflow Wizard replaces the current Outputs Configuration dialog {McoreD}

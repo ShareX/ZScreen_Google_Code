@@ -57,6 +57,7 @@ Source: ZScreen\bin\x86\Debug\*.exe; Excludes: *.vshost.exe; DestDir: {app}; Fla
 Source: ZScreen\bin\x86\Debug\*.pdb; Excludes: *.vshost.exe; DestDir: {app}; Flags: ignoreversion
 Source: ZScreen\bin\x86\Debug\*.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs
 Source: ZScreen\bin\x86\Debug\*.xml; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ZScreen\bin\x86\Debug\*.html; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppName}.exe"

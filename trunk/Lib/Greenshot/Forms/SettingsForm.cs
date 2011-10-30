@@ -43,10 +43,10 @@ namespace Greenshot
     /// </summary>
     public partial class SettingsForm : Form
     {
-        private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(SettingsForm));
         private static CoreConfiguration coreConfiguration = IniConfig.GetIniSection<CoreConfiguration>();
         private static EditorConfiguration editorConfiguration = IniConfig.GetIniSection<EditorConfiguration>();
         ILanguage lang;
+        private static log4net.ILog LOG = log4net.LogManager.GetLogger(typeof(SettingsForm));
         private ToolTip toolTip;
 
         public SettingsForm()
@@ -104,32 +104,31 @@ namespace Greenshot
             }
         }
 
-        private void UpdateUI()
+        private void BtnPatternHelpClick(object sender, EventArgs e)
         {
-            this.Text = lang.GetString(LangKey.settings_title);
+            MessageBox.Show(lang.GetString(LangKey.settings_message_filenamepattern), lang.GetString(LangKey.settings_filenamepattern));
+        }
 
-            this.tab_printer.Text = lang.GetString(LangKey.settings_printer);
-            this.tab_capture.Text = lang.GetString(LangKey.settings_capture);
-            this.tab_plugins.Text = lang.GetString(LangKey.settings_plugins);
+        private void Button_pluginconfigureClick(object sender, EventArgs e)
+        {
+            PluginHelper.instance.ConfigureSelectedItem(listview_plugins);
+        }
 
-            this.groupbox_windowscapture.Text = lang.GetString(LangKey.settings_windowscapture);
-            this.label_window_capture_mode.Text = lang.GetString(LangKey.settings_window_capture_mode);
-
-            this.groupbox_capture.Text = lang.GetString(LangKey.settings_capture);
-            this.checkbox_capture_mousepointer.Text = lang.GetString(LangKey.settings_capture_mousepointer);
-            this.checkbox_capture_windows_interactive.Text = lang.GetString(LangKey.settings_capture_windows_interactive);
-            this.label_waittime.Text = lang.GetString(LangKey.settings_waittime);
-
-            this.checkbox_playsound.Text = lang.GetString(LangKey.settings_playsound);
-
-            this.groupbox_printoptions.Text = lang.GetString(LangKey.settings_printoptions);
-            this.checkboxAllowCenter.Text = lang.GetString(LangKey.printoptions_allowcenter);
-            this.checkboxAllowEnlarge.Text = lang.GetString(LangKey.printoptions_allowenlarge);
-            this.checkboxAllowRotate.Text = lang.GetString(LangKey.printoptions_allowrotate);
-            this.checkboxAllowShrink.Text = lang.GetString(LangKey.printoptions_allowshrink);
-            this.checkboxTimestamp.Text = lang.GetString(LangKey.printoptions_timestamp);
-            this.checkboxPrintInverted.Text = lang.GetString(LangKey.printoptions_inverted);
-            this.checkbox_alwaysshowprintoptionsdialog.Text = lang.GetString(LangKey.settings_alwaysshowprintoptionsdialog);
+        private void Combobox_window_capture_modeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            int windowsVersion = Environment.OSVersion.Version.Major;
+            string modeText = combobox_window_capture_mode.Text;
+            string dwmMode = WindowCaptureMode.Aero.ToString();
+            string autoMode = WindowCaptureMode.Auto.ToString();
+            if (modeText.Equals(dwmMode, StringComparison.CurrentCultureIgnoreCase)
+                || (modeText.Equals(autoMode, StringComparison.CurrentCultureIgnoreCase) && windowsVersion >= 6))
+            {
+                colorButton_window_background.Visible = true;
+            }
+            else
+            {
+                colorButton_window_background.Visible = false;
+            }
         }
 
         private void DisplaySettings()
@@ -159,6 +158,11 @@ namespace Greenshot
             checkbox_capture_windows_interactive.Checked = coreConfiguration.CaptureWindowsInteractive;
 
             numericUpDownWaitTime.Value = coreConfiguration.CaptureDelay >= 0 ? coreConfiguration.CaptureDelay : 0;
+        }
+
+        private void Listview_pluginsSelectedIndexChanged(object sender, EventArgs e)
+        {
+            button_pluginconfigure.Enabled = PluginHelper.instance.isSelectedItemConfigurable(listview_plugins);
         }
 
         private void SaveSettings()
@@ -192,46 +196,38 @@ namespace Greenshot
             this.Close();
         }
 
-        private void BtnPatternHelpClick(object sender, EventArgs e)
+        private void settings_okay_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(lang.GetString(LangKey.settings_message_filenamepattern), lang.GetString(LangKey.settings_filenamepattern));
+            SaveSettings();
+            this.Close();
         }
 
-        private void Listview_pluginsSelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateUI()
         {
-            button_pluginconfigure.Enabled = PluginHelper.instance.isSelectedItemConfigurable(listview_plugins);
-        }
+            this.Text = lang.GetString(LangKey.settings_title);
 
-        private void Button_pluginconfigureClick(object sender, EventArgs e)
-        {
-            PluginHelper.instance.ConfigureSelectedItem(listview_plugins);
-        }
+            this.tab_printer.Text = lang.GetString(LangKey.settings_printer);
+            this.tab_capture.Text = lang.GetString(LangKey.settings_capture);
+            this.tab_plugins.Text = lang.GetString(LangKey.settings_plugins);
 
-        private void Combobox_window_capture_modeSelectedIndexChanged(object sender, EventArgs e)
-        {
-            int windowsVersion = Environment.OSVersion.Version.Major;
-            string modeText = combobox_window_capture_mode.Text;
-            string dwmMode = WindowCaptureMode.Aero.ToString();
-            string autoMode = WindowCaptureMode.Auto.ToString();
-            if (modeText.Equals(dwmMode, StringComparison.CurrentCultureIgnoreCase)
-                || (modeText.Equals(autoMode, StringComparison.CurrentCultureIgnoreCase) && windowsVersion >= 6))
-            {
-                colorButton_window_background.Visible = true;
-            }
-            else
-            {
-                colorButton_window_background.Visible = false;
-            }
-        }
+            this.groupbox_windowscapture.Text = lang.GetString(LangKey.settings_windowscapture);
+            this.label_window_capture_mode.Text = lang.GetString(LangKey.settings_window_capture_mode);
 
-        private void SettingsFormFormClosing(object sender, FormClosingEventArgs e)
-        {
-            /// MainForm.RegisterHotkeys();
-        }
+            this.groupbox_capture.Text = lang.GetString(LangKey.settings_capture);
+            this.checkbox_capture_mousepointer.Text = lang.GetString(LangKey.settings_capture_mousepointer);
+            this.checkbox_capture_windows_interactive.Text = lang.GetString(LangKey.settings_capture_windows_interactive);
+            this.label_waittime.Text = lang.GetString(LangKey.settings_waittime);
 
-        private void SettingsFormShown(object sender, EventArgs e)
-        {
-            HotkeyControl.UnregisterHotkeys();
+            this.checkbox_playsound.Text = lang.GetString(LangKey.settings_playsound);
+
+            this.groupbox_printoptions.Text = lang.GetString(LangKey.settings_printoptions);
+            this.checkboxAllowCenter.Text = lang.GetString(LangKey.printoptions_allowcenter);
+            this.checkboxAllowEnlarge.Text = lang.GetString(LangKey.printoptions_allowenlarge);
+            this.checkboxAllowRotate.Text = lang.GetString(LangKey.printoptions_allowrotate);
+            this.checkboxAllowShrink.Text = lang.GetString(LangKey.printoptions_allowshrink);
+            this.checkboxTimestamp.Text = lang.GetString(LangKey.printoptions_timestamp);
+            this.checkboxPrintInverted.Text = lang.GetString(LangKey.printoptions_inverted);
+            this.checkbox_alwaysshowprintoptionsdialog.Text = lang.GetString(LangKey.settings_alwaysshowprintoptionsdialog);
         }
     }
 }

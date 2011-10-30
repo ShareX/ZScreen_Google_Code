@@ -141,53 +141,6 @@ namespace Greenshot
             // captureForm = new CaptureForm();
         }
 
-        /// <summary>
-        /// DataReceivedEventHandler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="dataReceivedEventArgs"></param>
-        private void CopyDataDataReceived(object sender, CopyDataReceivedEventArgs copyDataReceivedEventArgs)
-        {
-            // Cast the data to the type of object we sent:
-            CopyDataTransport dataTransport = (CopyDataTransport)copyDataReceivedEventArgs.Data;
-            HandleDataTransport(dataTransport);
-        }
-
-        private void HandleDataTransport(CopyDataTransport dataTransport)
-        {
-            foreach (KeyValuePair<CommandEnum, string> command in dataTransport.Commands)
-            {
-                LOG.Debug("Data received, Command = " + command.Key + ", Data: " + command.Value);
-                switch (command.Key)
-                {
-                    case CommandEnum.Exit:
-                        exit();
-                        break;
-                    case CommandEnum.FirstLaunch:
-                        LOG.Info("FirstLaunch: Created new configuration.");
-                        break;
-                    case CommandEnum.ReloadConfig:
-                        IniConfig.Reload();
-                        ReloadConfiguration(null, null);
-                        break;
-                    case CommandEnum.OpenFile:
-                        string filename = command.Value;
-                        if (File.Exists(filename))
-                        {
-                            captureForm.MakeCapture(filename);
-                        }
-                        else
-                        {
-                            LOG.Warn("No such file: " + filename);
-                        }
-                        break;
-                    default:
-                        LOG.Error("Unknown command!");
-                        break;
-                }
-            }
-        }
-
         private void ReloadConfiguration(object source, FileSystemEventArgs e)
         {
             lang.SetLanguage(conf.Language);
@@ -195,9 +148,6 @@ namespace Greenshot
             {
                 // Even update language when needed
                 UpdateUI();
-                // Update the hotkey
-                // Make sure the current hotkeys are disabled
-                HotkeyControl.UnregisterHotkeys();
             });
         }
 
@@ -758,16 +708,6 @@ namespace Greenshot
                 {
                     LOG.Error("Error closing form!", e);
                 }
-            }
-
-            // Make sure hotkeys are disabled
-            try
-            {
-                HotkeyControl.UnregisterHotkeys();
-            }
-            catch (Exception e)
-            {
-                LOG.Error("Error unregistering hotkeys!", e);
             }
 
             // Now the sound isn't needed anymore

@@ -111,7 +111,7 @@ namespace ZScreenLib
                 tcMain.SelectedTab = tpImagePreview;
             }
 
-            btnTaskAnnotate.Visible = bIsImage;
+            btnTaskAnnotate.Visible = Task.Job1 == EDataType.Image;
             chkTaskImageFileFormat.Visible = bIsImage;
             chkTaskImageResize.Visible = bIsImage;
         }
