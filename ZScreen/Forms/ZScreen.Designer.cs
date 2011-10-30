@@ -298,8 +298,8 @@ namespace ZScreenGUI
             this.tpTreeGUI = new System.Windows.Forms.TabPage();
             this.pgIndexer = new System.Windows.Forms.PropertyGrid();
             this.tpInteraction = new System.Windows.Forms.TabPage();
-            this.btnOptionsBalloonTip = new System.Windows.Forms.GroupBox();
-            this.cbShowPopup = new System.Windows.Forms.CheckBox();
+            this.gbOptionsBalloonTip = new System.Windows.Forms.GroupBox();
+            this.chkShowPopup = new System.Windows.Forms.CheckBox();
             this.chkBalloonTipOpenLink = new System.Windows.Forms.CheckBox();
             this.cbShowUploadDuration = new System.Windows.Forms.CheckBox();
             this.gbDropBox = new System.Windows.Forms.GroupBox();
@@ -465,7 +465,7 @@ namespace ZScreenGUI
             this.gbLogs.SuspendLayout();
             this.tpTreeGUI.SuspendLayout();
             this.tpInteraction.SuspendLayout();
-            this.btnOptionsBalloonTip.SuspendLayout();
+            this.gbOptionsBalloonTip.SuspendLayout();
             this.gbDropBox.SuspendLayout();
             this.gbAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudFlashIconCount)).BeginInit();
@@ -3498,7 +3498,7 @@ namespace ZScreenGUI
             // 
             // tpInteraction
             // 
-            this.tpInteraction.Controls.Add(this.btnOptionsBalloonTip);
+            this.tpInteraction.Controls.Add(this.gbOptionsBalloonTip);
             this.tpInteraction.Controls.Add(this.gbDropBox);
             this.tpInteraction.Controls.Add(this.gbAppearance);
             this.tpInteraction.Location = new System.Drawing.Point(4, 22);
@@ -3509,33 +3509,32 @@ namespace ZScreenGUI
             this.tpInteraction.Text = "Interaction";
             this.tpInteraction.UseVisualStyleBackColor = true;
             // 
-            // btnOptionsBalloonTip
+            // gbOptionsBalloonTip
             // 
-            this.btnOptionsBalloonTip.Controls.Add(this.cbShowPopup);
-            this.btnOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
-            this.btnOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
-            this.btnOptionsBalloonTip.Location = new System.Drawing.Point(8, 144);
-            this.btnOptionsBalloonTip.Name = "btnOptionsBalloonTip";
-            this.btnOptionsBalloonTip.Size = new System.Drawing.Size(752, 104);
-            this.btnOptionsBalloonTip.TabIndex = 8;
-            this.btnOptionsBalloonTip.TabStop = false;
-            this.btnOptionsBalloonTip.Text = "Balloon Tip Options";
+            this.gbOptionsBalloonTip.Controls.Add(this.chkBalloonTipOpenLink);
+            this.gbOptionsBalloonTip.Controls.Add(this.cbShowUploadDuration);
+            this.gbOptionsBalloonTip.Location = new System.Drawing.Point(8, 168);
+            this.gbOptionsBalloonTip.Name = "gbOptionsBalloonTip";
+            this.gbOptionsBalloonTip.Size = new System.Drawing.Size(752, 80);
+            this.gbOptionsBalloonTip.TabIndex = 8;
+            this.gbOptionsBalloonTip.TabStop = false;
+            this.gbOptionsBalloonTip.Text = "Balloon Tip Options";
             // 
             // cbShowPopup
             // 
-            this.cbShowPopup.AutoSize = true;
-            this.cbShowPopup.Location = new System.Drawing.Point(16, 24);
-            this.cbShowPopup.Name = "cbShowPopup";
-            this.cbShowPopup.Size = new System.Drawing.Size(250, 17);
-            this.cbShowPopup.TabIndex = 5;
-            this.cbShowPopup.Text = "Show balloon tip after upload/task is completed";
-            this.cbShowPopup.UseVisualStyleBackColor = true;
-            this.cbShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
+            this.chkShowPopup.AutoSize = true;
+            this.chkShowPopup.Location = new System.Drawing.Point(16, 120);
+            this.chkShowPopup.Name = "chkShowPopup";
+            this.chkShowPopup.Size = new System.Drawing.Size(250, 17);
+            this.chkShowPopup.TabIndex = 5;
+            this.chkShowPopup.Text = "Show balloon tip after upload/task is completed";
+            this.chkShowPopup.UseVisualStyleBackColor = true;
+            this.chkShowPopup.CheckedChanged += new System.EventHandler(this.cbShowPopup_CheckedChanged);
             // 
             // chkBalloonTipOpenLink
             // 
             this.chkBalloonTipOpenLink.AutoSize = true;
-            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 48);
+            this.chkBalloonTipOpenLink.Location = new System.Drawing.Point(16, 24);
             this.chkBalloonTipOpenLink.Name = "chkBalloonTipOpenLink";
             this.chkBalloonTipOpenLink.Size = new System.Drawing.Size(189, 17);
             this.chkBalloonTipOpenLink.TabIndex = 6;
@@ -3546,7 +3545,7 @@ namespace ZScreenGUI
             // cbShowUploadDuration
             // 
             this.cbShowUploadDuration.AutoSize = true;
-            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 72);
+            this.cbShowUploadDuration.Location = new System.Drawing.Point(16, 48);
             this.cbShowUploadDuration.Name = "cbShowUploadDuration";
             this.cbShowUploadDuration.Size = new System.Drawing.Size(191, 17);
             this.cbShowUploadDuration.TabIndex = 8;
@@ -3557,7 +3556,7 @@ namespace ZScreenGUI
             // gbDropBox
             // 
             this.gbDropBox.Controls.Add(this.cbCloseDropBox);
-            this.gbDropBox.Location = new System.Drawing.Point(8, 256);
+            this.gbDropBox.Location = new System.Drawing.Point(8, 264);
             this.gbDropBox.Name = "gbDropBox";
             this.gbDropBox.Size = new System.Drawing.Size(752, 56);
             this.gbDropBox.TabIndex = 6;
@@ -3578,6 +3577,7 @@ namespace ZScreenGUI
             // gbAppearance
             // 
             this.gbAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.gbAppearance.Controls.Add(this.chkShowPopup);
             this.gbAppearance.Controls.Add(this.chkTwitterEnable);
             this.gbAppearance.Controls.Add(this.cbCompleteSound);
             this.gbAppearance.Controls.Add(this.chkCaptureFallback);
@@ -3585,7 +3585,7 @@ namespace ZScreenGUI
             this.gbAppearance.Controls.Add(this.nudFlashIconCount);
             this.gbAppearance.Location = new System.Drawing.Point(8, 8);
             this.gbAppearance.Name = "gbAppearance";
-            this.gbAppearance.Size = new System.Drawing.Size(752, 128);
+            this.gbAppearance.Size = new System.Drawing.Size(752, 152);
             this.gbAppearance.TabIndex = 5;
             this.gbAppearance.TabStop = false;
             this.gbAppearance.Text = "After completing a task";
@@ -3955,7 +3955,7 @@ namespace ZScreenGUI
             this.pgAppSettings.HelpVisible = false;
             this.pgAppSettings.Location = new System.Drawing.Point(3, 3);
             this.pgAppSettings.Name = "pgAppSettings";
-            this.pgAppSettings.Size = new System.Drawing.Size(789, 418);
+            this.pgAppSettings.Size = new System.Drawing.Size(784, 418);
             this.pgAppSettings.TabIndex = 118;
             this.pgAppSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppSettings_PropertyValueChanged);
             // 
@@ -3975,7 +3975,7 @@ namespace ZScreenGUI
             this.pgAppConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgAppConfig.Location = new System.Drawing.Point(3, 3);
             this.pgAppConfig.Name = "pgAppConfig";
-            this.pgAppConfig.Size = new System.Drawing.Size(789, 418);
+            this.pgAppConfig.Size = new System.Drawing.Size(784, 418);
             this.pgAppConfig.TabIndex = 0;
             this.pgAppConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAppConfig_PropertyValueChanged);
             // 
@@ -3995,7 +3995,7 @@ namespace ZScreenGUI
             this.pgWorkflow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgWorkflow.Location = new System.Drawing.Point(3, 3);
             this.pgWorkflow.Name = "pgWorkflow";
-            this.pgWorkflow.Size = new System.Drawing.Size(789, 418);
+            this.pgWorkflow.Size = new System.Drawing.Size(784, 418);
             this.pgWorkflow.TabIndex = 1;
             // 
             // tpAdvanedUploaders
@@ -4014,7 +4014,7 @@ namespace ZScreenGUI
             this.pgUploaders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgUploaders.Location = new System.Drawing.Point(3, 3);
             this.pgUploaders.Name = "pgUploaders";
-            this.pgUploaders.Size = new System.Drawing.Size(789, 418);
+            this.pgUploaders.Size = new System.Drawing.Size(784, 418);
             this.pgUploaders.TabIndex = 2;
             // 
             // tpAdvancedStats
@@ -4530,8 +4530,8 @@ namespace ZScreenGUI
             this.gbLogs.PerformLayout();
             this.tpTreeGUI.ResumeLayout(false);
             this.tpInteraction.ResumeLayout(false);
-            this.btnOptionsBalloonTip.ResumeLayout(false);
-            this.btnOptionsBalloonTip.PerformLayout();
+            this.gbOptionsBalloonTip.ResumeLayout(false);
+            this.gbOptionsBalloonTip.PerformLayout();
             this.gbDropBox.ResumeLayout(false);
             this.gbDropBox.PerformLayout();
             this.gbAppearance.ResumeLayout(false);
@@ -4675,7 +4675,7 @@ namespace ZScreenGUI
         internal System.Windows.Forms.CheckBox chkCaptureFallback;
         internal System.Windows.Forms.CheckBox cbShowUploadDuration;
         internal System.Windows.Forms.CheckBox chkBalloonTipOpenLink;
-        internal System.Windows.Forms.CheckBox cbShowPopup;
+        internal System.Windows.Forms.CheckBox chkShowPopup;
         internal System.Windows.Forms.Label lblTrayFlash;
         internal System.Windows.Forms.NumericUpDown nudFlashIconCount;
         internal System.Windows.Forms.TabPage tpFileNaming;
@@ -4861,7 +4861,7 @@ namespace ZScreenGUI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
         private System.Windows.Forms.TabPage tpCaptureClipboard;
-        private System.Windows.Forms.GroupBox btnOptionsBalloonTip;
+        private System.Windows.Forms.GroupBox gbOptionsBalloonTip;
         private System.Windows.Forms.CheckBox chkShortenURL;
         private System.Windows.Forms.ComboBox cboReleaseChannel;
         private System.Windows.Forms.Button btnClearHistory;

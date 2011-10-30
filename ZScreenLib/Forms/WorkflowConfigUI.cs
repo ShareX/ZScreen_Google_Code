@@ -10,6 +10,30 @@ namespace ZScreenLib
 {
     public partial class WorkflowWizard : HotkeyForm
     {
+        #region 0 Variables
+
+
+        public Workflow Config = new Workflow();
+
+        public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
+
+        protected WorkerTask Task = null;
+
+        #endregion
+
+        #region 1 Constructors
+
+        public WorkflowWizard()
+        {
+            InitializeComponent();
+        }
+
+        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
+            : this()
+        {
+            Initialize(info, gui);
+        }
+        #endregion
 
         private void btnCopyImageClose_Click(object sender, EventArgs e)
         {
@@ -28,10 +52,7 @@ namespace ZScreenLib
 
         }
 
-        public Workflow Config = new Workflow();
-
         #region Config GUI
-
 
         protected void ConfigGui()
         {
@@ -417,9 +438,8 @@ namespace ZScreenLib
         }
         #endregion Control Events
 
-        public WorkflowWizardGUIOptions GUI = new WorkflowWizardGUIOptions();
-
         #region Helper Methods
+
 
 
         private void BeforeClose()
@@ -456,6 +476,36 @@ namespace ZScreenLib
 
             // Outputs
             UpdateConfigOutputs();
+        }
+
+        protected virtual void Initialize(WorkerTask task, WorkflowWizardGUIOptions gui)
+        {
+            if (task != null)
+            {
+                this.Config = task.WorkflowConfig;
+                this.Text = Application.ProductName + " - Workflow - " + task.Info.Job.GetDescription();
+            }
+            else
+            {
+                this.Text = Application.ProductName;
+            }
+
+            tcMain.TabPages.Clear();
+            if (gui != null)
+            {
+                gbTasks.Visible = false;
+                this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
+                this.Width = this.MinimumSize.Width;
+                this.GUI = gui;
+            }
+            else
+            {
+                chkTaskOutputConfig.Checked = true;
+            }
+            if (task != null)
+            {
+                this.Task = task;
+            }
         }
 
         private void UpdateConfigOutputs()
@@ -534,56 +584,10 @@ namespace ZScreenLib
             }
         }
         #endregion Helper Methods
-
-        protected void Initialize(WorkerTask task, WorkflowWizardGUIOptions gui)
-        {
-            if (task != null)
-            {
-                this.Config = task.WorkflowConfig;
-                this.Text = Application.ProductName + " - Workflow - " + task.Info.Job.GetDescription();
-            }
-            else
-            {
-                this.Text = Application.ProductName;
-            }
-
-            tcMain.TabPages.Clear();
-            if (gui != null)
-            {
-                gbTasks.Visible = false;
-                this.MinimumSize = new System.Drawing.Size(this.Width - gbTasks.Width, this.Height);
-                this.Width = this.MinimumSize.Width;
-                this.GUI = gui;
-            }
-            else
-            {
-                chkTaskOutputConfig.Checked = true;
-            }
-            if (task != null)
-            {
-                this.Task = task;
-            }
-        }
-
-        protected WorkerTask Task = null;
-
-        #region MyRegion
-        public WorkflowWizard()
-        {
-            InitializeComponent();
-        }
-
-        public WorkflowWizard(WorkerTask info = null, WorkflowWizardGUIOptions gui = null)
-            : this()
-        {
-            Initialize(info, gui);
-        } 
-        #endregion
     }
 
     public class WorkflowWizardGUIOptions
     {
-
         public bool ShowQualityTab { get; set; }
 
         public bool ShowResizeTab { get; set; }

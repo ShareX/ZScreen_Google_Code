@@ -292,7 +292,7 @@ namespace ZScreenGUI
             chkShortenURL.Checked = Engine.ConfigUI.ShortenUrlAfterUpload;
             nudFlashIconCount.Value = Engine.ConfigUI.FlashTrayCount;
             chkCaptureFallback.Checked = Engine.ConfigUI.CaptureEntireScreenOnError;
-            cbShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
+            chkShowPopup.Checked = Engine.ConfigUI.ShowBalloonTip;
             chkBalloonTipOpenLink.Checked = Engine.ConfigUI.BalloonTipOpenLink;
             cbShowUploadDuration.Checked = Engine.ConfigUI.ShowUploadDuration;
             cbCompleteSound.Checked = Engine.ConfigUI.CompleteSound;
