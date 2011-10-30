@@ -218,10 +218,10 @@
     <Compile Include="Forms\ZScreenCoreUI.Designer.cs">
       <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="ZScreenOptionsCoreUI.cs">
+    <Compile Include="Forms\ZScreenOptionsCoreUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ZScreenOptions.Designer.cs">
+    <Compile Include="Forms\ZScreenOptions.Designer.cs">
       <DependentUpon>ZScreenOptionsCoreUI.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -240,7 +240,7 @@
     <EmbeddedResource Include="Forms\ZScreenCoreUI.resx">
       <DependentUpon>ZScreenCoreUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ZScreenOptions.resx">
+    <EmbeddedResource Include="Forms\ZScreenOptions.resx">
       <DependentUpon>ZScreenOptionsCoreUI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

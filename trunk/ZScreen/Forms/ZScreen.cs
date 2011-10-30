@@ -1048,7 +1048,8 @@ namespace ZScreenGUI
 
         private void cbShowPopup_CheckedChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ShowBalloonTip = cbShowPopup.Checked;
+            Engine.ConfigUI.ShowBalloonTip = chkShowPopup.Checked;
+            gbOptionsBalloonTip.Enabled = chkShowPopup.Checked;
         }
 
         private void cbShowUploadDuration_CheckedChanged(object sender, EventArgs e)
