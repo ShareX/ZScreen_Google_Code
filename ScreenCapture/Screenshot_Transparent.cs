@@ -58,7 +58,7 @@ namespace ScreenCapture
 
                         if (!NativeMethods.IsWindowMaximized(handle) && NativeMethods.IsDWMEnabled())
                         {
-                            int offset = 20;
+                            const int offset = 20;
 
                             rect.Inflate(offset, offset);
                             rect.Intersect(CaptureHelpers.GetScreenBounds());
