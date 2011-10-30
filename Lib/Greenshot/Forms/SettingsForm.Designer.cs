@@ -104,6 +104,7 @@ namespace Greenshot {
             this.settings_okay.TabIndex = 6;
             this.settings_okay.Text = "OK";
             this.settings_okay.UseVisualStyleBackColor = true;
+            this.settings_okay.Click += new System.EventHandler(this.settings_okay_Click);
             // 
             // tabcontrol
             // 
@@ -355,9 +356,9 @@ namespace Greenshot {
             // 
             // groupbox_plugins
             // 
-            this.groupbox_plugins.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupbox_plugins.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupbox_plugins.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.groupbox_plugins.Controls.Add(this.listview_plugins);
             this.groupbox_plugins.Controls.Add(this.button_pluginconfigure);
@@ -408,8 +409,6 @@ namespace Greenshot {
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "SettingsForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsFormFormClosing);
-            this.Shown += new System.EventHandler(this.SettingsFormShown);
             this.tabcontrol.ResumeLayout(false);
             this.tab_capture.ResumeLayout(false);
             this.groupbox_windowscapture.ResumeLayout(false);

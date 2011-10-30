@@ -463,28 +463,6 @@ namespace GreenshotPlugin.Controls {
 			}
 		}
 		
-		public static void UnregisterHotkeys() {
-			foreach(int hotkey in keyHandlers.Keys) {
-				UnregisterHotKey(hotkeyHWND, hotkey);
-			}
-			// Remove all key handlers
-			keyHandlers.Clear();
-		}
-
-		public static void UnregisterHotkey(int hotkey) {
-			bool removeHotkey = false;
-			foreach(int availableHotkey in keyHandlers.Keys) {
-				if (availableHotkey == hotkey) {
-					UnregisterHotKey(hotkeyHWND, hotkey);
-					removeHotkey = true;
-				}
-			}
-			if (removeHotkey) {
-				// Remove key handler
-				keyHandlers.Remove(hotkey);
-			}
-		}		
-
 		/// <summary>
 		/// Handle WndProc messages for the hotkey
 		/// </summary>
