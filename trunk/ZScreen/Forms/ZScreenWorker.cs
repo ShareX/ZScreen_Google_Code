@@ -61,7 +61,7 @@ namespace ZScreenGUI
 
             bwTask.States.Add(WorkerTask.TaskState.ThreadMode);
 
-            bwTask.ID = UploadManager.Queue();
+            bwTask.Id = UploadManager.Queue();
 
             if (bwTask.WasToTakeScreenshot)
             {
@@ -106,7 +106,7 @@ namespace ZScreenGUI
                 case (WorkerTask.ProgressType)104:
                     Adapter.CopyDataToClipboard(e.UserState);
                     break;
-                case WorkerTask.ProgressType.COPY_TO_CLIPBOARD_IMAGE:
+                case WorkerTask.ProgressType.CopyToClipboardImage:
                     if (e.UserState.GetType() == typeof(string))
                     {
                         Adapter.CopyImageToClipboard(e.UserState as string);
@@ -117,19 +117,19 @@ namespace ZScreenGUI
                     }
 
                     break;
-                case WorkerTask.ProgressType.FLASH_ICON:
+                case WorkerTask.ProgressType.FlashIcon:
                     Adapter.FlashNotifyIcon(this.niTray, e.UserState as Icon);
                     break;
                 case WorkerTask.ProgressType.UpdateCropMode:
                     this.cboCropGridMode.Checked = Engine.ConfigUI.CropGridToggle;
                     break;
-                case WorkerTask.ProgressType.CHANGE_TRAY_ICON_PROGRESS:
+                case WorkerTask.ProgressType.ChangeTrayIconProgress:
                     UploadManager.SetCumulativePercentatge((int)((ProgressManager)e.UserState).Percentage);
                     Adapter.UpdateNotifyIconProgress(this.niTray, UploadManager.CumulativePercentage);
                     Adapter.TaskbarSetProgressValue(this, UploadManager.CumulativePercentage);
                     this.Text = string.Format("{0}% - {1}", UploadManager.CumulativePercentage, Engine.GetProductName());
                     break;
-                case WorkerTask.ProgressType.UPDATE_PROGRESS_MAX:
+                case WorkerTask.ProgressType.UpdateProgressMax:
                     TaskbarProgressBarState tbps = (TaskbarProgressBarState)e.UserState;
                     Adapter.TaskbarSetProgressState(this, tbps);
                     break;
@@ -192,7 +192,7 @@ namespace ZScreenGUI
 
                     if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local) && Engine.ConfigUI.ShowSaveFileDialogImages)
                     {
-                        string fp = Adapter.SaveImage(task.tempImage);
+                        string fp = Adapter.SaveImage(task.TempImage);
                         if (!string.IsNullOrEmpty(fp))
                         {
                             task.UpdateLocalFilePath(fp);
@@ -275,7 +275,7 @@ namespace ZScreenGUI
             }
             finally
             {
-                UploadManager.Commit(task.ID);
+                UploadManager.Commit(task.Id);
 
                 if (TaskbarManager.IsPlatformSupported)
                 {
@@ -394,16 +394,16 @@ namespace ZScreenGUI
 
             imageTask.WasToTakeScreenshot = true;
             // the last point before the task enters background
-            if (imageTask.tempImage != null)
+            if (imageTask.TempImage != null)
             {
-                pbPreview.LoadImage(imageTask.tempImage);
+                pbPreview.LoadImage(imageTask.TempImage);
 
                 DialogResult result = System.Windows.Forms.DialogResult.OK;
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     // PerformActions should happen in main thread
-                    if (imageTask.tempImage != null && !imageTask.States.Contains(WorkerTask.TaskState.ImageEdited))
+                    if (imageTask.TempImage != null && !imageTask.States.Contains(WorkerTask.TaskState.ImageEdited))
                     {
                         imageTask.States.Add(WorkerTask.TaskState.ImageEdited);
                         if (imageTask.WorkflowConfig.PerformActions && imageTask.Job2 != WorkerTask.JobLevel2.UploadImage)
@@ -597,25 +597,10 @@ namespace ZScreenGUI
             {
                 foreach (string fp in strListFilePath)
                 {
-                    TaskInfo tifs = new TaskInfo() { ExistingFilePath = fp };
-                    if (GraphicsMgr.IsValidImage(fp))
-                    {
-                        WorkerTask fpimgTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, tifs);
-                        fpimgTask.SetImage(fp);
-                        fpimgTask.RunWorker();
-                    }
-                    else if (FileSystem.IsValidTextFile(fp))
-                    {
-                        WorkerTask fptfTask = CreateTask(WorkerTask.JobLevel2.UploadFromClipboard, tifs);
-                        fptfTask.SetText(File.ReadAllText(fp));
-                        fptfTask.RunWorker();
-                    }
-                    else
-                    {
-                        WorkerTask fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, tifs);
-                        fpdataTask.UpdateLocalFilePath(fp);
-                        fpdataTask.RunWorker();
-                    }
+                    var tifs = new TaskInfo() { ExistingFilePath = fp };
+                    var fpdataTask = CreateTask(WorkerTask.JobLevel2.UploadFromExplorer, tifs);
+                    fpdataTask.UpdateLocalFilePath(fp);
+                    fpdataTask.RunWorker();
                 }
             }
             return succ;
@@ -675,7 +660,7 @@ namespace ZScreenGUI
                 case WorkerTask.JobLevel2.Translate:
                     StartWorkerTranslator();
                     break;
-                case WorkerTask.JobLevel2.SCREEN_COLOR_PICKER:
+                case WorkerTask.JobLevel2.ScreenColorPicker:
                     ShowScreenColorPicker();
                     break;
             }

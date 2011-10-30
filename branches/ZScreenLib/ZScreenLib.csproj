@@ -144,6 +144,7 @@
     <Compile Include="Helpers\OCRHelper.cs" />
     <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\SoundFileNameEditor.cs" />
+    <Compile Include="Helpers\TaskInfo.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
     <Compile Include="Helpers\WorkerTaskHelper.cs" />
     <Compile Include="Helpers\Workflow.cs" />
