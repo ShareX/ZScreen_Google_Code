@@ -35,9 +35,9 @@ namespace ZScreenLib
                         this.pbPreview.LoadImage(task.Info.LocalFilePath, ur.URL);
                         break;
                     }
-                    else if(task.tempImage != null)
+                    else if(task.TempImage != null)
                     {
-                        this.pbPreview.LoadImage(task.tempImage);
+                        this.pbPreview.LoadImage(task.TempImage);
                     }
                 }
 
@@ -141,9 +141,9 @@ namespace ZScreenLib
                     Adapter.CopyImageToClipboard(img);
                 }
             }
-            else if (urTask.tempImage != null)
+            else if (urTask.TempImage != null)
             {
-                Adapter.CopyImageToClipboard(urTask.tempImage);
+                Adapter.CopyImageToClipboard(urTask.TempImage);
             }
         }
 

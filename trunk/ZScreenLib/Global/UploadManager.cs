@@ -64,7 +64,7 @@ namespace ZScreenLib
 
         public static void UploadImage(WorkerTask task)
         {
-            if (task.tempImage != null)
+            if (task.TempImage != null)
             {
                 StartUpload(task);
             }
@@ -73,7 +73,7 @@ namespace ZScreenLib
         private static void StartUpload(WorkerTask task)
         {
             Tasks.Add(task);
-            task.ID = Tasks.Count - 1;
+            task.Id = Tasks.Count - 1;
             task.UploadPreparing += new WorkerTask.TaskEventHandler(task_UploadPreparing);
             task.UploadStarted += new WorkerTask.TaskEventHandler(task_UploadStarted);
             task.UploadProgressChanged2 += new WorkerTask.TaskEventHandler(task_UploadProgressChanged);
@@ -100,17 +100,17 @@ namespace ZScreenLib
 
         private static void task_UploadPreparing(WorkerTask info)
         {
-            Engine.EngineLogger.WriteLine("Upload preparing. ID: {0}", info.ID);
+            Engine.EngineLogger.WriteLine("Upload preparing. ID: {0}", info.Id);
             ChangeListViewItemStatus(info);
         }
 
         private static void task_UploadStarted(WorkerTask task)
         {
-            string status = string.Format("Upload started. ID: {0}, Filename: {1}", task.ID, task.Info.FileName);
+            string status = string.Format("Upload started. ID: {0}, Filename: {1}", task.Id, task.Info.FileName);
             if (!string.IsNullOrEmpty(task.Info.LocalFilePath)) status += ", Filepath: " + task.Info.LocalFilePath;
             StaticHelper.WriteLine(status);
 
-            ListViewItem lvi = ListViewControl.Items[task.ID];
+            ListViewItem lvi = ListViewControl.Items[task.Id];
             lvi.Text = task.Info.FileName;
             lvi.SubItems[1].Text = task.Status.GetDescription();
             lvi.ImageIndex = 0;
@@ -120,7 +120,7 @@ namespace ZScreenLib
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[info.ID];
+                ListViewItem lvi = ListViewControl.Items[info.Id];
                 lvi.SubItems[2].Text = string.Format("{0:N0}%  {1:N0} KiB / {2:N0} KiB", info.Progress.Percentage,
                     info.Progress.Position / 1024, info.Progress.Length / 1024);
                 lvi.SubItems[3].Text = string.Format("{0:N0} kB/s", info.Progress.Speed);
@@ -135,14 +135,14 @@ namespace ZScreenLib
             {
                 if (ListViewControl != null && task != null && task.Result != null)
                 {
-                    ListViewItem lvi = ListViewControl.Items[task.ID];
+                    ListViewItem lvi = ListViewControl.Items[task.Id];
                     lvi.Tag = task.Result;
 
                     if (task.Result.IsError)
                     {
                         string errors = string.Join("\r\n\r\n", task.Result.Errors.ToArray());
 
-                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", task.ID, task.Info.FileName, errors);
+                        StaticHelper.WriteLine("Upload failed. ID: {0}, Filename: {1}, Errors:\r\n{2}", task.Id, task.Info.FileName, errors);
 
                         lvi.SubItems[1].Text = "Error";
                         lvi.SubItems[8].Text = string.Empty;
@@ -155,7 +155,7 @@ namespace ZScreenLib
                     }
                     else
                     {
-                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", task.ID, task.Info.FileName,
+                        StaticHelper.WriteLine("Upload completed. ID: {0}, Filename: {1}, URL: {2}, Duration: {3}ms", task.Id, task.Info.FileName,
                             task.Result.URL, (int)task.UploadDuration);
 
                         lvi.SubItems[1].Text = task.Status.GetDescription();
@@ -204,7 +204,7 @@ namespace ZScreenLib
         {
             if (ListViewControl != null)
             {
-                ListViewItem lvi = ListViewControl.Items[wt.ID];
+                ListViewItem lvi = ListViewControl.Items[wt.Id];
                 lvi.SubItems[1].Text = wt.Status.GetDescription();
             }
         }
@@ -214,7 +214,7 @@ namespace ZScreenLib
             if (ListViewControl != null)
             {
                 StaticHelper.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}",
-                    wt.ID, wt.Job1, wt.Job2, wt.GetDestinationName());
+                    wt.Id, wt.Job1, wt.Job2, wt.GetDestinationName());
 
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = wt.Info.FileName;
@@ -226,7 +226,7 @@ namespace ZScreenLib
                 lvi.SubItems.Add(wt.GetDescription());
                 lvi.SubItems.Add(wt.GetDestinationName());
                 lvi.SubItems.Add(string.Empty);
-                lvi.BackColor = wt.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
+                lvi.BackColor = wt.Id % 2 == 0 ? Color.White : Color.WhiteSmoke;
                 lvi.ImageIndex = 3;
                 ListViewControl.Items.Add(lvi);
                 lvi.EnsureVisible();
@@ -305,7 +305,7 @@ namespace ZScreenLib
 
                     if (task.JobIsImageToClipboard())
                     {
-                        Adapter.CopyImageToClipboard(task.tempImage);
+                        Adapter.CopyImageToClipboard(task.TempImage);
                     }
                     else if (task.WorkflowConfig.DestConfig.TaskClipboardContent.Contains(ClipboardContentEnum.Local))
                     {

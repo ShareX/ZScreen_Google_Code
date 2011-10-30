@@ -66,9 +66,9 @@ namespace ZScreenLib
             if (GUI.ShowResizeTab) this.tcMain.TabPages.Add(tpImageResize);
             if (GUI.ShowQualityTab) this.tcMain.TabPages.Add(tpImageQuality);
 
-            if (Task != null && Task.tempImage != null)
+            if (Task != null && Task.TempImage != null)
             {
-                pbImage.LoadImage(Task.tempImage);
+                pbImage.LoadImage(Task.TempImage);
             }
 
             // Jobs
@@ -111,7 +111,7 @@ namespace ZScreenLib
                 tcMain.SelectedTab = tpImagePreview;
             }
 
-            btnTaskAnnotate.Visible = bIsImage;
+            btnTaskAnnotate.Visible = Task.Job1 == EDataType.Image;
             chkTaskImageFileFormat.Visible = bIsImage;
             chkTaskImageResize.Visible = bIsImage;
         }
@@ -567,12 +567,12 @@ namespace ZScreenLib
         private void btnTaskAnnotate_Click(object sender, EventArgs e)
         {
             this.Task.PerformActions();
-            pbImage.LoadImage(this.Task.tempImage);
+            pbImage.LoadImage(this.Task.TempImage);
         }
 
         private void btnCopyImageClose_Click(object sender, EventArgs e)
         {
-            Adapter.CopyImageToClipboard(this.Task.tempImage);
+            Adapter.CopyImageToClipboard(this.Task.TempImage);
             btnCancel_Click(sender, e);
         }
     }
