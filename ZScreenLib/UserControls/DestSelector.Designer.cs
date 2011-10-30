@@ -31,7 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DestSelector));
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tsDest = new System.Windows.Forms.ToolStrip();
+            this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
             this.tsddbOutputs = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsddbClipboardContent = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbLinkFormat = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -39,8 +41,6 @@
             this.tsddbDestText = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbDestFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsddbDestLink = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbDestConfig = new System.Windows.Forms.ToolStripButton();
             this.tsDest.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,8 +82,19 @@
             this.tsDest.Name = "tsDest";
             this.tsDest.ShowItemToolTips = false;
             this.tsDest.Size = new System.Drawing.Size(352, 200);
-            this.tsDest.TabIndex = 128;
+            this.tsDest.TabIndex = 0;
             this.tsDest.Text = "Destinations";
+            // 
+            // tsbDestConfig
+            // 
+            this.tsbDestConfig.Image = global::ZScreenLib.Properties.Resources.server_edit;
+            this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDestConfig.Name = "tsbDestConfig";
+            this.tsbDestConfig.Size = new System.Drawing.Size(350, 20);
+            this.tsbDestConfig.Text = "Open outputs configuration...";
+            this.tsbDestConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
             // tsddbOutputs
             // 
@@ -94,6 +105,11 @@
             this.tsddbOutputs.Size = new System.Drawing.Size(350, 20);
             this.tsddbOutputs.Tag = "Outputs";
             this.tsddbOutputs.Text = "Outputs: loading...";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(350, 6);
             // 
             // tsddbClipboardContent
             // 
@@ -144,12 +160,12 @@
             this.tsddbDestText.Tag = "Upload text to";
             this.tsddbDestText.Text = "Upload text to: loading...";
             // 
-            // tsddDestFile
+            // tsddbDestFile
             // 
             this.tsddbDestFile.Image = global::ZScreenLib.Properties.Resources.page_go;
             this.tsddbDestFile.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsddbDestFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddbDestFile.Name = "tsddDestFile";
+            this.tsddbDestFile.Name = "tsddbDestFile";
             this.tsddbDestFile.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsddbDestFile.Size = new System.Drawing.Size(350, 20);
             this.tsddbDestFile.Tag = "Upload file to";
@@ -166,22 +182,6 @@
             this.tsddbDestLink.Tag = "URL shortener";
             this.tsddbDestLink.Text = "URL shortener: loading...";
             this.tsddbDestLink.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tsddDestLinks_DropDownItemClicked);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(350, 6);
-            // 
-            // tsbDestConfig
-            // 
-            this.tsbDestConfig.Image = global::ZScreenLib.Properties.Resources.server_edit;
-            this.tsbDestConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbDestConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbDestConfig.Name = "tsbDestConfig";
-            this.tsbDestConfig.Size = new System.Drawing.Size(350, 20);
-            this.tsbDestConfig.Text = "Open outputs configuration...";
-            this.tsbDestConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.tsbDestConfig.Click += new System.EventHandler(this.tsbDestConfig_Click);
             // 
             // DestSelector
             // 

@@ -48,7 +48,7 @@
             this.label1.Location = new System.Drawing.Point(33, 317);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
-            this.label1.TabIndex = 0;
+            this.label1.TabIndex = 3;
             this.label1.Text = "User Name";
             // 
             // txtUserName
@@ -56,14 +56,14 @@
             this.txtUserName.Location = new System.Drawing.Point(99, 314);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(241, 20);
-            this.txtUserName.TabIndex = 1;
+            this.txtUserName.TabIndex = 4;
             // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(99, 340);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(241, 20);
-            this.txtPassword.TabIndex = 3;
+            this.txtPassword.TabIndex = 6;
             // 
             // label2
             // 
@@ -71,7 +71,7 @@
             this.label2.Location = new System.Drawing.Point(40, 343);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 5;
             this.label2.Text = "Password";
             // 
             // txtHost
@@ -79,7 +79,7 @@
             this.txtHost.Location = new System.Drawing.Point(99, 366);
             this.txtHost.Name = "txtHost";
             this.txtHost.Size = new System.Drawing.Size(241, 20);
-            this.txtHost.TabIndex = 5;
+            this.txtHost.TabIndex = 8;
             // 
             // label3
             // 
@@ -87,7 +87,7 @@
             this.label3.Location = new System.Drawing.Point(64, 369);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 7;
             this.label3.Text = "Host";
             // 
             // nudPort
@@ -105,7 +105,7 @@
             0});
             this.nudPort.Name = "nudPort";
             this.nudPort.Size = new System.Drawing.Size(241, 20);
-            this.nudPort.TabIndex = 6;
+            this.nudPort.TabIndex = 10;
             this.nudPort.Value = new decimal(new int[] {
             8080,
             0,
@@ -118,7 +118,7 @@
             this.label4.Location = new System.Drawing.Point(67, 394);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(26, 13);
-            this.label4.TabIndex = 7;
+            this.label4.TabIndex = 9;
             this.label4.Text = "Port";
             // 
             // btnOK
@@ -126,7 +126,7 @@
             this.btnOK.Location = new System.Drawing.Point(304, 234);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 8;
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -136,7 +136,7 @@
             this.btnCancel.Location = new System.Drawing.Point(387, 234);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 9;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -147,7 +147,7 @@
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.pgProxy.Size = new System.Drawing.Size(450, 216);
-            this.pgProxy.TabIndex = 10;
+            this.pgProxy.TabIndex = 0;
             this.pgProxy.ToolbarVisible = false;
             // 
             // ProxyConfig

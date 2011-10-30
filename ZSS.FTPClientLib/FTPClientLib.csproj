@@ -105,6 +105,9 @@
     <EmbeddedResource Include="FTPClient2.resx">
       <DependentUpon>FTPClient2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginDialog.resx">
       <DependentUpon>LoginDialog.cs</DependentUpon>
     </EmbeddedResource>

@@ -43,7 +43,7 @@
             0});
             this.nudDelay.Name = "nudDelay";
             this.nudDelay.Size = new System.Drawing.Size(68, 20);
-            this.nudDelay.TabIndex = 1;
+            this.nudDelay.TabIndex = 0;
             this.nudDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudDelay.ValueChanged += new System.EventHandler(this.nudDelay_ValueChanged);
             // 
@@ -56,7 +56,7 @@
             this.cbDelay.Location = new System.Drawing.Point(74, 3);
             this.cbDelay.Name = "cbDelay";
             this.cbDelay.Size = new System.Drawing.Size(159, 21);
-            this.cbDelay.TabIndex = 2;
+            this.cbDelay.TabIndex = 1;
             this.cbDelay.SelectedIndexChanged += new System.EventHandler(this.cbDelay_SelectedIndexChanged);
             // 
             // NumericUpDownTimer

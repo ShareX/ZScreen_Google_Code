@@ -54,65 +54,65 @@ namespace ZScreenLib
             this.ViewRemotePanel.SuspendLayout();
             this.ControlsPanel.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // lbFiles
-            //
+            // 
             this.lbFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbFiles.FormattingEnabled = true;
             this.lbFiles.Location = new System.Drawing.Point(3, 141);
             this.lbFiles.Name = "lbFiles";
             this.lbFiles.ScrollAlwaysVisible = true;
             this.lbFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbFiles.Size = new System.Drawing.Size(245, 407);
+            this.lbFiles.Size = new System.Drawing.Size(245, 408);
             this.lbFiles.TabIndex = 1;
             this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
-            //
+            // 
             // btnDelete
-            //
+            // 
             this.btnDelete.Enabled = false;
             this.btnDelete.Location = new System.Drawing.Point(5, 99);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(235, 24);
-            this.btnDelete.TabIndex = 2;
+            this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete files";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            //
+            // 
             // btnCopyToClip
-            //
+            // 
             this.btnCopyToClip.Enabled = false;
             this.btnCopyToClip.Location = new System.Drawing.Point(5, 45);
             this.btnCopyToClip.Name = "btnCopyToClip";
             this.btnCopyToClip.Size = new System.Drawing.Size(235, 24);
-            this.btnCopyToClip.TabIndex = 3;
+            this.btnCopyToClip.TabIndex = 2;
             this.btnCopyToClip.Text = "Copy URL to clipboard";
             this.btnCopyToClip.UseVisualStyleBackColor = true;
             this.btnCopyToClip.Click += new System.EventHandler(this.btnCopyToClip_Click);
-            //
+            // 
             // cbReverse
-            //
+            // 
             this.cbReverse.AutoSize = true;
             this.cbReverse.Location = new System.Drawing.Point(7, 25);
             this.cbReverse.Margin = new System.Windows.Forms.Padding(0);
             this.cbReverse.Name = "cbReverse";
             this.cbReverse.Size = new System.Drawing.Size(81, 17);
-            this.cbReverse.TabIndex = 36;
+            this.cbReverse.TabIndex = 1;
             this.cbReverse.Text = "Reverse list";
             this.cbReverse.UseVisualStyleBackColor = true;
-            //
+            // 
             // cbAddSpace
-            //
+            // 
             this.cbAddSpace.AutoSize = true;
             this.cbAddSpace.Location = new System.Drawing.Point(7, 7);
             this.cbAddSpace.Margin = new System.Windows.Forms.Padding(0);
             this.cbAddSpace.Name = "cbAddSpace";
             this.cbAddSpace.Size = new System.Drawing.Size(110, 17);
-            this.cbAddSpace.TabIndex = 35;
+            this.cbAddSpace.TabIndex = 0;
             this.cbAddSpace.Text = "Add space before";
             this.cbAddSpace.UseVisualStyleBackColor = true;
-            //
+            // 
             // pnlControls
-            //
+            // 
             this.pnlControls.Controls.Add(this.btnSave);
             this.pnlControls.Controls.Add(this.cbAddSpace);
             this.pnlControls.Controls.Add(this.cbReverse);
@@ -123,29 +123,29 @@ namespace ZScreenLib
             this.pnlControls.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControls.Name = "pnlControls";
             this.pnlControls.Size = new System.Drawing.Size(251, 138);
-            this.pnlControls.TabIndex = 37;
-            //
+            this.pnlControls.TabIndex = 0;
+            // 
             // btnSave
-            //
+            // 
             this.btnSave.Enabled = false;
             this.btnSave.Location = new System.Drawing.Point(5, 72);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(235, 24);
-            this.btnSave.TabIndex = 37;
+            this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save files...";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            //
+            // 
             // bwRemoteViewer
-            //
+            // 
             this.bwRemoteViewer.WorkerReportsProgress = true;
             this.bwRemoteViewer.WorkerSupportsCancellation = true;
             this.bwRemoteViewer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwRemoteViewer_DoWork);
-            this.bwRemoteViewer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwRemoteViewer_RunWorkerCompleted);
             this.bwRemoteViewer.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwRemoteViewer_ProgressChanged);
-            //
+            this.bwRemoteViewer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwRemoteViewer_RunWorkerCompleted);
+            // 
             // pbViewer
-            //
+            // 
             this.pbViewer.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.pbViewer.Location = new System.Drawing.Point(0, 0);
             this.pbViewer.Margin = new System.Windows.Forms.Padding(0);
@@ -154,11 +154,11 @@ namespace ZScreenLib
             this.pbViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbViewer.TabIndex = 0;
             this.pbViewer.TabStop = false;
-            this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
             this.pbViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseDown);
-            //
+            this.pbViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbViewer_MouseMove);
+            // 
             // ssViewer
-            //
+            // 
             this.ssViewer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.sBar,
@@ -169,17 +169,17 @@ namespace ZScreenLib
             this.ssViewer.SizingGrip = false;
             this.ssViewer.TabIndex = 1;
             this.ssViewer.Text = "statusStrip1";
-            //
+            // 
             // toolStripStatusLabel1
-            //
+            // 
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripStatusLabel1.Image = global::ZScreenGUI.Properties.Resources.info;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusLabel1.Text = "Image";
-            //
+            // 
             // sBar
-            //
+            // 
             this.sBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.sBar.Name = "sBar";
             this.sBar.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
@@ -187,25 +187,25 @@ namespace ZScreenLib
             this.sBar.Spring = true;
             this.sBar.Text = "Ready.";
             this.sBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // pBar
-            //
+            // 
             this.pBar.Name = "pBar";
             this.pBar.Size = new System.Drawing.Size(100, 16);
             this.pBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            //
+            // 
             // txtViewer
-            //
+            // 
             this.txtViewer.BackColor = System.Drawing.SystemColors.Info;
             this.txtViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtViewer.Location = new System.Drawing.Point(0, 0);
             this.txtViewer.Multiline = true;
             this.txtViewer.Name = "txtViewer";
             this.txtViewer.Size = new System.Drawing.Size(519, 530);
-            this.txtViewer.TabIndex = 2;
-            //
+            this.txtViewer.TabIndex = 0;
+            // 
             // pnlViewer
-            //
+            // 
             this.pnlViewer.Controls.Add(this.txtViewer);
             this.pnlViewer.Controls.Add(this.ssViewer);
             this.pnlViewer.Controls.Add(this.pbViewer);
@@ -213,10 +213,10 @@ namespace ZScreenLib
             this.pnlViewer.Location = new System.Drawing.Point(3, 3);
             this.pnlViewer.Name = "pnlViewer";
             this.pnlViewer.Size = new System.Drawing.Size(519, 552);
-            this.pnlViewer.TabIndex = 38;
-            //
+            this.pnlViewer.TabIndex = 0;
+            // 
             // ViewRemotePanel
-            //
+            // 
             this.ViewRemotePanel.ColumnCount = 2;
             this.ViewRemotePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.13555F));
             this.ViewRemotePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.86445F));
@@ -228,10 +228,10 @@ namespace ZScreenLib
             this.ViewRemotePanel.RowCount = 1;
             this.ViewRemotePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ViewRemotePanel.Size = new System.Drawing.Size(782, 558);
-            this.ViewRemotePanel.TabIndex = 39;
-            //
+            this.ViewRemotePanel.TabIndex = 0;
+            // 
             // ControlsPanel
-            //
+            // 
             this.ControlsPanel.ColumnCount = 1;
             this.ControlsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ControlsPanel.Controls.Add(this.pnlControls, 0, 0);
@@ -243,10 +243,10 @@ namespace ZScreenLib
             this.ControlsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.ControlsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
             this.ControlsPanel.Size = new System.Drawing.Size(251, 552);
-            this.ControlsPanel.TabIndex = 39;
-            //
+            this.ControlsPanel.TabIndex = 1;
+            // 
             // ViewRemote
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -256,8 +256,8 @@ namespace ZScreenLib
             this.Name = "ViewRemote";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "View Remote Directory";
-            this.Shown += new System.EventHandler(this.ViewRemote_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ViewRemote_FormClosing);
+            this.Shown += new System.EventHandler(this.ViewRemote_Shown);
             this.pnlControls.ResumeLayout(false);
             this.pnlControls.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbViewer)).EndInit();
@@ -268,6 +268,7 @@ namespace ZScreenLib
             this.ViewRemotePanel.ResumeLayout(false);
             this.ControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion Windows Form Designer generated code
