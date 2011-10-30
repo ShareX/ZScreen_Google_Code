@@ -798,7 +798,7 @@ namespace ZScreenGUI
                                  ShowQualityTab = true,
                                  ShowResizeTab = true
                              };
-            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow), wfwgui) {Icon = Icon};
+            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow, false), wfwgui) {Icon = Icon};
             wfw.Show();
         }
 

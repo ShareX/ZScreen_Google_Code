@@ -640,7 +640,7 @@ namespace ZScreenLib
         }
 
 
-        public WorkerTask(Workflow wf)
+        public WorkerTask(Workflow wf, bool cloneWorkflow = true)
         {
             Info = new TaskInfo();
             UploadResults = new List<UploadResult>();
@@ -648,8 +648,15 @@ namespace ZScreenLib
             States.Add(TaskState.Created);
             MyWorker = new BackgroundWorker { WorkerReportsProgress = true };
 
-            IClone cm = new CloneManager();
-            WorkflowConfig = cm.Clone(wf);
+            if (cloneWorkflow)
+            {
+                IClone cm = new CloneManager();
+                WorkflowConfig = cm.Clone(wf);
+            }
+            else
+            {
+                WorkflowConfig = wf;
+            }
         }
 
         public WorkerTask(BackgroundWorker worker, Workflow wf)
