@@ -429,9 +429,9 @@ namespace ZScreenLib
                         bool bClipboardFormat = bClipboardFormatOnLongUrl || task.Job1 != EDataType.URL;
                         string tempText = string.Empty;
                         NameParser np = new NameParser(NameParserType.Clipboard);
-                        np.link = clipboardText.ToString().Trim();
-                        np.size = task.Info.FileSize;
-                        np.name = task.Info.FileName;
+                        np.Link = clipboardText.ToString().Trim();
+                        np.FileSize = task.Info.FileSize;
+                        np.FileName = task.Info.FileName;
                         if (bClipboardFormat)
                         {
                             np.WindowText = task.Info.WindowTitleText;

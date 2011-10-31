@@ -84,10 +84,10 @@ namespace HelpersLib
         n,
         [Description("Link")]
         link,
-        [Description("Size")]
-        size,
-        [Description("Name")]
-        name
+        [Description("File name")]
+        name,
+        [Description("File size")]
+        size
     }
 
     public static class ReplacementExtension
@@ -130,11 +130,11 @@ namespace HelpersLib
 
         public int MaxNameLength { get; set; }
 
-        public string link { get; set; }
+        public string Link { get; set; }
 
-        public string size { get; set; }
+        public string FileSize { get; set; }
 
-        public string name { get; set; }
+        public string FileName { get; set; }
 
         public string WindowText { get; set; }
 
@@ -169,14 +169,6 @@ namespace HelpersLib
             }
 
             StringBuilder sb = new StringBuilder(pattern);
-
-            #region Size, Url, name
-
-            sb.Replace(ReplacementVariables.link.ToPrefixString(), link);
-            sb.Replace(ReplacementVariables.size.ToPrefixString(), size);
-            sb.Replace(ReplacementVariables.name.ToPrefixString(), name);
-
-            #endregion Size, Url, name
 
             #region width, height (If Picture exist)
 
@@ -293,6 +285,14 @@ namespace HelpersLib
             while (result.ReplaceFirst(ra, ZAppHelper.GetRandomChar(ZAppHelper.Alphanumeric).ToString(), out result)) ;
 
             #endregion rn, ra
+
+            #region Link, FileName, FileSize
+
+            sb.Replace(ReplacementVariables.link.ToPrefixString(), Link);
+            sb.Replace(ReplacementVariables.name.ToPrefixString(), FileName);
+            sb.Replace(ReplacementVariables.size.ToPrefixString(), FileSize);
+
+            #endregion Link, FileName, FileSize
 
             if (Type != NameParserType.Watermark & Type != NameParserType.Clipboard)
             {
