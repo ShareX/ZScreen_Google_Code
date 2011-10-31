@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web;
 using HelpersLib;
 using Newtonsoft.Json;
 using UploadersLib.HelperClasses;
@@ -173,12 +174,9 @@ namespace UploadersLib.FileUploaders
 
         public static string GetDropboxURL(long userID, string uploadPath, string fileName)
         {
-            if (!string.IsNullOrEmpty(uploadPath))
+            if (!string.IsNullOrEmpty(uploadPath) && uploadPath.StartsWith("Public/", StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(fileName))
             {
-                if (uploadPath.StartsWith("Public/", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return ZAppHelper.CombineURL(URLDownload, userID.ToString(), uploadPath.Substring(7), fileName);
-                }
+                return ZAppHelper.CombineURL(URLDownload, userID.ToString(), uploadPath.Substring(7), HttpUtility.UrlPathEncode(fileName));
             }
 
             return "Upload path is private. Use \"Public\" folder to get public URL.";
