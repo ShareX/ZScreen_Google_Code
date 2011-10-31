@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -166,7 +167,7 @@ namespace ZScreenLib
         public event TaskEventHandler UploadCompleted;
         public event TaskEventHandler UploadPreparing;
         public event TaskEventHandler UploadProgressChanged2;
-        public event TaskEventHandler UploadStarted; 
+        public event TaskEventHandler UploadStarted;
         #endregion
 
         #region 0 Properties
@@ -721,7 +722,6 @@ namespace ZScreenLib
         #endregion
 
         #region Descriptions
-
 
         public string GetDescription()
         {
@@ -1388,7 +1388,7 @@ namespace ZScreenLib
                 StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from " + Info.LocalFilePath);
                 data = PrepareData(Info.LocalFilePath);
             }
-            else if (TempImage != null)         
+            else if (TempImage != null)
             {
                 StaticHelper.WriteLine(new StackFrame(1).GetMethod().Name + " prepared data from image");
                 EImageFormat imageFormat;
@@ -1581,9 +1581,9 @@ namespace ZScreenLib
 
         private void SetFileSize(long sz)
         {
-            Info.FileSize = sz > 1023
-                                ? string.Format("{0} KiB", (sz / 1024.0).ToString("0"))
-                                : string.Format("{0} B", (sz).ToString("0"));
+            var dsz = sz > 1023 ? (sz / 1024.0) : (double)sz;
+            var strsz = dsz.ToString("N0",  CultureInfo.CurrentCulture.NumberFormat);
+            Info.FileSize = string.Format("{0} {1}", strsz, sz > 1023 ? "KiB" : "B");
         }
 
         public bool ShortenURL(UploadResult ur_shorturl, string fullUrl)

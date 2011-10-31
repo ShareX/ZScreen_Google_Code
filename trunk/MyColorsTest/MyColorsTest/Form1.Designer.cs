@@ -1,4 +1,5 @@
-﻿using ZSS.Colors;
+﻿
+using ZSS.ColorsLib;
 
 namespace MyColorsTest
 {
@@ -33,7 +34,7 @@ namespace MyColorsTest
             this.txtColor = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pbColor = new System.Windows.Forms.PictureBox();
-            this.colorPicker = new ZSS.Colors.ColorPicker();
+            this.colorPicker = new ZSS.ColorsLib.ColorPicker();
             ((System.ComponentModel.ISupportInitialize)(this.pbColor)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,10 +69,11 @@ namespace MyColorsTest
             // 
             // colorPicker
             // 
-            this.colorPicker.DrawStyle = ZSS.Colors.DrawStyle.Hue;
+            this.colorPicker.AutoSize = true;
+            this.colorPicker.DrawStyle = ZSS.ColorsLib.DrawStyle.Hue;
             this.colorPicker.Location = new System.Drawing.Point(8, 8);
             this.colorPicker.Name = "colorPicker";
-            this.colorPicker.Size = new System.Drawing.Size(285, 255);
+            this.colorPicker.Size = new System.Drawing.Size(293, 263);
             this.colorPicker.TabIndex = 10;
             // 
             // Form1
