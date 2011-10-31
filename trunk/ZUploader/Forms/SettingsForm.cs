@@ -143,6 +143,9 @@ namespace ZUploader
                     case ReplacementVariables.t:
                     case ReplacementVariables.i:
                     case ReplacementVariables.n:
+                    case ReplacementVariables.link:
+                    case ReplacementVariables.name:
+                    case ReplacementVariables.size:
                         continue;
                 }
 
