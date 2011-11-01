@@ -43,7 +43,7 @@ namespace ZUploader
             lblCopyright.Text = AssemblyCopyright;
 
             UploadManager.UpdateProxySettings();
-            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Application.ProductVersion),
+            UpdateChecker updateChecker = new UpdateChecker(ZLinks.URL_UPDATE, Application.ProductName, new Version(Program.AssemblyVersion),
                 ReleaseChannelType.Stable, Uploader.ProxySettings.GetWebProxy);
             updateChecker.AutoDownloadSummary = false;
             uclUpdate.CheckUpdate(updateChecker);

@@ -493,11 +493,13 @@ namespace ZScreenLib
             string newDir = string.Empty;
             if (TaskbarManager.IsPlatformSupported)
             {
-                CommonOpenFileDialog dlg = new CommonOpenFileDialog();
-                dlg.EnsureReadOnly = true;
-                dlg.IsFolderPicker = true;
-                dlg.AllowNonFileSystemItems = true;
-                dlg.Title = title;
+                var dlg = new CommonOpenFileDialog
+                              {
+                                  EnsureReadOnly = true,
+                                  IsFolderPicker = true,
+                                  AllowNonFileSystemItems = true,
+                                  Title = title
+                              };
 
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
@@ -506,8 +508,7 @@ namespace ZScreenLib
             }
             else
             {
-                FolderBrowserDialog dlg = new FolderBrowserDialog();
-                dlg.Description = title;
+                var dlg = new FolderBrowserDialog {Description = title};
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     newDir = dlg.SelectedPath;
@@ -521,7 +522,7 @@ namespace ZScreenLib
             DialogResult result = DialogResult.Cancel;
             try
             {
-                FontDialog fDialog = new FontDialog
+                var fDialog = new FontDialog
                 {
                     ShowColor = true
                 };
@@ -603,8 +604,8 @@ namespace ZScreenLib
                         !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicUsername) &&
                         !string.IsNullOrEmpty(Engine.ConfigUploaders.TinyPicPassword))
                     {
-                        TinyPicUploader tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
-                        string regCode = tpu.UserAuth(Engine.ConfigUploaders.TinyPicUsername,
+                        var tpu = new TinyPicUploader(ZKeys.TinyPicID, ZKeys.TinyPicKey, AccountType.User);
+                        var regCode = tpu.UserAuth(Engine.ConfigUploaders.TinyPicUsername,
                             Engine.ConfigUploaders.TinyPicPassword);
                         if (Engine.ConfigUploaders.TinyPicRegistrationCode != regCode)
                         {

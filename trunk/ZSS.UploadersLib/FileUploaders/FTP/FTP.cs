@@ -247,10 +247,13 @@ namespace UploadersLib
                 {
                     Client.ChangeDirectory(remotePath);
                 }
-                catch (Exception)
+                catch (Exception ftpResponse)
                 {
-                    Client.MakeDirectory(remotePath);
-                    Client.ChangeDirectory(remotePath);
+                    if (ftpResponse.InnerException.Message.Contains("No such file or directory"))
+                    {
+                        Client.MakeDirectory(remotePath);
+                        Client.ChangeDirectory(remotePath);
+                    }
                 }
 
                 return true;
