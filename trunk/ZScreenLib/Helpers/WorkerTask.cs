@@ -1586,7 +1586,7 @@ namespace ZScreenLib
             Info.FileSize = string.Format("{0} {1}", strsz, sz > 1023 ? "KiB" : "B");
         }
 
-        public bool ShortenURL(UploadResult ur_shorturl, string fullUrl)
+        public bool ShortenURL(UploadResult urShorturl, string fullUrl)
         {
             if (!string.IsNullOrEmpty(fullUrl))
             {
@@ -1632,9 +1632,9 @@ namespace ZScreenLib
                     if (!string.IsNullOrEmpty(shortenUrl))
                     {
                         StaticHelper.WriteLine(string.Format("Shortened URL: {0}", shortenUrl));
-                        ur_shorturl.Host = us.Host;
-                        ur_shorturl.URL = fullUrl;
-                        ur_shorturl.ShortenedURL = shortenUrl;
+                        urShorturl.Host = us.Host;
+                        urShorturl.URL = fullUrl;
+                        urShorturl.ShortenedURL = shortenUrl;
                         return true;
                     }
                 }
