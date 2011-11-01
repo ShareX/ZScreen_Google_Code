@@ -320,6 +320,19 @@ namespace UploadersLib
             return false;
         }
 
+        public int GetFtpIndex(EDataType dataType)
+        {
+            switch (dataType)
+            {
+                case EDataType.Image:
+                    return FTPSelectedImage;
+                case EDataType.Text:
+                    return FTPSelectedText;
+                default:
+                    return FTPSelectedFile;
+            }
+        }
+
         #endregion Helper Methods
 
         #region I/O Methods

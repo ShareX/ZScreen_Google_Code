@@ -55,6 +55,25 @@ namespace ZUploader
 
         public string FileName { get; set; }
 
+        public EDataType DataType
+        {
+            get
+            {
+                if (ZAppHelper.IsImageFile(filePath))
+                {
+                    return EDataType.Image;
+                }
+                else if (ZAppHelper.IsTextFile(filePath))
+                {
+                    return EDataType.Text;
+                }
+                else
+                {
+                    return EDataType.File;
+                }
+            }
+        }
+
         private EDataType uploaderType;
         public EDataType UploaderType
         {

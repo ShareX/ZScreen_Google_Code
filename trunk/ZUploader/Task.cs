@@ -286,9 +286,10 @@ namespace ZUploader
             switch (UploadManager.FileUploader)
             {
                 case FileDestination.FTP:
-                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(Program.UploadersConfig.FTPSelectedImage))
+                    int ftpId = Program.UploadersConfig.GetFtpIndex(Info.DataType);
+                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(ftpId))
                     {
-                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[Program.UploadersConfig.FTPSelectedImage]);
+                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[ftpId]);
                     }
                     break;
                 case FileDestination.Dropbox:
