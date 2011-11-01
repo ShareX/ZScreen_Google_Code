@@ -427,17 +427,18 @@ namespace ZScreenLib
                     {
                         bool bClipboardFormatOnLongUrl = Engine.ConfigUI.EnableClipboardFormatForLongURLs && task.Job1 == EDataType.URL;
                         bool bClipboardFormat = bClipboardFormatOnLongUrl || task.Job1 != EDataType.URL;
-                        string tempText = string.Empty;
-                        NameParser np = new NameParser(NameParserType.Clipboard);
-                        np.Link = clipboardText.ToString().Trim();
-                        np.FileSize = task.Info.FileSize;
-                        np.FileName = task.Info.FileName;
+                        var np = new NameParser(NameParserType.Clipboard)
+                                     {
+                                         Link = clipboardText.ToString().Trim(),
+                                         FileSize = task.Info.FileSize,
+                                         FileName = task.Info.FileName
+                                     };
                         if (bClipboardFormat)
                         {
                             np.WindowText = task.Info.WindowTitleText;
                         }
 
-                        tempText = bClipboardFormat ? np.Convert(Engine.ConfigUI.ClipboardFormat) : clipboardText.ToString().Trim();
+                        string tempText = bClipboardFormat ? np.Convert(Engine.ConfigUI.ClipboardFormat) : clipboardText.ToString().Trim();
 
                         if (!string.IsNullOrEmpty(tempText))
                         {

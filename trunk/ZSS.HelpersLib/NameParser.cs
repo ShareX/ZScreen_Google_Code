@@ -170,6 +170,14 @@ namespace HelpersLib
 
             StringBuilder sb = new StringBuilder(pattern);
 
+            #region Link, FileName, FileSize
+
+            sb.Replace(ReplacementVariables.link.ToPrefixString(), Link);
+            sb.Replace(ReplacementVariables.name.ToPrefixString(), FileName);
+            sb.Replace(ReplacementVariables.size.ToPrefixString(), FileSize);
+
+            #endregion Link, FileName, FileSize
+
             #region width, height (If Picture exist)
 
             string width = string.Empty, height = string.Empty;
@@ -285,14 +293,6 @@ namespace HelpersLib
             while (result.ReplaceFirst(ra, ZAppHelper.GetRandomChar(ZAppHelper.Alphanumeric).ToString(), out result)) ;
 
             #endregion rn, ra
-
-            #region Link, FileName, FileSize
-
-            sb.Replace(ReplacementVariables.link.ToPrefixString(), Link);
-            sb.Replace(ReplacementVariables.name.ToPrefixString(), FileName);
-            sb.Replace(ReplacementVariables.size.ToPrefixString(), FileSize);
-
-            #endregion Link, FileName, FileSize
 
             if (Type != NameParserType.Watermark & Type != NameParserType.Clipboard)
             {

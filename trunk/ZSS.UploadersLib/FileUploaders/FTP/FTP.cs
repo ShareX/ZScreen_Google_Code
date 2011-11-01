@@ -131,9 +131,22 @@ namespace UploadersLib
 
         public void UploadData(Stream stream, string remotePath)
         {
-            Connect();
-            progress = new ProgressManager(stream.Length);
-            Client.PutFile(stream, remotePath, FileAction.Create);
+            if (Connect())
+            {
+                progress = new ProgressManager(stream.Length);
+                try
+                {
+                    Client.PutFile(stream, remotePath, FileAction.Create);
+                }
+                catch (Exception ftpResponse)
+                {
+                    if (ftpResponse.InnerException.Message.Contains("No such file or directory"))
+                    {
+                        Client.MakeDirectory(remotePath);
+                        Client.PutFile(stream, remotePath, FileAction.Create);
+                    }
+                }
+            }
         }
 
         public void UploadData(byte[] data, string remotePath)
@@ -171,12 +184,11 @@ namespace UploadersLib
 
         public void UploadFiles(string[] localPaths, string remotePath)
         {
-            string filename;
             foreach (string file in localPaths)
             {
                 if (!string.IsNullOrEmpty(file))
                 {
-                    filename = Path.GetFileName(file);
+                    string filename = Path.GetFileName(file);
                     if (File.Exists(file))
                     {
                         UploadFile(file, FTPHelpers.CombineURL(remotePath, filename));
@@ -208,7 +220,6 @@ namespace UploadersLib
 
         public void DownloadFiles(IEnumerable<FtpItem> files, string localPath)
         {
-            string directoryPath;
             foreach (FtpItem file in files)
             {
                 if (file != null && !string.IsNullOrEmpty(file.Name))
@@ -216,7 +227,7 @@ namespace UploadersLib
                     if (file.ItemType == FtpItemType.Directory)
                     {
                         FtpItemCollection newFiles = GetDirList(file.FullPath);
-                        directoryPath = Path.Combine(localPath, file.Name);
+                        string directoryPath = Path.Combine(localPath, file.Name);
                         if (!Directory.Exists(directoryPath))
                         {
                             Directory.CreateDirectory(directoryPath);
