@@ -1,5 +1,6 @@
-﻿Version 4.7.1 - 2011-10-22
+﻿Version 4.7.2 - 2011-10-31
 
+4.7.2 Supported image/text/file based FTP destinations
 4.7.1 Added camera sound when capture is made
 4.7.0 Added Transparent window capture 
 

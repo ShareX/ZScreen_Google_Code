@@ -48,7 +48,7 @@ namespace HelpersLib
     public enum TextFileExtensions
     {
         [Description("ASCII or Unicode plaintext")]
-        txt,
+        txt, log,
         [Description("ASCII or extended ASCII text file")]
         nfo,
         [Description("C source")]

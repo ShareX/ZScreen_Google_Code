@@ -40,17 +40,12 @@
             this.pbMikeURL = new System.Windows.Forms.PictureBox();
             this.pbAU = new System.Windows.Forms.PictureBox();
             this.lblMike = new System.Windows.Forms.Label();
-            this.pbBrandonURL = new System.Windows.Forms.PictureBox();
-            this.pbUS = new System.Windows.Forms.PictureBox();
-            this.lblBrandon = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.uclUpdate = new ZSS.UpdateCheckerLib.UpdateCheckerLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbTR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBerkURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMikeURL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAU)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBrandonURL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +58,7 @@
             this.lblProductName.Location = new System.Drawing.Point(272, 8);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(159, 24);
-            this.lblProductName.TabIndex = 1;
+            this.lblProductName.TabIndex = 0;
             this.lblProductName.Text = "ZUploader 1.0.0.0";
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -87,7 +82,7 @@
             this.btnClose.Location = new System.Drawing.Point(456, 224);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(67, 31);
-            this.btnClose.TabIndex = 3;
+            this.btnClose.TabIndex = 8;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -100,7 +95,7 @@
             this.lblCopyright.Location = new System.Drawing.Point(272, 198);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(51, 13);
-            this.lblCopyright.TabIndex = 4;
+            this.lblCopyright.TabIndex = 7;
             this.lblCopyright.Text = "Copyright";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -112,7 +107,7 @@
             this.label1.Location = new System.Drawing.Point(272, 166);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(195, 26);
-            this.label1.TabIndex = 5;
+            this.label1.TabIndex = 6;
             this.label1.Text = "FTP Library: http://www.starksoft.com\r\nIcons: http://p.yusukekamiyamane.com";
             // 
             // lblBugs
@@ -125,7 +120,7 @@
             this.lblBugs.Location = new System.Drawing.Point(344, 64);
             this.lblBugs.Name = "lblBugs";
             this.lblBugs.Size = new System.Drawing.Size(100, 13);
-            this.lblBugs.TabIndex = 6;
+            this.lblBugs.TabIndex = 3;
             this.lblBugs.Text = "Bugs / Suggestions";
             this.lblBugs.Click += new System.EventHandler(this.lblBugs_Click);
             // 
@@ -137,7 +132,7 @@
             this.lblBerk.Location = new System.Drawing.Point(328, 92);
             this.lblBerk.Name = "lblBerk";
             this.lblBerk.Size = new System.Drawing.Size(108, 13);
-            this.lblBerk.TabIndex = 7;
+            this.lblBerk.TabIndex = 4;
             this.lblBerk.Text = "Jaex (flexy123) - Berk";
             // 
             // pbTR
@@ -196,43 +191,8 @@
             this.lblMike.Location = new System.Drawing.Point(328, 114);
             this.lblMike.Name = "lblMike";
             this.lblMike.Size = new System.Drawing.Size(164, 13);
-            this.lblMike.TabIndex = 11;
+            this.lblMike.TabIndex = 5;
             this.lblMike.Text = "McoreD (mcored) - Mike Delpach";
-            // 
-            // pbBrandonURL
-            // 
-            this.pbBrandonURL.BackColor = System.Drawing.Color.Transparent;
-            this.pbBrandonURL.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbBrandonURL.Image = global::ZUploader.Properties.Resources.application_browser;
-            this.pbBrandonURL.Location = new System.Drawing.Point(304, 136);
-            this.pbBrandonURL.Name = "pbBrandonURL";
-            this.pbBrandonURL.Size = new System.Drawing.Size(16, 16);
-            this.pbBrandonURL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbBrandonURL.TabIndex = 18;
-            this.pbBrandonURL.TabStop = false;
-            this.pbBrandonURL.Click += new System.EventHandler(this.pbBrandonURL_Click);
-            // 
-            // pbUS
-            // 
-            this.pbUS.BackColor = System.Drawing.Color.Transparent;
-            this.pbUS.Image = global::ZUploader.Properties.Resources.us;
-            this.pbUS.Location = new System.Drawing.Point(280, 136);
-            this.pbUS.Name = "pbUS";
-            this.pbUS.Size = new System.Drawing.Size(16, 16);
-            this.pbUS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbUS.TabIndex = 16;
-            this.pbUS.TabStop = false;
-            // 
-            // lblBrandon
-            // 
-            this.lblBrandon.AutoSize = true;
-            this.lblBrandon.BackColor = System.Drawing.Color.Transparent;
-            this.lblBrandon.ForeColor = System.Drawing.Color.Black;
-            this.lblBrandon.Location = new System.Drawing.Point(328, 138);
-            this.lblBrandon.Name = "lblBrandon";
-            this.lblBrandon.Size = new System.Drawing.Size(177, 13);
-            this.lblBrandon.TabIndex = 15;
-            this.lblBrandon.Text = "inf1ni (rgrthat) - Brandon Zimmerman";
             // 
             // pbLogo
             // 
@@ -250,7 +210,7 @@
             this.uclUpdate.Location = new System.Drawing.Point(272, 35);
             this.uclUpdate.Name = "uclUpdate";
             this.uclUpdate.Size = new System.Drawing.Size(250, 24);
-            this.uclUpdate.TabIndex = 20;
+            this.uclUpdate.TabIndex = 1;
             // 
             // AboutForm
             // 
@@ -259,9 +219,6 @@
             this.ClientSize = new System.Drawing.Size(533, 264);
             this.Controls.Add(this.uclUpdate);
             this.Controls.Add(this.pbLogo);
-            this.Controls.Add(this.pbBrandonURL);
-            this.Controls.Add(this.pbUS);
-            this.Controls.Add(this.lblBrandon);
             this.Controls.Add(this.pbMikeURL);
             this.Controls.Add(this.pbAU);
             this.Controls.Add(this.lblMike);
@@ -284,8 +241,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbBerkURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMikeURL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbAU)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBrandonURL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbUS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -306,9 +261,6 @@
         private System.Windows.Forms.PictureBox pbMikeURL;
         private System.Windows.Forms.PictureBox pbAU;
         private System.Windows.Forms.Label lblMike;
-        private System.Windows.Forms.PictureBox pbBrandonURL;
-        private System.Windows.Forms.PictureBox pbUS;
-        private System.Windows.Forms.Label lblBrandon;
         private System.Windows.Forms.PictureBox pbLogo;
         private ZSS.UpdateCheckerLib.UpdateCheckerLabel uclUpdate;
     }
