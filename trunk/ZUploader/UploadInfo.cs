@@ -55,36 +55,20 @@ namespace ZUploader
 
         public string FileName { get; set; }
 
-        public EDataType DataType
-        {
-            get
-            {
-                if (ZAppHelper.IsImageFile(filePath))
-                {
-                    return EDataType.Image;
-                }
-                else if (ZAppHelper.IsTextFile(filePath))
-                {
-                    return EDataType.Text;
-                }
-                else
-                {
-                    return EDataType.File;
-                }
-            }
-        }
+        public EDataType DataType { get; set; }
 
-        private EDataType uploaderType;
-        public EDataType UploaderType
+        private EDataType uploadDestination;
+        public EDataType UploadDestination
         {
             get
             {
-                return uploaderType;
+                return uploadDestination;
             }
             set
             {
-                uploaderType = value;
-                switch (uploaderType)
+                uploadDestination = value;
+
+                switch (uploadDestination)
                 {
                     case EDataType.File:
                         UploaderHost = UploadManager.FileUploader.GetDescription();
@@ -122,7 +106,7 @@ namespace ZUploader
                 Filename = FileName,
                 Filepath = FilePath,
                 DateTimeUtc = UploadTime,
-                Type = UploaderType.ToString(),
+                Type = UploadDestination.ToString(),
                 Host = UploaderHost,
                 URL = Result.URL,
                 ThumbnailURL = Result.ThumbnailURL,
