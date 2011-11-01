@@ -243,7 +243,16 @@ namespace UploadersLib
             if (Connect())
             {
                 remotePath = FTPHelpers.AddSlash(remotePath, FTPHelpers.SlashType.Prefix);
-                Client.ChangeDirectory(remotePath);
+                try
+                {
+                    Client.ChangeDirectory(remotePath);
+                }
+                catch (Exception)
+                {
+                    Client.MakeDirectory(remotePath);
+                    Client.ChangeDirectory(remotePath);
+                }
+
                 return true;
             }
             return false;
