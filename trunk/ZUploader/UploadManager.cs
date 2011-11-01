@@ -182,8 +182,8 @@ namespace ZUploader
         {
             if (img != null)
             {
-                EDataType type = ImageUploader == ImageDestination.FileUploader ? EDataType.File : EDataType.Image;
-                Task task = Task.CreateImageUploaderTask(type, img);
+                EDataType destination = ImageUploader == ImageDestination.FileUploader ? EDataType.File : EDataType.Image;
+                Task task = Task.CreateImageUploaderTask(img, destination);
                 StartUpload(task);
             }
         }
@@ -192,8 +192,8 @@ namespace ZUploader
         {
             if (!string.IsNullOrEmpty(text))
             {
-                EDataType type = TextUploader == TextDestination.FileUploader ? EDataType.File : EDataType.Text;
-                Task task = Task.CreateTextUploaderTask(type, text);
+                EDataType destination = TextUploader == TextDestination.FileUploader ? EDataType.File : EDataType.Text;
+                Task task = Task.CreateTextUploaderTask(text, destination);
                 StartUpload(task);
             }
         }
@@ -276,7 +276,7 @@ namespace ZUploader
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
-                lvi.SubItems.Add(info.UploadDestination.ToString());
+                lvi.SubItems.Add(info.DataType.ToString());
                 lvi.SubItems.Add(info.UploaderHost);
                 lvi.SubItems.Add(string.Empty);
                 lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
