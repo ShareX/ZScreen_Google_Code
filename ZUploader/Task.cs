@@ -67,7 +67,8 @@ namespace ZUploader
             Status = TaskStatus.InQueue;
             Info = new UploadInfo();
             Info.Job = job;
-            Info.UploaderType = dataType;
+            Info.DataType = dataType;
+            Info.UploadDestination = dataType;
         }
 
         public static Task CreateDataUploaderTask(EDataType dataType, Stream stream, string fileName)
@@ -79,9 +80,15 @@ namespace ZUploader
         }
 
         // string filePath -> FileStream data
-        public static Task CreateFileUploaderTask(EDataType dataType, string filePath)
+        public static Task CreateFileUploaderTask(EDataType dataType, string filePath, EDataType destination = EDataType.Default)
         {
             Task task = new Task(dataType, TaskJob.FileUpload);
+
+            if (destination != EDataType.Default)
+            {
+                task.Info.UploadDestination = destination;
+            }
+
             task.Info.FilePath = filePath;
             task.data = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
             return task;
@@ -149,7 +156,7 @@ namespace ZUploader
 
             try
             {
-                switch (Info.UploaderType)
+                switch (Info.UploadDestination)
                 {
                     case EDataType.Image:
                         Info.Result = UploadImage(data, Info.FileName);
@@ -286,10 +293,11 @@ namespace ZUploader
             switch (UploadManager.FileUploader)
             {
                 case FileDestination.FTP:
-                    int ftpId = Program.UploadersConfig.GetFtpIndex(Info.DataType);
-                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(ftpId))
+                    int index = Program.UploadersConfig.GetFtpIndex(Info.DataType);
+
+                    if (Program.UploadersConfig.FTPAccountList2.HasValidIndex(index))
                     {
-                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[ftpId]);
+                        fileUploader = new FTPUploader(Program.UploadersConfig.FTPAccountList2[index]);
                     }
                     break;
                 case FileDestination.Dropbox:

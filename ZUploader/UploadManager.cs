@@ -61,21 +61,32 @@ namespace ZUploader
                 if (File.Exists(path))
                 {
                     EDataType type;
+                    EDataType destination = EDataType.Default;
 
-                    if (ImageUploader != ImageDestination.FileUploader && ZAppHelper.IsImageFile(path))
+                    if (ZAppHelper.IsImageFile(path))
                     {
                         type = EDataType.Image;
+
+                        if (ImageUploader == ImageDestination.FileUploader)
+                        {
+                            destination = EDataType.File;
+                        }
                     }
-                    else if (TextUploader != TextDestination.FileUploader && ZAppHelper.IsTextFile(path))
+                    else if (ZAppHelper.IsTextFile(path))
                     {
                         type = EDataType.Text;
+
+                        if (TextUploader == TextDestination.FileUploader)
+                        {
+                            destination = EDataType.File;
+                        }
                     }
                     else
                     {
                         type = EDataType.File;
                     }
 
-                    Task task = Task.CreateFileUploaderTask(type, path);
+                    Task task = Task.CreateFileUploaderTask(type, path, destination);
                     StartUpload(task);
                 }
                 else if (Directory.Exists(path))
@@ -256,7 +267,7 @@ namespace ZUploader
         {
             if (ListViewControl != null)
             {
-                Program.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}", info.ID, info.Job, info.UploaderType, info.UploaderHost);
+                Program.MyLogger.WriteLine("Upload in queue. ID: {0}, Job: {1}, Type: {2}, Host: {3}", info.ID, info.Job, info.UploadDestination, info.UploaderHost);
 
                 ListViewItem lvi = new ListViewItem();
                 lvi.Text = info.FileName;
@@ -265,7 +276,7 @@ namespace ZUploader
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
-                lvi.SubItems.Add(info.UploaderType.ToString());
+                lvi.SubItems.Add(info.UploadDestination.ToString());
                 lvi.SubItems.Add(info.UploaderHost);
                 lvi.SubItems.Add(string.Empty);
                 lvi.BackColor = info.ID % 2 == 0 ? Color.White : Color.WhiteSmoke;
