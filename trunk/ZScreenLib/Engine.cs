@@ -223,7 +223,6 @@ namespace ZScreenLib
 
         public const string EXT_FTP_ACCOUNTS = "zfa";
         public const string FILTER_IMAGE_HOSTING_SERVICES = "ZScreen Image Uploaders(*.zihs)|*.zihs";
-        public const string FILTER_XML_FILES = "XML Files(*.xml)|*.xml";
 
         #region Windows 7 Taskbar
 

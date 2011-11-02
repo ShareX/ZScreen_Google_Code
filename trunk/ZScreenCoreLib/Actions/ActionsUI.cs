@@ -65,7 +65,7 @@ namespace ZScreenLib
 
             using (var dlg = new OpenFileDialog())
             {
-                dlg.Filter = "";
+                dlg.Filter = StaticHelper.FILTER_EXE_FILES;
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

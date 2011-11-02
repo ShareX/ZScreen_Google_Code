@@ -3706,7 +3706,7 @@ namespace ZScreenGUI
             this.gbBackupRestoreUploaders.Size = new System.Drawing.Size(216, 136);
             this.gbBackupRestoreUploaders.TabIndex = 2;
             this.gbBackupRestoreUploaders.TabStop = false;
-            this.gbBackupRestoreUploaders.Text = "Uploaders ( for ZUploader )";
+            this.gbBackupRestoreUploaders.Text = "Uploaders Config";
             // 
             // btnUploadersConfigExport
             // 
@@ -3741,7 +3741,7 @@ namespace ZScreenGUI
             this.gbBackupRestoreOutputs.Size = new System.Drawing.Size(200, 136);
             this.gbBackupRestoreOutputs.TabIndex = 1;
             this.gbBackupRestoreOutputs.TabStop = false;
-            this.gbBackupRestoreOutputs.Text = "Outputs";
+            this.gbBackupRestoreOutputs.Text = "Workflow Settings";
             // 
             // btnOutputsConfigExport
             // 
@@ -3751,7 +3751,7 @@ namespace ZScreenGUI
             this.btnOutputsConfigExport.Name = "btnOutputsConfigExport";
             this.btnOutputsConfigExport.Size = new System.Drawing.Size(168, 24);
             this.btnOutputsConfigExport.TabIndex = 1;
-            this.btnOutputsConfigExport.Text = "Export Outputs Configuration...";
+            this.btnOutputsConfigExport.Text = "Export Workflow Configuration...";
             this.btnOutputsConfigExport.UseVisualStyleBackColor = true;
             this.btnOutputsConfigExport.Click += new System.EventHandler(this.btnOutputsConfigExport_Click);
             // 
@@ -3763,7 +3763,7 @@ namespace ZScreenGUI
             this.btnOutputsConfigImport.Name = "btnOutputsConfigImport";
             this.btnOutputsConfigImport.Size = new System.Drawing.Size(168, 24);
             this.btnOutputsConfigImport.TabIndex = 0;
-            this.btnOutputsConfigImport.Text = "Import Outputs Configuration...";
+            this.btnOutputsConfigImport.Text = "Import Workflow Configuration...";
             this.btnOutputsConfigImport.UseVisualStyleBackColor = true;
             this.btnOutputsConfigImport.Click += new System.EventHandler(this.btnOutputsConfigImport_Click);
             // 

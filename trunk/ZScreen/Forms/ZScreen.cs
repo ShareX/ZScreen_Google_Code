@@ -631,12 +631,12 @@ namespace ZScreenGUI
 
         private void btnOutputsConfigExport_Click(object sender, EventArgs e)
         {
-            OutputsConfigExport();
+            WorkflowConfigExport();
         }
 
         private void btnOutputsConfigImport_Click(object sender, EventArgs e)
         {
-            OutputsConfigImport();
+            WorkflowConfigImport();
         }
 
         private void btnRegCodeImageShack_Click(object sender, EventArgs e)
