@@ -68,7 +68,7 @@ namespace ZScreenGUI
             tpWatermark.MouseClick += CodesMenuCloseEvent;
             foreach (Control cntrl in tpWatermark.Controls)
             {
-                if (cntrl.GetType() == typeof (GroupBox))
+                if (cntrl.GetType() == typeof(GroupBox))
                 {
                     cntrl.MouseClick += CodesMenuCloseEvent;
                 }
@@ -77,12 +77,12 @@ namespace ZScreenGUI
 
         private void CreateCodesMenu()
         {
-            var variables = Enum.GetValues(typeof (ReplacementVariables)).Cast<ReplacementVariables>().
+            var variables = Enum.GetValues(typeof(ReplacementVariables)).Cast<ReplacementVariables>().
                 Select(
                     x =>
                     new
                         {
-                            Name = ReplacementExtension.Prefix + Enum.GetName(typeof (ReplacementVariables), x),
+                            Name = ReplacementExtension.Prefix + Enum.GetName(typeof(ReplacementVariables), x),
                             Description = x.GetDescription()
                         });
 
@@ -234,7 +234,7 @@ namespace ZScreenGUI
             {
                 if (Engine.HasVista)
                 {
-                    cboCaptureEngine.SelectedIndex = (int) CaptureEngineType.DWM;
+                    cboCaptureEngine.SelectedIndex = (int)CaptureEngineType.DWM;
                 }
 
                 ShowWindow();
@@ -340,7 +340,7 @@ namespace ZScreenGUI
 
             #endregion Windows Size/Location
 
-            #region Window Show/Hide 
+            #region Window Show/Hide
 
             if (Engine.ConfigApp.ShowMainWindow)
             {
@@ -418,29 +418,6 @@ namespace ZScreenGUI
 
         #endregion ZScreen Form Events
 
-        /// <summary>
-        /// Browse for an applicatoin
-        /// </summary>
-        /// <returns>Software</returns>
-        private Software BrowseApplication()
-        {
-            Software temp = null;
-
-            using (var dlg = new OpenFileDialog())
-            {
-                dlg.Filter = Resources.FilterAllFiles;
-
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    temp = new Software();
-                    temp.Name = Path.GetFileNameWithoutExtension(dlg.FileName);
-                    temp.Path = dlg.FileName;
-                }
-            }
-
-            return temp;
-        }
-
         private string FontToString()
         {
             return FontToString(Engine.ConfigWorkflow.WatermarkFont, Engine.ConfigWorkflow.WatermarkFontArgb);
@@ -452,26 +429,7 @@ namespace ZScreenGUI
                    color.R + "," + color.G + "," + color.B;
         }
 
-        /// <summary>
-        /// Searches for an Image Software in settings and returns it
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private static Software GetImageSoftware(string name)
-        {
-            foreach (Software app in Engine.ConfigUI.ActionsApps)
-            {
-                if (app != null && app.Name != null)
-                {
-                    if (app.Name.Equals(name))
-                    {
-                        return app;
-                    }
-                }
-            }
 
-            return null;
-        }
 
         private FTPAccount GetSelectedFTPforImages()
         {
@@ -522,16 +480,7 @@ namespace ZScreenGUI
             return false;
         }
 
-        private void AddImageSoftwareToList(Software temp)
-        {
-            if (temp != null)
-            {
-                Engine.ConfigUI.ActionsApps.Add(temp);
-                lbSoftware.Items.Add(temp);
-                lbSoftware.SelectedIndex = lbSoftware.Items.Count - 1;
-                RewriteImageEditorsRightClickMenu();
-            }
-        }
+
 
         private void Application_Idle(object sender, EventArgs e)
         {
@@ -541,15 +490,6 @@ namespace ZScreenGUI
         private void autoScreenshotsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowAutoCapture();
-        }
-
-        private void btnAddImageSoftware_Click(object sender, EventArgs e)
-        {
-            Software temp = BrowseApplication();
-            if (temp != null)
-            {
-                AddImageSoftwareToList(temp);
-            }
         }
 
         private void BtnBrowseImagesDirClick(object sender, EventArgs e)
@@ -604,7 +544,7 @@ namespace ZScreenGUI
 
         private void btnCodes_Click(object sender, EventArgs e)
         {
-            var b = (Button) sender;
+            var b = (Button)sender;
 
             const string beginning = "btnCodes";
             string name = b.Name, code;
@@ -635,25 +575,6 @@ namespace ZScreenGUI
             }
 
             mDebug.DebugTimer.Enabled = !mDebug.DebugTimer.Enabled;
-        }
-
-        private void btnDeleteImageSoftware_Click(object sender, EventArgs e)
-        {
-            int sel = lbSoftware.SelectedIndex;
-
-            if (sel != -1)
-            {
-                Engine.ConfigUI.ActionsApps.RemoveAt(sel);
-
-                lbSoftware.Items.RemoveAt(sel);
-
-                if (lbSoftware.Items.Count > 0)
-                {
-                    lbSoftware.SelectedIndex = (sel > 0) ? (sel - 1) : 0;
-                }
-            }
-
-            RewriteImageEditorsRightClickMenu();
         }
 
         private void btnDeleteSettings_Click(object sender, EventArgs e)
@@ -798,7 +719,7 @@ namespace ZScreenGUI
                                  ShowQualityTab = true,
                                  ShowResizeTab = true
                              };
-            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow, false), wfwgui) {Icon = Icon};
+            var wfw = new WorkflowWizard(new WorkerTask(Engine.ConfigWorkflow, false), wfwgui) { Icon = Icon };
             wfw.Show();
         }
 
@@ -851,7 +772,7 @@ namespace ZScreenGUI
 
         private void cbCloseButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigApp.WindowButtonActionClose = (WindowButtonAction) cboCloseButtonAction.SelectedIndex;
+            Engine.ConfigApp.WindowButtonActionClose = (WindowButtonAction)cboCloseButtonAction.SelectedIndex;
         }
 
         private void cbCloseDropBox_CheckedChanged(object sender, EventArgs e)
@@ -896,7 +817,7 @@ namespace ZScreenGUI
 
         private void cbCropStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropRegionStyles = (RegionStyles) chkCropStyle.SelectedIndex;
+            Engine.ConfigUI.CropRegionStyles = (RegionStyles)chkCropStyle.SelectedIndex;
         }
 
         private void cbDeleteLocal_CheckedChanged(object sender, EventArgs e)
@@ -931,18 +852,18 @@ namespace ZScreenGUI
 
         private void cbMinimizeButtonAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigApp.WindowButtonActionMinimize = (WindowButtonAction) cboMinimizeButtonAction.SelectedIndex;
+            Engine.ConfigApp.WindowButtonActionMinimize = (WindowButtonAction)cboMinimizeButtonAction.SelectedIndex;
         }
 
         private void cboCaptureEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.CaptureEngineMode2 = (CaptureEngineType) cboCaptureEngine.SelectedIndex;
+            Engine.ConfigWorkflow.CaptureEngineMode2 = (CaptureEngineType)cboCaptureEngine.SelectedIndex;
             UpdateAeroGlassConfig();
         }
 
         private void cboCropEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropEngineMode = (CropEngineType) cboCropEngine.SelectedIndex;
+            Engine.ConfigUI.CropEngineMode = (CropEngineType)cboCropEngine.SelectedIndex;
             gbCropRegion.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropCrosshairSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
             gbCropDynamicRegionBorderColorSettings.Visible = Engine.ConfigUI.CropEngineMode == CropEngineType.Cropv1;
@@ -958,7 +879,7 @@ namespace ZScreenGUI
 
         private void cboProxyConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ProxyConfig = (ProxyConfigType) cboProxyConfig.SelectedIndex;
+            Engine.ConfigUI.ProxyConfig = (ProxyConfigType)cboProxyConfig.SelectedIndex;
             if (IsReady)
             {
                 Uploader.ProxySettings = Adapter.CheckProxySettings();
@@ -967,12 +888,12 @@ namespace ZScreenGUI
 
         private void cboReleaseChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.ReleaseChannel = (ReleaseChannelType) cboReleaseChannel.SelectedIndex;
+            Engine.ConfigUI.ReleaseChannel = (ReleaseChannelType)cboReleaseChannel.SelectedIndex;
         }
 
         private void cboWatermarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.WatermarkMode = (WatermarkType) cboWatermarkType.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkMode = (WatermarkType)cboWatermarkType.SelectedIndex;
             TestWatermark();
             tcWatermark.Enabled = Engine.ConfigWorkflow.WatermarkMode != WatermarkType.NONE;
         }
@@ -1027,7 +948,7 @@ namespace ZScreenGUI
 
         private void cbSelectedWindowStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.SelectedWindowRegionStyles = (RegionStyles) cbSelectedWindowStyle.SelectedIndex;
+            Engine.ConfigUI.SelectedWindowRegionStyles = (RegionStyles)cbSelectedWindowStyle.SelectedIndex;
         }
 
         private void cbShowCropRuler_CheckedChanged(object sender, EventArgs e)
@@ -1083,13 +1004,13 @@ namespace ZScreenGUI
 
         private void cbWatermarkGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.WatermarkGradientType = (LinearGradientMode) cbWatermarkGradientType.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkGradientType = (LinearGradientMode)cbWatermarkGradientType.SelectedIndex;
             TestWatermark();
         }
 
         private void cbWatermarkPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.WatermarkPositionMode = (WatermarkPositionType) chkWatermarkPosition.SelectedIndex;
+            Engine.ConfigWorkflow.WatermarkPositionMode = (WatermarkPositionType)chkWatermarkPosition.SelectedIndex;
             TestWatermark();
         }
 
@@ -1101,7 +1022,7 @@ namespace ZScreenGUI
 
         private void CheckForCodes(object checkObject)
         {
-            var textBox = (TextBox) checkObject;
+            var textBox = (TextBox)checkObject;
             if (codesMenu.Items.Count > 0)
             {
                 codesMenu.Show(textBox, new Point(textBox.Width + 1, 0));
@@ -1202,7 +1123,7 @@ namespace ZScreenGUI
                 if (chkWindows7TaskbarIntegration.Checked)
                 {
                     Engine.ConfigApp.ShowInTaskbar = true;
-                        // Application requires to be shown in Taskbar for Windows 7 Integration
+                    // Application requires to be shown in Taskbar for Windows 7 Integration
                 }
                 Engine.ConfigApp.Windows7TaskbarIntegration = chkWindows7TaskbarIntegration.Checked;
                 ZScreen_Windows7onlyTasks();
@@ -1297,27 +1218,6 @@ namespace ZScreenGUI
             CaptureRectRegionLast();
         }
 
-        private void lbSoftware_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ShowImageEditorsSettings();
-        }
-
-        private void LbSoftwareItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            UpdateGuiEditors(sender);
-        }
-
-        private void LbSoftwareMouseClick(object sender, MouseEventArgs e)
-        {
-            int sel = lbSoftware.IndexFromPoint(e.X, e.Y);
-            if (sel != -1)
-            {
-                // The following lines have been commented out because of unusual check/uncheck behavior
-                // MessageBox.Show(lbSoftware.GetItemChecked(sel).ToString());
-                // lbSoftware.SetItemChecked(sel, !lbSoftware.GetItemChecked(sel));
-            }
-        }
-
         private void llblBugReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             StaticHelper.LoadBrowser(ZLinks.URL_ISSUES);
@@ -1342,12 +1242,12 @@ namespace ZScreenGUI
 
         private void nudCropGridHeight_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropGridSize.Height = (int) nudCropGridHeight.Value;
+            Engine.ConfigUI.CropGridSize.Height = (int)nudCropGridHeight.Value;
         }
 
         private void nudCropGridSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropGridSize.Width = (int) nudCropGridWidth.Value;
+            Engine.ConfigUI.CropGridSize.Width = (int)nudCropGridWidth.Value;
         }
 
         private void nudCropHueRange_ValueChanged(object sender, EventArgs e)
@@ -1357,7 +1257,7 @@ namespace ZScreenGUI
 
         private void nudCropInterval_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropInterval = (int) nudCropCrosshairInterval.Value;
+            Engine.ConfigUI.CropInterval = (int)nudCropCrosshairInterval.Value;
         }
 
         private void nudCropRegionInterval_ValueChanged(object sender, EventArgs e)
@@ -1372,17 +1272,17 @@ namespace ZScreenGUI
 
         private void nudCropStep_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CropStep = (int) nudCropCrosshairStep.Value;
+            Engine.ConfigUI.CropStep = (int)nudCropCrosshairStep.Value;
         }
 
         private void nudCrosshairLineCount_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CrosshairLineCount = (int) nudCrosshairLineCount.Value;
+            Engine.ConfigUI.CrosshairLineCount = (int)nudCrosshairLineCount.Value;
         }
 
         private void nudCrosshairLineSize_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.CrosshairLineSize = (int) nudCrosshairLineSize.Value;
+            Engine.ConfigUI.CrosshairLineSize = (int)nudCrosshairLineSize.Value;
         }
 
         private void nudFlashIconCount_ValueChanged(object sender, EventArgs e)
@@ -1392,12 +1292,12 @@ namespace ZScreenGUI
 
         private void nudHistoryMaxItems_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigUI.HistoryMaxNumber = (int) nudHistoryMaxItems.Value;
+            Engine.ConfigUI.HistoryMaxNumber = (int)nudHistoryMaxItems.Value;
         }
 
         private void nudMaxNameLength_ValueChanged(object sender, EventArgs e)
         {
-            Engine.ConfigWorkflow.MaxNameLength = (int) nudMaxNameLength.Value;
+            Engine.ConfigWorkflow.MaxNameLength = (int)nudMaxNameLength.Value;
         }
 
         private void nudSelectedWindowBorderSize_ValueChanged(object sender, EventArgs e)
@@ -1433,7 +1333,7 @@ namespace ZScreenGUI
         private void nudWatermarkBackTrans_ValueChanged(object sender, EventArgs e)
         {
             Engine.ConfigWorkflow.WatermarkBackTrans = nudWatermarkBackTrans.Value;
-            trackWatermarkBackgroundTrans.Value = (int) nudWatermarkBackTrans.Value;
+            trackWatermarkBackgroundTrans.Value = (int)nudWatermarkBackTrans.Value;
         }
 
         private void nudWatermarkCornerRadius_ValueChanged(object sender, EventArgs e)
@@ -1445,7 +1345,7 @@ namespace ZScreenGUI
         private void nudWatermarkFontTrans_ValueChanged(object sender, EventArgs e)
         {
             Engine.ConfigWorkflow.WatermarkFontTrans = nudWatermarkFontTrans.Value;
-            trackWatermarkFontTrans.Value = (int) nudWatermarkFontTrans.Value;
+            trackWatermarkFontTrans.Value = (int)nudWatermarkFontTrans.Value;
         }
 
         private void nudWatermarkImageScale_ValueChanged(object sender, EventArgs e)
@@ -1478,7 +1378,7 @@ namespace ZScreenGUI
                                         MessageBoxIcon.Error);
                         return;
                     }
-                    var ftpClient = new FTPClient2(acc) {Icon = Icon};
+                    var ftpClient = new FTPClient2(acc) { Icon = Icon };
                     ftpClient.Show();
                 }
             }
@@ -1486,46 +1386,46 @@ namespace ZScreenGUI
 
         private void pbActiveWindowDwmBackColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigWorkflow.ActiveWindowDwmBackColor);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.ActiveWindowDwmBackColor);
         }
 
         private void pbCropBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigUI.CropBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.CropBorderArgb);
         }
 
         private void pbCropCrosshairColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigUI.CropCrosshairArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.CropCrosshairArgb);
         }
 
         private void pbSelectedWindowBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigUI.SelectedWindowBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigUI.SelectedWindowBorderArgb);
         }
 
         private void pbWatermarkBorderColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigWorkflow.WatermarkBorderArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkBorderArgb);
             TestWatermark();
         }
 
         private void pbWatermarkFontColor_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigWorkflow.WatermarkFontArgb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkFontArgb);
             lblWatermarkFont.Text = FontToString();
             TestWatermark();
         }
 
         private void pbWatermarkGradient1_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigWorkflow.WatermarkGradient1Argb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkGradient1Argb);
             TestWatermark();
         }
 
         private void pbWatermarkGradient2_Click(object sender, EventArgs e)
         {
-            SelectColor((PictureBox) sender, ref Engine.ConfigWorkflow.WatermarkGradient2Argb);
+            SelectColor((PictureBox)sender, ref Engine.ConfigWorkflow.WatermarkGradient2Argb);
             TestWatermark();
         }
 
@@ -1550,14 +1450,6 @@ namespace ZScreenGUI
                     Engine.ConfigWorkflow = Workflow.Read(Engine.ConfigApp.WorkflowConfigCustomPath);
                 }
             }
-        }
-
-        private void pgEditorsImage_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            Software temp = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex];
-            lbSoftware.Items[lbSoftware.SelectedIndex] = temp;
-            Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex] = temp;
-            RewriteImageEditorsRightClickMenu();
         }
 
         private void ProxySetup(IEnumerable<ProxyInfo> accs)
@@ -1606,10 +1498,7 @@ namespace ZScreenGUI
             CaptureSelectedWindow();
         }
 
-        private void SetActiveImageSoftware()
-        {
-            Engine.ConfigUI.ImageEditor = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex];
-        }
+
 
         private void SetToolTip(Control original)
         {
@@ -1625,22 +1514,7 @@ namespace ZScreenGUI
             }
         }
 
-        private void ShowImageEditorsSettings()
-        {
-            if (lbSoftware.SelectedItem != null)
-            {
-                Software app = GetImageSoftware(lbSoftware.SelectedItem.ToString());
-                if (app != null)
-                {
-                    Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled =
-                        lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
-                    pgEditorsImage.SelectedObject = app;
-                    pgEditorsImage.Enabled = !app.Protected;
-                    btnActionsRemove.Enabled = !app.Protected;
-                    SetActiveImageSoftware();
-                }
-            }
-        }
+
 
         private void ShowMainWindow()
         {
@@ -1702,7 +1576,7 @@ namespace ZScreenGUI
 
         private void tpMain_DragDrop(object sender, DragEventArgs e)
         {
-            var fileDirPaths = (string[]) e.Data.GetData(DataFormats.FileDrop, true);
+            var fileDirPaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
             var ddMainGUIfiles = new List<string>();
             foreach (string fdp in fileDirPaths)
             {
@@ -1742,7 +1616,7 @@ namespace ZScreenGUI
 
         private void tpSourceFileSystem_DragDrop(object sender, DragEventArgs e)
         {
-            var ddfilePaths = (string[]) e.Data.GetData(DataFormats.FileDrop, true);
+            var ddfilePaths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
             UploadUsingFileSystem(ddfilePaths);
         }
 
@@ -1804,7 +1678,7 @@ namespace ZScreenGUI
 
         private void tsiSelectedWindow_Click(object sender, EventArgs e)
         {
-            var tsi = (ToolStripItem) sender;
+            var tsi = (ToolStripItem)sender;
             var wi = tsi.Tag as WindowInfo;
             if (wi != null)
             {
@@ -1820,11 +1694,6 @@ namespace ZScreenGUI
         private void tsmDropWindow_Click(object sender, EventArgs e)
         {
             ShowDropWindow();
-        }
-
-        private void tsmEditinImageSoftware_CheckedChanged(object sender, EventArgs e)
-        {
-            chkPerformActions.Checked = tsmEditinImageSoftware.Checked;
         }
 
         private void tsmFileUpload_Click(object sender, EventArgs e)
@@ -1870,8 +1739,8 @@ namespace ZScreenGUI
 
         private void txtActiveWindow_Leave(object sender, EventArgs e)
         {
-            mHadFocus = (TextBox) sender;
-            mHadFocusAt = ((TextBox) sender).SelectionStart;
+            mHadFocus = (TextBox)sender;
+            mHadFocusAt = ((TextBox)sender).SelectionStart;
         }
 
         private void txtActiveWindow_TextChanged(object sender, EventArgs e)
@@ -1893,8 +1762,8 @@ namespace ZScreenGUI
 
         private void txtEntireScreen_Leave(object sender, EventArgs e)
         {
-            mHadFocus = (TextBox) sender;
-            mHadFocusAt = ((TextBox) sender).SelectionStart;
+            mHadFocus = (TextBox)sender;
+            mHadFocusAt = ((TextBox)sender).SelectionStart;
         }
 
         private void txtEntireScreen_TextChanged(object sender, EventArgs e)
@@ -1966,44 +1835,18 @@ namespace ZScreenGUI
             chkSelectedWindowShowCheckers.Enabled = chkActiveWindowCleanBackground.Checked;
 
             // Disable Capture children option if DWM is enabled
-            if (cboCaptureEngine.SelectedIndex == (int) CaptureEngineType.DWM)
+            if (cboCaptureEngine.SelectedIndex == (int)CaptureEngineType.DWM)
             {
                 chkActiveWindowTryCaptureChildren.Checked = false;
             }
-            chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int) CaptureEngineType.DWM;
+            chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
         }
 
-        private void UpdateGuiEditors(object sender)
-        {
-            if (IsReady)
-            {
-                if (sender.GetType() == lbSoftware.GetType())
-                {
-                    // the checked state needs to be inversed for some weird reason to get it working properly
-                    if (Engine.ConfigUI.ActionsApps.HasValidIndex(lbSoftware.SelectedIndex))
-                    {
-                        Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled =
-                            !lbSoftware.GetItemChecked(lbSoftware.SelectedIndex);
-                        var tsm = tsmEditinImageSoftware.DropDownItems[lbSoftware.SelectedIndex] as ToolStripMenuItem;
-                        tsm.Checked = Engine.ConfigUI.ActionsApps[lbSoftware.SelectedIndex].Enabled;
-                    }
-                }
-                else if (sender.GetType() == typeof (ToolStripMenuItem))
-                {
-                    var tsm = sender as ToolStripMenuItem;
-                    var sel = (int) tsm.Tag;
-                    if (Engine.ConfigUI.ActionsApps.HasValidIndex(sel))
-                    {
-                        Engine.ConfigUI.ActionsApps[sel].Enabled = tsm.Checked;
-                        lbSoftware.SetItemChecked(lbSoftware.SelectedIndex, tsm.Checked);
-                    }
-                }
-            }
-        }
+
 
         private void watermarkCodeMenu_Click(object sender, EventArgs e)
         {
-            var tsi = (ToolStripMenuItem) sender;
+            var tsi = (ToolStripMenuItem)sender;
             int oldPos = txtWatermarkText.SelectionStart;
             string appendText;
             if (oldPos > 0 && txtWatermarkText.Text[txtWatermarkText.SelectionStart - 1] == ReplacementExtension.Prefix)
@@ -2020,6 +1863,16 @@ namespace ZScreenGUI
                     txtWatermarkText.Text.Insert(txtWatermarkText.SelectionStart, appendText);
                 txtWatermarkText.Select(oldPos + appendText.Length, 0);
             }
+        }
+
+        private void tsmEditinImageSoftware_Click(object sender, EventArgs e)
+        {
+            ShowActionsUI();
+        }
+
+        private void btnActionsUI_Click(object sender, EventArgs e)
+        {
+            ShowActionsUI();
         }
     }
 }

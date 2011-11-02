@@ -92,9 +92,9 @@ namespace ZScreenLib
             return Name;
         }
 
-        public static Software GetByName(string name)
+        public static Software GetByName(ActionsConfig config, string name)
         {
-            foreach (Software software in Engine.ConfigUI.ActionsApps)
+            foreach (Software software in config.ActionsApps)
             {
                 if (software.Name == name) return software;
             }
@@ -102,9 +102,9 @@ namespace ZScreenLib
             return null;
         }
 
-        public static bool Exist(string name)
+        public static bool Exist(ActionsConfig config, string name)
         {
-            foreach (Software software in Engine.ConfigUI.ActionsApps)
+            foreach (Software software in config.ActionsApps)
             {
                 if (software.Name == name) return true;
             }
@@ -112,15 +112,15 @@ namespace ZScreenLib
             return false;
         }
 
-        public static bool Remove(string name)
+        public static bool Remove(ActionsConfig config, string name)
         {
-            if (Exist(name))
+            if (Exist(config, name))
             {
-                foreach (Software software in Engine.ConfigUI.ActionsApps)
+                foreach (Software software in config.ActionsApps)
                 {
                     if (software.Name == name)
                     {
-                        Engine.ConfigUI.ActionsApps.Remove(software);
+                        config.ActionsApps.Remove(software);
                         return true;
                     }
                 }

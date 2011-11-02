@@ -54,9 +54,9 @@ namespace ZScreenGUI
 
                 if (File.Exists(filePath))
                 {
-                    if (!Software.Exist(name))
+                    if (!Software.Exist(Engine.ConfigUI.ConfigActions, name))
                     {
-                        Engine.ConfigUI.ActionsApps.Add(new Software(name, filePath));
+                        Engine.ConfigUI.ConfigActions.ActionsApps.Add(new Software(name, filePath));
                     }
 
                     return true;

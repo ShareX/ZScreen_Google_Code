@@ -291,6 +291,10 @@
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
       <Name>UploadersAPILib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZScreenCoreLib\ZScreenCoreLib.csproj">
+      <Project>{13D3BA40-1212-4ABC-A7C7-D1C96B43BE29}</Project>
+      <Name>ZScreenCoreLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\ZScreenTesterGUI\ZScreenTesterGUI.csproj">
       <Project>{D6EADC06-6BFD-4A4A-9F4F-D0264E5C97C8}</Project>
       <Name>ZScreenTesterGUI</Name>

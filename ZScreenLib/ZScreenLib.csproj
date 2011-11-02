@@ -142,7 +142,6 @@
     <Compile Include="Global\ExceptionMessage.cs" />
     <Compile Include="Helpers\FtpAccountListTypeConverter.cs" />
     <Compile Include="Helpers\OCRHelper.cs" />
-    <Compile Include="Helpers\Software.cs" />
     <Compile Include="Helpers\SoundFileNameEditor.cs" />
     <Compile Include="Helpers\TaskInfo.cs" />
     <Compile Include="Helpers\WorkerTask.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="Forms\LayeredForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Global\SyntaxParser.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,7 +210,6 @@
     <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="Global\UploadInfo.cs" />
     <Compile Include="Global\UploadManager.cs" />
-    <Compile Include="Helpers\ExeFileNameEditor.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Helpers\Freeze.cs" />
     <Compile Include="Helpers\MyTimer.cs" />
@@ -299,6 +296,10 @@
     <ProjectReference Include="..\ZAPILib\UploadersAPILib.csproj">
       <Project>{9BAA5449-BD67-4564-B9A2-72FD1B6BD796}</Project>
       <Name>UploadersAPILib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZScreenCoreLib\ZScreenCoreLib.csproj">
+      <Project>{13D3BA40-1212-4ABC-A7C7-D1C96B43BE29}</Project>
+      <Name>ZScreenCoreLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZScreenTester\GradientTester\GradientMaker.csproj">
       <Project>{8B26E330-9E25-46E3-8DEB-A49F3F312611}</Project>

@@ -33,12 +33,8 @@ namespace ZScreenGUI
             tpMain.ImageKey = "application_form";
             tpHotkeys.ImageKey = "keyboard";
             tpMainInput.ImageKey = "monitor";
-            tpMainActions.ImageKey = "picture_edit";
             tpOptions.ImageKey = "application_edit";
             tpAdvanced.ImageKey = "wrench";
-
-            // Notes
-            lblNoteActions.Text = string.Format("Enable \"{0}\" in the {1} tab for functionality.", chkPerformActions.Text, tpMain.Text);
 
             // Options - Proxy
             ucProxyAccounts.btnAdd.Click += new EventHandler(ProxyAccountsAddButton_Click);
@@ -231,41 +227,19 @@ namespace ZScreenGUI
             chkPerformActions.Enabled = !Engine.ConfigUI.PromptForOutputs;
             tsmEditinImageSoftware.Checked = Engine.ConfigWorkflow.PerformActions;
 
-            if (Engine.ConfigUI.ActionsApps.Count == 0)
+            if (Engine.ConfigUI.ConfigActions.ActionsApps.Count == 0)
             {
                 Software editor = new Software(Engine.zImageAnnotator, Application.ExecutablePath, true, true);
-                Engine.ConfigUI.ActionsApps.Add(editor);
+                Engine.ConfigUI.ConfigActions.ActionsApps.Add(editor);
                 Software effects = new Software(Engine.zImageEffects, Application.ExecutablePath, true, false);
-                Engine.ConfigUI.ActionsApps.Add(effects);
+                Engine.ConfigUI.ConfigActions.ActionsApps.Add(effects);
             }
             else
             {
-                Engine.ConfigUI.ActionsApps.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
+                Engine.ConfigUI.ConfigActions.ActionsApps.RemoveAll(x => string.IsNullOrEmpty(x.Path) || !File.Exists(x.Path));
             }
 
             ImageEditorHelper.FindImageEditors();
-
-            lbSoftware.Items.Clear();
-
-            foreach (Software app in Engine.ConfigUI.ActionsApps)
-            {
-                if (!String.IsNullOrEmpty(app.Name))
-                {
-                    lbSoftware.Items.Add(app.Name, app.Enabled);
-                }
-            }
-
-            RewriteImageEditorsRightClickMenu();
-
-            int i;
-            if (Engine.ConfigUI.ImageEditor != null && (i = lbSoftware.Items.IndexOf(Engine.ConfigUI.ImageEditor.Name)) != -1)
-            {
-                lbSoftware.SelectedIndex = i;
-            }
-            else if (lbSoftware.Items.Count > 0)
-            {
-                lbSoftware.SelectedIndex = 0;
-            }
         }
 
         private void ZScreen_ConfigGUI_Options()

@@ -194,8 +194,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
         //  Editors
         //~~~~~~~~~~~~~~~~~~~~~
-        public List<Software> ActionsApps = new List<Software>();
-        public Software ImageEditor = null;
+        public ActionsConfig ConfigActions = new ActionsConfig();
 
         //~~~~~~~~~~~~~~~~~~~~~
         //  HTTP
