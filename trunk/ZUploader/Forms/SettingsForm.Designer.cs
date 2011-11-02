@@ -121,7 +121,7 @@
             this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 16);
             this.cbClipboardAutoCopy.Name = "cbClipboardAutoCopy";
             this.cbClipboardAutoCopy.Size = new System.Drawing.Size(254, 17);
-            this.cbClipboardAutoCopy.TabIndex = 2;
+            this.cbClipboardAutoCopy.TabIndex = 0;
             this.cbClipboardAutoCopy.Text = "Copy URL to clipboard after upload is completed";
             this.cbClipboardAutoCopy.UseVisualStyleBackColor = true;
             this.cbClipboardAutoCopy.CheckedChanged += new System.EventHandler(this.cbClipboardAutoCopy_CheckedChanged);
@@ -132,7 +132,7 @@
             this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
             this.cbAutoPlaySound.Name = "cbAutoPlaySound";
             this.cbAutoPlaySound.Size = new System.Drawing.Size(327, 17);
-            this.cbAutoPlaySound.TabIndex = 3;
+            this.cbAutoPlaySound.TabIndex = 1;
             this.cbAutoPlaySound.Text = "Play sound when capture is made and after upload is completed";
             this.cbAutoPlaySound.UseVisualStyleBackColor = true;
             this.cbAutoPlaySound.CheckedChanged += new System.EventHandler(this.cbAutoPlaySound_CheckedChanged);
@@ -144,7 +144,7 @@
             this.pgProxy.Name = "pgProxy";
             this.pgProxy.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.pgProxy.Size = new System.Drawing.Size(513, 303);
-            this.pgProxy.TabIndex = 1;
+            this.pgProxy.TabIndex = 0;
             this.pgProxy.ToolbarVisible = false;
             // 
             // tcSettings
@@ -163,7 +163,7 @@
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
             this.tcSettings.Size = new System.Drawing.Size(531, 339);
-            this.tcSettings.TabIndex = 5;
+            this.tcSettings.TabIndex = 0;
             // 
             // tpGeneral
             // 
@@ -189,7 +189,7 @@
             this.cbShowTray.Location = new System.Drawing.Point(16, 112);
             this.cbShowTray.Name = "cbShowTray";
             this.cbShowTray.Size = new System.Drawing.Size(149, 17);
-            this.cbShowTray.TabIndex = 21;
+            this.cbShowTray.TabIndex = 4;
             this.cbShowTray.Text = "Show ZUploader tray icon";
             this.cbShowTray.UseVisualStyleBackColor = true;
             this.cbShowTray.CheckedChanged += new System.EventHandler(this.cbShowTray_CheckedChanged);
@@ -200,7 +200,7 @@
             this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 64);
             this.cbURLShortenAfterUpload.Name = "cbURLShortenAfterUpload";
             this.cbURLShortenAfterUpload.Size = new System.Drawing.Size(240, 17);
-            this.cbURLShortenAfterUpload.TabIndex = 19;
+            this.cbURLShortenAfterUpload.TabIndex = 2;
             this.cbURLShortenAfterUpload.Text = "Use URL Shortener after upload is completed";
             this.cbURLShortenAfterUpload.UseVisualStyleBackColor = true;
             this.cbURLShortenAfterUpload.CheckedChanged += new System.EventHandler(this.cbURLShortenAfterUpload_CheckedChanged);
@@ -211,7 +211,7 @@
             this.label1.Location = new System.Drawing.Point(16, 200);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(264, 13);
-            this.label1.TabIndex = 18;
+            this.label1.TabIndex = 6;
             this.label1.Text = "This folder have settings, history database and log files";
             // 
             // btnOpenZUploaderPath
@@ -219,7 +219,7 @@
             this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 168);
             this.btnOpenZUploaderPath.Name = "btnOpenZUploaderPath";
             this.btnOpenZUploaderPath.Size = new System.Drawing.Size(176, 23);
-            this.btnOpenZUploaderPath.TabIndex = 17;
+            this.btnOpenZUploaderPath.TabIndex = 5;
             this.btnOpenZUploaderPath.Text = "Open ZUploader personal folder";
             this.btnOpenZUploaderPath.UseVisualStyleBackColor = true;
             this.btnOpenZUploaderPath.Click += new System.EventHandler(this.btnOpenZUploaderPath_Click);
@@ -233,7 +233,7 @@
             this.lblGeneralInfo.Location = new System.Drawing.Point(3, 281);
             this.lblGeneralInfo.Name = "lblGeneralInfo";
             this.lblGeneralInfo.Size = new System.Drawing.Size(517, 29);
-            this.lblGeneralInfo.TabIndex = 16;
+            this.lblGeneralInfo.TabIndex = 7;
             this.lblGeneralInfo.Text = "Shell context menu is Windows Explorer right click menu for files and folders.";
             this.lblGeneralInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -243,7 +243,7 @@
             this.cbShellContextMenu.Location = new System.Drawing.Point(16, 88);
             this.cbShellContextMenu.Name = "cbShellContextMenu";
             this.cbShellContextMenu.Size = new System.Drawing.Size(285, 17);
-            this.cbShellContextMenu.TabIndex = 4;
+            this.cbShellContextMenu.TabIndex = 3;
             this.cbShellContextMenu.Text = "Show \"Upload using ZUploader\" in Shell context menu";
             this.cbShellContextMenu.UseVisualStyleBackColor = true;
             this.cbShellContextMenu.CheckedChanged += new System.EventHandler(this.cbShellContextMenu_CheckedChanged);
@@ -263,7 +263,7 @@
             this.tpUpload.Location = new System.Drawing.Point(4, 22);
             this.tpUpload.Name = "tpUpload";
             this.tpUpload.Size = new System.Drawing.Size(523, 313);
-            this.tpUpload.TabIndex = 7;
+            this.tpUpload.TabIndex = 1;
             this.tpUpload.Text = "Upload";
             this.tpUpload.UseVisualStyleBackColor = true;
             // 
@@ -272,7 +272,7 @@
             this.btnLoadUploadersConfig.Location = new System.Drawing.Point(432, 38);
             this.btnLoadUploadersConfig.Name = "btnLoadUploadersConfig";
             this.btnLoadUploadersConfig.Size = new System.Drawing.Size(75, 23);
-            this.btnLoadUploadersConfig.TabIndex = 13;
+            this.btnLoadUploadersConfig.TabIndex = 3;
             this.btnLoadUploadersConfig.Text = "Load";
             this.btnLoadUploadersConfig.UseVisualStyleBackColor = true;
             this.btnLoadUploadersConfig.Click += new System.EventHandler(this.btnLoadUploadersConfig_Click);
@@ -282,7 +282,7 @@
             this.btnBrowseCustomUploadersConfigPath.Location = new System.Drawing.Point(352, 38);
             this.btnBrowseCustomUploadersConfigPath.Name = "btnBrowseCustomUploadersConfigPath";
             this.btnBrowseCustomUploadersConfigPath.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowseCustomUploadersConfigPath.TabIndex = 12;
+            this.btnBrowseCustomUploadersConfigPath.TabIndex = 2;
             this.btnBrowseCustomUploadersConfigPath.Text = "Browse...";
             this.btnBrowseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
             this.btnBrowseCustomUploadersConfigPath.Click += new System.EventHandler(this.btnBrowseCustomUploadersConfigPath_Click);
@@ -292,7 +292,7 @@
             this.txtCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 40);
             this.txtCustomUploadersConfigPath.Name = "txtCustomUploadersConfigPath";
             this.txtCustomUploadersConfigPath.Size = new System.Drawing.Size(328, 20);
-            this.txtCustomUploadersConfigPath.TabIndex = 11;
+            this.txtCustomUploadersConfigPath.TabIndex = 1;
             this.txtCustomUploadersConfigPath.TextChanged += new System.EventHandler(this.txtCustomUploadersConfigPath_TextChanged);
             // 
             // cbUseCustomUploadersConfigPath
@@ -301,7 +301,7 @@
             this.cbUseCustomUploadersConfigPath.Location = new System.Drawing.Point(16, 16);
             this.cbUseCustomUploadersConfigPath.Name = "cbUseCustomUploadersConfigPath";
             this.cbUseCustomUploadersConfigPath.Size = new System.Drawing.Size(201, 17);
-            this.cbUseCustomUploadersConfigPath.TabIndex = 10;
+            this.cbUseCustomUploadersConfigPath.TabIndex = 0;
             this.cbUseCustomUploadersConfigPath.Text = "Use custom uploader config file path:";
             this.cbUseCustomUploadersConfigPath.UseVisualStyleBackColor = true;
             this.cbUseCustomUploadersConfigPath.CheckedChanged += new System.EventHandler(this.cbUseCustomUploadersConfigPath_CheckedChanged);
@@ -312,7 +312,7 @@
             this.lblUploadLimitHint.Location = new System.Drawing.Point(216, 80);
             this.lblUploadLimitHint.Name = "lblUploadLimitHint";
             this.lblUploadLimitHint.Size = new System.Drawing.Size(90, 13);
-            this.lblUploadLimitHint.TabIndex = 5;
+            this.lblUploadLimitHint.TabIndex = 6;
             this.lblUploadLimitHint.Text = "0 - 25 (0 disables)";
             // 
             // nudUploadLimit
@@ -325,7 +325,7 @@
             0});
             this.nudUploadLimit.Name = "nudUploadLimit";
             this.nudUploadLimit.Size = new System.Drawing.Size(56, 20);
-            this.nudUploadLimit.TabIndex = 4;
+            this.nudUploadLimit.TabIndex = 5;
             this.nudUploadLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudUploadLimit.Value = new decimal(new int[] {
             5,
@@ -340,7 +340,7 @@
             this.lblUploadLimit.Location = new System.Drawing.Point(16, 80);
             this.lblUploadLimit.Name = "lblUploadLimit";
             this.lblUploadLimit.Size = new System.Drawing.Size(128, 13);
-            this.lblUploadLimit.TabIndex = 3;
+            this.lblUploadLimit.TabIndex = 4;
             this.lblUploadLimit.Text = "Simultaneous upload limit:";
             // 
             // lblBufferSize
@@ -349,7 +349,7 @@
             this.lblBufferSize.Location = new System.Drawing.Point(16, 112);
             this.lblBufferSize.Name = "lblBufferSize";
             this.lblBufferSize.Size = new System.Drawing.Size(59, 13);
-            this.lblBufferSize.TabIndex = 2;
+            this.lblBufferSize.TabIndex = 7;
             this.lblBufferSize.Text = "Buffer size:";
             // 
             // lblBufferSizeInfo
@@ -358,7 +358,7 @@
             this.lblBufferSizeInfo.Location = new System.Drawing.Point(152, 112);
             this.lblBufferSizeInfo.Name = "lblBufferSizeInfo";
             this.lblBufferSizeInfo.Size = new System.Drawing.Size(23, 13);
-            this.lblBufferSizeInfo.TabIndex = 1;
+            this.lblBufferSizeInfo.TabIndex = 9;
             this.lblBufferSizeInfo.Text = "KiB";
             // 
             // cbBufferSize
@@ -368,7 +368,7 @@
             this.cbBufferSize.Location = new System.Drawing.Point(80, 108);
             this.cbBufferSize.Name = "cbBufferSize";
             this.cbBufferSize.Size = new System.Drawing.Size(64, 21);
-            this.cbBufferSize.TabIndex = 0;
+            this.cbBufferSize.TabIndex = 8;
             this.cbBufferSize.SelectedIndexChanged += new System.EventHandler(this.cbBufferSize_SelectedIndexChanged);
             // 
             // tpHotkeys
@@ -377,7 +377,7 @@
             this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
             this.tpHotkeys.Name = "tpHotkeys";
             this.tpHotkeys.Size = new System.Drawing.Size(523, 313);
-            this.tpHotkeys.TabIndex = 9;
+            this.tpHotkeys.TabIndex = 2;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
             // 
@@ -408,7 +408,7 @@
             this.tpImage.Name = "tpImage";
             this.tpImage.Padding = new System.Windows.Forms.Padding(3);
             this.tpImage.Size = new System.Drawing.Size(523, 313);
-            this.tpImage.TabIndex = 4;
+            this.tpImage.TabIndex = 3;
             this.tpImage.Text = "Image";
             this.tpImage.UseVisualStyleBackColor = true;
             // 
@@ -421,7 +421,7 @@
             this.lblImageInfo.Location = new System.Drawing.Point(3, 281);
             this.lblImageInfo.Name = "lblImageInfo";
             this.lblImageInfo.Size = new System.Drawing.Size(517, 29);
-            this.lblImageInfo.TabIndex = 14;
+            this.lblImageInfo.TabIndex = 12;
             this.lblImageInfo.Text = "These settings are for clipboard upload. Images that are stored in clipboard are " +
     "added as bitmap.";
             this.lblImageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -432,7 +432,7 @@
             this.lblUseImageFormat2AfterHint.Location = new System.Drawing.Point(288, 112);
             this.lblUseImageFormat2AfterHint.Name = "lblUseImageFormat2AfterHint";
             this.lblUseImageFormat2AfterHint.Size = new System.Drawing.Size(124, 13);
-            this.lblUseImageFormat2AfterHint.TabIndex = 13;
+            this.lblUseImageFormat2AfterHint.TabIndex = 9;
             this.lblUseImageFormat2AfterHint.Text = "KiB  0 - 5000 (0 disables)";
             // 
             // lblImageJPEGQualityHint
@@ -441,7 +441,7 @@
             this.lblImageJPEGQualityHint.Location = new System.Drawing.Point(168, 48);
             this.lblImageJPEGQualityHint.Name = "lblImageJPEGQualityHint";
             this.lblImageJPEGQualityHint.Size = new System.Drawing.Size(40, 13);
-            this.lblImageJPEGQualityHint.TabIndex = 12;
+            this.lblImageJPEGQualityHint.TabIndex = 4;
             this.lblImageJPEGQualityHint.Text = "0 - 100";
             // 
             // cbImageGIFQuality
@@ -456,7 +456,7 @@
             this.cbImageGIFQuality.Location = new System.Drawing.Point(104, 76);
             this.cbImageGIFQuality.Name = "cbImageGIFQuality";
             this.cbImageGIFQuality.Size = new System.Drawing.Size(120, 21);
-            this.cbImageGIFQuality.TabIndex = 10;
+            this.cbImageGIFQuality.TabIndex = 6;
             this.cbImageGIFQuality.SelectedIndexChanged += new System.EventHandler(this.cbImageGIFQuality_SelectedIndexChanged);
             // 
             // cbImageFormat2
@@ -472,7 +472,7 @@
             this.cbImageFormat2.Location = new System.Drawing.Point(104, 140);
             this.cbImageFormat2.Name = "cbImageFormat2";
             this.cbImageFormat2.Size = new System.Drawing.Size(56, 21);
-            this.cbImageFormat2.TabIndex = 9;
+            this.cbImageFormat2.TabIndex = 11;
             this.cbImageFormat2.SelectedIndexChanged += new System.EventHandler(this.cbImageFormat2_SelectedIndexChanged);
             // 
             // lblImageFormat2
@@ -481,7 +481,7 @@
             this.lblImageFormat2.Location = new System.Drawing.Point(16, 144);
             this.lblImageFormat2.Name = "lblImageFormat2";
             this.lblImageFormat2.Size = new System.Drawing.Size(80, 13);
-            this.lblImageFormat2.TabIndex = 8;
+            this.lblImageFormat2.TabIndex = 10;
             this.lblImageFormat2.Text = "Image format 2:";
             // 
             // lblUseImageFormat2After
@@ -503,7 +503,7 @@
             0});
             this.nudUseImageFormat2After.Name = "nudUseImageFormat2After";
             this.nudUseImageFormat2After.Size = new System.Drawing.Size(56, 20);
-            this.nudUseImageFormat2After.TabIndex = 6;
+            this.nudUseImageFormat2After.TabIndex = 8;
             this.nudUseImageFormat2After.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudUseImageFormat2After.Value = new decimal(new int[] {
             5000,
@@ -517,7 +517,7 @@
             this.nudImageJPEGQuality.Location = new System.Drawing.Point(104, 44);
             this.nudImageJPEGQuality.Name = "nudImageJPEGQuality";
             this.nudImageJPEGQuality.Size = new System.Drawing.Size(56, 20);
-            this.nudImageJPEGQuality.TabIndex = 4;
+            this.nudImageJPEGQuality.TabIndex = 3;
             this.nudImageJPEGQuality.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudImageJPEGQuality.Value = new decimal(new int[] {
             100,
@@ -532,7 +532,7 @@
             this.lblImageGIFQuality.Location = new System.Drawing.Point(16, 80);
             this.lblImageGIFQuality.Name = "lblImageGIFQuality";
             this.lblImageGIFQuality.Size = new System.Drawing.Size(60, 13);
-            this.lblImageGIFQuality.TabIndex = 3;
+            this.lblImageGIFQuality.TabIndex = 5;
             this.lblImageGIFQuality.Text = "GIF quality:";
             // 
             // lblImageJPEGQuality
@@ -580,7 +580,7 @@
             this.tpClipboardUpload.Name = "tpClipboardUpload";
             this.tpClipboardUpload.Padding = new System.Windows.Forms.Padding(3);
             this.tpClipboardUpload.Size = new System.Drawing.Size(523, 313);
-            this.tpClipboardUpload.TabIndex = 6;
+            this.tpClipboardUpload.TabIndex = 4;
             this.tpClipboardUpload.Text = "Clipboard upload";
             this.tpClipboardUpload.UseVisualStyleBackColor = true;
             // 
@@ -593,7 +593,7 @@
             this.lblClipboardUploadInfo.Location = new System.Drawing.Point(3, 281);
             this.lblClipboardUploadInfo.Name = "lblClipboardUploadInfo";
             this.lblClipboardUploadInfo.Size = new System.Drawing.Size(517, 29);
-            this.lblClipboardUploadInfo.TabIndex = 19;
+            this.lblClipboardUploadInfo.TabIndex = 4;
             this.lblClipboardUploadInfo.Text = "Clipboard upload automatically detects the data type and selects the upload servi" +
     "ce accordingly.";
             this.lblClipboardUploadInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -604,7 +604,7 @@
             this.lblNameFormatPatternPreview.Location = new System.Drawing.Point(16, 72);
             this.lblNameFormatPatternPreview.Name = "lblNameFormatPatternPreview";
             this.lblNameFormatPatternPreview.Size = new System.Drawing.Size(48, 13);
-            this.lblNameFormatPatternPreview.TabIndex = 18;
+            this.lblNameFormatPatternPreview.TabIndex = 3;
             this.lblNameFormatPatternPreview.Text = "Preview:";
             // 
             // lblNameFormatPattern
@@ -613,7 +613,7 @@
             this.lblNameFormatPattern.Location = new System.Drawing.Point(16, 16);
             this.lblNameFormatPattern.Name = "lblNameFormatPattern";
             this.lblNameFormatPattern.Size = new System.Drawing.Size(362, 13);
-            this.lblNameFormatPattern.TabIndex = 15;
+            this.lblNameFormatPattern.TabIndex = 0;
             this.lblNameFormatPattern.Text = "Clipboard upload name pattern for image and text (Not image file or text file):";
             // 
             // btnNameFormatPatternHelp
@@ -621,7 +621,7 @@
             this.btnNameFormatPatternHelp.Location = new System.Drawing.Point(440, 39);
             this.btnNameFormatPatternHelp.Name = "btnNameFormatPatternHelp";
             this.btnNameFormatPatternHelp.Size = new System.Drawing.Size(24, 23);
-            this.btnNameFormatPatternHelp.TabIndex = 17;
+            this.btnNameFormatPatternHelp.TabIndex = 2;
             this.btnNameFormatPatternHelp.Text = "?";
             this.btnNameFormatPatternHelp.UseVisualStyleBackColor = true;
             this.btnNameFormatPatternHelp.Click += new System.EventHandler(this.btnNameFormatPatternHelp_Click);
@@ -631,7 +631,7 @@
             this.txtNameFormatPattern.Location = new System.Drawing.Point(16, 40);
             this.txtNameFormatPattern.Name = "txtNameFormatPattern";
             this.txtNameFormatPattern.Size = new System.Drawing.Size(416, 20);
-            this.txtNameFormatPattern.TabIndex = 16;
+            this.txtNameFormatPattern.TabIndex = 1;
             this.txtNameFormatPattern.TextChanged += new System.EventHandler(this.txtNameFormatPattern_TextChanged);
             // 
             // tpCapture
@@ -643,7 +643,7 @@
             this.tpCapture.Name = "tpCapture";
             this.tpCapture.Padding = new System.Windows.Forms.Padding(5);
             this.tpCapture.Size = new System.Drawing.Size(523, 313);
-            this.tpCapture.TabIndex = 8;
+            this.tpCapture.TabIndex = 5;
             this.tpCapture.Text = "Capture";
             this.tpCapture.UseVisualStyleBackColor = true;
             // 
@@ -653,7 +653,7 @@
             this.cbCaptureTransparent.Location = new System.Drawing.Point(16, 40);
             this.cbCaptureTransparent.Name = "cbCaptureTransparent";
             this.cbCaptureTransparent.Size = new System.Drawing.Size(256, 17);
-            this.cbCaptureTransparent.TabIndex = 10;
+            this.cbCaptureTransparent.TabIndex = 1;
             this.cbCaptureTransparent.Text = "Capture with transparency (For window captures)";
             this.cbCaptureTransparent.UseVisualStyleBackColor = true;
             this.cbCaptureTransparent.CheckedChanged += new System.EventHandler(this.cbCaptureTransparent_CheckedChanged);
@@ -671,7 +671,7 @@
             this.gbSurfaceSettings.Location = new System.Drawing.Point(16, 72);
             this.gbSurfaceSettings.Name = "gbSurfaceSettings";
             this.gbSurfaceSettings.Size = new System.Drawing.Size(488, 176);
-            this.gbSurfaceSettings.TabIndex = 6;
+            this.gbSurfaceSettings.TabIndex = 2;
             this.gbSurfaceSettings.TabStop = false;
             this.gbSurfaceSettings.Text = "Shape capture settings";
             // 
@@ -681,7 +681,7 @@
             this.lblFixedShapeSizeHeight.Location = new System.Drawing.Point(40, 148);
             this.lblFixedShapeSizeHeight.Name = "lblFixedShapeSizeHeight";
             this.lblFixedShapeSizeHeight.Size = new System.Drawing.Size(41, 13);
-            this.lblFixedShapeSizeHeight.TabIndex = 9;
+            this.lblFixedShapeSizeHeight.TabIndex = 6;
             this.lblFixedShapeSizeHeight.Text = "Height:";
             // 
             // lblFixedShapeSizeWidth
@@ -690,7 +690,7 @@
             this.lblFixedShapeSizeWidth.Location = new System.Drawing.Point(40, 124);
             this.lblFixedShapeSizeWidth.Name = "lblFixedShapeSizeWidth";
             this.lblFixedShapeSizeWidth.Size = new System.Drawing.Size(38, 13);
-            this.lblFixedShapeSizeWidth.TabIndex = 8;
+            this.lblFixedShapeSizeWidth.TabIndex = 4;
             this.lblFixedShapeSizeWidth.Text = "Width:";
             // 
             // nudFixedShapeSizeHeight
@@ -731,7 +731,7 @@
             0});
             this.nudFixedShapeSizeWidth.Name = "nudFixedShapeSizeWidth";
             this.nudFixedShapeSizeWidth.Size = new System.Drawing.Size(56, 20);
-            this.nudFixedShapeSizeWidth.TabIndex = 6;
+            this.nudFixedShapeSizeWidth.TabIndex = 5;
             this.nudFixedShapeSizeWidth.Value = new decimal(new int[] {
             1,
             0,
@@ -745,7 +745,7 @@
             this.cbDrawBorder.Location = new System.Drawing.Point(16, 24);
             this.cbDrawBorder.Name = "cbDrawBorder";
             this.cbDrawBorder.Size = new System.Drawing.Size(170, 17);
-            this.cbDrawBorder.TabIndex = 2;
+            this.cbDrawBorder.TabIndex = 0;
             this.cbDrawBorder.Text = "Draw border around the shape";
             this.cbDrawBorder.UseVisualStyleBackColor = true;
             this.cbDrawBorder.CheckedChanged += new System.EventHandler(this.cbDrawBorder_CheckedChanged);
@@ -756,7 +756,7 @@
             this.cbFixedShapeSize.Location = new System.Drawing.Point(16, 96);
             this.cbFixedShapeSize.Name = "cbFixedShapeSize";
             this.cbFixedShapeSize.Size = new System.Drawing.Size(107, 17);
-            this.cbFixedShapeSize.TabIndex = 5;
+            this.cbFixedShapeSize.TabIndex = 3;
             this.cbFixedShapeSize.Text = "Fixed shape size:";
             this.cbFixedShapeSize.UseVisualStyleBackColor = true;
             this.cbFixedShapeSize.CheckedChanged += new System.EventHandler(this.cbFixedShapeSize_CheckedChanged);
@@ -767,7 +767,7 @@
             this.cbDrawCheckerboard.Location = new System.Drawing.Point(16, 48);
             this.cbDrawCheckerboard.Name = "cbDrawCheckerboard";
             this.cbDrawCheckerboard.Size = new System.Drawing.Size(287, 17);
-            this.cbDrawCheckerboard.TabIndex = 3;
+            this.cbDrawCheckerboard.TabIndex = 1;
             this.cbDrawCheckerboard.Text = "Draw checkerboard pattern replacing transparent areas";
             this.cbDrawCheckerboard.UseVisualStyleBackColor = true;
             this.cbDrawCheckerboard.CheckedChanged += new System.EventHandler(this.cbDrawCheckerboard_CheckedChanged);
@@ -778,7 +778,7 @@
             this.cbQuickCrop.Location = new System.Drawing.Point(16, 72);
             this.cbQuickCrop.Name = "cbQuickCrop";
             this.cbQuickCrop.Size = new System.Drawing.Size(455, 17);
-            this.cbQuickCrop.TabIndex = 4;
+            this.cbQuickCrop.TabIndex = 2;
             this.cbQuickCrop.Text = "Complete capture as soon as the mouse button is released, except when capturing p" +
     "olygon";
             this.cbQuickCrop.UseVisualStyleBackColor = true;
@@ -790,7 +790,7 @@
             this.cbShowCursor.Location = new System.Drawing.Point(16, 16);
             this.cbShowCursor.Name = "cbShowCursor";
             this.cbShowCursor.Size = new System.Drawing.Size(156, 17);
-            this.cbShowCursor.TabIndex = 1;
+            this.cbShowCursor.TabIndex = 0;
             this.cbShowCursor.Text = "Show cursor in screenshots";
             this.cbShowCursor.UseVisualStyleBackColor = true;
             this.cbShowCursor.CheckedChanged += new System.EventHandler(this.cbShowCursor_CheckedChanged);
@@ -808,7 +808,7 @@
             this.tpHistory.Name = "tpHistory";
             this.tpHistory.Padding = new System.Windows.Forms.Padding(3);
             this.tpHistory.Size = new System.Drawing.Size(523, 313);
-            this.tpHistory.TabIndex = 3;
+            this.tpHistory.TabIndex = 6;
             this.tpHistory.Text = "History";
             this.tpHistory.UseVisualStyleBackColor = true;
             // 
@@ -821,7 +821,7 @@
             this.lblHistoryInfo.Location = new System.Drawing.Point(3, 281);
             this.lblHistoryInfo.Name = "lblHistoryInfo";
             this.lblHistoryInfo.Size = new System.Drawing.Size(517, 29);
-            this.lblHistoryInfo.TabIndex = 15;
+            this.lblHistoryInfo.TabIndex = 6;
             this.lblHistoryInfo.Text = "ZUploader uses XML to store history items.";
             this.lblHistoryInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -840,7 +840,7 @@
             -2147483648});
             this.nudHistoryMaxItemCount.Name = "nudHistoryMaxItemCount";
             this.nudHistoryMaxItemCount.Size = new System.Drawing.Size(80, 20);
-            this.nudHistoryMaxItemCount.TabIndex = 11;
+            this.nudHistoryMaxItemCount.TabIndex = 5;
             this.nudHistoryMaxItemCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudHistoryMaxItemCount.Value = new decimal(new int[] {
             1,
@@ -855,7 +855,7 @@
             this.lblHistoryMaxItemCount.Location = new System.Drawing.Point(16, 96);
             this.lblHistoryMaxItemCount.Name = "lblHistoryMaxItemCount";
             this.lblHistoryMaxItemCount.Size = new System.Drawing.Size(192, 13);
-            this.lblHistoryMaxItemCount.TabIndex = 10;
+            this.lblHistoryMaxItemCount.TabIndex = 4;
             this.lblHistoryMaxItemCount.Text = "Max item count for filtering (-1 disables):";
             // 
             // btnBrowseCustomHistoryPath
@@ -863,7 +863,7 @@
             this.btnBrowseCustomHistoryPath.Location = new System.Drawing.Point(392, 62);
             this.btnBrowseCustomHistoryPath.Name = "btnBrowseCustomHistoryPath";
             this.btnBrowseCustomHistoryPath.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowseCustomHistoryPath.TabIndex = 9;
+            this.btnBrowseCustomHistoryPath.TabIndex = 3;
             this.btnBrowseCustomHistoryPath.Text = "Browse...";
             this.btnBrowseCustomHistoryPath.UseVisualStyleBackColor = true;
             this.btnBrowseCustomHistoryPath.Click += new System.EventHandler(this.btnBrowseCustomHistoryPath_Click);
@@ -873,7 +873,7 @@
             this.txtCustomHistoryPath.Location = new System.Drawing.Point(16, 64);
             this.txtCustomHistoryPath.Name = "txtCustomHistoryPath";
             this.txtCustomHistoryPath.Size = new System.Drawing.Size(368, 20);
-            this.txtCustomHistoryPath.TabIndex = 8;
+            this.txtCustomHistoryPath.TabIndex = 2;
             this.txtCustomHistoryPath.TextChanged += new System.EventHandler(this.txtCustomHistoryPath_TextChanged);
             // 
             // cbUseCustomHistoryPath
@@ -882,7 +882,7 @@
             this.cbUseCustomHistoryPath.Location = new System.Drawing.Point(16, 40);
             this.cbUseCustomHistoryPath.Name = "cbUseCustomHistoryPath";
             this.cbUseCustomHistoryPath.Size = new System.Drawing.Size(158, 17);
-            this.cbUseCustomHistoryPath.TabIndex = 6;
+            this.cbUseCustomHistoryPath.TabIndex = 1;
             this.cbUseCustomHistoryPath.Text = "Use custom history file path:";
             this.cbUseCustomHistoryPath.UseVisualStyleBackColor = true;
             this.cbUseCustomHistoryPath.CheckedChanged += new System.EventHandler(this.cbUseCustomHistoryPath_CheckedChanged);
@@ -893,7 +893,7 @@
             this.cbHistorySave.Location = new System.Drawing.Point(16, 16);
             this.cbHistorySave.Name = "cbHistorySave";
             this.cbHistorySave.Size = new System.Drawing.Size(118, 17);
-            this.cbHistorySave.TabIndex = 5;
+            this.cbHistorySave.TabIndex = 0;
             this.cbHistorySave.Text = "Enable history save";
             this.cbHistorySave.UseVisualStyleBackColor = true;
             this.cbHistorySave.CheckedChanged += new System.EventHandler(this.cbHistorySave_CheckedChanged);
@@ -906,7 +906,7 @@
             this.tpProxy.Name = "tpProxy";
             this.tpProxy.Padding = new System.Windows.Forms.Padding(5);
             this.tpProxy.Size = new System.Drawing.Size(523, 313);
-            this.tpProxy.TabIndex = 2;
+            this.tpProxy.TabIndex = 7;
             this.tpProxy.Text = "Proxy";
             this.tpProxy.UseVisualStyleBackColor = true;
             // 
@@ -916,7 +916,7 @@
             this.btnAutofillProxy.Location = new System.Drawing.Point(432, 272);
             this.btnAutofillProxy.Name = "btnAutofillProxy";
             this.btnAutofillProxy.Size = new System.Drawing.Size(75, 23);
-            this.btnAutofillProxy.TabIndex = 2;
+            this.btnAutofillProxy.TabIndex = 1;
             this.btnAutofillProxy.Text = "Autofill";
             this.btnAutofillProxy.UseVisualStyleBackColor = true;
             this.btnAutofillProxy.Click += new System.EventHandler(this.btnAutofillProxy_Click);
@@ -928,7 +928,7 @@
             this.tpDebug.Name = "tpDebug";
             this.tpDebug.Padding = new System.Windows.Forms.Padding(3);
             this.tpDebug.Size = new System.Drawing.Size(523, 313);
-            this.tpDebug.TabIndex = 5;
+            this.tpDebug.TabIndex = 8;
             this.tpDebug.Text = "Debug";
             this.tpDebug.UseVisualStyleBackColor = true;
             // 

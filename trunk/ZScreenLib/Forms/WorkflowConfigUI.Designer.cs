@@ -93,10 +93,10 @@
             this.chkTaskImageFileFormat = new System.Windows.Forms.CheckBox();
             this.chkTaskImageResize = new System.Windows.Forms.CheckBox();
             this.chkTaskOutputConfig = new System.Windows.Forms.CheckBox();
+            this.btnCopyImageClose = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnCopyImageClose = new System.Windows.Forms.Button();
             this.tcMain.SuspendLayout();
             this.tpJob.SuspendLayout();
             this.gbTask.SuspendLayout();
@@ -135,7 +135,7 @@
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
             this.tcMain.Size = new System.Drawing.Size(640, 400);
-            this.tcMain.TabIndex = 0;
+            this.tcMain.TabIndex = 1;
             // 
             // tpJob
             // 
@@ -157,7 +157,7 @@
             this.gbTask.Location = new System.Drawing.Point(8, 72);
             this.gbTask.Name = "gbTask";
             this.gbTask.Size = new System.Drawing.Size(608, 56);
-            this.gbTask.TabIndex = 10;
+            this.gbTask.TabIndex = 1;
             this.gbTask.TabStop = false;
             this.gbTask.Text = "Task";
             // 
@@ -177,7 +177,7 @@
             this.gbName.Location = new System.Drawing.Point(8, 8);
             this.gbName.Name = "gbName";
             this.gbName.Size = new System.Drawing.Size(608, 56);
-            this.gbName.TabIndex = 9;
+            this.gbName.TabIndex = 0;
             this.gbName.TabStop = false;
             this.gbName.Text = "Description";
             // 
@@ -186,7 +186,7 @@
             this.txtName.Location = new System.Drawing.Point(8, 24);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(560, 20);
-            this.txtName.TabIndex = 7;
+            this.txtName.TabIndex = 0;
             // 
             // chkUseHotkey
             // 
@@ -194,7 +194,7 @@
             this.chkUseHotkey.Location = new System.Drawing.Point(24, 160);
             this.chkUseHotkey.Name = "chkUseHotkey";
             this.chkUseHotkey.Size = new System.Drawing.Size(183, 17);
-            this.chkUseHotkey.TabIndex = 7;
+            this.chkUseHotkey.TabIndex = 3;
             this.chkUseHotkey.Text = "Enable a hotkey to run this profile";
             this.chkUseHotkey.UseVisualStyleBackColor = true;
             // 
@@ -203,7 +203,7 @@
             this.hmcHotkeys.Location = new System.Drawing.Point(16, 144);
             this.hmcHotkeys.Name = "hmcHotkeys";
             this.hmcHotkeys.Size = new System.Drawing.Size(600, 32);
-            this.hmcHotkeys.TabIndex = 11;
+            this.hmcHotkeys.TabIndex = 2;
             // 
             // tpImagePreview
             // 
@@ -212,7 +212,7 @@
             this.tpImagePreview.Name = "tpImagePreview";
             this.tpImagePreview.Padding = new System.Windows.Forms.Padding(3);
             this.tpImagePreview.Size = new System.Drawing.Size(632, 374);
-            this.tpImagePreview.TabIndex = 6;
+            this.tpImagePreview.TabIndex = 1;
             this.tpImagePreview.Text = "Preview";
             this.tpImagePreview.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +232,7 @@
             this.tpImageQuality.Location = new System.Drawing.Point(4, 22);
             this.tpImageQuality.Name = "tpImageQuality";
             this.tpImageQuality.Size = new System.Drawing.Size(632, 374);
-            this.tpImageQuality.TabIndex = 5;
+            this.tpImageQuality.TabIndex = 2;
             this.tpImageQuality.Text = "Quality";
             this.tpImageQuality.UseVisualStyleBackColor = true;
             // 
@@ -250,7 +250,7 @@
             this.gbPictureQuality.Location = new System.Drawing.Point(8, 8);
             this.gbPictureQuality.Name = "gbPictureQuality";
             this.gbPictureQuality.Size = new System.Drawing.Size(608, 352);
-            this.gbPictureQuality.TabIndex = 116;
+            this.gbPictureQuality.TabIndex = 0;
             this.gbPictureQuality.TabStop = false;
             this.gbPictureQuality.Text = "Picture Quality";
             // 
@@ -264,7 +264,7 @@
             this.tcQuality.Name = "tcQuality";
             this.tcQuality.SelectedIndex = 0;
             this.tcQuality.Size = new System.Drawing.Size(584, 120);
-            this.tcQuality.TabIndex = 121;
+            this.tcQuality.TabIndex = 7;
             // 
             // tpQualityPng
             // 
@@ -317,7 +317,7 @@
             this.lblQuality.Location = new System.Drawing.Point(12, 10);
             this.lblQuality.Name = "lblQuality";
             this.lblQuality.Size = new System.Drawing.Size(72, 13);
-            this.lblQuality.TabIndex = 108;
+            this.lblQuality.TabIndex = 0;
             this.lblQuality.Text = "JPEG Quality:";
             // 
             // cboJpgSubSampling
@@ -327,7 +327,7 @@
             this.cboJpgSubSampling.Location = new System.Drawing.Point(12, 58);
             this.cboJpgSubSampling.Name = "cboJpgSubSampling";
             this.cboJpgSubSampling.Size = new System.Drawing.Size(416, 21);
-            this.cboJpgSubSampling.TabIndex = 120;
+            this.cboJpgSubSampling.TabIndex = 2;
             // 
             // cboJpgQuality
             // 
@@ -336,7 +336,7 @@
             this.cboJpgQuality.Location = new System.Drawing.Point(12, 26);
             this.cboJpgQuality.Name = "cboJpgQuality";
             this.cboJpgQuality.Size = new System.Drawing.Size(416, 21);
-            this.cboJpgQuality.TabIndex = 119;
+            this.cboJpgQuality.TabIndex = 1;
             // 
             // tpQualityGif
             // 
@@ -355,7 +355,7 @@
             this.lblGIFQuality.Location = new System.Drawing.Point(12, 10);
             this.lblGIFQuality.Name = "lblGIFQuality";
             this.lblGIFQuality.Size = new System.Drawing.Size(62, 13);
-            this.lblGIFQuality.TabIndex = 117;
+            this.lblGIFQuality.TabIndex = 0;
             this.lblGIFQuality.Text = "GIF Quality:";
             // 
             // cboGIFQuality
@@ -369,7 +369,7 @@
             this.cboGIFQuality.Location = new System.Drawing.Point(12, 26);
             this.cboGIFQuality.Name = "cboGIFQuality";
             this.cboGIFQuality.Size = new System.Drawing.Size(98, 21);
-            this.cboGIFQuality.TabIndex = 118;
+            this.cboGIFQuality.TabIndex = 1;
             // 
             // tpQualityTiff
             // 
@@ -389,7 +389,7 @@
             this.cboTiffQuality.Location = new System.Drawing.Point(8, 16);
             this.cboTiffQuality.Name = "cboTiffQuality";
             this.cboTiffQuality.Size = new System.Drawing.Size(392, 21);
-            this.cboTiffQuality.TabIndex = 1;
+            this.cboTiffQuality.TabIndex = 0;
             // 
             // nudSwitchAfter
             // 
@@ -401,7 +401,7 @@
             0});
             this.nudSwitchAfter.Name = "nudSwitchAfter";
             this.nudSwitchAfter.Size = new System.Drawing.Size(72, 20);
-            this.nudSwitchAfter.TabIndex = 116;
+            this.nudSwitchAfter.TabIndex = 4;
             this.nudSwitchAfter.Value = new decimal(new int[] {
             350,
             0,
@@ -417,7 +417,7 @@
             this.cboSwitchFormat.Location = new System.Drawing.Point(232, 40);
             this.cboSwitchFormat.Name = "cboSwitchFormat";
             this.cboSwitchFormat.Size = new System.Drawing.Size(98, 21);
-            this.cboSwitchFormat.TabIndex = 9;
+            this.cboSwitchFormat.TabIndex = 6;
             this.cboSwitchFormat.SelectedIndexChanged += new System.EventHandler(this.cboSwitchFormat_SelectedIndexChanged);
             // 
             // lblFileFormat
@@ -427,7 +427,7 @@
             this.lblFileFormat.Location = new System.Drawing.Point(16, 24);
             this.lblFileFormat.Name = "lblFileFormat";
             this.lblFileFormat.Size = new System.Drawing.Size(61, 13);
-            this.lblFileFormat.TabIndex = 97;
+            this.lblFileFormat.TabIndex = 1;
             this.lblFileFormat.Text = "File Format:";
             // 
             // cboFileFormat
@@ -437,7 +437,7 @@
             this.cboFileFormat.Location = new System.Drawing.Point(16, 40);
             this.cboFileFormat.Name = "cboFileFormat";
             this.cboFileFormat.Size = new System.Drawing.Size(98, 21);
-            this.cboFileFormat.TabIndex = 6;
+            this.cboFileFormat.TabIndex = 3;
             this.cboFileFormat.SelectedIndexChanged += new System.EventHandler(this.cboFileFormat_SelectedIndexChanged);
             // 
             // lblKB
@@ -447,7 +447,7 @@
             this.lblKB.Location = new System.Drawing.Point(197, 44);
             this.lblKB.Name = "lblKB";
             this.lblKB.Size = new System.Drawing.Size(23, 13);
-            this.lblKB.TabIndex = 95;
+            this.lblKB.TabIndex = 5;
             this.lblKB.Text = "KiB";
             // 
             // lblAfter
@@ -457,7 +457,7 @@
             this.lblAfter.Location = new System.Drawing.Point(125, 24);
             this.lblAfter.Name = "lblAfter";
             this.lblAfter.Size = new System.Drawing.Size(88, 13);
-            this.lblAfter.TabIndex = 93;
+            this.lblAfter.TabIndex = 2;
             this.lblAfter.Text = "After: (0 disables)";
             // 
             // lblSwitchTo
@@ -467,7 +467,7 @@
             this.lblSwitchTo.Location = new System.Drawing.Point(235, 23);
             this.lblSwitchTo.Name = "lblSwitchTo";
             this.lblSwitchTo.Size = new System.Drawing.Size(54, 13);
-            this.lblSwitchTo.TabIndex = 92;
+            this.lblSwitchTo.TabIndex = 0;
             this.lblSwitchTo.Text = "Switch to:";
             // 
             // tpImageResize
@@ -477,7 +477,7 @@
             this.tpImageResize.Name = "tpImageResize";
             this.tpImageResize.Padding = new System.Windows.Forms.Padding(3);
             this.tpImageResize.Size = new System.Drawing.Size(632, 374);
-            this.tpImageResize.TabIndex = 4;
+            this.tpImageResize.TabIndex = 3;
             this.tpImageResize.Text = "Resize";
             this.tpImageResize.UseVisualStyleBackColor = true;
             // 
@@ -496,7 +496,7 @@
             this.gbImageSize.Location = new System.Drawing.Point(8, 8);
             this.gbImageSize.Name = "gbImageSize";
             this.gbImageSize.Size = new System.Drawing.Size(608, 120);
-            this.gbImageSize.TabIndex = 125;
+            this.gbImageSize.TabIndex = 0;
             this.gbImageSize.TabStop = false;
             this.gbImageSize.Text = "Image Size";
             // 
@@ -515,7 +515,7 @@
             0});
             this.nudImageSizeFixedWidth.Name = "nudImageSizeFixedWidth";
             this.nudImageSizeFixedWidth.Size = new System.Drawing.Size(64, 20);
-            this.nudImageSizeFixedWidth.TabIndex = 131;
+            this.nudImageSizeFixedWidth.TabIndex = 2;
             this.nudImageSizeFixedWidth.Value = new decimal(new int[] {
             480,
             0,
@@ -533,7 +533,7 @@
             0});
             this.nudImageSizeFixedHeight.Name = "nudImageSizeFixedHeight";
             this.nudImageSizeFixedHeight.Size = new System.Drawing.Size(64, 20);
-            this.nudImageSizeFixedHeight.TabIndex = 130;
+            this.nudImageSizeFixedHeight.TabIndex = 5;
             this.nudImageSizeFixedHeight.ValueChanged += new System.EventHandler(this.nudImageSizeFixedHeight_ValueChanged);
             // 
             // nudImageSizeRatio
@@ -541,7 +541,7 @@
             this.nudImageSizeRatio.Location = new System.Drawing.Point(120, 88);
             this.nudImageSizeRatio.Name = "nudImageSizeRatio";
             this.nudImageSizeRatio.Size = new System.Drawing.Size(40, 20);
-            this.nudImageSizeRatio.TabIndex = 129;
+            this.nudImageSizeRatio.TabIndex = 8;
             this.nudImageSizeRatio.Value = new decimal(new int[] {
             100,
             0,
@@ -555,7 +555,7 @@
             this.lblImageSizeFixedAutoScale.Location = new System.Drawing.Point(384, 60);
             this.lblImageSizeFixedAutoScale.Name = "lblImageSizeFixedAutoScale";
             this.lblImageSizeFixedAutoScale.Size = new System.Drawing.Size(152, 13);
-            this.lblImageSizeFixedAutoScale.TabIndex = 128;
+            this.lblImageSizeFixedAutoScale.TabIndex = 6;
             this.lblImageSizeFixedAutoScale.Text = "0 height or width for auto scale";
             // 
             // rbImageSizeDefault
@@ -564,7 +564,7 @@
             this.rbImageSizeDefault.Location = new System.Drawing.Point(16, 24);
             this.rbImageSizeDefault.Name = "rbImageSizeDefault";
             this.rbImageSizeDefault.Size = new System.Drawing.Size(110, 17);
-            this.rbImageSizeDefault.TabIndex = 127;
+            this.rbImageSizeDefault.TabIndex = 0;
             this.rbImageSizeDefault.TabStop = true;
             this.rbImageSizeDefault.Text = "Image size default";
             this.rbImageSizeDefault.UseVisualStyleBackColor = true;
@@ -576,7 +576,7 @@
             this.lblImageSizeFixedHeight.Location = new System.Drawing.Point(248, 59);
             this.lblImageSizeFixedHeight.Name = "lblImageSizeFixedHeight";
             this.lblImageSizeFixedHeight.Size = new System.Drawing.Size(61, 13);
-            this.lblImageSizeFixedHeight.TabIndex = 126;
+            this.lblImageSizeFixedHeight.TabIndex = 4;
             this.lblImageSizeFixedHeight.Text = "Height (px):";
             // 
             // rbImageSizeFixed
@@ -585,7 +585,7 @@
             this.rbImageSizeFixed.Location = new System.Drawing.Point(16, 56);
             this.rbImageSizeFixed.Name = "rbImageSizeFixed";
             this.rbImageSizeFixed.Size = new System.Drawing.Size(103, 17);
-            this.rbImageSizeFixed.TabIndex = 123;
+            this.rbImageSizeFixed.TabIndex = 1;
             this.rbImageSizeFixed.TabStop = true;
             this.rbImageSizeFixed.Text = "Image size fixed:";
             this.rbImageSizeFixed.UseVisualStyleBackColor = true;
@@ -597,7 +597,7 @@
             this.lblImageSizeFixedWidth.Location = new System.Drawing.Point(120, 59);
             this.lblImageSizeFixedWidth.Name = "lblImageSizeFixedWidth";
             this.lblImageSizeFixedWidth.Size = new System.Drawing.Size(58, 13);
-            this.lblImageSizeFixedWidth.TabIndex = 125;
+            this.lblImageSizeFixedWidth.TabIndex = 3;
             this.lblImageSizeFixedWidth.Text = "Width (px):";
             // 
             // lblImageSizeRatioPercentage
@@ -606,7 +606,7 @@
             this.lblImageSizeRatioPercentage.Location = new System.Drawing.Point(159, 91);
             this.lblImageSizeRatioPercentage.Name = "lblImageSizeRatioPercentage";
             this.lblImageSizeRatioPercentage.Size = new System.Drawing.Size(15, 13);
-            this.lblImageSizeRatioPercentage.TabIndex = 118;
+            this.lblImageSizeRatioPercentage.TabIndex = 9;
             this.lblImageSizeRatioPercentage.Text = "%";
             // 
             // rbImageSizeRatio
@@ -615,7 +615,7 @@
             this.rbImageSizeRatio.Location = new System.Drawing.Point(16, 88);
             this.rbImageSizeRatio.Name = "rbImageSizeRatio";
             this.rbImageSizeRatio.Size = new System.Drawing.Size(101, 17);
-            this.rbImageSizeRatio.TabIndex = 122;
+            this.rbImageSizeRatio.TabIndex = 7;
             this.rbImageSizeRatio.TabStop = true;
             this.rbImageSizeRatio.Text = "Image size ratio:";
             this.rbImageSizeRatio.UseVisualStyleBackColor = true;
@@ -631,7 +631,7 @@
             this.tpOutputs.Name = "tpOutputs";
             this.tpOutputs.Padding = new System.Windows.Forms.Padding(3);
             this.tpOutputs.Size = new System.Drawing.Size(632, 374);
-            this.tpOutputs.TabIndex = 2;
+            this.tpOutputs.TabIndex = 4;
             this.tpOutputs.Text = "Outputs";
             this.tpOutputs.UseVisualStyleBackColor = true;
             // 
@@ -644,7 +644,7 @@
             this.gbOutputs.Location = new System.Drawing.Point(8, 40);
             this.gbOutputs.Name = "gbOutputs";
             this.gbOutputs.Size = new System.Drawing.Size(608, 70);
-            this.gbOutputs.TabIndex = 5;
+            this.gbOutputs.TabIndex = 1;
             this.gbOutputs.TabStop = false;
             // 
             // chkSaveFile
@@ -652,7 +652,7 @@
             this.chkSaveFile.Location = new System.Drawing.Point(16, 40);
             this.chkSaveFile.Name = "chkSaveFile";
             this.chkSaveFile.Size = new System.Drawing.Size(184, 24);
-            this.chkSaveFile.TabIndex = 4;
+            this.chkSaveFile.TabIndex = 2;
             this.chkSaveFile.Text = "Save to file";
             this.chkSaveFile.UseVisualStyleBackColor = true;
             this.chkSaveFile.CheckedChanged += new System.EventHandler(this.chkSaveFile_CheckedChanged);
@@ -671,7 +671,7 @@
             this.chkUpload.Location = new System.Drawing.Point(232, 16);
             this.chkUpload.Name = "chkUpload";
             this.chkUpload.Size = new System.Drawing.Size(184, 24);
-            this.chkUpload.TabIndex = 2;
+            this.chkUpload.TabIndex = 1;
             this.chkUpload.Text = "Upload to Remote Locations";
             this.chkUpload.UseVisualStyleBackColor = true;
             // 
@@ -680,7 +680,7 @@
             this.chkClipboard.Location = new System.Drawing.Point(16, 16);
             this.chkClipboard.Name = "chkClipboard";
             this.chkClipboard.Size = new System.Drawing.Size(184, 24);
-            this.chkClipboard.TabIndex = 1;
+            this.chkClipboard.TabIndex = 0;
             this.chkClipboard.Text = "Copy Image or Text to Clipboard";
             this.chkClipboard.UseVisualStyleBackColor = true;
             // 
@@ -692,7 +692,7 @@
             this.gbRemoteLocations.Location = new System.Drawing.Point(8, 216);
             this.gbRemoteLocations.Name = "gbRemoteLocations";
             this.gbRemoteLocations.Size = new System.Drawing.Size(608, 136);
-            this.gbRemoteLocations.TabIndex = 6;
+            this.gbRemoteLocations.TabIndex = 3;
             this.gbRemoteLocations.TabStop = false;
             this.gbRemoteLocations.Text = "Upload to Remote Locations";
             // 
@@ -702,7 +702,7 @@
             this.flpTextUploaders.Location = new System.Drawing.Point(16, 24);
             this.flpTextUploaders.Name = "flpTextUploaders";
             this.flpTextUploaders.Size = new System.Drawing.Size(280, 96);
-            this.flpTextUploaders.TabIndex = 9;
+            this.flpTextUploaders.TabIndex = 0;
             this.flpTextUploaders.Visible = false;
             // 
             // flpImageUploaders
@@ -711,7 +711,7 @@
             this.flpImageUploaders.Location = new System.Drawing.Point(16, 24);
             this.flpImageUploaders.Name = "flpImageUploaders";
             this.flpImageUploaders.Size = new System.Drawing.Size(280, 96);
-            this.flpImageUploaders.TabIndex = 8;
+            this.flpImageUploaders.TabIndex = 1;
             this.flpImageUploaders.Visible = false;
             // 
             // flpFileUploaders
@@ -720,7 +720,7 @@
             this.flpFileUploaders.Location = new System.Drawing.Point(312, 24);
             this.flpFileUploaders.Name = "flpFileUploaders";
             this.flpFileUploaders.Size = new System.Drawing.Size(280, 96);
-            this.flpFileUploaders.TabIndex = 7;
+            this.flpFileUploaders.TabIndex = 2;
             // 
             // gbSaveToFile
             // 
@@ -730,7 +730,7 @@
             this.gbSaveToFile.Location = new System.Drawing.Point(8, 120);
             this.gbSaveToFile.Name = "gbSaveToFile";
             this.gbSaveToFile.Size = new System.Drawing.Size(608, 88);
-            this.gbSaveToFile.TabIndex = 5;
+            this.gbSaveToFile.TabIndex = 2;
             this.gbSaveToFile.TabStop = false;
             this.gbSaveToFile.Text = "When taking a screenshot, save the file to a preconfigured location";
             // 
@@ -739,21 +739,21 @@
             this.txtFileNameWithoutExt.Location = new System.Drawing.Point(16, 24);
             this.txtFileNameWithoutExt.Name = "txtFileNameWithoutExt";
             this.txtFileNameWithoutExt.Size = new System.Drawing.Size(456, 20);
-            this.txtFileNameWithoutExt.TabIndex = 8;
+            this.txtFileNameWithoutExt.TabIndex = 0;
             // 
             // txtSaveFolder
             // 
             this.txtSaveFolder.Location = new System.Drawing.Point(16, 56);
             this.txtSaveFolder.Name = "txtSaveFolder";
             this.txtSaveFolder.Size = new System.Drawing.Size(456, 20);
-            this.txtSaveFolder.TabIndex = 7;
+            this.txtSaveFolder.TabIndex = 1;
             // 
             // btnBrowse
             // 
             this.btnBrowse.Location = new System.Drawing.Point(480, 52);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(80, 24);
-            this.btnBrowse.TabIndex = 6;
+            this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "&Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -774,7 +774,7 @@
             this.gbTasks.Location = new System.Drawing.Point(3, 3);
             this.gbTasks.Name = "gbTasks";
             this.gbTasks.Size = new System.Drawing.Size(160, 389);
-            this.gbTasks.TabIndex = 2;
+            this.gbTasks.TabIndex = 0;
             this.gbTasks.TabStop = false;
             this.gbTasks.Text = "I want to...";
             // 
@@ -789,14 +789,14 @@
             this.flpTasks.Location = new System.Drawing.Point(8, 16);
             this.flpTasks.Name = "flpTasks";
             this.flpTasks.Size = new System.Drawing.Size(144, 352);
-            this.flpTasks.TabIndex = 3;
+            this.flpTasks.TabIndex = 0;
             // 
             // btnTaskAnnotate
             // 
             this.btnTaskAnnotate.Location = new System.Drawing.Point(3, 3);
             this.btnTaskAnnotate.Name = "btnTaskAnnotate";
             this.btnTaskAnnotate.Size = new System.Drawing.Size(117, 23);
-            this.btnTaskAnnotate.TabIndex = 4;
+            this.btnTaskAnnotate.TabIndex = 0;
             this.btnTaskAnnotate.Text = "Annotate Image...";
             this.btnTaskAnnotate.UseVisualStyleBackColor = true;
             this.btnTaskAnnotate.Click += new System.EventHandler(this.btnTaskAnnotate_Click);
@@ -818,7 +818,7 @@
             this.chkTaskImageResize.Location = new System.Drawing.Point(3, 55);
             this.chkTaskImageResize.Name = "chkTaskImageResize";
             this.chkTaskImageResize.Size = new System.Drawing.Size(89, 17);
-            this.chkTaskImageResize.TabIndex = 0;
+            this.chkTaskImageResize.TabIndex = 2;
             this.chkTaskImageResize.Text = "Resize image";
             this.chkTaskImageResize.UseVisualStyleBackColor = true;
             this.chkTaskImageResize.CheckedChanged += new System.EventHandler(this.chkTaskImageResize_CheckedChanged);
@@ -834,13 +834,23 @@
             this.chkTaskOutputConfig.UseVisualStyleBackColor = true;
             this.chkTaskOutputConfig.CheckedChanged += new System.EventHandler(this.chkTaskOutputConfig_CheckedChanged);
             // 
+            // btnCopyImageClose
+            // 
+            this.btnCopyImageClose.Location = new System.Drawing.Point(3, 101);
+            this.btnCopyImageClose.Name = "btnCopyImageClose";
+            this.btnCopyImageClose.Size = new System.Drawing.Size(117, 23);
+            this.btnCopyImageClose.TabIndex = 4;
+            this.btnCopyImageClose.Text = "Copy Image && Close";
+            this.btnCopyImageClose.UseVisualStyleBackColor = true;
+            this.btnCopyImageClose.Click += new System.EventHandler(this.btnCopyImageClose_Click);
+            // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Location = new System.Drawing.Point(592, 424);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(104, 24);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "&Save && Continue";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -852,7 +862,7 @@
             this.btnCancel.Location = new System.Drawing.Point(704, 424);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 24);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -864,17 +874,7 @@
             this.flpMain.Location = new System.Drawing.Point(8, 8);
             this.flpMain.Name = "flpMain";
             this.flpMain.Size = new System.Drawing.Size(820, 408);
-            this.flpMain.TabIndex = 12;
-            // 
-            // btnCopyImageClose
-            // 
-            this.btnCopyImageClose.Location = new System.Drawing.Point(3, 101);
-            this.btnCopyImageClose.Name = "btnCopyImageClose";
-            this.btnCopyImageClose.Size = new System.Drawing.Size(117, 23);
-            this.btnCopyImageClose.TabIndex = 5;
-            this.btnCopyImageClose.Text = "Copy Image && Close";
-            this.btnCopyImageClose.UseVisualStyleBackColor = true;
-            this.btnCopyImageClose.Click += new System.EventHandler(this.btnCopyImageClose_Click);
+            this.flpMain.TabIndex = 0;
             // 
             // WorkflowWizard
             // 
@@ -882,7 +882,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(850, 459);
+            this.ClientSize = new System.Drawing.Size(850, 460);
             this.Controls.Add(this.flpMain);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
