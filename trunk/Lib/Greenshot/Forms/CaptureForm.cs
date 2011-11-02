@@ -70,12 +70,6 @@ namespace Greenshot.Forms {
 			this.Hide();
 		}
 
-		void DoCaptureFeedback() {
-			if(conf.PlayCameraSound) {
-				SoundHelper.Play();
-			}
-		}
-
 		/// <summary>
 		/// Make Capture with default destinations
 		/// </summary>
@@ -347,7 +341,7 @@ namespace Greenshot.Forms {
 
 			// Make sure the user sees that the capture is made
 			if (capture.CaptureDetails.CaptureMode != CaptureMode.File && capture.CaptureDetails.CaptureMode != CaptureMode.Clipboard) {
-				DoCaptureFeedback();
+				
 			} else {
 				// If File || Clipboard
 				// Maybe not "made" but the original is still there... somehow

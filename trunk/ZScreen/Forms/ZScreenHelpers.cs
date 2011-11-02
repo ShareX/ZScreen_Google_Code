@@ -55,6 +55,12 @@ namespace ZScreenGUI
             GetGTGUI().Show();
         }
 
+        private void ShowActionsUI()
+        {
+            var ui = new ActionsUI(Engine.ConfigUI.ConfigActions) { Icon = this.Icon, Text = Application.ProductName + @" - Actions" };
+            ui.Show();
+        }
+
         public GoogleTranslateGUI GetGTGUI()
         {
             if (Loader.MyGTGUI == null || Loader.MyGTGUI.IsDisposed)

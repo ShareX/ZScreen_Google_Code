@@ -251,7 +251,6 @@
     <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\ImageOutput.cs" />
     <Compile Include="Helpers\ScaleHelper.cs" />
-    <Compile Include="Helpers\SoundHelper.cs" />
     <Compile Include="Helpers\StartupHelper.cs" />
     <Compile Include="Helpers\ToolStripItemEndisabler.cs" />
     <Compile Include="Helpers\WindowCapture.cs" />

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -32,9 +31,10 @@ using UploadersLib.ImageUploaders;
 using UploadersLib.OtherServices;
 using UploadersLib.TextUploaders;
 using UploadersLib.URLShorteners;
-using ZSS.IndexersLib;
 using ZScreenLib.Properties;
+using ZSS.IndexersLib;
 using ZUploader.HelperClasses;
+
 #region License Information (GPL v2)
 
 /*
@@ -102,7 +102,7 @@ namespace ZScreenLib
             CaptureFreeHandRegion
         }
 
-        #endregion
+        #endregion JobLevel2 enum
 
         #region JobLevel3 enum
 
@@ -120,7 +120,7 @@ namespace ZScreenLib
             CreateAnimatedImage
         }
 
-        #endregion
+        #endregion JobLevel3 enum
 
         #region ProgressType enum
 
@@ -140,7 +140,7 @@ namespace ZScreenLib
             PrintImage
         }
 
-        #endregion
+        #endregion ProgressType enum
 
         #region TaskState enum
 
@@ -158,17 +158,18 @@ namespace ZScreenLib
             Finished
         }
 
-        #endregion
-        #endregion Enums
+        #endregion TaskState enum
+
+        #endregion 0 Enums
 
         #region 0 Events
-
 
         public event TaskEventHandler UploadCompleted;
         public event TaskEventHandler UploadPreparing;
         public event TaskEventHandler UploadProgressChanged2;
         public event TaskEventHandler UploadStarted;
-        #endregion
+
+        #endregion 0 Events
 
         #region 0 Properties
 
@@ -186,6 +187,7 @@ namespace ZScreenLib
         }
 
         public List<string> Errors { get; set; }
+
         public int Id { get; set; }
 
         public TaskInfo Info { get; private set; }
@@ -209,6 +211,7 @@ namespace ZScreenLib
         public JobLevel2 Job2 { get; private set; } // Entire Screen, Active Window, Selected Window, Crop Shot, etc.
 
         public JobLevel3 Job3 { get; private set; } // Shorten URL, Upload Text, Index Folder, etc.
+
         private DateTime mEndTime;
 
         public BackgroundWorker MyWorker { get; set; }
@@ -225,11 +228,13 @@ namespace ZScreenLib
         }
 
         public DateTime StartTime { get; private set; }
+
         public List<TaskState> States = new List<TaskState>();
 
         public TaskStatus Status { get; private set; }
 
         public Image TempImage { get; private set; }
+
         public List<Image> tempImages;
 
         public string TempText { get; private set; }
@@ -244,8 +249,10 @@ namespace ZScreenLib
         public List<UploadResult> UploadResults { get; private set; }
 
         public bool WasToTakeScreenshot { get; set; }
+
         public Workflow WorkflowConfig { get; private set; }
-        #endregion Properties
+
+        #endregion 0 Properties
 
         #region Capture
 
@@ -445,10 +452,10 @@ namespace ZScreenLib
         {
             return CaptureRegionOrWindow(imgSS, true);
         }
+
         #endregion Capture
 
         #region Checks
-
 
         public bool Canceled()
         {
@@ -545,6 +552,7 @@ namespace ZScreenLib
 
             return false;
         }
+
         #endregion Checks
 
         #region Constructors
@@ -640,7 +648,6 @@ namespace ZScreenLib
             return success;
         }
 
-
         public WorkerTask(Workflow wf, bool cloneWorkflow = true)
         {
             Info = new TaskInfo();
@@ -713,13 +720,14 @@ namespace ZScreenLib
                 SetNotifyIconStatus(Info.TrayIcon, ready: true);
             }
         }
+
         #endregion Constructors
 
         #region Delegates
 
         public delegate void TaskEventHandler(WorkerTask wt);
 
-        #endregion
+        #endregion Delegates
 
         #region Descriptions
 
@@ -809,10 +817,10 @@ namespace ZScreenLib
             sbDebug.AppendLine(string.Format("  File Uploader: {0}", WorkflowConfig.DestConfig.ToStringFileUploaders()));
             return sbDebug.ToString();
         }
+
         #endregion Descriptions
 
         #region Edit Image
-
 
         public bool IsValidActionFile(Software app)
         {
@@ -841,7 +849,7 @@ namespace ZScreenLib
         /// </summary>
         public void PerformActions()
         {
-            foreach (Software app in Engine.ConfigUI.ActionsApps)
+            foreach (Software app in Engine.ConfigUI.ConfigActions.ActionsApps)
             {
                 if (app.Enabled)
                 {
@@ -951,6 +959,7 @@ namespace ZScreenLib
                 TempImage = img;
             }
         }
+
         #endregion Edit Image
 
         #region Google Translate
@@ -976,7 +985,6 @@ namespace ZScreenLib
             if (MyWorker != null) MyWorker.Dispose();
         }
 
-
         public HistoryItem GenerateHistoryItem()
         {
             return GenerateHistoryItem(Result);
@@ -997,7 +1005,6 @@ namespace ZScreenLib
                              Type = Job1.GetDescription()
                          };
 
-
             return hi;
         }
 
@@ -1014,6 +1021,7 @@ namespace ZScreenLib
             Info.WindowTitleText = NativeMethods.GetForegroundWindowText();
             MyWorker.RunWorkerAsync(this);
         }
+
         #endregion Helper Methods
 
         private void MyWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -1070,7 +1078,6 @@ namespace ZScreenLib
                 }
             }
         }
-
 
         private bool ExistsUploadResult(UploadResult ur2)
         {
@@ -1281,6 +1288,7 @@ namespace ZScreenLib
                 }
             }
         }
+
         #endregion Populating Task
 
         #region Publish Data
@@ -1582,7 +1590,7 @@ namespace ZScreenLib
         private void SetFileSize(long sz)
         {
             var dsz = sz > 1023 ? (sz / 1024.0) : (double)sz;
-            var strsz = dsz.ToString("N0",  CultureInfo.CurrentCulture.NumberFormat);
+            var strsz = dsz.ToString("N0", CultureInfo.CurrentCulture.NumberFormat);
             Info.FileSize = string.Format("{0} {1}", strsz, sz > 1023 ? "KiB" : "B");
         }
 
@@ -2160,6 +2168,7 @@ namespace ZScreenLib
                 FileSystem.WriteText(Info.LocalFilePath, text);
             }
         }
+
         #endregion Publish Data
 
         public void Start()
@@ -2238,6 +2247,7 @@ namespace ZScreenLib
                 UploadStarted(this);
             }
         }
+
         #endregion Task Events
 
         #region Upload Methods

@@ -710,16 +710,6 @@ namespace Greenshot
                 }
             }
 
-            // Now the sound isn't needed anymore
-            try
-            {
-                SoundHelper.Deinitialize();
-            }
-            catch (Exception e)
-            {
-                LOG.Error("Error deinitializing sound!", e);
-            }
-
             // Inform all registed plugins
             try
             {

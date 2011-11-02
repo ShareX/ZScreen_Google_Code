@@ -13,58 +13,6 @@ namespace ZScreenGUI
 {
     public partial class ZScreen : ZScreenCoreUI
     {
-        private void TrayImageEditorClick(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsm = (ToolStripMenuItem)sender;
-
-            Engine.ConfigUI.ImageEditor = GetImageSoftware(tsm.Text);
-
-            if (lbSoftware.Items.IndexOf(tsm.Text) >= 0)
-            {
-                tsmEditinImageSoftware.DropDown.AutoClose = false;
-                lbSoftware.SelectedItem = tsm.Text;
-                UpdateGuiEditors(sender);
-            }
-        }
-
-        private void RewriteImageEditorsRightClickMenu()
-        {
-            if (Engine.ConfigUI.ActionsApps != null)
-            {
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-                tsmEditinImageSoftware.DropDownItems.Clear();
-
-                List<Software> imgs = Engine.ConfigUI.ActionsApps;
-
-                //tsm.TextDirection = ToolStripTextDirection.Horizontal;
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                for (int x = 0; x < imgs.Count; x++)
-                {
-                    ToolStripMenuItem tsm = new ToolStripMenuItem
-                    {
-                        Tag = x,
-                        Text = imgs[x].Name,
-                        CheckOnClick = true,
-                        Checked = imgs[x].Enabled
-                    };
-                    tsm.Click += new EventHandler(TrayImageEditorClick);
-                    tsm.MouseEnter += new EventHandler(TrayImageEditor_MouseEnter);
-                    tsm.MouseLeave += new EventHandler(TrayImageEditor_MouseLeave);
-                    tsmEditinImageSoftware.DropDownItems.Add(tsm);
-                }
-
-                tsmEditinImageSoftware.DropDownDirection = ToolStripDropDownDirection.Right;
-
-                //show drop down menu in the correct place if menu is selected
-                if (tsmEditinImageSoftware.Selected)
-                {
-                    tsmEditinImageSoftware.DropDown.Hide();
-                    tsmEditinImageSoftware.DropDown.Show();
-                }
-            }
-        }
-
         private void TrayImageEditor_MouseLeave(object sender, EventArgs e)
         {
             tsmEditinImageSoftware.DropDown.AutoClose = true;
