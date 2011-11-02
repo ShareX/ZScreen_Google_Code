@@ -31,6 +31,9 @@ namespace HelpersLib
 {
     public static class StaticHelper
     {
+        public const string FILTER_XML_FILES = "XML Files(*.xml)|*.xml";
+        public const string FILTER_EXE_FILES = "All Files(*.exe)|*.exe";
+
         public static Logger MyLogger { private get; set; }
 
         public static void WriteLine(string message)

@@ -121,7 +121,7 @@ namespace ZScreenGUI
 
         private void AppSettingsImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XMLSettings temp = XMLSettings.Read(dlg.FileName);
@@ -133,7 +133,7 @@ namespace ZScreenGUI
 
         private void AppSettingsExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.SettingsFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -142,9 +142,9 @@ namespace ZScreenGUI
             }
         }
 
-        private void OutputsConfigImport()
+        private void WorkflowConfigImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Workflow temp = Workflow.Read(dlg.FileName);
@@ -152,9 +152,9 @@ namespace ZScreenGUI
             }
         }
 
-        private void OutputsConfigExport()
+        private void WorkflowConfigExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.WorkflowConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -165,7 +165,7 @@ namespace ZScreenGUI
 
         private void UploadersConfigImport()
         {
-            OpenFileDialog dlg = new OpenFileDialog { Filter = Engine.FILTER_XML_FILES };
+            OpenFileDialog dlg = new OpenFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 UploadersConfig temp = UploadersConfig.Read(dlg.FileName);
@@ -178,7 +178,7 @@ namespace ZScreenGUI
 
         private void UploadersConfigExport()
         {
-            SaveFileDialog dlg = new SaveFileDialog { Filter = Engine.FILTER_XML_FILES };
+            SaveFileDialog dlg = new SaveFileDialog { Filter = StaticHelper.FILTER_XML_FILES };
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dlg.FileName = Engine.UploadersConfigFileName;
             if (dlg.ShowDialog() == DialogResult.OK)
