@@ -233,7 +233,7 @@ namespace ZUploader
             this.tsMain.Padding = new System.Windows.Forms.Padding(4, 6, 4, 4);
             this.tsMain.ShowItemToolTips = false;
             this.tsMain.Size = new System.Drawing.Size(841, 33);
-            this.tsMain.TabIndex = 87;
+            this.tsMain.TabIndex = 0;
             this.tsMain.Text = "toolStrip1";
             // 
             // tsbClipboardUpload
@@ -511,14 +511,14 @@ namespace ZUploader
             // 
             this.tscMain.ContentPanel.Controls.Add(this.lvUploads);
             this.tscMain.ContentPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.tscMain.ContentPanel.Size = new System.Drawing.Size(884, 328);
+            this.tscMain.ContentPanel.Size = new System.Drawing.Size(884, 329);
             this.tscMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tscMain.LeftToolStripPanelVisible = false;
             this.tscMain.Location = new System.Drawing.Point(0, 0);
             this.tscMain.Name = "tscMain";
             this.tscMain.RightToolStripPanelVisible = false;
-            this.tscMain.Size = new System.Drawing.Size(884, 361);
-            this.tscMain.TabIndex = 88;
+            this.tscMain.Size = new System.Drawing.Size(884, 362);
+            this.tscMain.TabIndex = 0;
             this.tscMain.Text = "toolStripContainer1";
             // 
             // tscMain.TopToolStripPanel
@@ -544,8 +544,8 @@ namespace ZUploader
             this.lvUploads.Location = new System.Drawing.Point(3, 3);
             this.lvUploads.Name = "lvUploads";
             this.lvUploads.ShowItemToolTips = true;
-            this.lvUploads.Size = new System.Drawing.Size(878, 322);
-            this.lvUploads.TabIndex = 3;
+            this.lvUploads.Size = new System.Drawing.Size(878, 323);
+            this.lvUploads.TabIndex = 0;
             this.lvUploads.UseCompatibleStateImageBehavior = false;
             this.lvUploads.View = System.Windows.Forms.View.Details;
             this.lvUploads.SelectedIndexChanged += new System.EventHandler(this.lvUploads_SelectedIndexChanged);
@@ -648,7 +648,7 @@ namespace ZUploader
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 361);
+            this.ClientSize = new System.Drawing.Size(884, 362);
             this.Controls.Add(this.tscMain);
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(900, 400);

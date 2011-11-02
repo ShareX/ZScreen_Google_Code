@@ -82,7 +82,7 @@ namespace ZScreenGUI
             this.tsCoreMainTab.Location = new System.Drawing.Point(206, 0);
             this.tsCoreMainTab.Name = "tsCoreMainTab";
             this.tsCoreMainTab.Size = new System.Drawing.Size(158, 430);
-            this.tsCoreMainTab.TabIndex = 127;
+            this.tsCoreMainTab.TabIndex = 0;
             // 
             // tsbFullscreenCapture
             // 

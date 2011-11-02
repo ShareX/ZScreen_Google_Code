@@ -43,13 +43,13 @@ using ScreenCapture;
 using UploadersAPILib;
 using UploadersLib;
 using UploadersLib.HelperClasses;
-using ZSS.ColorsLib;
-using ZSS.FTPClientLib;
-using ZSS.UpdateCheckerLib;
 using ZScreenGUI.Properties;
 using ZScreenGUI.UserControls;
 using ZScreenLib;
 using ZScreenTesterGUI;
+using ZSS.ColorsLib;
+using ZSS.FTPClientLib;
+using ZSS.UpdateCheckerLib;
 using Timer = System.Timers.Timer;
 
 namespace ZScreenGUI
@@ -338,7 +338,7 @@ namespace ZScreenGUI
                 }
             }
 
-            #endregion Windows Size/Location
+            #endregion Window Size/Location
 
             #region Window Show/Hide
 
@@ -429,8 +429,6 @@ namespace ZScreenGUI
                    color.R + "," + color.G + "," + color.B;
         }
 
-
-
         private FTPAccount GetSelectedFTPforImages()
         {
             FTPAccount acc = null;
@@ -479,8 +477,6 @@ namespace ZScreenGUI
 
             return false;
         }
-
-
 
         private void Application_Idle(object sender, EventArgs e)
         {
@@ -1498,8 +1494,6 @@ namespace ZScreenGUI
             CaptureSelectedWindow();
         }
 
-
-
         private void SetToolTip(Control original)
         {
             SetToolTip(original, original);
@@ -1513,8 +1507,6 @@ namespace ZScreenGUI
                 SetToolTip(original, c);
             }
         }
-
-
 
         private void ShowMainWindow()
         {
@@ -1841,8 +1833,6 @@ namespace ZScreenGUI
             }
             chkActiveWindowTryCaptureChildren.Enabled = cboCaptureEngine.SelectedIndex != (int)CaptureEngineType.DWM;
         }
-
-
 
         private void watermarkCodeMenu_Click(object sender, EventArgs e)
         {
