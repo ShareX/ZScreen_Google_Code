@@ -394,7 +394,7 @@
             this.dtpFilterFrom.Location = new System.Drawing.Point(56, 46);
             this.dtpFilterFrom.Name = "dtpFilterFrom";
             this.dtpFilterFrom.Size = new System.Drawing.Size(230, 20);
-            this.dtpFilterFrom.TabIndex = 1;
+            this.dtpFilterFrom.TabIndex = 2;
             // 
             // cbDateFilter
             // 
@@ -402,7 +402,7 @@
             this.cbDateFilter.Location = new System.Drawing.Point(16, 24);
             this.cbDateFilter.Name = "cbDateFilter";
             this.cbDateFilter.Size = new System.Drawing.Size(74, 17);
-            this.cbDateFilter.TabIndex = 2;
+            this.cbDateFilter.TabIndex = 0;
             this.cbDateFilter.Text = "Date filter:";
             this.cbDateFilter.UseVisualStyleBackColor = true;
             // 
@@ -412,7 +412,7 @@
             this.label1.Location = new System.Drawing.Point(16, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 13);
-            this.label1.TabIndex = 3;
+            this.label1.TabIndex = 1;
             this.label1.Text = "From:";
             // 
             // label2
@@ -421,7 +421,7 @@
             this.label2.Location = new System.Drawing.Point(15, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(23, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 3;
             this.label2.Text = "To:";
             // 
             // dtpFilterTo
@@ -429,14 +429,14 @@
             this.dtpFilterTo.Location = new System.Drawing.Point(56, 70);
             this.dtpFilterTo.Name = "dtpFilterTo";
             this.dtpFilterTo.Size = new System.Drawing.Size(230, 20);
-            this.dtpFilterTo.TabIndex = 5;
+            this.dtpFilterTo.TabIndex = 4;
             // 
             // btnApplyFilters
             // 
             this.btnApplyFilters.Location = new System.Drawing.Point(8, 48);
             this.btnApplyFilters.Name = "btnApplyFilters";
             this.btnApplyFilters.Size = new System.Drawing.Size(136, 24);
-            this.btnApplyFilters.TabIndex = 7;
+            this.btnApplyFilters.TabIndex = 1;
             this.btnApplyFilters.Text = "Apply filters";
             this.btnApplyFilters.UseVisualStyleBackColor = true;
             this.btnApplyFilters.Click += new System.EventHandler(this.btnApplyFilters_Click);
@@ -446,7 +446,7 @@
             this.txtFilenameFilter.Location = new System.Drawing.Point(16, 119);
             this.txtFilenameFilter.Name = "txtFilenameFilter";
             this.txtFilenameFilter.Size = new System.Drawing.Size(170, 20);
-            this.txtFilenameFilter.TabIndex = 8;
+            this.txtFilenameFilter.TabIndex = 6;
             // 
             // cbFilenameFilterMethod
             // 
@@ -459,7 +459,7 @@
             this.cbFilenameFilterMethod.Location = new System.Drawing.Point(192, 119);
             this.cbFilenameFilterMethod.Name = "cbFilenameFilterMethod";
             this.cbFilenameFilterMethod.Size = new System.Drawing.Size(96, 21);
-            this.cbFilenameFilterMethod.TabIndex = 10;
+            this.cbFilenameFilterMethod.TabIndex = 7;
             // 
             // cbFilenameFilterCulture
             // 
@@ -472,7 +472,7 @@
             this.cbFilenameFilterCulture.Location = new System.Drawing.Point(16, 145);
             this.cbFilenameFilterCulture.Name = "cbFilenameFilterCulture";
             this.cbFilenameFilterCulture.Size = new System.Drawing.Size(170, 21);
-            this.cbFilenameFilterCulture.TabIndex = 11;
+            this.cbFilenameFilterCulture.TabIndex = 8;
             // 
             // cbFilenameFilter
             // 
@@ -480,7 +480,7 @@
             this.cbFilenameFilter.Location = new System.Drawing.Point(16, 96);
             this.cbFilenameFilter.Name = "cbFilenameFilter";
             this.cbFilenameFilter.Size = new System.Drawing.Size(93, 17);
-            this.cbFilenameFilter.TabIndex = 12;
+            this.cbFilenameFilter.TabIndex = 5;
             this.cbFilenameFilter.Text = "Filename filter:";
             this.cbFilenameFilter.UseVisualStyleBackColor = true;
             // 
@@ -490,7 +490,7 @@
             this.cbFilenameFilterCase.Location = new System.Drawing.Point(192, 146);
             this.cbFilenameFilterCase.Name = "cbFilenameFilterCase";
             this.cbFilenameFilterCase.Size = new System.Drawing.Size(94, 17);
-            this.cbFilenameFilterCase.TabIndex = 13;
+            this.cbFilenameFilterCase.TabIndex = 9;
             this.cbFilenameFilterCase.Text = "Case sensitive";
             this.cbFilenameFilterCase.UseVisualStyleBackColor = true;
             // 
@@ -501,7 +501,7 @@
             this.ssMain.Location = new System.Drawing.Point(0, 669);
             this.ssMain.Name = "ssMain";
             this.ssMain.Size = new System.Drawing.Size(917, 22);
-            this.ssMain.TabIndex = 15;
+            this.ssMain.TabIndex = 1;
             this.ssMain.Text = "statusStrip1";
             // 
             // tsslStatus
@@ -529,7 +529,7 @@
             this.gbFilters.Location = new System.Drawing.Point(161, 3);
             this.gbFilters.Name = "gbFilters";
             this.gbFilters.Size = new System.Drawing.Size(310, 241);
-            this.gbFilters.TabIndex = 16;
+            this.gbFilters.TabIndex = 2;
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
             // 
@@ -538,7 +538,7 @@
             this.txtHostFilter.Location = new System.Drawing.Point(112, 199);
             this.txtHostFilter.Name = "txtHostFilter";
             this.txtHostFilter.Size = new System.Drawing.Size(128, 20);
-            this.txtHostFilter.TabIndex = 17;
+            this.txtHostFilter.TabIndex = 13;
             // 
             // cbTypeFilterSelection
             // 
@@ -551,7 +551,7 @@
             this.cbTypeFilterSelection.Location = new System.Drawing.Point(112, 172);
             this.cbTypeFilterSelection.Name = "cbTypeFilterSelection";
             this.cbTypeFilterSelection.Size = new System.Drawing.Size(128, 21);
-            this.cbTypeFilterSelection.TabIndex = 16;
+            this.cbTypeFilterSelection.TabIndex = 11;
             // 
             // cbHostFilter
             // 
@@ -559,7 +559,7 @@
             this.cbHostFilter.Location = new System.Drawing.Point(16, 201);
             this.cbHostFilter.Name = "cbHostFilter";
             this.cbHostFilter.Size = new System.Drawing.Size(73, 17);
-            this.cbHostFilter.TabIndex = 15;
+            this.cbHostFilter.TabIndex = 12;
             this.cbHostFilter.Text = "Host filter:";
             this.cbHostFilter.UseVisualStyleBackColor = true;
             // 
@@ -569,7 +569,7 @@
             this.cbTypeFilter.Location = new System.Drawing.Point(16, 174);
             this.cbTypeFilter.Name = "cbTypeFilter";
             this.cbTypeFilter.Size = new System.Drawing.Size(90, 17);
-            this.cbTypeFilter.TabIndex = 14;
+            this.cbTypeFilter.TabIndex = 10;
             this.cbTypeFilter.Text = "File type filter:";
             this.cbTypeFilter.UseVisualStyleBackColor = true;
             // 
@@ -578,7 +578,7 @@
             this.btnRemoveFilters.Location = new System.Drawing.Point(8, 72);
             this.btnRemoveFilters.Name = "btnRemoveFilters";
             this.btnRemoveFilters.Size = new System.Drawing.Size(136, 24);
-            this.btnRemoveFilters.TabIndex = 17;
+            this.btnRemoveFilters.TabIndex = 2;
             this.btnRemoveFilters.Text = "Remove filters";
             this.btnRemoveFilters.UseVisualStyleBackColor = true;
             this.btnRemoveFilters.Click += new System.EventHandler(this.btnRemoveFilters_Click);
@@ -588,7 +588,7 @@
             this.btnRefreshList.Location = new System.Drawing.Point(8, 24);
             this.btnRefreshList.Name = "btnRefreshList";
             this.btnRefreshList.Size = new System.Drawing.Size(136, 24);
-            this.btnRefreshList.TabIndex = 17;
+            this.btnRefreshList.TabIndex = 0;
             this.btnRefreshList.Text = "Refresh list";
             this.btnRefreshList.UseVisualStyleBackColor = true;
             this.btnRefreshList.Click += new System.EventHandler(this.btnRefreshList_Click);
@@ -598,7 +598,7 @@
             this.btnCopyURL.Location = new System.Drawing.Point(8, 24);
             this.btnCopyURL.Name = "btnCopyURL";
             this.btnCopyURL.Size = new System.Drawing.Size(136, 24);
-            this.btnCopyURL.TabIndex = 18;
+            this.btnCopyURL.TabIndex = 0;
             this.btnCopyURL.Text = "Copy URL";
             this.btnCopyURL.UseVisualStyleBackColor = true;
             this.btnCopyURL.Click += new System.EventHandler(this.btnCopyURL_Click);
@@ -608,7 +608,7 @@
             this.btnOpenURL.Location = new System.Drawing.Point(8, 48);
             this.btnOpenURL.Name = "btnOpenURL";
             this.btnOpenURL.Size = new System.Drawing.Size(136, 24);
-            this.btnOpenURL.TabIndex = 18;
+            this.btnOpenURL.TabIndex = 1;
             this.btnOpenURL.Text = "Open URL";
             this.btnOpenURL.UseVisualStyleBackColor = true;
             this.btnOpenURL.Click += new System.EventHandler(this.btnOpenURL_Click);
@@ -618,7 +618,7 @@
             this.btnOpenLocalFile.Location = new System.Drawing.Point(8, 72);
             this.btnOpenLocalFile.Name = "btnOpenLocalFile";
             this.btnOpenLocalFile.Size = new System.Drawing.Size(136, 24);
-            this.btnOpenLocalFile.TabIndex = 18;
+            this.btnOpenLocalFile.TabIndex = 2;
             this.btnOpenLocalFile.Text = "Open local file";
             this.btnOpenLocalFile.UseVisualStyleBackColor = true;
             this.btnOpenLocalFile.Click += new System.EventHandler(this.btnOpenLocalFile_Click);
@@ -640,7 +640,7 @@
             this.lvHistory.Location = new System.Drawing.Point(3, 304);
             this.lvHistory.Name = "lvHistory";
             this.lvHistory.Size = new System.Drawing.Size(911, 362);
-            this.lvHistory.TabIndex = 0;
+            this.lvHistory.TabIndex = 1;
             this.lvHistory.UseCompatibleStateImageBehavior = false;
             this.lvHistory.View = System.Windows.Forms.View.Details;
             this.lvHistory.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvHistory_ItemSelectionChanged);
@@ -680,7 +680,7 @@
             this.gbSelectedHistoryItem.Location = new System.Drawing.Point(3, 113);
             this.gbSelectedHistoryItem.Name = "gbSelectedHistoryItem";
             this.gbSelectedHistoryItem.Size = new System.Drawing.Size(152, 104);
-            this.gbSelectedHistoryItem.TabIndex = 18;
+            this.gbSelectedHistoryItem.TabIndex = 1;
             this.gbSelectedHistoryItem.TabStop = false;
             this.gbSelectedHistoryItem.Text = "Selected history item";
             // 
@@ -692,7 +692,7 @@
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(152, 104);
-            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
             // 
@@ -709,7 +709,7 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.tlpMain.Size = new System.Drawing.Size(917, 669);
-            this.tlpMain.TabIndex = 19;
+            this.tlpMain.TabIndex = 0;
             // 
             // tlpMainTop
             // 
@@ -728,12 +728,14 @@
             // 
             // pbThumbnail
             // 
+            this.pbThumbnail.BackColor = System.Drawing.Color.White;
             this.pbThumbnail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbThumbnail.DisableViewer = false;
             this.pbThumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbThumbnail.Location = new System.Drawing.Point(485, 3);
             this.pbThumbnail.Name = "pbThumbnail";
             this.pbThumbnail.Size = new System.Drawing.Size(423, 289);
-            this.pbThumbnail.TabIndex = 14;
+            this.pbThumbnail.TabIndex = 1;
             // 
             // flpLeft
             // 
@@ -745,7 +747,7 @@
             this.flpLeft.Location = new System.Drawing.Point(3, 3);
             this.flpLeft.Name = "flpLeft";
             this.flpLeft.Size = new System.Drawing.Size(476, 289);
-            this.flpLeft.TabIndex = 17;
+            this.flpLeft.TabIndex = 0;
             // 
             // HistoryForm
             // 

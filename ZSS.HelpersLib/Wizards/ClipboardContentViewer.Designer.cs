@@ -45,7 +45,7 @@
             this.lblQuestion.ForeColor = System.Drawing.Color.White;
             this.lblQuestion.Location = new System.Drawing.Point(0, 0);
             this.lblQuestion.Name = "lblQuestion";
-            this.lblQuestion.Size = new System.Drawing.Size(385, 25);
+            this.lblQuestion.Size = new System.Drawing.Size(393, 25);
             this.lblQuestion.TabIndex = 0;
             this.lblQuestion.Text = "Your clipboard contains the following:";
             this.lblQuestion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -70,7 +70,7 @@
             this.btnOK.Location = new System.Drawing.Point(208, 328);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(80, 24);
-            this.btnOK.TabIndex = 2;
+            this.btnOK.TabIndex = 4;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -81,7 +81,7 @@
             this.btnCancel.Location = new System.Drawing.Point(296, 328);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 24);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -98,7 +98,7 @@
             this.txtClipboard.Name = "txtClipboard";
             this.txtClipboard.ReadOnly = true;
             this.txtClipboard.Size = new System.Drawing.Size(368, 288);
-            this.txtClipboard.TabIndex = 4;
+            this.txtClipboard.TabIndex = 1;
             // 
             // lbClipboard
             // 
@@ -110,7 +110,7 @@
             this.lbClipboard.Location = new System.Drawing.Point(8, 32);
             this.lbClipboard.Name = "lbClipboard";
             this.lbClipboard.Size = new System.Drawing.Size(368, 288);
-            this.lbClipboard.TabIndex = 5;
+            this.lbClipboard.TabIndex = 2;
             // 
             // cbDontShowThisWindow
             // 
@@ -119,7 +119,7 @@
             this.cbDontShowThisWindow.Location = new System.Drawing.Point(9, 332);
             this.cbDontShowThisWindow.Name = "cbDontShowThisWindow";
             this.cbDontShowThisWindow.Size = new System.Drawing.Size(137, 17);
-            this.cbDontShowThisWindow.TabIndex = 6;
+            this.cbDontShowThisWindow.TabIndex = 3;
             this.cbDontShowThisWindow.Text = "Don\'t show this window";
             this.cbDontShowThisWindow.UseVisualStyleBackColor = true;
             this.cbDontShowThisWindow.CheckedChanged += new System.EventHandler(this.cbDontShowThisWindow_CheckedChanged);
@@ -129,7 +129,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 360);
+            this.ClientSize = new System.Drawing.Size(393, 364);
             this.Controls.Add(this.cbDontShowThisWindow);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);

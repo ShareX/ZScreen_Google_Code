@@ -41,9 +41,9 @@
             // 
             // txtException
             // 
-            this.txtException.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtException.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtException.Location = new System.Drawing.Point(16, 48);
             this.txtException.Multiline = true;
             this.txtException.Name = "txtException";
@@ -98,8 +98,8 @@
             // 
             // flpMenu
             // 
-            this.flpMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.flpMenu.Controls.Add(this.btnCopyAll);
             this.flpMenu.Controls.Add(this.btnOpenLogFile);
             this.flpMenu.Controls.Add(this.btnSendBugReport);
@@ -108,7 +108,7 @@
             this.flpMenu.Location = new System.Drawing.Point(16, 278);
             this.flpMenu.Name = "flpMenu";
             this.flpMenu.Size = new System.Drawing.Size(464, 32);
-            this.flpMenu.TabIndex = 0;
+            this.flpMenu.TabIndex = 2;
             // 
             // btnContinue
             // 
@@ -127,7 +127,7 @@
             this.lblErrorMessage.Location = new System.Drawing.Point(16, 8);
             this.lblErrorMessage.Name = "lblErrorMessage";
             this.lblErrorMessage.Size = new System.Drawing.Size(464, 32);
-            this.lblErrorMessage.TabIndex = 2;
+            this.lblErrorMessage.TabIndex = 0;
             this.lblErrorMessage.Text = "Error";
             // 
             // ErrorForm

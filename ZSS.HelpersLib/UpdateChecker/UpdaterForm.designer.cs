@@ -43,7 +43,7 @@
             this.btnYes.Location = new System.Drawing.Point(472, 8);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(72, 40);
-            this.btnYes.TabIndex = 0;
+            this.btnYes.TabIndex = 1;
             this.btnYes.Text = "&Yes...";
             this.btnYes.UseVisualStyleBackColor = true;
             this.btnYes.Click += new System.EventHandler(this.btnYes_Click);
@@ -55,16 +55,16 @@
             this.btnNo.Location = new System.Drawing.Point(544, 8);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(72, 40);
-            this.btnNo.TabIndex = 1;
+            this.btnNo.TabIndex = 2;
             this.btnNo.Text = "&No";
             this.btnNo.UseVisualStyleBackColor = true;
             this.btnNo.Click += new System.EventHandler(this.btnNo_Click);
             // 
             // txtVer
             // 
-            this.txtVer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVer.BackColor = System.Drawing.Color.DimGray;
             this.txtVer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVer.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -73,7 +73,7 @@
             this.txtVer.Name = "txtVer";
             this.txtVer.ReadOnly = true;
             this.txtVer.Size = new System.Drawing.Size(608, 216);
-            this.txtVer.TabIndex = 2;
+            this.txtVer.TabIndex = 3;
             this.txtVer.TabStop = false;
             this.txtVer.Text = "";
             this.txtVer.WordWrap = false;
@@ -81,15 +81,15 @@
             // 
             // lblVer
             // 
-            this.lblVer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVer.BackColor = System.Drawing.Color.Transparent;
             this.lblVer.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblVer.ForeColor = System.Drawing.Color.White;
             this.lblVer.Location = new System.Drawing.Point(136, 8);
             this.lblVer.Name = "lblVer";
             this.lblVer.Size = new System.Drawing.Size(480, 104);
-            this.lblVer.TabIndex = 3;
+            this.lblVer.TabIndex = 0;
             this.lblVer.Text = "New version is available";
             // 
             // pbApp

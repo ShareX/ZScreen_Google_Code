@@ -83,7 +83,7 @@
             this.btnProfileCreate.Location = new System.Drawing.Point(3, 3);
             this.btnProfileCreate.Name = "btnProfileCreate";
             this.btnProfileCreate.Size = new System.Drawing.Size(112, 24);
-            this.btnProfileCreate.TabIndex = 1;
+            this.btnProfileCreate.TabIndex = 0;
             this.btnProfileCreate.Text = "&Create";
             this.btnProfileCreate.UseVisualStyleBackColor = true;
             this.btnProfileCreate.Click += new System.EventHandler(this.btnProfileCreate_Click);
@@ -93,7 +93,7 @@
             this.btnProfileEdit.Location = new System.Drawing.Point(3, 33);
             this.btnProfileEdit.Name = "btnProfileEdit";
             this.btnProfileEdit.Size = new System.Drawing.Size(112, 24);
-            this.btnProfileEdit.TabIndex = 2;
+            this.btnProfileEdit.TabIndex = 1;
             this.btnProfileEdit.Text = "&Edit";
             this.btnProfileEdit.UseVisualStyleBackColor = true;
             this.btnProfileEdit.Click += new System.EventHandler(this.btnProfileEdit_Click);
@@ -113,7 +113,7 @@
             this.btnProfileDuplicate.Location = new System.Drawing.Point(3, 63);
             this.btnProfileDuplicate.Name = "btnProfileDuplicate";
             this.btnProfileDuplicate.Size = new System.Drawing.Size(112, 24);
-            this.btnProfileDuplicate.TabIndex = 6;
+            this.btnProfileDuplicate.TabIndex = 2;
             this.btnProfileDuplicate.Text = "D&uplicate";
             this.btnProfileDuplicate.UseVisualStyleBackColor = true;
             this.btnProfileDuplicate.Click += new System.EventHandler(this.btnProfileDuplicate_Click);
@@ -123,7 +123,7 @@
             this.btnClose.Location = new System.Drawing.Point(3, 123);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(112, 24);
-            this.btnClose.TabIndex = 7;
+            this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Cl&ose";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -140,7 +140,7 @@
             this.flpButtons.Location = new System.Drawing.Point(631, 3);
             this.flpButtons.Name = "flpButtons";
             this.flpButtons.Size = new System.Drawing.Size(122, 332);
-            this.flpButtons.TabIndex = 8;
+            this.flpButtons.TabIndex = 1;
             // 
             // tlpMain
             // 
@@ -155,7 +155,7 @@
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.Size = new System.Drawing.Size(756, 338);
-            this.tlpMain.TabIndex = 9;
+            this.tlpMain.TabIndex = 0;
             // 
             // WorkflowManager
             // 
