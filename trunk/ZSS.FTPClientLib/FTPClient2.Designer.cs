@@ -278,7 +278,7 @@
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(38, 17);
+            this.lblStatus.Size = new System.Drawing.Size(37, 17);
             this.lblStatus.Text = "status";
             // 
             // lvFTPList
