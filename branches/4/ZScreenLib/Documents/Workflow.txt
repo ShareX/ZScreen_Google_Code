@@ -1,0 +1,16 @@
+﻿Clipboard Upload
+================
+Worker.cs -> StartBw_ClipboardUpload || UploadUsingFileSystem
+Worker.cs -> StartTextWorkers -> Run Worker
+BwApp_DoWork
+
+Uploading Image
+===============
+
+WorkerPrimary -> BwApp_DoWork()
+CaptureActiveWindow()
+PublishData()
+PublishImage()
+UploadImage()
+
+

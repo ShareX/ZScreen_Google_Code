@@ -1,0 +1,22 @@
+﻿Mike:
+Queue tab
+
+yfrog and twitpic using OAuth
+
+Run the following tasks before uploading
+	Image Editor
+	Command Line Tools 
+
+Windows.Forms.WebBrowser			
+	Preview CSS editing in a WebBrowser
+	
+Clipboard Upload Wizard
+	User hit Clipboard Upload hotkey
+	Task List (refer to WindowsAPICodePack) pops up asking What you want to do? 
+		Upload Images
+		Upload Everything (Images/Text/Files)
+		Index Folders
+
+Greenshot Editor Mods
+- remove General and Quality tabs in SettingsForm
+- 
