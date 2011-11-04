@@ -54,11 +54,12 @@ namespace ZUploader
             Text = Program.Title + " - Settings";
 
             // General
-            cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
-            cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
-            cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
-            cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
             cbShowTray.Checked = Program.Settings.ShowTray;
+            cbStartWithWindows.Checked = RegistryHelper.CheckStartWithWindows();
+            cbShellContextMenu.Checked = RegistryHelper.CheckShellContextMenu();
+            cbClipboardAutoCopy.Checked = Program.Settings.ClipboardAutoCopy;
+            cbURLShortenAfterUpload.Checked = Program.Settings.URLShortenAfterUpload;
+            cbAutoPlaySound.Checked = Program.Settings.AutoPlaySound;
 
             // Upload
             cbUseCustomUploadersConfigPath.Checked = Program.Settings.UseCustomUploadersConfigPath;
@@ -195,19 +196,22 @@ namespace ZUploader
 
         #region General
 
-        private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
+        private void cbShowTray_CheckedChanged(object sender, EventArgs e)
         {
-            Program.Settings.ClipboardAutoCopy = cbClipboardAutoCopy.Checked;
+            Program.Settings.ShowTray = cbShowTray.Checked;
+
+            if (loaded)
+            {
+                Program.mainForm.niTray.Visible = Program.Settings.ShowTray;
+            }
         }
 
-        private void cbAutoPlaySound_CheckedChanged(object sender, EventArgs e)
+        private void cbStartWithWindows_CheckedChanged(object sender, EventArgs e)
         {
-            Program.Settings.AutoPlaySound = cbAutoPlaySound.Checked;
-        }
-
-        private void cbURLShortenAfterUpload_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.URLShortenAfterUpload = cbURLShortenAfterUpload.Checked;
+            if (loaded)
+            {
+                RegistryHelper.SetStartWithWindows(cbStartWithWindows.Checked);
+            }
         }
 
         private void cbShellContextMenu_CheckedChanged(object sender, EventArgs e)
@@ -225,13 +229,19 @@ namespace ZUploader
             }
         }
 
-        private void cbShowTray_CheckedChanged(object sender, EventArgs e)
+        private void cbClipboardAutoCopy_CheckedChanged(object sender, EventArgs e)
         {
-            if (loaded)
-            {
-                Program.Settings.ShowTray = cbShowTray.Checked;
-                Program.mainForm.niTray.Visible = Program.Settings.ShowTray;
-            }
+            Program.Settings.ClipboardAutoCopy = cbClipboardAutoCopy.Checked;
+        }
+
+        private void cbURLShortenAfterUpload_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.URLShortenAfterUpload = cbURLShortenAfterUpload.Checked;
+        }
+
+        private void cbAutoPlaySound_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Settings.AutoPlaySound = cbAutoPlaySound.Checked;
         }
 
         private void btnOpenZUploaderPath_Click(object sender, EventArgs e)

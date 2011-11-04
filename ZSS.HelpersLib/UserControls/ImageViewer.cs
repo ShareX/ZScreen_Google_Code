@@ -105,7 +105,7 @@ namespace HelpersLib
         {
             this.SuspendLayout();
 
-            this.BackColor = Color.FloralWhite;
+            this.BackColor = Color.White;
             this.BackgroundImage = screenshot;
             this.Bounds = ZAppHelper.GetScreenBounds();
             this.Cursor = Cursors.Hand;

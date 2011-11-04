@@ -51,7 +51,6 @@
             this.lblBufferSizeInfo = new System.Windows.Forms.Label();
             this.cbBufferSize = new System.Windows.Forms.ComboBox();
             this.tpHotkeys = new System.Windows.Forms.TabPage();
-            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tpImage = new System.Windows.Forms.TabPage();
             this.lblImageInfo = new System.Windows.Forms.Label();
             this.lblUseImageFormat2AfterHint = new System.Windows.Forms.Label();
@@ -96,6 +95,9 @@
             this.btnAutofillProxy = new System.Windows.Forms.Button();
             this.tpDebug = new System.Windows.Forms.TabPage();
             this.txtDebugLog = new System.Windows.Forms.TextBox();
+            this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
+            this.lblGeneralSeparator = new System.Windows.Forms.Label();
+            this.hmHotkeys = new HelpersLib.Hotkey.HotkeyManagerControl();
             this.tcSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
             this.tpUpload.SuspendLayout();
@@ -118,7 +120,7 @@
             // cbClipboardAutoCopy
             // 
             this.cbClipboardAutoCopy.AutoSize = true;
-            this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 16);
+            this.cbClipboardAutoCopy.Location = new System.Drawing.Point(16, 112);
             this.cbClipboardAutoCopy.Name = "cbClipboardAutoCopy";
             this.cbClipboardAutoCopy.Size = new System.Drawing.Size(254, 17);
             this.cbClipboardAutoCopy.TabIndex = 0;
@@ -129,7 +131,7 @@
             // cbAutoPlaySound
             // 
             this.cbAutoPlaySound.AutoSize = true;
-            this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 40);
+            this.cbAutoPlaySound.Location = new System.Drawing.Point(16, 160);
             this.cbAutoPlaySound.Name = "cbAutoPlaySound";
             this.cbAutoPlaySound.Size = new System.Drawing.Size(327, 17);
             this.cbAutoPlaySound.TabIndex = 1;
@@ -167,6 +169,8 @@
             // 
             // tpGeneral
             // 
+            this.tpGeneral.Controls.Add(this.lblGeneralSeparator);
+            this.tpGeneral.Controls.Add(this.cbStartWithWindows);
             this.tpGeneral.Controls.Add(this.cbShowTray);
             this.tpGeneral.Controls.Add(this.cbURLShortenAfterUpload);
             this.tpGeneral.Controls.Add(this.label1);
@@ -186,7 +190,7 @@
             // cbShowTray
             // 
             this.cbShowTray.AutoSize = true;
-            this.cbShowTray.Location = new System.Drawing.Point(16, 112);
+            this.cbShowTray.Location = new System.Drawing.Point(16, 16);
             this.cbShowTray.Name = "cbShowTray";
             this.cbShowTray.Size = new System.Drawing.Size(149, 17);
             this.cbShowTray.TabIndex = 4;
@@ -197,7 +201,7 @@
             // cbURLShortenAfterUpload
             // 
             this.cbURLShortenAfterUpload.AutoSize = true;
-            this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 64);
+            this.cbURLShortenAfterUpload.Location = new System.Drawing.Point(16, 136);
             this.cbURLShortenAfterUpload.Name = "cbURLShortenAfterUpload";
             this.cbURLShortenAfterUpload.Size = new System.Drawing.Size(240, 17);
             this.cbURLShortenAfterUpload.TabIndex = 2;
@@ -208,15 +212,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 200);
+            this.label1.Location = new System.Drawing.Point(16, 232);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 13);
+            this.label1.Size = new System.Drawing.Size(257, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "This folder have settings, history database and log files";
+            this.label1.Text = "This folder has settings, history database and log files";
             // 
             // btnOpenZUploaderPath
             // 
-            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 168);
+            this.btnOpenZUploaderPath.Location = new System.Drawing.Point(16, 200);
             this.btnOpenZUploaderPath.Name = "btnOpenZUploaderPath";
             this.btnOpenZUploaderPath.Size = new System.Drawing.Size(176, 23);
             this.btnOpenZUploaderPath.TabIndex = 5;
@@ -240,7 +244,7 @@
             // cbShellContextMenu
             // 
             this.cbShellContextMenu.AutoSize = true;
-            this.cbShellContextMenu.Location = new System.Drawing.Point(16, 88);
+            this.cbShellContextMenu.Location = new System.Drawing.Point(16, 64);
             this.cbShellContextMenu.Name = "cbShellContextMenu";
             this.cbShellContextMenu.Size = new System.Drawing.Size(285, 17);
             this.cbShellContextMenu.TabIndex = 3;
@@ -380,14 +384,6 @@
             this.tpHotkeys.TabIndex = 2;
             this.tpHotkeys.Text = "Hotkeys";
             this.tpHotkeys.UseVisualStyleBackColor = true;
-            // 
-            // hmHotkeys
-            // 
-            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
-            this.hmHotkeys.Name = "hmHotkeys";
-            this.hmHotkeys.Size = new System.Drawing.Size(523, 313);
-            this.hmHotkeys.TabIndex = 0;
             // 
             // tpImage
             // 
@@ -943,6 +939,34 @@
             this.txtDebugLog.TabIndex = 0;
             this.txtDebugLog.WordWrap = false;
             // 
+            // cbStartWithWindows
+            // 
+            this.cbStartWithWindows.AutoSize = true;
+            this.cbStartWithWindows.Location = new System.Drawing.Point(16, 40);
+            this.cbStartWithWindows.Name = "cbStartWithWindows";
+            this.cbStartWithWindows.Size = new System.Drawing.Size(170, 17);
+            this.cbStartWithWindows.TabIndex = 8;
+            this.cbStartWithWindows.Text = "Start ZUploader with Windows";
+            this.cbStartWithWindows.UseVisualStyleBackColor = true;
+            this.cbStartWithWindows.CheckedChanged += new System.EventHandler(this.cbStartWithWindows_CheckedChanged);
+            // 
+            // lblGeneralSeparator
+            // 
+            this.lblGeneralSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblGeneralSeparator.Location = new System.Drawing.Point(16, 96);
+            this.lblGeneralSeparator.Name = "lblGeneralSeparator";
+            this.lblGeneralSeparator.Size = new System.Drawing.Size(475, 2);
+            this.lblGeneralSeparator.TabIndex = 9;
+            this.lblGeneralSeparator.Text = "label2";
+            // 
+            // hmHotkeys
+            // 
+            this.hmHotkeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hmHotkeys.Location = new System.Drawing.Point(0, 0);
+            this.hmHotkeys.Name = "hmHotkeys";
+            this.hmHotkeys.Size = new System.Drawing.Size(523, 313);
+            this.hmHotkeys.TabIndex = 0;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1056,5 +1080,7 @@
         private System.Windows.Forms.NumericUpDown nudFixedShapeSizeWidth;
         private System.Windows.Forms.Label lblFixedShapeSizeHeight;
         private System.Windows.Forms.CheckBox cbCaptureTransparent;
+        private System.Windows.Forms.Label lblGeneralSeparator;
+        private System.Windows.Forms.CheckBox cbStartWithWindows;
     }
 }
