@@ -5,6 +5,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace SingleInstanceApplication
 {
@@ -63,8 +64,7 @@ namespace SingleInstanceApplication
 
         public static bool CreateSingleInstance(EventHandler<InstanceCallbackEventArgs> callback)
         {
-            string name = Assembly.GetExecutingAssembly().GetName().Name;
-            return CreateSingleInstance(name, callback);
+            return CreateSingleInstance(Application.ProductName, callback);
         }
 
         /// <summary>
