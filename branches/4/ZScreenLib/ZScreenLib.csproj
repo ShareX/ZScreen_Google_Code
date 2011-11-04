@@ -128,8 +128,8 @@
       <DependentUpon>WorkflowConfigUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Capture.cs" />
+    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\ImageExtensions.cs" />
-    <Compile Include="Helpers\GraphicsEx.cs" />
     <Compile Include="Forms\ProxyConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,7 +205,6 @@
     <Compile Include="Global\EventHandlers.cs" />
     <Compile Include="Global\Extensions.cs" />
     <Compile Include="Global\FileSystem.cs" />
-    <Compile Include="Global\ImageEffects.cs" />
     <Compile Include="Global\RegistrationHelper.cs" />
     <Compile Include="Global\ResxMgr.cs" />
     <Compile Include="Global\UploadInfo.cs" />

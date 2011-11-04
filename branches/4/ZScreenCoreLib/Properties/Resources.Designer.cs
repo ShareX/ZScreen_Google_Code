@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HelpersLib.Properties {
+namespace ZScreenCoreLib.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace HelpersLib.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HelpersLib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZScreenCoreLib.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,9 +60,9 @@ namespace HelpersLib.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap explorer {
+        internal static System.Drawing.Bitmap main {
             get {
-                object obj = ResourceManager.GetObject("explorer", resourceCulture);
+                object obj = ResourceManager.GetObject("main", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

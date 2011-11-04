@@ -11,6 +11,7 @@ using GraphicsMgrLib;
 using HelpersLib;
 using HelpersLib.Hotkey;
 using UploadersLib;
+using ZScreenCoreLib;
 using ZScreenLib.Helpers;
 
 namespace ZScreenLib
@@ -53,6 +54,7 @@ namespace ZScreenLib
         public CaptureEngineType CaptureEngineMode2 = CaptureEngineType.GDI;
 
         private bool bPerformActions = false;
+
         [Browsable(false)]
         public bool PerformActions
         {
@@ -203,32 +205,7 @@ namespace ZScreenLib
         //~~~~~~~~~~~~~~~~~~~~~
         //  Watermark
         //~~~~~~~~~~~~~~~~~~~~~
-
-        public WatermarkType WatermarkMode = WatermarkType.NONE;
-        public WatermarkPositionType WatermarkPositionMode = WatermarkPositionType.BOTTOM_RIGHT;
-        public decimal WatermarkOffset = 5;
-        public bool WatermarkAddReflection = false;
-        public bool WatermarkAutoHide = true;
-
-        [Category(ComponentModelStrings.InputsClipboard), DefaultValue(false), Description("Do not apply watermark during Clipboard Upload")]
-        public bool WatermarkExcludeClipboardUpload { get; set; }
-
-        public string WatermarkText = "%h:%mi";
-        public XFont WatermarkFont = new XFont("Arial", 8);
-        public XColor WatermarkFontArgb = Color.White;
-        public decimal WatermarkFontTrans = 255;
-        public decimal WatermarkCornerRadius = 4;
-        public XColor WatermarkGradient1Argb = Color.FromArgb(85, 85, 85);
-        public XColor WatermarkGradient2Argb = Color.Black;
-        public XColor WatermarkBorderArgb = Color.Black;
-        public decimal WatermarkBackTrans = 225;
-        public LinearGradientMode WatermarkGradientType = LinearGradientMode.Vertical;
-        public bool WatermarkUseCustomGradient = false;
-        public GradientMakerSettings GradientMakerOptions = new GradientMakerSettings();
-
-        public string WatermarkImageLocation = "";
-        public bool WatermarkUseBorder = false;
-        public decimal WatermarkImageScale = 100;
+        public WatermarkConfig ConfigWatermark = new WatermarkConfig();
 
         #endregion Image Manipulation
 
